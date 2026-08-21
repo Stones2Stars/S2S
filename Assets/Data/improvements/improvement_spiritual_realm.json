@@ -1,0 +1,56 @@
+{
+ "type": "IMPROVEMENT_SPIRITUAL_REALM",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SPIRITUAL_REALMS",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_BRANESPACE"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    30,
+    {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_ARCHETYPAL_VECTOR_SPACES",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_SPIRITUAL_REALM"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_SPIRITUAL_REALM",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SPIRITUAL_REALM_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

@@ -1,0 +1,156 @@
+{
+ "type": "UNIT_MALACCAN_PIRATE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MALAYSIAN",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
+    "TECH_COAST_GUARD",
+    {
+     "any": [
+      "CIVIC_MERCANTILISM",
+      "CIVIC_NATIONALIST",
+      "CIVIC_FEUDAL",
+      "CIVIC_MONARCHY",
+      "CIVIC_DESPOTISM"
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 6
+  }
+ },
+ "combat": {
+  "unit": {
+   "vsUnit": {
+    "UNIT_CARGO_SHIP": {
+     "attack": {
+      "percent": 50
+     },
+     "defense": {
+      "percent": 50
+     }
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 55
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 45
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "skills": [
+  "alwaysHostile",
+  "hiddenNationality",
+  "pillage",
+  "mechanized",
+  "rivalTerritory",
+  "renderBelowWater"
+ ],
+ "tags": [
+  "military",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_DIESEL_SHIPS",
+ "combatClasses": [
+  "UNITCOMBAT_PIRATE",
+  "UNITCOMBAT_NAVAL_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_DIST_TORPEDO",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 1150,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MALACCAN_PIRATE",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 2.25,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MALACCAN_PIRATE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_MALACCAN_PIRATE",
+  "civilopedia": "TXT_KEY_UNIT_MALACCAN_PIRATE_PEDIA",
+  "help": "TXT_KEY_UNIT_PIRATE_HELP",
+  "worth": 2,
+  "militaryWorth": 3,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "minAreaSize": 10,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_PIRATE_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_PIRATE_SEA",
+   "UNITAI_SPY_SEA",
+   "UNITAI_ASSAULT_SEA",
+   "UNITAI_EXPLORE_SEA"
+  ],
+  "notUnitAIs": [
+   "UNITAI_ESCORT_SEA",
+   "UNITAI_RESERVE_SEA",
+   "UNITAI_ATTACK_SEA"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

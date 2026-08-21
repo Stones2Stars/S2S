@@ -19,10 +19,16 @@ EventSignsOpt = BugCore.game.EventSigns
 
 
 # civ globals
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+MAP = GC.getMap()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
+INFO = CyInfo()
 engine = CyEngine()
 TRNSLTR = CyTranslator()
-MAP = GC.getMap()
 
 # for sdtoolkit
 SD_MOD_ID = "EventSigns"
@@ -181,10 +187,9 @@ def applyLandmarkFromEvent(argsList):
 	iEvent = argsList[0]
 	kTriggeredData = argsList[1]
 
-	event = GC.getEventInfo(iEvent)
-	iFood = event.getPlotExtraYield(YieldTypes.YIELD_FOOD)
-	iProd = event.getPlotExtraYield(YieldTypes.YIELD_PRODUCTION)
-	iComm = event.getPlotExtraYield(YieldTypes.YIELD_COMMERCE)
+	iFood = INFO.getEventPlotExtraYield(iEvent, YieldTypes.YIELD_FOOD)
+	iProd = INFO.getEventPlotExtraYield(iEvent, YieldTypes.YIELD_PRODUCTION)
+	iComm = INFO.getEventPlotExtraYield(iEvent, YieldTypes.YIELD_COMMERCE)
 
 	if iFood != 0 or iProd != 0 or iComm != 0:
 		pPlot = MAP.plot(kTriggeredData.iPlotX, kTriggeredData.iPlotY)
@@ -520,7 +525,7 @@ def applySaltpeter(argsList):
 	# Add landmark for initial plot, if there is still a yield change
 	placeLandmark(CyPlot, sEventType, iFood, iProd, iComm, True, -1)
 
-	iForest = GC.getFEATURE_FOREST()
+	iForest = GC.getInfoTypeForString("FEATURE_FOREST")
 
 	listPlots = []
 	for plotX in MAP.plots():
@@ -538,7 +543,7 @@ def applySaltpeter(argsList):
 		iCount -= 1
 		plot[1].setExtraYield(YieldTypes.YIELD_COMMERCE, 2)
 		szTxt = TRNSLTR.getText("TXT_KEY_EVENT_SALTPETER_DISCOVERED",())
-		CvUtil.sendMessage(szTxt, iPlayer, GC.getEVENT_MESSAGE_TIME(), "", -1, plot[1].getX(), plot[1].getY(), True, True, 0, "", False)
+		CvUtil.sendMessage(szTxt, iPlayer, GC.getDefineINT("EVENT_MESSAGE_TIME"), "", -1, plot[1].getX(), plot[1].getY(), True, True, 0, "", False)
 		# Add landmark for other plots too.
 		placeLandmark(plot[1], sEventType, iFood, iProd, iComm, True, -1)
 

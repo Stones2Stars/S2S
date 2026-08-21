@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_ERA_RENAISSANCE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/era_renaissance.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ERA_RENAISSANCE",
+  "era": "C2C_ERA_RENAISSANCE"
+ }
+}

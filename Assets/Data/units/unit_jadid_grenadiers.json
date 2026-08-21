@@ -1,0 +1,185 @@
+{
+ "type": "UNIT_JADID_GRENADIERS",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_UZBEK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_EXPLOSIVES",
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MODERN_GRENADIER"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 25
+   },
+   "vsUnit": {
+    "UNIT_ARQUEBUSIER": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "UNIT_MUSKETMAN": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "UNIT_RIFLEMAN": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "UNIT_EARLY_TANK": {
+     "attack": {
+      "percent": 15
+     },
+     "defense": {
+      "percent": 75
+     }
+    },
+    "UNIT_TANK": {
+     "attack": {
+      "percent": 15
+     }
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 27
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 2
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 7
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 8
+   },
+   "limit": {
+    "flat": 20
+   },
+   "maxUnits": {
+    "flat": 2
+   }
+  }
+ },
+ "skills": [
+  "pillage",
+  "ignoreBuildingDefense"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_THROWING",
+ "combatClasses": [
+  "UNITCOMBAT_GUN",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_GRENADE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_GUERILLA1",
+   "PROMOTION_CITY_GARRISON1",
+   "PROMOTION_DRILL1"
+  ]
+ },
+ "cost": {
+  "production": 450,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_JADID_GRENADIERS",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_JADID_GRENADIERS"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_JADID_GRENADIERS",
+  "civilopedia": "TXT_KEY_UNIT_JADID_GRENADIERS_PEDIA",
+  "worth": 4,
+  "militaryWorth": 43,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_CITY_COUNTER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

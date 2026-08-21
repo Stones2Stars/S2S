@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_SAKA",
+ "enables": {
+  "units": [
+   "UNIT_KANISHKA"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SAKA"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SAKA",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

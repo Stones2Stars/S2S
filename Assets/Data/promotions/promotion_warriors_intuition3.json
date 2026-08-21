@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTION_WARRIORS_INTUITION3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT5"
+   ]
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_WARRIORS_INTUITION": 3
+ },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/WarriorIntuition3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_WARRIORS_INTUITION3"
+ }
+}

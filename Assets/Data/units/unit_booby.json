@@ -1,0 +1,147 @@
+{
+ "type": "UNIT_BOOBY",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_PAIR"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 5,
+   "title": "TXT_KEY_GROUPTITLE_FAMILY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_COMPANY",
+   "chance": 5,
+   "title": "TXT_KEY_GROUPTITLE_FLOCK_SMALL"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_BATTALION",
+   "chance": 3,
+   "title": "TXT_KEY_GROUPTITLE_FLOCK"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_FORCES",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_FLOCK_LARGE"
+  }
+ ],
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 60
+  }
+ },
+ "skills": [
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_BIRD",
+  "UNITCOMBAT_BIRD_SEABIRD",
+  "UNITCOMBAT_ANIMAL_COMBAT_PECK",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+  "UNITCOMBAT_MOTILITY_AERIAL",
+  "UNITCOMBAT_QUALITY_PATHETIC",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_TINY",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_BOOBY",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": 1,
+    "commerce": 2
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BOOBY",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_BOOBY"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_BOOBY",
+  "civilopedia": "TXT_KEY_UNIT_BOOBY_PEDIA",
+  "spawnOnly": true,
+  "xpValueAttack": 2,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES",
+   "TERRAIN_HILL",
+   "TERRAIN_ICE",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_PEAK",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_BADLAND",
+   "TERRAIN_LAKE_SHORE",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TRENCH_POLAR",
+   "TERRAIN_TUNDRA"
+  ]
+ }
+}

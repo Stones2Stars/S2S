@@ -1,0 +1,150 @@
+{
+ "type": "UNIT_SIEGE_TOWER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PRIME_TIMBER",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_SIEGE_WEAPONS_WORKSHOP",
+    "TECH_SIEGE_WARFARE",
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_BOMBARD"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_ARCHER": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 8
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 13
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_SIEGE_TOWER"
+  }
+ },
+ "skills": [
+  "noCapture",
+  "noDefensiveBonus",
+  "mechanized",
+  "onlyDefensive",
+  "tradable",
+  "collateralImmune"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SIEGE",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SIEGE_DEFENSIVE",
+  "UNITCOMBAT_SIEGE_URBAN",
+  "UNITCOMBAT_SIEGE_WOODEN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_BALLISTA",
+  "UNITCOMBAT_ARMOR_MEDIUM",
+  "UNITCOMBAT_SHIELD_TOWER",
+  "UNITCOMBAT_SPEED_SLOW",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SENTRY"
+  ]
+ },
+ "cost": {
+  "production": 250,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SIEGE_TOWER",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SIEGE_TOWER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_SIEGE_TOWER",
+  "civilopedia": "TXT_KEY_UNIT_SIEGE_TOWER_PEDIA",
+  "worth": 2,
+  "militaryWorth": 15,
+  "xpValueAttack": 6,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_CITY"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

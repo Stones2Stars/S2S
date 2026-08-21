@@ -1,0 +1,51 @@
+{
+ "type": "PROMOTION_ACE",
+ "enables": {
+  "promotions": [
+   "PROMOTION_TOPGUN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_VETERAN"
+   ]
+  }
+ },
+ "experience": {
+  "unit": {
+   "percent": 15
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "air": {
+  "unit": {
+   "evasion": {
+    "percent": 10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/acepilot.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,1,14"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_ACE",
+  "unitCombats": [
+   "UNITCOMBAT_EARLY_FIGHTERS",
+   "UNITCOMBAT_EARLY_BOMBERS",
+   "UNITCOMBAT_JET_FIGHTERS",
+   "UNITCOMBAT_BOMBERS",
+   "UNITCOMBAT_SUPERSONIC_PLANES",
+   "UNITCOMBAT_STEALTH"
+  ]
+ }
+}

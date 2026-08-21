@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_NAZCA",
+ "enables": {
+  "units": [
+   "UNIT_NAZCA_HEADHUNTERS",
+   "UNIT_PACADEO"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_NAZCA"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_NAZCA",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

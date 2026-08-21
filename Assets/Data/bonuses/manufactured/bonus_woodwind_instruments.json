@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_WOODWIND_INSTRUMENTS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIRD_CALLER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_WOODWIND_INSTRUMENTS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_WOODWIND_INSTRUMENTS",
+  "civilopedia": "TXT_KEY_BONUS_WOODWIND_INSTRUMENTS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

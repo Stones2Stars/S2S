@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTION_CULTURE_ASIAN",
+ "ui": {
+  "art": {
+   "icon": "art/Embassy/art/cultureasian.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CULTURE_ASIAN",
+  "unitCombats": [
+   "UNITCOMBAT_SETTLER"
+  ]
+ }
+}

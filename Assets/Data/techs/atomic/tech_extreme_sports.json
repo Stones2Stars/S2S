@@ -1,0 +1,86 @@
+{
+ "type": "TECH_EXTREME_SPORTS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BASE_JUMPING_SITE",
+   "BUILDING_BOSSABALL_COURT",
+   "BUILDING_BUNGEE_JUMPING_SITE",
+   "BUILDING_DROP_ZONE",
+   "BUILDING_JAI_ALAI_COURT",
+   "BUILDING_LASER_TAG_ARENA",
+   "BUILDING_PAINTBALL_ARENA",
+   "BUILDING_RIVER_RAFTING_DOCK",
+   "BUILDING_ROLLER_DERBY_TRACK",
+   "BUILDING_SKATE_PARK",
+   "BUILDING_SLAMBALL_COURT",
+   "BUILDING_SPELUNKING_CAVES",
+   "BUILDING_SURF_SHOP",
+   "BUILDING_X_GAMES"
+  ],
+  "techs": [
+   "TECH_URBAN_CULTURE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WATER_SPORTS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MOTORSPORTS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MODERN_SPORTS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COUNTERCULTURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 15474
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/Extreme_Sports.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_EXTREME_SPORTS",
+  "soundMP": "AS2D_TECH_EXTREME_SPORTS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_EXTREME_SPORTS",
+  "civilopedia": "TXT_KEY_TECH_EXTREME_SPORTS_PEDIA",
+  "quote": "TXT_KEY_TECH_EXTREME_SPORTS_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "gridX": 84,
+  "gridY": 3
+ }
+}

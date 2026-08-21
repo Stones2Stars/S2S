@@ -1,0 +1,136 @@
+{
+ "type": "UNIT_FLAMING_ARROW",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_CANNON_FORGE",
+    "TECH_GUNPOWDER",
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CULVERIN"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 100
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MELEE": {
+     "percent": 75
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 11
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_FLAMING_ARROW"
+  }
+ },
+ "skills": [
+  "pillage",
+  "ignoreBuildingDefense",
+  "onlyDefensive",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SIEGE",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SIEGE_DEFENSIVE",
+  "UNITCOMBAT_SIEGE_GUNPOWDER",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_CLUB",
+  "UNITCOMBAT_WEAPON_DIST_FIREWORKS",
+  "UNITCOMBAT_ARMOR_HEAVY",
+  "UNITCOMBAT_SPEED_SLOW",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 410,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FLAMING_ARROW",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 2,
+    "rangedWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_FLAMING_ARROW"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_FLAMING_ARROW",
+  "civilopedia": "TXT_KEY_UNIT_FLAMING_ARROW_PEDIA",
+  "worth": 3,
+  "militaryWorth": 37,
+  "xpValueAttack": 6,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_COLLATERAL",
+   "UNITAI_CITY_COUNTER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

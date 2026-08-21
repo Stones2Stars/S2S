@@ -1,0 +1,48 @@
+{
+ "type": "BUILDING_TUBER_GATHERER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GATHERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 30,
+  "materialsModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TUBER_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TUBER_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_TUBER_GATHERER_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

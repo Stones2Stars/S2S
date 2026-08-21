@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_INTERSTELLAR_NEUTRON_STAR_COMPUTATIONAL_SUBSTRATE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COMPUTRONIUM_UNIVERSE",
+    {
+     "type": "TERRAIN_NEUTRON_STAR",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_GALACTIC",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 6278,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_NEUTRON_STAR_COMPUTATIONAL_SUBSTRATE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_NEUTRON_STAR_COMPUTATIONAL_SUBSTRATE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_NEUTRON_STAR_COMPUTATIONAL_SUBSTRATE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

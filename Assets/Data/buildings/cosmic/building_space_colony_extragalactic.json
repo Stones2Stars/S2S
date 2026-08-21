@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_SPACE_COLONY_EXTRAGALACTIC",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_GALACTIC_COLONY"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_SPACE_CREASING",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1000
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -5
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SPACE_COLONY_EXTRAGALACTIC",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_COLONY_EXTRAGALACTIC",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_EXTRAGALACTIC_PEDIA",
+  "pediaCategory": "space",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

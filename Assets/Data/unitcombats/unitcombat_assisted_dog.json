@@ -1,0 +1,17 @@
+{
+ "type": "UNITCOMBAT_ASSISTED_DOG",
+ "hideAndSeek": {
+  "detection": {
+   "value": 100,
+   "unit": "HAS_CAMOUFLAGE"
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/assisted_by_dog.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ASSISTED_DOG"
+ }
+}

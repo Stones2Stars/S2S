@@ -1,0 +1,63 @@
+{
+ "type": "BONUS_PAPYRUS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_NUBIAN",
+   "BUILDING_GROVE_PAPYRUS",
+   "BUILDING_PAPER_MAKER",
+   "BUILDING_SCROLL_MAKER"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PAPYRUS"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 5,
+  "constAppearance": 140,
+  "minAreaSize": 3,
+  "maxLatitude": 60,
+  "rands": {
+   "iRandApp1": 40,
+   "iRandApp2": 40,
+   "iRandApp3": 40,
+   "iRandApp4": 40
+  },
+  "tilesPer": 72,
+  "groupRange": 2,
+  "groupRand": 8,
+  "area": true,
+  "flatlands": true,
+  "normalize": true,
+  "validFeatures": [
+   "FEATURE_FLOOD_PLAINS",
+   "FEATURE_OASIS",
+   "FEATURE_SWAMP"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_PLAINS",
+   "TERRAIN_MUDDY",
+   "TERRAIN_MARSH",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PAPYRUS",
+  "civilopedia": "TXT_KEY_BONUS_PAPYRUS_PEDIA",
+  "bonusClassType": "BONUSCLASS_PRODUCTION",
+  "source": "natural"
+ }
+}

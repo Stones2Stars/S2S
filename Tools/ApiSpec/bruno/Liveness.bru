@@ -1,0 +1,15 @@
+meta {
+  name: Liveness
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/
+  body: none
+  auth: none
+}
+
+docs {
+  Smoke test -> "hello world". Run first; if it fails the server is off / game not running.
+}

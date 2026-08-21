@@ -1,0 +1,177 @@
+{
+ "type": "CIVIC_PUBLIC_WORKS",
+ "enables": {
+  "buildings": [
+   "BUILDING_GARDEN_CITY",
+   "BUILDING_WORKHOUSE"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    {
+     "value": -3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    1,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   },
+   "buildings": {
+    "BUILDING_NATIONAL_COURIER_SYSTEM": {
+     "flat": 1
+    },
+    "BUILDING_THREE_GORGES_DAM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "buildings": {
+    "BUILDING_AQUEDUCT": {
+     "flat": 1
+    },
+    "BUILDING_PONT_DU_GARD": {
+     "flat": 1
+    },
+    "BUILDING_BATH_HOUSE": {
+     "flat": 1
+    },
+    "BUILDING_WATER_TREATMENT_PLANT": {
+     "flat": 1
+    },
+    "BUILDING_ARTESIAN_WELL": {
+     "flat": 1
+    },
+    "BUILDING_FIRE_BRIGADE": {
+     "flat": 1
+    },
+    "BUILDING_FIRE_STATION": {
+     "flat": 1
+    },
+    "BUILDING_CITY_PARK": {
+     "flat": 1
+    },
+    "BUILDING_TOWN_WELL": {
+     "flat": 1
+    },
+    "BUILDING_WATER_PIPES": {
+     "flat": 1
+    },
+    "BUILDING_CISTERN": {
+     "flat": 1
+    },
+    "BUILDING_WATER_TOWER": {
+     "flat": 1
+    },
+    "BUILDING_RESERVOIR": {
+     "flat": 1
+    },
+    "BUILDING_MODERN_WATERWORKS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 5
+   },
+   "numCities": {
+    "percent": 5
+   },
+   "percent": [
+    {
+     "value": 2,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 2,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ]
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -1
+   },
+   "national": {
+    "flat": -1
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_PAVED_ROADS": {
+     "percent": 20
+    },
+    "BUILDING_ASPHALT_ROADS": {
+     "percent": 20
+    },
+    "BUILDING_SKYROAD_CONTROL_TOWER": {
+     "percent": 20
+    },
+    "BUILDING_TELEPORT_BOOTH": {
+     "percent": 20
+    },
+    "BUILDING_PUBLIC_TRANSPORTATION": {
+     "percent": 20
+    },
+    "BUILDING_PERSONAL_RAPID_TRAIN": {
+     "percent": 20
+    },
+    "BUILDING_SEWER_SYSTEM": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "grants": {
+  "revolution": -15
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/welfare_public_works.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_PUBLIC_WORKS",
+  "civilopedia": "TXT_KEY_CIVIC_PUBLIC_WORKS_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_PUBLIC_WORKS_STRATEGY",
+  "civicOption": "CIVICOPTION_WELFARE",
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

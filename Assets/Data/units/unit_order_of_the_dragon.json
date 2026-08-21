@@ -1,0 +1,124 @@
+{
+ "type": "UNIT_ORDER_OF_THE_DRAGON",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_WALLACHIAN",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_ARMOR_CRAFTING",
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MUSKETMAN"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 13
+  }
+ },
+ "skills": [
+  "pillage"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_MELEE",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_AXE",
+  "UNITCOMBAT_ARMOR_MEDIUM",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_BATTALION",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SHOCK",
+   "PROMOTION_COVER",
+   "PROMOTION_FORMATION"
+  ]
+ },
+ "cost": {
+  "production": 290,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ORDER_OF_THE_DRAGON",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_ORDER_OF_THE_DRAGON"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_ORDER_OF_THE_DRAGON",
+  "civilopedia": "TXT_KEY_UNIT_ORDER_OF_THE_DRAGON_PEDIA",
+  "worth": 1,
+  "militaryWorth": 3,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "conscription": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

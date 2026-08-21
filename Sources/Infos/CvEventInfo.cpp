@@ -2,19 +2,19 @@
 //  FILE:    CvEventInfo.cpp
 //------------------------------------------------------------------------------------------------
 #include "CvGameCoreDLL.h"
-#include "CvArtFileMgr.h"
+#include "UI/CvArtFileMgr.h"
 #include "CvBuildingInfo.h"
 #include "CvHeritageInfo.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
+#include "AI/CvGameAI.h"
+#include "UI/CvGameTextMgr.h"
+#include "Defines/CvGlobals.h"
 #include "CvInfos.h"
 #include "CvInfoUtil.h"
-#include "CvPlayerAI.h"
-#include "CvPython.h"
-#include "CvXMLLoadUtility.h"
-#include "CvXMLLoadUtilityModTools.h"
-#include "CheckSum.h"
+#include "AI/CvPlayerAI.h"
+#include "Infrastructure/CvPython.h"
+#include "Infrastructure/CvXMLLoadUtility.h"
+#include "Infrastructure/CvXMLLoadUtilityModTools.h"
+#include "Tools/CheckSum.h"
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
 #include "CvEventInfo.h"
@@ -367,12 +367,6 @@ int CvEventInfo::getFreeUnitSupport() const
 int CvEventInfo::getInflationModifier() const
 {
 	return m_iInflationModifier;
-}
-
-
-int CvEventInfo::getSpaceProductionModifier() const
-{
-	return m_iSpaceProductionModifier;
 }
 
 
@@ -734,7 +728,6 @@ void CvEventInfo::getDataMembers(CvInfoUtil& util)
 		.add(m_iMaxPillage, L"iMaxPillage")
 		.add(m_iFreeUnitSupport, L"iFreeUnitSupport")
 		.add(m_iInflationModifier, L"iInflationMod")
-		.add(m_iSpaceProductionModifier, L"iSpaceProductionMod")
 		.add(m_iAIValue, L"iAIValue")
 		.addEnumAsInt(m_iPrereqGameOption, L"PrereqGameOption")
 		.add(m_iRevolutionIndexChange, L"iRevolutionIndexChange")
@@ -813,7 +806,6 @@ void CvEventInfo::getCheckSum(uint32_t& iSum) const
 	CheckSum(iSum, m_iMaxPillage);
 	CheckSum(iSum, m_iFreeUnitSupport);
 	CheckSum(iSum, m_iInflationModifier);
-	CheckSum(iSum, m_iSpaceProductionModifier);
 	CheckSum(iSum, m_iAIValue);
 
 	CheckSumI(iSum, GC.getNumFlavorTypes(), m_piTechFlavorValue);

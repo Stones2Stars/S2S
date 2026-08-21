@@ -1,0 +1,174 @@
+{
+ "type": "BUILDING_THRONE_ROOM",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRENCH_WARFARE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_IMPERIAL_FORTRESS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_AESTHETICS",
+    {
+     "any": [
+      "BUILDING_PALACE",
+      "BUILDING_FORBIDDEN_PALACE",
+      "BUILDING_CASTLE",
+      "BUILDING_STAR_FORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_IMPERIAL_FORTRESS"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GOLD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SILVER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PLATINUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ELECTRUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_JADE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GEMSTONE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PEARLS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_IVORY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SILK",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OSTRICH_FEATHERS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_NOBLE": 2
+  }
+ },
+ "cost": {
+  "production": 261,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_THRONE_ROOM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_THRONE_ROOM",
+  "civilopedia": "TXT_KEY_BUILDING_THRONE_ROOM_PEDIA",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

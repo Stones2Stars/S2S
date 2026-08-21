@@ -1,0 +1,44 @@
+{
+ "type": "PROMOTION_AIR_REFUEL",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BLITZ"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_VETERAN"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": -15
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 2
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/airplane.dds,Art/Interface/Buttons/Warlords_Atlas_1.dds,6,16"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_AIR_REFUEL",
+  "unitCombats": [
+   "UNITCOMBAT_JET_FIGHTERS",
+   "UNITCOMBAT_BOMBERS",
+   "UNITCOMBAT_SUPERSONIC_PLANES",
+   "UNITCOMBAT_STEALTH"
+  ]
+ }
+}

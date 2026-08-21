@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_FARM_CROP_RADISH",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_VEGETABLES"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FARMSCRAPER_I"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_IRRIGATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_WHEAT",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_LEMONS",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_FARMSCRAPER_I"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 160,
+  "sizeModifier": 3,
+  "countModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FARM_CROP_RADISH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_CROP_RADISH",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_RADISH_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

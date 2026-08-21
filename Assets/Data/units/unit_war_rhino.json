@@ -1,0 +1,125 @@
+{
+ "type": "UNIT_WAR_RHINO",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_IRON_WORKING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_ANIMAL_TRAINER_RHINOCEROS",
+      "BUILDING_EFFECT_HERITAGE_RHINOS"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_RHINO_SWORDSMAN"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 5
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 100
+   },
+   "limit": {
+    "flat": 50
+   },
+   "maxUnits": {
+    "flat": 2
+   }
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage",
+  "stampede",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_MAMMAL_RHINO",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_HORNED",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+  "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_HEAD_BUTT",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 138
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WAR_RHINO",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WAR_RHINO"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_WAR_RHINO",
+  "civilopedia": "TXT_KEY_UNIT_WAR_RHINO_PEDIA",
+  "worth": 1,
+  "militaryWorth": 1,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

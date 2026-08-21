@@ -1,0 +1,141 @@
+{
+ "type": "BUILDING_MAGELLANS_VOYAGE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMBUSTION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
+    "TECH_NAVIGATION",
+    {
+     "any": [
+      "BUILDING_SHIPYARD",
+      "BUILDING_DRYDOCK",
+      "BUILDING_NAVAL_YARD"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 50
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_NAVIGATION1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 2640,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 8
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MAGELLAN"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MAGELLANS_VOYAGE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MAGELLANS_VOYAGE",
+  "civilopedia": "TXT_KEY_BUILDING_MAGELLANS_VOYAGE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 14,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

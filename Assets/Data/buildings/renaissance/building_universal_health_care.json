@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_UNIVERSAL_HEALTH_CARE",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_LIBERALISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "research": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "grants": {
+  "population": {
+   "empire": 1
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_UNIVERSAL_HEALTH_CARE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_UNIVERSAL_HEALTH_CARE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_UNIVERSAL_HEALTH_CARE",
+  "civilopedia": "TXT_KEY_BUILDING_UNIVERSAL_HEALTH_CARE_PEDIA",
+  "help": "TXT_KEY_BUILDING_UNIVERSAL_HEALTH_CARE_HELP",
+  "pediaCategory": "nationalWonder",
+  "notConstructible": true,
+  "worth": 10,
+  "greatPeopleUnitType": "UNIT_DOCTOR",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

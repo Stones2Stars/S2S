@@ -1,0 +1,76 @@
+{
+ "type": "TECH_PROTOTYPED_PATHOGENS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARTIFICIAL_REEF",
+   "BUILDING_BACILLUS_CONCRETE",
+   "BUILDING_BIOHACKER_STUDIO",
+   "BUILDING_CISLUNAR_SANITATION_SYSTEM",
+   "BUILDING_FUTURE_VENICE",
+   "BUILDING_LIFE_STRUCTURAL_BACTERIA"
+  ],
+  "techs": [
+   "TECH_DYSTOPIA_PATHOGENS"
+  ],
+  "units": [
+   "UNIT_SOLAR_SYSTEM_LIFE_REWARD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BACTERIUM_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOTECH_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 36429
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/prototypedpathogens.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PROTOTYPED_PATHOGENS",
+  "soundMP": "AS2D_TECH_PROTOTYPED_PATHOGENS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PROTOTYPED_PATHOGENS",
+  "civilopedia": "TXT_KEY_TECH_PROTOTYPED_PATHOGENS_PEDIA",
+  "quote": "TXT_KEY_TECH_PROTOTYPED_PATHOGENS_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 100,
+  "gridY": 15
+ }
+}

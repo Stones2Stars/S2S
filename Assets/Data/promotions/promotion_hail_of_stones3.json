@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTION_HAIL_OF_STONES3",
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 4
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_HAIL_OF_STONES": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/HailOfStones3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_HAIL_OF_STONES3"
+ }
+}

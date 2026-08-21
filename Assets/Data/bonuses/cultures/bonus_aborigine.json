@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_ABORIGINE",
+ "enables": {
+  "units": [
+   "UNIT_BOOMERANG_THROWER",
+   "UNIT_MUNGO_MAN",
+   "UNIT_SATURDAY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ABORIGINE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ABORIGINE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

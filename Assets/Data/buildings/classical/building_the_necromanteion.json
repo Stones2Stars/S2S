@@ -1,0 +1,139 @@
+{
+ "type": "BUILDING_THE_NECROMANTEION",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HELLENIC_PANTHEON",
+    "TECH_AESTHETICS",
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_HELLENISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_HELLENISM"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_HELLENISM"
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_HELLENISM": {
+    "flat": 2
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 2
+  }
+ },
+ "cost": {
+  "production": 1566,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 50
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NECROMANTEION"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_THE_NECROMANTEION"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CHRISTIAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_THE_NECROMANTEION",
+  "civilopedia": "TXT_KEY_BUILDING_THE_NECROMANTEION_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 2,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_HELLENISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "100.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

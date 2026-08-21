@@ -13,9 +13,16 @@ import RevUtils
 
 
 # globals
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 GAME = GC.getGame()
+MAP = GC.getMap()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
+WORLD = CyWorldInfo()
 
 RevOpt = None
 
@@ -454,9 +461,9 @@ def checkRebelBonuses(argsList):
 			newUnitList = []
 
 			# Couple units regardless of rebel status
-			newUnitList.append(newOwner.initUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
+			newUnitList.append(newOwner.createUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
 			if pCity.getPopulation() > 4:
-				newUnitList.append(newOwner.initUnit(iCounter, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
+				newUnitList.append(newOwner.createUnit(iCounter, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
 
 			if newOwner.isRebel():
 				# Extra benefits if still considered a rebel
@@ -464,7 +471,7 @@ def checkRebelBonuses(argsList):
 				icon = CyArtFileMgr().getInterfaceArtInfo("INTERFACE_RESISTANCE").getPath()
 				sound = "AS2D_CITY_REVOLT"
 				eMsgType = InterfaceMessageTypes.MESSAGE_TYPE_MINOR_EVENT
-				iMsgTime = GC.getEVENT_MESSAGE_TIME()
+				iMsgTime = GC.getDefineINT("EVENT_MESSAGE_TIME")
 				CvUtil.sendMessage(szTxt, iOwnerNew, iMsgTime, icon, ColorTypes(8), ix, iy, True, True, eMsgType, sound, False)
 
 				szTxt = TRNSLTR.getText("TXT_KEY_REV_MESS_REBEL_CONTROL",())%(newOwner.getCivilizationDescription(0),pCity.getName())
@@ -483,20 +490,20 @@ def checkRebelBonuses(argsList):
 
 				# Extra units
 				if iWorker != -1:
-					newUnitList.append(newOwner.initUnit(iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
+					newUnitList.append(newOwner.createUnit(iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
 				if pCity.getPopulation() > 7:
-					newUnitList.append(newOwner.initUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
+					newUnitList.append(newOwner.createUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
 				if pCity.getPopulation() > 4 and newOwnerTeam.getPower(True) < oldOwnerTeam.getPower(True)/4:
-					newUnitList.append(newOwner.initUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
+					newUnitList.append(newOwner.createUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
 
 				if newOwner.getNumCities() <= 1:
 					# Extra units for first city captured
-					newUnitList.append(newOwner.initUnit(iCounter, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
+					newUnitList.append(newOwner.createUnit(iCounter, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
 					if newOwnerTeam.getPower(True) < oldOwnerTeam.getPower(True)/2:
-						newUnitList.append(newOwner.initUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
-						newUnitList.append(newOwner.initUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
+						newUnitList.append(newOwner.createUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
+						newUnitList.append(newOwner.createUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
 					elif newOwnerTeam.getPower(True) < oldOwnerTeam.getPower(True):
-						newUnitList.append(newOwner.initUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
+						newUnitList.append(newOwner.createUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
 
 				# Give a boat to island rebels
 				if pCity.isCoastal(10) and pCity.area().getNumCities() < 3 and pCity.area().getNumTiles() < 25:
@@ -505,7 +512,7 @@ def checkRebelBonuses(argsList):
 						info = GC.getUnitInfo(iUnitX)
 						if (info.getDomainType() == DomainTypes.DOMAIN_SEA
 						and info.getUnitAIType(UnitAITypes.UNITAI_ASSAULT_SEA)
-						and newOwner.canTrain(iUnitX,False,False)
+						and ENABLER.getUnitAvailabilityAnywhere(newOwner.getID(), iUnitX) == EnablerState.ENABLER_LISTED
 						):
 							iCombat = info.getCombat()
 							if iBestCombat < iCombat:
@@ -514,7 +521,7 @@ def checkRebelBonuses(argsList):
 								iBestCombat = iCombat
 
 					if iBestCombat > -1:
-						newOwner.initUnit(iBestUnit, ix, iy, UnitAITypes.UNITAI_ASSAULT_SEA, DirectionTypes.DIRECTION_SOUTH)
+						newOwner.createUnit(iBestUnit, ix, iy, UnitAITypes.UNITAI_ASSAULT_SEA, DirectionTypes.DIRECTION_SOUTH)
 						print "Rev - Rebels get a %s to raid motherland" % bestUnit.getDescription()
 
 				# Change city disorder timer to favor new player
@@ -663,7 +670,7 @@ def playerCityLost(CyPlayer, CyCity, bConquest = True):
 	if CyPlayer.isNPC() or CyPlayer.getNumCities() < 1:
 		return
 
-	revIdxChange = (GAME.getGameTurn() - CyCity.getGameTurnAcquired()) * 100.0 / GC.getGameSpeedInfo(GAME.getGameSpeedType()).getSpeedPercent()
+	revIdxChange = (GAME.getGameTurn() - CyCity.getGameTurnAcquired()) * 100.0 / GAME.getSpeedPercent()
 	revIdxChange += CyCity.getHighestPopulation()
 	revIdxChange *= CyCity.plot().calculateCulturePercent(CyPlayer.getID()) / 100.0
 
@@ -846,7 +853,7 @@ def checkForAssimilation():
 		CyPlot0 = None
 		szCiv = CyPlayerX.getCivilizationDescription(0)
 
-		iMinCities = GC.getWorldInfo(MAP.getWorldSize()).getTargetNumCities()
+		iMinCities = WORLD.getTargetNumCities(MAP.getWorldSize())
 		iNumCities = CyPlayerX.getNumCities() # We know this is greater than 0 as a capital city has been confirmed.
 
 		bRiskWar = False

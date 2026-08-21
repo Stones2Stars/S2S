@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_SOLAR_HIGHWAY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_RENEWABLE_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_POWER_LINES",
+    "TECH_SOLAR_POWER",
+    {
+     "any": [
+      "BUILDING_HIGHWAY",
+      "BUILDING_SKYROAD_CONTROL_TOWER",
+      "BUILDING_TELEPORT_BOOTH"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_GLASSWARE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_RENEWABLE_MEGACOMPLEX",
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SOLAR_HIGHWAY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SOLAR_HIGHWAY",
+  "civilopedia": "TXT_KEY_BUILDING_SOLAR_HIGHWAY_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

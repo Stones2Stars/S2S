@@ -1,0 +1,115 @@
+{
+ "type": "BUILDING_ISAAC_NEWTONS_COLLEGE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_QUANTUM_PHYSICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_UNIVERSITY",
+    "TECH_PHYSICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 3
+  }
+ },
+ "cost": {
+  "production": 3090,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NEWTON"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NEWTON"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_UNIVERSITY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ISAAC_NEWTONS_COLLEGE",
+  "civilopedia": "TXT_KEY_BUILDING_ISAAC_NEWTONS_COLLEGE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 14,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

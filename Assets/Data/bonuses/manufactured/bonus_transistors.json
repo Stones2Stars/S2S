@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_TRANSISTORS",
+ "enables": {
+  "buildings": [
+   "BUILDING_COPPER_RECLAMATION_PLANT",
+   "BUILDING_FACTORY_CALCULATORS",
+   "BUILDING_FACTORY_RADIOS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TRANSISTORS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TRANSISTORS",
+  "civilopedia": "TXT_KEY_BONUS_TRANSISTORS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

@@ -1,0 +1,87 @@
+{
+ "type": "BONUS_BANANA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CATCHER_JUNGLEFOWL",
+   "BUILDING_CULTURE_CARAL_SUPE",
+   "BUILDING_CULTURE_GHANA",
+   "BUILDING_CULTURE_KHMER",
+   "BUILDING_CULTURE_KONJO",
+   "BUILDING_CULTURE_TAIRONA",
+   "BUILDING_FARM_CROP_SNOW_FUNGUS",
+   "BUILDING_FARM_FLOWER_HIBISCUS",
+   "BUILDING_MONKEY_BREEDER",
+   "BUILDING_NATURE_ALTAR_BANANA",
+   "BUILDING_NATURE_CIRCLE_BANANA",
+   "BUILDING_ORCHARD_DURIAN",
+   "BUILDING_ORCHARD_KIWIFRUIT",
+   "BUILDING_ORCHARD_PERSIMMON",
+   "BUILDING_ORCHARD_STARFRUIT",
+   "BUILDING_ORCHARD_TANGERINE",
+   "BUILDING_PLANTATION_BANANA",
+   "BUILDING_PLANTATION_PINEAPPLE",
+   "BUILDING_PLANTATION_PLANTAIN",
+   "BUILDING_PLANTATION_TARO"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 5
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_BANANA"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "maxLatitude": 30,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 92,
+  "uniqueRange": 2,
+  "groupRange": 1,
+  "groupRand": 20,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validFeatures": [
+   "FEATURE_JUNGLE"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_BANANA",
+  "civilopedia": "TXT_KEY_BONUS_BANANA_PEDIA",
+  "bonusClassType": "BONUSCLASS_CROP",
+  "source": "natural"
+ }
+}

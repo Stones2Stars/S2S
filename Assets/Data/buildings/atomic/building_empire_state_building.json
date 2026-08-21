@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_EMPIRE_STATE_BUILDING",
+ "enables": {
+  "buildings": [
+   "BUILDING_DIRIGIBLE_TERMINAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SKYSCRAPER",
+    "TECH_PLASTICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 50
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 2
+  }
+ },
+ "cost": {
+  "production": 6180,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_EMPIRE_STATE_BUILDING"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EMPIRE_STATE_BUILDING"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EMPIRE_STATE_BUILDING",
+  "civilopedia": "TXT_KEY_BUILDING_EMPIRE_STATE_BUILDING_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 15,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

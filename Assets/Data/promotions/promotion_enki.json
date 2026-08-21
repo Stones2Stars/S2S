@@ -1,0 +1,40 @@
+{
+ "type": "PROMOTION_ENKI",
+ "withdrawal": {
+  "unit": {
+   "percent": 15
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat1.dds,Art/Interface/Buttons/GodsOfOld_Atlas.dds,5,7"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_ENKI",
+  "stateReligionPrereq": "RELIGION_MESOPOTAMISM",
+  "unitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS"
+  ]
+ }
+}

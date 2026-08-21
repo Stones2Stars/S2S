@@ -22,7 +22,14 @@
 
 from CvPythonExtensions import *
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
+STATE = CyState()
+GAME = CyGame()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
 # Map unit to font symbol
 g_gpUnitTypes = [
@@ -54,71 +61,78 @@ def getUnitIcon(iUnit):
 	for iUnitX, char in g_gpUnitTypes:
 		if iUnit == iUnitX:
 			return char
-	print "[WARN] GPUtil.getUnitIcon\n\tNo GP icon for " + GC.getUnitInfo(iUnit).getType()
+	print "[WARN] GPUtil.getUnitIcon\n\tNo GP icon for " + INFO.getType("UNIT_", iUnit)
 	return unichr(8862) # Generic great person symbol
 
 def getDisplayCity():
-	# Returns the city to display in the progress bar.
-	pHeadSelectedCity = CyInterface().getHeadSelectedCity()
-	if pHeadSelectedCity and pHeadSelectedCity.getTeam() == GC.getGame().getActiveTeam():
-		CyCity = pHeadSelectedCity
-		iTurns = getCityTurns(CyCity)
-	else:
-		CyCity, iTurns = findNextCity()
-		if not CyCity:
-			CyCity, iGPP = findMaxCity()
-			iTurns = None
-	return (CyCity, iTurns)
+	# Returns (owner, cityId, turns) for the progress bar. The selection is asked of the library rather than of
+	# the EXE's CyInterface, which hands back a handle carrying zero defs -- see CyState::getHeadSelectedCityId.
+	aSelected = STATE.getHeadSelectedCityId()
+	iPlayer = aSelected[0]
+	if aSelected[1] >= 0 and GC.getPlayer(iPlayer).getTeam() == GAME.getActiveTeam():
+		iCityId = aSelected[1]
+		return (iPlayer, iCityId, getCityTurns(iPlayer, iCityId))
+
+	iPlayer = GAME.getActivePlayer()
+	iCityId, iTurns = findNextCity()
+	if iCityId < 0:
+		iCityId, iGPP = findMaxCity()
+		iTurns = None
+	return (iPlayer, iCityId, iTurns)
 
 def findNextCity():
-	city = iTurns = 0
-	player = GC.getActivePlayer()
-	iThreshold = player.greatPeopleThresholdNonMilitary()
+	# Cities are walked by ID: the handle a CyCity would be carries zero defs, so it could answer neither its
+	# rate nor its progress. getCityIds is ONE crossing for the whole set.
+	iCityId = -1
+	iTurns = 0
+	iPlayer = GAME.getActivePlayer()
+	iThreshold = STATE.getGreatPeopleThresholdNonMilitary(iPlayer)
 
-	for cityX in player.cities():
-		iRate = cityX.getGreatPeopleRate()
+	for iCityX in GC.getPlayer(iPlayer).getCityIds():
+		iRate = GC.getPlayer(iPlayer).getCity(iCityX).getGreatPeopleRate()
 		if iRate > 0:
-			iProgress = cityX.getGreatPeopleProgress()
+			iProgress = GC.getPlayer(iPlayer).getCity(iCityX).getGreatPeopleProgress()
 			iTurnsX = (iThreshold - iProgress + iRate - 1) / iRate
 			if not iTurns or iTurnsX < iTurns:
 				iTurns = iTurnsX
-				city = cityX
+				iCityId = iCityX
 
-	return [city, iTurns]
+	return [iCityId, iTurns]
 
 def findMaxCity():
-	city = iGPP = 0
+	iCityId = -1
+	iGPP = 0
+	iPlayer = GAME.getActivePlayer()
 
-	for cityX in GC.getActivePlayer().cities():
-		iGPPX = cityX.getGreatPeopleProgress()
+	for iCityX in GC.getPlayer(iPlayer).getCityIds():
+		iGPPX = GC.getPlayer(iPlayer).getCity(iCityX).getGreatPeopleProgress()
 		if iGPPX > iGPP:
 			iGPP = iGPPX
-			city = cityX
+			iCityId = iCityX
 
-	return [city, iGPP]
+	return [iCityId, iGPP]
 
-def getCityTurns(CyCity):
-	if CyCity:
-		CyPlayer = GC.getPlayer(CyCity.getOwner())
-		iThreshold = CyPlayer.greatPeopleThresholdNonMilitary()
-		iRate = CyCity.getGreatPeopleRate()
+def getCityTurns(iPlayer, iCityId):
+	if iCityId >= 0:
+		iThreshold = STATE.getGreatPeopleThresholdNonMilitary(iPlayer)
+		iRate = GC.getPlayer(iPlayer).getCity(iCityId).getGreatPeopleRate()
 		if iRate > 0:
-			iProgress = CyCity.getGreatPeopleProgress()
+			iProgress = GC.getPlayer(iPlayer).getCity(iCityId).getGreatPeopleProgress()
 			iTurns = (iThreshold - iProgress + iRate - 1) / iRate
 			return iTurns
 	return None
 
-def calcPercentages(CyCity):
+def calcPercentages(iPlayer, iCityId):
 	# Calc total rate
 	iTotal = 0
 	for iUnit, _ in g_gpUnitTypes:
-		iTotal += CyCity.getGreatPeopleUnitProgress(iUnit)
+		iTotal += GC.getPlayer(iPlayer).getCity(iCityId).getGreatPeopleUnitProgress(iUnit)
 	# Calc individual percentages based on rates and total
 	percents = []
 	if iTotal > 0:
 		iLeftover = 100
 		for iUnit in range(GC.getNumUnitInfos()):
-			iProgress = CyCity.getGreatPeopleUnitProgress(iUnit)
+			iProgress = GC.getPlayer(iPlayer).getCity(iCityId).getGreatPeopleUnitProgress(iUnit)
 			if iProgress > 0:
 				iPercent = 100 * iProgress / iTotal
 				iLeftover -= iPercent
@@ -130,9 +144,9 @@ def calcPercentages(CyCity):
 
 
 # Displaying Progress
-def getGreatPeopleText(CyCity, iGPTurns, iGPBarWidth, bGPBarTypesNone, bGPBarTypesOne, bIncludeCityName, uFont):
+def getGreatPeopleText(iPlayer, iCityId, iGPTurns, iGPBarWidth, bGPBarTypesNone, bGPBarTypesOne, bIncludeCityName, uFont):
 
-	if not CyCity:
+	if iCityId < 0:
 		szText = CyTranslator().getText("INTERFACE_GREAT_PERSON_NONE", (unichr(8862),))
 
 	elif bGPBarTypesNone:
@@ -140,28 +154,28 @@ def getGreatPeopleText(CyCity, iGPTurns, iGPBarWidth, bGPBarTypesNone, bGPBarTyp
 		if iGPTurns:
 
 			if bIncludeCityName:
-				szText = CyTranslator().getText("INTERFACE_GREAT_PERSON_CITY_TURNS", (unichr(8862), CyCity.getName(), iGPTurns))
+				szText = CyTranslator().getText("INTERFACE_GREAT_PERSON_CITY_TURNS", (unichr(8862), GC.getPlayer(iPlayer).getCity(iCityId).getName(), iGPTurns))
 			else:
 				szText = CyTranslator().getText("INTERFACE_GREAT_PERSON_TURNS", (unichr(8862), iGPTurns))
 		else:
 			if bIncludeCityName:
-				szText = CyTranslator().getText("INTERFACE_GREAT_PERSON_CITY", (unichr(8862), CyCity.getName()))
+				szText = CyTranslator().getText("INTERFACE_GREAT_PERSON_CITY", (unichr(8862), GC.getPlayer(iPlayer).getCity(iCityId).getName()))
 			else:
 				szText = unichr(8862)
 	else:
-		lPercents = calcPercentages(CyCity)
+		lPercents = calcPercentages(iPlayer, iCityId)
 		iLength = len(lPercents)
 		if not iLength:
 
 			if iGPTurns:
 
 				if bIncludeCityName:
-					szText = CyTranslator().getText("INTERFACE_GREAT_PERSON_CITY_TURNS", (unichr(8862), CyCity.getName(), iGPTurns))
+					szText = CyTranslator().getText("INTERFACE_GREAT_PERSON_CITY_TURNS", (unichr(8862), GC.getPlayer(iPlayer).getCity(iCityId).getName(), iGPTurns))
 				else:
 					szText = CyTranslator().getText("INTERFACE_GREAT_PERSON_TURNS", (unichr(8862), iGPTurns))
 			else:
 				if bIncludeCityName:
-					szText = CyTranslator().getText("INTERFACE_GREAT_PERSON_CITY", (unichr(8862), CyCity.getName()))
+					szText = CyTranslator().getText("INTERFACE_GREAT_PERSON_CITY", (unichr(8862), GC.getPlayer(iPlayer).getCity(iCityId).getName()))
 				else:
 					szText = unichr(8862)
 		else:
@@ -170,16 +184,16 @@ def getGreatPeopleText(CyCity, iGPTurns, iGPBarWidth, bGPBarTypesNone, bGPBarTyp
 			if bGPBarTypesOne or iLength == 1:
 
 				iPercent, iUnit = lPercents[0]
-				name = GC.getUnitInfo(iUnit).getDescription()
+				name = INFO.getDescription("UNIT_", iUnit)
 				if iGPTurns:
 
 					if bIncludeCityName:
-						szText = CyTranslator().getText("INTERFACE_GREAT_PERSON_CITY_TURNS", (name, CyCity.getName(), iGPTurns))
+						szText = CyTranslator().getText("INTERFACE_GREAT_PERSON_CITY_TURNS", (name, GC.getPlayer(iPlayer).getCity(iCityId).getName(), iGPTurns))
 					else:
 						szText = CyTranslator().getText("INTERFACE_GREAT_PERSON_TURNS", (name, iGPTurns))
 				else:
 					if bIncludeCityName:
-						szText = CyTranslator().getText("INTERFACE_GREAT_PERSON_CITY", (name, CyCity.getName()))
+						szText = CyTranslator().getText("INTERFACE_GREAT_PERSON_CITY", (name, GC.getPlayer(iPlayer).getCity(iCityId).getName()))
 					else:
 						szText = unicode(name)
 			else:

@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_GROVE_BAMBOO",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SENTIENT_EARTH"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AGROFOREST"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_WEAVING",
+    {
+     "type": "FEATURE_BAMBOO",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_AGROFOREST"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_BAMBOO"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 20,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GROVE_BAMBOO",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GROVE_BAMBOO",
+  "civilopedia": "TXT_KEY_BUILDING_GROVE_BAMBOO_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

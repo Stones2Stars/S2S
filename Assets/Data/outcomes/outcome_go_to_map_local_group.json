@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_GO_TO_MAP_LOCAL_GROUP",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_LOCAL_GROUP",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_LOCAL_GROUP"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FOLDING_SPACE"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

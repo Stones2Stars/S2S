@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_INTERGALACTIC_EXOTIC_PARTICLE_FOUNDRY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_DYSON_SPHERES",
+    "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ALICE_MATTER"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 4004,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_EXOTIC_PARTICLE_FOUNDRY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_EXOTIC_PARTICLE_FOUNDRY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_EXOTIC_PARTICLE_FOUNDRY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

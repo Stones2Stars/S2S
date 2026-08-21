@@ -1,0 +1,144 @@
+{
+ "type": "UNIT_ENTERTAINER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_HERALDRY"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CELEBRITY"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_ENTERTAINER"
+  }
+ },
+ "skills": [
+  "rivalTerritory"
+ ],
+ "tags": [
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_ENTERTAINER",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_ENTERTAIN_CITY",
+    "outcomes": [
+     {
+      "requires": {
+       "outcome": "OUTCOME_ENTERTAIN_CITY"
+      },
+      "chance": 70,
+      "consumes": true,
+      "revolution": 4,
+      "culture": 6
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_ENTERTAIN_CITY_EXALTED"
+      },
+      "chance": 30,
+      "promotes": "PROMOTION_EXPERIENCED_ARTIST",
+      "revolution": 5,
+      "culture": 12
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_RAIN_DANCE"
+   },
+   {
+    "building": "BUILDING_WAR_DANCE"
+   },
+   {
+    "building": "BUILDING_FIRE_DANCE"
+   },
+   {
+    "building": "BUILDING_NATURE_DANCE"
+   },
+   {
+    "building": "BUILDING_MOON_DANCE"
+   },
+   {
+    "building": "BUILDING_FERTILITY_DANCE"
+   },
+   {
+    "building": "BUILDING_BLOOD_DANCE"
+   }
+  ]
+ },
+ "cost": {
+  "production": 250,
+  "upkeep": 4
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ENTERTAINER",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_ENTERTAINER",
+       "late": "ART_DEF_UNIT_ENTERTAINER_MODERN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_ENTERTAINER",
+  "civilopedia": "TXT_KEY_CONCEPT_ENTERTAINER_PEDIA",
+  "worth": 5,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_CULTURE",
+  "unitAIs": [
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_LABOR_UNION",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_LABOR_UNIONS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1540,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_LABOR_UNION"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LABOR_UNION",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COURTHOUSE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LABOR_UNION",
+  "civilopedia": "TXT_KEY_BUILDING_LABOR_UNION_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 5,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

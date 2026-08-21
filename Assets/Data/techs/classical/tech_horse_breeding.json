@@ -1,0 +1,94 @@
+{
+ "type": "TECH_HORSE_BREEDING",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_AVARIC",
+   "BUILDING_CULTURE_BAHRAINI",
+   "BUILDING_CULTURE_BASQUE",
+   "BUILDING_CULTURE_FURAWI",
+   "BUILDING_CULTURE_KUSHAN",
+   "BUILDING_CULTURE_PARTHIAN"
+  ],
+  "techs": [
+   "TECH_MOUNTED_ARCHERY",
+   "TECH_STIRRUP"
+  ],
+  "units": [
+   "UNIT_ASHINA_JIESHESHUAI",
+   "UNIT_ASVARAN_SARDAR",
+   "UNIT_CYAXARES",
+   "UNIT_FUNJ_CAVALRY",
+   "UNIT_HEAVY_CAVALRY",
+   "UNIT_HEAVY_TARKHAN",
+   "UNIT_JIMMU",
+   "UNIT_KUBRAT",
+   "UNIT_KUSHAN_RIDER",
+   "UNIT_MOUNTED_INFANTRY",
+   "UNIT_NORMAN_KNIGHT",
+   "UNIT_SANCHO",
+   "UNIT_SIPAHI",
+   "UNIT_VANDAL_PILLAGER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ANIMAL_RIDING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MILITARY_TRAINING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 499
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Horsebreeding.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,8"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_HORSE_BREEDING2",
+  "soundMP": "AS2D_TECH_HORSE_BREEDING2"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_HORSE_BREEDING",
+  "civilopedia": "TXT_KEY_TECH_HORSE_BREEDING_PEDIA",
+  "quote": "TXT_KEY_TECH_HORSE_BREEDING_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 8,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 34,
+  "gridY": 3
+ }
+}

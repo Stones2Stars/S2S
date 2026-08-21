@@ -1,0 +1,24 @@
+{
+ "type": "BONUS_HUMAN_MOD_NOVEL_SENSES",
+ "enables": {
+  "buildings": [
+   "BUILDING_HUMAN_MOD_GILLS",
+   "BUILDING_HUMAN_MOD_LUNARIS",
+   "BUILDING_HUMAN_MOD_MARTIAN",
+   "BUILDING_HUMAN_MOD_WINGS",
+   "BUILDING_HUMAN_MOD_ZERO_G_ADAPTATION",
+   "BUILDING_SIMULATED_WORLD"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HUMAN_MOD_NOVEL_SENSES"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HUMAN_MOD_NOVEL_SENSES",
+  "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
+  "bonusClassType": "BONUSCLASS_GENMODS",
+  "source": "manufactured"
+ }
+}

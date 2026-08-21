@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_RESOURCES_DRUGS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FARMSCRAPER_I"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_FARMSCRAPER_I"
+   ],
+   "all": [
+    {
+     "any": [
+      "BUILDING_PLANTATION_COCA",
+      "BUILDING_GROVE_COLA",
+      "BUILDING_FLY_AGARIC_GATHERER",
+      "BUILDING_GROVE_GINKGO",
+      "BUILDING_PLANTATION_CANNABIS",
+      "BUILDING_CANNABIS_GROW_OPERATION",
+      "BUILDING_PLANTATION_KAVA",
+      "BUILDING_PLANTATION_MARSH_MALLOW",
+      "BUILDING_PLANTATION_MYRRH",
+      "BUILDING_PLANTATION_PEYOTE",
+      "BUILDING_PLANTATION_POPPY",
+      "BUILDING_PLANTATION_TOBACCO"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_DRUGS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESOURCES_DRUGS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_DRUGS",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

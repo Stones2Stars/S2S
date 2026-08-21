@@ -1,0 +1,42 @@
+{
+ "type": "CIVIC_BURN_GARBAGE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CIVIC_BURN_TRASH"
+  ]
+ },
+ "growth": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "civics": {
+    "CIVIC_WASTE_TO_SEA": {
+     "flat": -1
+    },
+    "CIVIC_WASTE_EXPORTATION": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/garbage_burn.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_BURN_GARBAGE",
+  "civilopedia": "TXT_KEY_CIVIC_BURN_GARBAGE_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_BURN_GARBAGE_STRATEGY",
+  "civicOption": "CIVICOPTION_GARBAGE",
+  "upkeepLevel": "UPKEEP_LOW"
+ }
+}

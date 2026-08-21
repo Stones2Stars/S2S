@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_YOUTH_CENTER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COMPULSORY_EDUCATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 870,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_YOUTH_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_YOUTH_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_YOUTH_CENTER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

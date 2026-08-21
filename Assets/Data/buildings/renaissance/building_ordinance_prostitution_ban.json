@@ -1,0 +1,41 @@
+{
+ "type": "BUILDING_ORDINANCE_PROSTITUTION_BAN",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_JURISPRUDENCE"
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "flat": 5
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ORDINANCE_PROSTITUTION_BAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_PROSTITUTION_BAN",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_PROSTITUTION_BAN_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

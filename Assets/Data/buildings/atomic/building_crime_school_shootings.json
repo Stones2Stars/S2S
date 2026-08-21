@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_CRIME_SCHOOL_SHOOTINGS",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_URBAN_CULTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 980,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    -8,
+    {
+     "value": -50,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": 100
+   }
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 2
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_SCHOOL_SHOOTINGS",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_SCHOOL_SHOOTINGS_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTION_CHAIN_SHOT",
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 15
+    },
+    "UNITCOMBAT_SIEGE": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/SiegeAid1.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,6,11"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CHAIN_SHOT"
+ }
+}

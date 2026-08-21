@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_RELIGION_MORMON",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/religion_mormon.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_RELIGION_MORMON",
+  "religion": "RELIGION_MORMON"
+ }
+}

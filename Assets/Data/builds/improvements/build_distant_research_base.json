@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_DISTANT_RESEARCH_BASE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ENDLESS_EXPLORATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_DISTANT_RESEARCH_BASE"
+ },
+ "cost": {
+  "gold": 700,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/distant_research_base.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_DISTANT_RESEARCH_BASE"
+ }
+}

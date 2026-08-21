@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_HIKING_TRAILS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_RANGER_STATION",
+    "TECH_WILDLIFE_CONSERVATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": "TECH_TOURISM"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 680,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HIKING_TRAILS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HIKING_TRAILS",
+  "civilopedia": "TXT_KEY_BUILDING_HIKING_TRAILS_PEDIA",
+  "militaryWorth": 1,
+  "conquestProbability": 30,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

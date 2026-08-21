@@ -1,0 +1,136 @@
+{
+ "type": "BUILDING_COIT_TOWER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MEGASTRUCTURE_ENGINEERING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MODERN_ART",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    8,
+    {
+     "value": 8,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_FIRE_BRIGADE": {
+     "flat": 4
+    },
+    "BUILDING_FIRE_STATION": {
+     "flat": 4
+    },
+    "BUILDING_FIRE_DOCK": {
+     "flat": 4
+    },
+    "BUILDING_FIRE_HANGAR": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_FIRE_BRIGADE": {
+     "flat": 1
+    },
+    "BUILDING_FIRE_STATION": {
+     "flat": 1
+    },
+    "BUILDING_FIRE_HANGAR": {
+     "flat": 1
+    },
+    "BUILDING_FIRE_DOCK": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "cost": {
+  "production": 6480,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_COIT_TOWER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_COIT_TOWER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_COIT_TOWER",
+  "civilopedia": "TXT_KEY_BUILDING_COIT_TOWER_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_OLIVE_PRESS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SENTIENT_EARTH"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AGROFOREST"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ORCHARD_OLIVE",
+    "TECH_FERMENTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_POTTERY",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_AGROFOREST"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_OLIVE_OIL"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 146,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_OLIVE_PRESS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_OLIVE_PRESS",
+  "civilopedia": "TXT_KEY_BUILDING_OLIVE_PRESS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

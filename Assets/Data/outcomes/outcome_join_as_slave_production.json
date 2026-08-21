@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_JOIN_AS_SLAVE_PRODUCTION",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_JOIN_AS_SLAVE_PRODUCTION",
+  "message": "TXT_KEY_OUTCOME_JOIN_AS_SLAVE_PRODUCTION_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SLAVE_COMPOUND_INDUSTRY"
+   ]
+  }
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city"
+}

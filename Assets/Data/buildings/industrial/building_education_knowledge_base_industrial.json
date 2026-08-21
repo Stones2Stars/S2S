@@ -1,0 +1,48 @@
+{
+ "type": "BUILDING_EDUCATION_KNOWLEDGE_BASE_INDUSTRIAL",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_INDUSTRIAL_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": -5,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYEDUCATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EDUCATION_KNOWLEDGE_BASE_INDUSTRIAL",
+  "civilopedia": "TXT_KEY_BUILDING_EDUCATION_KNOWLEDGE_BASE_INDUSTRIAL_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

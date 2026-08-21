@@ -1,0 +1,70 @@
+{
+ "type": "TECH_PLANETARY_MEGASTRUCTURES",
+ "enables": {
+  "buildings": [
+   "BUILDING_ECUMENOPOLIS_EARTH",
+   "BUILDING_EFFECT_SOLAR_ECONOMY",
+   "BUILDING_MARTIAN_ARCOLOGY",
+   "BUILDING_MARTIAN_ECUMENOPOLIS",
+   "BUILDING_RING_OF_MARS",
+   "BUILDING_SOLAR_ECONOMY",
+   "BUILDING_VENUS_ARCOLOGY"
+  ],
+  "techs": [
+   "TECH_GALACTIC_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_MEGASTRUCTURES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 93709
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/planetarymegastructures.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PLANETARY_MEGASTRUCTURES",
+  "soundMP": "AS2D_TECH_PLANETARY_MEGASTRUCTURES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PLANETARY_MEGASTRUCTURES",
+  "civilopedia": "TXT_KEY_TECH_PLANETARY_MEGASTRUCTURES_PEDIA",
+  "quote": "TXT_KEY_TECH_PLANETARY_MEGASTRUCTURES_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 122,
+  "gridY": 5
+ }
+}

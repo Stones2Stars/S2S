@@ -1,6 +1,8 @@
 # Pedia overhaul by Toffer for Caveman2Cosmos.
 
 from CvPythonExtensions import *
+INFO = CyInfo()
+TRNSLTR = CyTranslator()
 
 class PediaCivilization:
 
@@ -33,12 +35,9 @@ class PediaCivilization:
 
 
 	def interfaceScreen(self, iCivilization):
-		GC = CyGlobalContext()
 		TRNSLTR = CyTranslator()
 		screen = self.main.screen()
 		aName = self.main.getNextWidgetName
-
-		CvCivilizationInfo = GC.getCivilizationInfo(iCivilization)
 
 		eWidGen			= WidgetTypes.WIDGET_GENERAL
 		ePanelBlue50	= PanelStyles.PANEL_STYLE_BLUE50
@@ -56,17 +55,19 @@ class PediaCivilization:
 		W_COL_2 = self.W_COL_2
 		H_MID_ROW = self.H_MID_ROW
 
-		screen.setText(aName(), "", szfontEdge + CvCivilizationInfo.getDescription(), 1<<0, X_COL_1, 0, 0, eFontTitle, eWidGen, 0, 0)
+		screen.setText(aName(), "", szfontEdge + INFO.getDescription("CIVILIZATION_", iCivilization), 1<<0, X_COL_1, 0, 0, eFontTitle, eWidGen, 0, 0)
 		# Main Panel
 		Pnl = aName()
 		screen.addPanel(Pnl, "", "", False, False, X_COL_1 - 3, Y_TOP_ROW_1 + 2, W_COL_1 + 8, H_TOP_ROW + 2, PanelStyles.PANEL_STYLE_MAIN)
-		screen.setImageButtonAt("", Pnl, CvCivilizationInfo.getButton(), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
+		screen.setImageButtonAt("", Pnl, INFO.getButton("CIVILIZATION_", iCivilization), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
 
 		Pnl = aName()
 		screen.addListBoxGFC(Pnl, "", self.X_STATS, self.Y_STATS, self.W_STATS, self.H_STATS, TableStyles.TABLE_STYLE_EMPTY)
 		screen.enableSelect(Pnl, False)
-		screen.appendListBoxStringNoUpdate(Pnl, szfont3b + CvCivilizationInfo.getShortDescription(0), eWidGen, 0, 0, 1<<0)
-		screen.appendListBoxStringNoUpdate(Pnl, szfont3b + CvCivilizationInfo.getAdjective(0), eWidGen, 0, 0, 1<<0)
+		#  A civilization's NAME, SHORT name and ADJECTIVE are three different authored texts, and the uiForm
+		#  argument selects the grammatical variant a localization needs -- so it is carried, never dropped.
+		screen.appendListBoxStringNoUpdate(Pnl, szfont3b + INFO.getShortDescription("CIVILIZATION_", iCivilization, 0), eWidGen, 0, 0, 1<<0)
+		screen.appendListBoxStringNoUpdate(Pnl, szfont3b + INFO.getAdjective("CIVILIZATION_", iCivilization, 0), eWidGen, 0, 0, 1<<0)
 		screen.updateListBox(Pnl)
 
 		# Leaders
@@ -76,9 +77,10 @@ class PediaCivilization:
 		# Adjust image size to panel
 		size = H_TOP_ROW - 36
 		x = 8
-		for iLeader in xrange(GC.getNumLeaderHeadInfos()):
-			if not CvCivilizationInfo.isLeaders(iLeader): continue
-			screen.setImageButtonAt("", Pnl, GC.getLeaderHeadInfo(iLeader).getButton(), x, 4, size, size, eWidJuToLeader, iLeader, -1)
+		#  The civilization carries its own leader list, so this reads it rather than asking every leaderhead in
+		#  turn whether it belongs here.
+		for iLeader in INFO.getCivilizationLeaders(iCivilization):
+			screen.setImageButtonAt("", Pnl, INFO.getButton("LEADER_", iLeader), x, 4, size, size, eWidJuToLeader, iLeader, -1)
 			x += size + 8
 
 		# City List
@@ -86,8 +88,9 @@ class PediaCivilization:
 		Pnl = aName()
 		screen.addListBoxGFC(Pnl, "", X_COL_1 + 6, Y_TOP_ROW_2 + 32, W_COL_1 - 10, H_MID_ROW - 40, TableStyles.TABLE_STYLE_EMPTY)
 		screen.enableSelect(Pnl, False)
-		for i in xrange(CvCivilizationInfo.getNumCityNames()):
-			szText = CvCivilizationInfo.getCityNames(i)
+		#  The pool is handed over as authored TXT KEYS -- resolving them is the caller's job, which is what the
+		#  test below has always done.
+		for szText in INFO.getCivilizationCityNames(iCivilization):
 			if szText[:4] == "TXT_":
 				szText = TRNSLTR.getText(szText, ())
 			screen.appendListBoxStringNoUpdate(Pnl, szfont3 + szText, eWidGen, 0, 0, 1<<0)
@@ -95,5 +98,5 @@ class PediaCivilization:
 
 		# History
 		screen.addPanel(aName(), TRNSLTR.getText("TXT_KEY_PEDIA_HISTORY", ()), "", True, True, X_COL_2, Y_TOP_ROW_2, W_COL_2, H_MID_ROW, ePanelBlue50)
-		szText = szfont3 + CvCivilizationInfo.getCivilopedia()
+		szText = szfont3 + INFO.getCivilopedia("CIVILIZATION_", iCivilization)
 		screen.addMultilineText(aName(), szText, X_COL_2 + 4, Y_TOP_ROW_2 + 32, W_COL_2 - 8, H_MID_ROW - 40, eWidGen, 0, 0, 1<<0)

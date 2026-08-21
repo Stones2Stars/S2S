@@ -1,0 +1,59 @@
+{
+ "type": "TECH_ASATRU",
+ "enables": {
+  "religions": [
+   "RELIGION_ASATRU"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEDIEVAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 1132
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/asatru.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ASATRU",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ASATRU",
+  "civilopedia": "TXT_KEY_TECH_ASATRU_PEDIA",
+  "quote": "TXT_KEY_TECH_ASATRU_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 8,
+  "gridX": 42,
+  "gridY": 3
+ }
+}

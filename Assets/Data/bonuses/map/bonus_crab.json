@@ -1,0 +1,64 @@
+{
+ "type": "BONUS_CRAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_CHIMU",
+   "BUILDING_CULTURE_FIJIAN",
+   "BUILDING_CULTURE_JOMON",
+   "BUILDING_CULTURE_PHILISTINE",
+   "BUILDING_CULTURE_SLOVENIAN",
+   "BUILDING_DIG_SITE_TRILOBITE_FOSSILS",
+   "BUILDING_FISHERMANS_HUT",
+   "BUILDING_GRAND_MARINE_FESTIVAL",
+   "BUILDING_MACKEREL_NETS",
+   "BUILDING_NET_CRAB"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CRAB"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 8,
+  "constAppearance": 500,
+  "minAreaSize": 8,
+  "minLatitude": 30,
+  "rands": {
+   "iRandApp1": 50,
+   "iRandApp2": 50,
+   "iRandApp3": 50,
+   "iRandApp4": 50
+  },
+  "tilesPer": 64,
+  "uniqueRange": 1,
+  "validTerrains": [
+   "TERRAIN_COAST",
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_COAST_TROPICAL",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_SEA_TROPICAL",
+   "TERRAIN_LAKE_SHORE",
+   "TERRAIN_LAKE"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CRAB",
+  "civilopedia": "TXT_KEY_BONUS_CRAB_PEDIA",
+  "bonusClassType": "BONUSCLASS_SEAFOOD",
+  "source": "natural"
+ }
+}

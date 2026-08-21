@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_BOUNTY_HUNTER1",
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 3
+   }
+  }
+ },
+ "skills": {
+  "unitCombats": [
+   "UNITCOMBAT_PROMOTED_TRANSPORT_CAPTIVES"
+  ]
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BOUNTY_HUNTER": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/BountyHunter1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BOUNTY_HUNTER1",
+  "domainCargoChange": "DOMAIN_LAND",
+  "specialCargoChange": "SPECIALUNIT_CAPTIVE"
+ },
+ "sizeMatters": {
+  "cargo": {
+   "smSpace": 27
+  }
+ }
+}

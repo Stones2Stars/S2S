@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_BIOLOGY_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_CYBER_INSECT_LAB",
+   "BUILDING_ENTOMOLOGY_LAB",
+   "BUILDING_EVOLUTION_SIMULATOR",
+   "BUILDING_HERPETOLOGY_LAB",
+   "BUILDING_MOLECULAR_BIOLOGY_LAB",
+   "BUILDING_ORNITHOLOGY_LAB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_UNIVERSITY",
+    "TECH_BIOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 5,
+     "enabled": "TECH_ZOOLOGY"
+    },
+    {
+     "value": 5,
+     "enabled": "TECH_BOTANY"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_ECOLOGY"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_GENETICS"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_MOLECULAR_BIOLOGY"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_GENESIS_BIOLOGY"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_GENOMIC_ENCYCLOPEDIA"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_BIOINFORMATICS"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 515,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BIOLOGY_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BIOLOGY_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_BIOLOGY_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

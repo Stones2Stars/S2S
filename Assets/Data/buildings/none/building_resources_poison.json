@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_RESOURCES_POISON",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NOVUS_CHEMISTRY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CHEMISTRY_LAB"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_CHEMISTRY_LAB",
+    "BUILDING_CHEMICALS_DISTRICT"
+   ],
+   "all": [
+    {
+     "any": [
+      "BUILDING_ENCLOSURE_AMPHIBIAN_POND",
+      "BUILDING_BELLADONNA",
+      "BUILDING_CURARE",
+      "BUILDING_DEATH_CAP_MUSHROOM",
+      "BUILDING_ALCHEMISTS_LAB",
+      "BUILDING_SNAKE_PIT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_POISON"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESOURCES_POISON",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_POISON",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

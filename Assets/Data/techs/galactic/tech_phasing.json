@@ -1,0 +1,65 @@
+{
+ "type": "TECH_PHASING",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_COSMIC_BANISHMENT",
+   "BUILDING_INTERSTELLAR_DYSON_SPHERE_PORTAL"
+  ],
+  "techs": [
+   "TECH_APPLIED_RELATIVITY",
+   "TECH_FEMTOTECHNOLOGY",
+   "TECH_TIME_TRAVEL"
+  ],
+  "units": [
+   "UNIT_COSMIC_WORKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WORMHOLE_COMMUNICATIONS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 186934
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Buttons/Techs/TechPhasing.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PHASING",
+  "soundMP": "AS2D_TECH_PHASING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PHASING",
+  "civilopedia": "TXT_KEY_TECH_PHASING_PEDIA",
+  "quote": "TXT_KEY_TECH_PHASING_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 50,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 135,
+  "gridY": 9
+ }
+}

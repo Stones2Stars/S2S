@@ -1,0 +1,19 @@
+{
+ "type": "OUTCOME_BONUS_SPAWNED",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_BONUS_SPAWNED",
+  "message": "TXT_KEY_OUTCOME_HUNTING_BONUS_SPAWNED_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CANINE_DOMESTICATION"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral",
+  "hostile"
+ ]
+}

@@ -1,0 +1,33 @@
+{
+ "type": "PROMOTION_ABSOLUTE_PROFICIENCY",
+ "skills": {
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_SUPERIOR"
+  ],
+  "removesUnitCombats": [
+   "UNITCOMBAT_QUALITY_STANDARD"
+  ]
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/UnitCombatClasses/Quality6UnitCombat.fw.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_ABSOLUTE_PROFICIENCY",
+  "replacesUnitCombat": "UNITCOMBAT_QUALITY_STANDARD",
+  "levelPrereq": 6,
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_ANIMAL"
+  ],
+  "zeroesXP": true
+ },
+ "sizeMatters": {
+  "quality": 1
+ }
+}

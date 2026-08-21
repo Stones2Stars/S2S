@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_TIWI",
+ "enables": {
+  "units": [
+   "UNIT_AUSTIN_WONAEAMIRRI",
+   "UNIT_WALLABY_HUNTERS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TIWI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TIWI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

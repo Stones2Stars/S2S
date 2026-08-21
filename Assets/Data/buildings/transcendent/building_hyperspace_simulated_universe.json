@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERSPACE_ALTERNATE_HISTORY_EXPLORATION",
+   "BUILDING_HYPERSPACE_CONSCIOUS_UNIVERSE",
+   "BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE",
+   "BUILDING_HYPERSPACE_GAME_OF_LIFE",
+   "BUILDING_HYPERSPACE_PICARD_HORN",
+   "BUILDING_HYPERSPACE_POINCARE_DODECAHEDRAL_SPACE",
+   "BUILDING_HYPERSPACE_SIMULATED_CIVILIZATION",
+   "BUILDING_HYPERSPACE_TRANSFINITE_STRUCTURES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HYPERSPACE_5D_ARTIFICIAL_GRAVITY",
+    "BUILDING_HYPERSPACE_INFLATON_FIELD",
+    "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
+    "TECH_EXPERIMENTAL_COSMOLOGY",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    120,
+    {
+     "value": 20,
+     "enabled": "TECH_OMEGA_POINT"
+    },
+    {
+     "value": 13,
+     "enabled": "TECH_UNIVERSAL_SINGULARITY"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    120,
+    {
+     "value": 20,
+     "enabled": "TECH_SIMULATION_AWARENESS"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 13,
+     "enabled": "TECH_DIRECTED_COSMIC_EVOLUTION"
+    },
+    {
+     "value": 13,
+     "enabled": "TECH_ASCENSION"
+    },
+    {
+     "value": 20,
+     "enabled": "TECH_ALPHA_POINT"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 1945,
+  "hurryModifier": 10000
+ },
+ "amenities": {
+  "adds3rdRing": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYPERSPACE_SIMULATED_UNIVERSE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_SIMULATED_UNIVERSE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

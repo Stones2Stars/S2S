@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_CISLUNAR_SOLAR_MONITOR",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_SANITATION_SYSTEM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 528,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_SOLAR_MONITOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_SOLAR_MONITOR",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SOLAR_MONITOR_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

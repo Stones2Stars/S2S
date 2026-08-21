@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANDROMEDA_COLONY",
+   "BUILDING_INTERGALACTIC_ADMINISTRATION",
+   "BUILDING_INTERGALACTIC_ANCIENT_CIVILIZATION",
+   "BUILDING_INTERGALACTIC_CULTURE",
+   "BUILDING_INTERGALACTIC_DYSON_SPHERES",
+   "BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
+   "BUILDING_INTERGALACTIC_GOVERNMENT",
+   "BUILDING_INTERGALACTIC_ROMAN_RING",
+   "BUILDING_INTERGALACTIC_YOTTAFACTORY",
+   "BUILDING_LARGE_MAGELLANIC_CLOUD_COLONY",
+   "BUILDING_SAGITTARIUS_DWARF_ELLIPTICAL_GALAXY_COLONY",
+   "BUILDING_SMALL_MAGELLANIC_CLOUD_COLONY",
+   "BUILDING_TRIANGULUM_COLONY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_GALACTIC_ECONOMY",
+    "BUILDING_SPACE_COLONY_EXTRAGALACTIC",
+    "TECH_INTERGALACTIC_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -5
+   }
+  }
+ },
+ "cost": {
+  "production": 2853,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_GALACTIC_COLONY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_GALACTIC_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_GALACTIC_COLONY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

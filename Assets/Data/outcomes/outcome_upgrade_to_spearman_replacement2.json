@@ -1,0 +1,22 @@
+{
+ "type": "OUTCOME_UPGRADE_TO_SPEARMAN_REPLACEMENT2",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_UPGRADE_TO_SPEARMAN",
+  "message": "TXT_KEY_OUTCOME_UPGRADE_TO_SPEARMAN_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SPEAR_MAKING",
+    "BUILDING_MILITARY_BASE"
+   ]
+  }
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city",
+ "replaces": [
+  "OUTCOME_UPGRADE_TO_SPEARMAN"
+ ]
+}

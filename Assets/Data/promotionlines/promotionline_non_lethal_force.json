@@ -1,0 +1,15 @@
+{
+ "type": "PROMOTIONLINE_NON_LETHAL_FORCE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/flaming1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_NON_LETHAL_FORCE",
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_LAW_ENFORCEMENT"
+  ]
+ }
+}

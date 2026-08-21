@@ -1,0 +1,128 @@
+{
+ "type": "BUILDING_MECHATRONICS_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUTOMATED_VEHICLE_DEALERSHIP",
+   "BUILDING_BIOMORPHICS_LAB",
+   "BUILDING_EPSILON_ASSEMBLER",
+   "BUILDING_FACTORY_EXOSKELETONS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ROBOTICS_LAB",
+    "TECH_BIOMECHANICAL_HARVESTING",
+    "TECH_MACHINE_LEARNING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 8,
+     "enabled": "TECH_POWERED_EXOSKELETON"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_WARMACHINES"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_ANDROIDS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_GRAPHENE_ALLOYS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_LIQUID_METALS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_INTERNAL_SHOCKWAVE_ENGINE"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 8,
+     "enabled": "TECH_POWERED_EXOSKELETON"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_WARMACHINES"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_ANDROIDS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_GRAPHENE_ALLOYS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_LIQUID_METALS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_INTERNAL_SHOCKWAVE_ENGINE"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "cost": {
+  "production": 2505,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MECHATRONICS_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MECHATRONICS_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_MECHATRONICS_LAB_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

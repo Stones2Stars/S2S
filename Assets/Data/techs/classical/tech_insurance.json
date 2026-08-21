@@ -1,0 +1,79 @@
+{
+ "type": "TECH_INSURANCE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INSURANCE_OFFICE"
+  ],
+  "techs": [
+   "TECH_GUILDS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CURRENCY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CALLIGRAPHY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "modifier": {
+    "percent": [
+     5,
+     {
+      "value": 10,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
+   }
+  }
+ },
+ "tradeMission": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "cost": {
+  "research": 749
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/insurance.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_INSURANCE",
+  "soundMP": "AS2D_TECH_INSURANCE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_INSURANCE",
+  "civilopedia": "TXT_KEY_TECH_INSURANCE_PEDIA",
+  "quote": "TXT_KEY_TECH_INSURANCE_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 20,
+  "tradeable": true,
+  "gridX": 38,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,114 @@
+{
+ "type": "BUILDING_CAVE_PAINTINGS",
+ "enables": {
+  "buildings": [
+   "BUILDING_LASCAUX_PAINTS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LITERATURE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FRESCO_MURAL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PETROGLYPHS",
+    {
+     "any": [
+      "BUILDING_CLAY_PIT",
+      "BUILDING_CHALK_GATHERER",
+      "BUILDING_HEMATITE_GATHERER",
+      "BUILDING_MODERN_EARTHWORKS",
+      "BUILDING_FIRE_PIT",
+      "BUILDING_BONFIRE",
+      "BUILDING_IMU",
+      "BUILDING_CHARCOAL_BURNER"
+     ]
+    },
+    {
+     "type": "FEATURE_CAVES",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_FRESCO_MURAL"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_HAEMATITE_ORE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_CHALK",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 50,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CAVE_PAINTINGS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CAVE_PAINTINGS",
+  "civilopedia": "TXT_KEY_BUILDING_CAVE_PAINTINGS_PEDIA",
+  "centerInCity": true,
+  "worth": 2,
+  "conquestProbability": 66,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

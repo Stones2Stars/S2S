@@ -19,7 +19,13 @@ import SdToolKit
 COLOR_KEYS = None
 PALETTE_WIDTH = None
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 StratLayerOpt = BugCore.game.StrategyOverlay
 
 g_layers = {}
@@ -38,13 +44,12 @@ def init(paletteWidth=3, paletteColors=None):
 		COLOR_KEYS = paletteColors
 	else:
 		PALETTE_WIDTH = 10  # override because it has 127 colors
+		# The whole registry in ONE crossing, in id order -- which is what the palette is indexed by. The old
+		# shape walked ids to 200 and let the out-of-range read RAISE to find the end; the index read knows
+		# where the registry stops, so neither the magic bound nor the swallowing except survives.
 		COLOR_KEYS = []
-		try:
-			for index in range(200):
-				info = GC.getColorInfo(index)
-				COLOR_KEYS.append(info.getType())
-		except:
-			pass
+		for kColor in INFO.getIndex("COLOR_"):
+			COLOR_KEYS.append(kColor["type"])
 
 	# create layers
 	global g_DotMap
@@ -448,7 +453,7 @@ class DotMapLayer(StrategyLayer):
 	def drawCross(self, city, alpha):
 		# Draws the cross for a single city.
 		x, y = city.point
-		color = GC.getColorInfo(city.color).getType()
+		color = INFO.getType("COLOR_", city.color)
 		layer = city.layer
 		if city.bAlt:
 			aList = self.BFC_OFFSETS_ALT
@@ -461,8 +466,7 @@ class DotMapLayer(StrategyLayer):
 		# Draws the dot for a single city.
 		if self.DRAW_DOTS:
 			x, y = city.point
-			colorInfo = GC.getColorInfo(city.color)
-			CyEngine().addColoredPlotAlt(x, y, self.DOT_STYLE, self.DOT_LAYER, colorInfo.getType(), alpha)
+			CyEngine().addColoredPlotAlt(x, y, self.DOT_STYLE, self.DOT_LAYER, INFO.getType("COLOR_", city.color), alpha)
 
 	def eraseDot(self, city, alpha):
 		# Erases the dot for a single city.

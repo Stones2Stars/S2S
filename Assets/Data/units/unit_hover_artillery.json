@@ -1,0 +1,167 @@
+{
+ "type": "UNIT_HOVER_ARTILLERY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_TITANIUM_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_FUSION",
+    "TECH_LIQUID_METALS",
+    {
+     "type": "BONUS_HOVERCRAFTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_PETROLEUM_PRODUCTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BIOFUEL",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_LEVITATION_ARTILLERY"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 4
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 50
+   },
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 95
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 20
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 100
+   },
+   "limit": {
+    "flat": 70
+   },
+   "maxUnits": {
+    "flat": 12
+   }
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage",
+  "canMoveAllTerrain",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost",
+  "mechanized",
+  "tradable",
+  "collateralImmune"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SIEGE",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_HOVERCRAFT",
+  "UNITCOMBAT_SIEGE_URBAN",
+  "UNITCOMBAT_SIEGE_FIELD",
+  "UNITCOMBAT_SIEGE_ROCKETRY",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+  "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_MOTILITY_HOVERING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 3250,
+  "upkeep": 6
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HOVER_ARTILLERY",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "rangedWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_HOVER_ARTILLERY"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_HOVER_ARTILLERY",
+  "civilopedia": "TXT_KEY_UNIT_HOVER_ARTILLERY_PEDIA",
+  "worth": 6,
+  "militaryWorth": 230,
+  "xpValueAttack": 6,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_COLLATERAL",
+   "UNITAI_CITY_COUNTER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combatLimit": 90
+  }
+ }
+}

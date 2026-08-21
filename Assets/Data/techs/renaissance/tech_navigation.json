@@ -1,0 +1,106 @@
+{
+ "type": "TECH_NAVIGATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_AUSTRALIAN",
+   "BUILDING_CULTURE_HONGKONGER",
+   "BUILDING_CULTURE_NEW_ZEALANDER",
+   "BUILDING_CULTURE_TAGALOG",
+   "BUILDING_MAGELLANS_VOYAGE"
+  ],
+  "promotions": [
+   "PROMOTION_NAVIGATION3"
+  ],
+  "techs": [
+   "TECH_HELIOCENTRISM",
+   "TECH_MERCANTILISM",
+   "TECH_NAVAL_TACTICS"
+  ],
+  "units": [
+   "UNIT_FRIGATE",
+   "UNIT_MASTER_SAILOR_FRIGATE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CARTOGRAPHY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASTRONOMY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "domainMoves": {
+  "empire": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "canTradeOn": {
+  "terrains": [
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_POLAR",
+   "TERRAIN_TRENCH_TROPICAL"
+  ]
+ },
+ "cost": {
+  "research": 2701
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   },
+   {
+    "FLAVOR_RELIGION": 3
+   },
+   {
+    "FLAVOR_GOLD": 8
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/navigation.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,13"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NAVIGATION",
+  "soundMP": "AS2D_TECH_NAVIGATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NAVIGATION",
+  "civilopedia": "TXT_KEY_TECH_NAVIGATION_PEDIA",
+  "quote": "TXT_KEY_TECH_NAVIGATION_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 53,
+  "gridY": 13
+ }
+}

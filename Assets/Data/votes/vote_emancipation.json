@@ -1,0 +1,18 @@
+{
+ "type": "VOTE_EMANCIPATION",
+ "voteSource": [
+  "DIPLOVOTE_UN"
+ ],
+ "threshold": {
+  "population": 51,
+  "minVoters": 3
+ },
+ "effect": {
+  "forceCivics": [
+   "CIVIC_EGALITARIAN"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_EGALITARIAN"
+ }
+}

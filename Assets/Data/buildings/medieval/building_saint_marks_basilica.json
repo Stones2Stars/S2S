@@ -1,0 +1,173 @@
+{
+ "type": "BUILDING_SAINT_MARKS_BASILICA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
+    "BUILDING_CHRISTIAN_CATHEDRAL",
+    "TECH_ARCHITECTURE",
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_CHRISTIANITY"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_CHRISTIANITY"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "production": {
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "IS_WATER"
+     }
+    ]
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "IS_WATER"
+     }
+    ]
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_CHRISTIANITY"
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_CHRISTIANITY": {
+    "flat": 6
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "cost": {
+  "production": 1920,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARCOS_CATHEDRAL"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CHRISTIAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SAINT_MARKS_BASILICA",
+  "civilopedia": "TXT_KEY_BUILDING_SAINT_MARKS_BASILICA_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 5,
+  "militaryWorth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "religion": "RELIGION_CHRISTIANITY",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

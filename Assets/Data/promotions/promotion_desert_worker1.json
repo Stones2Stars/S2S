@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_DESERT_WORKER1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_DESERT_WORKER2"
+  ]
+ },
+ "workRate": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_DESERT": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_DESERT_WORKER": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/workerdesert1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_DESERT_WORKER1"
+ }
+}

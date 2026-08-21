@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_FACTORY_GHEE_OIL",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PLANETARY_ECONOMICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "TECH_REFRIGERATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MILK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_GLASSWARE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_POTTERY",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BARRELS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_GHEE_OIL"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 800,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACTORY_GHEE_OIL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_GHEE_OIL",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_GHEE_OIL_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

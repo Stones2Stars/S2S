@@ -1,0 +1,146 @@
+{
+ "type": "UNIT_HEAVY_ROCKET",
+ "builds": [
+  "BUILD_SPACE_STATION_LV1",
+  "BUILD_SPACE_STATION_LV2",
+  "BUILD_SPACE_STATION_LV3"
+ ],
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ROCKET_FUEL",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_COMMERCIAL_SPACEPORT",
+    "TECH_COMMERCIAL_SPACEFLIGHT"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 24
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_HEAVY_ROCKET"
+  }
+ },
+ "skills": [
+  "canMoveAllTerrain",
+  "canMoveImpassable",
+  "ignoreTerrainCost"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SPACE_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_EARLY_SPACESHIP",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_EXPLORE_SS1",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_SS1"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreSS1",
+     "code": "from CvPythonExtensions import *\nimport random\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tvalid_terrain_strings = ['SPACE_STATION_LV1']\n\tvalid_terrains = [gc.getInfoTypeForString('IMPROVEMENT_'+t) for t in valid_terrain_strings]\n\treturn plot.getImprovementType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_SS1_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Conduct Scientific Mission\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_SS2",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_SS2"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreSS2",
+     "code": "from CvPythonExtensions import *\nimport random\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tvalid_terrain_strings = ['SPACE_STATION_LV2']\n\tvalid_terrains = [gc.getInfoTypeForString('IMPROVEMENT_'+t) for t in valid_terrain_strings]\n\treturn plot.getImprovementType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_SS2_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Conduct Scientific Mission\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_SS3",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_SS3"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreSS3",
+     "code": "from CvPythonExtensions import *\nimport random\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tvalid_terrain_strings = ['SPACE_STATION_LV3']\n\tvalid_terrains = [gc.getInfoTypeForString('IMPROVEMENT_'+t) for t in valid_terrain_strings]\n\treturn plot.getImprovementType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_SS3_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Conduct Scientific Mission\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   }
+  ]
+ },
+ "cost": {
+  "production": 3006,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HEAVY_ROCKET",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_HEAVY_ROCKET"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_HEAVY_ROCKET",
+  "civilopedia": "TXT_KEY_UNIT_HEAVY_ROCKET_PEDIA",
+  "help": "TXT_KEY_UNIT_SPACEUNIT_HELP",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH",
+   "MAPCATEGORY_CISLUNAR"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "workRate": 500
+  }
+ }
+}

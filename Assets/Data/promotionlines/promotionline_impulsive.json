@@ -1,0 +1,11 @@
+{
+ "type": "PROMOTIONLINE_IMPULSIVE",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitImpulsive.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_IMPULSIVE"
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_GRAVITY_GENERATORS",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_GRAVITY_GENERATORS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_GRAVITY_GENERATORS",
+  "civilopedia": "TXT_KEY_BONUS_GRAVITY_GENERATORS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

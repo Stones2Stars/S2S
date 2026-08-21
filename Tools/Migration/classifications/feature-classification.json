@@ -1,0 +1,36 @@
+{
+  "entity": "FeatureInfo",
+  "isSource": false,
+  "exeLink": { "dllExportCount": 1, "notes": "getArtInfo() (an art FK) is the lone DllExport on CvFeatureInfo; unconstrained for data." },
+  "ownerRulings_2026_06_16": "iSeeThrough -> a `vision` BLOCK (vision.plot.seeThrough.flat), grouped for the coming vision rework (dedicated-block rule, modifier-spec §0.8). iWarmingDefense -> DROP (dead: GLOBAL_WARMING #ifdef'd out; a future global-warming mechanic gets its OWN base object — issue #436, global-warming-mod.md). PropertyManipulators (RELATION_NEAR pollution) -> PARKED raw in `properties` for #429 (cutover replaces XML, so preserve-don't-drop). Authoritative field mapping = migration-renames.md §Feature.",
+  "summary": "Feature is a plot-leaf TARGET / deliveryguy that ADDS per-plot deltas onto the terrain-seeded accumulator (CvPlot movementCost 4559/defenseModifier 4404/recalculateBaseYield 8081, all +=), so its own effects are feature-owned plot-scope modifier families. isSource=false (zero enabler edges). All inbound feature-keyed modifiers stay KEEP-ON-SOURCE.",
+  "ownFields": [
+    { "field": "YieldChanges", "disposition": "modifier-family", "family": "food/production/commerce", "scope": "plot", "unit": "flat", "consumer": "CvPlot.cpp:8081", "notes": "Per-plot yield delta. Mapping scope:city WRONG -> plot." },
+    { "field": "RiverYieldChange", "disposition": "modifier-family", "family": "food/production/commerce", "scope": "plot", "unit": "flat", "conditional": "enabled: HAS_RIVER (bare)", "consumer": "CvPlot.cpp:8085 (only inside if(bRiver))", "notes": "Feature's extra river-side yield; HAS_RIVER-gated; compounds with the terrain river bonus. First HAS_RIVER use. Injected via post_process." },
+    { "field": "iHealthPercent", "disposition": "modifier-family", "family": "health", "scope": "plot", "unit": "percent", "notes": "Feature OWNS health (terrain dropped it because it lives here)." },
+    { "field": "iDefense", "disposition": "modifier-family", "family": "defense", "member": "amount", "scope": "plot", "unit": "percent" },
+    { "field": "iMovement", "disposition": "modifier-family", "family": "movement", "scope": "plot", "unit": "flat" },
+    { "field": "iCultureDistance", "disposition": "modifier-family", "family": "cultureDistance", "scope": "plot", "unit": "flat" },
+    { "field": "iSeeThrough", "disposition": "modifier-family", "family": "vision", "member": "seeThrough", "scope": "plot", "unit": "flat", "notes": "OWNER-RULED a `vision` block (2026-06-16); grouped for the coming vision rework." },
+    { "field": "iWarmingDefense", "disposition": "drop", "dropCategory": "i-truly-dead", "consumer": "CvGame.cpp:6624 inside #ifdef GLOBAL_WARMING; GLOBAL_WARMING is // #define'd out (CvGameCoreDLL.h:232)", "notes": "OWNER-RULED DROP. Scrapped global-warming mod holdover; future GW gets its own base object. Issue #436." },
+    { "field": "PropertyManipulators", "disposition": "parked", "section": "properties", "consumer": "CvGameObject.cpp:722", "notes": "RELATION_NEAR pollution = spatial leakage -> #429. Parked raw (clean_property_source) since the cutover replaces the XML. FLAG." },
+    { "field": "OnUnitChangeTo", "disposition": "grants", "notes": "Feature transforms a unit on entry (CvUnit.cpp:4991); module-only, 0 in base XML. FLAG: grants vs dedicated transform edge." },
+    { "field": "iAdvancedStartRemoveCost", "disposition": "cost", "notes": "Gold cost to remove the feature in advanced start." },
+    { "field": "iAppearance/iDisappearance/iGrowth/iSpread/iPopDestroys/bCanGrowAnywhere/bRequires*/bNo*/placement flags/bGraphicalOnly/TerrainBooleans", "disposition": "identity", "notes": "World-gen RNG / lifecycle / placement config. bGraphicalOnly = base-class flag (moved out of mapping art)." },
+    { "field": "ArtDefineTag/EffectType/iEffectProbability/GrowthSound/FootstepSounds/WorldSoundscapeAudioScript", "disposition": "art" },
+    { "field": "Description/Civilopedia", "disposition": "text" }
+  ],
+  "inboundBoosts": [
+    { "sourceEntity": "CvCivicInfo", "field": "FeatureHappinessChanges", "recommendation": "keep-on-source (civic delivers happiness per worked feature; no happiness getter on CvFeatureInfo)" },
+    { "sourceEntity": "CvUnitInfo", "field": "FeatureDefenseModifier", "recommendation": "keep-on-source (unit defends better/worse in this feature)" },
+    { "sourceEntity": "CvUnitCombatInfo", "field": "FeatureDefenseChangeModifier", "recommendation": "keep-on-source" },
+    { "sourceEntity": "CvPromotionInfo", "field": "FeatureDefensePercent", "recommendation": "keep-on-source" },
+    { "sourceEntity": "CvBuildInfo", "field": "isFeatureRemove / getFeatureChange", "recommendation": "keep-on-source (Build owns the feature-removal/transform edge; reverse is cold-path pedia)" }
+  ],
+  "openQuestions": [
+    "PropertyManipulators: parked raw for #429 (RELATION_NEAR spatial leakage). Confirm the #429 pass handles them; the `properties` parking section is a placeholder, not a final shape.",
+    "OnUnitChangeTo: grants vs a dedicated feature->unit transform edge. Module-only (0 base records); revisit if it carries data.",
+    "ArtDefineTag -> art.icon (feature has no separate UI Button). On-map-vs-icon nuance deferred to the art-data pass.",
+    "iSeeThrough is the FIRST member of the new `vision` block; the wider vision-behaviour rework is a separate owner pass (outside #428)."
+  ]
+}

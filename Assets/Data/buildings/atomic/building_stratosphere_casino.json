@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_STRATOSPHERE_CASINO",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CASINO",
+    "TECH_LEGALIZED_GAMBLING",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_DESERT",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_DUNES",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ],
+   "dormant": [
+    "BUILDING_ORDINANCE_GAMBLING_BAN"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "gold": {
+  "city": {
+   "percent": 12
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "cost": {
+  "production": 8070,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_STRATOSPHERE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_STRATOSPHERE_CASINO",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_STRATOSPHERE_CASINO",
+  "civilopedia": "TXT_KEY_BUILDING_STRATOSPHERE_CASINO_PEDIA",
+  "pediaCategory": "greatWonder",
+  "centerInCity": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

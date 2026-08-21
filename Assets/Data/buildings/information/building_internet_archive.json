@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_INTERNET_ARCHIVE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_FLASH_MEMORY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "empire": {
+   "buildings": {
+    "BUILDING_COMPUTER_NETWORK": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 12630,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_INTERNET_ARCHIVE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERNET_ARCHIVE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERNET_ARCHIVE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERNET_ARCHIVE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

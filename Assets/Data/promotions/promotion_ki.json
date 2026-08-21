@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTION_KI",
+ "skills": {
+  "immuneToFirstStrikes": true
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat1.dds,Art/Interface/Buttons/GodsOfOld_Atlas.dds,1,7"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_KI",
+  "stateReligionPrereq": "RELIGION_MESOPOTAMISM",
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_ARCHER"
+  ]
+ }
+}

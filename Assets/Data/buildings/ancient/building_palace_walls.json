@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_PALACE_WALLS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRENCH_WARFARE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_IMPERIAL_FORTRESS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MASONRY",
+    {
+     "any": [
+      "BUILDING_PALACE",
+      "BUILDING_FORBIDDEN_PALACE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_MARBLE",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_IMPERIAL_FORTRESS"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 30
+   },
+   "bombardDefense": {
+    "percent": 20
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 153,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PALACE_WALLS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PALACE_WALLS",
+  "civilopedia": "TXT_KEY_BUILDING_PALACE_WALLS_PEDIA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

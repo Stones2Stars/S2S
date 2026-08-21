@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_INTERGALACTIC_TEMPORAL_RIFT",
+ "enables": {
+  "buildings": [
+   "BUILDING_ZETTAVERSE_PORTAL"
+  ],
+  "units": [
+   "UNIT_HYPERSHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
+    "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    {
+     "value": 13,
+     "enabled": "TECH_TESSERACT_CONSTRUCTION"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 13,
+     "enabled": "TECH_HYPERLANES"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 5255,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_TEMPORAL_RIFT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_TEMPORAL_RIFT",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_TEMPORAL_RIFT_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

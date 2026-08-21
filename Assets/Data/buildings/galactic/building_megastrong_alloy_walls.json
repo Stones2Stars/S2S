@@ -1,0 +1,107 @@
+{
+ "type": "BUILDING_MEGASTRONG_ALLOY_WALLS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLARNEY_CASTLE",
+   "BUILDING_CASTLE",
+   "BUILDING_CITY_GATEHOUSE",
+   "BUILDING_GROVE",
+   "BUILDING_KRAK_DES_CHEVALIERS",
+   "BUILDING_THE_ISHTAR_GATE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MEGASTRONG_ALLOYS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MEGASTRONG_ALLOYS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 60
+   },
+   "min": {
+    "percent": 20
+   },
+   "noEntryLevel": {
+    "percent": 50
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -9
+  }
+ },
+ "cost": {
+  "production": 12155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MEGASTRONG_ALLOY_WALLS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MEGASTRONG_ALLOY_WALLS",
+  "civilopedia": "TXT_KEY_BUILDING_MEGASTRONG_ALLOY_WALLS_PEDIA",
+  "centerInCity": true,
+  "worth": 1,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

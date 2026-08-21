@@ -1,0 +1,82 @@
+{
+ "type": "TECH_LUNAR_MEGASTRUCTURES",
+ "enables": {
+  "buildings": [
+   "BUILDING_EFFECT_LUNA_RING",
+   "BUILDING_LUNAR_ARCOLOGY",
+   "BUILDING_LUNAR_ECUMENOPOLIS",
+   "BUILDING_LUNA_RING",
+   "BUILDING_TITAN_ARCOLOGY",
+   "BUILDING_TITAN_NITROGEN_EXPORTER"
+  ],
+  "builds": [
+   "BUILD_JOVIAN_LUNAR_ARCOLOGY",
+   "BUILD_LUNAR_ARCOLOGY"
+  ],
+  "improvements": [
+   "IMPROVEMENT_JOVIAN_LUNAR_ARCOLOGY",
+   "IMPROVEMENT_LUNAR_ARCOLOGY"
+  ],
+  "techs": [
+   "TECH_PLANETARY_MEGASTRUCTURES"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_JOVIAN_LUNAR_BASE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_DEFENSES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 90183
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/lunarmegastructures.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_LUNAR_MEGASTRUCTURES",
+  "soundMP": "AS2D_TECH_LUNAR_MEGASTRUCTURES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_LUNAR_MEGASTRUCTURES",
+  "civilopedia": "TXT_KEY_TECH_LUNAR_MEGASTRUCTURES_PEDIA",
+  "quote": "TXT_KEY_TECH_LUNAR_MEGASTRUCTURES_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 121,
+  "gridY": 5
+ }
+}

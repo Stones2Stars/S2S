@@ -1,0 +1,97 @@
+{
+ "type": "BUILDING_WORKHOUSE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SOCIAL_CONTRACT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "CIVIC_PUBLIC_WORKS",
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 15
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 475,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WORKHOUSE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SIEGE_WORKSHOP"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WORKHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_WORKHOUSE_PEDIA",
+  "worth": 3,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_INTERGALACTIC_BLACK_HOLE_ERA_SURVIVAL_PLAN",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
+    {
+     "type": "BUILDING_INTERSTELLAR_DEGENERATE_ERA_SURVIVAL_PLAN",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_PURE_INFORMATION_SOCIETY",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_VIRGO_SUPERCLUSTER",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_OBSERVABLE_UNIVERSE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 4492,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_BLACK_HOLE_ERA_SURVIVAL_PLAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_BLACK_HOLE_ERA_SURVIVAL_PLAN",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_BLACK_HOLE_ERA_SURVIVAL_PLAN_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

@@ -1,0 +1,95 @@
+{
+ "type": "UNIT_LOCUST_HUGE_SWARM",
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 17
+  }
+ },
+ "skills": [
+  "pillage",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_SWARM",
+  "UNITCOMBAT_ANIMAL_INVERTEBRATE",
+  "UNITCOMBAT_ANIMAL_INSECT",
+  "UNITCOMBAT_ANIMAL_COMBAT_DEVOUR",
+  "UNITCOMBAT_ANIMAL_COMBAT_REPELLENT",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_MOTILITY_AERIAL",
+  "UNITCOMBAT_QUALITY_INCAPABLE",
+  "UNITCOMBAT_GROUP_COUNTLESS",
+  "UNITCOMBAT_SIZE_FINE",
+  "UNITCOMBAT_HEALS_AS_SWARM"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LOCUST_HUGE_SWARM",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 8,
+      "define": {
+       "early": "ART_DEF_UNIT_LOCUST_HUGE_SWARM"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_LOCUST_HUGE_SWARM",
+  "civilopedia": "TXT_KEY_UNIT_LOCUST_PEDIA",
+  "spawnOnly": true,
+  "xpValueAttack": 7,
+  "xpValueDefense": 7,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PILLAGE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "unitAIs": [
+   "UNITAI_PILLAGE"
+  ],
+  "notUnitAIs": [
+   "UNITAI_ATTACK_CITY"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_COAST",
+   "TERRAIN_COAST_DEEP",
+   "TERRAIN_COAST_DEEP_POLAR",
+   "TERRAIN_COAST_DEEP_TROPICAL",
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_COAST_TROPICAL",
+   "TERRAIN_DUNES",
+   "TERRAIN_ICE",
+   "TERRAIN_LAKE_SHORE",
+   "TERRAIN_PEAK",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ]
+ }
+}

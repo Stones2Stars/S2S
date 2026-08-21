@@ -1,0 +1,170 @@
+{
+ "type": "UNIT_HUMPBACK_WHALE",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 5,
+   "title": "TXT_KEY_GROUPTITLE_SOLITARY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_POD"
+  }
+ ],
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 8
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "blendIntoCity",
+  "onlyDefensive",
+  "renderBelowWater"
+ ],
+ "tags": [
+  "seaUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SEA_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_RECKLESS_ANIMAL",
+  "UNITCOMBAT_MAMMAL_WHALE",
+  "UNITCOMBAT_ANIMAL_COMBAT_HEAD_BUTT",
+  "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+  "UNITCOMBAT_ANIMAL_COMBAT_TAIL",
+  "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "requires": {
+     "outcome": "OUTCOME_BONUS_SPAWNED"
+    },
+    "chance": 2,
+    "places": "BONUS_WHALE",
+    "food": {
+     "base": 10000,
+     "random": 5000
+    },
+    "production": {
+     "base": 1000,
+     "random": 500
+    },
+    "commerce": {
+     "base": 80,
+     "random": 220
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_TALES_SEA"
+    },
+    "chance": 8,
+    "spawns": {
+     "unit": "UNIT_TALESOF_HUMPBACK_WHALE",
+     "toCity": true
+    },
+    "food": {
+     "base": 10000,
+     "random": 5000
+    },
+    "production": {
+     "base": 1000,
+     "random": 500
+    },
+    "commerce": {
+     "base": 80,
+     "random": 220
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE_SEA_LARGE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_HUMPBACK_WHALE"
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 85,
+    "food": {
+     "base": 10000,
+     "random": 5000
+    },
+    "production": {
+     "base": 1000,
+     "random": 500
+    },
+    "commerce": {
+     "base": 80,
+     "random": 220
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HUMPBACK_WHALE",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 3,
+      "define": {
+       "early": "ART_DEF_UNIT_HUMPBACK_WHALE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_HUMPBACK_WHALE",
+  "civilopedia": "TXT_KEY_UNIT_HUMPBACK_WHALE_PEDIA",
+  "spawnOnly": true,
+  "xpValueAttack": 15,
+  "xpValueDefense": 10,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

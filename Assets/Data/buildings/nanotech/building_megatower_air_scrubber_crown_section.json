@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_MEGATOWER_AIR_SCRUBBER_CROWN_SECTION",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MEGATOWER",
+    "BUILDING_ARTIFICIAL_TREE_FARM",
+    "TECH_NANO_ARCHITECTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_METAMATERIALS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_AEROGEL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -100
+  }
+ },
+ "cost": {
+  "production": 3245,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MEGATOWER_AIR_SCRUBBER_CROWN_SECTION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MEGATOWER_AIR_SCRUBBER_CROWN_SECTION",
+  "civilopedia": "TXT_KEY_BUILDING_MEGATOWER_AIR_SCRUBBER_CROWN_SECTION_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

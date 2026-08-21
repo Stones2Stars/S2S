@@ -1,0 +1,53 @@
+{
+ "type": "TECH_LUMINAL_BEINGS",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_PURE_ENERGY"
+  ],
+  "buildings": [
+   "BUILDING_HUMAN_MOD_PURE_ENERGY",
+   "BUILDING_INTERGALACTIC_DARK_MATTER_CITY",
+   "BUILDING_INTERGALACTIC_GRAVITON_COMMUNICATION_CENTER"
+  ],
+  "techs": [
+   "TECH_TRANSCENDENT_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NOOGENESIS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DARK_ENERGY_HARVESTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 366008
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/luminal_beings.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_LUMINAL_BEINGS",
+  "civilopedia": "TXT_KEY_TECH_LUMINAL_BEINGS_PEDIA",
+  "quote": "TXT_KEY_TECH_LUMINAL_BEINGS_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 147,
+  "gridY": 17
+ }
+}

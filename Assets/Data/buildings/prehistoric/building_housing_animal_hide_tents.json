@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_HOUSING_ANIMAL_HIDE_TENTS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SANITATION"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HIDE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_SKINNING",
+    "TECH_SHELTER_BUILDING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "dormant": [
+    "BUILDING_HOUSING_TIPIS",
+    "BUILDING_HOUSING_VILLAS",
+    "BUILDING_HOUSING_MANORS",
+    "BUILDING_HOUSING_MANSIONS",
+    "BUILDING_HOUSING_CHATEAU",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HOUSING_ANIMAL_HIDE_TENTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_ANIMAL_HIDE_TENTS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_ANIMAL_HIDE_TENTS_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

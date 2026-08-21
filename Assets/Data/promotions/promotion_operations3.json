@@ -1,0 +1,43 @@
+{
+ "type": "PROMOTION_OPERATIONS3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_OPERATIONS4"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_OPERATIONS2",
+    {
+     "any": [
+      "PROMOTION_TACTICS4"
+     ]
+    }
+   ]
+  }
+ },
+ "heal": {
+  "unit": {
+   "neutral": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_OPERATIONS": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/operations3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_OPERATIONS3",
+  "controlPoints": 5,
+  "commandRange": 1
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_fast_reflex.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES"
+ }
+}

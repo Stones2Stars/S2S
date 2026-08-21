@@ -1,0 +1,135 @@
+{
+ "type": "CIVIC_PLUTOCRACY",
+ "enables": {
+  "hurries": [
+   "HURRY_GOLD"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    5,
+    {
+     "value": 7,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    {
+     "value": -1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    -2,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
+    "percent": -5
+   },
+   "resistance": {
+    "percent": -5
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 7
+   },
+   "numCities": {
+    "percent": 10
+   },
+   "percent": [
+    {
+     "value": 6,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 6,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
+   "corporation": {
+    "percent": -3
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": -2
+   },
+   "democracyLevel": {
+    "flat": 10
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": 10,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "policies": {
+  "canDoElection": true
+ },
+ "grants": {
+  "revolution": -20
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/power_plutocracy.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_PLUTOCRACY",
+  "civilopedia": "TXT_KEY_CIVIC_PLUTOCRACY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_PLUTOCRACY_STRATEGY",
+  "civicOption": "CIVICOPTION_POWER",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

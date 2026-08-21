@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_UNSANITARY3",
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 5
+  },
+  "plot": {
+   "flat": 5
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_UNSANITARY_PROMOTION": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionUnsanitary3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_UNSANITARY3",
+  "unitCombats": [
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_RUFFIAN",
+   "UNITCOMBAT_ANIMAL"
+  ]
+ }
+}

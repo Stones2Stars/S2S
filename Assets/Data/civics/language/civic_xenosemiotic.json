@@ -1,0 +1,101 @@
+{
+ "type": "CIVIC_XENOSEMIOTIC",
+ "commerce": {
+  "empire": {
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 5
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "civics": {
+    "CIVIC_NONVERBAL": {
+     "flat": -3
+    },
+    "CIVIC_NATIVE_LANGUAGE": {
+     "flat": -2
+    },
+    "CIVIC_TRADE_LANGUAGE": {
+     "flat": -1
+    },
+    "CIVIC_CODIFIED": {
+     "flat": 1
+    },
+    "CIVIC_WORLD_LANGUAGE": {
+     "flat": 2
+    },
+    "CIVIC_UNIVERSAL_TRANSLATOR": {
+     "flat": 3
+    },
+    "CIVIC_TELEPATHIC": {
+     "flat": 4
+    },
+    "CIVIC_XENOSEMIOTIC": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_GALACTIC_CANTINA": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/language_xeno_speak.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_XENOSEMIOTIC",
+  "civilopedia": "TXT_KEY_CIVIC_XENOSEMIOTIC_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_XENOSEMIOTIC_STRATEGY",
+  "civicOption": "CIVICOPTION_LANGUAGE",
+  "upkeepLevel": "UPKEEP_EXTREME"
+ }
+}

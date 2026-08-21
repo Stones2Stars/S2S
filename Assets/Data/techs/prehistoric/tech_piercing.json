@@ -1,0 +1,60 @@
+{
+ "type": "TECH_PIERCING",
+ "enables": {
+  "promotionLines": [
+   "PROMOTIONLINE_BUILD_UP_SET_FOR_CHARGE"
+  ],
+  "techs": [
+   "TECH_SEWING",
+   "TECH_SHARPENING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SOFT_HAMMER_PERCUSSION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 11
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/piercing.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PIERCING",
+  "soundMP": "AS2D_TECH_PIERCING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PIERCING",
+  "civilopedia": "TXT_KEY_TECH_PIERCING_PEDIA",
+  "quote": "TXT_KEY_TECH_PIERCING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 3,
+  "militaryWorth": 3,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 6,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,40 @@
+{
+ "type": "TERRAIN_URANUS",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/baseterrain/uranus.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_TERRAIN_URANUS"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_TUNDRA_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_TERRAIN_URANUS",
+  "civilopedia": "TXT_KEY_TERRAIN_URANUS_PEDIA",
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_JOVIAN"
+  ]
+ }
+}

@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_HUMAN_MOD_INDEFINITE_LIFESPAN",
+ "enables": {
+  "buildings": [
+   "BUILDING_HUMAN_MOD_IMMORTAL"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HUMAN_MOD_INDEFINITE_LIFESPAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HUMAN_MOD_INDEFINITE_LIFESPAN",
+  "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
+  "bonusClassType": "BONUSCLASS_GENMODS",
+  "source": "manufactured"
+ }
+}

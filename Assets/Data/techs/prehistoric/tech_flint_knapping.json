@@ -1,0 +1,63 @@
+{
+ "type": "TECH_FLINT_KNAPPING",
+ "enables": {
+  "buildings": [
+   "BUILDING_FLINT_KNAPPER"
+  ],
+  "techs": [
+   "TECH_MICROLITH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SHARPENING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "cost": {
+  "research": 15
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/flintknapping.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_FLINT_KNAPPING",
+  "soundMP": "AS2D_TECH_FLINT_KNAPPING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_FLINT_KNAPPING",
+  "civilopedia": "TXT_KEY_TECH_FLINT_KNAPPING_PEDIA",
+  "quote": "TXT_KEY_TECH_FLINT_KNAPPING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 8,
+  "gridY": 9
+ }
+}

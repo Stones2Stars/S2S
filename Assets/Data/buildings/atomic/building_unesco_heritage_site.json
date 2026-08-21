@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_UNESCO_HERITAGE_SITE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GLOBALIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ANCIENT_RELICS",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ],
+   "dormant": [
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ANCIENT_RELICS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "any": [
+    {
+     "value": 1,
+     "per": {
+      "type": "IMPROVEMENT_ARCHEOLOGICAL_SITE",
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 1180,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_UNESCO_HERITAGE_SITE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_UNESCO_HERITAGE_SITE",
+  "civilopedia": "TXT_KEY_BUILDING_UNESCO_HERITAGE_SITE_PEDIA",
+  "worth": 2,
+  "conquestProbability": 30,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_PRESENCE_OF_METAL",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_ORE",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_GOLD_ORE",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_SILVER_ORE",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_TIN_ORE",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_IRON_ORE",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_LEAD_ORE",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_PLATINUM_ORE",
+       "scope": "city",
+       "vicinity": "owned"
+      }
+     ]
+    },
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    "TECH_SOFT_HAMMER_PERCUSSION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CREATION_MYTH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PRESENCE_OF_METAL",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_PRESENCE_OF_ORIGIN_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

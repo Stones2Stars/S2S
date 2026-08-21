@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_MITHRIL_IMPORTER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_STARPORT",
+    {
+     "type": "BUILDING_MITHRIL_FOUNDRY",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_FANTASY_MATERIALS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   {
+    "BONUS_MITHRIL": 3
+   }
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 118530
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MITHRIL_IMPORTER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MITHRIL_IMPORTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MITHRIL_IMPORTER",
+  "civilopedia": "TXT_KEY_BUILDING_MITHRIL_IMPORTER_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

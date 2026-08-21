@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_HYBRID_AIRSHIP_PORT",
+ "enables": {
+  "buildings": [
+   "BUILDING_AERIAL_CITY",
+   "BUILDING_ANTIMATTER_HARVESTER",
+   "BUILDING_AUTOMATED_PORT",
+   "BUILDING_BELT_AND_ROAD_INITIATIVE",
+   "BUILDING_CLOUD_NINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COMMERCIAL_AIRPORT",
+    "TECH_WEIGHTLESS_FLIGHT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 5
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 5455,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYBRID_AIRSHIP_PORT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYBRID_AIRSHIP_PORT",
+  "civilopedia": "TXT_KEY_BUILDING_HYBRID_AIRSHIP_PORT_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

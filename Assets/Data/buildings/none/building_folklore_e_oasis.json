@@ -1,0 +1,118 @@
+{
+ "type": "BUILDING_FOLKLORE_E_OASIS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    "BUILDING_FOLKLORE_E_EARTH",
+    "BUILDING_FOLKLORE_E_SEA",
+    {
+     "type": "BUILDING_PRESENCE_OF_OASIS",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_ORAL_TRADITION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": [
+    1,
+    {
+     "value": -0.6,
+     "enabled": "TECH_LANGUAGE"
+    },
+    {
+     "value": -0.1,
+     "enabled": "TECH_SEDENTARY_LIFESTYLE"
+    },
+    {
+     "value": -0.1,
+     "enabled": "TECH_CLASSICAL_LIFESTYLE"
+    },
+    {
+     "value": -0.1,
+     "enabled": "TECH_MEDIEVAL_LIFESTYLE"
+    },
+    {
+     "value": -0.1,
+     "enabled": "TECH_RENAISSANCE_LIFESTYLE"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": [
+    {
+     "value": 0.1,
+     "enabled": "TECH_LANGUAGE"
+    },
+    {
+     "value": 0.1,
+     "enabled": "TECH_SEDENTARY_LIFESTYLE"
+    },
+    {
+     "value": 0.1,
+     "enabled": "TECH_CLASSICAL_LIFESTYLE"
+    },
+    {
+     "value": 0.1,
+     "enabled": "TECH_MEDIEVAL_LIFESTYLE"
+    },
+    {
+     "value": 0.1,
+     "enabled": "TECH_RENAISSANCE_LIFESTYLE"
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "empire": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "TECH_WRITING"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_LITERATURE"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 20,
+  "complexityModifier": 2
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FOLKLORE_E_OASIS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_E_OASIS",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_E_LANDFORM_PEDIA",
+  "pediaCategory": "animalistic",
+  "forceNoPrereqScaling": true,
+  "specialBuildingType": "SPECIALBUILDING_FOLKLORE_EXPLORATION",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

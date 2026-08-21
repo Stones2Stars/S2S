@@ -1,0 +1,63 @@
+{
+ "type": "TECH_INTERGROUP_TRAVEL",
+ "enables": {
+  "buildings": [
+   "BUILDING_ERIDANUS_CLUSTER_COLONY",
+   "BUILDING_FORNAX_CLUSTER_COLONY",
+   "BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
+   "BUILDING_MAFFEI_GROUP_COLONY",
+   "BUILDING_SCULPTOR_GROUP_COLONY",
+   "BUILDING_VIRGO_CLUSTER_COLONY"
+  ],
+  "techs": [
+   "TECH_INDUCED_SUPERNOVA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INTERGALACTIC_COLONIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CULTURAL_LONGEVITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 291683
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/intergroup_travel.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_INTERGROUP_TRAVEL",
+  "civilopedia": "TXT_KEY_TECH_INTERGROUP_TRAVEL_PEDIA",
+  "quote": "TXT_KEY_TECH_INTERGROUP_TRAVEL_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 141,
+  "gridY": 19
+ }
+}

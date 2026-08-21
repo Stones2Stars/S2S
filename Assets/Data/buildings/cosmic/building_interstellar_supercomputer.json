@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_INTERSTELLAR_SUPERCOMPUTER",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_GALACTIC_AC"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN",
+    "TECH_ULTRACOMPUTING",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 125
+  }
+ },
+ "cost": {
+  "production": 5766,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_SUPERCOMPUTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_SUPERCOMPUTER",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_SUPERCOMPUTER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

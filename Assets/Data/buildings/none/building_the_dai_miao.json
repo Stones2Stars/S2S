@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_THE_DAI_MIAO",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "IS_HOLY_CITY": "RELIGION_TAOISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "per": {
+      "type": "RELIGION_TAOISM",
+      "scope": "world"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_TAOISM": {
+    "flat": 4
+   }
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 3
+  }
+ },
+ "shrine": "RELIGION_TAOISM",
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SHRINE_TAOIST"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_THE_DAI_MIAO"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_TAOIST"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_THE_DAI_MIAO",
+  "civilopedia": "TXT_KEY_BUILDING_THE_DAI_MIAO_PEDIA",
+  "pediaCategory": "religious",
+  "notConstructible": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_TAOISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

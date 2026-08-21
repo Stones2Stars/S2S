@@ -1,0 +1,62 @@
+{
+ "type": "FEATURE_GREAT_BARRIER_REEF_BEACON",
+ "food": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "characteristics": [
+  "unfoundable",
+  "nukeImmune",
+  "ignoreTerrainCulture"
+ ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_WATER_POLLUTION": -5,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  }
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_CORAL_REEF_BEACON"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_GREAT_BARRIER_REEF_BEACON",
+  "civilopedia": "TXT_KEY_FEATURE_GREAT_BARRIER_PEDIA",
+  "appearance": -1,
+  "validTerrains": [
+   "TERRAIN_COAST_TROPICAL"
+  ]
+ }
+}

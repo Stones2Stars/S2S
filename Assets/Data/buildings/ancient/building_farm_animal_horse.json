@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_FARM_ANIMAL_HORSE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_HORSE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INDUSTRIAL_FARMS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_EQUINE_DOMESTICATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ],
+   "dormant": [
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 125,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FARM_ANIMAL_HORSE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_ANIMAL_HORSE",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_HORSE_PEDIA",
+  "worth": 4,
+  "militaryWorth": 6,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

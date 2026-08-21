@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_INTERSTELLAR_STELLAR_SAIL_NETWORK",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_STAR_CLUSTER_COLONY",
+    "TECH_ORBITAL_ENGINEERING",
+    {
+     "type": "TERRAIN_STAR_CLUSTER",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_GALACTIC",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 3611,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_STELLAR_SAIL_NETWORK",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_STELLAR_SAIL_NETWORK",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_STELLAR_SAIL_NETWORK_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

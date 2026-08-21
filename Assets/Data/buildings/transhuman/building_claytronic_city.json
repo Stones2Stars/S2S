@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_CLAYTRONIC_CITY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASCENDED_CITY",
+   "BUILDING_ATOMIC_FIREPROOFING",
+   "BUILDING_INVERSE_CITY",
+   "BUILDING_MULTIVERSE_CITY",
+   "BUILDING_OMEGA_ASSEMBLER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SELF_AWARE_CITY",
+    "BUILDING_CLAYTRONIC_TOWER",
+    "TECH_NANOTROIDS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 7805,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CLAYTRONIC_CITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CLAYTRONIC_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_CLAYTRONIC_CITY_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

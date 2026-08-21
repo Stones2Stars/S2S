@@ -1,0 +1,66 @@
+{
+ "type": "TECH_UNMANNED_NAVAL_VEHICLES",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SEA_MINE",
+   "BUILDING_PALM_ISLANDS",
+   "BUILDING_REMOTE_NAVAL_TRAINING_CENTER",
+   "BUILDING_UNDERWATER_DATA_CENTER"
+  ],
+  "techs": [
+   "TECH_MILITARY_ROBOTICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_UNMANNED_AIR_VEHICLES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 21329
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/UNMANNEDSEA.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_UNMANNED_NAVAL_VEHICLES",
+  "soundMP": "AS2D_TECH_UNMANNED_NAVAL_VEHICLES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_UNMANNED_NAVAL_VEHICLES",
+  "civilopedia": "TXT_KEY_TECH_UNMANNED_NAVAL_VEHICLES_PEDIA",
+  "quote": "TXT_KEY_TECH_UNMANNED_NAVAL_VEHICLES_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 89,
+  "gridY": 1
+ }
+}

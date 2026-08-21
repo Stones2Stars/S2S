@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_MOCHE",
+ "enables": {
+  "units": [
+   "UNIT_HUACA_GUARDIANS",
+   "UNIT_LORD_OF_SIPAN",
+   "UNIT_SI_WARRIOR"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MOCHE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MOCHE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

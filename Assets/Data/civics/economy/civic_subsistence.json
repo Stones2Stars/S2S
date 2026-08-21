@@ -1,0 +1,79 @@
+{
+ "type": "CIVIC_SUBSISTENCE",
+ "enables": {
+  "buildings": [
+   "BUILDING_WET_NURSE"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    -1,
+    {
+     "value": -1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    1,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": 10
+   },
+   "percent": [
+    {
+     "value": 1,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
+   "corporation": {
+    "percent": 25
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 2
+    },
+    "commerce": {
+     "percent": 2
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/economy_subsistence.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_SUBSISTENCE",
+  "civilopedia": "TXT_KEY_CIVIC_SUBSISTENCE_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_SUBSISTENCE_STRATEGY",
+  "civicOption": "CIVICOPTION_ECONOMY"
+ }
+}

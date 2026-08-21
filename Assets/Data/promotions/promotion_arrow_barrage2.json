@@ -1,0 +1,17 @@
+{
+ "type": "PROMOTION_ARROW_BARRAGE2",
+ "promotionLine": {
+  "PROMOTIONLINE_ARROW_BARRAGE": 2
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/ArrowBarrage2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_ARROW_BARRAGE2"
+ }
+}

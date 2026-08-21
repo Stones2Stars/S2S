@@ -1,0 +1,115 @@
+{
+ "type": "BUILDING_OPERA_HOUSE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BOLSHOI",
+   "BUILDING_ORCHESTRION_THEATER",
+   "BUILDING_SYDNEY_OPERA_HOUSE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_REALISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_MARBLE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2
+  }
+ },
+ "cost": {
+  "production": 770,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_OPERA",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_OPERA"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_OPERA_HOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_OPERA_HOUSE_PEDIA",
+  "worth": 3,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

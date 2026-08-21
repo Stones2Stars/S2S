@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_CREATION_MYTH",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ORAL_TRADITION",
+    {
+     "any": [
+      "BUILDING_STORYTELLER",
+      "BUILDING_SCHOOL_OF_SCRIBES",
+      "BUILDING_LIBRARY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_ORAL_TRADITION"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 20,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CREATION_MYTH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CREATION_MYTH",
+  "civilopedia": "TXT_KEY_BUILDING_CREATION_MYTH_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,64 @@
+{
+ "type": "TECH_MAGIC",
+ "enables": {
+  "buildings": [
+   "BUILDING_MAGIC_SHOP"
+  ],
+  "promotions": [
+   "PROMOTION_BUSHWHACK5"
+  ],
+  "techs": [
+   "TECH_ASTROLOGY",
+   "TECH_CANAANISM",
+   "TECH_KARMA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FOLK_MEDICINE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_RESURRECTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 274
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/magic.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MAGIC",
+  "soundMP": "AS2D_TECH_MAGIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MAGIC",
+  "civilopedia": "TXT_KEY_TECH_MAGIC_PEDIA",
+  "quote": "TXT_KEY_TECH_MAGIC_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 29,
+  "gridY": 17
+ }
+}

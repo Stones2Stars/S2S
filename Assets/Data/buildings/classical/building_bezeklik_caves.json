@@ -1,0 +1,135 @@
+{
+ "type": "BUILDING_BEZEKLIK_CAVES",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_AESTHETICS",
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_BUDDHISM"
+    },
+    {
+     "type": "FEATURE_CAVES",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_BUDDHISM"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    8,
+    {
+     "value": 8,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_BUDDHISM"
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_BUDDHISM": {
+    "flat": 2
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "cost": {
+  "production": 1566,
+  "sizeModifier": 3,
+  "complexityModifier": 1,
+  "hurryModifier": 50
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CAVES"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BEZEKLIK_CAVES"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BUDDHIST"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BEZEKLIK_CAVES",
+  "civilopedia": "TXT_KEY_BUILDING_BEZEKLIK_CAVES_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 2,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "religion": "RELIGION_BUDDHISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "100.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

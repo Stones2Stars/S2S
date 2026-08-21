@@ -1,0 +1,21 @@
+{
+ "type": "UNITCOMBAT_QUALITY_STANDARD",
+ "hideAndSeek": {
+  "detection": {
+   "value": 800,
+   "unit": "HAS_SIZE"
+  }
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "sizeMatters": {
+  "qualityBase": 5
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/combat_quality_standard.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_QUALITY_STANDARD"
+ }
+}

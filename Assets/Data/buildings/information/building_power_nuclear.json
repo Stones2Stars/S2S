@@ -1,0 +1,44 @@
+{
+ "type": "BUILDING_POWER_NUCLEAR",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ARTIFICIAL_NUCLEOSYNTHESIS"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_KNOWLEDGE_MANAGEMENT",
+    "TECH_SUPERCONDUCTORS",
+    "TECH_ATOMPUNK"
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "flat": 200
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_POWER_NUCLEAR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_POWER_NUCLEAR",
+  "civilopedia": "TXT_KEY_BUILDING_POWER_NUCLEAR_PEDIA",
+  "notConstructible": true,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

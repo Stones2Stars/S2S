@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_HQ_MILEHIGH_TRAVELS_INTERNATIONAL",
+ "enables": {
+  "corporations": [
+   "CORPORATION_MILEHIGH"
+  ],
+  "units": [
+   "UNIT_EXECUTIVE_MILEHIGH"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    "TECH_TOURISM",
+    "TECH_CORPORATION",
+    {
+     "any": [
+      "BUILDING_MODERN_OFFICES",
+      "BUILDING_OFFICIUM",
+      "BUILDING_SKYSCRAPER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "gold": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "headquarters": "CORPORATION_MILEHIGH",
+ "disabled": "GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS",
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HQ_MILEHIGH_TRAVELS_INTERNATIONAL"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_MILEHIGH_TRAVELS_INTERNATIONAL",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MILEHIGH_PEDIA",
+  "pediaCategory": "greatWonder",
+  "notConstructible": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "specialBuildingType": "SPECIALBUILDING_CORPORATION_HQ",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

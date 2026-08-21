@@ -1,0 +1,18 @@
+{
+ "type": "PROMOTION_BUILD_UP_OBSERVATION3",
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_OBSERVATION": 5
+ },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Observation3BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_OBSERVATION3"
+ }
+}

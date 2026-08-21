@@ -1,0 +1,119 @@
+{
+ "type": "BUILDING_CRIME_GANG_WARFARE",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_URBAN_CULTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 1100,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    -4,
+    {
+     "value": -40,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -6,
+    {
+     "value": -40,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 8
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": 40
+   }
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -6
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "chance": {
+    "per": "PROPERTY_CRIME"
+   },
+   "action": {
+    "grant": {
+     "units": [
+      "UNIT_STREET_GANG"
+     ]
+    }
+   }
+  }
+ ],
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_GANG_WARFARE",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_GANG_WARFARE_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

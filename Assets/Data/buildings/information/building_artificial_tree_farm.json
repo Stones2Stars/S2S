@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_ARTIFICIAL_TREE_FARM",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHEMOSYNTHESIS_PLANT_FARM",
+   "BUILDING_MEGATOWER_AIR_SCRUBBER_CROWN_SECTION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ECOLOGICAL_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_STEEL_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TITANIUM_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_NANOTUBES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "cost": {
+  "production": 2105,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ARTIFICIAL_TREE_FARM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ARTIFICIAL_TREE_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_ARTIFICIAL_TREE_FARM_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

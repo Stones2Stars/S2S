@@ -1,0 +1,28 @@
+{
+ "type": "PROMOTIONLINE_BUILD_UP_FIELD_MECHANIC",
+ "buildUp": {
+  "active": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/FieldMechanic1BuildUp.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_FIELD_MECHANIC",
+  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_FIELD_MECHANIC_HELP",
+  "unitCombats": [
+   "UNITCOMBAT_HEALS_MECHANICAL"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SPY",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
+ }
+}

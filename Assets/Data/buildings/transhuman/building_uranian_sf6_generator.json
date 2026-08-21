@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_URANIAN_SF6_GENERATOR",
+ "enables": {
+  "buildings": [
+   "BUILDING_TERRAFORMED_OBERON",
+   "BUILDING_TERRAFORMED_TITANIA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_URANIAN_LUNAR_HEATING",
+    "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+    {
+     "type": "TERRAIN_UMBRIEL",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1650,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_URANIAN_SF6_GENERATOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_URANIAN_SF6_GENERATOR",
+  "civilopedia": "TXT_KEY_BUILDING_URANIAN_SF6_GENERATOR_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

@@ -1,0 +1,74 @@
+{
+ "type": "TECH_KNOWLEDGE_MERCANTILISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_INSTANT_EDUCATION_CENTER",
+   "BUILDING_OPEN_SOURCE_TECHNOLOGY",
+   "BUILDING_TRANSDISCIPLINARY_UNIVERSITY",
+   "BUILDING_UNIVERSAL_LIBRARY"
+  ],
+  "civics": [
+   "CIVIC_INSTANT"
+  ],
+  "techs": [
+   "TECH_TERRA_COMPUTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMPREHENSIVE_CYBERNETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TECHNOLOGICAL_SINGULARITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 75052
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/knowledgemercantilism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_KNOWLEDGE_MERCANTILISM",
+  "soundMP": "AS2D_TECH_KNOWLEDGE_MERCANTILISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_KNOWLEDGE_MERCANTILISM",
+  "civilopedia": "TXT_KEY_TECH_KNOWLEDGE_MERCANTILISM_PEDIA",
+  "quote": "TXT_KEY_TECH_KNOWLEDGE_MERCANTILISM_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 116,
+  "gridY": 7
+ }
+}

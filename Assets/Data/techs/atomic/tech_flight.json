@@ -1,0 +1,107 @@
+{
+ "type": "TECH_FLIGHT",
+ "enables": {
+  "bonuses": [
+   "BONUS_AIRCRAFT"
+  ],
+  "buildings": [
+   "BUILDING_AIRPORT",
+   "BUILDING_AIR_SHIPPING_WAREHOUSE",
+   "BUILDING_FACTORY_AIRCRAFT",
+   "BUILDING_FIRE_HANGAR",
+   "BUILDING_FLAK_TOWER",
+   "BUILDING_FLIGHT_SCHOOL",
+   "BUILDING_NATIONAL_AIRCRAFT_MUSEUM"
+  ],
+  "promotions": [
+   "PROMOTION_INTERCEPTION1",
+   "PROMOTION_REPAIR_AIRCRAFT",
+   "PROMOTION_REPAIR_AIRCRAFT1",
+   "PROMOTION_REPAIR_MECHANICAL",
+   "PROMOTION_TRANSPORT_FIGHTERS",
+   "PROMOTION_TRANSPORT_FIGHTERS1",
+   "PROMOTION_TRANSPORT_FIGHTERS2",
+   "PROMOTION_TRANSPORT_FIGHTERS3",
+   "PROMOTION_TRANSPORT_SEAPLANES",
+   "PROMOTION_TRANSPORT_SEAPLANES1",
+   "PROMOTION_TRANSPORT_SEAPLANES2",
+   "PROMOTION_TRANSPORT_SEAPLANES3"
+  ],
+  "techs": [
+   "TECH_AVIATION",
+   "TECH_NAVAL_FLIGHT",
+   "TECH_ZEPPELINS"
+  ],
+  "units": [
+   "UNIT_ABDUL_RAZAK_HUSSEIN",
+   "UNIT_AUSTIN_WONAEAMIRRI",
+   "UNIT_AVIATION_TECHNICIAN",
+   "UNIT_DEWI_SARTIKA",
+   "UNIT_EARLY_FIGHTER",
+   "UNIT_ERWIN_ROMMEL",
+   "UNIT_JULES_WIJDENBOSCH",
+   "UNIT_WILLIAM_MARINER",
+   "UNIT_YAMAMOTO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BALLOON_WARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ATOMIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 9484
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Flight.dds,Art/Interface/Buttons/TechTree_Atlas.dds,4,10"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_FLIGHT",
+  "soundMP": "AS2D_TECH_MP_FLIGHT"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_FLIGHT",
+  "civilopedia": "TXT_KEY_TECH_FLIGHT_PEDIA",
+  "quote": "TXT_KEY_TECH_FLIGHT_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 8,
+  "tradeable": true,
+  "gridX": 72,
+  "gridY": 19
+ }
+}

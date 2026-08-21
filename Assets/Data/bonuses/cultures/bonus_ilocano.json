@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_ILOCANO",
+ "enables": {
+  "units": [
+   "UNIT_BILOG",
+   "UNIT_ELPIDIO_QUIRINO"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ILOCANO"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ILOCANO",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

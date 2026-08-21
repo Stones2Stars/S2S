@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_SAFETY_GREAT_FIREWALL",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "any": [
+      "CIVIC_INQUISITORIAL",
+      "CIVIC_TOTALITARIANISM",
+      "CIVIC_MARXIST",
+      "CIVIC_PROPAGANDA",
+      "CIVIC_SINGLE_PARTY",
+      "CIVIC_GRID"
+     ]
+    },
+    "TECH_CYBERWARFARE"
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": -5
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": -5
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": 10
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "empire": {
+   "flat": -10
+  }
+ },
+ "allowedSpecialists": {
+  "empire": {
+   "SPECIALIST_SPY": 1
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SAFETY_GREAT_FIREWALL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SAFETY_GREAT_FIREWALL",
+  "civilopedia": "TXT_KEY_BUILDING_SAFETY_GREAT_FIREWALL_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

@@ -1,0 +1,111 @@
+{
+ "type": "BUILDING_MEGATOWER_RESEARCH_LEVEL",
+ "enables": {
+  "buildings": [
+   "BUILDING_EXOTIC_MATTER_LAB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MEGATOWER",
+    "BUILDING_LABORATORY",
+    "TECH_NANO_ARCHITECTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_METAMATERIALS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HUMAN_MOD_COGNITIVE_ENHANCEMENT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TRANSPARENT_ALUMINUM",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 13
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 3245,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MEGATOWER_RESEARCH_LEVEL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MEGATOWER_RESEARCH_LEVEL",
+  "civilopedia": "TXT_KEY_BUILDING_MEGATOWER_RESEARCH_LEVEL_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

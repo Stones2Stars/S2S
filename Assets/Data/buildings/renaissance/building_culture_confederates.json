@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_CULTURE_CONFEDERATES",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_NORTH_AMERICAN",
+    "BUILDING_C_L_NORTH_AMERICAN",
+    "BUILDING_C_AC_EUROPEAN",
+    "TECH_CONSTITUTION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COTTON",
+     "scope": "city",
+     "vicinity": "owned"
+    },
+    "CIVIC_CONFEDERACY"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_CONFEDERATE"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 3210,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_CONFEDERATES",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_CONFEDERATES",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_CONFEDERATES_PEDIA",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,59 @@
+{
+ "type": "TECH_MORMON",
+ "enables": {
+  "religions": [
+   "RELIGION_MORMON"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AGRICULTURAL_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 6673
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/mormonism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MORMON",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MORMON",
+  "civilopedia": "TXT_KEY_TECH_MORMON_PEDIA",
+  "quote": "TXT_KEY_TECH_MORMON_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 8,
+  "gridX": 67,
+  "gridY": 3
+ }
+}

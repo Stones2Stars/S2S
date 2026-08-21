@@ -1,0 +1,181 @@
+{
+ "type": "UNIT_POST_APOCALYPTIC_GRENADIER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GUERRILLA_WARFARE",
+    {
+     "any": [
+      {
+       "type": "BONUS_ALCOHOL",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TAR",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_OLIVE_OIL",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_FISH_OIL",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_GHEE_OIL",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_WHALE_OIL",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_KEROSENE",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GRENADIER",
+     "UNIT_ANCIENT_FLAMETHROWER"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 20
+   },
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 13
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 17
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 2
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 5
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 6
+   },
+   "limit": {
+    "flat": 17
+   },
+   "maxUnits": {
+    "flat": 2
+   }
+  }
+ },
+ "skills": [
+  "pillage",
+  "ignoreBuildingDefense"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_THROWING",
+ "combatClasses": [
+  "UNITCOMBAT_GUN",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_KNIFE",
+  "UNITCOMBAT_WEAPON_DIST_EXPLOSIVE_FLASK",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 773,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_POST_APOCALYPTIC_GRENADIER",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_POST_APOCALYPTIC_GRENADIER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_POST_APOCALYPTIC_GRENADIER",
+  "civilopedia": "TXT_KEY_UNIT_APOCALYPSE_URBAN_CROSSBOWMAN_PEDIA",
+  "worth": 3,
+  "militaryWorth": 20,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_ESCORT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

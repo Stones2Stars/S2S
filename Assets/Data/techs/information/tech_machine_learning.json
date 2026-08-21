@@ -1,0 +1,78 @@
+{
+ "type": "TECH_MACHINE_LEARNING",
+ "enables": {
+  "buildings": [
+   "BUILDING_DIGITAL_ADVERTISING_FIRM",
+   "BUILDING_MECHATRONICS_LAB",
+   "BUILDING_SPEECH_RECOGNITION_SOFTWARE",
+   "BUILDING_YUTU"
+  ],
+  "builds": [
+   "BUILD_BREAK_ICE",
+   "BUILD_FISHING_BOATS",
+   "BUILD_HARVEST_KELP",
+   "BUILD_LIGHTHOUSE_CORAL",
+   "BUILD_LIGHTHOUSE_REEF",
+   "BUILD_SEA_MILL",
+   "BUILD_TIDAL_HARNESS",
+   "BUILD_WHALING_SHIPS"
+  ],
+  "promotions": [
+   "PROMOTION_RECOVER_TECH3"
+  ],
+  "techs": [
+   "TECH_AUTONOMOUS_VEHICLES",
+   "TECH_POWERED_EXOSKELETON"
+  ],
+  "units": [
+   "UNIT_CONSTRUCT_SHIP",
+   "UNIT_WALKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NEURAL_NETWORKS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 23650
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Sentient_robots.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MACHINE_LEARNING",
+  "soundMP": "AS2D_TECH_MACHINE_LEARNING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MACHINE_LEARNING",
+  "civilopedia": "TXT_KEY_TECH_MACHINE_LEARNING_PEDIA",
+  "quote": "TXT_KEY_TECH_MACHINE_LEARNING_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 92,
+  "gridY": 11
+ }
+}

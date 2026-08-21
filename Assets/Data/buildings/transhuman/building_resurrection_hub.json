@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_RESURRECTION_HUB",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEATH_COMBAT_ARENA",
+   "BUILDING_HUMAN_MOD_INDEFINITE_LIFESPAN",
+   "BUILDING_ULTIMATE_COMBAT_ARENA"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ASTROANTHROPOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_NANOMORPHIC_REPLICATOR"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_GESTATION_TANKS",
+    "BUILDING_UTERINE_REPLICATOR",
+    "BUILDING_ANIMA_STUDIO",
+    "BUILDING_BODY_EXCHANGE_CLINIC",
+    "TECH_ARTIFICIAL_LIFE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_NANOMORPHIC_REPLICATOR"
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_WORKER_ANDROID": {
+     "percent": 10
+    },
+    "UNIT_FERAL": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 5,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE"
+   }
+  },
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 5,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_ANIMALS"
+   }
+  }
+ ],
+ "cost": {
+  "production": 5905,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESURRECTION_HUB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESURRECTION_HUB",
+  "civilopedia": "TXT_KEY_BUILDING_RESURRECTION_HUB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

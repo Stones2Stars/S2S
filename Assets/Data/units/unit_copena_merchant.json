@@ -1,0 +1,149 @@
+{
+ "type": "UNIT_COPENA_MERCHANT",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENGINEERING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HOPEWELL",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_CARAVAN_POST",
+    "TECH_TRADE"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SUPPLY_TRAIN"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_TRADE_CARAVAN"
+  }
+ },
+ "skills": [
+  "noCapture",
+  "ignoreTerrainCost",
+  "noNonTypeProdMods",
+  "onlyDefensive",
+  "rivalTerritory"
+ ],
+ "tags": [
+  "merchant",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_TRADE",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_STAFF",
+  "UNITCOMBAT_WEAPON_DIST_SLING",
+  "UNITCOMBAT_MOTILITY_ANIMAL_DRAWN",
+  "UNITCOMBAT_ASSISTED_MULE",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_HURRY_PRODUCTION_CARAVAN",
+    "requires": {
+     "outcome": "OUTCOME_HURRY_PRODUCTION_CARAVAN"
+    },
+    "chance": 100,
+    "production": 104
+   }
+  ]
+ },
+ "grants": {
+  "greatPersonAction": {
+   "trade": {
+    "base": 30,
+    "multiplier": 1
+   }
+  }
+ },
+ "cost": {
+  "production": 130,
+  "upkeep": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_COPENA_MERCHANT",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_COPENA_MERCHANT"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_COPENA_MERCHANT",
+  "civilopedia": "TXT_KEY_UNIT_COPENA_MERCHANT_PEDIA",
+  "worth": 1,
+  "animalCombat": 100,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MERCHANT",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_MERCHANT",
+   "UNITAI_ENGINEER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_EXPLORE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

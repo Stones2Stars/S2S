@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_FRESCO_MURAL",
+ "enables": {
+  "buildings": [
+   "BUILDING_LASCAUX_PAINTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_IDEOGRAMS",
+    {
+     "any": [
+      "BUILDING_ROCK_ART",
+      "BUILDING_EFFECT_LASCAUX_CAVES",
+      "BUILDING_ANCIENT_CUSTOMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DYE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_CHALK",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_HAEMATITE_ORE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 118,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FRESCO_MURAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FRESCO_MURAL",
+  "civilopedia": "TXT_KEY_BUILDING_FRESCO_MURAL_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

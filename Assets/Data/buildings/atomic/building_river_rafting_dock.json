@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_RIVER_RAFTING_DOCK",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WEATHER_CONTROL"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ATHLETIC_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "TECH_EXTREME_SPORTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_ATHLETIC_MEGACOMPLEX"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1605,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RIVER_RAFTING_DOCK",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RIVER_RAFTING_DOCK",
+  "civilopedia": "TXT_KEY_BUILDING_RIVER_RAFTING_DOCK_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,47 @@
+{
+ "type": "CIVIC_OFF_PLANET_DUMPING",
+ "enables": {
+  "buildings": [
+   "BUILDING_GARBAGE_SPACEPORT"
+  ]
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": -15
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "civics": {
+    "CIVIC_WASTE_TO_SEA": {
+     "flat": -1
+    },
+    "CIVIC_WASTE_EXPORTATION": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/garbage_off_planet_dumping.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_OFF_PLANET_DUMPING",
+  "civilopedia": "TXT_KEY_CIVIC_OFF_PLANET_DUMPING_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_OFF_PLANET_DUMPING_STRATEGY",
+  "civicOption": "CIVICOPTION_GARBAGE",
+  "upkeepLevel": "UPKEEP_EXTREME"
+ }
+}

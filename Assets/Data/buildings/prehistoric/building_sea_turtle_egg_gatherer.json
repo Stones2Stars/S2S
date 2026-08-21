@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_SEA_TURTLE_EGG_GATHERER",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_EGGS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INDUSTRIAL_FARMS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FISHING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_SEA_LION_AND_SEAL",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_CLAM",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ]
+  }
+ },
+ "food": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 160,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SEA_TURTLE_EGG_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SEA_TURTLE_EGG_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_SEA_TURTLE_EGG_GATHERER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

@@ -1,0 +1,130 @@
+{
+ "type": "BUILDING_WONDER_OF_NATURE_VICTORIA_FALLS",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_LANGUAGE",
+    {
+     "type": "FEATURE_PLATY_VICTORIA_FALLS",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 2,
+     "enabled": "TECH_RAFT_BUILDING"
+    },
+    {
+     "value": 2,
+     "enabled": "TECH_SPEARFISHING"
+    },
+    {
+     "value": 2,
+     "enabled": "TECH_AGRICULTURE"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 10,
+     "enabled": "TECH_TOURISM"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 5,
+     "enabled": "TECH_ARCHEOLOGY"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 5,
+     "enabled": "TECH_ANIMISM"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": {
+    "value": 5,
+    "enabled": "TECH_EXPLORATION"
+   }
+  }
+ },
+ "cost": {
+  "production": 10,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "providesFreshWater": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_VICTORIA_FALLS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_VICTORIA_FALLS",
+  "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_VICTORIA_FALLS_PEDIA",
+  "worth": 4,
+  "conquestProbability": 70,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

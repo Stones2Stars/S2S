@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_INTERGALACTIC_RESEARCH_BASE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INTERGALACTIC_COLONIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_INTERGALACTIC_RESEARCH_BASE"
+ },
+ "cost": {
+  "gold": 700,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/intergalactic_research_base.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_INTERGALACTIC_RESEARCH_BASE"
+ }
+}

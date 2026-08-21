@@ -1,0 +1,154 @@
+{
+ "type": "BUILDING_AKSHARDHAM",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_AESTHETICS",
+    "TECH_CONSTRUCTION",
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_HINDUISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "RELIGION_HINDUISM"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 4,
+   "percent": 12
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_HINDUISM"
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2,
+   "percent": 25
+  }
+ },
+ "hurryAnger": {
+  "city": {
+   "percent": -50
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_HINDUISM": {
+    "flat": 6
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 1566,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 50
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_AKSHARDHAM"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_AKSHARDHAM"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HINDU"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_AKSHARDHAM",
+  "civilopedia": "TXT_KEY_BUILDING_AKSHARDHAM_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 2,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "religion": "RELIGION_HINDUISM",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": "100.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

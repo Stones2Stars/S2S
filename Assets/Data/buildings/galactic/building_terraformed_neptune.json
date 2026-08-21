@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_TERRAFORMED_NEPTUNE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_BISHOP_RING",
+    "BUILDING_NEPTUNE_CHANDELIER_CITY",
+    "TECH_JOVIAN_TERRAFORMING",
+    {
+     "type": "TERRAIN_NEPTUNE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "cost": {
+  "production": 42829,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TERRAFORMED_NEPTUNE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TERRAFORMED_NEPTUNE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TERRAFORMED_NEPTUNE",
+  "civilopedia": "TXT_KEY_BUILDING_TERRAFORMED_NEPTUNE_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

@@ -1,0 +1,144 @@
+{
+ "type": "BUILDING_MODERN_CRANE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BUNGEE_JUMPING_SITE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HIGH_TECH_CRANE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CONSTRUCTION_FIRM",
+    "TECH_ELECTRONICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_PETROLEUM_PRODUCTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BIOFUEL",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_HIGH_TECH_CRANE"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 30
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": -10,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   },
+   "buildings": {
+    "BUILDING_SKYSCRAPER": {
+     "percent": 10
+    },
+    "BUILDING_CASTLE": {
+     "percent": 10
+    },
+    "BUILDING_STAR_FORT": {
+     "percent": 10
+    },
+    "BUILDING_WALLS": {
+     "percent": 10
+    },
+    "BUILDING_HIGH_WALLS": {
+     "percent": 10
+    },
+    "BUILDING_BARRICADES": {
+     "percent": 10
+    },
+    "BUILDING_CEMENT_BARRIER": {
+     "percent": 10
+    },
+    "BUILDING_METAMATERIAL_WALLS": {
+     "percent": 10
+    },
+    "BUILDING_SUPERSTRONG_ALLOY_WALLS": {
+     "percent": 10
+    },
+    "BUILDING_MEGASTRONG_ALLOY_WALLS": {
+     "percent": 10
+    },
+    "BUILDING_IMPERIAL_FORTRESS": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 1080,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MODERN_CRANE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MODERN_CRANE",
+  "civilopedia": "TXT_KEY_BUILDING_MODERN_CRANE_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,163 @@
+{
+ "type": "CIVIC_GERONTOCRACY",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_TIME_ABYSS"
+  ],
+  "specialists": [
+   "SPECIALIST_NOBLE"
+  ]
+ },
+ "production": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 3,
+   "cities": {
+    "flat": [
+     {
+      "value": 5,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 25
+   },
+   "numCities": {
+    "percent": 20
+   },
+   "percent": [
+    {
+     "value": 10,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 10,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
+   "corporation": {
+    "percent": 10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": [
+     {
+      "value": 20,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
+   },
+   "unitMilitary": {
+    "percent": 10
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": 1
+   },
+   "national": {
+    "flat": 2
+   },
+   "distanceModifier": {
+    "percent": 30
+   },
+   "democracyLevel": {
+    "flat": -6
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": 20,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "grants": {
+  "revolution": 50
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/government_gerontocracy.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_GERONTOCRACY",
+  "civilopedia": "TXT_KEY_CIVIC_GERONTOCRACY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_GERONTOCRACY_STRATEGY",
+  "civicOption": "CIVICOPTION_GOVERNMENT",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_HIGH",
+  "weLoveTheKing": "TXT_KEY_CIVIC_WE_LOVE_MONARCH"
+ }
+}

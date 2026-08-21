@@ -1,0 +1,43 @@
+{
+ "type": "PROJECT_HUBBLE_SPACE_TELESCOPE",
+ "enables": {
+  "specialBuildings": [
+   "SPECIALBUILDING_DEEP_SPACE_RESEARCH_INSTITUTE"
+  ]
+ },
+ "allowed": {
+  "world": 1
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "create": 11800
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_HUBBLE"
+   },
+   "icon": "art/Interface/Buttons/Projects/hubble.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROJECT_HUBBLE_SPACE_TELESCOPE",
+  "civilopedia": "TXT_KEY_PROJECT_HUBBLE_SPACE_TELESCOPE_PEDIA",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

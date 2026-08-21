@@ -1,0 +1,28 @@
+{
+ "type": "PROMOTIONLINE_ENHANCED_MARCH",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/ForcedMarchStatus.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_ENHANCED_MARCH",
+  "unitCombats": [
+   "UNITCOMBAT_MOTILITY_FOOT",
+   "UNITCOMBAT_MOTILITY_RIDING",
+   "UNITCOMBAT_MOTILITY_ANIMAL_DRAWN",
+   "UNITCOMBAT_MOTILITY_DRIVING"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_CAPTAIN",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_STRIKE_TEAM",
+   "UNITCOMBAT_RUFFIAN"
+  ]
+ }
+}

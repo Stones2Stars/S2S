@@ -1,0 +1,62 @@
+{
+ "type": "TECH_CONSCIOUSNESS",
+ "enables": {
+  "buildings": [
+   "BUILDING_TRANCE_HUT"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_CLEVERNESS3"
+  ],
+  "techs": [
+   "TECH_ANCESTOR_WORSHIP",
+   "TECH_FOLK_MEDICINE",
+   "TECH_POLYTHEISM",
+   "TECH_SACRIFICE_CULT",
+   "TECH_TENGRIISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMMUNITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 96
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/consciousness.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CONSCIOUSNESS",
+  "soundMP": "AS2D_TECH_CONSCIOUSNESS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CONSCIOUSNESS",
+  "civilopedia": "TXT_KEY_TECH_CONSCIOUSNESS_PEDIA",
+  "quote": "TXT_KEY_TECH_CONSCIOUSNESS_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 21,
+  "gridY": 13
+ }
+}

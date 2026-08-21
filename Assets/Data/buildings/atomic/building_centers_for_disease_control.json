@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_CENTERS_FOR_DISEASE_CONTROL",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LABORATORY",
+    {
+     "type": "BUILDING_LABORATORY",
+     "scope": "empire",
+     "min": 3,
+     "scaling": "amountBuildings"
+    },
+    "TECH_MODERN_HEALTH_CARE",
+    {
+     "any": [
+      "BUILDING_HOSPITAL",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
+ "cost": {
+  "production": 2560,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CDC"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CENTERS_FOR_DISEASE_CONTROL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CENTERS_FOR_DISEASE_CONTROL",
+  "civilopedia": "TXT_KEY_BUILDING_CENTERS_FOR_DISEASE_CONTROL_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 8,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

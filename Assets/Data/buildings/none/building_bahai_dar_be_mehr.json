@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_BAHAI_DAR_BE_MEHR",
+ "enables": {
+  "buildings": [
+   "BUILDING_LOTUS_TEMPLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_BAHAI_TEMPLE",
+    "TECH_MUSICAL_NOTATION",
+    {
+     "any": [
+      "BUILDING_CITY_COUNCIL",
+      "BUILDING_METROPOLITAN_ADMINISTRATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_BAHAI"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_COPPER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_BAHAI"
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 2
+  }
+ },
+ "cost": {
+  "production": 630,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BAHAI_DAR_BE_MEHR"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BAHAI_DAR_BE_MEHR",
+  "civilopedia": "TXT_KEY_BUILDING_BAHAI_DAR_BE_MEHR_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 6,
+  "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",
+  "religion": "RELIGION_BAHAI",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

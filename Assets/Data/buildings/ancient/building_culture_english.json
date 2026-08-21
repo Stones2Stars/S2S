@@ -1,0 +1,132 @@
+{
+ "type": "BUILDING_CULTURE_ENGLISH",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "BUILDING_C_AC_EUROPEAN",
+    "BUILDING_C_L_EUROPEAN",
+    "TECH_MONARCHY",
+    {
+     "any": [
+      {
+       "type": "FEATURE_FOREST_YOUNG",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_ANCIENT",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_BURNT",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_APPLE",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ENGLISH"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_GLOBE_THEATRE": {
+     "percent": 10
+    },
+    "BUILDING_HADRIANS_WALL": {
+     "percent": 10
+    },
+    "BUILDING_ISAAC_NEWTONS_COLLEGE": {
+     "percent": 10
+    },
+    "BUILDING_EU_OXFORD_UNIVERSITY": {
+     "percent": 10
+    },
+    "BUILDING_STONEHENGE": {
+     "percent": 10
+    },
+    "BUILDING_EAST_INDIA_COMPANY": {
+     "percent": 10
+    },
+    "BUILDING_KINGS_CRUSADE": {
+     "percent": 10
+    },
+    "BUILDING_BIG_BEN": {
+     "percent": 10
+    },
+    "BUILDING_FIELD_OF_THE_CLOTH_OF_GOLD": {
+     "percent": 10
+    },
+    "BUILDING_LONDON_EYE": {
+     "percent": 10
+    },
+    "BUILDING_221B_BAKER_STREET": {
+     "percent": 10
+    },
+    "BUILDING_CRYSTAL_PALACE": {
+     "percent": 10
+    },
+    "BUILDING_SCARBOROUGH_FAIR": {
+     "percent": 10
+    },
+    "BUILDING_WESTMINSTER_ABBEY": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 1200,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_ENGLISH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_ENGLISH",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_ENGLISH_PEDIA",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

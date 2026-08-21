@@ -1,0 +1,190 @@
+{
+ "type": "BUILDING_MARKET",
+ "enables": {
+  "buildings": [
+   "BUILDING_SCARBOROUGH_FAIR",
+   "BUILDING_TROYES_TRADE_FAIR"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PLASTIC_ELECTRONICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SUPERMARKET"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRADE",
+    {
+     "any": [
+      "BUILDING_BARTER_POST",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_SUPERMARKET",
+    "BUILDING_HYPERMARKET"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BREAD",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MILK",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CHEESE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_EGGS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HONEY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DRIED_FRUIT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DRIED_FISH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DRIED_MEAT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LARD",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CANDY",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "cost": {
+  "production": 153,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARKET"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MARKETPLACE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARKET",
+  "civilopedia": "TXT_KEY_BUILDING_MARKET_PEDIA",
+  "worth": 3,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,38 @@
+{
+ "type": "FEATURE_BLUE_DWARF",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_BLUE_DWARF"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_ASTEROIDS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_BLUE_DWARF",
+  "civilopedia": "TXT_KEY_FEATURE_BLUE_DWARF_PEDIA",
+  "validTerrains": [
+   "TERRAIN_ORION_ARM",
+   "TERRAIN_MILKY_WAY"
+  ]
+ }
+}

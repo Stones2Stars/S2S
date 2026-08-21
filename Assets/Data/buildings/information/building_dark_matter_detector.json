@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_DARK_MATTER_DETECTOR",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_OBSERVATORY",
+    "TECH_IMAGINARY_PHYSICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    12,
+    {
+     "value": 9,
+     "enabled": "TECH_PHOTON_THERMODYNAMICS"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_UNIFICATION_PHYSICS"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 2205,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DARK_MATTER_DETECTOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DARK_MATTER_DETECTOR",
+  "civilopedia": "TXT_KEY_BUILDING_DARK_MATTER_DETECTOR_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

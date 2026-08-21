@@ -1,0 +1,40 @@
+{
+ "type": "BUILDING_INTERGALACTIC_HERO_ACADEMY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_COMMAND_CENTER",
+    "TECH_NOOGENESIS",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "cost": {
+  "production": 4246,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_HERO_ACADEMY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_HERO_ACADEMY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_HERO_ACADEMY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

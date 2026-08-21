@@ -1,0 +1,74 @@
+{
+ "type": "TECH_TELEPHONE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CALL_CENTER",
+   "BUILDING_HOUSING_APARTMENTS",
+   "BUILDING_HOUSING_BOONDOCKS",
+   "BUILDING_HOUSING_CONDOMINIUMS",
+   "BUILDING_HOUSING_GHETTOS",
+   "BUILDING_HOUSING_HIGHRISES",
+   "BUILDING_HOUSING_MANSIONS",
+   "BUILDING_HOUSING_PENTHOUSE_SUITES",
+   "BUILDING_HOUSING_PROJECTS",
+   "BUILDING_HOUSING_SUBURBS",
+   "BUILDING_POLICE_BOX",
+   "BUILDING_POLLING_FIRM",
+   "BUILDING_TELEPHONE_NETWORK"
+  ],
+  "techs": [
+   "TECH_MANAGEMENT",
+   "TECH_RADIO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TELEGRAPH",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ELECTRICITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 7008
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Buttons/Techs/telephone.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TELEPHONE",
+  "civilopedia": "TXT_KEY_TECH_TELEPHONE_PEDIA",
+  "quote": "TXT_KEY_TECH_TELEPHONE_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 68,
+  "gridY": 9
+ }
+}

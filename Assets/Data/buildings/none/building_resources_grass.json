@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_RESOURCES_GRASS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SENTIENT_EARTH"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AGROFOREST"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_AGROFOREST"
+   ],
+   "all": [
+    {
+     "any": [
+      "BUILDING_GRASS_GATHERER",
+      "BUILDING_WONDER_OF_NATURE_BASALT_ORGAN"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_GRASS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESOURCES_GRASS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_GRASS",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

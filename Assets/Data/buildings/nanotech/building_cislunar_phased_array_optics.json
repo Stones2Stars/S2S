@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_CISLUNAR_PHASED_ARRAY_OPTICS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_MATERIALS_LAB",
+    "TECH_PHOTON_THERMODYNAMICS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 1144,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_PHASED_ARRAY_OPTICS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_PHASED_ARRAY_OPTICS",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_PHASED_ARRAY_OPTICS_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

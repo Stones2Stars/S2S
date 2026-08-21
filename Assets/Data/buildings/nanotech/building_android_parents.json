@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_ANDROID_PARENTS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SOCIABLE_ROBOTS",
+    "TECH_CYBERSOCIAL_INTEGRATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ANDROIDS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 10,
+     "enabled": "TECH_SAPIENTROIDS"
+    }
+   ]
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 4655,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANDROID_PARENTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANDROID_PARENTS",
+  "civilopedia": "TXT_KEY_BUILDING_ANDROID_PARENTS_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "type": "BONUS_TIN_WARES",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARMOURER",
+   "BUILDING_CANNERY",
+   "BUILDING_CLOCKWORK_WORKSHOP",
+   "BUILDING_TOY_MAKER",
+   "BUILDING_WEATHER_VANES"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TIN_WARES"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TIN_WARES",
+  "civilopedia": "TXT_KEY_BONUS_WARES_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_EUROPA_CITY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EUROPA_COLONY",
+    "TECH_COLONY_ARCOLOGY",
+    {
+     "type": "TERRAIN_EUROPA",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -5
+   }
+  }
+ },
+ "cost": {
+  "production": 4123,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EUROPA_CITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EUROPA_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_EUROPA_CITY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

@@ -1,0 +1,145 @@
+{
+ "type": "BUILDING_THE_ISHTAR_GATE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RIFLING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_AESTHETICS",
+    "TECH_GLASS_BLOWING",
+    {
+     "STATE_RELIGION": "RELIGION_MESOPOTAMISM"
+    },
+    {
+     "any": [
+      "BUILDING_WALLS",
+      "BUILDING_HIGH_WALLS",
+      "BUILDING_BARRICADES",
+      "BUILDING_CEMENT_BARRIER",
+      "BUILDING_METAMATERIAL_WALLS",
+      "BUILDING_SUPERSTRONG_ALLOY_WALLS",
+      "BUILDING_MEGASTRONG_ALLOY_WALLS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_MESOPOTAMISM",
+    {
+     "type": "BONUS_GLASSWARE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    8,
+    {
+     "value": 8,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "cost": {
+  "production": 1566,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_ESPIONAGE": 10
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_MILITARY": 2
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ISHTAR"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_THE_ISHTAR_GATE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_THE_ISHTAR_GATE",
+  "civilopedia": "TXT_KEY_BUILDING_THE_ISHTAR_GATE_PEDIA",
+  "help": "TXT_KEY_BUILDING_THE_ISHTAR_GATE_HELP",
+  "pediaCategory": "religious",
+  "stateReligionCommerce": {
+   "espionage": 1
+  },
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "religion": "RELIGION_MESOPOTAMISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

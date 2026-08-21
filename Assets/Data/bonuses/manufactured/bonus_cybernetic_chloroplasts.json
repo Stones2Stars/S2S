@@ -1,0 +1,22 @@
+{
+ "type": "BONUS_CYBERNETIC_CHLOROPLASTS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CYBER_CHLOROPLASTIDA_BLOOM",
+   "BUILDING_GREEN_FLOAT",
+   "BUILDING_PHOTOSYNTHESIS_BOUTIQUE",
+   "BUILDING_PROGRAMMABLE_PLANT_FARM"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CYBERNETIC_CHLOROPLASTS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CYBERNETIC_CHLOROPLASTS",
+  "civilopedia": "TXT_KEY_BONUS_CYBERNETIC_CHLOROPLASTS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

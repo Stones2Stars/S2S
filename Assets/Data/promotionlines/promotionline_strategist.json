@@ -1,0 +1,11 @@
+{
+ "type": "PROMOTIONLINE_STRATEGIST",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitStrategist.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_STRATEGIST"
+ }
+}

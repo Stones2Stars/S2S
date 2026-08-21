@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_RESOURCES_PELTS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INDUSTRIAL_FARMS"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ],
+   "all": [
+    {
+     "any": [
+      "BUILDING_ANIMAL_PRESERVE",
+      "BUILDING_TRAP_BEAVER",
+      "BUILDING_CAMP_BELUGA",
+      "BUILDING_BREEDING_PROGRAM_BEAVER",
+      "BUILDING_BREEDING_PROGRAM_BELUGA",
+      "BUILDING_BREEDING_PROGRAM_CHINCHILLA",
+      "BUILDING_BREEDING_PROGRAM_ELEPHANT_SEAL",
+      "BUILDING_BREEDING_PROGRAM_FOX",
+      "BUILDING_BREEDING_PROGRAM_MINK",
+      "BUILDING_BREEDING_PROGRAM_RABBIT",
+      "BUILDING_BREEDING_PROGRAM_RACCOON",
+      "BUILDING_BREEDING_PROGRAM_SEAL",
+      "BUILDING_BREEDING_PROGRAM_SEA_OTTER",
+      "BUILDING_TRAP_CHINCHILLA",
+      "BUILDING_CAMP_ELEPHANT_SEAL",
+      "BUILDING_TRAP_FOX",
+      "BUILDING_TRAP_MINK",
+      "BUILDING_TRAP_SEA_OTTER",
+      "BUILDING_TRAP_RABBIT",
+      "BUILDING_TRAP_RACCOON",
+      "BUILDING_CAMP_SEAL"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_PELTS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESOURCES_PELTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_PELTS",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

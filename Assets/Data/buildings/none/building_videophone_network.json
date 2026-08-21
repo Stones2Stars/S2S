@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_VIDEOPHONE_NETWORK",
+ "enables": {
+  "buildings": [
+   "BUILDING_HOUSING_MID_CLASS_SKYPAD_APARTMENTS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_VIRTUAL_SOCIETY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_COMPUTER_NETWORK"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TELEPHONE_NETWORK",
+    "TECH_ATOMPUNK",
+    {
+     "type": "BONUS_COPPER_WIRES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_TELEVISIONS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ATOMPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ],
+   "dormant": [
+    "BUILDING_COMPUTER_NETWORK"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VIDEOPHONE_NETWORK",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VIDEOPHONE_NETWORK",
+  "civilopedia": "TXT_KEY_BUILDING_VIDEOPHONE_NETWORK_PEDIA",
+  "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

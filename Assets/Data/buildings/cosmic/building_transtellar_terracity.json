@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_TRANSTELLAR_TERRACITY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TRANSTELLAR_ALDERSON_DISK",
+    "TECH_ULTIMA_ARCHITECTURE",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -5
+   }
+  }
+ },
+ "cost": {
+  "production": 5515,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_TERRACITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_TERRACITY",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_TERRACITY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

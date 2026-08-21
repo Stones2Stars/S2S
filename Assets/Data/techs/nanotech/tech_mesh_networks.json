@@ -1,0 +1,73 @@
+{
+ "type": "TECH_MESH_NETWORKS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ADVANCED_QUALITY_CONTROL",
+   "BUILDING_CISLUNAR_SATELLITE_FACTORY",
+   "BUILDING_DISTRIBUTED_SOCIAL_NETWORK",
+   "BUILDING_FACTORY_NANOGENERATORS",
+   "BUILDING_NOMAD_SKYSCRAPER"
+  ],
+  "civics": [
+   "CIVIC_POLYSTATE"
+  ],
+  "techs": [
+   "TECH_AUTOMATED_ROBOTICS",
+   "TECH_HOLOGRAPHICS",
+   "TECH_MEGACORPORATIONS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_UBIQUITOUS_COMPUTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 37614
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/mesh_network.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,3,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MESH_NETWORKS",
+  "soundMP": "AS2D_TECH_MESH_NETWORKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MESH_NETWORKS",
+  "civilopedia": "TXT_KEY_TECH_MESH_NETWORKS_PEDIA",
+  "quote": "TXT_KEY_TECH_MESH_NETWORKS_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 101,
+  "gridY": 17
+ }
+}

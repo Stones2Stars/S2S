@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_PLANTATION_RUBBER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SENTIENT_EARTH"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AGROFOREST"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CHEMISTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_RUBBER",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ],
+   "dormant": [
+    "BUILDING_AGROFOREST"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 495,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PLANTATION_RUBBER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_RUBBER",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_RUBBER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

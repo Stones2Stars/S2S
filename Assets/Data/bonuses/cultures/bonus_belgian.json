@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_BELGIAN",
+ "enables": {
+  "units": [
+   "UNIT_BRIGADE_PIRON",
+   "UNIT_LEOPOLD",
+   "UNIT_LEOPOLD_II"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_BELGIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_BELGIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

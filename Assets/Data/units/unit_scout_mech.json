@@ -1,0 +1,135 @@
+{
+ "type": "UNIT_SCOUT_MECH",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SERVICE_BOTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_DISASTER_ROBOTS",
+    {
+     "any": [
+      {
+       "type": "BONUS_ALUMINUM_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_NANOTUBES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 5
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 90
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 100
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 30
+   }
+  }
+ },
+ "skills": [
+  "pillage",
+  "ignoreBuildingDefense"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ROBOT",
+ "combatClasses": [
+  "UNITCOMBAT_RECON",
+  "UNITCOMBAT_EXPLORER",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SENTRY",
+   "PROMOTION_SENTRY2"
+  ]
+ },
+ "cost": {
+  "production": 2985,
+  "upkeep": 6
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SCOUT_DROID",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1,
+    "padTime": 2.5,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SCOUT_DROID"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_SCOUT_MECH",
+  "civilopedia": "TXT_KEY_UNIT_SCOUT_MECH_PEDIA",
+  "worth": 7,
+  "militaryWorth": 795,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "conscription": 16,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_RANGED",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_CITY_SPECIAL",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_ESCORT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": 450
+  }
+ }
+}

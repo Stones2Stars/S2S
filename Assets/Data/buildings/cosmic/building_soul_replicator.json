@@ -1,0 +1,48 @@
+{
+ "type": "BUILDING_SOUL_REPLICATOR",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_NETWORK_NODE",
+    "TECH_PURE_INFORMATION_SOCIETY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 19055,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SOUL_REPLICATOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SOUL_REPLICATOR",
+  "civilopedia": "TXT_KEY_BUILDING_SOUL_REPLICATOR_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

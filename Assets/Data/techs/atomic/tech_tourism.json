@@ -1,0 +1,104 @@
+{
+ "type": "TECH_TOURISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_ACHIEVEMENT_TOURISTIC",
+   "BUILDING_ADVENTURE_TOURS_FRANCHISE",
+   "BUILDING_BALLOON_FESTIVAL",
+   "BUILDING_BED_N_BREAKFAST",
+   "BUILDING_CORAL_CASTLE",
+   "BUILDING_COUNTRY_CLUB",
+   "BUILDING_CRUISE_SHIP_PORT",
+   "BUILDING_EFFECT_ACHIEVEMENT_TOURISM",
+   "BUILDING_FAIRGROUNDS",
+   "BUILDING_HQ_ADVENTURE_TOURS",
+   "BUILDING_HQ_MILEHIGH_TRAVELS_INTERNATIONAL",
+   "BUILDING_HQ_SAFARI_HUNTERS",
+   "BUILDING_JUNGLE_TREEHOUSE_HOTEL",
+   "BUILDING_LONDON_EYE",
+   "BUILDING_MILEHIGH_TRAVELS_INTERNATIONAL_FRANCHISE",
+   "BUILDING_MOTEL",
+   "BUILDING_OUTBACK_HOTEL",
+   "BUILDING_POLAR_HOTEL",
+   "BUILDING_SAFARI_HOTEL",
+   "BUILDING_SAFARI_HUNTERS_GUIDE",
+   "BUILDING_SINGAPORE_FLYER",
+   "BUILDING_SNOWCASTLE_OF_KEMI",
+   "BUILDING_TOURIST_TRAP",
+   "BUILDING_TRAVEL_AGENCY",
+   "BUILDING_VACATION_RESORT",
+   "BUILDING_WALK_OF_FAME",
+   "BUILDING_WILD_WEST_HOTEL"
+  ],
+  "builds": [
+   "BUILD_MARINE_PRESERVE",
+   "BUILD_NATURE_PRESERVE",
+   "BUILD_WILDLIFE_SANCTUARY"
+  ],
+  "improvements": [
+   "IMPROVEMENT_MARINE_PRESERVE",
+   "IMPROVEMENT_NATURE_PRESERVE",
+   "IMPROVEMENT_WILDLIFE_SANCTUARY"
+  ],
+  "techs": [
+   "TECH_ECOLOGY",
+   "TECH_GASTRONOMY",
+   "TECH_LEGALIZED_GAMBLING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AVIATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HIGHWAY_SYSTEMS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GLOBALIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 12657
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_CULTURE": 10
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": ",Art/Interface/Buttons/TechTree/tourism.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,8,2"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TOURISM",
+  "soundMP": "AS2D_TECH_TOURISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TOURISM",
+  "civilopedia": "TXT_KEY_TECH_TOURISM_PEDIA",
+  "quote": "TXT_KEY_TECH_TOURISM_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 79,
+  "gridY": 3
+ }
+}

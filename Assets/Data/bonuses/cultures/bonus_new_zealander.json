@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_NEW_ZEALANDER",
+ "enables": {
+  "units": [
+   "UNIT_NEW_ZEALAND_INFANTRY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_NEW_ZEALANDER"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_NEW_ZEALANDER",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

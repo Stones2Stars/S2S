@@ -1,0 +1,113 @@
+{
+ "type": "BUILDING_ROSETTA_STONE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_UNIVERSAL_TRANSLATOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ARCHEOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ANCIENT_RELICS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MUSEUM": {
+     "flat": 3
+    },
+    "BUILDING_ARCHAEOLOGY_LAB": {
+     "flat": 3
+    },
+    "BUILDING_ANATOMY_LAB": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_MUSEUM": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 3210,
+  "countModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ROSETTA_STONE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ROSETTA_STONE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ROSETTA_STONE",
+  "civilopedia": "TXT_KEY_BUILDING_ROSETTA_STONE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

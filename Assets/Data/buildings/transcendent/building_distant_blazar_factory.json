@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_DISTANT_BLAZAR_FACTORY",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_ARTIFICIAL_SUPERMASSIVE_BLACK_HOLE",
+   "BUILDING_DISTANT_ARTISAN_PLANET_DESIGNER",
+   "BUILDING_DISTANT_BLACK_HOLE_CONSTELLATION",
+   "BUILDING_DISTANT_BRANESPACE_FOOD_SOURCE",
+   "BUILDING_DISTANT_BRANE_ASSEMBLER",
+   "BUILDING_DISTANT_DARK_FLOW_GENERATOR",
+   "BUILDING_DISTANT_INTERDICTION_FIELD_GENERATOR",
+   "BUILDING_DISTANT_MULTIVERSE_MINE",
+   "BUILDING_DISTANT_SMART_GRAVITY_GENERATOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_HORIZON_BREAKING",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 1261,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_BLAZAR_FACTORY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_BLAZAR_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_BLAZAR_FACTORY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

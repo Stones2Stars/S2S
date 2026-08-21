@@ -1,0 +1,134 @@
+{
+ "type": "UNIT_GREAT_DETECTIVE",
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "skills": [
+  "goldenAge",
+  "alwaysInvisible",
+  "rivalTerritory"
+ ],
+ "tags": [
+  "merchant",
+  "civilian",
+  "landUnit",
+  "people",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_PRODIGY",
+ "combatClasses": [
+  "UNITCOMBAT_LAW_ENFORCEMENT",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_REMOVE_WV_SLAVERY",
+    "requires": {
+     "outcome": "OUTCOME_REMOVE_WV_SLAVERY",
+     "plot": "IS_OWNED"
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doRemoveWVSlavery"
+    }
+   },
+   {
+    "mission": "MISSION_REMOVE_WV_CANNIBALISM",
+    "requires": {
+     "outcome": "OUTCOME_REMOVE_WV_CANNIBALISM",
+     "plot": "IS_OWNED"
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doRemoveWVCannibalism"
+    }
+   },
+   {
+    "mission": "MISSION_REMOVE_WV_HUMAN_SACRIFICE",
+    "requires": {
+     "outcome": "OUTCOME_REMOVE_WV_HUMAN_SACRIFICE",
+     "plot": "IS_OWNED"
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doRemoveWVHumanSacrifice"
+    }
+   }
+  ]
+ },
+ "grants": {
+  "greatPeople": [
+   "SPECIALIST_GREAT_SLEUTH"
+  ],
+  "goldenAge": true,
+  "buildings": [
+   {
+    "building": "BUILDING_SCOTLAND_YARD"
+   }
+  ]
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ANCIENT_GREAT_SPY",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_ANCIENT_GREAT_SPY",
+       "late": "ART_DEF_UNIT_GREAT_SPY"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_GREAT_DETECTIVE",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_DETECTIVE_PEDIA",
+  "spawnOnly": true,
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MERCHANT",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_MERCHANT"
+  ],
+  "notUnitAIs": [
+   "UNITAI_EXPLORE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

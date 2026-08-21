@@ -1,0 +1,105 @@
+{
+ "type": "BUILDING_FIRING_RANGE",
+ "enables": {
+  "units": [
+   "UNIT_MOCOVI_TRACKER",
+   "UNIT_MOHAWK_TRACKER",
+   "UNIT_NIAM_NIAM",
+   "UNIT_PUEBLO_REBEL",
+   "UNIT_SHARPSHOOTER",
+   "UNIT_SNIPER",
+   "UNIT_TARKKA_AMPUJA"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WEAPONIZED_LASERS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AUTOMATED_FIRING_RANGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MILITARY_TRADITION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_FIREARMS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_AMMUNITION",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_AUTOMATED_FIRING_RANGE",
+    "BUILDING_ORBITAL_TARGETS"
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_GUN": {
+     "flat": 4
+    },
+    "UNITCOMBAT_ARCHER": {
+     "flat": 3
+    },
+    "UNITCOMBAT_THROWING": {
+     "flat": 2
+    },
+    "UNITCOMBAT_SIEGE": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 580,
+  "sizeModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FIRING_RANGE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FIRING_RANGE",
+  "civilopedia": "TXT_KEY_BUILDING_FIRING_RANGE_PEDIA",
+  "worth": 3,
+  "militaryWorth": 5,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "type": "PROMOTIONLINE_USURPER",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitUsurper.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_USURPER"
+ }
+}

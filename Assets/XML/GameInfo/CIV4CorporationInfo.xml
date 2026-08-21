@@ -264,7 +264,7 @@
 			<PrereqBonuses>
 				<BonusType>BONUS_COTTON</BonusType>
 				<BonusType>BONUS_DYE</BonusType>
-				<BonusType>BONUS_BEAVERS</BonusType>
+				<BonusType>BONUS_BEAVER</BonusType>
 				<BonusType>BONUS_SHEEP</BonusType>
 				<BonusType>BONUS_SILK</BonusType>
 			</PrereqBonuses>
@@ -420,7 +420,7 @@
 			<iMaintenance>100</iMaintenance>
 			<iTGAIndex>10</iTGAIndex>
 			<PrereqBonuses>
-				<BonusType>BONUS_ELEPHANTS</BonusType>
+				<BonusType>BONUS_ELEPHANT</BonusType>
 				<BonusType>BONUS_WHALE</BonusType>
 				<BonusType>BONUS_CLAM</BonusType>
 				<BonusType>BONUS_HORSE</BonusType>
@@ -536,7 +536,7 @@
 			<PrereqBonuses>
 				<BonusType>BONUS_SILK</BonusType>
 				<BonusType>BONUS_DYE</BonusType>
-				<BonusType>BONUS_BEAVERS</BonusType>
+				<BonusType>BONUS_BEAVER</BonusType>
 				<BonusType>BONUS_COW</BonusType>
 				<BonusType>BONUS_COTTON</BonusType>
 			</PrereqBonuses>
@@ -797,7 +797,7 @@
 			<iMaintenance>100</iMaintenance>
 			<iTGAIndex>19</iTGAIndex>
 			<PrereqBonuses>
-				<BonusType>BONUS_ELEPHANTS</BonusType>
+				<BonusType>BONUS_ELEPHANT</BonusType>
 				<BonusType>BONUS_WHALE</BonusType>
 				<BonusType>BONUS_CLAM</BonusType>
 				<BonusType>BONUS_HORSE</BonusType>
@@ -852,10 +852,10 @@
 			<iMaintenance>100</iMaintenance>
 			<iTGAIndex>20</iTGAIndex>
 			<PrereqBonuses>
-				<BonusType>BONUS_ELEPHANTS</BonusType>
+				<BonusType>BONUS_ELEPHANT</BonusType>
 				<BonusType>BONUS_WHALE</BonusType>
 				<BonusType>BONUS_DEER</BonusType>
-				<BonusType>BONUS_BEAVERS</BonusType>
+				<BonusType>BONUS_BEAVER</BonusType>
 			</PrereqBonuses>
 			<HeadquarterCommerces>
 				<iHeadquarterCommerce>4</iHeadquarterCommerce>

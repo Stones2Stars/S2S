@@ -1,0 +1,137 @@
+{
+ "type": "BUILDING_BOMBARD_TOWER",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MANUFACTURING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ARTILLERY_BATTERY"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CANNON_FORGE",
+    "TECH_GUNPOWDER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_ARTILLERY_BATTERY",
+    "BUILDING_AUTO_CANNON_BATTERY",
+    "BUILDING_MISSILE_BATTERY",
+    "BUILDING_RAILGUN_BATTERY",
+    "BUILDING_LASER_BATTERY",
+    "BUILDING_ANTI_MATTER_BATTERY"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 30
+   },
+   "bombardDefense": {
+    "percent": 15
+   },
+   "dynamicDefense": {
+    "percent": 40
+   },
+   "adjacentDamage": {
+    "percent": 30
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "vision": {
+  "city": {
+   "elevation": {
+    "flat": 200
+   }
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 410,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BOMBARD_TOWER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CASTLE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BOMBARD_TOWER",
+  "civilopedia": "TXT_KEY_BUILDING_BOMBARD_TOWER_PEDIA",
+  "worth": 4,
+  "militaryWorth": 4,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

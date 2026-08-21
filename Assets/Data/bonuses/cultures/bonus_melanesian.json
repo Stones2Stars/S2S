@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_MELANESIAN",
+ "enables": {
+  "units": [
+   "UNIT_MOTU_ARCHERS",
+   "UNIT_QUAHE"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MELANESIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MELANESIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

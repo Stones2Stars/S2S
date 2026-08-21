@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_HERD_ZEBRA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_ZEBRA"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INDUSTRIAL_FARMS"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ],
+   "all": [
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HERD_ZEBRA"
+  }
+ },
+ "sound": {
+  "construct": "SND_AMB_HORSE_COBBLESTONES"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HERD_ZEBRA",
+  "civilopedia": "TXT_KEY_BUILDING_HERD_ZEBRA_PEDIA",
+  "notConstructible": true,
+  "worth": 3,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

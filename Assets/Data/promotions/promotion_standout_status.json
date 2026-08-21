@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTION_STANDOUT_STATUS",
+ "skills": {
+  "noInvisibility": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_STANDOUT": 2
+ },
+ "disabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/StandOutStatus.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_STANDOUT_STATUS",
+  "status": true,
+  "quick": true,
+  "prereqNormInvisible": true
+ }
+}

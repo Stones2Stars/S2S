@@ -1,0 +1,63 @@
+{
+ "type": "TECH_RADIO_ASTRONOMY",
+ "enables": {
+  "buildings": [
+   "BUILDING_RADIO_TELESCOPE",
+   "BUILDING_SETI_PROGRAM"
+  ],
+  "techs": [
+   "TECH_ASTROBIOLOGY",
+   "TECH_ASTROGEOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MICROWAVES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 12657
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/radioastronomy.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_RADIO_ASTRONOMY",
+  "soundMP": "AS2D_TECH_RADIO_ASTRONOMY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_RADIO_ASTRONOMY",
+  "civilopedia": "TXT_KEY_TECH_RADIO_ASTRONOMY_PEDIA",
+  "quote": "TXT_KEY_TECH_RADIO_ASTRONOMY_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 32,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 79,
+  "gridY": 13
+ }
+}

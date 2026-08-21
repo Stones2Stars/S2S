@@ -1,0 +1,66 @@
+{
+ "type": "TECH_EXOPLANET_DISCOVERY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTRONOMICAL_DATABASE",
+   "BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE",
+   "BUILDING_JAMES_WEBB_SPACE_TELESCOPE",
+   "BUILDING_KEPLER_SPACE_TELESCOPE"
+  ],
+  "techs": [
+   "TECH_ASTEROID_BELT_PROBES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_EXPLORATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 20610
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Exoplanetdiscovery.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_EXOPLANET_DISCOVERY",
+  "soundMP": "AS2D_TECH_EXOPLANET_DISCOVERY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_EXOPLANET_DISCOVERY",
+  "civilopedia": "TXT_KEY_TECH_EXOPLANET_DISCOVERY_PEDIA",
+  "quote": "TXT_KEY_TECH_EXOPLANET_DISCOVERY_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 88,
+  "gridY": 9
+ }
+}

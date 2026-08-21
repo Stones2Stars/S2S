@@ -1,0 +1,17 @@
+{
+ "type": "UNITCOMBAT_EXECUTIVE",
+ "skills": {
+  "cannotMergeSplit": true
+ },
+ "tags": [
+  "merchant"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/executives.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_EXECUTIVE"
+ }
+}

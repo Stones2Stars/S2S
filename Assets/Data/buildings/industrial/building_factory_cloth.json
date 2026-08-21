@@ -1,0 +1,146 @@
+{
+ "type": "BUILDING_FACTORY_CLOTH",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOROBOTICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "TECH_ASSEMBLY_LINE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOL",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_HEMP_FIBERS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_FLAX_FIBERS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SILK_FIBERS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_COTTON_FIBERS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_CLOTH"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BAMBOO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WOOL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SILK_FIBERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HEMP_FIBERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FLAX_FIBERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COTTON_FIBERS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 710,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACTORY_CLOTH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_CLOTH",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_CLOTH_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

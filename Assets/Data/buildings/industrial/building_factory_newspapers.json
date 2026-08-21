@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_FACTORY_NEWSPAPERS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOROBOTICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MANUFACTURING_DISTRICT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "BUILDING_PRESS_AGENCY",
+    "TECH_ASSEMBLY_LINE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PAPER",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_DYE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_MANUFACTURING_DISTRICT"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_NEWSPAPERS"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 710,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACTORY_NEWSPAPERS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_NEWSPAPERS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_NEWSPAPERS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

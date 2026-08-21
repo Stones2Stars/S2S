@@ -1,0 +1,80 @@
+{
+ "type": "TECH_MAGNETIC_LEVITATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_MAGLEV_RAILS",
+   "BUILDING_MAGLEV_STATION"
+  ],
+  "builds": [
+   "BUILD_MAGLEV"
+  ],
+  "techs": [
+   "TECH_CONTROLLED_PLASMA",
+   "TECH_FLASH_MEMORY",
+   "TECH_SPACE_TOURISM"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_RAILROAD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SUPERCONDUCTORS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 20610
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Buttons/Techs/TechLevitation.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MAGNETIC_LEVITATION",
+  "soundMP": "AS2D_TECH_MAGNETIC_LEVITATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MAGNETIC_LEVITATION",
+  "civilopedia": "TXT_KEY_TECH_MAGNETIC_LEVITATION_PEDIA",
+  "quote": "TXT_KEY_TECH_MAGNETIC_LEVITATION_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 88,
+  "gridY": 15
+ }
+}

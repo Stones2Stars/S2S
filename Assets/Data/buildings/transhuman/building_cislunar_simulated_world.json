@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_CISLUNAR_SIMULATED_WORLD",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_GOVERNANCE",
+    "TECH_SIMULATED_REALITY",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 2110,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_SIMULATED_WORLD",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_SIMULATED_WORLD",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SIMULATED_WORLD_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

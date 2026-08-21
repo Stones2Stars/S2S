@@ -1,0 +1,107 @@
+{
+ "type": "BUILDING_VILLAGE_HALL",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TOWN_HALL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRIBALISM",
+    "CULTURELEVEL_FLEDGLING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BAMBOO",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_TOWN_HALL",
+    "BUILDING_CITY_COUNCIL",
+    "BUILDING_METROPOLITAN_ADMINISTRATION"
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "any": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -5
+   }
+  }
+ },
+ "cost": {
+  "production": 74,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VILLAGE_HALL",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COURTHOUSE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VILLAGE_HALL",
+  "civilopedia": "TXT_KEY_BUILDING_VILLAGE_HALL_PEDIA",
+  "centerInCity": true,
+  "worth": 4,
+  "militaryWorth": 5,
+  "conquestProbability": 85,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

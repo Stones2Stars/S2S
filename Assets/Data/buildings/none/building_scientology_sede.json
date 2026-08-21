@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_SCIENTOLOGY_SEDE",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "IS_HOLY_CITY": "RELIGION_SCIENTOLOGY"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 2,
+     "per": {
+      "type": "RELIGION_SCIENTOLOGY",
+      "scope": "world"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_SCIENTOLOGY": {
+    "flat": 1
+   }
+  }
+ },
+ "shrine": "RELIGION_SCIENTOLOGY",
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SCIENTOLOGY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SCIENTOLOGY_SEDE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BUDDHIST"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SCIENTOLOGY_SEDE",
+  "civilopedia": "TXT_KEY_BUILDING_SCIENTOLOGY_SEDE_PEDIA",
+  "pediaCategory": "religious",
+  "notConstructible": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_SCIENTOLOGY",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

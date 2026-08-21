@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_DREAM_ARTIST",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DREAM_SIMULATION_CENTER",
+    "TECH_CYBERPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CYBERPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 5455,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DREAM_ARTIST",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DREAM_ARTIST",
+  "civilopedia": "TXT_KEY_BUILDING_DREAM_ARTIST_PEDIA",
+  "specialBuildingType": "SPECIALBUILDING_PUNK_CYBER",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

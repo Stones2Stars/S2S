@@ -2,22 +2,28 @@
 //  FILE:    CvSpawnInfo.cpp
 //------------------------------------------------------------------------------------------------
 #include "CvGameCoreDLL.h"
-#include "CvArtFileMgr.h"
+#include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
+#include "UI/CvArtFileMgr.h"
 #include "CvBuildingInfo.h"
 #include "CvHeritageInfo.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
+#include "AI/CvGameAI.h"
+#include "UI/CvGameTextMgr.h"
+#include "Defines/CvGlobals.h"
 #include "CvInfos.h"
 #include "CvInfoUtil.h"
-#include "CvPlayerAI.h"
-#include "CvPython.h"
-#include "CvXMLLoadUtility.h"
-#include "CvXMLLoadUtilityModTools.h"
-#include "CheckSum.h"
+#include "AI/CvPlayerAI.h"
+#include "Infrastructure/CvPython.h"
+#include "Infrastructure/CvXMLLoadUtility.h"
+#include "Infrastructure/CvXMLLoadUtilityModTools.h"
+#include "Tools/CheckSum.h"
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
 #include "CvSpawnInfo.h"
+
+// The json.md §8 TAG read this file makes. `wild` is its own tag (UNITCOMBAT_WILD, 198 units), so the
+// spawn test stays EXACT rather than widening to `animal` and sweeping tamed animals in with it. The
+// info's tag bitset is already the fold of the unit's own tags with its combat classes'
+// (deriveAtRegistryComplete), so the combat-class-authored tag reads straight off the unit.
 
 
 //======================================================================================================
@@ -284,7 +290,7 @@ bool CvSpawnInfo::getTreatAsBarbarian() const
 
 bool CvSpawnInfo::getNeutralOnly() const
 {
-	if (GC.getUnitInfo(getUnitType()).isWildAnimal() && GC.getGame().isOption(GAMEOPTION_ANIMAL_DANGEROUS))
+	if (GC.getUnitInfo(getUnitType()).hasTag(CLS_TAG_WILD) && GC.getGame().isOption(GAMEOPTION_ANIMAL_DANGEROUS))
 	{
 		return false;
 	}

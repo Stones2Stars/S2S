@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_HUMAN_MOD_TRANSAPIENT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_OPTRONIC_SUPERCOMPUTER",
+    "TECH_STELLAR_COMPUTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_INFORMATION_BASED",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_TRANSAPIENT"
+  ]
+ },
+ "research": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN": {
+     "flat": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 24310
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_TRANSAPIENT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_TRANSAPIENT",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_TRANSAPIENT_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

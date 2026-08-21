@@ -1,0 +1,115 @@
+{
+ "type": "TECH_ELECTRONICS",
+ "enables": {
+  "bonuses": [
+   "BONUS_BLENDER",
+   "BONUS_CALCULATORS",
+   "BONUS_DISHWASHERS",
+   "BONUS_HIT_SINGLES",
+   "BONUS_POWER_TOOLS",
+   "BONUS_THEREMIN",
+   "BONUS_TRANSISTORS",
+   "BONUS_VACUUM_CLEANERS",
+   "BONUS_WASHER_DRYER"
+  ],
+  "buildings": [
+   "BUILDING_ANIMATRONICS_WORKSHOP",
+   "BUILDING_COPY_STORE",
+   "BUILDING_ELECTRIC_FENCE",
+   "BUILDING_ELECTRONICS_STORE",
+   "BUILDING_FACTORY_BLENDER",
+   "BUILDING_FACTORY_CALCULATORS",
+   "BUILDING_FACTORY_DISHWASHERS",
+   "BUILDING_FACTORY_POWER_TOOLS",
+   "BUILDING_FACTORY_TRANSISTORS",
+   "BUILDING_FACTORY_VACUUM",
+   "BUILDING_FACTORY_WASHER_DRYER",
+   "BUILDING_FARNSWORTH_ELECTRONICS_LAB",
+   "BUILDING_JAZZ_CLUB",
+   "BUILDING_MODERN_CRANE",
+   "BUILDING_NIGHT_CLUB",
+   "BUILDING_ORDINANCE_SMOKE_DETECTOR",
+   "BUILDING_RECORD_STORE",
+   "BUILDING_ROCK_N_ROLL",
+   "BUILDING_THEREMIN_FACTORY"
+  ],
+  "builds": [
+   "BUILD_ELECTRIC_RAILROAD"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_SECURITY4"
+  ],
+  "techs": [
+   "TECH_EARLY_COMPUTING",
+   "TECH_MODERN_PHYSICS",
+   "TECH_SONAR",
+   "TECH_TELEVISION"
+  ],
+  "units": [
+   "UNIT_007",
+   "UNIT_SPECIAL_AGENT"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_PAVED_ROAD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ADVANCED_METALLURGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLASTICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 10744
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": ",Art/Interface/Buttons/TechTree/electronics.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,6"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ELECTRONICS",
+  "soundMP": "AS2D_TECH_ELECTRONICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ELECTRONICS",
+  "civilopedia": "TXT_KEY_TECH_ELECTRONICS_PEDIA",
+  "quote": "TXT_KEY_TECH_ELECTRONICS_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 75,
+  "gridY": 15
+ }
+}

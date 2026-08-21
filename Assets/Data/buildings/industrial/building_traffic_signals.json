@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_TRAFFIC_SIGNALS",
+ "enables": {
+  "buildings": [
+   "BUILDING_TRAFFIC_CAMERAS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TELEPORT_BOOTH"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_INCANDESCENT_LIGHTING",
+    {
+     "any": [
+      "BUILDING_ROADS",
+      "BUILDING_PAVED_ROADS",
+      "BUILDING_ASPHALT_ROADS",
+      "BUILDING_HIGHWAY",
+      "BUILDING_SKYROAD_CONTROL_TOWER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_GLASSWARE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_FIBERGLASS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_TELEPORT_BOOTH"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 800,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRAFFIC_SIGNALS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRAFFIC_SIGNALS",
+  "civilopedia": "TXT_KEY_BUILDING_TRAFFIC_SIGNALS_PEDIA",
+  "worth": 4,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

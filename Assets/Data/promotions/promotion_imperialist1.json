@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_IMPERIALIST1",
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 15
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_IMPERIALIST_PROMOTION": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionImperialist.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_IMPERIALIST1",
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT"
+  ]
+ }
+}

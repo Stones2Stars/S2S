@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_BONEMARROWER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_BONE_WORKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "BONUS_BONE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "food": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 90,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BONEMARROWER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BONEMARROWER",
+  "civilopedia": "TXT_KEY_BUILDING_BONEMARROWER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

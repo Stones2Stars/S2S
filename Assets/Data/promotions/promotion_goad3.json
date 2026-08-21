@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_GOAD3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_GOAD2"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "taunt": {
+    "flat": 75
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_GOAD": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Goad3Promotion.fw.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_GOAD3"
+ }
+}

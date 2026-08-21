@@ -1,0 +1,67 @@
+{
+ "type": "TECH_ANIMISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_LL_RICHARDSON_ISLAND",
+   "BUILDING_SAGE",
+   "BUILDING_SWEAT_LODGE"
+  ],
+  "techs": [
+   "TECH_CEREMONIAL_BURIAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FIRE_MAKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TATTOOS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRIBALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 34
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/Animism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ANIMISM",
+  "soundMP": "AS2D_TECH_ANIMISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ANIMISM",
+  "civilopedia": "TXT_KEY_TECH_ANIMISM_PEDIA",
+  "quote": "TXT_KEY_TECH_ANIMISM_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "tradeable": true,
+  "gridX": 14,
+  "gridY": 11
+ }
+}

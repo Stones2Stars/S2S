@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_HOUSING_MANSIONS",
+ "enables": {
+  "buildings": [
+   "BUILDING_DRUGLORDS_MANSON",
+   "BUILDING_LUXURY_FURNITURE_WORKSHOP",
+   "BUILDING_LYCEUM",
+   "BUILDING_MAUSOLEUM"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COLONY_ARCOLOGY"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MARBLE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_FRESHWATER",
+    "HAS_POWER",
+    "BUILDING_WATER_PIPES",
+    "BUILDING_SEWER_SYSTEM",
+    "BUILDING_TELEPHONE_NETWORK",
+    "TECH_TELEPHONE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "dormant": [
+    "BUILDING_HOUSING_CHATEAU",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HOUSING_MANSIONS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_MANSIONS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_MANSIONS_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

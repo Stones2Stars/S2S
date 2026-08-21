@@ -1,0 +1,66 @@
+{
+ "type": "TECH_OMEGA_POINT",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASCENDED_CITY",
+   "BUILDING_DEEP_SPACE_ASCENDED_PLANET",
+   "BUILDING_HEAVEN",
+   "BUILDING_INTERGALACTIC_ASCENDED_GALAXY",
+   "BUILDING_INTERSTELLAR_ASCENDED_STAR_SYSTEM"
+  ],
+  "techs": [
+   "TECH_FUTURE_TECH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MACROVERSE_TRAVERSAL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSFINITE_COMPUTATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARCHETYPAL_VECTOR_SPACES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 686864
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/omega_point.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_OMEGA_POINT",
+  "civilopedia": "TXT_KEY_TECH_OMEGA_POINT_PEDIA",
+  "quote": "TXT_KEY_TECH_OMEGA_POINT_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 159,
+  "gridY": 11
+ }
+}

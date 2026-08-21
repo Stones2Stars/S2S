@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_AMERICAN",
+ "enables": {
+  "units": [
+   "UNIT_AMERICAN_NAVY_SEAL",
+   "UNIT_PATTON",
+   "UNIT_THOMAS_JEFFERSON"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_AMERICAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_AMERICAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

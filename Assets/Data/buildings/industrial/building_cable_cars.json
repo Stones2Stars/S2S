@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_CABLE_CARS",
+ "enables": {
+  "buildings": [
+   "BUILDING_PUBLIC_TRANSPORTATION"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TELEPORT_BOOTH"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MOTORIZED_TRANSPORTATION",
+    {
+     "type": "TERRAIN_PEAK",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_TELEPORT_BOOTH"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 830,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CABLE_CARS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CABLE_CARS",
+  "civilopedia": "TXT_KEY_BUILDING_CABLE_CARS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

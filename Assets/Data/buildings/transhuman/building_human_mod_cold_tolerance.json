@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_HUMAN_MOD_COLD_TOLERANCE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_THERMAL_NEGATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_ROBOTIC_BODY",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_COLD_TOLERANCE"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_UMBRIEL_COLONY": {
+     "flat": 5
+    },
+    "BUILDING_TRITON_COLONY": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 13310
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_COLD_TOLERANCE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_COLD_TOLERANCE",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_COLD_TOLERANCE_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

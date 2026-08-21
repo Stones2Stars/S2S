@@ -1,0 +1,47 @@
+{
+ "type": "PROJECT_APOLLO_PROGRAM",
+ "enables": {
+  "projects": [
+   "PROJECT_SS_CASING",
+   "PROJECT_SS_COCKPIT",
+   "PROJECT_SS_DOCKING_BAY",
+   "PROJECT_SS_ENGINE",
+   "PROJECT_SS_LIFE_SUPPORT",
+   "PROJECT_SS_STASIS_CHAMBER",
+   "PROJECT_SS_THRUSTERS"
+  ]
+ },
+ "allowed": {
+  "team": 1
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "create": 12320
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Buildings/ApolloProgram.dds,Art/Interface/Buttons/Buildings_Atlas.dds,3,1"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROJECT_APOLLO_PROGRAM",
+  "civilopedia": "TXT_KEY_PROJECT_APOLLO_PROGRAM_PEDIA",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "launchesVictory": "VICTORY_SPACE_RACE"
+ }
+}

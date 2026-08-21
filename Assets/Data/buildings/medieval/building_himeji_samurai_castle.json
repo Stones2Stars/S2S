@@ -1,0 +1,113 @@
+{
+ "type": "BUILDING_HIMEJI_SAMURAI_CASTLE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MANUFACTURING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_VASSALAGE",
+    "TECH_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_CASTLE",
+      "BUILDING_STAR_FORT",
+      "BUILDING_IMPERIAL_FORTRESS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    8,
+    {
+     "value": 8,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "cost": {
+  "production": 1800,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 8
+   },
+   {
+    "FLAVOR_MILITARY": 8
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_HIMEJI_CASTLE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HIMEJI_SAMURAI_CASTLE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HIMEJI_SAMURAI_CASTLE",
+  "civilopedia": "TXT_KEY_BUILDING_HIMEJI_SAMURAI_CASTLE_PEDIA",
+  "help": "TXT_KEY_BUILDING_HIMEJI_SAMURAI_CASTLE_HELP",
+  "pediaCategory": "greatWonder",
+  "worth": 12,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

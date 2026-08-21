@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_PERSONAL_ELECTRONICS",
+ "enables": {
+  "units": [
+   "UNIT_SOFTWARE_DEVELOPER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PERSONAL_ELECTRONICS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PERSONAL_ELECTRONICS",
+  "civilopedia": "TXT_KEY_BONUS_PERSONAL_ELECTRONICS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

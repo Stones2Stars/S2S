@@ -1,0 +1,101 @@
+{
+ "type": "BUILDING_ANDEAN_MONASTERY",
+ "enables": {
+  "units": [
+   "UNIT_ANDEAN_MISSIONARY"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MODERN_PHYSICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MEDITATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "RELIGION_ANDEANISM",
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 2,
+   "percent": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_ANDEANISM": {
+    "flat": 1
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 216,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANDEAN_MONASTERY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ANDEAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANDEAN_MONASTERY",
+  "civilopedia": "TXT_KEY_BUILDING_ANDEAN_MONASTERY_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 3,
+  "specialBuildingType": "SPECIALBUILDING_MONASTERY",
+  "religion": "RELIGION_ANDEANISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

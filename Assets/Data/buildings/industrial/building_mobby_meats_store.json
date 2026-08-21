@@ -1,0 +1,164 @@
+{
+ "type": "BUILDING_MOBBY_MEATS_STORE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_REFRIGERATION",
+    "TECH_CORPORATION",
+    {
+     "any": [
+      "BUILDING_SHOPPING_DISTRICT",
+      "BUILDING_TRADING_POST"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CORPORATION_MOBBY"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": [
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BONUS_COW",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BONUS_PIG",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BONUS_DEER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BONUS_WHALE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COW",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PIG",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DEER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WHALE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 800,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MOBBY_MEATS_STORE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MOBBY_MEATS_STORE",
+  "civilopedia": "TXT_KEY_BUILDING_MOBBY_MEATS_STORE_PEDIA",
+  "worth": 8,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_CORPORATION",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

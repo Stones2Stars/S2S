@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_CITY_GATEHOUSE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CITY_GATE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRENCH_WARFARE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_IMPERIAL_FORTRESS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SIEGE_WARFARE",
+    {
+     "any": [
+      "BUILDING_HIGH_WALLS",
+      "BUILDING_BARRICADES",
+      "BUILDING_CEMENT_BARRIER",
+      "BUILDING_METAMATERIAL_WALLS",
+      "BUILDING_SUPERSTRONG_ALLOY_WALLS",
+      "BUILDING_MEGASTRONG_ALLOY_WALLS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_IMPERIAL_FORTRESS"
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 15
+   },
+   "bombardDefense": {
+    "percent": 10
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": [
+     {
+      "value": -15,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 252,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CITY_GATEHOUSE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CITY_GATEHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_CITY_GATEHOUSE_PEDIA",
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

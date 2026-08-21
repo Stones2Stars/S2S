@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_BARDIC_CIRCLE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_THEATRE",
+    "TECH_POETRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 4,
+     "enabled": "TECH_HERALDRY"
+    },
+    {
+     "value": 4,
+     "enabled": "TECH_GUILDS"
+    },
+    {
+     "value": 4,
+     "enabled": "TECH_ACOUSTICS"
+    },
+    {
+     "value": 6,
+     "enabled": "TECH_ROMANTICISM"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 4,
+     "enabled": "TECH_HERALDRY"
+    },
+    {
+     "value": 4,
+     "enabled": "TECH_GUILDS"
+    },
+    {
+     "value": 4,
+     "enabled": "TECH_ACOUSTICS"
+    },
+    {
+     "value": 6,
+     "enabled": "TECH_ROMANTICISM"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
+ "cost": {
+  "production": 280,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BARDIC_CIRCLE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_THEATRE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BARDIC_CIRCLE",
+  "civilopedia": "TXT_KEY_BUILDING_BARDIC_CIRCLE_PEDIA",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

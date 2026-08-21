@@ -1,0 +1,33 @@
+{
+ "type": "PROMOTION_COVERT_OPERATIONS1",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMMANDO"
+   ]
+  }
+ },
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  }
+ },
+ "skills": [
+  "camouflage"
+ ],
+ "promotionLine": {
+  "PROMOTIONLINE_COVERT_OPERATIONS": 1
+ },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/CovertOperations1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COVERT_OPERATIONS1"
+ }
+}

@@ -1,0 +1,107 @@
+{
+ "type": "BUILDING_EDUCATION_WUNDERKIND",
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EDUCATION_MASTERMIND",
+    "BUILDING_EDUCATION_GENIUS",
+    "BUILDING_EDUCATION_WISE",
+    "BUILDING_EDUCATION_OMNISCIENCE"
+   ],
+   "all": [
+    "TECH_NANOTECH_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_EDUCATION",
+     "scope": "city",
+     "min": 15000,
+     "max": 2000000
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 45
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 45
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 25,
+   "percent": 45
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "any": 4
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "percent": 81
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": 4
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": 40
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 45
+   }
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": 90
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -45
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -45
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYEDUCATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EDUCATION_WUNDERKIND",
+  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

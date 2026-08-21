@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_CLOUD_OBSERVERS_HUT",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_METEOROLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_WEATHER_VANES"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CLOUD_PATTERNS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_WEATHER_VANES",
+    "BUILDING_METEOROLOGY_LAB"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 200,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CLOUD_OBSERVERS_HUT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CLOUD_OBSERVERS_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_CLOUD_OBSERVERS_HUT_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

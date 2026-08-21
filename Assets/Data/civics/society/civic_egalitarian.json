@@ -1,0 +1,264 @@
+{
+ "type": "CIVIC_EGALITARIAN",
+ "enables": {
+  "buildings": [
+   "BUILDING_CIVIC_EGALITARIAN",
+   "BUILDING_STATUE_OF_LIBERTY"
+  ],
+  "specialists": [
+   "SPECIALIST_ARTIST"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "commerce": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_COTTAGE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HAMLET": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VILLAGE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_TOWN": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SUBURBS": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WILDLIFE_SANCTUARY": {
+     "flat": 2
+    },
+    "IMPROVEMENT_SUBMERGED_TOWN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    5,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    -2,
+    {
+     "value": -2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 25,
+      "per": {
+       "type": "POPULATION",
+       "each": 100,
+       "scope": "city"
+      }
+     },
+     {
+      "value": 1,
+      "religion": "!IS_STATE_RELIGION"
+     }
+    ]
+   },
+   "buildings": {
+    "BUILDING_SLAVE_MARKET": {
+     "flat": -5
+    },
+    "BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE": {
+     "flat": -2
+    },
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION": {
+     "flat": 1
+    },
+    "BUILDING_LABOR_UNION": {
+     "flat": 1
+    },
+    "BUILDING_BROADCAST_TOWER": {
+     "flat": 1
+    },
+    "BUILDING_COMMUNICATION_TOWER": {
+     "flat": 2
+    },
+    "BUILDING_NETWORK_NODE": {
+     "flat": 3
+    },
+    "BUILDING_BARRACKS": {
+     "flat": -1
+    },
+    "BUILDING_GARRISON": {
+     "flat": -1
+    },
+    "BUILDING_MILITARY_BASE": {
+     "flat": -1
+    },
+    "BUILDING_INTELLIGENCE_AGENCY": {
+     "flat": -1
+    },
+    "BUILDING_THE_KREMLIN": {
+     "flat": -1
+    },
+    "BUILDING_COIT_TOWER": {
+     "flat": 2
+    },
+    "BUILDING_WOODSTOCK": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "buildings": {
+    "BUILDING_BURNING_MAN": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
+    "percent": -10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 20
+   },
+   "numCities": {
+    "percent": 20
+   },
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 5,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
+   "corporation": {
+    "percent": 3
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 20
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "greatPeopleRate": {
+    "percent": -5
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -1
+   },
+   "national": {
+    "flat": -1
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": -5,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "policies": {
+  "disallowInquisitions": true
+ },
+ "grants": {
+  "revolution": -50
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/society_egalitarism.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_EGALITARIAN",
+  "civilopedia": "TXT_KEY_CIVIC_EGALITARIAN_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_EGALITARIAN_STRATEGY",
+  "civicOption": "CIVICOPTION_SOCIETY",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

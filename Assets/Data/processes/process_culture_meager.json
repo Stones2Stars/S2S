@@ -1,0 +1,20 @@
+{
+ "type": "PROCESS_CULTURE_MEAGER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Process/processculturemeagre.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROCESS_MEAGER_CULTURE"
+ },
+ "conversion": {
+  "culture": 30
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HERITAGE",
+   "TECH_LITERATURE"
+  ]
+ }
+}

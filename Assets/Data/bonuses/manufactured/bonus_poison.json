@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_POISON",
+ "enables": {
+  "buildings": [
+   "BUILDING_POISON_CRAFTER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_POISON"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_POISON",
+  "civilopedia": "TXT_KEY_BONUS_POISON_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

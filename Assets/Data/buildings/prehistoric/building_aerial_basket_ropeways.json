@@ -1,0 +1,131 @@
+{
+ "type": "BUILDING_AERIAL_BASKET_ROPEWAYS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MACHINERY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ARITHMETIC",
+    {
+     "any": [
+      "BUILDING_TRAVOIS_MAKER",
+      "BUILDING_WHEELWRIGHT",
+      "BUILDING_CARRIAGE_BUILDER",
+      "BUILDING_FACTORY_AUTOMOBILES",
+      "BUILDING_SELF_ASSEMBLY_FACTORY"
+     ]
+    },
+    {
+     "type": "FEATURE_JUNGLE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BASKETS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_ROPE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_VINES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": 15,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "cost": {
+  "production": 160,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_BASKETROPEWAYS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_AERIAL_BASKET_ROPEWAYS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_AERIAL_BASKET_ROPEWAYS",
+  "civilopedia": "TXT_KEY_BUILDING_AERIAL_BASKET_ROPEWAYS_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

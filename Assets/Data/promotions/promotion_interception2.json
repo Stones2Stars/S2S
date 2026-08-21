@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_INTERCEPTION2",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_INTERCEPTION1"
+   ]
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 20
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_INTERCEPTION": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/interception2.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,4,15"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_INTERCEPTION2"
+ }
+}

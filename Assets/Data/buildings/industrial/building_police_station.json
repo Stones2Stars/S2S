@@ -1,0 +1,184 @@
+{
+ "type": "BUILDING_POLICE_STATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_221B_BAKER_STREET",
+   "BUILDING_ACTIVE_DENIAL_SYSTEM",
+   "BUILDING_AI_SURVEILLANCE",
+   "BUILDING_ALCATRAZ",
+   "BUILDING_CITY_MORGUE",
+   "BUILDING_DETECTIVE_AGENCY",
+   "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
+   "BUILDING_FORENSICS_LAB",
+   "BUILDING_MEGATOWER_POLICE_STATION_LEVEL",
+   "BUILDING_POLICE_ACADEMY",
+   "BUILDING_POLICE_BOX",
+   "BUILDING_POLICE_CAT_TRAINER",
+   "BUILDING_POLICE_DOG_TRAINER",
+   "BUILDING_RACIAL_PROFILING",
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+  ],
+  "units": [
+   "UNIT_CITY_GUARD",
+   "UNIT_ENFORCERS",
+   "UNIT_GUARD",
+   "UNIT_HARAPPA_WATCHER",
+   "UNIT_HOPLOMACHUS",
+   "UNIT_HUACA_GUARDIANS",
+   "UNIT_NEANDERTHAL_ENFORCER",
+   "UNIT_NEANDERTHAL_WATCHER",
+   "UNIT_ORONAO_WATCHER",
+   "UNIT_PATROLS",
+   "UNIT_PETRA_GUARD",
+   "UNIT_POLICE_APC",
+   "UNIT_POLICE_CAR",
+   "UNIT_POLICE_HELICOPTER",
+   "UNIT_RIOTPOLICE",
+   "UNIT_SEARCH_BLOC",
+   "UNIT_SHERIFF",
+   "UNIT_TEXAS_RANGER",
+   "UNIT_TOWN_WATCHMEN",
+   "UNIT_TREASURE_GUARD",
+   "UNIT_WATCHER"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_BINARY_LEGISLATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_POLICE_PRECINCT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CRIMINOLOGY",
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CEMENT",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_POLICE_PRECINCT"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 15,
+   "percent": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 20
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -5,
+   "flat": 1
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "underworld": {
+  "city": {
+   "investigation": {
+    "flat": 40
+   }
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -40
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SPY": 1,
+   "SPECIALIST_INVESTIGATOR": 4
+  }
+ },
+ "cost": {
+  "production": 800,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   },
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_POLICESTATION"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_POLICE_STATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_POLICE_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_POLICE_STATION_PEDIA",
+  "worth": 1,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

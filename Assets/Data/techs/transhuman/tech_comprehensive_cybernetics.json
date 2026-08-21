@@ -1,0 +1,105 @@
+{
+ "type": "TECH_COMPREHENSIVE_CYBERNETICS",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_ROBOTIC_BODY"
+  ],
+  "buildings": [
+   "BUILDING_ADVANCED_NEUROIMPLANT_EXPORTER",
+   "BUILDING_DARCO",
+   "BUILDING_EFFECT_NEUROIMPLANT_EXPORTER",
+   "BUILDING_HUMAN_MOD_ROBOTIC_BODY",
+   "BUILDING_URBAN_PSYCHIC_INTEGRATION"
+  ],
+  "promotions": [
+   "PROMOTION_CONNIVING9",
+   "PROMOTION_CORRUPTION10",
+   "PROMOTION_FOMENT9",
+   "PROMOTION_INSPIRE9"
+  ],
+  "techs": [
+   "TECH_APOCALYPTIC_PATHOGENS",
+   "TECH_KNOWLEDGE_MERCANTILISM",
+   "TECH_MYTHOLOGICAL_BESTIARY",
+   "TECH_SAPIENTROIDS",
+   "TECH_SPECULATIVE_PHYSIOLOGY",
+   "TECH_TRANSHUMANISM"
+  ],
+  "units": [
+   "UNIT_TECHNARCHIST"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_BIKER_GANG",
+   "UNIT_BOSNEGERS",
+   "UNIT_HACKER",
+   "UNIT_PROGRAMMER",
+   "UNIT_ROBBER",
+   "UNIT_SOFTWARE_DEVELOPER",
+   "UNIT_STREET_GANG",
+   "UNIT_THUG"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MIND_UPLOADING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_EVOLVED_CONSTRUCTION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WHOLE_BRAIN_EMULATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 72474
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/comprehensivecybernetics.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_COMPREHENSIVE_CYBERNETICS",
+  "soundMP": "AS2D_TECH_COMPREHENSIVE_CYBERNETICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_COMPREHENSIVE_CYBERNETICS",
+  "civilopedia": "TXT_KEY_TECH_COMPREHENSIVE_CYBERNETICS_PEDIA",
+  "quote": "TXT_KEY_TECH_COMPREHENSIVE_CYBERNETICS_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 115,
+  "gridY": 17
+ }
+}

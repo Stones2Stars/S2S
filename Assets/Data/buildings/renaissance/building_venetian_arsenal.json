@@ -1,0 +1,126 @@
+{
+ "type": "BUILDING_VENETIAN_ARSENAL",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SCREW_PROPELLER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
+    "TECH_GUNPOWDER",
+    {
+     "any": [
+      "BUILDING_SHIPYARD",
+      "BUILDING_DRYDOCK",
+      "BUILDING_NAVAL_YARD"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "buildRate": {
+  "city": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 50
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_COMBAT1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 2460,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 8
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_VENETIAN_ARSENAL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VENETIAN_ARSENAL",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_DRYDOCK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VENETIAN_ARSENAL",
+  "civilopedia": "TXT_KEY_BUILDING_VENETIAN_ARSENAL_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 13,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

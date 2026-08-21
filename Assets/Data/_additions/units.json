@@ -1,0 +1,97 @@
+{
+ "UNIT_BAND": {
+  "grants": {
+   "units": [
+    {
+     "unit": "UNIT_TRIBAL_GUARDIAN",
+     "enabled": {
+      "noneOf": [
+       "BUILDING_C_AC_NEANDERTHAL"
+      ]
+     }
+    },
+    {
+     "unit": "UNIT_NEANDERTHAL_TRIBAL_GUARDIAN",
+     "enabled": "BUILDING_C_AC_NEANDERTHAL"
+    }
+   ]
+  }
+ },
+ "UNIT_CISLUNAR_INFANTRY": {
+  "identity": {
+   "domain": "DOMAIN_LAND"
+  }
+ },
+ "UNIT_DEEPSPACE_INFANTRY": {
+  "identity": {
+   "domain": "DOMAIN_LAND"
+  }
+ },
+ "UNIT_HYPERSPACE_DEFENDER": {
+  "identity": {
+   "domain": "DOMAIN_LAND"
+  }
+ },
+ "UNIT_WORLDSHIP_DEFENDER": {
+  "identity": {
+   "domain": "DOMAIN_AIR"
+  }
+ },
+ "UNIT_ICBM": {
+  "identity": {
+   "domain": "DOMAIN_AIR"
+  }
+ },
+ "UNIT_SETTLER": {
+  "grants": {
+   "culture": [
+    {
+     "value": 5,
+     "enabled": "TRAIT_CREATIVE"
+    },
+    {
+     "value": 5,
+     "enabled": "TRAIT_CREATIVE1"
+    },
+    {
+     "value": 10,
+     "enabled": "TRAIT_COMPLEX_CREATIVE2"
+    },
+    {
+     "value": 20,
+     "enabled": "TRAIT_COMPLEX_CREATIVE3"
+    },
+    {
+     "value": 5,
+     "enabled": "TRAIT_COMPLEX_PROGRESSIST2"
+    },
+    {
+     "value": 10,
+     "enabled": "TRAIT_COMPLEX_PROGRESSIST3"
+    },
+    {
+     "value": 5,
+     "enabled": "TRAIT_COMPLEX_PROLIFIC1"
+    },
+    {
+     "value": 5,
+     "enabled": "TRAIT_COMPLEX_PROLIFIC2"
+    }
+   ],
+   "population": [
+    {
+     "value": 1,
+     "enabled": "TRAIT_COMPLEX_PROLIFIC1"
+    },
+    {
+     "value": 1,
+     "enabled": "TRAIT_COMPLEX_PROLIFIC2"
+    },
+    {
+     "value": 1,
+     "enabled": "TRAIT_COMPLEX_PROLIFIC3"
+    }
+   ]
+  }
+ }
+}

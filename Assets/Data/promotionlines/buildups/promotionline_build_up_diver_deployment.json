@@ -1,0 +1,28 @@
+{
+ "type": "PROMOTIONLINE_BUILD_UP_DIVER_DEPLOYMENT",
+ "buildUp": {
+  "active": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/DiverDeployment1BuildUp.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_DIVER_DEPLOYMENT",
+  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_DIVER_DEPLOYMENT_HELP",
+  "unitCombats": [
+   "UNITCOMBAT_HEALS_NAVAL"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SPY",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
+ }
+}

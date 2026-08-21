@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_GENERAL_STAFF3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_GENERAL_STAFF4"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_GENERAL_STAFF2"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 2
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_GENERAL_STAFF": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/CommanderGeneralStaff3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_GENERAL_STAFF3"
+ }
+}

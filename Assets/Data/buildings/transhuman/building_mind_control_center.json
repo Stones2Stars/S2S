@@ -1,0 +1,117 @@
+{
+ "type": "BUILDING_MIND_CONTROL_CENTER",
+ "enables": {
+  "units": [
+   "UNIT_TURN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SIMULATED_REALITY",
+    {
+     "any": [
+      "BUILDING_INDUSTRIAL_PARK",
+      "BUILDING_MODERN_OFFICES"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_MIND_CONTROL"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 30
+  }
+ },
+ "research": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 50,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -15
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -500
+  }
+ },
+ "cost": {
+  "production": 5255,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MIND_CONTROL_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MIND_CONTROL"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MIND_CONTROL_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_MIND_CONTROL_CENTER_PEDIA",
+  "worth": 3,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

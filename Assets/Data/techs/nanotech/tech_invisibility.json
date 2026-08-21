@@ -1,0 +1,73 @@
+{
+ "type": "TECH_INVISIBILITY",
+ "enables": {
+  "promotions": [
+   "PROMOTION_COVERT_OPERATIONS2",
+   "PROMOTION_STEALTH1"
+  ],
+  "techs": [
+   "TECH_HOLOGRAPHICS"
+  ],
+  "units": [
+   "UNIT_FF_DESTROYER_I",
+   "UNIT_FUSION_TRANSPORT",
+   "UNIT_MASTER_SAILOR_FF_DESTROYER_I",
+   "UNIT_SPECIAL_INFANTRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_QUANTUM_TELEPORTATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GRAPHENE_ALLOYS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOTECH_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 36429
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/Techtree/invisibility2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_INVISIBILITY",
+  "soundMP": "AS2D_TECH_INVISIBILITY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_INVISIBILITY",
+  "civilopedia": "TXT_KEY_TECH_INVISIBILITY_PEDIA",
+  "quote": "TXT_KEY_TECH_INVISIBILITY_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 100,
+  "gridY": 13
+ }
+}

@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_ORDINANCE_CARPOOL",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TELEPORT_BOOTH"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES",
+    "BUILDING_COURTHOUSE",
+    "TECH_MOTORIZED_TRANSPORTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ],
+   "dormant": [
+    "BUILDING_TELEPORT_BOOTH"
+   ]
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ORDINANCE_EFFECT_CARPOOL"
+   }
+  ]
+ },
+ "cost": {
+  "production": 830,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ORDINANCE_CARPOOL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_CARPOOL",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_CARPOOL_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

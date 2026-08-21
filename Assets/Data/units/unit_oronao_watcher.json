@@ -1,0 +1,210 @@
+{
+ "type": "UNIT_ORONAO_WATCHER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_WARI",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_DUALISM",
+    {
+     "any": [
+      "BUILDING_TOWN_WATCH",
+      "BUILDING_TOWN_PATROL",
+      "BUILDING_GUARDHOUSE",
+      "BUILDING_GUARD_STATION",
+      "BUILDING_SHERIFFS_OFFICE",
+      "BUILDING_POLICE_STATION",
+      "BUILDING_POLICE_PRECINCT"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_PATROLS"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": 3
+   }
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_COPPER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_BRONZE_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "enclose": {
+    "percent": 6
+   },
+   "dynamicDefense": {
+    "percent": 6
+   },
+   "stealthStrikes": {
+    "flat": 1
+   },
+   "stealth": {
+    "percent": 15
+   },
+   "targets": {
+    "UNITCOMBAT_CRIMINAL": true
+   },
+   "defenders": {
+    "UNITCOMBAT_CRIMINAL": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 5
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 3
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "investigation": {
+    "flat": 15
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -6
+  },
+  "plot": {
+   "flat": -3
+  }
+ },
+ "skills": [
+  "noCapture",
+  "counterSpy",
+  "passage",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "troop"
+ ],
+ "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT",
+ "combatClasses": [
+  "UNITCOMBAT_MELEE",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_MACE",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_SHIELD_LARGE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "hideAndSeek": {
+  "detection": {
+   "value": 200,
+   "unit": "HAS_DISGUISED"
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SENTRY",
+   "PROMOTION_POLICING1",
+   "PROMOTION_POLICING2"
+  ]
+ },
+ "cost": {
+  "production": 175,
+  "upkeep": 4
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ORONAO_WATCHER",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_ORONAO_WATCHER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_ORONAO_WATCHER",
+  "civilopedia": "TXT_KEY_UNIT_ORONAO_WATCHER_PEDIA",
+  "worth": 4,
+  "militaryWorth": 6,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

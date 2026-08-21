@@ -1,0 +1,66 @@
+{
+ "type": "IMPROVEMENT_SATELLITE_STATION",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COLONY_ARCOLOGY",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_INNER_SOLAR_SYSTEM",
+      "TERRAIN_OUTER_SOLAR_SYSTEM",
+      "TERRAIN_TRANSNEPTUNIAN_SPACE"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MOLECULAR_ASSEMBLY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MOLECULAR_ASSEMBLY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 8
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_SATELLITE_STATION"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_SATELLITE_STATION",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SATELLITE_STATION_PEDIA",
+  "extraterrestrial": true,
+  "upgradeTime": 10,
+  "pillageGold": 200,
+  "upgradesTo": "IMPROVEMENT_ARCOLOGY_MOON"
+ }
+}

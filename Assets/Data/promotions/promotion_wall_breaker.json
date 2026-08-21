@@ -1,0 +1,51 @@
+{
+ "type": "PROMOTION_WALL_BREAKER",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LEADER"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 15
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 3
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 30
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Barrage4.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_WALL_BREAKER",
+  "unitCombats": [
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS",
+   "UNITCOMBAT_ASSAULT_MECH",
+   "UNITCOMBAT_DREADNOUGHT"
+  ]
+ }
+}

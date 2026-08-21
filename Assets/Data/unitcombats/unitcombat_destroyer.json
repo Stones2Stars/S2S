@@ -1,0 +1,36 @@
+{
+ "type": "UNITCOMBAT_DESTROYER",
+ "movement": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_OCEAN_POLAR": {
+     "percent": -50
+    },
+    "TERRAIN_OCEAN": {
+     "percent": -50
+    },
+    "TERRAIN_OCEAN_TROPICAL": {
+     "percent": -50
+    }
+   }
+  }
+ },
+ "tags": [
+  "naval"
+ ],
+ "hideAndSeek": {
+  "detection": {
+   "value": 100,
+   "unit": "HAS_SUBMARINE"
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/destroyers.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_DESTROYER",
+  "forNavalMilitary": true
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_PERCUSSION_INSTRUMENTS",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PERCUSSION_INSTRUMENTS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PERCUSSION_INSTRUMENTS",
+  "civilopedia": "TXT_KEY_BONUS_PERCUSSION_INSTRUMENTS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

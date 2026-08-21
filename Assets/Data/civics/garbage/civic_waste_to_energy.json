@@ -1,0 +1,80 @@
+{
+ "type": "CIVIC_WASTE_TO_ENERGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_BACTERIUM_LANDFILL",
+   "BUILDING_LANDFILL",
+   "BUILDING_WASTE_COMPACTOR",
+   "BUILDING_WASTE_INCINERATOR_POWER_PLANT"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 7
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 7
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "civics": {
+    "CIVIC_WASTE_TO_SEA": {
+     "flat": -1
+    },
+    "CIVIC_WASTE_EXPORTATION": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/garbage_waste_to_energy.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_WASTE_TO_ENERGY",
+  "civilopedia": "TXT_KEY_CIVIC_WASTE_TO_ENERGY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_WASTE_TO_ENERGY_STRATEGY",
+  "civicOption": "CIVICOPTION_GARBAGE",
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

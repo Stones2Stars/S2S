@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_SADDLER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOROBOTICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MANUFACTURING_DISTRICT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ANIMAL_RIDING",
+    {
+     "any": [
+      "BUILDING_STORAGE_PIT",
+      "BUILDING_GRANARY",
+      "BUILDING_MODERN_GRANARY",
+      "BUILDING_BARTER_POST",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_LEATHER",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_MANUFACTURING_DISTRICT"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_SADDLES"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 146,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SADDLER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SADDLER",
+  "civilopedia": "TXT_KEY_BUILDING_SADDLER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

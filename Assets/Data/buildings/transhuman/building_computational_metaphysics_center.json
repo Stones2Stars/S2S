@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTER_FOR_THE_STUDY_OF_CIVILIZATION",
+   "BUILDING_FORMAL_REASONING_CENTER",
+   "BUILDING_PHILOSOPHERS_CASTLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTUITIVE_ALGORITHMS",
+    "TECH_BINARY_SEMIOTICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": {
+    "value": 12,
+    "enabled": "TECH_NOOGENESIS"
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 13,
+     "enabled": "TECH_PANPSYCHISM"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 11,
+     "enabled": "TECH_COSMIC_PERSPECTIVE"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 5455,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

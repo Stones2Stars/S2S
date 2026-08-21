@@ -1,0 +1,69 @@
+{
+ "type": "TECH_REPLACEABLE_PARTS",
+ "enables": {
+  "buildings": [
+   "BUILDING_COTTAGE_INDUSTRY",
+   "BUILDING_PINBALL_ARCADE",
+   "BUILDING_TEXTILE_MILL",
+   "BUILDING_WIND_WATER_PUMP"
+  ],
+  "civics": [
+   "CIVIC_FIAT_MONEY"
+  ],
+  "techs": [
+   "TECH_INDUSTRIAL_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECONOMICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 3934
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Replaceable_Parts.dds,Art/Interface/Buttons/TechTree_Atlas.dds,2,7"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_REPLACE_PARTS",
+  "soundMP": "AS2D_TECH_MP_REPLACE_PARTS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_REPLACEABLE_PARTS",
+  "civilopedia": "TXT_KEY_TECH_REPLACEABLE_PARTS_PEDIA",
+  "quote": "TXT_KEY_TECH_REPLACEABLE_PARTS_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 59,
+  "gridY": 7
+ }
+}

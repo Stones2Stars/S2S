@@ -1,0 +1,206 @@
+{
+ "type": "CIVIC_CONFEDERACY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_CONFEDERATES"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 2,
+   "improvements": {
+    "IMPROVEMENT_FARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_PLANTATION": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 5,
+   "improvements": {
+    "IMPROVEMENT_PASTURE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_PLANTATION": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 3,
+   "improvements": {
+    "IMPROVEMENT_PASTURE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_PLANTATION": {
+     "flat": 2
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 3
+   },
+   "numCities": {
+    "percent": 5
+   },
+   "percent": [
+    {
+     "value": 3,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 2,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
+   "corporation": {
+    "percent": 2
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": [
+     {
+      "value": 9,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 1,
+   "modifier": {
+    "food": {
+     "percent": 4
+    },
+    "production": {
+     "percent": 4
+    },
+    "commerce": {
+     "percent": 4
+    }
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "unitProduction": {
+    "percent": 5
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -1
+   },
+   "national": {
+    "flat": 3
+   },
+   "distanceModifier": {
+    "percent": -50
+   },
+   "nationalityMod": {
+    "percent": -30
+   }
+  }
+ },
+ "grants": {
+  "revolution": 50
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/rule_confederacy.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_CONFEDERACY",
+  "civilopedia": "TXT_KEY_CIVIC_CONFEDERACY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_CONFEDERACY_STRATEGY",
+  "civicOption": "CIVICOPTION_RULE",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

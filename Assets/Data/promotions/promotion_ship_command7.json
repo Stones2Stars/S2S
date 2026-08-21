@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_SHIP_COMMAND7",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SHIP_COMMAND8"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SHIP_COMMAND6"
+   ]
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SHIP_COMMAND": 7
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/commodoreCommand7.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SHIP_COMMAND7",
+  "controlPoints": 1
+ }
+}

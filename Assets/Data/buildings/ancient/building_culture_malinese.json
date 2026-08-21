@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_CULTURE_MALINESE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_AFRICAN",
+    "BUILDING_C_L_AFRICAN",
+    "TECH_SALT_PROCESSING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SALT",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_MALINESE"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_GREAT_MOSQUE_OF_DJENNE": {
+     "percent": 10
+    },
+    "BUILDING_UNIVERSITY_OF_SANKORE": {
+     "percent": 10
+    },
+    "BUILDING_GREAT_MOSQUE_OF_DESERT": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 1008,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_MALINESE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_MALINESE",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_MALINESE_PEDIA",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

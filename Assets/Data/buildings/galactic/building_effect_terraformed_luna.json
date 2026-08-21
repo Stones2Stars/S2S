@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_EFFECT_TERRAFORMED_LUNA",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_LUNAR_TERRAFORMING"
+   ]
+  }
+ },
+ "food": {
+  "empire": {
+   "flat": 15
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": 20
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": 20
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": 4
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "empire": {
+   "flat": -30
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "empire": {
+   "flat": -30
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_TERRAFORMED_LUNA",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_TERRAFORMED_LUNA",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_TERRAFORMED_LUNA_PEDIA",
+  "pediaCategory": "space",
+  "notConstructible": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ],
+  "empireLevel": true
+ }
+}

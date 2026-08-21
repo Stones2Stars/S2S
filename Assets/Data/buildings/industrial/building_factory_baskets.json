@@ -1,0 +1,113 @@
+{
+ "type": "BUILDING_FACTORY_BASKETS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOROBOTICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MANUFACTURING_DISTRICT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "TECH_ASSEMBLY_LINE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_GRASS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_REEDS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BARK",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_VINES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STRAW",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PLASTIC",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_MANUFACTURING_DISTRICT"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_BASKETS"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PLASTIC",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 710,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACTORY_BASKETS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_BASKETS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_BASKETS_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

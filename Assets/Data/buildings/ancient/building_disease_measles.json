@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_DISEASE_MEASLES",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SMART_DRUGS"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_SEDENTARY_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_DISEASE",
+     "scope": "city",
+     "min": 300,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": -4
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -4,
+    {
+     "value": -65,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYDISEASE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISEASE_MEASLES",
+  "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

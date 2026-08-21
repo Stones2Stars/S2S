@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_ANDROID_SERVANT_STORE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SHOPPING_DISTRICT",
+    "TECH_PERSONAL_ROBOTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ANDROIDS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 4655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANDROID_SERVANT_STORE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANDROID_SERVANT_STORE",
+  "civilopedia": "TXT_KEY_BUILDING_ANDROID_SERVANT_STORE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

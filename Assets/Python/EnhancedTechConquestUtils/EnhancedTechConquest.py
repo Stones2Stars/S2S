@@ -1,10 +1,17 @@
 from CvPythonExtensions import *
 import CvUtil
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 def loadConfigurationData():
 	global g_bCheckPrereq
 	global g_iBasePercentOffset
@@ -94,11 +101,11 @@ class EnhancedTechConquest:
 			# Continue if the new team can't ever get the tech
 			if (CyTeamN.isHasTech(iTech)
 			or not CyTeamO.isHasTech(iTech)
-			or not CyPlayerN.canResearch(iTech, False, False)):
+			or not ENABLER.canEverResearch(CyPlayerN.getID(), iTech)):
 				continue
 			iTechsBehind += 1
 			# Continue if the conquerer cannot research the technology
-			bImmediateTech = CyPlayerN.canResearch(iTech, True, True);
+			bImmediateTech = ENABLER.getTechAvailability(CyPlayerN.getID(), iTech) == EnablerState.ENABLER_LISTED
 			if bCheckPrereq and not bImmediateTech:
 				continue
 			# Append the technology to the possible technology list
@@ -122,7 +129,7 @@ class EnhancedTechConquest:
 		if fBasePercent < 1: return
 
 		city = argsList[2]
-		charBeaker = GC.getCommerceInfo(CommerceTypes.COMMERCE_RESEARCH).getChar()
+		charBeaker = TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH)
 		if iPopPercent:
 			iPopulation = city.getPopulation() + 1
 			fForce = iPopPercent * (1 + city.isCapital()) * iPopulation / (100.0 * (CyPlayerO.getTotalPopulation() + iPopulation))
@@ -151,7 +158,7 @@ class EnhancedTechConquest:
 				bFirstList = False
 				iTech, iCost, iRemaining = aList1.pop(GAME.getSorenRandNum(iLen1, "random"))
 				iLen1 -= 1
-				if bGotTech and CyPlayerN.canResearch(iTech, True, True):
+				if bGotTech and ENABLER.getTechAvailability(CyPlayerN.getID(), iTech) == EnablerState.ENABLER_LISTED:
 					iRemaining = iCost - CyTeamN.getResearchProgress(iTech)
 				else: iCost = iRemaining
 
@@ -184,7 +191,7 @@ class EnhancedTechConquest:
 			CyTeamN.changeResearchProgress(iTech, iBeakers, iOwnerNew)
 
 			if bHuman:
-				szTxt += "\n\t* " + GC.getTechInfo(iTech).getDescription() + u" <-> %i%c" %(iBeakers, charBeaker)
+				szTxt += "\n\t* " + INFO.getDescription("TECH_", iTech) + u" <-> %i%c" %(iBeakers, charBeaker)
 
 			iCount += 1
 
@@ -195,6 +202,6 @@ class EnhancedTechConquest:
 
 			CvUtil.sendMessage(
 				szTxt, iOwnerNew, 20,
-				GC.getCivilizationInfo(CyPlayerO.getCivilizationType()).getButton(),
+				INFO.getButton("CIVILIZATION_", CyPlayerO.getCivilizationType()),
 				col, city.getX(), city.getY(), True, True
 			)

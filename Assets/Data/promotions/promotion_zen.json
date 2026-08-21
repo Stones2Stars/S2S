@@ -1,0 +1,48 @@
+{
+ "type": "PROMOTION_ZEN",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LEADER"
+   ]
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "skills": {
+  "alwaysHeal": true,
+  "immuneToFirstStrikes": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/buddhism_promo.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_ZEN",
+  "stateReligionPrereq": "RELIGION_BUDDHISM",
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_THROWING"
+  ]
+ }
+}

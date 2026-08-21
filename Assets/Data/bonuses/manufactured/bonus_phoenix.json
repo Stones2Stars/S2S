@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_PHOENIX",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PHOENIX"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PHOENIX",
+  "civilopedia": "TXT_KEY_BONUS_PHOENIX_PEDIA",
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
+ }
+}

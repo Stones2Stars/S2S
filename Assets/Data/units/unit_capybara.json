@@ -1,0 +1,168 @@
+{
+ "type": "UNIT_CAPYBARA",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_SOLITARY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 5,
+   "title": "TXT_KEY_GROUPTITLE_PAIR"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 5,
+   "title": "TXT_KEY_GROUPTITLE_FAMILY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_COMPANY",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_PACK"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_BATTALION",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_HERD"
+  }
+ ],
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "skills": [
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_MAMMAL_RODENT",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_SMALL",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_CAPYBARA",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 15,
+     "random": 15
+    },
+    "production": {
+     "base": 2,
+     "random": 3
+    },
+    "commerce": {
+     "base": 2,
+     "random": 2
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CAPYBARA",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_CAPYBARA"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_CAPYBARA",
+  "civilopedia": "TXT_KEY_UNIT_CAPYBARA_PEDIA",
+  "spawnOnly": true,
+  "xpValueAttack": 1,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_ICE",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_PLAINS",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_SCRUB",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ],
+  "featurePassableTechs": [
+   {
+    "FEATURE_FLOOD_PLAINS": "NONE"
+   },
+   {
+    "FEATURE_MANGROVE": "NONE"
+   },
+   {
+    "FEATURE_SAVANNA": "NONE"
+   },
+   {
+    "FEATURE_SWAMP": "NONE"
+   }
+  ]
+ }
+}

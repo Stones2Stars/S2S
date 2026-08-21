@@ -1,0 +1,94 @@
+{
+ "type": "TECH_SHIELDING",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARCOLOGY_SHIELDING",
+   "BUILDING_ASTEROID_WATER_SHIELD",
+   "BUILDING_IO_BASE",
+   "BUILDING_URANIAN_LUNAR_HEATING"
+  ],
+  "builds": [
+   "BUILD_AQUATIC_FORCEFIELD"
+  ],
+  "improvements": [
+   "IMPROVEMENT_AQUATIC_FORCEFIELD"
+  ],
+  "promotions": [
+   "PROMOTION_ELECTROMAGNETIC_ARMOR2",
+   "PROMOTION_SHIELDING1"
+  ],
+  "techs": [
+   "TECH_ADVANCED_SHIELDING",
+   "TECH_FRICTIONLESS_FLIGHT"
+  ],
+  "units": [
+   "UNIT_FUSION_NOVA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_OPTRONICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_EVOLVED_CONSTRUCTION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANTI_GRAVITY_FIELDS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 72474
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Robotics.dds,Art/Interface/Buttons/NextWar_Atlas.dds,1,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SHIELDING",
+  "soundMP": "AS2D_TECH_SHIELDING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SHIELDING",
+  "civilopedia": "TXT_KEY_TECH_SHIELDING_PEDIA",
+  "quote": "TXT_KEY_TECH_SHIELDING_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 115,
+  "gridY": 3
+ }
+}

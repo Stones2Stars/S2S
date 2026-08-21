@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTION_SLEUTH5",
+ "underworld": {
+  "unit": {
+   "investigation": {
+    "flat": 18
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SLEUTH": 5
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Sleuth5Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SLEUTH5"
+ }
+}

@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_HERDING_DOG_TRAINER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CANINE_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_FARM_ANIMAL_SHEEP",
+      "BUILDING_FARM_ANIMAL_GOAT",
+      "BUILDING_FARM_ANIMAL_LLAMA",
+      "BUILDING_FARM_ANIMAL_ALPACA",
+      "BUILDING_FARM_ANIMAL_COW",
+      "BUILDING_INDUSTRIAL_FARMS",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DOG",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 92,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HERDING_DOG_TRAINER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HERDING_DOG_TRAINER",
+  "civilopedia": "TXT_KEY_BUILDING_HERDING_DOG_TRAINER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

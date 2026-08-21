@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_TOY_CARVER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PLASTICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TOY_MAKER"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_BOARD_GAMES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_FACTORY_TOYS",
+    "BUILDING_MANUFACTURING_DISTRICT",
+    "BUILDING_TOY_MAKER"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_TOYS"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 146,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TOY_CARVER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TOY_CARVER",
+  "civilopedia": "TXT_KEY_BUILDING_TOY_CARVER_PEDIA",
+  "worth": 2,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

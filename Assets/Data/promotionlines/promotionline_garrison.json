@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTIONLINE_GARRISON",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CityGarrison1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,2,2"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_GARRISON",
+  "unitCombats": [
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_CLONES",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_WHEELED"
+  ],
+  "notOnDomains": [
+   "DOMAIN_SEA",
+   "DOMAIN_AIR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_WORKER",
+   "UNITCOMBAT_SETTLER",
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_STRIKE_TEAM",
+   "UNITCOMBAT_RUFFIAN",
+   "UNITCOMBAT_TRADE"
+  ]
+ }
+}

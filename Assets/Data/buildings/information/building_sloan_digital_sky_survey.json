@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_SLOAN_DIGITAL_SKY_SURVEY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_OBSERVATORY",
+    "TECH_SUPERSTRING_THEORY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_PLANETARIUM": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 12030,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SDSS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SLOAN_DIGITAL_SKY_SURVEY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SLOAN_DIGITAL_SKY_SURVEY",
+  "civilopedia": "TXT_KEY_BUILDING_SLOAN_DIGITAL_SKY_SURVEY_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

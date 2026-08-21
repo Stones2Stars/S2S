@@ -1,0 +1,123 @@
+{
+ "type": "FEATURE_FOREST",
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "plot": {
+   "percent": 25
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 15
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_AIR_POLLUTION": -5,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  },
+  {
+   "trigger": {
+    "type": "POPULATION",
+    "scope": "city",
+    "min": 3
+   },
+   "action": {
+    "destroy": "self"
+   }
+  }
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_FOREST",
+   "effect": {
+    "type": "EFFECT_BIRDSCATTER",
+    "probability": 15
+   }
+  }
+ },
+ "sound": {
+  "footsteps": [
+   {
+    "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_FOREST"
+   },
+   {
+    "FOOTSTEP_AUDIO_HUMAN_LOW": "AS3D_UN_FOOT_UNIT_LOW_FOREST"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL": "AS3D_UN_ANIMAL_FOOT_LARGE_FOREST"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL_LOW": "AS3D_UN_ANIMAL_FOOT_LARGE_LOW_FOREST"
+   },
+   {
+    "FOOTSTEP_AUDIO_HORSE": "AS3D_UN_HORSE_RUN_FOREST"
+   },
+   {
+    "LOOPSTEP_TANK": "AS3D_UN_TANK_LOOP_FOREST"
+   },
+   {
+    "ENDSTEP_TANK": "AS3D_UN_TANK_END_FOREST"
+   },
+   {
+    "LOOPSTEP_MOD_ARMOUR": "AS3D_UN_MOD_ARMOUR_LOOP_FOREST"
+   },
+   {
+    "ENDSTEP_MOD_ARMOUR": "AS3D_UN_MOD_ARMOUR_END_FOREST"
+   },
+   {
+    "LOOPSTEP_ARTILLERY": "AS3D_UN_ARTILL_RUN_LOOP_FOREST"
+   },
+   {
+    "ENDSTEP_ARTILLERY": "AS3D_UN_ARTILL_RUN_END_FOREST"
+   },
+   {
+    "LOOPSTEP_WHEELS_3": "AS3D_UN_TREBUCHET_RUN_LEAVES"
+   },
+   {
+    "ENDSTEP_WHEELS_3": "AS3D_UN_TREBUCHET_STOP_LEAVES"
+   }
+  ],
+  "soundscape": "ASSS_FOREST_SELECT_AMB",
+  "growth": "AS2D_FEATUREGROWTH"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_FOREST",
+  "civilopedia": "TXT_KEY_FEATURE_FOREST_PEDIA",
+  "validTerrains": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS",
+   "TERRAIN_TAIGA",
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY"
+  ]
+ }
+}

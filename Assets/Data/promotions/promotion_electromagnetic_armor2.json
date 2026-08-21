@@ -1,0 +1,84 @@
+{
+ "type": "PROMOTION_ELECTROMAGNETIC_ARMOR2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ELECTROMAGNETIC_ARMOR3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_ELECTROMAGNETIC_ARMOR1"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "moveDiscount": {
+    "flat": 1
+   }
+  }
+ },
+ "combat": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_GRASSLAND": {
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_PLAINS": {
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_ICE": {
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_TUNDRA": {
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_MARSH": {
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_DESERT": {
+     "defense": {
+      "percent": 20
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_MISSILE": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "protection": {
+    "percent": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_ELECTROMAGNETIC_ARMOR": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/stalwart2.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,5,9"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_ELECTROMAGNETIC_ARMOR2"
+ }
+}

@@ -1,0 +1,101 @@
+{
+ "type": "BUILDING_FACTORY_BARRELS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOROBOTICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MANUFACTURING_DISTRICT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "TECH_ASSEMBLY_LINE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BRONZE_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_MANUFACTURING_DISTRICT"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_BARRELS"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 710,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACTORY_BARRELS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_BARRELS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_BARRELS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

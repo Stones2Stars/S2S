@@ -1,0 +1,122 @@
+{
+ "type": "BUILDING_HATTER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_HATS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PERSONAL_ADORNMENTS",
+    {
+     "any": [
+      "BUILDING_STORAGE_PIT",
+      "BUILDING_GRANARY",
+      "BUILDING_MODERN_GRANARY",
+      "BUILDING_BARTER_POST",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_CLOTH",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_LEATHER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_FUR",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_FACTORY_HATS",
+    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HATS"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FEATHERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SILK",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 50,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HATTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HATTER",
+  "civilopedia": "TXT_KEY_BUILDING_HATTER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

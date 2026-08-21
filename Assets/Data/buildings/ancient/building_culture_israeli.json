@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_CULTURE_ISRAELI",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_MIDDLE_EASTERN",
+    "BUILDING_C_L_MIDDLE_EASTERN",
+    "TECH_MONOTHEISM",
+    {
+     "type": "TERRAIN_DESERT",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SALT",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ISRAELI"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_SOLOMONS_TEMPLE": {
+     "percent": 10
+    },
+    "BUILDING_PETRA": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 1104,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_ISRAELI",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_ISRAELI",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_ISRAELI_PEDIA",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

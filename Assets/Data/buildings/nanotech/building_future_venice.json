@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_FUTURE_VENICE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
+    "BUILDING_ARTIFICIAL_REEF",
+    "TECH_PROTOTYPED_PATHOGENS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 3
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 19470,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_FUTURE_VENICE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FUTURE_VENICE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FUTURE_VENICE",
+  "civilopedia": "TXT_KEY_BUILDING_FUTURE_VENICE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_HEALING_CLAY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOTROIDS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ALTERNATIVE_MEDICINE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_NATUROPATHY",
+    {
+     "any": [
+      "BUILDING_HEALERS_HUT",
+      "BUILDING_DOCTORS_OFFICE",
+      "BUILDING_SURGEONS_OFFICE",
+      "BUILDING_MEDICAL_CLINIC",
+      "BUILDING_APOTHECARY_SHOP",
+      "BUILDING_PHARMACY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FINE_CLAY",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ],
+   "dormant": [
+    "BUILDING_ALTERNATIVE_MEDICINE",
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 50,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HEALING_CLAY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HEALING_CLAY",
+  "civilopedia": "TXT_KEY_BUILDING_HEALING_CLAY_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

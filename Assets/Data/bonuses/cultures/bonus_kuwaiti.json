@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_KUWAITI",
+ "enables": {
+  "units": [
+   "UNIT_OIL_TANKER",
+   "UNIT_SABAH_AL_AHMAD"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_KUWAITI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_KUWAITI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

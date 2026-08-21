@@ -1,0 +1,85 @@
+{
+ "type": "TECH_EXOCORTEX_NETWORKS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS",
+   "BUILDING_DREAM_VISUALIZER",
+   "BUILDING_EXOCORTEX_NETWORKS",
+   "BUILDING_NEURON_REGENERATOR_LAB",
+   "BUILDING_VIRTUAL_WORLD_CLAN"
+  ],
+  "civics": [
+   "CIVIC_FAST"
+  ],
+  "promotions": [
+   "PROMOTION_EDUCATE9"
+  ],
+  "techs": [
+   "TECH_CYBERIMMUNOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SYNTHETIC_SENTIENCE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NOVUS_CHEMISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WIRELESS_ELECTRICITY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BIONICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 44505
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Exocortexnetworks.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_EXOCORTEX_NETWORKS",
+  "soundMP": "AS2D_TECH_EXOCORTEX_NETWORKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_EXOCORTEX_NETWORKS",
+  "civilopedia": "TXT_KEY_TECH_EXOCORTEX_NETWORKS_PEDIA",
+  "quote": "TXT_KEY_TECH_EXOCORTEX_NETWORKS_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 106,
+  "gridY": 19
+ }
+}

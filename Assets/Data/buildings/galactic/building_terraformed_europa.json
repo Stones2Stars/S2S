@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_TERRAFORMED_EUROPA",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EUROPA_SF6_GENERATOR",
+    "TECH_LUNAR_TERRAFORMING",
+    {
+     "type": "TERRAIN_EUROPA",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_TERRAFORMED_PLANET": {
+     "percent": 10
+    },
+    "BUILDING_INTERSTELLAR_BASE_OCEAN_PLANET": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 22747,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TERRAFORMED_EUROPA"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TERRAFORMED_EUROPA",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TERRAFORMED_EUROPA",
+  "civilopedia": "TXT_KEY_BUILDING_TERRAFORMED_EUROPA_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

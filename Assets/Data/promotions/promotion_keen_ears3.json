@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTION_KEEN_EARS3",
+ "hideAndSeek": {
+  "detection": {
+   "value": 100,
+   "unit": "HAS_CAMOUFLAGE"
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_KEEN_EARS": 3
+ },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/KeenEars3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_KEEN_EARS3"
+ }
+}

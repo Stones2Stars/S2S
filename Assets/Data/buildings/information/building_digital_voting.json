@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_DIGITAL_VOTING",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_BLOCKCHAIN_AUTHENTICATION",
+    "TECH_DIRECT_MERCHANDISING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    "CIVIC_DEMOCRACY"
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "cost": {
+  "production": 2405,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DIGITAL_VOTING",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DIGITAL_VOTING",
+  "civilopedia": "TXT_KEY_BUILDING_DIGITAL_VOTING_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_ENCELADUS_RESUPPLY_BASE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_ORBITAL_BASE",
+    "TECH_KUIPER_BELT_EXPLORATION",
+    {
+     "type": "TERRAIN_ENCELADUS",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -5
+   }
+  }
+ },
+ "cost": {
+  "production": 959,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ENCELADUS_RESUPPLY_BASE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ENCELADUS_RESUPPLY_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_ENCELADUS_RESUPPLY_BASE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

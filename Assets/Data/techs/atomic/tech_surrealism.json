@@ -1,0 +1,65 @@
+{
+ "type": "TECH_SURREALISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_DALI_THEATRE_AND_MUSEUM"
+  ],
+  "techs": [
+   "TECH_POSTMODERNISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMMUNISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DADA",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 11665
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_CULTURE": 9
+   },
+   {
+    "FLAVOR_RELIGION": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/surrealism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SURREALISM",
+  "soundMP": "AS2D_TECH_SURREALISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SURREALISM",
+  "civilopedia": "TXT_KEY_TECH_SURREALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_SURREALISM_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 77,
+  "gridY": 1
+ }
+}

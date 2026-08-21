@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTION_EXPERIENCED_ARTIST",
+ "costs": {
+  "unit": {
+   "upgrade": {
+    "percent": -30
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Mercenary.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,1,9"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_EXPERIENCED_ARTIST",
+  "unitCombats": [
+   "UNITCOMBAT_ENTERTAINER"
+  ]
+ }
+}

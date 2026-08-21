@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_INSTANT_TELEPORTATION_PORTAL",
+   "BUILDING_INTERGALACTIC_TEMPORAL_RIFT",
+   "BUILDING_INTERGALACTIC_VOID_BASE"
+  ],
+  "units": [
+   "UNIT_WORLDSHIP3",
+   "UNIT_WORLDSHIP4"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
+    "TECH_MEGAWORMHOLES",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    30,
+    {
+     "value": 13,
+     "enabled": "TECH_HYPERSTRUCTURE_ENGINEERING"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 13,
+     "enabled": "TECH_TRANSDIMENSIONAL_COMMERCE"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 5
+   }
+  }
+ },
+ "cost": {
+  "production": 4004,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

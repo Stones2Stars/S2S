@@ -1,0 +1,108 @@
+{
+ "type": "BUILDING_BARAY",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CANAL_SYSTEMS",
+    {
+     "any": [
+      "BUILDING_AQUEDUCT",
+      "BUILDING_MODERN_WATERWORKS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1512,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_KHMER_BARAY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BARAY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_AQUEDUCT"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BARAY",
+  "civilopedia": "TXT_KEY_BUILDING_BARAY_PEDIA",
+  "pediaCategory": "greatWonder",
+  "centerInCity": true,
+  "worth": 5,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_DOCTOR",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_BAMBOO_ARMOURER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ARTILLERY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ARMOURER"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CARPENTRY",
+    "TECH_TANNING",
+    {
+     "any": [
+      "BUILDING_TANNERY",
+      "BUILDING_FACTORY_LEATHER",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "FEATURE_BAMBOO",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BAMBOO",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_ARMOURER"
+   ]
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_BAMBOO_ARMOR"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 68,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BAMBOO_ARMOURER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BAMBOO_ARMOURER",
+  "civilopedia": "TXT_KEY_BUILDING_BAMBOO_ARMOURER_PEDIA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

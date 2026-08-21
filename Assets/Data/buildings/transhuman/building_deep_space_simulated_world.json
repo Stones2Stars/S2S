@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_DEEP_SPACE_SIMULATED_WORLD",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_SECURITY_SYSTEM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_NEUROIMPLANT_EXPORTER",
+    "BUILDING_SPACE_COLONY_DEEP_SPACE",
+    "TECH_NANOMORPHICS",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -5
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 2104,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_SIMULATED_WORLD",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_SIMULATED_WORLD",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_SIMULATED_WORLD_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

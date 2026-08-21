@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_BELIEF_REINCARNATION",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_REINCARNATION"
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "warWeariness": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "empire": {
+   "flat": -5
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BELIEF_REINCARNATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BELIEF_REINCARNATION",
+  "civilopedia": "TXT_KEY_BUILDING_BELIEF_REINCARNATION_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

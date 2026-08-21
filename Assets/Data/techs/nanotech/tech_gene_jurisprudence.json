@@ -1,0 +1,69 @@
+{
+ "type": "TECH_GENE_JURISPRUDENCE",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_DESIGNER_BABIES"
+  ],
+  "buildings": [
+   "BUILDING_GENETIC_PROFILING",
+   "BUILDING_GENOTYPE_STUDIO",
+   "BUILDING_HUMAN_MOD_DESIGNER_BABIES"
+  ],
+  "techs": [
+   "TECH_RAPID_RECUPERATION",
+   "TECH_SYNTHETIC_SENTIENCE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GENE_ENHANCEMENT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 38858
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Genejurisprudence.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENE_JURISPRUDENCE",
+  "soundMP": "AS2D_TECH_GENE_JURISPRUDENCE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_GENE_JURISPRUDENCE",
+  "civilopedia": "TXT_KEY_TECH_GENE_JURISPRUDENCE_PEDIA",
+  "quote": "TXT_KEY_TECH_GENE_JURISPRUDENCE_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 102,
+  "gridY": 19
+ }
+}

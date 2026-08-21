@@ -1,0 +1,42 @@
+{
+ "entity": "TerrainInfo",
+ "rootElement": "TerrainInfo",
+ "glob": "**/CIV4TerrainInfos.xml",
+ "channels": {
+  "iMovement": {
+   "scope": "plot",
+   "channel": "movement",
+   "kind": "flat"
+  }
+ },
+ "inversionsOut": {},
+ "enablerEdges": {},
+ "prereqs": [],
+ "cost": [],
+ "art": [
+  "ArtDefineTag",
+  "Button",
+  "FootstepSounds",
+  "WorldSoundscapeAudioScript"
+ ],
+ "identity": [
+  "Type",
+  "Description",
+  "Civilopedia",
+  "iCultureDistance",
+  "iBuildModifier",
+  "iDefense",
+  "iHealthPercent",
+  "iDistanceToLand",
+  "ClimateZoneType",
+  "bFound",
+  "bFoundCoast",
+  "bFoundFreshWater",
+  "bFreshWaterTerrain",
+  "Yields",
+  "MapCategoryTypes"
+ ],
+ "boostsIn": [
+  "buildingBoosts"
+ ]
+}

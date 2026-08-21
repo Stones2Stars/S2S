@@ -1,0 +1,97 @@
+{
+ "type": "TECH_TOOL_MAKING",
+ "enables": {
+  "bonuses": [
+   "BONUS_STONE",
+   "BONUS_STONE_TOOLS"
+  ],
+  "buildings": [
+   "BUILDING_CHILD_LABOR_CREW",
+   "BUILDING_NUT_CRACKING_STONE",
+   "BUILDING_PERCUSSION_INSTRUMENT_MAKER",
+   "BUILDING_STONE_TOOL_MAKER"
+  ],
+  "builds": [
+   "BUILD_STONE_TOOLS_WORKSHOP_KILL"
+  ],
+  "improvements": [
+   "IMPROVEMENT_STONE_TOOLS_WORKSHOP"
+  ],
+  "techs": [
+   "TECH_HARD_HAMMER_PERCUSSION",
+   "TECH_SHELTER_BUILDING"
+  ],
+  "units": [
+   "UNIT_STONE_THROWER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GATHERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SCAVENGING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "cost": {
+  "research": 5
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/Stone_tools.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,4,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TOOL_MAKING",
+  "soundMP": "AS2D_TECH_TOOL_MAKING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TOOL_MAKING",
+  "civilopedia": "TXT_KEY_TECH_TOOL_MAKING_PEDIA",
+  "quote": "TXT_KEY_TECH_TOOL_MAKING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 3,
+  "gridY": 7
+ }
+}

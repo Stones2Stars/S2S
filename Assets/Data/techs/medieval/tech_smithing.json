@@ -1,0 +1,92 @@
+{
+ "type": "TECH_SMITHING",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARMOURER",
+   "BUILDING_CULTURE_FILIPINO",
+   "BUILDING_CULTURE_JAPANESE",
+   "BUILDING_CULTURE_MARIC",
+   "BUILDING_CULTURE_TASMANIAN",
+   "BUILDING_GUILD_BLACKSMITHS"
+  ],
+  "techs": [
+   "TECH_ARMOR_CRAFTING",
+   "TECH_RUDDER",
+   "TECH_STIRRUP"
+  ],
+  "units": [
+   "UNIT_CORNUTI",
+   "UNIT_FALXMEN",
+   "UNIT_JAPAN_SAMURAI",
+   "UNIT_KALARIPAYATT",
+   "UNIT_KALLARANI",
+   "UNIT_KATARA",
+   "UNIT_KHINGILA_WARRIORS",
+   "UNIT_KHITAN_INFANTRY",
+   "UNIT_KRISS_WARRIOR",
+   "UNIT_MURRI_WARRIOR",
+   "UNIT_SAXON_RAIDER",
+   "UNIT_SHEBA_ELITES",
+   "UNIT_SWORDSMAN",
+   "UNIT_TASMANIAN_DEVILS",
+   "UNIT_UACUSECHA",
+   "UNIT_URUMI_SWORDSMAN",
+   "UNIT_VIKING_BESERKER",
+   "UNIT_WARLORDII",
+   "UNIT_WARLORDIIS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEDIEVAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1132
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/Smithing2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SMITHING",
+  "soundMP": "AS2D_TECH_SMITHING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SMITHING",
+  "civilopedia": "TXT_KEY_TECH_SMITHING_PEDIA",
+  "quote": "TXT_KEY_TECH_SMITHING_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 18,
+  "militaryWorth": 12,
+  "tradeable": true,
+  "gridX": 42,
+  "gridY": 13
+ }
+}

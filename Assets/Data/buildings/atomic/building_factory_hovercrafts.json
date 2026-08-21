@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_FACTORY_HOVERCRAFTS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ORBITAL_FLIGHT"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "TECH_AMPHIBIOUS_WARFARE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PARTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HOVERCRAFTS"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_NANOTUBES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TITANIUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COMPUTERS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1080,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACTORY_HOVERCRAFTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_HOVERCRAFTS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_HOVERCRAFTS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

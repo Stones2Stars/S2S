@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_FOUNDATION",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_USURY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_PHILANTHROPIC",
+    {
+     "any": [
+      {
+       "type": "BONUS_SCROLLS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BOOKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_COMPUTERS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PAPER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 332,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FOUNDATION",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FOUNDATION",
+  "civilopedia": "TXT_KEY_BUILDING_FOUNDATION_PEDIA",
+  "worth": 3,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_LUNAR_ARCOLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_GIGAVERSE_PORTAL",
+   "BUILDING_LUNAR_DEATH_RAY",
+   "BUILDING_LUNAR_ECUMENOPOLIS",
+   "BUILDING_LUNA_RING",
+   "BUILDING_MITHRIL_FOUNDRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LUNAR_PARCOLOGY",
+    "BUILDING_LUNAR_MANUFACTURING_PLANT",
+    "TECH_LUNAR_MEGASTRUCTURES",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 2478,
+  "hurryModifier": 10000
+ },
+ "amenities": {
+  "adds3rdRing": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUNAR_ARCOLOGY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_ARCOLOGY",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_ARCOLOGY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

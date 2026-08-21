@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_HOUSING_IGLOOS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_HOUSING_BOONDOCKS",
+    "BUILDING_HOUSING_DUGOUTS",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
+   ],
+   "all": [
+    {
+     "latitude": {
+      "min": 50
+     }
+    },
+    "TECH_SHELTER_BUILDING",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_TAIGA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_TUNDRA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_ICE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HOUSING_IGLOOS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_IGLOOS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_IGLOOS_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "centerInCity": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

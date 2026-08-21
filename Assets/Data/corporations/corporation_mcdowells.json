@@ -1,0 +1,99 @@
+{
+ "type": "CORPORATION_MCDOWELLS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIG_MCDOWELLS_RESTAURANT"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 1.75,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_MCDOWELLS"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_PIG",
+       "BONUS_COW",
+       "BONUS_SHEEP",
+       "BONUS_POTATOES",
+       "BONUS_WHEAT",
+       "BONUS_SALT"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HEADQUARTERS": "CORPORATION_MCDOWELLS"
+     },
+     "per": "CORPORATION_LEVEL"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_MCDOWELLS"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_MCDOWELLS"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_PIG",
+        "BONUS_COW",
+        "BONUS_SHEEP",
+        "BONUS_POTATOES",
+        "BONUS_WHEAT",
+        "BONUS_SALT"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 9,
+   "icon": "Art/Interface/Buttons/corporations/mcdowells.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_MCDOWELLS",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MCDOWELLS_PEDIA",
+  "competingSpreadCostPercent": 200,
+  "spreadFactor": 50
+ }
+}

@@ -1,0 +1,197 @@
+{
+ "type": "IMPROVEMENT_WILDLIFE_SANCTUARY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TOURISM",
+     "scope": "team"
+    },
+    {
+     "bonus": [
+      "BONUS_ELEPHANT",
+      "BONUS_BEAVER",
+      "BONUS_PARROT",
+      "BONUS_SEA_LION_AND_SEAL",
+      "BONUS_WALRUS",
+      "BONUS_MAMMOTH",
+      "BONUS_BISON",
+      "BONUS_DEER",
+      "BONUS_GUINEA_PIG",
+      "BONUS_KANGAROO",
+      "BONUS_RABBIT"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_ARTIFICIAL_EVOLUTION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RABBIT"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ECOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ECOLOGICAL_ENGINEERING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ENVIRONMENTAL_ECONOMICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_ELEPHANT"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_BEAVER"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PARROT"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SEA_LION_AND_SEAL"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_WALRUS"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MAMMOTH"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_BISON"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_DEER"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GUINEA_PIG"
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "HAS_BONUS": "BONUS_KANGAROO"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RABBIT"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_HUNTING_CAMP"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_WILDLIFE_SANCTUARY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_WILDLIFE_SANCTUARY_PEDIA",
+  "advancedStart": {
+   "cost": 24
+  },
+  "pillageGold": 25,
+  "pillageTo": "IMPROVEMENT_HUNTING_PRESERVE",
+  "bonuses": {
+   "BONUS_ELEPHANT": {
+    "trade": true
+   },
+   "BONUS_BEAVER": {
+    "trade": true
+   },
+   "BONUS_PARROT": {
+    "trade": true
+   },
+   "BONUS_SEA_LION_AND_SEAL": {
+    "trade": true
+   },
+   "BONUS_WALRUS": {
+    "trade": true
+   },
+   "BONUS_MAMMOTH": {
+    "trade": true
+   },
+   "BONUS_BISON": {
+    "trade": true
+   },
+   "BONUS_DEER": {
+    "trade": true
+   },
+   "BONUS_GUINEA_PIG": {
+    "trade": true
+   },
+   "BONUS_KANGAROO": {
+    "trade": true
+   },
+   "BONUS_RABBIT": {
+    "trade": true
+   }
+  }
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_CAUTIOUS5",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CAUTIOUS4"
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CAUTIOUS": 5
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Cautious5Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CAUTIOUS5"
+ }
+}

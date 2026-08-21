@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_SHRINE_OF_BAB",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "IS_HOLY_CITY": "RELIGION_BAHAI"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "per": {
+      "type": "RELIGION_BAHAI",
+      "scope": "world"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_BAHAI": {
+    "flat": 1
+   }
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 3
+  }
+ },
+ "shrine": "RELIGION_BAHAI",
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SHRINE_BAHAI"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SHRINE_OF_BAB"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SHRINE_OF_BAB",
+  "civilopedia": "TXT_KEY_BUILDING_SHRINE_OF_BAB_PEDIA",
+  "pediaCategory": "religious",
+  "stateReligionCommerce": {
+   "research": 1
+  },
+  "notConstructible": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_BAHAI",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

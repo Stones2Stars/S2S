@@ -1,0 +1,42 @@
+{
+ "type": "TERRAIN_MARTIAN_ROCKY",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 25
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/baseterrain/DuneRugged.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_TERRAIN_ROCKY"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_PLAINS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_TERRAIN_MARTIAN_ROCKY",
+  "civilopedia": "TXT_KEY_TERRAIN_MARTIAN_ROCKY_PEDIA",
+  "found": true,
+  "buildTimeModifier": 25,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

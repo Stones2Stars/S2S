@@ -1,0 +1,44 @@
+{
+ "type": "PROMOTION_PROJECTION3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_PROJECTION2",
+    "PROMOTION_COMBAT4"
+   ]
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 2
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 10
+   }
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_PROJECTION": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/projection3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_PROJECTION3"
+ }
+}

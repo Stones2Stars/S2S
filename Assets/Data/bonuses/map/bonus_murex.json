@@ -1,0 +1,59 @@
+{
+ "type": "BONUS_MUREX",
+ "enables": {
+  "buildings": [
+   "BUILDING_ABALONE_DIGGERS",
+   "BUILDING_CONCH_DIVER",
+   "BUILDING_CULTURE_ANDAMANESE",
+   "BUILDING_CULTURE_AVERNIAN",
+   "BUILDING_CULTURE_CARTHAGINIAN",
+   "BUILDING_CULTURE_PHOENICIAN",
+   "BUILDING_CULTURE_TUNISIAN",
+   "BUILDING_MUREX_DIVER",
+   "BUILDING_NET_FLOUNDER"
+  ]
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MUREX"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 8,
+  "constAppearance": 500,
+  "minAreaSize": 10,
+  "maxLatitude": 23,
+  "rands": {
+   "iRandApp1": 50,
+   "iRandApp2": 50,
+   "iRandApp3": 50,
+   "iRandApp4": 50
+  },
+  "tilesPer": 64,
+  "uniqueRange": 3,
+  "validTerrains": [
+   "TERRAIN_COAST",
+   "TERRAIN_COAST_TROPICAL",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_TROPICAL"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MUREX",
+  "civilopedia": "TXT_KEY_BONUS_MUREX_PEDIA",
+  "bonusClassType": "BONUSCLASS_LUXURY",
+  "source": "natural"
+ }
+}

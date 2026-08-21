@@ -1,0 +1,82 @@
+{
+ "type": "TECH_MUSICAL_NOTATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_BALLROOM",
+   "BUILDING_CULTURE_SERBIAN",
+   "BUILDING_CULTURE_TIMURID",
+   "BUILDING_MONKEY_BREEDER",
+   "BUILDING_MUSIC_SCHOOL"
+  ],
+  "promotions": [
+   "PROMOTION_BARD1"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_CATHEDRAL"
+  ],
+  "techs": [
+   "TECH_MEDIEVAL_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_BAYAJIDDA",
+   "UNIT_JAYAVARMAN_II",
+   "UNIT_KUCUMATZ",
+   "UNIT_STEPHEN_UROS_IV_DUSAN",
+   "UNIT_SUNDIATA_KEITA",
+   "UNIT_TIMUR",
+   "UNIT_YAWAR_RUNA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DRAMA",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_ARTIST"
+ },
+ "cost": {
+  "research": 904
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_RELIGION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": ",Art/Interface/Buttons/TechTree/Music.dds,Art/Interface/Buttons/TechTree_Atlas.dds,3,11"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MUSICAL_NOTATION",
+  "soundMP": "AS2D_TECH_MP_MUSIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MUSICAL_NOTATION",
+  "civilopedia": "TXT_KEY_TECH_MUSICAL_NOTATION_PEDIA",
+  "quote": "TXT_KEY_TECH_MUSICAL_NOTATION_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 40,
+  "gridY": 3
+ }
+}

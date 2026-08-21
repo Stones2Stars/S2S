@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_GONDOLA_CANALS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FUSION_SPACECRAFT"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TOURISM_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CANAL_SYSTEMS",
+    {
+     "any": [
+      "BUILDING_AQUEDUCT",
+      "BUILDING_MODERN_WATERWORKS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_TOURISM_MEGACOMPLEX"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 252,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GONDOLA_CANALS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GONDOLA_CANALS",
+  "civilopedia": "TXT_KEY_BUILDING_GONDOLA_CANALS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

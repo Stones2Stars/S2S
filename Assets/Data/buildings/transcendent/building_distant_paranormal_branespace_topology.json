@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DISTANT_PARANORMAL_BRANESPACE_TOPOLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_HACKED_SOURCE_CODE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_LAYERED_REALITY",
+    "TECH_REALITY_REPROGRAMMING",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "cost": {
+  "production": 3423,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_PARANORMAL_BRANESPACE_TOPOLOGY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_PARANORMAL_BRANESPACE_TOPOLOGY",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_PARANORMAL_BRANESPACE_TOPOLOGY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

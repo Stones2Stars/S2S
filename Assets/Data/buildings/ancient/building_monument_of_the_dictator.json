@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_MONUMENT_OF_THE_DICTATOR",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_BRONZE_WORKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SCULPTURES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "CIVIC_DESPOTISM"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "cost": {
+  "production": 184,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MONUMENT_OF_THE_DICTATOR"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_NAVAL_ACADEMY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MONUMENT_OF_THE_DICTATOR",
+  "civilopedia": "TXT_KEY_BUILDING_MONUMENT_OF_THE_DICTATOR_PEDIA",
+  "worth": 3,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

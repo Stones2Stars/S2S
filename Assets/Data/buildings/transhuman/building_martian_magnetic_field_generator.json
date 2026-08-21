@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MARTIAN_ELECTRONICS_FACTORY",
+    "BUILDING_MARTIAN_MEGACITY",
+    "TECH_PLANETARY_DEFENSES",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 4032,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

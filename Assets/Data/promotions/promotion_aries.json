@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTION_ARIES",
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 3
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/StarSigns/aries.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_ARIES",
+  "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ],
+  "starsign": true
+ }
+}

@@ -1,0 +1,103 @@
+{
+ "type": "TECH_MILITARY_TRAINING",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_ELEPHANT",
+   "BUILDING_ARCHIMEDES_WORKSHOP",
+   "BUILDING_BARRACKS",
+   "BUILDING_CRIME_MILITARY_DESERTION",
+   "BUILDING_CULTURE_GOTH",
+   "BUILDING_CULTURE_SAXON",
+   "BUILDING_CULTURE_YAMATO",
+   "BUILDING_DRAFT_OFFICE",
+   "BUILDING_EKAL_MASHARTI",
+   "BUILDING_MILITARY_SCHOOL",
+   "BUILDING_PARADE_GROUNDS",
+   "BUILDING_SLAVE_COMPOUND_MILITARY_SUPPORT",
+   "BUILDING_SUN_TZUS_ART_OF_WAR",
+   "BUILDING_TEMPLE_OF_SETH",
+   "BUILDING_TRIUMPH_COLUMN",
+   "BUILDING_WAR_DOG_TRAINER"
+  ],
+  "civics": [
+   "CIVIC_CONSCRIPTION",
+   "CIVIC_MARTIAL"
+  ],
+  "promotions": [
+   "PROMOTION_BACKSTAB5",
+   "PROMOTION_DRILL3",
+   "PROMOTION_HUNTING_DOG3",
+   "PROMOTION_NON_LETHAL_FORCE1",
+   "PROMOTION_PACK_HUNTER3",
+   "PROMOTION_RACING_DOG3",
+   "PROMOTION_SIDESTEP3",
+   "PROMOTION_TRACK_SCENT3",
+   "PROMOTION_WAYLAY4"
+  ],
+  "techs": [
+   "TECH_ANCIENT_MACHINERY",
+   "TECH_ATHLETICS",
+   "TECH_HORSE_BREEDING",
+   "TECH_LAW_ENFORCEMENT"
+  ],
+  "units": [
+   "UNIT_ELEPHANT_RIDER",
+   "UNIT_GOTH_ALARIC",
+   "UNIT_WARCAT",
+   "UNIT_WARDOG",
+   "UNIT_WARLORDI",
+   "UNIT_WARLORDIS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CLASSICAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 448
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/MedievalCombat.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,11"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MILITARY_TRAINING",
+  "soundMP": "AS2D_TECH_MILITARY_TRAINING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MILITARY_TRAINING",
+  "civilopedia": "TXT_KEY_TECH_MILITARY_TRAINING_PEDIA",
+  "quote": "TXT_KEY_TECH_MILITARY_TRAINING_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 10,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 33,
+  "gridY": 5
+ }
+}

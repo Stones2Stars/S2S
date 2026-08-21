@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_STAR_SCOOP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STAR_LIFTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_STAR_SCOOP"
+ },
+ "cost": {
+  "gold": 700,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/star_scoop.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_STAR_SCOOP"
+ }
+}

@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_INTERSTELLAR_EVENT_HORIZON_CITY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY",
+    "TECH_GRAVITRONICS",
+    {
+     "any": [
+      {
+       "type": "FEATURE_BLACK_HOLE",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_SUPERMASSIVE_BLACK_HOLE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 5515,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_EVENT_HORIZON_CITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_EVENT_HORIZON_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_EVENT_HORIZON_CITY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

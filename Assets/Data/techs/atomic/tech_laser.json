@@ -1,0 +1,80 @@
+{
+ "type": "TECH_LASER",
+ "enables": {
+  "buildings": [
+   "BUILDING_ACCELERATOR",
+   "BUILDING_CERN_ACCELERATOR",
+   "BUILDING_LASER_EYE_SURGERY_CLINIC",
+   "BUILDING_LASER_TAG_ARENA"
+  ],
+  "techs": [
+   "TECH_FIBER_OPTICS"
+  ],
+  "units": [
+   "UNIT_MSNIPER",
+   "UNIT_SPECIAL_FORCES",
+   "UNIT_SSG"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_NIAM_NIAM",
+   "UNIT_PUEBLO_REBEL",
+   "UNIT_SNIPER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MICROWAVES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SOLAR_POWER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 13724
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 9
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/laser.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,4,16"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_LASER",
+  "soundMP": "AS2D_TECH_LASER"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_LASER",
+  "civilopedia": "TXT_KEY_TECH_LASER_PEDIA",
+  "quote": "TXT_KEY_TECH_LASER_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 81,
+  "gridY": 17
+ }
+}

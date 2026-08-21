@@ -1,0 +1,66 @@
+{
+ "type": "IMPROVEMENT_DYSON_SPHERE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTROENGINEERING",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_MILKY_WAY",
+      "TERRAIN_GALACTIC_CORE",
+      "TERRAIN_ORION_ARM",
+      "TERRAIN_STAR_CLUSTER",
+      "TERRAIN_NEBULA",
+      "TERRAIN_RED_GIANT",
+      "TERRAIN_SUN_LIKE_STAR",
+      "TERRAIN_RED_DWARF"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 10
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_STELLAR_COMPUTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_STELLAR_ENGINE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_DYSON_SPHERE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_DYSON_SPHERE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_DYSON_SPHERE_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

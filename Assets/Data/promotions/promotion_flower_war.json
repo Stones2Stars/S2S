@@ -1,0 +1,83 @@
+{
+ "type": "PROMOTION_FLOWER_WAR",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LEADER"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "moveDiscount": {
+    "flat": 1
+   }
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": -20,
+   "feature": {
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "FEATURE_BAMBOO": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "FEATURE_FOREST_YOUNG": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "FEATURE_FOREST_BURNT": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "FEATURE_FOREST_ANCIENT": {
+     "attack": {
+      "percent": 25
+     }
+    }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 30
+   },
+   "resistance": {
+    "flat": -5
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/nagual_promo.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FLOWER_WAR",
+  "stateReligionPrereq": "RELIGION_NAGHUALISM",
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_THROWING"
+  ]
+ }
+}

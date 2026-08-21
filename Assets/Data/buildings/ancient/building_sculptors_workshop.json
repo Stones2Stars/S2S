@@ -1,0 +1,144 @@
+{
+ "type": "BUILDING_SCULPTORS_WORKSHOP",
+ "enables": {
+  "buildings": [
+   "BUILDING_PHIDIAS_STATUE_WORKSHOP"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_SCULPTURES"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SCULPTURE",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_JADE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_MARBLE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_FINE_CLAY",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_FACTORY_SCULPTURES",
+    "BUILDING_MANUFACTURING_DISTRICT"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_SCULPTURES"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 2,
+     "enabled": "TECH_ORNAMENTATION"
+    },
+    {
+     "value": 3,
+     "enabled": "TECH_AESTHETICS"
+    },
+    {
+     "value": 5,
+     "enabled": "TECH_FREE_ARTISTRY"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
+ "cost": {
+  "production": 160,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   },
+   {
+    "FLAVOR_GOLD": 4
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SCULPTORS_WORKSHOP",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FORGE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SCULPTORS_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_SCULPTORS_WORKSHOP_PEDIA",
+  "conquestProbability": 80,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_LUNAR_KREEP_MINE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LUNAR_MANUFACTURING_PLANT",
+    "TECH_NANOMINING",
+    "TECH_LUNAR_TRADE",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_TITANIUM_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STEEL_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 250
+  }
+ },
+ "cost": {
+  "production": 2500,
+  "hurryModifier": 10000
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUNAR_KREEP_MINE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_KREEP_MINE",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_KREEP_MINE_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

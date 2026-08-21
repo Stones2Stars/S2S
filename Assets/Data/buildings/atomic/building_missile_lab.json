@@ -1,0 +1,124 @@
+{
+ "type": "BUILDING_MISSILE_LAB",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ORBITAL_FLIGHT"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LABORATORY",
+    "TECH_ADVANCED_ROCKETRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_ICBM": {
+     "percent": 20
+    },
+    "UNIT_TACTICAL_NUKE": {
+     "percent": 20
+    },
+    "UNIT_GUIDED_MISSILE": {
+     "percent": 20
+    },
+    "UNIT_PRECISION_ATTACK_MISSILE": {
+     "percent": 20
+    },
+    "UNIT_BIOLOGICAL_WARFARE_MISSILE": {
+     "percent": 20
+    },
+    "UNIT_POISON_NOVA": {
+     "percent": 10
+    },
+    "UNIT_MRBM": {
+     "percent": 10
+    },
+    "UNIT_IRBM": {
+     "percent": 10
+    },
+    "UNIT_HYDROGEN": {
+     "percent": 10
+    },
+    "UNIT_EXPERIMENTAL": {
+     "percent": 10
+    },
+    "UNIT_FUSION_NUKE": {
+     "percent": 10
+    },
+    "UNIT_FUSION_NOVA": {
+     "percent": 10
+    },
+    "UNIT_TURN": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MISSILE_LAB",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MISSILE_LAB"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MISSILE_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_MISSILE_LAB_PEDIA",
+  "worth": 8,
+  "militaryWorth": 25,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 5,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_BUFFALO_JUMP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_HUNTING",
+    {
+     "any": [
+      "BUILDING_HERD_BISON",
+      "BUILDING_CAMP_BISON",
+      "BUILDING_CAMP_GIANT_BISON",
+      "BUILDING_BREEDING_PROGRAM_BISON",
+      "BUILDING_ANIMAL_PRESERVE",
+      "BUILDING_INDUSTRIAL_FARMS",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "TERRAIN_HILL",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BISON",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 74,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BUFFALO_JUMP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BUFFALO_JUMP",
+  "civilopedia": "TXT_KEY_BUILDING_BUFFALO_JUMP_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

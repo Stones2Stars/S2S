@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_CARNIVAL_BOXING_KANGAROO",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ADVANCED_AVIATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CARNIVAL",
+    "TECH_TRADE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    "HERITAGE_TAXON_MARSUPIALIA"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 306,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CARNIVAL_BOXING_KANGAROO"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CARNIVAL_BOXING_KANGAROO",
+  "civilopedia": "TXT_KEY_BUILDING_CARNIVAL_BOXING_KANGAROO_PEDIA",
+  "worth": 1,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

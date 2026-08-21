@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_SENTRY_POST",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+  ],
+  "units": [
+   "UNIT_ENFORCERS",
+   "UNIT_NEANDERTHAL_ENFORCER",
+   "UNIT_NEANDERTHAL_WATCHER",
+   "UNIT_WATCHER"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LAW_ENFORCEMENT"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TOWN_WATCH"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CONDUCT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_TOWN_WATCH",
+    "BUILDING_TOWN_PATROL",
+    "BUILDING_GUARDHOUSE",
+    "BUILDING_GUARD_STATION",
+    "BUILDING_SHERIFFS_OFFICE",
+    "BUILDING_POLICE_STATION",
+    "BUILDING_POLICE_PRECINCT"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 5
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "underworld": {
+  "city": {
+   "investigation": {
+    "flat": 10
+   }
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 62,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SENTRY_POST",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SENTRY_POST",
+  "civilopedia": "TXT_KEY_BUILDING_SENTRY_POST_PEDIA",
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

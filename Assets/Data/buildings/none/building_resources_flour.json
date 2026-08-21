@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_RESOURCES_FLOUR",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_AUGMENTED_CONSUMABLES"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_MILL"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_MODERN_MILL",
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+   ],
+   "all": [
+    {
+     "any": [
+      "BUILDING_DONKEY_MILL",
+      "BUILDING_OXEN_MILL",
+      "BUILDING_QUERN",
+      "BUILDING_WATERMILL",
+      "BUILDING_WINDMILL"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_FLOUR"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESOURCES_FLOUR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_FLOUR",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

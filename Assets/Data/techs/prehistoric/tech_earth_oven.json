@@ -1,0 +1,55 @@
+{
+ "type": "TECH_EARTH_OVEN",
+ "enables": {
+  "buildings": [
+   "BUILDING_IMU"
+  ],
+  "techs": [
+   "TECH_CELEBRATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SLASH_AND_BURN",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 39
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/earthoven.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_EARTH_OVEN",
+  "soundMP": "AS2D_TECH_EARTH_OVEN"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_EARTH_OVEN",
+  "civilopedia": "TXT_KEY_TECH_EARTH_OVEN_PEDIA",
+  "quote": "TXT_KEY_TECH_EARTH_OVEN_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 15,
+  "gridY": 5
+ }
+}

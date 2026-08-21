@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_METEORITE_LAB",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_GEOLOGY_LAB",
+    "TECH_ASTROGEOLOGY",
+    {
+     "any": [
+      {
+       "type": "FEATURE_CRATER",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_BARRINGER_CRATER",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_NGORONGORO_CRATER",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 1685,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_METEORITE_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_METEORITE_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_METEORITE_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

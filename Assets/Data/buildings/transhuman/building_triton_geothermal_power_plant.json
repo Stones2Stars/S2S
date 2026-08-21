@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_TRITON_GEOTHERMAL_POWER_PLANT",
+ "enables": {
+  "buildings": [
+   "BUILDING_TRITON_HEAT_RING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TRITON_COLONY",
+    "TECH_ASTROGATION_CONSTELLATION",
+    {
+     "type": "TERRAIN_TRITON",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "cost": {
+  "production": 1272,
+  "hurryModifier": 10000
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRITON_GEOTHERMAL_POWER_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRITON_GEOTHERMAL_POWER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_TRITON_GEOTHERMAL_POWER_PLANT_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

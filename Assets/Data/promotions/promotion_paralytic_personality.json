@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_PARALYTIC_PERSONALITY",
+ "skills": {
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_INFERIOR"
+  ],
+  "removesUnitCombats": [
+   "UNITCOMBAT_QUALITY_POOR"
+  ]
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/UnitCombatClasses/Quality2UnitCombat.fw.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_PARALYTIC_PERSONALITY",
+  "replacesUnitCombat": "UNITCOMBAT_QUALITY_POOR",
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_ANIMAL"
+  ],
+  "forOffset": true
+ },
+ "sizeMatters": {
+  "quality": -1
+ }
+}

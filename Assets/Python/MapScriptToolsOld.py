@@ -30,11 +30,25 @@
 #  -----
 
 from CvPythonExtensions import *
+
+# the map-gen accessors -- the bindings list IS this module's dependency list
+CLIMATE = CyClimateInfo()
+BONUS = CyBonusInfo()
+FEATURE = CyFeatureInfo()
+TERRAIN = CyTerrainInfo()
+IMPROVEMENT = CyImprovementInfo()
+
 import CvMapGeneratorUtil as MGU
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
-MAP = GC.getMap()
+INFO = CyInfo()
 GAME = GC.getGame()
+MAP = GC.getMap()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
 bInitialized = False
 
@@ -61,6 +75,9 @@ def getModInfo(mapVersion=None, defLatitude=None, sMapInfo=None):
 	### civ universal constants
 	###########################
 	global MAP, iNumPlotsX, iNumPlotsY
+	# MAP is declared global here but was never ASSIGNED, so the first read raised NameError and took the whole
+	# map script down with it ("Failed to load python module C2C_Inland_Sea"). The module already holds GC.
+	MAP = GC.getMap()
 	iNumPlotsX = MAP.getGridWidth()
 	iNumPlotsY = MAP.getGridHeight()
 
@@ -125,7 +142,7 @@ def getModInfo(mapVersion=None, defLatitude=None, sMapInfo=None):
 	ebBanana          = GC.getInfoTypeForString('BONUS_BANANA')			# grass, jungle
 	ebCow             = GC.getInfoTypeForString('BONUS_COW')			# grass, plains
 	ebDeer            = GC.getInfoTypeForString('BONUS_DEER')			# tundra, forest
-	ebFur             = GC.getInfoTypeForString('BONUS_BEAVERS')			# tundra, snow, forest
+	ebFur             = GC.getInfoTypeForString('BONUS_BEAVER')			# tundra, snow, forest
 	ebMarble          = GC.getInfoTypeForString('BONUS_MARBLE')			# plains, tundra, snow
 	ebSheep           = GC.getInfoTypeForString('BONUS_SHEEP')			# grass, plains
 
@@ -161,7 +178,7 @@ def getModInfo(mapVersion=None, defLatitude=None, sMapInfo=None):
 		###############################
 		### user selected map constants
 		###############################
-		sClimateType = GC.getClimateInfo(MAP.getClimate()).getType()
+		sClimateType = INFO.getType("CLIMATE_", MAP.getClimate())
 
 		bTeams = teamStart.getTeams() # check if there are teams
 
@@ -221,7 +238,7 @@ def isBonus(sInfo):
 	if not (sInfo[0:5] == "BONUS"):
 		sInfo = "BONUS_" + sInfo.upper()
 	for i in range(GC.getNumBonusInfos()):
-		info_string = GC.getBonusInfo(i).getType()
+		info_string = INFO.getType("BONUS_", i)
 		if info_string==sInfo: return True
 	return False
 
@@ -873,13 +890,12 @@ class MapPrettifier:
 			return
 		# read parameter
 		eTerrain, chPercent = targetTerTuple
-		bWater = GC.getTerrainInfo(eTerrain).isWaterTerrain()
 		srcTer = []
 		chTer = []
 		for i in range( len(sourceTerTuples) ):
 			srcTerrain, srcChance = sourceTerTuples[i]
 			# we don't change plots
-			if GC.getTerrainInfo(srcTerrain).isWaterTerrain() == bWater:
+			if TERRAIN.isWaterTerrain(srcTerrain) == bWater:
 				srcTer.append( srcTerrain )
 				chTer.append( srcChance )
 		# check seed terrain
@@ -1003,17 +1019,17 @@ class MarshMaker:
 		self.iMarshHotBottom   = max( self.iMarshHotBottom, 0 )
 
 		self.iMarshHotTop      = tMarshHotRange[1]
-		self.iMarshHotTop     += int( 90 * GC.getClimateInfo(MAP.getClimate()).getSnowLatitudeChange() )
+		self.iMarshHotTop     += int( 90 * CLIMATE.getSnowLatitudeChange(MAP.getClimate()) )
 		self.iMarshHotTop      = min( self.iMarshHotTop, 90 )
 		self.iMarshHotTop      = max( self.iMarshHotTop, 0 )
 
 		self.iMarshColdBottom  = tMarshColdRange[0]
-		self.iMarshColdBottom += int( 90 * GC.getClimateInfo(MAP.getClimate()).getDesertBottomLatitudeChange() )
+		self.iMarshColdBottom += int( 90 * CLIMATE.getDesertBottomLatitudeChange(MAP.getClimate()) )
 		self.iMarshColdBottom  = min( self.iMarshColdBottom, 90 )
 		self.iMarshColdBottom  = max( self.iMarshColdBottom, 0 )
 
 		self.iMarshColdTop     = tMarshColdRange[1]
-		self.iMarshColdTop    += int( 90 * GC.getClimateInfo(MAP.getClimate()).getDesertTopLatitudeChange() )
+		self.iMarshColdTop    += int( 90 * CLIMATE.getDesertTopLatitudeChange(MAP.getClimate()) )
 		self.iMarshColdTop     = min( self.iMarshColdTop, 90 )
 		self.iMarshColdTop     = max( self.iMarshColdTop, 0 )
 		sprint = "[MST] Marsh ranges for %s - Hot Swamp: [%r,%r], Cold Fen: [%r,%r] \n" % (sClimateType,self.iMarshHotBottom,self.iMarshHotTop,self.iMarshColdBottom,self.iMarshColdTop)
@@ -2120,18 +2136,17 @@ class MapRegions:
 				pl.setBonusType( bon )
 				# work placed boni
 				if choose( chance, True, False ):
-					bonString = GC.getBonusInfo(bon).getType()
-					bonTech = GC.getBonusInfo(bon).getTechCityTrade()
+					bonString = INFO.getType("BONUS_", bon)
 					bonEra = 0
 					if bonTech > -1:
-						bonEra = GC.getTechInfo(bonTech).getEra()
+						bonEra = INFO.getIntrinsic("TECH_", bonTech, IntrinsicSlot.PYINT_ERA)
 					if bonEra < 0: bonEra = 0
-					eraString =	GC.getEraInfo(bonEra).getType()
+					eraString =	INFO.getType("C2C_ERA_", bonEra)
 					sprint += "[MST] Improve %s @ (%r,%r) - Era: %s\n" % (bonString,pl.getX(),pl.getY(),eraString)
 					# find possible improvements for boni
 					impList = [ (bonEra, imp) for imp in range(GC.getNumImprovementInfos())
 													  if pl.canHaveImprovement(imp, TeamTypes.NO_TEAM, True) and
-													     GC.getImprovementInfo(imp).isImprovementBonusMakesValid(bon) ]
+													     IMPROVEMENT.isValidOnBonus(imp, bon) ]
 					if len(impList) == 0:
 						sprint += "[MST] No improvement found for %s @ (%r,%r)\n" % (bonString,pl.getX(),pl.getY())
 						continue
@@ -2143,7 +2158,7 @@ class MapRegions:
 						if bonEra > 1:
 							sprint += "[MST] Civ to primitive to work %s @ (%r,%r)\n" % (bonString,pl.getX(),pl.getY())
 							continue												# ancient and classic tech only
-					impString = GC.getImprovementInfo(imp).getType()
+					impString = INFO.getType("IMPROVEMENT_", imp)
 					pl.setImprovementType( imp )
 					sprint += "[MST] Placed %s on %s @ (%r,%r)\n" % (impString,bonString,pl.getX(),pl.getY())
 			print sprint
@@ -2168,7 +2183,7 @@ class MapRegions:
 						pl.setFeatureType( FeatureTypes.NO_FEATURE, -1 )
 					if pl.canHaveImprovement( imp, TeamTypes.NO_TEAM, True ):
 						if choose( chance, True, False ): continue
-						impString = GC.getImprovementInfo(imp).getType()
+						impString = INFO.getType("IMPROVEMENT_", imp)
 						pl.setImprovementType( imp )
 						sprint += "[MST] Placed %s @ (%r,%r)\n" % (impString,pl.getX(),pl.getY())
 
@@ -2188,7 +2203,7 @@ class MapRegions:
 
 			eRoad = GC.getInfoTypeForString('ROUTE_ROAD')
 			if bAliens: eRoad = GC.getNumRouteInfos() - 1
-			roadString = GC.getRouteInfo(eRoad).getType()
+			roadString = INFO.getType("ROUTE_", eRoad)
 			for pl in pListCity:
 				if pl.isWater(): continue
 				if pl.isPeak(): continue
@@ -2205,7 +2220,7 @@ class MapRegions:
 			else: chance = 25
 
 			eRoad = GC.getInfoTypeForString('ROUTE_ROAD')
-			roadString = GC.getRouteInfo(eRoad).getType()
+			roadString = INFO.getType("ROUTE_", eRoad)
 			for x,y in pList:
 				pl = GetPlot(x,y)
 				if pl in pListCity: continue
@@ -2228,7 +2243,7 @@ class MapRegions:
 			else:
 				bon = chooseListElement( bonList )
 				pl.setBonusType( bon )
-				bonString = GC.getBonusInfo(bon).getType()
+				bonString = INFO.getType("BONUS_", bon)
 				sprint += "\n[MST] Placed %s @ (%r,%r)" % (bonString,pl.getX(),pl.getY())
 
 			# name
@@ -2599,7 +2614,7 @@ class BonusBalancer:
 	def isBonusValid(self, eBonus, pPlot, bIgnoreUniqueRange, bIgnoreOneArea, bIgnoreAdjacent):
 		iX, iY = pPlot.getX(), pPlot.getY()
 
-		if not bIgnoreOneArea and GC.getBonusInfo(eBonus).isOneArea():
+		if not bIgnoreOneArea and BONUS.isOneArea(eBonus):
 			if MAP.getNumBonuses(eBonus) > 0:
 				if MAP.getArea(pPlot.getArea()).getNumBonuses(eBonus) == 0:
 					return False
@@ -2611,7 +2626,6 @@ class BonusBalancer:
 					return False
 
 		if not bIgnoreUniqueRange:
-			uniqueRange = GC.getBonusInfo(eBonus).getUniqueRange()
 			for iDX in range(-uniqueRange, uniqueRange+1):
 				for iDY in range(-uniqueRange, uniqueRange+1):
 					plotX = plotXY(iX, iY, iDX, iDY)
@@ -2633,7 +2647,7 @@ class BonusBalancer:
 			if not plot.isFlatlands(): continue
 			iBonus = plot.getBonusType( -1 )
 			if iBonus < 0: continue
-			type_string = GC.getBonusInfo(iBonus).getType()
+			type_string = INFO.getType("BONUS_", iBonus)
 			if type_string in lMinerals:
 				# find nearby hill
 				lHills = []
@@ -2675,7 +2689,7 @@ class BonusBalancer:
 			pl = MAP.plotByIndex(i)
 			iBonus = pl.getBonusType(-1)
 			if iBonus>=0:
-				type_string = GC.getBonusInfo(iBonus).getType()
+				type_string = INFO.getType("BONUS_", iBonus)
 				if type_string in self.resourcesToBalance:
 					if pl.getArea() in self.startArea:
 						iChoice = int(self.iEliminate)
@@ -2696,7 +2710,7 @@ class BonusBalancer:
 		lMissing, lFound, lFree = self.checkAllBoniPlaced()
 		if lMissing:
 			sprint = "[MST] Missing boni found: Not all resources have been randomly placed: \n"
-			for i in lMissing: sprint += "[MST] %s wasn't placed randomly \n" % (GC.getBonusInfo(i[0]).getType())
+			for i in lMissing: sprint += "[MST] %s wasn't placed randomly \n" % (INFO.getType("BONUS_", i[0]))
 			print sprint
 			# reduce numerous boni, since some other boni are missing
 			lFree = self.reduceNumerousBoni(lFound, lFree)
@@ -2705,7 +2719,7 @@ class BonusBalancer:
 			# print warning, if there are still missing boni
 			if lMissing:
 				sprint = "[MST] WARNING! - not all missing boni could be placed \n"
-				for i in lMissing: sprint += "[MST] %s is still missing \n" % (GC.getBonusInfo(i[0]).getType())
+				for i in lMissing: sprint += "[MST] %s is still missing \n" % (INFO.getType("BONUS_", i[0]))
 				print sprint
 			else:
 				print "[MST] All missing boni have been placed"
@@ -2822,7 +2836,7 @@ class BonusBalancer:
 					misBonus = boniMissing[i]
 					iBonus  = misBonus[0]
 					iDesire = misBonus[1]
-#					sprint += "[MST] Pass %i, %s need %i more \n" % (pass_num,GC.getBonusInfo(iBonus).getType(),iDesire)
+#					sprint += "[MST] Pass %i, %s need %i more \n" % (pass_num,INFO.getType("BONUS_", iBonus),iDesire)
 					if iDesire>0:
 						for j in range( len(freePlots) ):
 							inx = freePlots[j]
@@ -2832,15 +2846,15 @@ class BonusBalancer:
 							fp = MAP.plotByIndex( inx )
 							if bCreateTerrainFeature:
 								bIgnoreLatitude = False
-								if GC.getBonusInfo(iBonus).isFeature(efJungle) or GC.getBonusInfo(iBonus).isFeatureTerrain(efJungle):
+								if BONUS.isFeature(iBonus, efJungle) or BONUS.isFeatureTerrain(iBonus, efJungle):
 									if fp.getFeatureType()==efForest and evalLatitude(fp)<30:
 										iVar = self.transformForest2Jungle(fp)
 										bJTrans = True
-								elif GC.getBonusInfo(iBonus).isTerrain(etDesert) or GC.getBonusInfo(iBonus).isFeatureTerrain(etDesert):
+								elif BONUS.isTerrain(iBonus, etDesert) or BONUS.isFeatureTerrain(iBonus, etDesert):
 									if fp.getTerrainType()==etPlains and evalLatitude(fp)<45:
 										fp.setTerrainType( etDesert, True, True )
 										bDTrans = True
-								elif GC.getBonusInfo(iBonus).isTerrain(etTundra) or GC.getBonusInfo(iBonus).isFeatureTerrain(etTundra):
+								elif BONUS.isTerrain(iBonus, etTundra) or BONUS.isFeatureTerrain(iBonus, etTundra):
 									if (fp.getTerrainType()==etGrass or fp.getTerrainType()==etMarsh) and (evalLatitude(fp)>60):
 										fp.setTerrainType( etTundra, True, True )
 										bTTrans = True
@@ -2874,7 +2888,7 @@ class BonusBalancer:
 						iDesire = misBonus[1]
 						if iDesire == 0:
 							del boniMissing[r]
-							sprint += "[MST] all %s placed \n" % ( GC.getBonusInfo(iBonus).getType() )
+							sprint += "[MST] all %s placed \n" % ( INFO.getType("BONUS_", iBonus) )
 						else:
 							r += 1
 					sprint += "[MST] %2i boni still missing: %r \n" % ( len(boniMissing), boniMissing )
@@ -2897,11 +2911,10 @@ class BonusBalancer:
 	def placeBonus(self, plot, iBonus):
 #		print "[MST] ======== BonusBalancer:placeBonus()"
 		eFeature = plot.getFeatureType()
-		bonusInfo = GC.getBonusInfo( iBonus )
 		# temp save feature and variety
 		featureVariety = -1
 		if eFeature>=0:
-			if GC.getFeatureInfo(eFeature).getNumVarieties()>1:
+			if FEATURE.getNumVarieties(eFeature)>1:
 				featureVariety = plot.getFeatureVariety()
 				plot.setFeatureType( FeatureTypes.NO_FEATURE, -1 )
 		#place bonus
@@ -2911,7 +2924,7 @@ class BonusBalancer:
 
 		#restore the feature if possible
 		if featureVariety>=0:
-			if (bonusInfo == None) or bonusInfo.isFeature(eFeature):
+			if (bonusInfo == None) or BONUS.isFeature(iBonus, eFeature):
 				plot.setFeatureType(eFeature,featureVariety)
 
 	# change Forest to Jungle; return variety
@@ -3004,7 +3017,7 @@ class BonusBalancer:
 					if iBonus in resources_placed or iBonus in boniList:
 						continue
 
-					type_string = GC.getBonusInfo(iBonus).getType()
+					type_string = INFO.getType("BONUS_", iBonus)
 					if type_string not in self.resourcesToBalance:
 						continue
 
@@ -3028,7 +3041,7 @@ class BonusBalancer:
 
 		boniList = boniList + resources_placed
 		boniList.sort()
-		resList = [ GC.getBonusInfo(i).getType() for i in boniList ]
+		resList = [ INFO.getType("BONUS_", i) for i in boniList ]
 
 		return plBoniCnt
 
@@ -3071,21 +3084,27 @@ class BonusBalancer:
 	# calculate number of desired boni
 	# - like CvMapGenerator::calculateNumBonusesToAdd(BonusTypes eBonusType) in CvMapGenerator.cpp
 	def calcNumBoniToAdd(self, iBonus):
-		bonusInfo = GC.getBonusInfo(iBonus)
-		if bonusInfo.getPlacementOrder() < 0:
+		if BONUS.getPlacementOrder(iBonus) < 0:
 			return 0
 
 		bIgnoreLatitude = False
 		iLandTiles = 0
 		iNumPossible = 0
-		if bonusInfo.getTilesPer() > 0:
+		if BONUS.getTilesPer(iBonus) > 0:
 			for i in range( iNumPlotsX*iNumPlotsY ):
 				plot = MAP.plotByIndex(i)
 				if plot.canHaveBonus(iBonus, bIgnoreLatitude):
 					iNumPossible += 1
-			iLandTiles += iNumPossible / bonusInfo.getTilesPer()
-		iPlayers = GAME.countCivPlayersAlive() * bonusInfo.getPercentPerPlayer() / 100
-		iBonusCount = bonusInfo.getRandAppearance() * (iLandTiles + iPlayers) / 100
+			iLandTiles += iNumPossible / BONUS.getTilesPer(iBonus)
+		iPlayers = GAME.countCivPlayersAlive() * BONUS.getPercentPerPlayer(iBonus) / 100
+		# ⚑ The bands are four DICE that are SUMMED, never alternatives to pick between: the appearance count is
+		# the constant plus one draw per band. Every band is drawn even when its ceiling is 0, because the draw
+		# still advances the shared map-RNG seed and the sequence is what the generated map is made of.
+		iRandAppearance = BONUS.getConstAppearance(iBonus)
+		mapRand = GAME.getMapRand()
+		for iBand in range( BONUS.getNumRandAppearanceBands() ):
+			iRandAppearance += mapRand.get( BONUS.getRandAppearance(iBonus, iBand), "random%d" % (iBand + 1) )
+		iBonusCount = iRandAppearance * (iLandTiles + iPlayers) / 100
 		return max( 1, iBonusCount )
 
 ##########################################################################

@@ -1,0 +1,24 @@
+{
+ "type": "BUILD_BONUS_RESIN",
+ "produces": {
+  "improvement": "IMPROVEMENT_BONUS_RESIN"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Bonus/Resin.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_IRRIGATE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_RESIN",
+  "consumesUnit": true
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_RESCUE_DOG",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/rescuedog1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_RESCUE_DOG",
+  "unitCombats": [
+   "UNITCOMBAT_CANINE"
+  ]
+ }
+}

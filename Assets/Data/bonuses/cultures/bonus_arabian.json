@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_ARABIAN",
+ "enables": {
+  "units": [
+   "UNIT_ARABIA_CAMELARCHER",
+   "UNIT_BAIBARS",
+   "UNIT_KHALID"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ARABIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ARABIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

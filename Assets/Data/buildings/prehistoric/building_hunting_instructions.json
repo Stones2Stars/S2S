@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_HUNTING_INSTRUCTIONS",
+ "enables": {
+  "buildings": [
+   "BUILDING_GREAT_HOLMEGAARD_HUNT"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEMI_AUTOMATIC_WEAPONS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PERSISTENCE_HUNTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_MASTER_HUNTER_TRADITION"
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_HUNTER1",
+       "enabled": "IS_RECON"
+      }
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 20,
+  "countModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HUNTING_INSTRUCTIONS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUNTING_INSTRUCTIONS",
+  "civilopedia": "TXT_KEY_BUILDING_HUNTING_INSTRUCTIONS_PEDIA",
+  "worth": 1,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

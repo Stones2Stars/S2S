@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_HEALTH_SPA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PICOTECHNOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HEALTHCARE_MEGACOMPLEX"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
+   ],
+   "all": [
+    "TECH_FOLK_MEDICINE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HEALTH_SPA"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HOSPITAL"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HEALTH_SPA",
+  "civilopedia": "TXT_KEY_BUILDING_HEALTH_SPA_PEDIA",
+  "notConstructible": true,
+  "worth": 5,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

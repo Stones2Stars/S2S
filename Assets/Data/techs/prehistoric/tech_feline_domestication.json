@@ -1,0 +1,62 @@
+{
+ "type": "TECH_FELINE_DOMESTICATION",
+ "enables": {
+  "bonuses": [
+   "BONUS_CAT"
+  ],
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_BIG_CAT",
+   "BUILDING_CAT_BREEDER",
+   "BUILDING_CAT_SHRINE",
+   "BUILDING_MILITARY_STANDARD_BIG_CATS"
+  ],
+  "techs": [
+   "TECH_VETERINARY_MEDICINE"
+  ],
+  "units": [
+   "UNIT_TRAINEDCAT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ANIMAL_HUSBANDRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 60
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/felinedomestication.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_FELINE_DOMESTICATION",
+  "soundMP": "AS2D_TECH_FELINE_DOMESTICATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_FELINE_DOMESTICATION",
+  "civilopedia": "TXT_KEY_TECH_FELINE_DOMESTICATION_PEDIA",
+  "quote": "TXT_KEY_TECH_FELINE_DOMESTICATION_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 18,
+  "gridY": 11
+ }
+}

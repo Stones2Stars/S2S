@@ -1,0 +1,163 @@
+{
+ "type": "UNIT_EARLYCHARIOT",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_CHARIOT_WORKSHOP",
+    "TECH_CHARIOTRY"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CHARIOT",
+     "UNIT_HORSE_ARCHER"
+    ]
+   }
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "combat": {
+  "unit": {
+   "feature": {
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": -25
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": -50
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 75
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 5
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_MOUNTED",
+ "combatClasses": [
+  "UNITCOMBAT_WHEELED",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_POLEARM",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_ANIMAL_DRAWN",
+  "UNITCOMBAT_MOUNT_HORSE",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_BLITZ"
+  ]
+ },
+ "cost": {
+  "production": 120,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_EARLYCHARIOT",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_EARLYCHARIOT"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_EARLYCHARIOT",
+  "civilopedia": "TXT_KEY_UNIT_EARLYCHARIOT_PEDIA",
+  "worth": 1,
+  "militaryWorth": 6,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_COUNTER",
+   "UNITAI_PILLAGE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

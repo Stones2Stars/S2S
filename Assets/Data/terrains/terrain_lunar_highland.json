@@ -1,0 +1,40 @@
+{
+ "type": "TERRAIN_LUNAR_HIGHLAND",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface\\Buttons\\WorldBuilder\\lunarHighlands.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_TERRAIN_LUNAR_HIGHLAND"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_DESERT_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_TERRAIN_LUNAR_HIGHLAND",
+  "civilopedia": "TXT_KEY_TERRAIN_LUNAR_HIGHLAND_PEDIA",
+  "found": true,
+  "buildTimeModifier": 25,
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_CAR_RENTAL_STORE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HYPERMARKET"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MOTORIZED_TRANSPORTATION",
+    {
+     "any": [
+      "BUILDING_SHOPPING_DISTRICT",
+      "BUILDING_TRADING_POST"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_HYPERMARKET"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 7,
+     "enabled": "TECH_TOURISM"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 830,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CAR_RENTAL_STORE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CAR_RENTAL_STORE",
+  "civilopedia": "TXT_KEY_BUILDING_CAR_RENTAL_STORE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

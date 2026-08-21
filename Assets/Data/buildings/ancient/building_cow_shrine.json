@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_COW_SHRINE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PALEONTOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_REINCARNATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COW",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "RELIGION_HINDUISM"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 200,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_COW_SHRINE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_COW_SHRINE",
+  "civilopedia": "TXT_KEY_BUILDING_COW_SHRINE_PEDIA",
+  "pediaCategory": "religious",
+  "advisor": "ADVISOR_RELIGION",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

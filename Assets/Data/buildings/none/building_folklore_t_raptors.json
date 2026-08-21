@@ -1,0 +1,125 @@
+{
+ "type": "BUILDING_FOLKLORE_T_RAPTORS",
+ "enables": {
+  "buildings": [
+   "BUILDING_HAWKING_HUT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    "TECH_TAXONOMY",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_EAGLE",
+      "BUILDING_FOLKLORE_BALD_EAGLE",
+      "BUILDING_FOLKLORE_HAASTS_EAGLE",
+      "BUILDING_FOLKLORE_PALEOLITHIC_BIRDS",
+      "BUILDING_FOLKLORE_HARPY_EAGLE",
+      "BUILDING_FOLKLORE_HAWK",
+      "BUILDING_FOLKLORE_STELLERS_SEA_EAGLE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": [
+    1,
+    {
+     "value": -0.6,
+     "enabled": "TECH_LANGUAGE"
+    },
+    {
+     "value": -0.1,
+     "enabled": "TECH_CLASSICAL_LIFESTYLE"
+    },
+    {
+     "value": -0.1,
+     "enabled": "TECH_MEDIEVAL_LIFESTYLE"
+    },
+    {
+     "value": -0.1,
+     "enabled": "TECH_RENAISSANCE_LIFESTYLE"
+    },
+    {
+     "value": -0.1,
+     "enabled": "TECH_INDUSTRIAL_LIFESTYLE"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": [
+    {
+     "value": 0.1,
+     "enabled": "TECH_LANGUAGE"
+    },
+    {
+     "value": 0.1,
+     "enabled": "TECH_CLASSICAL_LIFESTYLE"
+    },
+    {
+     "value": 0.1,
+     "enabled": "TECH_MEDIEVAL_LIFESTYLE"
+    },
+    {
+     "value": 0.1,
+     "enabled": "TECH_RENAISSANCE_LIFESTYLE"
+    },
+    {
+     "value": 0.1,
+     "enabled": "TECH_INDUSTRIAL_LIFESTYLE"
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "empire": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "TECH_EDUCATION"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_BIOLOGY"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 250,
+  "complexityModifier": 2
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FOLKLORE_T_RAPTORS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_T_RAPTORS",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+  "pediaCategory": "animalistic",
+  "specialBuildingType": "SPECIALBUILDING_FOLKLORE_TAXONOMY",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

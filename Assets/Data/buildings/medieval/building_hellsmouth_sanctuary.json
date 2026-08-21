@@ -1,0 +1,124 @@
+{
+ "type": "BUILDING_HELLSMOUTH_SANCTUARY",
+ "enables": {
+  "units": [
+   "UNIT_HELLSMOUTH_DOG"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FUNDAMENTALISM",
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_VOODOO"
+    },
+    {
+     "type": "TERRAIN_PEAK",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_VOODOO"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 4,
+   "percent": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_VOODOO"
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryAnger": {
+  "city": {
+   "percent": -50
+  }
+ },
+ "cost": {
+  "production": 1920,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 50
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_HELLSMOUTH"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HELLSMOUTH"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_VOODOO"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HELLSMOUTH_SANCTUARY",
+  "civilopedia": "TXT_KEY_BUILDING_HELLSMOUTH_SANCTUARY_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 2,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_VOODOO",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": "100.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

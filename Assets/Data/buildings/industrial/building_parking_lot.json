@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_PARKING_LOT",
+ "enables": {
+  "buildings": [
+   "BUILDING_PARKING_GARAGE",
+   "BUILDING_SOLAR_PARKING_LOT"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TELEPORT_BOOTH"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MOTORIZED_TRANSPORTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_OIL",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TAR",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_AUTOMOBILES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_TELEPORT_BOOTH"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 830,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PARKING_LOT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PARKING_LOT",
+  "civilopedia": "TXT_KEY_BUILDING_PARKING_LOT_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,36 @@
+{
+ "type": "BUILD_ABATIS_THORN_HEDGE_KILL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SHELTER_BUILDING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_ABATIS_THORN_HEDGE"
+ },
+ "cost": {
+  "gold": 20,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Structures/Improvements/Abatis/abatis.dds"
+  },
+  "hotkey": "KB_F",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_ABATIS_THORN_HEDGE_KILL",
+  "consumesUnit": true
+ }
+}

@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_INTERGALACTIC_BIRCH_PLANET",
+ "enables": {
+  "buildings": [
+   "BUILDING_FEYMARCH",
+   "BUILDING_INTERGALACTIC_MERGED_MEGAGALAXY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_YOTTAFACTORY",
+    "TECH_DARK_ENERGY_HARVESTING",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 250
+  }
+ },
+ "cost": {
+  "production": 4492,
+  "hurryModifier": 10000
+ },
+ "amenities": {
+  "adds3rdRing": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_BIRCH_PLANET"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_BIRCH_PLANET",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_BIRCH_PLANET_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

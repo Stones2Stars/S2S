@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_MILITARY_SCHOOL",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MILITARY_TRAINING",
+    {
+     "any": [
+      "BUILDING_BARRACKS",
+      "BUILDING_GARRISON",
+      "BUILDING_MILITARY_BASE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_MARTIAL"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": 25,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 12
+  }
+ },
+ "cost": {
+  "production": 216,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MILITARY_SCHOOL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MILITARY_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_MILITARY_SCHOOL_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_GATE_OF_THE_SUN",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CLOCKWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SUNDIAL",
+    {
+     "any": [
+      "BUILDING_SUNDIAL",
+      "BUILDING_TOWNCLOCK"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SCULPTURES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_STONE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1
+  }
+ },
+ "cost": {
+  "production": 1056,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GATE_OF_THE_SUN"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GATE_OF_THE_SUN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GATE_OF_THE_SUN",
+  "civilopedia": "TXT_KEY_BUILDING_GATE_OF_THE_SUN_PEDIA",
+  "pediaCategory": "greatWonder",
+  "centerInCity": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

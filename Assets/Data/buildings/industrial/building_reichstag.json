@@ -1,0 +1,104 @@
+{
+ "type": "BUILDING_REICHSTAG",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_IMPERIALISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SPY": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 4800,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 8
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_REICHSTAG"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_REICHSTAG"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_REICHSTAG",
+  "civilopedia": "TXT_KEY_BUILDING_REICHSTAG_PEDIA",
+  "help": "TXT_KEY_BUILDING_REICHSTAG_HELP",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_SPY",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

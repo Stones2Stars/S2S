@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_DISTANT_BIOPHILIC_SUBUNIVERSE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_DIRECTED_COSMIC_EVOLUTION",
+    {
+     "any": [
+      "BUILDING_DISTANT_ARTIFICIAL_SUPERMASSIVE_BLACK_HOLE",
+      "BUILDING_DISTANT_BLACK_HOLE_CONSTELLATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 3166,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_BIOPHILIC_SUBUNIVERSE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_BIOPHILIC_SUBUNIVERSE",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_BIOPHILIC_SUBUNIVERSE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

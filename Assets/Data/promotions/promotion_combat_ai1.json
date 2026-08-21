@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_COMBAT_AI1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_COMBAT_AI2",
+   "PROMOTION_DEFENSIVE_PROTOCOLS1",
+   "PROMOTION_FUZZY_LOGIC",
+   "PROMOTION_GUARDIAN1",
+   "PROMOTION_OFFENSIVE_PROTOCOLS1",
+   "PROMOTION_SENSORS"
+  ]
+ },
+ "experience": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COMBAT_AI": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,8,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COMBAT_AI1"
+ }
+}

@@ -1,0 +1,156 @@
+{
+ "type": "BUILDING_ANIMATRONICS_WORKSHOP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ELECTRONICS",
+    "TECH_ANIMATION",
+    {
+     "any": [
+      "BUILDING_AMUSEMENT_PARK",
+      "BUILDING_THEATRE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PARTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_TOYS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CLOTHING",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HATS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHOES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_JEWELRY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SYNTHETIC_RUBBER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PLASTIC",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COMPUTERS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1,
+   "SPECIALIST_ARTIST": 1
+  }
+ },
+ "cost": {
+  "production": 1080,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANIMATRONICS_WORKSHOP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMATRONICS_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMATRONICS_WORKSHOP_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,15 @@
+{
+ "type": "VOTE_POPE",
+ "voteSource": [
+  "DIPLOVOTE_POPE"
+ ],
+ "threshold": {
+  "population": 40,
+  "minVoters": 3,
+  "stateReligionPercent": 100
+ },
+ "role": "secretaryGeneral",
+ "identity": {
+  "description": "TXT_KEY_VOTE_POPE"
+ }
+}

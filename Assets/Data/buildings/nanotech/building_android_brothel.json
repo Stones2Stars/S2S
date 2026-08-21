@@ -1,0 +1,154 @@
+{
+ "type": "BUILDING_ANDROID_BROTHEL",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PERSONAL_ROBOTS",
+    {
+     "any": [
+      "BUILDING_NIGHT_CLUB",
+      "BUILDING_CASINO",
+      "BUILDING_GALACTIC_CANTINA"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ANDROIDS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_ORDINANCE_PROSTITUTION_BAN"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": 1,
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OSTRICH_FEATHERS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OSTRICH_FEATHERS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HIT_SINGLES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TOBACCO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_TOBACCO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
+ "cost": {
+  "production": 4655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANDROID_BROTHEL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANDROID_BROTHEL",
+  "civilopedia": "TXT_KEY_BUILDING_ANDROID_BROTHEL_PEDIA",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

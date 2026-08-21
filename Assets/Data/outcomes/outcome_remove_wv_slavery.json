@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_REMOVE_WV_SLAVERY",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_REMOVE_WV_SLAVERY",
+  "message": "TXT_KEY_OUTCOME_REMOVE_WV_SLAVERY_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE"
+   ]
+  }
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city"
+}

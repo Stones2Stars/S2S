@@ -20,7 +20,12 @@ bPatchOK = False
 szPatchName = None
 msgBox = None
 PB = CyPitboss()
-gc = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 localText = CyTranslator()
 curPage = None
 
@@ -927,7 +932,7 @@ class StagingPage(wx.wizard.WizardPageSimple):
 
 		teamList = []
 		rowNum = 0
-		for rowNum in xrange(gc.getMAX_PC_PLAYERS()):
+		for rowNum in xrange(GC.getMAX_PC_PLAYERS()):
 			teamList.append(str(rowNum+1))
 
 		# Handicaps - get from app
@@ -941,7 +946,7 @@ class StagingPage(wx.wizard.WizardPageSimple):
 
 		# Create a row - enough for the max players in a Pitboss game
 		rowNum = 0
-		for rowNum in xrange(gc.getMAX_PC_PLAYERS()):
+		for rowNum in xrange(GC.getMAX_PC_PLAYERS()):
 			# Create the border box
 			border = wx.StaticBox(playerPanel, -1, (localText.getText("TXT_KEY_PITBOSS_PLAYER", (rowNum+1, ))), (0,(rowNum*30)))
 			# Create the layout mgr
@@ -1278,7 +1283,7 @@ class StagingPage(wx.wizard.WizardPageSimple):
 		# Have the app suggest number of players based on map size
 		PB.suggestPlayerSetup()
 
-		for i in xrange(gc.getMAX_PC_PLAYERS()):
+		for i in xrange(GC.getMAX_PC_PLAYERS()):
 			# Get the player data
 			playerData = PB.getPlayerSetupData(i)
 
@@ -1319,7 +1324,7 @@ class StagingPage(wx.wizard.WizardPageSimple):
 
 		# Don't wait for ready's if we're loading
 		if not bSaved and bAllReady:
-			for i in xrange(gc.getMAX_PC_PLAYERS()):
+			for i in xrange(GC.getMAX_PC_PLAYERS()):
 				if PB.getWho(i) == 3 and not PB.getReady(i):
 					# Don't allow a launch if a human is not ready
 					bAllReady = False

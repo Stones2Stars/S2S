@@ -1,0 +1,70 @@
+{
+ "type": "TECH_SMART_DRUGS",
+ "enables": {
+  "bonuses": [
+   "BONUS_SMART_MEDICINE"
+  ],
+  "buildings": [
+   "BUILDING_NOOTROPIC_DISPENSARY",
+   "BUILDING_RESEARCH_HOSPITAL",
+   "BUILDING_RESPIROCYTE_INJECTION"
+  ],
+  "techs": [
+   "TECH_REGENERATIVE_MEDICINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SYNTHETIC_SENTIENCE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANTI_AGING_MEDICINE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 44505
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/smart_drugs.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SMART_DRUGS",
+  "soundMP": "AS2D_TECH_SMART_DRUGS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SMART_DRUGS",
+  "civilopedia": "TXT_KEY_TECH_SMART_DRUGS_PEDIA",
+  "quote": "TXT_KEY_TECH_SMART_DRUGS_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 106,
+  "gridY": 17
+ }
+}

@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_JOVIAN_SCOOP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COLONY_ARCOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_JOVIAN_SCOOP"
+ },
+ "cost": {
+  "gold": 500,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/jovian_scoop.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_JOVIAN_SCOOP"
+ }
+}

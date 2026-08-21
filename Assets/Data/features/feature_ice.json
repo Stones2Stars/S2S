@@ -1,0 +1,66 @@
+{
+ "type": "FEATURE_ICE",
+ "cultureDistance": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_WATER_POLLUTION": -2,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  },
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_AIR_POLLUTION": -1,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  }
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_ICE"
+  }
+ },
+ "sound": {
+  "footsteps": [
+   {
+    "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_SNOW"
+   },
+   {
+    "FOOTSTEP_AUDIO_HUMAN_LOW": "AS3D_UN_FOOT_UNIT_LOW_SNOW"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL": "AS3D_UN_ANIMAL_FOOT_LARGE_SNOW"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL_LOW": "AS3D_UN_ANIMAL_FOOT_LARGE_LOW_SNOW"
+   }
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_ICE",
+  "civilopedia": "TXT_KEY_FEATURE_ICE_PEDIA",
+  "addsFreshWater": true,
+  "impassable": true,
+  "validTerrains": [
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_TRENCH_POLAR"
+  ]
+ }
+}

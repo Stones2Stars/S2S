@@ -1,450 +1,201 @@
-#include "CvGameCoreDLL.h"
-#include "FProfiler.h"
+//
+//	CvBonusInfo -- the bonus poco's own typed reading on top of the base section dispatch (see the header).
+//	The plot-output and wellbeing families compile into m_modifiers via the base dispatch -- no per-family raw
+//	read survives here (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)). mapFrom materializes the identity/ai/mapGeneration census
+//	set ONCE into typed members (docs/architecture/patterns.md §Materialize at mapFrom); idempotent by contract. The tech forward FKs
+//	are reset here and re-landed by CvReversePass after every re-map.
+//
 
-#include "CvArtFileMgr.h"
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
 #include "CvBonusInfo.h"
-#include "CvDefines.h"
-#include "CvImprovementInfo.h"
-#include "CvInfoUtil.h"
-#include "CvXMLLoadUtility.h"
-#include "CheckSum.h"
-#include "CvGlobals.h"
-#include "CvGameAI.h"
+#include "UI/CvArtFileMgr.h"      // ARTFILEMGR -- the EXE-shim-merge getArtInfo()
+#include "Infos/CvArtInfoBonus.h" // complete CvArtInfoBonus -- getButton() needs the full definition
+#include "CvJsonParse.h"          // jsonResolveId + the shared walkers (jsonChildObj/jsonIdInt/jsonIdBool/jsonIdFk/jsonIdStr/jsonWorldArt)
+#include "Defines/CvGlobals.h"    // GC (getGame)
+#include "AI/CvGameAI.h"          // complete CvGameAI (GC.getGame()) -> CvGame::getMapRandNum, the map-gen appearance roll
 
-CvBonusInfo::CvBonusInfo() :
-	// Only non-declarative fields here; everything else defaults via initDataMembers().
-	m_iRandAppearance1(0)
-	, m_iRandAppearance2(0)
-	, m_iRandAppearance3(0)
-	, m_iRandAppearance4(0)
+namespace
+{
+	// mapGeneration.{validTerrains,validFeatures,validPlacementOn} -- FK string arrays -> resolved id sets.
+	void bi_readFkIntSet(const picojson::object& parent, const char* szKey, std::set<int>& idsOut)
+	{
+		idsOut.clear();
+		picojson::object::const_iterator listIter = parent.find(szKey);
+		if (listIter == parent.end() || !listIter->second.is<picojson::array>())
+		{
+			return;
+		}
+		const picojson::array& idList = listIter->second.get<picojson::array>();
+		for (size_t iEntry = 0; iEntry < idList.size(); ++iEntry)
+		{
+			if (!idList[iEntry].is<std::string>())
+			{
+				continue;
+			}
+			const int iResolved = jsonResolveId(idList[iEntry].get<std::string>());
+			if (iResolved >= 0)
+			{
+				idsOut.insert(iResolved);
+			}
+		}
+	}
+}
+
+CvBonusInfo::CvBonusInfo()
+	: m_iBonusClassType(-1)
+	, m_iAIObjective(0)   // legacy load default 0 (plain .add) -- -1 fed unclamped AI valuation
+	, m_iAITradeModifier(0)
+	, m_iPercentPerPlayer(0)
 	, m_iChar(0)
-	, m_piImprovementChange(NULL)
-	, m_tradeProvidingImprovements(NULL)
+	, m_iMinAreaSize(0)
+	, m_iMinLatitude(0)
+	, m_iMaxLatitude(90)
+	, m_iPlacementOrder(-1)
+	, m_iTilesPer(0)
+	, m_iUniqueRange(0)
+	, m_iGroupRange(0)
+	, m_iGroupRand(0)
+	, m_iConstAppearance(0)
+	, m_iMinLandPercent(0)
+	, m_bOneArea(false)
+	, m_bHills(false)
+	, m_bPeaks(false)
+	, m_bFlatlands(false)
+	, m_bBonusCoastalOnly(false)
+	, m_bNoRiverSide(false)
+	, m_bNormalize(false)
+	, m_eTechReveal(NO_TECH)
+	, m_eTechCityTrade(NO_TECH)
+	, m_eTechObsolete(NO_TECH)
 {
-	CvInfoUtil(this).initDataMembers();
+	for (int iBand = 0; iBand < NUM_RAND_APPEARANCE_BANDS; ++iBand)
+	{
+		m_aiRandAppearance[iBand] = 0;
+	}
 }
 
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   ~CvBonusInfo()
-//
-//  PURPOSE :   Default destructor
-//
-//------------------------------------------------------------------------------------------------------
-CvBonusInfo::~CvBonusInfo()
+void CvBonusInfo::mapFrom(const picojson::value& entity)
 {
-	CvInfoUtil(this).uninitDataMembers(); // frees m_piYieldChange (owned by addYields)
+	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom. The tech forward FKs reset here
+	// because CvReversePass re-lands them AFTER every re-map (its first-tech-wins check reads NO_TECH).
+	// NB m_providedByImprovementTypes / m_tradeProvidingImprovements are NOT cleared here -- the general
+	// reverse pass owns them (clear-first), not this parse.
+	m_aeMapCategories.clear();
+	m_eTechReveal = NO_TECH;
+	m_eTechCityTrade = NO_TECH;
+	m_eTechObsolete = NO_TECH;
 
-	SAFE_DELETE_ARRAY(m_piImprovementChange);
-}
+	CvInfo::mapFrom(entity);   // core reading + availability + the modifier compile (plot yields / wellbeing)
+	if (!entity.is<picojson::object>())
+	{
+		return;
+	}
+	const picojson::object& entityObj = entity.get<picojson::object>();
 
-int CvBonusInfo::getBonusClassType() const
-{
-	return m_iBonusClassType;
-}
+	// ai.behaviour.{objective,tradeModifier} -- real per-bonus AI weights. objective is read manually so an
+	// ABSENT block leaves the constructor default instead of collapsing through a helper default.
+	if (const picojson::object* pAi = jsonChildObj(entityObj, "ai"))
+	{
+		if (const picojson::object* pBehaviour = jsonChildObj(*pAi, "behaviour"))
+		{
+			picojson::object::const_iterator objectiveIter = pBehaviour->find("objective");
+			if (objectiveIter != pBehaviour->end() && objectiveIter->second.is<double>())
+			{
+				m_iAIObjective = (int)objectiveIter->second.get<double>();
+			}
+			m_iAITradeModifier = jsonIdInt(*pBehaviour, "tradeModifier");
+		}
+	}
 
-int CvBonusInfo::getChar() const
-{
-	return m_iChar;
-}
+	if (const picojson::object* pMapGen = jsonChildObj(entityObj, "mapGeneration"))
+	{
+		m_iMinAreaSize = jsonIdInt(*pMapGen, "minAreaSize");
+		m_iMinLatitude = jsonIdInt(*pMapGen, "minLatitude");
+		m_iMaxLatitude = jsonIdInt(*pMapGen, "maxLatitude", 90);      // legacy load default 90 -- 0 equator-locks placement
+		m_iPlacementOrder = jsonIdInt(*pMapGen, "placementOrder", -1);// legacy load default -1 = not a map-placed bonus
+		m_iTilesPer = jsonIdInt(*pMapGen, "tilesPer");
+		m_iMinLandPercent = jsonIdInt(*pMapGen, "minLandPercent");
+		m_iConstAppearance = jsonIdInt(*pMapGen, "constAppearance");
+		m_iUniqueRange = jsonIdInt(*pMapGen, "uniqueRange");
+		m_iGroupRange = jsonIdInt(*pMapGen, "groupRange");
+		m_iGroupRand = jsonIdInt(*pMapGen, "groupRand");
 
-void CvBonusInfo::setChar(int i)
-{
-	m_iChar = i;
-}
+		// mapGeneration.rands.{iRandApp1..4} -- the per-pass appearance band CEILINGS the map generator rolls
+		// against. Absent -> the 0 defaults below hold (fully redefined every map, mapFrom being idempotent).
+		for (int iBand = 0; iBand < NUM_RAND_APPEARANCE_BANDS; ++iBand)
+		{
+			m_aiRandAppearance[iBand] = 0;
+		}
+		if (const picojson::object* pRands = jsonChildObj(*pMapGen, "rands"))
+		{
+			static const char* const szRandBandKeys[NUM_RAND_APPEARANCE_BANDS] =
+			{ "iRandApp1", "iRandApp2", "iRandApp3", "iRandApp4" };
+			for (int iBand = 0; iBand < NUM_RAND_APPEARANCE_BANDS; ++iBand)
+			{
+				m_aiRandAppearance[iBand] = jsonIdInt(*pRands, szRandBandKeys[iBand]);
+			}
+		}
+		m_bOneArea = jsonIdBool(*pMapGen, "area");
+		m_bHills = jsonIdBool(*pMapGen, "hills");
+		m_bPeaks = jsonIdBool(*pMapGen, "peaks");
+		m_bFlatlands = jsonIdBool(*pMapGen, "flatlands");
+		m_bBonusCoastalOnly = jsonIdBool(*pMapGen, "bonusCoastalOnly");
+		m_bNoRiverSide = jsonIdBool(*pMapGen, "noRiverSide");
+		m_bNormalize = jsonIdBool(*pMapGen, "normalize");
 
-int CvBonusInfo::getTechReveal() const
-{
-	return m_iTechReveal;
-}
+		// legacy TerrainBooleans/FeatureBooleans/FeatureTerrainBooleans -> the map-gen placement predicates
+		bi_readFkIntSet(*pMapGen, "validTerrains", m_terrainSet);
+		bi_readFkIntSet(*pMapGen, "validFeatures", m_featureSet);
+		bi_readFkIntSet(*pMapGen, "validPlacementOn", m_featureTerrainSet);
+	}
 
-int CvBonusInfo::getTechCityTrade() const
-{
-	return m_iTechCityTrade;
-}
+	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
+	{
+		m_iBonusClassType = jsonIdFk(*pIdentity, "bonusClassType");
+		m_iPercentPerPlayer = jsonIdInt(*pIdentity, "player");   // legacy iPlayer; 0 today (no bonus authors it)
+		picojson::object::const_iterator categoriesIter = pIdentity->find("mapCategories");
+		if (categoriesIter != pIdentity->end() && categoriesIter->second.is<picojson::array>())
+		{
+			const picojson::array& categoryList = categoriesIter->second.get<picojson::array>();
+			for (size_t iEntry = 0; iEntry < categoryList.size(); ++iEntry)
+			{
+				if (!categoryList[iEntry].is<std::string>())
+				{
+					continue;
+				}
+				const int iResolved = jsonResolveId(categoryList[iEntry].get<std::string>());
+				if (iResolved >= 0)
+				{
+					m_aeMapCategories.push_back((MapCategoryTypes)iResolved);
+				}
+			}
+		}
+	}
 
-int CvBonusInfo::getTechObsolete() const
-{
-	return m_iTechObsolete;
-}
-
-int CvBonusInfo::getAITradeModifier() const
-{
-	return m_iAITradeModifier;
-}
-
-int CvBonusInfo::getAIObjective() const
-{
-	return m_iAIObjective;
-}
-
-int CvBonusInfo::getHealth() const
-{
-	return m_iHealth;
-}
-
-int CvBonusInfo::getHappiness() const
-{
-	return m_iHappiness;
-}
-
-int CvBonusInfo::getMinAreaSize() const
-{
-	return m_iMinAreaSize;
-}
-
-int CvBonusInfo::getMinLatitude() const
-{
-	return m_iMinLatitude;
-}
-
-int CvBonusInfo::getMaxLatitude() const
-{
-	return m_iMaxLatitude;
-}
-
-int CvBonusInfo::getPlacementOrder() const
-{
-	return m_iPlacementOrder;
-}
-
-int CvBonusInfo::getRandAppearance() const
-{
-	return m_iConstAppearance +
-		GC.getGame().getMapRandNum(m_iRandAppearance1, "random1") +
-		GC.getGame().getMapRandNum(m_iRandAppearance2, "random2") +
-		GC.getGame().getMapRandNum(m_iRandAppearance3, "random3") +
-		GC.getGame().getMapRandNum(m_iRandAppearance4, "random4");
-}
-
-bool CvBonusInfo::isMapBonus() const
-{
-	return (
-			m_iConstAppearance > 0
-		||	m_iRandAppearance1 > 0
-		||	m_iRandAppearance2 > 0
-		||	m_iRandAppearance3 > 0
-		||	m_iRandAppearance4 > 0
-	);
-}
-
-int CvBonusInfo::getPercentPerPlayer() const
-{
-	return m_iPercentPerPlayer;
-}
-
-int CvBonusInfo::getTilesPer() const
-{
-	return m_iTilesPer;
-}
-
-int CvBonusInfo::getMinLandPercent() const
-{
-	return m_iMinLandPercent;
-}
-
-int CvBonusInfo::getUniqueRange() const
-{
-	return m_iUniqueRange;
-}
-
-int CvBonusInfo::getGroupRange() const
-{
-	return m_iGroupRange;
-}
-
-int CvBonusInfo::getGroupRand() const
-{
-	return m_iGroupRand;
-}
-
-bool CvBonusInfo::isOneArea() const
-{
-	return m_bOneArea;
-}
-
-bool CvBonusInfo::isHills() const
-{
-	return m_bHills;
-}
-
-bool CvBonusInfo::isFlatlands() const
-{
-	return m_bFlatlands;
-}
-
-bool CvBonusInfo::isBonusCoastalOnly() const
-{
-	return m_bBonusCoastalOnly;
-}
-
-bool CvBonusInfo::isNoRiverSide() const
-{
-	return m_bNoRiverSide;
-}
-
-bool CvBonusInfo::isNormalize() const
-{
-	return m_bNormalize;
-}
-
-const char* CvBonusInfo::getArtDefineTag() const
-{
-	return m_szArtDefineTag;
-}
-
-// Arrays
-
-int CvBonusInfo::getYieldChange(int i) const
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, i);
-	return m_piYieldChange ? m_piYieldChange[i] : 0;
-}
-
-int* CvBonusInfo::getYieldChangeArray() const
-{
-	return m_piYieldChange;
-}
-
-int CvBonusInfo::getImprovementChange(int i) const
-{
-	FASSERT_BOUNDS(0, GC.getNumImprovementInfos(), i);
-	return m_piImprovementChange ? m_piImprovementChange[i] : 0;
-}
-
-bool CvBonusInfo::isTerrain(int i) const
-{
-	FASSERT_BOUNDS(0, GC.getNumTerrainInfos(), i);
-	return algo::any_of_equal(m_aeTerrain, static_cast<TerrainTypes>(i));
-}
-
-bool CvBonusInfo::isFeature(int i) const
-{
-	FASSERT_BOUNDS(0, GC.getNumFeatureInfos(), i);
-	return algo::any_of_equal(m_aeFeature, static_cast<FeatureTypes>(i));
-}
-
-bool CvBonusInfo::isFeatureTerrain(int i) const
-{
-	FASSERT_BOUNDS(0, GC.getNumTerrainInfos(), i);
-	return algo::any_of_equal(m_aeFeatureTerrain, static_cast<TerrainTypes>(i));
-}
-
-int CvBonusInfo::getCategory(int i) const
-{
-	return m_aiCategories[i];
-}
-
-int CvBonusInfo::getNumCategories() const
-{
-	return (int)m_aiCategories.size();
-}
-
-bool CvBonusInfo::isCategory(int i) const
-{
-	return algo::any_of_equal(m_aiCategories, i);
-}
-
-
-const char* CvBonusInfo::getButton() const
-{
-	const CvArtInfoBonus* pBonusArtInfo = getArtInfo();
-	return pBonusArtInfo ? pBonusArtInfo->getButton() : NULL;
-}
-
-bool CvBonusInfo::isPeaks() const
-{
-	return m_bPeaks;
-}
-
-
-ImprovementTypes CvBonusInfo::getProvidedByImprovementType(const int i) const
-{
-	return m_providedByImprovementTypes[i];
-}
-
-int CvBonusInfo::getNumProvidedByImprovementTypes() const
-{
-	return (int)m_providedByImprovementTypes.size();
-}
-
-bool CvBonusInfo::isProvidedByImprovementType(const ImprovementTypes i) const
-{
-	return algo::any_of_equal(m_providedByImprovementTypes, i);
+	// world.art.icon -- the ART_DEF_* tag the EXE map-gen art lookup keys on. Cleared first: jsonIdStr only
+	// assigns when the key is present, so without this an absent block would leave the PREVIOUS pass's tag
+	// standing on the re-map (the mapFrom idempotency contract, CvInfo.h).
+	m_szArtDefineTag.clear();
+	if (const picojson::object* pArt = jsonWorldArt(entityObj))
+	{
+		jsonIdStr(*pArt, "define", m_szArtDefineTag);
+	}
 }
 
 void CvBonusInfo::setProvidedByImprovementTypes(const ImprovementTypes eType)
 {
+	// Populated post-load by the general reverse pass, once per improvement whose
+	// isImprovementBonusTrade flags this bonus. Real runtime data -- feeds the get/num/is read surface.
 	m_providedByImprovementTypes.push_back(eType);
 }
 
-
-void CvBonusInfo::getDataMembers(CvInfoUtil& util)
-{
-	// Declared in the legacy getCheckSum order. The checksum is NOT delegated (see getCheckSum),
-	// but keeping the order aligned makes the two trivially comparable.
-	// Stays hand-written: m_iRandAppearance1-4 (nested under <Rands>, no wrapper for nested scalar
-	// groups), m_piImprovementChange (dead member - never read from XML), m_iChar (runtime GameFont).
-	util
-		.addEnumAsInt(m_iBonusClassType, L"BonusClassType")
-		.addEnumAsInt(m_iTechReveal, L"TechReveal")
-		.addEnumAsInt(m_iTechCityTrade, L"TechCityTrade")
-		.addEnumAsInt(m_iTechObsolete, L"TechObsolete")
-		.add(m_iAITradeModifier, L"iAITradeModifier")
-		.add(m_iAIObjective, L"iAIObjective")
-		.add(m_iHealth, L"iHealth")
-		.add(m_iHappiness, L"iHappiness")
-		.add(m_iMinAreaSize, L"iMinAreaSize")
-		.add(m_iMinLatitude, L"iMinLatitude")
-		.add(m_iMaxLatitude, L"iMaxLatitude", 90)
-		.add(m_iPlacementOrder, L"iPlacementOrder", -1)
-		.add(m_iConstAppearance, L"iConstAppearance")
-		.add(m_iPercentPerPlayer, L"iPlayer")
-		.add(m_iTilesPer, L"iTilesPer")
-		.add(m_iMinLandPercent, L"iMinLandPercent")
-		.add(m_iUniqueRange, L"iUniqueRange")
-		.add(m_iGroupRange, L"iGroupRange")
-		.add(m_iGroupRand, L"iGroupRand")
-		.add(m_bOneArea, L"bArea")
-		.add(m_bHills, L"bHills")
-		.add(m_bFlatlands, L"bFlatlands")
-		.add(m_bBonusCoastalOnly, L"bBonusCoastalOnly")
-		.add(m_bNoRiverSide, L"bNoRiverSide")
-		.add(m_bNormalize, L"bNormalize")
-		.addYields(m_piYieldChange, L"YieldChanges")
-		.add(m_aeTerrain, L"TerrainBooleans")
-		.add(m_aeFeature, L"FeatureBooleans")
-		.add(m_aeFeatureTerrain, L"FeatureTerrainBooleans")
-		.add(m_aeMapCategoryTypes, L"MapCategoryTypes")
-		.add(m_bPeaks, L"bPeaks")
-		.add(m_aiCategories, L"Categories")
-		.add(m_PropertyManipulators)
-		.add(m_szArtDefineTag, L"ArtDefineTag")
-	;
-}
-
-// Explicit (not delegated to CvInfoUtil) because the hand-written m_iRandAppearance1-4 sit
-// mid-order; delegating would drop them and change the asset checksum. Body kept byte-identical
-// to the legacy checksum (m_piImprovementChange is always NULL and contributes nothing).
-void CvBonusInfo::getCheckSum(uint32_t& iSum) const
-{
-	PROFILE_EXTRA_FUNC();
-	CheckSum(iSum, m_iBonusClassType);
-	CheckSum(iSum, m_iTechReveal);
-	CheckSum(iSum, m_iTechCityTrade);
-	CheckSum(iSum, m_iTechObsolete);
-	CheckSum(iSum, m_iAITradeModifier);
-	CheckSum(iSum, m_iAIObjective);
-	CheckSum(iSum, m_iHealth);
-	CheckSum(iSum, m_iHappiness);
-	CheckSum(iSum, m_iMinAreaSize);
-	CheckSum(iSum, m_iMinLatitude);
-	CheckSum(iSum, m_iMaxLatitude);
-	CheckSum(iSum, m_iPlacementOrder);
-	CheckSum(iSum, m_iConstAppearance);
-	CheckSum(iSum, m_iRandAppearance1);
-	CheckSum(iSum, m_iRandAppearance2);
-	CheckSum(iSum, m_iRandAppearance3);
-	CheckSum(iSum, m_iRandAppearance4);
-	CheckSum(iSum, m_iPercentPerPlayer);
-	CheckSum(iSum, m_iTilesPer);
-	CheckSum(iSum, m_iMinLandPercent);
-	CheckSum(iSum, m_iUniqueRange);
-	CheckSum(iSum, m_iGroupRange);
-	CheckSum(iSum, m_iGroupRand);
-
-	CheckSum(iSum, m_bOneArea);
-	CheckSum(iSum, m_bHills);
-	CheckSum(iSum, m_bFlatlands);
-	CheckSum(iSum, m_bBonusCoastalOnly);
-	CheckSum(iSum, m_bNoRiverSide);
-	CheckSum(iSum, m_bNormalize);
-	CheckSumI(iSum, NUM_YIELD_TYPES, m_piYieldChange);
-	CheckSumI(iSum, GC.getNumImprovementInfos(), m_piImprovementChange);
-	CheckSumC(iSum, m_aeTerrain);
-	CheckSumC(iSum, m_aeFeature);
-	CheckSumC(iSum, m_aeFeatureTerrain);
-	CheckSumC(iSum, m_aeMapCategoryTypes);
-	CheckSum(iSum, m_bPeaks);
-
-	CheckSumC(iSum, m_aiCategories);
-
-	m_PropertyManipulators.getCheckSum(iSum);
-}
-
-bool CvBonusInfo::read(CvXMLLoadUtility* pXML)
-{
-	if (!CvInfoBase::read(pXML))
-	{
-		return false;
-	}
-
-	CvInfoUtil(this).readXml(pXML);
-
-	// Appearance rands are nested under <Rands>; no wrapper for nested scalar groups.
-	if (pXML->TryMoveToXmlFirstChild(L"Rands"))
-	{
-		pXML->GetOptionalChildXmlValByName(&m_iRandAppearance1, L"iRandApp1");
-		pXML->GetOptionalChildXmlValByName(&m_iRandAppearance2, L"iRandApp2");
-		pXML->GetOptionalChildXmlValByName(&m_iRandAppearance3, L"iRandApp3");
-		pXML->GetOptionalChildXmlValByName(&m_iRandAppearance4, L"iRandApp4");
-
-		pXML->MoveToXmlParent();
-	}
-
-	return true;
-}
-
-void CvBonusInfo::copyNonDefaults(const CvBonusInfo* pClassInfo)
-{
-	// The art tag must merge BEFORE the base copy: CvInfoBase::copyNonDefaults calls the virtual
-	// getButton(), which resolves through getArtDefineTag() — an empty tag asserts in
-	// ARTFILEMGR.getBonusArtInfo. The declared StringWrapper copy below then no-ops.
-	if (m_szArtDefineTag.empty()) m_szArtDefineTag = pClassInfo->getArtDefineTag();
-
-	CvInfoBase::copyNonDefaults(pClassInfo);
-
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-
-	if (m_iRandAppearance1 == 0) m_iRandAppearance1 = pClassInfo->m_iRandAppearance1;
-	if (m_iRandAppearance2 == 0) m_iRandAppearance2 = pClassInfo->m_iRandAppearance2;
-	if (m_iRandAppearance3 == 0) m_iRandAppearance3 = pClassInfo->m_iRandAppearance3;
-	if (m_iRandAppearance4 == 0) m_iRandAppearance4 = pClassInfo->m_iRandAppearance4;
-}
-
-const std::vector<std::pair<ImprovementTypes, BuildTypes> >* CvBonusInfo::getTradeProvidingImprovements()
-{
-	PROFILE_EXTRA_FUNC();
-	if (m_tradeProvidingImprovements == NULL)
-	{
-
-		if (m_tradeProvidingImprovements == NULL)
-		{
-			const int eBonus = GC.getInfoTypeForString(m_szType);
-			std::vector<std::pair<ImprovementTypes, BuildTypes> >* tradeProvidingImprovements = new std::vector<std::pair<ImprovementTypes, BuildTypes> >();
-
-			for (int iJ = 0; iJ < GC.getNumBuildInfos(); iJ++)
-			{
-				const BuildTypes eBuild = static_cast<BuildTypes>(iJ);
-				const ImprovementTypes eImp = GC.getBuildInfo(eBuild).getImprovement();
-
-				if (eImp != NO_IMPROVEMENT && GC.getImprovementInfo(eImp).isImprovementBonusTrade(eBonus))
-				{
-					tradeProvidingImprovements->push_back(std::make_pair(eImp, eBuild));
-				}
-			}
-
-			m_tradeProvidingImprovements = (volatile std::vector<std::pair<ImprovementTypes, BuildTypes> >*)tradeProvidingImprovements;
-		}
-	}
-
-	return (const std::vector<std::pair<ImprovementTypes, BuildTypes> >*)m_tradeProvidingImprovements;
-}
-
-// ===== Methods relocated from CvInfos.cpp =====
-
 const CvArtInfoBonus* CvBonusInfo::getArtInfo() const
 {
-	return ARTFILEMGR.getBonusArtInfo( getArtDefineTag());
+	return ARTFILEMGR.getBonusArtInfo(getArtDefineTag());
 }
 
+const char* CvBonusInfo::getButton() const
+{
+	const CvArtInfoBonus* pArtInfo = getArtInfo();
+	return pArtInfo != NULL ? pArtInfo->getButton() : "";
+}

@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTION_BUILD_UP_CRIME_FIGHTING1",
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -1
+  },
+  "plot": {
+   "flat": -1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_CRIME_FIGHTING": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/CrimeFighting1BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_CRIME_FIGHTING1"
+ }
+}

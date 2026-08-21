@@ -1,0 +1,352 @@
+#!/usr/bin/env python3
+"""Curate LeaderHead (#428, Tier D #30) — the AI PERSONALITY entity: ~90 AI/diplomacy/strategy params that
+define how an AI player behaves all game. NOT a cascade source/target (zero per-turn-effect fields) — virtually
+everything lands in the unified `ai` group, subgrouped (this is the densest `ai` entity, so it shapes the `ai`
+sub-group vocabulary; the authored-object `ai` group, json.md). 119 records, base only. EXE-link: 1 DllExport (getArtInfo
+-> ArtDefineTag is EXE-bound; all else unconstrained). Bespoke curator.
+
+`ai` subgroups (owner 2026-06-16: keep granular — a big ai block is expected for the AI-behaviour entity):
+- flavours          <- Flavors (FLAVOR_* weights)
+- personality       <- the misc personality knobs (baseAttitude/peaceWeight/warmongerRespect/espionageWeight/
+                       wonderConstructRand/buildUnitProb/freedomAppreciation/vassalPowerModifier)
+- war               <- war/peace decision rands (maxWar*/limitedWar*/dogpile/makePeace/declareWarTrade/
+                       demandRebuked*/refuseToTalkWar/baseAttackOddsChange/attackOddsChangeRand/razeCityProb)
+- victory           <- {culture,space,conquest,domination,diplomacy}VictoryWeight
+- trade             <- maxGold{,PerTurn}TradePercent / noTechTradeThreshold / techTradeKnownPercent
+- attitude          <- relation families {change?,divisor?,changeLimit?}: closeBorders, lostWar, atWar, atPeace,
+                       same/differentReligion, bonusTrade, openBorders, defensivePact, shareWar, favoriteCivic,
+                       worse/betterRankDifference
+- refuse            <- the *AttitudeThreshold strings (ATTITUDE_*): the min attitude to agree to each deal/action
+- memory            <- MemoryDecays (rand) + MemoryAttitudePercents (percent), keyed by MEMORY_*
+- contact           <- ContactRands + ContactDelays, keyed by CONTACT_*
+- noWarProb         <- NoWarAttitudeProbs, keyed by ATTITUDE_*
+- unitWeights       <- UnitAIWeightModifiers, keyed by UNITAI_*
+- improvementWeights<- ImprovementWeightModifiers, keyed by IMPROVEMENT_*
+- favorites         <- FavoriteCivic, FavoriteReligion (AI attitude drivers; owner-agreed -> ai)
+
+Non-ai:
+- ArtDefineTag                 -> world.art.icon (EXE-bound leaderhead portrait).
+- Diplomacy{Intro,}Music{Peace,War} -> sound.diplo* (era -> DiploScriptId maps; audio).
+- bNPC                         -> ai.npc (barbarian/NPC leader; an AI classification; 3 leaders).
+- Description / Civilopedia    -> text.
+
+TRAITS -> BOTH assignment sets are seeded from the legacy `Traits` table (owner). Every authored leader trait
+has a simple AND a complex variant, and the correspondence is pure SPELLING: `TRAIT_X` / `TRAIT_X1` are the
+simple set's entries, and `TRAIT_COMPLEX_X` / `TRAIT_COMPLEX_X1` are their complex twins — so `traits` carries
+the legacy entries verbatim and `complexTraits` the `TRAIT_` -> `TRAIT_COMPLEX_` respelling of the same list.
+The earlier never-fill rule existed because that correspondence was believed broken; it was the SPELLING that
+was wrong, not the mapping. Every emitted id is validated against the TraitInfo table and a miss FAILS LOUD —
+never silently dropped. `DefaultTraits`/`DefaultComplexTraits` stay dropped (redundant single-entry mirrors of
+the same table on the two NPC leaders).
+(Mid-game trait-type swapping is catastrophic — see WorldBuilder-safe-swap #438.)
+
+  python3 curate_leaderhead.py --sample LEADER_ALEXANDER LEADER_GANDHI LEADER_BARBARIAN
+  python3 curate_leaderhead.py --write
+"""
+import argparse
+import json
+import os
+import re
+from collections import OrderedDict
+
+import engine
+import curate_common as cc
+from store import Store, REPO
+
+# --- flat scalar AI knobs: tag -> (subgroup, key). Only non-zero ints emitted. ---
+SCALAR = {
+    # personality
+    "iBaseAttitude": ("personality", "baseAttitude"), "iBasePeaceWeight": ("personality", "basePeaceWeight"),
+    "iPeaceWeightRand": ("personality", "peaceWeightRand"), "iWarmongerRespect": ("personality", "warmongerRespect"),
+    "iEspionageWeight": ("personality", "espionageWeight"), "iWonderConstructRand": ("personality", "wonderConstructRand"),
+    "iBuildUnitProb": ("personality", "buildUnitProb"), "iFreedomAppreciation": ("personality", "freedomAppreciation"),
+    "iVassalPowerModifier": ("personality", "vassalPowerModifier"),
+    # war / peace decisions
+    "iMaxWarRand": ("war", "maxWarRand"), "iMaxWarNearbyPowerRatio": ("war", "maxWarNearbyPowerRatio"),
+    "iMaxWarDistantPowerRatio": ("war", "maxWarDistantPowerRatio"), "iMaxWarMinAdjacentLandPercent": ("war", "maxWarMinAdjacentLandPercent"),
+    "iLimitedWarRand": ("war", "limitedWarRand"), "iLimitedWarPowerRatio": ("war", "limitedWarPowerRatio"),
+    "iDogpileWarRand": ("war", "dogpileWarRand"), "iMakePeaceRand": ("war", "makePeaceRand"),
+    "iDeclareWarTradeRand": ("war", "declareWarTradeRand"), "iDemandRebukedSneakProb": ("war", "demandRebukedSneakProb"),
+    "iDemandRebukedWarProb": ("war", "demandRebukedWarProb"), "iRefuseToTalkWarThreshold": ("war", "refuseToTalkWarThreshold"),
+    "iBaseAttackOddsChange": ("war", "baseAttackOddsChange"), "iAttackOddsChangeRand": ("war", "attackOddsChangeRand"),
+    "iRazeCityProb": ("war", "razeCityProb"),
+    # victory weights
+    "iCultureVictoryWeight": ("victory", "culture"), "iSpaceVictoryWeight": ("victory", "space"),
+    "iConquestVictoryWeight": ("victory", "conquest"), "iDominationVictoryWeight": ("victory", "domination"),
+    "iDiplomacyVictoryWeight": ("victory", "diplomacy"),
+    # trade
+    "iMaxGoldTradePercent": ("trade", "maxGoldPercent"), "iMaxGoldPerTurnTradePercent": ("trade", "maxGoldPerTurnPercent"),
+    "iNoTechTradeThreshold": ("trade", "noTechTradeThreshold"), "iTechTradeKnownPercent": ("trade", "techTradeKnownPercent"),
+}
+
+# --- attitude relation families: tag -> (relation, member). ai.attitude.<relation>.<member>. ---
+ATTITUDE = {
+    "iCloseBordersAttitudeChange": ("closeBorders", "change"),
+    "iLostWarAttitudeChange": ("lostWar", "change"),
+    "iAtWarAttitudeDivisor": ("atWar", "divisor"), "iAtWarAttitudeChangeLimit": ("atWar", "changeLimit"),
+    "iAtPeaceAttitudeDivisor": ("atPeace", "divisor"), "iAtPeaceAttitudeChangeLimit": ("atPeace", "changeLimit"),
+    "iSameReligionAttitudeChange": ("sameReligion", "change"), "iSameReligionAttitudeDivisor": ("sameReligion", "divisor"),
+    "iSameReligionAttitudeChangeLimit": ("sameReligion", "changeLimit"),
+    "iDifferentReligionAttitudeChange": ("differentReligion", "change"), "iDifferentReligionAttitudeDivisor": ("differentReligion", "divisor"),
+    "iDifferentReligionAttitudeChangeLimit": ("differentReligion", "changeLimit"),
+    "iBonusTradeAttitudeDivisor": ("bonusTrade", "divisor"), "iBonusTradeAttitudeChangeLimit": ("bonusTrade", "changeLimit"),
+    "iOpenBordersAttitudeDivisor": ("openBorders", "divisor"), "iOpenBordersAttitudeChangeLimit": ("openBorders", "changeLimit"),
+    "iDefensivePactAttitudeDivisor": ("defensivePact", "divisor"), "iDefensivePactAttitudeChangeLimit": ("defensivePact", "changeLimit"),
+    "iShareWarAttitudeChange": ("shareWar", "change"), "iShareWarAttitudeDivisor": ("shareWar", "divisor"),
+    "iShareWarAttitudeChangeLimit": ("shareWar", "changeLimit"),
+    "iFavoriteCivicAttitudeChange": ("favoriteCivic", "change"), "iFavoriteCivicAttitudeDivisor": ("favoriteCivic", "divisor"),
+    "iFavoriteCivicAttitudeChangeLimit": ("favoriteCivic", "changeLimit"),
+    "iBetterRankDifferenceAttitudeChange": ("betterRankDifference", "change"),
+    "iWorseRankDifferenceAttitudeChange": ("worseRankDifference", "change"),
+}
+
+# --- attitude-threshold strings (ATTITUDE_*): tag -> key under ai.refuse. ---
+REFUSE = {
+    "DemandTributeAttitudeThreshold": "demandTribute", "NoGiveHelpAttitudeThreshold": "noGiveHelp",
+    "TechRefuseAttitudeThreshold": "tech", "StrategicBonusRefuseAttitudeThreshold": "strategicBonus",
+    "HappinessBonusRefuseAttitudeThreshold": "happinessBonus", "HealthBonusRefuseAttitudeThreshold": "healthBonus",
+    "MapRefuseAttitudeThreshold": "map", "DeclareWarRefuseAttitudeThreshold": "declareWar",
+    "DeclareWarThemRefuseAttitudeThreshold": "declareWarThem", "StopTradingRefuseAttitudeThreshold": "stopTrading",
+    "StopTradingThemRefuseAttitudeThreshold": "stopTradingThem", "AdoptCivicRefuseAttitudeThreshold": "adoptCivic",
+    "ConvertReligionRefuseAttitudeThreshold": "convertReligion", "OpenBordersRefuseAttitudeThreshold": "openBorders",
+    "DefensivePactRefuseAttitudeThreshold": "defensivePact", "PermanentAllianceRefuseAttitudeThreshold": "permanentAlliance",
+    "VassalRefuseAttitudeThreshold": "vassal",
+}
+
+# --- keyed lists: tag -> (subgroup, key). value = the entry's numeric (the *Type child is the key). ---
+KEYED = {
+    "MemoryDecays": ("memory", "decay"), "MemoryAttitudePercents": ("memory", "attitudePercent"),
+    "ContactRands": ("contact", "rand"), "ContactDelays": ("contact", "delay"),
+    "NoWarAttitudeProbs": ("noWarProb", None), "UnitAIWeightModifiers": ("unitWeights", None),
+    "ImprovementWeightModifiers": ("improvementWeights", None),
+}
+FAVORITES = {"FavoriteCivic": "civic", "FavoriteReligion": "religion"}
+MUSIC = {"DiplomacyIntroMusicPeace": "diploIntroMusicPeace", "DiplomacyMusicPeace": "diploMusicPeace",
+         "DiplomacyIntroMusicWar": "diploIntroMusicWar", "DiplomacyMusicWar": "diploMusicWar"}
+TEXT = {"Description": "description", "Civilopedia": "civilopedia"}
+# `Traits` seeds BOTH assignment slots (see the module doc); the two Default* tables are redundant
+# single-entry mirrors of it on the NPC leaders and stay dropped.
+DROP = {"Type", "DefaultTraits", "DefaultComplexTraits"}
+
+AI_ORDER = ["npc", "flavours", "personality", "war", "victory", "trade", "attitude", "refuse",
+            "memory", "contact", "noWarProb", "unitWeights", "improvementWeights", "favorites"]
+
+
+def _keyed(node):
+    """<Wrapper><Entry><FooType>K</FooType><iVal>N</iVal></Entry>...> -> {K: int}. Key child ends with 'Type'."""
+    out = OrderedDict()
+    for entry in list(node):
+        k, val = None, None
+        for c in entry:
+            if k is None and c.tag.endswith("Type"):
+                k = engine.text(c)
+            else:
+                t = engine.text(c)
+                if engine.is_int(t):
+                    val = int(t)
+        if k and k != "NONE" and val is not None:
+            out[k] = val
+    return out
+
+
+def _music(node):
+    """Full music -> {era: DiploScriptId} map; intro music (entries carry EraType only, no script) -> [era,...] list."""
+    pairs = []
+    for entry in list(node):
+        era, script = None, None
+        for c in entry:
+            if c.tag == "EraType":
+                era = engine.text(c)
+            elif c.tag == "DiploScriptId":
+                script = engine.text(c)
+        if era and era != "NONE":
+            pairs.append((era, script))
+    if any(s for _e, s in pairs):
+        return OrderedDict(pairs)
+    return [e for e, _s in pairs]
+
+
+def _list(node):
+    out = []
+    for c in node:
+        t = engine.text(c)
+        if not t:
+            for cc_ in c:
+                if engine.text(cc_):
+                    t = engine.text(cc_)
+                    break
+        if t and t != "NONE":
+            out.append(t)
+    return out
+
+
+def _complex_trait_entries(trait_entries):
+    """The COMPLEX-set assignment for a leader, respelled from its legacy (simple) trait list.
+
+    ⛔ A COMPLEX GAME HAS NEVER USED RUNG 0 OF ANY TRAIT -- A LINE IS 1 -> 2 -> 3 (owner,
+    [DEC-trait-sets-separate]). The legacy table pairs a base with its rank-1 entry (`TRAIT_NOMAD`,
+    `TRAIT_NOMAD1`), and respelling that verbatim made the leader hold `TRAIT_COMPLEX_NOMAD` -- a rung 0 that
+    exists in no complex ladder -- BESIDE rung 1, so the base's values applied on top of the rung's.
+
+    So the base is dropped where the same line already names a rung, and promoted to rung 1 where it does not.
+    ⚠ The promotion is the one judgement in here: it reaches exactly the two NPC leaders that author a bare
+    `TRAIT_BARBARIC`, and the alternative (emitting nothing) would leave them with no complex assignment at all.
+    """
+    def stem(entry):
+        return re.sub(r"\d+$", "", entry)
+
+    rung_stems = set(stem(e) for e in trait_entries if re.search(r"\d+$", e))
+    out = []
+    for entry in trait_entries:
+        if not re.search(r"\d+$", entry) and stem(entry) in rung_stems:
+            continue                     # its own line already names a rung -- the base is the leaked rung 0
+        complex_id = "TRAIT_COMPLEX_" + entry[len("TRAIT_"):]
+        if not re.search(r"\d+$", entry):
+            complex_id += "1"            # a bare base means rank 1 in a set whose ladder starts there
+        if complex_id not in out:
+            out.append(complex_id)
+    return out
+
+
+def curate(typ, rec):
+    text, ai, identity, grants, art_blocks, sound = {}, {}, {}, {}, {}, {}
+    leftover = []
+    trait_entries = []
+
+    def put_ai(sub, key, val):
+        node = ai.setdefault(sub, OrderedDict())
+        if key is None:
+            node.update(val)
+        else:
+            node[key] = val
+
+    for c in rec:
+        tag, t = c.tag, engine.text(c)
+        if tag in DROP:
+            continue
+        elif tag == "Traits":
+            trait_entries = _list(c)
+        elif tag in TEXT:
+            if t:
+                text[TEXT[tag]] = t
+        elif tag in SCALAR:
+            if engine.is_int(t) and int(t) != 0:
+                sub, key = SCALAR[tag]
+                put_ai(sub, key, int(t))
+        elif tag in ATTITUDE:
+            if engine.is_int(t) and int(t) != 0:
+                rel, member = ATTITUDE[tag]
+                ai.setdefault("attitude", OrderedDict()).setdefault(rel, OrderedDict())[member] = int(t)
+        elif tag in REFUSE:
+            if t and t != "NONE":
+                ai.setdefault("refuse", OrderedDict())[REFUSE[tag]] = t
+        elif tag in KEYED:
+            sub, key = KEYED[tag]
+            vals = _keyed(c)
+            if vals:
+                if key is None:
+                    put_ai(sub, None, vals)
+                else:
+                    ai.setdefault(sub, OrderedDict())[key] = vals
+        elif tag in FAVORITES:
+            if t and t != "NONE":
+                ai.setdefault("favorites", OrderedDict())[FAVORITES[tag]] = t
+        elif tag == "Flavors":
+            v = engine.generic(c)
+            if v:
+                ai["flavours"] = v
+        elif tag in MUSIC:
+            m = _music(c)
+            if m:
+                sound[MUSIC[tag]] = m
+        elif tag == "ArtDefineTag":
+            cc.put_art(art_blocks, tag, engine.generic(c))   # -> world.art.icon
+        elif tag == "bNPC":
+            if t in ("1", "true", "True"):
+                ai["npc"] = True                          # AI-only leader (barbarian/NPC) — an AI classification
+        else:
+            if list(c) or t:
+                leftover.append(tag)
+                identity[engine.FIELD_RENAME.get(tag, cc.de_i(tag))] = engine.generic(c)
+
+    out = OrderedDict()
+    out["type"] = typ
+    # BOTH assignment sets, seeded from the one legacy `Traits` table (owner; module doc): the entries are the
+    # SIMPLE set verbatim, and the complex set is the same list respelled TRAIT_ -> TRAIT_COMPLEX_ (every
+    # starting trait has both variants; the correspondence is pure spelling). The arrays stay ALWAYS-PRESENT
+    # even when a leader authors nothing -- an absent key hides the capability from a modder (same rule as unit
+    # `tags`). Which set is ACTIVE is chosen at runtime by GAMEOPTION_LEADER_COMPLEX_TRAITS (modifier.md §4).
+    out["traits"] = list(trait_entries)
+    out["complexTraits"] = _complex_trait_entries(trait_entries)
+    for k in ("description", "civilopedia"):
+        if k in text:
+            out[k] = text[k]
+    if grants:
+        out["grants"] = grants
+    if ai:
+        ordered = OrderedDict()
+        for sub in AI_ORDER:
+            if sub in ai:
+                ordered[sub] = ai[sub]
+        for sub in ai:
+            if sub not in ordered:
+                ordered[sub] = ai[sub]
+        out["ai"] = ordered
+    cc.emit_art(out, art_blocks)
+    if sound:
+        out["sound"] = sound
+    if identity:
+        out["identity"] = identity
+    cc.fold_text_to_identity(out)   # TEXT -> identity (json.md §7)
+    return out, leftover
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--sample", nargs="*", help="print these types (default: first 1)")
+    ap.add_argument("--write", action="store_true")
+    args = ap.parse_args()
+    store = Store()
+    table = store.table("LeaderHeadInfo")
+    results, all_leftover = OrderedDict(), set()
+    for typ, rec in table.items():
+        obj, leftover = curate(typ, rec)
+        results[typ] = obj
+        all_leftover.update(leftover)
+    n = len(results)
+    has = lambda k: sum(1 for o in results.values() if k in o)
+    print("LeaderHeadInfo curated: %d" % n)
+    for k in ("grants", "ai", "world", "sound", "identity"):
+        print("  with %-9s: %d" % (k, has(k)))
+    # The trait-assignment validation (module doc): every emitted id -- both sets -- must resolve in the
+    # TraitInfo table. A miss means the spelling correspondence broke for that entry; FAIL LOUD, never drop.
+    trait_types = set(store.table("TraitInfo"))
+    bad = []
+    for typ, obj in results.items():
+        for slot in ("traits", "complexTraits"):
+            for entry in obj.get(slot, []):
+                if entry not in trait_types:
+                    bad.append("%s.%s: %s" % (typ, slot, entry))
+    iAssigned = sum(1 for o in results.values() if o.get("traits"))
+    print("  trait assignments seeded: %d leaders (both sets); unresolved: %d" % (iAssigned, len(bad)))
+    if bad:
+        raise SystemExit("  !! UNRESOLVED TRAIT ASSIGNMENTS:\n    " + "\n    ".join(bad))
+    if all_leftover:
+        print("  !! leftover-to-identity (review): %s" % ", ".join(sorted(all_leftover)))
+    else:
+        print("  (every XML tag classified — no leftovers)")
+    if args.sample is not None:
+        for nm in (args.sample or list(results)[:1]):
+            print("\n=== %s ===" % nm)
+            print(json.dumps(results.get(nm, {"(not found)": nm}), indent=1, ensure_ascii=False))
+    if args.write:
+        out_dir = os.path.join(REPO, "Assets", "Data", "leaderheads")
+        os.makedirs(out_dir, exist_ok=True)
+        for typ, obj in results.items():
+            with open(os.path.join(out_dir, typ.lower() + ".json"), "w") as f:
+                json.dump(obj, f, indent=1, ensure_ascii=False)
+        print("\nwrote %d LeaderHeadInfo JSON files under Assets/Data/leaderheads" % n)
+
+
+if __name__ == "__main__":
+    main()

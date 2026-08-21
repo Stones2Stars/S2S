@@ -1,0 +1,58 @@
+{
+ "type": "SPECIALIST_SETTLED_SLAVE_TUTOR",
+ "food": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -0.4
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -0.4
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/slave_tutor.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/slave_tutor.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_SETTLED_SLAVE_TUTOR",
+  "civilopedia": "TXT_KEY_SPECIALIST_SETTLED_SLAVE_PEDIA",
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_CAPTIVE",
+   "CATEGORY_SPECIALIST_GROUP_RESEARCH"
+  ],
+  "slave": true
+ }
+}

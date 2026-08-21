@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_INTERSTELLAR_CHRONOTON_CANNONS",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_OMEGA_MINUS_ENGINEERING",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CHRONOTON",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 30
+   },
+   "bombardDefense": {
+    "percent": 10
+   },
+   "dynamicDefense": {
+    "percent": 10
+   },
+   "adjacentDamage": {
+    "percent": 10
+   }
+  }
+ },
+ "vision": {
+  "city": {
+   "elevation": {
+    "flat": 100
+   }
+  }
+ },
+ "cost": {
+  "production": 7351,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CHRONOTON_CANNONS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_CHRONOTON_CANNONS",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CHRONOTON_CANNONS_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

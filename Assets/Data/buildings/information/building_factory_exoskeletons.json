@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_FACTORY_EXOSKELETONS",
+ "enables": {
+  "buildings": [
+   "BUILDING_DELTA_ASSEMBLER",
+   "BUILDING_MINING_BOT_CONTROL_CENTER"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_NANOTECH_COMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "BUILDING_MECHATRONICS_LAB",
+    "TECH_POWERED_EXOSKELETON",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ELECTROLYTIC_CELLS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_PLATINUM_WARES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_NANOTECH_COMPLEX"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_EXOSKELETONS"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2745,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACTORY_EXOSKELETONS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_EXOSKELETONS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_EXOSKELETONS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

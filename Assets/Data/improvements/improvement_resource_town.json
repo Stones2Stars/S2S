@@ -1,0 +1,67 @@
+{
+ "type": "IMPROVEMENT_RESOURCE_TOWN",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ELECTRICITY",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_BARREN",
+      "TERRAIN_DESERT",
+      "TERRAIN_DUNES",
+      "TERRAIN_GRASSLAND",
+      "TERRAIN_ICE",
+      "TERRAIN_LUSH",
+      "TERRAIN_MARSH",
+      "TERRAIN_MUDDY",
+      "TERRAIN_PERMAFROST",
+      "TERRAIN_PLAINS",
+      "TERRAIN_ROCKY",
+      "TERRAIN_BADLAND",
+      "TERRAIN_JAGGED",
+      "TERRAIN_SALT_FLATS",
+      "TERRAIN_SCRUB",
+      "TERRAIN_TAIGA",
+      "TERRAIN_TUNDRA"
+     ]
+    }
+   ]
+  }
+ },
+ "culture": {
+  "plot": {
+   "flat": 40
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 15
+   }
+  }
+ },
+ "characteristics": [
+  "actsAsCity",
+  "bombardable"
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_VILLAGE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_RESOURCE_TOWN",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_RESOURCE_OUTPOSTS_PEDIA",
+  "advancedStart": {
+   "cost": 10
+  },
+  "upgradeTime": 5,
+  "outsideBorders": true,
+  "upgradesTo": "IMPROVEMENT_RESOURCE_COMPLEX",
+  "upgradeRequiresFortify": true,
+  "universalBonusTrade": true
+ }
+}

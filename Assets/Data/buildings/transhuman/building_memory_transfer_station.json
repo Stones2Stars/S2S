@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_MEMORY_TRANSFER_STATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_INSTANT_EDUCATION_CENTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_NEURON_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NEUROIMPLANTS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 5055,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MEMORY_TRANSFER_STATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MEMORY_TRANSFER_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_MEMORY_TRANSFER_STATION_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

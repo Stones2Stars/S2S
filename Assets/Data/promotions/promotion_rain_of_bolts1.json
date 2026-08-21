@@ -1,0 +1,17 @@
+{
+ "type": "PROMOTION_RAIN_OF_BOLTS1",
+ "promotionLine": {
+  "PROMOTIONLINE_RAIN_OF_BOLTS": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/RainOfBolts1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_RAIN_OF_BOLTS1"
+ }
+}

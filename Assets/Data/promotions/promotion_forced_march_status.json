@@ -1,0 +1,44 @@
+{
+ "type": "PROMOTION_FORCED_MARCH_STATUS",
+ "movement": {
+  "unit": {
+   "moves": {
+    "flat": 1
+   }
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": -30,
+   "breakdownChance": {
+    "flat": -10
+   },
+   "breakdownDamage": {
+    "flat": -1
+   }
+  }
+ },
+ "heal": {
+  "unit": {
+   "selfModifier": {
+    "percent": -15
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_ENHANCED_MARCH": 2
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/ForcedMarchStatus.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FORCED_MARCH_STATUS",
+  "status": true,
+  "quick": true
+ }
+}

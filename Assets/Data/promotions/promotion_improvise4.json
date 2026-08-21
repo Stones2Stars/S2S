@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_IMPROVISE4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_IMPROVISE5"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_IMPROVISE3"
+   ]
+  }
+ },
+ "costs": {
+  "unit": {
+   "upgrade": {
+    "percent": -10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_IMPROVISE": 4
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Improvise4.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_PING"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_IMPROVISE4"
+ }
+}

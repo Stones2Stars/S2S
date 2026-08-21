@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_NAVAJO",
+ "enables": {
+  "units": [
+   "UNIT_NARBONA",
+   "UNIT_NAVAJO_RIFLEMAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_NAVAJO"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_NAVAJO",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

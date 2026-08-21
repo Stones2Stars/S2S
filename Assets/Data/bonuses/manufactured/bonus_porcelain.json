@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_PORCELAIN",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PORCELAIN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PORCELAIN",
+  "civilopedia": "TXT_KEY_BONUS_PORCELAIN_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

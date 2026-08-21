@@ -1,0 +1,42 @@
+{
+ "type": "PROMOTION_GUERILLA1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_GUERILLA2"
+  ]
+ },
+ "combat": {
+  "unit": {
+   "hillsAttack": {
+    "percent": 10
+   },
+   "hillsDefense": {
+    "percent": 20
+   },
+   "terrain": {
+    "TERRAIN_PEAK": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_GUERILLA": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Guerilla1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,5,5"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_GUERILLA1"
+ }
+}

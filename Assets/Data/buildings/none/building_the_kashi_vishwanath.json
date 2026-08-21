@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_THE_KASHI_VISHWANATH",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "IS_HOLY_CITY": "RELIGION_HINDUISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "per": {
+      "type": "RELIGION_HINDUISM",
+      "scope": "world"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_HINDUISM": {
+    "flat": 1
+   }
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 3
+  }
+ },
+ "shrine": "RELIGION_HINDUISM",
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SHRINE_HINDU"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_THE_KASHI_VISHWANATH"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HINDU"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_THE_KASHI_VISHWANATH",
+  "civilopedia": "TXT_KEY_BUILDING_THE_KASHI_VISHWANATH_PEDIA",
+  "pediaCategory": "religious",
+  "notConstructible": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_HINDUISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

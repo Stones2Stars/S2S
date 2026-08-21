@@ -1,0 +1,215 @@
+{
+ "type": "UNIT_POLICE_MECH",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MECHS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_POLICE_PRECINCT",
+    "TECH_DISASTER_ROBOTS"
+   ]
+  }
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": 20
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 4
+  }
+ },
+ "combat": {
+  "unit": {
+   "enclose": {
+    "percent": 30
+   },
+   "dynamicDefense": {
+    "percent": 30
+   },
+   "stealthStrikes": {
+    "flat": 4
+   },
+   "stealth": {
+    "percent": 80
+   },
+   "targets": {
+    "UNITCOMBAT_CRIMINAL": true
+   },
+   "defenders": {
+    "UNITCOMBAT_CRIMINAL": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 150
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 50
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 3
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 10
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 35
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "investigation": {
+    "flat": 150
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -45
+  },
+  "plot": {
+   "flat": -28
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": {
+     "all": [
+      "IS_LAND",
+      "IS_PEOPLE",
+      "!IS_VTOL"
+     ]
+    },
+    "flat": 1
+   }
+  }
+ },
+ "skills": [
+  "noCapture",
+  "counterSpy",
+  "mechanized",
+  "passage",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "troop"
+ ],
+ "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT",
+ "combatClasses": [
+  "UNITCOMBAT_ASSAULT_MECH",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_HYDRAULIC_APPENDAGE",
+  "UNITCOMBAT_WEAPON_H2H_TASER",
+  "UNITCOMBAT_WEAPON_H2H_SPRAY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_DIST_HEAT",
+  "UNITCOMBAT_WEAPON_DIST_SONIC",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_SHIELD_ENERGY",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL",
+  "UNITCOMBAT_HEALS_AS_TECH"
+ ],
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 500,
+    "unit": "HAS_DISGUISED"
+   },
+   {
+    "value": 600,
+    "unit": "HAS_POLITICAL"
+   },
+   {
+    "value": 300,
+    "unit": "HAS_CAMOUFLAGE"
+   }
+  ]
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SENTRY"
+  ]
+ },
+ "cost": {
+  "production": 3580,
+  "upkeep": 14
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_POLICE_MECH",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1,
+    "padTime": 2.5,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_POLICE_MECH"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_POLICE_MECH",
+  "civilopedia": "TXT_KEY_UNIT_POLICE_MECH_PEDIA",
+  "worth": 21,
+  "militaryWorth": 80,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_RANGED",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_PROPERTY_CONTROL",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_INVESTIGATOR",
+   "UNITAI_SEE_INVISIBLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

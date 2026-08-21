@@ -1,0 +1,10 @@
+{
+ "type": "FOLDTARGET_HAS_PEAK",
+ "identity": {
+  "description": "TXT_KEY_FOLDTARGET_HAS_PEAK"
+ },
+ "predicate": "HAS_PEAK",
+ "terrains": [
+  "TERRAIN_PEAK"
+ ]
+}

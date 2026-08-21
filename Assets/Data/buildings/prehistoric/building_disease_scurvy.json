@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_DISEASE_SCURVY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MODERN_HEALTH_CARE"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_NATUROPATHY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_DISEASE",
+     "scope": "city",
+     "min": 75,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": -1
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -1,
+    {
+     "value": -15,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LEMONS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYDISEASE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISEASE_SCURVY",
+  "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

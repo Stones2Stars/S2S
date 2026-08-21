@@ -1,0 +1,35 @@
+{
+ "type": "BUILD_RESOURCE_SETTLEMENT",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CITY_PLANNING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_RESOURCE_SETTLEMENT"
+ },
+ "cost": {
+  "gold": 50,
+  "time": 1000
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/BuildHamlet.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,2,10"
+  },
+  "hotkey": "KB_F",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_RESOURCE_SETTLEMENT"
+ }
+}

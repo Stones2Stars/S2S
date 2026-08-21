@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_EFFECT_TRADITION_ARCHERY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARCHERY_RANGE",
+   "BUILDING_GREAT_HOLMEGAARD_HUNT",
+   "BUILDING_TRADITION_ARCHERY"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MILITARY_TRADITION"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_BRONZE_WORKING"
+   ]
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_ARCHER": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_ARCHER_TRADITION"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_TRADITION_ARCHERY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_TRADITION_ARCHERY",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_TRADITION_ARCHERY_PEDIA",
+  "notConstructible": true,
+  "militaryWorth": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

@@ -1,0 +1,89 @@
+{
+ "type": "TECH_COMPULSORY_EDUCATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHURCH_OF_THE_STATE",
+   "BUILDING_CITY_COLLEGE",
+   "BUILDING_CRIME_TRUANCY",
+   "BUILDING_DEPARTMENT_OF_EDUCATION",
+   "BUILDING_ELEMENTARY_SCHOOL",
+   "BUILDING_HIGH_SCHOOL",
+   "BUILDING_ORDINANCE_YOUTH_CURFEW",
+   "BUILDING_PRIVATE_SCHOOL",
+   "BUILDING_SAFETY_YOUTH_CURFEW",
+   "BUILDING_SCHOOL_BUS_STATION",
+   "BUILDING_YOUTH_CENTER"
+  ],
+  "civics": [
+   "CIVIC_ANTIRELIGION",
+   "CIVIC_CODIFIED",
+   "CIVIC_COMPULSORY"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_TEACH4",
+   "PROMOTION_EDUCATE5"
+  ],
+  "techs": [
+   "TECH_ATOMIC_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PSYCHOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MANAGEMENT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 7718
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Education.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,6"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_COMPULSORY_EDUCATION",
+  "soundMP": "AS2D_TECH_COMPULSORY_EDUCATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_COMPULSORY_EDUCATION",
+  "civilopedia": "TXT_KEY_TECH_COMPULSORY_EDUCATION_PEDIA",
+  "quote": "TXT_KEY_TECH_COMPULSORY_EDUCATION_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 70,
+  "gridY": 11
+ }
+}

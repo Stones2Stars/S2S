@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_ASTEROID_CLUSTER_CITY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ASTEROID_INTERIOR_CITY",
+    "TECH_POSTHUMANISM",
+    {
+     "type": "TERRAIN_ASTEROID_SURFACE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -10
+   }
+  }
+ },
+ "cost": {
+  "production": 8676,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ASTEROID_CLUSTER_CITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ASTEROID_CLUSTER_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_ASTEROID_CLUSTER_CITY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

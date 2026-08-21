@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_EFFECT_FERTILITY_FESTIVAL",
+ "enables": {
+  "buildings": [
+   "BUILDING_FERTILITY_FESTIVAL"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WOMENS_SUFFRAGE"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_CELEBRATION"
+   ]
+  }
+ },
+ "food": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "foodKept": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FERTILITY_FESTIVAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_FERTILITY_FESTIVAL",
+  "civilopedia": "TXT_KEY_BUILDING_FERTILITY_FESTIVAL_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

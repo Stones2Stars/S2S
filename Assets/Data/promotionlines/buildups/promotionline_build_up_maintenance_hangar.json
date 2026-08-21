@@ -1,0 +1,28 @@
+{
+ "type": "PROMOTIONLINE_BUILD_UP_MAINTENANCE_HANGAR",
+ "buildUp": {
+  "active": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/MaintenanceHangar1BuildUp.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_MAINTENANCE_HANGAR",
+  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_MAINTENANCE_HANGAR_HELP",
+  "unitCombats": [
+   "UNITCOMBAT_HEALS_AIRCRAFT"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SPY",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
+ }
+}

@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_CHILEHAUS",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_EXPRESSIONISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MODERN_OFFICES": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2
+  }
+ },
+ "cost": {
+  "production": 5220,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CHILEHAUS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CHILEHAUS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CHILEHAUS",
+  "civilopedia": "TXT_KEY_BUILDING_CHILEHAUS_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_STATESMAN",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

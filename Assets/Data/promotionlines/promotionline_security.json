@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_SECURITY",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Security1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SECURITY",
+  "unitCombats": [
+   "UNITCOMBAT_SPY"
+  ]
+ }
+}

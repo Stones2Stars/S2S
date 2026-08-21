@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_FACTORY_CHEESE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "TECH_ASSEMBLY_LINE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MILK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_CHEESE"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 710,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACTORY_CHEESE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_CHEESE",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_CHEESE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

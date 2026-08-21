@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_ETHANOL_STATION",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TELEPORT_BOOTH"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SHOPPING_DISTRICT",
+    "TECH_BIOMATERIALS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BIOFUEL",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_TELEPORT_BOOTH"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2005,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ETHANOL_STATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ETHANOL_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_ETHANOL_STATION_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

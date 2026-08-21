@@ -1,0 +1,195 @@
+{
+ "type": "BUILDING_SMUGGLERS_SHANTY",
+ "enables": {
+  "units": [
+   "UNIT_BARBARY_CORSAIR",
+   "UNIT_DRAGON_SHIP_PIRATE",
+   "UNIT_LIBURNA",
+   "UNIT_SAMBUK",
+   "UNIT_TAHITIAN_RIDERS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PIRACY",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_ALCOHOL",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_DRUGS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    },
+    {
+     "any": [
+      "CIVIC_DESPOTISM",
+      "CIVIC_MONARCHY",
+      "CIVIC_FEUDAL",
+      "CIVIC_NATIONALIST",
+      "CIVIC_MERCANTILISM",
+      "CIVIC_BANDITRY"
+     ]
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TOBACCO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HEMP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OPIUM",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -2,
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_TOBACCO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_HEMP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_OPIUM",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": 10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 160,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SMUGGLERS_SHANTY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SMUGGLERS_SHANTY",
+  "civilopedia": "TXT_KEY_BUILDING_SMUGGLERS_SHANTY_PEDIA",
+  "militaryWorth": 1,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

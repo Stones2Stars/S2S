@@ -1,0 +1,46 @@
+{
+ "type": "IMPROVEMENT_PLACE_GALAXY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GALACTIFORMING",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_LOCAL_GROUP",
+      "TERRAIN_VIRGO_SUPERCLUSTER"
+     ]
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": -1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_PLACE_GALAXY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_PLACE_GALAXY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_LAND_WORKED_PEDIA",
+  "extraterrestrial": true,
+  "featureChanges": [
+   "FEATURE_GALAXY"
+  ],
+  "placesFeature": true,
+  "changeRemove": true,
+  "advancedStart": {
+   "cost": -1
+  },
+  "outsideBorders": true,
+  "graphicalOnly": true
+ }
+}

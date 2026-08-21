@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_OZONE_GENERATOR",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INDUSTRIAL_PARK",
+    "TECH_WEATHER_CONTROL",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 6905,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_OZONE_GENERATOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_OZONE_GENERATOR",
+  "civilopedia": "TXT_KEY_BUILDING_OZONE_GENERATOR_PEDIA",
+  "worth": 2,
+  "militaryWorth": 2,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

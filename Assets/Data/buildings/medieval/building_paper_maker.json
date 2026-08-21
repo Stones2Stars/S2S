@@ -1,0 +1,103 @@
+{
+ "type": "BUILDING_PAPER_MAKER",
+ "enables": {
+  "buildings": [
+   "BUILDING_GUILD_PRINTERS",
+   "BUILDING_RESOURCES_PAPER"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PLASTIC_ELECTRONICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_PAPER"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PAPER",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PAPYRUS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CLOTH",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_FACTORY_PAPER",
+    "BUILDING_ELECTRONIC_PAPER_MAKER"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 344,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PAPER_MAKER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PAPER_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_PAPER_MAKER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

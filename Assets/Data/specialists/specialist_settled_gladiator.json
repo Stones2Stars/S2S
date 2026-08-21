@@ -1,0 +1,30 @@
+{
+ "type": "SPECIALIST_SETTLED_GLADIATOR",
+ "gold": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MELEE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/mainscreen/cityscreen/specialist_gladiator.dds",
+   "icon": "Art/Interface/mainscreen/cityscreen/specialist_gladiator.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_SETTLED_GLADIATOR",
+  "civilopedia": "TXT_KEY_SPECIALIST_SETTLED_GLADIATOR_PEDIA",
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_MILITARY"
+  ]
+ }
+}

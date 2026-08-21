@@ -1,0 +1,254 @@
+{
+ "type": "UNIT_HIGHWAYMAN",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_DEPUTIZATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_HIGHWAYMANS_HIDEOUT",
+    "TECH_MATCHLOCK",
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_OUTLAW"
+    ]
+   }
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_FLINT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "combat": {
+  "unit": {
+   "lunge": {
+    "percent": 15
+   },
+   "enclose": {
+    "percent": 10
+   },
+   "unnerve": {
+    "percent": 10
+   },
+   "stealthStrikes": {
+    "flat": 1
+   },
+   "stealth": {
+    "percent": 30
+   },
+   "flanking": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 25
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 25
+    },
+    "UNITCOMBAT_THROWING": {
+     "percent": 50
+    }
+   },
+   "targets": {
+    "UNITCOMBAT_TRADE": true,
+    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 20
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 50
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 2
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 12
+  },
+  "plot": {
+   "flat": 25
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_CAPTIVE",
+    "flat": 2
+   }
+  }
+ },
+ "skills": [
+  "alwaysHostile",
+  "hiddenNationality",
+  "noDefensiveBonus",
+  "pillage",
+  "barbCoExist",
+  "ignoreTerrainCost",
+  "noNonOwnedCityEntry",
+  "stealthDefense",
+  "upgradeAnywhere",
+  "camouflage"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "troop"
+ ],
+ "combatClass": "UNITCOMBAT_RUFFIAN",
+ "combatClasses": [
+  "UNITCOMBAT_MOUNTED",
+  "UNITCOMBAT_GUN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_RIFLE_BUTT",
+  "UNITCOMBAT_WEAPON_DIST_RIFLE",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_RIDING",
+  "UNITCOMBAT_MOUNT_HORSE",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  },
+  "detection": {
+   "value": 100,
+   "unit": "HAS_CAMOUFLAGE"
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO",
+   "PROMOTION_MARAUDER",
+   "PROMOTION_LOOTER"
+  ]
+ },
+ "cost": {
+  "production": 470,
+  "upkeep": 7
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HIGHWAYMAN",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_HIGHWAYMAN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_HIGHWAYMAN",
+  "civilopedia": "TXT_KEY_UNIT_HIGHWAYMAN_PEDIA",
+  "worth": 6,
+  "militaryWorth": 17,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,73 @@
+{
+ "type": "TECH_PSYCHOLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_AMUSEMENT_PARK",
+   "BUILDING_INSANE_ASYLUM",
+   "BUILDING_PSYCHOLOGY_LAB",
+   "BUILDING_PUBLIC_BEACH",
+   "BUILDING_SECURITY_BUREAU",
+   "BUILDING_WATER_PARK"
+  ],
+  "techs": [
+   "TECH_COMPULSORY_EDUCATION",
+   "TECH_CUBISM",
+   "TECH_EXPRESSIONISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ARCHEOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PALEONTOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CRIMINOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 7356
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Psychology.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,14"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PSYCHOLOGY",
+  "soundMP": "AS2D_TECH_PSYCHOLOGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PSYCHOLOGY",
+  "civilopedia": "TXT_KEY_TECH_PSYCHOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_PSYCHOLOGY_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 21,
+  "militaryWorth": 7,
+  "tradeable": true,
+  "gridX": 69,
+  "gridY": 1
+ }
+}

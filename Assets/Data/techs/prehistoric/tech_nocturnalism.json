@@ -1,0 +1,57 @@
+{
+ "type": "TECH_NOCTURNALISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_ROGUES_HIDEOUT_UNSANCTIONED"
+  ],
+  "techs": [
+   "TECH_EXPLORATION"
+  ],
+  "units": [
+   "UNIT_AMBUSHER",
+   "UNIT_ROGUE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WARFARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 52
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/Button_Nocturnalism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NOCTURNALISM",
+  "soundMP": "AS2D_TECH_NOCTURNALISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NOCTURNALISM",
+  "civilopedia": "TXT_KEY_TECH_NOCTURNALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_NOCTURNALISM_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 17,
+  "gridY": 5
+ }
+}

@@ -1,0 +1,83 @@
+{
+ "type": "TECH_SOLAR_ORDNANCE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT",
+   "BUILDING_DEEP_SPACE_SOLAR_ARRAY_TRANSNEPTUNIAN",
+   "BUILDING_ERIS_COLONY",
+   "BUILDING_HAUMEA_COLONY",
+   "BUILDING_MAKEMAKE_COLONY"
+  ],
+  "builds": [
+   "BUILD_SOLAR_CONCENTRATOR",
+   "BUILD_SOLAR_SYSTEM_BASE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_SOLAR_CONCENTRATOR",
+   "IMPROVEMENT_SOLAR_SYSTEM_BASE"
+  ],
+  "projects": [
+   "PROJECT_SS_THRUSTERS"
+  ],
+  "techs": [
+   "TECH_NUCLEAR_PULSE_PROPULSION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NANOSHIELDING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLANETARY_DEFENSES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 90183
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/solarordnance.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SOLAR_ORDNANCE",
+  "soundMP": "AS2D_TECH_SOLAR_ORDNANCE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SOLAR_ORDNANCE",
+  "civilopedia": "TXT_KEY_TECH_SOLAR_ORDNANCE_PEDIA",
+  "quote": "TXT_KEY_TECH_SOLAR_ORDNANCE_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 121,
+  "gridY": 3
+ }
+}

@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_OCEAN_SPIRAL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
+    "BUILDING_OCEAN_CITY",
+    "TECH_MARINE_ARCHITECTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_OCEAN_CITY": {
+     "percent": 10
+    },
+    "BUILDING_OCEAN_ARCOLOGY": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 17190,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_OCEAN_SPIRAL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_OCEAN_SPIRAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_OCEAN_SPIRAL",
+  "civilopedia": "TXT_KEY_BUILDING_OCEAN_SPIRAL_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

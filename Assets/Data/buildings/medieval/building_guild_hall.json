@@ -1,0 +1,102 @@
+{
+ "type": "BUILDING_GUILD_HALL",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GUILDS",
+    {
+     "any": [
+      "BUILDING_FORGE",
+      "BUILDING_FOUNDRY",
+      "BUILDING_METALS_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_GOLD_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "CIVIC_GUILDS"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 15
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 332,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GUILD_HALL",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GUILDHALL"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GUILD_HALL",
+  "civilopedia": "TXT_KEY_BUILDING_GUILD_HALL_PEDIA",
+  "worth": 4,
+  "militaryWorth": 5,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

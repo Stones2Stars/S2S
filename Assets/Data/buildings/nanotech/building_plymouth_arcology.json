@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_PLYMOUTH_ARCOLOGY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CONTROL_CENTER",
+    "TECH_MEDIA_HIVEMIND",
+    {
+     "any": [
+      "BUILDING_LIQUID_METALS_FOUNDRY",
+      "BUILDING_PICOTECH_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOTRUSSES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "production": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_CONTROL_CENTER",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 21990,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PLYMOUTH_ARCOLOGY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PLYMOUTH_ARCOLOGY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PLYMOUTH_ARCOLOGY",
+  "civilopedia": "TXT_KEY_BUILDING_PLYMOUTH_ARCOLOGY_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

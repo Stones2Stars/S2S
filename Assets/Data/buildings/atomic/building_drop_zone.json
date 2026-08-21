@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_DROP_ZONE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WEATHER_CONTROL"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ATHLETIC_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_EXTREME_SPORTS",
+    {
+     "any": [
+      "BUILDING_AIRFIELD",
+      "BUILDING_AEROSPACE_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_ATHLETIC_MEGACOMPLEX"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_PARATROOPER": {
+     "percent": 10
+    },
+    "UNIT_MODERN_PARATROOPER": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 1605,
+  "sizeModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DROP_ZONE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DROP_ZONE",
+  "civilopedia": "TXT_KEY_BUILDING_DROP_ZONE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

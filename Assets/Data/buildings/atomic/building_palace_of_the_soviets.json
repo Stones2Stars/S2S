@@ -1,0 +1,123 @@
+{
+ "type": "BUILDING_PALACE_OF_THE_SOVIETS",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COMMUNISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    "CIVIC_MARXIST"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_SOCIAL_JUSTICE_ORGANIZATION": {
+     "flat": 2
+    },
+    "BUILDING_WELFARE_OFFICE": {
+     "flat": 1
+    },
+    "BUILDING_PLANNING_OFFICE": {
+     "flat": 1
+    },
+    "BUILDING_CHURCH_OF_THE_STATE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "revolution": {
+  "city": {
+   "national": {
+    "flat": -10
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 5940,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PALACE_SOV"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PALACE_OF_THE_SOVIETS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PALACE_OF_THE_SOVIETS",
+  "civilopedia": "TXT_KEY_BUILDING_PALACE_OF_THE_SOVIETS_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

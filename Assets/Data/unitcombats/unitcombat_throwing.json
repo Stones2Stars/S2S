@@ -1,0 +1,25 @@
+{
+ "type": "UNITCOMBAT_THROWING",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": -5
+   }
+  }
+ },
+ "tags": [
+  "throwing"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/throwing_units.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_THROWING",
+  "forMilitary": true
+ }
+}

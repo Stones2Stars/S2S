@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_INTERSTELLAR_PULSAR_NAVIGATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_TRANSTELLAR_LASER_HIGHWAY_RELAY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_INTERSTELLAR_COMMUNICATION",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_INTERSTELLAR",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 1990,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_PULSAR_NAVIGATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_PULSAR_NAVIGATION",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PULSAR_NAVIGATION_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR",
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

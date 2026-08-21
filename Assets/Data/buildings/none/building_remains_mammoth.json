@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_REMAINS_MAMMOTH",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MAMMOTH",
+     "scope": "city",
+     "vicinity": "owned"
+    },
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    "HERITAGE_FOLKLORE_MAMMOTH"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 5,
+     "enabled": "TECH_BIOLOGY"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_PALEONTOLOGY_LAB": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "enabled": "TECH_BIOLOGY"
+   }
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_REMAINS_MAMMOTH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_REMAINS_MAMMOTH",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+  "pediaCategory": "animalistic",
+  "notConstructible": true,
+  "worth": 1,
+  "conquestProbability": 90,
+  "advisor": "ADVISOR_SCIENCE"
+ }
+}

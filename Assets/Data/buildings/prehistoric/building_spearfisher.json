@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_SPEARFISHER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HARBOR"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "TECH_SPEARFISHING",
+    {
+     "any": [
+      "BUILDING_STORAGE_PIT",
+      "BUILDING_GRANARY",
+      "BUILDING_MODERN_GRANARY",
+      "BUILDING_BARTER_POST",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_HARBOR",
+    "BUILDING_PORT",
+    "BUILDING_COMMERCIAL_PORT",
+    "BUILDING_INTERNATIONAL_PORT",
+    "BUILDING_OCEAN_ADMINISTRATION"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": "TECH_HARPOON_MAKING"
+    }
+   ],
+   "terrains": {
+    "TERRAIN_COAST": {
+     "flat": 1
+    },
+    "TERRAIN_COAST_POLAR": {
+     "flat": 1
+    },
+    "TERRAIN_COAST_TROPICAL": {
+     "flat": 1
+    },
+    "TERRAIN_LAKE_SHORE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 74,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SPEARFISHER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SPEARFISHER",
+  "civilopedia": "TXT_KEY_BUILDING_SPEARFISHER_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

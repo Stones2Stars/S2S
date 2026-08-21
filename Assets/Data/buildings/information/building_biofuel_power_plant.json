@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_BIOFUEL_POWER_PLANT",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_RENEWABLE_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "BUILDING_POWER_LINES",
+    "TECH_BIOMATERIALS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BIOFUEL",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_RENEWABLE_MEGACOMPLEX"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2005,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BIOFUEL_POWER_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BIOFUEL_POWER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_BIOFUEL_POWER_PLANT_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

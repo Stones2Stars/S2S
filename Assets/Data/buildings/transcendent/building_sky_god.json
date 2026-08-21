@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_SKY_GOD",
+ "enables": {
+  "buildings": [
+   "BUILDING_REALM_OF_ENLIGHTENMENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_AERIAL_CITY",
+    "TECH_DEITIES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 26055,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SKY_GOD",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SKY_GOD",
+  "civilopedia": "TXT_KEY_BUILDING_SKY_GOD_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,71 @@
+{
+ "type": "TECH_THERMODYNAMICS",
+ "enables": {
+  "bonuses": [
+   "BONUS_HYDROGEN"
+  ],
+  "buildings": [
+   "BUILDING_CEMENT_MILL",
+   "BUILDING_HYDROGEN_GENERATOR"
+  ],
+  "techs": [
+   "TECH_BALLOON_WARFARE",
+   "TECH_COMBUSTION",
+   "TECH_ORGANIC_CHEMISTRY",
+   "TECH_STEEL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STATISTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_STEAM_POWER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_SCIENTIST"
+ },
+ "cost": {
+  "research": 5460
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/Thermodynamics.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,7,2"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_THERMODYNAMICS",
+  "soundMP": "AS2D_TECH_THERMODYNAMICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_THERMODYNAMICS",
+  "civilopedia": "TXT_KEY_TECH_THERMODYNAMICS_PEDIA",
+  "quote": "TXT_KEY_TECH_THERMODYNAMICS_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 20,
+  "tradeable": true,
+  "gridX": 63,
+  "gridY": 17
+ }
+}

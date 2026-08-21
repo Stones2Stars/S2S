@@ -1,0 +1,143 @@
+{
+ "type": "UNIT_LEONIDAS",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SPARTAN",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_BRONZE_WORKING",
+    "TECH_POLYTHEISM",
+    {
+     "any": [
+      {
+       "type": "BONUS_BRONZE_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "hillsDefense": {
+    "percent": 50
+   },
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 100
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 100
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 9
+  }
+ },
+ "skills": [
+  "pillage",
+  "firstStrikeImmune"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_HERO",
+ "combatClasses": [
+  "UNITCOMBAT_MELEE",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_POLEARM",
+  "UNITCOMBAT_WEAPON_DIST_JAVELIN",
+  "UNITCOMBAT_ARMOR_HEAVY",
+  "UNITCOMBAT_SHIELD_LARGE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EPIC",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_HEROIC"
+  ],
+  "greatPeople": [
+   "SPECIALIST_GREAT_MILITARY_INSTRUCTOR"
+  ]
+ },
+ "cost": {
+  "production": 736,
+  "upkeep": 1,
+  "hurryCostModifier": 200
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LEONIDAS",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_LEONIDAS"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_LEONIDAS",
+  "civilopedia": "TXT_KEY_UNIT_LEONIDAS_PEDIA",
+  "worth": 4,
+  "militaryWorth": 8,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "conscription": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "leaderPromotion": "PROMOTION_LEADER",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,82 @@
+{
+ "type": "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CALLISTO_NOBLE_GAS_GENERATOR",
+   "BUILDING_EUROPA_SF6_GENERATOR",
+   "BUILDING_EXOTIC_MATTER_LAB",
+   "BUILDING_HE3_FUSION_POWER_PLANT",
+   "BUILDING_TITAN_SF6_GENERATOR",
+   "BUILDING_URANIAN_SF6_GENERATOR",
+   "BUILDING_VENUS_FUSION_PLANT"
+  ],
+  "promotions": [
+   "PROMOTION_HEAL2"
+  ],
+  "techs": [
+   "TECH_ADVANCED_SHIELDING",
+   "TECH_TERRA_COMPUTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TECHNOLOGICAL_SINGULARITY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ABYSS_COLONIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOMINING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 75052
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/artificialnucleosynthesis.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+  "soundMP": "AS2D_TECH_ARTIFICIAL_NUCLEOSYNTHESIS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+  "civilopedia": "TXT_KEY_TECH_ARTIFICIAL_NUCLEOSYNTHESIS_PEDIA",
+  "quote": "TXT_KEY_TECH_ARTIFICIAL_NUCLEOSYNTHESIS_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 116,
+  "gridY": 13
+ }
+}

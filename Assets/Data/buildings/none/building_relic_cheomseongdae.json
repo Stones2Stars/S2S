@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_RELIC_CHEOMSEONGDAE",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CHEOMSEONGDAE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RELIC_CHEOMSEONGDAE",
+  "civilopedia": "TXT_KEY_BUILDING_CHEOMSEONGDAE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "notConstructible": true,
+  "noInstanceLimit": true,
+  "worth": 4,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

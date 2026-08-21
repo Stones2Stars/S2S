@@ -1,0 +1,35 @@
+{
+ "type": "FEATURE_PLATY_SINAI",
+ "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
+  "nukeImmune",
+  "countsAsPeak",
+  "ignoreTerrainCulture"
+ ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_SINAI"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_SINAI",
+  "civilopedia": "TXT_KEY_FEATURE_SINAI_PEDIA",
+  "requiresFlatlands": true,
+  "validTerrains": [
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES"
+  ]
+ }
+}

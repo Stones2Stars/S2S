@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_VENUS_PROJECT",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_RATIONAL_CITY",
+     "scope": "empire",
+     "min": 3,
+     "scaling": "amountBuildings"
+    },
+    "TECH_UTOPIA_DESTINY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": -50,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_RATIONAL_CITY",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 31530,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_VENUS_PROJECT"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VENUS_PROJECT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_PROJECT",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_PROJECT_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

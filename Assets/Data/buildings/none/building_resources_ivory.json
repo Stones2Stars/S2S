@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_RESOURCES_IVORY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INDUSTRIAL_FARMS"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ],
+   "all": [
+    {
+     "any": [
+      "BUILDING_ANIMAL_PRESERVE",
+      "BUILDING_BREEDING_PROGRAM_ELEPHANT",
+      "BUILDING_BREEDING_PROGRAM_MAMMOTH",
+      "BUILDING_BREEDING_PROGRAM_NARWHAL",
+      "BUILDING_BREEDING_PROGRAM_RHINO",
+      "BUILDING_BREEDING_PROGRAM_WALRUS",
+      "BUILDING_CAMP_ELEPHANT",
+      "BUILDING_FARM_ANIMAL_ELEPHANT",
+      "BUILDING_HERD_ELEPHANT",
+      "BUILDING_CAMP_MAMMOTH",
+      "BUILDING_CAMP_NARWHAL",
+      "BUILDING_CAMP_RHINO",
+      "BUILDING_CAMP_WALRUS",
+      "BUILDING_CAMP_WOOLLY_RHINO"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_IVORY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESOURCES_IVORY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_IVORY",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

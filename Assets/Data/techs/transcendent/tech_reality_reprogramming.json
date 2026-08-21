@@ -1,0 +1,71 @@
+{
+ "type": "TECH_REALITY_REPROGRAMMING",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIZARRO_WORLD",
+   "BUILDING_DE_MAT_POLICE_FORCE",
+   "BUILDING_DISTANT_PARANORMAL_BRANESPACE_TOPOLOGY",
+   "BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
+   "BUILDING_HYPERSPACE_NEW_BIG_BANG",
+   "BUILDING_HYPERSPACE_S_E_P_FIELD",
+   "BUILDING_INVERSE_CITY",
+   "BUILDING_MULTIVERSAL_ECONOMY"
+  ],
+  "techs": [
+   "TECH_ALPHA_POINT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRANSFINITE_STRUCTURES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DIRECTED_COSMIC_EVOLUTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 664224
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/truth_manipulation.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_REALITY_REPROGRAMMING",
+  "civilopedia": "TXT_KEY_TECH_REALITY_REPROGRAMMING_PEDIA",
+  "quote": "TXT_KEY_TECH_REALITY_REPROGRAMMING_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 158,
+  "gridY": 9
+ }
+}

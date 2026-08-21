@@ -1,0 +1,103 @@
+{
+ "type": "BUILDING_ARCOLOGY_SHIELDING",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ATOMIZATION_FIELD"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ADVANCED_SHIELDING"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SHIELDING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_ADVANCED_SHIELDING"
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 380
+   },
+   "bombardDefense": {
+    "percent": 40
+   },
+   "nukeDefense": {
+    "percent": -25
+   },
+   "airDefense": {
+    "percent": -25
+   },
+   "min": {
+    "percent": 5
+   },
+   "noEntryLevel": {
+    "percent": 6
+   },
+   "adjacentDamage": {
+    "percent": 35
+   }
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -9
+  }
+ },
+ "cost": {
+  "production": 5905,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ARCOLOGY_SHIELDED"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ARCOLOGY_SHIELDING"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ARCOLOGY_SHIELDING",
+  "civilopedia": "TXT_KEY_BUILDING_ARCOLOGY_SHIELDING_PEDIA",
+  "worth": 2,
+  "militaryWorth": 4,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_CISLUNAR_SOCIAL_ENGINEERING",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_BIONIC_CORE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_GOVERNANCE",
+    "BUILDING_CISLUNAR_SPACEPORT",
+    "TECH_SOCIAL_CALCULUS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -10
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 2317,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_SOCIAL_ENGINEERING",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_SOCIAL_ENGINEERING",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SOCIAL_ENGINEERING_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

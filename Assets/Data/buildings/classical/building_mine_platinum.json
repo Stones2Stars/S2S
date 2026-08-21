@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_MINE_PLATINUM",
+ "enables": {
+  "buildings": [
+   "BUILDING_SMELTER_PLATINUM"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CORE_MINE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MINING_CAMP",
+    "TECH_IRON_WORKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PLATINUM_ORE",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ],
+   "dormant": [
+    "BUILDING_CORE_MINE"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -1,
+    {
+     "value": -25,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 216,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MINE_PLATINUM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_PLATINUM",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_PLATINUM_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

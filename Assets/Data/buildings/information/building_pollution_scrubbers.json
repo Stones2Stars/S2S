@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_POLLUTION_SCRUBBERS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INDUSTRIAL_PARK",
+    "TECH_ECOLOGICAL_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "cost": {
+  "production": 2105,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_POLLUTION_SCRUBBERS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_POLLUTION_SCRUBBERS",
+  "civilopedia": "TXT_KEY_BUILDING_POLLUTION_SCRUBBERS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

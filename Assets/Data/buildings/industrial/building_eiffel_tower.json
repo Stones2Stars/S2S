@@ -1,0 +1,122 @@
+{
+ "type": "BUILDING_EIFFEL_TOWER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_RADIO",
+    "TECH_CIVIL_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_SMELTER_STEEL",
+      "BUILDING_ADVANCED_IRONWORKS",
+      "BUILDING_METALS_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 7,
+     "enabled": "TECH_TOURISM"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_BROADCAST_TOWER",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 5220,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 200
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_EIFFEL_TOWER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EIFFEL_TOWER"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EIFFEL_TOWER",
+  "civilopedia": "TXT_KEY_BUILDING_EIFFEL_TOWER_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 16,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

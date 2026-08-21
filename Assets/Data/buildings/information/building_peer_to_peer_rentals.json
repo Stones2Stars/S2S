@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_PEER_TO_PEER_RENTALS",
+ "enables": {
+  "buildings": [
+   "BUILDING_NOMAD_SKYSCRAPER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DIGITAL_OFFICES",
+    "TECH_ONLINE_COMMUNITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 9,
+     "enabled": "TECH_MESH_NETWORKS"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 2105,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PEER_TO_PEER_RENTALS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PEER_TO_PEER_RENTALS",
+  "civilopedia": "TXT_KEY_BUILDING_PEER_TO_PEER_RENTALS_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

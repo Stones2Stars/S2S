@@ -1,8 +1,21 @@
 # Pedia overhaul by Toffer for Caveman2Cosmos.
 
 from CvPythonExtensions import *
+GC = CyGlobalContext()
+INFO = CyInfo()
+IMPINFO = CyImprovementInfo()
+TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class PediaImprovement:
+
+	# The three OUTPUT yields, each its own modifier family (json.md par.6: the yields are SPLIT families, so
+	# there is no single "yield" family to name), paired with the engine yield index the symbol table is keyed on.
+	aYieldFamilies = (
+		(YieldTypes.YIELD_FOOD, ModifierFamily.MODFAM_FOOD),
+		(YieldTypes.YIELD_PRODUCTION, ModifierFamily.MODFAM_PRODUCTION),
+		(YieldTypes.YIELD_COMMERCE, ModifierFamily.MODFAM_COMMERCE),
+	)
 
 	def __init__(self, parent, H_BOT_ROW):
 		self.main = parent
@@ -41,23 +54,57 @@ class PediaImprovement:
 		self.Y_MAIN = Y_TOP_ROW + i
 		self.H_MAIN = H_TOP_ROW - i * 2
 
+	def gatherConditionedYields(self, iTheImprove, eBucket):
+		# The improvement's OWN conditioned yield entries, grouped by the entity that gates each one.
+		#
+		# A tech/civic/bonus boost to an improvement is authored deliverer-side and LANDED HERE by the readJson
+		# reverse pass as a conditioned own-output entry, so the improvement already carries the answer. What
+		# this replaces sweeps every tech, then every civic, then every bonus, asking each what it grants us --
+		# the own-data inversion, and dead besides.
+		#
+		# The three output yields are SPLIT families (json.md par.6), so "every yield" is the three, asked once
+		# each. Values arrive x100 like every amount; this is a reader, so it reduces at its point of use.
+		dByAtom = {}
+		for k, eFamily in self.aYieldFamilies:
+			for entry in INFO.getConditionedEntries("IMPROVEMENT_", iTheImprove, eFamily, eBucket):
+				iValue = entry["value"] / 100
+				if not iValue:
+					continue
+				for iAtom in entry["atoms"]:
+					if not dByAtom.has_key(iAtom):
+						dByAtom[iAtom] = {}
+					dByAtom[iAtom][k] = dByAtom[iAtom].get(k, 0) + iValue
+		aOut = []
+		aAtoms = dByAtom.keys()
+		aAtoms.sort()
+		for iAtom in aAtoms:
+			szYield = ""
+			for k, eFamily in self.aYieldFamilies:
+				iYieldChange = dByAtom[iAtom].get(k, 0)
+				if iYieldChange:
+					if iYieldChange < 0:
+						szYield += " <color=255,0,0,255>"
+					else:
+						szYield += " <color=0,230,0,255>"
+					szYield += str(iYieldChange) + u'%c' % (TEXT.getSymbolChar("YIELD_", k))
+			if szYield:
+				aOut.append((iAtom, szYield))
+		return aOut
+
 	def interfaceScreen(self, iTheImprove):
 		GC = CyGlobalContext()
 		TRNSLTR = CyTranslator()
-		CvTheImproveInfo = GC.getImprovementInfo(iTheImprove)
 		screen = self.main.screen()
 		aName = self.main.getNextWidgetName
 
 		eWidGen			= WidgetTypes.WIDGET_GENERAL
 		eWidJuToBonus	= WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS
 		eWidJuToCivic	= WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIVIC
-		eWidJuToRoute	= WidgetTypes.WIDGET_PEDIA_JUMP_TO_ROUTE
 		eWidJuToTech	= WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH
 		ePnlBlue50		= PanelStyles.PANEL_STYLE_BLUE50
 		ePnlEmpty		= PanelStyles.PANEL_STYLE_EMPTY
 		eTblEmpty		= TableStyles.TABLE_STYLE_EMPTY
 		eFontTitle		= FontTypes.TITLE_FONT
-		eNumYieldTypes	= YieldTypes.NUM_YIELD_TYPES
 
 		enumGBS = self.main.enumGBS
 		szfontEdge, szfont4b, szfont4, szfont3b, szfont3, szfont2b, szfont2 = self.main.aFontList
@@ -84,63 +131,27 @@ class PediaImprovement:
 		screen.addImprovementGraphicGFC("Preview|Min", iTheImprove, self.X_GRAPHIC, Y_TOP_ROW_1 + 8, H_TOP_ROW_1, H_TOP_ROW_1, eWidGen, iTheImprove, 0, -20, 30, 0.7, True)
 		self.main.aWidgetBucket.append("Preview|Min")
 		# Main Panel
-		screen.setText(aName(), "", szfontEdge + CvTheImproveInfo.getDescription(), 1<<0, X_COL_1, 0, 0, FontTypes.TITLE_FONT, eWidGen, 0, 0)
+		screen.setText(aName(), "", szfontEdge + INFO.getDescription("IMPROVEMENT_", iTheImprove), 1<<0, X_COL_1, 0, 0, FontTypes.TITLE_FONT, eWidGen, 0, 0)
 		Pnl = aName()
 		screen.addPanel(Pnl, "", "", False, False, X_COL_1 - 3, Y_TOP_ROW_1 + 2, W_COL_1 + 8, H_TOP_ROW_1 + 2, PanelStyles.PANEL_STYLE_MAIN)
 		Img = "ToolTip|IMP" + str(iTheImprove)
 		self.main.aWidgetBucket.append(Img)
-		screen.setImageButtonAt(Img, Pnl, CvTheImproveInfo.getButton(), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
+		screen.setImageButtonAt(Img, Pnl, INFO.getButton("IMPROVEMENT_", iTheImprove), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
 		# Stats
 		szText = ""
-		if CvTheImproveInfo.isOutsideBorders():
-			szText += " " + TRNSLTR.getText("TXT_KEY_PEDIA_IMPROVEMENT_BUILD_OUTSIDE_BORDERS", ()) + ".\n"
-		szYieldReq = " Min. "
-		bYieldReq = False
 		szYield = ""
+		aFlatYields = INFO.getFlatYields("IMPROVEMENT_", iTheImprove, CascScope.CASC_SCOPE_PLOT)
 		for k in range(YieldTypes.NUM_YIELD_TYPES):
-			szChar = u'%c' % (GC.getYieldInfo(k).getChar())
-			iYieldChange = CvTheImproveInfo.getYieldChange(k)
+			szChar = u'%c' % (TEXT.getSymbolChar("YIELD_", k))
+			iYieldChange = aFlatYields[k]
 			if iYieldChange:
 				if iYieldChange < 0:
 					szYield += " <color=255,0,0,255>"
 				else:
 					szYield += " <color=0,230,0,255>+"
 				szYield += str(iYieldChange) + szChar + "</color>"
-			iRiverYieldChange = CvTheImproveInfo.getRiverSideYieldChange(k)
-			if iRiverYieldChange:
-				if iRiverYieldChange < 0:
-					szYield += " (<color=255,0,0,255>"
-				else:
-					szYield += " (<color=0,230,0,255>+"
-				szYield += str(iRiverYieldChange) + szChar + "</color>River)"
-			iFreshwaterYieldChange = CvTheImproveInfo.getIrrigatedYieldChange(k)
-			if iFreshwaterYieldChange:
-				if iFreshwaterYieldChange < 0:
-					szYield += " (<color=255,0,0,255>"
-				else:
-					szYield += " (<color=0,230,0,255>+"
-				szYield += str(iFreshwaterYieldChange) + szChar + "</color>Freshwater)"
-			iPrereqNatureYield = CvTheImproveInfo.getPrereqNatureYield(k)
-			if iPrereqNatureYield:
-				szYieldReq += str(iPrereqNatureYield) + szChar
 		if szYield:
 			szText += szYield + "\n"
-		iDefenseMod = CvTheImproveInfo.getDefenseModifier()
-		if iDefenseMod:
-			szDefChar = unichr(8861)
-			szText += szDefChar
-			if iDefenseMod < 0:
-				szText += " <color=255,0,0,255>"
-			else:
-				szText += " <color=0,230,0,255>+"
-			szText += "%d%%" %iDefenseMod + "</color>" + unichr(8855) + szDefChar
-		iAirDefense = CvTheImproveInfo.getAirBombDefense()
-		if iAirDefense:
-			if iAirDefense < 0:
-				szText += " <color=255,0,0,255>"
-			else:
-				szText += " <color=0,230,0,255>+"
-			szText += str(iAirDefense) + "</color> "+ TRNSLTR.getText("TXT_KEY_PEDIA_IMPROVEMENT_AIR_DEFENSE", ())
 		if szText:
 			listBox = aName()
 			screen.addListBoxGFC(listBox, "", X_MAIN, Y_MAIN, W_STATS, H_MAIN, eTblEmpty)
@@ -150,10 +161,8 @@ class PediaImprovement:
 		# Builds
 		PF = "ToolTip|JumpTo|"
 		aList0 = []
-		for i in range(GC.getNumBuildInfos()):
-			CvBuildInfo = GC.getBuildInfo(i)
-			if CvBuildInfo.getImprovement() == iTheImprove:
-				aList0.append((i, CvBuildInfo.getButton()))
+		for i in IMPINFO.getBuilds(iTheImprove):
+			aList0.append((i, INFO.getButton("BUILD_", i)))
 
 		if aList0:
 			szChild = PF + "BUILD"
@@ -175,64 +184,16 @@ class PediaImprovement:
 		# Synergy
 		szAnd = "<font=4b>&#38"
 		aValidList = []
-		aList1 = []
-		for iTech in range(GC.getNumTechInfos()):
-			szYield = ""
-			for k in range(eNumYieldTypes):
-				iYieldChange = CvTheImproveInfo.getTechYieldChanges(iTech, k)
-				if iYieldChange:
-					if iYieldChange < 0:
-						szYield += " <color=255,0,0,255>"
-					else:
-						szYield += " <color=0,230,0,255>"
-					szYield += str(iYieldChange) + u'%c' % (GC.getYieldInfo(k).getChar())
-			if szYield:
-				aList1.append((iTech, szYield))
-		aList2 = []
-		for iCivic in range(GC.getNumCivicInfos()):
-			szYield = ""
-			for k in range(eNumYieldTypes):
-				iYieldChange = GC.getCivicInfo(iCivic).getImprovementYieldChanges(iTheImprove, k)
-				if iYieldChange:
-					if iYieldChange < 0:
-						szYield += " <color=255,0,0,255>"
-					else:
-						szYield += " <color=0,230,0,255>"
-					szYield += str(iYieldChange) + u'%c' % (GC.getYieldInfo(k).getChar())
-			if szYield:
-				aList2.append((iCivic, szYield))
-		aList3 = []
+		aList1 = self.gatherConditionedYields(iTheImprove, EdgeBucket.EDGEB_TECHS)
+		aList2 = self.gatherConditionedYields(iTheImprove, EdgeBucket.EDGEB_CIVICS)
+		aList3 = self.gatherConditionedYields(iTheImprove, EdgeBucket.EDGEB_BONUSES)
 		szChild = PF + "BONUS"
 		n = 0
 		for iType in range(GC.getNumBonusInfos()):
-			szYield = ""
-			for k in range(eNumYieldTypes):
-				iYieldChange = CvTheImproveInfo.getImprovementBonusYield(iType, k)
-				if iYieldChange:
-					if iYieldChange < 0:
-						szYield += " <color=255,0,0,255>"
-					else:
-						szYield += " <color=0,230,0,255>"
-					szYield += str(iYieldChange) + u'%c' % (GC.getYieldInfo(k).getChar())
-			if szYield:
-				aList3.append((iType, szYield))
-			if CvTheImproveInfo.isImprovementBonusMakesValid(iType):
-				aValidList.append([szChild + str(iType) + "|" + str(n), GC.getBonusInfo(iType).getButton()])
+			if IMPINFO.isValidOnBonus(iTheImprove, iType):
+				aValidList.append([szChild + str(iType) + "|" + str(n), INFO.getButton("BONUS_", iType)])
 				n += 1
-		aList4 = []
-		for iRoute in range(GC.getNumRouteInfos()):
-			szYield = ""
-			for k in range(eNumYieldTypes):
-				iYieldChange = CvTheImproveInfo.getRouteYieldChanges(iRoute, k)
-				if iYieldChange:
-					if iYieldChange < 0:
-						szYield += " <color=255,0,0,255>"
-					else:
-						szYield += " <color=0,230,0,255>"
-					szYield += str(iYieldChange) + u'%c' % (GC.getYieldInfo(k).getChar())
-			if szYield:
-				aList4.append((iRoute, szYield))
-		if aList1 or aList2 or aList3 or aList4:
+		if aList1 or aList2 or aList3:
 			panelName = aName()
 			screen.addPanel(panelName, TRNSLTR.getText("TXT_KEY_PEDIA_SYNERGY", ()), "", False, True, X_COL_1, Y_TOP_ROW_2, W_PEDIA_PAGE, H_TOP_ROW_2, ePnlBlue50)
 			bAnd = False
@@ -241,7 +202,7 @@ class PediaImprovement:
 				for i, szYield in aList1:
 					childPanelName = aName()
 					screen.attachPanel(panelName, childPanelName, "", "", True, True, ePnlEmpty)
-					screen.attachImageButton(childPanelName, "", GC.getTechInfo(i).getButton(), enumGBS, eWidJuToTech, i, 2, False)
+					screen.attachImageButton(childPanelName, "", INFO.getButton("TECH_", i), enumGBS, eWidJuToTech, i, 2, False)
 					screen.attachLabel(childPanelName, "", szfont3b + " " + szYield)
 					screen.attachLabel(panelName, "", "   ")
 			if aList2:
@@ -252,7 +213,7 @@ class PediaImprovement:
 				for i, szYield in aList2:
 					childPanelName = aName()
 					screen.attachPanel(panelName, childPanelName, "", "", True, True, ePnlEmpty)
-					screen.attachImageButton(childPanelName, "", GC.getCivicInfo(i).getButton(), enumGBS, eWidJuToCivic, i, 2, False)
+					screen.attachImageButton(childPanelName, "", INFO.getButton("CIVIC_", i), enumGBS, eWidJuToCivic, i, 2, False)
 					screen.attachLabel(childPanelName, "", szfont3b + " " + szYield)
 					screen.attachLabel(panelName, "", "   ")
 			if aList3:
@@ -263,18 +224,7 @@ class PediaImprovement:
 				for i, szYield in aList3:
 					childPanelName = aName()
 					screen.attachPanel(panelName, childPanelName, "", "", True, True, ePnlEmpty)
-					screen.attachImageButton(childPanelName, "", GC.getBonusInfo(i).getButton(), enumGBS, eWidJuToBonus, i, 2, False)
-					screen.attachLabel(childPanelName, "", szfont3b + " " + szYield)
-					screen.attachLabel(panelName, "", "   ")
-			if aList4:
-				if bAnd:
-					screen.attachLabel(panelName, "", szAnd + "  ")
-				else:
-					bAnd = True
-				for i, szYield in aList4:
-					childPanelName = aName()
-					screen.attachPanel(panelName, childPanelName, "", "", True, True, ePnlEmpty)
-					screen.attachImageButton(childPanelName, "", GC.getRouteInfo(i).getButton(), enumGBS, eWidJuToRoute, i, 2, False)
+					screen.attachImageButton(childPanelName, "", INFO.getButton("BONUS_", i), enumGBS, eWidJuToBonus, i, 2, False)
 					screen.attachLabel(childPanelName, "", szfont3b + " " + szYield)
 					screen.attachLabel(panelName, "", "   ")
 		else:
@@ -282,50 +232,49 @@ class PediaImprovement:
 			H_MID_ROW += H_TOP_ROW_2
 		# Requires
 		nTerrains = GC.getNumTerrainInfos()
-		iType = CvTheImproveInfo.getPrereqTech()
-		if iType != -1:
-			aList0.append([PF + "TECH" + str(iType), GC.getTechInfo(iType).getButton()])
+		for iType in INFO.getRequiresIds("IMPROVEMENT_", iTheImprove, EdgeBucket.EDGEB_TECHS):
+			aList0.append([PF + "TECH" + str(iType), INFO.getButton("TECH_", iType)])
 
 		# bNotOnAnyBonus is not exposed to python.
 
-		if CvTheImproveInfo.isWaterImprovement():
+		if IMPINFO.isWaterOnly(iTheImprove):
 			aList0.append([PF + "CONCEPT_NEW" + str(GC.getInfoTypeForString("CONCEPT_WATER_TERRAINS")), "Art/Interface/Buttons/BaseTerrain/Ocean.dds"])
 
-		if CvTheImproveInfo.isPeakImprovement():
+		if IMPINFO.isPeakOnly(iTheImprove):
 			aList0.append([PF + "TERRAIN" + str(GC.getInfoTypeForString("TERRAIN_PEAK")) + "|" + str(n), "Art/Interface/Buttons/BaseTerrain/Peak.dds"])
 			n += 1
-		elif not CvTheImproveInfo.isPeakMakesValid():
+		elif not IMPINFO.isValidOnPeak(iTheImprove):
 			aList0.append([PF + "TERRAIN" + str(GC.getInfoTypeForString("TERRAIN_PEAK")) + "|" + str(n), "Art/Interface/Buttons/BaseTerrain/Peak.dds", "NOT"])
 			n += 1
 
-		if CvTheImproveInfo.isRequiresFlatlands():
+		if IMPINFO.isFlatlandsOnly(iTheImprove):
 			aList0.append(["ToolTip|TxtTT|TXT_KEY_IMPROVEMENTHELP_ONLY_BUILD_FLATLANDS1", "Art/Interface/Buttons/BaseTerrain/Grassland.dds"])
 
-		if CvTheImproveInfo.isRequiresRiverSide():
+		if IMPINFO.isRiverSideOnly(iTheImprove):
 			aList0.append(["ToolTip|TxtTT|TXT_KEY_IMPROVEMENTHELP_REQUIRES_RIVER1", "Art/Interface/Buttons/WorldBuilder/River_Placement.dds"])
 
-		if CvTheImproveInfo.isRequiresFeature():
+		if IMPINFO.isRequiresFeature(iTheImprove):
 			aList0.append(["ToolTip|TxtTT|Any_plot_feature1", "Art/bug/questionmark.dds"])
 
-		if CvTheImproveInfo.isRequiresIrrigation():
+		if IMPINFO.isRequiresIrrigation(iTheImprove):
 			aList0.append(["ToolTip|TxtTT|TXT_KEY_IMPROVEMENTHELP_REQUIRES_IRRIGATION1", "Art/Interface/Buttons/Buildings/Irrigation.dds"])
 
-		if CvTheImproveInfo.isNoFreshWater():
+		if IMPINFO.isNoFreshWater(iTheImprove):
 			aList0.append(["ToolTip|TxtTT|TXT_KEY_IMPROVEMENTHELP_NO_BUILD_FRESH_WATER1", "Art/bug/questionmark.dds"])
 
 		szChild = PF + "TERRAIN"
 		for i in range(nTerrains):
-			if CvTheImproveInfo.getTerrainMakesValid(i):
-				aValidList.append((szChild + str(i) + "|" + str(n), GC.getTerrainInfo(i).getButton()))
+			if IMPINFO.isValidOnTerrain(iTheImprove, i):
+				aValidList.append((szChild + str(i) + "|" + str(n), INFO.getButton("TERRAIN_", i)))
 				n += 1
-		if CvTheImproveInfo.isHillsMakesValid():
+		if IMPINFO.isValidOnHills(iTheImprove):
 			aValidList.append((szChild + str(GC.getInfoTypeForString("TERRAIN_HILL")) + "|" + str(n), "Art/Interface/Buttons/BaseTerrain/Hill.dds"))
 			n += 1
 
 		szChild = PF + "FEATURE"
 		for i in range(GC.getNumFeatureInfos()):
-			if CvTheImproveInfo.getFeatureMakesValid(i):
-				aValidList.append((szChild + str(i) + "|" + str(n), GC.getFeatureInfo(i).getButton()))
+			if IMPINFO.isValidOnFeature(iTheImprove, i):
+				aValidList.append((szChild + str(i) + "|" + str(n), INFO.getButton("FEATURE_", i)))
 				n += 1
 
 		if aList0 or aValidList:
@@ -383,7 +332,7 @@ class PediaImprovement:
 		i = szEffects.find("\n") + 1
 		if not i:
 			szEffects = ""
-		szHistory = CvTheImproveInfo.getCivilopedia()
+		szHistory = INFO.getCivilopedia("IMPROVEMENT_", iTheImprove)
 		if szEffects or szHistory:
 			if szEffects and szHistory:
 				W_MID_COL_1 = self.W_3RD_PP

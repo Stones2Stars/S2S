@@ -1,0 +1,220 @@
+{
+ "type": "BUILDING_FARMSCRAPER_II",
+ "enables": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_III",
+   "BUILDING_PUSHBUTTON_AUTOMAT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FARMSCRAPER_I",
+    "TECH_VERTICAL_FARMING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_BERRIES",
+   "BONUS_CANNED_FOOD",
+   "BONUS_NUTS"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": [
+    120,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_APPLE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CORN",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COW",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CRAB",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DEER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_FISH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LEMONS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OLIVES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PIG",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHRIMP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WHALE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ],
+   "percent": [
+    {
+     "value": 10,
+     "enabled": "HAS_POWER"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    25,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GRAPES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "cost": {
+  "production": 3975,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FARMSCRAPER_II",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_VERTICAL_FARM"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FARMSCRAPER_II",
+  "civilopedia": "TXT_KEY_BUILDING_FARMSCRAPER_PEDIA",
+  "worth": 6,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

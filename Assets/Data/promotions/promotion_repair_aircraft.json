@@ -1,0 +1,48 @@
+{
+ "type": "PROMOTION_REPAIR_AIRCRAFT",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SELF_REPAIR1"
+   ]
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 1
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_AIRCRAFT": {
+     "heal": 1
+    }
+   }
+  }
+ },
+ "skills": {
+  "unitCombats": [
+   "UNITCOMBAT_HEALS_AIRCRAFT"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/RepairAircraftPromotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_REPAIR_AIRCRAFT",
+  "levelPrereq": 5,
+  "unitCombats": [
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_SPECIES_NEANDERTHAL",
+   "UNITCOMBAT_SPECIES_ALIEN",
+   "UNITCOMBAT_SPECIES_AI"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ]
+ }
+}

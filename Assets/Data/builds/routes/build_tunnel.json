@@ -1,0 +1,109 @@
+{
+ "type": "BUILD_TUNNEL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CIVIL_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "route": "ROUTE_TUNNEL",
+  "terraform": [
+   {
+    "terrain": "TERRAIN_COAST_DEEP",
+    "tech": "TECH_DEEP_SEA_EXPLORATION",
+    "time": 500
+   },
+   {
+    "terrain": "TERRAIN_COAST_DEEP_POLAR",
+    "tech": "TECH_DEEP_SEA_EXPLORATION",
+    "time": 500
+   },
+   {
+    "terrain": "TERRAIN_COAST_DEEP_TROPICAL",
+    "tech": "TECH_DEEP_SEA_EXPLORATION",
+    "time": 500
+   },
+   {
+    "terrain": "TERRAIN_SEA",
+    "tech": "TECH_DEEP_SEA_EXPLORATION",
+    "time": 500
+   },
+   {
+    "terrain": "TERRAIN_SEA_POLAR",
+    "tech": "TECH_DEEP_SEA_EXPLORATION",
+    "time": 500
+   },
+   {
+    "terrain": "TERRAIN_SEA_TROPICAL",
+    "tech": "TECH_DEEP_SEA_EXPLORATION",
+    "time": 500
+   },
+   {
+    "terrain": "TERRAIN_SEA_DEEP",
+    "tech": "TECH_MARINE_ARCHITECTURE",
+    "time": 1000
+   },
+   {
+    "terrain": "TERRAIN_SEA_DEEP_POLAR",
+    "tech": "TECH_MARINE_ARCHITECTURE",
+    "time": 1000
+   },
+   {
+    "terrain": "TERRAIN_SEA_DEEP_TROPICAL",
+    "tech": "TECH_MARINE_ARCHITECTURE",
+    "time": 1000
+   },
+   {
+    "terrain": "TERRAIN_OCEAN",
+    "tech": "TECH_MARINE_ARCHITECTURE",
+    "time": 1000
+   },
+   {
+    "terrain": "TERRAIN_OCEAN_POLAR",
+    "tech": "TECH_MARINE_ARCHITECTURE",
+    "time": 1000
+   },
+   {
+    "terrain": "TERRAIN_OCEAN_TROPICAL",
+    "tech": "TECH_MARINE_ARCHITECTURE",
+    "time": 1000
+   },
+   {
+    "terrain": "TERRAIN_TRENCH",
+    "tech": "TECH_DUMMY"
+   },
+   {
+    "terrain": "TERRAIN_TRENCH_POLAR",
+    "tech": "TECH_DUMMY"
+   },
+   {
+    "terrain": "TERRAIN_TRENCH_TROPICAL",
+    "tech": "TECH_DUMMY"
+   }
+  ]
+ },
+ "cost": {
+  "gold": 1000,
+  "time": 1000
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/builds/buildtunnel.dds"
+  },
+  "hotkey": "KB_T",
+  "hotKeyPriority": 1
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_RAILROAD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_TUNNEL"
+ }
+}

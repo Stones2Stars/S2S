@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_SHANG_JADE_RITUAL_ITEMS",
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SHANG_JADE_RITUAL_ITEMS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SHANG_JADE_RITUAL_ITEMS",
+  "civilopedia": "TXT_KEY_BONUS_SHANG_JADE_RITUAL_ITEMS_PEDIA",
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
+ }
+}

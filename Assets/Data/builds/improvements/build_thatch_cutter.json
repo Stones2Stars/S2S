@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_THATCH_CUTTER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_THATCH_CUTTER"
+ },
+ "cost": {
+  "gold": 12,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/thatch_cutter.dds"
+  },
+  "hotkey": "KB_U"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_THATCH_CUTTER"
+ }
+}

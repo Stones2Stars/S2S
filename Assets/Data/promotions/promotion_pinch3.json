@@ -1,0 +1,39 @@
+{
+ "type": "PROMOTION_PINCH3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_PINCH2",
+    {
+     "any": [
+      "PROMOTION_COMBAT2",
+      "PROMOTION_DRILL2"
+     ]
+    }
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_GUN": {
+     "percent": 30
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_PINCH": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Pinch3.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,4,10"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_PINCH3"
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_INTELLIGENCE_AGENCY",
+ "enables": {
+  "buildings": [
+   "BUILDING_AI_SURVEILLANCE",
+   "BUILDING_CRYPTOLOGY_CENTER",
+   "BUILDING_DIGITAL_EMBASSY",
+   "BUILDING_SIGNALS_INTELLIGENCE_RECEIVERS"
+  ],
+  "units": [
+   "UNIT_SPECIAL_AGENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ENCRYPTION_MACHINES",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT",
+      "BUILDING_MODERN_OFFICES"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 8,
+   "percent": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_SPY": {
+     "flat": 2
+    },
+    "UNITCOMBAT_LAW_ENFORCEMENT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SPY": 2
+  }
+ },
+ "cost": {
+  "production": 990,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTELLIGENCE_AGENCY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_INTELLIGENCE_AGENCY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTELLIGENCE_AGENCY",
+  "civilopedia": "TXT_KEY_BUILDING_INTELLIGENCE_AGENCY_PEDIA",
+  "worth": 5,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

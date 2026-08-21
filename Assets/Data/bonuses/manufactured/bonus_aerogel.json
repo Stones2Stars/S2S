@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_AEROGEL",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_AEROGEL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_AEROGEL",
+  "civilopedia": "TXT_KEY_BONUS_AEROGEL_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_HIPPODROME",
+ "enables": {
+  "buildings": [
+   "BUILDING_CIRCUS_MAXIMUS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MOTORSPORTS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ROYAL_TOURNAMENT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CHARIOT_WORKSHOP",
+    "TECH_CHARIOTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_ROYAL_TOURNAMENT",
+    "BUILDING_SPEEDWAY"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MOUNTED": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 139,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HIPPODROME"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COLOSSEUM"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HIPPODROME",
+  "civilopedia": "TXT_KEY_BUILDING_HIPPODROME_PEDIA",
+  "worth": 4,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

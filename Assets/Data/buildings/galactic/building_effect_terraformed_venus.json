@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_EFFECT_TERRAFORMED_VENUS",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_PLANETARY_TERRAFORMING"
+   ]
+  }
+ },
+ "food": {
+  "empire": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": 125
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": 250
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": 50
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "empire": {
+   "flat": -50
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "empire": {
+   "flat": -50
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_TERRAFORMED_VENUS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_TERRAFORMED_VENUS",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_TERRAFORMED_VENUS_PEDIA",
+  "pediaCategory": "space",
+  "notConstructible": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ],
+  "empireLevel": true
+ }
+}

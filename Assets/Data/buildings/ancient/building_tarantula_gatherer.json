@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_TARANTULA_GATHERER",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_BUGS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ARBORETUM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SERICULTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_SILK",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_MANGO",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_ARBORETUM",
+    "BUILDING_AGROFOREST"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 160,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 7
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TARANTULA_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TARANTULA_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_TARANTULA_GATHERER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

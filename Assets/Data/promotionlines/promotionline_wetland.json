@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTIONLINE_WETLAND",
+ "ui": {
+  "art": {
+   "icon": "art/Tweaks/art/wetlandcombat1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_WETLAND",
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_RUFFIAN",
+   "UNITCOMBAT_ANIMAL",
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_HUNTER",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_CLONES"
+  ],
+  "notOnDomains": [
+   "DOMAIN_SEA",
+   "DOMAIN_AIR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ]
+ }
+}

@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_ORDINANCE_EFFECT_CLEAN_AIR_ACT",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_ECOLOGY"
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "empire": {
+   "flat": -100
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ORDINANCE_CLEAN_AIR_ACT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_CLEAN_AIR_ACT",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_CLEAN_AIR_ACT_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

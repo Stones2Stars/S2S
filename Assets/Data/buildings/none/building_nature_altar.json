@@ -1,0 +1,116 @@
+{
+ "type": "BUILDING_NATURE_ALTAR",
+ "enables": {
+  "buildings": [
+   "BUILDING_NATIONAL_BELIEF_RESURRECTION",
+   "BUILDING_NATURE_ALTAR_ALMOND",
+   "BUILDING_NATURE_ALTAR_APPLE",
+   "BUILDING_NATURE_ALTAR_BANANA",
+   "BUILDING_NATURE_ALTAR_BARLEY_GOD",
+   "BUILDING_NATURE_ALTAR_COCONUT",
+   "BUILDING_NATURE_ALTAR_DATES",
+   "BUILDING_NATURE_ALTAR_FIGS",
+   "BUILDING_NATURE_ALTAR_GRAPES",
+   "BUILDING_NATURE_ALTAR_GUAVAS",
+   "BUILDING_NATURE_ALTAR_KAVA",
+   "BUILDING_NATURE_ALTAR_LEMON",
+   "BUILDING_NATURE_ALTAR_MAIZE_GOD",
+   "BUILDING_NATURE_ALTAR_MANGO",
+   "BUILDING_NATURE_ALTAR_MELONS",
+   "BUILDING_NATURE_ALTAR_MUSHROOMS",
+   "BUILDING_NATURE_ALTAR_OLIVES",
+   "BUILDING_NATURE_ALTAR_PAPAYAS",
+   "BUILDING_NATURE_ALTAR_PISTACHIO",
+   "BUILDING_NATURE_ALTAR_POMEGRANATE",
+   "BUILDING_NATURE_ALTAR_POTATO_GOD",
+   "BUILDING_NATURE_ALTAR_PRICKLY_PEAR",
+   "BUILDING_NATURE_ALTAR_PUMPKIN",
+   "BUILDING_NATURE_ALTAR_RICE_GOD",
+   "BUILDING_NATURE_ALTAR_SQUASH",
+   "BUILDING_NATURE_ALTAR_WHEAT_GOD",
+   "BUILDING_NATURE_CIRCLE_OF_POWER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_DRUIDIC_TRADITIONS"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_DRUIDIC_TRADITIONS"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1
+  }
+ },
+ "cost": {
+  "production": 80,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NATURE_ALTAR",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_DRUID"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NATURE_ALTAR",
+  "civilopedia": "TXT_KEY_BUILDING_NATURE_ALTAR_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 4,
+  "religion": "RELIGION_DRUIDIC_TRADITIONS",
+  "advisor": "ADVISOR_RELIGION",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

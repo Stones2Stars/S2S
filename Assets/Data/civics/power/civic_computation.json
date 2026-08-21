@@ -1,0 +1,99 @@
+{
+ "type": "CIVIC_COMPUTATION",
+ "production": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 5
+   },
+   "numCities": {
+    "percent": 5
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": [
+     {
+      "value": 45,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -20
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": -1
+   },
+   "violentMod": {
+    "percent": -30
+   },
+   "democracyLevel": {
+    "flat": -25
+   }
+  }
+ },
+ "grants": {
+  "revolution": 10
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/power_computation.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_COMPUTATION",
+  "civilopedia": "TXT_KEY_CIVIC_COMPUTATION_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_COMPUTATION_STRATEGY",
+  "civicOption": "CIVICOPTION_POWER",
+  "anarchyLength": 3,
+  "upkeepLevel": "UPKEEP_EXTREME"
+ }
+}

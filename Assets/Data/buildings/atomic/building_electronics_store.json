@@ -1,0 +1,149 @@
+{
+ "type": "BUILDING_ELECTRONICS_STORE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUGMENTED_EQUIPMENT_CENTER"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HYPERMARKET"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SHOPPING_DISTRICT",
+    "TECH_ELECTRONICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_COMPUTERS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CALCULATORS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_RADIOS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_HYPERMARKET"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TOYS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COMPUTERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PHONOGRAPHS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_RADIOS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DISKETTES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CALCULATORS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_VIDEO_GAMES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1080,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ELECTRONICS_STORE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ELECTRONICS_STORE",
+  "civilopedia": "TXT_KEY_BUILDING_ELECTRONICS_STORE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

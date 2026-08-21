@@ -1,0 +1,233 @@
+{
+ "type": "BUILDING_ULTRAFUEL_REFINERY",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "BUILDING_FACTORY",
+    "TECH_AUGMENTED_CONSUMABLES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_GRAINS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SUGAR",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_VEGETABLES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_FRUIT",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_HEMP",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_GRASS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_REEDS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STRAW",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_ALGAE",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_BIOFUEL",
+   "BONUS_PETROLEUM_PRODUCTS",
+   "BONUS_ULTRAFUEL"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 40,
+   "percent": [
+    25,
+    {
+     "value": 20,
+     "enabled": "HAS_POWER"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 35
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_CANOE": {
+     "percent": 10
+    },
+    "UNIT_WAR_CANOE": {
+     "percent": 10
+    },
+    "UNIT_GALLEY": {
+     "percent": 10
+    },
+    "UNIT_WARGALLEY": {
+     "percent": 10
+    },
+    "UNIT_TRIREME": {
+     "percent": 10
+    },
+    "UNIT_QUINQUEREME": {
+     "percent": 10
+    },
+    "UNIT_CARAVEL": {
+     "percent": 10
+    },
+    "UNIT_FLUYT": {
+     "percent": 10
+    },
+    "UNIT_SLOOP": {
+     "percent": 10
+    },
+    "UNIT_GALLEON": {
+     "percent": 10
+    },
+    "UNIT_BRIGANTINE": {
+     "percent": 10
+    },
+    "UNIT_PRIVATEER": {
+     "percent": 10
+    },
+    "UNIT_FRIGATE": {
+     "percent": 10
+    },
+    "UNIT_MANOWAR": {
+     "percent": 10
+    },
+    "UNIT_SHIP_OF_THE_LINE": {
+     "percent": 10
+    },
+    "UNIT_MERCHANTFLEET": {
+     "percent": 10
+    },
+    "UNIT_PADDLE_STEAMER": {
+     "percent": 10
+    },
+    "UNIT_COG": {
+     "percent": 10
+    },
+    "UNIT_GALLEASS": {
+     "percent": 10
+    },
+    "UNIT_QUINQUEREME2": {
+     "percent": 10
+    },
+    "UNIT_DECAREME": {
+     "percent": 10
+    }
+   },
+   "buildings": {
+    "BUILDING_EXPRESSWAY": {
+     "percent": 10
+    },
+    "BUILDING_PAVED_ROADS": {
+     "percent": 10
+    },
+    "BUILDING_ASPHALT_ROADS": {
+     "percent": 10
+    },
+    "BUILDING_SKYROAD_CONTROL_TOWER": {
+     "percent": 10
+    },
+    "BUILDING_TELEPORT_BOOTH": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 3525,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_OIL_REFINERY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_OIL_REFINERY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ULTRAFUEL_REFINERY",
+  "civilopedia": "TXT_KEY_BUILDING_ULTRAFUEL_REFINERY_PEDIA",
+  "worth": 6,
+  "militaryWorth": 30,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "type": "BONUS_CHINESE",
+ "enables": {
+  "units": [
+   "UNIT_ABAOJI",
+   "UNIT_CHINA_CHOKONU",
+   "UNIT_GUAN_YU",
+   "UNIT_ZHENG_HE"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CHINESE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CHINESE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

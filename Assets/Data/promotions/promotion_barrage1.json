@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_BARRAGE1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ACCURACY",
+   "PROMOTION_BARRAGE2",
+   "PROMOTION_NAPALM_BOMBS"
+  ]
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 15
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BARRAGE": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Barrage1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,4,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BARRAGE1",
+  "unitCombats": [
+   "UNITCOMBAT_SUBMARINE",
+   "UNITCOMBAT_EARLY_BOMBERS",
+   "UNITCOMBAT_BOMBERS",
+   "UNITCOMBAT_STEALTH"
+  ]
+ }
+}

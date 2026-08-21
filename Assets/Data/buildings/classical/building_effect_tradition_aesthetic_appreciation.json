@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_EFFECT_TRADITION_AESTHETIC_APPRECIATION",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CIVIL_ENGINEERING"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_AESTHETICS"
+   ]
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "empire": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "empire": {
+   "flat": -2
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_TRADITION_ASTHETIC_APPRECIATION"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRADITION_AESTHETIC_APPRECIATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_TRADITION_AESTHETIC_APPRECIATION",
+  "civilopedia": "TXT_KEY_BUILDING_TRADITION_AESTHETIC_APPRECIATION_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

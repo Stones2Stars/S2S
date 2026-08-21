@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_INDUSTRYESPIONAGE",
+ "ui": {
+  "art": {
+   "icon": "art/Interface/Buttons/Promotions/IndustryEspionage.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_INDUSTRYESPIONAGE",
+  "help": "TXT_KEY_PROMOTION_INDUSTRYESPIONAGE_HELP",
+  "unitCombats": [
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_STRIKE_TEAM"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_CIVILIAN"
+  ]
+ }
+}

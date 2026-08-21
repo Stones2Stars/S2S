@@ -1,0 +1,22 @@
+{
+ "type": "BONUS_VIDEO_GAMES",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMA_GAMING_LEAGUE",
+   "BUILDING_ELECTRONIC_GAMING_LEAGUE",
+   "BUILDING_HOLOGRAPHIC_GAMING_LEAGUE",
+   "BUILDING_VIDEO_GAME_ARCADE"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_VIDEO_GAMES"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_VIDEO_GAMES",
+  "civilopedia": "TXT_KEY_BONUS_VIDEO_GAMES_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

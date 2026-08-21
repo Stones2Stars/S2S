@@ -157,7 +157,7 @@ namespace python = boost::python;
 
 #define DllExport   __declspec( dllexport )
 
-#include "NiPoint.h"
+#include "Infrastructure/NiPoint.h"
 
 //
 // Basic types
@@ -229,9 +229,7 @@ int DECLARE_FLAGS(ECacheAccess::flags);
 //
 // Feature macros
 //
-// #define GLOBAL_WARMING
 // #define THE_GREAT_WALL
-// #define NOMADIC_START
 
 //
 // Cache feature macros
@@ -239,7 +237,6 @@ int DECLARE_FLAGS(ECacheAccess::flags);
 #define PATHFINDING_CACHE
 #define PATHFINDING_VALIDITY_CACHE
 #define YIELD_VALUE_CACHING // KOSHLING - Cache yield values where possible
-#define CAN_TRAIN_CACHING  // Enable canTrain results to be cached within a (caller) defined scope
 
 //
 // Profiler
@@ -278,6 +275,12 @@ int getModifiedIntValue(const int iValue, const int iMod);
 int64_t getModifiedIntValue64(const int64_t iValue, const int iMod);
 // ! Toffer
 
+// The Size-Matters GROUP multiplier of a rank -- json.md par.9's `count / 3^(groupRank-1)` geometry, as ONE
+// derivation shared by the writers (changeUnitCountSM) and the reader (getUnitCountSM). ⛔ The clamp lives HERE
+// and nowhere else: intPow(3, -1) is 0, so an unclamped rank-0 unit CONTRIBUTES ZERO on the write side while the
+// read side divides by 1 -- the two sides of one quantity disagreeing, silently.
+int smGroupMultiplier(int iGroupRank);
+
 int applySMRank(int value, int rankChange, int rankMultiplier);
 int64_t applySMRank64(int64_t value, int rankChange, int rankMultiplier, bool bScaleUp = true);
 
@@ -312,53 +315,53 @@ const std::string getModDir();
 //
 // Polyfills
 //
-#include "nullptr_t.h"
-#include "EnumFlags.h"
-#include "hash.h"
+#include "Defines/nullptr_t.h"
+#include "Infrastructure/EnumFlags.h"
+#include "Tools/hash.h"
 
 //
 // Our code
 //
-#include "logging.h"
-#include "enum_iterator.h"
-#include "algorithm2.h"
-#include "scoring.h"
-#include "FAssert.h"
-#include "Stopwatch.h"
+#include "Tools/logging.h"
+#include "Infrastructure/enum_iterator.h"
+#include "Tools/algorithm2.h"
+#include "Tools/scoring.h"
+#include "Tools/FAssert.h"
+#include "Tools/Stopwatch.h"
 #include "CvGameCoreDLLDefNew.h"
 #include "CvGameCoreDLLUnDefNew.h"
-#include "FDataStreamBase.h"
-#include "FFreeListArrayBase.h"
-#include "FFreeListTrashArray.h"
-#include "FFreeListArray.h"
-#include "FAStarNode.h"
+#include "Infrastructure/FDataStreamBase.h"
+#include "Infrastructure/FFreeListArrayBase.h"
+#include "Infrastructure/FFreeListTrashArray.h"
+#include "Infrastructure/FFreeListArray.h"
+#include "Infrastructure/FAStarNode.h"
 
-#include "CvEnums.h"
-#include "CvStructs.h"
+#include "Defines/CvEnums.h"
+#include "Defines/CvStructs.h"
 
-#include "CvDLLUtilityIFaceBase.h"
-//#include "CvDLLEngineIFaceBase.h"
-#include "CvDLLPythonIFaceBase.h"
-//#include "CvDLLInterfaceIFaceBase.h"
+#include "Infrastructure/CvDLLUtilityIFaceBase.h"
+//#include "Infrastructure/CvDLLEngineIFaceBase.h"
+#include "Infrastructure/CvDLLPythonIFaceBase.h"
+//#include "Infrastructure/CvDLLInterfaceIFaceBase.h"
 
-#include "BetterBTSAI.h"
-#include "CvGameCoreUtils.h"
-#include "CvBugOptions.h"
+#include "AI/BetterBTSAI.h"
+#include "Engine/CvGameCoreUtils.h"
+#include "Infrastructure/CvBugOptions.h"
 //#include "CvInfos.h"
 //#include "CvInfoWater.h"
-#include "CvViewport.h"
-#include "FProfiler.h"
+#include "UI/CvViewport.h"
+#include "Tools/FProfiler.h"
 
-#include "SCvDebug.h"
-#include "SCvInternalGlobals.h"
+#include "Tools/SCvDebug.h"
+#include "Defines/SCvInternalGlobals.h"
 
-#include "CyDeal.h"
-#include "CyMap.h"
-#include "CyArea.h"
-#include "CyCity.h"
-#include "CyUnit.h"
-#include "CySelectionGroup.h"
-#include "CyPlot.h"
+#include "Python/CyDeal.h"
+#include "Python/CyMap.h"
+#include "Python/CyArea.h"
+#include "Python/CyCity.h"
+#include "Python/CyUnit.h"
+#include "Python/CySelectionGroup.h"
+#include "Python/CyPlot.h"
 
 #ifdef FINAL_RELEASE
 // Undefine OutputDebugString in final release builds

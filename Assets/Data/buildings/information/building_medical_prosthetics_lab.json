@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_MEDICAL_PROSTHETICS_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUGMENTED_ORGAN_LAB"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PICOTECHNOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HEALTHCARE_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MEDICAL_CLINIC",
+    "TECH_MOLECULAR_MEDICINE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": "TECH_REPLACEMENT_ORGANS"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_DOCTOR": 1
+  }
+ },
+ "cost": {
+  "production": 2205,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MEDICAL_PROSTHETICS_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MEDICAL_PROSTHETICS_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_MEDICAL_PROSTHETICS_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

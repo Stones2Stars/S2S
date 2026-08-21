@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_EXPLORE_MOON_SURFACE",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_MOON_SURFACE",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_MOON_SURFACE_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_LUNAR_EXPLORATION"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

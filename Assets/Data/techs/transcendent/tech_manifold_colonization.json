@@ -1,0 +1,68 @@
+{
+ "type": "TECH_MANIFOLD_COLONIZATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_KLEIN_BOTTLE_UNIVERSE",
+   "BUILDING_DISTANT_LAYERED_REALITY",
+   "BUILDING_DISTANT_NON_ORIENTABLE_WORMHOLE",
+   "BUILDING_HYPERSPACE_COMPLEX_PROJECTIVE_SPACE_COLONY",
+   "BUILDING_HYPERSPACE_REAL_PROJECTIVE_SPACE_COLONY",
+   "BUILDING_HYPERSPACE_TOROIDAL_COLONY"
+  ],
+  "techs": [
+   "TECH_SUBDIMENSIONAL_UNIVERSE",
+   "TECH_TRANSFINITE_STRUCTURES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PARAMETER_TUNING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SPATIAL_TRANSCENDENCE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BRANE_CROSSOVER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 621429
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/manifold_colonization.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MANIFOLD_COLONIZATION",
+  "civilopedia": "TXT_KEY_TECH_MANIFOLD_COLONIZATION_PEDIA",
+  "quote": "TXT_KEY_TECH_MANIFOLD_COLONIZATION_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 156,
+  "gridY": 13
+ }
+}

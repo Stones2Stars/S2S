@@ -1,0 +1,74 @@
+{
+ "type": "TECH_NEW_URBANISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_BICYCLE_BOULEVARD",
+   "BUILDING_GARDEN_CITY",
+   "BUILDING_LARGE_SUSPENSION_BRIDGE",
+   "BUILDING_MIXED_USE_DEVELOPMENT",
+   "BUILDING_MODERN_WATERWORKS",
+   "BUILDING_REGIONAL_PLANNING_COMMISSION",
+   "BUILDING_SEASIDE",
+   "BUILDING_URBAN_VILLAGE"
+  ],
+  "techs": [
+   "TECH_URBAN_CULTURE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RECYCLING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 14870
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/techtree/New_Urbanism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NEW_URBANISM",
+  "civilopedia": "TXT_KEY_TECH_NEW_URBANISM_PEDIA",
+  "quote": "TXT_KEY_TECH_NEW_URBANISM_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 14,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "gridX": 83,
+  "gridY": 5
+ }
+}

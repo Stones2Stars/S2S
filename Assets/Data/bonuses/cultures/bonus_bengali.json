@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_BENGALI",
+ "enables": {
+  "units": [
+   "UNIT_DHAR",
+   "UNIT_KARRANI",
+   "UNIT_SEPOY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_BENGALI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_BENGALI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

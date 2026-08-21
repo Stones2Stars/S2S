@@ -1,0 +1,93 @@
+{
+ "type": "BUILDING_MODERN_CARTOGRAPHER",
+ "enables": {
+  "buildings": [
+   "BUILDING_DIGITAL_GLOBE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SATELLITES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_BOOKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_COMPUTERS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_MOBILITY"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 1410,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MODERN_CARTOGRAPHER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MODERN_CARTOGRAPHER",
+  "civilopedia": "TXT_KEY_BUILDING_MODERN_CARTOGRAPHER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

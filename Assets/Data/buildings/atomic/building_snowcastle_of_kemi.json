@@ -1,0 +1,104 @@
+{
+ "type": "BUILDING_SNOWCASTLE_OF_KEMI",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "latitude": {
+      "min": 55
+     }
+    },
+    "TECH_TOURISM",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_TAIGA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_ICE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 7680,
+  "sizeModifier": 2,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ICE_HOTEL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SNOWCASTLE_OF_KEMI"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HOTEL"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SNOWCASTLE_OF_KEMI",
+  "civilopedia": "TXT_KEY_BUILDING_SNOWCASTLE_OF_KEMI_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "militaryWorth": 3,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 2,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

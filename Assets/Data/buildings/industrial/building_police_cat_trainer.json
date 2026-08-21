@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_POLICE_CAT_TRAINER",
+ "enables": {
+  "units": [
+   "UNIT_POLICE_CAT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_HERITAGE_BIG_CATS",
+    "TECH_CRIMINOLOGY",
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_POLICE_STATION",
+      "BUILDING_POLICE_PRECINCT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 800,
+  "sizeModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_POLICE_CAT_TRAINER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_POLICE_CAT_TRAINER",
+  "civilopedia": "TXT_KEY_BUILDING_POLICE_CAT_TRAINER_PEDIA",
+  "worth": 2,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_BILLBOARDS",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PRINTING_PRESS",
+    {
+     "any": [
+      "BUILDING_BARTER_POST",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_PAPER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_COMPUTERS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 410,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BILLBOARDS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BILLBOARDS",
+  "civilopedia": "TXT_KEY_BUILDING_BILLBOARDS_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

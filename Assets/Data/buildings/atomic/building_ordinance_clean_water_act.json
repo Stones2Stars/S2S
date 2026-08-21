@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_ORDINANCE_CLEAN_WATER_ACT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEPARTMENT_OF_WATER",
+    "BUILDING_COURTHOUSE",
+    "TECH_ECOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ORDINANCE_EFFECT_CLEAN_WATER_ACT"
+   }
+  ]
+ },
+ "cost": {
+  "production": 1345,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ORDINANCE_CLEAN_WATER_ACT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_CLEAN_WATER_ACT",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_CLEAN_WATER_ACT_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

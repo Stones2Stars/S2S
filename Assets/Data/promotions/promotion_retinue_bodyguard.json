@@ -1,0 +1,41 @@
+{
+ "type": "PROMOTION_RETINUE_BODYGUARD",
+ "combat": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 20
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Retinue/bodyguard.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_GET_RETINUE"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_RETINUE_BODYGUARD",
+  "unitCombats": [
+   "UNITCOMBAT_HERO"
+  ]
+ }
+}

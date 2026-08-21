@@ -1,0 +1,70 @@
+{
+ "type": "TECH_PHOTONIC_SATELLITES",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTEROID_BELT_ASTRONOMICAL_TELESCOPE",
+   "BUILDING_CISLUNAR_DYSON_HARROP_SATELLITE",
+   "BUILDING_ENERGY_BEAM_NETWORK",
+   "BUILDING_EYE_IN_THE_SKY",
+   "BUILDING_MARTIAN_ORBITAL_MIRROR_ARRAY"
+  ],
+  "techs": [
+   "TECH_MOLECULAR_SCANNING",
+   "TECH_PLANETARY_DEFENSES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORBITAL_MEGASTRUCTURES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANIMAMATERIALS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 77770
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/photonicsatellites.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SATELLITES",
+  "soundMP": "AS2D_TECH_MP_SATELLITES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PHOTONIC_SATELLITES",
+  "civilopedia": "TXT_KEY_TECH_PHOTONIC_SATELLITES_PEDIA",
+  "quote": "TXT_KEY_TECH_PHOTONIC_SATELLITES_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 117,
+  "gridY": 7
+ }
+}

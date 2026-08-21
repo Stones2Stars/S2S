@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_IKAROS",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_JET_PROPULSION_LABORATORY",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_SOLAR_PROPULSION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 18
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CISLUNAR_SOLAR_ARRAY": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 12030
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_IKAROS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_IKAROS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_IKAROS",
+  "civilopedia": "TXT_KEY_BUILDING_IKAROS_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

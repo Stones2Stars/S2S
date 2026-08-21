@@ -1,0 +1,13 @@
+{
+ "type": "CULTURELEVEL_NONE",
+ "allowed": {
+  "worldWonders": 1,
+  "teamWonders": 1,
+  "nationalWonders": 2
+ },
+ "identity": {
+  "description": "TXT_KEY_CULTURELEVEL_NONE",
+  "cityRadius": 2,
+  "cultureThreshold": 0
+ }
+}

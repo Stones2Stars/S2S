@@ -1,0 +1,28 @@
+{
+ "type": "PROMOTION_BACKSTAB1",
+ "combat": {
+  "unit": {
+   "stealth": {
+    "percent": 10
+   },
+   "stealthStrikes": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BACKSTAB": 1
+ },
+ "enabled": "GAMEOPTION_COMBAT_WITHOUT_WARNING",
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Backstab1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BACKSTAB1"
+ }
+}

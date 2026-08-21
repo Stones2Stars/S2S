@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTIONLINE_ANTITANK_DEFENSE",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/antitank1.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,3,14"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_ANTITANK_DEFENSE",
+  "unitCombats": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_CLONES",
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_HELICOPTER"
+  ],
+  "notOnDomains": [
+   "DOMAIN_SEA"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ]
+ }
+}

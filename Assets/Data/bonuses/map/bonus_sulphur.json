@@ -1,0 +1,142 @@
+{
+ "type": "BONUS_SULPHUR",
+ "enables": {
+  "buildings": [
+   "BUILDING_AMMUNITIONS_WORKSHOP",
+   "BUILDING_BOMBARD_TOWER",
+   "BUILDING_CANNON_FORGE",
+   "BUILDING_CANNON_TURRET",
+   "BUILDING_CHEMICAL_PLANT",
+   "BUILDING_CULTURE_ASHANTI",
+   "BUILDING_CULTURE_BENGALI",
+   "BUILDING_CULTURE_CLOCKPUNK",
+   "BUILDING_CULTURE_IRANIAN",
+   "BUILDING_CULTURE_OTTOMAN",
+   "BUILDING_CULTURE_PIMA",
+   "BUILDING_FACTORY_AMMUNITION",
+   "BUILDING_FACTORY_RUBBER",
+   "BUILDING_FIREWORKS_SHOP",
+   "BUILDING_GRAND_FIRE_FESTIVAL",
+   "BUILDING_HIGHWAYMANS_HIDEOUT",
+   "BUILDING_LANDMINES",
+   "BUILDING_MINE_CITRINE",
+   "BUILDING_MINE_COBALT",
+   "BUILDING_MINE_MASCAGNITE",
+   "BUILDING_MINE_NICKEL",
+   "BUILDING_MINE_PYRITE",
+   "BUILDING_MINE_SULPHUR"
+  ],
+  "units": [
+   "UNIT_ANCIENT_HAND_CANNON",
+   "UNIT_ANCIENT_ROCKETEER",
+   "UNIT_ARQUEBUSIER",
+   "UNIT_BOMBARD",
+   "UNIT_BOMBARD_MAMMOTH",
+   "UNIT_BRIGANTINE",
+   "UNIT_CABANAGEM_REBEL",
+   "UNIT_CAMEL_CUIRASSIER",
+   "UNIT_CANNON",
+   "UNIT_CARABINIER",
+   "UNIT_CUIRASSIER",
+   "UNIT_CULVERIN",
+   "UNIT_DAVINCI_TANK",
+   "UNIT_DEER_LIGHT",
+   "UNIT_DRAGOON",
+   "UNIT_DROMON_FIRE_SHIP",
+   "UNIT_FALCONET",
+   "UNIT_FLAMING_ARROW",
+   "UNIT_FRIGATE",
+   "UNIT_GIRAFFE_CARABINIER",
+   "UNIT_GIRAFFE_CUIRASSIER",
+   "UNIT_GIRAFFE_DRAGOON",
+   "UNIT_GREAT_BOMBARD",
+   "UNIT_GRENADIER",
+   "UNIT_IRON_FRIGATE",
+   "UNIT_JADID_GRENADIERS",
+   "UNIT_LANCER",
+   "UNIT_MANOWAR",
+   "UNIT_MASTER_SAILOR_FRIGATE",
+   "UNIT_MASTER_SAILOR_IRON_FRIGATE",
+   "UNIT_MASTER_SAILOR_SLOOP",
+   "UNIT_MOTAR",
+   "UNIT_MUSKETMAN",
+   "UNIT_ORGAN_GUN",
+   "UNIT_REN_IMP_GUARD",
+   "UNIT_RIBAULDEQUIN",
+   "UNIT_SHIP_OF_THE_LINE",
+   "UNIT_SIEGE_WAGON",
+   "UNIT_SLOOP",
+   "UNIT_TWAFO",
+   "UNIT_WARLORDIII",
+   "UNIT_WARLORDIIIS",
+   "UNIT_WARLORDIV",
+   "UNIT_WARLORDIVS",
+   "UNIT_ZEBRA_CUIRASSIER"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SULPHUR"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 2,
+  "constAppearance": 300,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "groupRange": 1,
+  "groupRand": 14,
+  "flatlands": true,
+  "hills": true,
+  "peaks": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_TAIGA"
+  ],
+  "validFeatures": [
+   "FEATURE_CRATER"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_DUNES",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SULPHUR",
+  "civilopedia": "TXT_KEY_BONUS_SULPHUR_PEDIA",
+  "bonusClassType": "BONUSCLASS_STRATEGIC",
+  "source": "natural"
+ }
+}

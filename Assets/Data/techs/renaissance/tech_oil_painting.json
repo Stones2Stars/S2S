@@ -1,0 +1,63 @@
+{
+ "type": "TECH_OIL_PAINTING",
+ "enables": {
+  "buildings": [
+   "BUILDING_PORTRAIT_PAINTER"
+  ],
+  "techs": [
+   "TECH_FREE_ARTISTRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RENAISSANCE_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 2364
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,2,16"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_OIL_PAINTING",
+  "soundMP": "AS2D_TECH_OIL_PAINTING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_OIL_PAINTING",
+  "civilopedia": "TXT_KEY_TECH_OIL_PAINTING_PEDIA",
+  "quote": "TXT_KEY_TECH_OIL_PAINTING_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 51,
+  "gridY": 17
+ }
+}

@@ -1,0 +1,139 @@
+{
+ "type": "UNIT_CROW",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_SOLITARY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 3,
+   "title": "TXT_KEY_GROUPTITLE_PAIR"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 6,
+   "title": "TXT_KEY_GROUPTITLE_MURDER_SMALL"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_COMPANY",
+   "chance": 3,
+   "title": "TXT_KEY_GROUPTITLE_MURDER"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_FORCES",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_MURDER_LARGE"
+  }
+ ],
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 60
+  }
+ },
+ "skills": [
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_BIRD",
+  "UNITCOMBAT_BIRD_CORVID",
+  "UNITCOMBAT_ANIMAL_COMBAT_PECK",
+  "UNITCOMBAT_ANIMAL_COMBAT_SCRATCH",
+  "UNITCOMBAT_ANIMAL_COMBAT_WARNING",
+  "UNITCOMBAT_MOTILITY_AERIAL",
+  "UNITCOMBAT_QUALITY_POOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_TINY",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_CROW",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": 1,
+    "commerce": 3
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CROW",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_CROW"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_CROW",
+  "civilopedia": "TXT_KEY_UNIT_CROW_PEDIA",
+  "spawnOnly": true,
+  "xpValueAttack": 2,
+  "xpValueDefense": 1,
+  "aggression": 10,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_LAKE_SHORE",
+   "TERRAIN_SEA_DEEP_TROPICAL",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_SEA_TROPICAL"
+  ]
+ }
+}

@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_NATIONAL_BELIEF_REINCARNATION",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_REINCARNATION",
+    {
+     "any": [
+      "BUILDING_ANDEAN_TEMPLE",
+      "BUILDING_HINDU_TEMPLE",
+      "BUILDING_BUDDHIST_TEMPLE",
+      "BUILDING_TAOIST_TEMPLE",
+      "BUILDING_HELLENIC_TEMPLE",
+      "BUILDING_JAIN_TEMPLE",
+      "BUILDING_ASATRU_TEMPLE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_BELIEF_REINCARNATION"
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NATIONAL_BELIEF_REINCARNATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_BELIEF_REINCARNATION",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_BELIEF_REINCARNATION_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "notConstructible": true,
+  "worth": 10,
+  "advisor": "ADVISOR_RELIGION",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

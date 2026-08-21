@@ -13,7 +13,13 @@ import time
 import string
 
 PB = CyPitboss()
-gc = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
+gc = GC   # this module spells it lowercase
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 localText = CyTranslator()
 msgBox = None
 # potential mark for deletion TODO: MurderMesa/Scvijc
@@ -85,7 +91,7 @@ class AdminFrame(wx.Frame):
 
 		# Create a row for each player in the game
 		rowNum = 0
-		for rowNum in xrange(gc.getMAX_PC_PLAYERS()):
+		for rowNum in xrange(GC.getMAX_PC_PLAYERS()):
 			if (gc.getPlayer(rowNum).isEverAlive()):
 				# Create the border box
 				border = wx.StaticBox(playerPanel, -1, (localText.getText("TXT_KEY_PITBOSS_PLAYER", (rowNum+1, ))), (0,(rowNum*30)))
@@ -267,7 +273,7 @@ class AdminFrame(wx.Frame):
 				self.timerDisplay.SetLabel(timerStr)
 
 		rowNum = 0
-		for rowNum in xrange(gc.getMAX_PC_PLAYERS()):
+		for rowNum in xrange(GC.getMAX_PC_PLAYERS()):
 			if gc.getPlayer(rowNum).isEverAlive():
 				# Get the player data
 				playerData = PB.getPlayerAdminData(rowNum)

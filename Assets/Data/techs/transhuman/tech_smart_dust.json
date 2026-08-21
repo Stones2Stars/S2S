@@ -1,0 +1,69 @@
+{
+ "type": "TECH_SMART_DUST",
+ "enables": {
+  "buildings": [
+   "BUILDING_NANITE_DEFUSER",
+   "BUILDING_NANOTECH_CLOTHING_OUTFITTER",
+   "BUILDING_SMART_DUST_WALLS"
+  ],
+  "promotions": [
+   "PROMOTION_HEAL1",
+   "PROMOTION_SENSORS"
+  ],
+  "techs": [
+   "TECH_EVOLVED_CONSTRUCTION",
+   "TECH_NANOMINING",
+   "TECH_OPTRONICS"
+  ],
+  "units": [
+   "UNIT_NANITE_SPY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BINARY_SUBCONSCIOUSNESS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 67710
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/smart_dust.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,16"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SMART_DUST",
+  "soundMP": "AS2D_TECH_SMART_DUST"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SMART_DUST",
+  "civilopedia": "TXT_KEY_TECH_SMART_DUST_PEDIA",
+  "quote": "TXT_KEY_TECH_SMART_DUST_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 113,
+  "gridY": 9
+ }
+}

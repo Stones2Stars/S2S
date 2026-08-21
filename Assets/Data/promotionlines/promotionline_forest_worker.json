@@ -1,0 +1,15 @@
+{
+ "type": "PROMOTIONLINE_FOREST_WORKER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/workerforest1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_FOREST_WORKER",
+  "unitCombats": [
+   "UNITCOMBAT_WORKER",
+   "UNITCOMBAT_COMBAT_WORKER"
+  ]
+ }
+}

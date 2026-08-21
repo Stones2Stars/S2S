@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_UNITED_FEDERATION_OF_PLANETS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_STARPORT",
+    "BUILDING_PALACE",
+    "TECH_GALACTIC_FEDERATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_INTERSTELLAR_STARPORT",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 75930
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_UNITED_FEDERATION_OF_PLANETS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_UNITED_FEDERATION_OF_PLANETS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_UNITED_FEDERATION_OF_PLANETS",
+  "civilopedia": "TXT_KEY_BUILDING_UNITED_FEDERATION_OF_PLANETS_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

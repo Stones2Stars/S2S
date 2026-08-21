@@ -1,0 +1,132 @@
+{
+ "type": "BUILDING_ARMOURER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SMITHING",
+    {
+     "any": [
+      "BUILDING_FORGE",
+      "BUILDING_FOUNDRY",
+      "BUILDING_METALS_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CHARCOAL",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TIN_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_LEAD_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BRONZE_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BRASS_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "domains": {
+    "DOMAIN_LAND": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_BAMBOO_ARMOR"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 300,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ARMOURER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FORGE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ARMOURER",
+  "civilopedia": "TXT_KEY_BUILDING_ARMOURER_PEDIA",
+  "worth": 4,
+  "militaryWorth": 5,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

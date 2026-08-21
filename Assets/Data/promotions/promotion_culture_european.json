@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTION_CULTURE_EUROPEAN",
+ "ui": {
+  "art": {
+   "icon": "art/Embassy/art/cultureeuropean.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CULTURE_EUROPEAN",
+  "unitCombats": [
+   "UNITCOMBAT_SETTLER"
+  ]
+ }
+}

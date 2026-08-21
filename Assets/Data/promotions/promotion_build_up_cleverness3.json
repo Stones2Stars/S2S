@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTION_BUILD_UP_CLEVERNESS3",
+ "underworld": {
+  "unit": {
+   "insidiousness": {
+    "flat": 2
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_CLEVERNESS": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Cleverness3Buildup.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_CLEVERNESS3"
+ }
+}

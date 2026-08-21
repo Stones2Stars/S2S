@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_SPEAKEASY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SYNTHETIC_SYNESTHESIA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
+    "TECH_WOMENS_SUFFRAGE",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ALCOHOL",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": 5
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 800,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SPEAKEASY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SPEAKEASY",
+  "civilopedia": "TXT_KEY_BUILDING_SPEAKEASY_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

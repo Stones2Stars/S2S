@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_PALACE_OF_BEAULIEU",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_GRAND_MANOR",
+    "TECH_HUMANISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SILVER_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    "CIVIC_VASSALAGE"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 8
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_GRAND_MANOR": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1,
+   "SPECIALIST_ARTIST": 1
+  }
+ },
+ "cost": {
+  "production": 2460,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_BEAULIEU"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PALACE_OF_BEAULIEU",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PALACE_OF_BEAULIEU",
+  "civilopedia": "TXT_KEY_BUILDING_PALACE_OF_BEAULIEU_PEDIA",
+  "pediaCategory": "greatWonder",
+  "centerInCity": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

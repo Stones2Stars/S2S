@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_INTERGALACTIC_ZERO_POINT_FACTORIES",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_ZERO_POINT_PLANT",
+    "TECH_MATERIALIZATION",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 5783,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_ZERO_POINT_FACTORIES",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_ZERO_POINT_FACTORIES",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_ZERO_POINT_FACTORIES_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

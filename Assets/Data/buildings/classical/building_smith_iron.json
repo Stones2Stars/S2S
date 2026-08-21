@@ -1,0 +1,103 @@
+{
+ "type": "BUILDING_SMITH_IRON",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOMINING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ADVANCED_IRONWORKS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_IRON_WORKING",
+    {
+     "any": [
+      "BUILDING_FORGE",
+      "BUILDING_FOUNDRY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_IRON_INGOTS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_ADVANCED_IRONWORKS",
+    "BUILDING_METALS_MEGACOMPLEX"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_IRON_WARES"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": "TECH_AESTHETICS"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 216,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SMITH_IRON",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SMITH_IRON",
+  "civilopedia": "TXT_KEY_BUILDING_SMITH_IRON_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

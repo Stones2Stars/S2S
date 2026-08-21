@@ -1,0 +1,144 @@
+{
+ "type": "BUILDING_PHIDIAS_STATUE_WORKSHOP",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CITY_PLANNING",
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_HELLENISM"
+    },
+    {
+     "any": [
+      "BUILDING_SCULPTORS_WORKSHOP",
+      "BUILDING_FACTORY_SCULPTURES",
+      "BUILDING_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_HELLENISM"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ],
+   "percent": 10
+  },
+  "empire": {
+   "percent": 2
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_HELLENISM": {
+    "flat": 2
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2
+  }
+ },
+ "cost": {
+  "production": 1458,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 50
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_FIDIAS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PHIDIAS_STATUE_WORKSHOP"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CHRISTIAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PHIDIAS_STATUE_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_PHIDIAS_STATUE_WORKSHOP_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 2,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "religion": "RELIGION_HELLENISM",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": "100.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

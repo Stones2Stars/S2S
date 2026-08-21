@@ -1,0 +1,38 @@
+{
+ "type": "FEATURE_OORT_CLOUD",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_OORT_CLOUD"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_ASTEROIDS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_OORT_CLOUD",
+  "civilopedia": "TXT_KEY_FEATURE_OORT_CLOUD_PEDIA",
+  "validTerrains": [
+   "TERRAIN_TRANSTELLAR_SPACE",
+   "TERRAIN_TRANSNEPTUNIAN_SPACE"
+  ]
+ }
+}

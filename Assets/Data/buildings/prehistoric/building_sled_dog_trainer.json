@@ -1,0 +1,111 @@
+{
+ "type": "BUILDING_SLED_DOG_TRAINER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "latitude": {
+      "min": 50
+     }
+    },
+    "TECH_CANINE_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_DOG_BREEDER",
+      "BUILDING_REPET"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "TERRAIN_TAIGA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_TUNDRA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_ICE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DOG",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STEEL_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_ALUMINUM_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 92,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SLED_DOG_TRAINER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SLED_DOG_TRAINER",
+  "civilopedia": "TXT_KEY_BUILDING_SLED_DOG_TRAINER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

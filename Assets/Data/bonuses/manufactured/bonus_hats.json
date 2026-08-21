@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_HATS",
+ "enables": {
+  "buildings": [
+   "BUILDING_TAILOR_SHOP"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HATS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HATS",
+  "civilopedia": "TXT_KEY_BONUS_HATS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_TERRAFORMED_VENUS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_VENUS_CALCIUM_CARBONATE_STRUCTURES",
+    "BUILDING_VENUS_SURFACE_FACTORY",
+    "BUILDING_VENUS_ARCOLOGY",
+    {
+     "type": "BUILDING_VENUS_BIOTIC_ATMOSPHERE",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_VENUS_CO2_REMOVAL",
+     "scope": "empire",
+     "min": 2,
+     "scaling": "amountBuildings"
+    },
+    "TECH_PLANETARY_TERRAFORMING",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_TERRAFORMED_VENUS"
+   }
+  ]
+ },
+ "cost": {
+  "production": 27966,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_VENUS_TERRA"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TERRAFORMED_VENUS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TERRAFORMED_VENUS",
+  "civilopedia": "TXT_KEY_BUILDING_TERRAFORMED_VENUS_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_NETWORK_NODE",
+    "TECH_SENTIENT_EARTH",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_ROBOTIC_BODY",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_HUMAN_MOD_ENLIGHTENED",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS"
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_NETWORK_NODE",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 13810
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

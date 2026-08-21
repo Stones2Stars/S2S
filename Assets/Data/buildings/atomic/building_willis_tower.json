@@ -1,0 +1,113 @@
+{
+ "type": "BUILDING_WILLIS_TOWER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SKYSCRAPER",
+    "TECH_GLOBALIZATION",
+    {
+     "any": [
+      "BUILDING_DEPARTMENT_STORE",
+      "BUILDING_HYPERMARKET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_DEPARTMENT_STORE",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 7080,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 200
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_WILLIS_TOWER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WILLIS_TOWER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WILLIS_TOWER",
+  "civilopedia": "TXT_KEY_BUILDING_WILLIS_TOWER_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 20,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

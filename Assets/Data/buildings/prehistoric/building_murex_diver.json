@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_MUREX_DIVER",
+ "enables": {
+  "buildings": [
+   "BUILDING_DYE_MAKER",
+   "BUILDING_FACTORY_DYE",
+   "BUILDING_RESOURCES_SHELLFISH"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_AUTOMATED_URBANIZATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AQUAFARM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRAP_FISHING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MUREX",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ],
+   "dormant": [
+    "BUILDING_AQUAFARM"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 50,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MUREX_DIVER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MUREX_DIVER",
+  "civilopedia": "TXT_KEY_BUILDING_MUREX_DIVER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

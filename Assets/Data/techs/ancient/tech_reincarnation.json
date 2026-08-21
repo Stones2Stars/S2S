@@ -1,0 +1,64 @@
+{
+ "type": "TECH_REINCARNATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_BELIEF_REINCARNATION",
+   "BUILDING_COW_SHRINE",
+   "BUILDING_ELEPHANT_SHRINE",
+   "BUILDING_NATIONAL_BELIEF_REINCARNATION"
+  ],
+  "techs": [
+   "TECH_BUDDHISM",
+   "TECH_THEOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_KARMA",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 348
+ },
+ "ai": {
+  "behaviour": {
+   "weight": 25
+  },
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/reincarnation.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_REINCARNATION2",
+  "soundMP": "AS2D_TECH_REINCARNATION2"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_REINCARNATION",
+  "civilopedia": "TXT_KEY_TECH_REINCARNATION_PEDIA",
+  "quote": "TXT_KEY_TECH_REINCARNATION_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 16,
+  "tradeable": true,
+  "gridX": 31,
+  "gridY": 15
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "type": "BONUS_ORGANIC_PHOTONIC_CELLS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOLUMINESCENT_BOUTIQUE",
+   "BUILDING_BIOMORPHICS_LAB",
+   "BUILDING_CISLUNAR_NANOSATELLITE_CONSTELLATION",
+   "BUILDING_OLED_LAMPS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ORGANIC_PHOTONIC_CELLS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ORGANIC_PHOTONIC_CELLS",
+  "civilopedia": "TXT_KEY_BONUS_ORGANIC_PHOTONIC_CELLS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

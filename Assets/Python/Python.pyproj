@@ -199,9 +199,7 @@
     <Compile Include="Screens\CvVictoryScreen.py" />
     <Compile Include="Screens\CvWonderMovieScreen.py" />
     <Compile Include="Screens\Debug\CvDebugInfoScreen.py" />
-    <Compile Include="Screens\Debug\DebugScreen.py" />
     <Compile Include="Screens\Debug\HelperFunctions.py" />
-    <Compile Include="Screens\Debug\TestCode.py" />
     <Compile Include="Screens\EventTriggerScreen.py" />
     <Compile Include="Screens\ExtensionScreens\CityOptions.py" />
     <Compile Include="Screens\Forgetful.py" />

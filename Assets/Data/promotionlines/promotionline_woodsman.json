@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTIONLINE_WOODSMAN",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Woodsman1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,6,6"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_WOODSMAN",
+  "unitCombats": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_ANIMAL",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_CLONES",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_STRIKE_TEAM",
+   "UNITCOMBAT_HUNTER",
+   "UNITCOMBAT_RECON"
+  ],
+  "notOnDomains": [
+   "DOMAIN_SEA",
+   "DOMAIN_AIR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ]
+ }
+}

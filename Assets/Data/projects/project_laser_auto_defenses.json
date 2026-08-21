@@ -1,0 +1,60 @@
+{
+ "type": "PROJECT_LASER_AUTO_DEFENSES",
+ "allowed": {
+  "team": 1
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 25,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_MICROCHIPS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "combat": {
+  "team": {
+   "nukeInterception": {
+    "percent": 15
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "all": {
+    "percent": 5
+   },
+   "numCities": {
+    "percent": 5
+   }
+  }
+ },
+ "cost": {
+  "create": 33160
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/Buttons/Projects/LaserDefenses.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROJECT_LASER_AUTO_DEFENSES",
+  "civilopedia": "TXT_KEY_PROJECT_MISSILE_DEFENCE_PEDIA",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

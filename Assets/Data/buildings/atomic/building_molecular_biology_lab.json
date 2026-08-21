@@ -1,0 +1,118 @@
+{
+ "type": "BUILDING_MOLECULAR_BIOLOGY_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_OMEGA_ACIDS",
+   "BUILDING_GENETICA_APPAREL_SHOP",
+   "BUILDING_GENETICA_SALON",
+   "BUILDING_NUCLEIC_ACID_LAB",
+   "BUILDING_PROTEIN_LAB"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ANIMAMATERIALS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CHEMICALS_DISTRICT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_BIOLOGY_LAB",
+    "BUILDING_CHEMISTRY_LAB",
+    "TECH_MOLECULAR_BIOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_CHEMICALS_DISTRICT"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ENZYMES"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": {
+    "value": 8,
+    "enabled": "TECH_BIOMATERIALS"
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 8,
+     "enabled": "TECH_GENETIC_BIOCHEMISTRY"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_GENESIS_BIOLOGY"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_BIOINFORMATICS"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_BIOMATHEMATICS"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": "TECH_MOLECULAR_MEDICINE"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 1410,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MOLECULAR_BIOLOGY_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MOLECULAR_BIOLOGY_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_MOLECULAR_BIOLOGY_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

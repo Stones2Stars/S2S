@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_DECOYS1",
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_STRIKE_TEAM": {
+     "percent": 15
+    },
+    "UNITCOMBAT_RUFFIAN": {
+     "percent": 15
+    },
+    "UNITCOMBAT_HUNTER": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_DECOYS": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Decoys1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_DECOYS1"
+ }
+}

@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_TITAN_SUPERCOMPUTER",
+ "enables": {
+  "buildings": [
+   "BUILDING_COMPUTRONIUM_TITAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TITAN_HYDROCARBON_REFINERY",
+    "TECH_TERRA_COMPUTER",
+    {
+     "type": "MAPCATEGORY_TITANIC",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "cost": {
+  "production": 1867,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TITAN_SUPERCOMPUTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TITAN_SUPERCOMPUTER",
+  "civilopedia": "TXT_KEY_BUILDING_TITAN_SUPERCOMPUTER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_TITANIC"
+  ]
+ }
+}

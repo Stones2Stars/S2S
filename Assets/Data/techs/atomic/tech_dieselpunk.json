@@ -1,0 +1,81 @@
+{
+ "type": "TECH_DIESELPUNK",
+ "enables": {
+  "bonuses": [
+   "BONUS_DIESELPUNK"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_PUNK_DIESEL"
+  ],
+  "units": [
+   "UNIT_BIG_BERTHA",
+   "UNIT_CHROMIUM_GUNMAN",
+   "UNIT_DOUBLE_BIPLANE",
+   "UNIT_DRACHE_HELICOPTER",
+   "UNIT_GOLIATH_AIRSHIP",
+   "UNIT_RAILROAD_ARTILLERY",
+   "UNIT_TZAR_TANK",
+   "UNIT_VERY_HEAVY_ARMOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ARMORED_VEHICLES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SUBMARINE_WARFARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 10744
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 9
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_GOLD": 7
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/dieselpunk.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_DIESELPUNK",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_DIESELPUNK",
+  "civilopedia": "TXT_KEY_TECH_DIESELPUNK_PEDIA",
+  "quote": "TXT_KEY_TECH_DIESELPUNK_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "militaryWorth": 6,
+  "gridX": 75,
+  "gridY": 17,
+  "tradeable": true
+ }
+}

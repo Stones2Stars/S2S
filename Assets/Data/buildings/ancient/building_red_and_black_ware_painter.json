@@ -1,0 +1,107 @@
+{
+ "type": "BUILDING_RED_AND_BLACK_WARE_PAINTER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_L_EUROPEAN",
+    "BUILDING_GLAZE_MAKER",
+    "TECH_GLASS_BLOWING",
+    {
+     "any": [
+      "BUILDING_POTTERS_HUT",
+      "BUILDING_POTTERS_WORKSHOP",
+      "BUILDING_FACTORY_POTTERY",
+      "BUILDING_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FINE_CLAY",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   {
+    "BONUS_RED_AND_BLACK_CERAMICS": 6
+   }
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ENTERTAINER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2
+  }
+ },
+ "cost": {
+  "production": 1200,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_RED_AND_BLACK"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RED_AND_BLACK_WARE_PAINTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RED_AND_BLACK_WARE_PAINTER",
+  "civilopedia": "TXT_KEY_BUILDING_RED_AND_BLACK_WARE_PAINTER_PEDIA",
+  "pediaCategory": "greatWonder",
+  "centerInCity": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

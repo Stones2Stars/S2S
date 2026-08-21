@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_TUNGSTEN",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TUNGSTEN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TUNGSTEN",
+  "civilopedia": "TXT_KEY_BONUS_TUNGSTEN_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

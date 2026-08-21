@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_SQUATTER_CAMPS",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FEUDALISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_VASSAL_LEVIES"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": -25
+   }
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "cost": {
+  "production": 310,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SQUATTER_CAMPS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SQUATTER_CAMPS",
+  "civilopedia": "TXT_KEY_BUILDING_SQUATTER_CAMPS_PEDIA",
+  "worth": 6,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

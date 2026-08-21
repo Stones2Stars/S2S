@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTION_HIDE_IN_SHADOWS2",
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  }
+ },
+ "skills": [
+  "camouflage"
+ ],
+ "promotionLine": {
+  "PROMOTIONLINE_HIDE_IN_SHADOWS": 2
+ },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/HideInShadows2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_HIDE_IN_SHADOWS2"
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_SICAN",
+ "enables": {
+  "units": [
+   "UNIT_NAYLAMP",
+   "UNIT_TUCUME"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SICAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SICAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

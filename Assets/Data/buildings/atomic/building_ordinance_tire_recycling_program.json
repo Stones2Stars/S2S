@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_GARBAGE_COLLECTION_AGENCY",
+    "BUILDING_COURTHOUSE",
+    "TECH_RECYCLING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_TIRES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ORDINANCE_EFFECT_TIRE_RECYCLING_PROGRAM"
+   }
+  ]
+ },
+ "cost": {
+  "production": 1475,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_SPACE_NEEDLE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SUPERSONIC_FLIGHT",
+    {
+     "any": [
+      "BUILDING_FACTORY_AIRCRAFT",
+      "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_FACTORY_JET_ENGINES": {
+     "flat": 3
+    },
+    "BUILDING_FACTORY_AIRCRAFT": {
+     "flat": 3
+    },
+    "BUILDING_MILITARY_INDUSTRIAL_COMPLEX": {
+     "flat": 6
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 2
+  }
+ },
+ "cost": {
+  "production": 8070,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SPACE_NEEDLE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SPACE_NEEDLE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_NEEDLE",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_NEEDLE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

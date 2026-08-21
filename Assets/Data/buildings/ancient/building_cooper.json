@@ -1,0 +1,113 @@
+{
+ "type": "BUILDING_COOPER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_BARRELS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CARPENTER",
+    "TECH_FERMENTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BRONZE_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_LEAD_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_FACTORY_BARRELS",
+    "BUILDING_MANUFACTURING_DISTRICT"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_BARRELS"
+  ]
+ },
+ "production": {
+  "city": {
+   "improvements": {
+    "IMPROVEMENT_LUMBERMILL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 146,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_COOPER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_COOPER",
+  "civilopedia": "TXT_KEY_BUILDING_COOPER_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

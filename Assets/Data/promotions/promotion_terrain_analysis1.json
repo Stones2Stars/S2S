@@ -1,0 +1,80 @@
+{
+ "type": "PROMOTION_TERRAIN_ANALYSIS1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_TERRAIN_ANALYSIS2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT_AI2"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "hillsAttack": {
+    "percent": 15
+   },
+   "terrain": {
+    "TERRAIN_GRASSLAND": {
+     "attack": {
+      "percent": 15
+     }
+    },
+    "TERRAIN_PLAINS": {
+     "attack": {
+      "percent": 15
+     }
+    },
+    "TERRAIN_MARSH": {
+     "attack": {
+      "percent": 15
+     }
+    },
+    "TERRAIN_TUNDRA": {
+     "attack": {
+      "percent": 15
+     }
+    },
+    "TERRAIN_ICE": {
+     "attack": {
+      "percent": 15
+     }
+    },
+    "TERRAIN_DESERT": {
+     "attack": {
+      "percent": 15
+     }
+    }
+   },
+   "feature": {
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": 15
+     }
+    },
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": 15
+     }
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_TERRAIN_ANALYSIS": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Woodsman1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,1,6"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_TERRAIN_ANALYSIS1"
+ }
+}

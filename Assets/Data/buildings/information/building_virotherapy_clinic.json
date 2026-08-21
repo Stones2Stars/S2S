@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_VIROTHERAPY_CLINIC",
+ "enables": {
+  "buildings": [
+   "BUILDING_BACTERIUM_BIOFORGE",
+   "BUILDING_CYBERIMMUNIOLOGY_THERAPY_CLINIC"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_BACTERIOPHAGE_THERAPY_CLINIC",
+    "BUILDING_STEM_CELL_LAB",
+    "TECH_MOLECULAR_MEDICINE",
+    {
+     "type": "BONUS_IMMUNITY_DRUGS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ENZYMES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_GUINEA_PIG",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SHEEP",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 9,
+     "enabled": "TECH_GENE_ENHANCEMENT"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_CYBERIMMUNOLOGY"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_NANOROBOTICS"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_DOCTOR": 1
+  }
+ },
+ "cost": {
+  "production": 2205,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VIROTHERAPY_CLINIC",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VIROTHERAPY_CLINIC",
+  "civilopedia": "TXT_KEY_BUILDING_VIROTHERAPY_CLINIC_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

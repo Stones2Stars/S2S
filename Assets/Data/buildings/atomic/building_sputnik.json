@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_SPUTNIK",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_LAUNCH_SITE",
+    "TECH_ADVANCED_ROCKETRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_COMMUNICATIONS_SATELLITE": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_SATELLITE": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 8070
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SPUTNIK"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SPUTNIK",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SPUTNIK",
+  "civilopedia": "TXT_KEY_BUILDING_SPUTNIK_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_MODERN_EARTHWORKS",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUTONOMOUS_MINE",
+   "BUILDING_CAVE_PAINTINGS",
+   "BUILDING_CORE_MINE",
+   "BUILDING_ENHANCED_GEOTHERMAL_SYSTEM",
+   "BUILDING_GRAND_EARTH_FESTIVAL",
+   "BUILDING_GUILD_MASONS",
+   "BUILDING_HYDRAULIC_FRACTURING",
+   "BUILDING_RARE_EARTH_MINERAL_MINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MINING_CAMP",
+    "TECH_MODERN_SEISMOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_BORAX",
+   "BONUS_BRICKS",
+   "BONUS_CEMENT",
+   "BONUS_CHALK",
+   "BONUS_CINNABAR_ORE",
+   "BONUS_CLAY",
+   "BONUS_FLINT",
+   "BONUS_FOSSILS",
+   "BONUS_HAEMATITE_ORE",
+   "BONUS_OBSIDIAN",
+   "BONUS_PEAT",
+   "BONUS_POTASH",
+   "BONUS_PUMICE_STONE",
+   "BONUS_PYRITE",
+   "BONUS_SAND",
+   "BONUS_TAR",
+   "BONUS_WATERPROOF_CEMENT"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 45
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 1410,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MODERN_EARTHWORKS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MODERN_EARTHWORKS",
+  "civilopedia": "TXT_KEY_BUILDING_MODERN_EARTHWORKS_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

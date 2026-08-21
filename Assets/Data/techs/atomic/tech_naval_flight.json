@@ -1,0 +1,61 @@
+{
+ "type": "TECH_NAVAL_FLIGHT",
+ "enables": {
+  "techs": [
+   "TECH_COAST_GUARD",
+   "TECH_SUBMARINE_WARFARE"
+  ],
+  "units": [
+   "UNIT_EARLY_CARRIER",
+   "UNIT_MASTER_SAILOR_EARLY_CARRIER",
+   "UNIT_SEAPLANE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FLIGHT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 9889
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/NavalAviation.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,12"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NAVAL_FLIGHT",
+  "soundMP": "AS2D_TECH_NAVAL_FLIGHT"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NAVAL_FLIGHT",
+  "civilopedia": "TXT_KEY_TECH_NAVAL_FLIGHT_PEDIA",
+  "quote": "TXT_KEY_TECH_NAVAL_FLIGHT_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 73,
+  "gridY": 17
+ }
+}

@@ -1,0 +1,60 @@
+{
+ "type": "CIVIC_VIRTUAL_CITIZENSHIP",
+ "production": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "production": {
+     "percent": 5
+    },
+    "commerce": {
+     "percent": 5
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "policies": {
+  "fixedBorders": true
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/immigration_digital_citizenship.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_VIRTUAL_CITIZENSHIP",
+  "civilopedia": "TXT_KEY_CIVIC_VIRTUAL_CITIZENSHIP_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_VIRTUAL_CITIZENSHIP_STRATEGY",
+  "civicOption": "CIVICOPTION_IMMIGRATION",
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

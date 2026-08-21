@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_LIFE_METHANE_BASED",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TITAN_BIOFACTORY",
+    "TECH_ABYSS_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_TITANIC",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_TERRAFORMED_TITAN": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 2904,
+  "hurryModifier": 10000
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LIFE_METHANE_BASED",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_METHANE_BASED",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_METHANE_BASED_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_TITANIC"
+  ]
+ }
+}

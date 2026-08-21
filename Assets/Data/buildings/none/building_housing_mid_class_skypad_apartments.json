@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_HOUSING_MID_CLASS_SKYPAD_APARTMENTS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COLONY_ARCOLOGY"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ATOMPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_FRESHWATER",
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    },
+    "BUILDING_PUSHBUTTON_AUTOMAT",
+    "BUILDING_SEWER_SYSTEM",
+    "BUILDING_WATER_PIPES",
+    "TECH_ATOMPUNK",
+    {
+     "any": [
+      "BUILDING_VIDEOPHONE_NETWORK",
+      "BUILDING_COMPUTER_NETWORK"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "dormant": [
+    "BUILDING_HOUSING_ARCOLOGY_SUBURBS",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HOUSING_MID_CLASS_SKYPAD_APARTMENTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_MID_CLASS_SKYPAD_APARTMENTS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_MID_CLASS_SKYPAD_APARTMENTS_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

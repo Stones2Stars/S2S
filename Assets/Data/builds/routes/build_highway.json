@@ -1,0 +1,41 @@
+{
+ "type": "BUILD_HIGHWAY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HIGHWAY_SYSTEMS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "route": "ROUTE_HIGHWAY",
+  "features": [
+   {
+    "feature": "FEATURE_VOLCANO_ACTIVE",
+    "tech": "TECH_DUMMY"
+   }
+  ]
+ },
+ "cost": {
+  "gold": 12,
+  "time": 300
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/BuildHighway.dds"
+  },
+  "hotkey": "KB_R",
+  "shiftDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_SHOVEL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_HIGHWAY"
+ }
+}

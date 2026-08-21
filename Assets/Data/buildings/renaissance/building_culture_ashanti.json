@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_CULTURE_ASHANTI",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_AFRICAN",
+    "BUILDING_C_L_AFRICAN",
+    "TECH_GUNPOWDER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ASHANTI"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2460,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_ASHANTI",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_ASHANTI",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_ASHANTI_PEDIA",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

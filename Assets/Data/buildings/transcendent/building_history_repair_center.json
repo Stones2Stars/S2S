@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_HISTORY_REPAIR_CENTER",
+ "enables": {
+  "buildings": [
+   "BUILDING_HISTORICAL_RECREATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TIME_MACHINE",
+    "TECH_TIMELINE_RECTIFICATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 26955,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HISTORY_REPAIR_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HISTORY_REPAIR_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_HISTORY_REPAIR_CENTER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

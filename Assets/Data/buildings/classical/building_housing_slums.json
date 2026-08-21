@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_HOUSING_SLUMS",
+ "enables": {
+  "buildings": [
+   "BUILDING_KIVA"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TELEPHONE"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_FRESHWATER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_SANITATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "dormant": [
+    "BUILDING_HOUSING_SHANTY_TOWN",
+    "BUILDING_HOUSING_GHETTOS",
+    "BUILDING_HOUSING_INNER_CITY",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HOUSING_SLUMS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_SLUMS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_SLUMS_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

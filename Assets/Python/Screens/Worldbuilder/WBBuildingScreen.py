@@ -12,7 +12,15 @@ import WBCorporationScreen
 import WBInfoScreen
 import WorldBuilder
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
+BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
+STATE = CyState()
+ACT = CyAct()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
 iChangeType = 2
 iOwnerType = 0
@@ -124,9 +132,9 @@ class WBBuildingScreen:
 		for (loopCity, iPlayerX, sColor) in self.lCities:
 			iRow = screen.appendTableRow("CurrentCity")
 			iCiv = loopCity.getCivilizationType()
-			screen.setTableText("CurrentCity", 0, iRow, "", GC.getCivilizationInfo(iCiv).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<0)
+			screen.setTableText("CurrentCity", 0, iRow, "", INFO.getButton("CIVILIZATION_", iCiv), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<0)
 			iLeader = GC.getPlayer(iPlayerX).getLeaderType()
-			screen.setTableText("CurrentCity", 1, iRow, "", GC.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<0)
+			screen.setTableText("CurrentCity", 1, iRow, "", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<0)
 			screen.setTableText("CurrentCity", 2, iRow, "<font=3>" + sColor + loopCity.getName() + "</color></font>", '', WidgetTypes.WIDGET_PYTHON, 7200 + iPlayerX, loopCity.getID(), 1<<0)
 
 	def sortBuildings(self):
@@ -139,14 +147,17 @@ class WBBuildingScreen:
 		lTeam = []
 		lWorld = []
 		for i in xrange(GC.getNumBuildingInfos()):
-			if isNationalWonder(i):
-				lNational.append([GC.getBuildingInfo(i).getDescription(), i])
-			elif isTeamWonder(i):
-				lTeam.append([GC.getBuildingInfo(i).getDescription(), i])
-			elif isWorldWonder(i):
-				lWorld.append([GC.getBuildingInfo(i).getDescription(), i])
+			# The wonder CATEGORY is WHICH self-cap scope the building authors ([json.md] 4.4) -- EMPIRE is the
+			# national wonder, TEAM the team wonder, WORLD the world wonder. -1 means uncapped: an ordinary building.
+			eScope = BUILDING.getWonderScope(i)
+			if eScope == AllowedCap.ALLOWEDCAP_EMPIRE:
+				lNational.append([INFO.getDescription("BUILDING_", i), i])
+			elif eScope == AllowedCap.ALLOWEDCAP_TEAM:
+				lTeam.append([INFO.getDescription("BUILDING_", i), i])
+			elif eScope == AllowedCap.ALLOWEDCAP_WORLD:
+				lWorld.append([INFO.getDescription("BUILDING_", i), i])
 			else:
-				lBuilding.append([GC.getBuildingInfo(i).getDescription(), i])
+				lBuilding.append([INFO.getDescription("BUILDING_", i), i])
 		lNational.sort()
 		lTeam.sort()
 		lWorld.sort()
@@ -175,14 +186,13 @@ class WBBuildingScreen:
 			item = lBuilding[iCount]
 			iRow = iCount % nRows
 			iColumn = iCount / nRows
-			ItemInfo = GC.getBuildingInfo(item[1])
 
 			if pCity.hasBuilding(item[1]):
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 			else:
 				sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 
-			screen.setTableText("WBBuilding", iColumn, iRow, "<font=3>" + sColor + item[0] + "</color></font>", ItemInfo.getButton(), WidgetTypes.WIDGET_HELP_BUILDING, item[1], 1, 1<<0 )
+			screen.setTableText("WBBuilding", iColumn, iRow, "<font=3>" + sColor + item[0] + "</color></font>", INFO.getButton("BUILDING_", item[1]), WidgetTypes.WIDGET_HELP_BUILDING, item[1], 1, 1<<0 )
 
 	def placeWonders(self):
 		screen = CyGInterfaceScreen( "WBBuildingScreen", CvScreenEnums.WB_BUILDING)
@@ -211,14 +221,13 @@ class WBBuildingScreen:
 			item = lWonders[iCount]
 			iRow = iCount % nRows
 			iColumn = iCount / nRows
-			ItemInfo = GC.getBuildingInfo(item[1])
 
 			if pCity.hasBuilding(item[1]):
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 			else:
 				sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 
-			screen.setTableText("WBWonders", iColumn, iRow, "<font=3>" + sColor + item[0] + "</color></font>", ItemInfo.getButton(), WidgetTypes.WIDGET_HELP_BUILDING, item[1], 1, 1<<0 )
+			screen.setTableText("WBWonders", iColumn, iRow, "<font=3>" + sColor + item[0] + "</color></font>", INFO.getButton("BUILDING_", item[1]), WidgetTypes.WIDGET_HELP_BUILDING, item[1], 1, 1<<0 )
 
 	def handleInput (self, inputClass):
 		screen = CyGInterfaceScreen( "WBBuildingScreen", CvScreenEnums.WB_BUILDING)
@@ -370,7 +379,7 @@ class WBBuildingScreen:
 				iType = not pCity.hasBuilding(item)
 			self.doEffects(pCity, item, iType)
 		iFreeBuilding = info.getFreeBuilding()
-		if iFreeBuilding > -1 and bWonder != isLimitedWonder(iFreeBuilding):
+		if iFreeBuilding > -1 and bWonder != BUILDING.isLimitedWonder(iFreeBuilding):
 			return True
 		return False
 
@@ -378,7 +387,7 @@ class WBBuildingScreen:
 		bEffects = False
 		if bAdd and WorldBuilder.bPython and not pCity.hasBuilding(item):
 			bEffects = True
-		pCity.changeHasBuilding(item, bAdd)
+		ACT.setCityBuilding(pCity.getOwner(), pCity.getID(), item, bAdd)
 		if bEffects:
 			self.eventManager.onBuildingBuilt([pCity, item])
 

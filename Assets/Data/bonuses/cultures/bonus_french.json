@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_FRENCH",
+ "enables": {
+  "units": [
+   "UNIT_FRENCH_MUSKETEER",
+   "UNIT_HENRI_IV",
+   "UNIT_JOAN_OF_ARC"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_FRENCH"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_FRENCH",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

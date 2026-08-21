@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_OORT_CLOUD_COMET_DISASSEMBLY",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PLANET_CRACKING",
+    {
+     "type": "FEATURE_OORT_CLOUD",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_INTERSTELLAR",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_SOLAR_SYSTEM",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 2536,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_OORT_CLOUD_COMET_DISASSEMBLY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_OORT_CLOUD_COMET_DISASSEMBLY",
+  "civilopedia": "TXT_KEY_BUILDING_OORT_CLOUD_COMET_DISASSEMBLY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR",
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

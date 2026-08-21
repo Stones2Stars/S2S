@@ -1,0 +1,154 @@
+{
+ "type": "UNIT_GIANT_SQUID",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "combat": {
+  "unit": {
+   "targets": {
+    "UNITCOMBAT_SIZE_SMALL": true,
+    "UNITCOMBAT_SIZE_MEDIUM": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 4
+  }
+ },
+ "skills": [
+  "assassin",
+  "blendIntoCity",
+  "onlyDefensive",
+  "renderBelowWater"
+ ],
+ "tags": [
+  "seaUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SEA_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_INVERTEBRATE",
+  "UNITCOMBAT_RECKLESS_ANIMAL",
+  "UNITCOMBAT_INVERTEBRATE_MOLLUSK",
+  "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+  "UNITCOMBAT_ANIMAL_COMBAT_PECK",
+  "UNITCOMBAT_ANIMAL_COMBAT_CONSTRICT",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "requires": {
+     "outcome": "OUTCOME_TALES_SEA"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_TALESOF_GIANT_SQUID",
+     "toCity": true
+    },
+    "food": {
+     "base": 50,
+     "random": 50
+    },
+    "production": {
+     "base": 1,
+     "random": 1
+    },
+    "commerce": {
+     "base": 5,
+     "random": 2
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE_SEA_LARGE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_GIANT_SQUID"
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 90,
+    "food": {
+     "base": 50,
+     "random": 50
+    },
+    "production": {
+     "base": 1,
+     "random": 1
+    },
+    "commerce": {
+     "base": 5,
+     "random": 2
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KRAKEN",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 2,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_KRAKEN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_GIANT_SQUID",
+  "civilopedia": "TXT_KEY_UNIT_GIANT_SQUID_PEDIA",
+  "spawnOnly": true,
+  "xpValueAttack": 12,
+  "xpValueDefense": 7,
+  "aggression": 2,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_COAST",
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_COAST_TROPICAL"
+  ]
+ }
+}

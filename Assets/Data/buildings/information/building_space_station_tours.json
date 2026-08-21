@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_SPACE_STATION_TOURS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_LAUNCH_SITE",
+    "TECH_SPACE_TOURISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 2205
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SPACE_STATION_TOURS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_STATION_TOURS",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_STATION_TOURS_PEDIA",
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

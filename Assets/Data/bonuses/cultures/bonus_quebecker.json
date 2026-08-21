@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_QUEBECKER",
+ "enables": {
+  "units": [
+   "UNIT_ADELARD_GODBOUT",
+   "UNIT_QUEBEC_DEFENDERS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_QUEBECKER"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_QUEBECKER",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

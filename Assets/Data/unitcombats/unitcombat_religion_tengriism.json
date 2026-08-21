@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_RELIGION_TENGRIISM",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/religion_tengrism.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_RELIGION_TENGRIISM",
+  "religion": "RELIGION_TENGRIISM"
+ }
+}

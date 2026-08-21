@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_BUILD_UP_RESTFUL_RECOVERY1",
+ "combat": {
+  "unit": {
+   "percent": -5
+  }
+ },
+ "heal": {
+  "unit": {
+   "selfModifier": {
+    "percent": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_RESTFUL_RECOVERY": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/RestfulRecovery1BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_RESTFUL_RECOVERY1"
+ }
+}

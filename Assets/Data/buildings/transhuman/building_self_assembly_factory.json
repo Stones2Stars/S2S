@@ -1,0 +1,122 @@
+{
+ "type": "BUILDING_SELF_ASSEMBLY_FACTORY",
+ "enables": {
+  "buildings": [
+   "BUILDING_AERIAL_BASKET_ROPEWAYS",
+   "BUILDING_CHARIOT_WORKSHOP",
+   "BUILDING_INDUSTRIAL_THINGAMAJIG",
+   "BUILDING_SPACESCRAPER_INDUSTRIAL_DISTRICT"
+  ],
+  "units": [
+   "UNIT_CARTWRIGHT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DELTA_ASSEMBLER",
+    "TECH_SYNERGETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_AUTOMOBILES"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": [
+    50,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CARBON_FIBER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_CHARIOT": {
+     "percent": 10
+    },
+    "UNIT_FREIGHT": {
+     "percent": 10
+    },
+    "UNIT_MOTORCYCLE": {
+     "percent": 10
+    },
+    "UNIT_JEEP": {
+     "percent": 10
+    },
+    "UNIT_HUMVEE": {
+     "percent": 10
+    },
+    "UNIT_TRADE_CARAVAN": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 5,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL"
+   }
+  }
+ ],
+ "cost": {
+  "production": 5455,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SELF_ASSEMBLY_FACTORY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SELF_ASSEMBLY_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_SELF_ASSEMBLY_FACTORY_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

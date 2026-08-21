@@ -1,0 +1,60 @@
+{
+ "type": "TECH_PATENT_RIGHTS",
+ "enables": {
+  "buildings": [
+   "BUILDING_PATENT_OFFICE"
+  ],
+  "techs": [
+   "TECH_ECONOMICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CORPORATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 3074
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/patentrights.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PATENTRIGHT",
+  "soundMP": "AS2D_TECH_PATENTRIGHT"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PATENT_RIGHTS",
+  "civilopedia": "TXT_KEY_TECH_PATENT_RIGHTS_PEDIA",
+  "quote": "TXT_KEY_TECH_PATENT_RIGHTS_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 55,
+  "gridY": 13
+ }
+}

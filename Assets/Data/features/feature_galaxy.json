@@ -1,0 +1,38 @@
+{
+ "type": "FEATURE_GALAXY",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_GALAXY"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_ASTEROIDS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_GALAXY",
+  "civilopedia": "TXT_KEY_FEATURE_GALAXY_PEDIA",
+  "validTerrains": [
+   "TERRAIN_LOCAL_GROUP",
+   "TERRAIN_VIRGO_SUPERCLUSTER"
+  ]
+ }
+}

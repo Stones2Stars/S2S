@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_EXPLORE_INTERSTELLAR",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_INTERSTELLAR",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_INTERSTELLAR_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ASTROGATION_CONSTELLATION"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

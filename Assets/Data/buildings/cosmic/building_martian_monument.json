@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_MARTIAN_MONUMENT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MARTIAN_CITY",
+    "TECH_NOOGENESIS",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "any": [
+      "CIVIC_DIVINE_CULT",
+      "CIVIC_STATE_CHURCH",
+      "CIVIC_COSMIC_ENLIGHTENING",
+      "CIVIC_INQUISITORIAL"
+     ]
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 24466,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_MONUMENT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_MONUMENT",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_MONUMENT_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

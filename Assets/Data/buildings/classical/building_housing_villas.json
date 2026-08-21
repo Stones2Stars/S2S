@@ -1,0 +1,92 @@
+{
+ "type": "BUILDING_HOUSING_VILLAS",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUXURY_FURNITURE_WORKSHOP",
+   "BUILDING_LYCEUM",
+   "BUILDING_MAUSOLEUM"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TELEPHONE"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_FRESHWATER",
+    {
+     "type": "BONUS_MARBLE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_SEWER_SYSTEM",
+    "TECH_SANITATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "dormant": [
+    "BUILDING_HOUSING_MANORS",
+    "BUILDING_HOUSING_MANSIONS",
+    "BUILDING_HOUSING_CHATEAU",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HOUSING_VILLAS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_VILLAS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_VILLAS_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,188 @@
+{
+ "type": "SPECIALIST_PRIEST",
+ "production": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_ANGKOR_WAT",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_ARK_OF_THE_COVENANT",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_MASADA",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_THE_NECROMANTEION",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_THE_NECROMANTEION",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1,
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "CIVIC_THEOCRACY",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 50,
+     "enabled": {
+      "type": "CIVIC_STATE_CHURCH",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "CIVIC_INQUISITORIAL",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "CIVIC_APOTHEOSIS",
+      "scope": "empire"
+     }
+    }
+   ]
+  },
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": -1,
+      "enabled": {
+       "type": "BUILDING_HOUSE_OF_WISDOM",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_HOUSE_OF_WISDOM",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  },
+  "city": {
+   "percent": [
+    {
+     "value": 25,
+     "enabled": {
+      "type": "CIVIC_THEOCRACY",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 25,
+     "enabled": {
+      "type": "CIVIC_APOTHEOSIS",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": [
+    {
+     "value": 25,
+     "enabled": {
+      "type": "CIVIC_THEOCRACY",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "CIVIC_FREE_CHURCH",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MISSIONARY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/Priest.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/Priest.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_PRIEST",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
+  "visible": true,
+  "categories": [
+   "CATEGORY_ASSIGNABLE_SPECIALISTS",
+   "CATEGORY_SPECIALIST_GROUP_RELIGIOUS"
+  ],
+  "greatPeopleUnit": "UNIT_PROPHET"
+ }
+}

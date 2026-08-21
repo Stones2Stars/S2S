@@ -1,0 +1,75 @@
+{
+ "type": "UNITCOMBAT_MAMMAL_URSINE",
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_ANIMAL_COMBAT",
+    "outcomes": [
+     {
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_COMBAT1"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 5
+      },
+      "gold": 1,
+      "culture": 5
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_COMBAT2"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 5
+      },
+      "gold": 2,
+      "culture": 5
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_COMBAT3"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 5
+      },
+      "gold": 3,
+      "culture": 5
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_COMBAT4"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 5
+      },
+      "gold": 4,
+      "culture": 5
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_COMBAT5"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 5
+      },
+      "gold": 5,
+      "culture": 5
+     }
+    ]
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/mammal.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_MAMMAL_URSINE"
+ }
+}

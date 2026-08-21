@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_WAYLAY2",
+ "combat": {
+  "unit": {
+   "stealth": {
+    "percent": 10
+   },
+   "stealthStrikes": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_WAYLAY": 2
+ },
+ "enabled": "GAMEOPTION_COMBAT_WITHOUT_WARNING",
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Waylay2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_WAYLAY2",
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT"
+  ],
+  "prereqNormInvisible": true
+ }
+}

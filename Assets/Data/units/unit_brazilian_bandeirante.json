@@ -1,0 +1,141 @@
+{
+ "type": "UNIT_BRAZILIAN_BANDEIRANTE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BRAZILIAN",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_FLINTLOCK",
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_RIFLEMAN"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_LEAD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_FLINT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 20
+  }
+ },
+ "skills": [
+  "pillage"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_GUN",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_RIFLE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_GUERILLA1",
+   "PROMOTION_WOODSMAN1",
+   "PROMOTION_HUNTING_SIGHT1"
+  ]
+ },
+ "cost": {
+  "production": 385,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BANDEIRANTE",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_BANDEIRANTE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_BRAZILIAN_BANDEIRANTE",
+  "civilopedia": "TXT_KEY_UNIT_BANDEIRANTE_PEDIA",
+  "worth": 3,
+  "militaryWorth": 49,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "conscription": 9,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_RANGED",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_RESERVE",
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

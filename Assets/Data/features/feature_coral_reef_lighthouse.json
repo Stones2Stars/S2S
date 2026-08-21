@@ -1,0 +1,51 @@
+{
+ "type": "FEATURE_CORAL_REEF_LIGHTHOUSE",
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_WATER_POLLUTION": -5,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  }
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_CORAL_REEF_LIGHTHOUSE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_CORAL_REEF_LIGHTHOUSE",
+  "civilopedia": "TXT_KEY_FEATURE_CORAL_REEF_PEDIA",
+  "appearance": -1,
+  "validTerrains": [
+   "TERRAIN_COAST",
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_COAST_TROPICAL",
+   "TERRAIN_LAKE",
+   "TERRAIN_LAKE_SHORE"
+  ]
+ }
+}

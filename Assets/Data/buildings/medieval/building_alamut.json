@@ -1,0 +1,151 @@
+{
+ "type": "BUILDING_ALAMUT",
+ "enables": {
+  "units": [
+   "UNIT_HASHISHIN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FUNDAMENTALISM",
+    "STATE_RELIGION_IN_CITY",
+    {
+     "type": "TERRAIN_PEAK",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    },
+    {
+     "any": [
+      "CIVIC_DIVINE_CULT",
+      "CIVIC_STATE_CHURCH",
+      "CIVIC_INQUISITORIAL"
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "percent": 12
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 25
+   },
+   "adjacentDamage": {
+    "percent": 25
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_FANATIC"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 1860,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ALAMUT"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ALAMUT"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ALAMUT",
+  "civilopedia": "TXT_KEY_BUILDING_ALAMUT_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "militaryWorth": 2,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_SPY",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

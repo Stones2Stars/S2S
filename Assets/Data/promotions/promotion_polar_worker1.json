@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_POLAR_WORKER1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_POLAR_WORKER2"
+  ]
+ },
+ "workRate": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_TAIGA": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_POLAR_WORKER": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/workerpolar1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_POLAR_WORKER1"
+ }
+}

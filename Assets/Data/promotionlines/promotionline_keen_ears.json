@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTIONLINE_KEEN_EARS",
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/KeenEars1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_KEEN_EARS",
+  "unitCombats": [
+   "UNITCOMBAT_CANINE",
+   "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SPY",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
+ }
+}

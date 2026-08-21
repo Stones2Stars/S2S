@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTIONLINE_STALL",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Stall1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_STALL",
+  "unitCombats": [
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_FELINE",
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_SUBMARINE",
+   "UNITCOMBAT_STRIKE_TEAM",
+   "UNITCOMBAT_ROCKET_LAUNCHER",
+   "UNITCOMBAT_RUFFIAN",
+   "UNITCOMBAT_HELICOPTER"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PROMOTED_CAUTIOUS"
+  ]
+ }
+}

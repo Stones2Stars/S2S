@@ -1,0 +1,102 @@
+{
+ "type": "RELIGION_BUDDHISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_BEZEKLIK_CAVES",
+   "BUILDING_BUDDHIST_MONASTERY",
+   "BUILDING_BUDDHIST_STUPA",
+   "BUILDING_BUDDHIST_TEMPLE",
+   "BUILDING_KOTOKU_IN",
+   "BUILDING_NARAS_GIANT_BUDDHA",
+   "BUILDING_PALACE_OF_POTALA"
+  ],
+  "units": [
+   "UNIT_BUDDHIST_MISSIONARY"
+  ]
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_BUDDHISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_BUDDHISM"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_BUDDHISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_BUDDHISM"
+     }
+    }
+   ]
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 4,
+   "icon": "Art/Interface/Buttons/Religions/Buddhism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Buddhism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Buddhism.dds",
+   "movie": {
+    "file": "Art/Movies/Religion/Buddhism/Bud_Found.nif",
+    "sound": "AS2D_BUILD_BUDDHIST_MOVIE"
+   }
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_BUDDHIST"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_BUDDHISM",
+  "adjective": "TXT_KEY_TECH_BUDDHISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_BUDDHISM_PEDIA",
+  "spreadFactor": 35
+ }
+}

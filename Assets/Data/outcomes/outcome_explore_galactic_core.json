@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_EXPLORE_GALACTIC_CORE",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_GALACTIC_CORE",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_GALACTIC_CORE_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ANTIMATTER_ROCKETS"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

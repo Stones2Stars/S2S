@@ -1,0 +1,40 @@
+{
+ "type": "IMPROVEMENT_BIOTIC_NEUTRON_STAR",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_NEUTRON_STAR"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 20
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 10
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_BIOTIC_NEUTRON_STAR"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_BIOTIC_NEUTRON_STAR",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_BIOTIC_NEUTRON_STAR_PEDIA",
+  "extraterrestrial": true,
+  "outsideBorders": true,
+  "pillageGold": 200
+ }
+}

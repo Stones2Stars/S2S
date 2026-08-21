@@ -1,0 +1,120 @@
+{
+ "type": "IMPROVEMENT_EARLY_QUARRY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MINING",
+     "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_ROCKY",
+        "TERRAIN_BADLAND",
+        "TERRAIN_JAGGED"
+       ]
+      },
+      "HAS_HILLS",
+      {
+       "bonus": [
+        "BONUS_STONE",
+        "BONUS_OBSIDIAN",
+        "BONUS_MARBLE",
+        "BONUS_FINE_CLAY",
+        "BONUS_TURQUOISE",
+        "BONUS_JADE"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    4,
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_STONE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OBSIDIAN"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MARBLE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_FINE_CLAY"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_TURQUOISE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_JADE"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_STONE_TOOLS_WORKSHOP"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_EARLY_QUARRY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_QUARRY_PEDIA",
+  "advancedStart": {
+   "cost": 24
+  },
+  "upgradeTime": 10,
+  "pillageGold": 25,
+  "pillageTo": "IMPROVEMENT_STONE_TOOLS_WORKSHOP",
+  "upgradesTo": "IMPROVEMENT_QUARRY",
+  "bonuses": {
+   "BONUS_STONE": {
+    "trade": true
+   },
+   "BONUS_OBSIDIAN": {
+    "trade": true
+   },
+   "BONUS_MARBLE": {
+    "trade": true
+   },
+   "BONUS_FINE_CLAY": {
+    "trade": true
+   },
+   "BONUS_TURQUOISE": {
+    "trade": true
+   },
+   "BONUS_JADE": {
+    "trade": true
+   }
+  }
+ }
+}

@@ -1,0 +1,79 @@
+{
+ "type": "TECH_GENE_ENHANCEMENT",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_GENE_EDITING"
+  ],
+  "buildings": [
+   "BUILDING_AUGMENTED_ORGAN_LAB",
+   "BUILDING_BIOENHANCEMENT_CENTER",
+   "BUILDING_FARM_MECH_CONTROL_CENTER",
+   "BUILDING_HUMAN_MOD_GENE_EDITING",
+   "BUILDING_TRANSGENICS_LAB"
+  ],
+  "techs": [
+   "TECH_AUGMENTED_CONSUMABLES",
+   "TECH_GENE_JURISPRUDENCE",
+   "TECH_MAINSTREAM_CLONING"
+  ],
+  "units": [
+   "UNIT_CHROME_INFANTRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GENESIS_BIOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_UBIQUITOUS_COMPUTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 37614
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Geneenhancement.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENE_ENHANCEMENT",
+  "soundMP": "AS2D_TECH_GENE_ENHANCEMENT"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_GENE_ENHANCEMENT",
+  "civilopedia": "TXT_KEY_TECH_GENE_ENHANCEMENT_PEDIA",
+  "quote": "TXT_KEY_TECH_GENE_ENHANCEMENT_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 101,
+  "gridY": 19
+ }
+}

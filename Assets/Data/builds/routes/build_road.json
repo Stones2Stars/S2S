@@ -1,0 +1,110 @@
+{
+ "type": "BUILD_ROAD",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ROAD_BUILDING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "route": "ROUTE_ROAD",
+  "features": [
+   {
+    "feature": "FEATURE_SWAMP",
+    "tech": "TECH_CANAL_SYSTEMS"
+   },
+   {
+    "feature": "FEATURE_CRATER",
+    "tech": "TECH_PAVED_ROADS"
+   },
+   {
+    "feature": "FEATURE_TAR_PIT",
+    "tech": "TECH_PAVED_ROADS"
+   },
+   {
+    "feature": "FEATURE_MANGROVE",
+    "tech": "TECH_CANAL_SYSTEMS"
+   },
+   {
+    "feature": "FEATURE_PEAT_BOG",
+    "tech": "TECH_CANAL_SYSTEMS"
+   },
+   {
+    "feature": "FEATURE_VOLCANO_DORMANT",
+    "tech": "TECH_PAVED_ROADS"
+   },
+   {
+    "feature": "FEATURE_VOLCANO_ACTIVE",
+    "tech": "TECH_MOUNTAINEERING"
+   }
+  ],
+  "terraform": [
+   {
+    "terrain": "TERRAIN_BADLAND",
+    "tech": "TECH_PAVED_ROADS"
+   },
+   {
+    "terrain": "TERRAIN_DESERT",
+    "tech": "TECH_PAVED_ROADS"
+   },
+   {
+    "terrain": "TERRAIN_SALT_FLATS",
+    "tech": "TECH_PAVED_ROADS"
+   },
+   {
+    "terrain": "TERRAIN_TUNDRA",
+    "tech": "TECH_PAVED_ROADS"
+   },
+   {
+    "terrain": "TERRAIN_MARSH",
+    "tech": "TECH_PAVED_ROADS"
+   },
+   {
+    "terrain": "TERRAIN_HILL",
+    "tech": "TECH_PAVED_ROADS"
+   },
+   {
+    "terrain": "TERRAIN_JAGGED",
+    "tech": "TECH_PAVED_ROADS"
+   },
+   {
+    "terrain": "TERRAIN_DUNES",
+    "tech": "TECH_PAVED_ROADS"
+   },
+   {
+    "terrain": "TERRAIN_PERMAFROST",
+    "tech": "TECH_PAVED_ROADS"
+   },
+   {
+    "terrain": "TERRAIN_ICE",
+    "tech": "TECH_PAVED_ROADS"
+   },
+   {
+    "terrain": "TERRAIN_PEAK",
+    "tech": "TECH_PAVED_ROADS"
+   }
+  ]
+ },
+ "cost": {
+  "gold": 4,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/BuildRoad.dds"
+  },
+  "hotkey": "KB_R"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_SHOVEL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_ROAD"
+ }
+}

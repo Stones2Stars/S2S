@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_COMBAT5",
+ "enables": {
+  "promotions": [
+   "PROMOTION_COMBAT6",
+   "PROMOTION_LIVE1",
+   "PROMOTION_WARRIORS_INTUITION3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT4"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COMBAT": 5
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat5.dds,Art/Interface/Buttons/Promotions_Atlas.dds,4,6"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COMBAT5"
+ }
+}

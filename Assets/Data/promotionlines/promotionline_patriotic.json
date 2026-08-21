@@ -1,0 +1,15 @@
+{
+ "type": "PROMOTIONLINE_PATRIOTIC",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/patriotic1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_PATRIOTIC",
+  "unitCombats": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_MOUNTED"
+  ]
+ }
+}

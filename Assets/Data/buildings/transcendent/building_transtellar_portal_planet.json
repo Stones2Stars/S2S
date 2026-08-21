@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_TRANSTELLAR_PORTAL_PLANET",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TRANSTELLAR_DYSON_SPHERE",
+    "TECH_HYPERLANES",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 9080,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_PORTAL_PLANET",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_PORTAL_PLANET",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_PORTAL_PLANET_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

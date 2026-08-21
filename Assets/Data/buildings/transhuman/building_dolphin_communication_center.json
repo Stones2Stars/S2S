@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_DOLPHIN_COMMUNICATION_CENTER",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "BUILDING_OCEAN_CITY",
+    "TECH_SPECIES_UPLIFTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CETACEA_SAPIENS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_WHALE",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 5055,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DOLPHIN_COMMUNICATION_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DOLPHIN_COMMUNICATION_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_DOLPHIN_COMMUNICATION_CENTER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

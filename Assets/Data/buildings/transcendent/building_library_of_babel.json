@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_LIBRARY_OF_BABEL",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_INFINITE_SPEED_TACHYON_GENERATOR",
+    "BUILDING_DISTANT_LAYERED_REALITY",
+    "TECH_TRANSFINITE_COMPUTATION",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 13692,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_LIBRARY_OF_BABEL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LIBRARY_OF_BABEL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LIBRARY_OF_BABEL",
+  "civilopedia": "TXT_KEY_BUILDING_LIBRARY_OF_BABEL_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

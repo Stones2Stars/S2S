@@ -1,0 +1,84 @@
+{
+ "type": "TECH_PLANETARY_DEFENSES",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_SHIELDING",
+   "BUILDING_FRIEDLANDER_SKYSHADE",
+   "BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR",
+   "BUILDING_MERCURY_SUNSHADE",
+   "BUILDING_RHEA_MILITARY_BASE",
+   "BUILDING_URANIAN_LUNAR_MAGNETIC_FIELD"
+  ],
+  "builds": [
+   "BUILD_LISTENING_NODE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_LISTENING_NODE"
+  ],
+  "techs": [
+   "TECH_LUNAR_MEGASTRUCTURES",
+   "TECH_SOLAR_ORDNANCE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FRICTIONLESS_FLIGHT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PHOTONIC_SATELLITES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADVANCED_WARMACHINES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 83654
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/planetarydefenses.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PLANETARY_DEFENSES",
+  "soundMP": "AS2D_TECH_PLANETARY_DEFENSES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PLANETARY_DEFENSES",
+  "civilopedia": "TXT_KEY_TECH_PLANETARY_DEFENSES_PEDIA",
+  "quote": "TXT_KEY_TECH_PLANETARY_DEFENSES_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 119,
+  "gridY": 5
+ }
+}

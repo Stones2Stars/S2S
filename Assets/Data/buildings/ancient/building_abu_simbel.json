@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_ABU_SIMBEL",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MONARCHY",
+    {
+     "type": "TERRAIN_PEAK",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "disabled": "IS_GOVERNMENT_CENTER"
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 5,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "occupationTime": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1200,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true,
+  "governmentCenter": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ABU"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ABU_SIMBEL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ABU_SIMBEL",
+  "civilopedia": "TXT_KEY_BUILDING_ABU_SIMBEL_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 16,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

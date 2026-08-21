@@ -1,0 +1,101 @@
+{
+ "type": "TECH_MASS_MEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLIMP_ADVERTISING",
+   "BUILDING_CANNES_FILM_FESTIVAL",
+   "BUILDING_CAPITOL_RECORDS_TOWER",
+   "BUILDING_CN_TOWER",
+   "BUILDING_MOTORCYCLE_CLUB",
+   "BUILDING_MOTORCYCLE_CLUB_UNSANCTIONED",
+   "BUILDING_RECORDING_STUDIO",
+   "BUILDING_TERRORISTS_COMPOUND",
+   "BUILDING_TOKYO_TOWER",
+   "BUILDING_UN_MISSION",
+   "BUILDING_VIP_CLUB",
+   "BUILDING_WORLD_NEWS_NETWORK",
+   "BUILDING_ZIZKOV_TELEVISION_TOWER"
+  ],
+  "promotions": [
+   "PROMOTION_CORRUPTION7"
+  ],
+  "techs": [
+   "TECH_MICROWAVES",
+   "TECH_MODERN_SPORTS",
+   "TECH_POP_ART"
+  ],
+  "units": [
+   "UNIT_BIKER_GANG",
+   "UNIT_CELEBRITY",
+   "UNIT_GEORGE_CADLE_PRICE",
+   "UNIT_JOHN_FRUM",
+   "UNIT_JURI_ULUOTS",
+   "UNIT_KWAME_NKRUMAH",
+   "UNIT_LARA_CROFT",
+   "UNIT_LUTAKAWI",
+   "UNIT_MANDAWUY_YUNUPINGU",
+   "UNIT_NELSON_MANDELA",
+   "UNIT_ROBERT_LUI",
+   "UNIT_TERUO_NAKAMURA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CONSUMERISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TELEVISION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 11665
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 9
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": ",Art/Interface/Buttons/TechTree/MassMedia.dds,Art/Interface/Buttons/TechTree_Atlas.dds,2,5"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MASS_MEDIA",
+  "soundMP": "AS2D_TECH_MP_MASS_MEDIA"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MASS_MEDIA",
+  "civilopedia": "TXT_KEY_TECH_MASS_MEDIA_PEDIA",
+  "quote": "TXT_KEY_TECH_MASS_MEDIA_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 77,
+  "gridY": 15
+ }
+}

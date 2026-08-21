@@ -1,0 +1,71 @@
+{
+ "type": "TECH_TELEPORTATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_TELEPORT_BOOTH",
+   "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
+  ],
+  "builds": [
+   "BUILD_JUMPLANE"
+  ],
+  "techs": [
+   "TECH_GRAVITY_CONTROL",
+   "TECH_PLANET_SCOUTING",
+   "TECH_XENODIPLOMACY"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_MAGLEV"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ATOMIZATION_FIELD",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 149039
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/teleportation.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TELEPORTATION",
+  "soundMP": "AS2D_TECH_TELEPORTATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TELEPORTATION",
+  "civilopedia": "TXT_KEY_TECH_TELEPORTATION_PEDIA",
+  "quote": "TXT_KEY_TECH_TELEPORTATION_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 129,
+  "gridY": 5
+ }
+}

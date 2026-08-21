@@ -1,0 +1,34 @@
+{
+ "type": "IMPROVEMENT_BEACON_CORAL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SAILING",
+     "scope": "team"
+    },
+    "IS_WATER",
+    {
+     "feature": [
+      "FEATURE_CORAL_REEF"
+     ]
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_BEACON"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_BEACON_CORAL",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_LIGHTHOUSE_PEDIA",
+  "advancedStart": {
+   "cost": -1
+  },
+  "outsideBorders": true,
+  "placesFeature": true,
+  "graphicalOnly": true
+ }
+}

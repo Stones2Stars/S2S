@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_ANIMAL_ACTOR_STUDIO",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MOVIE_STUDIO",
+    "TECH_MOTION_PICTURES",
+    {
+     "any": [
+      "BUILDING_REPET",
+      "BUILDING_DOG_BREEDER",
+      "BUILDING_CAT_BREEDER",
+      "BUILDING_ANIMAL_TRAINER_HORSE",
+      "BUILDING_ANIMAL_TRAINER_ELEPHANT",
+      "BUILDING_MONKEY_BREEDER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ],
+   "dormant": [
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
+ "cost": {
+  "production": 830,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANIMAL_ACTOR_STUDIO",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMAL_ACTOR_STUDIO",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_ACTOR_STUDIO_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

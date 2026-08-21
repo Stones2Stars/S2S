@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_NORWEGIAN",
+ "enables": {
+  "units": [
+   "UNIT_SKI_PATROL"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_NORWEGIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_NORWEGIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

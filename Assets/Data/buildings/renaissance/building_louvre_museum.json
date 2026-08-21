@@ -1,0 +1,116 @@
+{
+ "type": "BUILDING_LOUVRE_MUSEUM",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SCIENTIFIC_METHOD",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ],
+   "percent": 10
+  },
+  "empire": {
+   "percent": 2,
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2
+  }
+ },
+ "cost": {
+  "production": 2850,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 8
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_LOUVRE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LOUVRE_MUSEUM",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COLOSSUS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LOUVRE_MUSEUM",
+  "civilopedia": "TXT_KEY_BUILDING_LOUVRE_MUSEUM_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 14,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,114 @@
+{
+ "type": "BUILDING_CARTOGRAPHERS_SHOP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LUNAR_BASES"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_CARTOGRAPHER"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CARTOGRAPHY",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_BOOKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PAPER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SCROLLS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TABLETS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_MODERN_CARTOGRAPHER"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_MOBILITY"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 356,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CARTOGRAPHERS_SHOP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CARTOGRAPHERS_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_CARTOGRAPHERS_SHOP_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

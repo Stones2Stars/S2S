@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_ROGUE_PLANET_SUPPLY_DEPOT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ROGUE_PLANET_OUTPOST",
+    "TECH_INTERSTELLAR_TRADE",
+    {
+     "type": "FEATURE_ROGUE_PLANET",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_INTERSTELLAR",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 250
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 2536,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ROGUE_PLANET_SUPPLY_DEPOT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ROGUE_PLANET_SUPPLY_DEPOT",
+  "civilopedia": "TXT_KEY_BUILDING_ROGUE_PLANET_SUPPLY_DEPOT_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR",
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

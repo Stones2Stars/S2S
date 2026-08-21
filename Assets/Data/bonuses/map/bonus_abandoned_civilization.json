@@ -1,0 +1,48 @@
+{
+ "type": "BONUS_ABANDONED_CIVILIZATION",
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ABANDONED_CIVILIZATION"
+  }
+ },
+ "mapGeneration": {
+  "constAppearance": 35,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 32,
+  "area": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_ORION_ARM",
+   "TERRAIN_MILKY_WAY",
+   "TERRAIN_STAR_CLUSTER"
+  ],
+  "validFeatures": [
+   "FEATURE_MINI_NEPTUNE",
+   "FEATURE_SUPER_EARTH",
+   "FEATURE_DESERT_PLANET",
+   "FEATURE_OCEAN_PLANET"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_TRANSTELLAR_SPACE"
+  ],
+  "placementOrder": 9
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ABANDONED_CIVILIZATION",
+  "civilopedia": "TXT_KEY_BONUS_ABANDONED_CIVILIZATION_PEDIA",
+  "bonusClassType": "BONUSCLASS_MISC",
+  "source": "natural"
+ }
+}

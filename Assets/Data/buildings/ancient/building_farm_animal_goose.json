@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_FARM_ANIMAL_GOOSE",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_EGGS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INDUSTRIAL_FARMS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "TECH_POULTRY_DOMESTICATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_POULTRY",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_OLIVES",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1,
+   "percent": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GRAINS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 125,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FARM_ANIMAL_GOOSE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_ANIMAL_GOOSE",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_GOOSE_PEDIA",
+  "worth": 4,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

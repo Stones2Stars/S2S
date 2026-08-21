@@ -14,10 +14,18 @@ import SdToolKit as SDTK
 from CvUtil import sendMessage
 
 # globals
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
-MAP = GC.getMap()
+INFO = CyInfo()
 GAME = GC.getGame()
+MAP = GC.getMap()
+STATE = CyState()
+ACT = CyAct()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
+WORLD = CyWorldInfo()
 
 class BarbarianCiv:
 
@@ -63,7 +71,7 @@ class BarbarianCiv:
 		# Increase odds per barb city within reason.
 		fMod *= iNumCities ** .5
 		# Gamespeed factor
-		iFactorGS = GC.getGameSpeedInfo(GAME.getGameSpeedType()).getSpeedPercent()
+		iFactorGS = GAME.getSpeedPercent()
 		iRange = 16*iFactorGS
 		iEra = GAME.getCurrentEra()
 
@@ -247,7 +255,7 @@ class BarbarianCiv:
 			iMinEra = iEra - self.RevOpt.getNewWorldErasBehind()
 			if iMinEra > -1:
 				for iTech in xrange(iNumTechs):
-					if CyPlayer.canResearch(iTech, False, True) and GC.getTechInfo(iTech).getEra() <= iMinEra:
+					if ENABLER.getTechAvailability(CyPlayer.getID(), iTech) == EnablerState.ENABLER_LISTED and INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA) <= iMinEra:
 						CyTeam.setHasTech(iTech, True, iPlayer, False, False)
 		else:
 			iNumTeams = GAME.countCivTeamsAlive()
@@ -257,7 +265,7 @@ class BarbarianCiv:
 				if iTech in techsOwned:
 					CyTeam.setHasTech(iTech, True, iPlayer, False, False)
 					continue
-				if not CyPlayer.canResearch(iTech, False, True):
+				if ENABLER.getTechAvailability(CyPlayer.getID(), iTech) != EnablerState.ENABLER_LISTED:
 					continue
 				iKnownRatio = 100 * GAME.countKnownTechNumTeams(iTech) / iNumTeams
 				if iKnownRatio < 100 and closeTeams:
@@ -296,20 +304,20 @@ class BarbarianCiv:
 			else: iBaseOffensiveUnits = max(1, iBaseOffensiveUnits / 3)
 		else:
 			if iSettler > -1:
-				CyPlayer.initUnit(iSettler, iX, iY, UnitAITypes.UNITAI_SETTLE, DirectionTypes.DIRECTION_SOUTH)
+				CyPlayer.createUnit(iSettler, iX, iY, UnitAITypes.UNITAI_SETTLE, DirectionTypes.DIRECTION_SOUTH)
 				#print "Free settler: " + CyUnit.getName()
 			if iWorker > -1:
-				CyPlayer.initUnit(iWorker, iX, iY, UnitAITypes.UNITAI_WORKER, DirectionTypes.DIRECTION_SOUTH)
-				CyPlayer.initUnit(iWorker, iX, iY, UnitAITypes.UNITAI_WORKER, DirectionTypes.DIRECTION_SOUTH)
+				CyPlayer.createUnit(iWorker, iX, iY, UnitAITypes.UNITAI_WORKER, DirectionTypes.DIRECTION_SOUTH)
+				CyPlayer.createUnit(iWorker, iX, iY, UnitAITypes.UNITAI_WORKER, DirectionTypes.DIRECTION_SOUTH)
 				#print "Free Workers (2): " + CyUnit.getName()
 			if iExplorer > -1:
-				CyPlayer.initUnit(iExplorer, iX, iY, UnitAITypes.UNITAI_EXPLORE, DirectionTypes.DIRECTION_SOUTH)
-				CyPlayer.initUnit(iExplorer, iX, iY, UnitAITypes.UNITAI_EXPLORE, DirectionTypes.DIRECTION_SOUTH)
+				CyPlayer.createUnit(iExplorer, iX, iY, UnitAITypes.UNITAI_EXPLORE, DirectionTypes.DIRECTION_SOUTH)
+				CyPlayer.createUnit(iExplorer, iX, iY, UnitAITypes.UNITAI_EXPLORE, DirectionTypes.DIRECTION_SOUTH)
 				#print "Free Explorers (2): " + CyUnit.getName()
 			if iMerchant > -1:
 				iTemp = 2 + 2*(iEra + 1)
 				for i in xrange(iTemp):
-					CyPlayer.initUnit(iMerchant, iX, iY, UnitAITypes.UNITAI_MERCHANT, DirectionTypes.DIRECTION_SOUTH)
+					CyPlayer.createUnit(iMerchant, iX, iY, UnitAITypes.UNITAI_MERCHANT, DirectionTypes.DIRECTION_SOUTH)
 				#print "Free Merchant (%d): %s" %(iTemp, CyUnit.getName())
 
 		aList = [iCounter, iAttack, iAttackCity, iMobile]
@@ -321,7 +329,7 @@ class BarbarianCiv:
 				while iCount < iTemp:
 					iUnit = aList[GAME.getSorenRandNum(4, 'BC give offensive')]
 					if iUnit == -1: continue
-					CyUnit = CyPlayer.initUnit(iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+					CyUnit = CyPlayer.createUnit(iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 					CyUnit.changeExperience(iEra + GAME.getSorenRandNum(2*(iEra+1), 'Experience'), -1, False, False, False)
 					iCount += 1
 					#print "Free Combatant: " + CyUnit.getName()
@@ -329,7 +337,7 @@ class BarbarianCiv:
 
 		szTxt = TRNSLTR.getText("TXT_KEY_BARBCIV_WORD_SPREADS", ()) + " "
 		szTxt += TRNSLTR.getText("TXT_KEY_BARBCIV_FORM_MINOR", ()) % (civName, szCityName)
-		MSG_TIME = GC.getEVENT_MESSAGE_TIME()
+		MSG_TIME = GC.getDefineINT("EVENT_MESSAGE_TIME")
 		for iPlayerX in xrange(MAX_PC_PLAYERS):
 			CyPlayerX = GC.getPlayer(iPlayerX)
 			if not CyPlayerX.isHuman(): continue
@@ -381,7 +389,7 @@ class BarbarianCiv:
 	def getCloseCivs(self, iPlayer, CyArea, iX, iY):
 		closeTeams = []
 		iTemp = self.RevOpt.getCloseDist()
-		iTemp *= GC.getWorldInfo(MAP.getWorldSize()).getDefaultPlayers() - 1
+		iTemp *= WORLD.getDefaultPlayers(MAP.getWorldSize()) - 1
 		for iPlayerX in xrange(self.MAX_PC_PLAYERS):
 			if iPlayerX == iPlayer: continue
 			if CyArea.getCitiesPerPlayer(iPlayerX) > 0:
@@ -416,7 +424,7 @@ class BarbarianCiv:
 			):
 				continue
 
-			if not CyPlayer.canTrain(iUnit, False, False): continue
+			if ENABLER.getUnitAvailabilityAnywhere(CyPlayer.getID(), iUnit) != EnablerState.ENABLER_LISTED: continue
 
 			iStr = CvUnitInfo.getCombat()
 			if CvUnitInfo.getUnitAIType(UnitAITypes.UNITAI_CITY_DEFENSE):
@@ -552,7 +560,7 @@ class BarbarianCiv:
 				):
 					iUnit = CyUnit.getUnitType()
 					CyUnit.kill(False, -1)
-					CyPlayer.initUnit(iUnit, CyPlotX.getX(), CyPlotX.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+					CyPlayer.createUnit(iUnit, CyPlotX.getX(), CyPlotX.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 
 		# City Culture
 		# Transfer barbarian culture to the new player (becomes "accepted" culture)
@@ -576,13 +584,13 @@ class BarbarianCiv:
 			iNational = GC.getInfoTypeForString(szNational)
 			iLocal = GC.getInfoTypeForString(szLocal)
 			if iNational > -1 and iLocal > -1 and CyCity.hasBuilding(iNational) and not CyCity.hasBuilding(iLocal):
-				CyCity.changeHasBuilding(iLocal, True)
+				ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iLocal, True)
 				break
 
 		# Free city defenders
 		if iDefender > -1:
 			for i in range(iDefenders):
-				CyPlayer.initUnit(iDefender, X, Y, UnitAITypes.UNITAI_CITY_DEFENSE, DirectionTypes.NO_DIRECTION)
+				CyPlayer.createUnit(iDefender, X, Y, UnitAITypes.UNITAI_CITY_DEFENSE, DirectionTypes.NO_DIRECTION)
 
 
 
@@ -629,11 +637,11 @@ class BarbarianCiv:
 
 		odds += iTemp # Value from contact with other minor civs.
 		odds += 12*iCities + CyPlayer.getTotalPopulation() + 32*CyPlayer.countHolyCities()
-		odds += CyPlayer.getNumMilitaryUnits()/(4*GC.getWorldInfo(GC.getMap().getWorldSize()).getTargetNumCities())
+		odds += CyPlayer.getNumMilitaryUnits()/(4*WORLD.getTargetNumCities(GC.getMap().getWorldSize()))
 		odds += 4*CyPlayer.getWondersScore() # 20 points per wonder, see getWonderScore in CvGameCoreUtils.cpp.
 		if odds < 512: return
 
-		iFactorGS = GC.getGameSpeedInfo(GAME.getGameSpeedType()).getSpeedPercent()
+		iFactorGS = GAME.getSpeedPercent()
 		if not GAME.getSorenRandNum(40*iFactorGS + odds, 'minor2major') < odds: return
 
 		bLowScore = False
@@ -669,7 +677,7 @@ class BarbarianCiv:
 
 			# Pickup nearby barb cities, search a 4x area if in new world.
 			iAreaID = CyArea.getID()
-			iMaxDistance = (iHighestEra + 10) * (1 + 3*bNewWorld) * GC.getWorldInfo(MAP.getWorldSize()).getDefaultPlayers() / 8
+			iMaxDistance = (iHighestEra + 10) * (1 + 3*bNewWorld) * WORLD.getDefaultPlayers(MAP.getWorldSize()) / 8
 			CyPlayerBarb = GC.getPlayer(iPlayerBarb)
 			aList = ()
 			for cityX in CyPlayerBarb.cities():
@@ -689,19 +697,19 @@ class BarbarianCiv:
 				plotX.setOwner(iPlayer) # ...because this invalidates the cityX pointer.
 				cityX = plotX.getPlotCity()
 				self.setupFormerBarbCity(cityX, iPlayer, iDefender, int(iNumBarbDefenders*fMilitaryMod + 1))
-				cityX.changePopulation(1)
+				ACT.changeCityPopulation(cityX.getOwner(), cityX.getID(), 1)
 				if iWorker > -1:
-					CyPlayer.initUnit(iWorker, x, y, UnitAITypes.UNITAI_WORKER, DirectionTypes.DIRECTION_SOUTH)
+					CyPlayer.createUnit(iWorker, x, y, UnitAITypes.UNITAI_WORKER, DirectionTypes.DIRECTION_SOUTH)
 				if iExplorer > -1:
-					CyPlayer.initUnit(iExplorer, x, y, UnitAITypes.UNITAI_EXPLORE, DirectionTypes.DIRECTION_SOUTH)
+					CyPlayer.createUnit(iExplorer, x, y, UnitAITypes.UNITAI_EXPLORE, DirectionTypes.DIRECTION_SOUTH)
 				if iMerchant > -1:
 					iTemp = 2 + 2*(iEra + 1)
 					for i in xrange(iTemp):
-						CyPlayer.initUnit(iMerchant, x, y, UnitAITypes.UNITAI_MERCHANT, DirectionTypes.DIRECTION_SOUTH)
+						CyPlayer.createUnit(iMerchant, x, y, UnitAITypes.UNITAI_MERCHANT, DirectionTypes.DIRECTION_SOUTH)
 
 			# Bonus units in capital
 			if iWorker != -1:
-				CyPlayer.initUnit(iWorker, iX, iY, UnitAITypes.UNITAI_WORKER, DirectionTypes.DIRECTION_SOUTH)
+				CyPlayer.createUnit(iWorker, iX, iY, UnitAITypes.UNITAI_WORKER, DirectionTypes.DIRECTION_SOUTH)
 			i1 = iCounter
 			i2 = iMobile
 			i3 = iAttack
@@ -722,7 +730,7 @@ class BarbarianCiv:
 				iCount = 0
 				while iCount < amount:
 					iUnit = aList[GAME.getSorenRandNum(iLen, 'Military')]
-					CyUnit = CyPlayer.initUnit(iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+					CyUnit = CyPlayer.createUnit(iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 					CyUnit.changeExperience(iEra + GAME.getSorenRandNum(2*(iEra+1), 'Experience'), -1, False, False, False)
 					iCount += 1
 
@@ -745,7 +753,7 @@ class BarbarianCiv:
 
 				iUnit = aList.pop(GAME.getSorenRandNum(iLen, 'Great Person'))
 				iLen -= 1
-				CyPlayer.initUnit(iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+				CyPlayer.createUnit(iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 				iCount += 1
 
 			# Gold

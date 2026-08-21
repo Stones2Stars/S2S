@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_VENUS_AGRODOME",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_VENUS_SURFACE_CITY",
+    "TECH_EXTRATERRESTRIAL_AGRICULTURE",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NOVUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 125
+  }
+ },
+ "cost": {
+  "production": 5294,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VENUS_AGRODOME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_AGRODOME",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_AGRODOME_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_CN_TOWER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_NATIONAL_TV_STATION",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_MASS_MEDIA",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "warWeariness": {
+  "empire": {
+   "percent": -75
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 7080,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CN_TOWER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CN_TOWER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CN_TOWER",
+  "civilopedia": "TXT_KEY_BUILDING_CN_TOWER_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 8,
+  "militaryWorth": 4,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

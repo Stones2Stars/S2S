@@ -1,0 +1,56 @@
+{
+ "type": "UNITCOMBAT_RECON",
+ "movement": {
+  "unit": {
+   "feature": {
+    "FEATURE_REEF": {
+     "percent": -50
+    },
+    "FEATURE_CORAL_REEF": {
+     "percent": -50
+    }
+   }
+  }
+ },
+ "combat": {
+  "unit": {
+   "damageModifier": {
+    "percent": -20
+   },
+   "taunt": {
+    "flat": 50
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": -20
+   }
+  }
+ },
+ "tags": [
+  "recon"
+ ],
+ "hideAndSeek": {
+  "detection": {
+   "value": 100,
+   "unit": "HAS_CAMOUFLAGE"
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/recons.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_RECON",
+  "forMilitary": true,
+  "forNavalMilitary": true
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ }
+}

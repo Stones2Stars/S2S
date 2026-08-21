@@ -1,0 +1,131 @@
+{
+ "type": "BUILDING_ZOROASTRIAN_PANTHEON",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ZOROASTRIAN_FIRE_TEMPLE",
+    "TECH_MATHEMATICS",
+    {
+     "any": [
+      "BUILDING_TOWN_HALL",
+      "BUILDING_CITY_COUNCIL",
+      "BUILDING_METROPOLITAN_ADMINISTRATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_ZOROASTRIANISM"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_ZOROASTRIANISM"
+     }
+    }
+   ]
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_ZOROASTRIANISM": {
+    "flat": 3
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 2
+  }
+ },
+ "cost": {
+  "production": 216,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ZOROASTRIAN_PANTHEON",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BUDDHIST"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ZOROASTRIAN_PANTHEON",
+  "civilopedia": "TXT_KEY_BUILDING_ZOROASTRIAN_PANTHEON_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 6,
+  "specialBuildingType": "SPECIALBUILDING_PANTHEON",
+  "religion": "RELIGION_ZOROASTRIANISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

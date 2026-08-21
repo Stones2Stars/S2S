@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_CULTURE_ORANG_ASLI",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "BUILDING_C_AC_OCEANIAN",
+    "BUILDING_C_L_OCEANIAN",
+    "TECH_YEOMANRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PRIME_TIMBER",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ORANG_ASLI"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1920,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_ORANG_ASLI",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_ORANG_ASLI",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_ORANG_ASLI_PEDIA",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

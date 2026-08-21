@@ -1,0 +1,59 @@
+{
+ "type": "TECH_NAGHUALISM",
+ "enables": {
+  "religions": [
+   "RELIGION_NAGHUALISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CALENDAR",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 614
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/naghualism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NAGHUALISM",
+  "soundMP": "AS2D_TECH_NAGHUALISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NAGHUALISM",
+  "civilopedia": "TXT_KEY_TECH_NAGHUALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_NAGHUALISM_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 8,
+  "gridX": 36,
+  "gridY": 3
+ }
+}

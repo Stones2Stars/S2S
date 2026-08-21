@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_VIRGO",
+ "combat": {
+  "unit": {
+   "hillsDefense": {
+    "percent": 50
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/StarSigns/virgo.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_VIRGO",
+  "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ],
+  "starsign": true
+ }
+}

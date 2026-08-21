@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_ARTIFICIAL_INTELLIGENCE_LAB",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_NEURAL_NETWORKS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 2205,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ARTIFICIAL_INTELLIGENCE_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ARTIFICIAL_INTELLIGENCE_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_ARTIFICIAL_INTELLIGENCE_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

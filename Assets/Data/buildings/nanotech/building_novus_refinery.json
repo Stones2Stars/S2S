@@ -1,0 +1,123 @@
+{
+ "type": "BUILDING_NOVUS_REFINERY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ELECTROWEAK_MATTER"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_PICOTECH_COMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INDUSTRIAL_PARK",
+    "BUILDING_EVOLUTIONARY_ALGORITHMS",
+    "TECH_NOVUS_CHEMISTRY",
+    "TECH_NANOELECTRONICS",
+    {
+     "type": "BONUS_LIQUID_METAL",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SHOCKWAVE_ENGINES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_PICOTECH_COMPLEX"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_NOVUS_CHEMICALS"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 9,
+     "enabled": "TECH_SUPERSTRONG_ALLOYS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_ORBITAL_FLIGHT"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_DNA_COMPUTING"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_ARTIFICIAL_PHOTOSYNTHESIS"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "cost": {
+  "production": 3805,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NOVUS_REFINERY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NOVUS_REFINERY",
+  "civilopedia": "TXT_KEY_BUILDING_NOVUS_REFINERY_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

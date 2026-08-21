@@ -1,0 +1,92 @@
+{
+ "type": "BUILDING_BLACK_HAT_HIDEOUT_UNSANCTIONED",
+ "requires": {
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    "BUILDING_WIRELESS_NETWORKS",
+    "TECH_COMMUNICATION_NETWORKS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 2500,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": -30,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 30
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "chance": {
+    "per": "PROPERTY_CRIME"
+   },
+   "action": {
+    "grant": {
+     "units": [
+      "UNIT_HACKER"
+     ]
+    }
+   }
+  },
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": -6,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_TECH"
+   }
+  }
+ ],
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BLACK_HAT_HIDEOUT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BLACK_HAT_HIDEOUT_UNSANCTIONED",
+  "civilopedia": "TXT_KEY_BUILDING_BLACK_HAT_HIDEOUT_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

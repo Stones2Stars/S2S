@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM",
+ "enables": {
+  "buildings": [
+   "BUILDING_NEOM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
+    "TECH_STABLE_TIME_LOOPS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 35
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    60,
+    {
+     "value": 13,
+     "enabled": "TECH_MULTIVERSE_TRAVERSAL"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SYNTHETIC_DIAMOND",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": -20,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "cost": {
+  "production": 19755,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM",
+  "civilopedia": "TXT_KEY_BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

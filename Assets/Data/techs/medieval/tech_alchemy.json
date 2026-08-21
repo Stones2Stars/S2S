@@ -1,0 +1,95 @@
+{
+ "type": "TECH_ALCHEMY",
+ "enables": {
+  "bonuses": [
+   "BONUS_KEROSENE",
+   "BONUS_MARZIPAN",
+   "BONUS_PASTA",
+   "BONUS_WINE_CHAMPAGNE",
+   "BONUS_WINE_VINTAGE_RED",
+   "BONUS_WINE_VINTAGE_WHITE"
+  ],
+  "buildings": [
+   "BUILDING_ALCHEMISTS_LAB",
+   "BUILDING_CONFECTIONERS_WORKSHOP",
+   "BUILDING_CULTURE_BEDOUIN",
+   "BUILDING_DISTILLERY",
+   "BUILDING_DW_CHAMPAGNE",
+   "BUILDING_DW_VINTAGE_RED",
+   "BUILDING_DW_VINTAGE_WHITE",
+   "BUILDING_GUILD_APOTHECARIES",
+   "BUILDING_HERBALIST",
+   "BUILDING_KEROSENE_DISTILLERY",
+   "BUILDING_PASTA_MAKERS_SHOP"
+  ],
+  "techs": [
+   "TECH_CRUCIBLE_STEEL",
+   "TECH_INVENTION",
+   "TECH_OPTICS",
+   "TECH_RAT_CATCHING",
+   "TECH_STAINED_GLASS"
+  ],
+  "units": [
+   "UNIT_ANCIENT_FLAMETHROWER",
+   "UNIT_ANCIENT_HAND_CANNON",
+   "UNIT_APU_TAMBO",
+   "UNIT_BADIS",
+   "UNIT_BARUD_WARRIOR",
+   "UNIT_CANACUMACO",
+   "UNIT_HELLSMOUTH_DOG",
+   "UNIT_YUSUF"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CANDLE_MAKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DRUG_TRADE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1334
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/alchemy.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ALCHEMYASTROLOGY",
+  "soundMP": "AS2D_TECH_ALCHEMYASTROLOGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ALCHEMY",
+  "civilopedia": "TXT_KEY_TECH_ALCHEMY_PEDIA",
+  "quote": "TXT_KEY_TECH_ALCHEMY_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 44,
+  "gridY": 7
+ }
+}

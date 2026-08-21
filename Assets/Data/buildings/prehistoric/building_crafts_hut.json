@@ -1,0 +1,157 @@
+{
+ "type": "BUILDING_CRAFTS_HUT",
+ "enables": {
+  "buildings": [
+   "BUILDING_GUILD_ARTISANS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PLASTIC_ELECTRONICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MALL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_BARTER",
+    {
+     "any": [
+      "BUILDING_STORAGE_PIT",
+      "BUILDING_GRANARY",
+      "BUILDING_MODERN_GRANARY",
+      "BUILDING_BARTER_POST",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_MALL",
+    "BUILDING_HYPERMARKET"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GLASSWARE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_POTTERY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SCULPTURES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BASKETS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BEADS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LACQUERWARE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MASKS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CANDLES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": "TECH_PICTOGRAPHS"
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 74,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CRAFTS_HUT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRAFTS_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_CRAFTS_HUT_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

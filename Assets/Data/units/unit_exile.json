@@ -1,0 +1,183 @@
+{
+ "type": "UNIT_EXILE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
+ "replacedBy": {
+  "units": [
+   "UNIT_NEANDERTHAL_GATHERER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EXILE_PRACTICES",
+    "TECH_DECEPTION"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_THIEF"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": -1
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "lunge": {
+    "percent": 2
+   },
+   "unnerve": {
+    "percent": 2
+   },
+   "targets": {
+    "UNITCOMBAT_TRADE": true,
+    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "underworld": {
+  "unit": {
+   "insidiousness": {
+    "flat": 2
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 4
+  },
+  "plot": {
+   "flat": 2
+  }
+ },
+ "skills": [
+  "alwaysHostile",
+  "hiddenNationality",
+  "noCapture",
+  "noDefensiveBonus",
+  "pillage",
+  "blendIntoCity",
+  "counterSpy",
+  "destroy",
+  "ignoreTerrainCost",
+  "stealPlans",
+  "camouflage"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_CRIMINAL",
+ "combatClasses": [
+  "UNITCOMBAT_MELEE",
+  "UNITCOMBAT_THROWING",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_ROCK",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_EXILE"
+ ],
+ "hideAndSeek": {
+  "method": "camouflage",
+  "concealment": {
+   "flat": 200
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_INDUSTRYESPIONAGE",
+   "PROMOTION_MARAUDER"
+  ],
+  "greatPersonAction": {
+   "trade": {
+    "base": 5,
+    "multiplier": 1
+   }
+  }
+ },
+ "cost": {
+  "production": 13,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_EXILE",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_EXILE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_EXILE",
+  "civilopedia": "TXT_KEY_UNIT_EXILE_PEDIA",
+  "worth": 1,
+  "militaryWorth": 2,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_INFILTRATOR",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "espionagePoints": 25,
+  "unitAIs": [
+   "UNITAI_SPY",
+   "UNITAI_PILLAGE",
+   "UNITAI_INFILTRATOR"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

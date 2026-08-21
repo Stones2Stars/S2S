@@ -1,0 +1,73 @@
+{
+ "type": "BONUS_DONKEY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_DONKEY",
+   "BUILDING_CARRIAGE_BUILDER",
+   "BUILDING_CARRION_GATHERER",
+   "BUILDING_CENTRAL_BREEDER_DONKEY",
+   "BUILDING_CULTURE_BRETON",
+   "BUILDING_CULTURE_DZUNGAR",
+   "BUILDING_CULTURE_ROMANI",
+   "BUILDING_FARM_ANIMAL_DONKEY",
+   "BUILDING_STREET_CARS"
+  ],
+  "units": [
+   "UNIT_NEANDERTHAL_SHEPHERD",
+   "UNIT_PACKMULE",
+   "UNIT_SHEPHERD",
+   "UNIT_TAMED_DONKEY",
+   "UNIT_TAMED_DONKEY_PAIR",
+   "UNIT_WORKMULE"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_DONKEY"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 3,
+  "constAppearance": 200,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 100,
+  "uniqueRange": 5,
+  "hills": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_PLAINS"
+  ],
+  "validFeatures": [
+   "FEATURE_FLOOD_PLAINS",
+   "FEATURE_VERY_TALL_GRASS",
+   "FEATURE_SAVANNA",
+   "FEATURE_CACTUS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_SCRUB",
+   "TERRAIN_DESERT"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_DONKEY",
+  "civilopedia": "TXT_KEY_BONUS_DONKEY_PEDIA",
+  "bonusClassType": "BONUSCLASS_STRATEGIC",
+  "source": "natural"
+ }
+}

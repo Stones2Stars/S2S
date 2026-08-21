@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_SOCIAL_NETWORKS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLOGS",
+   "BUILDING_DISTRIBUTED_SOCIAL_NETWORK",
+   "BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE",
+   "BUILDING_MEME_GENERATOR",
+   "BUILDING_SOCIAL_MEDIA_SURVEILLANCE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_EXOCORTEX_NETWORKS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HOLOGRAPHIC_NETWORKS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ENCRYPTED_FIREWALL",
+    "TECH_ONLINE_COMMUNITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_HOLOGRAPHIC_NETWORKS",
+    "BUILDING_EXOCORTEX_NETWORKS"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
+ "cost": {
+  "production": 2105,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SOCIAL_NETWORKS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SOCIAL_NETWORKS",
+  "civilopedia": "TXT_KEY_BUILDING_SOCIAL_NETWORKS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

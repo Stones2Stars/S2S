@@ -1,0 +1,47 @@
+{
+ "type": "FEATURE_PLATY_PRAVCICKA_BRANA",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 5
+   }
+  }
+ },
+ "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
+  "nukeImmune",
+  "ignoreTerrainCulture"
+ ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_PRAVCICKA_BRANA"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_PRAVCICKA_BRANA",
+  "civilopedia": "TXT_KEY_FEATURE_PRAVCICKA_BRANA_PEDIA",
+  "requiresFlatlands": true,
+  "validTerrains": [
+   "TERRAIN_PLAINS",
+   "TERRAIN_ROCKY",
+   "TERRAIN_SCRUB"
+  ]
+ }
+}

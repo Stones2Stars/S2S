@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_CISLUNAR_MATERIALS_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_BIOFACTORY",
+   "BUILDING_CISLUNAR_CLOAKING",
+   "BUILDING_CISLUNAR_COOLING_SYSTEM",
+   "BUILDING_CISLUNAR_PHASED_ARRAY_OPTICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_LIQUID_METALS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 9,
+     "enabled": "TECH_SUPERSTRONG_ALLOYS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_SUPERCHARGED_CRYSTALLOGRAPHY"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_NANOROBOTICS"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 528,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_MATERIALS_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_MATERIALS_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_MATERIALS_LAB_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

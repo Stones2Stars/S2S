@@ -1,0 +1,111 @@
+{
+ "type": "BUILDING_EMPERORS_CLOTHING_STORE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ASSEMBLY_LINE",
+    "TECH_CORPORATION",
+    {
+     "any": [
+      "BUILDING_SHOPPING_DISTRICT",
+      "BUILDING_TRADING_POST"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CORPORATION_EMPCLOTH"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SILK",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BEAVER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COTTON",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 710,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EMPERORS_CLOTHING_STORE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FACTORY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EMPERORS_CLOTHING_STORE",
+  "civilopedia": "TXT_KEY_BUILDING_EMPERORS_CLOTHING_STORE_PEDIA",
+  "worth": 6,
+  "militaryWorth": 2,
+  "conquestProbability": 75,
+  "specialBuildingType": "SPECIALBUILDING_CORPORATION",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,132 @@
+{
+ "type": "UNIT_QSHIP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
+    "TECH_SUBMARINE_WARFARE",
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 5
+  }
+ },
+ "combat": {
+  "unit": {
+   "vsUnit": {
+    "UNIT_UBOAT": {
+     "attack": {
+      "percent": 50
+     },
+     "defense": {
+      "percent": 50
+     }
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 35
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 10
+   }
+  }
+ },
+ "skills": [
+  "pillage",
+  "ignoreBuildingDefense",
+  "mechanized",
+  "renderBelowWater"
+ ],
+ "tags": [
+  "military",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_STEAM_SHIPS",
+ "combatClasses": [
+  "UNITCOMBAT_NAVAL_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_DIST_TORPEDO",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 1130,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_QSHIP",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 2.25,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_QSHIP"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_QSHIP",
+  "civilopedia": "TXT_KEY_UNIT_QSHIP_PEDIA",
+  "worth": 3,
+  "militaryWorth": 14,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "minAreaSize": 10,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_RESERVE_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_SEA",
+   "UNITAI_RESERVE_SEA",
+   "UNITAI_ESCORT_SEA",
+   "UNITAI_EXPLORE_SEA"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

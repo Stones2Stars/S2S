@@ -1,0 +1,116 @@
+{
+ "type": "BUILDING_ULTIMATE_COMBAT_ARENA",
+ "enables": {
+  "buildings": [
+   "BUILDING_MAGITEK_COMBAT_ARENA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ATHLETIC_MEGACOMPLEX",
+    "TECH_BINARY_PSYCHOKINESIS",
+    {
+     "any": [
+      "BUILDING_RESURRECTION_HUB",
+      "BUILDING_NANOMORPHIC_REPLICATOR"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 12,
+     "enabled": "TECH_FANTASY_MATERIALS"
+    },
+    {
+     "value": 13,
+     "enabled": "TECH_HYPERINTELLIGENCE"
+    },
+    {
+     "value": 13,
+     "enabled": "TECH_DEITIES"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_POSTHUMANISM"
+    },
+    {
+     "value": 12,
+     "enabled": "TECH_SHAPESHIFTING"
+    },
+    {
+     "value": 12,
+     "enabled": "TECH_MENSIOKINESIS"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HUMAN_MOD_NOVEL_SENSES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MITHRIL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 6405,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ULTIMATE_COMBAT_ARENA",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ULTIMATE_COMBAT_ARENA",
+  "civilopedia": "TXT_KEY_BUILDING_ULTIMATE_COMBAT_ARENA_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_MING",
+ "enables": {
+  "units": [
+   "UNIT_TREASURE_SHIP",
+   "UNIT_WANLI"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MING"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MING",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

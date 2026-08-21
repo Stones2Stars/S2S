@@ -1,0 +1,65 @@
+{
+ "type": "TECH_CHAOS_THEORY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARXIV",
+   "BUILDING_BIOSPHERE_2",
+   "BUILDING_FINANCIAL_RISK_MONITOR",
+   "BUILDING_TRAFFIC_ENGINEERING_AGENCY"
+  ],
+  "techs": [
+   "TECH_COMMUNICATION_NETWORKS",
+   "TECH_SUPERSTRING_THEORY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CLIMATE_MODELS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INFORMATION_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 19916
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Buttons/Techs/chaos_theory.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CHAOS_THEORY",
+  "civilopedia": "TXT_KEY_TECH_CHAOS_THEORY_PEDIA",
+  "quote": "TXT_KEY_TECH_CHAOS_THEORY_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 87,
+  "gridY": 17
+ }
+}

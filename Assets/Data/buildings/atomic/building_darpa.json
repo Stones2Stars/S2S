@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_DARPA",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LABORATORY",
+    "BUILDING_MILITARY_BASE",
+    "TECH_SATELLITES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": [
+    20,
+    {
+     "value": 8,
+     "enabled": "TECH_AUTONOMOUS_VEHICLES"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_COMPUTER_NETWORKS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_DISASTER_ROBOTS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_MILITARY_ROBOTICS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_BRAIN_MACHINE_INTERFACE"
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 8460,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_DARPA"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DARPA",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DARPA",
+  "civilopedia": "TXT_KEY_BUILDING_DARPA_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

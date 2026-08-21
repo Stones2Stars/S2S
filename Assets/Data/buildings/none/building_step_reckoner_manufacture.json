@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_STEP_RECKONER_MANUFACTURE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PERSONAL_COMPUTERS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CLOCKPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CLOCKPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "BONUS_COPPER_WARES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 380,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_STEP_RECKONER_MANUFACTURE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_STEP_RECKONER_MANUFACTURE",
+  "civilopedia": "TXT_KEY_BUILDING_STEP_RECKONER_MANUFACTURE_PEDIA",
+  "worth": 2,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_CLOCK",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

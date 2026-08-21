@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_BURIAL_TRADITION_SKY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANCIENT_EMBALMER",
+   "BUILDING_BURIAL_PLATFORMS",
+   "BUILDING_BURIAL_TRADITION_BONE",
+   "BUILDING_BURIAL_TRADITION_MUMMY",
+   "BUILDING_MORTUARY",
+   "BUILDING_STELE",
+   "BUILDING_TOWER_OF_SILENCE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRANSHUMANISM"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FUNERARY_SERVICES"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FOLKLORE_E_SKY",
+    "TECH_CEREMONIAL_BURIAL",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_BURIAL_TRADITION_CAVE",
+    "BUILDING_BURIAL_TRADITION_EARTH",
+    "BUILDING_BURIAL_TRADITION_FIRE",
+    "BUILDING_BURIAL_TRADITION_SEA"
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_FUNERARY_SERVICES",
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "cost": {
+  "production": 86,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BURIAL_TRADITION_SKY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BURIAL_TRADITION_SKY",
+  "civilopedia": "TXT_KEY_BUILDING_BURIAL_TRADITION_SKY_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

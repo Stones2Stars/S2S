@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_MIGHT9",
+ "combat": {
+  "unit": {
+   "flat": 10
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MIGHT": 9
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Might9Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_MIGHT9",
+  "levelPrereq": 19,
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_QUALITY_EPIC",
+   "UNITCOMBAT_QUALITY_DIVINE"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_ANIMAL"
+  ]
+ }
+}

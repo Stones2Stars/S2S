@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_PAIUTE",
+ "enables": {
+  "units": [
+   "UNIT_PAIUTE_CAVALRY",
+   "UNIT_WINNEMUCCA"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PAIUTE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PAIUTE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

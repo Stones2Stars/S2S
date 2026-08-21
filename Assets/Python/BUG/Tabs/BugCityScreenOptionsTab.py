@@ -50,15 +50,7 @@ class BugCityScreenOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addLabel(screen, LEFT, "BuildingEffects", "Building Actual Effects in Hovers:")
 		aLeft, aRight = self.addTwoColumnLayout(screen, LEFT, "BuildingEffects", False)
 		self.addCheckbox(screen, aLeft, "MiscHover__BuildingActualEffects")
-		self.addCheckbox(screen, aLeft, "MiscHover__BuildingAdditionalFood")
-		self.addCheckbox(screen, aLeft, "MiscHover__BuildingAdditionalProduction")
-		self.addCheckbox(screen, aLeft, "MiscHover__BuildingAdditionalCommerce")
-		self.addCheckbox(screen, aLeft, "MiscHover__BuildingSavedMaintenance")
 		self.addSpacer(screen, aRight, "CityScreen2a")
-		self.addCheckbox(screen, aRight, "MiscHover__BuildingAdditionalHealth")
-		self.addCheckbox(screen, aRight, "MiscHover__BuildingAdditionalHappiness")
-		self.addCheckbox(screen, aRight, "MiscHover__BuildingAdditionalGreatPeople")
-		self.addCheckbox(screen, aRight, "MiscHover__BuildingAdditionalDefense")
 		self.addSpacer(screen, LEFT, "CityScreen3")
 
 		#City Bar

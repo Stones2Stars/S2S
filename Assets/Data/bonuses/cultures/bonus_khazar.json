@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_KHAZAR",
+ "enables": {
+  "units": [
+   "UNIT_BULAN",
+   "UNIT_MOBILE_TREBUCHET"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_KHAZAR"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_KHAZAR",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

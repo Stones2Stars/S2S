@@ -1,0 +1,144 @@
+{
+ "type": "UNIT_GOLIATH_AIRSHIP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HYDROGEN",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_DIESELPUNK",
+    "TECH_ZEPPELINS",
+    {
+     "type": "BONUS_DIESELPUNK",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GUNSHIP"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_GUN": {
+     "percent": 50
+    },
+    "UNITCOMBAT_TRACKED": {
+     "percent": 50
+    },
+    "UNITCOMBAT_WHEELED": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 40
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": {
+     "all": [
+      "IS_AIR",
+      "IS_FIGHTER",
+      "!IS_MISSILE"
+     ]
+    },
+    "flat": 2
+   }
+  }
+ },
+ "skills": [
+  "noCapture",
+  "noDefensiveBonus",
+  "canMoveAllTerrain",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost",
+  "dcmFighterEngage",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_BALLOON",
+ "combatClasses": [
+  "UNITCOMBAT_TRANSPORT",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_A2G_BOMBS",
+  "UNITCOMBAT_SPEED_SLOW",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_COLOSSAL",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 1030,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GOLIATH_AIRSHIP",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 0.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_GOLIATH_AIRSHIP"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_GOLIATH_AIRSHIP",
+  "civilopedia": "TXT_KEY_UNIT_GOLIATH_AIRSHIP_PEDIA",
+  "worth": 3,
+  "militaryWorth": 139,
+  "xpValueAttack": 3,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

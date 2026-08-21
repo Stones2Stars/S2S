@@ -1,0 +1,20 @@
+{
+ "type": "CULTURELEVEL_ILLUSTRIOUS",
+ "allowed": {
+  "worldWonders": 10,
+  "teamWonders": 12,
+  "nationalWonders": 22
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 40
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CULTURELEVEL_ILLUSTRIOUS",
+  "cityRadius": 3,
+  "cultureThreshold": 133120
+ }
+}

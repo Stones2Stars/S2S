@@ -1,0 +1,145 @@
+{
+ "type": "UNIT_RHINO_SWORDSMAN",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ARMORED_CAVALRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_IRON_WORKING",
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_EFFECT_HERITAGE_RHINOS",
+      "BUILDING_ANIMAL_TRAINER_RHINOCEROS"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_KNIGHT"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 10
+   },
+   "cityDefense": {
+    "percent": -80
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 6
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 100
+   },
+   "limit": {
+    "flat": 75
+   },
+   "maxUnits": {
+    "flat": 4
+   }
+  }
+ },
+ "skills": [
+  "pillage"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_MOUNTED",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_AXE",
+  "UNITCOMBAT_ARMOR_HEAVY",
+  "UNITCOMBAT_SHIELD_LARGE",
+  "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_HORNED",
+  "UNITCOMBAT_ANIMAL_COMBAT_HEAD_BUTT",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+  "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+  "UNITCOMBAT_MOTILITY_RIDING",
+  "UNITCOMBAT_MOUNT_RHINO",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 225
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RHINO_SWORDSMAN",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_RHINO_SWORDSMAN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_RHINO_SWORDSMAN",
+  "civilopedia": "TXT_KEY_UNIT_RHINO_SWORDSMAN_PEDIA",
+  "worth": 2,
+  "militaryWorth": 3,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

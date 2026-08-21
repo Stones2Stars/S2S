@@ -1,0 +1,92 @@
+{
+ "type": "BUILDING_CATCHER_CANARY",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FEATHERS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INDUSTRIAL_FARMS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_POULTRY_DOMESTICATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_PARROT",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_WHEAT",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": "TECH_ECOLOGY"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 125,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 7
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CATCHER_CANARY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CATCHER_CANARY",
+  "civilopedia": "TXT_KEY_BUILDING_CATCHER_CANARY_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

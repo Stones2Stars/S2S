@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_SEDNA_PROBE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_JET_PROPULSION_LABORATORY",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_MAGNETIC_SAILS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_COMMERCIAL_SPACEPORT": {
+     "percent": 10
+    },
+    "BUILDING_STARPORT": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 22830
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SEDNA_PROBE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SEDNA_PROBE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SEDNA_PROBE",
+  "civilopedia": "TXT_KEY_BUILDING_SEDNA_PROBE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

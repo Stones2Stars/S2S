@@ -1,0 +1,69 @@
+{
+ "type": "TECH_ZEPTOTECHNOLOGY",
+ "enables": {
+  "bonuses": [
+   "BONUS_VIBRANIUM"
+  ],
+  "buildings": [
+   "BUILDING_ALEPH_ASSEMBLER",
+   "BUILDING_GRAND_UNIFIED_ACCELERATOR",
+   "BUILDING_HYPERFOG",
+   "BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_PLANT",
+   "BUILDING_VIBRANIUM_MINE",
+   "BUILDING_ZEPTOBOTIC_NEURAL_IMPLANTS"
+  ],
+  "techs": [
+   "TECH_ELECTROWEAK_MATTER",
+   "TECH_NOOGENESIS",
+   "TECH_REACTIONLESS_DRIVE",
+   "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WORMHOLE_HIVEMIND",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_EXOTIC_STARS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 314134
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/zeptotechnology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ZEPTOTECHNOLOGY",
+  "civilopedia": "TXT_KEY_TECH_ZEPTOTECHNOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_ZEPTOTECHNOLOGY_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 143,
+  "gridY": 11
+ }
+}

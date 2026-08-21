@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_EMU_EGG_CARVER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_L_OCEANIAN",
+    "TECH_PICTOGRAPHS",
+    {
+     "any": [
+      "BUILDING_CAMP_EMU",
+      "BUILDING_BREEDING_PROGRAM_EMU",
+      "BUILDING_ANIMAL_PRESERVE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   {
+    "BONUS_CARVED_EMU_EGGS": 6
+   }
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2
+  }
+ },
+ "cost": {
+  "production": 516,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_EMU_EGG"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EMU_EGG_CARVER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EMU_EGG_CARVER",
+  "civilopedia": "TXT_KEY_BUILDING_EMU_EGG_CARVER_PEDIA",
+  "pediaCategory": "greatWonder",
+  "centerInCity": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,174 @@
+{
+ "type": "CIVIC_GOLD_STANDARD",
+ "enables": {
+  "buildings": [
+   "BUILDING_GOLD_VAULT"
+  ],
+  "hurries": [
+   "HURRY_GOLD"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": [
+    3,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    3,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": [
+    5,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    7,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    5,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    1,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1,
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "per": {
+       "type": "POPULATION",
+       "each": 100,
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "corporation": {
+    "percent": -10
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 1,
+   "modifier": {
+    "food": {
+     "percent": 5
+    },
+    "production": {
+     "percent": 5
+    },
+    "commerce": {
+     "percent": 5
+    },
+    "percent": [
+     {
+      "value": 10,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": -1
+   }
+  }
+ },
+ "inflation": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "weight": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/currency_gold_standard.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_GOLD_STANDARD",
+  "civilopedia": "TXT_KEY_CIVIC_GOLD_STANDARD_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_GOLD_STANDARD_STRATEGY",
+  "civicOption": "CIVICOPTION_CURRENCY",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_MARTIAN_COMMUNICATION_BEACON",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_MARTIAN",
+    "TECH_PLANETARY_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 702,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_COMMUNICATION_BEACON",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_COMMUNICATION_BEACON",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_COMMUNICATION_BEACON_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

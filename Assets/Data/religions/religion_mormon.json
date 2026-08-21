@@ -1,0 +1,79 @@
+{
+ "type": "RELIGION_MORMON",
+ "enables": {
+  "buildings": [
+   "BUILDING_LDS_MEETINGHOUSE",
+   "BUILDING_LDS_MISSIONARY_TRAINING_CENTRE",
+   "BUILDING_LDS_TEMPLE"
+  ],
+  "units": [
+   "UNIT_MORMON_MISSIONARY"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_MORMON"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_MORMON"
+     }
+    }
+   ]
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 27,
+   "icon": "Art/Interface/Buttons/Religions/Mormonism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/found_mormon.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Mormonism.dds",
+   "movie": {
+    "file": "Art/Cutscene/Mormon_Generic_Found.nif",
+    "sound": "AS2D_BUILD_SHAMAN_MOVIE"
+   }
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_JEWISH"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MORMON",
+  "civilopedia": "TXT_KEY_TECH_MORMON_PEDIA",
+  "spreadFactor": 15
+ }
+}

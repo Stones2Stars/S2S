@@ -1,0 +1,30 @@
+{
+ "type": "BONUS_PHARMACEUTICALS",
+ "enables": {
+  "buildings": [
+   "BUILDING_PHARMACY",
+   "BUILDING_RESEARCH_HOSPITAL"
+  ],
+  "units": [
+   "UNIT_AMBULANCE",
+   "UNIT_AMBULANCE_II",
+   "UNIT_EARLY_MEDIVAC",
+   "UNIT_MEDEVAC_DROPSHIP",
+   "UNIT_MEDIC",
+   "UNIT_MEDICAL_LAB_TECH",
+   "UNIT_MEDICAL_VET",
+   "UNIT_MODERN_MEDIVAC"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PHARMACEUTICALS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PHARMACEUTICALS",
+  "civilopedia": "TXT_KEY_BONUS_PHARMACEUTICALS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

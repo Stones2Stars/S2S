@@ -1,0 +1,38 @@
+{
+ "type": "PROMOTION_SPHINX",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT6"
+   ]
+  }
+ },
+ "costs": {
+  "unit": {
+   "upgrade": {
+    "percent": -50
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Sphinx.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SPHINX",
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HELICOPTER"
+  ]
+ }
+}

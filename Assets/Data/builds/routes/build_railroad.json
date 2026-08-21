@@ -1,0 +1,70 @@
+{
+ "type": "BUILD_RAILROAD",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RAILROAD",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "route": "ROUTE_RAILROAD",
+  "features": [
+   {
+    "feature": "FEATURE_CRATER",
+    "tech": "TECH_NITROGLYCERIN"
+   },
+   {
+    "feature": "FEATURE_VOLCANO_DORMANT",
+    "tech": "TECH_NITROGLYCERIN"
+   },
+   {
+    "feature": "FEATURE_VOLCANO_ACTIVE",
+    "tech": "TECH_DUMMY"
+   }
+  ],
+  "terraform": [
+   {
+    "terrain": "TERRAIN_HILL",
+    "tech": "TECH_NITROGLYCERIN"
+   },
+   {
+    "terrain": "TERRAIN_JAGGED",
+    "tech": "TECH_NITROGLYCERIN"
+   },
+   {
+    "terrain": "TERRAIN_DUNES",
+    "tech": "TECH_REFRIGERATION"
+   },
+   {
+    "terrain": "TERRAIN_ICE",
+    "tech": "TECH_COMBUSTION"
+   },
+   {
+    "terrain": "TERRAIN_PEAK",
+    "tech": "TECH_NITROGLYCERIN"
+   }
+  ]
+ },
+ "cost": {
+  "gold": 20,
+  "time": 400
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/BuildRailroad.dds"
+  },
+  "hotkey": "KB_R"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_RAILROAD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_RAILROAD"
+ }
+}

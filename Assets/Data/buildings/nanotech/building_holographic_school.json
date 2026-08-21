@@ -1,0 +1,194 @@
+{
+ "type": "BUILDING_HOLOGRAPHIC_SCHOOL",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTEGRATED_SCHOOLS",
+   "BUILDING_LEARNING_CENTER",
+   "BUILDING_TELECOURSE_STUDIO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MEGATOWER_EDUCATION_LEVEL",
+    "TECH_HOLOGRAPHICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    100,
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BONUS_CALCULATORS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BONUS_COMPUTERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BONUS_PENCILS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ],
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 40,
+   "percent": 1
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_CAVALRY": {
+     "percent": 10
+    },
+    "UNIT_CHARIOT": {
+     "percent": 10
+    },
+    "UNIT_CHIVALRY": {
+     "percent": 10
+    },
+    "UNIT_CUIRASSIER": {
+     "percent": 10
+    },
+    "UNIT_HEAVY_CAVALRY": {
+     "percent": 10
+    },
+    "UNIT_HORSEMAN": {
+     "percent": 10
+    },
+    "UNIT_HORSE_ARCHER": {
+     "percent": 10
+    },
+    "UNIT_KNIGHT": {
+     "percent": 10
+    },
+    "UNIT_LIGHT_CAVALRY": {
+     "percent": 10
+    },
+    "UNIT_MOUNTED_INFANTRY": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_DIPLOMAT": {
+     "flat": 2
+    },
+    "UNITCOMBAT_HELICOPTER": {
+     "flat": 5
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "flat": 2
+    },
+    "UNITCOMBAT_SPY": {
+     "flat": 1
+    },
+    "UNITCOMBAT_WHEELED": {
+     "flat": 2
+    }
+   },
+   "domains": {
+    "DOMAIN_AIR": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1,
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_SPEED"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 3525,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HOLOGRAPHIC_SCHOOL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HOLOGRAPHIC_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_HOLOGRAPHIC_SCHOOL_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

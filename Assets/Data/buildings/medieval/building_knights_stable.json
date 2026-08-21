@@ -1,0 +1,116 @@
+{
+ "type": "BUILDING_KNIGHTS_STABLE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_RACE_TRACK",
+   "BUILDING_GER",
+   "BUILDING_GUILD_HOSTLERS",
+   "BUILDING_KINGS_TOURNAMENT",
+   "BUILDING_POLO_FIELD",
+   "BUILDING_RIDING_SCHOOL"
+  ],
+  "units": [
+   "UNIT_TAMED_BISON",
+   "UNIT_TAMED_BUFFALO",
+   "UNIT_TAMED_CAMEL",
+   "UNIT_TAMED_DONKEY",
+   "UNIT_TAMED_ELEPHANT",
+   "UNIT_TAMED_HORSE",
+   "UNIT_TAMED_LLAMA",
+   "UNIT_TAMED_MAMMOTH"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_VERTICAL_FLIGHT"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_STABLE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_STIRRUP",
+    {
+     "any": [
+      "BUILDING_ANIMAL_TRAINER_CAMEL",
+      "BUILDING_ANIMAL_TRAINER_DONKEY",
+      "BUILDING_ANIMAL_TRAINER_HORSE",
+      "BUILDING_ANIMAL_TRAINER_ELEPHANT",
+      "BUILDING_ANIMAL_TRAINER_LLAMA"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SADDLES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_MODERN_STABLE"
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MOUNTED": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 310,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_KNIGHTS_STABLES",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_KNIGHT_STABLE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_KNIGHTS_STABLE",
+  "civilopedia": "TXT_KEY_BUILDING_KNIGHTS_STABLE_PEDIA",
+  "worth": 2,
+  "militaryWorth": 3,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

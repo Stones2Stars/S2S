@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_EDUCATION_IDIOCRACY",
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EDUCATION_IGNORANCE",
+    "BUILDING_EDUCATION_BEWILDERED",
+    "BUILDING_EDUCATION_MINDLESS"
+   ],
+   "all": [
+    "TECH_TRANSHUMAN_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_EDUCATION",
+     "scope": "city",
+     "min": -2000000,
+     "max": -20000
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -50
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": -30,
+   "percent": -50
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "any": -5
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "percent": -100
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -50
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": -55
+   }
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -100
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 55
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 55
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYEDUCATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EDUCATION_IDIOCRACY",
+  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

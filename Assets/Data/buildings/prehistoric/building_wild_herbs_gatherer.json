@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_WILD_HERBS_GATHERER",
+ "enables": {
+  "units": [
+   "UNIT_NEANDERTHAL_WISE_WOMAN",
+   "UNIT_WISE_WOMAN"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_HERBALISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "empire": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "TECH_COOKING"
+    }
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": "TECH_NATUROPATHY"
+    }
+   ]
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 1,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE"
+   }
+  }
+ ],
+ "cost": {
+  "production": 40,
+  "countModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WILD_HERBS_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WILD_HERBS_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_WILD_HERBS_GATHERER_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

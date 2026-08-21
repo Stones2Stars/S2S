@@ -1,0 +1,94 @@
+{
+ "type": "IMPROVEMENT_TOWN",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GUILDS",
+     "scope": "team"
+    },
+    {
+     "natureYield": {
+      "food": 1
+     }
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_GRASSLAND",
+        "TERRAIN_PLAINS",
+        "TERRAIN_LUSH",
+        "TERRAIN_SCRUB",
+        "TERRAIN_MUDDY"
+       ]
+      },
+      "HAS_FRESHWATER"
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    11,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PRINTING_PRESS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SOCIAL_CONTRACT",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ECONOMICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "plot": {
+   "flat": 20
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_TOWN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_TOWN",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_TOWN_PEDIA",
+  "advancedStart": {
+   "cost": -1
+  },
+  "upgradeTime": 40,
+  "pillageGold": 100,
+  "cultureRange": 1,
+  "pillageTo": "IMPROVEMENT_VILLAGE",
+  "upgradesTo": "IMPROVEMENT_SUBURBS"
+ }
+}

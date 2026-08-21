@@ -1,0 +1,66 @@
+{
+ "type": "TECH_WORMHOLE_HIVEMIND",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_CLUSTER_BRAIN",
+   "BUILDING_INTERGALACTIC_WORMHOLE_COMMUNICATION_NETWORK",
+   "BUILDING_INTERSTELLAR_MEDIA_CENTER",
+   "BUILDING_INTERSTELLAR_NETWORK_NODE",
+   "BUILDING_MILKY_WAY_CLUSTER_BRAIN"
+  ],
+  "techs": [
+   "TECH_ZEPTOTECHNOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GRAVITRONICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INTERGALACTIC_COLONIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ULTIMA_ARCHITECTURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 291683
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/wormhole_hivemind.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_WORMHOLE_HIVEMIND",
+  "civilopedia": "TXT_KEY_TECH_WORMHOLE_HIVEMIND_PEDIA",
+  "quote": "TXT_KEY_TECH_WORMHOLE_HIVEMIND_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 141,
+  "gridY": 5
+ }
+}

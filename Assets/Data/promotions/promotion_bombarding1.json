@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_BOMBARDING1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BOMBARDING2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT1"
+   ]
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 2
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BOMBARDING": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/bombarding1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BOMBARDING1"
+ }
+}

@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_VENUS_SURFACE_PROBE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_VENUS",
+    "TECH_SUPERSTRONG_ALLOYS",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1000
+  }
+ },
+ "cost": {
+  "production": 1144,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VENUS_SURFACE_PROBE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_SURFACE_PROBE",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_SURFACE_PROBE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

@@ -1,0 +1,88 @@
+{
+ "type": "TECH_RAFT_BUILDING",
+ "enables": {
+  "buildings": [
+   "BUILDING_WATER_BURIALS"
+  ],
+  "promotions": [
+   "PROMOTION_SEA_HUNTER1"
+  ],
+  "techs": [
+   "TECH_SPEARFISHING"
+  ],
+  "units": [
+   "UNIT_NEANDERTHAL_RAFT",
+   "UNIT_RAFT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BINDING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADHESIVES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SIMPLE_WOOD_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "canTradeOn": {
+  "terrains": [
+   "TERRAIN_LAKE_SHORE"
+  ]
+ },
+ "capabilities": {
+  "hasRiverTrade": true
+ },
+ "cost": {
+  "research": 20
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/raftbuilding.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_RAFT_BUILDING",
+  "soundMP": "AS2D_TECH_RAFT_BUILDING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_RAFT_BUILDING",
+  "civilopedia": "TXT_KEY_TECH_RAFT_BUILDING_PEDIA",
+  "quote": "TXT_KEY_TECH_RAFT_BUILDING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 10,
+  "gridY": 5
+ }
+}

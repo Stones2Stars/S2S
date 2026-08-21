@@ -1,228 +1,70 @@
-//------------------------------------------------------------------------------------------------
-//  FILE:    CvRouteInfo.cpp
-//------------------------------------------------------------------------------------------------
-#include "CvGameCoreDLL.h"
-#include "CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "CvPlayerAI.h"
-#include "CvPython.h"
-#include "CvXMLLoadUtility.h"
-#include "CvXMLLoadUtilityModTools.h"
-#include "CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
+//
+//	CvRouteInfo -- the route poco's own typed reading on top of the base section dispatch (see the header).
+//	The yield and movement families compile into m_modifiers via the base dispatch -- no per-family raw read
+//	survives here (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)); the improvement-keyed rows and the tech-conditioned move deltas
+//	are compiled keyed/conditioned entries. mapFrom materializes the identity census set ONCE into typed
+//	members (docs/architecture/patterns.md §Materialize at mapFrom); idempotent by contract. The bonus-prereq forward FKs reset here
+//	and are re-landed by CvReversePass after every re-map.
+//
+
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
 #include "CvRouteInfo.h"
+#include "CvModEntry.h"
+#include "CvJsonParse.h"          // the shared walkers (jsonChildObj/jsonIdInt/jsonIdBool)
+#include "AI/CvGameAI.h"          // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, mirrors the archive)
 
-
-//======================================================================================================
-//					CvRouteInfo
-//======================================================================================================
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   CvRouteInfo()
-//
-//  PURPOSE :   Default constructor
-//
-//------------------------------------------------------------------------------------------------------
-CvRouteInfo::CvRouteInfo() :
-// Only the non-XML runtime field (m_zobristValue, below) and the hand-written array need explicit
-// init here; every declared field is defaulted by initDataMembers() below.
-m_piTechMovementChange(NULL)
+CvRouteInfo::CvRouteInfo()
+	: m_iValue(0)
+	, m_iAdvancedStartCost(100)
+	, m_iZobristValue(0)
+	, m_bSeaTunnel(false)
+	, m_ePrereqBonus(NO_BONUS)
 {
-	CvInfoUtil(this).initDataMembers();
-
-	m_zobristValue = GC.getGame().getSorenRand().getInt();
+	// Non-XML runtime map-hash value, drawn from the synced RNG at info construction EXACTLY as the archived
+	// CvRouteInfo ctor did. CvPlot XORs it into m_movementCharacteristicsHash.
+	m_iZobristValue = GC.getGame().getSorenRand().getInt();
 }
 
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   ~CvRouteInfo()
-//
-//  PURPOSE :   Default destructor
-//
-//------------------------------------------------------------------------------------------------------
-CvRouteInfo::~CvRouteInfo()
+void CvRouteInfo::mapFrom(const picojson::value& entity)
 {
-	// m_piYieldChange is owned by its addYields wrapper and freed by uninitDataMembers.
-	CvInfoUtil(this).uninitDataMembers();
-	SAFE_DELETE_ARRAY(m_piTechMovementChange);
-}
+	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom. The bonus-prereq forward FKs
+	// reset here because CvReversePass re-lands them AFTER every re-map (the OR-list would double otherwise).
+	m_ePrereqBonus = NO_BONUS;
+	m_aePrereqOrBonuses.clear();
 
+	CvInfo::mapFrom(entity);   // core reading + the section dispatch (compiles m_modifiers)
 
-int CvRouteInfo::getAdvancedStartCost() const
-{
-	return m_iAdvancedStartCost;
-}
-
-
-int CvRouteInfo::getValue() const
-{
-	return m_iValue;
-}
-
-
-int CvRouteInfo::getMovementCost() const
-{
-	return m_iMovementCost;
-}
-
-
-int CvRouteInfo::getFlatMovementCost() const
-{
-	return m_iFlatMovementCost;
-}
-
-
-bool CvRouteInfo::isSeaTunnel() const
-{
-	return m_bSeaTunnel;
-}
-
-
-int CvRouteInfo::getPrereqBonus() const
-{
-	return m_iPrereqBonus;
-}
-
-
-int CvRouteInfo::getYieldChange(int i) const
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, i);
-	return m_piYieldChange ? m_piYieldChange[i] : 0;
-}
-
-
-int* CvRouteInfo::getYieldChangeArray() const
-{
-	return m_piYieldChange;
-}
-
-
-int CvRouteInfo::getTechMovementChange(int i) const
-{
-	FASSERT_BOUNDS(0, GC.getNumTechInfos(), i);
-	return m_piTechMovementChange ? m_piTechMovementChange[i] : 0;
-}
-
-
-int CvRouteInfo::getCategory(int i) const
-{
-	return m_aiCategories[i];
-}
-
-
-int CvRouteInfo::getNumCategories() const
-{
-	return (int)m_aiCategories.size();
-}
-
-
-bool CvRouteInfo::isCategory(int i) const
-{
-	return algo::any_of_equal(m_aiCategories, i);
-}
-
-
-const std::vector<BonusTypes>& CvRouteInfo::getPrereqOrBonuses() const
-{
-	return m_piPrereqOrBonuses;
-}
-
-
-void CvRouteInfo::getDataMembers(CvInfoUtil& util)
-{
-	// Declared in the legacy getCheckSum order. m_piTechMovementChange (dynamic tech-length int array
-	// via SetVariableListTagPair) has no wrapper yet and stays hand-written in read/copyNonDefaults;
-	// because it sits mid-order in the legacy checksum, getCheckSum below stays explicit too.
-	util
-		.add(m_iAdvancedStartCost, L"iAdvancedStartCost", 100)
-		.add(m_iValue, L"iValue")
-		.add(m_iMovementCost, L"iMovement")
-		.add(m_iFlatMovementCost, L"iFlatMovement")
-		.add(m_bSeaTunnel, L"bSeaTunnel")
-		.addEnumAsInt(m_iPrereqBonus, L"BonusType")
-		.addYields(m_piYieldChange, L"Yields")
-		.add(m_piPrereqOrBonuses, L"PrereqOrBonuses")
-		.add(m_aiCategories, L"Categories")
-		.add(m_PropertyManipulators)
-	;
-}
-
-
-bool CvRouteInfo::read(CvXMLLoadUtility* pXML)
-{
-	//shouldHaveType = true;
-	if (!CvInfoBase::read(pXML))
+	// the KEYED improvement-yield plane, scanned ONCE from the compiled entries (modifier.md §4/§5)
+	m_improvementYield.clear();
 	{
-		return false;
-	}
-	if (m_szType.empty())
-	{
-		OutputDebugStringW(pXML->GetXmlTagName());
-		OutputDebugString("\n");
-		FErrorMsg("error");
-	}
-	//shouldHaveType = false;
-
-	CvInfoUtil(this).readXml(pXML);
-
-	pXML->SetVariableListTagPair(&m_piTechMovementChange, L"TechMovementChanges", GC.getNumTechInfos());
-
-	return true;
-}
-
-
-void CvRouteInfo::copyNonDefaults(const CvRouteInfo* pClassInfo)
-{
-	PROFILE_EXTRA_FUNC();
-	const int iDefault = 0;
-
-	CvInfoBase::copyNonDefaults(pClassInfo);
-
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-
-	for ( int i = 0;  i < GC.getNumTechInfos(); i++)
-	{
-		if (getTechMovementChange(i) == iDefault && pClassInfo->getTechMovementChange(i) != iDefault)
+		const int iImprovementsSeg = modSegmentLookup("improvements");
+		const std::vector<CvModEntry*>& entries = m_modifiers.entries();
+		for (size_t iEntry = 0; iEntry < entries.size(); ++iEntry)
 		{
-			if ( NULL == m_piTechMovementChange )
+			const CvModEntry* pEntry = entries[iEntry];
+			const int iYield = infoFamilyYield(pEntry->family);
+			if (iImprovementsSeg >= 0 && pEntry->targetSeg == iImprovementsSeg
+			&&  pEntry->targetFk >= 0 && iYield >= 0)
 			{
-				CvXMLLoadUtility::InitList(&m_piTechMovementChange,GC.getNumTechInfos(),iDefault);
+				m_improvementYield[pEntry->targetFk * NUM_YIELD_TYPES + iYield] += pEntry->value;
 			}
-			m_piTechMovementChange[i] = pClassInfo->getTechMovementChange(i);
 		}
 	}
+	if (!entity.is<picojson::object>())
+	{
+		return;
+	}
+	const picojson::object& entityObj = entity.get<picojson::object>();
+
+	// identity: the intrinsic route stats
+	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
+	{
+		m_iValue = jsonIdInt(*pIdentity, "value");
+		m_bSeaTunnel = jsonIdBool(*pIdentity, "seaTunnel");
+		if (const picojson::object* pAdvancedStart = jsonChildObj(*pIdentity, "advancedStart"))
+		{
+			m_iAdvancedStartCost = jsonIdInt(*pAdvancedStart, "cost", 100);   // legacy load default 100
+		}
+	}
+	// (m_iZobristValue is drawn in the ctor -- non-XML runtime value, see there.)
 }
-
-
-void CvRouteInfo::getCheckSum(uint32_t& iSum) const
-{
-	// Explicit (not delegated) to keep the legacy checksum byte-identical: the hand-written
-	// m_piTechMovementChange sits mid-order between the declared fields.
-	CheckSum(iSum, m_iAdvancedStartCost);
-
-	CheckSum(iSum, m_iValue);
-	CheckSum(iSum, m_iMovementCost);
-	CheckSum(iSum, m_iFlatMovementCost);
-
-	CheckSum(iSum, m_bSeaTunnel);
-	CheckSum(iSum, m_iPrereqBonus);
-
-	// Arrays
-
-	CheckSum(iSum, m_piYieldChange, NUM_YIELD_TYPES);
-	CheckSum(iSum, m_piTechMovementChange, GC.getNumTechInfos());
-	CheckSumC(iSum, m_piPrereqOrBonuses);
-	CheckSumC(iSum, m_aiCategories);
-
-	m_PropertyManipulators.getCheckSum(iSum);
-}
-

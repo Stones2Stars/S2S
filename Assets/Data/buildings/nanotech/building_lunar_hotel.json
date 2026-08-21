@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_LUNAR_HOTEL",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LUNAR_SPACE_PORT",
+    "TECH_LUNAR_TOURISM",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1000
+  }
+ },
+ "cost": {
+  "production": 2000,
+  "hurryModifier": 10000
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUNAR_HOTEL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_HOTEL",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_HOTEL_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

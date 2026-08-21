@@ -1,0 +1,44 @@
+{
+ "type": "BUILDING_HYPERSPACE_MEDIA_CENTER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1261,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYPERSPACE_MEDIA_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_MEDIA_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_MEDIA_CENTER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

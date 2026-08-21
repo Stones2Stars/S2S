@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_EFFECT_HERITAGE_MAMMOTHS",
+ "enables": {
+  "units": [
+   "UNIT_BALLISTA_MAMMOTH",
+   "UNIT_BOMBARD_MAMMOTH",
+   "UNIT_NEANDERTHAL_MAMMOTH_RIDER",
+   "UNIT_TRAINED_MAMMOTH",
+   "UNIT_WAR_MAMMOTH",
+   "UNIT_WORKMAMMOTH"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_HERITAGE",
+    "TECH_MEGAFAUNA_DOMESTICATION"
+   ]
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_HERITAGE_MAMMOTHS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_MAMMOTHS",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_MAMMOTH_PEDIA",
+  "notConstructible": true,
+  "worth": 2,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

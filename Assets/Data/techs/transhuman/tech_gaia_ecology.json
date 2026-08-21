@@ -1,0 +1,84 @@
+{
+ "type": "TECH_GAIA_ECOLOGY",
+ "enables": {
+  "bonuses": [
+   "BONUS_DEEP_SPACE_LIFEFORMS"
+  ],
+  "buildings": [
+   "BUILDING_DEEP_SPACE_ECOSYSTEM",
+   "BUILDING_EUROPA_VERTICAL_REEF",
+   "BUILDING_GREEN_DESERT",
+   "BUILDING_REWILDERNESS",
+   "BUILDING_VENUS_BIOTIC_ATMOSPHERE"
+  ],
+  "techs": [
+   "TECH_TERRA_COMPUTER",
+   "TECH_THERMAL_NEGATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORGANIC_CITIES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ABYSS_COLONIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_LIFE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOMINING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 75052
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/gaiaecology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GAIA_ECOLOGY",
+  "soundMP": "AS2D_TECH_GAIA_ECOLOGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_GAIA_ECOLOGY",
+  "civilopedia": "TXT_KEY_TECH_GAIA_ECOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_GAIA_ECOLOGY_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 116,
+  "gridY": 11
+ }
+}

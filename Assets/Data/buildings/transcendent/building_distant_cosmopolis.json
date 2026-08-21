@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_DISTANT_COSMOPOLIS",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_FUTURE_CITY",
+   "BUILDING_DISTANT_HYPERPORT",
+   "BUILDING_DISTANT_PAST_CITY",
+   "BUILDING_OMELAS",
+   "BUILDING_ROKOS_BASILISK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_HORIZON_BREAKING",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 1261,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_COSMOPOLIS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_COSMOPOLIS",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_COSMOPOLIS_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

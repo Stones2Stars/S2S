@@ -1,0 +1,85 @@
+{
+ "type": "TECH_ADVANCED_SHIELDING",
+ "enables": {
+  "buildings": [
+   "BUILDING_ADVANCED_SHIELDING",
+   "BUILDING_NATIONAL_SHIELD",
+   "BUILDING_TRITON_HEAT_RING"
+  ],
+  "promotions": [
+   "PROMOTION_ELECTROMAGNETIC_ARMOR3",
+   "PROMOTION_SHIELDING3"
+  ],
+  "techs": [
+   "TECH_NANOSHIELDING",
+   "TECH_THERMAL_NEGATION"
+  ],
+  "units": [
+   "UNIT_DREADNOUGHT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SHIELDING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANIMAMATERIALS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 77770
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 8
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Robotics.dds,Art/Interface/Buttons/NextWar_Atlas.dds,2,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ADVANCED_SHIELDING",
+  "soundMP": "AS2D_TECH_ADVANCED_SHIELDING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ADVANCED_SHIELDING",
+  "civilopedia": "TXT_KEY_TECH_ADVANCED_SHIELDING_PEDIA",
+  "quote": "TXT_KEY_TECH_ADVANCED_SHIELDING_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 50,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 117,
+  "gridY": 3
+ }
+}

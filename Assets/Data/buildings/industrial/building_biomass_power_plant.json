@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_BIOMASS_POWER_PLANT",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BIOFUEL_POWER_PLANT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "BUILDING_POWER_LINES",
+    "TECH_ELECTRICITY",
+    "TECH_ORGANIC_CHEMISTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FERTILIZERS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_BIOFUEL_POWER_PLANT",
+    "BUILDING_RENEWABLE_MEGACOMPLEX"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 770,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BIOMASS_POWER_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BIOMASS_POWER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_BIOMASS_POWER_PLANT_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

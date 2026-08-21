@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_MEGATOWER_EDUCATION_LEVEL",
+ "enables": {
+  "buildings": [
+   "BUILDING_HOLOGRAPHIC_SCHOOL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MEGATOWER",
+    "BUILDING_UNIVERSITY",
+    "TECH_NANO_ARCHITECTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_METAMATERIALS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HUMAN_MOD_DESIGNER_BABIES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TRANSPARENT_ALUMINUM",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 3245,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MEGATOWER_EDUCATION_LEVEL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MEGATOWER_EDUCATION_LEVEL",
+  "civilopedia": "TXT_KEY_BUILDING_MEGATOWER_EDUCATION_LEVEL_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

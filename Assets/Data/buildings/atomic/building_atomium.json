@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_ATOMIUM",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FISSION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_URANIUM",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 6480,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_THE_ATOMIUM"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ATOMIUM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ATOMIUM",
+  "civilopedia": "TXT_KEY_BUILDING_ATOMIUM_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

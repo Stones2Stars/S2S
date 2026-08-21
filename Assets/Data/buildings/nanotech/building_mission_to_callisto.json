@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_MISSION_TO_CALLISTO",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COMMERCIAL_SPACEPORT",
+    "TECH_ACCELERATED_GERMINATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_CALLISTO_RESUPPLY_BASE": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CALLISTO_RESUPPLY_BASE": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 24870
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MISSION_TO_CALLISTO"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MISSION_TO_CALLISTO",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MISSION_TO_CALLISTO",
+  "civilopedia": "TXT_KEY_BUILDING_MISSION_TO_CALLISTO_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

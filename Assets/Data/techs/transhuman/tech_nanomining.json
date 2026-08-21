@@ -1,0 +1,82 @@
+{
+ "type": "TECH_NANOMINING",
+ "enables": {
+  "buildings": [
+   "BUILDING_CORE_MINE",
+   "BUILDING_HELIUM_3_IMPORTER",
+   "BUILDING_LUNAR_HE3_EXTRACTION_FACILITY",
+   "BUILDING_LUNAR_KREEP_MINE",
+   "BUILDING_METALS_MEGACOMPLEX",
+   "BUILDING_MINING_NANOBOT_CONTROL_CENTER",
+   "BUILDING_PHOBOS_INDUSTRIAL_COMPLEX",
+   "BUILDING_TITAN_AMMONIA_ERUPTION",
+   "BUILDING_VENUS_SURFACE_SCOOP"
+  ],
+  "builds": [
+   "BUILD_CORE_MINE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_CORE_MINE"
+  ],
+  "techs": [
+   "TECH_ANIMAMATERIALS",
+   "TECH_APOCALYPTIC_PATHOGENS",
+   "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+   "TECH_ASTEROID_EXTRACTION",
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SMART_DUST",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BOTANICAL_ALCHEMY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 72474
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GOLD": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Nanotechnology.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,6,12"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NANOMINING",
+  "soundMP": "AS2D_TECH_NANOMINING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NANOMINING",
+  "civilopedia": "TXT_KEY_TECH_NANOMINING_PEDIA",
+  "quote": "TXT_KEY_TECH_NANOMINING_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 115,
+  "gridY": 11
+ }
+}

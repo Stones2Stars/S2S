@@ -1,0 +1,93 @@
+{
+ "type": "BUILDING_ENCLOSURE_BEAR",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_BEAR"
+  ],
+  "units": [
+   "UNIT_TAMED_ASIANBEAR",
+   "UNIT_TAMED_BLACKBEAR",
+   "UNIT_TAMED_BROWNBEAR",
+   "UNIT_TAMED_CAVEBEAR",
+   "UNIT_TAMED_GRIZZLY",
+   "UNIT_TAMED_PANDA_BEAR",
+   "UNIT_TAMED_POLARBEAR",
+   "UNIT_TAMED_SLOTHBEAR",
+   "UNIT_TAMED_SPECTACLEDBEAR",
+   "UNIT_TAMED_SUNBEAR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FOLKLORE_T_BEAR",
+    "TECH_TRADE",
+    {
+     "any": [
+      "BUILDING_CARNIVAL",
+      "BUILDING_ZOO",
+      "BUILDING_GOVERNORS_MENAGERIE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 5,
+     "enabled": "TECH_SCIENTIFIC_METHOD"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_RECON": {
+     "flat": 1
+    },
+    "UNITCOMBAT_HUNTER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 306,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CAVEBEAR_CAGE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ENCLOSURE_BEAR",
+  "civilopedia": "TXT_KEY_BUILDING_WILD_ANIMAL_CAGE_PEDIA",
+  "pediaCategory": "animalistic",
+  "worth": 1,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

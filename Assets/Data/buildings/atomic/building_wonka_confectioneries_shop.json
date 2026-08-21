@@ -1,0 +1,118 @@
+{
+ "type": "BUILDING_WONKA_CONFECTIONERIES_SHOP",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_INDUSTRIALISM",
+    "TECH_CORPORATION",
+    {
+     "any": [
+      "BUILDING_CANDY_SHOP",
+      "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CORPORATION_WONKA"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COFFEE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SALT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SUGAR",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SPICES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TEA",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 950,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WONKA_CONFECTIONERIES_SHOP"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WONKA_CONFECTIONERIES_SHOP",
+  "civilopedia": "TXT_KEY_BUILDING_WONKA_CONFECTIONERIES_SHOP_PEDIA",
+  "worth": 8,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_CORPORATION",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

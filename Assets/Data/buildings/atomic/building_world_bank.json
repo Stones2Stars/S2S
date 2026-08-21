@@ -1,0 +1,102 @@
+{
+ "type": "BUILDING_WORLD_BANK",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_BANK",
+    "TECH_GLOBALIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "commerce": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_GOLD_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "cost": {
+  "production": 2360,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_WORLD_BANK"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WORLD_BANK",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WORLD_BANK",
+  "civilopedia": "TXT_KEY_BUILDING_WORLD_BANK_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 10,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "specialBuildingType": "SPECIALBUILDING_WORLD_BANK",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

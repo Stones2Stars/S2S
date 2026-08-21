@@ -1,395 +1,110 @@
-//------------------------------------------------------------------------------------------------
-//  FILE:    CvSpecialistInfo.cpp
-//------------------------------------------------------------------------------------------------
+//
+//	CvSpecialistInfo -- the specialist poco's own typed reading on top of the base section dispatch (see the
+//	header). mapFrom materializes the census identity set + the property bridge ONCE
+//	(docs/architecture/patterns.md §Materialize at mapFrom); every output magnitude is a compiled point/conditioned read (header), never
+//	a mirrored array. Idempotent by contract (unconditional assigns, clear-first containers).
+//
+
 #include "CvGameCoreDLL.h"
-#include "CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "CvPlayerAI.h"
-#include "CvPython.h"
-#include "CvXMLLoadUtility.h"
-#include "CvXMLLoadUtilityModTools.h"
-#include "CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
+#include "AI/CvGameAI.h"   // folder-consolidation: keeps the unity batch self-sufficient (unchanged from the poco era)
 #include "CvSpecialistInfo.h"
+#include "CvModEntry.h"
+#include "CvJsonParse.h"               // jsonChildObj / jsonIdBool / jsonIdStr / jsonReadFlavours / jsonResolveId
+#include "Property/CvPropertyBridge.h" // the shared PROPERTY_* family -> manipulator walk
 
-
-//======================================================================================================
-//					CvSpecialistInfo
-//======================================================================================================
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   CvSpecialistInfo()
-//
-//  PURPOSE :   Default constructor
-//
-//------------------------------------------------------------------------------------------------------
-CvSpecialistInfo::CvSpecialistInfo() :
-// m_iMissionType is a non-XML, runtime-assigned field (see setMissionType); m_iGreatPeopleUnitType
-// (delayed-resolution int FK), m_piFlavorValue (SetVariableListTagPair) and the
-// UnitCombatExperienceTypes pair stay hand-written. Every other XML-backed field is declared in
-// getDataMembers() and defaulted by initDataMembers() below.
- m_iGreatPeopleUnitType(NO_UNIT)
-,m_iMissionType(NO_MISSION)
-,m_piFlavorValue(NULL)
+CvSpecialistInfo::CvSpecialistInfo()
+	: m_iGreatPeopleUnitType(-1)
+	, m_bSlave(false)
+	, m_bVisible(false)
+	, m_iMissionType(NO_MISSION)
 {
-	CvInfoUtil(this).initDataMembers();
 }
 
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   ~CvSpecialistInfo()
-//
-//  PURPOSE :   Default destructor
-//
-//------------------------------------------------------------------------------------------------------
-CvSpecialistInfo::~CvSpecialistInfo()
+int CvSpecialistInfo::getFlavorValue(int iFlavor) const
 {
-	PROFILE_EXTRA_FUNC();
-	// Owns the declared yield/commerce arrays and the tech maps' delayed-resolution registrations.
-	CvInfoUtil(this).uninitDataMembers();
-	SAFE_DELETE_ARRAY(m_piFlavorValue);
+	return mapValueOrDefault(m_flavours, iFlavor);
+}
 
-	for (int i=0; i<(int)m_aUnitCombatExperienceTypes.size(); i++)
+void CvSpecialistInfo::mapFrom(const picojson::value& entity)
+{
+	CvInfo::mapFrom(entity);   // core reading + the section dispatch (compiles m_modifiers)
+
+	// PROPERTY_* per-turn SOURCES: city-gathered per assigned specialist -- the ONE shared walk.
+	CascadePropertyBridge::bridgeFamilies(getModifiers(), m_PropertyManipulators, RELATION_SAME_PLOT, 0, NULL, getType());
+
+	// idempotency (CvInfo.h): the full-registry re-run fully redefines every materialized member. The base map
+	// runs FIRST and this type's own members are reset after it -- the documented order every sibling follows.
+	m_iGreatPeopleUnitType = -1;
+	m_bSlave = false;
+	m_bVisible = false;
+	m_aiCategories.clear();
+	m_flavours.clear();
+
+	// the KEYED experience plane: experience.city.unitCombats.{UNITCOMBAT_*}.flat -- scanned ONCE from the
+	// compiled entries (the sanctioned load-time scan source). Read per target; never folded scope-wide.
+	m_unitCombatExperience.clear();
 	{
-		GC.removeDelayedResolution((int*)&(m_aUnitCombatExperienceTypes[i]));
-	}
-
-	for (int i=0; i<(int)m_aUnitCombatExperienceTypesNull.size(); i++)
-	{
-		GC.removeDelayedResolution((int*)&(m_aUnitCombatExperienceTypesNull[i]));
-	}
-
-	GC.removeDelayedResolution((int*)&m_iGreatPeopleUnitType);
-}
-
-
-int CvSpecialistInfo::getGreatPeopleUnitType() const
-{
-	return m_iGreatPeopleUnitType;
-}
-
-
-int CvSpecialistInfo::getGreatPeopleRateChange() const
-{
-	return m_iGreatPeopleRateChange;
-}
-
-
-int CvSpecialistInfo::getMissionType() const
-{
-	return m_iMissionType;
-}
-
-
-void CvSpecialistInfo::setMissionType(int iNewType)
-{
-	m_iMissionType = iNewType;
-}
-
-
-bool CvSpecialistInfo::isVisible() const
-{
-	return m_bVisible;
-}
-
-
-int CvSpecialistInfo::getExperience() const
-{
-	return m_iExperience;
-}
-
-
-// Arrays
-
-int CvSpecialistInfo::getYieldChange(int i) const
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, i);
-	return m_piYieldChange ? m_piYieldChange[i] : 0;
-}
-
-
-const int* CvSpecialistInfo::getYieldChangeArray() const
-{
-	return m_piYieldChange;
-}
-
-
-int CvSpecialistInfo::getCommerceChange(int i) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, i);
-	return m_piCommerceChange ? m_piCommerceChange[i] : 0;
-}
-
-
-int CvSpecialistInfo::getFlavorValue(int i) const
-{
-	FASSERT_BOUNDS(0, GC.getNumFlavorTypes(), i);
-	return m_piFlavorValue ? m_piFlavorValue[i] : 0;
-}
-
-
-const char* CvSpecialistInfo::getTexture() const
-{
-	return m_szTexture;
-}
-
-
-int CvSpecialistInfo::getHealthPercent() const
-{
-	return m_iHealthPercent;
-}
-
-int CvSpecialistInfo::getHappinessPercent() const
-{
-	return m_iHappinessPercent;
-}
-
-
-bool CvSpecialistInfo::isSlave() const
-{
-	return m_bSlave;
-}
-
-
-//TB Specialist Tags
-int CvSpecialistInfo::getInsidiousness() const
-{
-	return m_iInsidiousness;
-}
-
-
-int CvSpecialistInfo::getInvestigation() const
-{
-	return m_iInvestigation;
-}
-
-
-//int CvSpecialistInfo::getNumTechHappinessTypes() const
-//{
-//	return (int)m_aTechHappinessTypes.size();
-//}
-
-int CvSpecialistInfo::getTechHappiness(TechTypes eTech) const
-{
-	FASSERT_BOUNDS(0, GC.getNumTechInfos(), eTech);
-	return m_aTechHappinessTypes.getValue(eTech);
-}
-
-
-//int CvSpecialistInfo::getNumTechHealthTypes() const
-//{
-//	return (int)m_aTechHealthTypes.size();
-//}
-
-int CvSpecialistInfo::getTechHealth(TechTypes eTech) const
-{
-	FASSERT_BOUNDS(0, GC.getNumTechInfos(), eTech);
-	return m_aTechHealthTypes.getValue(eTech);
-}
-
-
-int CvSpecialistInfo::getCategory(int i) const
-{
-	return m_aiCategories[i];
-}
-
-
-int CvSpecialistInfo::getNumCategories() const
-{
-	return (int)m_aiCategories.size();
-}
-
-
-bool CvSpecialistInfo::isCategory(int i) const
-{
-	return algo::any_of_equal(m_aiCategories, i);
-}
-
-
-int CvSpecialistInfo::getNumUnitCombatExperienceTypes() const
-{
-	return (int)m_aUnitCombatExperienceTypes.size();
-}
-
-
-const UnitCombatModifier& CvSpecialistInfo::getUnitCombatExperienceType(int iUnitCombat) const
-{
-	FASSERT_BOUNDS(0, (int)m_aUnitCombatExperienceTypes.size(), iUnitCombat);
-	FASSERT_BOUNDS(0, (int)m_aUnitCombatExperienceTypesNull.size(), iUnitCombat);
-
-	if (!GC.getGame().isOption(GAMEOPTION_UNIT_XP_FROM_SPECIALISTS) && isVisible())
-	{
-		return m_aUnitCombatExperienceTypesNull[iUnitCombat];
-	}
-	return m_aUnitCombatExperienceTypes[iUnitCombat];
-}
-
-
-
-void CvSpecialistInfo::getDataMembers(CvInfoUtil& util)
-{
-	// Kept hand-written: m_iGreatPeopleUnitType (delayed-resolution int FK - no wrapper yet),
-	// m_piFlavorValue (SetVariableListTagPair dynamic array) and the UnitCombatExperienceTypes block
-	// (one XML walk fills two parallel vectors - the real one and the zero-modifier Null twin - with
-	// delayed-resolution pointers into both). m_iMissionType is runtime-assigned, not XML-backed.
-	// getCheckSum stays explicit: the hand-written fields and the runtime m_iMissionType sit
-	// mid-order in the legacy checksum.
-	util
-		.add(m_bVisible, L"bVisible")
-		.add(m_iGreatPeopleRateChange, L"iGreatPeopleRateChange")
-		.add(m_aiCategories, L"Categories")
-		.addYields(m_piYieldChange, L"Yields")
-		.addCommerce(m_piCommerceChange, L"Commerces")
-		.add(m_iExperience, L"iExperience")
-		.add(m_PropertyManipulators)
-		.add(m_iHealthPercent, L"iHealthPercent")
-		.add(m_iHappinessPercent, L"iHappinessPercent")
-		.add(m_bSlave, L"bSlave")
-		.add(m_iInsidiousness, L"iInsidiousness")
-		.add(m_iInvestigation, L"iInvestigation")
-		.add(m_aTechHappinessTypes, L"TechHappinessTypes")
-		.add(m_aTechHealthTypes, L"TechHealthTypes")
-		.add(m_szTexture, L"Texture")
-	;
-}
-
-
-// read from xml
-//
-bool CvSpecialistInfo::read(CvXMLLoadUtility* pXML)
-{
-	PROFILE_EXTRA_FUNC();
-	CvString szTextVal;
-	if (!CvHotkeyInfo::read(pXML))
-	{
-		return false;
-	}
-
-	CvInfoUtil(this).readXml(pXML);
-
-	pXML->GetOptionalChildXmlValByName(szTextVal, L"GreatPeopleUnitType");
-	GC.addDelayedResolution((int*)&m_iGreatPeopleUnitType, szTextVal);
-
-	pXML->SetVariableListTagPair(&m_piFlavorValue, L"Flavors", GC.getNumFlavorTypes());
-
-	if(pXML->TryMoveToXmlFirstChild(L"UnitCombatExperienceTypes"))
-	{
-		int i = 0;
-		int iNum = pXML->GetXmlChildrenNumber(L"UnitCombatExperienceType" );
-		m_aUnitCombatExperienceTypes.resize(iNum); // Important to keep the delayed resolution pointers correct
-		m_aUnitCombatExperienceTypesNull.resize(iNum);
-
-		if(pXML->TryMoveToXmlFirstChild())
+		const int iUnitCombatsSeg = modSegmentLookup("unitCombats");
+		const std::vector<CvModEntry*>& entries = m_modifiers.entries();
+		for (size_t iEntry = 0; iEntry < entries.size(); ++iEntry)
 		{
-			if (pXML->TryMoveToXmlFirstOfSiblings(L"UnitCombatExperienceType"))
+			const CvModEntry* pEntry = entries[iEntry];
+			if (pEntry->family == MODFAM_EXPERIENCE && pEntry->targetSeg == iUnitCombatsSeg
+			&&  pEntry->targetFk >= 0 && iUnitCombatsSeg >= 0)
 			{
-				do
+				m_unitCombatExperience[pEntry->targetFk] += pEntry->value;
+			}
+		}
+	}
+	m_szTexture.clear();
+
+	if (!entity.is<picojson::object>())
+	{
+		return;
+	}
+	const picojson::object& entityObj = entity.get<picojson::object>();
+
+	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
+	{
+		m_bSlave = jsonIdBool(*pIdentity, "slave");
+		m_bVisible = jsonIdBool(*pIdentity, "visible");
+		picojson::object::const_iterator unitIt = pIdentity->find("greatPeopleUnit");
+		if (unitIt != pIdentity->end() && unitIt->second.is<std::string>())
+		{
+			m_iGreatPeopleUnitType = jsonResolveId(unitIt->second.get<std::string>());
+		}
+		// identity.categories -- CATEGORY_* FK list (assignability/grouping classification; authored on every
+		// shipped specialist)
+		picojson::object::const_iterator categoriesIt = pIdentity->find("categories");
+		if (categoriesIt != pIdentity->end() && categoriesIt->second.is<picojson::array>())
+		{
+			const picojson::array& categories = categoriesIt->second.get<picojson::array>();
+			for (size_t iCategory = 0; iCategory < categories.size(); ++iCategory)
+			{
+				if (categories[iCategory].is<std::string>())
 				{
-					pXML->GetChildXmlValByName(szTextVal, L"UnitCombatType");
-					pXML->GetChildXmlValByName(&(m_aUnitCombatExperienceTypes[i].iModifier), L"iModifier");
-					GC.addDelayedResolution((int*)&(m_aUnitCombatExperienceTypes[i].eUnitCombat), szTextVal);
-					GC.addDelayedResolution((int*)&(m_aUnitCombatExperienceTypesNull[i].eUnitCombat), szTextVal);
-					m_aUnitCombatExperienceTypesNull[i].iModifier = 0;
-					i++;
-				} while(pXML->TryMoveToXmlNextSibling(L"UnitCombatExperienceType"));
+					const int iCategoryId = jsonResolveId(categories[iCategory].get<std::string>());
+					if (iCategoryId >= 0)
+					{
+						m_aiCategories.push_back(iCategoryId);
+					}
+				}
 			}
-			pXML->MoveToXmlParent();
 		}
-		pXML->MoveToXmlParent();
 	}
-	return true;
-}
 
-
-void CvSpecialistInfo::copyNonDefaults(const CvSpecialistInfo* pClassInfo)
-{
-	PROFILE_EXTRA_FUNC();
-	CvHotkeyInfo::copyNonDefaults(pClassInfo);
-
-	// NOTE: the legacy copy dereferenced m_piCommerceChange without a NULL check (a latent crash for
-	// modular merges when this definition has no Commerces tag); the wrapper handles NULL correctly.
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-
-	GC.copyNonDefaultDelayedResolution((int*)&m_iGreatPeopleUnitType, (int*)&pClassInfo->m_iGreatPeopleUnitType);
-
-	const int iDefault = 0;
-	for ( int i = 0; i < GC.getNumFlavorTypes(); i++ )
+	// ui.art.texture -- the specialist's city-screen glyph
+	if (const picojson::object* pUi = jsonChildObj(entityObj, "ui"))
 	{
-		if ( getFlavorValue(i) == iDefault && pClassInfo->getFlavorValue(i) != iDefault )
+		if (const picojson::object* pArt = jsonChildObj(*pUi, "art"))
 		{
-			if ( NULL == m_piFlavorValue )
-			{
-				CvXMLLoadUtility::InitList(&m_piFlavorValue,GC.getNumFlavorTypes(),iDefault);
-			}
-			m_piFlavorValue[i] = pClassInfo->getFlavorValue(i);
+			jsonIdStr(*pArt, "texture", m_szTexture);
 		}
 	}
 
-	if (getNumUnitCombatExperienceTypes() == 0)
+	// ai.flavours -- an ARRAY of single-key { FLAVOR_X: n } objects (NOT a map)
+	if (const picojson::object* pAi = jsonChildObj(entityObj, "ai"))
 	{
-		const int iNum = pClassInfo->getNumUnitCombatExperienceTypes();
-		m_aUnitCombatExperienceTypes.resize(iNum);
-		m_aUnitCombatExperienceTypesNull.resize(iNum);
-		for (int i=0; i<iNum; i++)
-		{
-			m_aUnitCombatExperienceTypes[i].iModifier = pClassInfo->m_aUnitCombatExperienceTypes[i].iModifier;
-			GC.copyNonDefaultDelayedResolution((int*)&(m_aUnitCombatExperienceTypes[i].eUnitCombat), (int*)&(pClassInfo->m_aUnitCombatExperienceTypes[i].eUnitCombat));
-			m_aUnitCombatExperienceTypesNull[i].iModifier = 0;
-			GC.copyNonDefaultDelayedResolution((int*)&(m_aUnitCombatExperienceTypesNull[i].eUnitCombat), (int*)&(pClassInfo->m_aUnitCombatExperienceTypesNull[i].eUnitCombat));
-		}
+		jsonReadFlavours(*pAi, m_flavours);
 	}
 }
-
-
-void CvSpecialistInfo::getCheckSum(uint32_t& iSum) const
-{
-	PROFILE_EXTRA_FUNC();
-	// NOTE: kept explicit (not delegated to CvInfoUtil) to preserve the exact legacy checksum: the
-	// hand-written m_iGreatPeopleUnitType/m_piFlavorValue/UnitCombatExperienceTypes and the runtime
-	// m_iMissionType sit mid-order between declared fields.
-	CheckSum(iSum, m_iGreatPeopleUnitType);
-	CheckSum(iSum, m_iGreatPeopleRateChange);
-	CheckSum(iSum, m_iMissionType);
-	CheckSum(iSum, m_iHealthPercent);
-	CheckSum(iSum, m_iHappinessPercent);
-	CheckSum(iSum, m_bSlave);
-	CheckSum(iSum, m_iExperience);
-	m_PropertyManipulators.getCheckSum(iSum);
-	CheckSum(iSum, m_bVisible);
-	CheckSum(iSum, m_piYieldChange, NUM_YIELD_TYPES);
-	CheckSum(iSum, m_piCommerceChange, NUM_COMMERCE_TYPES);
-	CheckSum(iSum, m_piFlavorValue, GC.getNumFlavorTypes());
-	//Team Project (1)
-	//TB Specialist Tags
-	// int
-	CheckSum(iSum, m_iInsidiousness);
-	CheckSum(iSum, m_iInvestigation);
-	CheckSumC(iSum, m_aTechHappinessTypes);
-	CheckSumC(iSum, m_aTechHealthTypes);
-	CheckSumC(iSum, m_aiCategories);
-
-	int iNumElements = m_aUnitCombatExperienceTypes.size();
-	for (int i = 0; i < iNumElements; ++i)
-	{
-		CheckSum(iSum, m_aUnitCombatExperienceTypes[i].eUnitCombat);
-		CheckSum(iSum, m_aUnitCombatExperienceTypes[i].iModifier);
-	}
-
-	iNumElements = m_aUnitCombatExperienceTypesNull.size();
-	for (int i = 0; i < iNumElements; ++i)
-	{
-		CheckSum(iSum, m_aUnitCombatExperienceTypesNull[i].eUnitCombat);
-		CheckSum(iSum, m_aUnitCombatExperienceTypesNull[i].iModifier);
-	}
-
-}
-

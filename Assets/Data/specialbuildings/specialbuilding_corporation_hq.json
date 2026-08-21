@@ -1,0 +1,11 @@
+{
+ "type": "SPECIALBUILDING_CORPORATION_HQ",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Great_Wonders/corpo_cereal_mills.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALBUILDING_CORPORATION_HQ"
+ }
+}

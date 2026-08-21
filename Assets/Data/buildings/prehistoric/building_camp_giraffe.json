@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_CAMP_GIRAFFE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_GIRAFFE",
+   "BUILDING_RESOURCES_CARCASS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PLANETARY_ECONOMICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BREEDING_PROGRAM_GIRAFFE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRACKING",
+    {
+     "any": [
+      "BUILDING_HUNTERS_CAMP",
+      "BUILDING_ANCIENT_CUSTOMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_ELEPHANT",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_DEER",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_BREEDING_PROGRAM_GIRAFFE",
+    "BUILDING_ANIMAL_PRESERVE"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": "TECH_ECOLOGY"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 45,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CAMP_GIRAFFE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_GIRAFFE",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_GIRAFFE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

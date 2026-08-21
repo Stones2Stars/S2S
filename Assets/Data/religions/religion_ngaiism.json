@@ -1,0 +1,84 @@
+{
+ "type": "RELIGION_NGAIISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_NAITERU_KOB_BLESS",
+   "BUILDING_NGAI_BLESS",
+   "BUILDING_NGAI_NAROK_BLESS",
+   "BUILDING_NGAI_NAROK_BLESS_COW",
+   "BUILDING_NGAI_NAROK_BLESS_PIG",
+   "BUILDING_NGAI_NAROK_BLESS_SHEEP",
+   "BUILDING_NGAI_NA_NYOKE_BLESS"
+  ],
+  "units": [
+   "UNIT_NGAI_MISSIONARY"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_NGAIISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_NGAIISM"
+     }
+    }
+   ]
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 12,
+   "icon": "Art/Interface/Buttons/Religions/Ngai.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/found_ngaiism.dds",
+   "genericTechButton": "Art/Interface/Buttons/Religions/Ngai.dds",
+   "movie": {
+    "file": "Art/Cutscene/Ngai_Generic_Found.nif",
+    "sound": "AS2D_BUILD_NGAI_MOVIE"
+   }
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_NGAI"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NGAIISM",
+  "adjective": "TXT_KEY_TECH_NGAIISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_NGAIISM_PEDIA",
+  "spreadFactor": 5
+ }
+}

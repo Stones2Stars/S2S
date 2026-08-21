@@ -1,0 +1,96 @@
+{
+ "type": "UNIT_SLEEPER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPY_TRAINING_FACILITY",
+    "TECH_POLITICAL_PHILOSOPHY"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "skills": [
+  "counterSpy",
+  "destroy",
+  "food",
+  "investigate",
+  "alwaysInvisible",
+  "rivalTerritory"
+ ],
+ "tags": [
+  "spy",
+  "landUnit",
+  "unpromotable"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SENTRY"
+  ]
+ },
+ "cost": {
+  "production": 531,
+  "upkeep": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/sleeper.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SETTLER_MALE",
+   "meshGroups": {
+    "groupSize": 4,
+    "meleeWaveSize": 4,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_MALE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_FEMALE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_CHILD"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_SLEEPER",
+  "civilopedia": "TXT_KEY_UNIT_SLEEPER_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SPY",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_SPY"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

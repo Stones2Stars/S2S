@@ -1,0 +1,11 @@
+{
+ "type": "PROMOTIONLINE_EXPANSIVE",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitExpansive.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_EXPANSIVE"
+ }
+}

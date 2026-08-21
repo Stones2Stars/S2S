@@ -1,0 +1,152 @@
+{
+ "type": "UNIT_SOFTWARE_DEVELOPER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPREHENSIVE_CYBERNETICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PERSONAL_ELECTRONICS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_MICROPROCESSOR",
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_DISKETTES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_FLASH_MEMORY_DEVICES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    },
+    {
+     "any": [
+      "BUILDING_DESIGN_STUDIO",
+      "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HACKER"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 15
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 11
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_TECH": {
+     "heal": 32,
+     "adjacentHeal": 15
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "skills": [
+  "onlyDefensive"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_GUN",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_HANDGUN",
+  "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_TECH"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 1540,
+  "upkeep": 9,
+  "hurryCostModifier": 25
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SOFTWARE_DEVELOPER",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_SOFTWARE_DEVELOPER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_SOFTWARE_DEVELOPER",
+  "civilopedia": "TXT_KEY_UNIT_SOFTWARE_DEVELOPER_PEDIA",
+  "worth": 14,
+  "militaryWorth": 15,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_HEALER",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

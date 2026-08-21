@@ -1,0 +1,40 @@
+{
+ "type": "UNITCOMBAT_GROUP_HORDE",
+ "experience": {
+  "unit": {
+   "percent": -60
+  }
+ },
+ "heal": {
+  "unit": {
+   "selfModifier": {
+    "percent": -12
+   }
+  }
+ },
+ "hideAndSeek": {
+  "concealment": {
+   "flat": -800
+  },
+  "detection": {
+   "value": 200,
+   "unit": "HAS_SIZE"
+  }
+ },
+ "skills": [
+  "size",
+  "camouflage"
+ ],
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "sizeMatters": {
+  "groupBase": 8
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/group_horde.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_GROUP_HORDE"
+ }
+}

@@ -1,0 +1,153 @@
+{
+ "type": "BUILDING_STARPORT",
+ "enables": {
+  "buildings": [
+   "BUILDING_ADVANCED_NEUROIMPLANT_EXPORTER",
+   "BUILDING_ALIEN_EMBASSY",
+   "BUILDING_GALACTIC_PORT",
+   "BUILDING_INTERSTELLAR_IMMIGRATION_OFFICE",
+   "BUILDING_INTERSTELLAR_PROBE",
+   "BUILDING_MITHRIL_IMPORTER",
+   "BUILDING_PLANETARY_IMMIGRATION_OFFICE",
+   "BUILDING_SECTION_31",
+   "BUILDING_SOLAR_NOVA_SURVIVAL_PLAN",
+   "BUILDING_STARFLEET_ACADEMY",
+   "BUILDING_UNITED_FEDERATION_OF_PLANETS"
+  ],
+  "units": [
+   "UNIT_POSTHUMAN_WORK_CREW",
+   "UNIT_TRANSHUMAN_WORK_CREW"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ASTROGATION_CONSTELLATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 11,
+     "enabled": "TECH_LAUNCH_ARCOLOGY"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_ADVANCED_SEEDSHIPS"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_INTERSTELLAR_TRADE"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 11,
+     "enabled": "TECH_FOLDING_SPACE"
+    },
+    {
+     "value": 12,
+     "enabled": "TECH_SPACE_CREASING"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_ANTIMATTER_ROCKETS"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_WORMHOLE_TRAVERSAL"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_NUCLEAR_PULSE_PROPULSION"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_FUSION_SPACECRAFT"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_ACNP_PROPULSION"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_INTERSTELLAR_TRAVEL"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_INTERSTELLAR_COLONIZATION"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PERSONAL_SPACECRAFT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 3
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 2,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_SPACECRAFT"
+   }
+  }
+ ],
+ "cost": {
+  "production": 5655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "orbitalInfrastructure": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_STARPORT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_STARPORT",
+  "civilopedia": "TXT_KEY_BUILDING_STARPORT_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

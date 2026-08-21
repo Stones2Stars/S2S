@@ -1,0 +1,97 @@
+{
+ "type": "TECH_MANUFACTURING",
+ "enables": {
+  "bonuses": [
+   "BONUS_KEVLAR"
+  ],
+  "buildings": [
+   "BUILDING_AUTO_CANNON_BATTERY",
+   "BUILDING_CEMENT_BARRIER",
+   "BUILDING_FACTORY_KEVLAR",
+   "BUILDING_FOOD_PROCESSING_PLANT",
+   "BUILDING_FRAUNHOFER_SOCIETY",
+   "BUILDING_MANUFACTURING_PLANT"
+  ],
+  "builds": [
+   "BUILD_MANUFACTURING_COMPLEX"
+  ],
+  "improvements": [
+   "IMPROVEMENT_MANUFACTURING_COMPLEX"
+  ],
+  "techs": [
+   "TECH_CONGLOMERATES",
+   "TECH_JET_PROPULSION",
+   "TECH_NUCLEAR_POWER",
+   "TECH_SEMICONDUCTORS"
+  ],
+  "units": [
+   "UNIT_BTR80",
+   "UNIT_LANDING_SHIP",
+   "UNIT_MODERN_INFANTRY",
+   "UNIT_MODERN_MACHINE_GUN",
+   "UNIT_PASDARAN",
+   "UNIT_REPUBLICAN_GUARD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HIGHWAY_SYSTEMS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PHYSICAL_CHEMISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LOGISTICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 11665
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/Automatization.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,2"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MANUFACTURING",
+  "soundMP": "AS2D_TECH_MANUFACTURING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MANUFACTURING",
+  "civilopedia": "TXT_KEY_TECH_MANUFACTURING_PEDIA",
+  "quote": "TXT_KEY_TECH_MANUFACTURING_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 77,
+  "gridY": 5
+ }
+}

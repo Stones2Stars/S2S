@@ -1,0 +1,76 @@
+{
+ "type": "TECH_NANOELECTRONICS",
+ "enables": {
+  "bonuses": [
+   "BONUS_NANOACTUATORS",
+   "BONUS_NANOBOTS"
+  ],
+  "buildings": [
+   "BUILDING_EVOLUTIONARY_ALGORITHMS",
+   "BUILDING_FACTORY_NANOACTUATORS",
+   "BUILDING_NANITE_LAB",
+   "BUILDING_NANOBOT_TRAPS",
+   "BUILDING_NANOFACTORY",
+   "BUILDING_NOVUS_REFINERY"
+  ],
+  "promotions": [
+   "PROMOTION_POWER_SOURCE_UPGRADE1"
+  ],
+  "techs": [
+   "TECH_NANOROBOTICS",
+   "TECH_WARMACHINES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLASTIC_ELECTRONICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 41539
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Nano_electronics.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,12"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NANOELECTRONICS",
+  "soundMP": "AS2D_TECH_NANOELECTRONICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NANOELECTRONICS",
+  "civilopedia": "TXT_KEY_TECH_NANOELECTRONICS_PEDIA",
+  "quote": "TXT_KEY_TECH_NANOELECTRONICS_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 104,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_CRIME_FALSE_ACCUSATIONS",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_ORATORY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 75,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": 5
+   }
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 4
+   }
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_FALSE_ACCUSATIONS",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_FALSE_ACCUSATIONS_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

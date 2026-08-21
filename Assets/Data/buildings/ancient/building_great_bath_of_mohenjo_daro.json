@@ -1,0 +1,117 @@
+{
+ "type": "BUILDING_GREAT_BATH_OF_MOHENJO_DARO",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CIVIL_SERVICE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_POTTERY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_FRESHWATER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 5,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "grants": {
+  "population": {
+   "city": 3
+  }
+ },
+ "cost": {
+  "production": 750,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GREAT_BATH"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GREAT_BATH_OF_MOHENJO_DARO"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GREAT_BATH_OF_MOHENJO_DARO",
+  "civilopedia": "TXT_KEY_BUILDING_GREAT_BATH_OF_MOHENJO_DARO_PEDIA",
+  "help": "TXT_KEY_BUILDING_GREAT_BATH_OF_MOHENJO_DARO_HELP",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_DOCTOR",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

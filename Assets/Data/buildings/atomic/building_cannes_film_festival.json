@@ -1,0 +1,103 @@
+{
+ "type": "BUILDING_CANNES_FILM_FESTIVAL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_MOVIE_STUDIO",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_MASS_MEDIA",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_HOLLYWOOD"
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "percent": 12
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_MOVIE_THEATRE": {
+     "flat": 5
+    },
+    "BUILDING_VIRTUAL_REALITY_THEATER": {
+     "flat": 5
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "flat": 5
+    },
+    "BUILDING_BROADCAST_TOWER": {
+     "flat": 2
+    },
+    "BUILDING_COMMUNICATION_TOWER": {
+     "flat": 2
+    },
+    "BUILDING_NETWORK_NODE": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 7080,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CANNES_FF"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CANNES_FILM_FESTIVAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CANNES_FILM_FESTIVAL",
+  "civilopedia": "TXT_KEY_BUILDING_CANNES_FILM_FESTIVAL_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

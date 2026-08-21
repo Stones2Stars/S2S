@@ -1,0 +1,68 @@
+{
+ "type": "IMPROVEMENT_SOLAR_SYSTEM_BASE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SOLAR_ORDNANCE",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_INNER_SOLAR_SYSTEM",
+      "TERRAIN_OUTER_SOLAR_SYSTEM",
+      "TERRAIN_TRANSNEPTUNIAN_SPACE"
+     ]
+    }
+   ]
+  }
+ },
+ "culture": {
+  "plot": {
+   "flat": 10
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 20
+   },
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "elevation": {
+    "flat": 100
+   }
+  }
+ },
+ "characteristics": [
+  "actsAsCity",
+  "bombardable",
+  "zoneOfControl"
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_SOLAR_SYSTEM_BASE"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_SOLAR_SYSTEM_BASE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SOLAR_SYSTEM_BASE_PEDIA",
+  "extraterrestrial": true,
+  "advancedStart": {
+   "cost": 60
+  },
+  "outsideBorders": true,
+  "militaryStructure": true,
+  "cultureRange": 1,
+  "upgradeRequiresFortify": true,
+  "universalBonusTrade": true
+ }
+}

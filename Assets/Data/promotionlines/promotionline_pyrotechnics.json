@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_PYROTECHNICS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Pyrotechnics1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_PYROTECHNICS",
+  "unitCombats": [
+   "UNITCOMBAT_WEAPON_DIST_FIREWORKS"
+  ]
+ }
+}

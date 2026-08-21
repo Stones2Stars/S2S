@@ -1,0 +1,131 @@
+{
+ "type": "BUILDING_FURNITURE_MAKER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_FURNITURE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CARPENTER",
+    "TECH_CARPENTRY",
+    {
+     "any": [
+      "BUILDING_STORAGE_PIT",
+      "BUILDING_GRANARY",
+      "BUILDING_MODERN_GRANARY",
+      "BUILDING_BARTER_POST",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BAMBOO",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_MANUFACTURING_DISTRICT",
+    "BUILDING_FACTORY_FURNITURE"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_FURNITURE"
+  ]
+ },
+ "production": {
+  "city": {
+   "improvements": {
+    "IMPROVEMENT_LUMBERMILL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 2,
+     "enabled": "TECH_FURNITURE_MAKING"
+    },
+    {
+     "value": 3,
+     "enabled": "TECH_AESTHETICS"
+    },
+    {
+     "value": 3,
+     "enabled": "TECH_MACHINERY"
+    },
+    {
+     "value": 4,
+     "enabled": "TECH_GUILDS"
+    },
+    {
+     "value": 4,
+     "enabled": "TECH_INVENTION"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 68,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FURNITURE_MAKER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FURNITURE_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_FURNITURE_MAKER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

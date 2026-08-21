@@ -1,0 +1,48 @@
+{
+ "type": "SPECIALIST_SETTLED_SLAVE_COMMERCE",
+ "food": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -0.4
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -0.4
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/slave_commerce.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/slave_commerce.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_SETTLED_SLAVE_COMMERCE",
+  "civilopedia": "TXT_KEY_SPECIALIST_SETTLED_SLAVE_PEDIA",
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_CAPTIVE",
+   "CATEGORY_SPECIALIST_GROUP_ECONOMIC"
+  ],
+  "slave": true
+ }
+}

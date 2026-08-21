@@ -1,0 +1,131 @@
+{
+ "type": "UNIT_P51_MUSTANG",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_AVIATION",
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      "BUILDING_MILITARY_AIRBASE",
+      "BUILDING_AEROSPACE_COMPLEX"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_EARLYJET"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "bombard": {
+  "unit": {
+   "airBombRate": {
+    "flat": 5
+   }
+  }
+ },
+ "range": {
+  "unit": {
+   "flat": 6
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 40
+   }
+  }
+ },
+ "skills": [
+  "ignoreBuildingDefense",
+  "mechanized",
+  "dcmFighterEngage",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "airUnit"
+ ],
+ "combatClass": "UNITCOMBAT_EARLY_FIGHTERS",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_AIRCRAFT",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 930,
+  "upkeep": 2
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_P51_MUSTANG",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 0.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_P51_MUSTANG"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_P51_MUSTANG",
+  "civilopedia": "TXT_KEY_UNIT_P51_MUSTANG_PEDIA",
+  "worth": 4,
+  "militaryWorth": 12,
+  "xpValueAttack": 4,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_ATTACK_AIR",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_AIR"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "airCombat": 26,
+   "airCombatLimit": 40,
+   "airUnitCap": 1
+  }
+ }
+}

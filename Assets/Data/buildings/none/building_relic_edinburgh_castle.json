@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_RELIC_EDINBURGH_CASTLE",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EDINBURGH_CASTLE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RELIC_EDINBURGH_CASTLE",
+  "civilopedia": "TXT_KEY_BUILDING_EDINBURGH_CASTLE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "notConstructible": true,
+  "noInstanceLimit": true,
+  "worth": 5,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

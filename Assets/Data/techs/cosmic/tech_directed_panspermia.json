@@ -1,0 +1,67 @@
+{
+ "type": "TECH_DIRECTED_PANSPERMIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_GUIDED_PLANETARY_EVOLUTION",
+   "BUILDING_INTERGALACTIC_TERRAFORMING_BASE",
+   "BUILDING_INTERSTELLAR_BIOGEOCOMPUTER",
+   "BUILDING_LIFE_DUST_AND_PLASMA",
+   "BUILDING_ROGUE_PLANET_CITY"
+  ],
+  "techs": [
+   "TECH_CULTURAL_LONGEVITY",
+   "TECH_GALACTIC_ECOLOGY",
+   "TECH_PARTICLE_GENETICS"
+  ],
+  "units": [
+   "UNIT_BACTERIA_SWARM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STELLAR_ENGINE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COSMIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 262044
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/directed_panspermia.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_DIRECTED_PANSPERMIA",
+  "civilopedia": "TXT_KEY_TECH_DIRECTED_PANSPERMIA_PEDIA",
+  "quote": "TXT_KEY_TECH_DIRECTED_PANSPERMIA_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 138,
+  "gridY": 19
+ }
+}

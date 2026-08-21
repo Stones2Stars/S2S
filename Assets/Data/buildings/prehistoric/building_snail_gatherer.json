@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_SNAIL_GATHERER",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_BUGS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SCAVENGING",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_GRASSLAND",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_LUSH",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_MUDDY",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_MARSH",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "empire": {
+   "flat": [
+    1,
+    {
+     "value": 2,
+     "enabled": "TECH_GARDENING"
+    }
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": [
+    -1,
+    {
+     "value": 1,
+     "enabled": "TECH_COOKING"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SNAIL_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SNAIL_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_SNAIL_GATHERER_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

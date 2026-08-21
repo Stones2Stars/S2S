@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_RESOURCES_NUTS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FARMSCRAPER_II"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_FARMSCRAPER_II"
+   ],
+   "all": [
+    {
+     "any": [
+      "BUILDING_GROVE_OAK",
+      "BUILDING_GROVE_ALMOND",
+      "BUILDING_GROVE_BRAZIL_NUT",
+      "BUILDING_GROVE_CASHEW",
+      "BUILDING_GROVE_CHESTNUT",
+      "BUILDING_PLANTATION_COCONUT",
+      "BUILDING_GROVE_GEVUINA",
+      "BUILDING_GROVE_HAZELNUT",
+      "BUILDING_GROVE_MACADAMIA",
+      "BUILDING_GROVE_MONGONGO",
+      "BUILDING_PLANTATION_PEANUT",
+      "BUILDING_GROVE_PECAN",
+      "BUILDING_GROVE_PINE_NUT",
+      "BUILDING_GROVE_PISTACHIO",
+      "BUILDING_GROVE_WALNUT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_NUTS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESOURCES_NUTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_NUTS",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,37 @@
+{
+ "type": "BUILDING_CIVIC_MARTIAL_LAW",
+ "requires": {
+  "operate": {
+   "all": [
+    "CIVIC_MARTIAL_LAW",
+    "BUILDING_PALACE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CIVIC_MARTIAL_LAW",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CIVIC_MARTIAL_LAW",
+  "civilopedia": "TXT_KEY_BUILDING_CIVIC_MARTIAL_LAW_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

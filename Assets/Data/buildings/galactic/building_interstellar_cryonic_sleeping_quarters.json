@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_INTERSTELLAR_CRYONIC_SLEEPING_QUARTERS",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_INTERSTELLAR_TRAVEL",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_INTERSTELLAR",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "foodKept": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "cost": {
+  "production": 1192,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CRYONIC_SLEEPING_QUARTERS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_CRYONIC_SLEEPING_QUARTERS",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CRYONIC_SLEEPING_QUARTERS_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR",
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

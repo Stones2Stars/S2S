@@ -1,0 +1,84 @@
+{
+ "type": "TECH_CONGLOMERATES",
+ "enables": {
+  "buildings": [
+   "BUILDING_BANK_OF_CHINA_TOWER",
+   "BUILDING_BURJ_AL_ARAB",
+   "BUILDING_BURJ_KHALIFA",
+   "BUILDING_KINGDOM_CENTRE"
+  ],
+  "techs": [
+   "TECH_MODERN_HEALTH_CARE"
+  ],
+  "units": [
+   "UNIT_CARGO_SHIP",
+   "UNIT_OIL_TANKER"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_LIBERTY_MERCHANT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GLOBALIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MANUFACTURING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FRANCHISES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 12152
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_PRODUCTION": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/Conglomerates2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CONGLOMERATES",
+  "soundMP": "AS2D_TECH_CONGLOMERATES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CONGLOMERATES",
+  "civilopedia": "TXT_KEY_TECH_CONGLOMERATES_PEDIA",
+  "quote": "TXT_KEY_TECH_CONGLOMERATES_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 78,
+  "gridY": 9
+ }
+}

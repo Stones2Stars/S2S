@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_HAMSTER_BREEDER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PLANETARY_ECONOMICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ZOOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_GUINEA_PIG",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_CORN",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 535,
+  "countModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HAMSTER_BREEDER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HAMSTER_BREEDER",
+  "civilopedia": "TXT_KEY_BUILDING_HAMSTER_BREEDER_PEDIA",
+  "worth": 4,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

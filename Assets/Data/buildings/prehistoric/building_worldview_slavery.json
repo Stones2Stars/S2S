@@ -1,0 +1,108 @@
+{
+ "type": "BUILDING_WORLDVIEW_SLAVERY",
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+   ],
+   "all": [
+    "BUILDING_PALACE",
+    "TECH_SLAVERY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_STREET_CLEANER": {
+     "percent": -50
+    },
+    "BUILDING_TREADMILL_CRANE": {
+     "percent": -50
+    },
+    "BUILDING_STEAM_CRANE": {
+     "percent": -50
+    },
+    "BUILDING_MODERN_CRANE": {
+     "percent": -50
+    },
+    "BUILDING_HIGH_TECH_CRANE": {
+     "percent": -50
+    },
+    "BUILDING_WATERMILL": {
+     "percent": -50
+    },
+    "BUILDING_WINDMILL": {
+     "percent": -50
+    },
+    "BUILDING_DONKEY_MILL": {
+     "percent": -50
+    },
+    "BUILDING_LUMBER_MILL": {
+     "percent": -50
+    },
+    "BUILDING_AGROFOREST": {
+     "percent": -50
+    },
+    "BUILDING_MODERN_MILL": {
+     "percent": -50
+    },
+    "BUILDING_OXEN_MILL": {
+     "percent": -50
+    },
+    "BUILDING_SMELTER_STEEL": {
+     "percent": -50
+    },
+    "BUILDING_ADVANCED_IRONWORKS": {
+     "percent": -50
+    },
+    "BUILDING_METALS_MEGACOMPLEX": {
+     "percent": -50
+    },
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT": {
+     "percent": -50
+    },
+    "BUILDING_FACTORY": {
+     "percent": -50
+    }
+   }
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_WORLDVIEW_SLAVERY_ACTIVE"
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WORLDVIEW_SLAVERY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SLAVE_MARKET"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WORLDVIEW_SLAVERY",
+  "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_SLAVERY_PEDIA",
+  "help": "TXT_KEY_BUILDING_WORLDVIEW_SLAVERY_HELP",
+  "notConstructible": true,
+  "worth": 3,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

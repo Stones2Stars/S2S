@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_NYLON",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_ROPE"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_NYLON"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_NYLON",
+  "civilopedia": "TXT_KEY_BONUS_NYLON_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

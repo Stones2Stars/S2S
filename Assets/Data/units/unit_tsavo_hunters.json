@@ -1,0 +1,119 @@
+{
+ "type": "UNIT_TSAVO_HUNTERS",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_KENYAN",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_RIFLING"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": -75
+   },
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 25
+    }
+   },
+   "targets": {
+    "UNITCOMBAT_ANIMAL": true,
+    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 20
+  }
+ },
+ "skills": [
+  "assassin"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_HUNTER",
+ "combatClasses": [
+  "UNITCOMBAT_EXPLORER",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_HANDGUN",
+  "UNITCOMBAT_WEAPON_DIST_RIFLE",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_HUNTING_SIGHT1",
+   "PROMOTION_HUNTING_SIGHT2"
+  ]
+ },
+ "cost": {
+  "production": 510,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TSAVO_HUNTERS",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_TSAVO_HUNTERS"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_TSAVO_HUNTERS",
+  "civilopedia": "TXT_KEY_UNIT_TSAVO_HUNTERS_PEDIA",
+  "worth": 2,
+  "militaryWorth": 2,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "animalCombat": 125,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_HUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_HUNTER",
+   "UNITAI_EXPLORE",
+   "UNITAI_ATTACK"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

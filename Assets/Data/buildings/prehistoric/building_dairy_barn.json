@@ -1,0 +1,117 @@
+{
+ "type": "BUILDING_DAIRY_BARN",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INDUSTRIAL_FARMS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ANIMAL_HUSBANDRY",
+    {
+     "any": [
+      "BUILDING_FARM_ANIMAL_COW",
+      "BUILDING_FARM_ANIMAL_GOAT",
+      "BUILDING_FARM_ANIMAL_SHEEP",
+      "BUILDING_FARM_ANIMAL_YAK",
+      "BUILDING_HERD_GOAT",
+      "BUILDING_HERD_COW",
+      "BUILDING_HERD_BUFFALO"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_GLASSWARE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_POTTERY",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_LEATHER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_MILK"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GLASSWARE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 98,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DAIRY_BARN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DAIRY_BARN",
+  "civilopedia": "TXT_KEY_BUILDING_DAIRY_BARN_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,156 @@
+{
+ "type": "BUILDING_HEIMDALL_SANCTUARY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HUMANISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SHIP_BUILDING",
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_ASATRU"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_ASATRU",
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 3,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_ASATRU"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 100
+   }
+  },
+  "empire": {
+   "amount": {
+    "percent": 20
+   }
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_ASATRU": {
+    "flat": 2
+   }
+  }
+ },
+ "cost": {
+  "production": 1350,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 50
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_HEIMDALL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HEIMDALL",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_NORDIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HEIMDALL_SANCTUARY",
+  "civilopedia": "TXT_KEY_BUILDING_HEIMDALL_SANCTUARY_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 2,
+  "conquestProbability": 100,
+  "religion": "RELIGION_ASATRU",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": "100.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

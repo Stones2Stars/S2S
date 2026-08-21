@@ -1,0 +1,72 @@
+{
+ "type": "TECH_REPLACEMENT_ORGANS",
+ "enables": {
+  "bonuses": [
+   "BONUS_REPLACEMENT_ORGANS"
+  ],
+  "buildings": [
+   "BUILDING_BIONIC_EYE_IMPLANT",
+   "BUILDING_FACTORY_REPLACEMENT_ORGANS",
+   "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+   "BUILDING_ROBOTIC_SURGEON"
+  ],
+  "techs": [
+   "TECH_NANOTECH_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MICROMECHANICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PERSONALIZED_HEALTH",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "research": 28189
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Replacement_Organs.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_REPLACEMENT_ORGANS",
+  "soundMP": "AS2D_TECH_REPLACEMENT_ORGANS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_REPLACEMENT_ORGANS",
+  "civilopedia": "TXT_KEY_TECH_REPLACEMENT_ORGANS_PEDIA",
+  "quote": "TXT_KEY_TECH_REPLACEMENT_ORGANS_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 50,
+  "tradeable": true,
+  "gridX": 97,
+  "gridY": 3
+ }
+}

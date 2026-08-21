@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_HYPERSPACE_EXPORTER",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERSPACE_COMMERCIAL_CENTER"
+  ],
+  "units": [
+   "UNIT_HYPERSHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRANSDIMENSIONAL_COMMERCE",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    500,
+    {
+     "value": 30,
+     "enabled": {
+      "type": "BONUS_QUANTONIUM_CRYSTALS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 80
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 1485,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYPERSPACE_EXPORTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_EXPORTER",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_EXPORTER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

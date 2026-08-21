@@ -1,0 +1,53 @@
+{
+ "type": "SPECIALIST_SETTLED_SLAVE_MILITARY",
+ "food": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -0.4
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -0.4
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/slave_military.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/slave_military.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_SETTLED_SLAVE_MILITARY",
+  "civilopedia": "TXT_KEY_SPECIALIST_SETTLED_SLAVE_PEDIA",
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_CAPTIVE",
+   "CATEGORY_SPECIALIST_GROUP_MILITARY"
+  ],
+  "slave": true
+ }
+}

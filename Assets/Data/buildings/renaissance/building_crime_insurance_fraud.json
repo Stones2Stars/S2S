@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_CRIME_INSURANCE_FRAUD",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_SOCIAL_CONTRACT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 400,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 10
+   }
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_INSURANCE_FRAUD",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_INSURANCE_FRAUD_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

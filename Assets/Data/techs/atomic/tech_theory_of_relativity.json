@@ -1,0 +1,58 @@
+{
+ "type": "TECH_THEORY_OF_RELATIVITY",
+ "enables": {
+  "buildings": [
+   "BUILDING_EINSTEINS_LABORATORY"
+  ],
+  "techs": [
+   "TECH_COSMOLOGY",
+   "TECH_QUANTUM_PHYSICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ABSTRACT_MATHEMATICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 9889
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/TheoryofRelativity.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,6,2"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_THEORY_OF_RELATIVITY",
+  "soundMP": "AS2D_TECH_THEORY_OF_RELATIVITY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_THEORY_OF_RELATIVITY",
+  "civilopedia": "TXT_KEY_TECH_THEORY_OF_RELATIVITY_PEDIA",
+  "quote": "TXT_KEY_TECH_THEORY_OF_RELATIVITY_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 30,
+  "tradeable": true,
+  "gridX": 73,
+  "gridY": 3
+ }
+}

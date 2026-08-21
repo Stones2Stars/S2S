@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_CHARIOT_WORKSHOP",
+ "enables": {
+  "buildings": [
+   "BUILDING_HIPPODROME"
+  ],
+  "units": [
+   "UNIT_CHARIOT",
+   "UNIT_CHARIOTARCHER",
+   "UNIT_EARLYCHARIOT",
+   "UNIT_EGYPT_WARCHARIOT",
+   "UNIT_HITTITES_HITTITE_CHARIOT",
+   "UNIT_HYKSOSI_CHARIOT",
+   "UNIT_KIKKULI_CHARIOT",
+   "UNIT_SHANG_CHARIOT",
+   "UNIT_SINTASHTA_CHARIOT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ANIMAL_TRAINER_HORSE",
+    "TECH_CHARIOTRY",
+    {
+     "any": [
+      "BUILDING_WHEELWRIGHT",
+      "BUILDING_CARRIAGE_BUILDER",
+      "BUILDING_FACTORY_AUTOMOBILES",
+      "BUILDING_SELF_ASSEMBLY_FACTORY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 139,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CHARIOT_WORKSHOP",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CHARIOT_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_CHARIOT_WORKSHOP_PEDIA",
+  "worth": 4,
+  "militaryWorth": 6,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

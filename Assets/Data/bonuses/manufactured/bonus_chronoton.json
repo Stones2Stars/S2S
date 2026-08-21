@@ -1,0 +1,23 @@
+{
+ "type": "BONUS_CHRONOTON",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_INFINITE_SPEED_TACHYON_GENERATOR",
+   "BUILDING_INTERGALACTIC_FANTASY_CITY",
+   "BUILDING_INTERGALACTIC_MATTER_PRESERVER",
+   "BUILDING_INTERSTELLAR_CHRONOTON_CANNONS",
+   "BUILDING_INTERSTELLAR_FALSE_VACUUM_TRAP"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CHRONOTON"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CHRONOTON",
+  "civilopedia": "TXT_KEY_BONUS_CHRONOTON_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

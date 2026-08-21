@@ -1,0 +1,172 @@
+{
+ "type": "UNIT_WIRUTI",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_KILLKE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_SIEGE_WARFARE",
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MUSKETMAN"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 15
+   },
+   "cityDefense": {
+    "percent": 5
+   },
+   "unitCombat": {
+    "UNITCOMBAT_ARCHER": {
+     "percent": 50
+    },
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 25
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 8
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 15
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 2
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 5
+   },
+   "limit": {
+    "flat": 15
+   },
+   "maxUnits": {
+    "flat": 1
+   }
+  }
+ },
+ "skills": [
+  "pillage"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_THROWING",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_POLEARM",
+  "UNITCOMBAT_WEAPON_DIST_JAVELIN",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_SHIELD_SMALL",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_POISON_TIPS",
+   "PROMOTION_LOOSE_FORMATION",
+   "PROMOTION_MOUNTAINEER"
+  ]
+ },
+ "cost": {
+  "production": 215,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WIRUTI",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "rangedWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_WIRUTI"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_WIRUTI",
+  "civilopedia": "TXT_KEY_UNIT_WIRUTI_PEDIA",
+  "worth": 3,
+  "militaryWorth": 6,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "conscription": 5,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_RANGED",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_ATTACK",
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

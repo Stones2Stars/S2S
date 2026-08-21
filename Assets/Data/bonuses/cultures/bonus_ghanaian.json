@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_GHANAIAN",
+ "enables": {
+  "units": [
+   "UNIT_KWAME_NKRUMAH",
+   "UNIT_SONINKE_SWORDSMAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_GHANAIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_GHANAIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

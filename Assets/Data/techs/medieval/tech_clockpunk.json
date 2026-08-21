@@ -1,0 +1,79 @@
+{
+ "type": "TECH_CLOCKPUNK",
+ "enables": {
+  "bonuses": [
+   "BONUS_CLOCKPUNK"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_PUNK_CLOCK"
+  ],
+  "units": [
+   "UNIT_CLOCKWORK_GOLEM",
+   "UNIT_DAVINCI_TANK",
+   "UNIT_ORNITHOPTER",
+   "UNIT_REPEATING_CROSSBOWMAN",
+   "UNIT_ZEPHYR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_OPTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CLOCKWORKS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CHIVALRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1960
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/clockpunk.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CLOCKPUNK",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CLOCKPUNK",
+  "civilopedia": "TXT_KEY_TECH_CLOCKPUNK_PEDIA",
+  "quote": "TXT_KEY_TECH_CLOCKPUNK_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "militaryWorth": 8,
+  "tradeable": true,
+  "gridX": 49,
+  "gridY": 1
+ }
+}

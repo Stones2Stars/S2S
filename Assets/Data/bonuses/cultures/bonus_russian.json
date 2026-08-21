@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_RUSSIAN",
+ "enables": {
+  "units": [
+   "UNIT_IVAN_IV",
+   "UNIT_RUSSIA_COSSACK"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_RUSSIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_RUSSIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

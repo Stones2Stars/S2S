@@ -1,0 +1,118 @@
+{
+ "type": "UNIT_GALAPAGOS_TORTOISE",
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "skills": [
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_REPTILE",
+  "UNITCOMBAT_RECKLESS_ANIMAL",
+  "UNITCOMBAT_REPTILE_TURTLE",
+  "UNITCOMBAT_ANIMAL_COMBAT_NIP",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHELLED",
+  "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+  "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
+  "UNITCOMBAT_SPEED_SLOW",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_GALAPAGOS_TORTOISE",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 50,
+     "random": 150
+    },
+    "production": {
+     "base": 5,
+     "random": 15
+    },
+    "commerce": {
+     "base": 7,
+     "random": 3
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TORTOISE2",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_TORTOISE2"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_GALAPAGOS_TORTOISE",
+  "civilopedia": "TXT_KEY_UNIT_GALAPAGOS_TORTOISE_PEDIA",
+  "spawnOnly": true,
+  "xpValueAttack": 2,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_DUNES",
+   "TERRAIN_ICE",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ]
+ }
+}

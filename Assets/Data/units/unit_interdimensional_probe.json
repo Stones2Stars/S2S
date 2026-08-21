@@ -1,0 +1,124 @@
+{
+ "type": "UNIT_INTERDIMENSIONAL_PROBE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_HORIZON_PORT",
+    "TECH_ENDLESS_EXPLORATION"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 3
+ },
+ "movement": {
+  "unit": {
+   "flat": 12
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_INTERDIMENSIONAL_PROBE"
+  }
+ },
+ "skills": [
+  "canMoveAllTerrain",
+  "canMoveImpassable",
+  "ignoreTerrainCost"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SPACE_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_WORMHOLE_SPACESHIP",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_EXPLORE_HYPERSPACE",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_HYPERSPACE"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreInterdimensional",
+     "code": "from CvPythonExtensions import *\nimport random\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tvalid_terrain_strings = ['HYPERSPACE']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_HYPERSPACE_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore hyperspace\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_MULTIVERSE",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_MULTIVERSE"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreMultiverse",
+     "code": "from CvPythonExtensions import *\nimport random\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tvalid_terrain_strings = ['BRANESPACE']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_MULTIVERSE_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore multiverse\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   }
+  ]
+ },
+ "cost": {
+  "production": 5000,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_INTERDIMENSIONAL_PROBE",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_INTERDIMENSIONAL_PROBE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_INTERDIMENSIONAL_PROBE",
+  "civilopedia": "TXT_KEY_UNIT_INTERDIMENSIONAL_PROBE_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT",
+   "MAPCATEGORY_HYPERSPACE"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "workRate": 250
+  }
+ }
+}

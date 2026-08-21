@@ -1,0 +1,38 @@
+{
+ "type": "BUILDING_EFFECT_COSMIC_EXPANSION_POWER_PLANT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
+    "TECH_CONTROLLED_VACUUM_COLLAPSE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 22755
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_COSMIC_EXPANSION_POWER_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_COSMIC_EXPANSION_POWER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_COSMIC_EXPANSION_POWER_PLANT_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

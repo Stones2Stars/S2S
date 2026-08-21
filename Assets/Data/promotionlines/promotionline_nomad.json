@@ -1,0 +1,11 @@
+{
+ "type": "PROMOTIONLINE_NOMAD",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/traitnomadic.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_NOMAD"
+ }
+}

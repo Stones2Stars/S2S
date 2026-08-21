@@ -1,0 +1,77 @@
+{
+ "type": "TECH_ADAPTIVE_ARCHITECTURE",
+ "enables": {
+  "buildings": [
+   "BUILDING_GRAND_SPACESCRAPER",
+   "BUILDING_INTERSTELLAR_AERIAL_CITY",
+   "BUILDING_INTERSTELLAR_AEROPONICS_ARCOLOGY",
+   "BUILDING_INTERSTELLAR_GRAVITON_DETECTOR",
+   "BUILDING_INTERSTELLAR_METROPOLIS",
+   "BUILDING_INTERSTELLAR_RESIDENTIAL_DISTRICT",
+   "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
+   "BUILDING_NEPTUNE_CHANDELIER_CITY"
+  ],
+  "techs": [
+   "TECH_PLANET_ENGINEERING",
+   "TECH_STAR_LIFTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MOLECULAR_ASSEMBLY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLANET_CRACKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLANET_SCOUTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_XENODIPLOMACY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 159944
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/adaptive_architecture.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ADAPTIVE_ARCHITECTURE",
+  "civilopedia": "TXT_KEY_TECH_ADAPTIVE_ARCHITECTURE_PEDIA",
+  "quote": "TXT_KEY_TECH_ADAPTIVE_ARCHITECTURE_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 131,
+  "gridY": 3
+ }
+}

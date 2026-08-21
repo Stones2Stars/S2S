@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_BLIMP_ADVERTISING",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MASS_MEDIA",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HYDROGEN",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 6
+  }
+ },
+ "cost": {
+  "production": 1180,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BLIMP_ADVERTISING",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MARKETPLACE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BLIMP_ADVERTISING",
+  "civilopedia": "TXT_KEY_BUILDING_BLIMP_ADVERTISING_PEDIA",
+  "worth": 2,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

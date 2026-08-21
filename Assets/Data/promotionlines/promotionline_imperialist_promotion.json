@@ -1,0 +1,18 @@
+{
+ "type": "PROMOTIONLINE_IMPERIALIST_PROMOTION",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PromotionImperialist.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_IMPERIALIST_PROMOTION",
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_MISSIONARY",
+   "UNITCOMBAT_EXECUTIVE"
+  ]
+ }
+}

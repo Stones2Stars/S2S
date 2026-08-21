@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_WHEAT_GATHERER",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_GRAINS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_VERTICAL_FARMING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FARM_CROP_WHEAT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GROUND_STONE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "BONUS_WHEAT",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_FARM_CROP_WHEAT",
+    "BUILDING_FARMSCRAPER_III"
+   ]
+  }
+ },
+ "food": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 60,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WHEAT_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WHEAT_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_WHEAT_GATHERER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

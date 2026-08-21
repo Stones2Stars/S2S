@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_WALKABOUT",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_L_OCEANIAN",
+    "TECH_RITUALISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 60,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WALKABOUT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WALKABOUT",
+  "civilopedia": "TXT_KEY_BUILDING_WALKABOUT_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

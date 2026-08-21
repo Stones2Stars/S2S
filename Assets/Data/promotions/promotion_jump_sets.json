@@ -1,0 +1,33 @@
+{
+ "type": "PROMOTION_JUMP_SETS",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_POWER_SOURCE_UPGRADE1"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "skills": {
+  "amphib": true,
+  "river": true
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Amphibious.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,8,11"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_JUMP_SETS",
+  "unitCombats": [
+   "UNITCOMBAT_ROBOT"
+  ]
+ }
+}

@@ -1,0 +1,50 @@
+{
+ "type": "PROMOTION_BARRAGE2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BARRAGE3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_BARRAGE1"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 20
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BARRAGE": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Barrage2.dds,Art/Interface/Buttons/Promotions_Atlas.dds,5,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BARRAGE2",
+  "unitCombats": [
+   "UNITCOMBAT_SUBMARINE",
+   "UNITCOMBAT_EARLY_BOMBERS",
+   "UNITCOMBAT_BOMBERS"
+  ]
+ }
+}

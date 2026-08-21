@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_ELECTRIC_FENCE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SHIELDING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_WIRELESS_ELECTRIC_FENCE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ELECTRONICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_WIRELESS_ELECTRIC_FENCE",
+    "BUILDING_ARCOLOGY_SHIELDING",
+    "BUILDING_ADVANCED_SHIELDING"
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 140
+   },
+   "min": {
+    "percent": 5
+   },
+   "noEntryLevel": {
+    "percent": 16
+   },
+   "adjacentDamage": {
+    "percent": 25
+   }
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 1080,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ELECTRIC_FENCE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ELECTRIC_FENCE",
+  "civilopedia": "TXT_KEY_BUILDING_ELECTRIC_FENCE_PEDIA",
+  "centerInCity": true,
+  "militaryWorth": 4,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

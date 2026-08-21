@@ -1,0 +1,85 @@
+{
+ "type": "TECH_SCIENTIFIC_METHOD",
+ "enables": {
+  "bonuses": [
+   "BONUS_NATURAL_GAS",
+   "BONUS_OIL"
+  ],
+  "buildings": [
+   "BUILDING_LOUVRE_MUSEUM",
+   "BUILDING_MUSEUM",
+   "BUILDING_NATIONAL_SCIENCE_FOUNDATION",
+   "BUILDING_SMITHSONIAN_INSTITUTION"
+  ],
+  "builds": [
+   "BUILD_ARCHEOLOGICAL_SITE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_ARCHEOLOGICAL_SITE"
+  ],
+  "techs": [
+   "TECH_CALCULUS",
+   "TECH_CHEMISTRY",
+   "TECH_ENLIGHTENMENT",
+   "TECH_EXPLOSIVES",
+   "TECH_MICROBIOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PRINTING_PRESS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HELIOCENTRISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CRITICAL_THOUGHT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "freeTechs": 1
+ },
+ "cost": {
+  "research": 3074
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/Scientific_Method.dds,Art/Interface/Buttons/TechTree_Atlas.dds,8,7"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SCIMETHOD",
+  "soundMP": "AS2D_TECH_MP_SCIMETHOD"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SCIENTIFIC_METHOD",
+  "civilopedia": "TXT_KEY_TECH_SCIENTIFIC_METHOD_PEDIA",
+  "quote": "TXT_KEY_TECH_SCIENTIFIC_METHOD_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 20,
+  "tradeable": true,
+  "gridX": 55,
+  "gridY": 11
+ }
+}

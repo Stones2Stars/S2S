@@ -1,0 +1,151 @@
+{
+ "type": "UNIT_GERENUK",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 3,
+   "title": "TXT_KEY_GROUPTITLE_SOLITARY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_CLUSTER"
+  }
+ ],
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 45
+  }
+ },
+ "skills": [
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_RECKLESS_ANIMAL",
+  "UNITCOMBAT_MAMMAL_ANTELOPE",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_GERENUK",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 10,
+     "random": 10
+    },
+    "production": {
+     "base": 1,
+     "random": 2
+    },
+    "commerce": {
+     "base": 5,
+     "random": 3
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GERENUK",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_GERENUK"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_GERENUK",
+  "civilopedia": "TXT_KEY_UNIT_GERENUK_PEDIA",
+  "spawnOnly": true,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "featureImpassable": [
+   "FEATURE_FOREST_ANCIENT",
+   "FEATURE_JUNGLE",
+   "FEATURE_MANGROVE",
+   "FEATURE_SWAMP"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_BARREN",
+   "TERRAIN_DUNES",
+   "TERRAIN_ICE",
+   "TERRAIN_MARSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ],
+  "featurePassableTechs": [
+   {
+    "FEATURE_FOREST_YOUNG": "NONE"
+   },
+   {
+    "FEATURE_SAVANNA": "NONE"
+   }
+  ]
+ }
+}

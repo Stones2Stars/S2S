@@ -1,0 +1,81 @@
+{
+ "type": "TECH_SURVEYING",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_TRESPASSING",
+   "BUILDING_GUILD_CARPENTERS",
+   "BUILDING_GUILD_WOODCUTTERS",
+   "BUILDING_HOUSING_COMMONS",
+   "BUILDING_HOUSING_COTTAGES",
+   "BUILDING_HOUSING_ESTATES",
+   "BUILDING_HOUSING_MANORS",
+   "BUILDING_HOUSING_SHACKS",
+   "BUILDING_HOUSING_SHANTY_TOWN",
+   "BUILDING_SURVEYORS_OFFICE"
+  ],
+  "builds": [
+   "BUILD_PAVED_ROAD"
+  ],
+  "promotions": [
+   "PROMOTION_WAYLAY5"
+  ],
+  "techs": [
+   "TECH_ARCHITECTURE",
+   "TECH_WINDMILLS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 15
+  }
+ },
+ "cost": {
+  "research": 1230
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/surveying.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SURVEYING",
+  "soundMP": "AS2D_TECH_SURVEYING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SURVEYING",
+  "civilopedia": "TXT_KEY_TECH_SURVEYING_PEDIA",
+  "quote": "TXT_KEY_TECH_SURVEYING_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 43,
+  "gridY": 9
+ }
+}

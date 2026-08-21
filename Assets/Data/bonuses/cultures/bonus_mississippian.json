@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_MISSISSIPPIAN",
+ "enables": {
+  "units": [
+   "UNIT_BEAR_KNEE",
+   "UNIT_RIVER_WORKER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MISSISSIPPIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MISSISSIPPIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

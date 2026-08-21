@@ -1,0 +1,105 @@
+{
+ "type": "BUILDING_VENUS_SURFACE_CITY",
+ "enables": {
+  "buildings": [
+   "BUILDING_VENUS_AGRODOME",
+   "BUILDING_VENUS_ARCOLOGY",
+   "BUILDING_VENUS_BIOTIC_ATMOSPHERE",
+   "BUILDING_VENUS_FUSION_PLANT",
+   "BUILDING_VENUS_HOTEL",
+   "BUILDING_VENUS_MAGNESIUM_AND_CALCIUM_MINE",
+   "BUILDING_VENUS_SURFACE_FACTORY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_VENUS_CITY",
+    "TECH_ABYSS_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PLASTEEL",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    500,
+    {
+     "value": 10,
+     "enabled": "TECH_THERMAL_NEGATION"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -10
+   }
+  }
+ },
+ "cost": {
+  "production": 2793,
+  "hurryModifier": 10000
+ },
+ "amenities": {
+  "adds3rdRing": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VENUS_SURFACE_CITY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_SURFACE_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_SURFACE_CITY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

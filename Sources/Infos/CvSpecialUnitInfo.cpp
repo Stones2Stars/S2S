@@ -1,128 +1,44 @@
-//------------------------------------------------------------------------------------------------
-//  FILE:    CvSpecialUnitInfo.cpp
-//------------------------------------------------------------------------------------------------
-#include "CvGameCoreDLL.h"
-#include "CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "CvPlayerAI.h"
-#include "CvPython.h"
-#include "CvXMLLoadUtility.h"
-#include "CvXMLLoadUtilityModTools.h"
-#include "CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
+//
+//	CvSpecialUnitInfo -- mapFrom materializes the identity flags ONCE (docs/architecture/patterns.md §Materialize at mapFrom); the
+//	combat/withdrawal families ride the base section dispatch into the composed CvModifiers (no family-address
+//	read survives here). Idempotent by contract (unconditional scalar assigns).
+//
+
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
+#include "CvInfos.h"              // umbrella: keeps the unity batch's info-type defs whole (leakage guard)
+#include "AI/CvGameAI.h"
 #include "CvSpecialUnitInfo.h"
+#include "CvJsonParse.h"          // jsonChildObj / jsonIdBool
 
-
-
-//======================================================================================================
-//					CvSpecialUnitInfo
-//======================================================================================================
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   CvSpecialUnitInfo()
-//
-//  PURPOSE :   Default constructor
-//
-//------------------------------------------------------------------------------------------------------
 CvSpecialUnitInfo::CvSpecialUnitInfo()
-{
-	CvInfoUtil(this).initDataMembers();
-}
-
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   ~CvSpecialUnitInfo()
-//
-//  PURPOSE :   Default destructor
-//
-//------------------------------------------------------------------------------------------------------
-CvSpecialUnitInfo::~CvSpecialUnitInfo()
+	: m_bValid(true)          // legacy default TRUE (curator elides valid:true; only an explicit valid:false overrides)
+	, m_bCityLoad(false)
+	, m_bSMLoadSame(false)
 {
 }
 
-
-bool CvSpecialUnitInfo::isValid() const
+void CvSpecialUnitInfo::mapFrom(const picojson::value& entity)
 {
-	return m_bValid;
-}
+	// remap-idempotency (CvInfo.h): fully redefine every materialized member before the guarded parse
+	m_bValid = true;          // legacy default TRUE (curator elides valid:true; only an explicit valid:false overrides)
+	m_bCityLoad = false;
+	m_bSMLoadSame = false;
 
-
-bool CvSpecialUnitInfo::isCityLoad() const
-{
-	return m_bCityLoad;
-}
-
-
-bool CvSpecialUnitInfo::isSMLoadSame() const
-{
-	return m_bSMLoadSame;
-}
-
-
-int CvSpecialUnitInfo::getCombatPercent() const
-{
-	return m_iCombatPercent;
-}
-
-
-int CvSpecialUnitInfo::getWithdrawalChange() const
-{
-	return m_iWithdrawalChange;
-}
-
-
-// Arrays
-
-
-void CvSpecialUnitInfo::getDataMembers(CvInfoUtil& util)
-{
-	util
-		.add(m_bValid, L"bValid")
-		.add(m_bCityLoad, L"bCityLoad")
-		.add(m_bSMLoadSame, L"bSMLoadSame")
-		.add(m_iCombatPercent, L"iCombatPercent")
-		.add(m_iWithdrawalChange, L"iWithdrawalChange")
-	;
-}
-
-
-bool CvSpecialUnitInfo::read(CvXMLLoadUtility* pXML)
-{
-	if (!CvInfoBase::read(pXML))
+	CvInfo::mapFrom(entity);   // core reading (type / text keys) + the section dispatch (compiles m_modifiers)
+	if (!entity.is<picojson::object>())
 	{
-		return false;
+		return;
 	}
+	const picojson::object& entityObj = entity.get<picojson::object>();
 
-	CvInfoUtil(this).readXml(pXML);
-
-	return true;
+	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
+	{
+		m_bCityLoad = jsonIdBool(*pIdentity, "cityLoad");
+		m_bSMLoadSame = jsonIdBool(*pIdentity, "smLoadSame");
+		picojson::object::const_iterator validIter = pIdentity->find("valid");
+		if (validIter != pIdentity->end() && validIter->second.is<bool>())
+		{
+			m_bValid = validIter->second.get<bool>();
+		}
+	}
 }
-
-
-void CvSpecialUnitInfo::copyNonDefaults(const CvSpecialUnitInfo* pClassInfo)
-{
-	CvInfoBase::copyNonDefaults(pClassInfo);
-
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-}
-
-
-void CvSpecialUnitInfo::getCheckSum(uint32_t& iSum) const
-{
-	// NOTE: kept explicit (not delegated to CvInfoUtil) to preserve the exact legacy checksum, which
-	// historically omits m_bCityLoad. Folding it in would change the value.
-	CheckSum(iSum, m_bValid);
-	CheckSum(iSum, m_bSMLoadSame);
-	CheckSum(iSum, m_iCombatPercent);
-	CheckSum(iSum, m_iWithdrawalChange);
-}
-

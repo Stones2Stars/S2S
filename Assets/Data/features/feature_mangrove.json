@@ -1,0 +1,98 @@
+{
+ "type": "FEATURE_MANGROVE",
+ "cultureDistance": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 10
+   }
+  }
+ },
+ "characteristics": [
+  "unfoundable"
+ ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_AIR_POLLUTION": -4,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  },
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_WATER_POLLUTION": -5,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  }
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_MANGROVE"
+  }
+ },
+ "sound": {
+  "footsteps": [
+   {
+    "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_HUMAN_LOW": "AS3D_UN_FOOT_UNIT_LOW_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL": "AS3D_UN_ANIMAL_FOOT_LARGE_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL_LOW": "AS3D_UN_ANIMAL_FOOT_LARGE_LOW_MUD"
+   },
+   {
+    "LOOPSTEP_OCEAN1": "AS3D_UN_OCEAN_LOOP1"
+   },
+   {
+    "ENDSTEP_OCEAN1": "AS3D_UN_OCEAN_END1"
+   },
+   {
+    "LOOPSTEP_OCEAN2": "AS3D_UN_OCEAN_LOOP1"
+   },
+   {
+    "ENDSTEP_OCEAN2": "AS3D_UN_OCEAN_END2"
+   }
+  ],
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_MANGROVE",
+  "civilopedia": "TXT_KEY_FEATURE_MANGROVE_PEDIA",
+  "coastalOnly": true,
+  "requiresFlatlands": true,
+  "appearance": 200,
+  "growth": 10,
+  "validTerrains": [
+   "TERRAIN_MARSH",
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_COAST_TROPICAL"
+  ]
+ }
+}

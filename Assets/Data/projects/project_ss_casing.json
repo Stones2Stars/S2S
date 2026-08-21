@@ -1,0 +1,46 @@
+{
+ "type": "PROJECT_SS_CASING",
+ "allowed": {
+  "team": 5
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "victory": {
+  "thresholds": {
+   "VICTORY_SPACE_RACE": 5
+  },
+  "minThresholds": {
+   "VICTORY_SPACE_RACE": 1
+  },
+  "successRate": 20
+ },
+ "cost": {
+  "create": 55240
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Buildings/SS_Casing.dds,Art/Interface/Buttons/Buildings_Atlas.dds,4,6"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROJECT_SS_CASING",
+  "civilopedia": "TXT_KEY_PROJECT_SS_CASING_PEDIA",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "launchesVictory": "VICTORY_SPACE_RACE",
+  "spaceship": true
+ }
+}

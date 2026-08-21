@@ -1,0 +1,56 @@
+{
+ "type": "TECH_MAIL",
+ "enables": {
+  "buildings": [
+   "BUILDING_NATIONAL_COURIER_SYSTEM",
+   "BUILDING_SEAL_MAKER"
+  ],
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CLASSICAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 448
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/mail.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MAIL",
+  "soundMP": "AS2D_TECH_MAIL"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MAIL",
+  "civilopedia": "TXT_KEY_TECH_MAIL_PEDIA",
+  "quote": "TXT_KEY_TECH_MAIL_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 33,
+  "gridY": 13
+ }
+}

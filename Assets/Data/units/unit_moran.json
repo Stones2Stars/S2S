@@ -1,0 +1,187 @@
+{
+ "type": "UNIT_MORAN",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MASAI",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_COPPER_WORKING",
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BRONZE_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SKIRMISHER"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_COPPER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_BRONZE_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 25
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 25
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 5
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 15
+  }
+ },
+ "skills": [
+  "pillage",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_THROWING",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_POLEARM",
+  "UNITCOMBAT_WEAPON_DIST_JAVELIN",
+  "UNITCOMBAT_SHIELD_TOWER",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SHOCK"
+  ]
+ },
+ "cost": {
+  "production": 125,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MORAN",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "rangedWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_MORAN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_MASAI_MORAN",
+  "civilopedia": "TXT_KEY_UNIT_MASAI_MORAN_PEDIA",
+  "worth": 2,
+  "militaryWorth": 4,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_ATTACK_CITY"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

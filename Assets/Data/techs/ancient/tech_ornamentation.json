@@ -1,0 +1,75 @@
+{
+ "type": "TECH_ORNAMENTATION",
+ "enables": {
+  "bonuses": [
+   "BONUS_FAKE_GEMS",
+   "BONUS_NOK_SCULPTURES",
+   "BONUS_TERRACOTTA"
+  ],
+  "buildings": [
+   "BUILDING_GLAZE_MAKER",
+   "BUILDING_HARAPPAN_FAKE_GEMS",
+   "BUILDING_NOK_SCULPTURE_WORKSHOP",
+   "BUILDING_OBELISK",
+   "BUILDING_TERRACOTTA_WORKSHOP",
+   "BUILDING_WIG_SHOP"
+  ],
+  "techs": [
+   "TECH_FURNITURE_MAKING",
+   "TECH_GEARS",
+   "TECH_WRITING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HERITAGE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_METAL_CASTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SCULPTURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 213
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/ornamentation.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ORNAMENTATION",
+  "soundMP": "AS2D_TECH_ORNAMENTATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ORNAMENTATION",
+  "civilopedia": "TXT_KEY_TECH_ORNAMENTATION_PEDIA",
+  "quote": "TXT_KEY_TECH_ORNAMENTATION_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 27,
+  "gridY": 11
+ }
+}

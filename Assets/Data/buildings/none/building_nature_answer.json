@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_NATURE_ANSWER",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "IS_HOLY_CITY": "RELIGION_DRUIDIC_TRADITIONS"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    },
+    {
+     "value": 1,
+     "per": {
+      "type": "RELIGION_DRUIDIC_TRADITIONS",
+      "scope": "world"
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_DRUIDIC_TRADITIONS": {
+    "flat": 1
+   }
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 3
+  }
+ },
+ "shrine": "RELIGION_DRUIDIC_TRADITIONS",
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SHRINE_DRUID"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NATURE_ANSWER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_DRUID"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NATURE_ANSWER",
+  "civilopedia": "TXT_KEY_BUILDING_NATURE_ANSWER_PEDIA",
+  "pediaCategory": "religious",
+  "notConstructible": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_DRUIDIC_TRADITIONS",
+  "advisor": "ADVISOR_RELIGION",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

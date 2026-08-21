@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_SAXON",
+ "enables": {
+  "units": [
+   "UNIT_ALFRED",
+   "UNIT_SAXON_RAIDER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SAXON"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SAXON",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

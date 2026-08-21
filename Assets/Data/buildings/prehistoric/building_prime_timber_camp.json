@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_PRIME_TIMBER_CAMP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SIMPLE_WOOD_WORKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PRIME_TIMBER",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ],
+   "dormant": [
+    "BUILDING_AGROFOREST"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 50,
+  "sizeModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PRIME_TIMBER_CAMP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PRIME_TIMBER_CAMP",
+  "civilopedia": "TXT_KEY_BUILDING_PRIME_TIMBER_CAMP_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

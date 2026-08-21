@@ -1,0 +1,162 @@
+{
+ "type": "UNIT_MOBILE_TREBUCHET",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_KHAZAR",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_SIEGE_WEAPONS_WORKSHOP",
+    "TECH_ENGINEERING"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_BOMBARD"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 75
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 9
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 16
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 100
+   },
+   "limit": {
+    "flat": 50
+   },
+   "maxUnits": {
+    "flat": 6
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_TREBUCHET"
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage",
+  "mechanized",
+  "tradable",
+  "collateralImmune"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SIEGE",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SIEGE_URBAN",
+  "UNITCOMBAT_SIEGE_WOODEN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_LAUNCHED_STONE",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_SPEED_SLOW",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 330,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MOBILE_TREBUCHET",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "rangedWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_MOBILE_TREBUCHET"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_MOBILE_TREBUCHET",
+  "civilopedia": "TXT_KEY_UNIT_MOBILE_TREBUCHET_PEDIA",
+  "worth": 2,
+  "militaryWorth": 15,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_COLLATERAL",
+   "UNITAI_ATTACK",
+   "UNITAI_CITY_COUNTER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combatLimit": 75
+  }
+ }
+}

@@ -1,0 +1,101 @@
+{
+ "type": "BUILDING_POACHERS_CAMP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ECOLOGICAL_ENGINEERING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_WILDLIFE_CONSERVATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_CARCASS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PELTS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": 25
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "cost": {
+  "production": 680,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_POACHERS_CAMP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_POACHERS_CAMP",
+  "civilopedia": "TXT_KEY_BUILDING_POACHERS_CAMP_PEDIA",
+  "militaryWorth": 1,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

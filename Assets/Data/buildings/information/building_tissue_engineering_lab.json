@@ -1,0 +1,114 @@
+{
+ "type": "BUILDING_TISSUE_ENGINEERING_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_MEDICAL_TRICODERS",
+   "BUILDING_FACTORY_REPLACEMENT_ORGANS",
+   "BUILDING_PHENOTYPE_STUDIO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_STEM_CELL_LAB",
+    "TECH_MOLECULAR_MEDICINE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_ENZYMES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 9,
+     "enabled": "TECH_ANTI_AGING_MEDICINE"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_RAPID_RECUPERATION"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_GENE_ENHANCEMENT"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_CYBERIMMUNOLOGY"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": "TECH_ANTI_AGING_MEDICINE"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_RAPID_RECUPERATION"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_GENE_ENHANCEMENT"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_CYBERIMMUNOLOGY"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 2205,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TISSUE_ENGINEERING_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TISSUE_ENGINEERING_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_TISSUE_ENGINEERING_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

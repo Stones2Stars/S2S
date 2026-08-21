@@ -1,0 +1,84 @@
+{
+ "type": "TECH_ASTRONAUTICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BAIKONUR_COSMODROME",
+   "BUILDING_DEEP_SPACE_RESEARCH_INSTITUTE"
+  ],
+  "projects": [
+   "PROJECT_HUBBLE_SPACE_TELESCOPE"
+  ],
+  "promotions": [
+   "PROMOTION_REPAIR_AIRCRAFT4"
+  ],
+  "techs": [
+   "TECH_ASTRO_ENVIRONMENTAL_SYSTEMS",
+   "TECH_FIRE_SUPPRESSION"
+  ],
+  "units": [
+   "UNIT_ASTRONAUTIC_TECHNICIAN"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_BALLOON"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_VERTICAL_FLIGHT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SATELLITES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 14287
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Space_Flight.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,16"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SPACEFLIGHT",
+  "soundMP": "AS2D_TECH_SPACEFLIGHT"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ASTRONAUTICS",
+  "civilopedia": "TXT_KEY_TECH_ASTRONAUTICS_PEDIA",
+  "quote": "TXT_KEY_TECH_ASTRONAUTICS_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 82,
+  "gridY": 11
+ }
+}

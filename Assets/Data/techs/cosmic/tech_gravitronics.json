@@ -1,0 +1,69 @@
+{
+ "type": "TECH_GRAVITRONICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ATOMIC_ASSEMBLER",
+   "BUILDING_CENTERPOINT_STATION",
+   "BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER",
+   "BUILDING_INTERSTELLAR_BLACK_HOLE_EMS",
+   "BUILDING_INTERSTELLAR_EVENT_HORIZON_CITY",
+   "BUILDING_MULTIVAC",
+   "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER"
+  ],
+  "techs": [
+   "TECH_IMMORTALITY",
+   "TECH_ULTRACOMPUTING",
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TIME_TRAVEL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_APPLIED_RELATIVITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 271404
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/gravitronics.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_GRAVITRONICS",
+  "civilopedia": "TXT_KEY_TECH_GRAVITRONICS_PEDIA",
+  "quote": "TXT_KEY_TECH_GRAVITRONICS_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 139,
+  "gridY": 9
+ }
+}

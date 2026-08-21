@@ -1,0 +1,52 @@
+{
+ "type": "SPECIALIST_SPY",
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 4,
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "CIVIC_CAPITALIST",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_SPY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/spy.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/spy.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_SPY",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_SPY_PEDIA",
+  "visible": true,
+  "categories": [
+   "CATEGORY_ASSIGNABLE_SPECIALISTS",
+   "CATEGORY_SPECIALIST_GROUP_ESPIONAGE"
+  ],
+  "greatPeopleUnit": "UNIT_GREAT_SPY"
+ }
+}

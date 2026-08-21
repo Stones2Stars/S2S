@@ -1,0 +1,101 @@
+{
+ "type": "BUILDING_FACTORY_RADIOS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOELECTRONICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "TECH_RADIO",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COPPER_WIRES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_GLASSWARE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TRANSISTORS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_MICROCHIPS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_RADIOS"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 870,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACTORY_RADIOS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_RADIOS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_RADIOS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

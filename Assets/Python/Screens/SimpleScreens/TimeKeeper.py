@@ -1,4 +1,11 @@
 from CvPythonExtensions import *
+GC = CyGlobalContext()
+INFO = CyInfo()
+#	The era pacing this screen tabulates belongs to ONE registry, so it is read from the per-info GAMESPEED
+#	accessor rather than a generic slot ([patterns.md] THE PYTHON READ BOUNDARY -- an explicit binding at module
+#	scope IS the module's dependency list).
+SPEED = CyGameSpeedInfo()
+TRNSLTR = CyTranslator()
 
 def TimeKeeper():
 	import CvScreenEnums
@@ -10,12 +17,11 @@ def TimeKeeper():
 	# Cache Era data
 	iEras = GC.getNumEraInfos()
 	szColorEra = "<font=3>" + TRNSLTR.getText("[COLOR_UNIT_TEXT]", ())
-	aListEra = []
-	iEra = 0
-	while iEra < iEras:
-		CvInfo = GC.getEraInfo(iEra)
-		aListEra.append(szColorEra + CvInfo.getDescription())
-		iEra += 1
+	#	Keyed by the entry's OWN id, never by position: getIndex walks to the registry's real count and skips a
+	#	hole, so a positional list would run short and the rows below index by era id.
+	aListEra = {}
+	for kEra in INFO.getIndex("C2C_ERA_"):
+		aListEra[kEra["id"]] = szColorEra + kEra["description"]
 	# Create table
 	screen = CyGInterfaceScreen("TimeKeeperScreen", CvScreenEnums.TIMEKEEPER)
 	screen.addPanel("", "", "", True, False, -10, -10, xRes + 20, yRes + 20, PanelStyles.PANEL_STYLE_MAIN)
@@ -26,7 +32,7 @@ def TimeKeeper():
 	screen.addTableControlGFC(TABLE, iNumColumns + 1, 0, 0, xRes, yRes, True, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
 	screen.setTableColumnHeader(TABLE, 0, "", 120)
 	for i in xrange(iNumColumns):
-		screen.setTableColumnHeader(TABLE, i + 1, GC.getGameSpeedInfo(i).getDescription(), (xRes - 120)/iNumColumns)
+		screen.setTableColumnHeader(TABLE, i + 1, INFO.getDescription("GAMESPEED_", i), (xRes - 120)/iNumColumns)
 
 	for _ in xrange(5 * iEras + 3):
 		screen.appendTableRow(TABLE)
@@ -46,13 +52,12 @@ def TimeKeeper():
 	# Fill table: one block of rows per era, one column per game speed
 	iCol = 0
 	while iCol < iNumColumns:
-		CvGameSpeedInfo = GC.getGameSpeedInfo(iCol)
 		iRow = 0
 		for iEra in xrange(iEras):
-			iStartTurn = CvGameSpeedInfo.getEraStartTurn(iEra)
-			iTurns = CvGameSpeedInfo.getTurnsInEra(iEra)
-			iIncrement = CvGameSpeedInfo.getTicksPerTurnInEra(iEra)
-			screen.setTableText(TABLE, 0, iRow, aListEra[iEra], "", eWidGen, 1, 2, 1<<0)
+			iStartTurn = SPEED.getEraStartTurn(iCol, iEra)
+			iTurns = SPEED.getTurnsInEra(iCol, iEra)
+			iIncrement = SPEED.getTicksPerTurnInEra(iCol, iEra)
+			screen.setTableText(TABLE, 0, iRow, aListEra.get(iEra, ""), "", eWidGen, 1, 2, 1<<0)
 			iRow += 1
 			screen.setTableText(TABLE, 0, iRow, szStartYear, "", eWidGen, 1, 2, 1<<0)
 			screen.setTableText(TABLE, iCol+1, iRow, "<font=3>" + CyGameTextMgr().getDateStr(iStartTurn, False, eCalNoSeasons, iStartYear, iCol), "", eWidGen, 1, 2, 1<<0)
@@ -67,7 +72,7 @@ def TimeKeeper():
 			screen.setTableText(TABLE, iCol+1, iRow, "<font=3>" + separateYearMonthDay(iTurns * iIncrement), "", eWidGen, 1, 2, 1<<0)
 			iRow += 1
 
-		iTotalTurns = CvGameSpeedInfo.getTotalTurns()
+		iTotalTurns = SPEED.getTotalTurns(iCol)
 		iRow += 1
 		screen.setTableText(TABLE, 0, iRow, szEndYear, "", eWidGen, 1, 2, 1<<0)
 		screen.setTableText(TABLE, iCol+1, iRow, szColorSel + CyGameTextMgr().getDateStr(iTotalTurns, False, eCalNoSeasons, iStartYear, iCol), "", eWidGen, 1, 2, 1<<0)

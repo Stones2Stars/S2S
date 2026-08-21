@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_AI_POLICE_FORCE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DE_MAT_POLICE_FORCE",
+   "BUILDING_GRAVITY_CROWD_CONTROL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+    "BUILDING_MEGATOWER_POLICE_STATION_LEVEL",
+    "TECH_UTOPIA_DESTINY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -75
+  }
+ },
+ "cost": {
+  "production": 5255,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_AI_POLICE_FORCE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_AI_POLICE_FORCE",
+  "civilopedia": "TXT_KEY_BUILDING_AI_POLICE_FORCE_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

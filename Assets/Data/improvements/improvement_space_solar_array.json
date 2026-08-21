@@ -1,0 +1,81 @@
+{
+ "type": "IMPROVEMENT_SPACE_SOLAR_ARRAY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SOLAR_PROPULSION",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_CISLUNAR_SPACE"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SOLAR_ORDNANCE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PHOTONIC_SATELLITES",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SOLAR_ORDNANCE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_SPACE_SOLAR_PANELS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_SPACE_SOLAR_ARRAY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SOLAR_PANEL_PEDIA",
+  "extraterrestrial": true,
+  "advancedStart": {
+   "cost": -1
+  },
+  "pillageGold": 50,
+  "outsideBorders": true
+ }
+}

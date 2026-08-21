@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_MARTIAN_MAGLEV_TERMINAL",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_MARTIAN",
+    "TECH_SUPERSONIC_RAILS",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MARTIAN_MANUFACTURED_GOODS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1144,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_MAGLEV_TERMINAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_MAGLEV_TERMINAL",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_MAGLEV_TERMINAL_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

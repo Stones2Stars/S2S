@@ -1,0 +1,41 @@
+{
+ "type": "TERRAIN_MARTIAN_ICE",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Ice.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_TERRAIN_ICE"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_TUNDRA_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_TERRAIN_MARTIAN_ICE",
+  "civilopedia": "TXT_KEY_TERRAIN_MARTIAN_ICE_PEDIA",
+  "foundCoast": true,
+  "foundFreshWater": true,
+  "buildTimeModifier": 75,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

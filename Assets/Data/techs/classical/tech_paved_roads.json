@@ -1,0 +1,82 @@
+{
+ "type": "TECH_PAVED_ROADS",
+ "enables": {
+  "buildings": [
+   "BUILDING_PAVED_ROADS",
+   "BUILDING_VIA_APPIA"
+  ],
+  "builds": [
+   "BUILD_PAVED_ROAD",
+   "BUILD_ROAD"
+  ],
+  "promotions": [
+   "PROMOTION_STREET_FIGHTER4"
+  ],
+  "techs": [
+   "TECH_MEDIEVAL_LIFESTYLE"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_TRAIL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CITY_PLANNING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MACHINERY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 904
+ },
+ "ai": {
+  "behaviour": {
+   "weight": 100,
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/Pavedroads.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PAVED_ROADS",
+  "soundMP": "AS2D_TECH_PAVED_ROADS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PAVED_ROADS",
+  "civilopedia": "TXT_KEY_TECH_PAVED_ROADS_PEDIA",
+  "quote": "TXT_KEY_TECH_PAVED_ROADS_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 24,
+  "militaryWorth": 8,
+  "tradeable": true,
+  "gridX": 40,
+  "gridY": 11
+ }
+}

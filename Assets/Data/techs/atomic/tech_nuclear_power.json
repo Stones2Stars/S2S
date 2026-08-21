@@ -1,0 +1,70 @@
+{
+ "type": "TECH_NUCLEAR_POWER",
+ "enables": {
+  "buildings": [
+   "BUILDING_NUCLEAR_PLANT",
+   "BUILDING_TOXIC_WASTE_DUMP"
+  ],
+  "techs": [
+   "TECH_ATOMPUNK",
+   "TECH_DEEP_SEA_EXPLORATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MANUFACTURING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MICROWAVES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 12657
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/NuclearPower.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,13"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NUCLEAR_POWER",
+  "soundMP": "AS2D_TECH_NUCLEAR_POWER"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NUCLEAR_POWER",
+  "civilopedia": "TXT_KEY_TECH_NUCLEAR_POWER_PEDIA",
+  "quote": "TXT_KEY_TECH_NUCLEAR_POWER_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 8,
+  "tradeable": true,
+  "gridX": 79,
+  "gridY": 15
+ }
+}

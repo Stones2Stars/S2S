@@ -1,0 +1,110 @@
+{
+ "type": "BUILDING_APOSTOLIC_PALACE",
+ "enables": {
+  "votes": [
+   "FORCE_TEAM_ELIGIBLE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MASS_MEDIA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TEAM",
+     "scope": "world",
+     "min": 3
+    },
+    {
+     "type": "VICTORY_DIPLOMATIC",
+     "scope": "world"
+    },
+    "TECH_PAPACY",
+    "STATE_RELIGION_IN_CITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 1860,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 300
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_APOSTOLIC_PALACE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_APOSTOLIC_PALACE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_APOSTOLIC_PALACE",
+  "civilopedia": "TXT_KEY_BUILDING_APOSTOLIC_PALACE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 15,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "diploVoteType": "DIPLOVOTE_POPE",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

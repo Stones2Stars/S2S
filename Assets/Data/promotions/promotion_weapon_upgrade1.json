@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_WEAPON_UPGRADE1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_WEAPON_UPGRADE2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_REINFORCED_STRUCTURE"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 20
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_WEAPON_UPGRADE": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CityRaider2.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,5,5"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_WEAPON_UPGRADE1"
+ }
+}

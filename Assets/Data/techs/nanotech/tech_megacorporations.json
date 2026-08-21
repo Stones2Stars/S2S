@@ -1,0 +1,76 @@
+{
+ "type": "TECH_MEGACORPORATIONS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CORPORATE_HIVE",
+   "BUILDING_GLOBAL_STOCK_EXCHANGE",
+   "BUILDING_MATERIALS_CONGLOMERATE",
+   "BUILDING_MEGACORPORATE_HEADQUARTERS"
+  ],
+  "civics": [
+   "CIVIC_CORPOR_NATION",
+   "CIVIC_PLUTOCRACY"
+  ],
+  "techs": [
+   "TECH_LUNAR_TOURISM",
+   "TECH_MEDIA_HIVEMIND"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MESH_NETWORKS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LUNAR_COLONIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 38858
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_PRODUCTION": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/megacorporations.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MEGACORPORATIONS",
+  "soundMP": "AS2D_TECH_MEGACORPORATIONS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MEGACORPORATIONS",
+  "civilopedia": "TXT_KEY_TECH_MEGACORPORATIONS_PEDIA",
+  "quote": "TXT_KEY_TECH_MEGACORPORATIONS_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 102,
+  "gridY": 3
+ }
+}

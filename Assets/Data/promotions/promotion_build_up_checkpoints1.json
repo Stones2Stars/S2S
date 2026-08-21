@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTION_BUILD_UP_CHECKPOINTS1",
+ "hideAndSeek": {
+  "detection": {
+   "value": 100,
+   "unit": "HAS_DISGUISED"
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_CHECKPOINTS": 1
+ },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Checkpoints1BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_CHECKPOINTS1"
+ }
+}

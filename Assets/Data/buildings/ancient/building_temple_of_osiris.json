@@ -1,0 +1,151 @@
+{
+ "type": "BUILDING_TEMPLE_OF_OSIRIS",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_WRITING",
+    {
+     "STATE_RELIGION": "RELIGION_KEMETISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_TEMPLE_OF_SETH",
+    "BUILDING_TEMPLE_OF_ISIS"
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "RELIGION_KEMETISM",
+    {
+     "type": "BONUS_SCULPTURES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "food": {
+  "city": {
+   "percent": [
+    {
+     "value": 25,
+     "enabled": {
+      "type": "BONUS_WHEAT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  },
+  "empire": {
+   "percent": 2
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": "HAS_STATE_RELIGION"
+    }
+   ]
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_KEMETISM": {
+    "flat": 3
+   }
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 2
+  }
+ },
+ "cost": {
+  "production": 352,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_EGYPTIAN_MYTH_OSIRIS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EGYPTIAN_MYTH_OSIRIS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BUDDHIST"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TEMPLE_OF_OSIRIS",
+  "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_OSIRIS_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 6,
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

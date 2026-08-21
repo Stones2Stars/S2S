@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_SILVER_TONGUE1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SILVER_TONGUE2"
+  ]
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SILVERTONGUE": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/silvertongue1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SILVER_TONGUE1"
+ }
+}

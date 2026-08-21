@@ -1,0 +1,96 @@
+{
+ "type": "CIVIC_IMMATERIAL",
+ "food": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
+    "percent": 20
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": -5
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": 10
+   },
+   "freeCivilian": {
+    "flat": [
+     {
+      "value": 30,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 2,
+   "modifier": {
+    "commerce": {
+     "percent": 5
+    }
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -1
+   }
+  }
+ },
+ "policies": {
+  "noCorporations": true
+ },
+ "grants": {
+  "revolution": -25
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/society_immaterial.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_IMMATERIAL",
+  "civilopedia": "TXT_KEY_CIVIC_IMMATERIAL_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_IMMATERIAL_STRATEGY",
+  "civicOption": "CIVICOPTION_SOCIETY",
+  "anarchyLength": 2,
+  "upkeepLevel": "UPKEEP_EXTREME"
+ }
+}

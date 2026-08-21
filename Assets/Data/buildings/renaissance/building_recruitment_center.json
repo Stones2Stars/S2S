@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_RECRUITMENT_CENTER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MILITARY_TRADITION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_VOLUNTARY"
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": 25,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "cost": {
+  "production": 580,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RECRUITMENT_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RECRUITMENT_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_RECRUITMENT_CENTER_PEDIA",
+  "worth": 6,
+  "militaryWorth": 4,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

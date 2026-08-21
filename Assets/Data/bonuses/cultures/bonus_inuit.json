@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_INUIT",
+ "enables": {
+  "units": [
+   "UNIT_INUIT_HARPOONER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_INUIT"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_INUIT",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

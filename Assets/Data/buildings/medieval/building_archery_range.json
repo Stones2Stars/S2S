@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_ARCHERY_RANGE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MILITARY_TRADITION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SHOOTING_CLUB"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_YEOMANRY",
+    {
+     "any": [
+      "BUILDING_FLETCHERS_HUT",
+      "BUILDING_EFFECT_TRADITION_ARCHERY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_SHOOTING_CLUB",
+    "BUILDING_FIRING_RANGE",
+    "BUILDING_AUTOMATED_FIRING_RANGE",
+    "BUILDING_ORBITAL_TARGETS"
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ARCHER": {
+     "flat": 3
+    },
+    "UNITCOMBAT_THROWING": {
+     "flat": 2
+    },
+    "UNITCOMBAT_SIEGE": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 320,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ARCHERY_RANGE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ARCHERY_RANGE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ARCHERY_RANGE",
+  "civilopedia": "TXT_KEY_BUILDING_ARCHERY_RANGE_PEDIA",
+  "worth": 2,
+  "militaryWorth": 3,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

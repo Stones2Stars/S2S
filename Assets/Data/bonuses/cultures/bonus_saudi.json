@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_SAUDI",
+ "enables": {
+  "units": [
+   "UNIT_MUHAMMAD_BIN_SAUD",
+   "UNIT_SAUD_CAVALRY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SAUDI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SAUDI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

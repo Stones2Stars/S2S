@@ -1,0 +1,107 @@
+{
+ "type": "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_AEROGEL_SHIELDING",
+   "BUILDING_CISLUNAR_ASTEROID_MINE",
+   "BUILDING_CISLUNAR_DOCKING_BAY",
+   "BUILDING_CISLUNAR_DRYDOCK",
+   "BUILDING_CISLUNAR_FACTORY",
+   "BUILDING_CISLUNAR_INFLATABLE_HABITAT",
+   "BUILDING_CISLUNAR_LABS",
+   "BUILDING_CISLUNAR_MEDICAL_LAB",
+   "BUILDING_CISLUNAR_MICROSATELLITE_CONSTELLATION",
+   "BUILDING_CISLUNAR_RESUPPLY",
+   "BUILDING_CISLUNAR_SANITATION_SYSTEM",
+   "BUILDING_CISLUNAR_SOLAR_ARRAY",
+   "BUILDING_CISLUNAR_SOLAR_MONITOR",
+   "BUILDING_CISLUNAR_SPORTS_ARENA",
+   "BUILDING_CISLUNAR_TELESCOPE",
+   "BUILDING_ORBITAL_PRISON",
+   "BUILDING_SAFETY_ORBITAL_PRISON",
+   "BUILDING_SPACE_COLONY_CISLUNAR"
+  ],
+  "builds": [
+   "BUILD_ORBITAL_TRAJECTORY"
+  ],
+  "techs": [
+   "TECH_HYPERSONIC_FLIGHT",
+   "TECH_LUNAR_COLONIZATION"
+  ],
+  "units": [
+   "UNIT_CISLUNARSETTLER",
+   "UNIT_CISLUNAR_WORKER",
+   "UNIT_CONSTRUCTION_SHIP"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_SPACE_STATION_LV1",
+   "BUILD_SPACE_STATION_LV2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_JOVIAN_EXPLORATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GRAPHENE_ALLOYS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOTECH_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 36429
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/advancedenvironmentalsystems.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS2",
+  "soundMP": "AS2D_TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS2"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+  "civilopedia": "TXT_KEY_TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS_PEDIA",
+  "quote": "TXT_KEY_TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 100,
+  "gridY": 3
+ }
+}

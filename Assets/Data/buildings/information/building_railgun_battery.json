@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_RAILGUN_BATTERY",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WEAPONIZED_ANTIMATTER"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LASER_BATTERY"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_RAILGUN",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_LASER_BATTERY",
+    "BUILDING_ANTI_MATTER_BATTERY"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 70
+   },
+   "bombardDefense": {
+    "percent": 25
+   },
+   "airDefense": {
+    "percent": -25
+   },
+   "dynamicDefense": {
+    "percent": 80
+   },
+   "adjacentDamage": {
+    "percent": 45
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "vision": {
+  "city": {
+   "elevation": {
+    "flat": 300
+   }
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 2625,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RAILGUN_BATTERY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COMMAND_BUNKER"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RAILGUN_BATTERY",
+  "civilopedia": "TXT_KEY_BUILDING_RAILGUN_BATTERY_PEDIA",
+  "worth": 8,
+  "militaryWorth": 8,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

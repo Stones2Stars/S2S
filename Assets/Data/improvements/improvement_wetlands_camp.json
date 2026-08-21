@@ -1,0 +1,120 @@
+{
+ "type": "IMPROVEMENT_WETLANDS_CAMP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NATUROPATHY",
+     "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_MARSH",
+        "TERRAIN_MUDDY"
+       ]
+      },
+      {
+       "feature": [
+        "FEATURE_SWAMP",
+        "FEATURE_FLOOD_PLAINS"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_HUNTING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SEDENTARY_LIFESTYLE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MEDICINE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_TOURISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WILDLIFE_CONSERVATION",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_WETLANDS_CAMP"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_WETLANDS_CAMP",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_WETLANDS_CAMP_PEDIA",
+  "pillageTo": "IMPROVEMENT_SEED_CAMP",
+  "advancedStart": {
+   "cost": 24
+  },
+  "pillageGold": 5,
+  "bonuses": {
+   "BONUS_FINE_CLAY": {
+    "discoverRand": 5000
+   },
+   "BONUS_FLAX": {
+    "discoverRand": 5000
+   },
+   "BONUS_PAPYRUS": {
+    "discoverRand": 5000
+   },
+   "BONUS_RICE": {
+    "discoverRand": 5000
+   }
+  }
+ }
+}

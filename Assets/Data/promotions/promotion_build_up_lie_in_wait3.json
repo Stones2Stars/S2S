@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTION_BUILD_UP_LIE_IN_WAIT3",
+ "combat": {
+  "unit": {
+   "stealth": {
+    "percent": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_LIE_IN_WAIT": 3
+ },
+ "enabled": "GAMEOPTION_COMBAT_WITHOUT_WARNING",
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/LieInWait3Buildup.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_LIE_IN_WAIT3",
+  "prereqNormInvisible": true
+ }
+}

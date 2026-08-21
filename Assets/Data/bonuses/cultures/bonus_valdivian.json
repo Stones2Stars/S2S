@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_VALDIVIAN",
+ "enables": {
+  "units": [
+   "UNIT_FIGURINE_POTTER",
+   "UNIT_PASTENE"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_VALDIVIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_VALDIVIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

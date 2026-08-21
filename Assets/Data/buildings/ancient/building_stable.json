@@ -1,0 +1,120 @@
+{
+ "type": "BUILDING_STABLE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_RACE_TRACK",
+   "BUILDING_GER",
+   "BUILDING_POLO_FIELD",
+   "BUILDING_RIDING_SCHOOL"
+  ],
+  "units": [
+   "UNIT_TAMED_BISON",
+   "UNIT_TAMED_BUFFALO",
+   "UNIT_TAMED_CAMEL",
+   "UNIT_TAMED_DONKEY",
+   "UNIT_TAMED_ELEPHANT",
+   "UNIT_TAMED_HORSE",
+   "UNIT_TAMED_LLAMA",
+   "UNIT_TAMED_MAMMOTH"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CAVALRY_TACTICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_KNIGHTS_STABLE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ANIMAL_RIDING",
+    {
+     "any": [
+      "BUILDING_ANIMAL_TRAINER_CAMEL",
+      "BUILDING_ANIMAL_TRAINER_DONKEY",
+      "BUILDING_ANIMAL_TRAINER_HORSE",
+      "BUILDING_ANIMAL_TRAINER_ELEPHANT",
+      "BUILDING_ANIMAL_TRAINER_LLAMA"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SADDLES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_MODERN_STABLE",
+    "BUILDING_KNIGHTS_STABLE"
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "TECH_LEISURE"
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MOUNTED": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 146,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_STABLE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_STABLE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_STABLE",
+  "civilopedia": "TXT_KEY_BUILDING_STABLE_PEDIA",
+  "worth": 2,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

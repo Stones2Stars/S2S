@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_LIFE_LIQUID_NITROGEN",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_KUIPER_BELT_OUTPOST",
+    "TECH_ADAPTIVE_RADIATION",
+    {
+     "type": "TERRAIN_KUIPER_BELT_OBJECT",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_EDEN": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 23432,
+  "hurryModifier": 10000
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LIFE_LIQUID_NITROGEN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_LIQUID_NITROGEN",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_LIQUID_NITROGEN_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

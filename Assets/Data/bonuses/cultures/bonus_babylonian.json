@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_BABYLONIAN",
+ "enables": {
+  "units": [
+   "UNIT_BABYLON_BOWMAN",
+   "UNIT_NABOPOLASSAR",
+   "UNIT_NEDBUCHADNEZZAR"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_BABYLONIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_BABYLONIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

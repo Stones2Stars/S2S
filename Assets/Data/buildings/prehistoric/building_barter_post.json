@@ -1,0 +1,152 @@
+{
+ "type": "BUILDING_BARTER_POST",
+ "enables": {
+  "buildings": [
+   "BUILDING_APOTHECARY_SHOP",
+   "BUILDING_ASSASSINS_DEN",
+   "BUILDING_ASTROLOGY_SCHOOL",
+   "BUILDING_BAKERY",
+   "BUILDING_BASKETMAKER",
+   "BUILDING_BAZAAR",
+   "BUILDING_BEADWORKER",
+   "BUILDING_BILLBOARDS",
+   "BUILDING_BONEWORKER",
+   "BUILDING_BRASS_INSTRUMENT_MAKER",
+   "BUILDING_BREWERY",
+   "BUILDING_BRIDAL_SHOP",
+   "BUILDING_BROTHEL",
+   "BUILDING_CANDY_SHOP",
+   "BUILDING_CANOE_BUILDER",
+   "BUILDING_CIDER_HOUSE",
+   "BUILDING_COBBLER",
+   "BUILDING_CRAFTS_HUT",
+   "BUILDING_DANCE_HALL",
+   "BUILDING_DANCE_HUT",
+   "BUILDING_FISHERMANS_HUT",
+   "BUILDING_FISHMONGER",
+   "BUILDING_FISH_OIL_MAKER",
+   "BUILDING_FLETCHERS_HUT",
+   "BUILDING_FURNITURE_MAKER",
+   "BUILDING_GEMCUTTER",
+   "BUILDING_GHEE_MAKER",
+   "BUILDING_GROCER",
+   "BUILDING_HATTER",
+   "BUILDING_HEALERS_HUT",
+   "BUILDING_KEROSENE_DISTILLERY",
+   "BUILDING_LACQUERWARE_MAKER",
+   "BUILDING_LYE_MAKER",
+   "BUILDING_MAGIC_SHOP",
+   "BUILDING_MARKET",
+   "BUILDING_MARKET_SCALES",
+   "BUILDING_MASK_CARVER",
+   "BUILDING_MOSAIC_WORKSHOP",
+   "BUILDING_MUSIC_HUT",
+   "BUILDING_MYSTICS_HUT",
+   "BUILDING_PERCUSSION_INSTRUMENT_MAKER",
+   "BUILDING_PIERCER",
+   "BUILDING_POISON_CRAFTER",
+   "BUILDING_POTTERS_HUT",
+   "BUILDING_ROPER",
+   "BUILDING_SADDLER",
+   "BUILDING_SAGE",
+   "BUILDING_SAIL_WEAVER",
+   "BUILDING_SEAL_MAKER",
+   "BUILDING_SEAMSTRESS",
+   "BUILDING_SLAUGHTERHOUSE",
+   "BUILDING_SMOKEHOUSE",
+   "BUILDING_SPEARFISHER",
+   "BUILDING_STARGAZERS_HUT",
+   "BUILDING_STONEWORKER",
+   "BUILDING_STORYTELLER",
+   "BUILDING_STRING_INSTRUMENT_MAKER",
+   "BUILDING_TABLET_MAKER",
+   "BUILDING_TAR_REFINERY",
+   "BUILDING_TATTOOER",
+   "BUILDING_TAVERN",
+   "BUILDING_TRAVOIS_MAKER",
+   "BUILDING_WHEELWRIGHT",
+   "BUILDING_WIG_SHOP",
+   "BUILDING_WOODCARVER",
+   "BUILDING_WOODWIND_INSTRUMENT_MAKER"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CONSUMERISM"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TRADING_POST"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_BARTER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_TRADING_POST",
+    "BUILDING_SHOPPING_DISTRICT"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 3
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "cost": {
+  "production": 74,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BARTER_POST",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MARKETPLACE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BARTER_POST",
+  "civilopedia": "TXT_KEY_BUILDING_BARTER_POST_PEDIA",
+  "worth": 2,
+  "conquestProbability": 66,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

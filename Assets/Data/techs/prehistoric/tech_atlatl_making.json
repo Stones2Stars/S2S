@@ -1,0 +1,70 @@
+{
+ "type": "TECH_ATLATL_MAKING",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SIDESTEP2"
+  ],
+  "techs": [
+   "TECH_HUNTING"
+  ],
+  "units": [
+   "UNIT_ATLATL",
+   "UNIT_MAYA_HOLKAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SPEAR_MAKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WOODWORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 26
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/atlatlmaking.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ATLATL_MAKING",
+  "soundMP": "AS2D_TECH_ATLATL_MAKING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ATLATL_MAKING",
+  "civilopedia": "TXT_KEY_TECH_ATLATL_MAKING_PEDIA",
+  "quote": "TXT_KEY_TECH_ATLATL_MAKING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "militaryWorth": 3,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 12,
+  "gridY": 11
+ }
+}

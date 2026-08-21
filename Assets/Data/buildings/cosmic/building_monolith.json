@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_MONOLITH",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_NOOGENESIS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_COSMIC_ENLIGHTENING"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 18355,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MONOLITH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MONOLITH",
+  "civilopedia": "TXT_KEY_BUILDING_MONOLITH_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

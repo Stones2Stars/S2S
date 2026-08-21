@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_FALLEN_GRACE",
+ "skills": {
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_EPIC"
+  ],
+  "removesUnitCombats": [
+   "UNITCOMBAT_QUALITY_DIVINE"
+  ]
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/UnitCombatClasses/Quality9UnitCombat.fw.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FALLEN_GRACE",
+  "replacesUnitCombat": "UNITCOMBAT_QUALITY_DIVINE",
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_ANIMAL"
+  ],
+  "forOffset": true
+ },
+ "sizeMatters": {
+  "quality": -1
+ }
+}

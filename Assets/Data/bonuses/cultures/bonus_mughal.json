@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_MUGHAL",
+ "enables": {
+  "units": [
+   "UNIT_MUGHAL_BABUR",
+   "UNIT_SIEGE_ELEPHANT"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MUGHAL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MUGHAL",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

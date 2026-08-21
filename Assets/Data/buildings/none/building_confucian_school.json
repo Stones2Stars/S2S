@@ -1,0 +1,173 @@
+{
+ "type": "BUILDING_CONFUCIAN_SCHOOL",
+ "requires": {
+  "build": {
+   "all": [
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_CONFUCIANISM"
+    },
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_PRIME_TIMBER",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_CONFUCIANISM",
+    {
+     "any": [
+      {
+       "type": "BONUS_BOOKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PAPER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SCROLLS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TABLETS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "percent": 20
+  },
+  "empire": {
+   "percent": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ],
+   "percent": 12
+  },
+  "empire": {
+   "percent": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_CONFUCIANISM"
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2,
+   "percent": 25
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_CONFUCIANISM": {
+    "flat": 6
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "grants": {
+  "population": {
+   "empire": 1
+  }
+ },
+ "cost": {
+  "production": 1512,
+  "complexityModifier": 2,
+  "hurryModifier": 50
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_RELIGION": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CONFUCIO"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CONFUCIO"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CONFUCIAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CONFUCIAN_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_CONFUCIAN_SCHOOL_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 2,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "religion": "RELIGION_CONFUCIANISM",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": "100.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

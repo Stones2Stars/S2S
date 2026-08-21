@@ -1,0 +1,130 @@
+{
+ "type": "BUILDING_FOLKLORE_E_SEA",
+ "enables": {
+  "buildings": [
+   "BUILDING_BURIAL_TRADITION_SEA",
+   "BUILDING_FOLKLORE_BELUGA",
+   "BUILDING_FOLKLORE_E_CORAL_REEF",
+   "BUILDING_FOLKLORE_E_MERMAID",
+   "BUILDING_FOLKLORE_E_OASIS",
+   "BUILDING_FOLKLORE_E_REEF",
+   "BUILDING_FOLKLORE_T_LEVIATHAN",
+   "BUILDING_FOLKLORE_T_SHARKS",
+   "BUILDING_GRAND_MARINE_FESTIVAL",
+   "BUILDING_WONDERS_OF_THE_DEEP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    {
+     "type": "BUILDING_PRESENCE_OF_SEA",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_ORAL_TRADITION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": [
+    1,
+    {
+     "value": -0.6,
+     "enabled": "TECH_LANGUAGE"
+    },
+    {
+     "value": -0.1,
+     "enabled": "TECH_SEDENTARY_LIFESTYLE"
+    },
+    {
+     "value": -0.1,
+     "enabled": "TECH_CLASSICAL_LIFESTYLE"
+    },
+    {
+     "value": -0.1,
+     "enabled": "TECH_MEDIEVAL_LIFESTYLE"
+    },
+    {
+     "value": -0.1,
+     "enabled": "TECH_RENAISSANCE_LIFESTYLE"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": [
+    {
+     "value": 0.1,
+     "enabled": "TECH_LANGUAGE"
+    },
+    {
+     "value": 0.1,
+     "enabled": "TECH_SEDENTARY_LIFESTYLE"
+    },
+    {
+     "value": 0.1,
+     "enabled": "TECH_CLASSICAL_LIFESTYLE"
+    },
+    {
+     "value": 0.1,
+     "enabled": "TECH_MEDIEVAL_LIFESTYLE"
+    },
+    {
+     "value": 0.1,
+     "enabled": "TECH_RENAISSANCE_LIFESTYLE"
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "empire": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "TECH_WRITING"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_LITERATURE"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 20,
+  "complexityModifier": 2
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FOLKLORE_E_SEA",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_E_SEA",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ELEMENTAL_PEDIA",
+  "pediaCategory": "animalistic",
+  "forceNoPrereqScaling": true,
+  "specialBuildingType": "SPECIALBUILDING_FOLKLORE_EXPLORATION",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

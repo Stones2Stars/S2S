@@ -1,0 +1,105 @@
+{
+ "type": "BUILDING_PESTS_RATS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_RAT_CATCHER"
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 4
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_GRAINS",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_CHEESE",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_VEGETABLES",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    },
+    {
+     "latitude": {
+      "max": 80
+     }
+    },
+    "TECH_SEDENTARY_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "dormant": [
+    "BUILDING_RAT_CATCHER",
+    "BUILDING_AGROFOREST"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": -1
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -1
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PESTS_RATS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PESTS_RATS",
+  "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

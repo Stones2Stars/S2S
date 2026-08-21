@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_EMANCIPATION_PROCLAMATION",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_EMANCIPATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+   }
+  ]
+ },
+ "cost": {
+  "production": 1310,
+  "complexityModifier": 2
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_EMANCIPATION_PROCLAMATION"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EMANCIPATION_PROCLAMATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EMANCIPATION_PROCLAMATION",
+  "civilopedia": "TXT_KEY_BUILDING_EMANCIPATION_PROCLAMATION_PEDIA",
+  "help": "TXT_KEY_BUILDING_EMANCIPATION_PROCLAMATION_HELP",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

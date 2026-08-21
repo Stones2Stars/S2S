@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTION_FIGHT_THE_POWER1",
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_LAW_ENFORCEMENT": {
+     "percent": 30
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FIGHT_THE_POWER": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/FightThePower1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FIGHT_THE_POWER1"
+ }
+}

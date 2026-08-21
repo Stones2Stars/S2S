@@ -1,0 +1,101 @@
+{
+ "type": "BUILDING_RADIOPLEX",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_BINARY_SUBCONSCIOUSNESS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_DIESELPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DIESELPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "BONUS_RADIOS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HIT_MUSICALS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HIT_SINGLES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2
+  }
+ },
+ "cost": {
+  "production": 1080
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RADIOPLEX",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BROADCASTTOWER"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RADIOPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_RADIOPLEX_PEDIA",
+  "worth": 5,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_DIESEL",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

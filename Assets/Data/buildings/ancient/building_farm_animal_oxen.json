@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_FARM_ANIMAL_OXEN",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_BUFFALO",
+   "BUILDING_CARAVAN_POST",
+   "BUILDING_OXEN_MILL",
+   "BUILDING_RESOURCES_CARCASS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INDUSTRIAL_FARMS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRADE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COW",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ],
+   "dormant": [
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 153,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FARM_ANIMAL_OXEN",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_ANIMAL_OXEN",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_ANIMAL_OXEN_PEDIA",
+  "worth": 4,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

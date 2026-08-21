@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_DAYAK",
+ "enables": {
+  "units": [
+   "UNIT_JAMES_BROOKE",
+   "UNIT_NGAYAU"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_DAYAK"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_DAYAK",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

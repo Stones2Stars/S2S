@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_GRAIN_GATHERER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GATHERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "empire": {
+   "flat": 1,
+   "improvements": {
+    "IMPROVEMENT_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GRAIN_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COMMUNITY_GARDEN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GRAIN_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_GRAIN_GATHERER_PEDIA",
+  "worth": 3,
+  "militaryWorth": 1,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

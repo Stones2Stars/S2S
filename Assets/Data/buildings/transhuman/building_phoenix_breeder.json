@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_PHOENIX_BREEDER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_L_MIDDLE_EASTERN",
+    "TECH_MYTHOLOGICAL_BESTIARY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_HIERACOSPHINX_BREEDER",
+    "BUILDING_JACKALOPE_BREEDER",
+    "BUILDING_PEGASUS_BREEDER",
+    "BUILDING_QILIN_BREEDER",
+    "BUILDING_QUETZALCOATL_BREEDER",
+    "BUILDING_RAINBOW_SERPENT_BREEDER"
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ORGANIC_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 12
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_PHOENIX"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 12310,
+  "sizeModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PHOENIX_BREEDER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PHOENIX_BREEDER",
+  "civilopedia": "TXT_KEY_BUILDING_MYTHICAL_BREEDER_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 10,
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

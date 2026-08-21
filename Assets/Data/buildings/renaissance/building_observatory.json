@@ -1,0 +1,159 @@
+{
+ "type": "BUILDING_OBSERVATORY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALMAGEST",
+   "BUILDING_ANTIKYTHERA_MECHANISM",
+   "BUILDING_DARK_MATTER_DETECTOR",
+   "BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE",
+   "BUILDING_GRAND_SKY_FESTIVAL",
+   "BUILDING_JAMES_WEBB_SPACE_TELESCOPE",
+   "BUILDING_NEUTRINO_OBSERVATORY",
+   "BUILDING_PLANETARIUM",
+   "BUILDING_RUDOLPHINE",
+   "BUILDING_SLOAN_DIGITAL_SKY_SURVEY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ASTRONOMY",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_HILL",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_PEAK",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_GLASSWARE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STEEL_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 5,
+     "enabled": "TECH_CALCULUS"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_RADIO_ASTRONOMY"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_THEORY_OF_RELATIVITY"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_MODERN_PHYSICS"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_ASTRONAUTICS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_JOVIAN_EXPLORATION"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_ASTEROID_BELT_PROBES"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 425,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_OBSERVATORY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_OBSERVATORY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_OBSERVATORY",
+  "civilopedia": "TXT_KEY_BUILDING_OBSERVATORY_PEDIA",
+  "worth": 5,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_THREE_GORGES_DAM",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "BUILDING_FACTORY",
+    "BUILDING_POWER_LINES",
+    "TECH_HYDROELECTRICITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STEEL_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_POWER_GORGE"
+   }
+  ]
+ },
+ "cost": {
+  "production": 4800,
+  "sizeModifier": 3,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 200
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true,
+  "providesPower": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_THREE_GORGES_DAM"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_THREE_GORGES_DAM"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_THREE_GORGES_DAM",
+  "civilopedia": "TXT_KEY_BUILDING_THREE_GORGES_DAM_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 20,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

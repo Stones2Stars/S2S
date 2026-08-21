@@ -1,0 +1,11 @@
+{
+ "type": "OUTCOME_SLAY_ANIMAL",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_SLAY_ANIMAL",
+  "message": "TXT_KEY_OUTCOME_SLAY_ANIMAL_MESSAGE"
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city"
+}

@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_TARNISHED_SUPREMACY",
+ "skills": {
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_ELITE"
+  ],
+  "removesUnitCombats": [
+   "UNITCOMBAT_QUALITY_EPIC"
+  ]
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/UnitCombatClasses/Quality8UnitCombat.fw.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_TARNISHED_SUPREMACY",
+  "replacesUnitCombat": "UNITCOMBAT_QUALITY_EPIC",
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_ANIMAL"
+  ],
+  "forOffset": true
+ },
+ "sizeMatters": {
+  "quality": -1
+ }
+}

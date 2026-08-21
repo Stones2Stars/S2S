@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTION_WAYLAY5",
+ "combat": {
+  "unit": {
+   "stealth": {
+    "percent": 20
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_WAYLAY": 5
+ },
+ "enabled": "GAMEOPTION_COMBAT_WITHOUT_WARNING",
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Waylay5Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_WAYLAY5"
+ }
+}

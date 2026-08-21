@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_GEODESIC_DOME",
+ "enables": {
+  "buildings": [
+   "BUILDING_NUDGING_SPACE_ARCOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MEGATOWER",
+    "TECH_SYNERGETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CARBYNE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 5455,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GEODESIC_DOME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GEODESIC_DOME",
+  "civilopedia": "TXT_KEY_BUILDING_GEODESIC_DOME_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

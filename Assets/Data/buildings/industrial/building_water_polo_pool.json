@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_WATER_POLO_POOL",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WEATHER_CONTROL"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ATHLETIC_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_WATER_SPORTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_ATHLETIC_MEGACOMPLEX"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 770,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WATER_POLO_POOL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WATER_POLO_POOL",
+  "civilopedia": "TXT_KEY_BUILDING_WATER_POLO_POOL_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

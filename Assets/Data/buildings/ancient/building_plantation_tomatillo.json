@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_PLANTATION_TOMATILLO",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FRUIT"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FARMSCRAPER_III"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_IRRIGATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_CORN",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_APPLE",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_FARMSCRAPER_III"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 160,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PLANTATION_TOMATILLO",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_TOMATILLO",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_TOMATILLO_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

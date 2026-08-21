@@ -1,0 +1,175 @@
+{
+ "type": "BUILDING_BEADMAKERS_WORKSHOP",
+ "enables": {
+  "buildings": [
+   "BUILDING_HARAPPAN_FAKE_GEMS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_BEADS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GUILDS",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_BONE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_GLASSWARE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SHELLFISH",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_OBSIDIAN",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_FINE_CLAY",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_MANUFACTURING_DISTRICT",
+    "BUILDING_FACTORY_BEADS"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_BEADS"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_IVORY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PEARLS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GEMSTONE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CLAM",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_AMBER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_JADE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 332,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 8
+   },
+   {
+    "FLAVOR_GOLD": 4
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BEADMAKERS_WORKSHOP",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_JEWELLERY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BEADMAKERS_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_BEADMAKERS_WORKSHOP_PEDIA",
+  "conquestProbability": 80,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

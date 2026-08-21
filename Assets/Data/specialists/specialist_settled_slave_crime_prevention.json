@@ -1,0 +1,48 @@
+{
+ "type": "SPECIALIST_SETTLED_SLAVE_CRIME_PREVENTION",
+ "food": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -0.4
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -0.4
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/slave_crime_prevention.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/slave_military.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_SETTLED_SLAVE_CRIME_PREVENTION",
+  "civilopedia": "TXT_KEY_SPECIALIST_SETTLED_SLAVE_PEDIA",
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_CAPTIVE",
+   "CATEGORY_SPECIALIST_GROUP_LEGAL"
+  ],
+  "slave": true
+ }
+}

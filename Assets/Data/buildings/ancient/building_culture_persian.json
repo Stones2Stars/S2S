@@ -1,0 +1,93 @@
+{
+ "type": "BUILDING_CULTURE_PERSIAN",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_MIDDLE_EASTERN",
+    "BUILDING_C_L_MIDDLE_EASTERN",
+    "TECH_ANIMAL_RIDING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_GOLD_ORE",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_PERSIAN"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_SPIRAL_MINARET": {
+     "percent": 10
+    },
+    "BUILDING_APADANA_PALACE": {
+     "percent": 10
+    },
+    "BUILDING_CYRUS_CYLINDER": {
+     "percent": 10
+    },
+    "BUILDING_TOMB_OF_CYRUS": {
+     "percent": 10
+    },
+    "BUILDING_ALAMUT": {
+     "percent": 10
+    },
+    "BUILDING_MAUSOLEUM_OF_MAUSSOLLOS": {
+     "percent": 10
+    },
+    "BUILDING_HOUSE_OF_WISDOM": {
+     "percent": 10
+    },
+    "BUILDING_AZADI_TOWER": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 876,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_PERSIAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_PERSIAN",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_PERSIAN_PEDIA",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

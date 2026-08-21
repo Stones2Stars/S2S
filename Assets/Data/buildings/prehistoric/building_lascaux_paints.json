@@ -1,0 +1,126 @@
+{
+ "type": "BUILDING_LASCAUX_PAINTS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MASS_MEDIA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PETROGLYPHS",
+    {
+     "any": [
+      "BUILDING_CAVE_PAINTINGS",
+      "BUILDING_FRESCO_MURAL"
+     ]
+    },
+    {
+     "type": "FEATURE_CAVES",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 8000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_LASCAUX_CAVES"
+   }
+  ]
+ },
+ "cost": {
+  "production": 300,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_LASCAUX"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LASCAUX_PAINTS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_STONEHENGE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LASCAUX_PAINTS",
+  "civilopedia": "TXT_KEY_BUILDING_LASCAUX_PAINTS_PEDIA",
+  "help": "TXT_KEY_BUILDING_LASCAUX_CAVES_HELP",
+  "pediaCategory": "greatWonder",
+  "centerInCity": true,
+  "worth": 6,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

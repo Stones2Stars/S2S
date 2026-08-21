@@ -1,0 +1,107 @@
+{
+ "type": "TECH_SIEGE_WARFARE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CITY_GATEHOUSE",
+   "BUILDING_CULTURE_BRITON",
+   "BUILDING_CULTURE_HOLY_ROMAN",
+   "BUILDING_CULTURE_INDONESIAN",
+   "BUILDING_CULTURE_MUISCA",
+   "BUILDING_CULTURE_QIANG",
+   "BUILDING_CULTURE_THRACIAN",
+   "BUILDING_GUARD_TOWER",
+   "BUILDING_HIGH_WALLS",
+   "BUILDING_PIR_E_NARAKI"
+  ],
+  "promotions": [
+   "PROMOTION_SELF_REPAIR3"
+  ],
+  "techs": [
+   "TECH_MACHINERY"
+  ],
+  "units": [
+   "UNIT_ANCIENT_ROCKETEER",
+   "UNIT_BALLISTA",
+   "UNIT_BALLISTA_ELEPHANT",
+   "UNIT_CHUO_QIANG",
+   "UNIT_CZIBCZA_WARRIOR",
+   "UNIT_FYRDMAN",
+   "UNIT_GAEROAS",
+   "UNIT_HOLY_ROMAN_LANDSKNECHT",
+   "UNIT_INDONESIAN_SILAT",
+   "UNIT_KHMER_PHAKAK",
+   "UNIT_KOREAN_HWACHA",
+   "UNIT_KUTAMA_INFANTRY",
+   "UNIT_MAPINGUARI_PIKE",
+   "UNIT_MENALAMBA",
+   "UNIT_MWAANTA_GAAND",
+   "UNIT_PIKEMAN",
+   "UNIT_POYA_LONGSPEARS",
+   "UNIT_SIEGE_ONAGER",
+   "UNIT_SIEGE_RAM",
+   "UNIT_SIEGE_TOWER",
+   "UNIT_SKIRMISHER",
+   "UNIT_THRACIAN_PELTAST",
+   "UNIT_WAR_WAGON",
+   "UNIT_WIRUTI"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_IRON_WORKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANCIENT_BALLISTICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 679
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Siege_Warfare.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,2,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SIEGE_WARFARE",
+  "soundMP": "AS2D_TECH_SIEGE_WARFARE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SIEGE_WARFARE",
+  "civilopedia": "TXT_KEY_TECH_SIEGE_WARFARE_PEDIA",
+  "quote": "TXT_KEY_TECH_SIEGE_WARFARE_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 37,
+  "gridY": 13
+ }
+}

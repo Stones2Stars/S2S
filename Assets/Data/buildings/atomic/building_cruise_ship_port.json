@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_CRUISE_SHIP_PORT",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TELEPORT_BOOTH"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "TECH_TOURISM",
+    {
+     "any": [
+      "BUILDING_INTERNATIONAL_PORT",
+      "BUILDING_OCEAN_ADMINISTRATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_TELEPORT_BOOTH"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -1,
+    {
+     "value": 1,
+     "enabled": "TECH_SMART_DRUGS"
+    }
+   ]
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1280,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CRUISE_SHIP_PORT",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_LIGHTHOUSE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRUISE_SHIP_PORT",
+  "civilopedia": "TXT_KEY_BUILDING_CRUISE_SHIP_PORT_PEDIA",
+  "conquestProbability": 30,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

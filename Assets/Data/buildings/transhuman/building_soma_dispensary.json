@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_SOMA_DISPENSARY",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SYNTHETIC_SYNESTHESIA",
+    {
+     "any": [
+      "BUILDING_NEUROSCIENCE_CENTER",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 10,
+     "enabled": "TECH_SIMULATED_REALITY"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    -20,
+    {
+     "value": 10,
+     "enabled": "TECH_WHOLE_BRAIN_EMULATION"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": [
+    {
+     "value": 10,
+     "enabled": "TECH_SIMULATED_REALITY"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 5055,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SOMA_DISPENSARY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SOMA_DISPENSARY",
+  "civilopedia": "TXT_KEY_BUILDING_SOMA_DISPENSARY_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

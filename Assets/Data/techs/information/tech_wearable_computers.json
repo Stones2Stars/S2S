@@ -1,0 +1,78 @@
+{
+ "type": "TECH_WEARABLE_COMPUTERS",
+ "enables": {
+  "buildings": [
+   "BUILDING_QUANTIFIED_HEALTH_CENTER",
+   "BUILDING_SMARTPHONE_MANUFACTURER",
+   "BUILDING_TABLET_MANUFACTURER"
+  ],
+  "promotions": [
+   "PROMOTION_LAND_WARRIOR1"
+  ],
+  "techs": [
+   "TECH_COMMERCIAL_SPACEFLIGHT",
+   "TECH_DIRECT_MERCHANDISING",
+   "TECH_ORGANIC_PHOTONICS",
+   "TECH_RAPID_PROTOTYPING",
+   "TECH_VIRTUAL_SOCIETY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FUEL_CELLS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_VIRTUAL_REALITY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FLASH_MEMORY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 23650
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/wearable_electronics.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_WEARABLE_COMPUTERS",
+  "soundMP": "AS2D_TECH_WEARABLE_COMPUTERS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_WEARABLE_COMPUTERS",
+  "civilopedia": "TXT_KEY_TECH_WEARABLE_COMPUTERS_PEDIA",
+  "quote": "TXT_KEY_TECH_WEARABLE_COMPUTERS_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 92,
+  "gridY": 15
+ }
+}

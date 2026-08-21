@@ -1,0 +1,80 @@
+{
+ "type": "TECH_HOMO_SUPERIOR",
+ "enables": {
+  "civics": [
+   "CIVIC_SUPERHUMAN"
+  ],
+  "techs": [
+   "TECH_BINARY_SEMIOTICS",
+   "TECH_CRYONICS"
+  ],
+  "units": [
+   "UNIT_CANIS_SUPERIOR",
+   "UNIT_FELINE_SUPERIOR",
+   "UNIT_FERAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NEURON_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SPECIES_UPLIFTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 65511
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/dna_button_01.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,5"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_HOMO_SUPERIOR",
+  "soundMP": "AS2D_TECH_HOMO_SUPERIOR"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_HOMO_SUPERIOR",
+  "civilopedia": "TXT_KEY_TECH_HOMO_SUPERIOR_PEDIA",
+  "quote": "TXT_KEY_TECH_HOMO_SUPERIOR_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 112,
+  "gridY": 17
+ }
+}

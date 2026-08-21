@@ -1,0 +1,117 @@
+{
+ "type": "BUILDING_QUERN",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FLOUR"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REFRIGERATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "TECH_GROUND_STONE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_GRAINS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_STONE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_WATERMILL",
+    "BUILDING_WINDMILL",
+    "BUILDING_DONKEY_MILL",
+    "BUILDING_OXEN_MILL",
+    "BUILDING_MODERN_MILL",
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WHEAT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BARLEY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CORN",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_RICE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ],
+   "improvements": {
+    "IMPROVEMENT_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_QUERN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_QUERN",
+  "civilopedia": "TXT_KEY_BUILDING_QUERN_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

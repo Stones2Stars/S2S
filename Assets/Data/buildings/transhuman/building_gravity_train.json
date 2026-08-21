@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_GRAVITY_TRAIN",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHUO_SHINKANSEN",
+   "BUILDING_GLOBAL_RAIL_NETWORK",
+   "BUILDING_GN_DRIVE",
+   "BUILDING_GRAVITY_TRAIN_NETWORK",
+   "BUILDING_HYPERLOOP",
+   "BUILDING_STRATOSPHERIC_MAGLEV_TERMINAL",
+   "BUILDING_TRANSATLANTIC_TUNNEL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_STRATOSPHERIC_TOWER",
+    "TECH_FRICTIONLESS_FLIGHT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SUPERSOLID_MATERIAL",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 12
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 6155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GRAVITY_TRAIN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GRAVITY_TRAIN",
+  "civilopedia": "TXT_KEY_BUILDING_GRAVITY_TRAIN_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

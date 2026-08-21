@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_DELHI_MUMBAI_INDUSTRIAL_CORRIDOR",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INDUSTRIAL_PARK",
+    "TECH_MEGACITIES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 20
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 2
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_MANUFACTURING_PLANT",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 15750,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_DEHLI_MUMBAI_INDUSTRIAL_CORRIDOR"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DELHI_MUMBAI_INDUSTRIAL_CORRIDOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DELHI_MUMBAI_INDUSTRIAL_CORRIDOR",
+  "civilopedia": "TXT_KEY_BUILDING_DELHI_MUMBAI_INDUSTRIAL_CORRIDOR_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

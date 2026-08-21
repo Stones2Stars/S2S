@@ -1,0 +1,104 @@
+{
+  "type": "UNIT_SIR_GNARLALOT",
+
+  "identity": {
+    "description": "TXT_KEY_UNIT_SIR_GNARLALOT",
+    "base": {
+      "combat": 12,
+      "moves": 2,
+      "workRate": 50,
+      "airCombat": 0,
+      "cargo": 0,
+      "combatLimit": 100,
+      "airUnitCap": 0,
+      "combatClass": "UNITCOMBAT_MELEE"
+    },
+    "domain": "DOMAIN_LAND",
+    "defaultUnitAI": "UNITAI_ATTACK",
+    "captures": "UNIT_SUBDUED_LION"
+  },
+  "cost": { "production": 80, "upkeep": 1 },
+  "costs": {
+    "empire": {
+      "perInstance": { "percent": 5, "per": { "type": "SELF", "scope": "empire", "each": 1 } }
+    }
+  },
+
+  "requires": {
+    "build": {
+      "all": [
+        { "type": "BONUS_GNARLITE", "scope": "city", "connection": "trade|vicinity", "min": 1 },
+        { "type": "BUILDING_TEMPLE_OF_GNARL", "scope": "city", "min": 1 }
+      ],
+      "any": [
+        [ { "type": "CIVIC_VASSALAGE", "scope": "empire", "min": 1 },
+          { "type": "CIVIC_NATIONHOOD", "scope": "empire", "min": 1 } ]
+      ],
+      "noneOf": [ { "type": "SELF", "scope": "empire", "min": 5 } ]
+    }
+  },
+
+  "buildRate": {
+    "self": {
+      "percent": [
+        { "value": 25, "enabled": { "type": "BONUS_GNARLITE", "scope": "city", "min": 1 } },
+        { "value": 25, "enabled": { "type": "BONUS_HORSE", "scope": "city", "min": 1 } }
+      ]
+    }
+  },
+
+  "strength": {
+    "unit": {
+      "percent": 10,
+      "cityAttack": { "percent": 25 },
+      "hillsDefense": { "percent": 50 },
+      "vsBarbs": { "percent": 100 },
+      "terrain": { "TERRAIN_FOREST": { "attack": { "percent": 25 } } },
+      "feature": { "FEATURE_JUNGLE": { "defense": { "percent": 25 } } },
+      "unitCombat": { "UNITCOMBAT_MOUNTED": { "percent": 50 } },
+      "domain": { "DOMAIN_LAND": { "percent": 10 } },
+      "flanking": { "UNITCOMBAT_ARCHER": { "percent": 50 } }
+    }
+  },
+  "withdrawal": { "unit": { "flat": 20 } },
+  "firstStrike": { "unit": { "strikes": { "flat": 1 }, "chance": { "flat": 25 } } },
+  "bombard": { "unit": { "rate": { "flat": 16 } } },
+  "collateral": { "unit": { "damage": { "percent": 100 }, "maxUnits": { "flat": 5 } } },
+  "air": { "unit": { "range": { "flat": 6 }, "intercept": { "percent": 50 } } },
+  "heal": { "unit": { "friendly": { "flat": 10 }, "neutral": { "flat": 5 } } },
+  "movement": { "unit": { "moves": { "flat": 1 } } },
+  "experience": { "unit": { "flat": 2 } },
+  "capture": { "unit": { "probability": { "flat": 50 }, "resistance": { "flat": 10 } } },
+  "espionage": { "unit": { "investigation": { "flat": 5 } } },
+  "PROPERTY_CRIME": { "unit": { "flat": 2 } },
+
+  "capabilities": {
+    "blitz": true,
+    "amphibious": true,
+    "hiddenNationality": true,
+    "canMoveImpassable": false
+  },
+
+  "vision": {
+    "unit": {
+      "range": { "flat": 1 },
+      "invisible": ["INVISIBLE_SUBMARINE"],
+      "seeInvisible": ["INVISIBLE_SUBMARINE"]
+    }
+  },
+
+  "grants": {
+    "promotions": ["PROMOTION_COMBAT1"],
+    "builds": ["BUILD_FORT"],
+    "freePromotions": { "PROMOTION_GUERILLA1": ["UNITCOMBAT_MELEE"] }
+  },
+  "outcomes": {
+    "kill": [
+      { "type": "OUTCOME_SUBDUE", "chance": 50, "unit": "UNIT_SUBDUED_LION" }
+    ]
+  },
+  "succession": { "upgradesTo": ["UNIT_GNARL_KNIGHT"] },
+
+  "ui": { "art": { "icon": "ART_DEF_UNIT_SIR_GNARLALOT" } },
+  "world": { "art": { "icon": "ART_DEF_UNIT_SIR_GNARLALOT" } }
+}

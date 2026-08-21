@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_INVENTORS_WORKSHOP",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_INVENTION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 5,
+     "enabled": "TECH_PATENT_RIGHTS"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 5,
+     "enabled": "TECH_SCIENTIFIC_METHOD"
+    },
+    {
+     "value": 5,
+     "enabled": "TECH_REPLACEABLE_PARTS"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_3D_MODELLING"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_RAPID_PROTOTYPING"
+    }
+   ]
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "cost": {
+  "production": 344,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INVENTORS_WORKSHOP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INVENTORS_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_INVENTORS_WORKSHOP_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

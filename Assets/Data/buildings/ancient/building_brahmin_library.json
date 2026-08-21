@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_BRAHMIN_LIBRARY",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_WRITING",
+    "TECH_CASTE_SYSTEM",
+    {
+     "any": [
+      "BUILDING_SCHOOL_OF_SCRIBES",
+      "BUILDING_LIBRARY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_CASTE_SYSTEM",
+    "RELIGION_HINDUISM"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1,
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 200,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BRAHMIN_LIBRARY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_LIBRARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BRAHMIN_LIBRARY",
+  "civilopedia": "TXT_KEY_BUILDING_BRAHMIN_LIBRARY_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 3,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

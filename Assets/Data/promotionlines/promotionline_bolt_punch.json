@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_BOLT_PUNCH",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/BoltPunch1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BOLT_PUNCH",
+  "unitCombats": [
+   "UNITCOMBAT_WEAPON_DIST_BALLISTA"
+  ]
+ }
+}

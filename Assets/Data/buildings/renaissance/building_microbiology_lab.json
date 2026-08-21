@@ -1,0 +1,116 @@
+{
+ "type": "BUILDING_MICROBIOLOGY_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_MICROBIOLOGY_ARTIST",
+   "BUILDING_NUCLEIC_ACID_LAB",
+   "BUILDING_PROTEIN_LAB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_UNIVERSITY",
+    "TECH_MICROBIOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 6,
+     "enabled": "TECH_ANTIBIOTICS"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_BIOLOGICAL_WARFARE"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_ECOLOGY"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_GENETICS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_BIOMATERIALS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_MOLECULAR_MEDICINE"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_GENOMIC_ENCYCLOPEDIA"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_BIOINFORMATICS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_GENE_ENHANCEMENT"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 495,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MICROBIOLOGY_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MICROBIOLOGY_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_MICROBIOLOGY_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

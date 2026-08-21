@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_DISTANT_LOCALIZED_BIG_RIP",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_BIG_BANG_PROBE",
+    "TECH_PARAMETER_TUNING",
+    {
+     "type": "TERRAIN_DISTANT_PAST",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 2666,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_LOCALIZED_BIG_RIP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_LOCALIZED_BIG_RIP",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_LOCALIZED_BIG_RIP_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

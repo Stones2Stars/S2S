@@ -1,0 +1,264 @@
+{
+ "type": "CIVIC_TOTALITARIANISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHECKPOINT",
+   "BUILDING_CRYOGENIC_PRISON",
+   "BUILDING_ELYSIUM",
+   "BUILDING_EYE_IN_THE_SKY",
+   "BUILDING_GREAT_FIREWALL",
+   "BUILDING_PROPAGANDA_SATELLITES",
+   "BUILDING_SAFETY_GREAT_FIREWALL"
+  ],
+  "specialists": [
+   "SPECIALIST_SPY"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    1,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    5,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    -3,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    5,
+    {
+     "value": 7,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1,
+   "cities": {
+    "flat": [
+     {
+      "value": -20,
+      "per": {
+       "type": "POPULATION",
+       "each": 100,
+       "scope": "city"
+      }
+     }
+    ]
+   },
+   "buildings": {
+    "BUILDING_INTELLIGENCE_AGENCY": {
+     "flat": 1
+    },
+    "BUILDING_SECURITY_BUREAU": {
+     "flat": 1
+    },
+    "BUILDING_AMMUNITIONS_WORKSHOP": {
+     "flat": 1
+    },
+    "BUILDING_FACTORY_AMMUNITION": {
+     "flat": 1
+    },
+    "BUILDING_MILITARY_INDUSTRIAL_COMPLEX": {
+     "flat": 1
+    },
+    "BUILDING_MILITARY_SATELLITES": {
+     "flat": 1
+    },
+    "BUILDING_ARC_DE_TRIOMPHE": {
+     "flat": 1
+    },
+    "BUILDING_TELESCREEN": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 5
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
+    "percent": -10
+   },
+   "resistance": {
+    "percent": -10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 20
+   },
+   "numCities": {
+    "percent": 15
+   },
+   "percent": [
+    {
+     "value": 10,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 8,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
+   "corporation": {
+    "percent": 20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeCivilian": {
+    "flat": [
+     {
+      "value": 30,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -20
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": 2
+   },
+   "democracyLevel": {
+    "flat": -30
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": 20,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "grants": {
+  "revolution": -200
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/government_totalitarianism.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_TOTALITARIANISM",
+  "civilopedia": "TXT_KEY_CIVIC_TOTALITARIANISM_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_TOTALITARIANISM_STRATEGY",
+  "civicOption": "CIVICOPTION_GOVERNMENT",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_HIGH",
+  "weLoveTheKing": "TXT_KEY_CIVIC_WE_LOVE_DICTATOR"
+ }
+}

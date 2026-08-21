@@ -1,0 +1,70 @@
+{
+ "type": "TECH_NANOMORPHIC_TROIDS",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_NANOMORPHISM",
+   "BONUS_NANOMORPHIC_HABITATS"
+  ],
+  "buildings": [
+   "BUILDING_CISLUNAR_CLAYTRONIC_STATION",
+   "BUILDING_DEEP_SPACE_CLAYTRONIC_STATION",
+   "BUILDING_HUMAN_MOD_NANOMORPHISM",
+   "BUILDING_MARTIAN_CLAYTRONIC_CITY",
+   "BUILDING_VENUS_CLAYTRONIC_CITY"
+  ],
+  "promotions": [
+   "PROMOTION_HEAL5"
+  ],
+  "techs": [
+   "TECH_MOLECULAR_ASSEMBLY",
+   "TECH_PLANET_CRACKING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ATOMIC_SCALE_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 144040
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 9
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Buttons/Techs/TechAttometerNanomophism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NANOMORPHIC_TROIDS",
+  "soundMP": "AS2D_TECH_NANOMORPHIC_TROIDS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NANOMORPHIC_TROIDS",
+  "civilopedia": "TXT_KEY_TECH_NANOMORPHIC_TROIDS_PEDIA",
+  "quote": "TXT_KEY_TECH_NANOMORPHIC_TROIDS_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 50,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 128,
+  "gridY": 1
+ }
+}

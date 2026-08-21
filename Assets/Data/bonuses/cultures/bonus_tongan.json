@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_TONGAN",
+ "enables": {
+  "units": [
+   "UNIT_NUKULEKA_WARRIORS",
+   "UNIT_WILLIAM_MARINER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TONGAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TONGAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

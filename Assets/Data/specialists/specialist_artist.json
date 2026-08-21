@@ -1,0 +1,107 @@
+{
+ "type": "SPECIALIST_ARTIST",
+ "production": {
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 2,
+      "enabled": {
+       "type": "BUILDING_BAUHAUS_SCHOOL",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_MADISON_AVENUE",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 2,
+      "enabled": {
+       "type": "BUILDING_WALK_OF_FAME",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1,
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "CIVIC_GUILDS",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BUILDING_WARHOLS_FACTORY",
+      "scope": "city"
+     }
+    }
+   ],
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "CIVIC_CAPITALIST",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ENTERTAINER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/Artist.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/Artist.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_ARTIST",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
+  "visible": true,
+  "categories": [
+   "CATEGORY_ASSIGNABLE_SPECIALISTS",
+   "CATEGORY_SPECIALIST_GROUP_CULTURAL"
+  ],
+  "greatPeopleUnit": "UNIT_ARTIST"
+ }
+}

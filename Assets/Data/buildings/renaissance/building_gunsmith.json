@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_GUNSMITH",
+ "enables": {
+  "buildings": [
+   "BUILDING_SHOOTING_CLUB"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MILITARY_ROBOTICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_AMMUNITION"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MATCHLOCK",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STEEL_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
+    "BUILDING_FACTORY_AMMUNITION"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_FIREARMS"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 425,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GUNSMITH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GUNSMITH",
+  "civilopedia": "TXT_KEY_BUILDING_GUNSMITH_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

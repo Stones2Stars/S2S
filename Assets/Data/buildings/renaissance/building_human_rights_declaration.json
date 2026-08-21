@@ -1,0 +1,97 @@
+{
+ "type": "BUILDING_HUMAN_RIGHTS_DECLARATION",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_REPRESENTATIVE_DEMOCRACY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 10,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "warWeariness": {
+  "empire": {
+   "percent": 100
+  }
+ },
+ "grants": {
+  "population": {
+   "empire": 1
+  }
+ },
+ "cost": {
+  "production": 3480,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_RIGHTS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BOOK"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_RIGHTS_DECLARATION",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_RIGHTS_DECLARATION_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

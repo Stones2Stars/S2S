@@ -1,0 +1,96 @@
+{
+ "type": "UNIT_FREED_SLAVE",
+ "requires": {
+  "build": {
+   "dormant": {
+    "all": [
+     "UNIT_GATHERER"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_FREED_SLAVE"
+  }
+ },
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_BATTALION",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_JOIN_CITY_FREED_SLAVE",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_CITY_FREED_SLAVE"
+    },
+    "chance": 100,
+    "food": 100
+   }
+  ]
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SLAVE_GATHERER",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SLAVE_GATHERER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_FREED_SLAVE",
+  "civilopedia": "TXT_KEY_UNIT_FREED_SLAVE_PEDIA",
+  "help": "TXT_KEY_UNIT_FREED_SLAVE_HELP",
+  "spawnOnly": true,
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "workRate": 45
+  }
+ }
+}

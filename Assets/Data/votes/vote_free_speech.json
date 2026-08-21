@@ -1,0 +1,18 @@
+{
+ "type": "VOTE_FREE_SPEECH",
+ "voteSource": [
+  "DIPLOVOTE_UN"
+ ],
+ "threshold": {
+  "population": 51,
+  "minVoters": 3
+ },
+ "effect": {
+  "forceCivics": [
+   "CIVIC_LEGISLATURE"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_LEGISLATURE"
+ }
+}

@@ -1,0 +1,58 @@
+{
+ "type": "TECH_SPACEPUNK",
+ "enables": {
+  "bonuses": [
+   "BONUS_SPACEPUNK"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_PUNK_SPACE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ANTIMATTER_PRODUCTION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INTERSTELLAR_TRAVEL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 130429
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/spacepunk.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SPACEPUNK",
+  "civilopedia": "TXT_KEY_TECH_SPACEPUNK_PEDIA",
+  "quote": "TXT_KEY_TECH_SPACEPUNK_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 125,
+  "gridY": 7
+ }
+}

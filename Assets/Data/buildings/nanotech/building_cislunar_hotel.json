@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_CISLUNAR_HOTEL",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_DOCKING_BAY",
+    "BUILDING_CISLUNAR_AGRICULTURAL_LAB",
+    "TECH_LUNAR_TOURISM",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1000
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 800,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_HOTEL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_HOTEL",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_HOTEL_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

@@ -1,0 +1,73 @@
+{
+ "type": "TECH_ADVANCED_COMPUTERS",
+ "enables": {
+  "buildings": [
+   "BUILDING_AI_SURVEILLANCE",
+   "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS",
+   "BUILDING_COMPUTER_CENTER"
+  ],
+  "promotions": [
+   "PROMOTION_FUZZY_LOGIC"
+  ],
+  "techs": [
+   "TECH_AMPLIFIED_WAVELENGTHS",
+   "TECH_DNA_COMPUTING",
+   "TECH_DROIDS",
+   "TECH_ENVIRONMENTAL_ECONOMICS",
+   "TECH_PHOTON_THERMODYNAMICS",
+   "TECH_SUPERSTRONG_ALLOYS"
+  ],
+  "units": [
+   "UNIT_ASSAULT_DROID"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AUTOMATED_URBANIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 42984
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/ai2.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,6,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ADVANCED_COMPUTERS",
+  "soundMP": "AS2D_TECH_ADVANCED_COMPUTERS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ADVANCED_COMPUTERS",
+  "civilopedia": "TXT_KEY_TECH_ADVANCED_COMPUTERS_PEDIA",
+  "quote": "TXT_KEY_TECH_ADVANCED_COMPUTERS_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 105,
+  "gridY": 11
+ }
+}

@@ -1,0 +1,178 @@
+{
+ "type": "UNIT_SEALION_SEA",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_SINGULAR"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_GROUP"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 5,
+   "title": "TXT_KEY_GROUPTITLE_POD"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_COMPANY",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_HERD"
+  }
+ ],
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 4
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "skills": [
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "seaUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SEA_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_RECKLESS_ANIMAL",
+  "UNITCOMBAT_MAMMAL_PINNIPED",
+  "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+  "UNITCOMBAT_ANIMAL_COMBAT_ROARING",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+  "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "requires": {
+     "outcome": "OUTCOME_TALES_SEA"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_TALESOF_SEALION_SEA",
+     "toCity": true
+    },
+    "food": {
+     "base": 20,
+     "random": 80
+    },
+    "production": {
+     "base": 5,
+     "random": 20
+    },
+    "commerce": {
+     "base": 8,
+     "random": 10
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE_SEA_LARGE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_SEALION_SEA"
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 90,
+    "food": {
+     "base": 20,
+     "random": 80
+    },
+    "production": {
+     "base": 5,
+     "random": 20
+    },
+    "commerce": {
+     "base": 8,
+     "random": 10
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SEALION_SEA",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SEALION_SEA"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_SEALION",
+  "civilopedia": "TXT_KEY_UNIT_SEALION_PEDIA",
+  "spawnOnly": true,
+  "xpValueAttack": 6,
+  "xpValueDefense": 4,
+  "aggression": 1,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_COAST_DEEP_TROPICAL",
+   "TERRAIN_COAST_TROPICAL",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_SEA_DEEP_TROPICAL",
+   "TERRAIN_SEA_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_POLAR",
+   "TERRAIN_TRENCH_TROPICAL"
+  ]
+ }
+}

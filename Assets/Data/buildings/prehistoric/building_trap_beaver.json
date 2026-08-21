@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_TRAP_BEAVER",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_PELTS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PLANETARY_ECONOMICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BREEDING_PROGRAM_BEAVER"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "TECH_TRAPPING",
+    {
+     "any": [
+      "BUILDING_ANIMAL_SNARE_TRAPS",
+      "BUILDING_ANCIENT_CUSTOMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BEAVER",
+     "scope": "city",
+     "connection": "onSite"
+    },
+    {
+     "type": "BONUS_PRIME_TIMBER",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ],
+   "dormant": [
+    "BUILDING_BREEDING_PROGRAM_BEAVER",
+    "BUILDING_ANIMAL_PRESERVE"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": "TECH_ECOLOGY"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 35,
+  "countModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRAP_BEAVER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRAP_BEAVER",
+  "civilopedia": "TXT_KEY_BUILDING_TRAP_BEAVER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

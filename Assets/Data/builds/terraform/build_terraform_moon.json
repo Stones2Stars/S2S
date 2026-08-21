@@ -1,0 +1,36 @@
+{
+ "type": "BUILD_TERRAFORM_MOON",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_TERRAFORMING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_TERRAFORM_MOON",
+  "terrainChange": "TERRAIN_GREEN_MOON"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/baseterrain/grassland.dds"
+  },
+  "hotkey": "KB_T",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_TERRAFORM_MOON"
+ }
+}

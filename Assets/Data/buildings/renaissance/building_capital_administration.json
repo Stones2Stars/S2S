@@ -1,0 +1,93 @@
+{
+ "type": "BUILDING_CAPITAL_ADMINISTRATION",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_PALACE",
+    "BUILDING_METROPOLITAN_ADMINISTRATION",
+    "TECH_SOCIAL_CONTRACT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 30
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "any": 2
+  }
+ },
+ "cost": {
+  "production": 950,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_GOLD": 6
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CAPITAL_ADMINISTRATION"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CAPITAL_ADMINISTRATION",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COURTHOUSE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CAPITAL_ADMINISTRATION",
+  "civilopedia": "TXT_KEY_BUILDING_CAPITAL_ADMINISTRATION_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "centerInCity": true,
+  "worth": 4,
+  "militaryWorth": 5,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

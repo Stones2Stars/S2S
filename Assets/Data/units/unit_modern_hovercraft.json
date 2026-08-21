@@ -1,0 +1,172 @@
+{
+ "type": "UNIT_MODERN_HOVERCRAFT",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ALUMINUM_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_MODERN_WARFARE",
+    {
+     "type": "BONUS_HOVERCRAFTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_BIOFUEL",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PETROLEUM_PRODUCTS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HITECH_HOVERCRAFT"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 4
+  }
+ },
+ "combat": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_MARSH": {
+     "attack": {
+      "percent": 50
+     }
+    }
+   },
+   "feature": {
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": -25
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": -25
+     }
+    },
+    "FEATURE_SWAMP": {
+     "attack": {
+      "percent": 50
+     }
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 75
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": {
+     "all": [
+      "IS_LAND",
+      "IS_TROOP"
+     ]
+    },
+    "flat": 3
+   }
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage",
+  "canMoveAllTerrain",
+  "ignoreTerrainCost",
+  "mechanized",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_HOVERCRAFT",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_TRANSPORT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_MOTILITY_HOVERING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_AMPHIBIOUS"
+  ]
+ },
+ "cost": {
+  "production": 1475,
+  "upkeep": 5
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MODERN_HOVERCRAFT",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MODERN_HOVERCRAFT"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_MODERN_HOVERCRAFT",
+  "civilopedia": "TXT_KEY_UNIT_MODERN_HOVERCRAFT_PEDIA",
+  "worth": 5,
+  "militaryWorth": 161,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_PILLAGE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

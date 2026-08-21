@@ -1,0 +1,50 @@
+{
+ "type": "PROMOTION_WIND_HORSE",
+ "enables": {
+  "promotions": [
+   "PROMOTION_WIND_HORSE2"
+  ]
+ },
+ "experience": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": 10
+   }
+  }
+ },
+ "pillage": {
+  "unit": {
+   "flat": 10
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_WIND_HORSE": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Windhorse1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_WIND_HORSE",
+  "stateReligionPrereq": "RELIGION_TENGRIISM"
+ }
+}

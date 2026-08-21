@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_LIFE_HYPERSPACE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "gold": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 4456,
+  "hurryModifier": 10000
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LIFE_HYPERSPACE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_HYPERSPACE",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_HYPERSPACE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

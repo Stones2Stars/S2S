@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_DISTANT_BUBBLE_TRANSFER_STATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_BRANE_THRUSTER",
+   "BUILDING_DISTANT_HOTEL_INFINITE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_HORIZON_PORT",
+    "TECH_CONTROLLED_INFLATION",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 1485,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_BUBBLE_TRANSFER_STATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_BUBBLE_TRANSFER_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_BUBBLE_TRANSFER_STATION_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

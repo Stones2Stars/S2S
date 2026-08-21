@@ -1,0 +1,36 @@
+{
+ "type": "TERRAIN_INTERGALACTIC_VOID",
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/galactic_void.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_TERRAIN_INTERGALACTIC_VOID"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TERRAIN_INTERGALACTIC_VOID",
+  "civilopedia": "TXT_KEY_TERRAIN_INTERGALACTIC_VOID_PEDIA",
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

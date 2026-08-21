@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_PRESENCE_OF_CRATER",
+ "requires": {
+  "operate": {
+   "all": [
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    {
+     "any": [
+      {
+       "type": "FEATURE_CRATER",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_BARRINGER_CRATER",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_NGORONGORO_CRATER",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CREATION_MYTH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PRESENCE_OF_CRATER",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_PRESENCE_OF_ORIGIN_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

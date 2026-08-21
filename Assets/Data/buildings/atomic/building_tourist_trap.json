@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_TOURIST_TRAP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FUSION_SPACECRAFT"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TOURISM_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TOURISM",
+    {
+     "any": [
+      "BUILDING_ASPHALT_ROADS",
+      "BUILDING_SKYROAD_CONTROL_TOWER",
+      "BUILDING_TELEPORT_BOOTH"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_TOURISM_MEGACOMPLEX"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1280,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TOURIST_TRAP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TOURIST_TRAP",
+  "civilopedia": "TXT_KEY_BUILDING_TOURIST_TRAP_PEDIA",
+  "militaryWorth": 1,
+  "conquestProbability": 30,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

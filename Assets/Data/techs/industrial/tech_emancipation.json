@@ -1,0 +1,68 @@
+{
+ "type": "TECH_EMANCIPATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_HUMAN_TRAFFICKING",
+   "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
+   "BUILDING_EMANCIPATION_PROCLAMATION"
+  ],
+  "techs": [
+   "TECH_ASSEMBLY_LINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DEPUTIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 5460
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/emancipation.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_EMANCIPATION",
+  "soundMP": "AS2D_TECH_EMANCIPATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_EMANCIPATION",
+  "civilopedia": "TXT_KEY_TECH_EMANCIPATION_PEDIA",
+  "quote": "TXT_KEY_TECH_EMANCIPATION_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 63,
+  "gridY": 5
+ }
+}

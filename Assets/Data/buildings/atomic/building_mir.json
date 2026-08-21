@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_MIR",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_JET_PROPULSION_LABORATORY",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_SPACE_STATIONS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CISLUNAR_DOCKING_BAY": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 10110
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MIR"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MIR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MIR",
+  "civilopedia": "TXT_KEY_BUILDING_MIR_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

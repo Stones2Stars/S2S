@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_FIELD_GENERATOR",
+ "enables": {
+  "buildings": [
+   "BUILDING_UBIQUITOUS_SUBDIMENSIONAL_UNIVERSE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ALEPH_ASSEMBLER",
+    "TECH_SENTIENT_ENERGY_FIELDS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 24355,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FIELD_GENERATOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FIELD_GENERATOR",
+  "civilopedia": "TXT_KEY_BUILDING_FIELD_GENERATOR_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

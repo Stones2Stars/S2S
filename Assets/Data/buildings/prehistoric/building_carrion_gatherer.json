@@ -1,0 +1,171 @@
+{
+ "type": "BUILDING_CARRION_GATHERER",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_CARCASS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INDUSTRIAL_FARMS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SCAVENGING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_CAMEL",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_COW",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_DONKEY",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_HORSE",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_LLAMA",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_PIG",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_SHEEP",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_BEAVER",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_BISON",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_DEER",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_ELEPHANT",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_GUINEA_PIG",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_KANGAROO",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_MAMMOTH",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_PARROT",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_POULTRY",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_RABBIT",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_WALRUS",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_SEA_LION_AND_SEAL",
+       "scope": "city",
+       "vicinity": "owned"
+      }
+     ]
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ]
+  }
+ },
+ "food": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": [
+    -1,
+    {
+     "value": 1,
+     "enabled": "TECH_COOKING"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CARRION_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CARRION_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_CARRION_GATHERER_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

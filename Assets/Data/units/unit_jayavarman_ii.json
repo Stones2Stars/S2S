@@ -1,0 +1,154 @@
+{
+ "type": "UNIT_JAYAVARMAN_II",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_KHMER",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_MUSICAL_NOTATION"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 15
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "skills": [
+  "pillage"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_HERO",
+ "combatClasses": [
+  "UNITCOMBAT_MELEE",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_POLEARM",
+  "UNITCOMBAT_ARMOR_MEDIUM",
+  "UNITCOMBAT_SHIELD_LARGE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EPIC",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_RETINUE_MESSENGER"
+  ],
+  "greatPeople": [
+   "SPECIALIST_GREAT_PROPHET",
+   "SPECIALIST_GREAT_MERCHANT",
+   "SPECIALIST_NOBLE",
+   "SPECIALIST_GREAT_MILITARY_INSTRUCTOR"
+  ],
+  "buildings": [
+   {
+    "building": "BUILDING_ACHIEVEMENT_AGRICULTURAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_COMMERCIAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_CULTURAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_ENVIRONMENTAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_INDUSTRIAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_MEDICAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_MILITARY"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_POLITICAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_SAFETY"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_SCIENTIFIC"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_SEAFARING"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_TOURISTIC"
+   }
+  ]
+ },
+ "cost": {
+  "production": 1120,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_JAYAVARMAN_II",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_JAYAVARMAN_II"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_JAYAVARMAN_II",
+  "civilopedia": "TXT_KEY_UNIT_JAYAVARMAN_II_PEDIA",
+  "worth": 6,
+  "militaryWorth": 8,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "leaderPromotion": "PROMOTION_LEADER",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_COUNTER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

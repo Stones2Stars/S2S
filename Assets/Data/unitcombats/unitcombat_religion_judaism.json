@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_RELIGION_JUDAISM",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/religion_judaism.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_RELIGION_JUDAISM",
+  "religion": "RELIGION_JUDAISM"
+ }
+}

@@ -1,0 +1,65 @@
+{
+ "type": "TECH_DIPLOMACY",
+ "enables": {
+  "buildings": [
+   "BUILDING_AMBASSADORS_HOUSE",
+   "BUILDING_EMPORIUM",
+   "BUILDING_TEMPLE_OF_ARTEMIS"
+  ],
+  "processes": [
+   "PROCESS_SPY"
+  ],
+  "techs": [
+   "TECH_CALLIGRAPHY",
+   "TECH_SPICE_TRADE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CODE_OF_LAWS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_MERCHANT"
+ },
+ "cost": {
+  "research": 554
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/techtree/Diplomacy.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_DIPLOMACY",
+  "soundMP": "AS2D_TECH_DIPLOMACY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_DIPLOMACY",
+  "civilopedia": "TXT_KEY_TECH_DIPLOMACY_PEDIA",
+  "quote": "TXT_KEY_TECH_DIPLOMACY_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 35,
+  "gridY": 17
+ }
+}

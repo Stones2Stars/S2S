@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_JUTE",
+ "enables": {
+  "units": [
+   "UNIT_BEOWULF",
+   "UNIT_KNARR"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_JUTE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_JUTE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

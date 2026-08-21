@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_COLONIZE_MAP_MILKY_WAY",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_MILKY_WAY",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_MILKY_WAY"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

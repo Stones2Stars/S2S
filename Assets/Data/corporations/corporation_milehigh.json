@@ -1,0 +1,119 @@
+{
+ "type": "CORPORATION_MILEHIGH",
+ "enables": {
+  "buildings": [
+   "BUILDING_MILEHIGH_TRAVELS_INTERNATIONAL_FRANCHISE"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HEADQUARTERS": "CORPORATION_MILEHIGH"
+     },
+     "per": "CORPORATION_LEVEL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 0.5,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_MILEHIGH"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_ELEPHANT",
+       "BONUS_WHALE",
+       "BONUS_CLAM",
+       "BONUS_HORSE",
+       "BONUS_ANCIENT_RELICS"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_MILEHIGH"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_ELEPHANT",
+       "BONUS_WHALE",
+       "BONUS_CLAM",
+       "BONUS_HORSE",
+       "BONUS_ANCIENT_RELICS"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_MILEHIGH"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_MILEHIGH"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_ELEPHANT",
+        "BONUS_WHALE",
+        "BONUS_CLAM",
+        "BONUS_HORSE",
+        "BONUS_ANCIENT_RELICS"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 10,
+   "icon": "Art/Interface/Buttons/corporations/milehigh.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_MILEHIGH",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MILEHIGH_PEDIA",
+  "competingSpreadCostPercent": 200,
+  "spreadFactor": 50
+ }
+}

@@ -1,0 +1,114 @@
+{
+ "type": "BUILDING_CULTURE_RUSSIAN",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_EUROPEAN",
+    "BUILDING_C_L_EUROPEAN",
+    "TECH_GUILDS",
+    {
+     "type": "TERRAIN_TAIGA",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "FEATURE_FOREST_YOUNG",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_ANCIENT",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_BURNT",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BEAVER",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_RUSSIAN"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_HERMITAGE": {
+     "percent": 10
+    },
+    "BUILDING_THE_KREMLIN": {
+     "percent": 10
+    },
+    "BUILDING_BOLSHOI": {
+     "percent": 10
+    },
+    "BUILDING_PALACE_OF_THE_SOVIETS": {
+     "percent": 10
+    },
+    "BUILDING_YASNAYA_POLYANA": {
+     "percent": 10
+    },
+    "BUILDING_THE_MOTHERLAND_CALLS": {
+     "percent": 10
+    },
+    "BUILDING_HELSINKI_CATHEDRAL": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 1992,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_RUSSIAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_RUSSIAN",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_RUSSIAN_PEDIA",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

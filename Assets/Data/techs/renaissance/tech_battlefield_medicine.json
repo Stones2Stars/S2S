@@ -1,0 +1,82 @@
+{
+ "type": "TECH_BATTLEFIELD_MEDICINE",
+ "enables": {
+  "buildings": [
+   "BUILDING_FIELD_HOSPITAL",
+   "BUILDING_PHARMACY"
+  ],
+  "promotions": [
+   "PROMOTION_FIRST_AID_ANIMALS3",
+   "PROMOTION_FIRST_AID_PEOPLE3",
+   "PROMOTION_PARAMEDIC1",
+   "PROMOTION_RESCUE_DOG1",
+   "PROMOTION_RESCUE_DOG2",
+   "PROMOTION_RESCUE_DOG3"
+  ],
+  "techs": [
+   "TECH_MICROBIOLOGY"
+  ],
+  "units": [
+   "UNIT_FIELD_VET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MATCHLOCK",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LEADERSHIP",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 2701
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/fieldSurgery.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,1,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_BATTLEFIELD_MEDICINE",
+  "soundMP": "AS2D_TECH_BATTLEFIELD_MEDICINE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_BATTLEFIELD_MEDICINE",
+  "civilopedia": "TXT_KEY_TECH_BATTLEFIELD_MEDICINE_PEDIA",
+  "quote": "TXT_KEY_TECH_BATTLEFIELD_MEDICINE_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 53,
+  "gridY": 1
+ }
+}

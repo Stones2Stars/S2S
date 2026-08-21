@@ -1,0 +1,14 @@
+# build artifacts of the isolated readjson harness (rebuild via build.ps1)
+readjson.exe
+readjson.obj
+msvcr71.dll
+msvcp71.dll
+
+# run outputs
+_*.txt
+
+# testOutput/ — target dir for readjson run outputs (conformance / render dumps for live-data
+# validation). Contents are never committed; the folder itself is kept (via .gitkeep) so it always
+# exists as a stable target on a fresh clone.
+testOutput/*
+!testOutput/.gitkeep

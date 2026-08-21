@@ -1,0 +1,212 @@
+{
+ "type": "UNIT_GARAMANTES",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_DEPUTIZATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_LIBYAN",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_MERCENARY_STABLES",
+    "TECH_BRONZE_WORKING",
+    "TECH_ANIMAL_RIDING",
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HIGHWAYMAN"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "combat": {
+  "unit": {
+   "lunge": {
+    "percent": 10
+   },
+   "enclose": {
+    "percent": 5
+   },
+   "unnerve": {
+    "percent": 5
+   },
+   "stealth": {
+    "percent": 20
+   },
+   "flanking": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 25
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 25
+    },
+    "UNITCOMBAT_THROWING": {
+     "percent": 50
+    }
+   },
+   "targets": {
+    "UNITCOMBAT_TRADE": true,
+    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 8
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 50
+  }
+ },
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 2
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 10
+  },
+  "plot": {
+   "flat": 20
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_CAPTIVE",
+    "flat": 2
+   }
+  }
+ },
+ "skills": [
+  "alwaysHostile",
+  "hiddenNationality",
+  "noDefensiveBonus",
+  "pillage",
+  "barbCoExist",
+  "ignoreTerrainCost",
+  "noNonOwnedCityEntry",
+  "stealthDefense",
+  "upgradeAnywhere"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "troop"
+ ],
+ "combatClass": "UNITCOMBAT_RUFFIAN",
+ "combatClasses": [
+  "UNITCOMBAT_MOUNTED",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_POLEARM",
+  "UNITCOMBAT_WEAPON_H2H_KNIFE",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_RIDING",
+  "UNITCOMBAT_MOUNT_HORSE",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO",
+   "PROMOTION_MARAUDER",
+   "PROMOTION_LOOTER",
+   "PROMOTION_WARMTH1",
+   "PROMOTION_WARMTH2",
+   "PROMOTION_WARMTH3"
+  ]
+ },
+ "cost": {
+  "production": 230,
+  "upkeep": 5
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GARAMANTES",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_GARAMANTES"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_GARAMANTES",
+  "civilopedia": "TXT_KEY_UNIT_GARAMANTES_PEDIA",
+  "worth": 2,
+  "militaryWorth": 8,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

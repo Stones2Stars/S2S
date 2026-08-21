@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_GROVE_RESIN",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SENTIENT_EARTH"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AGROFOREST"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ADHESIVES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_RESIN",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ],
+   "dormant": [
+    "BUILDING_AGROFOREST"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 45,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GROVE_RESIN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GROVE_RESIN",
+  "civilopedia": "TXT_KEY_BUILDING_GROVE_RESIN_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

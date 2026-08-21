@@ -1,0 +1,102 @@
+{
+ "type": "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BUNGEE_JUMPING_SITE",
+   "BUILDING_GOLDEN_GATE_BRIDGE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NEW_URBANISM"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SMALL_SUSPENSION_BRIDGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "TECH_MOTORIZED_TRANSPORTATION",
+    "TECH_CIVIL_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_PAVED_ROADS",
+      "BUILDING_ASPHALT_ROADS",
+      "BUILDING_SKYROAD_CONTROL_TOWER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_SMALL_SUSPENSION_BRIDGE",
+    "BUILDING_LARGE_SUSPENSION_BRIDGE",
+    "BUILDING_TELEPORT_BOOTH"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 12,
+   "percent": 12
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": -1
+   },
+   "riverDefensePenalty": {
+    "percent": 36
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 12
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1,
+   "modifier": {
+    "percent": 24
+   }
+  }
+ },
+ "cost": {
+  "production": 830,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+  "civilopedia": "TXT_KEY_BUILDING_LARGE_STEEL_ARCH_BRIDGE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

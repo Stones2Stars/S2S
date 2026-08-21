@@ -1,0 +1,45 @@
+{
+ "type": "BONUS_CARBON_DIOXIDE_ICE",
+ "enables": {
+  "buildings": [
+   "BUILDING_MARTIAN_BIOFACTORY"
+  ]
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CARBON_DIOXIDE_ICE"
+  }
+ },
+ "mapGeneration": {
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 332,
+  "hills": true,
+  "flatlands": true,
+  "noRiverSide": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_LUNAR_HIGHLAND"
+  ],
+  "placementOrder": 9
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CARBON_DIOXIDE_ICE",
+  "civilopedia": "TXT_KEY_BONUS_CARBON_DIOXIDE_ICE_PEDIA",
+  "bonusClassType": "BONUSCLASS_MISC",
+  "source": "natural"
+ }
+}

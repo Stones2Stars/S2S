@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_CUSTOMS_OFFICE",
+ "enables": {
+  "buildings": [
+   "BUILDING_FEITORIA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "TECH_ECONOMICS",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT",
+      "BUILDING_MODERN_OFFICES"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": [
+     {
+      "value": 20,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "production": 535,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CUSTOMS_OFFICE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CUSTOMS_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_CUSTOMS_OFFICE_PEDIA",
+  "worth": 4,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

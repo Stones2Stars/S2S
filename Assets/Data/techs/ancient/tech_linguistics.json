@@ -1,0 +1,67 @@
+{
+ "type": "TECH_LINGUISTICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_BASHKIR",
+   "BUILDING_CULTURE_SAFFARID"
+  ],
+  "techs": [
+   "TECH_CLASSICAL_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_BARD",
+   "UNIT_BASHKIR_SHAMAN",
+   "UNIT_MAGOS",
+   "UNIT_PERSIAN_POET",
+   "UNIT_TESHUB_PRIEST"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HERITAGE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SEAFARING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 348
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/llinguistics.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_LINGUISTICS",
+  "soundMP": "AS2D_TECH_LINGUISTICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_LINGUISTICS",
+  "civilopedia": "TXT_KEY_TECH_LINGUISTICS_PEDIA",
+  "quote": "TXT_KEY_TECH_LINGUISTICS_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 31,
+  "gridY": 3
+ }
+}

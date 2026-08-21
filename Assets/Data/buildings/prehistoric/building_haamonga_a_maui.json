@@ -1,0 +1,117 @@
+{
+ "type": "BUILDING_HAAMONGA_A_MAUI",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ASTRONOMY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MEGALITH_CONSTRUCTION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STONE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ARCHER": {
+     "flat": 1
+    },
+    "UNITCOMBAT_RECON": {
+     "flat": 1
+    },
+    "UNITCOMBAT_MELEE": {
+     "flat": 1
+    },
+    "UNITCOMBAT_THROWING": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "warWeariness": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "cost": {
+  "production": 624,
+  "sizeModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MAUI"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HAAMONGA_A_MAUI",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HAAMONGA_A_MAUI",
+  "civilopedia": "TXT_KEY_BUILDING_HAAMONGA_A_MAUI_PEDIA",
+  "pediaCategory": "greatWonder",
+  "centerInCity": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_GENERAL",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

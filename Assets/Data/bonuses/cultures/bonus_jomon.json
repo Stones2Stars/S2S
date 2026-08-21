@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_JOMON",
+ "enables": {
+  "units": [
+   "UNIT_JIMMU",
+   "UNIT_JOMON_HUNTING_DOGS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_JOMON"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_JOMON",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

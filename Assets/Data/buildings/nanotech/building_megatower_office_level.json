@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_MEGATOWER_OFFICE_LEVEL",
+ "enables": {
+  "buildings": [
+   "BUILDING_ACOUSTIC_CONSTRUCTION_FIRM",
+   "BUILDING_HYPERLOOP",
+   "BUILDING_MEGACORPORATE_HEADQUARTERS",
+   "BUILDING_SELF_CONSTRUCTION_FIRM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MEGATOWER",
+    "BUILDING_MODERN_OFFICES",
+    "TECH_NANO_ARCHITECTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_METAMATERIALS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TRANSPARENT_ALUMINUM",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 3245,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MEGATOWER_OFFICE_LEVEL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MEGATOWER_OFFICE_LEVEL",
+  "civilopedia": "TXT_KEY_BUILDING_MEGATOWER_OFFICE_LEVEL_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

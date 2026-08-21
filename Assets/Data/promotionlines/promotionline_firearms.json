@@ -1,0 +1,18 @@
+{
+ "type": "PROMOTIONLINE_FIREARMS",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/firearms1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_FIREARMS",
+  "unitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS"
+  ],
+  "notOnDomains": [
+   "DOMAIN_LAND",
+   "DOMAIN_AIR"
+  ]
+ }
+}

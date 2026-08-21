@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_PUBLIC_STONING",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_EXECUTIONS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CRUCIFIXION_CROSSES"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CONDUCT",
+    {
+     "any": [
+      "BUILDING_ROCK_GATHERER",
+      "BUILDING_ANCIENT_CUSTOMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_CRUCIFIXION_CROSSES",
+    "BUILDING_GALLOWS",
+    "BUILDING_GUILLOTINE",
+    "BUILDING_ELECTRIC_CHAIR",
+    "BUILDING_LETHAL_INJECTION"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -5
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 62,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PUBLIC_STONING",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PUBLIC_STONING",
+  "civilopedia": "TXT_KEY_BUILDING_PUBLIC_STONING_PEDIA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

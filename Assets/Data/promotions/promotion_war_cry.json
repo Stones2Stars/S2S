@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_WAR_CRY",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_TACTICS1"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/WarCry.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_WAR_CRY",
+  "unitCombats": [
+   "UNITCOMBAT_COMMANDER"
+  ]
+ }
+}

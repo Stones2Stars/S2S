@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_BULLY2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BULLY3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_BULLY1"
+   ]
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BULLY": 2
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Bully2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "combatModifier": {
+   "perSizeLess": 15
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BULLY2"
+ }
+}

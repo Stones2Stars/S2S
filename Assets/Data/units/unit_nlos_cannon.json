@@ -1,0 +1,150 @@
+{
+ "type": "UNIT_NLOS_CANNON",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_MICROMECHANICS",
+    {
+     "any": [
+      "BUILDING_FACTORY_AMMUNITION",
+      "BUILDING_AMMUNITIONS_WORKSHOP",
+      "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_LEVITATION_ARTILLERY",
+     "UNIT_WALKER_ARTILLERY"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 90
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 26
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 140
+   },
+   "limit": {
+    "flat": 90
+   },
+   "maxUnits": {
+    "flat": 10
+   }
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage",
+  "ignoreBuildingDefense",
+  "mechanized",
+  "tradable",
+  "collateralImmune"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SIEGE",
+ "combatClasses": [
+  "UNITCOMBAT_WHEELED",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SIEGE_URBAN",
+  "UNITCOMBAT_SIEGE_FIELD",
+  "UNITCOMBAT_SIEGE_ROCKETRY",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 3294,
+  "upkeep": 6
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NLOS_CANNON",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "rangedWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_NLOS_CANNON"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_NLOS_CANNON",
+  "civilopedia": "TXT_KEY_UNIT_NLOS_CANNON_PEDIA",
+  "worth": 6,
+  "militaryWorth": 350,
+  "xpValueAttack": 6,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_COLLATERAL",
+   "UNITAI_CITY_COUNTER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combatLimit": 90
+  }
+ }
+}

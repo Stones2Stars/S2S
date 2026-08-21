@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_INTERSTELLAR_CULTURE_AGGRESSIVE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_COLONY_EUGENICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CULTURAL_EVOLUTION",
+    {
+     "type": "MAPCATEGORY_GALACTIC",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL",
+    "BUILDING_INTERSTELLAR_CULTURE_EXPLORATORY",
+    "BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS",
+    "BUILDING_INTERSTELLAR_CULTURE_OBEDIENT",
+    "BUILDING_INTERSTELLAR_CULTURE_PARADISE",
+    "BUILDING_INTERSTELLAR_CULTURE_REBELLIOUS"
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": 50,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "production": 1757,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CULTURE_AGGRESSIVE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_AGGRESSIVE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_AGGRESSIVE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC"
+  ]
+ }
+}

@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_LUNAR_ASSEMBLY_PLANT",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUNAR_DROID_FACTORY",
+   "BUILDING_LUNAR_PARCOLOGY",
+   "BUILDING_LUNAR_SHIPYARD",
+   "BUILDING_LUNAR_SOLAR_ARRAY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LUNAR_ROCK_QUARRY",
+    "TECH_LUNAR_MANUFACTURING",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PARTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": {
+    "value": 200,
+    "enabled": "TECH_LUNAR_TRADE"
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 2
+  }
+ },
+ "cost": {
+  "production": 1300,
+  "hurryModifier": 10000
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUNAR_ASSEMBLY_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_ASSEMBLY_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_ASSEMBLY_PLANT_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

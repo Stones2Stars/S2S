@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_ORICHALCUM_FORGE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_AERIAL_CITY",
+    "TECH_FANTASY_MATERIALS",
+    {
+     "any": [
+      "BUILDING_SPACE_SHIPPING_WAREHOUSE",
+      "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ORICHALCUM"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 118530,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ORICHALCUM_FORGE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ORICHALCUM_FORGE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ORICHALCUM_FORGE",
+  "civilopedia": "TXT_KEY_BUILDING_ORICHALCUM_FORGE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

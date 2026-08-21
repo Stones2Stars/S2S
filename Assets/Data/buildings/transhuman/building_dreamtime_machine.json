@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_DREAMTIME_MACHINE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB",
+    "BUILDING_DREAM_VISUALIZER",
+    "TECH_NEURON_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "cost": {
+  "production": 5055,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DREAMTIME_MACHINE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DREAMTIME_MACHINE",
+  "civilopedia": "TXT_KEY_BUILDING_DREAMTIME_MACHINE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

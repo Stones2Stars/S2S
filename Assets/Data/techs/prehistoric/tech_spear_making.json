@@ -1,0 +1,77 @@
+{
+ "type": "TECH_SPEAR_MAKING",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_ARAWAK"
+  ],
+  "techs": [
+   "TECH_ATLATL_MAKING",
+   "TECH_OBSIDIAN_WEAPONS",
+   "TECH_SPEARFISHING"
+  ],
+  "units": [
+   "UNIT_MAPINGUARI_STONE",
+   "UNIT_NEANDERTHAL_STONE_AGE_SPEARMAN",
+   "UNIT_STONE_SPEARMAN",
+   "UNIT_YURUPARI"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_MAPINGUARI_WOODEN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMPOSITE_TOOLS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MICROLITH",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRAP_FISHING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 23
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/spearmaking.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SPEAR_MAKING",
+  "soundMP": "AS2D_TECH_SPEAR_MAKING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SPEAR_MAKING",
+  "civilopedia": "TXT_KEY_TECH_SPEAR_MAKING_PEDIA",
+  "quote": "TXT_KEY_TECH_SPEAR_MAKING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 11,
+  "gridY": 1
+ }
+}

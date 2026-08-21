@@ -1,0 +1,21 @@
+{
+ "type": "CULTURELEVEL_MINOR",
+ "allowed": {
+  "worldWonders": 2,
+  "teamWonders": 2,
+  "nationalWonders": 7
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 7
+   }
+  }
+ },
+ "enabled": "GAMEOPTION_CULTURE_REALISTIC_SPREAD",
+ "identity": {
+  "description": "TXT_KEY_CULTURELEVEL_MINOR",
+  "cityRadius": 2,
+  "cultureThreshold": 260
+ }
+}

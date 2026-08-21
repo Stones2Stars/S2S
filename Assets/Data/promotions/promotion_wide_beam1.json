@@ -1,0 +1,17 @@
+{
+ "type": "PROMOTION_WIDE_BEAM1",
+ "promotionLine": {
+  "PROMOTIONLINE_WIDE_BEAM": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/WideBeam1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_WIDE_BEAM1"
+ }
+}

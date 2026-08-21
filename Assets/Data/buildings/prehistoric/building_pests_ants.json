@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_PESTS_ANTS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 2
+    },
+    "TECH_COOKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PESTS_ANTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PESTS_ANTS",
+  "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

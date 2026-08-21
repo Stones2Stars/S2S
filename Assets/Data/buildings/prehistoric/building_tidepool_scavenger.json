@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_TIDEPOOL_SCAVENGER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_AQUACULTURE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FISHERMANS_HUT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "TECH_SCAVENGING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_FISHERMANS_HUT",
+    "BUILDING_AQUAFARM"
+   ]
+  }
+ },
+ "food": {
+  "empire": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": "TECH_SPEARFISHING"
+    }
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": [
+    -1,
+    {
+     "value": 1,
+     "enabled": "TECH_COOKING"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TIDEPOOL_SCAVENGER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TIDEPOOL_SCAVENGER",
+  "civilopedia": "TXT_KEY_BUILDING_TIDEPOOL_SCAVENGER_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_PESTS_MOTHS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 6
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_CLOTH",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_CLOTHING",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    },
+    "TECH_TEXTILE_LOOM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -1
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -1
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PESTS_MOTHS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PESTS_MOTHS",
+  "civilopedia": "TXT_KEY_BUILDING_PESTS_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

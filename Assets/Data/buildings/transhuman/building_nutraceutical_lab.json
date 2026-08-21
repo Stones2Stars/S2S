@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_NUTRACEUTICAL_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_SMART_MEDICINE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_POSTHUMANISM"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MEDICAL_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TRANSGENICS_LAB",
+    "TECH_NUTRACEUTICAL_ANIMALS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_MEDICAL_MEGACOMPLEX"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 5655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NUTRACEUTICAL_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NUTRACEUTICAL_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_NUTRACEUTICAL_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

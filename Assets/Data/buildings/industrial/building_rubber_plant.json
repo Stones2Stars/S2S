@@ -1,0 +1,104 @@
+{
+ "type": "BUILDING_RUBBER_PLANT",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_SYNTHETIC_RUBBER"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MATERIALS_CONGLOMERATE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_POLYMERIZATION",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT",
+      "BUILDING_FACTORY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_MATERIALS_CONGLOMERATE"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 740,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACTORY_RUBBER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_OIL_REFINERY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RUBBER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_RUBBER_PLANT_PEDIA",
+  "worth": 6,
+  "militaryWorth": 30,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -8,9 +8,15 @@
 ## Author: EmperorFool
 
 from CvPythonExtensions import *
+TRNSLTR = CyTranslator()
 
+# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
+TEXT = CyGameTextMgr()
 # Types
 NUM_TYPES = 10
 (
@@ -53,6 +59,23 @@ LABEL_KEYS = (
 	"TXT_KEY_CONCEPT_SPECIALISTS",
 	"TXT_KEY_CONCEPT_BASE_MODIFIER"
 )
+# The census term ORDER, as CyCity::getYieldTerms returns it. One list, one order, both sides.
+NUM_TERMS = 12
+(
+	T_PLOT_BASE,
+	T_PLOT_NATURE,
+	T_PLOT_IMPROVEMENT,
+	T_PLOT_REST,
+	T_TRADE_YIELD,
+	T_GOLDEN_AGE,
+	T_UPPER_FLAT,
+	T_SPECIALISTS,
+	T_CITY_FLAT,
+	T_PERCENT_SUM,
+	T_WORKED_PLOTS,
+	T_RATE,
+) = xrange(NUM_TERMS)
+
 # Yields
 YIELDS = (YieldTypes.YIELD_FOOD, YieldTypes.YIELD_PRODUCTION, YieldTypes.YIELD_COMMERCE)
 # Tiles
@@ -78,6 +101,7 @@ class Tracker:
 			for eType in xrange(NUM_TYPES):
 				self.values[eYield][eType] = 0
 		self.tileCounts = [0, 0, 0, 0]
+		self.terms = {}
 
 	def addBuilding(self, eYield, iValue):
 		self.values[eYield][BUILDINGS] += iValue
@@ -88,104 +112,85 @@ class Tracker:
 	def addForeignTrade(self, eYield, iValue):
 		self.values[eYield][FOREIGN_TRADE] += iValue
 
-	def processCity(self, CyCity):
+	def processCity(self, iPlayer, iCityID):
 		"""
-		Calculates the yields for the given city's tiles, specialists, corporations and multipliers.
-		The building and trade yields are calculated by CvMainInterface.
+		Reads the city's yield CENSUS -- the same decomposition InfoValuation::cityReceiverRate produces and the
+		/computed census renders. Nothing is calculated here.
+
+		â A tooltip IS a census (owner), so this panel and the served document must be the SAME answer or they
+		are two answers to one question. This used to hand-roll its own walk over plots, specialists and
+		corporations through the CyCity API -- an API that no longer exists, which is why it raised.
 		"""
-		# Calculates the yield for all city-tiles.
-		iPlayer = CyCity.getOwner()
-		for i in xrange(GC.getNUM_CITY_PLOTS()):
-			CyPlot = CyCity.getCityIndexPlot(i)
-			if CyPlot and CyPlot.hasYield():
-
-				if CyCity.isWorkingPlot(CyPlot):
-					iTileType = WORKED_TILES
-				elif CyCity.canWork(CyPlot):
-					iTileType = CITY_TILES
-				elif CyPlot.getOwner() == iPlayer:
-					iTileType = OWNED_TILES
-				else:
-					iTileType = ALL_TILES
-
-				for eYield in YIELDS:
-					iValue = CyPlot.getYield(eYield)
-					if iValue:
-						for eType in xrange(iTileType, ALL_TILES + 1):
-							self.values[eYield][eType] += iValue
-				for eType in xrange(iTileType, ALL_TILES + 1):
-					self.tileCounts[eType] += 1
-
-		CyPlayer = GC.getPlayer(iPlayer)
-		iValue = 0
+		self.terms = {}
 		for eYield in YIELDS:
-			# Calculates the yield from specialists.
-			for eType in xrange(GC.getNumSpecialistInfos()):
-				iValue += CyPlayer.specialistYield(eType, eYield) * (CyCity.getSpecialistCount(eType) + CyCity.getFreeSpecialistCount(eType))
-			if iValue:
-				self.values[eYield][SPECIALISTS] += iValue
-				iValue = 0
-			# Calculates the yield from corporations.
-			for eType in xrange(GC.getNumCorporationInfos()):
-				if CyCity.isHasCorporation(eType):
-					iValue += CyCity.getCorporationYieldByCorporation(eYield, eType)
-			if iValue:
-				self.values[eYield][CORPORATIONS] += iValue
-				iValue = 0
-			# Account for yield modifiers.
-			iValue = CyCity.getBaseYieldRateModifier(eYield, 0) - 100
-			if iValue:
-				self.values[eYield][BASE_MODIFIER] += iValue
-				iValue = 0
+			self.terms[eYield] = GC.getPlayer(iPlayer).getCity(iCityID).getYieldTerms(eYield)
 
+	def term(self, eYield, iTerm):
+		# x100 amounts come back as whole game numbers here; percentSum / workedPlots are already whole
+		# ([DEC-fixedpoint-x100]: the reader divides at the point of use).
+		terms = self.terms.get(eYield)
+		if not terms or iTerm >= len(terms):
+			return 0
+		return int(terms[iTerm])
 
 	def fillTable(self, screen, table, eYield, eType):
+		# Renders the CENSUS terms. â The rows are what the cascade actually computes, not the old hand-rolled
+		# buckets: the census walks the city's WORKED plots, so "city / owned / all tiles" have no term and are
+		# not shown. Altered visible text is never a reason to hesitate here ([patterns.md]) -- what matters is
+		# that the panel and the served census agree.
 		TRNSLTR = CyTranslator()
-		# Fills the given GFC table control with the chosen yield values.
 		self.iRow = 0
-		# Tiles
-		iTotal = self.values[eYield][eType]
-		self.appendTable(screen, table, False, TRNSLTR.getText(LABEL_KEYS[eType], (self.tileCounts[eType],)), eYield, iTotal)
 
-		# Trade
-		for eType in (DOMESTIC_TRADE, FOREIGN_TRADE):
-			iValue = self.values[eYield][eType]
+		# The worked-plot base, with its three segments -- a short plot yield cannot be attributed from the total
+		# alone (a dead improvement leg and a dead nature leg look identical in it).
+		iPlotBase = self.term(eYield, T_PLOT_BASE) / 100
+		self.appendTable(screen, table, False,
+			TRNSLTR.getText(LABEL_KEYS[WORKED_TILES], (self.term(eYield, T_WORKED_PLOTS),)), eYield, iPlotBase)
+		for iTerm, szKey in ((T_PLOT_NATURE, "TXT_KEY_CONCEPT_NATURE"),
+		                     (T_PLOT_IMPROVEMENT, "TXT_KEY_CONCEPT_IMPROVEMENT"),
+		                     (T_PLOT_REST, "TXT_KEY_CONCEPT_OTHER")):
+			iValue = self.term(eYield, iTerm) / 100
 			if iValue:
-				self.appendTable(screen, table, False, TRNSLTR.getText(LABEL_KEYS[eType], ()), eYield, iValue, True)
-		iValue = self.values[eYield][DOMESTIC_TRADE] + self.values[eYield][FOREIGN_TRADE]
-		iValue /= 100
-		iTotal += iValue
+				self.appendTable(screen, table, False, u"    " + TRNSLTR.getText(szKey, ()), eYield, iValue)
+		iTotal = iPlotBase
 
-		# Buildings, Corporations, Specialists
-		for eType in (BUILDINGS, CORPORATIONS, SPECIALISTS):
-			iValue = self.values[eYield][eType]
+		# Trade -- the SCREEN supplies the domestic/foreign split, which the census does not carry; the census's
+		# own tradeYield is the same money and is deliberately not added beside it.
+		for eTradeType in (DOMESTIC_TRADE, FOREIGN_TRADE):
+			iValue = self.values[eYield][eTradeType]
+			if iValue:
+				self.appendTable(screen, table, False, TRNSLTR.getText(LABEL_KEYS[eTradeType], ()), eYield, iValue, True)
+		iTotal += (self.values[eYield][DOMESTIC_TRADE] + self.values[eYield][FOREIGN_TRADE]) / 100
+
+		# The remaining TIER-1 flats the percent stack multiplies, then the city's own TIER-2 flats.
+		for iTerm, szKey in ((T_SPECIALISTS, "TXT_KEY_CONCEPT_SPECIALISTS"),
+		                     (T_UPPER_FLAT, "TXT_KEY_WB_BUILDINGS"),
+		                     (T_GOLDEN_AGE, "TXT_KEY_CONCEPT_GOLDEN_AGE"),
+		                     (T_CITY_FLAT, "TXT_KEY_WB_BUILDINGS")):
+			iValue = self.term(eYield, iTerm) / 100
 			if iValue:
 				iTotal += iValue
-				self.appendTable(screen, table, False, TRNSLTR.getText(LABEL_KEYS[eType], ()), eYield, iValue)
+				self.appendTable(screen, table, False, TRNSLTR.getText(szKey, ()), eYield, iValue)
 
-		# Subtotal and Base Modifiers
-		iModifier = self.values[eYield][BASE_MODIFIER]
+		# The single additive percent stack.
+		iModifier = self.term(eYield, T_PERCENT_SUM)
 		if iModifier:
-			# Subtotal
 			self.appendTableTotal(screen, table, eYield, iTotal)
-			# Modifier
 			iValue = (iTotal * (iModifier + 100) // 100) - iTotal
-			iSubtotal = iTotal + iValue
-			self.appendTable(screen, table, False, TRNSLTR.getText("TXT_KEY_CONCEPT_BASE_MODIFIER", (iModifier,)), eYield, iValue)
-		else:
-			iSubtotal = iTotal
+			self.appendTable(screen, table, False,
+				TRNSLTR.getText("TXT_KEY_CONCEPT_BASE_MODIFIER", (iModifier,)), eYield, iValue)
 
-		iTotal = iSubtotal
-
-		# Total
-		self.appendTableTotal(screen, table, eYield, iTotal)
+		# â The TOTAL is the census's OWN rate, never this function's running sum. The combine is the
+		# authority; a total re-added here would be a second answer, and the two would drift the moment a term
+		# is added to the cascade and not to this loop.
+		self.appendTableTotal(screen, table, eYield, self.term(eYield, T_RATE) / 100)
 
 	def appendTable(self, screen, table, bTotal, heading, eYield, iValue, bFraction=False):
 		"""
 		Appends the given yield value to the table control.
 		If bTotal is True, the heading is colored yellow and there's no + sign on the value.
 		"""
-		cYield = GC.getYieldInfo(eYield).getChar()
+		cYield = TEXT.getSymbolChar("YIELD_", eYield)
 		screen.appendTableRow(table)
 		if bTotal:
 			heading = u"<color=205,180,55,255>%s</color>" % heading
@@ -210,6 +215,6 @@ class Tracker:
 		Appends the given yield total to the table control's 3rd running total column.
 		"""
 		if self.iRow > 0:
-			cYield = GC.getYieldInfo(eYield).getChar()
+			cYield = TEXT.getSymbolChar("YIELD_", eYield)
 			value = u"<color=205,180,55,255>%d</color>" % iValue
 			screen.setTableText(table, 2, self.iRow - 1, u"<font=1>%s%c</font>" % (value, cYield), "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<1)

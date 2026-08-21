@@ -1,0 +1,190 @@
+{
+ "type": "UNIT_WALLABY",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_SOLITARY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 4,
+   "title": "TXT_KEY_GROUPTITLE_COURT"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_HERD"
+  }
+ ],
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 35
+  }
+ },
+ "skills": [
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_MAMMAL_MARSUPIAL",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+  "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_TINY",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_WALLABY",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 1,
+     "random": 1
+    },
+    "production": {
+     "base": 1,
+     "random": 1
+    },
+    "commerce": {
+     "base": 1,
+     "random": 2
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WALLABY",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WALLABY"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_WALLABY",
+  "civilopedia": "TXT_KEY_UNIT_WALLABY_PEDIA",
+  "spawnOnly": true,
+  "xpValueAttack": 3,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "featureImpassable": [
+   "FEATURE_JUNGLE",
+   "FEATURE_MANGROVE",
+   "FEATURE_SWAMP"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES",
+   "TERRAIN_ICE",
+   "TERRAIN_MARSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_SCRUB",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ],
+  "featurePassableTechs": [
+   {
+    "FEATURE_CAVES": "NONE"
+   },
+   {
+    "FEATURE_DARK_ROCK_ARCH": "NONE"
+   },
+   {
+    "FEATURE_DARK_ROCK_ARCH2": "NONE"
+   },
+   {
+    "FEATURE_DARK_ROCK_FORM1": "NONE"
+   },
+   {
+    "FEATURE_DARK_ROCK_FORM2": "NONE"
+   },
+   {
+    "FEATURE_DARK_ROCK_FORM3": "NONE"
+   },
+   {
+    "FEATURE_DARK_ROCK_FORM4": "NONE"
+   },
+   {
+    "FEATURE_ROCK_ARCH": "NONE"
+   },
+   {
+    "FEATURE_ROCK_ARCH2": "NONE"
+   },
+   {
+    "FEATURE_ROCK_FORM1": "NONE"
+   },
+   {
+    "FEATURE_ROCK_FORM2": "NONE"
+   },
+   {
+    "FEATURE_ROCK_FORM3": "NONE"
+   },
+   {
+    "FEATURE_ROCK_FORM4": "NONE"
+   }
+  ]
+ }
+}

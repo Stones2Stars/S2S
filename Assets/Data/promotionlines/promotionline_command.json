@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_COMMAND",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/CommanderCommand1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_COMMAND",
+  "unitCombats": [
+   "UNITCOMBAT_COMMANDER"
+  ]
+ }
+}

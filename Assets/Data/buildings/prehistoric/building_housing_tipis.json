@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_HOUSING_TIPIS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SURVEYING"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_BISON",
+     "scope": "city",
+     "connection": "onSite"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_HIDE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_LEATHER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    },
+    "TECH_PORTABLE_SHELTERS",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_GRASSLAND",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_PLAINS",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "dormant": [
+    "BUILDING_HOUSING_VILLAS",
+    "BUILDING_HOUSING_MANORS",
+    "BUILDING_HOUSING_MANSIONS",
+    "BUILDING_HOUSING_CHATEAU",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HOUSING_TIPIS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_TIPIS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_TIPIS_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

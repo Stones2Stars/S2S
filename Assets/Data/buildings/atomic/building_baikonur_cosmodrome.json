@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_BAIKONUR_COSMODROME",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_LAUNCH_SITE",
+    "TECH_ASTRONAUTICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MILITARY_SPACEPORT": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 8850,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_BAIKONUR_COSMODROME"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BAIKONUR_COSMODROME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BAIKONUR_COSMODROME",
+  "civilopedia": "TXT_KEY_BUILDING_BAIKONUR_COSMODROME_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

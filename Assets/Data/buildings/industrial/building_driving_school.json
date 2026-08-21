@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_DRIVING_SCHOOL",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HOLOGRAPHIC_SCHOOL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MOTORIZED_TRANSPORTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_WHEELED": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 830,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DRIVING_SCHOOL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DRIVING_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_DRIVING_SCHOOL_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

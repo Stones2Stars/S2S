@@ -1,0 +1,78 @@
+{
+ "type": "IMPROVEMENT_WHALING_BOATS",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HARPOON_MAKING",
+     "scope": "team"
+    },
+    "IS_WATER",
+    {
+     "bonus": [
+      "BONUS_WHALE"
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_WHALE"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WEATHER_LORE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_WHALE"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_WHALING_BOATS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_WHALING_BOATS",
+  "civilopedia": "TXT_KEY_WHALING_BOATS_PEDIA",
+  "advancedStart": {
+   "cost": 30
+  },
+  "upgradeTime": 5,
+  "pillageGold": 15,
+  "upgradesTo": "IMPROVEMENT_WHALING_SHIPS",
+  "bonuses": {
+   "BONUS_WHALE": {
+    "trade": true
+   }
+  }
+ }
+}

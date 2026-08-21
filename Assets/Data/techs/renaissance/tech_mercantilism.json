@@ -1,0 +1,87 @@
+{
+ "type": "TECH_MERCANTILISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTRAL_BANK",
+   "BUILDING_MERCANTILISM_BONUS_GOLD",
+   "BUILDING_MERCANTILISM_BONUS_SILVER",
+   "BUILDING_SPICE_VOYAGE"
+  ],
+  "civics": [
+   "CIVIC_MERCANTILISM"
+  ],
+  "techs": [
+   "TECH_STOCK_BROKERING"
+  ],
+  "units": [
+   "UNIT_JACOB_KETTLER",
+   "UNIT_MATAPANG",
+   "UNIT_PIER",
+   "UNIT_PRIVATEER",
+   "UNIT_RAZZIA_PIRATES",
+   "UNIT_SANDEH",
+   "UNIT_VAKHTANG_VI"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DIVINE_RIGHT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COLONIALISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NAVIGATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 2883
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Mercantilism.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,11"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MERCANTILISM",
+  "soundMP": "AS2D_TECH_MERCANTILISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MERCANTILISM",
+  "civilopedia": "TXT_KEY_TECH_MERCANTILISM_PEDIA",
+  "quote": "TXT_KEY_TECH_MERCANTILISM_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 54,
+  "gridY": 13
+ }
+}

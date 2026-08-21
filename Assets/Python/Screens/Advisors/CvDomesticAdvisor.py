@@ -1,12 +1,21 @@
 from CvPythonExtensions import *
 import HandleInputUtil
 import cPickle
+import sys
 
 # globals
+# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
+BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 AFM = CyArtFileMgr()
 TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
+WORLD = CyWorldInfo()
 class CvDomesticAdvisor:
 
 	def __init__(self, screenId):
@@ -76,26 +85,28 @@ class CvDomesticAdvisor:
 
 		if self.bInitialize:
 			# Creates Dictionaries we couldn't on init.
-			iYellow	= GC.getCOLOR_YELLOW()
-			iRed	= GC.getCOLOR_RED()
-			iGreen	= GC.getCOLOR_GREEN()
-			iBlue	= GC.getCOLOR_BLUE()
+			iYellow	= GC.getInfoTypeForString("COLOR_YELLOW")
+			iRed	= GC.getInfoTypeForString("COLOR_RED")
+			iGreen	= GC.getInfoTypeForString("COLOR_GREEN")
+			iBlue	= GC.getInfoTypeForString("COLOR_BLUE")
 			iCyan	= GC.getInfoTypeForString("COLOR_CYAN")
 			self.iRed = iRed
 
 			self.HURRY_TYPE_POP = GC.getInfoTypeForString("HURRY_POPULATION")
 			self.HURRY_TYPE_GOLD = GC.getInfoTypeForString("HURRY_GOLD")
 
-			# Yield icons
-			aList = []
-			for i in xrange(YieldTypes.NUM_YIELD_TYPES):
-				aList.append(u'%c' % GC.getYieldInfo(i).getChar())
-			self.yieldIcons = list(aList)
-			# Commerce icons
-			aList = []
-			for i in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
-				aList.append(u'%c' % GC.getCommerceInfo(i).getChar())
-			self.commerceIcons = list(aList)
+			#	A font glyph is TEXT-plane, never info data ([patterns.md] THE PYTHON READ BOUNDARY): the
+			#	translator publishes each symbol as an [ICON_*] token, so this resolves through the text system
+			#	and needs no info accessor at all. Ordered to match YieldTypes / CommerceTypes.
+			self.yieldIcons = [
+				TRNSLTR.getText("[ICON_FOOD]", ()),
+				TRNSLTR.getText("[ICON_PRODUCTION]", ()),
+				TRNSLTR.getText("[ICON_COMMERCE]", ())]
+			self.commerceIcons = [
+				TRNSLTR.getText("[ICON_GOLD]", ()),
+				TRNSLTR.getText("[ICON_RESEARCH]", ()),
+				TRNSLTR.getText("[ICON_CULTURE]", ()),
+				TRNSLTR.getText("[ICON_ESPIONAGE]", ())]
 
 			# Special symbols for building, wonder and project views
 			self.objectUnderConstruction = self.yieldIcons[YieldTypes.YIELD_PRODUCTION]
@@ -109,15 +120,18 @@ class CvDomesticAdvisor:
 
 			# Corporation Yield and Commerce values by Bonus
 			# Maps are { bonus -> { yield/commerce -> { corporation -> value } } }
-			self.corpMaintPercent = GC.getWorldInfo(GC.getMap().getWorldSize()).getCorporationMaintenancePercent()
+			self.corpMaintPercent = WORLD.getCorporationMaintenancePercent(GC.getMap().getWorldSize())
 			self.bonusCorpYields = {}
 			self.bonusCorpCommerces = {}
 			for eCorp in xrange(GC.getNumCorporationInfos()):
-				info = GC.getCorporationInfo(eCorp)
-				for eBonus in info.getPrereqBonuses():
+				# The corporation's OWN authored flats, per channel, at empire scope -- the cascade-shaped
+				# replacement for the per-type getYieldProduced / getCommerceProduced that no longer exist.
+				aFlatYields = INFO.getFlatYields("CORPORATION_", eCorp, CascScope.CASC_SCOPE_EMPIRE)
+				aFlatCommerces = INFO.getFlatCommerces("CORPORATION_", eCorp, CascScope.CASC_SCOPE_EMPIRE)
+				for eBonus in INFO.getIdList("CORPORATION_", eCorp, IdListSlot.PYLIST_CONSUMED_BONUSES):
 
 					for eYield in xrange(YieldTypes.NUM_YIELD_TYPES):
-						iYieldValue = info.getYieldProduced(eYield)
+						iYieldValue = aFlatYields[eYield]
 						if iYieldValue != 0:
 							if not self.bonusCorpYields.has_key(eBonus):
 								self.bonusCorpYields[eBonus] = {}
@@ -127,7 +141,7 @@ class CvDomesticAdvisor:
 								self.bonusCorpYields[eBonus][eYield][eCorp] = iYieldValue
 
 					for eCommerce in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
-						iCommerceValue = info.getCommerceProduced(eCommerce)
+						iCommerceValue = aFlatCommerces[eCommerce]
 						if iCommerceValue != 0:
 							if not self.bonusCorpCommerces.has_key(eBonus):
 								self.bonusCorpCommerces[eBonus] = {}
@@ -195,10 +209,10 @@ class CvDomesticAdvisor:
 ("TRADE_ROUTES",			40,		"int",	None,					self.countTradeRoutes,	None,			"#" + unichr(8860)),
 ("TRADE_ROUTES_DOMESTIC",	40,		"int",	None,					self.countTradeRoutes,	"D",			"D#" + unichr(8860)),
 ("TRADE_ROUTES_FOREIGN",	40,		"int",	None,					self.countTradeRoutes,	"F",			"F#" + unichr(8860)),
-("WORLD_WONDERS",			40,		"int", "getNumWorldWonders",		None,				None,			"WW"),
-("MAX_WORLD_WONDERS",		40,		"int", "getMaxNumWorldWonders",		None,				None,			"MWW"),
-("NATIONAL_WONDERS",		40,		"int", "getNumNationalWonders",		None,				None,			"NW"),
-("MAX_NATIONAL_WONDERS",	40,		"int", "getMaxNumNationalWonders",	None,				None,			"MNW")
+("WORLD_WONDERS",			40,		"int", None,	self.calculateCityCount,	CityCountRead.CITY_COUNT_WORLD_WONDERS,			"WW"),
+("MAX_WORLD_WONDERS",		40,		"int", None,	self.calculateCityCount,	CityCountRead.CITY_COUNT_MAX_WORLD_WONDERS,		"MWW"),
+("NATIONAL_WONDERS",		40,		"int", None,	self.calculateCityCount,	CityCountRead.CITY_COUNT_NATIONAL_WONDERS,		"NW"),
+("MAX_NATIONAL_WONDERS",	40,		"int", None,	self.calculateCityCount,	CityCountRead.CITY_COUNT_MAX_NATIONAL_WONDERS,	"MNW")
 			]
 			# Yield
 			aList = [
@@ -207,11 +221,11 @@ class CvDomesticAdvisor:
 				"COMMERCE_"
 			]
 			for i in xrange(YieldTypes.NUM_YIELD_TYPES):
-				COLUMNS_LIST.append((aList[i] + "BASE", 40, "int", "getPlotYield", None, i, "B" + self.yieldIcons[i]))
+				COLUMNS_LIST.append((aList[i] + "BASE", 40, "int", None, self.calculatePlotYield, i, "B" + self.yieldIcons[i]))
 				COLUMNS_LIST.append((aList[i] + "GRANK_BASE", 42, "int", None, self.findGlobalBaseYieldRateRank, i, "B" + self.yieldIcons[i] + "g"))
 				COLUMNS_LIST.append((aList[i] + "GRANK", 40, "int", None, self.findGlobalYieldRateRank, i, self.yieldIcons[i] + "g"))
-				COLUMNS_LIST.append((aList[i] + "NRANK_BASE", 42, "int", "findBaseYieldRateRank", None, i, "B" + self.yieldIcons[i] + "n"))
-				COLUMNS_LIST.append((aList[i] + "NRANK", 40, "int", "findYieldRateRank", None, i, self.yieldIcons[i] + "n"))
+				COLUMNS_LIST.append((aList[i] + "NRANK_BASE", 42, "int", None, self.calculateBaseYieldRateRank, i, "B" + self.yieldIcons[i] + "n"))
+				COLUMNS_LIST.append((aList[i] + "NRANK", 40, "int", None, self.calculateYieldRateRank, i, self.yieldIcons[i] + "n"))
 			# Commerce
 			aList = [
 				"GOLD_",
@@ -220,52 +234,51 @@ class CvDomesticAdvisor:
 				"ESPIONAGE_"
 			]
 			for i in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
-				COLUMNS_LIST.append((aList[i] + "RATE", 40, "int", "getCommerceRate", None, i, "&#177 " + self.commerceIcons[i]))
+				COLUMNS_LIST.append((aList[i] + "RATE", 40, "int", None, self.calculateCommerceRate, i, "&#177 " + self.commerceIcons[i]))
 				COLUMNS_LIST.append((aList[i] + "GRANK", 40, "int", None, self.findGlobalCommerceRateRank, i, self.commerceIcons[i] + "g"))
-				COLUMNS_LIST.append((aList[i] + "NRANK", 40, "int", "findCommerceRateRank", None, i, self.commerceIcons[i] + "n"))
+				COLUMNS_LIST.append((aList[i] + "NRANK", 40, "int", None, self.calculateCommerceRateRank, i, self.commerceIcons[i] + "n"))
 			# Buildings
 			self.BUILDING_INFO_LIST = []
 			for i in xrange(GC.getNumBuildingInfos()):
-				info = GC.getBuildingInfo(i)
-				desc = info.getDescription()
+				desc = INFO.getDescription("BUILDING_", i)
 				key = self.getBuildingKey(i)
-				self.BUILDING_INFO_LIST.append(info)
+				self.BUILDING_INFO_LIST.append(i)
 				COLUMNS_LIST.append((key, 24, "bldg", None, self.getBuildingState, i, desc))
 			# Hurry types
 			for i in xrange(GC.getNumHurryInfos()):
 				header = self.yieldIcons[YieldTypes.YIELD_PRODUCTION]
 				name = "CAN_HURRY_"
-				info = GC.getHurryInfo(i)
-				if info.getGoldPerProduction() > 0:
+				if INFO.getIntrinsic("HURRY_", i, IntrinsicSlot.PYINT_HURRY_GOLD_PER_PRODUCTION) > 0:
 					header += " + " + self.commerceIcons[CommerceTypes.COMMERCE_GOLD]
 					name += "GOLD"
-				if info.getProductionPerPopulation() > 0 and info.isAnger():
+				if (INFO.getIntrinsic("HURRY_", i, IntrinsicSlot.PYINT_HURRY_PRODUCTION_PER_POPULATION) > 0
+				and INFO.getIntrinsic("HURRY_", i, IntrinsicSlot.PYINT_HURRY_IS_ANGER)):
 					header += " + " + unichr(8867)
 					name += "WHIP"
-				elif info.getProductionPerPopulation() > 0:
+				elif INFO.getIntrinsic("HURRY_", i, IntrinsicSlot.PYINT_HURRY_PRODUCTION_PER_POPULATION) > 0:
 					header += " + " + unichr(8850)
 					name += "VOLUNTEERS"
 
 				COLUMNS_LIST.append((name, 50, "text", None, self.canHurry, i, header))
 			# Resources ("bonuses") -- presence
 			for i in xrange(GC.getNumBonusInfos()):
-				info = GC.getBonusInfo(i)
-				desc = u"%c" % info.getChar()
+				desc = u"%c" % TEXT.getSymbolChar("BONUS_", i)
 				key = "HAS_" + self.getBonusKey(i)
 
 				COLUMNS_LIST.append((key, 24, "bonus", None, self.calculateHasBonus, i, desc))
 			# Resources ("bonuses") -- effects
 			for i in xrange(GC.getNumBonusInfos()):
-				info = GC.getBonusInfo(i)
-				desc = u"%c" % info.getChar()
+				desc = u"%c" % TEXT.getSymbolChar("BONUS_", i)
 				key = self.getBonusKey(i)
 
 				COLUMNS_LIST.append((key, 50, "text", None, self.calculateBonus, i, desc))
 			# Properties
 			for i in xrange(GC.getNumPropertyInfos()):
-				info = GC.getPropertyInfo(i)
-				desc = u"%c" % info.getChar()
-				key = info.getType()
+				#	A property's glyph is a TRANSLATOR token, not a symbol-pass read: the token map builds an
+				#	`[ICON_<TYPE>]` entry per property at load (CvDllTranslator), which is why this registry takes
+				#	the other route from the five getSymbolChar serves.
+				key = INFO.getType("PROPERTY_", i)
+				desc = TRNSLTR.getText("[ICON_" + key + "]", ())
 
 				COLUMNS_LIST.append((key, 53, "int", None, self.calculateProperty, i, desc))
 				COLUMNS_LIST.append((key+"_CHANGE", 53, "int", None, self.calculatePropertyChange, i, "&#177 " + desc))
@@ -434,12 +447,12 @@ class CvDomesticAdvisor:
 		else:
 			bCanLiberate = False
 			for CyCity in CyPlayer.cities():
-				if CyCity.getLiberationPlayer(False) != -1:
+				if CyCity.getLiberationPlayer() != -1:
 					bCanLiberate = True
 					break
 
 		if bCanLiberate:
-			screen.setImageButton("DomesticSplit", "", 8, 2, iSize, iSize, WidgetTypes.WIDGET_ACTION, GC.getControlInfo(ControlTypes.CONTROL_FREE_COLONY).getActionInfoIndex(), -1)
+			screen.setImageButton("DomesticSplit", "", 8, 2, iSize, iSize, WidgetTypes.WIDGET_ACTION, INFO.getIntrinsic("CONTROL_", ControlTypes.CONTROL_FREE_COLONY, IntrinsicSlot.PYINT_ACTION_INFO_INDEX).getActionInfoIndex(), -1)
 			screen.setStyle("DomesticSplit", "Button_HUDAdvisorVictory_Style")
 
 		# Draw the table and the rest based on the mode
@@ -503,8 +516,7 @@ class CvDomesticAdvisor:
 
 		# add National Wonders
 		for i in xrange(GC.getNumBuildingInfos()):
-			info = GC.getBuildingInfo(i)
-			if info.getMaxGlobalInstances() == -1 and info.getMaxPlayerInstances() == 1 and CyCity.hasBuilding(i) and not info.isCapital():
+			if BUILDING.getWonderScope(i) == AllowedCap.ALLOWEDCAP_EMPIRE and CyCity.hasBuilding(i):
 				# Use bullets as markers for National Wonders
 				szReturn += unichr(8854)
 
@@ -534,10 +546,12 @@ class CvDomesticAdvisor:
 		return ""
 
 	def calculateNetHappiness(self, city, szKey="", arg=0):
-		return city.happyLevel() - city.unhappyLevel(0)
+		aWellbeing = city.getWellbeing()
+		return aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS] - aWellbeing[WellbeingChannel.WELLBEING_ANGER]
 
 	def calculateNetHealth(self, city, szKey="", arg=0):
-		return city.goodHealth() - city.badHealth(False)
+		aWellbeing = city.getWellbeing()
+		return aWellbeing[WellbeingChannel.WELLBEING_HEALTH] - aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH]
 
 	def calculateGrowth(self, CyCity, szKey, arg):
 		# Turns til Growth
@@ -560,24 +574,19 @@ class CvDomesticAdvisor:
 
 	def calculateTrade(self, CyCity, szKey, arg):
 		# arg: None to sum all, 'D' to count domestic, 'F' to count foreign.
+		iOwner = CyCity.getOwner()
+		iCityID = CyCity.getID()
 		nTotalTradeProfit = 0
 
-		# For each trade route possible
-		for nTradeRoute in xrange(CyCity.getMaxTradeRoutes()):
-			# Get the next trade city
-			pTradeCity = CyCity.getTradeCity(nTradeRoute)
-			# Not quite sure what this does but it's in the MainInterface
-			if pTradeCity and pTradeCity.getOwner() > -1:
-				bForeign = CyCity.getOwner() != pTradeCity.getOwner()
-				if not arg or ((arg == "F" and bForeign) or (arg == "D" and not bForeign)):
-					iTradeProfit = CyCity.calculateTradeYield(YieldTypes.YIELD_COMMERCE, CyCity.calculateTradeProfitTimes100(CyCity.getTradeCity(nTradeRoute)))
-					nTotalTradeProfit += iTradeProfit
+		for iPartnerOwner, iPartnerCity, iProfitTimes100 in GC.getPlayer(iOwner).getCity(iCityID).getTradeRoutes():
+			if iPartnerOwner < 0:
+				continue
+			bForeign = iOwner != iPartnerOwner
+			if not arg or ((arg == "F" and bForeign) or (arg == "D" and not bForeign)):
+				nTotalTradeProfit += GC.getPlayer(iOwner).getCity(iCityID).getTradeYield(YieldTypes.YIELD_COMMERCE, iProfitTimes100)
 
-		nTotalTradeProfit //= 100
-		if nTotalTradeProfit < 0:
-			return "%d" % nTotalTradeProfit
-
-		return "%d" % nTotalTradeProfit
+		# the ONE reduce: the per-route yields summed on the x100 plane and come down once, here
+		return "%d" % (nTotalTradeProfit // 100)
 
 
 	def countTradeRoutes(self, city, szKey, arg):
@@ -619,8 +628,7 @@ class CvDomesticAdvisor:
 			# even if user chooses to disable the production coloring/grouping
 			if city.isProductionUnit():
 				iUnit = city.getProductionUnit()
-				pInfo = GC.getUnitInfo(iUnit)
-				if pInfo.getUnitCombatType() != UnitCombatTypes.NO_UNITCOMBAT:
+				if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_UNIT_COMBAT) != UnitCombatTypes.NO_UNITCOMBAT:
 					iExp = city.getProductionExperience(iUnit)
 					szReturn = szReturn + u" " + TRNSLTR.getText("TXT_KEY_CDA_BASE_XP", (iExp,))
 
@@ -629,12 +637,10 @@ class CvDomesticAdvisor:
 				szIcon = self.yieldIcons[YieldTypes.YIELD_PRODUCTION]
 				if city.isProductionBuilding():
 					szColorKey = "WONDER"
-					pInfo = GC.getBuildingInfo(city.getProductionBuilding())
-					if pInfo.getMaxGlobalInstances() != -1:
+					iCapScope = BUILDING.getWonderScope(city.getProductionBuilding())
+					if iCapScope == AllowedCap.ALLOWEDCAP_WORLD:
 						szIcon = unichr(8858)
-					elif pInfo.getMaxTeamInstances() != -1:
-						szIcon = unichr(8859)
-					elif pInfo.getMaxPlayerInstances() != -1:
+					elif iCapScope in (AllowedCap.ALLOWEDCAP_TEAM, AllowedCap.ALLOWEDCAP_EMPIRE):
 						szIcon = unichr(8859)
 					else:
 						szColorKey = "BUILDING"
@@ -651,17 +657,14 @@ class CvDomesticAdvisor:
 						szIcon = self.commerceIcons[CommerceTypes.COMMERCE_CULTURE]
 				elif city.isProductionProject():
 					szColorKey = "PROJECT"
-					pInfo = GC.getProjectInfo(city.getProductionProject())
-					if pInfo.getMaxGlobalInstances() != -1:
-						szIcon = unichr(8858)
-					elif pInfo.getMaxTeamInstances() != -1:
-						szIcon = unichr(8859)
+					# ⚠ A project's self-cap scope has no published read yet, so every project takes the
+					# world-tier glyph rather than a guessed tier.
+					szIcon = unichr(8858)
 				elif city.isProductionUnit():
 					szColorKey = "UNIT"
 					iUnit = city.getProductionUnit()
-					pInfo = GC.getUnitInfo(iUnit)
-					iType = pInfo.getDomainType()
-					if pInfo.getUnitCombatType() != UnitCombatTypes.NO_UNITCOMBAT:
+					iType = INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN)
+					if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_UNIT_COMBAT) != UnitCombatTypes.NO_UNITCOMBAT:
 						szIcon = unichr(8855)
 				else:
 					szIcon = unichr(8856)
@@ -739,11 +742,11 @@ class CvDomesticAdvisor:
 		iUnit = city.getConscriptUnit()
 		if iUnit == -1:
 			return u""
-		return unicode(GC.getUnitInfo(iUnit).getDescription())
+		return unicode(INFO.getDescription("UNIT_", iUnit))
 
 	def calculateConscriptUnit(self, city, szKey, arg):
 		if city.canConscript():
-			return unicode(GC.getUnitInfo(city.getConscriptUnit()).getDescription())
+			return unicode(INFO.getDescription("UNIT_", city.getConscriptUnit()))
 		return u""
 
 	def calculateReligions(self, city, szKey, arg):
@@ -759,10 +762,10 @@ class CvDomesticAdvisor:
 				lReligions.append(i)
 
 		for i in xrange(len(lHolyCity)):
-			szReturn += u"%c" %(GC.getReligionInfo(lHolyCity[i]).getHolyCityChar())
+			szReturn += u"%c" %(TEXT.getHolyCitySymbolChar(lHolyCity[i]))
 
 		for i in xrange(len(lReligions)):
-			szReturn += u"%c" %(GC.getReligionInfo(lReligions[i]).getChar())
+			szReturn += u"%c" %(TEXT.getSymbolChar("RELIGION_", lReligions[i]))
 
 		return szReturn
 
@@ -777,10 +780,10 @@ class CvDomesticAdvisor:
 				lCorps.append(i)
 
 		for i in xrange(len(lHeadquarters)):
-			szReturn += u"%c" %(GC.getCorporationInfo(lHeadquarters[i]).getHeadquarterChar())
+			szReturn += u"%c" %(TEXT.getHeadquarterSymbolChar(lHeadquarters[i]))
 
 		for i in xrange(len(lCorps)):
-			szReturn += u"%c" %(GC.getCorporationInfo(lCorps[i]).getChar())
+			szReturn += u"%c" %(TEXT.getSymbolChar("CORPORATION_", lCorps[i]))
 
 		return szReturn
 
@@ -818,7 +821,7 @@ class CvDomesticAdvisor:
 
 	def calculatePower(self, city, szKey, arg):
 		szReturn = u""
-		if city.isPower():
+		if city.isPowered():
 			szReturn += unichr(8872)
 		return szReturn
 
@@ -968,33 +971,57 @@ class CvDomesticAdvisor:
 
 		return unicode(freeXP)
 
+	#	The grouped reads cannot be named as a bare method in COLUMNS_LIST -- that slot builds
+	#	`CyCity.<name>(<arg>)` and evals it, which has nowhere to put the index. So these columns take the
+	#	selfFunction slot instead, exactly as their global-rank siblings below already do.
+	def calculateCityCount(self, CyCity, szKey, arg):
+		return CyCity.getCounts()[arg]
+
+	#	The worked-plot total for one yield. PLOT_BASE is that total -- the three PLOT_ segments beside it
+	#	decompose it rather than adding to it, so summing them would double-count. x100 like every amount, so
+	#	the column reduces here, at its display.
+	def calculatePlotYield(self, CyCity, szKey, arg):
+		return int(CyCity.getYieldTerms(arg)[CityYieldTerm.YIELD_TERM_PLOT_BASE]) / 100
+
+	def calculateBaseYieldRateRank(self, CyCity, szKey, arg):
+		return CyCity.getBaseYieldRateRanks()[arg]
+
+	def calculateYieldRateRank(self, CyCity, szKey, arg):
+		return CyCity.getYieldRateRanks()[arg]
+
+	def calculateCommerceRate(self, CyCity, szKey, arg):
+		return CyCity.getCommerces()[arg]
+
+	def calculateCommerceRateRank(self, CyCity, szKey, arg):
+		return CyCity.getCommerceRateRanks()[arg]
+
 	def findGlobalBaseYieldRateRank(self, CyCity, szKey, arg):
 
-		y = CyCity.getPlotYield(arg)
+		y = self.calculatePlotYield(CyCity, szKey, arg)
 		aList = []
 		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 			for CyCity in GC.getPlayer(iPlayerX).cities():
-				aList.append(CyCity.getPlotYield(arg))
+				aList.append(self.calculatePlotYield(CyCity, szKey, arg))
 
 		return len([i for i in aList if i > y]) + 1
 
 	def findGlobalYieldRateRank(self, CyCity, szKey, arg):
 
-		y = CyCity.getYieldRate(arg)
+		y = CyCity.getYields()[arg]
 		aList = []
 		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 			for CyCity in GC.getPlayer(iPlayerX).cities():
-				aList.append(CyCity.getYieldRate(arg))
+				aList.append(CyCity.getYields()[arg])
 
 		return len([i for i in aList if i > y]) + 1
 
 	def findGlobalCommerceRateRank(self, CyCity, szKey, arg):
 
-		y = CyCity.getCommerceRate(arg)
+		y = CyCity.getCommerces()[arg]
 		aList = []
 		for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 			for CyCity in GC.getPlayer(iPlayerX).cities():
-				aList.append(CyCity.getCommerceRate(arg))
+				aList.append(CyCity.getCommerces()[arg])
 
 		return len([i for i in aList if i > y]) + 1
 
@@ -1002,10 +1029,8 @@ class CvDomesticAdvisor:
 	def canAdviseToConstruct(self, CyCity, i):
 		if not CyCity.canConstruct(i, True, False, False):
 			return False
-		info = GC.getBuildingInfo(i)
-		if info.isGovernmentCenter() or info.isCapital():
-			return False
-
+		# ⚠ The old palace/government-centre exclusion is dropped: both are AMENITIES now and neither has a
+		# published CLS_AMENITY id to test. canConstruct already refuses a second palace.
 		return True
 
 	def advise(self, CyCity, szKey, type):
@@ -1016,10 +1041,10 @@ class CvDomesticAdvisor:
 		if self.calculateNetHappiness(CyCity) > 2 and self.calculateNetHealth(CyCity) > 2:
 			for iType in xrange(GC.getNumBuildingInfos()):
 				if self.canAdviseToConstruct(CyCity, iType):
-					info = GC.getBuildingInfo(iType)
-					iCost = float(info.getProductionCost())
+					iCost = float(INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_COST))
 					if iCost > 0:
-						value = info.getFoodKept() / iCost
+						value = INFO.getScalar("BUILDING_", iType, InfoScalar.SCALAR_FOOD_KEPT,
+							CascScope.CASC_SCOPE_CITY, CascUnit.CASC_UNIT_PERCENT) / iCost
 						if value > bestData:
 							bestOrder = iType
 							bestData = value
@@ -1028,22 +1053,19 @@ class CvDomesticAdvisor:
 		if bestOrder == -1:
 			for iType in xrange(GC.getNumBuildingInfos()):
 				if self.canAdviseToConstruct(CyCity, iType):
-					info = GC.getBuildingInfo(iType)
+					aWellbeing = INFO.getWellbeing("BUILDING_", iType, CascScope.CASC_SCOPE_CITY)
+					iBuildCost = float(INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_COST)) or 1.0
 					if self.calculateNetHappiness(CyCity) < 3 and self.calculateNetHappiness(CyCity) - self.calculateNetHealth(CyCity) > 2:
-						iHealth = info.getHealth()
-						for eBonus, iNumHealth in info.getBonusHealthChanges():
-							if CyCity.hasBonus(eBonus):
-								iHealth += iNumHealth
-						value = iHealth / float(info.getProductionCost())
+						# ⚠ The per-bonus health refinement is dropped -- a keyed bonus->wellbeing read does not
+						# exist on the surface yet, and the group total is the honest number today.
+						iHealth = aWellbeing[WellbeingChannel.WELLBEING_HEALTH]
+						value = iHealth / iBuildCost
 						if value > bestData:
 							bestOrder = iType
 							bestData = value
 					elif self.calculateNetHealth(CyCity) < 3 and self.calculateNetHealth(CyCity) - self.calculateNetHappiness(CyCity) > 2:
-						iHappiness = info.getHappiness()
-						for eBonus, iNumHappiness in info.getBonusHappinessChanges():
-							if CyCity.hasBonus(eBonus):
-								iHappiness += iNumHappiness
-						value = iHappiness  / float(info.getProductionCost())
+						iHappiness = aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS]
+						value = iHappiness / iBuildCost
 						if value > bestData:
 							bestOrder = iType
 							bestData = value
@@ -1053,47 +1075,49 @@ class CvDomesticAdvisor:
 			CyPlayer = self.CyPlayer
 			for iType in xrange(GC.getNumBuildingInfos()):
 				if self.canAdviseToConstruct(CyCity, iType):
-					info = GC.getBuildingInfo(iType)
+					# ⚠ A building's per-commerce MODIFIER has no published read yet, so this ranks on cost alone
+					# until one exists -- an honest ordering rather than a fabricated one.
+					iBuildCost = float(INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_COST)) or 1.0
 
 					if type == "Culture":
 						if CyCity.findBaseYieldRateRank(YieldTypes.YIELD_COMMERCE) < 6:
-							value = info.getCommerceModifier(CommerceTypes.COMMERCE_CULTURE) / float(info.getProductionCost())
+							value = 1.0 / iBuildCost
 							if value > bestData:
 								bestOrder = iType
 								bestData = value
 						else:
-							value = info.getPowerValue() / float(info.getProductionCost())
+							value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 							if value > bestData:
 								bestOrder = iType
 								bestData = value
 					elif type == "Military":
-						value = info.getPowerValue() / float(info.getProductionCost())
+						value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 						if value > bestData:
 							bestOrder = iType
 							bestData = value
 					elif type == "Religion":
 						bestOrder = -1
 					elif type == "Research":
-						value = info.getCommerceModifier(CommerceTypes.COMMERCE_RESEARCH) / float(info.getProductionCost())
+						value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 						if value > bestData:
 							bestOrder = iType
 							bestData = value
 					elif type == "Spaceship":
-						if not CyCity.isPower():
-							if info.isPower():
-								value = CyCity.getPlotYield(YieldTypes.YIELD_PRODUCTION) / float(info.getProductionCost())
+						if not CyCity.isPowered():
+							if False:   # ⚠ building isPower() has no published read yet
+								value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 								if value > bestData:
 									bestOrder = iType
 									bestData = value
 
 						if CyCity.findBaseYieldRateRank(YieldTypes.YIELD_PRODUCTION) < 12:
-							value = CyCity.getPlotYield(YieldTypes.YIELD_PRODUCTION) * 2 * info.getYieldModifier(YieldTypes.YIELD_PRODUCTION) / float(info.getProductionCost())
+							value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 							if value > bestData:
 								bestOrder = iType
 								bestData = value
 
 						if CyCity.findBaseYieldRateRank(YieldTypes.YIELD_COMMERCE) < CyPlayer.getNumCities() / 2:
-							value = CyCity.getPlotYield(YieldTypes.YIELD_COMMERCE) * info.getCommerceModifier(CommerceTypes.COMMERCE_RESEARCH) / float(info.getProductionCost())
+							value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 							if value > bestData:
 								bestOrder = iType
 								bestData = value
@@ -1104,11 +1128,12 @@ class CvDomesticAdvisor:
 		if bestOrder == -1:
 			for iType in xrange(GC.getNumBuildingInfos()):
 				if self.canAdviseToConstruct(CyCity, iType):
-					info = GC.getBuildingInfo(iType)
+					# ⚠ getPowerValue has no published read yet; ranks on cost alone until one exists.
+					iBuildCost = float(INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_COST)) or 1.0
 
 					if type == "Culture":
 						if CyCity.findBaseYieldRateRank(YieldTypes.YIELD_COMMERCE) < 6:
-							value = info.getPowerValue() / float(info.getProductionCost())
+							value = 1.0 / iBuildCost
 							if value > bestData:
 								bestOrder = iType
 								bestData = value
@@ -1116,26 +1141,25 @@ class CvDomesticAdvisor:
 							bestOrder = -1
 					elif type == "Military":
 						if CyCity.findBaseYieldRateRank(YieldTypes.YIELD_PRODUCTION) <= 3:
-							value = -1 * info.getMilitaryProductionModifier() / float(info.getProductionCost())
-							print info.getDescription() + ": " + str(value)
+							value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 							if value > bestData:
 								bestOrder = iType
 								bestData = value
 						else:
-							value = info.getYieldModifier(YieldTypes.YIELD_PRODUCTION) / float(info.getProductionCost())
+							value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 							if value > bestData:
 								bestOrder = iType
 								bestData = value
-							if not CyCity.isPower():
-								if info.isPower():
-									value = 1 / float(info.getProductionCost())
+							if not CyCity.isPowered():
+								if False:   # ⚠ building isPower() has no published read yet
+									value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 									if value > bestData:
 										bestOrder = iType
 										bestData = value
 					elif type == "Religion":
 						bestOrder = -1
 					elif type == "Research":
-						value = info.getCommerceModifier(CommerceTypes.COMMERCE_GOLD) / float(info.getProductionCost())
+						value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 						if value > bestData:
 							bestOrder = iType
 							bestData = value
@@ -1144,7 +1168,7 @@ class CvDomesticAdvisor:
 
 		szReturn = u""
 		if bestOrder != -1:
-			szReturn = GC.getBuildingInfo(bestOrder).getDescription()
+			szReturn = INFO.getDescription("BUILDING_", bestOrder)
 
 		if szReturn == CyCity.getProductionName():
 			szReturn = u""
@@ -1283,7 +1307,7 @@ class CvDomesticAdvisor:
 				screen.appendTableRow(PAGE)
 				iCityID = cityList[i].getID()
 				screen.setTableText(PAGE, 0, i, "", zoomArt, WidgetTypes.WIDGET_ZOOM_CITY, iPlayer, iCityID, 1<<0)
-				screen.setTableText(PAGE, 1, i, cityList[i].getName(), "", eWidGen, 1, 1, 1<<0)
+				screen.setTableText(PAGE, 1, i, GC.getPlayer(iPlayer).getCity(iCityID).getName(), "", eWidGen, 1, 1, 1<<0)
 
 			# Order the columns
 			columns = []
@@ -1301,11 +1325,11 @@ class CvDomesticAdvisor:
 					type = columnDef[2]
 					if type == "bldg":
 						building = columnDef[5]
-						buildingInfo = self.BUILDING_INFO_LIST[building]
+						iBuildingId = self.BUILDING_INFO_LIST[building]
 						screen.setTableColumnHeader(PAGE, value + 2, "", self.columnWidth[key])
 						szName = "BLDG_BTN_%d" % building
 						x = iBuildingButtonX + (self.columnWidth[key] - 24) / 2
-						screen.setImageButton(szName, buildingInfo.getButton(), x, iBuildingButtonY, 24, 24, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, building, -1)
+						screen.setImageButton(szName, INFO.getButton("BUILDING_", iBuildingId), x, iBuildingButtonY, 24, 24, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, building, -1)
 					else:
 						screen.setTableColumnHeader(PAGE, value + 2, "<font=2>" + self.HEADER_DICT[key], self.columnWidth[key])
 
@@ -1342,7 +1366,11 @@ class CvDomesticAdvisor:
 							szValue = self.ColorCityValues(unicode(calcFunc(cityList[i], key, columnDef[5])), key)
 							funcTableWrite(PAGE, value + 2, i, szValue, "", eWidGen, 1, 1, justify)
 				except:
-					print ("draw table failure!", value, key)
+					#	The column list is customizable, so one bad column must not take the screen down --
+					#	but it must SAY what broke. The bare message here hid every column whose read had
+					#	been renamed or retired: they rendered blank and looked merely empty.
+					print ("CvDomesticAdvisor: column '%s' failed to draw: %s: %s"
+						% (key, sys.exc_info()[0], sys.exc_info()[1]))
 
 
 	def switchPage(self, page):
@@ -1389,16 +1417,14 @@ class CvDomesticAdvisor:
 				screen.selectRow("DomCustomize", i, True)
 
 	def getBuildingKey(self, index):
-		info = GC.getBuildingInfo(index)
-		desc = info.getType()
+		desc = INFO.getType("BUILDING_", index)
 		key = "_"
 		key = key.join(desc.split())
 		key = key.upper()
 		return key
 
 	def getBonusKey(self, index):
-		info = GC.getBonusInfo(index)
-		type = info.getType()
+		type = INFO.getType("BONUS_", index)
 		key = "_"
 		key = key.join(type.split())
 		key = key.upper()

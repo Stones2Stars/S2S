@@ -1,0 +1,110 @@
+{
+ "type": "BUILDING_THOR_ALTAR",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HUMANISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SHIP_BUILDING",
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_ASATRU"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_ASATRU",
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_ASATRU": {
+    "flat": 1
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_MJOLNIR"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 225,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_THOR_ALTAR",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_NORDIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_THOR_ALTAR",
+  "civilopedia": "TXT_KEY_BUILDING_THOR_ALTAR_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 2,
+  "religion": "RELIGION_ASATRU",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": "100.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

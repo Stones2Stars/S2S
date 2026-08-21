@@ -1,0 +1,163 @@
+{
+ "type": "UNIT_PIG_NEW",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 4,
+   "title": "TXT_KEY_GROUPTITLE_SINGULAR"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 3,
+   "title": "TXT_KEY_GROUPTITLE_DRIFT"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_SOUNDER"
+  }
+ ],
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "skills": [
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_MAMMAL_SWINE",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_WARNING",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_SMALL",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "requires": {
+     "outcome": "OUTCOME_BONUS_SPAWNED"
+    },
+    "chance": 2,
+    "places": "BONUS_PIG",
+    "food": {
+     "base": 20,
+     "random": 230
+    },
+    "production": {
+     "base": 3,
+     "random": 12
+    },
+    "commerce": {
+     "base": 2,
+     "random": 3
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 3,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_PIG_NEW",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 20,
+     "random": 230
+    },
+    "production": {
+     "base": 3,
+     "random": 12
+    },
+    "commerce": {
+     "base": 2,
+     "random": 3
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PIG_NEW",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_PIG_NEW"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_PIG_NEW",
+  "civilopedia": "TXT_KEY_UNIT_PIG_PEDIA",
+  "spawnOnly": true,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "aggression": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "featureImpassable": [
+   "FEATURE_JUNGLE"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES",
+   "TERRAIN_ICE",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ]
+ }
+}

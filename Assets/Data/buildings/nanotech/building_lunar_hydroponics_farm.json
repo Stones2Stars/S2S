@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_LUNAR_HYDROPONICS_FARM",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUNAR_ALGAE_FARM",
+   "BUILDING_LUNAR_ALGAE_LAB",
+   "BUILDING_LUNAR_BIOMASS_POWERPLANT",
+   "BUILDING_LUNAR_GREENHOUSE_COMPLEX",
+   "BUILDING_LUNAR_PARCOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
+    "TECH_LUNAR_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_GLASSWARE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 160,
+  "hurryModifier": 10000
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUNAR_HYDROPONICS_FARM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_HYDROPONICS_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_HYDROPONICS_FARM_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_JADED_DECADENCE",
+ "skills": {
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_POOR"
+  ],
+  "removesUnitCombats": [
+   "UNITCOMBAT_QUALITY_MEDIOCRE"
+  ]
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/UnitCombatClasses/Quality3UnitCombat.fw.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_JADED_DECADENCE",
+  "replacesUnitCombat": "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_ANIMAL"
+  ],
+  "forOffset": true
+ },
+ "sizeMatters": {
+  "quality": -1
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_TOTEM_POLE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRIBALISM",
+    {
+     "any": [
+      "BUILDING_WOODCARVER",
+      "BUILDING_ANCIENT_CUSTOMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_TRIBAL",
+    "RELIGION_SHAMANISM",
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ARCHER": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 80,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TOTEM_POLE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_TOTEM"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TOTEM_POLE",
+  "civilopedia": "TXT_KEY_BUILDING_TOTEM_POLE_PEDIA",
+  "pediaCategory": "religious",
+  "centerInCity": true,
+  "worth": 2,
+  "militaryWorth": 1,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

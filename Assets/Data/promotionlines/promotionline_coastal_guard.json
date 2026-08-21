@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTIONLINE_COASTAL_GUARD",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/coastal_guard1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_COASTAL_GUARD",
+  "unitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS",
+   "UNITCOMBAT_SUBMARINE"
+  ],
+  "notOnDomains": [
+   "DOMAIN_LAND",
+   "DOMAIN_AIR"
+  ]
+ }
+}

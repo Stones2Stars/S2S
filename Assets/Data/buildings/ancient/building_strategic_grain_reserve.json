@@ -1,0 +1,140 @@
+{
+ "type": "BUILDING_STRATEGIC_GRAIN_RESERVE",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "TECH_POTTERY",
+    {
+     "any": [
+      "BUILDING_GRANARY",
+      "BUILDING_MODERN_GRANARY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CORN",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_RICE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WHEAT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  },
+  "empire": {
+   "flat": 1
+  }
+ },
+ "foodKept": {
+  "city": {
+   "percent": 20
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_GRANARY",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 250,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true,
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_STRATEGIC_GRAIN_RESERVE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_STRATEGIC_GRAIN_RESERVE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_STRATEGIC_GRAIN_RESERVE",
+  "civilopedia": "TXT_KEY_BUILDING_STRATEGIC_GRAIN_RESERVE_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 10,
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

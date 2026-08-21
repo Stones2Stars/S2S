@@ -1,0 +1,109 @@
+{
+ "type": "UNIT_IRBM",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_URANIUM",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_GUIDED_WEAPONS"
+   ],
+   "disabled": "NO_NUKES"
+  }
+ },
+ "enabled": "GAMEOPTION_ADVANCED_NUKES",
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "range": {
+  "unit": {
+   "flat": 16
+  }
+ },
+ "air": {
+  "unit": {
+   "evasion": {
+    "percent": 25
+   },
+   "nukeRange": {
+    "flat": 1
+   }
+  }
+ },
+ "skills": [
+  "ignoreBuildingDefense",
+  "mechanized",
+  "suicide",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "airUnit",
+  "missile",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_DOOM",
+ "combatClasses": [
+  "UNITCOMBAT_BALLISTIC",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_WARHEAD",
+  "UNITCOMBAT_WEAPON_DETONATE_RADIOACTIVE",
+  "UNITCOMBAT_MOTILITY_UNMANNED",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_HUGE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 2006,
+  "upkeep": 6
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_IRBM",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 0.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_IRBM"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_IRBM",
+  "civilopedia": "TXT_KEY_UNIT_TACTICAL_NUKE_PEDIA",
+  "worth": 5,
+  "militaryWorth": 30,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_ICBM",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ICBM"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": 150
+  }
+ }
+}

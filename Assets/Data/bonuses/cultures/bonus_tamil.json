@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_TAMIL",
+ "enables": {
+  "units": [
+   "UNIT_TIGERCLAW"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TAMIL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TAMIL",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

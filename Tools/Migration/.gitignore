@@ -1,0 +1,5 @@
+# Regenerable intermediate — per-entity distinct-tag lists (extract_tags.py rebuilds from XML)
+tags/
+__pycache__/
+*.pyc
+curate_out.txt

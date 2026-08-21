@@ -1,0 +1,59 @@
+{
+ "type": "TECH_CHRISTIANITY",
+ "enables": {
+  "religions": [
+   "RELIGION_CHRISTIANITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PHILOSOPHY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 749
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/christianity.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CHRISTIANITY",
+  "soundMP": "AS2D_TECH_CHRISTIANITY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CHRISTIANITY",
+  "civilopedia": "TXT_KEY_TECH_CHRISTIANITY_PEDIA",
+  "quote": "TXT_KEY_TECH_CHRISTIANITY_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 8,
+  "gridX": 38,
+  "gridY": 17
+ }
+}

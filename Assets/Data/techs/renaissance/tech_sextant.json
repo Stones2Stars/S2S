@@ -1,0 +1,79 @@
+{
+ "type": "TECH_SEXTANT",
+ "enables": {
+  "buildings": [
+   "BUILDING_BELL_ROCK_LIGHTHOUSE",
+   "BUILDING_YACHT_CLUB"
+  ],
+  "techs": [
+   "TECH_GRAND_WAR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WEATHER_FORECASTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NAVAL_TACTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PHYSICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "domainMoves": {
+  "empire": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 3704
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_GOLD": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/sextant.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SEXTANT",
+  "soundMP": "AS2D_TECH_SEXTANT"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SEXTANT",
+  "civilopedia": "TXT_KEY_TECH_SEXTANT_PEDIA",
+  "quote": "TXT_KEY_TECH_SEXTANT_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 58,
+  "gridY": 17
+ }
+}

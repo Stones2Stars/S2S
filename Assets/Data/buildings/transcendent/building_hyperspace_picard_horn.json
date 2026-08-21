@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_HYPERSPACE_PICARD_HORN",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERSPACE_REAL_PROJECTIVE_SPACE_COLONY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+    "TECH_PARAMETER_TUNING",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "cost": {
+  "production": 2666,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYPERSPACE_PICARD_HORN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_PICARD_HORN",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_PICARD_HORN_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

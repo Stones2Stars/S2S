@@ -1,0 +1,119 @@
+{
+ "type": "BUILDING_CAUSEWAY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_STEAM_POWER"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CHAIN_BRIDGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "TECH_METALLURGY",
+    {
+     "any": [
+      "BUILDING_ROADS",
+      "BUILDING_PAVED_ROADS",
+      "BUILDING_ASPHALT_ROADS",
+      "BUILDING_SKYROAD_CONTROL_TOWER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_MARBLE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CEMENT",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_CHAIN_BRIDGE",
+    "BUILDING_TRUSS_BRIDGE",
+    "BUILDING_SMALL_STEEL_ARCH_BRIDGE",
+    "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+    "BUILDING_SMALL_SUSPENSION_BRIDGE",
+    "BUILDING_LARGE_SUSPENSION_BRIDGE",
+    "BUILDING_TELEPORT_BOOTH"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 8,
+   "percent": 8
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": -1
+   },
+   "riverDefensePenalty": {
+    "percent": 24
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1,
+   "modifier": {
+    "percent": 8
+   }
+  }
+ },
+ "cost": {
+  "production": 425,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CAUSEWAY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CAUSEWAY",
+  "civilopedia": "TXT_KEY_BUILDING_CAUSEWAY_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

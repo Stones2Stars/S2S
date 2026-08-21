@@ -1,0 +1,92 @@
+{
+ "type": "BUILDING_AUTOMATED_VEHICLE_DEALERSHIP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LEVITATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SHOPPING_DISTRICT",
+    "BUILDING_GESTURE_RECOGNITION_SOFTWARE",
+    "BUILDING_MECHATRONICS_LAB",
+    "TECH_BIOMECHANICAL_HARVESTING",
+    "TECH_AUTONOMOUS_VEHICLES",
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_HYDROGEN",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_FLASH_MEMORY_DEVICES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP",
+    "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 2505,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_AUTOMATED_VEHICLE_DEALERSHIP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_AUTOMATED_VEHICLE_DEALERSHIP",
+  "civilopedia": "TXT_KEY_BUILDING_AUTOMATED_VEHICLE_DEALERSHIP_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

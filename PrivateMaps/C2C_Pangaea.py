@@ -11,6 +11,12 @@
 from CvPythonExtensions import *
 import CvMapGeneratorUtil as MGU
 
+#	The map-gen read surface -- one named accessor per registry, so the bindings list IS this
+#	script's dependency list. The whole-registry ENUMERATION below stays; only where each value
+#	comes from changed.
+INFO = CyInfo()
+SEALEVEL = CySeaLevelInfo()
+
 balancer = MGU.BonusBalancer()
 
 def getDescription():
@@ -97,7 +103,7 @@ def normalizeAddExtras():
 def addBonusType(argsList):
 	[iBonusType] = argsList
 
-	if CyMap().getCustomMapOption(2) == 1 and CyGlobalContext().getBonusInfo(iBonusType).getType() in balancer.resourcesToBalance:
+	if CyMap().getCustomMapOption(2) == 1 and INFO.getType("BONUS_", iBonusType) in balancer.resourcesToBalance:
 		return None # don't place any of this bonus randomly
 
 	CyPythonMgr().allowDefaultImpl() # pretend we didn't implement this method, and let C handle this bonus in the default way
@@ -204,7 +210,7 @@ class PangaeaMultilayeredFractal(MGU.MultilayeredFractal):
 		grain = sizevalues[sizekey]
 
 		# Sea Level adjustment (from user input).
-		sea = CyGlobalContext().getSeaLevelInfo(self.map.getSeaLevel()).getSeaLevelChange()
+		sea = SEALEVEL.getSeaLevelChange(self.map.getSeaLevel())
 
 		# The following regions are specific to Pangaea.py
 		mainWestLon = 0.2

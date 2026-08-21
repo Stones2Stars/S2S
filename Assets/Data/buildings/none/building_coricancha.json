@@ -1,0 +1,103 @@
+{
+ "type": "BUILDING_CORICANCHA",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "IS_HOLY_CITY": "RELIGION_ANDEANISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "per": {
+      "type": "RELIGION_ANDEANISM",
+      "scope": "world"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    },
+    {
+     "value": 1,
+     "per": {
+      "type": "RELIGION_ANDEANISM",
+      "scope": "world"
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_ANDEANISM": {
+    "flat": 1
+   }
+  }
+ },
+ "shrine": "RELIGION_ANDEANISM",
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ANDEAN_SHRINE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CORICANCHA"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ANDEAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CORICANCHA",
+  "civilopedia": "TXT_KEY_BUILDING_CORICANCHA_PEDIA",
+  "pediaCategory": "religious",
+  "notConstructible": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_ANDEANISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

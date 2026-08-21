@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_GOLD_VAULT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_PALACE",
+    "TECH_NATIONALISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_GOLD_STANDARD",
+    {
+     "type": "BONUS_GOLD_ORE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "gold": {
+  "empire": {
+   "percent": 7
+  }
+ },
+ "cost": {
+  "production": 999,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GOLD_VAULT",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MUSEUM"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GOLD_VAULT",
+  "civilopedia": "TXT_KEY_BUILDING_GOLD_VAULT_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 4,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,101 @@
+{
+ "type": "BUILDING_FACTORY_TANNIN",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ANIMAMATERIALS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CHEMICALS_DISTRICT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "TECH_ASSEMBLY_LINE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_BARK",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_NUTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BERRIES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_FRUIT",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_CHEMICALS_DISTRICT"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_TANNIN"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 710,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACTORY_TANNIN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_TANNIN",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_TANNIN_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

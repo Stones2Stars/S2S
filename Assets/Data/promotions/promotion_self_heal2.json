@@ -1,0 +1,46 @@
+{
+ "type": "PROMOTION_SELF_HEAL2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BUILD_UP_RESTFUL_RECOVERY3",
+   "PROMOTION_SELF_HEAL3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SELF_HEAL1"
+   ]
+  }
+ },
+ "heal": {
+  "unit": {
+   "neutral": {
+    "flat": 1
+   },
+   "selfModifier": {
+    "percent": 1
+   },
+   "victory": {
+    "flat": 3
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SELF_HEAL": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/SelfHeal2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "maxHP": 2
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SELF_HEAL2"
+ }
+}

@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_FERTILITY_FESTIVAL",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WOMENS_SUFFRAGE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CELEBRATION",
+    {
+     "any": [
+      "BUILDING_FERTILITY_DANCE",
+      "BUILDING_EFFECT_FERTILITY_FESTIVAL"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_FUR",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BASKETS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "flat": 1
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_FERTILITY_FESTIVAL"
+   }
+  ]
+ },
+ "cost": {
+  "production": 184,
+  "sizeModifier": 1,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_FERTILITYFESTIVAL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FERTILITY_FESTIVAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FERTILITY_FESTIVAL",
+  "civilopedia": "TXT_KEY_BUILDING_FERTILITY_FESTIVAL_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

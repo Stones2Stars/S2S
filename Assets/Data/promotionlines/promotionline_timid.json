@@ -1,0 +1,11 @@
+{
+ "type": "PROMOTIONLINE_TIMID",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitTimid.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_TIMID"
+ }
+}

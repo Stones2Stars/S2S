@@ -1,0 +1,14 @@
+{
+ "type": "UNITCOMBAT_MOUNT_LLAMA",
+ "tags": [
+  "mounted"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/mount_llama.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_MOUNT_LLAMA"
+ }
+}

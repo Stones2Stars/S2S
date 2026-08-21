@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_ORDINANCE_SMOKING_PROHIBITION",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_URBAN_CULTURE"
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "empire": {
+   "flat": -15
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ORDINANCE_SMOKING_PROHIBITION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_SMOKING_PROHIBITION",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_SMOKING_PROHIBITION_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

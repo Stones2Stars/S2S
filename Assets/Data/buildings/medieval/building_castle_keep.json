@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_CASTLE_KEEP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRENCH_WARFARE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_IMPERIAL_FORTRESS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FEUDALISM",
+    {
+     "any": [
+      "BUILDING_CASTLE",
+      "BUILDING_STAR_FORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_IMPERIAL_FORTRESS"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "occupationTime": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "cost": {
+  "production": 310,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "amenities": {
+  "protectedCulture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CASTLE_KEEP"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CASTLE_KEEP",
+  "civilopedia": "TXT_KEY_BUILDING_CASTLE_KEEP_PEDIA",
+  "worth": 15,
+  "militaryWorth": 25,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

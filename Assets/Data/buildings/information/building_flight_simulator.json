@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_FLIGHT_SIMULATOR",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ASTROGATION_CONSTELLATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_WAR_SIMULATIONS",
+    {
+     "any": [
+      "BUILDING_MILITARY_BASE",
+      "BUILDING_MILITARY_AIRBASE",
+      "BUILDING_AEROSPACE_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR"
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_HELICOPTER": {
+     "flat": 2
+    }
+   },
+   "domains": {
+    "DOMAIN_AIR": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 2105,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FLIGHT_SIMULATOR",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FLIGHT_SIMULATOR",
+  "civilopedia": "TXT_KEY_BUILDING_FLIGHT_SIMULATOR_PEDIA",
+  "worth": 5,
+  "militaryWorth": 6,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

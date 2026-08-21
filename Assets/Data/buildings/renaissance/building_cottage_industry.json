@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_COTTAGE_INDUSTRY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOTECHNOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MANUFACTURING_PLANT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_REPLACEABLE_PARTS",
+    {
+     "any": [
+      "BUILDING_FOUNDRY",
+      "BUILDING_METALS_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_MANUFACTURING_PLANT"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 15
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 555,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_COTTAGE_INDUSTRY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_COTTAGE_INDUSTRY",
+  "civilopedia": "TXT_KEY_BUILDING_COTTAGE_INDUSTRY_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

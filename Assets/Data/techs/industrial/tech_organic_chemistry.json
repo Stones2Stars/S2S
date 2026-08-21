@@ -1,0 +1,68 @@
+{
+ "type": "TECH_ORGANIC_CHEMISTRY",
+ "enables": {
+  "bonuses": [
+   "BONUS_FERTILIZERS"
+  ],
+  "buildings": [
+   "BUILDING_BIOMASS_POWER_PLANT",
+   "BUILDING_FERTILIZER_PLANT",
+   "BUILDING_HQ_STANDARD_ETHANOL",
+   "BUILDING_STANDARD_ETHANOL_DISTILLERY"
+  ],
+  "techs": [
+   "TECH_ANTIBIOTICS",
+   "TECH_POLYMERIZATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ELIXIRS_AND_TONICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_THERMODYNAMICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 5745
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/organicChemistry.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,14"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ORGANIC_CHEMISTRY",
+  "soundMP": "AS2D_TECH_ORGANIC_CHEMISTRY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ORGANIC_CHEMISTRY",
+  "civilopedia": "TXT_KEY_TECH_ORGANIC_CHEMISTRY_PEDIA",
+  "quote": "TXT_KEY_TECH_ORGANIC_CHEMISTRY_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 64,
+  "gridY": 17
+ }
+}

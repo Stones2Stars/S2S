@@ -1,0 +1,272 @@
+{
+ "type": "BUILDING_GRAND_SKY_FESTIVAL",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FOLKLORE_E_SKY",
+    "TECH_CELEBRATION",
+    {
+     "any": [
+      "BUILDING_MOON_DANCE",
+      "BUILDING_STARGAZERS_HUT",
+      "BUILDING_OBSERVATORY"
+     ]
+    },
+    {
+     "type": "TERRAIN_PEAK",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_GRAND_FIRE_FESTIVAL",
+    "BUILDING_GRAND_EARTH_FESTIVAL",
+    "BUILDING_GRAND_MARINE_FESTIVAL"
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_INCENSE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_INDIGO",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_MUSHROOMS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TOBACCO",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_VANILLA",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_OPIUM",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TEA",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INDIGO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MUSHROOMS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TOBACCO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_VANILLA",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OPIUM",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TEA",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 2,
+     "enabled": "TECH_SACRIFICE_CULT"
+    },
+    {
+     "value": 2,
+     "enabled": "TECH_STARGAZING"
+    },
+    {
+     "value": 2,
+     "enabled": "TECH_FOLK_DANCE"
+    },
+    {
+     "value": 2,
+     "enabled": "TECH_FOLK_MUSIC"
+    },
+    {
+     "value": 3,
+     "enabled": "TECH_MUSICAL_NOTATION"
+    },
+    {
+     "value": 3,
+     "enabled": "TECH_SPICE_TRADE"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": "TECH_DRUG_TRADE"
+    }
+   ]
+  },
+  "empire": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_TACTICS"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 570,
+  "sizeModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 50
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_GOLD": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SKY_FESTIVAL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GRAND_SKY_FESTIVAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GRAND_SKY_FESTIVAL",
+  "civilopedia": "TXT_KEY_BUILDING_GRAND_SKY_FESTIVAL_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

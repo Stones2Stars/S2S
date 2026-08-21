@@ -1,0 +1,115 @@
+{
+ "type": "BUILD_PATH",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_THE_WHEEL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "route": "ROUTE_PATH",
+  "features": [
+   {
+    "feature": "FEATURE_JUNGLE",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 100
+   },
+   {
+    "feature": "FEATURE_SWAMP",
+    "tech": "TECH_ROAD_BUILDING"
+   },
+   {
+    "feature": "FEATURE_CRATER",
+    "tech": "TECH_ROAD_BUILDING"
+   },
+   {
+    "feature": "FEATURE_TAR_PIT",
+    "tech": "TECH_ROAD_BUILDING"
+   },
+   {
+    "feature": "FEATURE_MANGROVE",
+    "tech": "TECH_ROAD_BUILDING"
+   },
+   {
+    "feature": "FEATURE_PEAT_BOG",
+    "tech": "TECH_ROAD_BUILDING"
+   },
+   {
+    "feature": "FEATURE_VOLCANO_DORMANT",
+    "tech": "TECH_ROAD_BUILDING"
+   },
+   {
+    "feature": "FEATURE_VOLCANO_ACTIVE",
+    "tech": "TECH_ROAD_BUILDING"
+   }
+  ],
+  "terraform": [
+   {
+    "terrain": "TERRAIN_BADLAND",
+    "tech": "TECH_ROAD_BUILDING"
+   },
+   {
+    "terrain": "TERRAIN_DESERT",
+    "tech": "TECH_ROAD_BUILDING"
+   },
+   {
+    "terrain": "TERRAIN_SALT_FLATS",
+    "tech": "TECH_ROAD_BUILDING"
+   },
+   {
+    "terrain": "TERRAIN_TUNDRA",
+    "tech": "TECH_ROAD_BUILDING"
+   },
+   {
+    "terrain": "TERRAIN_MARSH",
+    "tech": "TECH_ROAD_BUILDING"
+   },
+   {
+    "terrain": "TERRAIN_HILL",
+    "tech": "TECH_ROAD_BUILDING"
+   },
+   {
+    "terrain": "TERRAIN_JAGGED",
+    "tech": "TECH_ROAD_BUILDING"
+   },
+   {
+    "terrain": "TERRAIN_DUNES",
+    "tech": "TECH_ROAD_BUILDING"
+   },
+   {
+    "terrain": "TERRAIN_PERMAFROST",
+    "tech": "TECH_ROAD_BUILDING"
+   },
+   {
+    "terrain": "TERRAIN_ICE",
+    "tech": "TECH_ROAD_BUILDING"
+   },
+   {
+    "terrain": "TERRAIN_PEAK",
+    "tech": "TECH_ROAD_BUILDING"
+   }
+  ]
+ },
+ "cost": {
+  "gold": 4,
+  "time": 150
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/dirt.dds"
+  },
+  "hotkey": "KB_R"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_SHOVEL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_PATH"
+ }
+}

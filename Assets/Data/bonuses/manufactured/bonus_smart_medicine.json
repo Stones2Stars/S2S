@@ -1,0 +1,37 @@
+{
+ "type": "BONUS_SMART_MEDICINE",
+ "enables": {
+  "buildings": [
+   "BUILDING_MEDICAL_DIAGNOSTAT",
+   "BUILDING_NEURON_REGENERATOR_LAB",
+   "BUILDING_NOOTROPIC_DISPENSARY",
+   "BUILDING_PHARMACY",
+   "BUILDING_REJUVENATION_TANK"
+  ]
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 2
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SMART_MEDICINE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SMART_MEDICINE",
+  "civilopedia": "TXT_KEY_BONUS_SMART_MEDICINE_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

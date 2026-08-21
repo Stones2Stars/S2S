@@ -1,0 +1,84 @@
+{
+ "type": "RELIGION_BAHAI",
+ "enables": {
+  "buildings": [
+   "BUILDING_BAHAI_DAR_BE_MEHR",
+   "BUILDING_BAHAI_MONASTERY",
+   "BUILDING_BAHAI_TEMPLE"
+  ],
+  "units": [
+   "UNIT_BAHAI_MISSIONARY"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_BAHAI"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_BAHAI"
+     }
+    }
+   ]
+  }
+ },
+ "grants": {
+  "freeUnit": "UNIT_BAHAI_MISSIONARY",
+  "numFreeUnits": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 13,
+   "icon": "Art/Interface/Buttons/Religions/Bahai.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Bahai.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Bahai.dds",
+   "movie": {
+    "file": "Art/Cutscene/Bahai_Generic_Found.nif",
+    "sound": "AS2D_BUILD_NORDDIC_MOVIE"
+   }
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_ZORO"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_BAHAI",
+  "adjective": "TXT_KEY_TECH_BAHAI_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_BAHAI_PEDIA",
+  "spreadFactor": 5
+ }
+}

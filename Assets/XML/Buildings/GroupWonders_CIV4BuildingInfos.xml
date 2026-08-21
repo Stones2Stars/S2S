@@ -16,7 +16,6 @@
 			<fVisibilityPriority>1</fVisibilityPriority>
 			<PrereqTech>TECH_AVIATION</PrereqTech>
 			<iPrereqPopulation>15</iPrereqPopulation>
-			<iLevelPrereq>12</iLevelPrereq>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_MILITARY_ACADEMY</BuildingType>
 			</PrereqInCityBuildings>
@@ -1545,7 +1544,6 @@
 			<fVisibilityPriority>1</fVisibilityPriority>
 			<PrereqTech>TECH_MILITARY_TRADITION</PrereqTech>
 			<iPrereqPopulation>15</iPrereqPopulation>
-			<iLevelPrereq>12</iLevelPrereq>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_MILITARY_ACADEMY</BuildingType>
 			</PrereqInCityBuildings>
@@ -1792,7 +1790,6 @@
 			<fVisibilityPriority>1</fVisibilityPriority>
 			<PrereqTech>TECH_GRAND_WAR</PrereqTech>
 			<iPrereqPopulation>15</iPrereqPopulation>
-			<iLevelPrereq>12</iLevelPrereq>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_MILITARY_ACADEMY</BuildingType>
 			</PrereqInCityBuildings>
@@ -2448,7 +2445,6 @@
 			<fVisibilityPriority>1</fVisibilityPriority>
 			<PrereqTech>TECH_GRAND_WAR</PrereqTech>
 			<iPrereqPopulation>15</iPrereqPopulation>
-			<iLevelPrereq>12</iLevelPrereq>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_MILITARY_ACADEMY</BuildingType>
 			</PrereqInCityBuildings>
@@ -2548,7 +2544,6 @@
 			<fVisibilityPriority>1</fVisibilityPriority>
 			<PrereqTech>TECH_AVIATION</PrereqTech>
 			<iPrereqPopulation>15</iPrereqPopulation>
-			<iLevelPrereq>12</iLevelPrereq>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_MILITARY_ACADEMY</BuildingType>
 			</PrereqInCityBuildings>
@@ -3735,7 +3730,6 @@
 			<fVisibilityPriority>1</fVisibilityPriority>
 			<PrereqTech>TECH_MILITARY_TRADITION</PrereqTech>
 			<iPrereqPopulation>8</iPrereqPopulation>
-			<iLevelPrereq>12</iLevelPrereq>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_MILITARY_ACADEMY</BuildingType>
 			</PrereqInCityBuildings>

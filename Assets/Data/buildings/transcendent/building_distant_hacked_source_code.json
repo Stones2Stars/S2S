@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DISTANT_HACKED_SOURCE_CODE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_PARANORMAL_BRANESPACE_TOPOLOGY",
+    "TECH_SIMULATION_AWARENESS",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 3683,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_HACKED_SOURCE_CODE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_HACKED_SOURCE_CODE",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_HACKED_SOURCE_CODE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

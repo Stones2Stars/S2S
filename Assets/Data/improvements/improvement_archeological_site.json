@@ -1,0 +1,67 @@
+{
+ "type": "IMPROVEMENT_ARCHEOLOGICAL_SITE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SCIENTIFIC_METHOD",
+     "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "feature": [
+        "FEATURE_CITY_RUINS",
+        "FEATURE_ARCOLOGY_RUINS"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_ANCIENT_RELICS"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    3,
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_TOURISM",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": -1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_ARCHEOLOGICAL_SITE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_ARCHEOLOGICAL_SITE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_ARCHEOLOGICAL_SITE_PEDIA",
+  "advancedStart": {
+   "cost": 30
+  },
+  "outsideBorders": true,
+  "bonuses": {
+   "BONUS_ANCIENT_RELICS": {
+    "trade": true
+   }
+  }
+ }
+}

@@ -1,0 +1,42 @@
+{
+ "type": "PROMOTION_RAPID_DEPLOYMENT1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_RAPID_DEPLOYMENT2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT_AI3"
+   ]
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -5
+   },
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "skills": {
+  "blitz": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_RAPID_DEPLOYMENT": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/March.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,3,8"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_RAPID_DEPLOYMENT1"
+ }
+}

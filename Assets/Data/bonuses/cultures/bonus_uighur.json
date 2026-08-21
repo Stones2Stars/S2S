@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_UIGHUR",
+ "enables": {
+  "units": [
+   "UNIT_BILGE_KHAN",
+   "UNIT_IPARHAN",
+   "UNIT_UIGHUR_KNIGHT"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_UIGHUR"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_UIGHUR",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

@@ -1,0 +1,131 @@
+{
+ "type": "BUILDING_CAHOKIA_MOUNDS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_THEOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COPPER_WORKING",
+    {
+     "any": [
+      "BUILDING_TUMULUS",
+      "BUILDING_ANCIENT_CUSTOMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_TUMULUS": {
+     "flat": 2
+    },
+    "BUILDING_ANCIENT_CUSTOMS": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_FINE_CLAY",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_TUMULUS": {
+     "percent": 10
+    },
+    "BUILDING_ANCIENT_CUSTOMS": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 876,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CAHOKIA"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CAHOKIA_MOUNDS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CAHOKIA_MOUNDS",
+  "civilopedia": "TXT_KEY_BUILDING_CAHOKIA_MOUNDS_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

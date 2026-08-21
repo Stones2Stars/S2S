@@ -1,0 +1,88 @@
+{
+ "type": "CIVIC_ORAL_TRADITION",
+ "enables": {
+  "buildings": [
+   "BUILDING_CREATION_MYTH"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    -1,
+    {
+     "value": -2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    -1,
+    {
+     "value": -1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    {
+     "value": -1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": -1
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_STORYTELLER": {
+     "percent": 20
+    },
+    "BUILDING_KNOWLEDGE_INHERITANCE": {
+     "percent": 20
+    },
+    "BUILDING_SCHOOL_OF_SCRIBES": {
+     "percent": 20
+    },
+    "BUILDING_LIBRARY": {
+     "percent": 20
+    },
+    "BUILDING_LYCEUM": {
+     "percent": 20
+    },
+    "BUILDING_ELEMENTARY_SCHOOL": {
+     "percent": 20
+    },
+    "BUILDING_HOLOGRAPHIC_SCHOOL": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/education_oral_tradition.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_ORAL_TRADITION",
+  "civilopedia": "TXT_KEY_CIVIC_ORAL_TRADITION_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_ORAL_TRADITION_STRATEGY",
+  "civicOption": "CIVICOPTION_EDUCATION"
+ }
+}

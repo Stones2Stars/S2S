@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_CITY_MORGUE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FUNERARY_SERVICES",
+    "TECH_CRIMINOLOGY",
+    {
+     "any": [
+      "BUILDING_HOSPITAL",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX",
+      "BUILDING_POLICE_STATION",
+      "BUILDING_POLICE_PRECINCT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 800,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CITY_MORGUE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CITY_MORGUE",
+  "civilopedia": "TXT_KEY_BUILDING_CITY_MORGUE_PEDIA",
+  "conquestProbability": 95,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

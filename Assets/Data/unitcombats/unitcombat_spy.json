@@ -1,0 +1,17 @@
+{
+ "type": "UNITCOMBAT_SPY",
+ "skills": {
+  "cannotMergeSplit": true
+ },
+ "tags": [
+  "spy"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/spies.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SPY"
+ }
+}

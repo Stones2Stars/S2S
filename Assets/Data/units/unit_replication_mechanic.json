@@ -1,0 +1,152 @@
+{
+ "type": "UNIT_REPLICATION_MECHANIC",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_POWER_TOOLS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_3D_PRINTING",
+    {
+     "type": "BONUS_HELICOPTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_PERSONAL_ELECTRONICS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      "BUILDING_3D_PRINTING_MILL",
+      "BUILDING_NANOBOTIC_PRINTING_MILL",
+      "BUILDING_MOLECULAR_ASSEMBLER",
+      "BUILDING_ATOMIC_ASSEMBLER",
+      "BUILDING_QUANTUM_ASSEMBLER",
+      "BUILDING_MATERIALIZER"
+     ]
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 5
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 40
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 11
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_MECHANICAL": {
+     "heal": 33,
+     "adjacentHeal": 16
+    },
+    "UNITCOMBAT_HEALS_AS_AIRCRAFT": {
+     "heal": 17
+    },
+    "UNITCOMBAT_HEALS_AS_TECH": {
+     "heal": 12
+    }
+   }
+  }
+ },
+ "skills": [
+  "mechanized",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "vtol"
+ ],
+ "combatClass": "UNITCOMBAT_HELICOPTER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_AIRCRAFT",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL",
+  "UNITCOMBAT_HEALS_MECHANICAL",
+  "UNITCOMBAT_HEALS_AIRCRAFT",
+  "UNITCOMBAT_HEALS_TECH"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 1654,
+  "upkeep": 9,
+  "hurryCostModifier": 25
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_REPLICATION_MECHANIC",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_REPLICATION_MECHANIC"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_REPLICATION_MECHANIC",
+  "civilopedia": "TXT_KEY_UNIT_REPLICATION_MECHANIC_PEDIA",
+  "worth": 12,
+  "militaryWorth": 30,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_HEALER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_HEALER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,228 @@
+{
+ "type": "BUILDING_ANCIENT_CUSTOMS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAHOKIA_MOUNDS",
+   "BUILDING_CAMP_ANTELOPE",
+   "BUILDING_CAMP_BELUGA",
+   "BUILDING_CAMP_BISON",
+   "BUILDING_CAMP_BOAR",
+   "BUILDING_CAMP_CARIBOU",
+   "BUILDING_CAMP_DEER",
+   "BUILDING_CAMP_ELEPHANT",
+   "BUILDING_CAMP_ELEPHANT_SEAL",
+   "BUILDING_CAMP_EMU",
+   "BUILDING_CAMP_GIRAFFE",
+   "BUILDING_CAMP_HIPPO",
+   "BUILDING_CAMP_KANGAROO",
+   "BUILDING_CAMP_MOOSE",
+   "BUILDING_CAMP_MOUFLON",
+   "BUILDING_CAMP_MUSKOX",
+   "BUILDING_CAMP_NARWHAL",
+   "BUILDING_CAMP_OSTRICH",
+   "BUILDING_CAMP_RHEA",
+   "BUILDING_CAMP_RHINO",
+   "BUILDING_CAMP_SEAL",
+   "BUILDING_CAMP_WALRUS",
+   "BUILDING_CAMP_ZEBRA",
+   "BUILDING_DRIED_FISH_MAKER",
+   "BUILDING_DRIED_MEAT_MAKER",
+   "BUILDING_FIRE_PIT",
+   "BUILDING_FRESCO_MURAL",
+   "BUILDING_HUNTING_DOG_TRAINER",
+   "BUILDING_PUBLIC_STONING",
+   "BUILDING_RESOURCES_BUGS",
+   "BUILDING_SERPENT_MOUND",
+   "BUILDING_SKINNER",
+   "BUILDING_STONE_TOOL_MAKER",
+   "BUILDING_TANNERY",
+   "BUILDING_TOTEM_POLE",
+   "BUILDING_TRAP_BEAVER",
+   "BUILDING_TRAP_CHINCHILLA",
+   "BUILDING_TRAP_FOX",
+   "BUILDING_TRAP_MINK",
+   "BUILDING_TRAP_RABBIT",
+   "BUILDING_TRAP_RACCOON",
+   "BUILDING_TRAP_SEA_OTTER",
+   "BUILDING_WET_NURSE"
+  ],
+  "units": [
+   "UNIT_NEANDERTHAL_WISE_WOMAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_HERITAGE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BEAVER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DEER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_RABBIT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_POULTRY",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BEAVER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DEER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": -1,
+     "enabled": "TECH_LITERATURE"
+    }
+   ],
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": -1,
+     "enabled": "TECH_LITERATURE"
+    }
+   ],
+   "percent": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "TECH_LEISURE"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": -1,
+     "enabled": "TECH_LITERATURE"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 139,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANCIENT_CUSTOMS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANCIENT_CUSTOMS",
+  "civilopedia": "TXT_KEY_BUILDING_ANCIENT_CUSTOMS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

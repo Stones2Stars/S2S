@@ -1,0 +1,71 @@
+{
+ "type": "TECH_GASTRONOMY",
+ "enables": {
+  "bonuses": [
+   "BONUS_ENERGY_DRINK"
+  ],
+  "buildings": [
+   "BUILDING_CULINARY_SCHOOL",
+   "BUILDING_FACTORY_ENERGY_DRINK",
+   "BUILDING_GASTRONOMY_LAB",
+   "BUILDING_HEALTH_FOOD_STORE"
+  ],
+  "techs": [
+   "TECH_HYDROPONICS",
+   "TECH_ONLINE_COMMUNITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TOURISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 13181
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/gastronomy.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GASTRONOMY",
+  "soundMP": "AS2D_TECH_GASTRONOMY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_GASTRONOMY",
+  "civilopedia": "TXT_KEY_TECH_GASTRONOMY_PEDIA",
+  "quote": "TXT_KEY_TECH_GASTRONOMY_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 80,
+  "gridY": 1
+ }
+}

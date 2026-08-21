@@ -1,0 +1,35 @@
+{
+ "type": "IMPROVEMENT_LIGHTHOUSE_CORAL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ENGINEERING",
+     "scope": "team"
+    },
+    "IS_WATER",
+    {
+     "feature": [
+      "FEATURE_CORAL_REEF",
+      "FEATURE_CORAL_REEF_BEACON"
+     ]
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_LIGHTHOUSE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_LIGHTHOUSE_CORAL",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_LIGHTHOUSE_PEDIA",
+  "advancedStart": {
+   "cost": -1
+  },
+  "outsideBorders": true,
+  "placesFeature": true,
+  "graphicalOnly": true
+ }
+}

@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_GREAT_GREEN_WALL",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_STATE_PARK",
+    "TECH_ENVIRONMENTAL_ECONOMICS",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_DESERT",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_DUNES",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_ROCKY",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_ATMOSPHERIC_WATER_GENERATOR": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -100
+  }
+ },
+ "cost": {
+  "production": 25890,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GREEN_WALL_OF_CHINA"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GREAT_GREEN_WALL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GREAT_GREEN_WALL",
+  "civilopedia": "TXT_KEY_BUILDING_GREAT_GREEN_WALL_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

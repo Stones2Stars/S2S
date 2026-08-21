@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_SKIS",
+ "enables": {
+  "buildings": [
+   "BUILDING_SKI_RESORT"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SKIS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SKIS",
+  "civilopedia": "TXT_KEY_BONUS_SKIS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

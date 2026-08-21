@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_POLLUTION_TOXIC_HYDROSPHERE",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_WATER_POLLUTION",
+     "scope": "city",
+     "min": 1800,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": -10,
+   "plots": {
+    "flat": [
+     {
+      "value": -10,
+      "enabled": "IS_WATER"
+     }
+    ]
+   }
+  }
+ },
+ "production": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYWATERPOLLUTION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_POLLUTION_TOXIC_HYDROSPHERE",
+  "civilopedia": "TXT_KEY_BUILDING_WATER_POLLUTION_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

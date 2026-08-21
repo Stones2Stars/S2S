@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTIONLINE_BUILD_UP_BLEND_INTO_CROWD",
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "buildUp": {
+  "active": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/BlendIntoCrowd1BuildUp.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_BLEND_INTO_CROWD",
+  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_BLEND_INTO_CROWD_HELP",
+  "unitCombats": [
+   "UNITCOMBAT_CRIMINAL"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SPY",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
+ }
+}

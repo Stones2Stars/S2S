@@ -1,0 +1,116 @@
+{
+ "type": "BUILDING_BOTANICAL_GARDENS",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_BOTANY",
+    {
+     "any": [
+      "BUILDING_ARBORETUM",
+      "BUILDING_AGROFOREST"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 1070,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 7
+   },
+   {
+    "FLAVOR_GOLD": 7
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_BOTANICAL_GARDENS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BOTANICAL_GARDENS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_PARK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BOTANICAL_GARDENS",
+  "civilopedia": "TXT_KEY_BUILDING_BOTANICAL_GARDENS_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 6,
+  "militaryWorth": 3,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

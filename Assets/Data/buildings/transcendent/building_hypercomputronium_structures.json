@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_HYPERCOMPUTRONIUM_STRUCTURES",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HYPERPLANET",
+    "BUILDING_HYPERSPACE_TRANSFINITE_STRUCTURES",
+    "TECH_TRANSFINITE_COMPUTATION",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 3423,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYPERCOMPUTRONIUM_STRUCTURES",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERCOMPUTRONIUM_STRUCTURES",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERCOMPUTRONIUM_STRUCTURES_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

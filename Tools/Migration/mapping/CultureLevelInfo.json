@@ -1,0 +1,20 @@
+{
+  "entity": "CultureLevelInfo",
+  "rootElement": "CultureLevelInfo",
+  "glob": "**/CIV4CultureLevelInfo.xml",
+  "channels": {
+    "iCityDefenseModifier": {"scope": "city", "channel": "defense", "kind": "percent"},
+    "iCityRadius": {"scope": "city", "channel": "cityRadius", "kind": "flat"},
+    "iMaxWorldWonders": {"scope": "city", "channel": "maxWorldWonders", "kind": "flat"},
+    "iMaxTeamWonders": {"scope": "city", "channel": "maxTeamWonders", "kind": "flat"},
+    "iMaxNationalWonders": {"scope": "city", "channel": "maxNationalWonders", "kind": "flat"},
+    "iMaxNationalWondersOCC": {"scope": "city", "channel": "maxNationalWondersOCC", "kind": "flat"}
+  },
+  "inversionsOut": {},
+  "enablerEdges": {},
+  "prereqs": ["PrereqGameOption", "ReplacementCondition"],
+  "cost": [],
+  "art": [],
+  "identity": ["Type", "Description", "SpeedThresholds", "ReplacementID"],
+  "boostsIn": []
+}

@@ -1,0 +1,67 @@
+{
+ "type": "TECH_STABLE_TIME_LOOPS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
+   "BUILDING_DEEP_THOUGHT",
+   "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM",
+   "BUILDING_TACHYONIC_ANTITELEPHONE",
+   "BUILDING_TIME_MACHINE"
+  ],
+  "techs": [
+   "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+   "TECH_STRING_MANIPULATION",
+   "TECH_TRANSCENDENT_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_CHRONOFORM_SHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NOOGENESIS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_QUANTUM_RAMJET",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 366008
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/stable_time_loops.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_STABLE_TIME_LOOPS",
+  "civilopedia": "TXT_KEY_TECH_STABLE_TIME_LOOPS_PEDIA",
+  "quote": "TXT_KEY_TECH_STABLE_TIME_LOOPS_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 147,
+  "gridY": 13
+ }
+}

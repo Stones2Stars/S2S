@@ -1,0 +1,108 @@
+{
+ "type": "BUILDING_GUILD_GLASSBLOWERS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ASSEMBLY_LINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_STAINED_GLASS",
+    "TECH_GUILDS",
+    {
+     "any": [
+      "BUILDING_GLASSBLOWERS_WORKSHOP",
+      "BUILDING_FACTORY_GLASSWARE",
+      "BUILDING_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_GLASSBLOWERS_WORKSHOP": {
+     "flat": 5
+    },
+    "BUILDING_FACTORY_GLASSWARE": {
+     "flat": 5
+    },
+    "BUILDING_MANUFACTURING_DISTRICT": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 664,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GUILD_GLASSBLOWERS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GUILD_GLASSBLOWERS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GUILD_GLASSBLOWERS",
+  "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "specialBuildingType": "SPECIALBUILDING_GUILD",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

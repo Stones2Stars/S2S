@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_JADE_IMPORTER",
+ "enables": {
+  "buildings": [
+   "BUILDING_JADE_DEATH_MASK_CARVER",
+   "BUILDING_LIANGZHU_JADE_CARVER",
+   "BUILDING_OLMEC_JADE_CARVER",
+   "BUILDING_SHANG_JADE_CARVER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_JADE_CARVER",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_TRADE",
+    {
+     "any": [
+      "BUILDING_BAZAAR",
+      "BUILDING_MALL",
+      "BUILDING_HYPERMARKET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_JADE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 153,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_JADE_MERCHANT",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MARKETPLACE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_JADE_IMPORTER",
+  "civilopedia": "TXT_KEY_BUILDING_JADE_MERCHANT_PEDIA",
+  "worth": 3,
+  "militaryWorth": 3,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

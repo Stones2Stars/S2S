@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_CULTURE_MUGHAL",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_ASIAN",
+    "BUILDING_C_L_ASIAN",
+    "TECH_ARCHITECTURE",
+    {
+     "type": "FEATURE_JUNGLE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MARBLE",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_MUGHAL"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_TAJ_MAHAL": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 1920,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_MUGHAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_MUGHAL",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_MUGHAL_PEDIA",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

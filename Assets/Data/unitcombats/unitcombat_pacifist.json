@@ -1,0 +1,17 @@
+{
+ "type": "UNITCOMBAT_PACIFIST",
+ "skills": {
+  "cannotMergeSplit": true
+ },
+ "tags": [
+  "civilian"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Categories/Pacifist.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_PACIFIST"
+ }
+}

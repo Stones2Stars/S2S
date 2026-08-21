@@ -1,0 +1,148 @@
+{
+ "type": "BUILDING_MONTE_CARLO",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_LEGALIZED_GAMBLING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_LAS_VEGAS_STRIP"
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_CEMENT",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_MARBLE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STEEL_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_ORDINANCE_GAMBLING_BAN"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "gold": {
+  "city": {
+   "percent": 12
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 10,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_CASINO": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_GOLD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CASINO": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 8070,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MONTE_CARLO"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MONTE_CARLO",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MONTE_CARLO",
+  "civilopedia": "TXT_KEY_BUILDING_MONTE_CARLO_PEDIA",
+  "help": "TXT_KEY_BUILDING_LASVEGASSTRIP_HELP",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

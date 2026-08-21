@@ -1,0 +1,40 @@
+{
+ "type": "FEATURE_SUPERMASSIVE_BLACK_HOLE",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "characteristics": [
+  "unfoundable"
+ ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_SUPERMASSIVE_BLACK_HOLE"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_ASTEROIDS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_SUPERMASSIVE_BLACK_HOLE",
+  "civilopedia": "TXT_KEY_FEATURE_SUPERMASSIVE_BLACK_HOLE_PEDIA",
+  "validTerrains": [
+   "TERRAIN_GALACTIC_CORE"
+  ]
+ }
+}

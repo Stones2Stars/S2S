@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTION_SAGITTARIUS",
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 3
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/StarSigns/SAGITTARIUS.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SAGITTARIUS",
+  "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ],
+  "starsign": true
+ }
+}

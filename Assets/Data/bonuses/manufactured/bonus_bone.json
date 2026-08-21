@@ -1,0 +1,32 @@
+{
+ "type": "BONUS_BONE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BEADMAKERS_WORKSHOP",
+   "BUILDING_BEADWORKER",
+   "BUILDING_BONEMARROWER",
+   "BUILDING_BONEWORKER",
+   "BUILDING_CAPUCHIN_CRYPT",
+   "BUILDING_COUNTING_STICKS",
+   "BUILDING_DOG_BREEDER",
+   "BUILDING_FLETCHERS_HUT",
+   "BUILDING_GREAT_HOLMEGAARD_HUNT",
+   "BUILDING_HOUSING_BONE_HUTS",
+   "BUILDING_PIERCER",
+   "BUILDING_PIERCING_SHOP",
+   "BUILDING_TATTOOER",
+   "BUILDING_TATTOO_PARLOR"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_BONE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_BONE",
+  "civilopedia": "TXT_KEY_BONUS_BONE_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

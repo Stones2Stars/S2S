@@ -1,0 +1,15 @@
+{
+ "type": "HURRY_POPULATION",
+ "conversion": {
+  "productionPerPopulation": 250
+ },
+ "causesAnger": true,
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/MainScreen/CityScreen/hurry_slavery.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_HURRY_POPULATION"
+ }
+}

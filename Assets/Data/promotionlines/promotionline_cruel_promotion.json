@@ -1,0 +1,19 @@
+{
+ "type": "PROMOTIONLINE_CRUEL_PROMOTION",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PromotionCruel.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_CRUEL_PROMOTION",
+  "unitCombats": [
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_STRIKE_TEAM",
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_GUN"
+  ]
+ }
+}

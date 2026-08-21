@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_OMEGA_ASSEMBLER",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALEPH_ASSEMBLER",
+   "BUILDING_ATOMIC_ASSEMBLER",
+   "BUILDING_FEMTOBOTIC_ASSEMBLER",
+   "BUILDING_FEMTOBOT_FACTORY",
+   "BUILDING_MATHEMATICAL_ORACLE",
+   "BUILDING_QUANTUM_ASSEMBLER",
+   "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
+   "BUILDING_ZEPTOBOTIC_NEURAL_IMPLANTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CLAYTRONIC_CITY",
+    "BUILDING_SPACESCRAPER",
+    "BUILDING_ALPHA_ASSEMBLER",
+    "TECH_PICOTECHNOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PERSONAL_SPACECRAFT",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 55,
+   "percent": 55
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 12155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_OMEGA_ASSEMBLER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_OMEGA_ASSEMBLER",
+  "civilopedia": "TXT_KEY_BUILDING_OMEGA_ASSEMBLER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

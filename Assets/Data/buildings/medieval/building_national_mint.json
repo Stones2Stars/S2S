@@ -1,0 +1,146 @@
+{
+ "type": "BUILDING_NATIONAL_MINT",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_BANK",
+     "scope": "empire",
+     "min": 5,
+     "scaling": "amountBuildings"
+    },
+    "TECH_BANKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "any": [
+      "CIVIC_COINAGE",
+      "CIVIC_FREE_MARKET",
+      "CIVIC_MERCANTILISM"
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GOLD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SILVER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COPPER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PLATINUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ELECTRUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 736,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 8
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NATIONAL_MINT"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NATIONAL_MINT",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_MINT",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_MINT_PEDIA",
+  "help": "TXT_KEY_BUILDING_NATIONAL_MINT_HELP",
+  "pediaCategory": "nationalWonder",
+  "worth": 8,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

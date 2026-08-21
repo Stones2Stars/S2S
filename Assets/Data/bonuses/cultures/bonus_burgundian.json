@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_BURGUNDIAN",
+ "enables": {
+  "units": [
+   "UNIT_GENOAN_MERCENARY",
+   "UNIT_PHILIP_THE_BOLD"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_BURGUNDIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_BURGUNDIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

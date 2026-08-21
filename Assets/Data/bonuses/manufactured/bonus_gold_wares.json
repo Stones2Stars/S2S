@@ -1,0 +1,24 @@
+{
+ "type": "BONUS_GOLD_WARES",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARK_OF_THE_COVENANT",
+   "BUILDING_FACTORY_ANTI_GRAVITY_FIELD_GENERATORS",
+   "BUILDING_GUILD_HALL",
+   "BUILDING_JEWELER",
+   "BUILDING_NONSUCH_PALACE",
+   "BUILDING_SHWEDAGON_PAYA"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_GOLD_WARES"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_GOLD_WARES",
+  "civilopedia": "TXT_KEY_BONUS_WARES_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

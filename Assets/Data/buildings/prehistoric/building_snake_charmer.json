@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_SNAKE_CHARMER",
+ "enables": {
+  "units": [
+   "UNIT_TAMED_SNAKE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SIMPLE_WOOD_WORKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      "HERITAGE_FOLKLORE_ADDER_PUFF",
+      "HERITAGE_FOLKLORE_COBRA",
+      "HERITAGE_FOLKLORE_PYTHON_BALL",
+      "HERITAGE_FOLKLORE_VIPER_CHAIN",
+      "HERITAGE_FOLKLORE_VIPER_PIT"
+     ]
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": -1,
+     "enabled": "TECH_LITERATURE"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 100,
+  "sizeModifier": 1,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SNAKE_CHARMER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SNAKE_CHARMER",
+  "civilopedia": "TXT_KEY_BUILDING_SNAKE_CHARMER_PEDIA",
+  "worth": 2,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_MILITARY",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

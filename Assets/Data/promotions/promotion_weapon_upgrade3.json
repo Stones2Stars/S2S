@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_WEAPON_UPGRADE3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_WEAPON_UPGRADE2"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 30
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_WEAPON_UPGRADE": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CityRaider4.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,7,5"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_WEAPON_UPGRADE3"
+ }
+}

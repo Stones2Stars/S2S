@@ -1,0 +1,95 @@
+{
+ "type": "BUILD_TIDAL_HARNESS",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_TIDAL_HARNESS",
+  "features": [
+   {
+    "feature": "FEATURE_KELP",
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_SEA_GRASS",
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_REEF",
+    "tech": "TECH_DUMMY",
+    "time": 200
+   },
+   {
+    "feature": "FEATURE_CORAL_REEF",
+    "tech": "TECH_DUMMY",
+    "time": 200
+   },
+   {
+    "feature": "FEATURE_PLATY_GREAT_BARRIER",
+    "tech": "TECH_DUMMY",
+    "time": 200
+   },
+   {
+    "feature": "FEATURE_REEF_BEACON",
+    "tech": "TECH_DUMMY",
+    "time": 200
+   },
+   {
+    "feature": "FEATURE_CORAL_REEF_BEACON",
+    "tech": "TECH_DUMMY",
+    "time": 200
+   },
+   {
+    "feature": "FEATURE_GREAT_BARRIER_REEF_BEACON",
+    "tech": "TECH_DUMMY",
+    "time": 200
+   },
+   {
+    "feature": "FEATURE_REEF_LIGHTHOUSE",
+    "tech": "TECH_DUMMY",
+    "time": 200
+   },
+   {
+    "feature": "FEATURE_CORAL_REEF_LIGHTHOUSE",
+    "tech": "TECH_DUMMY",
+    "time": 200
+   },
+   {
+    "feature": "FEATURE_GREAT_BARRIER_REEF_LIGHTHOUSE",
+    "tech": "TECH_DUMMY",
+    "time": 200
+   },
+   {
+    "feature": "FEATURE_ICE",
+    "tech": "TECH_MACHINE_LEARNING",
+    "time": 300,
+    "remove": true
+   }
+  ]
+ },
+ "cost": {
+  "gold": 120,
+  "time": 1000
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/Tidal_Harness.dds"
+  },
+  "hotkey": "KB_T"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_TIDAL_HARNESS"
+ }
+}

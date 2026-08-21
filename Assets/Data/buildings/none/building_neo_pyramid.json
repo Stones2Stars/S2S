@@ -1,0 +1,102 @@
+{
+ "type": "BUILDING_NEO_PYRAMID",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_THE_GREAT_PYRAMID",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_STARPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STARPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "production": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_CLAYTRONIC_CITY": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERGALACTIC_TEMPORAL_RIFT": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 3
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 110130
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NEO_PYRAMID"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NEO_PYRAMID",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NEO_PYRAMID",
+  "civilopedia": "TXT_KEY_BUILDING_NEO_PYRAMID_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "specialBuildingType": "SPECIALBUILDING_PUNK_STAR",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

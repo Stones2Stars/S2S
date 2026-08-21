@@ -12,6 +12,9 @@ import SystemPaths as SP
 import codecs
 import os
 import time
+GC = CyGlobalContext()
+GAME = GC.getGame()
+TRNSLTR = CyTranslator()
 
 AutologOpt = BugCore.game.Autolog
 

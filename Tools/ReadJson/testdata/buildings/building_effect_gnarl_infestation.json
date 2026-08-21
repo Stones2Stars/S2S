@@ -1,0 +1,42 @@
+{
+  "type": "BUILDING_EFFECT_GNARL_INFESTATION",
+
+  "identity": {
+    "description": "TXT_KEY_BUILDING_EFFECT_GNARL_INFESTATION",
+    "propertyEffect": true,
+    "autoBuild": true,
+    "nukeImmune": true
+  },
+
+  "requires": {
+    "operate": {
+      "all": [ { "type": "PROPERTY_GNARL_INFESTATION", "scope": "city", "min": 50, "max": 100 } ]
+    }
+  },
+
+  "PROPERTY_GNARL_INFESTATION": { "city": { "flat": 5 } },
+  "PROPERTY_CRIME": { "city": { "flat": 10 } },
+
+  "health": {
+    "city": {
+      "flat": [
+        -2,
+        { "value": -3, "enabled": { "type": "TECH_GNARLOLOGY", "scope": "team" } }
+      ]
+    }
+  },
+  "happiness": {
+    "city": {
+      "flat": { "value": -1, "per": { "type": "PROPERTY_GNARL_INFESTATION", "scope": "city", "each": 25 } }
+    }
+  },
+
+  "grants": {
+    "repeatable": [
+      { "unit": "UNIT_GNARL_BEAST", "interval": "perTurn",
+        "chance": { "per": { "type": "PROPERTY_GNARL_INFESTATION", "scope": "city", "each": 10 } } }
+    ]
+  },
+
+  "ui": { "art": { "icon": "ART_DEF_BUILDING_EFFECT_GNARL_INFESTATION" } }
+}

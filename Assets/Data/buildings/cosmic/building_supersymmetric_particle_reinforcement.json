@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_SUPERSYMMETRIC_PARTICLE_REINFORCEMENT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ADVANCED_SHIELDING",
+    "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 30
+   }
+  }
+ },
+ "cost": {
+  "production": 17655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SUPERSYMMETRIC_PARTICLE_REINFORCEMENT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SUPERSYMMETRIC_PARTICLE_REINFORCEMENT",
+  "civilopedia": "TXT_KEY_BUILDING_SUPERSYMMETRIC_PARTICLE_REINFORCEMENT_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

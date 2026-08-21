@@ -1,0 +1,215 @@
+{
+ "type": "UNIT_TEXAS_RANGER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_TEXAN",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_DEPUTIZATION",
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      "BUILDING_SHERIFFS_OFFICE",
+      "BUILDING_POLICE_STATION",
+      "BUILDING_POLICE_PRECINCT"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_RIOTPOLICE"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": 8
+   }
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_FLINT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "combat": {
+  "unit": {
+   "enclose": {
+    "percent": 14
+   },
+   "dynamicDefense": {
+    "percent": 14
+   },
+   "stealthStrikes": {
+    "flat": 2
+   },
+   "stealth": {
+    "percent": 35
+   },
+   "targets": {
+    "UNITCOMBAT_CRIMINAL": true
+   },
+   "defenders": {
+    "UNITCOMBAT_CRIMINAL": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 23
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 15
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "investigation": {
+    "flat": 40
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -15
+  },
+  "plot": {
+   "flat": -7
+  }
+ },
+ "skills": [
+  "noCapture",
+  "counterSpy",
+  "passage",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "troop"
+ ],
+ "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT",
+ "combatClasses": [
+  "UNITCOMBAT_GUN",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_RIFLE_BUTT",
+  "UNITCOMBAT_WEAPON_DIST_RIFLE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "hideAndSeek": {
+  "detection": {
+   "value": 600,
+   "unit": "HAS_DISGUISED"
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SENTRY",
+   "PROMOTION_SENTRY2",
+   "PROMOTION_SENTRY3"
+  ]
+ },
+ "cost": {
+  "production": 630,
+  "upkeep": 7
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TEXAS_RANGER",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_TEXAS_RANGER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_TEXAS_RANGER",
+  "civilopedia": "TXT_KEY_UNIT_TEXAS_RANGER_PEDIA",
+  "worth": 8,
+  "militaryWorth": 20,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

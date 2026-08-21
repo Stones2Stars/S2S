@@ -1,0 +1,29 @@
+{
+ "type": "BONUS_FLASH_MEMORY_DEVICES",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUGMENTED_EQUIPMENT_CENTER",
+   "BUILDING_BELL_LABS",
+   "BUILDING_EPSILON_ASSEMBLER",
+   "BUILDING_FACTORY_MICROGENERATORS"
+  ],
+  "units": [
+   "UNIT_ASTRONAUTIC_TECHNICIAN",
+   "UNIT_HACKER",
+   "UNIT_SERVICE_DROID",
+   "UNIT_SOFTWARE_DEVELOPER",
+   "UNIT_SYSTEMS_ANALYST"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_FLASH_MEMORY_DEVICES"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_FLASH_MEMORY_DEVICES",
+  "civilopedia": "TXT_KEY_BONUS_FLASH_MEMORY_DEVICES_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

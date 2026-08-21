@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_ORNITHOPTER_AERIE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ADVANCED_AVIATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AIRPORT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CLOCKWORK_WORKSHOP",
+    "TECH_CLOCKPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CLOCKPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ],
+   "dormant": [
+    "BUILDING_AIRPORT",
+    "BUILDING_COMMERCIAL_AIRPORT"
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 4,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+   }
+  }
+ ],
+ "cost": {
+  "production": 380
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ORNITHOPTER_AERIE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_EARLY_AIRPORT"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ORNITHOPTER_AERIE",
+  "civilopedia": "TXT_KEY_BUILDING_ORNITHOPTER_AERIE_PEDIA",
+  "worth": 5,
+  "airUnitCapacity": 2,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_CLOCK",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

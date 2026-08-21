@@ -1,0 +1,55 @@
+{
+ "type": "PROMOTION_SEA_HUNTER2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SEA_HUNTER3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SEA_HUNTER1"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_SEA_ANIMAL": {
+     "percent": 20
+    },
+    "UNITCOMBAT_MOTILITY_AERIAL": {
+     "percent": 10
+    },
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": -15
+    }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SEA_HUNTER": 2
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/seahunter2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SEA_HUNTER2",
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_LAND"
+  ]
+ }
+}

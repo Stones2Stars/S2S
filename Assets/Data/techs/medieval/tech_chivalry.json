@@ -1,0 +1,92 @@
+{
+ "type": "TECH_CHIVALRY",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLARNEY_CASTLE",
+   "BUILDING_CULTURE_LITHUANIAN",
+   "BUILDING_CULTURE_SONGHAI"
+  ],
+  "techs": [
+   "TECH_CLOCKPUNK",
+   "TECH_TOURNAMENTS"
+  ],
+  "units": [
+   "UNIT_ASKIA",
+   "UNIT_AZAWAD_CAVALRY",
+   "UNIT_CHAPUL",
+   "UNIT_CHIVALRY",
+   "UNIT_KARRANI",
+   "UNIT_LAPU_LAPU",
+   "UNIT_LORD",
+   "UNIT_MATOPE",
+   "UNIT_MONASPA_GUARD",
+   "UNIT_NANDUAPAQUE",
+   "UNIT_PETYHORCY",
+   "UNIT_RA_FIST",
+   "UNIT_RA_KNIGHT",
+   "UNIT_RUHANGA",
+   "UNIT_SKANDERBEG",
+   "UNIT_VLAD_III_DRACULA"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_WARLORD_VASSAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POETRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CRUCIBLE_STEEL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARMORED_CAVALRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1820
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/chivalry.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CHIVALRY",
+  "soundMP": "AS2D_TECH_CHIVALRY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CHIVALRY",
+  "civilopedia": "TXT_KEY_TECH_CHIVALRY_PEDIA",
+  "quote": "TXT_KEY_TECH_CHIVALRY_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 20,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 48,
+  "gridY": 3
+ }
+}

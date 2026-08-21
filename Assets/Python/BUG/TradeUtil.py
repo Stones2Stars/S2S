@@ -81,8 +81,13 @@
 from CvPythonExtensions import *
 import BugUtil
 
+# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 GAME = GC.getGame()
+INFO = CyInfo()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
 CORP_BONUSES = {}
 TRADE_FORMATS = {}
@@ -308,8 +313,15 @@ def getDesiredBonuses(player, team):
 	bonuses = set()
 	for eBonus in range(GC.getNumBonusInfos()):
 		if player.getNumAvailableBonuses(eBonus) == 0:
-			eObsoleteTech = GC.getBonusInfo(eBonus).getTechObsolete()
-			if eObsoleteTech == -1 or not team.isHasTech(eObsoleteTech):
+			# "What obsoletes me?" is a reverse EDGE the readJson pass already landed
+			# ([DEC-one-reverse-view]) -- a LIST, because nothing says a bonus has only one obsoleter.
+			aObsoleters = INFO.getEdgeIds("BONUS_", eBonus, EdgeFamily.EDGEF_OBSOLETED_BY, EdgeBucket.EDGEB_TECHS)
+			bObsolete = False
+			for eObsoleteTech in aObsoleters:
+				if team.isHasTech(eObsoleteTech):
+					bObsolete = True
+					break
+			if not bObsolete:
 				bonuses.add(eBonus)
 	return bonuses | getCorporationBonuses(player)
 
@@ -330,12 +342,15 @@ def initCorporationBonuses():
 	Initializes the CORP_BONUSES dictionary.
 	Map corporation ID to the set of bonus IDs it uses.
 	'''
+	# ⚑ This is an ENABLER question, not info payload: "which bonuses does this corporation need" is exactly what
+	# a `requires` tree answers, so it is asked of the enabler rather than reconstructed by walking every
+	# corporation info and inverting the result here.
+	# ⚠ WHY IT EXISTS AT ALL: a corporation CONSUMES copies, which makes bonuses semi-volumetric -- the one case
+	# in the game where a player still wants a resource they already hold. getDesiredBonuses UNIONs this set on
+	# top of (theirs - mine), so these must not be filtered out by presence.
+	ENABLER = CyEnabler()
 	for eCorp in range(GC.getNumCorporationInfos()):
-		corp = GC.getCorporationInfo(eCorp)
-		bonuses = set()
-		for eBonus in corp.getPrereqBonuses():
-			bonuses.add(eBonus)
-		CORP_BONUSES[eCorp] = bonuses
+		CORP_BONUSES[eCorp] = set(ENABLER.getRequiredBonuses(eCorp))
 
 def getTradeableBonuses(fromPlayer, eToPlayer):
 	"""
@@ -503,19 +518,23 @@ def addTrade(type, format):
 ## whatever you want to display in the formatted string.
 
 def getTradeTech(player, trade):
-	return GC.getTechInfo(trade.iData).getDescription()
+	return INFO.getDescription("TECH_", trade.iData)
 
 def getTradeBonus(player, trade):
-	return GC.getBonusInfo(trade.iData).getDescription()
+	return INFO.getDescription("BONUS_", trade.iData)
 
 def getTradeCity(player, trade):
-	return getPlayer(player).getCity(trade.iData).getName()
+	# <player> arrives as either an id or a CyPlayer, so it is normalized before the id-based read.
+	pPlayer = getPlayer(player)
+	if pPlayer is None:
+		return u""
+	return GC.getPlayer(pPlayer.getID()).getCity(trade.iData).getName()
 
 def getTradeCivic(player, trade):
-	return GC.getCivicInfo(trade.iData).getDescription()
+	return INFO.getDescription("CIVIC_", trade.iData)
 
 def getTradeReligion(player, trade):
-	return GC.getReligionInfo(trade.iData).getDescription()
+	return INFO.getDescription("RELIGION_", trade.iData)
 
 def getTradePlayer(player, trade):
 	return getPlayer(trade.iData).getName()

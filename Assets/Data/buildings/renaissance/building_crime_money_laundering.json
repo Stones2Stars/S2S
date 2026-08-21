@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_CRIME_MONEY_LAUNDERING",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_CORPORATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 375,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": 25
+   }
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 50
+   }
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_MONEY_LAUNDERING",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_MONEY_LAUNDERING_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

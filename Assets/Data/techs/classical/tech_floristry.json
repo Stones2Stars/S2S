@@ -1,0 +1,82 @@
+{
+ "type": "TECH_FLORISTRY",
+ "enables": {
+  "bonuses": [
+   "BONUS_FLAX_FIBERS",
+   "BONUS_FLOWERS"
+  ],
+  "buildings": [
+   "BUILDING_FARM_FLOWER_BEGONIA",
+   "BUILDING_FARM_FLOWER_BLUEBELL",
+   "BUILDING_FARM_FLOWER_CARNATION",
+   "BUILDING_FARM_FLOWER_DAISY",
+   "BUILDING_FARM_FLOWER_FLAX",
+   "BUILDING_FARM_FLOWER_FOXGLOVE",
+   "BUILDING_FARM_FLOWER_HIBISCUS",
+   "BUILDING_FARM_FLOWER_INDIGO",
+   "BUILDING_FARM_FLOWER_IRIS",
+   "BUILDING_FARM_FLOWER_LILY",
+   "BUILDING_FARM_FLOWER_ORCHID",
+   "BUILDING_FARM_FLOWER_PANSY",
+   "BUILDING_FARM_FLOWER_ROSE",
+   "BUILDING_FARM_FLOWER_SNAPDRAGON",
+   "BUILDING_FARM_FLOWER_SUNFLOWER",
+   "BUILDING_FARM_FLOWER_TULIP",
+   "BUILDING_FARM_FLOWER_VIOLET",
+   "BUILDING_FLORIST",
+   "BUILDING_PLANTATION_HENNA",
+   "BUILDING_PLANTATION_MADDER"
+  ],
+  "techs": [
+   "TECH_AGRICULTURAL_TOOLS",
+   "TECH_CROP_ROTATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AESTHETICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 824
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/floristry.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_FLORISTRY",
+  "soundMP": "AS2D_TECH_FLORISTRY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_FLORISTRY",
+  "civilopedia": "TXT_KEY_TECH_FLORISTRY_PEDIA",
+  "quote": "TXT_KEY_TECH_FLORISTRY_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 10,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 39,
+  "gridY": 7
+ }
+}

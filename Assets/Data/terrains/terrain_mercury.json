@@ -1,0 +1,41 @@
+{
+ "type": "TERRAIN_MERCURY",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/baseterrain/mercury.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_TERRAIN_MERCURY"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_TUNDRA_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_TERRAIN_MERCURY",
+  "civilopedia": "TXT_KEY_TERRAIN_MERCURY_PEDIA",
+  "found": true,
+  "buildTimeModifier": 50,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_JOVIAN"
+  ]
+ }
+}

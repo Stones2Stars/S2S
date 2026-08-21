@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_HERDING1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_HERDING2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_BARK"
+   ]
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_HERDING": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Herding1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_HERDING1"
+ }
+}

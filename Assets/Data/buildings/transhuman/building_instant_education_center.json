@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_INSTANT_EDUCATION_CENTER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MEMORY_TRANSFER_STATION",
+    "TECH_KNOWLEDGE_MERCANTILISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_INSTANT"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 6155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INSTANT_EDUCATION_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INSTANT_EDUCATION_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_INSTANT_EDUCATION_CENTER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,73 @@
+{
+ "type": "TECH_FOLK_MUSIC",
+ "enables": {
+  "bonuses": [
+   "BONUS_BRASS_INSTRUMENTS",
+   "BONUS_STRING_INSTRUMENTS"
+  ],
+  "buildings": [
+   "BUILDING_BRASS_INSTRUMENT_MAKER",
+   "BUILDING_CULTURE_BELIZEAN",
+   "BUILDING_CULTURE_MITTANNI",
+   "BUILDING_CULTURE_MOCOVI",
+   "BUILDING_CULTURE_QULLA",
+   "BUILDING_CULTURE_SCOTTISH",
+   "BUILDING_CULTURE_SENEGALI",
+   "BUILDING_PUPPET_THEATER",
+   "BUILDING_STRING_INSTRUMENT_MAKER"
+  ],
+  "techs": [
+   "TECH_ANCESTOR_WORSHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMMUNITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 96
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 9
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/folkmusic.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_FOLK_MUSIC",
+  "soundMP": "AS2D_TECH_FOLK_MUSIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_FOLK_MUSIC",
+  "civilopedia": "TXT_KEY_TECH_FOLK_MUSIC_PEDIA",
+  "quote": "TXT_KEY_TECH_FOLK_MUSIC_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 21,
+  "gridY": 15
+ }
+}

@@ -63,9 +63,23 @@ UNHAPPY_ICON = "Art/Interface/mainscreen/cityscreen/angry_citizen.dds"
 
 ### Globals
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 GAME = GC.getGame()
+STATE = CyState()
+INFO = CyInfo()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
+
+# An order names its subject on the info plane, which is addressed by PREFIX + id.
+ORDER_PREFIX = {
+	int(OrderTypes.ORDER_TRAIN):     "UNIT_",
+	int(OrderTypes.ORDER_CONSTRUCT): "BUILDING_",
+	int(OrderTypes.ORDER_CREATE):    "PROJECT_",
+	int(OrderTypes.ORDER_MAINTAIN):  "PROCESS_",
+}
 
 EVENT_MESSAGE_TIME_LONG = GC.getDefineINT("EVENT_MESSAGE_TIME_LONG")
 Civ4lertsOpt = BugCore.game.Civ4lerts
@@ -142,9 +156,10 @@ class AbstractStatefulAlert:
 
 
 ## City Alert Managers
-
-def getCityId(city):
-	return (city.getOwner(), city.getID())
+#
+#	⚑ A city is an (iOwner, iCityId) PAIR everywhere below, never a handle. That is what an engine callback
+#	hands over now (Cy::PyIdentity) and what every CyState read is addressed by, so the alert framework's
+#	tracking key and its subject are the SAME value -- the old getCityId(city) round-trip has nothing left to do.
 
 class AbstractCityAlertManager(AbstractStatefulAlert):
 	"""
@@ -164,23 +179,21 @@ class AbstractCityAlertManager(AbstractStatefulAlert):
 		alert.init()
 
 	def onCityAcquiredAndKept(self, argsList):
-		#iOwnerOld, iOwnerNew, city, bConquest, bTrade = argsList
-		if argsList[1] == GAME.getActivePlayer():
+		#iOwnerOld, iOwnerNew, cityId, bConquest, bTrade = argsList
+		if argsList[1] == STATE.getActivePlayer():
 			self._resetCity(argsList[2])
 
 	def onCityLost(self, argsList):
-		city = argsList[0]
-		iPlayer = GAME.getActivePlayer()
-		if iPlayer == city.getOwner():
-			self._discardCity(city)
+		cityId = argsList[0]
+		if cityId[0] == STATE.getActivePlayer():
+			self._discardCity(cityId)
 
 	def checkAllActivePlayerCities(self):
 		"Loops over active player's cities, telling each alert to perform its check."
-		ePlayer = GAME.getActivePlayer()
-		player = GC.getActivePlayer()
-		for city in player.cities():
+		ePlayer = STATE.getActivePlayer()
+		for iCity in GC.getPlayer(ePlayer).getCityIds():
 			for alert in self.alerts:
-				alert.checkCity(getCityId(city), city, ePlayer, player)
+				alert.checkCity((ePlayer, iCity), ePlayer)
 
 	def _init(self):
 		"Initializes each alert."
@@ -192,15 +205,15 @@ class AbstractCityAlertManager(AbstractStatefulAlert):
 		for alert in self.alerts:
 			alert.reset()
 
-	def _resetCity(self, city):
+	def _resetCity(self, cityId):
 		"tells each alert to check the state of the given city -- no alerts are displayed."
 		for alert in self.alerts:
-			alert.resetCity(city)
+			alert.resetCity(cityId)
 
-	def _discardCity(self, city):
+	def _discardCity(self, cityId):
 		"tells each alert to discard the state of the given city."
 		for alert in self.alerts:
-			alert.discardCity(city)
+			alert.discardCity(cityId)
 
 class BeginActivePlayerTurnCityAlertManager(AbstractCityAlertManager):
 	"""
@@ -240,7 +253,7 @@ class AbstractCityAlert:
 		"Performs static initialization that doesn't require game data."
 		pass
 
-	def checkCity(self, cityId, city, iPlayer, player):
+	def checkCity(self, cityId, iPlayer):
 		"Checks the city, updates its tracked state and possibly displays an alert."
 		pass
 
@@ -251,18 +264,19 @@ class AbstractCityAlert:
 	def reset(self):
 		"Clears state kept for each city."
 		self._beforeReset()
-		for city in GC.getActivePlayer().cities():
-			self.resetCity(city)
+		ePlayer = STATE.getActivePlayer()
+		for iCity in GC.getPlayer(ePlayer).getCityIds():
+			self.resetCity((ePlayer, iCity))
 
 	def _beforeReset(self):
 		"Performs clearing of state before looping over cities."
 		pass
 
-	def resetCity(self, city):
+	def resetCity(self, cityId):
 		"Checks the city and updates its tracked state."
 		pass
 
-	def discardCity(self, city):
+	def discardCity(self, cityId):
 		"Discards the tracked state of the city."
 		pass
 
@@ -276,55 +290,56 @@ class AbstractCityTestAlert(AbstractCityAlert):
 	def __init__(self, eventManager):
 		AbstractCityAlert.__init__(self, eventManager)
 
-	def checkCity(self, cityId, city, iPlayer, player):
+	def checkCity(self, cityId, iPlayer):
 		message = None
-		passes = self._passesTest(city)
+		passes = self._passesTest(cityId)
 		passed = cityId in self.cities
 		if passes != passed:
 			# City switched this turn, save new state and display an alert
 			if passes:
 				self.cities.add(cityId)
 				if self._isShowAlert(passes):
-					message, icon = self._getAlertMessageIcon(city, passes)
+					message, icon = self._getAlertMessageIcon(cityId, passes)
 			else:
 				self.cities.discard(cityId)
 				if self._isShowAlert(passes):
-					message, icon = self._getAlertMessageIcon(city, passes)
+					message, icon = self._getAlertMessageIcon(cityId, passes)
 		elif self._isShowPendingAlert(passes):
 			# See if city will switch next turn
-			willPass = self._willPassTest(city)
+			willPass = self._willPassTest(cityId)
 			if passed != willPass:
-				message, icon = self._getPendingAlertMessageIcon(city, willPass)
+				message, icon = self._getPendingAlertMessageIcon(cityId, willPass)
 		if message:
-			addMessage(iPlayer, message, icon, city.getX(), city.getY(), True, True)
+			aPos = GC.getPlayer(cityId[0]).getCity(cityId[1]).getPosition()
+			addMessage(iPlayer, message, icon, aPos[0], aPos[1], True, True)
 
 	def _passedTest(self, cityId):
 		"Returns True if the city passed the test last turn."
 		return cityId in self.cities
 
-	def _passesTest(self, city):
+	def _passesTest(self, cityId):
 		"Returns True if the city passes the test."
 		return False
 
-	def _willPassTest(self, city):
+	def _willPassTest(self, cityId):
 		"Returns True if the city will pass the test next turn based on current conditions."
 		return False
 
 	def _beforeReset(self):
 		self.cities = set()
 
-	def resetCity(self, city):
-		if self._passesTest(city):
-			self.cities.add(getCityId(city))
+	def resetCity(self, cityId):
+		if self._passesTest(cityId):
+			self.cities.add(cityId)
 
-	def discardCity(self, city):
-		self.cities.discard(getCityId(city))
+	def discardCity(self, cityId):
+		self.cities.discard(cityId)
 
 	def _isShowAlert(self, passes):
 		"Returns True if the alert is enabled."
 		return False
 
-	def _getAlertMessageIcon(self, city, passes):
+	def _getAlertMessageIcon(self, cityId, passes):
 		"Returns a tuple of the message and icon to use for the alert."
 		return (None, None)
 
@@ -332,7 +347,7 @@ class AbstractCityTestAlert(AbstractCityAlert):
 		"Returns True if the alert is enabled."
 		return False
 
-	def _getPendingAlertMessageIcon(self, city, passes):
+	def _getPendingAlertMessageIcon(self, cityId, passes):
 		"Returns a tuple of the message and icon to use for the pending alert."
 		return (None, None)
 
@@ -346,17 +361,20 @@ class CityPendingGrowth(AbstractCityAlert):
 	def __init__(self, eventManager):
 		AbstractCityAlert.__init__(self, eventManager)
 
-	def checkCity(self, cityId, city, iPlayer, player):
+	def checkCity(self, cityId, iPlayer):
 		if Civ4lertsOpt.isShowCityPendingGrowthAlert():
-			if CityUtil.willGrowThisTurn(city):
+			szName = GC.getPlayer(cityId[0]).getCity(cityId[1]).getName()
+			iPop = GC.getPlayer(cityId[0]).getCity(cityId[1]).getPopulation()
+			aPos = GC.getPlayer(cityId[0]).getCity(cityId[1]).getPosition()
+			if CityUtil.willGrowThisTurn(cityId):
 				addMessage(
-					iPlayer, TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_PENDING_GROWTH", (city.getName(), city.getPopulation() + 1)),
-					"Art/Interface/Symbols/Food/food05.dds", city.getX(), city.getY(), True, True
+					iPlayer, TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_PENDING_GROWTH", (szName, iPop + 1)),
+					"Art/Interface/Symbols/Food/food05.dds", aPos[0], aPos[1], True, True
 				)
-			elif CityUtil.willShrinkThisTurn(city):
+			elif CityUtil.willShrinkThisTurn(cityId):
 				addMessage(
-					iPlayer, TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_PENDING_SHRINKAGE", (city.getName(), city.getPopulation() - 1)),
-					"Art/Interface/Symbols/Food/food05.dds", city.getX(), city.getY(), True, True
+					iPlayer, TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_PENDING_SHRINKAGE", (szName, iPop - 1)),
+					"Art/Interface/Symbols/Food/food05.dds", aPos[0], aPos[1], True, True
 				)
 
 class CityGrowth(AbstractCityAlert):
@@ -367,29 +385,32 @@ class CityGrowth(AbstractCityAlert):
 	def __init__(self, eventManager):
 		AbstractCityAlert.__init__(self, eventManager)
 
-	def checkCity(self, cityId, city, iPlayer, player):
+	def checkCity(self, cityId, iPlayer):
 		if cityId not in self.populations:
-			self.resetCity(city)
+			self.resetCity(cityId)
 		else:
-			iPop = city.getPopulation()
+			iPop = GC.getPlayer(cityId[0]).getCity(cityId[1]).getPopulation()
 			iOldPop = self.populations[cityId]
-			iWhipCounter = city.getHurryAngerTimer()
-			iConscriptCounter = city.getConscriptAngerTimer()
+			aCountdowns = GC.getPlayer(cityId[0]).getCity(cityId[1]).getCountdowns()
+			iWhipCounter = aCountdowns[CityCountdownKind.COUNTDOWN_HURRY_ANGER]
+			iConscriptCounter = aCountdowns[CityCountdownKind.COUNTDOWN_CONSCRIPT_ANGER]
 
 			bWhipOrDraft = False
 			if iWhipCounter > self.CityWhipCounter[cityId] or iConscriptCounter > self.CityConscriptCounter[cityId]:
 				bWhipOrDraft = True
 
 			if Civ4lertsOpt.isShowCityGrowthAlert():
+				szName = GC.getPlayer(cityId[0]).getCity(cityId[1]).getName()
+				aPos = GC.getPlayer(cityId[0]).getCity(cityId[1]).getPosition()
 				if iPop > iOldPop:
 					addMessage(
-						iPlayer, TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_GROWTH", (city.getName(), iPop)),
-						"Art/Interface/Symbols/Food/food05.dds", city.getX(), city.getY(), True, True
+						iPlayer, TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_GROWTH", (szName, iPop)),
+						"Art/Interface/Symbols/Food/food05.dds", aPos[0], aPos[1], True, True
 					)
 				elif iPop < iOldPop and not bWhipOrDraft:
 					addMessage(
-						iPlayer, TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_SHRINKAGE", (city.getName(), iPop)),
-						"Art/Interface/Symbols/Food/food05.dds", city.getX(), city.getY(), True, True
+						iPlayer, TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_SHRINKAGE", (szName, iPop)),
+						"Art/Interface/Symbols/Food/food05.dds", aPos[0], aPos[1], True, True
 					)
 
 			self.populations[cityId] = iPop
@@ -401,14 +422,13 @@ class CityGrowth(AbstractCityAlert):
 		self.CityWhipCounter = dict()
 		self.CityConscriptCounter = dict()
 
-	def resetCity(self, city):
-		cityId = getCityId(city)
-		self.populations[cityId] = city.getPopulation()
-		self.CityWhipCounter[cityId] = city.getHurryAngerTimer()
-		self.CityConscriptCounter[cityId] = city.getConscriptAngerTimer()
+	def resetCity(self, cityId):
+		aCountdowns = GC.getPlayer(cityId[0]).getCity(cityId[1]).getCountdowns()
+		self.populations[cityId] = GC.getPlayer(cityId[0]).getCity(cityId[1]).getPopulation()
+		self.CityWhipCounter[cityId] = aCountdowns[CityCountdownKind.COUNTDOWN_HURRY_ANGER]
+		self.CityConscriptCounter[cityId] = aCountdowns[CityCountdownKind.COUNTDOWN_CONSCRIPT_ANGER]
 
-	def discardCity(self, city):
-		cityId = getCityId(city)
+	def discardCity(self, cityId):
 		if cityId in self.populations:
 			del self.populations[cityId], self.CityWhipCounter[cityId], self.CityConscriptCounter[cityId]
 
@@ -427,30 +447,39 @@ class CityHappiness(AbstractCityTestAlert):
 		AbstractCityAlert.init(self)
 		self.kiTempHappy = GC.getDefineINT("TEMP_HAPPY")
 
-	def _passesTest(self, city):
-		return city.angryPopulation(0) > 0
+	def _passesTest(self, cityId):
+		# angryPopulation is a FINAL-STATE calculation over the channels, not a channel of its own
+		# ([patterns.md] THE TWO READ ROLES, rule 6): clamp(anger - happiness, 0, pop).
+		aWellbeing = GC.getPlayer(cityId[0]).getCity(cityId[1]).getRealizedWellbeing(0)
+		iDeficit = aWellbeing[WellbeingChannel.WELLBEING_ANGER] - aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS]
+		return iDeficit > 0
 
-	def _willPassTest(self, city):
-		if CityUtil.willGrowThisTurn(city):
+	def _willPassTest(self, cityId):
+		if CityUtil.willGrowThisTurn(cityId):
 			iExtra = 1
-		elif CityUtil.willShrinkThisTurn(city):
+		elif CityUtil.willShrinkThisTurn(cityId):
 			iExtra = -1
 		else:
 			iExtra = 0
-		iHappy = city.happyLevel()
-		iUnhappy = city.unhappyLevel(iExtra)
-		iTimer = city.getHurryAngerTimer()
-		if iUnhappy > 0 and iTimer > 0 and not iTimer % city.flatHurryAngerLength():
+		# The channels are x100 native; this comparison is in whole citizens, so it reduces at the point of use
+		# ([DEC-fixedpoint-x100]: no getter reduces).
+		aWellbeing = GC.getPlayer(cityId[0]).getCity(cityId[1]).getRealizedWellbeing(iExtra)
+		iHappy = aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS] / 100
+		iUnhappy = aWellbeing[WellbeingChannel.WELLBEING_ANGER] / 100
+		aCountdowns = GC.getPlayer(cityId[0]).getCity(cityId[1]).getCountdowns()
+		aDecaying = (
+			(CityCountdownKind.COUNTDOWN_HURRY_ANGER, CityCountdownKind.COUNTDOWN_HURRY_ANGER_PERIOD),
+			(CityCountdownKind.COUNTDOWN_CONSCRIPT_ANGER, CityCountdownKind.COUNTDOWN_CONSCRIPT_ANGER_PERIOD),
+			(CityCountdownKind.COUNTDOWN_DEFY_RESOLUTION_ANGER, CityCountdownKind.COUNTDOWN_DEFY_RESOLUTION_ANGER_PERIOD),
+		)
+		for eTimer, ePeriod in aDecaying:
+			iTimer = aCountdowns[eTimer]
+			iPeriod = aCountdowns[ePeriod]
+			if iUnhappy > 0 and iTimer > 0 and iPeriod > 0 and not iTimer % iPeriod:
+				iUnhappy -= 1
+		if iUnhappy > 0 and aCountdowns[CityCountdownKind.COUNTDOWN_ESPIONAGE_HAPPINESS] > 0:
 			iUnhappy -= 1
-		iTimer = city.getConscriptAngerTimer()
-		if iUnhappy > 0 and iTimer > 0 and not iTimer % city.flatConscriptAngerLength():
-			iUnhappy -= 1
-		iTimer = city.getDefyResolutionAngerTimer()
-		if iUnhappy > 0 and iTimer > 0 and not iTimer % city.flatDefyResolutionAngerLength():
-			iUnhappy -= 1
-		if iUnhappy > 0 and city.getEspionageHappinessCounter() > 0:
-			iUnhappy -= 1
-		if iHappy > 0 and city.getHappinessTimer() == 1:
+		if iHappy > 0 and aCountdowns[CityCountdownKind.COUNTDOWN_HAPPINESS] == 1:
 			iHappy -= self.kiTempHappy
 		if iHappy < 0:
 			iHappy = 0
@@ -461,18 +490,18 @@ class CityHappiness(AbstractCityTestAlert):
 	def _isShowAlert(self, passes):
 		return Civ4lertsOpt.isShowCityHappinessAlert()
 
-	def _getAlertMessageIcon(self, city, passes):
+	def _getAlertMessageIcon(self, cityId, passes):
 		if passes:
-			return (TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_UNHAPPY", (city.getName(), )), UNHAPPY_ICON)
-		return (TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_HAPPY", (city.getName(), )), HAPPY_ICON)
+			return (TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_UNHAPPY", (GC.getPlayer(cityId[0]).getCity(cityId[1]).getName(), )), UNHAPPY_ICON)
+		return (TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_HAPPY", (GC.getPlayer(cityId[0]).getCity(cityId[1]).getName(), )), HAPPY_ICON)
 
 	def _isShowPendingAlert(self, passes):
 		return Civ4lertsOpt.isShowCityPendingHappinessAlert()
 
-	def _getPendingAlertMessageIcon(self, city, passes):
+	def _getPendingAlertMessageIcon(self, cityId, passes):
 		if passes:
-			return (TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_PENDING_UNHAPPY", (city.getName(), )), UNHAPPY_ICON)
-		return (TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_PENDING_HAPPY", (city.getName(), )), HAPPY_ICON)
+			return (TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_PENDING_UNHAPPY", (GC.getPlayer(cityId[0]).getCity(cityId[1]).getName(), )), UNHAPPY_ICON)
+		return (TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_PENDING_HAPPY", (GC.getPlayer(cityId[0]).getCity(cityId[1]).getName(), )), HAPPY_ICON)
 
 class CityHealthiness(AbstractCityTestAlert):
 	"""
@@ -483,37 +512,42 @@ class CityHealthiness(AbstractCityTestAlert):
 	def __init__(self, eventManager):
 		AbstractCityTestAlert.__init__(self, eventManager)
 
-	def _passesTest(self, city):
-		return city.healthRate(False, 0) < 0
+	def _passesTest(self, cityId):
+		# healthRate is health summed AGAINST unhealth -- a final-state calculation over the channels, not a
+		# channel of its own ([patterns.md] THE TWO READ ROLES, rule 6).
+		aWellbeing = GC.getPlayer(cityId[0]).getCity(cityId[1]).getRealizedWellbeing(0)
+		return aWellbeing[WellbeingChannel.WELLBEING_HEALTH] < aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH]
 
-	def _willPassTest(self, city):
-		if CityUtil.willGrowThisTurn(city):
+	def _willPassTest(self, cityId):
+		if CityUtil.willGrowThisTurn(cityId):
 			iExtra = 1
-		elif CityUtil.willShrinkThisTurn(city):
+		elif CityUtil.willShrinkThisTurn(cityId):
 			iExtra = -1
 		else:
 			iExtra = 0
-		# badHealth() doesn't take iExtra!
-		iHealthRate = city.healthRate(False, iExtra)
-		if city.getEspionageHealthCounter() > 0:
+		aWellbeing = GC.getPlayer(cityId[0]).getCity(cityId[1]).getRealizedWellbeing(iExtra)
+		iHealthRate = (aWellbeing[WellbeingChannel.WELLBEING_HEALTH]
+		               - aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH]) / 100
+		aCountdowns = GC.getPlayer(cityId[0]).getCity(cityId[1]).getCountdowns()
+		if aCountdowns[CityCountdownKind.COUNTDOWN_ESPIONAGE_HEALTH] > 0:
 			iHealthRate += 1
 		return iHealthRate < 0
 
 	def _isShowAlert(self, passes):
 		return Civ4lertsOpt.isShowCityHealthinessAlert()
 
-	def _getAlertMessageIcon(self, city, passes):
+	def _getAlertMessageIcon(self, cityId, passes):
 		if passes:
-			return (TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_UNHEALTHY", (city.getName(), )), UNHEALTHY_ICON)
-		return (TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_HEALTHY", (city.getName(), )), HEALTHY_ICON)
+			return (TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_UNHEALTHY", (GC.getPlayer(cityId[0]).getCity(cityId[1]).getName(), )), UNHEALTHY_ICON)
+		return (TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_HEALTHY", (GC.getPlayer(cityId[0]).getCity(cityId[1]).getName(), )), HEALTHY_ICON)
 
 	def _isShowPendingAlert(self, passes):
 		return Civ4lertsOpt.isShowCityPendingHealthinessAlert()
 
-	def _getPendingAlertMessageIcon(self, city, passes):
+	def _getPendingAlertMessageIcon(self, cityId, passes):
 		if passes:
-			return (TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_PENDING_UNHEALTHY", (city.getName(), )), UNHEALTHY_ICON)
-		return (TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_PENDING_HEALTHY", (city.getName(), )), HEALTHY_ICON)
+			return (TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_PENDING_UNHEALTHY", (GC.getPlayer(cityId[0]).getCity(cityId[1]).getName(), )), UNHEALTHY_ICON)
+		return (TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_PENDING_HEALTHY", (GC.getPlayer(cityId[0]).getCity(cityId[1]).getName(), )), HEALTHY_ICON)
 
 # Occupation
 
@@ -526,29 +560,31 @@ class CityOccupation(AbstractCityTestAlert):
 	def __init__(self, eventManager):
 		AbstractCityTestAlert.__init__(self, eventManager)
 
-	def _passesTest(self, city):
-		return city.isOccupation()
+	def _passesTest(self, cityId):
+		return GC.getPlayer(cityId[0]).getCity(cityId[1]).isOccupation()
 
-	def _willPassTest(self, city):
-		return city.isOccupation() and city.getOccupationTimer() > 1
+	def _willPassTest(self, cityId):
+		if not GC.getPlayer(cityId[0]).getCity(cityId[1]).isOccupation():
+			return False
+		return GC.getPlayer(cityId[0]).getCity(cityId[1]).getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION] > 1
 
 	def _isShowAlert(self, passes):
 		return Civ4lertsOpt.isShowCityOccupationAlert()
 
-	def _getAlertMessageIcon(self, city, passes):
+	def _getAlertMessageIcon(self, cityId, passes):
 		if passes:
-			print "%s passed occupation test, ignoring" % city.getName()
+			print "%s passed occupation test, ignoring" % GC.getPlayer(cityId[0]).getCity(cityId[1]).getName()
 			return (None, None)
-		return (TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_PACIFIED", (city.getName(), )), HAPPY_ICON)
+		return (TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_PACIFIED", (GC.getPlayer(cityId[0]).getCity(cityId[1]).getName(), )), HAPPY_ICON)
 
 	def _isShowPendingAlert(self, passes):
 		return Civ4lertsOpt.isShowCityPendingOccupationAlert()
 
-	def _getPendingAlertMessageIcon(self, city, passes):
+	def _getPendingAlertMessageIcon(self, cityId, passes):
 		if passes:
-			print "[WARN] %s passed pending occupation test, ignoring" % city.getName()
+			print "[WARN] %s passed pending occupation test, ignoring" % GC.getPlayer(cityId[0]).getCity(cityId[1]).getName()
 			return (None, None)
-		return (TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_PENDING_PACIFIED", (city.getName(), )), HAPPY_ICON)
+		return (TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_PENDING_PACIFIED", (GC.getPlayer(cityId[0]).getCity(cityId[1]).getName(), )), HAPPY_ICON)
 
 # Hurrying Production
 
@@ -567,53 +603,40 @@ class AbstractCanHurry(AbstractCityTestAlert):
 
 	def init(self, szHurryType):
 		AbstractCityAlert.init(self)
-		self.keHurryType = GC.getInfoTypeForString(szHurryType)
+		self.keHurryType = ENUMS.getInfoType(szHurryType)
 
 	def onCityBuildingUnit(self, argsList):
-		city = argsList[0]
-		#iUnit = argsList[1]
-		self._onItemStarted(city)
+		#cityId, iUnit = argsList
+		self._onItemStarted(argsList[0])
 
 	def onCityBuildingBuilding(self, argsList):
-		city = argsList[0]
-		#iBuilding = argsList[1]
-		self._onItemStarted(city)
+		#cityId, iBuilding = argsList
+		self._onItemStarted(argsList[0])
 
 	def onCityBuildingProject(self, argsList):
-		city = argsList[0]
-		#iProject = argsList[1]
-		self._onItemStarted(city)
+		#cityId, iProject = argsList
+		self._onItemStarted(argsList[0])
 
 	def onCityBuildingProcess(self, argsList):
-		city = argsList[0]
-		#iProcess = argsList[1]
-		self._onItemStarted(city)
+		#cityId, iProcess = argsList
+		self._onItemStarted(argsList[0])
 
-	def _onItemStarted(self, city):
-		if city.getOwner() == GAME.getActivePlayer():
-			self.discardCity(city)
+	def _onItemStarted(self, cityId):
+		if cityId[0] == STATE.getActivePlayer():
+			self.discardCity(cityId)
 
-	def _passesTest(self, city):
-		return city.canHurry(self.keHurryType, False)
+	def _passesTest(self, cityId):
+		aQuote = GC.getPlayer(cityId[0]).getCity(cityId[1]).getHurryQuote(self.keHurryType)
+		return aQuote[CityHurryQuote.HURRY_QUOTE_ALLOWED] != 0
 
-	def _getAlertMessageIcon(self, city, passes):
+	def _getAlertMessageIcon(self, cityId, passes):
 		if passes:
-			info = None
-			if city.isProductionBuilding():
-				iType = city.getProductionBuilding()
-				if iType >= 0:
-					info = GC.getBuildingInfo(iType)
-			elif city.isProductionUnit():
-				iType = city.getProductionUnit()
-				if iType >= 0:
-					info = GC.getUnitInfo(iType)
-			elif city.isProductionProject():
-				# Can't hurry projects, but just in case
-				iType = city.getProductionProject()
-				if iType >= 0:
-					info = GC.getProjectInfo(iType)
-			if info:
-				return (self._getAlertMessage(city, info), info.getButton())
+			# The order read names WHAT is being built in one fetch; the info plane is addressed by prefix + id.
+			aOrder = GC.getPlayer(cityId[0]).getCity(cityId[1]).getOrder()
+			szPrefix = ORDER_PREFIX.get(aOrder[CityOrderRead.ORDER_READ_TYPE])
+			iType = aOrder[CityOrderRead.ORDER_READ_ID]
+			if szPrefix is not None and iType >= 0:
+				return (self._getAlertMessage(cityId, szPrefix, iType), INFO.getButton(szPrefix, iType))
 		return (None, None)
 
 class CanHurryPopulation(AbstractCanHurry):
@@ -629,19 +652,30 @@ class CanHurryPopulation(AbstractCanHurry):
 	def _isShowAlert(self, passes):
 		return passes and Civ4lertsOpt.isShowCityCanHurryPopAlert()
 
-	def _getAlertMessage(self, city, info):
-		iPop = city.hurryPopulation(self.keHurryType)
-		iOverflow = city.hurryProduction(self.keHurryType) - city.productionLeft()
+	def _getAlertMessage(self, cityId, szPrefix, iType):
+		aQuote = GC.getPlayer(cityId[0]).getCity(cityId[1]).getHurryQuote(self.keHurryType)
+		aOrder = GC.getPlayer(cityId[0]).getCity(cityId[1]).getOrder()
+		aCountdowns = GC.getPlayer(cityId[0]).getCity(cityId[1]).getCountdowns()
+		iPop = aQuote[CityHurryQuote.HURRY_QUOTE_POPULATION_COST]
+		iOverflow = (aQuote[CityHurryQuote.HURRY_QUOTE_PRODUCTION_GAINED]
+		             - aOrder[CityOrderRead.ORDER_READ_PRODUCTION_LEFT])
 		if Civ4lertsOpt.isWhipAssistOverflowCountCurrentProduction():
-			iOverflow = iOverflow + city.getCurrentProductionDifference(True, False)
-		iAnger = city.getHurryAngerTimer() + city.flatHurryAngerLength()
-		iMaxOverflow = city.getMaxProductionOverflow()
-		iOverflowGold = max(0, iOverflow - iMaxOverflow) * GC.getDefineINT("MAXED_UNIT_GOLD_PERCENT") / 100
-		iOverflow = 100 * iMaxOverflow / city.getBaseYieldRateModifier(YieldTypes.YIELD_PRODUCTION, 0)
+			iOverflow = iOverflow + aOrder[CityOrderRead.ORDER_READ_PRODUCTION_PER_TURN]
+		iAnger = (aCountdowns[CityCountdownKind.COUNTDOWN_HURRY_ANGER]
+		          + aCountdowns[CityCountdownKind.COUNTDOWN_HURRY_ANGER_PERIOD])
+		iMaxOverflow = aOrder[CityOrderRead.ORDER_READ_MAX_OVERFLOW]
+		iOverflowGold = max(0, iOverflow - iMaxOverflow) * STATE.getDefineINT("MAXED_UNIT_GOLD_PERCENT") / 100
+		# The kept overflow is expressed in POST-modifier hammers; dividing by the production modifier reports
+		# it in the pre-modifier hammers the player actually sees in the build box.
+		iProductionModifier = GC.getPlayer(cityId[0]).getCity(cityId[1]).getYieldModifiers()[YieldTypes.YIELD_PRODUCTION]
+		if iProductionModifier > 0:
+			iOverflow = 100 * iMaxOverflow / iProductionModifier
+		szName = GC.getPlayer(cityId[0]).getCity(cityId[1]).getName()
+		szItem = INFO.getDescription(szPrefix, iType)
 		if iOverflowGold > 0:
-			return TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_CAN_HURRY_POP_PLUS_GOLD", (city.getName(), info.getDescription(), iPop, iOverflow, iAnger, iOverflowGold))
+			return TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_CAN_HURRY_POP_PLUS_GOLD", (szName, szItem, iPop, iOverflow, iAnger, iOverflowGold))
 
-		return TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_CAN_HURRY_POP", (city.getName(), info.getDescription(), iPop, iOverflow, iAnger))
+		return TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_CAN_HURRY_POP", (szName, szItem, iPop, iOverflow, iAnger))
 
 class CanHurryGold(AbstractCanHurry):
 	"""
@@ -656,9 +690,10 @@ class CanHurryGold(AbstractCanHurry):
 	def _isShowAlert(self, passes):
 		return passes and Civ4lertsOpt.isShowCityCanHurryGoldAlert()
 
-	def _getAlertMessage(self, city, info):
-		iGold = city.getHurryGold(self.keHurryType)
-		return TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_CAN_HURRY_GOLD", (city.getName(), info.getDescription(), iGold))
+	def _getAlertMessage(self, cityId, szPrefix, iType):
+		iGold = GC.getPlayer(cityId[0]).getCity(cityId[1]).getHurryQuote(self.keHurryType)[CityHurryQuote.HURRY_QUOTE_GOLD_COST]
+		szName = GC.getPlayer(cityId[0]).getCity(cityId[1]).getName()
+		return TRNSLTR.getText("TXT_KEY_CIV4LERTS_ON_CITY_CAN_HURRY_GOLD", (szName, INFO.getDescription(szPrefix, iType), iGold))
 
 
 ## Trading Gold
@@ -766,8 +801,8 @@ class RefusesToTalk(AbstractStatefulAlert):
 		self.checkIfIsAnyOrHasMetAllTeams(eTeam, eRivalTeam)
 
 	def onCityRazed(self, argsList):
-		city, iPlayer = argsList
-		self.checkIfIsAnyOrHasMetAllTeams(city.getTeam(), GC.getPlayer(iPlayer).getTeam())
+		cityId, iPlayer = argsList
+		self.checkIfIsAnyOrHasMetAllTeams(STATE.getPlayerTeam(cityId[0]), STATE.getPlayerTeam(iPlayer))
 
 	def onDealCanceled(self, argsList):
 		eOfferPlayer, eTargetPlayer, pTrade = argsList
@@ -848,8 +883,8 @@ class WorstEnemy(AbstractStatefulAlert):
 		self.checkIfIsAnyOrHasMetAllTeams(eTeam, eRivalTeam)
 
 	def onCityRazed(self, argsList):
-		city, ePlayer = argsList
-		self.checkIfIsAnyOrHasMetAllTeams(city.getTeam(), GC.getPlayer(ePlayer).getTeam())
+		cityId, ePlayer = argsList
+		self.checkIfIsAnyOrHasMetAllTeams(STATE.getPlayerTeam(cityId[0]), STATE.getPlayerTeam(ePlayer))
 
 	def onVassalState(self, argsList):
 		eMaster = argsList[0]

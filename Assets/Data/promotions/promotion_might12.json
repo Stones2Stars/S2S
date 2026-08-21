@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_MIGHT12",
+ "combat": {
+  "unit": {
+   "flat": 25
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MIGHT": 12
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Might12Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_MIGHT12",
+  "levelPrereq": 25,
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_EPIC",
+   "UNITCOMBAT_QUALITY_DIVINE"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_ANIMAL"
+  ]
+ }
+}

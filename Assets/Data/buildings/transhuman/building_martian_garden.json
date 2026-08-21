@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_MARTIAN_GARDEN",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MARTIAN_WATER_EXTRACTION",
+    "BUILDING_MARTIAN_METROPOLIS",
+    "TECH_QUADRUPLE_HELIX",
+    "TECH_HYPERMAGNETICS",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 2110,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_GARDEN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_GARDEN",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_GARDEN_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

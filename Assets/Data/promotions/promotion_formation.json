@@ -1,0 +1,44 @@
+{
+ "type": "PROMOTION_FORMATION",
+ "enables": {
+  "promotions": [
+   "PROMOTION_FORMATION2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT2",
+    "PROMOTION_DRILL2"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FORMATION": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Formation.dds,Art/Interface/Buttons/Promotions_Atlas.dds,1,2"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FORMATION",
+  "unitCombats": [
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_ANIMAL",
+   "UNITCOMBAT_THROWING"
+  ]
+ }
+}

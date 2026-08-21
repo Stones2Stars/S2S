@@ -1,0 +1,136 @@
+{
+ "type": "TECH_TRACKING",
+ "enables": {
+  "bonuses": [
+   "BONUS_LIZARDS"
+  ],
+  "buildings": [
+   "BUILDING_CAMP_ANTELOPE",
+   "BUILDING_CAMP_AUROCHS",
+   "BUILDING_CAMP_BISON",
+   "BUILDING_CAMP_BOAR",
+   "BUILDING_CAMP_CARIBOU",
+   "BUILDING_CAMP_DEER",
+   "BUILDING_CAMP_DIPROTODON",
+   "BUILDING_CAMP_ELEPHANT",
+   "BUILDING_CAMP_EMU",
+   "BUILDING_CAMP_GIANT_BISON",
+   "BUILDING_CAMP_GIRAFFE",
+   "BUILDING_CAMP_HIPPO",
+   "BUILDING_CAMP_KANGAROO",
+   "BUILDING_CAMP_MAMMOTH",
+   "BUILDING_CAMP_MEGALOCEROS",
+   "BUILDING_CAMP_MEGATHERIUM",
+   "BUILDING_CAMP_MOOSE",
+   "BUILDING_CAMP_MOUFLON",
+   "BUILDING_CAMP_MUSKOX",
+   "BUILDING_CAMP_OSTRICH",
+   "BUILDING_CAMP_RHEA",
+   "BUILDING_CAMP_RHINO",
+   "BUILDING_CAMP_WOOLLY_RHINO",
+   "BUILDING_CAMP_ZEBRA",
+   "BUILDING_CULTURE_AINU",
+   "BUILDING_CULTURE_AKA",
+   "BUILDING_CULTURE_CREE",
+   "BUILDING_FARM_ANIMAL_REINDEER",
+   "BUILDING_HUNTERS_CAMP",
+   "BUILDING_LIZARD_HUNTERS_CAMP",
+   "BUILDING_MASTER_HUNTER"
+  ],
+  "civics": [
+   "CIVIC_SUBSISTENCE"
+  ],
+  "promotions": [
+   "PROMOTION_HUNTER3",
+   "PROMOTION_MASTER_HUNTER1",
+   "PROMOTION_MASTER_HUNTER3",
+   "PROMOTION_STALL3",
+   "PROMOTION_TACTICS"
+  ],
+  "techs": [
+   "TECH_HUNTING",
+   "TECH_PORTABLE_SHELTERS"
+  ],
+  "units": [
+   "UNIT_CREE_TRACKER",
+   "UNIT_KAMUY",
+   "UNIT_KHONVOUM",
+   "UNIT_MASTER_TRACKER",
+   "UNIT_NEANDERTHAL_MASTER_TRACKER",
+   "UNIT_NEANDERTHAL_TRACKER",
+   "UNIT_PYGMY_WARRIOR",
+   "UNIT_TORE",
+   "UNIT_TRACKER"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_CHASER",
+   "UNIT_MASTER_CHASER",
+   "UNIT_NEANDERTHAL_CHASER",
+   "UNIT_NEANDERTHAL_MASTER_CHASER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRAPPING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_POISON_CRAFTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SHARPENING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 15
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Hunting.dds,Art/Interface/Buttons/TechTree_Atlas.dds,7,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TRACKING",
+  "soundMP": "AS2D_TECH_MP_HUNTING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TRACKING",
+  "civilopedia": "TXT_KEY_TECH_TRACKING_PEDIA",
+  "quote": "TXT_KEY_TECH_TRACKING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 8,
+  "gridY": 11
+ }
+}

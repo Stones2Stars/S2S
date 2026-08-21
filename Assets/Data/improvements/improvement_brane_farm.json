@@ -1,0 +1,42 @@
+{
+ "type": "IMPROVEMENT_BRANE_FARM",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BRANE_CONSTRUCTION",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_BRANESPACE"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 15
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 5
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_BRANE_FARM"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_BRANE_FARM",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_BRANE_FARM_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

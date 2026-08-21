@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTIONLINE_BUILD_UP_TEACH",
+ "buildUp": {
+  "active": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Teach1BuildUp.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_TEACH",
+  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_TEACH_HELP",
+  "unitCombats": [
+   "UNITCOMBAT_ENTERTAINER"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SPY",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
+ }
+}

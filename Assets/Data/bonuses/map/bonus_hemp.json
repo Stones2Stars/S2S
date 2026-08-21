@@ -1,0 +1,80 @@
+{
+ "type": "BONUS_HEMP",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOFUEL_REFINERY",
+   "BUILDING_CULTURE_DUTCH",
+   "BUILDING_CULTURE_GUATEMALAN",
+   "BUILDING_CULTURE_JAMAICAN",
+   "BUILDING_CULTURE_JIVARO",
+   "BUILDING_CULTURE_MANDAN",
+   "BUILDING_CULTURE_NEPALESE",
+   "BUILDING_CULTURE_SOMALI",
+   "BUILDING_FARM_CROP_ELDERBERRY",
+   "BUILDING_FARM_CROP_SPINACH",
+   "BUILDING_FARM_FLOWER_VIOLET",
+   "BUILDING_GROVE_COLA",
+   "BUILDING_HEMP_FARM",
+   "BUILDING_PLANTATION_CANNABIS",
+   "BUILDING_TRANCE_HUT",
+   "BUILDING_ULTRAFUEL_REFINERY",
+   "BUILDING_WEAVER"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 3
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HEMP"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "uniqueRange": 3,
+  "groupRange": 1,
+  "groupRand": 16,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_PLAINS",
+   "TERRAIN_SCRUB"
+  ],
+  "validFeatures": [
+   "FEATURE_FOREST",
+   "FEATURE_FOREST_ANCIENT"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_LUSH",
+   "TERRAIN_GRASSLAND"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HEMP",
+  "civilopedia": "TXT_KEY_BONUS_HEMP_PEDIA",
+  "bonusClassType": "BONUSCLASS_PRODUCTION",
+  "source": "natural"
+ }
+}

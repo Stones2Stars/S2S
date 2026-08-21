@@ -1,0 +1,82 @@
+{
+ "type": "UNITCOMBAT_LAW_ENFORCEMENT",
+ "combat": {
+  "unit": {
+   "attack": {
+    "percent": -10
+   },
+   "defense": {
+    "percent": 10
+   },
+   "vsBarbs": {
+    "percent": 25
+   },
+   "stealth": {
+    "percent": 10
+   },
+   "enclose": {
+    "percent": 5
+   },
+   "dynamicDefense": {
+    "percent": 5
+   },
+   "cityAttack": {
+    "percent": -50
+   },
+   "cityDefense": {
+    "percent": 50
+   },
+   "stealthStrikes": {
+    "flat": 1
+   },
+   "unitCombat": {
+    "UNITCOMBAT_CRIMINAL": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 30
+   },
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "investigation": {
+    "flat": 1
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 3
+  }
+ },
+ "skills": {
+  "cannotMergeSplit": true,
+  "noInvisibility": true
+ },
+ "tags": [
+  "police"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/law_enforcers.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_LAW_ENFORCEMENT",
+  "forMilitary": true,
+  "defaultStatuses": [
+   "PROMOTION_STANDOUT_STATUS",
+   "PROMOTION_STANDOUT_STATUS_HS",
+   "PROMOTION_STANDOUT_STATUS_HS_SM"
+  ]
+ }
+}

@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_RESOURCES_WOOD",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SENTIENT_EARTH"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AGROFOREST"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_AGROFOREST"
+   ],
+   "all": [
+    {
+     "any": [
+      "BUILDING_GROVE_BRAZILWOOD",
+      "BUILDING_DRIFTWOOD_GATHERER",
+      "BUILDING_LUMBER_GATHERER",
+      "BUILDING_LUMBER_CAMP",
+      "BUILDING_GROVE_TIMBER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_WOOD"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESOURCES_WOOD",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_WOOD",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

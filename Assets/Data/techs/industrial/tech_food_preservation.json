@@ -1,0 +1,76 @@
+{
+ "type": "TECH_FOOD_PRESERVATION",
+ "enables": {
+  "bonuses": [
+   "BONUS_CANNED_FOOD"
+  ],
+  "buildings": [
+   "BUILDING_CANNERY"
+  ],
+  "techs": [
+   "TECH_AGRICULTURAL_ENGINEERING",
+   "TECH_REFRIGERATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CHEMISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_STEAM_POWER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "research": 5460
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Foodp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_FOOD_PRESERVATION",
+  "soundMP": "AS2D_TECH_FOOD_PRESERVATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_FOOD_PRESERVATION",
+  "civilopedia": "TXT_KEY_TECH_FOOD_PRESERVATION_PEDIA",
+  "quote": "TXT_KEY_TECH_FOOD_PRESERVATION_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 63,
+  "gridY": 11
+ }
+}

@@ -37,6 +37,11 @@ public:
 	DllExport ActionSubTypes getSubType() const;
 	void setSubType(ActionSubTypes eSubType) { m_eSubType = eSubType; }
 
+	// The entity whose hotkey SLOT this action is. An action holds no identity of its own, so every read
+	// below delegates here -- and so does the Python identity plane, which needs a genuine CvInfoBase for an
+	// ACTION_ id. This class is not one; the entity the slot stands for is.
+	const CvHotkeyInfo* getHotkeyInfo() const;
+
 	// functions to replace the CvInfoBase calls
 	const char* getType() const;
 	const wchar_t* getDescription() const;
@@ -72,9 +77,6 @@ protected:
 
 	int m_iOriginalIndex;
 	ActionSubTypes m_eSubType;
-
-private:
-	const CvHotkeyInfo* getHotkeyInfo() const;
 };
 
 #endif // CV_ACTION_INFO_H

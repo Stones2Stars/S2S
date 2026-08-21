@@ -1,0 +1,92 @@
+{
+ "type": "TECH_ARTIFICIAL_LIFE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMA_CHAMBER",
+   "BUILDING_ANIMA_GAMING_LEAGUE",
+   "BUILDING_ANIMA_STUDIO",
+   "BUILDING_BODY_EXCHANGE_CLINIC",
+   "BUILDING_CYBER_CHLOROPLASTIDA_BLOOM",
+   "BUILDING_HUMAN_MOD_ROBOTIC_BODY",
+   "BUILDING_PSYCHOSCANNER",
+   "BUILDING_RESURRECTION_HUB"
+  ],
+  "builds": [
+   "BUILD_SANITIZE",
+   "BUILD_SANITIZE_WATER"
+  ],
+  "techs": [
+   "TECH_ANIMAMATERIALS",
+   "TECH_APOCALYPTIC_PATHOGENS",
+   "TECH_GAIA_ECOLOGY",
+   "TECH_MYTHOLOGICAL_BESTIARY",
+   "TECH_SAPIENTROIDS",
+   "TECH_SPECULATIVE_PHYSIOLOGY",
+   "TECH_TRANSHUMANISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BOTANICAL_ALCHEMY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NUTRACEUTICAL_ANIMALS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WHOLE_BRAIN_EMULATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_SCIENTIST"
+ },
+ "cost": {
+  "research": 72474
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/artificial_life.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ARTIFICIAL_LIFE",
+  "soundMP": "AS2D_TECH_ARTIFICIAL_LIFE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ARTIFICIAL_LIFE",
+  "civilopedia": "TXT_KEY_TECH_ARTIFICIAL_LIFE_PEDIA",
+  "quote": "TXT_KEY_TECH_ARTIFICIAL_LIFE_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 50,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 115,
+  "gridY": 15
+ }
+}

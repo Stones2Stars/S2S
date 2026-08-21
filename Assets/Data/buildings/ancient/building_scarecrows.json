@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_SCARECROWS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FARMSCRAPER_I"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "latitude": {
+      "max": 70
+     }
+    },
+    "TECH_AGRICULTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 6
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_CLOTHING",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STRAW",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_FARMSCRAPER_I"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 118,
+  "countModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SCARECROWS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SCARECROWS",
+  "civilopedia": "TXT_KEY_BUILDING_SCARECROWS_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

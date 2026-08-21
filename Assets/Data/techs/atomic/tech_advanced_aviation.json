@@ -1,0 +1,82 @@
+{
+ "type": "TECH_ADVANCED_AVIATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_COMMERCIAL_AIRPORT",
+   "BUILDING_GRAND_AERODROME"
+  ],
+  "promotions": [
+   "PROMOTION_FUEL_TANK",
+   "PROMOTION_RANGE1",
+   "PROMOTION_REPAIR_AIRCRAFT2"
+  ],
+  "techs": [
+   "TECH_JET_PROPULSION",
+   "TECH_VERTICAL_FLIGHT"
+  ],
+  "units": [
+   "UNIT_BOMBER",
+   "UNIT_FIGHTER",
+   "UNIT_FLIGHT_TECHNICIAN",
+   "UNIT_PARATROOPER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MODERN_PHYSICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_RADAR",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MECHANIZED_WARFARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 12152
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GOLD": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,3,16"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ADVANCED_AVIATION",
+  "soundMP": "AS2D_TECH_ADVANCED_AVIATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ADVANCED_AVIATION",
+  "civilopedia": "TXT_KEY_TECH_ADVANCED_AVIATION_PEDIA",
+  "quote": "TXT_KEY_TECH_ADVANCED_AVIATION_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 78,
+  "gridY": 11
+ }
+}

@@ -1,144 +1,151 @@
 #pragma once
+#ifndef CV_JSON_CORPORATION_INFO_H
+#define CV_JSON_CORPORATION_INFO_H
 
-#ifndef CV_CORPORATION_INFO_H
-#define CV_CORPORATION_INFO_H
+//
+//	CvCorporationInfo -- the CORPORATION poco rebuilt to the exemplar surface (patterns.md § THE GETTER SETUP:
+//	the four read categories, nothing else). Styled for the JSON anatomy (json.md §2); every magnitude read is a
+//	load-compiled fetch (docs/architecture/patterns.md §Materialize at mapFrom); no legacy getter name returns (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
+//
+//	CENSUS SHAPE (Assets/Data/corporations, 23 entities): every modifier-family entry a corporation authors is
+//	CONDITIONED -- the per-city output rides {HAS_CORPORATION: SELF} gates with per:{anyOf: consumed bonuses}
+//	scalers, and the HQ revenue rides {IS_HEADQUARTERS: SELF} + per:"CORPORATION_LEVEL" (rulings 4+10, the
+//	{IS_HOLY_CITY} pattern). NOTHING folds into the unconditioned slot sums, so this type carries NO per-group
+//	point getters -- the read surface for corp magnitudes is the base conditioned-list access + the expected*
+//	what-if valuations (CvInfo), plus the two mapFrom-materialized value planes below (scanned ONCE from the
+//	compiled entries -- the one sanctioned load-time scan source, patterns.md § Materialize at mapFrom).
+//	Corp active/dormant stays an ENGINE-OWNED input (isActiveCorporation -- culture-religion-research.md).
+//
 
-#include "CvInfoBase.h"
+#include "CvInfo.h"
+#include <map>
+#include <vector>
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//
-//  class : CvCorporationInfo
-//
-//  DESC:
-//
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class CvCorporationInfo
-	: public CvHotkeyInfo
-	, private bst::noncopyable
+class CvCorporationInfo : public CvInfo
 {
-	//---------------------------PUBLIC INTERFACE----------------------------------------
 public:
-
 	CvCorporationInfo();
-	virtual ~CvCorporationInfo();
 
-	int getChar() const;
-	// TGA_INDEXATION 01/21/08 MRGENIE
-	int getTGAIndex() const;
+	virtual void mapFrom(const picojson::value& entity);
 
-	void setChar(int i);
-	int getHeadquarterChar() const;
-	void setHeadquarterChar(int i);
-	TechTypes getTechPrereq() const { return m_iTechPrereq; }
-	int getFreeUnit() const;
-	int getSpreadFactor() const;
-	int getSpreadCost() const;
-	int getMaintenance() const;
-	int getMissionType() const;
-	void setMissionType(int iNewType);
+	// ======================= 1. SECTIONS -- whole typed objects =======================
+	virtual const CvEdges*     getEdges()     const { return &m_edges; }
+	virtual const CvProvides*  getProvides()  const { return &m_provides; }   // §5a provides.bonuses (the produced bonus)
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvRequires*  getRequires()  const { return &m_requires; }   // §4.3 requires.spread (served while no corp authors it -- owner ruling 2026-07-17)
 
-	int getBonusProduced() const;
+	// ======================= 2. CLASSIFICATION -- none (corporations author no §8 block) ====================
 
-	const char* getMovieFile() const;
-	const char* getMovieSound() const;
-	const char* getSound() const;
+	// ======================= 3. MODIFIER GROUPS -- conditioned-only (see the census note above) ==============
+	// No point getters: every authored entry is conditioned, so every unconditioned sum is 0 by construction.
+	// Readers walk the base modifierConditioned()/modifierConditionedRange() or ask the expected* endpoints.
+	// The TWO materialized value planes (bare ×100 member reads, filled once at mapFrom from entries()):
+	// -- the HQ-city revenue plane (rulings 4+10): the per-CORPORATION_LEVEL commerce value of the
+	//    {IS_HEADQUARTERS: SELF} entries; the consumer applies × corp level at the HQ city itself.
+	int getHeadquartersCommerce(CommerceTypes eCommerce) const { return m_aiHeadquartersCommerce[(int)eCommerce]; }
+	// -- the corp's PRODUCED output, scaled by the consumed-bonus count at the consumer: the data authors
+	//    `{yield|commerce}.city.flat` (food/production/culture/gold/research), so these are ordinary point reads
+	//    over the compiled sums. ×100 like every other flat; the reader reduces at its point of use.
+	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
+	{ return flatWithFans(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope); }
+	int getFlatCommerce(CommerceTypes eCommerce, CvCascScope eScope) const
+	{ return flatWithFans(infoCommerceFamily(eCommerce), CHANNEL_AMOUNT, eScope); }
+	// -- the rest of what a corporation authors at CITY scope: wellbeing, the military build-rate and free XP.
+	int getBuildRateModifier(BuildRateKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_BUILD_RATE, eKind, eScope, CASC_UNIT_PERCENT); }
+	int getExperience(ExperienceKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_EXPERIENCE, eKind, eScope, infoKindUnit(MODFAM_EXPERIENCE, eKind)); }
+	// -- the consumed-bonus set (the per:{anyOf:...} scaler's union): WHICH bonuses this corp's output scales
+	//    over -- the spread/dormancy gate's "≥1 prereq bonus present" set and the AI's consumption view.
+	const std::vector<int>& getConsumedBonuses() const { return m_aeConsumedBonuses; }
 
-	const std::vector<BonusTypes>& getPrereqBonuses() const;
+	// ======================= 4. INTRINSIC -- bare typed reads (the census identity set) ======================
+	int getSpreadFactor() const { return m_iSpreadFactor; }                                   // identity.spreadFactor (spread-weight config)
+	int getCompetingSpreadCostPercent() const { return m_iCompetingSpreadCostPercent; }       // identity.competingSpreadCostPercent
+	int getSpreadCost() const { return m_iSpreadCost; }                                       // cost.spread (executive spread gold)
+	const char* getSound() const { return m_szSound.c_str(); }                                // sound.sound
+	int getTGAIndex() const { return m_iTGAIndex; }                                           // ui.art.tgaIndex
+	const char* getMovieFile() const { return m_szMovieFile.c_str(); }                        // ui.art.movie.file
+	const char* getMovieSound() const { return m_szMovieSound.c_str(); }                      // ui.art.movie.sound
+	// --- RUNTIME member (set post-load, NOT JSON): the HQ-building registry, the exact sibling of the
+	// religion's shrine registry. The BUILDING declares the relationship as its §9 `headquarters` FK
+	// (json.md §9 -- `headquarters` is the corp analog of `shrine`, same FK shape), and every consumer asks
+	// the CORPORATION which building is its HQ, so the readJson reverse pass fills this from the compiled FK
+	// (CvReversePass calls addHeadquartersBuilding) rather than each consumer scanning the building registry.
+	const std::vector<BuildingTypes>& getHeadquartersBuildings() const
+	{ return reinterpret_cast<const std::vector<BuildingTypes>&>(m_aeHeadquartersBuildings); }
+	void addHeadquartersBuilding(int iBuilding) { m_aeHeadquartersBuildings.push_back(iBuilding); }
+	void clearHeadquartersBuildings() { m_aeHeadquartersBuildings.clear(); }   // clear-first: the pass runs in BOTH load phases
 
-	// Arrays
-	int getHeadquarterCommerce(int i) const;
-	int* getHeadquarterCommerceArray() const;
-	int getCommerceProduced(int i) const;
-	int* getCommerceProducedArray() const;
-	int getYieldProduced(int i) const;
-	int* getYieldProducedArray() const;
+	// requires.spread per-building count atoms ({type:BUILDING_X, scope:empire, min:N}, json §4.3) -- the
+	// executive-spread gate's per-building COUNT need; 0 = no requirement (materialized at mapFrom).
+	int getSpreadBuildingCount(int iBuilding) const
+	{
+		std::map<int, int>::const_iterator countIt = m_spreadBuildingCounts.find(iBuilding);
+		return countIt != m_spreadBuildingCounts.end() ? countIt->second : 0;
+	}
+	// The same plane as a LIST: the handful of buildings this corp actually names, so a consumer asking
+	// "what does it require" walks those rather than every building id asking each one in turn (the
+	// own-data inversion). Ordered by building id, so a reader sees them in registry order.
+	const std::map<int, int>& getSpreadBuildingCounts() const { return m_spreadBuildingCounts; }
 
-	bool read(CvXMLLoadUtility* pXML);
+	// --- store-inverted tech FKs (tech.enables.corporations / tech.obsoletes.corporations), reconstructed at
+	// LOAD by the readJson reverse pass (CvReversePass), which calls the setters below. LOAD-ONLY writers. ---
+	TechTypes getTechPrereq() const { return m_eTechPrereq; }
+	TechTypes getObsoleteTech() const { return m_eObsoleteTech; }
+	void setTechPrereq(TechTypes eTech) { m_eTechPrereq = eTech; }
+	void setObsoleteTech(TechTypes eTech) { m_eObsoleteTech = eTech; }
 
-	TechTypes getObsoleteTech() const;
-	int getSpread() const;
-	int getHealth() const;
-	int getHappiness() const;
-	int getMilitaryProductionModifier() const;
-	int getFreeXP() const;
-	int getPrereqGameOption() const;
+	// --- RUNTIME members (set post-load, NOT JSON): the GameFont glyphs + the spread mission id ---
+	int getChar() const { return m_iChar; }
+	void setChar(int iSymbol);                        // TGA-derived slot, religion-block offset (.cpp)
+	int getHeadquarterChar() const { return m_iHeadquarterChar; }
+	void setHeadquarterChar(int iSymbol);
+	int getMissionType() const { return m_iMissionType; }
+	void setMissionType(int iMission) { m_iMissionType = iMission; }
 
-	int getPrereqBuilding(int i) const;
-	int getPrereqBuildingVectorSize() const;
-	CvString getPrereqBuildingNamesVectorElement(const int i) const;
-	int getPrereqBuildingValuesVectorElement(const int i) const;
-
-	bool isCompetingCorporation(int i) const;
-	int getCompetingCorporationVectorSize() const;
-	CvString getCompetingCorporationNamesVectorElement(const int i) const;
-	bool getCompetingCorporationValuesVectorElement(const int i) const;
-
-	int getCategory(int i) const;
-	int getNumCategories() const;
-	bool isCategory(int i) const;
-
-	void getDataMembers(CvInfoUtil& util);
-	bool readPass3();
-	int getYieldChange(int i) const;
-	int* getYieldChangeArray() const;
-	int getCommerceChange(int i) const;
-	int* getCommerceChangeArray() const;
-
-	void copyNonDefaults(const CvCorporationInfo* pClassInfo);
-
-	void getCheckSum(uint32_t& iSum) const;
-
+	// The KEEP-legacy property engine's per-turn SOURCES (property-audit.md). The gather roster walks
+	// a corporation, so the container must exist -- but NO corporation authors a PROPERTY_* family today, so it is
+	// accurately EMPTY rather than stubbed: it fills the moment such a deposit is curated.
 	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
 
-private:
-
-	std::vector<int> m_aiCategories;
-
-	CvPropertyManipulators m_PropertyManipulators;
-
 protected:
-	// TGA_INDEXATION 01/21/08 MRGENIE
-	int m_iTGAIndex;
+	virtual CvEdges*     mutEdges()     { return &m_edges; }
+	virtual CvProvides*  mutProvides()  { return &m_provides; }
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvRequires*  mutRequires()  { return &m_requires; }
 
+private:
+	// --- the composed section units ---
+	CvEdges     m_edges;
+	CvProvides  m_provides;
+	CvModifiers m_modifiers;
+	CvRequires  m_requires;
+
+	// --- the materialized value planes (filled once at mapFrom from the compiled entries) ---
+	int m_aiHeadquartersCommerce[NUM_COMMERCE_TYPES];
+	std::vector<int> m_aeConsumedBonuses;
+	std::map<int, int> m_spreadBuildingCounts;
+
+	// --- the RUNTIME registry (post-load, fed by the reverse pass from each building's §9 headquarters FK) ---
+	std::vector<int> m_aeHeadquartersBuildings;
+
+	// --- the intrinsic identity members ---
+	int m_iSpreadFactor;
+	int m_iCompetingSpreadCostPercent;
+	int m_iSpreadCost;
+	int m_iTGAIndex;
+	std::string m_szSound;
+	std::string m_szMovieFile;
+	std::string m_szMovieSound;
+
+	// --- reverse-pass-fed FKs + runtime members ---
+	TechTypes m_eTechPrereq;
+	TechTypes m_eObsoleteTech;
 	int m_iChar;
 	int m_iHeadquarterChar;
-	TechTypes m_iTechPrereq;
-	int m_iFreeUnit;
-	int m_iSpreadFactor;
-	int m_iSpreadCost;
-	int m_iMaintenance;
 	int m_iMissionType;
-	int m_iBonusProduced;
-
-	TechTypes m_iObsoleteTech;
-	int m_iSpread;
-	int m_iHealth;
-	int m_iHappiness;
-	int m_iFreeXP;
-	int m_iMilitaryProductionModifier;
-	int m_iPrereqGameOption;
-
-	int* m_paiPrereqBuilding;
-	std::vector<CvString> m_aszPrereqBuildingforPass3;
-	std::vector<int> m_aiPrereqBuildingforPass3;
-
-	bool* m_pabCompetingCorporation;
-	std::vector<CvString> m_aszCompetingCorporationforPass3;
-	std::vector<bool> m_abCompetingCorporationforPass3;
-
-	int* m_piYieldChange;
-	int* m_piCommerceChange;
-
-	CvString m_szMovieFile;
-	CvString m_szMovieSound;
-	CvString m_szSound;
-
-	std::vector<BonusTypes> m_vPrereqBonuses;
-
-	// Arrays
-	int* m_paiHeadquarterCommerce;
-	int* m_paiCommerceProduced;
-	int* m_paiYieldProduced;
+	CvPropertyManipulators m_PropertyManipulators;   // fed from the PROPERTY_* families (CascadePropertyBridge)
 };
 
-#endif // CV_CORPORATION_INFO_H
+#endif // CV_JSON_CORPORATION_INFO_H

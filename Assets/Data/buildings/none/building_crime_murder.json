@@ -1,0 +1,103 @@
+{
+ "type": "BUILDING_CRIME_MURDER",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 875,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    -6,
+    {
+     "value": -30,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -6,
+    {
+     "value": -10,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": 100
+   }
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 40
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_MURDER",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_MURDER_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

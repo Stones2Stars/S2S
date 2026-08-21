@@ -1,0 +1,197 @@
+{
+ "type": "UNIT_BANDIT_FOOTPAD",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RIFLING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MERCENARY_CAMP",
+    "TECH_BRONZE_WORKING"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CUTTHROAT"
+    ]
+   }
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_COPPER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_BRONZE_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "lunge": {
+    "percent": 10
+   },
+   "enclose": {
+    "percent": 4
+   },
+   "unnerve": {
+    "percent": 10
+   },
+   "stealth": {
+    "percent": 10
+   },
+   "targets": {
+    "UNITCOMBAT_TRADE": true,
+    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 6
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 10
+  },
+  "plot": {
+   "flat": 10
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_CAPTIVE",
+    "flat": 1
+   }
+  }
+ },
+ "skills": [
+  "alwaysHostile",
+  "hiddenNationality",
+  "pillage",
+  "barbCoExist",
+  "ignoreTerrainCost",
+  "noNonOwnedCityEntry",
+  "stealthDefense",
+  "upgradeAnywhere"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "troop"
+ ],
+ "combatClass": "UNITCOMBAT_RUFFIAN",
+ "combatClasses": [
+  "UNITCOMBAT_MELEE",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+  "UNITCOMBAT_WEAPON_H2H_AXE",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_SHIELD_LARGE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_BATTALION",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO",
+   "PROMOTION_MARAUDER",
+   "PROMOTION_LOOTER"
+  ]
+ },
+ "cost": {
+  "production": 200,
+  "upkeep": 5
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BANDIT_FOOTPAD",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_BANDIT_FOOTPAD"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_BANDIT_FOOTPAD",
+  "civilopedia": "TXT_KEY_UNIT_BANDIT_FOOTPAD_PEDIA",
+  "worth": 2,
+  "militaryWorth": 7,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

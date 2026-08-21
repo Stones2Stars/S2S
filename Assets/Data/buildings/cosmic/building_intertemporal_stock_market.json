@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_INTERTEMPORAL_STOCK_MARKET",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_E_STOCK_MARKET",
+    "TECH_SPACETIME_ECONOMICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 42
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 2
+  }
+ },
+ "cost": {
+  "production": 19055,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERTEMPORAL_STOCK_MARKET",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERTEMPORAL_STOCK_MARKET",
+  "civilopedia": "TXT_KEY_BUILDING_INTERTEMPORAL_STOCK_MARKET_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

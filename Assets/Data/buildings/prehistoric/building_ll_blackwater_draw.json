@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_LL_BLACKWATER_DRAW",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_BONE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_BONE_WORKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 180,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_BLACKWATER_DRAW"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LL_BLACKWATER_DRAW",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LL_BLACKWATER_DRAW",
+  "civilopedia": "TXT_KEY_BUILDING_LL_BLACKWATER_DRAW_PEDIA",
+  "pediaCategory": "groupWonder",
+  "centerInCity": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_GROUP_LEGENDARY_LANDSCAPES",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

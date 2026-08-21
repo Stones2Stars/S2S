@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTION_SURPRISE_STATUS",
+ "skills": {
+  "stealthDefense": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SURPRISE": 2
+ },
+ "enabled": "GAMEOPTION_COMBAT_WITHOUT_WARNING",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/SurpriseStatus.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SURPRISE",
+  "status": true,
+  "quick": true,
+  "prereqNormInvisible": true
+ }
+}

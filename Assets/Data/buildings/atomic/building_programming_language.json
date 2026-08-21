@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_PROGRAMMING_LANGUAGE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COMPUTER_SCIENCE_DEPARTMENT",
+    "TECH_COMPUTER_SCIENCE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1180,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROGRAMMING_LANGUAGE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PROGRAMMING_LANGUAGE",
+  "civilopedia": "TXT_KEY_BUILDING_PROGRAMMING_LANGUAGE_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

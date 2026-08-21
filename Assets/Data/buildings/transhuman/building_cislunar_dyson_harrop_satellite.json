@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_CISLUNAR_DYSON_HARROP_SATELLITE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ENERGY_BEAM_NETWORK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_NANOSATELLITE_CONSTELLATION",
+    "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+    "TECH_PHOTONIC_SATELLITES",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 3362,
+  "hurryModifier": 10000
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_DYSON_HARROP_SATELLITE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_DYSON_HARROP_SATELLITE",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_DYSON_HARROP_SATELLITE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

@@ -1,0 +1,158 @@
+{
+ "type": "UNIT_DREADNOUGHT",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_TANKS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_ADVANCED_SHIELDING",
+    {
+     "type": "BONUS_ALUMINUM_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_PETROLEUM_PRODUCTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BIOFUEL",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 240
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 2
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 40
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 90
+   },
+   "maxUnits": {
+    "flat": 10
+   }
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost",
+  "mechanized",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_DREADNOUGHT",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_ION",
+  "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+  "UNITCOMBAT_WEAPON_DIST_ELECTRICAL",
+  "UNITCOMBAT_WEAPON_H2H_FLAMETHROWER",
+  "UNITCOMBAT_WEAPON_DIST_HEAT",
+  "UNITCOMBAT_WEAPON_DIST_LASER",
+  "UNITCOMBAT_WEAPON_DIST_MEDIUM_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_COLOSSAL",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_BLITZ"
+  ]
+ },
+ "cost": {
+  "production": 6400,
+  "upkeep": 151
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DREADNOUGHT_ARMOR",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_DREADNOUGHT_ARMOR"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_DREADNOUGHT",
+  "civilopedia": "TXT_KEY_UNIT_DREADNOUGHT_PEDIA",
+  "worth": 8,
+  "militaryWorth": 1240,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": 500
+  }
+ }
+}

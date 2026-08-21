@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_ECOSCRAPER",
+ "enables": {
+  "buildings": [
+   "BUILDING_ECOMEGATOWER",
+   "BUILDING_GARDENS_BY_THE_BAY",
+   "BUILDING_MEGATOWER_BIODOME_PARK_CROWN_SECTION",
+   "BUILDING_SEA_TREE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SKYSCRAPER",
+    "TECH_ECOLOGICAL_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "cost": {
+  "production": 2105,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ECOSCRAPER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ECOSCRAPER",
+  "civilopedia": "TXT_KEY_BUILDING_ECOSCRAPER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

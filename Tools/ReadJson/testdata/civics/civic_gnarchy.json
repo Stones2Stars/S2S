@@ -1,0 +1,34 @@
+{
+  "type": "CIVIC_GNARCHY",
+
+  "identity": {
+    "description": "TXT_KEY_CIVIC_GNARCHY",
+    "civicOption": "CIVICOPTION_GOVERNMENT",
+    "anarchyLength": 2
+  },
+
+  "enables": {
+    "buildings": ["BUILDING_TEMPLE_OF_GNARL"],
+    "hurries": ["HURRY_GNARL"]
+  },
+
+  "happiness": {
+    "empire": {
+      "flat": [
+        2,
+        { "value": 3, "enabled": { "type": "BONUS_GNARLITE", "scope": "empire", "min": 1 } }
+      ]
+    }
+  },
+  "gold": {
+    "empire": { "flat": { "value": 1, "per": { "type": "BONUS_GNARLITE", "scope": "empire", "each": 1 } } }
+  },
+  "buildRate": { "empire": { "military": { "percent": 25 } } },
+  "maintenance": { "empire": { "distance": { "percent": -20 } } },
+  "PROPERTY_CRIME": { "city": { "flat": -5 } },
+
+  "policies": { "noForeignTrade": true, "allowInquisitions": true },
+  "grants": { "revolution": -100 },
+
+  "ui": { "art": { "icon": "ART_DEF_CIVIC_GNARCHY" } }
+}

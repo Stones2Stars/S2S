@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_SONGHAI",
+ "enables": {
+  "units": [
+   "UNIT_ASKIA",
+   "UNIT_AZAWAD_CAVALRY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SONGHAI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SONGHAI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

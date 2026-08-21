@@ -1,0 +1,78 @@
+{
+ "type": "TECH_ACNP_PROPULSION",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANTIMATTER_IMPORTER",
+   "BUILDING_BRACEWELL_PROBES",
+   "BUILDING_GLIESE_163C_COLONY",
+   "BUILDING_HD_85512B_COLONY",
+   "BUILDING_MERCURY_ANTIMATTER_FACTORY"
+  ],
+  "techs": [
+   "TECH_ADVANCED_SEEDSHIPS",
+   "TECH_ANTIMATTER_ROCKETS",
+   "TECH_ECOSYNTHESIS"
+  ],
+  "units": [
+   "UNIT_BRACEWELL_PROBE",
+   "UNIT_GALACTIC_REWARD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ADAPTIVE_RADIATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INTERSTELLAR_TRADE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 159944
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/acnppropulsion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ACNP_PROPULSION",
+  "soundMP": "AS2D_TECH_ACNP_PROPULSION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ACNP_PROPULSION",
+  "civilopedia": "TXT_KEY_TECH_ACNP_PROPULSION_PEDIA",
+  "quote": "TXT_KEY_TECH_ACNP_PROPULSION_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 131,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_INTERSTELLAR_METROPOLIS",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_ECUMENOPOLIS",
+   "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
+   "BUILDING_INTERSTELLAR_STARPORT",
+   "BUILDING_INTERSTELLAR_ZOO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+    "TECH_ADAPTIVE_ARCHITECTURE",
+    {
+     "type": "MAPCATEGORY_PLASMA",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -5
+   }
+  }
+ },
+ "cost": {
+  "production": 2856,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_METROPOLIS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_METROPOLIS",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_METROPOLIS_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

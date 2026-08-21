@@ -1,0 +1,77 @@
+{
+ "type": "TECH_MODERN_SANITATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_LITTERING",
+   "BUILDING_FIRE_HYDRANTS",
+   "BUILDING_FUNERARY_SERVICES",
+   "BUILDING_PUBLIC_RESTROOMS",
+   "BUILDING_WASTE_COMPACTOR",
+   "BUILDING_WATER_TREATMENT_PLANT"
+  ],
+  "techs": [
+   "TECH_CIVIL_ENGINEERING",
+   "TECH_MEDICINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ELIXIRS_AND_TONICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_STATISTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FIREFIGHTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 6351
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Modern_Sanitation.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,11"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MODERN_SANITATION",
+  "soundMP": "AS2D_TECH_MODERN_SANITATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MODERN_SANITATION",
+  "civilopedia": "TXT_KEY_TECH_MODERN_SANITATION_PEDIA",
+  "quote": "TXT_KEY_TECH_MODERN_SANITATION_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 66,
+  "gridY": 3
+ }
+}

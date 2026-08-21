@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_SCIENCE_SYMPOSIUM",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_UNIVERSITY",
+    "BUILDING_CONVENTION_CENTRE",
+    "TECH_COMMUNICATION_NETWORKS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 1925,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SCIENCE_SYMPOSIUM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SCIENCE_SYMPOSIUM",
+  "civilopedia": "TXT_KEY_BUILDING_SCIENCE_SYMPOSIUM_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

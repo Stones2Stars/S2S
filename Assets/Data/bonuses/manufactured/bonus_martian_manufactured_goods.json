@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_MARTIAN_MANUFACTURED_GOODS",
+ "enables": {
+  "buildings": [
+   "BUILDING_MARTIAN_BIOFACTORY",
+   "BUILDING_MARTIAN_ELECTRONICS_FACTORY",
+   "BUILDING_MARTIAN_MAGLEV_TERMINAL"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MARTIAN_MANUFACTURED_GOODS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MARTIAN_MANUFACTURED_GOODS",
+  "civilopedia": "TXT_KEY_BONUS_MARTIAN_MANUFACTURED_GOODS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

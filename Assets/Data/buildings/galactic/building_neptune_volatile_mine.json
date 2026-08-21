@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_NEPTUNE_VOLATILE_MINE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_NEPTUNE_WIND_TURBINE",
+    {
+     "type": "BUILDING_NEPTUNE_ORBITAL_RING",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_PLANET_CRACKING",
+    {
+     "type": "TERRAIN_NEPTUNE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 7810,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NEPTUNE_VOLATILE_MINE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NEPTUNE_VOLATILE_MINE",
+  "civilopedia": "TXT_KEY_BUILDING_NEPTUNE_VOLATILE_MINE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

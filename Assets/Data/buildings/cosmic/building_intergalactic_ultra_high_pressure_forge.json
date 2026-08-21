@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_INTERGALACTIC_ULTRA_HIGH_PRESSURE_FORGE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_ZERO_POINT_PLANT",
+    "TECH_ELECTROWEAK_MATTER",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 4246,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_ULTRA_HIGH_PRESSURE_FORGE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_ULTRA_HIGH_PRESSURE_FORGE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_ULTRA_HIGH_PRESSURE_FORGE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

@@ -61,7 +61,7 @@
 			<iPillageGold>25</iPillageGold>
 			<BonusTypeStructs>
 				<BonusTypeStruct>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 					<bBonusMakesValid>1</bBonusMakesValid>
 					<bBonusTrade>1</bBonusTrade>
 					<YieldChanges>
@@ -71,7 +71,7 @@
 					</YieldChanges>
 				</BonusTypeStruct>
 				<BonusTypeStruct>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<bBonusMakesValid>1</bBonusMakesValid>
 					<bBonusTrade>1</bBonusTrade>
 					<YieldChanges>
@@ -81,7 +81,7 @@
 					</YieldChanges>
 				</BonusTypeStruct>
 				<BonusTypeStruct>
-					<BonusType>BONUS_PARROTS</BonusType>
+					<BonusType>BONUS_PARROT</BonusType>
 					<bBonusMakesValid>1</bBonusMakesValid>
 					<bBonusTrade>1</bBonusTrade>
 					<YieldChanges>
@@ -141,7 +141,7 @@
 					</YieldChanges>
 				</BonusTypeStruct>
 				<BonusTypeStruct>
-					<BonusType>BONUS_GUINEA_PIGS</BonusType>
+					<BonusType>BONUS_GUINEA_PIG</BonusType>
 					<bBonusMakesValid>1</bBonusMakesValid>
 					<bBonusTrade>1</bBonusTrade>
 					<YieldChanges>
@@ -232,7 +232,7 @@
 					</YieldChanges>
 				</BonusTypeStruct>
 				<BonusTypeStruct>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<bBonusMakesValid>1</bBonusMakesValid>
 					<bBonusTrade>1</bBonusTrade>
 					<YieldChanges>
@@ -242,7 +242,7 @@
 					</YieldChanges>
 				</BonusTypeStruct>
 				<BonusTypeStruct>
-					<BonusType>BONUS_GUINEA_PIGS</BonusType>
+					<BonusType>BONUS_GUINEA_PIG</BonusType>
 					<bBonusMakesValid>1</bBonusMakesValid>
 					<bBonusTrade>1</bBonusTrade>
 					<YieldChanges>
@@ -252,7 +252,7 @@
 					</YieldChanges>
 				</BonusTypeStruct>
 				<BonusTypeStruct>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 					<bBonusMakesValid>1</bBonusMakesValid>
 					<bBonusTrade>1</bBonusTrade>
 					<YieldChanges>
@@ -320,7 +320,7 @@
 					</YieldChanges>
 				</BonusTypeStruct>
 				<BonusTypeStruct>
-					<BonusType>BONUS_PARROTS</BonusType>
+					<BonusType>BONUS_PARROT</BonusType>
 					<bBonusMakesValid>1</bBonusMakesValid>
 					<bBonusTrade>1</bBonusTrade>
 					<YieldChanges>
@@ -378,7 +378,7 @@
 					</YieldChanges>
 				</BonusTypeStruct>
 				<BonusTypeStruct>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<bBonusMakesValid>1</bBonusMakesValid>
 					<bBonusTrade>1</bBonusTrade>
 					<YieldChanges>
@@ -388,7 +388,7 @@
 					</YieldChanges>
 				</BonusTypeStruct>
 				<BonusTypeStruct>
-					<BonusType>BONUS_GUINEA_PIGS</BonusType>
+					<BonusType>BONUS_GUINEA_PIG</BonusType>
 					<bBonusMakesValid>1</bBonusMakesValid>
 					<bBonusTrade>1</bBonusTrade>
 					<YieldChanges>
@@ -398,7 +398,7 @@
 					</YieldChanges>
 				</BonusTypeStruct>
 				<BonusTypeStruct>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 					<bBonusMakesValid>1</bBonusMakesValid>
 					<bBonusTrade>1</bBonusTrade>
 					<YieldChanges>
@@ -464,7 +464,7 @@
 					</YieldChanges>
 				</BonusTypeStruct>
 				<BonusTypeStruct>
-					<BonusType>BONUS_PARROTS</BonusType>
+					<BonusType>BONUS_PARROT</BonusType>
 					<bBonusMakesValid>1</bBonusMakesValid>
 					<bBonusTrade>1</bBonusTrade>
 					<YieldChanges>
@@ -711,7 +711,7 @@
 					</YieldChanges>
 				</BonusTypeStruct>
 				<BonusTypeStruct>
-					<BonusType>BONUS_BEAVERS</BonusType>
+					<BonusType>BONUS_BEAVER</BonusType>
 					<bBonusMakesValid>1</bBonusMakesValid>
 					<bBonusTrade>1</bBonusTrade>
 					<YieldChanges>
@@ -721,7 +721,7 @@
 					</YieldChanges>
 				</BonusTypeStruct>
 				<BonusTypeStruct>
-					<BonusType>BONUS_GUINEA_PIGS</BonusType>
+					<BonusType>BONUS_GUINEA_PIG</BonusType>
 					<bBonusMakesValid>1</bBonusMakesValid>
 					<bBonusTrade>1</bBonusTrade>
 					<YieldChanges>
@@ -731,7 +731,7 @@
 					</YieldChanges>
 				</BonusTypeStruct>
 				<BonusTypeStruct>
-					<BonusType>BONUS_ELEPHANTS</BonusType>
+					<BonusType>BONUS_ELEPHANT</BonusType>
 					<bBonusMakesValid>1</bBonusMakesValid>
 					<bBonusTrade>1</bBonusTrade>
 					<YieldChanges>
@@ -789,7 +789,7 @@
 					</YieldChanges>
 				</BonusTypeStruct>
 				<BonusTypeStruct>
-					<BonusType>BONUS_PARROTS</BonusType>
+					<BonusType>BONUS_PARROT</BonusType>
 					<bBonusMakesValid>1</bBonusMakesValid>
 					<bBonusTrade>1</bBonusTrade>
 					<YieldChanges>

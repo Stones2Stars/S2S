@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_SUBTERRANEAN_CITY_EXPANSION",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SUBTERRANEAN_CITY",
+    "BUILDING_CORE_MINE",
+    "TECH_GEOSCULPTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 8405,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SUBTERRANEAN_CITY_EXPANSION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SUBTERRANEAN_CITY_EXPANSION",
+  "civilopedia": "TXT_KEY_BUILDING_SUBTERRANEAN_CITY_EXPANSION_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

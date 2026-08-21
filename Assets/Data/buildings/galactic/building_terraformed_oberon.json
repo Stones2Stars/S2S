@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_TERRAFORMED_OBERON",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_URANIAN_SF6_GENERATOR",
+    "BUILDING_URANIAN_LUNAR_MAGNETIC_FIELD",
+    "TECH_LUNAR_TERRAFORMING",
+    {
+     "type": "TERRAIN_UMBRIEL",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_TERRAFORMED_TITANIA"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 22747,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TERRAFORMED_OBERON"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TERRAFORMED_OBERON",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TERRAFORMED_OBERON",
+  "civilopedia": "TXT_KEY_BUILDING_TERRAFORMED_OBERON_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

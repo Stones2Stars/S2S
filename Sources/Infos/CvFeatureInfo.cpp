@@ -1,511 +1,241 @@
-//------------------------------------------------------------------------------------------------
-//  FILE:    CvFeatureInfo.cpp
-//------------------------------------------------------------------------------------------------
-#include "CvGameCoreDLL.h"
-#include "CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "CvPlayerAI.h"
-#include "CvPython.h"
-#include "CvXMLLoadUtility.h"
-#include "CvXMLLoadUtilityModTools.h"
-#include "CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
+//
+//	CvFeatureInfo -- the feature poco's own typed reading on top of the base section dispatch (see the header).
+//	The yield/defense/health/cultureDistance families compile into m_modifiers via the base dispatch -- no
+//	per-family raw read survives here (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)); the HAS_RIVER yield extras are compiled
+//	conditioned entries. mapFrom materializes the identity/cost/art/sound census set ONCE into typed members
+//	(docs/architecture/patterns.md §Materialize at mapFrom); idempotent by contract.
+//
+
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
 #include "CvFeatureInfo.h"
+#include "UI/CvArtFileMgr.h"      // ARTFILEMGR -- the EXE-shim-merge getArtInfo()
+#include "Infos/CvArtInfoFeature.h"   // complete CvArtInfoFeature -- getButton() needs the full definition
+#include "CvJsonParse.h"          // jsonResolveId + the shared walkers (jsonChildObj/jsonIdInt/jsonIdBool/jsonIdStr/jsonWorldArt)
+#include "Property/CvPropertyBridge.h" // the shared `triggers` PROPERTY pulse -> manipulator walk
+#include "AI/CvGameAI.h"          // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, mirrors the archive)
 
-
-//======================================================================================================
-//					CvBonusInfo
-//======================================================================================================
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   CvBonusInfo()
-//
-//  PURPOSE :   Default constructor
-//
-//------------------------------------------------------------------------------------------------------
-
-
-
-//======================================================================================================
-//					CvFeatureInfo
-//======================================================================================================
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   CvFeatureInfo()
-//
-//  PURPOSE :   Default constructor
-//
-//------------------------------------------------------------------------------------------------------
-CvFeatureInfo::CvFeatureInfo() :
-// Only non-declarative fields here; everything else defaults via initDataMembers().
-m_iWorldSoundscapeScriptId(0),
-m_pi3DAudioScriptFootstepIndex(NULL)
+CvFeatureInfo::CvFeatureInfo()
+	: m_iAppearanceProbability(0)
+	, m_iDisappearanceProbability(0)
+	, m_iGrowthProbability(0)
+	, m_iSpreadProbability(0)
+	, m_iAdvancedStartRemoveCost(0)
+	, m_iEffectProbability(0)
+	, m_iZobristValue(0)
+	, m_iWorldSoundscapeScriptId(-1)
+	, m_bImpassable(false)
+	, m_bRequiresFlatlands(false)
+	, m_bRequiresRiver(false)
+	, m_bAddsFreshWater(false)
+	, m_bNoCoast(false)
+	, m_bNoRiver(false)
+	, m_bNoAdjacent(false)
+	, m_bCoastalOnly(false)
+	, m_bVisibleAlways(false)
+	, m_bCanGrowAnywhere(false)
 {
-	CvInfoUtil(this).initDataMembers();
-
-	m_zobristValue = GC.getGame().getSorenRand().getInt();
+	// Non-XML runtime map-hash value, drawn from the synced RNG at info construction EXACTLY as the archived
+	// CvFeatureInfo ctor did. CvPlot XORs it into m_movementCharacteristicsHash.
+	m_iZobristValue = GC.getGame().getSorenRand().getInt();
 }
 
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   ~CvFeatureInfo()
-//
-//  PURPOSE :   Default destructor
-//
-//------------------------------------------------------------------------------------------------------
-CvFeatureInfo::~CvFeatureInfo()
-{
-	CvInfoUtil(this).uninitDataMembers(); // frees m_piYieldChange / m_piRiverYieldChange (owned by addYields)
-
-	SAFE_DELETE_ARRAY(m_pi3DAudioScriptFootstepIndex);
-}
-
-
-int CvFeatureInfo::getMovementCost() const
-{
-	return m_iMovementCost;
-}
-
-
-int CvFeatureInfo::getSeeThroughChange() const
-{
-	return m_iSeeThroughChange;
-}
-
-
-int CvFeatureInfo::getHealthPercent() const
-{
-	return m_iHealthPercent;
-}
-
-
-int CvFeatureInfo::getAppearanceProbability() const
-{
-	return m_iAppearanceProbability;
-}
-
-
-int CvFeatureInfo::getDisappearanceProbability() const
-{
-	return m_iDisappearanceProbability;
-}
-
-
-int CvFeatureInfo::getGrowthProbability() const
-{
-	return m_iGrowthProbability;
-}
-
-
-int CvFeatureInfo::getDefenseModifier() const
-{
-	return m_iDefenseModifier;
-}
-
-
-int CvFeatureInfo::getAdvancedStartRemoveCost() const
-{
-	return m_iAdvancedStartRemoveCost;
-}
-
-
-int CvFeatureInfo::getWarmingDefense() const			//GWMod new xml field M.A.
-{
-	return m_iWarmingDefense;
-}
-
-
-int CvFeatureInfo::getPopDestroys() const			//GWMod new xml field M.A.
-{
-	return m_iPopDestroys;
-}
-
-
-bool CvFeatureInfo::isNoCoast() const
-{
-	return m_bNoCoast;
-}
-
-
-bool CvFeatureInfo::isNoRiver() const
-{
-	return m_bNoRiver;
-}
-
-
-bool CvFeatureInfo::isNoAdjacent() const
-{
-	return m_bNoAdjacent;
-}
-
-
-bool CvFeatureInfo::isRequiresFlatlands() const
-{
-	return m_bRequiresFlatlands;
-}
-
-
-bool CvFeatureInfo::isRequiresRiver() const
-{
-	return m_bRequiresRiver;
-}
-
-
-bool CvFeatureInfo::isAddsFreshWater() const
-{
-	return m_bAddsFreshWater;
-}
-
-
-bool CvFeatureInfo::isImpassable() const
-{
-	return m_bImpassable;
-}
-
-
-bool CvFeatureInfo::isNoCity() const
-{
-	return m_bNoCity;
-}
-
-
-bool CvFeatureInfo::isNoImprovement() const
-{
-	return m_bNoImprovement;
-}
-
-
-bool CvFeatureInfo::isVisibleAlways() const
-{
-	return m_bVisibleAlways;
-}
-
-
-bool CvFeatureInfo::isNukeImmune() const
-{
-	return m_bNukeImmune;
-}
-
-
-bool CvFeatureInfo::isCountsAsPeak() const
-{
-	return m_bCountsAsPeak;
-}
-
-
-// BUG - City Plot Status - start
 bool CvFeatureInfo::isOnlyBad() const
 {
-	PROFILE_EXTRA_FUNC();
-	if (getHealthPercent() > 0 || isAddsFreshWater())
+	// The BUG city-plot-status test, over the compiled reads: any positive health modifier, fresh water, or
+	// positive own tile yield means the feature is not purely bad.
+	if (getWellbeingModifier(WELLBEING_HEALTH, CASC_SCOPE_PLOT) > 0 || isAddsFreshWater())
 	{
 		return false;
 	}
-	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 	{
-		if (getYieldChange(iI) > 0)
+		if (getFlatYield((YieldTypes)iYield, CASC_SCOPE_PLOT) > 0)
 		{
 			return false;
 		}
 	}
-
 	return true;
 }
 
-// BUG - City Plot Status - end
-
-const char* CvFeatureInfo::getOnUnitChangeTo() const
+bool CvFeatureInfo::isTerrain(int iTerrain) const
 {
-	return m_szOnUnitChangeTo;
+	for (size_t iEntry = 0; iEntry < m_aeValidTerrains.size(); ++iEntry)
+	{
+		if ((int)m_aeValidTerrains[iEntry] == iTerrain)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
-
-const char* CvFeatureInfo::getArtDefineTag() const
+void CvFeatureInfo::mapFrom(const picojson::value& entity)
 {
-	return m_szArtDefineTag;
+	// remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom
+	m_aeValidTerrains.clear();
+	m_aeMapCategories.clear();
+
+	CvInfo::mapFrom(entity);   // core reading + the section dispatch (compiles m_modifiers)
+	if (!entity.is<picojson::object>())
+	{
+		return;
+	}
+	const picojson::object& entityObj = entity.get<picojson::object>();
+
+	// PROPERTY_* per-turn SOURCES: the feature's `triggers` property pulses (bamboo/jungle air-pollution
+	// sinks, reef water-pollution sinks) feed the KEEP-legacy solver via the plot gather. The ONE shared
+	// pulse walk (clear-and-refill inside).
+	CascadePropertyBridge::bridgePulses(getTriggers(), m_PropertyManipulators, getType());
+
+	// identity: placement + relief fields
+	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
+	{
+		m_iAppearanceProbability = jsonIdInt(*pIdentity, "appearance");
+		m_iDisappearanceProbability = jsonIdInt(*pIdentity, "disappearance");
+		m_iGrowthProbability = jsonIdInt(*pIdentity, "growth");
+		m_iSpreadProbability = jsonIdInt(*pIdentity, "spread");
+		m_bImpassable = jsonIdBool(*pIdentity, "impassable");
+		m_bRequiresFlatlands = jsonIdBool(*pIdentity, "requiresFlatlands");
+		m_bRequiresRiver = jsonIdBool(*pIdentity, "requiresRiver");
+		m_bAddsFreshWater = jsonIdBool(*pIdentity, "addsFreshWater");
+		m_bNoCoast = jsonIdBool(*pIdentity, "noCoast");
+		m_bNoRiver = jsonIdBool(*pIdentity, "noRiver");
+		m_bNoAdjacent = jsonIdBool(*pIdentity, "noAdjacent");
+		m_bCoastalOnly = jsonIdBool(*pIdentity, "coastalOnly");
+		m_bVisibleAlways = jsonIdBool(*pIdentity, "visibleAlways");
+		m_bCanGrowAnywhere = jsonIdBool(*pIdentity, "canGrowAnywhere");
+
+		picojson::object::const_iterator terrainsIter = pIdentity->find("validTerrains");
+		if (terrainsIter != pIdentity->end() && terrainsIter->second.is<picojson::array>())
+		{
+			const picojson::array& terrainList = terrainsIter->second.get<picojson::array>();
+			for (size_t iEntry = 0; iEntry < terrainList.size(); ++iEntry)
+			{
+				if (!terrainList[iEntry].is<std::string>())
+				{
+					continue;
+				}
+				const int iResolved = jsonResolveId(terrainList[iEntry].get<std::string>());
+				if (iResolved >= 0)
+				{
+					m_aeValidTerrains.push_back((TerrainTypes)iResolved);
+				}
+			}
+		}
+		picojson::object::const_iterator categoriesIter = pIdentity->find("mapCategories");
+		if (categoriesIter != pIdentity->end() && categoriesIter->second.is<picojson::array>())
+		{
+			const picojson::array& categoryList = categoriesIter->second.get<picojson::array>();
+			for (size_t iEntry = 0; iEntry < categoryList.size(); ++iEntry)
+			{
+				if (!categoryList[iEntry].is<std::string>())
+				{
+					continue;
+				}
+				const int iResolved = jsonResolveId(categoryList[iEntry].get<std::string>());
+				if (iResolved >= 0)
+				{
+					m_aeMapCategories.push_back((MapCategoryTypes)iResolved);
+				}
+			}
+		}
+	}
+
+	// cost block: the advanced-start feature-removal cost
+	if (const picojson::object* pCost = jsonChildObj(entityObj, "cost"))
+	{
+		m_iAdvancedStartRemoveCost = jsonIdInt(*pCost, "advancedStartRemoveCost");
+	}
+
+	// world.art: the ART_DEF_* icon tag + the on-map effect (type + probability). Cleared first: jsonIdStr only
+	// assigns when the key is present (mapFrom idempotency, CvInfo.h).
+	m_szArtDefineTag.clear();
+	m_szEffectType.clear();
+	if (const picojson::object* pArt = jsonWorldArt(entityObj))
+	{
+		jsonIdStr(*pArt, "define", m_szArtDefineTag);
+		if (const picojson::object* pEffect = jsonChildObj(*pArt, "effect"))
+		{
+			jsonIdStr(*pEffect, "type", m_szEffectType);
+			m_iEffectProbability = jsonIdInt(*pEffect, "probability");
+		}
+	}
+
+	// sound block: the feature-growth 2D sound + the on-map audio tags resolved to runtime audio-manager
+	// indices at info-load (gDLL->getAudioTagIndex -- the archived read mechanism). soundscape ->
+	// AUDIOTAG_SOUNDSCAPE; each footsteps entry keys a FOOTSTEP_AUDIO_* type to its AS3D_* script tag.
+	m_iWorldSoundscapeScriptId = -1;
+	m_ai3DAudioScriptFootstepIndex.clear();
+	if (const picojson::object* pSound = jsonChildObj(entityObj, "sound"))
+	{
+		jsonIdStr(*pSound, "growth", m_szGrowthSound);
+
+		picojson::object::const_iterator soundscapeIter = pSound->find("soundscape");
+		if (soundscapeIter != pSound->end() && soundscapeIter->second.is<std::string>()
+			&& soundscapeIter->second.get<std::string>().length() > 0)
+		{
+			m_iWorldSoundscapeScriptId = gDLL->getAudioTagIndex(soundscapeIter->second.get<std::string>().c_str(), AUDIOTAG_SOUNDSCAPE);
+		}
+
+		picojson::object::const_iterator footstepsIter = pSound->find("footsteps");
+		if (footstepsIter != pSound->end() && footstepsIter->second.is<picojson::array>())
+		{
+			const picojson::array& footstepList = footstepsIter->second.get<picojson::array>();
+			m_ai3DAudioScriptFootstepIndex.assign(GC.getNumFootstepAudioTypes(), -1);   // legacy InitList default -1
+			for (size_t iEntry = 0; iEntry < footstepList.size(); ++iEntry)
+			{
+				if (!footstepList[iEntry].is<picojson::object>())
+				{
+					continue;
+				}
+				const picojson::object& footstepObj = footstepList[iEntry].get<picojson::object>();
+				for (picojson::object::const_iterator footstepIter = footstepObj.begin(); footstepIter != footstepObj.end(); ++footstepIter)
+				{
+					const int iFootstepType = jsonResolveId(footstepIter->first);   // FOOTSTEP_AUDIO_* -> type index
+					if (iFootstepType < 0 || iFootstepType >= (int)m_ai3DAudioScriptFootstepIndex.size())
+					{
+						continue;   // mirrors the legacy iIndexVal != -1 skip
+					}
+					if (footstepIter->second.is<std::string>() && footstepIter->second.get<std::string>().length() > 0)
+					{
+						m_ai3DAudioScriptFootstepIndex[iFootstepType] = gDLL->getAudioTagIndex(footstepIter->second.get<std::string>().c_str());
+					}
+					// empty script tag -> slot stays -1 (legacy szTemp.GetLength() > 0 ? ... : -1)
+				}
+			}
+		}
+	}
+
+	// grants block: the on-entry unit transform (module-only; no base feature authors it)
+	if (const picojson::object* pGrants = jsonChildObj(entityObj, "grants"))
+	{
+		jsonIdStr(*pGrants, "onUnitChangeTo", m_szOnUnitChangeTo);
+	}
+
+	// (m_iZobristValue is drawn in the ctor -- non-XML runtime value, see there.)
 }
-
-
-int CvFeatureInfo::getWorldSoundscapeScriptId() const
-{
-	return m_iWorldSoundscapeScriptId;
-}
-
-
-const char* CvFeatureInfo::getEffectType() const
-{
-	return m_szEffectType;
-}
-
-
-int CvFeatureInfo::getEffectProbability() const
-{
-	return m_iEffectProbability;
-}
-
-
-// Arrays
-
-int CvFeatureInfo::getYieldChange(int i) const
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, i);
-	return m_piYieldChange ? m_piYieldChange[i] : 0;
-}
-
-
-int CvFeatureInfo::getRiverYieldChange(int i) const
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, i);
-	return m_piRiverYieldChange ? m_piRiverYieldChange[i] : 0;
-}
-
-
-int CvFeatureInfo::get3DAudioScriptFootstepIndex(int i) const
-{
-	//	FAssertMsg(i < ?, "Index out of bounds");
-	FAssertMsg(i > -1, "Index out of bounds");
-	return m_pi3DAudioScriptFootstepIndex ? m_pi3DAudioScriptFootstepIndex[i] : -1;
-}
-
-
-bool CvFeatureInfo::isTerrain(int i) const
-{
-	FASSERT_BOUNDS(0, GC.getNumTerrainInfos(), i);
-	return algo::any_of_equal(m_aeTerrain, static_cast<TerrainTypes>(i));
-}
-
-
-int CvFeatureInfo::getNumVarieties() const
-{
-	return getArtInfo()->getNumVarieties();
-}
-
-
-const char* CvFeatureInfo::getButton() const
-{
-	const CvArtInfoFeature* pFeatureArtInfo = getArtInfo();
-	return pFeatureArtInfo ? pFeatureArtInfo->getButton() : NULL;
-}
-
 
 const CvArtInfoFeature* CvFeatureInfo::getArtInfo() const
 {
-	return ARTFILEMGR.getFeatureArtInfo( getArtDefineTag());
+	return ARTFILEMGR.getFeatureArtInfo(getArtDefineTag());
 }
 
-
-int CvFeatureInfo::getSpreadProbability() const
+const char* CvFeatureInfo::getButton() const
 {
-	return m_iSpreadProbability;
+	const CvArtInfoFeature* pArtInfo = getArtInfo();
+	return pArtInfo != NULL ? pArtInfo->getButton() : "";
 }
 
-
-int CvFeatureInfo::getCultureDistance() const
+// Art-define tier: variety count + secondary-render test live in the art define (CvArtInfoFeature), not
+// feature-curator output. Delegate exactly as the archived class did.
+int CvFeatureInfo::getNumVarieties() const
 {
-	return m_iCultureDistance;
+	const CvArtInfoFeature* pArtInfo = getArtInfo();
+	return pArtInfo != NULL ? pArtInfo->getNumVarieties() : 0;
 }
 
-
-const char* CvFeatureInfo::getGrowthSound() const
-{
-	return m_szGrowthSound;
-}
-
-
-bool CvFeatureInfo::isIgnoreTerrainCulture() const
-{
-	return m_bIgnoreTerrainCulture;
-}
-
-
-bool CvFeatureInfo::isCanGrowAnywhere() const
-{
-	return m_bCanGrowAnywhere;
-}
-
-
-// AIAndy: Returns true if the feature can be displayed properly as secondary feature
 bool CvFeatureInfo::canBeSecondary() const
 {
-	return !(getArtInfo()->isRiverArt() || (getArtInfo()->getTileArtType() != TILE_ART_TYPE_NONE));
+	const CvArtInfoFeature* pArtInfo = getArtInfo();
+	return pArtInfo != NULL && !(pArtInfo->isRiverArt() || pArtInfo->getTileArtType() != TILE_ART_TYPE_NONE);
 }
-
-
-int CvFeatureInfo::getCategory(int i) const
-{
-	return m_aiCategories[i];
-}
-
-
-int CvFeatureInfo::getNumCategories() const
-{
-	return (int)m_aiCategories.size();
-}
-
-
-bool CvFeatureInfo::isCategory(int i) const
-{
-	return algo::any_of_equal(m_aiCategories, i);
-}
-
-
-
-void CvFeatureInfo::getDataMembers(CvInfoUtil& util)
-{
-	// Declared in the legacy getCheckSum order. The checksum is NOT delegated (see getCheckSum),
-	// but keeping the order aligned makes the two trivially comparable.
-	// Stays hand-written: m_pi3DAudioScriptFootstepIndex (SetVariableListTagPair-style dynamic
-	// array), m_iWorldSoundscapeScriptId (audio tag index lookup), m_zobristValue (runtime).
-	util
-		.add(m_iSpreadProbability, L"iSpread")
-		.add(m_iCultureDistance, L"iCultureDistance")
-		.add(m_bIgnoreTerrainCulture, L"bIgnoreTerrainCulture")
-		.add(m_bCanGrowAnywhere, L"bCanGrowAnywhere")
-		.add(m_iMovementCost, L"iMovement")
-		.add(m_iSeeThroughChange, L"iSeeThrough")
-		.add(m_iHealthPercent, L"iHealthPercent")
-		.add(m_iAppearanceProbability, L"iAppearance")
-		.add(m_iDisappearanceProbability, L"iDisappearance")
-		.add(m_iGrowthProbability, L"iGrowth")
-		.add(m_iDefenseModifier, L"iDefense")
-		.add(m_iAdvancedStartRemoveCost, L"iAdvancedStartRemoveCost")
-		.add(m_iWarmingDefense, L"iWarmingDefense") //GWMod new xml field M.A.
-		.add(m_iPopDestroys, L"iPopDestroys", -1)
-		.add(m_bNoCoast, L"bNoCoast")
-		.add(m_bNoRiver, L"bNoRiver")
-		.add(m_bNoAdjacent, L"bNoAdjacent")
-		.add(m_bRequiresFlatlands, L"bRequiresFlatlands")
-		.add(m_bRequiresRiver, L"bRequiresRiver")
-		.add(m_bCoastalOnly, L"bCoastalOnly")
-		.add(m_bAddsFreshWater, L"bAddsFreshWater")
-		.add(m_bImpassable, L"bImpassable")
-		.add(m_bNoCity, L"bNoCity")
-		.add(m_bNoImprovement, L"bNoImprovement")
-		.add(m_bNoBonus, L"bNoBonus")
-		.add(m_bVisibleAlways, L"bVisibleAlways")
-		.add(m_bNukeImmune, L"bNukeImmune")
-		.add(m_bCountsAsPeak, L"bCountsAsPeak")
-		.add(m_szOnUnitChangeTo, L"OnUnitChangeTo") // checksummed by the legacy hand-written getCheckSum
-		.add(m_aeMapCategoryTypes, L"MapCategoryTypes")
-		.add(m_aiCategories, L"Categories")
-		.addYields(m_piYieldChange, L"YieldChanges")
-		.addYields(m_piRiverYieldChange, L"RiverYieldChange")
-		.add(m_aeTerrain, L"TerrainBooleans")
-		.add(m_PropertyManipulators)
-		.add(m_iEffectProbability, L"iEffectProbability") // read but not checksummed (legacy omission, preserved)
-		.add(m_szEffectType, L"EffectType")
-		.add(m_szGrowthSound, L"GrowthSound")
-		.add(m_szArtDefineTag, L"ArtDefineTag")
-	;
-}
-
-
-bool CvFeatureInfo::read(CvXMLLoadUtility* pXML)
-{
-	CvString szTextVal;
-	if (!CvInfoBase::read(pXML))
-	{
-		return false;
-	}
-
-	CvInfoUtil(this).readXml(pXML);
-
-	pXML->SetVariableListTagPairForAudioScripts(&m_pi3DAudioScriptFootstepIndex, L"FootstepSounds", GC.getNumFootstepAudioTypes());
-
-	pXML->GetOptionalChildXmlValByName(szTextVal, L"WorldSoundscapeAudioScript");
-	if ( szTextVal.GetLength() > 0 )
-		m_iWorldSoundscapeScriptId = gDLL->getAudioTagIndex( szTextVal.GetCString(), AUDIOTAG_SOUNDSCAPE );
-	else
-		m_iWorldSoundscapeScriptId = -1;
-
-	return true;
-}
-
-
-void CvFeatureInfo::copyNonDefaults(const CvFeatureInfo* pClassInfo)
-{
-	PROFILE_EXTRA_FUNC();
-	int iDefault = 0;
-	int iTextDefault = -1;  //all integers which are TEXT_KEYS in the xml are -1 by default
-
-	// The art tag must merge BEFORE the base copy: CvInfoBase::copyNonDefaults calls the virtual
-	// getButton(), which resolves through getArtDefineTag(). The declared StringWrapper copy
-	// then no-ops.
-	if (m_szArtDefineTag.empty()) m_szArtDefineTag = pClassInfo->getArtDefineTag();
-
-	CvInfoBase::copyNonDefaults(pClassInfo);
-
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-
-	for ( int i = 0; i < GC.getNumFootstepAudioTypes(); i++ )
-	{
-		if ( get3DAudioScriptFootstepIndex(i) == iDefault && pClassInfo->get3DAudioScriptFootstepIndex(i) != iDefault)
-		{
-			if ( NULL == m_pi3DAudioScriptFootstepIndex )
-			{
-				CvXMLLoadUtility::InitList(&m_pi3DAudioScriptFootstepIndex,GC.getNumFootstepAudioTypes(),iDefault);
-			}
-			m_pi3DAudioScriptFootstepIndex[i] = pClassInfo->get3DAudioScriptFootstepIndex(i);
-		}
-	}
-	if (getWorldSoundscapeScriptId() == iTextDefault) m_iWorldSoundscapeScriptId = pClassInfo->getWorldSoundscapeScriptId();
-}
-
-
-// Explicit (not delegated to CvInfoUtil) because the legacy checksum folds the STRING
-// m_szOnUnitChangeTo mid-order (StringWrapper checksums are no-ops) and omits the read fields
-// m_iEffectProbability / m_szEffectType / m_szGrowthSound. Body kept byte-identical to legacy.
-void CvFeatureInfo::getCheckSum(uint32_t &iSum) const
-{
-	PROFILE_EXTRA_FUNC();
-	CheckSum(iSum, m_iSpreadProbability);
-	CheckSum(iSum, m_iCultureDistance);
-	CheckSum(iSum, m_bIgnoreTerrainCulture);
-	CheckSum(iSum, m_bCanGrowAnywhere);
-	CheckSum(iSum, m_iMovementCost);
-	CheckSum(iSum, m_iSeeThroughChange);
-	CheckSum(iSum, m_iHealthPercent);
-	CheckSum(iSum, m_iAppearanceProbability);
-	CheckSum(iSum, m_iDisappearanceProbability);
-	CheckSum(iSum, m_iGrowthProbability);
-	CheckSum(iSum, m_iDefenseModifier);
-	CheckSum(iSum, m_iAdvancedStartRemoveCost);
-	CheckSum(iSum, m_iWarmingDefense);
-	CheckSum(iSum, m_iPopDestroys);
-
-	CheckSum(iSum, m_bNoCoast);
-	CheckSum(iSum, m_bNoRiver);
-	CheckSum(iSum, m_bNoAdjacent);
-	CheckSum(iSum, m_bRequiresFlatlands);
-	CheckSum(iSum, m_bRequiresRiver);
-	CheckSum(iSum, m_bCoastalOnly);
-	CheckSum(iSum, m_bAddsFreshWater);
-	CheckSum(iSum, m_bImpassable);
-	CheckSum(iSum, m_bNoCity);
-	CheckSum(iSum, m_bNoImprovement);
-	CheckSum(iSum, m_bNoBonus);
-	CheckSum(iSum, m_bVisibleAlways);
-	CheckSum(iSum, m_bNukeImmune);
-	CheckSum(iSum, m_bCountsAsPeak);
-	CheckSumC(iSum, m_szOnUnitChangeTo);
-	CheckSumC(iSum, m_aeMapCategoryTypes);
-	CheckSumC(iSum, m_aiCategories);
-
-	// Arrays
-
-	CheckSum(iSum, m_piYieldChange, NUM_YIELD_TYPES);
-	CheckSum(iSum, m_piRiverYieldChange, NUM_YIELD_TYPES);
-
-	CheckSumC(iSum, m_aeTerrain);
-	m_PropertyManipulators.getCheckSum(iSum);
-}
-

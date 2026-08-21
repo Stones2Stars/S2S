@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_TAHITIAN",
+ "enables": {
+  "units": [
+   "UNIT_POMAREI",
+   "UNIT_POMARE_IV",
+   "UNIT_TAHITIAN_RIDERS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TAHITIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TAHITIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

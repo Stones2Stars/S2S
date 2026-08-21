@@ -1,0 +1,82 @@
+{
+ "type": "TECH_TIME_TRAVEL",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHRONOPOLIS",
+   "BUILDING_CRIME_TIMELINE_TAMPERING",
+   "BUILDING_DINOSAUR_PARK",
+   "BUILDING_INTERSTELLAR_TIMEHOLE"
+  ],
+  "civics": [
+   "CIVIC_TIME_DRAFTING"
+  ],
+  "techs": [
+   "TECH_CULTURAL_LONGEVITY",
+   "TECH_GRAVITRONICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PHASING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FOLDING_SPACE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COSMIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_SCIENTIST"
+ },
+ "cost": {
+  "research": 262044
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/timetravel.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TIME_TRAVEL",
+  "soundMP": "AS2D_TECH_TIME_TRAVEL"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TIME_TRAVEL",
+  "civilopedia": "TXT_KEY_TECH_TIME_TRAVEL_PEDIA",
+  "quote": "TXT_KEY_TECH_TIME_TRAVEL_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 138,
+  "gridY": 5
+ }
+}

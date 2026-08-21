@@ -1,0 +1,126 @@
+{
+ "type": "BUILDING_WONDER_OF_NATURE_ULURU",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_LANGUAGE",
+    {
+     "type": "FEATURE_PLATY_ULURU",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 10,
+     "enabled": "TECH_TOURISM"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 5,
+     "enabled": "TECH_ARCHEOLOGY"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 2,
+     "enabled": "TECH_WRITING"
+    },
+    {
+     "value": 5,
+     "enabled": "TECH_CULTURAL_IDENTITY"
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CAVE_PAINTINGS": {
+     "percent": 10
+    },
+    "BUILDING_FRESCO_MURAL": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": {
+    "value": 5,
+    "enabled": "TECH_EXPLORATION"
+   }
+  }
+ },
+ "cost": {
+  "production": 10,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "providesFreshWater": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_ULURU",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_ULURU",
+  "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_ULURU_PEDIA",
+  "worth": 4,
+  "conquestProbability": 70,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

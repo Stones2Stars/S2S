@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_TITAN_FLOATING_CONTINENT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TITAN_SF6_GENERATOR",
+    "TECH_GEOSCULPTING",
+    {
+     "type": "MAPCATEGORY_TITANIC",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "cost": {
+  "production": 4123,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TITAN_FLOATING_CONTINENT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TITAN_FLOATING_CONTINENT",
+  "civilopedia": "TXT_KEY_BUILDING_TITAN_FLOATING_CONTINENT_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_TITANIC"
+  ]
+ }
+}

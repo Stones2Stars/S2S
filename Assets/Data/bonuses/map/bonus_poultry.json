@@ -1,0 +1,107 @@
+{
+ "type": "BONUS_POULTRY",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIRD_CALLER",
+   "BUILDING_BREEDING_PROGRAM_EMU",
+   "BUILDING_BREEDING_PROGRAM_OSTRICH",
+   "BUILDING_BREEDING_PROGRAM_RHEA",
+   "BUILDING_CAMP_EMU",
+   "BUILDING_CAMP_OSTRICH",
+   "BUILDING_CAMP_RHEA",
+   "BUILDING_CARRION_GATHERER",
+   "BUILDING_CHICKEN_COOP",
+   "BUILDING_COCK_FIGHTING_RING",
+   "BUILDING_CORMORANT_TRAINER",
+   "BUILDING_CULTURE_BRITON",
+   "BUILDING_CULTURE_CANTONESE",
+   "BUILDING_CULTURE_HOPEWELL",
+   "BUILDING_CULTURE_KENYAN",
+   "BUILDING_CULTURE_LUSITANIAN",
+   "BUILDING_CULTURE_NAHUA",
+   "BUILDING_CULTURE_SLOVAKIAN",
+   "BUILDING_CULTURE_WARI",
+   "BUILDING_DIG_SITE_ARCHAEOPTERYX_FOSSILS",
+   "BUILDING_DISEASE_BIRD_FLU",
+   "BUILDING_FALCONER",
+   "BUILDING_FARM_ANIMAL_DUCK",
+   "BUILDING_FARM_ANIMAL_GOOSE",
+   "BUILDING_FARM_ANIMAL_TURKEY",
+   "BUILDING_HOMING_PIGEON_COOP",
+   "BUILDING_NEST_THIEF",
+   "BUILDING_ORNITHOLOGY_LAB",
+   "BUILDING_SLAUGHTERHOUSE"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_POULTRY"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 200,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 200,
+  "uniqueRange": 4,
+  "groupRange": 1,
+  "groupRand": 10,
+  "hills": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS",
+   "TERRAIN_TAIGA",
+   "TERRAIN_LUSH",
+   "TERRAIN_MARSH"
+  ],
+  "validFeatures": [
+   "FEATURE_JUNGLE",
+   "FEATURE_FOREST",
+   "FEATURE_FOREST_ANCIENT",
+   "FEATURE_SWAMP",
+   "FEATURE_SAVANNA",
+   "FEATURE_BAMBOO",
+   "FEATURE_FLOOD_PLAINS",
+   "FEATURE_OASIS",
+   "FEATURE_VERY_TALL_GRASS",
+   "FEATURE_CACTUS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_MUDDY"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_POULTRY",
+  "civilopedia": "TXT_KEY_BONUS_POULTRY_PEDIA",
+  "bonusClassType": "BONUSCLASS_LIVESTOCK",
+  "source": "natural"
+ }
+}

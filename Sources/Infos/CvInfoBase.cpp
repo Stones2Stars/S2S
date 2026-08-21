@@ -2,19 +2,19 @@
 //  FILE:    CvInfoBase.cpp
 //------------------------------------------------------------------------------------------------
 #include "CvGameCoreDLL.h"
-#include "CvArtFileMgr.h"
+#include "UI/CvArtFileMgr.h"
 #include "CvBuildingInfo.h"
 #include "CvHeritageInfo.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
+#include "AI/CvGameAI.h"
+#include "UI/CvGameTextMgr.h"
+#include "Defines/CvGlobals.h"
 #include "CvInfos.h"
 #include "CvInfoUtil.h"
-#include "CvPlayerAI.h"
-#include "CvPython.h"
-#include "CvXMLLoadUtility.h"
-#include "CvXMLLoadUtilityModTools.h"
-#include "CheckSum.h"
+#include "AI/CvPlayerAI.h"
+#include "Infrastructure/CvPython.h"
+#include "Infrastructure/CvXMLLoadUtility.h"
+#include "Infrastructure/CvXMLLoadUtilityModTools.h"
+#include "Tools/CheckSum.h"
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
 #include "CvInfoBase.h"
@@ -47,15 +47,30 @@ m_szType(szType)
 //  PURPOSE :   Default destructor
 //
 //------------------------------------------------------------------------------------------------------
+//	The ONE place the cached descriptions are freed -- the destructor and reset() both come here, so the
+//	delete loop cannot drift between them. reset() genuinely frees rather than merely clearing: it runs when
+//	the info is re-read, after which no pointer issued from the previous load may be held anyway.
+void CvInfoBase::clearCachedDescriptions() const
+{
+	for (std::vector<CvWString*>::const_iterator it = m_aCachedDescriptions.begin();
+		it != m_aCachedDescriptions.end(); ++it)
+	{
+		delete *it;
+	}
+	m_aCachedDescriptions.clear();
+}
+
+
 CvInfoBase::~CvInfoBase()
 {
+	clearCachedDescriptions();
 }
 
 
 void CvInfoBase::reset()
 {
 	//clear cache
-	m_aCachedDescriptions.clear();
+	clearCachedDescriptions();
 	m_szCachedText.clear();
 	m_szCachedHelp.clear();
 	m_szCachedStrategy.clear();
@@ -86,12 +101,10 @@ const char* CvInfoBase::getType() const
 
 const char* CvInfoBase::getButton() const
 {
-	if (m_szButton.empty())
-	{
-		return NULL;
-	}
-
-	return m_szButton;
+	// Return "" for an empty button, NEVER NULL: the button flows to Python (boost.python's const char*->str converter
+	// does strlen() on it) and to the EXE UI -- a NULL deref'd there is an ACCESS_VIOLATION reading 0x0 (e.g. the city
+	// screen's getReligionInfo(i).getButton() on a blank/padding-filler religion). "" is the vanilla behaviour.
+	return m_szButton.empty() ? "" : m_szButton.GetCString();
 }
 
 
@@ -124,10 +137,10 @@ const wchar_t* CvInfoBase::getDescription(uint uiForm) const
 	PROFILE_EXTRA_FUNC();
 	while(m_aCachedDescriptions.size() <= uiForm)
 	{
-		m_aCachedDescriptions.push_back(gDLL->getObjectText(m_szTextKey, m_aCachedDescriptions.size()));
+		m_aCachedDescriptions.push_back(new CvWString(gDLL->getObjectText(m_szTextKey, m_aCachedDescriptions.size())));
 	}
 
-	return m_aCachedDescriptions[uiForm];
+	return *m_aCachedDescriptions[uiForm];
 }
 
 
@@ -224,7 +237,7 @@ void CvInfoBase::copyNonDefaults(const CvInfoBase* pClassInfo)
 		m_szStrategyKey = pClassInfo->getStrategyKey();
 	}
 
-	if ( getButton() == NULL || getButton() == cDefault)
+	if ( m_szButton.empty() || getButton() == cDefault)   // getButton() no longer returns NULL (empty -> "")
 	{
 		m_szButton = pClassInfo->getButton();
 	}

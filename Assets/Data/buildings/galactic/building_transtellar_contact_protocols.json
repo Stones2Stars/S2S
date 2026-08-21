@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_DATA_COLLECTION",
+    "TECH_XENODIPLOMACY",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 2536,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

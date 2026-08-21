@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_SINGULARITY_BRAIN_LAB",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CYBERNETIC_ORGAN_LAB",
+    "BUILDING_NETWORK_NODE",
+    "TECH_TERRA_COMPUTER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 6405,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SINGULARITY_BRAIN_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SINGULARITY_BRAIN_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_SINGULARITY_BRAIN_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_HIGH_SCHOOL",
+ "enables": {
+  "buildings": [
+   "BUILDING_CITY_COLLEGE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HOLOGRAPHIC_SCHOOL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COMPULSORY_EDUCATION",
+    "BUILDING_ELEMENTARY_SCHOOL",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CALCULATORS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PENCILS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COMPUTERS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 870,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HIGH_SCHOOL",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SCHOOL"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HIGH_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_HIGH_SCHOOL_PEDIA",
+  "worth": 3,
+  "conquestProbability": 33,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

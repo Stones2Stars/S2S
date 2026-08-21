@@ -1,0 +1,200 @@
+{
+ "type": "UNIT_POLICE_HELICOPTER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_VERTICAL_FLIGHT",
+    {
+     "type": "BONUS_HELICOPTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_RADIOS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      "BUILDING_POLICE_STATION",
+      "BUILDING_POLICE_PRECINCT"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_POLICE_MECH"
+    ]
+   }
+  }
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": 11
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 4
+  }
+ },
+ "combat": {
+  "unit": {
+   "enclose": {
+    "percent": 22
+   },
+   "dynamicDefense": {
+    "percent": 22
+   },
+   "defenders": {
+    "UNITCOMBAT_CRIMINAL": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 40
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 55
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -35
+  },
+  "plot": {
+   "flat": -20
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": {
+     "all": [
+      "IS_LAND",
+      "IS_PEOPLE",
+      "!IS_VTOL"
+     ]
+    },
+    "flat": 1
+   }
+  }
+ },
+ "skills": [
+  "noCapture",
+  "counterSpy",
+  "mechanized",
+  "onlyDefensive",
+  "passage",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "vtol"
+ ],
+ "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT",
+ "combatClasses": [
+  "UNITCOMBAT_HELICOPTER",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_AIRCRAFT",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 500,
+    "unit": "HAS_DISGUISED"
+   },
+   {
+    "value": 500,
+    "unit": "HAS_POLITICAL"
+   },
+   {
+    "value": 200,
+    "unit": "HAS_CAMOUFLAGE"
+   }
+  ]
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SENTRY"
+  ]
+ },
+ "cost": {
+  "production": 1150,
+  "upkeep": 12
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_POLICE_HELICOPTER",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_POLICE_HELICOPTER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_POLICE_HELICOPTER",
+  "civilopedia": "TXT_KEY_UNIT_POLICE_HELICOPTER_PEDIA",
+  "worth": 13,
+  "militaryWorth": 50,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_RANGED",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_PROPERTY_CONTROL",
+   "UNITAI_INVESTIGATOR",
+   "UNITAI_SEE_INVISIBLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

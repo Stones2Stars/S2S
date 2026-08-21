@@ -1,0 +1,93 @@
+{
+ "type": "CORPORATION_RED",
+ "enables": {
+  "buildings": [
+   "BUILDING_RED_CURTAINS_THEATRE"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HEADQUARTERS": "CORPORATION_RED"
+     },
+     "per": "CORPORATION_LEVEL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_RED"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_HIT_MOVIES",
+       "BONUS_HIT_SINGLES",
+       "BONUS_HIT_MUSICALS"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_RED"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_RED"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_HIT_MOVIES",
+        "BONUS_HIT_SINGLES",
+        "BONUS_HIT_MUSICALS"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 21,
+   "icon": "Art/Interface/Buttons/corporations/Red.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_RED",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_RED_PEDIA",
+  "competingSpreadCostPercent": 200,
+  "spreadFactor": 50
+ }
+}

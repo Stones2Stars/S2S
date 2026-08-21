@@ -1,0 +1,110 @@
+{
+ "type": "BUILDING_WINERY",
+ "enables": {
+  "buildings": [
+   "BUILDING_DW_CHAMPAGNE",
+   "BUILDING_DW_VINTAGE_RED",
+   "BUILDING_DW_VINTAGE_WHITE",
+   "BUILDING_RESOURCES_ALCOHOL"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FERMENTATION",
+    {
+     "any": [
+      "BUILDING_VINEYARD",
+      "BUILDING_FARMSCRAPER_III"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_GLASSWARE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_POTTERY",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BARRELS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2,
+   "improvements": {
+    "IMPROVEMENT_WINERY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "cost": {
+  "production": 146,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WINERY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WINERY",
+  "civilopedia": "TXT_KEY_BUILDING_WINERY_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_VENUS_CARBONWORKS",
+ "enables": {
+  "units": [
+   "UNIT_VENUS_SETTLER",
+   "UNIT_VENUS_WORKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_VENUS",
+    "TECH_PLANETARY_MANUFACTURING",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_COPPER_WARES",
+   "BONUS_NANOTUBES",
+   "BONUS_PLASTIC"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 905,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VENUS_CARBONWORKS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_CARBONWORKS",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_CARBONWORKS_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

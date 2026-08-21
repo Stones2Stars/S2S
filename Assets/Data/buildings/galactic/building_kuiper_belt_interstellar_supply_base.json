@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_KUIPER_BELT_INTERSTELLAR_SUPPLY_BASE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_KUIPER_BELT_FUSION_PLANT",
+    "TECH_COSMIC_PERSPECTIVE",
+    {
+     "type": "TERRAIN_KUIPER_BELT_OBJECT",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 11,
+     "enabled": "TECH_PLANET_CRACKING"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 6326,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_KUIPER_BELT_INTERSTELLAR_SUPPLY_BASE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_KUIPER_BELT_INTERSTELLAR_SUPPLY_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_KUIPER_BELT_INTERSTELLAR_SUPPLY_BASE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

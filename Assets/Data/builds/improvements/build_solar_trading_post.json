@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_SOLAR_TRADING_POST",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MAGNETIC_SAILS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_SOLAR_TRADING_POST"
+ },
+ "cost": {
+  "gold": 500,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/solar_trading_post.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_SOLAR_TRADING_POST"
+ }
+}

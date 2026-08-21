@@ -1,0 +1,13 @@
+{
+  "entity": "SpecialBuildingInfo",
+  "rootElement": "SpecialBuildingInfo",
+  "glob": "**/CIV4SpecialBuildingInfos.xml",
+  "channels": {},
+  "inversionsOut": {},
+  "enablerEdges": {},
+  "prereqs": ["TechPrereq"],
+  "cost": [],
+  "art": ["Button"],
+  "identity": ["Type", "Description", "bValid", "iMaxPlayerInstances", "ObsoleteTech"],
+  "boostsIn": []
+}

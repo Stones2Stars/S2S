@@ -1,0 +1,115 @@
+{
+ "type": "PROMOTION_SENSORS3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SENSORS2"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 10,
+   "terrain": {
+    "TERRAIN_GRASSLAND": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_PLAINS": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_ICE": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_TUNDRA": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_MARSH": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_DESERT": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_COAST": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_OCEAN": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_COAST_TROPICAL": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_COAST_POLAR": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_OCEAN_TROPICAL": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_OCEAN_POLAR": {
+     "defense": {
+      "percent": 10
+     }
+    }
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SENSORS": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Sentry3.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,6,10"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SENSORS3"
+ }
+}

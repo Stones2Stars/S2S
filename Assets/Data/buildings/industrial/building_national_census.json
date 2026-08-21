@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_NATIONAL_CENSUS",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_STATISTICS",
+    {
+     "any": [
+      "BUILDING_POST_OFFICE",
+      "BUILDING_COMPUTER_NETWORK",
+      "BUILDING_HYPERMARKET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_METROPOLITAN_ADMINISTRATION": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SPY": 1
+  }
+ },
+ "cost": {
+  "production": 1260,
+  "complexityModifier": 2
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NATIONAL_CENSUS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NATIONAL_CENSUS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_CENSUS",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_CENSUS_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

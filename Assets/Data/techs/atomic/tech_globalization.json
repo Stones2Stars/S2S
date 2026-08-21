@@ -1,0 +1,98 @@
+{
+ "type": "TECH_GLOBALIZATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_AON_CENTER",
+   "BUILDING_AZADI_TOWER",
+   "BUILDING_DRUGLORDS_MANSON",
+   "BUILDING_NAVAL_YARD",
+   "BUILDING_SOCIAL_JUSTICE_ORGANIZATION",
+   "BUILDING_TRANSAMERICA_TOWER",
+   "BUILDING_UNESCO_HERITAGE_SITE",
+   "BUILDING_UNITED_NATIONS",
+   "BUILDING_UNIVERSAL_CHURCH",
+   "BUILDING_WILLIS_TOWER",
+   "BUILDING_WORLD_BANK",
+   "BUILDING_WORLD_TOWER",
+   "BUILDING_WORLD_TRADE_CENTER"
+  ],
+  "civics": [
+   "CIVIC_SKILLED_WORKERS",
+   "CIVIC_WORLD_LANGUAGE"
+  ],
+  "projects": [
+   "PROJECT_INTERNATIONAL_MONETARY_FUND"
+  ],
+  "techs": [
+   "TECH_CONGLOMERATES",
+   "TECH_POSTMODERNISM",
+   "TECH_TOURISM"
+  ],
+  "units": [
+   "UNIT_HOSPITAL_SHIP_2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FOREIGN_POLICY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LOGISTICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 11665
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GOLD": 7
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/Globalization.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,7"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GLOBALIZATION",
+  "soundMP": "AS2D_TECH_GLOBALIZATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_GLOBALIZATION",
+  "civilopedia": "TXT_KEY_TECH_GLOBALIZATION_PEDIA",
+  "quote": "TXT_KEY_TECH_GLOBALIZATION_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 77,
+  "gridY": 3
+ }
+}

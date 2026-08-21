@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_PROPAGANDA_NET",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PROPAGANDA",
+    {
+     "any": [
+      "BUILDING_MODERN_OFFICES",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_PROPAGANDA"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "espionage": {
+  "city": {
+   "flat": 2
+  },
+  "empire": {
+   "percent": 10
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": 25,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": 20
+  }
+ },
+ "warWeariness": {
+  "empire": {
+   "percent": -20
+  }
+ },
+ "cost": {
+  "production": 1900,
+  "countModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true,
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PROPAGANDA"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPAGANDA",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_STONEHENGE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PROPAGANDA_NET",
+  "civilopedia": "TXT_KEY_BUILDING_PROPAGANDA_NET_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 10,
+  "greatPeopleUnitType": "UNIT_GREAT_SPY",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

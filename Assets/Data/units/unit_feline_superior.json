@@ -1,0 +1,223 @@
+{
+ "type": "UNIT_FELINE_SUPERIOR",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_HERITAGE_BIG_CATS",
+    "BUILDING_REPET",
+    "TECH_HOMO_SUPERIOR",
+    "TECH_MEGAFAUNA_DOMESTICATION"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_CAT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "combat": {
+  "unit": {
+   "lunge": {
+    "percent": 50
+   },
+   "unnerve": {
+    "percent": 25
+   },
+   "dynamicDefense": {
+    "percent": 25
+   },
+   "stealthStrikes": {
+    "flat": 5
+   },
+   "stealth": {
+    "percent": 50
+   },
+   "flanking": {
+    "UNITCOMBAT_CRIMINAL": {
+     "percent": 50
+    },
+    "UNITCOMBAT_RUFFIAN": {
+     "percent": 50
+    },
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 25
+    },
+    "UNITCOMBAT_STRIKE_TEAM": {
+     "percent": 50
+    }
+   },
+   "targets": {
+    "UNITCOMBAT_STRIKE_TEAM": true,
+    "UNITCOMBAT_CRIMINAL": true,
+    "UNITCOMBAT_RUFFIAN": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 160
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 50
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 2
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 2
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 15
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "investigation": {
+    "flat": 30
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  },
+  "plot": {
+   "flat": -10
+  }
+ },
+ "skills": [
+  "alwaysHostile",
+  "hiddenNationality",
+  "noCapture",
+  "noDefensiveBonus",
+  "counterSpy",
+  "ignoreTerrainCost",
+  "ignoreZoneOfControl",
+  "noNonOwnedCityEntry",
+  "ignoreNoEntryLevel",
+  "camouflage",
+  "invisible"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_FELINE",
+ "combatClasses": [
+  "UNITCOMBAT_LAW_ENFORCEMENT",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_ANIMAL",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_CLONES",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+  "UNITCOMBAT_ARMOR_MODERN",
+  "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+  "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+  "UNITCOMBAT_ANIMAL_COMBAT_ROARING",
+  "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "hideAndSeek": {
+  "method": "camouflage",
+  "concealment": {
+   "flat": 1000
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 5300,
+  "upkeep": 8
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FELIS_SUPERIOR",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_FELIS_SUPERIOR"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_FELINE_SUPERIOR",
+  "civilopedia": "TXT_KEY_UNIT_WARCAT_PEDIA",
+  "worth": 22,
+  "militaryWorth": 85,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PILLAGE_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE_COUNTER",
+   "UNITAI_CITY_SPECIAL",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

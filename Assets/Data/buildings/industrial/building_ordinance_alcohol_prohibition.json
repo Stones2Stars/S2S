@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
+ "enables": {
+  "buildings": [
+   "BUILDING_SPEAKEASY"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_WOMENS_SUFFRAGE"
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "flat": 5
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_ALCOHOL_PROHIBITION_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

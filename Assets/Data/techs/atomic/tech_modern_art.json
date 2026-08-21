@@ -1,0 +1,78 @@
+{
+ "type": "TECH_MODERN_ART",
+ "enables": {
+  "buildings": [
+   "BUILDING_BAUHAUS_SCHOOL",
+   "BUILDING_COIT_TOWER",
+   "BUILDING_GETTY_CENTER"
+  ],
+  "techs": [
+   "TECH_DADA",
+   "TECH_POP_ART"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CUBISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_EXPRESSIONISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CONSUMERISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 10744
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_ESPIONAGE": 5
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/modernart.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_FINEARTS",
+  "soundMP": "AS2D_TECH_FINEARTS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MODERN_ART",
+  "civilopedia": "TXT_KEY_TECH_MODERN_ART_PEDIA",
+  "quote": "TXT_KEY_TECH_MODERN_ART_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 75,
+  "gridY": 5
+ }
+}

@@ -1,0 +1,81 @@
+{
+ "type": "CORPORATION_MAPSTER",
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HEADQUARTERS": "CORPORATION_MAPSTER"
+     },
+     "per": "CORPORATION_LEVEL"
+    },
+    {
+     "value": 0.75,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_MAPSTER"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_HIT_MOVIES",
+       "BONUS_HIT_SINGLES",
+       "BONUS_HIT_MUSICALS"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_MAPSTER"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 0.5,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_MAPSTER"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_HIT_MOVIES",
+        "BONUS_HIT_SINGLES",
+        "BONUS_HIT_MUSICALS"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 14,
+   "icon": "Art/Interface/Buttons/corporations/sparth/mapster.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_MAPSTER",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MAPSTER_PEDIA",
+  "competingSpreadCostPercent": 200
+ }
+}

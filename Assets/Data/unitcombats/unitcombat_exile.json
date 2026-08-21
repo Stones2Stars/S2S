@@ -1,0 +1,26 @@
+{
+ "type": "UNITCOMBAT_EXILE",
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "skills": {
+  "ignoreZoneofControl": true,
+  "excile": true,
+  "barbCoExist": true
+ },
+ "tags": [
+  "outlaw"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Categories/Exile.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_EXILE"
+ }
+}

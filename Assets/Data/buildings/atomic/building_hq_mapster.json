@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_HQ_MAPSTER",
+ "enables": {
+  "corporations": [
+   "CORPORATION_MAPSTER"
+  ],
+  "units": [
+   "UNIT_EXECUTIVE_MAPSTER"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    "TECH_EARLY_COMPUTING",
+    "TECH_CORPORATION",
+    {
+     "any": [
+      "BUILDING_MODERN_OFFICES",
+      "BUILDING_OFFICIUM",
+      "BUILDING_SKYSCRAPER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "espionage": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "headquarters": "CORPORATION_MAPSTER",
+ "disabled": "GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS",
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HQ_MAPSTER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_MAPSTER",
+  "civilopedia": "TXT_KEY_BUILDING_HQ_MAPSTER_PEDIA",
+  "pediaCategory": "greatWonder",
+  "notConstructible": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_SPY",
+  "specialBuildingType": "SPECIALBUILDING_CORPORATION_HQ",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

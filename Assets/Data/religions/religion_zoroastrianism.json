@@ -1,0 +1,86 @@
+{
+ "type": "RELIGION_ZOROASTRIANISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_APADANA_PALACE",
+   "BUILDING_BEHISTUN_INSCRIPTION",
+   "BUILDING_PIR_E_NARAKI",
+   "BUILDING_SETI_PIR",
+   "BUILDING_TOWER_OF_SILENCE",
+   "BUILDING_WORLDVIEW_SLAVERY_ZOROASTRIANISM_I",
+   "BUILDING_ZOROASTRIAN_FIRE_TEMPLE",
+   "BUILDING_ZOROASTRIAN_PANTHEON",
+   "BUILDING_ZOROASTRIAN_SHRINE"
+  ],
+  "units": [
+   "UNIT_ZOROASTRIAN_MISSIONARY"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_ZOROASTRIANISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_ZOROASTRIANISM"
+     }
+    }
+   ]
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 7,
+   "icon": "Art/Interface/Buttons/Religions/Zoroastrianism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Zoroastrianism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Zoroastrianism.dds",
+   "movie": {
+    "file": "Art/Cutscene/Zoro_Found.nif",
+    "sound": "AS2D_BUILD_ZORO_MOVIE"
+   }
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_ZORO"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ZOROASTRIANISM",
+  "adjective": "TXT_KEY_TECH_ZOROASTRIANISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_ZOROASTRIANISM_PEDIA",
+  "spreadFactor": 25
+ }
+}

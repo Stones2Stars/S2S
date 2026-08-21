@@ -1,0 +1,97 @@
+{
+ "type": "BUILDING_FACTORY_MICROGENERATORS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_NANOTECH_COMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "TECH_MICROGENERATORS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FLASH_MEMORY_DEVICES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_HYDROGEN",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_NANOTECH_COMPLEX"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_MICROGENERATORS"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 8,
+     "enabled": "TECH_ASTEROID_MINING"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_UBIQUITOUS_COMPUTING"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2625,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACTORY_MICROGENERATORS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_MICROGENERATORS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_MICROGENERATORS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

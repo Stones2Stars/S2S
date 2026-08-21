@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_DENE",
+ "enables": {
+  "units": [
+   "UNIT_DENE_SLED_DOGS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_DENE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_DENE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

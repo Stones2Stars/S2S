@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_PHOENICIAN",
+ "enables": {
+  "units": [
+   "UNIT_BAAL_ESER",
+   "UNIT_ITHOBAAL",
+   "UNIT_PHOENICAN_BIREME"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PHOENICIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PHOENICIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

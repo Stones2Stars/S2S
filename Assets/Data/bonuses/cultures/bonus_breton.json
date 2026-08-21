@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_BRETON",
+ "enables": {
+  "units": [
+   "UNIT_JOSE_BALLIVIAN",
+   "UNIT_PALADIN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_BRETON"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_BRETON",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

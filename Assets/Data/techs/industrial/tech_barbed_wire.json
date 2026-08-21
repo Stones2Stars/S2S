@@ -1,0 +1,66 @@
+{
+ "type": "TECH_BARBED_WIRE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BARBWIRE_FENCE"
+  ],
+  "techs": [
+   "TECH_FOREIGN_POLICY",
+   "TECH_TRENCH_WARFARE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STEEL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AGRICULTURAL_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 6673
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/barbedwire.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_BARBED_WIRE",
+  "soundMP": "AS2D_TECH_BARBED_WIRE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_BARBED_WIRE",
+  "civilopedia": "TXT_KEY_TECH_BARBED_WIRE_PEDIA",
+  "quote": "TXT_KEY_TECH_BARBED_WIRE_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 67,
+  "gridY": 5
+ }
+}

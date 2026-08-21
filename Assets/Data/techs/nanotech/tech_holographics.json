@@ -1,0 +1,87 @@
+{
+ "type": "TECH_HOLOGRAPHICS",
+ "enables": {
+  "bonuses": [
+   "BONUS_HOLOGRAPHIC_PROJECTORS"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_HOLOGRAPHIC_PROJECTORS",
+   "BUILDING_HOLOGRAPHICA_APPAREL_SHOP",
+   "BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR",
+   "BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR",
+   "BUILDING_HOLOGRAPHIC_GAMING_LEAGUE",
+   "BUILDING_HOLOGRAPHIC_NETWORKS",
+   "BUILDING_HOLOGRAPHIC_SCHOOL",
+   "BUILDING_HOLOGRAPHIC_SOLAR_SYSTEM",
+   "BUILDING_HOLOGRAPHIC_THEATER",
+   "BUILDING_MEGATOWER_HOLOGRAM_ADVERTISING_CROWN_SECTION",
+   "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP"
+  ],
+  "techs": [
+   "TECH_ACOUSTOPHORESIS",
+   "TECH_MEDIA_HIVEMIND",
+   "TECH_PLASTIC_ELECTRONICS",
+   "TECH_SYNTHETIC_SENTIENCE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INVISIBILITY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MESH_NETWORKS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOGENERATORS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 38858
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Holographics.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_HOLOGRAPHICS",
+  "soundMP": "AS2D_TECH_HOLOGRAPHICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_HOLOGRAPHICS",
+  "civilopedia": "TXT_KEY_TECH_HOLOGRAPHICS_PEDIA",
+  "quote": "TXT_KEY_TECH_HOLOGRAPHICS_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 102,
+  "gridY": 7
+ }
+}

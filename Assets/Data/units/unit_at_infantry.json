@@ -1,0 +1,140 @@
+{
+ "type": "UNIT_AT_INFANTRY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_COMPOSITES",
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SPECIAL_INFANTRY"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_GUN": {
+     "percent": -50
+    },
+    "UNITCOMBAT_TRACKED": {
+     "percent": 50
+    },
+    "UNITCOMBAT_WHEELED": {
+     "percent": 50
+    }
+   },
+   "targets": {
+    "UNITCOMBAT_WHEELED": true,
+    "UNITCOMBAT_TRACKED": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 55
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 15
+   }
+  }
+ },
+ "skills": [
+  "pillage",
+  "ignoreBuildingDefense"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "troop"
+ ],
+ "combatClass": "UNITCOMBAT_ROCKET_LAUNCHER",
+ "combatClasses": [
+  "UNITCOMBAT_GUN",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+  "UNITCOMBAT_WEAPON_H2H_HANDGUN",
+  "UNITCOMBAT_ARMOR_MODERN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_AMBUSH"
+  ]
+ },
+ "cost": {
+  "production": 1400,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AT_INFANTRY",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_AT_INFANTRY"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_AT_INFANTRY",
+  "civilopedia": "TXT_KEY_UNIT_AT_INFANTRY_PEDIA",
+  "worth": 5,
+  "militaryWorth": 162,
+  "xpValueAttack": 2,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_RESERVE",
+   "UNITAI_CITY_SPECIAL",
+   "UNITAI_ESCORT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_BACK_DOWN1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BACK_DOWN2"
+  ]
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BACK_DOWN": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/BackDown1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BACK_DOWN1"
+ }
+}

@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_NAVIGATION2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_NAVIGATION3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_NAVIGATION1"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "moves": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_NAVIGATION": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Navigation2.dds,Art/Interface/Buttons/Promotions_Atlas.dds,8,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_NAVIGATION2"
+ }
+}

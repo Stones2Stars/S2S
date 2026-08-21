@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_TRANSTELLAR_ALDERSON_DISK",
+ "enables": {
+  "buildings": [
+   "BUILDING_GODWHEEL",
+   "BUILDING_RAK_MESBA",
+   "BUILDING_TRANSTELLAR_ALDERSON_DISK_FANTASY_ZONE",
+   "BUILDING_TRANSTELLAR_ALDERSON_DISK_MENAGERIE",
+   "BUILDING_TRANSTELLAR_TERRACITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TRANSTELLAR_ARTIFICIAL_RED_DWARF",
+    "TECH_ULTIMA_ARCHITECTURE",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    20,
+    {
+     "value": 12,
+     "enabled": "TECH_GALACTIC_ENGINEERING"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    100,
+    {
+     "value": 12,
+     "enabled": "TECH_GALACTIC_ENGINEERING"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "cost": {
+  "production": 5515,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_ALDERSON_DISK",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_ALDERSON_DISK",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_ALDERSON_DISK_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

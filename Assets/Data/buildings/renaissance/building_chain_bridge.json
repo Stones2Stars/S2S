@@ -1,0 +1,113 @@
+{
+ "type": "BUILDING_CHAIN_BRIDGE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_STEEL"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TRUSS_BRIDGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "TECH_PHYSICS",
+    {
+     "any": [
+      "BUILDING_ROADS",
+      "BUILDING_PAVED_ROADS",
+      "BUILDING_ASPHALT_ROADS",
+      "BUILDING_SKYROAD_CONTROL_TOWER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_TRUSS_BRIDGE",
+    "BUILDING_SMALL_STEEL_ARCH_BRIDGE",
+    "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+    "BUILDING_SMALL_SUSPENSION_BRIDGE",
+    "BUILDING_LARGE_SUSPENSION_BRIDGE",
+    "BUILDING_TELEPORT_BOOTH"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 9,
+   "percent": 9
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": -1
+   },
+   "riverDefensePenalty": {
+    "percent": 27
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 9
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1,
+   "modifier": {
+    "percent": 18
+   }
+  }
+ },
+ "cost": {
+  "production": 515,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CHAIN_BRIDGE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CHAIN_BRIDGE",
+  "civilopedia": "TXT_KEY_BUILDING_CHAIN_BRIDGE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

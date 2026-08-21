@@ -1,0 +1,59 @@
+{
+ "type": "ROUTE_ROAD",
+ "production": {
+  "plot": {
+   "improvements": {
+    "IMPROVEMENT_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_LUMBERMILL": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WORKSHOP": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "plot": {
+   "improvements": {
+    "IMPROVEMENT_ARCHEOLOGICAL_SITE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FOSSIL_DIG_SITE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SUBURBS": {
+     "flat": 1
+    },
+    "IMPROVEMENT_TOWN": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VILLAGE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 60
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/BuildRoad.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_ROUTE_ROAD",
+  "value": 3,
+  "advancedStart": {
+   "cost": 12
+  }
+ }
+}

@@ -1,0 +1,85 @@
+{
+ "type": "IMPROVEMENT_WINDMILL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WINDMILLS",
+     "scope": "team"
+    },
+    "HAS_HILLS"
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_AGRICULTURAL_TOOLS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_REPLACEABLE_PARTS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ELECTRICITY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    3,
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_ELECTRICITY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_WINDMILL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_WINDMILL",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_WINDMILL_PEDIA",
+  "advancedStart": {
+   "cost": 30
+  },
+  "upgradeTime": 15,
+  "pillageGold": 15,
+  "upgradesTo": "IMPROVEMENT_MODERN_WINDMILL"
+ }
+}

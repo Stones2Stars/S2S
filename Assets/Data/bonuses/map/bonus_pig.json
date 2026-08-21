@@ -1,0 +1,87 @@
+{
+ "type": "BONUS_PIG",
+ "enables": {
+  "buildings": [
+   "BUILDING_BREEDING_PROGRAM_BOAR",
+   "BUILDING_BREEDING_PROGRAM_RHINO",
+   "BUILDING_CAMP_BOAR",
+   "BUILDING_CAMP_RHINO",
+   "BUILDING_CAMP_WOOLLY_RHINO",
+   "BUILDING_CARRION_GATHERER",
+   "BUILDING_CULTURE_BAVARIAN",
+   "BUILDING_CULTURE_GERMAN",
+   "BUILDING_CULTURE_INDUS",
+   "BUILDING_CULTURE_KOREAN",
+   "BUILDING_CULTURE_SEMANG",
+   "BUILDING_CULTURE_TANZANIAN",
+   "BUILDING_DIG_SITE_DIMETRODON_FOSSILS",
+   "BUILDING_DISEASE_SWINE_FLU",
+   "BUILDING_FARM_ANIMAL_PIG",
+   "BUILDING_INVOCATION_HUT_PIG",
+   "BUILDING_NGAI_NAROK_BLESS_PIG",
+   "BUILDING_SHAMANISTIC_TEMPLE_PIG",
+   "BUILDING_WHITE_TRUFFLE_GATHERER",
+   "BUILDING_WOOLLY_PIG_BREEDER"
+  ],
+  "units": [
+   "UNIT_NEANDERTHAL_SHEPHERD",
+   "UNIT_SHEPHERD",
+   "UNIT_TAMED_BOAR"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PIG"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 6,
+  "constAppearance": 200,
+  "minAreaSize": 3,
+  "maxLatitude": 50,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "groupRange": 1,
+  "groupRand": 10,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validFeatures": [
+   "FEATURE_FOREST",
+   "FEATURE_FOREST_ANCIENT",
+   "FEATURE_JUNGLE",
+   "FEATURE_FLOOD_PLAINS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_SCRUB",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS",
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_MARSH"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PIG",
+  "civilopedia": "TXT_KEY_BONUS_PIG_PEDIA",
+  "bonusClassType": "BONUSCLASS_LIVESTOCK",
+  "source": "natural"
+ }
+}

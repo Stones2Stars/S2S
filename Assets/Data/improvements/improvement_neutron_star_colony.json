@@ -1,0 +1,40 @@
+{
+ "type": "IMPROVEMENT_NEUTRON_STAR_COLONY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NEUTRONIUM",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_NEUTRON_STAR"
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 10
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 20
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_NEUTRON_STAR_COLONY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_NEUTRON_STAR_COLONY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_NEUTRON_STAR_COLONY_PEDIA",
+  "extraterrestrial": true,
+  "outsideBorders": true,
+  "pillageGold": 200
+ }
+}

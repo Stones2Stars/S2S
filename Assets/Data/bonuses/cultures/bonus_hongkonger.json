@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_HONGKONGER",
+ "enables": {
+  "units": [
+   "UNIT_KAI_HO",
+   "UNIT_TRADE_JUNK"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HONGKONGER"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HONGKONGER",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

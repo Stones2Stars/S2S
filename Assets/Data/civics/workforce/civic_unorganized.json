@@ -1,0 +1,110 @@
+{
+ "type": "CIVIC_UNORGANIZED",
+ "food": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    -5,
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    -5,
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    -5,
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE": {
+     "flat": 1
+    },
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": -20
+  }
+ },
+ "policies": {
+  "noCorporations": true
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/labor_unorganized.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_UNORGANIZED",
+  "civilopedia": "TXT_KEY_CIVIC_UNORGANIZED_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_UNORGANIZED_STRATEGY",
+  "civicOption": "CIVICOPTION_WORKFORCE"
+ }
+}

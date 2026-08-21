@@ -1,0 +1,105 @@
+{
+ "type": "BUILDING_TEMPLE_OF_RA",
+ "enables": {
+  "buildings": [
+   "BUILDING_NATIONAL_BELIEF_RESURRECTION",
+   "BUILDING_TEMPLE_OF_MUT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MUMMIFICATION",
+    "TECH_PRIESTHOOD",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "RELIGION_KEMETISM"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_KEMETISM"
+     }
+    }
+   ]
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_KEMETISM": {
+    "flat": 2
+   }
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1
+  }
+ },
+ "cost": {
+  "production": 160,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EGYPTIAN_MYTH_TEMPLE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BUDDHIST"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TEMPLE_OF_RA",
+  "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_RA_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 4,
+  "specialBuildingType": "SPECIALBUILDING_TEMPLE",
+  "religion": "RELIGION_KEMETISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

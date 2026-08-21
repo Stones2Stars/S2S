@@ -1,0 +1,35 @@
+{
+ "type": "UNITCOMBAT_BALLOON",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -20
+   },
+   "resistance": {
+    "flat": -20
+   }
+  }
+ },
+ "skills": {
+  "fliesToMove": true,
+  "submarine": true,
+  "submerged": true
+ },
+ "tags": [
+  "air"
+ ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 300
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/balloons.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_BALLOON",
+  "forMilitary": true
+ }
+}

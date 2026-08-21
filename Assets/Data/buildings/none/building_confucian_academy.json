@@ -1,0 +1,135 @@
+{
+ "type": "BUILDING_CONFUCIAN_ACADEMY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CONFUCIAN_TEMPLE",
+    "TECH_MUSICAL_NOTATION",
+    {
+     "any": [
+      "BUILDING_CITY_COUNCIL",
+      "BUILDING_METROPOLITAN_ADMINISTRATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_CONFUCIANISM"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_COPPER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_CONFUCIANISM"
+     }
+    }
+   ]
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_CONFUCIANISM": {
+    "flat": 1
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 2
+  }
+ },
+ "cost": {
+  "production": 280,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CONFUCIAN_ACADEMY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CONFUCIAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CONFUCIAN_ACADEMY",
+  "civilopedia": "TXT_KEY_BUILDING_CONFUCIAN_ACADEMY_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 6,
+  "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",
+  "religion": "RELIGION_CONFUCIANISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

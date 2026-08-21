@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_QILIN",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_QILIN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_QILIN",
+  "civilopedia": "TXT_KEY_BONUS_QILIN_PEDIA",
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
+ }
+}

@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_UBIQUITOUS_SENSORS",
+ "enables": {
+  "buildings": [
+   "BUILDING_MAGLEV_ELEVATORS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CLOUD_SERVER",
+    "TECH_MICROGENERATORS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MICROGENERATORS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2625,
+  "countModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_UBIQUITOUS_SENSORS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_UBIQUITOUS_SENSORS",
+  "civilopedia": "TXT_KEY_BUILDING_UBIQUITOUS_SENSORS_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

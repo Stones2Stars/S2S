@@ -3158,14 +3158,14 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CITY_BAR_CULTURE</Tag>
-		<English>[NEWLINE][ICON_CULTURE]: %d1/%d2 (%s3: Lvl %d4)</English>
-		<French>[NEWLINE][ICON_CULTURE] : %d1/%d2 (%s3 : Niv %d4)</French>
-		<Italian>[NEWLINE][ICON_CULTURE]: %d1 / %d2[NEWLINE]Livello culturale [COLOR_HIGHLIGHT_TEXT]%d4[COLOR_REVERT]: %s3</Italian> <!-- hoover city -->
+		<English>[NEWLINE][ICON_CULTURE]: %s1/%d2 (%s3: Lvl %d4)</English>
+		<French>[NEWLINE][ICON_CULTURE] : %s1/%d2 (%s3 : Niv %d4)</French>
+		<Italian>[NEWLINE][ICON_CULTURE]: %s1 / %d2[NEWLINE]Livello culturale [COLOR_HIGHLIGHT_TEXT]%d4[COLOR_REVERT]: %s3</Italian> <!-- hoover city -->
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CITY_BAR_CULTURE_MAX</Tag>
-		<English>[NEWLINE][ICON_CULTURE]: %d1 (%s2: Lvl %d3)</English>
-		<French>[NEWLINE][ICON_CULTURE] : %d1 (%s2 : Niv %d3)</French>
+		<English>[NEWLINE][ICON_CULTURE]: %s1 (%s2: Lvl %d3)</English>
+		<French>[NEWLINE][ICON_CULTURE] : %s1 (%s2 : Niv %d3)</French>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CITY_BAR_FOOD_GROW</Tag>
@@ -3381,11 +3381,11 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CITY_POPULATION</Tag>
-		<English>Population: %d1</English>
-		<French>Population : %d1</French>
-		<German>Bevölkerung: %d1</German>
-		<Italian>Popolazione: [COLOR_HIGHLIGHT_TEXT]%d1[COLOR_REVERT]</Italian> <!-- city screen hover city name -->
-		<Spanish>Población: %d1</Spanish>
+		<English>Population: %s1</English>
+		<French>Population : %s1</French>
+		<German>Bevölkerung: %s1</German>
+		<Italian>Popolazione: [COLOR_HIGHLIGHT_TEXT]%s1[COLOR_REVERT]</Italian> <!-- city screen hover city name -->
+		<Spanish>Población: %s1</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CITY_PROPERTY_SPAWN_BARB</Tag>
@@ -6690,6 +6690,10 @@
 		<German>%d1 [ICON_ESPIONAGE]: Gesamtkosten</German>
 		<Italian>%d1 [ICON_ESPIONAGE]: costo totale</Italian>
 		<Spanish>%d1 [ICON_ESPIONAGE]: Coste total</Spanish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_ESPIONAGE_TEAM_MEMBERS</Tag>
+		<English>x%d1 [ICON_ESPIONAGE] for team size</English>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_ESPIONAGE_COUNTERESPIONAGE_MOD</Tag>
@@ -27927,6 +27931,158 @@ feindliche Einheit scrollen[COLOR_REVERT][\BOLD]Anzeige der Siegchance
 		<Spanish>%s1 [ICON_COMMERCE]: Beneficio base</Spanish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_TRADE_ROUTE_HELP_WITH</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Trade route with %s1[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRADE_ROUTE_HELP_MODIFIER</Tag>
+		<English>[NEWLINE][ICON_BULLET]%D1%% Trade route modifier</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_TRADE_ROUTE_HELP_PROFIT</Tag>
+		<English>[NEWLINE][ICON_BULLET]%s1 [ICON_COMMERCE]: Profit</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_HELP_PRODUCTION_COST</Tag>
+		<English>Cost: %d1[ICON_PRODUCTION]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNIT_HELP_PRODUCTION_COST</Tag>
+		<English>Cost: %d1[ICON_PRODUCTION]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDING_HELP_PRODUCTION_STORED</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Built: %d1[ICON_PRODUCTION][COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQUIRES</Tag>
+		<English>[COLOR_WARNING_TEXT]Cannot be built yet — requirements are not met:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_TECH</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs a technology you have not researched:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_BUILDING</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs another building first:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_BONUS</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs a resource this city does not have:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_CIVIC</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs a civic you have not adopted:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_RELIGION</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs a religion that is not present here:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_CORPORATION</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs a corporation that is not active here:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_HERITAGE</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs a heritage you have not acquired:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_UNIT</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs a unit you do not have:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_PROMOTION</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs a promotion this unit has not earned:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_POPULATION</Tag>
+		<English>[COLOR_WARNING_TEXT]This city is not large enough yet:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_CITY_COUNT</Tag>
+		<English>[COLOR_WARNING_TEXT]Your empire does not have enough cities yet:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_PROPERTY</Tag>
+		<English>[COLOR_WARNING_TEXT]This city is outside the required range:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_CULTURELEVEL</Tag>
+		<English>[COLOR_WARNING_TEXT]This city needs more culture:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_VICTORY</Tag>
+		<English>[COLOR_WARNING_TEXT]This game was not set up with the victory condition it needs:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_TERRAIN</Tag>
+		<English>[COLOR_WARNING_TEXT]The terrain here is wrong for it:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_FEATURE</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs a terrain feature that is not here:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_IMPROVEMENT</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs an improvement that has not been built here:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_ROUTE</Tag>
+		<English>[COLOR_WARNING_TEXT]Needs a route that has not been laid here:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_MAPCATEGORY</Tag>
+		<English>[COLOR_WARNING_TEXT]It does not belong in this part of the world:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REQ_PLOT</Tag>
+		<English>[COLOR_WARNING_TEXT]The ground here cannot support it:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_DORMANT</Tag>
+		<English>[COLOR_WARNING_TEXT]Superseded by a building already in this city.[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_REPLACED</Tag>
+		<English>[COLOR_WARNING_TEXT]Superseded — a replacement is available to you.[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_OPTION</Tag>
+		<English>[COLOR_WARNING_TEXT]Disabled by a game option.[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_CAP_SELF</Tag>
+		<English>[COLOR_WARNING_TEXT]No more of these may exist — the limit is already reached.[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_CAP_GROUP</Tag>
+		<English>[COLOR_WARNING_TEXT]Another building of its group has taken the available slot.[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GATEREASON_CAP_CATEGORY</Tag>
+		<English>[COLOR_WARNING_TEXT]This city already holds as many wonders of this kind as its culture allows.[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GRANTHELP_TECHS</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Grants technologies:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GRANTHELP_CIVICS</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Grants civics:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GRANTHELP_BUILDINGS</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Grants buildings:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GRANTHELP_PROMOTIONS</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Grants promotions:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GRANTHELP_GREATPEOPLE</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Grants great people:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_TRADE_ROUTE_MOD_BUILDING</Tag>
 		<English>%D2%%: for %s1_building</English>
 		<French>%D2%% : pour %s1_building</French>
@@ -30965,6 +31121,42 @@ feindliche Einheit scrollen[COLOR_REVERT][\BOLD]Anzeige der Siegchance
 		<German>[COLOR_HIGHLIGHT_TEXT]&lt;UMSCHALT&gt;[COLOR_REVERT] für Anzeige der Kategorien</German>
 		<Polish>Naci&#156;nij SHIFT aby zobaczy&#230; Klasy Bojowe</Polish>
 		<Russian>Нажмите SHIFT для просмотра атрибутов</Russian>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EDGE_UNLOCKS</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Unlocks:[COLOR_REVERT] %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EDGE_OBSOLETES</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Obsoletes:[COLOR_REVERT] %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EDGE_OBSOLETED_BY</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Obsoleted by:[COLOR_REVERT] %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EDGE_REPLACES</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Replaces:[COLOR_REVERT] %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EDGE_DISABLES</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Disables:[COLOR_REVERT] %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EDGE_MORE</Tag>
+		<English> (+%d1 more, hold ALT for all)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PLOTHELP_OWNER</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Owned by:[COLOR_REVERT] %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PLOTHELP_CULTURE</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Culture:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PLOTHELP_CULTURAL_OWNER</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Cultural control:[COLOR_REVERT] %s1</English>
 	</TEXT>
 </Civ4GameText>
 

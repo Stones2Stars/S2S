@@ -1,0 +1,210 @@
+{
+ "type": "BUILDING_FORGE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARMOURER",
+   "BUILDING_GRAND_FIRE_FESTIVAL",
+   "BUILDING_GRAND_MANOR",
+   "BUILDING_GUILD_BLACKSMITHS",
+   "BUILDING_GUILD_HALL",
+   "BUILDING_SMITH_ALUMINUM",
+   "BUILDING_SMITH_BRASS",
+   "BUILDING_SMITH_BRONZE",
+   "BUILDING_SMITH_COPPER",
+   "BUILDING_SMITH_ELECTRUM",
+   "BUILDING_SMITH_GOLD",
+   "BUILDING_SMITH_IRON",
+   "BUILDING_SMITH_PLATINUM",
+   "BUILDING_SMITH_SILVER",
+   "BUILDING_SMITH_STEEL",
+   "BUILDING_SMITH_TIN",
+   "BUILDING_SMITH_TITANIUM",
+   "BUILDING_THE_COLOSSUS",
+   "BUILDING_TOWNCLOCK"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOMINING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FOUNDRY"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_METAL_CASTING",
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_INGOTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TIN_INGOTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_IRON_INGOTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_LEAD_INGOTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SILVER_INGOTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_GOLD_INGOTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PLATINUM_INGOTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BRASS_INGOTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_ELECTRUM_INGOTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TITANIUM_INGOTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STEEL_INGOTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_ALUMINUM_INGOTS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_CHARCOAL",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_COAL",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_FOUNDRY",
+    "BUILDING_METALS_MEGACOMPLEX"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_TOOLS"
+  ]
+ },
+ "production": {
+  "city": {
+   "percent": 15,
+   "improvements": {
+    "IMPROVEMENT_MINE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 3,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL"
+   }
+  }
+ ],
+ "cost": {
+  "production": 153,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FORGE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FORGE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FORGE",
+  "civilopedia": "TXT_KEY_BUILDING_FORGE_PEDIA",
+  "worth": 4,
+  "militaryWorth": 5,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

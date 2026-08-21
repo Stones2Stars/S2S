@@ -1,0 +1,115 @@
+{
+ "type": "BUILDING_BIOMORPHICS_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_NANOACTUATORS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MECHATRONICS_LAB",
+    "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
+    "TECH_THOUGHT_SCANNING",
+    "TECH_GENESIS_BIOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_ORGANIC_PHOTONIC_CELLS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 9,
+     "enabled": "TECH_BIONICS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_PERSONAL_ROBOTS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_ANDROIDS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_CYBERNETICS"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 9,
+     "enabled": "TECH_BIONICS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_CYBERNETICS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_ANDROIDS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_PERSONAL_ROBOTS"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "cost": {
+  "production": 3245,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BIOMORPHICS_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BIOMORPHICS_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_BIOMORPHICS_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

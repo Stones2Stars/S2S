@@ -1,0 +1,41 @@
+{
+ "type": "PROMOTION_REPAIR_AIRCRAFT3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BUILD_UP_MAINTENANCE_HANGAR3"
+  ]
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 1
+   },
+   "victoryAdjacent": {
+    "flat": 1
+   },
+   "victoryStack": {
+    "flat": 3
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_AIRCRAFT": {
+     "heal": 4,
+     "adjacentHeal": 1
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_REPAIR_AIRCRAFT": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/RepairAircraft3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_REPAIR_AIRCRAFT3"
+ }
+}

@@ -1,0 +1,141 @@
+{
+ "type": "UNIT_CAPUCHIN",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_LONE"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 6,
+   "title": "TXT_KEY_GROUPTITLE_PAIR"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 16,
+   "title": "TXT_KEY_GROUPTITLE_FAMILY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_COMPANY",
+   "chance": 6,
+   "title": "TXT_KEY_GROUPTITLE_TROOP"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_BATTALION",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_COMMUNITY"
+  }
+ ],
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "skills": [
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_MAMMAL_MONKEY",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_WARNING",
+  "UNITCOMBAT_ANIMAL_COMBAT_REPELLENT",
+  "UNITCOMBAT_ANIMAL_COMBAT_NIP",
+  "UNITCOMBAT_ANIMAL_COMBAT_TREECLIMBING",
+  "UNITCOMBAT_ANIMAL_COMBAT_PUMMEL",
+  "UNITCOMBAT_ANIMAL_COMBAT_FECAL_FLINGING",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_POOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_TINY",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_CAPUCHIN",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": 1,
+    "commerce": 1
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CAPUCHIN",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_CAPUCHIN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_CAPUCHIN",
+  "civilopedia": "TXT_KEY_UNIT_CAPUCHIN_PEDIA",
+  "spawnOnly": true,
+  "xpValueAttack": 2,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_DUNES",
+   "TERRAIN_ICE",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ]
+ }
+}

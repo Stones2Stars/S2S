@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_LAW_SCHOOL",
+ "enables": {
+  "buildings": [
+   "BUILDING_LAW_FIRM"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOTROIDS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AI_LEGAL_SYSTEM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COURTHOUSE",
+    "TECH_EDUCATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_AI_LEGAL_SYSTEM"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "cost": {
+  "production": 368,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_ESPIONAGE": 3
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LAW_SCHOOL",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COURTHOUSE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LAW_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_LAW_SCHOOL_PEDIA",
+  "worth": 4,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

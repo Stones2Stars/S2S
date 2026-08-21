@@ -1,0 +1,67 @@
+{
+ "type": "CIVIC_SMALLHOLDING",
+ "food": {
+  "empire": {
+   "percent": 1,
+   "improvements": {
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": -1
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    -2,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    -2,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/agriculture_subsistence_agriculture.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_SMALLHOLDING",
+  "civilopedia": "TXT_KEY_CIVIC_SMALLHOLDING_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_SMALLHOLDING_STRATEGY",
+  "civicOption": "CIVICOPTION_AGRICULTURE",
+  "upkeepLevel": "UPKEEP_LOW"
+ }
+}

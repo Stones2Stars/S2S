@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_HYDROPONIC_VEGETABLE_GARDEN",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_VEGETABLES"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FARMSCRAPER_I"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HYDROPONICS_LAB",
+    "TECH_HYDROPONICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_FRESHWATER",
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_FARMSCRAPER_I"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1410,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYDROPONIC_VEGETABLE_GARDEN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYDROPONIC_VEGETABLE_GARDEN",
+  "civilopedia": "TXT_KEY_BUILDING_HYDROPONIC_VEGETABLE_GARDEN_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

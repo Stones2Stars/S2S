@@ -1,0 +1,36 @@
+{
+ "type": "BUILD_SCAVENGING_CAMP_KILL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SCAVENGING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_SCAVENGING_CAMP"
+ },
+ "cost": {
+  "gold": 4,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/scavenging_camp.dds"
+  },
+  "hotkey": "KB_S",
+  "shiftDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_SCAVENGING_CAMP_KILL",
+  "consumesUnit": true
+ }
+}

@@ -1,0 +1,137 @@
+{
+ "type": "UNIT_MAPINGUARI_WOODEN",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SPEAR_MAKING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SIMPLE_WOOD_WORKING",
+    {
+     "any": [
+      "BUILDING_MAPINGUARI_COMPOUND",
+      "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MAPINGUARI_STONE"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityDefense": {
+    "percent": -80
+   },
+   "attack": {
+    "percent": -50
+   },
+   "defense": {
+    "percent": 100
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 4
+  }
+ },
+ "skills": [
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_TAMED",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_MAMMAL_ANTEATER",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
+  "UNITCOMBAT_ANIMAL_COMBAT_ROARING",
+  "UNITCOMBAT_ANIMAL_COMBAT_CONSTRICT",
+  "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+  "UNITCOMBAT_SPEED_SLOW",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 62,
+  "upkeep": 5
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MAPINGUARI_WOODEN",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MAPINGUARI_WOODEN"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WOODEN_SPEARMAN"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WOODEN_SPEARMAN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_MAPINGUARI_WOODEN",
+  "civilopedia": "TXT_KEY_UNIT_MAPINGUARI_PEDIA",
+  "worth": 1,
+  "militaryWorth": 4,
+  "xpValueAttack": 2,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ESCORT",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_PILLAGE_COUNTER",
+   "UNITAI_ESCORT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

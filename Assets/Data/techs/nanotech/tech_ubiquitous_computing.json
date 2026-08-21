@@ -1,0 +1,75 @@
+{
+ "type": "TECH_UBIQUITOUS_COMPUTING",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARCTIC_DATA_CENTER",
+   "BUILDING_DELTA_ASSEMBLER",
+   "BUILDING_NATURAL_LANGUAGE_ALGORITHMS"
+  ],
+  "promotions": [
+   "PROMOTION_RECOVER_TECH4"
+  ],
+  "techs": [
+   "TECH_GENE_ENHANCEMENT",
+   "TECH_HYPERSONIC_FLIGHT",
+   "TECH_MASS_SURVEILLANCE",
+   "TECH_MESH_NETWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMPUTATIONAL_SOCIOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOTECH_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 36429
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/melectronics2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_UBIQUITOUS_COMPUTING",
+  "soundMP": "AS2D_TECH_UBIQUITOUS_COMPUTING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_UBIQUITOUS_COMPUTING",
+  "civilopedia": "TXT_KEY_TECH_UBIQUITOUS_COMPUTING_PEDIA",
+  "quote": "TXT_KEY_TECH_UBIQUITOUS_COMPUTING_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 100,
+  "gridY": 17
+ }
+}

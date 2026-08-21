@@ -1,0 +1,48 @@
+{
+ "type": "BUILDING_NATIONAL_DRUG_PROHIBITION",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    "BUILDING_SUPREME_COURT",
+    "TECH_COUNTERCULTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ORDINANCE_DRUG_PROHIBITION"
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NATIONAL_DRUG_PROHIBITION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_DRUG_PROHIBITION",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_DRUG_PROHIBITION_PEDIA",
+  "notConstructible": true,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

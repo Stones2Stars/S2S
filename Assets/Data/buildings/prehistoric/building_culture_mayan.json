@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_CULTURE_MAYAN",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_NORTH_AMERICAN",
+    "BUILDING_C_L_NORTH_AMERICAN",
+    "TECH_OBSIDIAN_WEAPONS",
+    {
+     "type": "FEATURE_JUNGLE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_INDIGO",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_MAYAN"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_TEMPLE_OF_AH_CACAO": {
+     "percent": 10
+    },
+    "BUILDING_CHICHEN_ITZA": {
+     "percent": 10
+    },
+    "BUILDING_PYRAMID_OF_THE_MAGICIAN": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 480,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_MAYAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_MAYAN",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_MAYAN_PEDIA",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

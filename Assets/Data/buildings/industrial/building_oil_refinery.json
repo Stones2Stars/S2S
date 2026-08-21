@@ -1,0 +1,125 @@
+{
+ "type": "BUILDING_OIL_REFINERY",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_PETROLEUM_PRODUCTS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_BOTANICAL_ALCHEMY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ULTRAFUEL_REFINERY"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "BUILDING_FACTORY",
+    "TECH_REFINING",
+    "TECH_ASSEMBLY_LINE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_OIL",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_ULTRAFUEL_REFINERY"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": [
+    {
+     "value": 20,
+     "enabled": "HAS_POWER"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -1,
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_OIL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 710,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_OIL_REFINERY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_OIL_REFINERY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_OIL_REFINERY",
+  "civilopedia": "TXT_KEY_BUILDING_OIL_REFINERY_PEDIA",
+  "worth": 6,
+  "militaryWorth": 30,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_HEMUDU",
+ "enables": {
+  "units": [
+   "UNIT_HEMUDU_HUNTERS",
+   "UNIT_SHENGJUN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HEMUDU"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HEMUDU",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

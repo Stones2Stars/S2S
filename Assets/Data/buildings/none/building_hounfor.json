@@ -1,0 +1,115 @@
+{
+ "type": "BUILDING_HOUNFOR",
+ "enables": {
+  "units": [
+   "UNIT_UNDEAD_WORKER",
+   "UNIT_VOODOO_MISSIONARY"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MODERN_PHYSICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MEDITATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_VOODOO",
+    {
+     "any": [
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_VOODOO"
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 320,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HOUNFOR"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_VOODOO"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HOUNFOR",
+  "civilopedia": "TXT_KEY_BUILDING_HOUNFOR_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 3,
+  "specialBuildingType": "SPECIALBUILDING_MONASTERY",
+  "religion": "RELIGION_VOODOO",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

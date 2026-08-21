@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_CISLUNAR_OMNISURVEILLANCE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_CONTROL_SYSTEM",
+    "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+    "TECH_MOLECULAR_SCANNING",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "cost": {
+  "production": 4408,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_OMNISURVEILLANCE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_OMNISURVEILLANCE",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_OMNISURVEILLANCE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

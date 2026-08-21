@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_SPELUNKING_CAVES",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FUSION_SPACECRAFT"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TOURISM_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_EXTREME_SPORTS",
+    {
+     "type": "FEATURE_CAVES",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_TOURISM_MEGACOMPLEX"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1605,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SPELUNKING_CAVES",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SPELUNKING_CAVES",
+  "civilopedia": "TXT_KEY_BUILDING_SPELUNKING_CAVES_PEDIA",
+  "militaryWorth": 1,
+  "conquestProbability": 30,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

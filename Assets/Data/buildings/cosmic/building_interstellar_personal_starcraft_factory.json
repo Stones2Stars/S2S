@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_INTERSTELLAR_PERSONAL_STARCRAFT_FACTORY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER",
+    "TECH_REACTIONLESS_DRIVE",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_PERSONAL_STARCRAFT"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 6806,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_PERSONAL_STARCRAFT_FACTORY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_PERSONAL_STARCRAFT_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PERSONAL_STARCRAFT_FACTORY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

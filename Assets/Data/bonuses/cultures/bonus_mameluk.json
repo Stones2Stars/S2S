@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_MAMELUK",
+ "enables": {
+  "units": [
+   "UNIT_BARQUQ",
+   "UNIT_MAMELUK"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MAMELUK"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MAMELUK",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

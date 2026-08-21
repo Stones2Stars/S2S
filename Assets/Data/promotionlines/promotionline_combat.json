@@ -1,0 +1,23 @@
+{
+ "type": "PROMOTIONLINE_COMBAT",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,8,2"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_COMBAT",
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_NAVAL_COMBATANT",
+   "UNITCOMBAT_PIRATE",
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_LAW_ENFORCEMENT",
+   "UNITCOMBAT_RUFFIAN"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ]
+ }
+}

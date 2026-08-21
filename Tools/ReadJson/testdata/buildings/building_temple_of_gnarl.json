@@ -1,0 +1,129 @@
+{
+  "type": "BUILDING_TEMPLE_OF_GNARL",
+
+  "identity": {
+    "description": "TXT_KEY_BUILDING_TEMPLE_OF_GNARL",
+    "strategy": "TXT_KEY_BUILDING_TEMPLE_OF_GNARL_STRATEGY",
+    "capital": false,
+    "governmentCenter": false,
+    "shrine": "RELIGION_GNARLODOXY",
+    "corporationHQ": "CORPORATION_CREATIVE_CONSTRUCTIONS",
+    "maxWorldWonders": 1,
+    "commerceFlexible": ["culture"]
+  },
+  "cost": { "production": 500, "sizeModifier": 25, "materialsModifier": 10 },
+
+  "enables": {
+    "units": ["UNIT_SIR_GNARLALOT"],
+    "buildings": ["BUILDING_TORTURE_B"],
+    "builds": ["BUILD_TORTURE"],
+    "civics": ["CIVIC_TORTURE"],
+    "religions": ["RELIGION_TORTURE"],
+    "corporations": ["CORPORATION_TORTURE"],
+    "projects": ["PROJECT_TORTURE"],
+    "processes": ["PROCESS_TORTURE"],
+    "promotions": ["PROMOTION_TORTURE"],
+    "improvements": ["IMPROVEMENT_TORTURE"],
+    "bonuses": ["BONUS_TORTURE"],
+    "routes": ["ROUTE_TORTURE"],
+    "votes": ["FORCE_TEAM_ELIGIBLE"],
+    "hurries": ["HURRY_GOLD"],
+    "specialBuildingsWaived": ["SPECIALBUILDING_WONDER"]
+  },
+  "obsoletes": { "buildings": ["BUILDING_OLD_A"], "units": ["UNIT_OLD_B"] },
+  "replaces": { "buildings": ["BUILDING_PREDECESSOR"] },
+  "disables": { "buildings": ["BUILDING_BANNED_BY_THIS"] },
+
+  "requires": {
+    "build": {
+      "all": [
+        { "type": "BONUS_STONE", "scope": "city", "connection": "trade|vicinity", "min": 1 },
+        { "type": "POPULATION", "scope": "city", "min": 5 },
+        { "type": "BUILDING_TORTURE_PREREQ", "scope": "city", "min": 1 },
+        { "type": "BUILDING_TORTURE_COUNTED", "scope": "empire", "min": 12 },
+        { "type": "UNIT_TORTURE_CAP", "scope": "empire", "min": 1, "max": 5 },
+        { "latitude": { "min": 30, "max": 60 } }
+      ],
+      "any": [
+        [ { "type": "CIVIC_MONARCHY", "scope": "empire", "min": 1 },
+          { "type": "CIVIC_REPUBLIC", "scope": "empire", "min": 1 } ]
+      ],
+      "noneOf": [ { "type": "SELF", "scope": "world", "min": 1 } ],
+      "disabled": "IS_CAPITAL"
+    },
+    "operate": {
+      "all": [
+        { "type": "CIVIC_GNARCHY", "scope": "empire", "min": 1 },
+        { "type": "BONUS_GNARLITE", "scope": "city", "connection": "trade|vicinity", "min": 1 }
+      ],
+      "any": [
+        [ { "type": "BONUS_COAL", "scope": "city", "min": 1 },
+          { "type": "BONUS_OIL", "scope": "city", "min": 1 } ]
+      ],
+      "noneOf": [ { "HAS_FEATURE": "FEATURE_JUNGLE" } ],
+      "enabled": "HAS_POWER"
+    }
+  },
+
+  "grants": {
+    "buildings": ["BUILDING_FREEBIE"],
+    "units": ["UNIT_FREEBIE"],
+    "techs": ["TECH_FREEBIE"],
+    "specialists": ["SPECIALIST_ENGINEER"],
+    "promotions": ["PROMOTION_FREE"],
+    "population": 1,
+    "goldenAge": true,
+    "foundBuildings": [
+      { "building": "BUILDING_PALACE", "enabled": { "type": "CITY", "scope": "empire", "max": 0 } }
+    ],
+    "repeatable": [
+      { "unit": "UNIT_PROPERTY_CRIMINAL", "interval": "perTurn",
+        "chance": { "per": { "type": "PROPERTY_CRIME", "scope": "city", "each": 1 } },
+        "enabled": { "type": "BONUS_GOLD", "scope": "city", "min": 1 } },
+      { "heal": 2, "interval": { "perTurn": 1 } }
+    ]
+  },
+
+  "happiness": { "city": { "flat": 2 } },
+  "health": { "city": { "flat": 1, "percent": -10 } },
+  "production": {
+    "city": {
+      "flat": 2,
+      "percent": [
+        25,
+        { "value": 25, "enabled": { "type": "BONUS_COAL", "scope": "city", "min": 1 } },
+        { "value": 50, "enabled": "HAS_POWER" }
+      ],
+      "multiplier": 200
+    }
+  },
+  "buildRate": {
+    "self": {
+      "percent": [
+        { "value": 100, "enabled": { "type": "BONUS_GNARLITE", "scope": "city", "min": 1 } },
+        { "value": 50, "enabled": { "type": "BONUS_STONE", "scope": "city", "min": 1 } }
+      ]
+    },
+    "city": {
+      "buildings": { "BUILDING_TORTURE_B": { "percent": 50 } },
+      "military": { "percent": 25 },
+      "space": { "percent": 25 }
+    },
+    "empire": {
+      "buildings": { "BUILDING_TORTURE_B": { "percent": 10 } },
+      "space": { "percent": 10 }
+    }
+  },
+  "food": { "city": { "improvements": { "IMPROVEMENT_FARM": { "flat": 1 } } } },
+  "gold": { "city": { "flat": { "value": 1, "per": { "type": "RELIGION_*", "scope": "world", "each": 1 } } } },
+  "research": { "city": { "religions": { "RELIGION_GNARLODOXY": { "flat": 2 } } } },
+  "culture": { "city": { "flat": { "value": 5, "enabled": { "existedFor": { "min": 10 } } } } },
+  "espionage": { "city": { "flat": 1 } },
+  "maintenance": { "empire": { "distance": { "percent": -10 } } },
+  "upkeep": { "empire": { "unit": { "percent": 100, "ai": { "percent": 120 } } } },
+  "defense": { "city": { "amount": { "percent": 25 }, "min": { "flat": 25 } } },
+  "experience": { "city": { "unitCombats": { "UNITCOMBAT_MELEE": { "flat": 2 } } } },
+  "freeSpecialists": { "empire": { "specialists": { "SPECIALIST_SCIENTIST": { "flat": 1 } } } },
+  "PROPERTY_CRIME": { "city": { "flat": -10 } },
+  "PROPERTY_EDUCATION": { "city": { "flat": { "value": 1, "per": { "type": "POPULATION", "scope": "city", "each": 5 } } } }
+}

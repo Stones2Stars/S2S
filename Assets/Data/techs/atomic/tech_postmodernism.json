@@ -1,0 +1,68 @@
+{
+ "type": "TECH_POSTMODERNISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_ENVIRONMENTAL_ART_STUDIO",
+   "BUILDING_PORTLAND_BUILDING",
+   "BUILDING_RETREAT_CENTER",
+   "BUILDING_TAIPEI_101"
+  ],
+  "techs": [
+   "TECH_COUNTERCULTURE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GLOBALIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_POP_ART",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SURREALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 12657
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Buttons/Techs/postmodernism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_POSTMODERNISM",
+  "civilopedia": "TXT_KEY_TECH_POSTMODERNISM_PEDIA",
+  "quote": "TXT_KEY_TECH_POSTMODERNISM_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 79,
+  "gridY": 1
+ }
+}

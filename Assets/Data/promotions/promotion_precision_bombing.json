@@ -1,0 +1,67 @@
+{
+ "type": "PROMOTION_PRECISION_BOMBING",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_ACCURACY"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_ARCHER": {
+     "percent": 100
+    },
+    "UNITCOMBAT_MELEE": {
+     "percent": 100
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 75
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 25
+    },
+    "UNITCOMBAT_SIEGE": {
+     "percent": 50
+    },
+    "UNITCOMBAT_WHEELED": {
+     "percent": 25
+    },
+    "UNITCOMBAT_TRACKED": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 5
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Precision_bombing.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,2,10"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_PRECISION_BOMBING",
+  "unitCombats": [
+   "UNITCOMBAT_EARLY_BOMBERS",
+   "UNITCOMBAT_BOMBERS",
+   "UNITCOMBAT_STEALTH"
+  ]
+ }
+}

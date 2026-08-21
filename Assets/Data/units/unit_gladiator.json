@@ -1,0 +1,117 @@
+{
+ "type": "UNIT_GLADIATOR",
+ "requires": {
+  "build": {
+   "dormant": {
+    "all": [
+     "UNIT_MACEMAN"
+    ]
+   }
+  }
+ },
+ "disabled": "GAMEOPTION_NO_EVENTS",
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 9
+  }
+ },
+ "skills": [
+  "pillage"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_MELEE",
+ "combatClasses": [
+  "UNITCOMBAT_MELEE",
+  "UNITCOMBAT_THROWING",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_BOLA",
+  "UNITCOMBAT_SHIELD_LARGE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EPIC",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_DRILL1"
+  ],
+  "greatPeople": [
+   "SPECIALIST_SETTLED_GLADIATOR"
+  ],
+  "buildings": [
+   {
+    "building": "BUILDING_GLADIATORIAL_SCHOOL"
+   }
+  ]
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GLADIATOR",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 3,
+      "define": {
+       "early": "ART_DEF_UNIT_GLADIATOR"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_GLADIATOR",
+  "civilopedia": "TXT_KEY_UNIT_GLADIATOR_PEDIA",
+  "spawnOnly": true,
+  "worth": 2,
+  "militaryWorth": 5,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

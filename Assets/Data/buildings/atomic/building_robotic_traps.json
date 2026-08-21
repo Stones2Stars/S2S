@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_ROBOTIC_TRAPS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOELECTRONICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_EMP_TRAPS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ROBOTICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_EMP_TRAPS",
+    "BUILDING_NANOBOT_TRAPS",
+    "BUILDING_GRAVITY_TRAPS"
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 35
+   }
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 1685,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ROBOTIC_TRAPS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_NANOFACTORY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ROBOTIC_TRAPS",
+  "civilopedia": "TXT_KEY_BUILDING_ROBOTIC_TRAPS_PEDIA",
+  "militaryWorth": 6,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

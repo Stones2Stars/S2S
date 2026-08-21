@@ -1,0 +1,4 @@
+[
+  "I am a JSON array, not an entity object",
+  { "type": "BUILDING_NOPE" }
+]

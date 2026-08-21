@@ -1,0 +1,68 @@
+{
+ "type": "TECH_HYDROELECTRICITY",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYDRO_PLANT",
+   "BUILDING_POWER_GORGE",
+   "BUILDING_THREE_GORGES_DAM"
+  ],
+  "builds": [
+   "BUILD_HYDRO_DAM"
+  ],
+  "improvements": [
+   "IMPROVEMENT_HYDRO_DAM"
+  ],
+  "techs": [
+   "TECH_GYROCOMPASS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ELECTRICITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 7008
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/hydroelectricity.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_HYDROELECTRICITY",
+  "soundMP": "AS2D_TECH_HYDROELECTRICITY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_HYDROELECTRICITY",
+  "civilopedia": "TXT_KEY_TECH_HYDROELECTRICITY_PEDIA",
+  "quote": "TXT_KEY_TECH_HYDROELECTRICITY_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 68,
+  "gridY": 13
+ }
+}

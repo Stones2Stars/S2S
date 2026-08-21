@@ -1,0 +1,136 @@
+{
+ "type": "UNIT_BEARKNIGHT",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_ARMORED_CAVALRY",
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_EFFECT_HERITAGE_BEARS",
+      "BUILDING_ANIMAL_TRAINER_BEAR"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_AUTOGYRO",
+     "UNIT_ARMORED_CAR"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE_WOODEN": {
+     "percent": 50
+    }
+   },
+   "flanking": {
+    "UNITCOMBAT_SIEGE": {
+     "percent": 100
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 14
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage",
+  "firstStrikeImmune",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_MOUNTED",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_POLEARM",
+  "UNITCOMBAT_WEAPON_H2H_AXE",
+  "UNITCOMBAT_ARMOR_MEDIUM",
+  "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_ROARING",
+  "UNITCOMBAT_ANIMAL_COMBAT_CONSTRICT",
+  "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
+  "UNITCOMBAT_MOTILITY_RIDING",
+  "UNITCOMBAT_MOUNT_BEAR",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 375
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BEARKNIGHT",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 3,
+    "rangedWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_BEARKNIGHT"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_BEARKNIGHT",
+  "civilopedia": "TXT_KEY_UNIT_BEARKNIGHT_PEDIA",
+  "worth": 2,
+  "militaryWorth": 3,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

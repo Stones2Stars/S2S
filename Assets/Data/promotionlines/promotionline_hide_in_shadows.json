@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTIONLINE_HIDE_IN_SHADOWS",
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/HideInShadows1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_HIDE_IN_SHADOWS",
+  "unitCombats": [
+   "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_STRIKE_TEAM",
+   "UNITCOMBAT_FELINE",
+   "UNITCOMBAT_HUNTER"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
+ }
+}

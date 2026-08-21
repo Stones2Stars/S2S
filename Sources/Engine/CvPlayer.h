@@ -1,0 +1,2035 @@
+#pragma once
+
+// player.h
+
+#ifndef CIV4_PLAYER_H
+#define CIV4_PLAYER_H
+
+#include "Tools/copy_iterator.h"
+#include "UI/CvBuildLists.h"
+#include "AI/CvCityAI.h"
+#include "AI/CvContractBroker.h"
+#include "AI/CvWorkerAI.h"
+#include "AI/CvHunterAI.h"
+#include "AI/CvDecisionAI.h"
+#include "CvGameObject.h"
+#include "UI/CvBuildLists.h"
+#include "CvPlotGroup.h"
+#include "CvProperties.h"
+#include "EmpireContext.h"
+#include "PolicyContext.h"   // the empire's enacted-policy dictionary: storage + maintenance, one place
+#include "CapabilityContext.h"   // the empire's ability union: storage + maintenance, one place
+#include "TraitContext.h"    // the empire's held-trait set: storage + maintenance, one place
+#include "CvCascadePackage.h"   // the EMPIRE-scope cascade package + receiver sums (state-repositories.md)
+#include "Enabler/CvEnabler.h"  // PlayerEnabler -- the per-player tri-state domains (enabler.md §7.1)
+#include "AI/CvSelectionGroupAI.h"
+#include "UI/CvTalkingHeadMessage.h"
+#include "UI/CvUnitList.h"
+#include "AI/CvUnitAI.h"
+#include "Infrastructure/index_iterator_base.h"
+#include "Infrastructure/LinkedList.h"
+#ifdef CVARMY_BREAKSAVE
+	#include "CvArmy.h"
+#endif
+
+class CvArea;
+class CvDiploParameters;
+class CvEventTriggerInfo;
+class CvPlot;
+class CvPopupInfo;
+class CvUnitSelectionCriteria;
+class CvUpgradeCache;
+class CvPlayerAI;
+
+#define	UNIT_BIRTHMARK_TEMP_UNIT	20000
+
+#define MAX_RESEARCH_RATE_VALUE 1999999999
+#define MAX_COMMERCE_VALUE 900000000
+#define MAX_COMMERCE_RATE_MODIFIER_VALUE 1999999999
+#define MAX_GOLD_VALUE 9999999999999999
+#define MAX_GOLD_PER_TURN_VALUE 1999999999
+
+//	Struct used to hold civic switch history
+typedef struct civcSwitchInstance
+{
+	int	iTurn;
+	int	eFromCivic;
+	int	eToCivic;
+	bool bNoAnarchy;
+} civcSwitchInstance;
+
+typedef std::list<CvTalkingHeadMessage> CvMessageQueue;
+typedef std::list<CvPopupInfo*> CvPopupQueue;
+typedef std::list<CvDiploParameters*> CvDiploQueue;
+typedef stdext::hash_map<int, int64_t> CvTurnScoreMap;
+typedef stdext::hash_map<EventTypes, EventTriggeredData> CvEventMap;
+typedef std::vector< std::pair<UnitCombatTypes, PromotionTypes> > UnitCombatPromotionArray;
+typedef std::vector< std::pair<UnitTypes, PromotionTypes> > UnitPromotionArray;
+typedef std::vector< std::pair<CivilizationTypes, LeaderHeadTypes> > CivLeaderArray;
+typedef std::vector<TechTypes> techPath;
+
+class CvPlayer
+	: private bst::noncopyable
+{
+public:
+	CvPlayer();
+	virtual ~CvPlayer();
+
+	CvGameObjectPlayer* getGameObject() { return &m_GameObject; };
+	const CvGameObjectPlayer* getGameObject() const { return &m_GameObject; };
+
+	void setIdleCity(const int iCityID, const bool bNewValue);
+	bool hasIdleCity() const;
+	CvCity* getIdleCity() const;
+	bool isIdleCity(const int iCityID) const;
+	void resetIdleCities();
+
+	void processTech(const TechTypes eTech, const int iChange);
+
+	bool hasHeritage(const HeritageTypes eType) const;
+	bool canAddHeritage(const HeritageTypes eType, const bool bTestVisible = false) const;
+	void setHeritage(const HeritageTypes eType, const bool bNewValue);
+	std::vector<HeritageTypes> getHeritage() const { return m_myHeritage; }
+
+public:
+protected:
+	CvGameObjectPlayer m_GameObject;
+	void baseInit(PlayerTypes eID);
+	void initMore(PlayerTypes eID, LeaderHeadTypes ePersonality, bool bSetAlive = true);
+
+	std::vector<int> m_idleCities;
+	std::vector<CvUnit*> m_commanders;
+	std::vector<CvPlot*> m_commandFieldPlots;
+	std::vector<CvUnit*> m_commodores;
+	std::vector<CvPlot*> m_commodoreFieldPlots;
+
+	std::vector<HeritageTypes> m_myHeritage;
+
+public:
+
+	DllExport void init(PlayerTypes eID);
+	DllExport void setupGraphical();
+	DllExport void reset(PlayerTypes eID = NO_PLAYER, bool bConstructorCall = false);
+
+	void resetPlotAndCityData();
+
+	void changePersonalityType();
+	void resetCivTypeEffects();
+	void changeLeader(LeaderHeadTypes eNewLeader);
+	void changeCiv(CivilizationTypes eNewCiv);
+	void setIsHuman(bool bNewValue);
+
+	void initInGame(PlayerTypes eID, bool bSetAlive);
+	void setIsRebel(bool bNewValue);
+	bool isRebel() const;
+	int getStabilityIndex() const;
+	void setStabilityIndex(int iNewValue);
+	void changeStabilityIndex(int iChange);
+	int getStabilityIndexAverage() const;
+	void setStabilityIndexAverage(int iNewValue);
+	void updateStabilityIndexAverage();
+
+	bool haveSettlerUnit() const;
+	bool isAliveAndTeam(const TeamTypes eTeam, const bool bSameTeam = true, const TeamTypes eTeamAlt = NO_TEAM) const;
+
+	void uninit();
+
+public:
+
+	void initFreeState();
+	void initFreeUnits();
+
+	UnitTypes getBestUnitType(UnitAITypes eUnitAI) const;
+
+	int getBestUnitTypeCargoVolume(UnitAITypes eUnitAI) const;
+	bool addStartUnitAI(const UnitAITypes eUnitAI, const int iCount);
+
+	int startingPlotRange() const;
+	bool startingPlotWithinRange(CvPlot* pPlot, PlayerTypes ePlayer, int iRange, int iPass) const;
+	int startingPlotDistanceFactor(const CvPlot* pPlot, PlayerTypes ePlayer, int iRange) const;
+	int findStartingArea() const;
+	CvPlot* findStartingPlot(bool bRandomize = false);
+
+	CvPlotGroup* initPlotGroup(CvPlot* pPlot, bool bRecalculateBonuses);
+
+	CvCity* initCity(int iX, int iY, bool bBumpUnits, bool bUpdatePlotGroups);
+	void acquireCity(CvCity* pCity, bool bConquest, bool bTrade, bool bUpdatePlotGroups);
+	void killCities();
+	CvWString getNewCityName() const;
+	void getCivilizationCityName(CvWString& szBuffer, CivilizationTypes eCivilization) const;
+	bool isCityNameValid(CvWString& szName, bool bTestDestroyed = true) const;
+
+	CvUnit* getTempUnit(UnitTypes eUnit, int iX, int iY);
+	void releaseTempUnit();
+	CvUnit* initUnit(UnitTypes eUnit, int iX, int iY, UnitAITypes eUnitAI, DirectionTypes eFacingDirection, int iBirthmark);
+
+	///<summary>Bring a unit of this player into existence at a location, settling everything creation owes it.</summary>
+	///<remarks>
+	/// The ONE creation step every route ends at -- trained, conscripted, granted, awarded, spawned
+	/// ([triggers.md]). The route settles the production debit and nothing else; what a new unit is OWED is
+	/// settled here, once. A city standing at the location settles its own share (the free experience it gives
+	/// units born in it), so a caller never resolves that itself -- and a unit born in the field has nobody to
+	/// owe it. bConscript takes the half-experience draft rate. Movement is deliberately NOT settled here: the
+	/// engine has two standing answers (a trained unit is spent, a conscript is ready), so the caller states
+	/// which. What is legitimately NOT here is a TRANSFORMATION of a unit that already exists.
+	///</remarks>
+	CvUnit* createUnit(UnitTypes eUnit, int iX, int iY, UnitAITypes eUnitAI = NO_UNITAI,
+		DirectionTypes eFacingDirection = NO_DIRECTION, bool bConscript = false);
+	void disbandUnit();
+	void killUnits();
+
+	CvSelectionGroup* cycleSelectionGroups(const CvUnit* pUnit, bool bForward, bool bWorkers, bool* pbWrap, bool bAllowViewportSwitch);
+
+	bool hasTrait(TraitTypes eTrait) const;
+
+	void setHumanDisabled(bool newVal);
+	inline bool isHumanDisabled() const { return m_bDisableHuman; }
+	inline bool isHumanPlayer(const bool bCountDisabled = false) const { return m_bHuman || bCountDisabled && m_bDisableHuman; }
+	bool isNormalAI() const;
+
+	DllExport bool isHuman() const;
+	DllExport void updateHuman();
+	DllExport bool isBarbarian() const;
+	bool isNPC() const;
+	bool isHominid() const;
+	bool isAnimal() const;
+
+	DllExport const wchar_t* getName(uint uiForm = 0) const;
+
+	void setName(std::wstring szNewValue);
+	void setCivName(std::wstring szNewDesc, std::wstring szNewShort, std::wstring szNewAdj);
+
+	DllExport const wchar_t* getNameKey() const;
+	DllExport const wchar_t* getCivilizationDescription(uint uiForm = 0) const;
+	const wchar_t* getCivilizationDescriptionKey() const;
+	const wchar_t* getCivilizationShortDescription(uint uiForm = 0) const;
+	const wchar_t* getCivilizationShortDescriptionKey() const;
+	const wchar_t* getCivilizationAdjective(uint uiForm = 0) const;
+	const wchar_t* getCivilizationAdjectiveKey() const;
+	DllExport CvWString getFlagDecal() const;
+	DllExport bool isWhiteFlag() const;
+	const wchar_t* getStateReligionName(uint uiForm = 0) const;
+	const wchar_t* getStateReligionKey() const;
+	const CvWString getBestAttackUnitName(uint uiForm = 0) const;
+	const CvWString getWorstEnemyName() const;
+	const wchar_t* getBestAttackUnitKey() const;
+	DllExport ArtStyleTypes getArtStyleType() const;
+	const char* getUnitButton(UnitTypes eUnit) const;
+
+	void doTurn();
+	void doMultiMapTurn();
+	void doTurnUnits();
+
+	void recordHistory();
+
+	void NoteAnimalSubdued();
+	void NoteUnitConstructed(BuildingTypes eBuilding);
+	void NoteCivicsSwitched(int iNumChanges);
+
+	void verifyCivics();
+
+	void updatePlotGroups(const CvArea* possibleNewInAreaOnly = NULL, bool reInitialize = false);
+
+	// The empire's additive maintenance stack for one KIND (team + empire), the empire twin of the city read.
+	// ⛔ It reads the rolled LEGS directly rather than going through InfoValuation::realizedAtEmpire: that
+	// helper answers a RECEIVER channel with its maintained sum, and maintenance is now one -- so routing this
+	// through it would silently hand back the empire's realized TOTAL where a percent stack was asked for.
+	int maintenancePercentStack(int iKind) const;
+	// Marks the empire's maintenance RECEIVER slot -- what a member city's realized value moving invalidates.
+
+
+	void updateCorporation();
+	void updateCitySight(bool bIncrement, bool bUpdatePlotGroups);
+	void updateTradeRoutes();
+	void updatePlunder(int iChange, bool bUpdatePlotGroups);
+	void updateTimers();
+	CvCity* findClosestCity(const CvPlot* pPlot) const;
+
+	bool hasReadyUnautomatedUnit(bool bAny = false) const;
+	bool hasReadyUnit(bool bAny = false) const;
+	bool hasAutoUnit() const;
+	DllExport bool hasBusyUnit() const;
+
+	bool isChoosingFreeTech() const;
+	void startChoosingFreeTech();
+	void endChoosingFreeTech();
+	void chooseTech(int iDiscover = 0, CvWString szText = CvWString(), bool bFront = false);
+
+	int calculateScore(bool bFinal = false, bool bVictory = false) const;
+
+	int findBestFoundValue() const;
+
+	int upgradeAllPrice(UnitTypes eUpgradeUnit, UnitTypes eFromUnit) const;
+
+	int countReligionSpreadUnits(const CvArea* pArea, ReligionTypes eReligion, bool bIncludeTraining = false) const;
+	int countCorporationSpreadUnits(const CvArea* pArea, CorporationTypes eCorporation, bool bIncludeTraining = false) const;
+
+	int countNumCoastalCities() const;
+	int countNumCoastalCitiesByArea(const CvArea* pArea) const;
+	inline void noteOrbitalInfrastructureCountDirty() { m_orbitalInfrastructureCountDirty = true; }
+
+	int countOwnedBonuses(BonusTypes eBonus) const;
+	int countUnimprovedBonuses(const CvArea* pArea, const CvPlot* pFromPlot = NULL) const;
+	int countCityFeatures(FeatureTypes eFeature) const;
+	int countNumBuildings(BuildingTypes eBuilding) const;
+	bool hasBuilding(const BuildingTypes eBuilding) const;
+	int countNumCitiesConnectedToCapital() const;
+	int countPotentialForeignTradeCities(const CvArea* pIgnoreArea = NULL) const;
+	int countPotentialForeignTradeCitiesConnected() const;
+
+	DllExport bool canContact(PlayerTypes ePlayer) const;
+	void contact(PlayerTypes ePlayer);
+	DllExport void handleDiploEvent(DiploEventTypes eDiploEvent, PlayerTypes ePlayer, int iData1, int iData2);
+	bool canTradeWith(PlayerTypes eWhoTo) const;
+	DllExport bool canTradeItem(PlayerTypes eWhoTo, TradeData item, bool bTestDenial = false) const;
+	DllExport DenialTypes getTradeDenial(PlayerTypes eWhoTo, TradeData item) const;
+	bool canTradeNetworkWith(PlayerTypes ePlayer) const;
+	int getNumAvailableBonuses(BonusTypes eBonus) const;
+	int getNumTradeableBonuses(BonusTypes eBonus) const;
+	int getNumTradeBonusImports(PlayerTypes ePlayer) const;
+	bool hasBonus(BonusTypes eBonus) const;
+
+	bool isTradingWithTeam(TeamTypes eTeam, bool bIncludeCancelable) const;
+	bool canStopTradingWithTeam(TeamTypes eTeam, bool bContinueNotTrading = false) const;
+	void stopTradingWithTeam(TeamTypes eTeam);
+	void killAllDeals();
+
+	void findNewCapital();
+	int getNumGovernmentCenters() const;
+
+	void raze(CvCity* pCity);
+	void disband(CvCity* pCity);
+
+	bool canReceiveGoody(const CvPlot* pPlot, GoodyTypes eGoody, const CvUnit* pUnit) const;
+	void receiveGoody(CvPlot* pPlot, GoodyTypes eGoody, CvUnit* pUnit);
+	void doGoody(CvPlot* pPlot, CvUnit* pUnit);
+
+	DllExport bool canFound(int iX, int iY, bool bTestVisible = false) const;
+	void found(int iX, int iY, CvUnit* pUnit = NULL);
+
+	bool canCreate(ProjectTypes eProject, bool bContinue = false, bool bTestVisible = false) const;
+	bool canMaintain(ProcessTypes eProcess) const;
+	bool isProductionMaxedBuilding(BuildingTypes building, bool bAcquireCity = false) const;
+	bool isProductionMaxedUnit(UnitTypes eUnit) const;
+	bool isProductionMaxedProject(ProjectTypes eProject) const;
+	int getProductionNeeded(UnitTypes eUnit) const;
+	int getProductionNeeded(BuildingTypes eBuilding) const;
+	int getProductionNeeded(ProjectTypes eProject) const;
+	int getProductionModifier(UnitTypes eUnit) const;
+	int taggedBuildRate(int iTagId) const;   // the empire tier of CvCity::taggedBuildRate (held traits + adopted civics)
+	int keyedExperience(int iTargetSegment, int iTargetFk) const;   // the empire half of CvCity::keyedExperience
+	int getProductionModifier(BuildingTypes eBuilding) const;
+	int getProductionModifier(ProjectTypes eProject) const;
+
+	int64_t getBaseUnitCost(const UnitTypes eUnit) const;
+
+	void removeBuilding(BuildingTypes building);
+
+	void processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pArea, bool bReligiouslyDisabling = false);
+
+	int getBuildCost(const CvPlot* pPlot, BuildTypes eBuild) const;
+	bool canBuild(const CvPlot* pPlot, BuildTypes eBuild, bool bTestVisible = false, bool bIncludePythonOverrides = true) const;
+
+	RouteTypes getBestRoute(const CvPlot* pPlot = NULL, bool bConnect = true, const CvUnit* pBuilder = NULL) const;
+
+	int getImprovementUpgradeProgressRate(const ImprovementTypes eImprovement) const;
+
+	int calculateTotalYield(YieldTypes eYield) const;
+	int calculateTotalExports(YieldTypes eYield) const;
+	int calculateTotalImports(YieldTypes eYield) const;
+
+	// The empire's summed realized city wellbeing -- ONE group read over the four channels (×100), replacing
+	// the four one-channel aggregate functions ([patterns.md] § THE TWO READ ROLES: the getter IS the group).
+	void getRealizedCityWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
+
+
+	int calculateUnitSupply(int& iPaidUnits, int& iBaseSupplyCost) const;
+	int calculateUnitSupply() const;
+	int64_t calculatePreInflatedCosts() const;
+	int getInflationMod10000() const;
+	int64_t getInflationCost() const;
+	int64_t getFinalExpense() const;
+	short getProfitMargin(int64_t &iNetExpenses, int iExtraExpense=0, int iExtraExpenseMod=0) const;
+	short getProfitMargin(int iExtraExpense=0, int iExtraExpenseMod=0) const;
+	void cacheKeyFinanceNumbers();
+	int64_t getMinTaxIncome() const;
+	int64_t getMaxTaxIncome() const;
+
+	int64_t calculateBaseNetGold() const;
+	int calculateBaseNetResearch(TechTypes eTech = NO_TECH) const;
+	int calculateResearchModifier(TechTypes eTech) const;
+	int calculateGoldRate() const;
+	int calculateResearchRate(TechTypes eTech = NO_TECH) const;
+	int calculateTotalCommerce() const;
+
+	bool canEverResearch(TechTypes eTech) const;
+	TechTypes getCurrentResearch() const;
+	bool isCurrentResearchRepeat() const;
+	bool isNoResearchAvailable() const;
+	int getResearchTurnsLeft(TechTypes eTech, bool bOverflow) const;
+
+	bool isCivic(CivicTypes eCivic) const;
+	bool canDoCivics(CivicTypes eCivic) const;
+	bool canRevolution(CivicTypes* paeNewCivics) const;
+	void revolution(CivicTypes* paeNewCivics, bool bForce = false);
+
+	bool canDoReligion(ReligionTypes eReligion) const;
+	bool canChangeReligion() const;
+	bool canConvert(ReligionTypes eReligion) const;
+	void convert(ReligionTypes eReligion);
+	bool hasHolyCity(ReligionTypes eReligion) const;
+	bool hasHolyCity() const;
+
+	int countHolyCities() const;
+	void foundReligion(ReligionTypes eReligion, ReligionTypes eSlotReligion, bool bAward);
+
+	bool hasHeadquarters(CorporationTypes eCorporation) const;
+	int countHeadquarters() const;
+	int countCorporations(CorporationTypes eCorporation) const;
+	void foundCorporation(CorporationTypes eCorporation);
+
+	int getCivicAnarchyLength(CivicTypes* paeNewCivics) const;
+	int getReligionAnarchyLength() const;
+
+	int unitsRequiredForGoldenAge() const;
+	int unitsGoldenAgeCapable() const;
+	int unitsGoldenAgeReady() const;
+	void killGoldenAgeUnits(CvUnit* pUnitAlive);
+
+	int greatPeopleThresholdMilitary() const;
+	int greatPeopleThresholdNonMilitary() const;
+
+	int specialistYield(SpecialistTypes eSpecialist, YieldTypes eYield) const;
+	int specialistCommerceTimes100(SpecialistTypes eSpecialist, CommerceTypes eCommerce) const;
+	int specialistCommerce(SpecialistTypes eSpecialist, CommerceTypes eCommerce) const;
+
+	CvPlot* getStartingPlot() const;
+	void setStartingPlot(CvPlot* pNewValue, const bool bUpdateStartDist);
+
+	int getTotalPopulation() const;
+	void changeTotalPopulation(int iChange);
+	int64_t getRealPopulation() const;
+	int getReligionPopulation(ReligionTypes eReligion) const;
+
+	int getTotalLand() const;
+	void changeTotalLand(int iChange);
+
+	int getTotalLandScored() const;
+	void changeTotalLandScored(int iChange);
+
+	int64_t getGold() const;
+	void setGold(int64_t iNewValue);
+	DllExport void setGold(int iNewValue) { setGold(static_cast<int64_t>(iNewValue)); }
+	void changeGold(int64_t iChange);
+	DllExport void changeGold(int iChange) { setGold(static_cast<int64_t>(getGold() + iChange)); }
+
+	int getGoldPerTurn() const;
+
+	int getAdvancedStartPoints() const;
+	void setAdvancedStartPoints(int iNewValue);
+	void changeAdvancedStartPoints(int iChange);
+
+	void doEspionageOneOffPoints(int iChange);
+	int getEspionageSpending(TeamTypes eAgainstTeam, int iTotal = -1) const;
+	bool canDoEspionageMission(EspionageMissionTypes eMission, PlayerTypes eTargetPlayer, const CvPlot* pPlot, int iExtraData, const CvUnit* pUnit) const;
+	int64_t getEspionageMissionBaseCost(EspionageMissionTypes eMission, PlayerTypes eTargetPlayer, const CvPlot* pPlot, int iExtraData, const CvUnit* pSpyUnit) const;
+	int getEspionageMissionCost(EspionageMissionTypes eMission, PlayerTypes eTargetPlayer, const CvPlot* pPlot = NULL, int iExtraData = -1, const CvUnit* pSpyUnit = NULL) const;
+	int getEspionageMissionCostModifier(EspionageMissionTypes eMission, PlayerTypes eTargetPlayer, const CvPlot* pPlot, const CvUnit* pSpyUnit) const;
+	bool doEspionageMission(EspionageMissionTypes eMission, PlayerTypes eTargetPlayer, CvPlot* pPlot, int iExtraData, CvUnit* pUnit, bool bCaught = false);
+	int getEspionageSpendingWeightAgainstTeam(TeamTypes eIndex) const;
+	void setEspionageSpendingWeightAgainstTeam(TeamTypes eIndex, int iValue);
+	void changeEspionageSpendingWeightAgainstTeam(TeamTypes eIndex, int iChange);
+
+	bool canStealTech(PlayerTypes eTarget, TechTypes eTech) const;
+	bool canForceCivics(PlayerTypes eTarget, CivicTypes eCivic) const;
+	bool canForceReligion(PlayerTypes eTarget, ReligionTypes eReligion) const;
+	bool canSpyDestroyUnit(PlayerTypes eTarget, const CvUnit& kUnit) const;
+	bool canSpyDestroyBuilding(PlayerTypes eTarget, BuildingTypes eBuilding) const;
+	bool canSpyDestroyProject(PlayerTypes eTarget, ProjectTypes eProject) const;
+
+	void doAdvancedStartAction(AdvancedStartActionTypes eAction, int iX, int iY, int iData, bool bAdd);
+	int getAdvancedStartUnitCost(UnitTypes eUnit, bool bAdd, const CvPlot* pPlot = NULL) const;
+	int getAdvancedStartCityCost(bool bAdd, const CvPlot* pPlot = NULL) const;
+	int getAdvancedStartPopCost(bool bAdd, const CvCity* pCity = NULL) const;
+	int getAdvancedStartCultureCost(bool bAdd, const CvCity* pCity = NULL) const;
+	int getAdvancedStartBuildingCost(BuildingTypes eBuilding, bool bAdd, const CvCity* pCity = NULL) const;
+	int getAdvancedStartImprovementCost(ImprovementTypes eImprovement, bool bAdd, const CvPlot* pPlot = NULL) const;
+	int getAdvancedStartRouteCost(RouteTypes eRoute, bool bAdd, const CvPlot* pPlot = NULL) const;
+	int getAdvancedStartTechCost(TechTypes eTech, bool bAdd) const;
+	int getAdvancedStartVisibilityCost(const CvPlot* pPlot = NULL) const;
+
+	// ── THE INTERNAL SLOT SETTERS (#430) ─────────────────────────────────────────────────────────
+	// COMMIT the member, ANNOUNCE the fact -- and nothing else. The public setter is its guard, then
+	// one of these, then its EFFECTS (graphics, trade routes, corporations, AI marks, alerts, UI).
+	// `CvPlayer::read` calls these directly: the stream is authoritative for base state, so no effect
+	// may decide any part of it, while the fact still comes from the ONE body per slot.
+	// ⚠ `makeNukesValid` needs no twin -- it is already commit + announce with no effects of its own.
+	void setCurrentEraInternal(EraTypes eNewValue);
+	void setLastStateReligionInternal(ReligionTypes eNewReligion);
+	void changeGoldenAgeTurnsInternal(int iChange);
+	void changeAnarchyTurnsInternal(int iChange);
+	void setCommercePercentInternal(CommerceTypes eIndex, int iNewValue);
+
+	int getGoldenAgeTurns() const;
+	bool isGoldenAge() const;
+	void changeGoldenAgeTurns(int iChange);
+	int getGoldenAgeLength() const;
+
+	int getNumUnitGoldenAges() const;
+	void changeNumUnitGoldenAges(int iChange);
+
+	int getAnarchyTurns() const;
+	bool isAnarchy() const;
+
+	void changeAnarchyTurns(int iChange, bool bHideMessages = false);
+
+	int getStrikeTurns() const;
+	void changeStrikeTurns(int iChange);
+
+	int getMaxAnarchyTurns() const;
+	void updateMaxAnarchyTurns();
+
+	int getMinAnarchyTurns() const;
+	void updateMinAnarchyTurns();
+
+	int anarchyModifierScalar() const;
+
+
+
+	void createGreatPeople(UnitTypes eGreatPersonUnit, bool bIncrementThreshold, bool bIncrementExperience, int iX, int iY);
+
+	int getGreatPeopleCreated() const;
+	void incrementGreatPeopleCreated();
+
+	int getGreatGeneralsCreated() const;
+	void incrementGreatGeneralsCreated();
+
+	int getGreatPeopleThresholdModifier() const;
+	void changeGreatPeopleThresholdModifier(int iChange);
+
+	int getGreatGeneralsThresholdModifier() const;
+	void changeGreatGeneralsThresholdModifier(int iChange);
+
+
+
+
+
+
+
+
+
+	int getFeatureProductionModifier() const;
+	void changeFeatureProductionModifier(int iChange);
+
+	int getWorkRate(BuildTypes eBuild) const;
+
+
+	bool isNonStateReligionCommerce() const;
+
+	bool isUpgradeAnywhere() const;
+
+	int getRevIdxLocal() const;
+	void changeRevIdxLocal(int iChange);
+
+	int getRevIdxNational() const;
+	void changeRevIdxNational(int iChange);
+
+	int getRevIdxDistanceModifier() const;
+	void changeRevIdxDistanceModifier(int iChange);
+
+	bool isInquisitionConditions() const;
+
+
+	bool canFoundReligion() const;
+
+	int getNumNukeUnits() const;
+	void changeNumNukeUnits(int iChange);
+
+	int getNumOutsideUnits() const;
+	void changeNumOutsideUnits(int iChange);
+
+	int getFreeUnitUpkeepCivilian() const;
+	int getFreeUnitUpkeepMilitary() const;
+
+	int getTypicalUnitValue(UnitAITypes eUnitAI) const;
+
+	// Toffer - Unit Upkeep
+	int getCivilianUnitUpkeepMod() const;
+	int getMilitaryUnitUpkeepMod() const;
+	void setUnitUpkeepDirty() const;
+
+	int64_t getUnitUpkeepCivilian100() const;
+	int64_t getUnitUpkeepCivilian() const;
+	int64_t getUnitUpkeepCivilianNet() const;
+	int64_t getUnitUpkeepMilitary100() const;
+	int64_t getUnitUpkeepMilitary() const;
+	int64_t getUnitUpkeepMilitaryNet() const;
+	int64_t getUnitUpkeepNet(const bool bMilitary, const int iUnitUpkeep = MAX_INT) const;
+	int64_t calcFinalUnitUpkeep(const bool bReal=true) const;
+	int64_t calcFinalUnitUpkeepFrom(int64_t iCivilian100, int64_t iMilitary100, const bool bReal=true) const;
+	int64_t getFinalUnitUpkeep() const;
+	// ! Unit Upkeep
+
+	int getNumMilitaryUnits() const;
+	void changeNumMilitaryUnits(int iChange);
+
+	int getHappyPerMilitaryUnit() const;
+
+	bool isMilitaryFoodProduction() const;
+
+	int getHighestUnitLevel() const;
+	void setHighestUnitLevel(int iNewValue);
+
+	int getConscriptCount() const;
+	void setConscriptCount(int iNewValue);
+	void changeConscriptCount(int iChange);
+
+	int getMaxConscript() const;
+	void changeMaxConscript(int iChange);
+
+	int getOverflowResearch() const;
+	void changeOverflowResearch(int iChange);
+
+
+
+	// The empire's realized maintenance TOTAL: a bare fetch of its package's RECEIVER slot -- the Σ of its
+	// member cities' realized values, which is what a cross-scope receiver total IS
+	// ([state-repositories.md]). It carries no cache of its own: a receiver is the same cache holding a
+	// different slot, and a hand-named one beside the package is the shape docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE calls a
+	// DEFECT, because it forces a bespoke invalidation path no derived mask can reach.
+	int64_t getTotalMaintenance() const;
+
+
+
+	int getExtraHealth() const;
+	void changeExtraHealth(int iChange);
+
+
+
+
+	int getExtraHappiness() const;
+	void changeExtraHappiness(int iChange, bool bUnattributed = false);
+
+
+
+	int getWarWearinessPercentAnger() const;
+	void updateWarWearinessPercentAnger();
+	int getModifiedWarWearinessPercentAnger(int iWarWearinessPercentAnger) const;
+
+
+
+	bool isNoForeignTrade() const;
+	bool isNoCorporations() const;
+	bool isNoForeignCorporations() const;
+
+	int getTradeRoutes() const;
+
+	int getRevolutionTimer() const;
+	void setRevolutionTimer(int iNewValue);
+	void changeRevolutionTimer(int iChange);
+
+	int getConversionTimer() const;
+	void setConversionTimer(int iNewValue);
+	void changeConversionTimer(int iChange);
+
+	bool isStateReligion() const;
+	bool isNoNonStateReligionSpread() const;
+
+
+	int getStateReligionUnitProductionModifier() const;
+	void changeStateReligionUnitProductionModifier(int iChange);
+
+	int getStateReligionBuildingProductionModifier() const;
+	void changeStateReligionBuildingProductionModifier(int iChange);
+
+
+	DllExport CvCity* getCapitalCity() const;
+	void setCapitalCity(CvCity* pNewCapitalCity);
+
+	int getCitiesLost() const;
+	void changeCitiesLost(int iChange);
+
+	int getWinsVsBarbs() const;
+	void changeWinsVsBarbs(int iChange);
+
+	int getAssets() const;
+	void changeAssets(int iChange);
+
+	int getPower() const;
+	void changePower(int iChange);
+
+	int getTechPower() const;
+	void changeTechPower(int iChange);
+	int getUnitPower() const;
+	void changeUnitPower(int iChange);
+
+	int getPopScore(bool bCheckVassal = true) const;
+	void changePopScore(int iChange);
+	int getLandScore(bool bCheckVassal = true) const;
+	void changeLandScore(int iChange);
+	int getTechScore() const;
+	void changeTechScore(int iChange);
+	int getWondersScore() const;
+	void changeWondersScore(int iChange);
+
+	int getCombatExperience() const;
+	void setCombatExperience(int iExperience, UnitTypes eGGType = NO_UNIT);
+	void changeCombatExperience(int iChange, UnitTypes eGGType = NO_UNIT);
+
+	bool isConnected() const;
+	DllExport int getNetID() const;
+	DllExport void setNetID(int iNetID);
+	void sendReminder();
+
+	uint getStartTime() const;
+	DllExport void setStartTime(uint uiStartTime);
+	uint getTotalTimePlayed() const;
+
+	bool isMinorCiv() const;
+
+	DllExport bool isAlive() const;
+	bool isEverAlive() const;
+	void setAlive(bool bNewValue, bool bActivateTurn = true);
+	void verifyAlive();
+
+	DllExport bool isTurnActive() const;
+	DllExport void setTurnActive(bool bNewValue, bool bDoTurn = true);
+
+	bool isAutoMoves() const;
+	void setAutoMoves(bool bNewValue);
+	DllExport void setTurnActiveForPbem(bool bActive);
+
+	DllExport bool isPbemNewTurn() const;
+	DllExport void setPbemNewTurn(bool bNew);
+
+	bool isEndTurn() const { return m_bEndTurn; }
+	DllExport void setEndTurn(bool bNewValue);
+	void changeEndTurn(const bool bNewValue, const bool bForce = false);
+
+	bool isForcedCityCycle() const;
+	void setForcedCityCycle(const bool bNewValue) { m_bForcedCityCycle = bNewValue; }
+
+	DllExport bool isTurnDone() const;
+
+	bool isExtendedGame() const;
+	void makeExtendedGame();
+
+	bool isFoundedFirstCity() const;
+	void setFoundedFirstCity(bool bNewValue);
+
+	bool isStrike() const;
+	void setStrike(bool bNewValue);
+
+	DllExport PlayerTypes getID() const;
+
+	DllExport HandicapTypes getHandicapType() const;
+
+	DllExport CivilizationTypes getCivilizationType() const;
+
+	DllExport LeaderHeadTypes getLeaderType() const;
+
+	LeaderHeadTypes getPersonalityType() const;
+	void setPersonalityType(LeaderHeadTypes eNewValue);
+
+	DllExport EraTypes getCurrentEra() const;
+	void setCurrentEra(EraTypes eNewValue);
+
+	int64_t getCulture() const;
+	void changeCulture(int64_t iAddValue);
+
+	ReligionTypes getLastStateReligion() const;
+	ReligionTypes getStateReligion() const;
+	// The per-player ISOLATED empire-scope live state (EmpireContext) -- state religion, policies. The city eval reaches
+	// it up the scope chain for empire facts (not mirrored per city). Maintained event-driven.
+	const EmpireContext& getEmpireContext() const { return m_empireContext; }
+	PolicyContext& policies() const { return m_policies; }
+	// The empire's ABILITY union (capabilities / canTrade / canWorkOn / canTradeOn). It is the PLAYER's, never
+	// the team's -- CvTeam is the tech BRIDGE and owns no live-state surface (docs/cascade.md §The contexts (plot/city/player own one live-state context)).
+	CapabilityContext& capabilities() const { return m_capabilities; }
+	// The empire's HELD-TRAIT set. A store rather than a forward because ENUMERATING the held traits off the
+	// has-array walks the whole trait registry, while TESTING one is a pointer hop (Engine/TraitContext.h).
+	TraitContext& traits() const { return m_traits; }
+
+	// The EMPIRE-scope cascade package -- the percent/flat sums this player's sources author at empire scope,
+	// PLUS the empire RECEIVER sums (gold/research/culture/espionage -- the realized totals the empire
+	// consumes) riding the same cache beside the packages (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE). A MAINTAINED SUM
+	// (docs/cascade.md §THE MAINTAINED SUM): the fact names the source and APPLYING that source's compiled deposits is the whole
+	// maintenance -- nothing marked, deferred or rebuilt. Never serialized.
+	const CvCascadePackage<CvPlayer>& getCascadePackage() const { return m_cascadePackage; }
+
+	// ---- THE ENABLER'S PER-PLAYER DOMAINS (enabler.md §7.1) -- techs / civics / projects / processes / builds /
+	// promotions. The owner is where the domain's HAVE AXES live, NOT where the gate is asked: projects and
+	// processes are chosen on a CITY's production list but their axes are team-scope, so the domain is
+	// PLAYER-held and the city gate reads through its owner -- per-city copies would be byte-identical state
+	// that must never drift.
+	// ⛔ NO dirty->recompute path: built by the reseed's events through the same appliers play uses
+	// (docs/spine.md §5 (the load reseed)), maintained by targeted propagation, never serialized. PUBLIC + MUTABLE because the
+	// domain enablers write through a `const CvPlayer&` -- the player owns the storage, not the delta logic.
+	mutable PlayerEnabler m_enabler;
+	// Size every player-held domain + apply its static exclusions, at BOTH lifecycle starts (new game and load).
+	// Sizing only; the events build the content.
+	void primeEnablerDomains() const;
+	// The INIT paths' lifecycle start (game start via initFreeState, mid-game creation via initInGame):
+	// primeEnablerDomains + the announcements the save read's reseed makes for a loaded player (the handicap,
+	// the team techs/projects this player starts under, PLAYER_INIT). First-time-only; the load path stays
+	// CvPlayer::read's own in-read emits.
+	void announceLifecycleStart();
+
+	// ---- THE AVAILABILITY READ SURFACE (player-held domains) -- the ENABLER's "can I, right now?" half of the
+	// GAME-OBJECT read role (patterns.md § THE TWO READ ROLES), one read pair per DOMAIN, the existing engine enum
+	// as the consumer's vocabulary. ⛔ Every read is a BARE O(1) fetch of the maintained tri-state: no gate runs,
+	// no calculator is called, `requires` is never evaluated (enabler.md §7) -- so a missed propagation leaves a
+	// visibly wrong verdict instead of being silently recomputed away (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
+	// The tri-state is returned whole (HIDDEN vs GREYED is the "why not"); the frontier read fills a caller-owned
+	// vector so a hot caller reuses one buffer.
+	//
+	// ⚠ Projects and processes are PLAYER-held although a CITY builds them: their HAVE axes are team-scope, so
+	// per-city copies would be byte-identical state that must never drift, and the city gate reads through its
+	// owner (enabler.md §7.1).
+	// ---- THE "ANYWHERE" FAN -- construction and training are CITY concerns, on one plane (enabler.md §8): the
+	// gate needs the city-local supply (what is in VICINITY, and in the PLOT GROUP), which no higher scope can
+	// see. ⛔ There is therefore NO player-level construct/train verdict, and these are NOT one: they ASK THE
+	// CITIES and are named to say so. O(cities) by construction.
+	// ⛔ A caller that holds a city must ask THAT city (getUnitAvailability / getBuildingAvailability); reaching
+	// for the fan there is both wrong and needlessly linear. Use these only for a genuine "can I build this
+	// ANYWHERE in my empire?".
+	// ⛔ And do NOT replace them with a maintained player-level union: that is duplicated state which must never
+	// drift -- the same argument that keeps projects/processes player-held rather than copied per city (§7.1).
+	// ⛔ The verdict comes back WHOLE, exactly as the city read does (enabler.md §8) -- the BEST state any of the
+	// player's cities holds. Reducing it to a bool here would be the same defect one scope up: a caller wanting
+	// "offered anywhere" tests == LISTED, one wanting "in the tree anywhere" (the pedia's did-this-tech-unlock-it
+	// question, the build-list filters' show-unbuildable mode) tests >= GREYED, and a bool would force a second
+	// read to recover the difference it threw away.
+	EnablerDomain::State getUnitAvailabilityAnywhere(UnitTypes eUnit) const;
+	EnablerDomain::State getBuildingAvailabilityAnywhere(BuildingTypes eBuilding) const;
+
+	// ⚑ THE UNION -- hoist this OUT of a loop over the whole database; do not call the single-id fan inside one.
+	// The fan is cheap per call (one bare read per city) but multiplies: asked for every unit type it is
+	// types x cities -- ~2,073 x 185 on the standing late-game save, ~383k reads for one question. Unioning the
+	// cities' LISTED frontiers ONCE answers every type at once, at cities x frontier (~9k), because a frontier
+	// is the small offered set rather than the database (enabler.md §6 -- iterate the frontier, never the
+	// database; the same inversion the AI's own decision loops use).
+	// ⛔ Still NOT cached state: it is computed per call and discarded. A maintained union would be an OR across
+	// cities, so keeping it correct needs a per-(player x type) REFCOUNT touched by every building built, tech
+	// researched, resource connected and city founded/conquered -- duplicated state that must never drift, to
+	// save a walk that is already cheap once hoisted.
+	// Filled ASCENDING and deduplicated, so a caller's id-ordered tie-break is unchanged.
+	void getTrainableAnywhere(std::vector<int>& units) const;
+
+	EnablerDomain::State getTechAvailability(TechTypes eTech) const;
+	EnablerDomain::State getCivicAvailability(CivicTypes eCivic) const;
+	EnablerDomain::State getTraitAvailability(TraitTypes eTrait) const;
+	EnablerDomain::State getProjectAvailability(ProjectTypes eProject) const;
+	EnablerDomain::State getProcessAvailability(ProcessTypes eProcess) const;
+	void getAvailableTechs(std::vector<int>& techs) const;
+	void getAvailableCivics(std::vector<int>& civics) const;
+	void getAvailableTraits(std::vector<int>& traits) const;
+	void getAvailableProjects(std::vector<int>& projects) const;
+	void getAvailableProcesses(std::vector<int>& processes) const;
+
+	// ⚠ THE TWO DELIBERATE CARVE-OUTS (enabler.md §7.1 -- maintain a set only where reads are hot and the owner
+	// space is small). Both of these answer the UNLOCKED half ONLY; each has a second half evaluated live, and a
+	// consumer treating either as the whole verdict will over-offer:
+	//   - BUILDS: the player's unlocked worker-builds. The PLOT-VALIDITY half stays a live per-plot gate (a
+	//     maintained set over ~10k plots is waste, and worker decisions already iterate plots).
+	//   - PROMOTIONS: the player's unlocked set. There are deliberately NO per-unit maintained sets (thousands of
+	//     units x hundreds of promotions, churned every tech, for a decision that happens only at level-up), so
+	//     the unit-state applicability is evaluated ON DEMAND at level-up.
+	EnablerDomain::State getBuildUnlocked(BuildTypes eBuild) const;
+	EnablerDomain::State getPromotionUnlocked(PromotionTypes ePromotion) const;
+	void getUnlockedBuilds(std::vector<int>& builds) const;
+	void getUnlockedPromotions(std::vector<int>& promotions) const;
+
+	// THE EMPIRE'S GROUP READ SURFACE -- the GAME-OBJECT read role's answer to "what do I HAVE, right now?"
+	// (patterns.md § THE TWO READ ROLES). It is NOT the INFO role's authored what-do-I-CARRY answer and must
+	// never look like it. ONE GETTER PER FAMILY the EMPIRE scope carries channels of (the set is the data's --
+	// CvInfoKinds.h's census scope masks): the call carries NO channel argument and NO scope argument (the
+	// object IS the scope), the group's enum indexes the RESULT, and there is no scalar getter per channel --
+	// a caller wanting one value indexes the group. The surface grows by DATA, never by a new getter.
+	// Values are ×100 NATIVE (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); a reader divides by 100 at the point of use.
+	// Each fills its array through the ONE cross-scope roll-up (InfoValuation::realizedAtEmpire -- the team +
+	// empire packages combined AT READ, modifier.md §1), except the four channels the empire CONSUMES
+	// (gold/research/culture/espionage), which answer their maintained receiver sum. Every read is a BARE FETCH.
+	// NAMING: an engine-enum-indexed group takes the engine plural; a kind-enum-indexed group says so
+	// (get<Family>Kinds), which also keeps this surface distinct from the legacy scalar getters holding the bare
+	// family name (getStateReligion / getTradeRoutes / getDiplomacy) -- overloading those would make the two
+	// read roles look interchangeable.
+	void getYields(int (&yields)[NUM_YIELD_TYPES]) const;
+	void getCommerces(int (&commerces)[NUM_COMMERCE_TYPES]) const;
+	// The four wellbeing channels (modifier.md §2b) as the empire authors them -- four ordinary channels, each a
+	// positive magnitude. ⛔ The city-level VERDICTS (angryPopulation / healthRate) are final-state calculations
+	// downstream of these numbers, never entries in this array (patterns.md rule 6).
+	void getWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
+	void getDefenseKinds(int (&defenses)[NUM_DEFENSE_KINDS]) const;
+	void getMaintenanceKinds(int (&maintenances)[NUM_MAINTENANCE_KINDS]) const;
+	void getUpkeepKinds(int (&upkeeps)[NUM_UPKEEP_KINDS]) const;
+	void getCostKinds(int (&costs)[NUM_COSTS_KINDS]) const;
+	void getBuildRateKinds(int (&buildRates)[NUM_BUILD_RATE_KINDS]) const;
+	void getCombatKinds(int (&combats)[NUM_COMBAT_KINDS]) const;
+	void getExperienceKinds(int (&experiences)[NUM_EXPERIENCE_KINDS]) const;
+	void getRevolutionKinds(int (&revolutions)[NUM_REVOLUTION_KINDS]) const;
+	void getTradeRouteKinds(int (&tradeRoutes)[NUM_TRADE_ROUTE_KINDS]) const;
+	void getStateReligionKinds(int (&stateReligions)[NUM_STATE_RELIGION_KINDS]) const;
+	void getDiplomacyKinds(int (&diplomacies)[NUM_DIPLOMACY_KINDS]) const;
+	void getDurationKinds(int (&durations)[NUM_DURATIONS_KINDS]) const;
+	void getAirKinds(int (&airs)[NUM_AIR_KINDS]) const;
+	void getCaptureKinds(int (&captures)[NUM_CAPTURE_KINDS]) const;
+	void getCargoKinds(int (&cargos)[NUM_CARGO_KINDS]) const;
+	// The two threshold families key the ENGINE's YieldTypes directly (their member spelling IS the channel --
+	// CvInfoKinds.h ruling 1), so they are yield-indexed groups rather than kind-indexed ones.
+	// The straggler-scalar group (patterns.md getScalar, read as ONE group): every InfoScalar slot answered at
+	// THIS scope; the entries whose family the empire carries hold a value, the rest answer 0.
+	void getScalars(int (&scalars)[NUM_INFO_SCALARS]) const;
+
+	void setLastStateReligion(const ReligionTypes eNewReligion);
+
+	PlayerTypes getParent() const;
+	void setParent(PlayerTypes eParent);
+
+	DllExport TeamTypes getTeam() const;
+	void setTeam(TeamTypes eTeam);
+	void updateTeamType();
+
+	bool isDoNotBotherStatus(PlayerTypes playerID) const;
+
+	DllExport PlayerColorTypes getPlayerColor() const;
+	DllExport int getPlayerTextColorR() const;
+	DllExport int getPlayerTextColorG() const;
+	DllExport int getPlayerTextColorB() const;
+	int getPlayerTextColorA() const;
+
+
+
+
+	int getYieldRateModifier(YieldTypes eIndex) const;
+	void changeYieldRateModifier(YieldTypes eIndex, int iChange);
+
+
+	int getExtraYieldThreshold(YieldTypes eIndex) const;
+	void updateExtraYieldThreshold(YieldTypes eIndex);
+
+	int getLessYieldThreshold(YieldTypes eIndex) const;
+	void updateLessYieldThreshold(YieldTypes eIndex);
+
+	int getTradeYieldModifier(YieldTypes eIndex) const;
+
+
+	int getCommercePercent(CommerceTypes eIndex) const;
+	void setCommercePercent(CommerceTypes eIndex, int iNewValue);
+	void changeCommercePercent(CommerceTypes eIndex, int iChange);
+
+	void changeCommerceRate(CommerceTypes eIndex, int iChange);
+
+
+	void changeCommerceRateModifierfromEvents(CommerceTypes eIndex, int iChange);
+
+
+
+	int getStateReligionBuildingCommerce(CommerceTypes eIndex) const;
+
+
+	bool isCommerceFlexible(CommerceTypes eIndex) const;
+
+	int getGoldPerTurnByPlayer(PlayerTypes eIndex) const;
+	void changeGoldPerTurnByPlayer(PlayerTypes eIndex, int iChange);
+
+	bool isFeatAccomplished(FeatTypes eIndex) const;
+	void setFeatAccomplished(FeatTypes eIndex, bool bNewValue);
+
+	DllExport bool isOption(PlayerOptionTypes eIndex) const;
+	DllExport void setOption(PlayerOptionTypes eIndex, bool bNewValue);
+
+	bool isLoyalMember(VoteSourceTypes eVoteSource) const;
+	void setLoyalMember(VoteSourceTypes eVoteSource, bool bNewValue);
+
+	bool isPlayable() const;
+	void setPlayable(bool bNewValue);
+
+	int getBonusExport(const BonusTypes eBonus) const;
+	int getBonusImport(const BonusTypes eBonus) const;
+	void changeBonusExport(const BonusTypes eBonus, const int iChange);
+	void changeBonusImport(const BonusTypes eBonus, const int iChange);
+
+	int getImprovementCount(ImprovementTypes eIndex) const;
+	void changeImprovementCount(ImprovementTypes eIndex, int iChange);
+
+
+	int getExtraBuildingHappiness(const BuildingTypes eIndex) const;
+	void changeExtraBuildingHappiness(const BuildingTypes eIndex, const int iChange, const bool bLimited = false);
+	int getExtraBuildingHealth(const BuildingTypes eIndex) const;
+	void changeExtraBuildingHealth(const BuildingTypes eIndex, const int iChange, const bool bLimited = false);
+
+
+	int getUnitCount(const UnitTypes eUnit) const;
+	void changeUnitCount(const UnitTypes eUnit, const int iChange);
+	int getUnitCountSM(const UnitTypes eUnit) const;
+	void changeUnitCountSM(const UnitTypes eUnit, const int iChange);
+	bool isUnitMaxedOut(const UnitTypes eUnit, const int iExtra = 0) const;
+	int getUnitMaking(const UnitTypes eUnit) const;
+	void changeUnitMaking(const UnitTypes eUnit, int iChange);
+	int getUnitCountPlusMaking(const UnitTypes eUnit) const;
+
+	int getBuildingCount(BuildingTypes eIndex) const;
+	// WHICH buildings the empire holds, not merely how many of one. The per-type count answers a point
+	// question; a consumer asking "what do I have" had no aggregate and swept all ~5,200 ids testing
+	// count > 0 ([tally.md]: give the OBJECT the accessor, never a side-store). DERIVED, never serialized:
+	// maintained by the ONE `changeBuildingCount` choke point and rebuilt by the load reseed, the same shape
+	// `CvCity::getHasBuildings` already has at city scope.
+	const std::vector<BuildingTypes>& getHasBuildings() const { return m_heldBuildings; }
+
+	// ===== EMPIRE-LEVEL buildings (docs/specs/enabler.md §2 (empire-level buildings), enabler-spec §2) -- held by the PLAYER, once,
+	// never present in any city. The held store IS m_paiBuildingCount at 0/1 for an identity.empireLevel id (no
+	// second store to drift); setHasEmpireBuilding is the ONE holding choke point (CvCity::setHasBuilding and the
+	// city-read ledger both route here), announcing SEVT_EMPIRE_BUILDING_ADDED / _REMOVED at the crossing and the
+	// OPERATE verdict's ACTIVATED / DORMANTED beside it -- the member's own deposits ride the operate crossing,
+	// exactly as a city building's do. =====
+	bool hasEmpireBuilding(BuildingTypes eIndex) const;
+	void setHasEmpireBuilding(BuildingTypes eIndex, bool bNewValue, bool bFirst = true);
+	// The player-side OPERATE verdict -- a bare fetch of the derived store; never serialized, rebuilt by the
+	// facts. A member with no operate clause is active while held.
+	bool isEmpireBuildingActive(BuildingTypes eIndex) const;
+	// Re-evaluate every held member's operate against the empire context and announce the crossings. Called by
+	// the enabler consumer on the facts an empire-evaluable operate can name (civic / tech / empire-building).
+	void updateEmpireBuildingOperate();
+	// Size the verdict store on demand -- a player reset before the building registry loaded carries an empty
+	// vector, and the reads reachable from load-stream facts answer false rather than trusting reset ordering.
+	void ensureEmpireBuildingActiveSized();
+
+	int getBuildingGroupCount(SpecialBuildingTypes eIndex) const;
+	bool isBuildingMaxedOut(BuildingTypes eIndex, int iExtra = 0) const;
+	void changeBuildingCount(BuildingTypes eIndex, int iChange);
+	void changeBuildingGroupCount(SpecialBuildingTypes eIndex, int iChange);
+
+	int getBuildingMaking(const BuildingTypes eIndex) const;
+	void changeBuildingMaking(const BuildingTypes eIndex, int iChange);
+
+	int getBuildingGroupMaking(SpecialBuildingTypes eIndex) const;
+	void changeBuildingGroupMaking(SpecialBuildingTypes eIndex, int iChange);
+
+	int getBuildingCountPlusMaking(BuildingTypes eIndex) const;
+
+	int getHurryCount(HurryTypes eIndex) const;
+	bool canHurry(HurryTypes eIndex) const;
+	bool canPopRush() const;
+	void changeHurryCount(HurryTypes eIndex, int iChange);
+
+	int getSpecialBuildingNotRequiredCount(SpecialBuildingTypes eIndex) const;
+	void changeSpecialBuildingNotRequiredCount(SpecialBuildingTypes eIndex, int iChange);
+
+	int getHasReligionCount(ReligionTypes eIndex) const;
+	int countTotalHasReligion() const;
+	int findHighestHasReligionCount() const;
+	void changeHasReligionCount(ReligionTypes eIndex, int iChange);
+
+	int getHasCorporationCount(CorporationTypes eIndex) const;
+	void changeHasCorporationCount(CorporationTypes eIndex, int iChange);
+	bool isActiveCorporation(CorporationTypes eIndex) const;
+
+	int getSpecialistValidCount(SpecialistTypes eIndex) const;
+	bool isSpecialistValid(SpecialistTypes eIndex) const;
+
+	CvProperties* getProperties();
+	const CvProperties* getPropertiesConst() const;
+
+	void changeSpecialistValidCount(SpecialistTypes eIndex, int iChange, bool bLimited = false);
+
+	bool isResearchingTech(TechTypes eIndex) const;
+	void setResearchingTech(TechTypes eIndex, bool bNewValue);
+
+	CivicTypes getCivics(CivicOptionTypes eIndex) const;
+	int getSingleCivicUpkeep(CivicTypes eCivic, bool bIgnoreAnarchy = false) const;
+	int getCivicUpkeep(bool bIgnoreAnarchy = false) const;
+	void setCivics(CivicOptionTypes eIndex, CivicTypes eNewValue);
+
+	int64_t getTreasuryUpkeep() const;
+
+
+	void updateGroupCycle(CvUnit* pUnit, bool bFarMove);
+	CLLNode<int>* removeGroupCycle(int iID);
+	CLLNode<int>* deleteGroupCycleNode(CLLNode<int>* pNode);
+	CLLNode<int>* nextGroupCycleNode(CLLNode<int>* pNode) const;
+	CLLNode<int>* previousGroupCycleNode(CLLNode<int>* pNode) const;
+	CLLNode<int>* headGroupCycleNode() const;
+	CLLNode<int>* tailGroupCycleNode() const;
+
+	int findPathLength(TechTypes eTech, bool bCost = true) const;
+	int getQueuePosition(TechTypes eTech) const;
+	void clearResearchQueue();
+	bool pushResearch(TechTypes eTech, bool bClear = false);
+	void popResearch(TechTypes eTech);
+	int getLengthResearchQueue() const;
+	CLLNode<TechTypes>* nextResearchQueueNode(CLLNode<TechTypes>* pNode) const;
+	CLLNode<TechTypes>* headResearchQueueNode() const;
+	CLLNode<TechTypes>* tailResearchQueueNode() const;
+
+	void addCityName(const CvWString& szName);
+	int getNumCityNames() const;
+	CvWString getCityName(int iIndex) const;
+	CLLNode<CvWString>* nextCityNameNode(CLLNode<CvWString>* pNode) const;
+	CLLNode<CvWString>* headCityNameNode() const;
+
+	// plot groups iteration
+	DECLARE_INDEX_ITERATOR(const CvPlayer, CvPlotGroup, plot_group_iterator, firstPlotGroup, nextPlotGroup);
+	plot_group_iterator beginPlotGroups() const { return plot_group_iterator(this); }
+	plot_group_iterator endPlotGroups() const { return plot_group_iterator(); }
+	typedef bst::iterator_range<plot_group_iterator> plot_group_range;
+	plot_group_range plot_groups() const { return plot_group_range(beginPlotGroups(), endPlotGroups()); }
+
+	// deprecated, use plot_group_iterator
+	CvPlotGroup* firstPlotGroup(int* pIterIdx, bool bRev = false) const;
+	// deprecated, use plot_group_iterator
+	CvPlotGroup* nextPlotGroup(int* pIterIdx, bool bRev = false) const;
+
+	CvPlotGroup* getPlotGroup(int iID) const;
+	CvPlotGroup* addPlotGroup();
+	void deletePlotGroup(int iID);
+
+	// city iteration
+	DECLARE_INDEX_ITERATOR(const CvPlayer, CvCity, city_iterator, firstCity, nextCity);
+	city_iterator beginCities() const { return city_iterator(this); }
+	city_iterator endCities() const { return city_iterator(); }
+	typedef bst::iterator_range<city_iterator> city_range;
+	city_range cities() const { return city_range(beginCities(), endCities()); }
+
+	safe_city_iterator beginCitiesSafe() const { return safe_city_iterator(beginCities(), endCities()); }
+	safe_city_iterator endCitiesSafe() const { return safe_city_iterator(); }
+	typedef bst::iterator_range<safe_city_iterator> safe_city_range;
+	safe_city_range cities_safe() const { return safe_city_range(beginCitiesSafe(), endCitiesSafe()); }
+
+	// deprecated, use city_iterator
+	CvCity* firstCity(int* pIterIdx, bool bRev = false) const;
+	// deprecated, use city_iterator
+	CvCity* nextCity(int* pIterIdx, bool bRev = false) const;
+
+	DllExport CvCity* firstCityExternal(int* pIterIdx, bool bRev = false) const;
+	DllExport CvCity* nextCityExternal(int* pIterIdx, bool bRev = false) const;
+	DllExport int getNumCities() const;
+	DllExport CvCity* getCity(int iID) const;
+	CvCity* addCity();
+	void deleteCity(int iID);
+
+	DECLARE_INDEX_ITERATOR(const CvPlayer, CvUnit, unit_iterator, firstUnit, nextUnit);
+
+	unit_iterator beginUnits() const { return unit_iterator(this); }
+	unit_iterator endUnits() const { return unit_iterator(); }
+	typedef bst::iterator_range<unit_iterator> unit_range;
+	unit_range units() const { return unit_range(beginUnits(), endUnits()); }
+
+	safe_unit_iterator beginUnitsSafe() const { return safe_unit_iterator(beginUnits(), endUnits()); }
+	safe_unit_iterator endUnitsSafe() const { return safe_unit_iterator(); }
+	typedef bst::iterator_range<safe_unit_iterator> safe_unit_range;
+	safe_unit_range units_safe() const { return safe_unit_range(beginUnitsSafe(), endUnitsSafe()); }
+
+	// deprecated, use unit_range
+	CvUnit* firstUnit(int* pIterIdx, bool bRev = false) const;
+	// deprecated, use unit_range
+	CvUnit* nextUnit(int* pIterIdx, bool bRev = false) const;
+	DllExport CvUnit* firstUnitExternal(int* pIterIdx, bool bRev = false) const;
+	DllExport CvUnit* nextUnitExternal(int* pIterIdx, bool bRev = false) const;
+	DllExport int getNumUnits() const;
+	CvUnit* getUnit(int iID) const;
+	CvUnit* addUnit();
+	void deleteUnit(int iID);
+
+#ifdef CVARMY_BREAKSAVE
+	CvArmy* getArmy(int iArmyID) const;
+
+	void deleteArmy(int iArmyID);
+
+#endif
+
+	// selection groups iteration
+	DECLARE_INDEX_ITERATOR(const CvPlayer, CvSelectionGroup, group_iterator, firstSelectionGroup, nextSelectionGroup);
+	group_iterator beginGroups() const { return group_iterator(this); }
+	group_iterator endGroups() const { return group_iterator(); }
+	typedef bst::iterator_range<group_iterator> group_range;
+	group_range groups() const { return group_range(beginGroups(), endGroups()); }
+
+	// non-empty selection groups iteration
+	DECLARE_INDEX_ITERATOR(const CvPlayer, CvSelectionGroup, group_non_empty_iterator, firstSelectionGroupNonEmpty, nextSelectionGroupNonEmpty);
+	group_non_empty_iterator beginGroupsNonEmpty() const { return group_non_empty_iterator(this); }
+	group_non_empty_iterator endGroupsNonEmpty() const { return group_non_empty_iterator(); }
+	typedef bst::iterator_range<group_non_empty_iterator> group_non_empty_range;
+	group_non_empty_range groups_non_empty() const { return group_non_empty_range(beginGroupsNonEmpty(), endGroupsNonEmpty()); }
+
+	// deprecated, use group_range
+	CvSelectionGroup* firstSelectionGroup(int* pIterIdx, bool bRev = false) const;
+	// deprecated, use group_range
+	CvSelectionGroup* nextSelectionGroup(int* pIterIdx, bool bRev = false) const;
+	CvSelectionGroup* firstSelectionGroupNonEmpty(int* pIterIdx, bool bRev = false) const;
+	CvSelectionGroup* nextSelectionGroupNonEmpty(int* pIterIdx, bool bRev = false) const;
+
+	int getNumSelectionGroups() const;
+
+	CvSelectionGroup* getSelectionGroup(int iID) const;
+	CvSelectionGroup* addSelectionGroup();
+	void deleteSelectionGroup(int iID);
+
+	// triggered events iteration
+	DECLARE_INDEX_ITERATOR(const CvPlayer, EventTriggeredData, event_iterator, firstEventTriggered, nextEventTriggered);
+	event_iterator beginEvents() const { return event_iterator(this); }
+	event_iterator endEvents() const { return event_iterator(); }
+	typedef bst::iterator_range<event_iterator> event_range;
+	event_range events() const { return event_range(beginEvents(), endEvents()); }
+
+	// deprecated, use event_iterator
+	EventTriggeredData* firstEventTriggered(int* pIterIdx, bool bRev = false) const;
+	// deprecated, use event_iterator
+	EventTriggeredData* nextEventTriggered(int* pIterIdx, bool bRev = false) const;
+
+	EventTriggeredData* getEventTriggered(int iID) const;
+	EventTriggeredData* addEventTriggered();
+	void deleteEventTriggered(int iID);
+	EventTriggeredData* initTriggeredData(EventTriggerTypes eEventTrigger, bool bFire = false, int iCityId = -1, int iPlotX = INVALID_PLOT_COORD, int iPlotY = INVALID_PLOT_COORD, PlayerTypes eOtherPlayer = NO_PLAYER, int iOtherPlayerCityId = -1, ReligionTypes eReligion = NO_RELIGION, CorporationTypes eCorporation = NO_CORPORATION, int iUnitId = -1, BuildingTypes eBuilding = NO_BUILDING);
+	int getEventTriggerWeight(EventTriggerTypes eTrigger) const;
+	bool isEventTriggerPossible(EventTriggerTypes eTrigger, bool bIgnoreActive = false) const;
+
+	DllExport void addMessage(const CvTalkingHeadMessage& message);
+	void showMissedMessages();
+	void clearMessages();
+	DllExport const CvMessageQueue& getGameMessages() const;
+	void expireMessages();
+	DllExport void addPopup(CvPopupInfo* pInfo, bool bFront = false);
+	void clearPopups();
+	DllExport CvPopupInfo* popFrontPopup();
+	DllExport const CvPopupQueue& getPopups() const;
+	DllExport void addDiplomacy(CvDiploParameters* pDiplo);
+	void clearDiplomacy();
+	DllExport const CvDiploQueue& getDiplomacy() const;
+	DllExport CvDiploParameters* popFrontDiplomacy();
+	DllExport void showSpaceShip();
+	DllExport void clearSpaceShipPopups();
+
+	int64_t getScoreHistory(int iTurn) const;
+	void updateScoreHistory(int iTurn, int64_t iBestScore);
+
+	int64_t getEconomyHistory(int iTurn) const;
+	int64_t getIndustryHistory(int iTurn) const;
+	int64_t getAgricultureHistory(int iTurn) const;
+	int64_t getPowerHistory(int iTurn) const;
+	int64_t getCultureHistory(int iTurn) const;
+	int64_t getEspionageHistory(int iTurn) const;
+	int64_t getRevolutionStabilityHistory(int iTurn) const;
+
+	// Script data needs to be a narrow string for pickling in Python
+	std::string getScriptData() const;
+	void setScriptData(std::string szNewValue);
+
+	DllExport const CvString getPbemEmailAddress() const;
+	DllExport void setPbemEmailAddress(const char* szAddress);
+	DllExport const CvString getSmtpHost() const;
+	void setSmtpHost(const char* szHost);
+
+	const EventTriggeredData* getEventOccured(EventTypes eEvent, bool bIncludeExpiredEvents = false) const;
+	bool isTriggerFired(EventTriggerTypes eEventTrigger) const;
+	void setEventOccured(EventTypes eEvent, const EventTriggeredData& kEventTriggered, bool bOthers = true);
+	void resetEventOccured(EventTypes eEvent, bool bAnnounce = true);
+	void setTriggerFired(const EventTriggeredData& kTriggeredData, bool bOthers = true, bool bAnnounce = true);
+	void resetTriggerFired(EventTriggerTypes eEventTrigger);
+	void trigger(EventTriggerTypes eEventTrigger);
+	void trigger(const EventTriggeredData& kData);
+	void applyEvent(EventTypes eEvent, int iTriggeredId, bool bUpdateTrigger = true);
+	bool canDoEvent(EventTypes eEvent, const EventTriggeredData& kTriggeredData) const;
+	TechTypes getBestEventTech(EventTypes eEvent, PlayerTypes eOtherPlayer) const;
+	int getEventCost(EventTypes eEvent, PlayerTypes eOtherPlayer, bool bRandom) const;
+	bool canTrigger(EventTriggerTypes eTrigger, PlayerTypes ePlayer, ReligionTypes eReligion) const;
+	const EventTriggeredData* getEventCountdown(EventTypes eEvent) const;
+	void setEventCountdown(EventTypes eEvent, const EventTriggeredData& kEventTriggered);
+	void resetEventCountdown(EventTypes eEvent);
+
+	bool isFreePromotion(UnitCombatTypes eUnitCombat, PromotionTypes ePromotion) const;
+	void setFreePromotion(UnitCombatTypes eUnitCombat, PromotionTypes ePromotion, bool bFree);
+	bool isFreePromotion(UnitTypes eUnit, PromotionTypes ePromotion) const;
+	void setFreePromotion(UnitTypes eUnit, PromotionTypes ePromotion, bool bFree);
+
+	PlayerVoteTypes getVote(int iId) const;
+	void setVote(int iId, PlayerVoteTypes ePlayerVote);
+
+	int getUnitExtraCost(UnitTypes eUnit) const;
+	void setUnitExtraCost(UnitTypes eUnit, int iCost);
+
+	bool splitEmpire(int iAreaId);
+	bool canSplitEmpire() const;
+	bool canSplitArea(int iAreaId) const;
+	PlayerTypes getSplitEmpirePlayer(int iAreaId) const;
+	bool getSplitEmpireLeaders(CivLeaderArray& aLeaders) const;
+	bool assimilatePlayer(PlayerTypes ePlayer);
+
+	void launch(VictoryTypes victoryType);
+
+	bool hasShrine(ReligionTypes eReligion) const;
+	int getVotes(VoteTypes eVote, VoteSourceTypes eVoteSource) const;
+	void processVoteSourceBonus(VoteSourceTypes eVoteSource, bool bActive);
+	bool canDoResolution(VoteSourceTypes eVoteSource, const VoteSelectionSubData& kData) const;
+	bool canDefyResolution(VoteSourceTypes eVoteSource, const VoteSelectionSubData& kData) const;
+	void setDefiedResolution(VoteSourceTypes eVoteSource, const VoteSelectionSubData& kData);
+	void setEndorsedResolution(VoteSourceTypes eVoteSource, const VoteSelectionSubData& kData);
+	bool isFullMember(VoteSourceTypes eVoteSource) const;
+	bool isVotingMember(VoteSourceTypes eVoteSource) const;
+
+	void invalidatePopulationRankCache();
+	void invalidateYieldRankCache(YieldTypes eYield = NO_YIELD);
+	void invalidateCommerceRankCache(CommerceTypes eCommerce = NO_COMMERCE);
+
+	PlayerTypes pickConqueredCityOwner(const CvCity& kCity) const;
+	bool canHaveTradeRoutesWith(PlayerTypes ePlayer) const;
+
+	void forcePeace(PlayerTypes ePlayer);
+
+	bool canSpiesEnterBorders(PlayerTypes ePlayer) const;
+	int getNewCityProductionValue() const;
+
+	int getGrowthThreshold(int iPopulation) const;
+	int getPopulationgrowthratepercentage() const;
+
+
+
+
+	int getForceAllTradeRoutes() const;
+	void changeForceAllTradeRoutes(int iChange);
+
+
+
+
+	int getDistantUnitSupportCostModifier() const;
+	void setDistantUnitSupportCostModifier(int iNewValue);
+	void changeDistantUnitSupportCostModifier(int iChange);
+
+
+
+
+
+
+	int getCityLimit() const { return m_iCityLimit; }
+	void changeCityLimit(int iChange);
+
+	int getCityOverLimitUnhappy() const;
+	void changeCityOverLimitUnhappy(int iChange);
+
+
+	void setShowLandmarks(bool bNewVal);
+
+
+	int getSevoWondersScore(int mode);
+
+
+
+	CvCity* getBestHQCity(CorporationTypes eCorporation) const;
+	PlayerVoteTypes getPledgedVote() const;
+	void setPledgedVote(PlayerVoteTypes eIndex);
+	TeamTypes getPledgedSecretaryGeneralVote() const;
+	void setPledgedSecretaryGeneralVote(TeamTypes eIndex);
+
+
+	bool isAutomatedCanBuild(BuildTypes eBuild) const;
+	void setAutomatedCanBuild(BuildTypes eBuild, bool bNewValue);
+
+	int getNumTradeImportsByBonus(PlayerTypes ePlayer, BonusTypes eBonus) const;
+
+	DenialTypes AI_workerTrade(const CvUnit* pUnit, PlayerTypes ePlayer) const;
+
+	DenialTypes AI_militaryUnitTrade(const CvUnit* pUnit, PlayerTypes ePlayer) const;
+	DenialTypes AI_corporationTrade(CorporationTypes eCorporation, PlayerTypes ePlayer) const;
+	DenialTypes AI_pledgeVoteTrade(VoteTriggeredData* kData, PlayerVoteTypes ePlayerVote, PlayerTypes ePlayer) const;
+	DenialTypes AI_secretaryGeneralTrade(VoteSourceTypes eVoteSource, PlayerTypes ePlayer) const;
+
+	int doMultipleResearch(int iOverflow);
+
+	void acquireFort(CvPlot* pPlot);
+
+	int getFreeSpecialistCount(SpecialistTypes eIndex) const;
+	// THE GROUP READ ([patterns.md] THE TWO READ ROLES rule 1/7) -- every specialist in ONE pass,
+	// filled into a caller-owned array. The scalar above is a slice of it, so a caller wanting several
+	// counts takes the group: asking the scalar in a loop re-walks the same sources once per specialist.
+	void getFreeSpecialists(std::vector<int64_t>& aiCounts) const;   // x100 -- the caller reduces
+	int getResourceConsumption(BonusTypes eBonus) const;
+	void recalculateAllResourceConsumption();
+
+	void listCommander(bool bAdd, CvUnit* unit);
+	std::vector<CvUnit*> getCommanders() const { return m_commanders; }
+
+	void listCommodore(bool bAdd, CvUnit* unit);
+    std::vector<CvUnit*> getCommodores() const { return m_commodores; }
+
+	void setCommandFieldPlot(bool bNewValue, CvPlot* aPlot);
+	std::vector<CvPlot*> getCommandFieldPlots() const { return m_commandFieldPlots; }
+
+	void setCommodoreFieldPlot(bool bNewValue, CvPlot* aPlot);
+	std::vector<CvPlot*> getCommodoreFieldPlots() const { return m_commodoreFieldPlots; }
+
+
+	bool hasValidBuildings(TechTypes eTech) const;
+
+	int getBuildingCommerceModifier(BuildingTypes eBonus, CommerceTypes eIndex) const;
+	void changeBuildingCommerceModifier(BuildingTypes eBonus, CommerceTypes eIndex, int iChange);
+
+	int getBuildingCommerceChange(BuildingTypes building, CommerceTypes CommerceType) const;
+	void changeBuildingCommerceChange(BuildingTypes building, CommerceTypes CommerceType, int iChange);
+
+
+
+	bool isNoLandmarkAnger() const;
+
+	void setColor(PlayerColorTypes eColor);
+
+	void setHandicap(int iNewVal, bool bAdjustGameHandicap = false);
+
+	bool canBuild(const CvPlot* pPlot, ImprovementTypes eImprovement, bool bTestVisible) const;
+
+	int getModderOption(ModderOptionTypes eIndex) const;
+	bool isModderOption(ModderOptionTypes eIndex) const;
+	void setModderOption(ModderOptionTypes eIndex, bool bNewValue);
+	void setModderOption(ModderOptionTypes eIndex, int iNewValue);
+
+	int64_t getCorporateMaintenance() const;
+
+	int getCorporationInfluence(CorporationTypes eIndex) const;
+	int getRevolutionFromCivics(RevolutionKind eKind) const;
+
+
+	bool m_bChoosingReligion;
+
+	int getScoreComponent(int iRawScore, int iInitial, int iMax, int iFactor, bool bExponential, bool bFinal, bool bVictory) const;
+
+	int getHurriedCount() const;
+	void changeHurriedCount(int iChange);
+	void doAdvancedEconomy();
+
+	int getWonderConstructRand() const;
+
+
+
+	void changeFractionalCombatExperience(int iChange, UnitTypes eGGType = NO_UNIT);
+
+	void clearTileCulture();
+	void clearCityCulture();
+
+	int getBonusMintedPercent(const BonusTypes eBonus) const;
+	void changeBonusMintedPercent(const BonusTypes eBonus, const int iChange);
+
+	//	Moved from unit to player to allow for caching
+	bool upgradeAvailable(UnitTypes eFromUnit, UnitTypes eToUnit) const;
+
+	// Building list for filtering, grouping and sorting
+	void setBuildingListInvalid();
+	bool getBuildingListFilterActive(BuildingFilterTypes eFilter);
+	void setBuildingListFilterActive(BuildingFilterTypes eFilter, bool bActive);
+	BuildingGroupingTypes getBuildingListGrouping();
+	void setBuildingListGrouping(BuildingGroupingTypes eGrouping);
+	BuildingSortTypes getBuildingListSorting();
+	void setBuildingListSorting(BuildingSortTypes eSorting);
+	int getBuildingListGroupNum();
+	int getBuildingListNumInGroup(int iGroup);
+	BuildingTypes getBuildingListType(int iGroup, int iPos);
+	int getBuildingListSelectedBuildingRow();
+	int getBuildingListSelectedWonderRow();
+	void setBuildingListSelectedBuilding(BuildingTypes eBuilding);
+	void setBuildingListSelectedWonder(BuildingTypes eWonder);
+	BuildingTypes getBuildingListSelectedBuilding();
+	BuildingTypes getBuildingListSelectedWonder();
+
+	// Unit list for filtering, grouping and sorting
+	void setUnitListInvalid();
+	bool getUnitListFilterActive(UnitFilterTypes eFilter);
+	void setUnitListFilterActive(UnitFilterTypes eFilter, bool bActive);
+	UnitGroupingTypes getUnitListGrouping();
+	void setUnitListGrouping(UnitGroupingTypes eGrouping);
+	UnitSortTypes getUnitListSorting();
+	void setUnitListSorting(UnitSortTypes eSorting);
+	int getUnitListGroupNum();
+	int getUnitListNumInGroup(int iGroup);
+	UnitTypes getUnitListType(int iGroup, int iPos);
+	int getUnitListSelectedRow();
+	void setUnitListSelected(UnitTypes eUnit);
+	UnitTypes getUnitListSelected();
+	void processNewRoutes();
+	inline int getZobristValue() const { return m_zobristValue; }
+
+	inline bool getTurnHadUIInteraction() const { return m_turnHadUIInteraction; }
+	inline void setTurnHadUIInteraction(bool newVal) { m_turnHadUIInteraction = newVal; }
+
+protected:
+	int** m_ppiBuildingCommerceModifier;
+	int** m_ppiBuildingCommerceChange;
+	bool* m_pabAutomatedCanBuild;
+	int* m_paiResourceConsumption;
+	int* m_aiModderOptions;
+	PlayerVoteTypes m_ePledgedVote;
+	TeamTypes m_eSecretaryGeneralVote;
+	UnitTypes m_eGreatGeneralTypetoAssign;
+	int m_iFreeUnitUpkeepCivilianEvents;   // event-granted free upkeep -- one-shot, persisted
+	int m_iDistantUnitSupportCostModifier;
+	int m_iForceAllTradeRoutes;
+	bool m_bShowLandmarks;
+	int m_iCityLimit;
+	int m_iCityOverLimitUnhappy;
+	//TB Traits
+	bool* m_pabHasTrait;
+	int m_iLeaderHeadLevel;
+	int m_iCompatCheckCount;
+	int* m_paiNationalTechResearchModifier;
+
+	int m_iNationalAirUnitCapacity;
+
+
+
+	//TB Traits
+	int m_iBaseMergeSelection;
+	int m_iFirstMergeSelection;
+	int m_iSecondMergeSelection;
+	int m_iSplittingUnit;
+	int m_iAmbushingUnit;
+	int m_iAmbushingTargetUnit;
+	bool m_bAssassinate;
+
+	int m_iHurryCount;
+
+	int m_iFractionalCombatExperience;
+
+	TeamTypes m_eDemandWarAgainstTeam;
+
+	CvProperties m_Properties;
+	CvBuildingList m_BuildingList;
+	CvUnitList m_UnitList;
+
+	int	m_zobristValue;
+
+	bool m_turnHadUIInteraction;
+
+
+public:
+	void verifyUnitStacksValid();
+
+	// BUG - Trade Totals - start
+	void calculateTradeTotals(YieldTypes eIndex, int& iDomesticYield, int& iDomesticRoutes, int& iForeignYield, int& iForeignRoutes, PlayerTypes eWithPlayer = NO_PLAYER, bool bBase = false) const;
+	// BUG - Trade Totals - end
+
+	DllExport void buildTradeTable(PlayerTypes eOtherPlayer, CLinkList<TradeData>& ourList) const;
+	DllExport bool getHeadingTradeString(PlayerTypes eOtherPlayer, TradeableItems eItem, CvWString& szString, CvString& szIcon) const;
+	DllExport bool getItemTradeString(PlayerTypes eOtherPlayer, bool bOffer, bool bShowingCurrent, const TradeData& zTradeData, CvWString& szString, CvString& szIcon) const;
+	DllExport void updateTradeList(PlayerTypes eOtherPlayer, CLinkList<TradeData>& ourInventory, const CLinkList<TradeData>& ourOffer, const CLinkList<TradeData>& theirOffer) const;
+	DllExport int getIntroMusicScriptId(PlayerTypes eForPlayer) const;
+	DllExport int getMusicScriptId(PlayerTypes eForPlayer) const;
+	DllExport void getGlobeLayerColors(GlobeLayerTypes eGlobeLayerType, int iOption, std::vector<NiColorA>& aColors, std::vector<CvPlotIndicatorData>& aIndicators) const;
+	DllExport void cheat(bool bCtrl, bool bAlt, bool bShift);
+
+	DllExport const CvArtInfoUnit* getUnitArtInfo(UnitTypes eUnit, int iMeshGroup = 0) const;
+	DllExport bool hasSpaceshipArrived() const;
+
+	// BUG - Reminder Mod - start
+	void addReminder(int iGameTurn, CvWString szMessage) const;
+	// BUG - Reminder Mod - end
+
+	virtual void AI_init() = 0;
+	virtual void AI_reset(bool bConstructor) = 0;
+	virtual void AI_doTurnPre() = 0;
+	virtual void AI_doTurnPost() = 0;
+	virtual void AI_doTurnUnitsPre() = 0;
+	virtual void AI_doTurnUnitsPost() = 0;
+	virtual void AI_updateFoundValues(bool bClear = false, const CvArea* area = NULL) const = 0;
+	virtual void AI_unitUpdate() = 0;
+	virtual void AI_makeAssignWorkDirty() = 0;
+	virtual void AI_assignWorkingPlots() = 0;
+	virtual void AI_updateAssignWork() = 0;
+	virtual void AI_makeProductionDirty() = 0;
+
+
+	virtual void AI_conquerCity(PlayerTypes eOldOwner, CvCity* pCity, bool bConquest, bool bTrade) = 0;
+	virtual int AI_foundValue(int iX, int iY, int iMinUnitRange = -1, bool bStartingLoc = false) const = 0;
+	virtual bool AI_isCommercePlot(const CvPlot* pPlot) const = 0;
+	virtual int AI_getPlotDanger(const CvPlot* pPlot, int iRange = -1, bool bTestMoves = true) const = 0;
+	virtual bool AI_isFinancialTrouble() const = 0;
+	virtual TechTypes AI_bestTech(int iMaxPathLength = 1, bool bIgnoreCost = false, bool bAsync = false, TechTypes eIgnoreTech = NO_TECH, AdvisorTypes eIgnoreAdvisor = NO_ADVISOR) = 0;
+	virtual void AI_chooseFreeTech() = 0;
+	virtual void AI_chooseResearch() = 0;
+	virtual bool AI_isWillingToTalk(PlayerTypes ePlayer) const = 0;
+	virtual bool AI_demandRebukedSneak(PlayerTypes ePlayer) const = 0;
+	virtual bool AI_demandRebukedWar(PlayerTypes ePlayer) const = 0;
+	virtual AttitudeTypes AI_getAttitude(PlayerTypes ePlayer, bool bForced = true) const = 0;
+	virtual PlayerVoteTypes AI_diploVote(const VoteSelectionSubData& kVoteData, VoteSourceTypes eVoteSource, bool bPropose) = 0;
+	virtual int AI_dealVal(PlayerTypes ePlayer, const CLinkList<TradeData>* pList, bool bIgnoreAnnual = false, int iExtra = 0) const = 0;
+	virtual bool AI_considerOffer(PlayerTypes ePlayer, const CLinkList<TradeData>* pTheirList, const CLinkList<TradeData>* pOurList, int iChange = 1) const = 0;
+	virtual bool AI_counterPropose(PlayerTypes ePlayer, const CLinkList<TradeData>* pTheirList, const CLinkList<TradeData>* pOurList, CLinkList<TradeData>* pTheirInventory, CLinkList<TradeData>* pOurInventory, CLinkList<TradeData>* pTheirCounter, CLinkList<TradeData>* pOurCounter) const = 0;
+	virtual int AI_bonusVal(BonusTypes eBonus, int iChange = 0, bool bForTrade = false) const = 0;
+	virtual int AI_bonusTradeVal(BonusTypes eBonus, PlayerTypes ePlayer, int iChange = 0) const = 0;
+	virtual DenialTypes AI_bonusTrade(BonusTypes eBonus, PlayerTypes ePlayer) const = 0;
+	virtual int AI_cityTradeVal(CvCity* pCity) const = 0;
+	virtual DenialTypes AI_cityTrade(CvCity* pCity, PlayerTypes ePlayer) const = 0;
+	virtual DenialTypes AI_stopTradingTrade(TeamTypes eTradeTeam, PlayerTypes ePlayer) const = 0;
+	virtual DenialTypes AI_civicTrade(CivicTypes eCivic, PlayerTypes ePlayer) const = 0;
+	virtual DenialTypes AI_religionTrade(ReligionTypes eReligion, PlayerTypes ePlayer) const = 0;
+
+	virtual int AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea* pArea, const CvUnitSelectionCriteria* criteria = NULL) const = 0;
+	virtual int AI_totalUnitAIs(UnitAITypes eUnitAI) const = 0;
+	virtual int AI_totalAreaUnitAIs(const CvArea* pArea, UnitAITypes eUnitAI) const = 0;
+	virtual int AI_totalWaterAreaUnitAIs(const CvArea* pArea, UnitAITypes eUnitAI) const = 0;
+	virtual int AI_plotTargetMissionAIs(const CvPlot* pPlot, MissionAITypes eMissionAI, const CvSelectionGroup* pSkipSelectionGroup = NULL, int iRange = 0, int* piClosest = NULL) const = 0;
+	virtual int AI_unitTargetMissionAIs(const CvUnit* pUnit, MissionAITypes eMissionAI, const CvSelectionGroup* pSkipSelectionGroup = NULL) const = 0;
+
+	virtual int AI_civicValue(CivicTypes eCivic, bool bCivicOptionVacuum = false, CivicTypes* paeSelectedCivics = NULL) const = 0;
+
+	virtual int AI_getNumAIUnits(UnitAITypes eIndex) const = 0;
+	virtual void AI_changePeacetimeTradeValue(PlayerTypes eIndex, int iChange) = 0;
+	virtual void AI_changePeacetimeGrantValue(PlayerTypes eIndex, int iChange) = 0;
+	virtual int AI_getAttitudeExtra(const PlayerTypes ePlayer) const = 0;
+	virtual void AI_setAttitudeExtra(const PlayerTypes ePlayer, const int iNewValue) = 0;
+	virtual void AI_changeAttitudeExtra(const PlayerTypes ePlayer, const int iChange) = 0;
+	virtual void AI_setFirstContact(PlayerTypes eIndex, bool bNewValue) = 0;
+	virtual int AI_getMemoryCount(PlayerTypes eIndex1, MemoryTypes eIndex2) const = 0;
+	virtual void AI_changeMemoryCount(PlayerTypes eIndex1, MemoryTypes eIndex2, int iChange) = 0;
+	virtual void AI_doCommerce() = 0;
+	virtual EventTypes AI_chooseEvent(int iTriggeredId, int* pValue = NULL) const = 0;
+	virtual void AI_launch(VictoryTypes eVictory) = 0;
+	virtual void AI_doAdvancedStart(bool bNoExit = false) = 0;
+	virtual void AI_updateBonusValue() = 0;
+	virtual void AI_updateBonusValue(BonusTypes eBonus) = 0;
+	virtual ReligionTypes AI_chooseReligion() = 0;
+	virtual int AI_getExtraGoldTarget() const = 0;
+	virtual void AI_setExtraGoldTarget(int iNewValue) = 0;
+	virtual int AI_maxGoldPerTurnTrade(PlayerTypes ePlayer) const = 0;
+	virtual int AI_maxGoldTrade(PlayerTypes ePlayer) const = 0;
+
+protected:
+	bst::array<XYCoords, NUM_MAPS> m_startingCoords;
+	int m_iTotalPopulation;
+	int m_iTotalLand;
+	int m_iTotalLandScored;
+	int64_t m_iGold;
+	int m_iGoldPerTurn;
+	int m_iAdvancedStartPoints;
+	int m_iGoldenAgeTurns;
+	int m_iNumUnitGoldenAges;
+	int m_iStrikeTurns;
+	int m_iAnarchyTurns;
+	int m_iMaxAnarchyTurns;
+	int m_iMinAnarchyTurns;
+	int m_iGreatPeopleCreated;
+	int m_iGreatGeneralsCreated;
+	int m_iGreatPeopleThresholdModifier;
+	int m_iGreatGeneralsThresholdModifier;
+	int m_iFeatureProductionModifier;
+
+	int m_iRevIdxLocal;
+	int m_iRevIdxNational;
+	int m_iRevIdxDistanceModifier;
+
+	int m_iNumNukeUnits;
+	int m_iNumOutsideUnits;
+
+	mutable int64_t m_iFinalUnitUpkeep;
+	mutable bool m_bUnitUpkeepDirty;
+
+	int m_iNumMilitaryUnits;
+	int m_iConscriptCount;
+	int m_iMaxConscript;
+	int m_iHighestUnitLevel;
+	int m_iOverflowResearch;
+
+	int m_iExtraHealth;
+	int m_iExtraHappiness;
+	int m_iExtraHappinessUnattributed;
+	int m_iWarWearinessPercentAnger;
+	int m_iRevolutionTimer;
+	int m_iConversionTimer;
+	int m_iStateReligionUnitProductionModifier;
+	int m_iStateReligionBuildingProductionModifier;
+	int m_iCapitalCityID;
+	int m_iCitiesLost;
+	int m_iWinsVsBarbs;
+	int m_iAssets;
+	int m_iPower;
+	int m_iTechPower;
+	int	m_iUnitPower;
+	int m_iPopulationScore;
+	int m_iLandScore;
+	int m_iTechScore;
+	int m_iWondersScore;
+	int m_iCombatExperience;
+	int m_iPopRushHurryCount;
+	int m_iInflationModifier;
+
+	uint m_uiStartTime; // XXX save these?
+
+	bool m_bAlive;
+	bool m_bEverAlive;
+	bool m_bTurnActive;
+	bool m_bAutoMoves;
+	bool m_bEndTurn;
+	bool m_bPbemNewTurn;
+	bool m_bExtendedGame;
+	bool m_bFoundedFirstCity;
+	bool m_bStrike;
+	//TB Nukefix
+	bool m_bNukesValid;
+	bool m_bHuman;
+	bool m_bDisableHuman; // Set to true to disable isHuman() check
+	bool m_bForcedCityCycle;
+
+	int m_iStabilityIndex;
+	int m_iStabilityIndexAverage;
+
+	bool m_bRebel;
+	int m_iMotherPlayer;
+
+	//TB Traits begin
+	int m_iFocusPlotX;
+	int m_iFocusPlotY;
+	int* m_aiLessYieldThreshold;
+
+	//TB Traits end
+
+	// Used for DynamicCivNames
+	CvWString m_szName;
+	CvWString m_szCivDesc;
+	CvWString m_szCivShort;
+	CvWString m_szCivAdj;
+
+	int m_bDoNotBotherStatus;
+
+	int m_iChoosingFreeTech;
+
+	PlayerTypes m_eID;
+	LeaderHeadTypes m_ePersonalityType;
+	EraTypes m_eCurrentEra;
+	ReligionTypes m_eLastStateReligion;
+	EmpireContext m_empireContext;   // per-player empire-scope live state (see getEmpireContext); maintained event-driven
+	// The empire's ENACTED-POLICY dictionary. Owned HERE, as CvCity owns its amenity dictionary and for the same
+	// reason: the player owns the STORAGE while the context owns the delta LOGIC and the facts that drive it
+	// (Engine/PolicyContext.h -- one place responsible). Its maintainer reaches this accessor directly.
+	mutable PolicyContext m_policies;
+	mutable CapabilityContext m_capabilities;
+	mutable TraitContext m_traits;   // the empire's held-trait set (see traits()); a delta store, never serialized
+	// the EMPIRE-scope cascade package + receiver sums (see getCascadePackage); recompute-only, never serialized
+	CvCascadePackage<CvPlayer> m_cascadePackage;
+	PlayerTypes m_eParent;
+	TeamTypes m_eTeamType;
+
+	int64_t m_iCulture;
+
+	int m_iUpgradeRoundCount;
+	int m_iSelectionRegroup;
+
+	int* m_aiYieldRateModifier;
+	int* m_aiExtraYieldThreshold;
+	int* m_aiCommercePercent;
+	int* m_aiCommerceRateModifierfromEvents;
+	int* m_aiGoldPerTurnByPlayer;
+	int* m_aiEspionageSpendingWeightAgainstTeam;
+
+	bool* m_abFeatAccomplished;
+	bool* m_abOptions;
+
+	CvString m_szScriptData;
+
+	int* m_paiImprovementCount;
+	int** m_paiExtraBuildingYield;
+	int** m_paiExtraBuildingCommerce;
+	int* m_paiBuildingCount;
+	// The empire-level OPERATE verdicts, indexed by building id -- DERIVED, never serialized; meaningful only
+	// where the id is empireLevel and held.
+	std::vector<bool> m_abEmpireBuildingActive;
+	// The ENUMERABLE half of the count above: which building types the empire currently holds at all.
+	// DERIVED, never serialized -- maintained by `changeBuildingCount` at its 0<->held crossings and rebuilt
+	// by the load reseed, exactly as `CvCity::m_hasBuildings` is at city scope.
+	std::vector<BuildingTypes> m_heldBuildings;
+	int* m_paiBuildingGroupCount;
+	int* m_paiBuildingGroupMaking;
+	int* m_paiHurryCount;
+	int* m_paiSpecialBuildingNotRequiredCount;
+	int* m_paiHasReligionCount;
+	int* m_paiHasCorporationCount;
+	int* m_paiSpecialistValidCount;
+
+	bool* m_pabResearchingTech;
+	bool* m_pabLoyalMember;
+
+	std::vector<EventTriggerTypes> m_triggersFired;
+
+	CivicTypes* m_paeCivics;
+
+	CLinkList<TechTypes> m_researchQueue;
+
+	CLinkList<CvWString> m_cityNames;
+
+	std::vector<CLinkList<int>*>						  m_groupCycles;
+	std::vector<FFreeListTrashArray<CvPlotGroup>*>		  m_plotGroups;
+	std::vector<FFreeListTrashArray<CvCityAI>*>			  m_cities;
+	std::vector<FFreeListTrashArray<CvUnitAI>*>			  m_units;
+	std::vector<FFreeListTrashArray<CvSelectionGroupAI>*> m_selectionGroups;
+
+#ifdef CVARMY_BREAKSAVE
+	FFreeListTrashArray<CvArmy>							  m_armies;
+#endif 
+
+	FFreeListTrashArray<EventTriggeredData> m_eventsTriggered;
+	CvEventMap m_mapEventsOccured;
+	CvEventMap m_mapEventCountdown;
+	UnitCombatPromotionArray m_aFreeUnitCombatPromotions;
+	UnitPromotionArray m_aFreeUnitPromotions;
+
+	std::vector< std::pair<int, PlayerVoteTypes> > m_aVote;
+	std::vector< std::pair<UnitTypes, int> > m_aUnitExtraCosts;
+
+	CvMessageQueue m_listGameMessages;
+	CvPopupQueue m_listPopups;
+	CvDiploQueue m_listDiplomacy;
+
+	CvTurnScoreMap m_mapScoreHistory;
+	CvTurnScoreMap m_mapEconomyHistory;
+	CvTurnScoreMap m_mapIndustryHistory;
+	CvTurnScoreMap m_mapAgricultureHistory;
+	CvTurnScoreMap m_mapPowerHistory;
+	CvTurnScoreMap m_mapCultureHistory;
+	CvTurnScoreMap m_mapEspionageHistory;
+
+	CvTurnScoreMap m_mapRevolutionStabilityHistory;
+
+
+	// KOSHLING - add pre-calculated lists of plots meeting criteria that
+	// otherwise get re-calculated many times during unit mission setting
+	std::map<int, BonusTypes>	m_guardableResourcePlots;
+
+	// Temp unit which is used to generate paths for hypothetical units.
+	// Kept around rather than created each usage to avoid chewing through the ID space.
+	CvUnit* m_pTempUnit;
+public:
+	inline bool isTempUnit(const CvUnit* pUnit) const
+	{
+		return (pUnit == m_pTempUnit || pUnit->AI_getBirthmark() == UNIT_BIRTHMARK_TEMP_UNIT);
+	}
+	inline const std::map<int, BonusTypes>& getGuardableResourcePlots() const
+	{
+		return m_guardableResourcePlots;
+	}
+
+protected:
+	void doGold();
+	void doResearch();
+	void doEspionagePoints();
+	void doWarnings();
+	void doEvents();
+
+	bool checkExpireEvent(EventTypes eEvent, const EventTriggeredData& kTriggeredData) const;
+	void expireEvent(EventTypes eEvent, EventTriggeredData& kTriggeredData, bool bFail);
+	bool isValidTriggerReligion(const CvEventTriggerInfo& kTrigger, const CvCity* pCity, ReligionTypes eReligion) const;
+	bool isValidTriggerCorporation(const CvEventTriggerInfo& kTrigger, const CvCity* pCity, CorporationTypes eCorporation) const;
+	CvCity* pickTriggerCity(EventTriggerTypes eTrigger) const;
+	CvUnit* pickTriggerUnit(EventTriggerTypes eTrigger, const CvPlot* pPlot, bool bCheckPlot) const;
+	bool isValidEventTech(TechTypes eTech, EventTypes eEvent, PlayerTypes eOtherPlayer) const;
+
+	int calculatePlotRouteYieldDifference(const CvPlot* pPlot, const RouteTypes eRoute, YieldTypes eYield) const;
+	RouteTypes getBestRouteInternal(const CvPlot* pPlot, bool bConnect, const CvUnit* pBuilder, BuildTypes* eBestRouteBuild = NULL) const;
+	bool isRouteValid(RouteTypes eRoute, BuildTypes eRouteBuild, const CvPlot* pPlot, const CvUnit* pBuilder) const;
+
+	void verifyGoldCommercePercent();
+
+	void processCivics(const CivicTypes eCivic, const int iChange, const bool bLimited = false);
+
+	// for serialization
+	virtual void read(FDataStreamBase* pStream);
+	virtual void write(FDataStreamBase* pStream);
+
+	void doUpdateCacheOnTurn();
+	int getResearchTurnsLeftTimes100(TechTypes eTech, bool bOverflow) const;
+
+	void getTradeLayerColors(std::vector<NiColorA>& aColors, std::vector<CvPlotIndicatorData>& aIndicators) const; // used by Globeview trade layer
+	void getUnitLayerColors(GlobeLayerUnitOptionTypes eOption, std::vector<NiColorA>& aColors, std::vector<CvPlotIndicatorData>& aIndicators) const; // used by Globeview unit layer
+	void getResourceLayerColors(GlobeLayerResourceOptionTypes eOption, std::vector<NiColorA>& aColors, std::vector<CvPlotIndicatorData>& aIndicators) const; // used by Globeview resource layer
+	void getReligionLayerColors(ReligionTypes eSelectedReligion, std::vector<NiColorA>& aColors, std::vector<CvPlotIndicatorData>& aIndicators) const; // used by Globeview religion layer
+	void getCultureLayerColors(std::vector<NiColorA>& aColors, std::vector<CvPlotIndicatorData>& aIndicators) const; // used by Globeview culture layer
+
+	void processTrait(TraitTypes eTrait, int iChange);
+
+	//TB Traits begin
+public:
+
+
+
+
+
+
+
+	void setHasTrait(TraitTypes eIndex, bool bNewValue);
+	// COMMIT + ANNOUNCE + apply -- the ONE body a held trait moves through, so no caller can move one
+	// silently. The SELECTABILITY gate stays with the caller, because it genuinely differs: a leader SWAP
+	// re-assigns under game-start semantics (the barbarian carve-out, START_NO_POSITIVE), a runtime grant
+	// does not.
+	void setHasTraitInternal(TraitTypes eIndex, bool bNewValue);
+	bool canLearnTrait(TraitTypes eIndex, bool isSelectingNegative = false) const;
+	bool canUnlearnTrait(TraitTypes eTrait, bool bPositive) const;
+
+	int getLeaderHeadLevel() const;
+	void setLeaderHeadLevel(int iValue);
+	void changeLeaderHeadLevel(int iChange);
+
+	uint64_t getLeaderLevelupNextCultureTotal() const;
+	uint64_t getLeaderLevelupCultureToEarn() const;
+
+	bool canLeaderPromote() const;
+	void doPromoteLeader();
+	void clearLeaderTraits();
+
+
+	int getNationalGreatPeopleUnitRate(const UnitTypes eIndex) const;
+	void changeNationalGreatPeopleUnitRate(const UnitTypes eIndex, const int iChange);
+
+
+
+
+
+
+
+	int getNationalTechResearchModifier(TechTypes eIndex) const;
+	void setNationalTechResearchModifier(TechTypes eIndex, int iNewValue);
+	void changeNationalTechResearchModifier(TechTypes eIndex, int iChange);
+
+	int getCoastalAIInfluence() const;
+
+
+	int getGoldenAgeOnBirthOfGreatPersonCount(const UnitTypes eIndex) const;
+	void changeGoldenAgeOnBirthOfGreatPersonCount(const UnitTypes eIndex, const char iChange);
+
+
+	int getNationalAirUnitCapacity() const;
+	void setNationalAirUnitCapacity(int iValue);
+	void changeNationalAirUnitCapacity(int iChange);
+
+
+
+
+
+
+
+
+
+	bool hasCitiesStartwithStateReligion() const;
+
+	bool hasDraftsOnCityCapture() const;
+
+
+
+
+	bool hasExtraGoody() const;
+
+	bool hasAllReligionsActive() const;
+
+
+
+
+
+	//TB Traits end
+
+	void startDeferredPlotGroupBonusCalculation();
+	void endDeferredPlotGroupBonusCalculation();
+
+	bool hasFixedBorders() const;
+
+	int getBaseMergeSelectionUnit() const;
+	void setBaseMergeSelectionUnit(int iNewValue);
+
+	int getFirstMergeSelectionUnit() const;
+	void setFirstMergeSelectionUnit(int iNewValue);
+
+	int getSecondMergeSelectionUnit() const;
+	void setSecondMergeSelectionUnit(int iNewValue);
+
+	int getSplittingUnit() const;
+	void setSplittingUnit(int iNewValue);
+
+	int getAmbushingUnit() const;
+	int getAmbushingTargetUnit() const;
+	bool isAssassinate() const;
+	void setAmbushingUnit(int iNewValue, bool bAssassinate = false);
+	void setAmbushingTargetUnit(int iNewValue, bool bAssassinate = true);
+
+	int getGreatGeneralPointsForType(const UnitTypes eUnit) const;
+	void setGreatGeneralPointsForType(const UnitTypes eUnit, const int iValue);
+	void changeGreatGeneralPointsForType(const UnitTypes eUnit, const int iChange);
+
+	UnitTypes getGreatGeneralTypetoAssign() const;
+	void setSMValues();
+
+	void upgradePlotPopup(ImprovementTypes eImprovement, int iX, int iY);
+	void upgradePlot(int iX, int iY, ImprovementTypes eImprovement, bool bConfirm);
+
+	void setFocusPlots(int iX, int iY);
+
+	void RecalculatePlotGroupHashes();
+	CvContractBroker& getContractBroker();
+	CvWorkerAI& getWorkerAI() { return m_workerAI; }
+	CvHunterAI& getHunterAI() { return m_hunterAI; }
+
+	void addPlotDangerSource(const CvPlot* pPlot, int iStrength);
+
+	void addPropertiesAllCities(const CvProperties* pProp);
+	void subtractPropertiesAllCities(const CvProperties* pProp);
+
+	bool canHaveBuilder(BuildTypes eBuild) const;
+	//TB Nukefix
+	bool isNukesValid() const;
+	void makeNukesValid(bool bValid = true);
+
+	int getUpgradeRoundCount() const;
+	void changeUpgradeRoundCount(int iChange);
+	void resetUpgradeRoundCount();
+
+	int getSelectionRegroup() const;
+	void setSelectionRegroup(int iGroupID);
+
+
+	CvBuildLists* m_pBuildLists;
+
+private:
+	int m_iNumAnimalsSubdued;
+	std::map<BuildingTypes, int> m_unitConstructionCounts;
+	std::map<short, uint32_t> m_unitCount;
+	std::map<short, uint32_t> m_unitCountSM;
+	std::map<short, uint32_t> m_unitMaking;
+	std::map<short, uint32_t> m_buildingMaking;
+	std::map<short, uint32_t> m_bonusExport;
+	std::map<short, uint32_t> m_bonusImport;
+	std::map<short, uint32_t> m_greatGeneralPointsType;
+	std::map<short, int> m_bonusMintedPercent;
+	std::map<short, int> m_extraBuildingHappiness;
+	std::map<short, int> m_extraBuildingHealth;
+	std::map<short, int> m_greatPeopleRateforUnit;
+	std::map<short, char> m_goldenAgeOnBirthOfGreatPersonCount;
+
+	int m_iNumAnarchyTurns;
+	int m_iNumCivicSwitches;
+	int m_iNumCivicsSwitched;
+	mutable int* m_aiPathLengthCache;
+	mutable int* m_aiCostPathLengthCache;
+	mutable RouteTypes m_eBestRoute;
+	mutable BuildTypes m_eBestRouteBuild;
+	mutable std::map<int, bool>	m_canHaveBuilder;
+
+	CvContractBroker m_contractBroker;
+	CvWorkerAI m_workerAI;
+	CvHunterAI m_hunterAI;
+	CvDecisionAI m_decisionAI;
+
+	mutable bst::scoped_ptr<CvUpgradeCache> m_upgradeCache;
+
+	mutable bool m_orbitalInfrastructureCountDirty;
+	mutable int m_orbitalInfrastructureCount;
+	mutable int* m_cachedBonusCount;
+	mutable int	 m_cachedBonusCountGameTurn;
+
+	std::vector<civcSwitchInstance> m_civicSwitchHistory;
+
+	static bool m_staticsInitialized;
+
+	int64_t m_iMinTaxIncome;
+	int64_t m_iMaxTaxIncome;
+
+protected:
+	void constructTechPathSet(TechTypes eTech, std::vector<techPath*>& pathSet, techPath& rootPath) const;
+	void invalidateBuildingLists() const;
+
+public:
+	virtual void AI_invalidateAttitudeCache(PlayerTypes ePlayer) = 0;
+	virtual void AI_setHasInquisitionTarget() = 0;
+};
+
+#endif

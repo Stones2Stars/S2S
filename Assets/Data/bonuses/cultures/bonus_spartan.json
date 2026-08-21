@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_SPARTAN",
+ "enables": {
+  "units": [
+   "UNIT_LEONIDAS",
+   "UNIT_SPARTAN_WARRIOR"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SPARTAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SPARTAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

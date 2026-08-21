@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_PLATINUM_WARES",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_ANTI_GRAVITY_FIELD_GENERATORS",
+   "BUILDING_FACTORY_EXOSKELETONS",
+   "BUILDING_JEWELER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PLATINUM_WARES"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PLATINUM_WARES",
+  "civilopedia": "TXT_KEY_BONUS_WARES_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

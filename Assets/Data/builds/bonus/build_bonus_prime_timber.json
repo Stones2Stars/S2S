@@ -1,0 +1,24 @@
+{
+ "type": "BUILD_BONUS_PRIME_TIMBER",
+ "produces": {
+  "improvement": "IMPROVEMENT_BONUS_PRIME_TIMBER"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Resources/Timber_button.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_IRRIGATE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_PRIME_TIMBER",
+  "consumesUnit": true
+ }
+}

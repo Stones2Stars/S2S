@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_LIBYAN",
+ "enables": {
+  "units": [
+   "UNIT_GARAMANTES",
+   "UNIT_SHOSHENQ_I"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_LIBYAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_LIBYAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

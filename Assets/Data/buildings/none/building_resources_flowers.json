@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_RESOURCES_FLOWERS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_INDUSTRIAL_ECOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GREENHOUSE"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_GREENHOUSE"
+   ],
+   "all": [
+    {
+     "any": [
+      "BUILDING_FARM_FLOWER_BEGONIA",
+      "BUILDING_FARM_FLOWER_BLUEBELL",
+      "BUILDING_FARM_FLOWER_CARNATION",
+      "BUILDING_FARM_FLOWER_DAISY",
+      "BUILDING_FARM_FLOWER_FLAX",
+      "BUILDING_FARM_FLOWER_FOXGLOVE",
+      "BUILDING_PLANTATION_HENNA",
+      "BUILDING_FARM_FLOWER_HIBISCUS",
+      "BUILDING_FARM_FLOWER_INDIGO",
+      "BUILDING_FARM_FLOWER_IRIS",
+      "BUILDING_FARM_FLOWER_LILY",
+      "BUILDING_PLANTATION_MADDER",
+      "BUILDING_FARM_FLOWER_ORCHID",
+      "BUILDING_FARM_FLOWER_PANSY",
+      "BUILDING_FARM_FLOWER_ROSE",
+      "BUILDING_FARM_FLOWER_SNAPDRAGON",
+      "BUILDING_FARM_FLOWER_SUNFLOWER",
+      "BUILDING_FARM_FLOWER_TULIP",
+      "BUILDING_TEXTILE_MANUFACTURING_DISTRICT",
+      "BUILDING_FARM_FLOWER_VIOLET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_FLOWERS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESOURCES_FLOWERS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_FLOWERS",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

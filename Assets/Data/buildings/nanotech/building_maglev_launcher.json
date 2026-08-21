@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_MAGLEV_LAUNCHER",
+ "enables": {
+  "buildings": [
+   "BUILDING_LOFSTROM_LOOP",
+   "BUILDING_STARTRAM",
+   "BUILDING_STRATOSPHERIC_SPACEPORT",
+   "BUILDING_WIRELESS_SPACE_LAUNCH"
+  ],
+  "units": [
+   "UNIT_CYBERNETIC_WORK_CREW"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COMMERCIAL_SPACEPORT",
+    "TECH_MASS_DRIVER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    7,
+    {
+     "value": 10,
+     "enabled": "TECH_FRICTIONLESS_FLIGHT"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 3385,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MAGLEV_LAUNCHER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MAGLEV_LAUNCHER",
+  "civilopedia": "TXT_KEY_BUILDING_MAGLEV_LAUNCHER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

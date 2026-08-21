@@ -1,0 +1,198 @@
+{
+ "type": "UNIT_FF_DESTROYER_I",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
+    "TECH_INVISIBILITY",
+    "TECH_FUSION"
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 20,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 13
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 200
+    },
+    "UNITCOMBAT_STEAM_SHIPS": {
+     "percent": 100
+    },
+    "UNITCOMBAT_DIESEL_SHIPS": {
+     "percent": 50
+    },
+    "UNITCOMBAT_NUCLEAR_SHIPS": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 120
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 60
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 20
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 50
+   },
+   "limit": {
+    "flat": 60
+   },
+   "maxUnits": {
+    "flat": 5
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 20
+   }
+  }
+ },
+ "skills": [
+  "pillage",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost",
+  "mechanized",
+  "renderBelowWater",
+  "tradable",
+  "stealth"
+ ],
+ "tags": [
+  "military",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_NUCLEAR_SHIPS",
+ "combatClasses": [
+  "UNITCOMBAT_DESTROYER",
+  "UNITCOMBAT_NAVAL_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_LASER",
+  "UNITCOMBAT_WEAPON_DIST_TORPEDO",
+  "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_DIST_MEDIUM_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_SHIELD_ENERGY",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_GARGANTUAN",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
+ "hideAndSeek": {
+  "method": "stealth",
+  "concealment": {
+   "flat": 100
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 3600,
+  "upkeep": 3
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FUSION_DESTROYER",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 2.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_FUSION_DESTROYER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_FF_DESTROYER_I",
+  "civilopedia": "TXT_KEY_UNIT_FF_DESTROYER_PEDIA",
+  "worth": 4,
+  "militaryWorth": 450,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "minAreaSize": 10,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ATTACK_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_SEA",
+   "UNITAI_RESERVE_SEA",
+   "UNITAI_ESCORT_SEA",
+   "UNITAI_EXPLORE_SEA"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "defendAgainstUnit": [
+   "UNIT_SUBMARINE",
+   "UNIT_ATTACK_SUBMARINE",
+   "UNIT_NUCLEAR_SUBMARINE",
+   "UNIT_STEALTH_SUBMARINE",
+   "UNIT_FUSION_SUBMARINE"
+  ],
+  "advancedStart": {
+   "cost": 200
+  }
+ }
+}

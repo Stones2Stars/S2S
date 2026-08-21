@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_DISTANT_TIMELINE_STABILIZERS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_EXPLORERS_BASE",
+    "TECH_TIMELINE_RECTIFICATION",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -5
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 2914,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_TIMELINE_STABILIZERS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_TIMELINE_STABILIZERS",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_TIMELINE_STABILIZERS_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

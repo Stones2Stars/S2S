@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_MICROLITH_WORKSHOP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_IRON_WORKING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MICROLITH",
+    "TECH_SHELTER_BUILDING",
+    {
+     "any": [
+      "BUILDING_STORAGE_PIT",
+      "BUILDING_GRANARY",
+      "BUILDING_MODERN_GRANARY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": 25,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "production": 100,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MICROLITH_WEAPONS_FACTORY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MICROLITH_WEAPONS_FACTORY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MICROLITH_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_MICROLITH_WORKSHOP_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 2,
+  "militaryWorth": 6,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

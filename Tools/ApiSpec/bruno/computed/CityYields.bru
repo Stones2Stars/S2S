@@ -1,0 +1,19 @@
+meta {
+  name: computed/cities/yields
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/computed/cities/yields?globalId=00-8192
+  body: none
+  auth: none
+}
+
+params:query {
+  globalId: 00-8192
+}
+
+docs {
+  getYieldRate100 per channel + full per-source decomposition (the per-mechanic parity surface). Select the city by globalId "<PP>-<id>" (or player=&city=).
+}

@@ -1,0 +1,15 @@
+{
+ "type": "PROMOTIONLINE_WEAPON_UPGRADE",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CityRaider2.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,5,5"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_WEAPON_UPGRADE",
+  "unitCombats": [
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_ASSAULT_MECH"
+  ]
+ }
+}

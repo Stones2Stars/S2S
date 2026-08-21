@@ -1,0 +1,74 @@
+{
+ "type": "TECH_FOLK_MEDICINE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ACUPUNCTURISTS_SHOP",
+   "BUILDING_CULTURE_MANI",
+   "BUILDING_HEALTH_SPA"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_DISEASE_CONTROL2",
+   "PROMOTION_DISEASE_CONTROL2"
+  ],
+  "techs": [
+   "TECH_MAGIC",
+   "TECH_SOAP_MAKING"
+  ],
+  "units": [
+   "UNIT_MANIQ_SPEAKER",
+   "UNIT_MEDICINE_MAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CONSCIOUSNESS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_STANDARDIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FERMENTATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 164
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/folkmedicine.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_FOLK_MEDICINE",
+  "soundMP": "AS2D_TECH_FOLK_MEDICINE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_FOLK_MEDICINE",
+  "civilopedia": "TXT_KEY_TECH_FOLK_MEDICINE_PEDIA",
+  "quote": "TXT_KEY_TECH_FOLK_MEDICINE_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 25,
+  "gridY": 1
+ }
+}

@@ -1,0 +1,211 @@
+{
+ "type": "UNIT_MSNIPER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SUPERSTRONG_ALLOYS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_LASER",
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      "BUILDING_AUTOMATED_FIRING_RANGE",
+      "BUILDING_ORBITAL_TARGETS"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HTSNIPER"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2,
+   "dropRange": {
+    "flat": 7
+   }
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 15
+   },
+   "lunge": {
+    "percent": 18
+   },
+   "unnerve": {
+    "percent": 18
+   },
+   "stealthStrikes": {
+    "flat": 3
+   },
+   "stealth": {
+    "percent": 50
+   },
+   "targets": {
+    "UNITCOMBAT_EXPLORER": true,
+    "UNITCOMBAT_CIVILIAN": true,
+    "UNITCOMBAT_CANINE": true,
+    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 70
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 40
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 2
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 15
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -30
+   }
+  }
+ },
+ "skills": [
+  "assassin",
+  "counterSpy",
+  "destroy",
+  "ignoreTerrainCost",
+  "ignoreZoneOfControl",
+  "rivalTerritory",
+  "sabotage",
+  "stealPlans",
+  "camouflage"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "troop"
+ ],
+ "combatClass": "UNITCOMBAT_STRIKE_TEAM",
+ "combatClasses": [
+  "UNITCOMBAT_GUN",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_RIFLE_BUTT",
+  "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_MODERN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "hideAndSeek": {
+  "method": "camouflage",
+  "concealment": {
+   "flat": 700
+  },
+  "detection": {
+   "value": 500,
+   "unit": "HAS_CAMOUFLAGE"
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SNIPER",
+   "PROMOTION_SENTRY"
+  ]
+ },
+ "cost": {
+  "production": 1410,
+  "upkeep": 10
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "sizeMatters": {
+  "combatModifier": {
+   "perSizeMore": 15,
+   "perVolumeMore": -15,
+   "perVolumeLess": 15
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MODERN_SNIPER",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MODERN_SNIPER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_MSNIPER",
+  "civilopedia": "TXT_KEY_UNIT_SNIPER_PEDIA",
+  "worth": 12,
+  "militaryWorth": 50,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE_COUNTER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

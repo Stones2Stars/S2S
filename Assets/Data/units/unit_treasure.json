@@ -1,0 +1,107 @@
+{
+ "type": "UNIT_TREASURE",
+ "disabled": "GAMEOPTION_NO_EVENTS",
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_TREASURE"
+  }
+ },
+ "skills": [
+  "rivalTerritory"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_TRADE",
+ "combatClasses": [
+  "UNITCOMBAT_WHEELED",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_SPEED_SLOW",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_TREASURY"
+   },
+   {
+    "building": "BUILDING_MUSEUM"
+   }
+  ],
+  "greatPersonAction": {
+   "hurry": {
+    "base": 100,
+    "multiplier": 10
+   },
+   "greatWork": {
+    "base": 200
+   }
+  }
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TREASURE_UNIT",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_TREASURE_UNIT"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_TREASURE",
+  "civilopedia": "TXT_KEY_UNIT_TREASURE_PEDIA",
+  "spawnOnly": true,
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ENGINEER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_ARTIST",
+   "UNITAI_ENGINEER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

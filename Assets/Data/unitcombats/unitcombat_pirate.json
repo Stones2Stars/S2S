@@ -1,0 +1,55 @@
+{
+ "type": "UNITCOMBAT_PIRATE",
+ "movement": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_COAST_POLAR": {
+     "percent": -50
+    },
+    "TERRAIN_COAST": {
+     "percent": -50
+    },
+    "TERRAIN_COAST_TROPICAL": {
+     "percent": -50
+    }
+   }
+  }
+ },
+ "combat": {
+  "unit": {
+   "stealth": {
+    "percent": 10
+   },
+   "stealthStrikes": {
+    "flat": 1
+   }
+  }
+ },
+ "tags": [
+  "outlaw"
+ ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  },
+  "detection": {
+   "value": 100,
+   "unit": "HAS_NAVAL_DISGUISE"
+  }
+ },
+ "skills": [
+  "navalDisguise"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/pirate_ships.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_PIRATE",
+  "forNavalMilitary": true,
+  "defaultStatuses": [
+   "PROMOTION_REMOVE_STANDOUT_STATUS"
+  ]
+ }
+}

@@ -1,305 +1,144 @@
-//------------------------------------------------------------------------------------------------
-//  FILE:    CvTerrainInfo.cpp
-//------------------------------------------------------------------------------------------------
-#include "CvGameCoreDLL.h"
-#include "CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "CvPlayerAI.h"
-#include "CvPython.h"
-#include "CvXMLLoadUtility.h"
-#include "CvXMLLoadUtilityModTools.h"
-#include "CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
+//
+//	CvTerrainInfo -- the terrain poco's own typed reading on top of the base section dispatch (see the header).
+//	The yield/defense/cultureDistance families compile into m_modifiers via the base dispatch -- no per-family
+//	raw read survives here (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)). mapFrom materializes the identity/art/sound census set
+//	ONCE into typed members (docs/architecture/patterns.md §Materialize at mapFrom); idempotent by contract.
+//
+
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
 #include "CvTerrainInfo.h"
+#include "UI/CvArtFileMgr.h"           // ARTFILEMGR -- the EXE-shim-merge getArtInfo()
+#include "Infos/CvArtInfoTerrain.h"    // complete CvArtInfoTerrain -- getButton() needs the full definition
+#include "CvJsonParse.h"          // jsonResolveId + the shared walkers (jsonChildObj/jsonIdInt/jsonIdBool/jsonIdStr/jsonWorldArt)
+#include "AI/CvGameAI.h"          // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, mirrors the archive)
 
-
-//======================================================================================================
-//					CvTerrainInfo
-//======================================================================================================
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   CvTerrainInfo()
-//
-//  PURPOSE :   Default constructor
-//
-//------------------------------------------------------------------------------------------------------
-CvTerrainInfo::CvTerrainInfo() :
-// Only non-declarative fields here; everything else defaults via initDataMembers().
-m_eClimate(NO_CLIMATE_ZONE),
-m_iWorldSoundscapeScriptId(0),
-m_pi3DAudioScriptFootstepIndex(NULL)
+CvTerrainInfo::CvTerrainInfo()
+	: m_iBuildModifier(0)
+	, m_iDistanceToLand(0)
+	, m_iZobristValue(0)
+	, m_iWorldSoundscapeScriptId(-1)
+	, m_bFreshWaterTerrain(false)
+	, m_bImpassable(false)
+	, m_bFound(false)
+	, m_bFoundCoast(false)
+	, m_bFoundFreshWater(false)
+	, m_eClimate(NO_CLIMATE_ZONE)
 {
-	CvInfoUtil(this).initDataMembers();
-
-	m_zobristValue = GC.getGame().getSorenRand().getInt();
+	// Non-XML runtime map-hash value, drawn from the synced RNG at info construction EXACTLY as the archived
+	// CvTerrainInfo ctor did. CvPlot XORs it into m_movementCharacteristicsHash; the value must be RNG-quality
+	// and cross-client-identical (the pre-game RNG is deterministic), so it is stored, not defaulted.
+	m_iZobristValue = GC.getGame().getSorenRand().getInt();
 }
 
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   ~CvTerrainInfo()
-//
-//  PURPOSE :   Default destructor
-//
-//------------------------------------------------------------------------------------------------------
-CvTerrainInfo::~CvTerrainInfo()
+void CvTerrainInfo::mapFrom(const picojson::value& entity)
 {
-	CvInfoUtil(this).uninitDataMembers(); // frees m_piYields (owned by addYields)
-
-	SAFE_DELETE_ARRAY(m_pi3DAudioScriptFootstepIndex);
-}
-
-
-int CvTerrainInfo::getMovementCost() const
-{
-	return m_iMovementCost;
-}
-
-
-int CvTerrainInfo::getBuildModifier() const
-{
-	return m_iBuildModifier;
-}
-
-
-int CvTerrainInfo::getDefenseModifier() const
-{
-	return m_iDefenseModifier;
-}
-
-
-bool CvTerrainInfo::isImpassable() const
-{
-	return m_bImpassable;
-}
-
-
-bool CvTerrainInfo::isFound() const
-{
-	return m_bFound;
-}
-
-
-bool CvTerrainInfo::isFoundCoast() const
-{
-	return m_bFoundCoast;
-}
-
-
-bool CvTerrainInfo::isFoundFreshWater() const
-{
-	return m_bFoundFreshWater;
-}
-
-
-bool CvTerrainInfo::isFreshWaterTerrain() const
-{
-	return m_bFreshWaterTerrain;
-}
-
-
-const char* CvTerrainInfo::getArtDefineTag() const
-{
-	return m_szArtDefineTag;
-}
-
-
-int CvTerrainInfo::getWorldSoundscapeScriptId() const
-{
-	return m_iWorldSoundscapeScriptId;
-}
-
-
-// Arrays
-
-int CvTerrainInfo::getYield(int i) const
-{
-	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, i);
-	return m_piYields ? m_piYields[i] : 0;
-}
-
-
-int CvTerrainInfo::get3DAudioScriptFootstepIndex(int i) const
-{
-	FAssertMsg(i > -1, "Index out of bounds");
-	return m_pi3DAudioScriptFootstepIndex ? m_pi3DAudioScriptFootstepIndex[i] : 0;
-}
-
-
-int CvTerrainInfo::getCultureDistance() const
-{
-	return m_iCultureDistance;
-}
-
-int CvTerrainInfo::getHealthPercent() const
-{
-	return m_iHealthPercent;
-}
-
-
-//TB Combat Mod begin
-
-//TB Combat Mod end
-
-
-int CvTerrainInfo::getCategory(int i) const
-{
-	return m_aiCategories[i];
-}
-
-
-int CvTerrainInfo::getNumCategories() const
-{
-	return (int)m_aiCategories.size();
-}
-
-
-bool CvTerrainInfo::isCategory(int i) const
-{
-	return algo::any_of_equal(m_aiCategories, i);
-}
-
-
-
-
-void CvTerrainInfo::getDataMembers(CvInfoUtil& util)
-{
-	// Declared in the legacy getCheckSum order. The checksum is NOT delegated (see getCheckSum),
-	// but keeping the order aligned makes the two trivially comparable.
-	// Stays hand-written: m_eClimate (ClimateZoneTypes is a registered enum with NO InfoClassTraits
-	// specialization, so addEnum would index m_infoClassXmlLoadOrder[NO_INFO_CLASS] out of bounds),
-	// m_pi3DAudioScriptFootstepIndex (SetVariableListTagPair-style dynamic array),
-	// m_iWorldSoundscapeScriptId (audio tag index lookup), m_zobristValue (runtime).
-	util
-		.add(m_iMovementCost, L"iMovement")
-		.add(m_iBuildModifier, L"iBuildModifier")
-		.add(m_iDefenseModifier, L"iDefense")
-		.add(m_iDistanceToLand, L"iDistanceToLand")
-		.add(m_bImpassable, L"bImpassable")
-		.add(m_bFound, L"bFound")
-		.add(m_bFoundCoast, L"bFoundCoast")
-		.add(m_bFoundFreshWater, L"bFoundFreshWater")
-		.add(m_bFreshWaterTerrain, L"bFreshWaterTerrain")
-		.addYields(m_piYields, L"Yields")
-		.add(m_iCultureDistance, L"iCultureDistance")
-		.add(m_iHealthPercent, L"iHealthPercent")
-		.add(m_PropertyManipulators)
-		.add(m_aiCategories, L"Categories")
-		.add(m_aeMapCategoryTypes, L"MapCategoryTypes")
-		.add(m_szArtDefineTag, L"ArtDefineTag")
-	;
-}
-
-
-bool CvTerrainInfo::read(CvXMLLoadUtility* pXML)
-{
-	CvString szTextVal;
-	if (!CvInfoBase::read(pXML))
+	m_aeMapCategories.clear();   // remap-idempotency (CvInfo.h): the full-registry pass re-runs mapFrom
+	CvInfo::mapFrom(entity);     // core reading + the section dispatch (compiles m_modifiers)
+	if (!entity.is<picojson::object>())
 	{
-		return false;
+		return;
 	}
+	const picojson::object& entityObj = entity.get<picojson::object>();
 
-	CvInfoUtil(this).readXml(pXML);
-
-	pXML->GetOptionalChildXmlValByName(szTextVal, L"ClimateZoneType");
-	m_eClimate = (ClimateZoneTypes) pXML->GetInfoClass(szTextVal);
-
-	pXML->SetVariableListTagPairForAudioScripts(&m_pi3DAudioScriptFootstepIndex, L"FootstepSounds", GC.getNumFootstepAudioTypes());
-
-	if (pXML->GetOptionalChildXmlValByName(szTextVal, L"WorldSoundscapeAudioScript"))
-		m_iWorldSoundscapeScriptId = gDLL->getAudioTagIndex( szTextVal.GetCString(), AUDIOTAG_SOUNDSCAPE );
-	else
-		m_iWorldSoundscapeScriptId = -1;
-
-	return true;
-}
-
-
-void CvTerrainInfo::copyNonDefaults(const CvTerrainInfo* pClassInfo)
-{
-	PROFILE_EXTRA_FUNC();
-	int iTextDefault = -1;  //all integers which are TEXT_KEYS in the xml are -1 by default
-
-	// The art tag must merge BEFORE the base copy: CvInfoBase::copyNonDefaults calls the virtual
-	// getButton(), which resolves through getArtDefineTag(). The declared StringWrapper copy
-	// then no-ops.
-	if (m_szArtDefineTag.empty()) m_szArtDefineTag = pClassInfo->getArtDefineTag();
-
-	CvInfoBase::copyNonDefaults(pClassInfo);
-
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-
-	// Legacy quirk preserved: compares against CLIMATE_ZONE_TEMPERATE instead of NO_CLIMATE_ZONE
-	// (-1, the read default), so a module override lacking <ClimateZoneType> does NOT inherit it.
-	if (m_eClimate == CLIMATE_ZONE_TEMPERATE) m_eClimate = pClassInfo->getClimate();
-
-	for ( int i = 0; i < GC.getNumFootstepAudioTypes(); i++)
+	// identity: the terrain relief + climate fields (+ the worker build-time percent -- substrate self-data,
+	// ruling 18 plane 1: identity.buildTimeModifier, never a modifier family)
+	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
 	{
-		if (get3DAudioScriptFootstepIndex(i) == -1 && pClassInfo->get3DAudioScriptFootstepIndex(i) != -1)
+		m_iBuildModifier = jsonIdInt(*pIdentity, "buildTimeModifier");
+		m_iDistanceToLand = jsonIdInt(*pIdentity, "distanceToLand");
+		m_bFreshWaterTerrain = jsonIdBool(*pIdentity, "freshWaterTerrain");
+		m_bImpassable = jsonIdBool(*pIdentity, "impassable");
+		m_bFound = jsonIdBool(*pIdentity, "found");
+		m_bFoundCoast = jsonIdBool(*pIdentity, "foundCoast");
+		m_bFoundFreshWater = jsonIdBool(*pIdentity, "foundFreshWater");
+
+		// identity.climateZoneType (18 water terrains). CLIMATE_ZONE_ loads before TERRAIN_, so this
+		// cross-class FK resolves at first-pass read time; the full-registry re-run re-resolves regardless.
+		picojson::object::const_iterator climateIter = pIdentity->find("climateZoneType");
+		if (climateIter != pIdentity->end() && climateIter->second.is<std::string>())
 		{
-			if ( NULL == m_pi3DAudioScriptFootstepIndex )
+			m_eClimate = (ClimateZoneTypes)jsonResolveId(climateIter->second.get<std::string>());
+		}
+
+		picojson::object::const_iterator categoriesIter = pIdentity->find("mapCategories");
+		if (categoriesIter != pIdentity->end() && categoriesIter->second.is<picojson::array>())
+		{
+			const picojson::array& categoryList = categoriesIter->second.get<picojson::array>();
+			for (size_t iEntry = 0; iEntry < categoryList.size(); ++iEntry)
 			{
-				CvXMLLoadUtility::InitList(&m_pi3DAudioScriptFootstepIndex,GC.getNumFootstepAudioTypes(),-1);
+				if (!categoryList[iEntry].is<std::string>())
+				{
+					continue;
+				}
+				const int iResolved = jsonResolveId(categoryList[iEntry].get<std::string>());
+				if (iResolved >= 0)
+				{
+					m_aeMapCategories.push_back((MapCategoryTypes)iResolved);
+				}
 			}
-			m_pi3DAudioScriptFootstepIndex[i] = pClassInfo->get3DAudioScriptFootstepIndex(i);
 		}
 	}
 
-	if (getWorldSoundscapeScriptId() == iTextDefault) m_iWorldSoundscapeScriptId = pClassInfo->getWorldSoundscapeScriptId();
+	// world.art.icon -- the ART_DEF_* tag (EXE map-gen art lookup). Cleared first: jsonIdStr only assigns when
+	// the key is present (mapFrom idempotency, CvInfo.h).
+	m_szArtDefineTag.clear();
+	if (const picojson::object* pArt = jsonWorldArt(entityObj))
+	{
+		jsonIdStr(*pArt, "define", m_szArtDefineTag);
+	}
+
+	// sound: resolve the on-map audio string tags to runtime audio-manager indices at info-load -- EXACTLY the
+	// archived read mechanism (gDLL->getAudioTagIndex). soundscape -> AUDIOTAG_SOUNDSCAPE; each footsteps entry
+	// keys a FOOTSTEP_AUDIO_* type to its AS3D_* script tag.
+	m_iWorldSoundscapeScriptId = -1;
+	m_ai3DAudioScriptFootstepIndex.clear();
+	if (const picojson::object* pSound = jsonChildObj(entityObj, "sound"))
+	{
+		picojson::object::const_iterator soundscapeIter = pSound->find("soundscape");
+		if (soundscapeIter != pSound->end() && soundscapeIter->second.is<std::string>()
+			&& soundscapeIter->second.get<std::string>().length() > 0)
+		{
+			m_iWorldSoundscapeScriptId = gDLL->getAudioTagIndex(soundscapeIter->second.get<std::string>().c_str(), AUDIOTAG_SOUNDSCAPE);
+		}
+
+		picojson::object::const_iterator footstepsIter = pSound->find("footsteps");
+		if (footstepsIter != pSound->end() && footstepsIter->second.is<picojson::array>())
+		{
+			const picojson::array& footstepList = footstepsIter->second.get<picojson::array>();
+			m_ai3DAudioScriptFootstepIndex.assign(GC.getNumFootstepAudioTypes(), -1);   // legacy InitList default -1
+			for (size_t iEntry = 0; iEntry < footstepList.size(); ++iEntry)
+			{
+				if (!footstepList[iEntry].is<picojson::object>())
+				{
+					continue;
+				}
+				const picojson::object& footstepObj = footstepList[iEntry].get<picojson::object>();
+				for (picojson::object::const_iterator footstepIter = footstepObj.begin(); footstepIter != footstepObj.end(); ++footstepIter)
+				{
+					const int iFootstepType = jsonResolveId(footstepIter->first);   // FOOTSTEP_AUDIO_* -> type index
+					if (iFootstepType < 0 || iFootstepType >= (int)m_ai3DAudioScriptFootstepIndex.size())
+					{
+						continue;   // mirrors the legacy iIndexVal != -1 skip
+					}
+					if (footstepIter->second.is<std::string>() && footstepIter->second.get<std::string>().length() > 0)
+					{
+						m_ai3DAudioScriptFootstepIndex[iFootstepType] = gDLL->getAudioTagIndex(footstepIter->second.get<std::string>().c_str());
+					}
+					// empty script tag -> slot stays -1 (legacy szTemp.GetLength() > 0 ? ... : -1)
+				}
+			}
+		}
+	}
+	// (m_iZobristValue is drawn in the ctor -- non-XML runtime value, see there.)
 }
-
-
-
-// Explicit (not delegated to CvInfoUtil) because the hand-written m_eClimate sits mid-order;
-// delegating would drop it and change the asset checksum. Body kept byte-identical to legacy.
-void CvTerrainInfo::getCheckSum(uint32_t &iSum) const
-{
-	PROFILE_EXTRA_FUNC();
-	CheckSum(iSum, m_iMovementCost);
-	CheckSum(iSum, m_iBuildModifier);
-	CheckSum(iSum, m_iDefenseModifier);
-	CheckSum(iSum, m_iDistanceToLand);
-	CheckSum(iSum, m_eClimate);
-
-	CheckSum(iSum, m_bImpassable);
-	CheckSum(iSum, m_bFound);
-	CheckSum(iSum, m_bFoundCoast);
-	CheckSum(iSum, m_bFoundFreshWater);
-	CheckSum(iSum, m_bFreshWaterTerrain);
-
-	// Arrays
-
-	CheckSum(iSum, m_piYields, NUM_YIELD_TYPES);
-
-	CheckSum(iSum, m_iCultureDistance);
-	CheckSum(iSum, m_iHealthPercent);
-
-	m_PropertyManipulators.getCheckSum(iSum);
-	//TB Combat Mods begin
-	CheckSumC(iSum, m_aiCategories);
-	CheckSumC(iSum, m_aeMapCategoryTypes);
-
-	//TB Combat Mods end
-}
-
-
-const char* CvTerrainInfo::getButton() const
-{
-	const CvArtInfoTerrain* pTerrainArtInfo = getArtInfo();
-	return pTerrainArtInfo ? pTerrainArtInfo->getButton() : NULL;
-}
-
 
 const CvArtInfoTerrain* CvTerrainInfo::getArtInfo() const
 {
 	return ARTFILEMGR.getTerrainArtInfo(getArtDefineTag());
 }
 
+const char* CvTerrainInfo::getButton() const
+{
+	const CvArtInfoTerrain* pArtInfo = getArtInfo();
+	return pArtInfo != NULL ? pArtInfo->getButton() : "";
+}

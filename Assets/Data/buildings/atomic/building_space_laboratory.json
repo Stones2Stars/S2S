@@ -1,0 +1,115 @@
+{
+ "type": "BUILDING_SPACE_LABORATORY",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SPACE_STATIONS",
+    {
+     "any": [
+      "BUILDING_EFFECT_LAUNCH_SITE",
+      "BUILDING_COMMERCIAL_SPACEPORT",
+      "BUILDING_MILITARY_SPACEPORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": 20,
+      "enabled": "IS_SPACE"
+     }
+    ]
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 9
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
+ "cost": {
+  "production": 3370,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SPACE_LABORATORY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SPACE_LABORATORY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SPACEWAY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_LABORATORY",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_LABORATORY_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 6,
+  "specialBuildingType": "SPECIALBUILDING_SPACE_LABORATORY",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

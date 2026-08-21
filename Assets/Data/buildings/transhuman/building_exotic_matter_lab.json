@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_EXOTIC_MATTER_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_EXOTIC_PARTICLE_LAB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MEGATOWER_RESEARCH_LEVEL",
+    "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    {
+     "value": 12,
+     "enabled": "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 6155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EXOTIC_MATTER_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EXOTIC_MATTER_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_EXOTIC_MATTER_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

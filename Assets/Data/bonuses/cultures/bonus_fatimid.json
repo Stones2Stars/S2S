@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_FATIMID",
+ "enables": {
+  "units": [
+   "UNIT_AL_MAHDI_BILLAH",
+   "UNIT_KUTAMA_INFANTRY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_FATIMID"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_FATIMID",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

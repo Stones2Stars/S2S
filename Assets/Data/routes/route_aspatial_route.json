@@ -1,0 +1,35 @@
+{
+ "type": "ROUTE_ASPATIAL_ROUTE",
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 5
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/aspatial_route.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_ROUTE_ASPATIAL_ROUTE",
+  "value": 6,
+  "advancedStart": {
+   "cost": 30
+  }
+ }
+}

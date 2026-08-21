@@ -1,0 +1,21 @@
+{
+ "type": "OUTCOME_ANIMAL_COMBAT5",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_ANIMAL_COMBAT4",
+  "message": "TXT_KEY_OUTCOME_ANIMAL_COMBAT_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MAJOR_LEAGUE_STADIUM"
+   ]
+  }
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city",
+ "replaces": [
+  "OUTCOME_ANIMAL_COMBAT1"
+ ]
+}

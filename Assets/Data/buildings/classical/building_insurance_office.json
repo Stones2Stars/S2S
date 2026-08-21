@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_INSURANCE_OFFICE",
+ "enables": {
+  "buildings": [
+   "BUILDING_TRANSAMERICA_TOWER"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CYBERSOCIAL_INTEGRATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_INSURANCE",
+    {
+     "any": [
+      "BUILDING_MODERN_OFFICES",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 261,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INSURANCE_OFFICE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INSURANCE_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_INSURANCE_OFFICE_PEDIA",
+  "worth": 5,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

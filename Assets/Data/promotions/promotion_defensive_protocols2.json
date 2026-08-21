@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_DEFENSIVE_PROTOCOLS2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_DEFENSIVE_PROTOCOLS3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_DEFENSIVE_PROTOCOLS1"
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_DEFENSIVE_PROTOCOLS": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Flanking2.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,2,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_DEFENSIVE_PROTOCOLS2"
+ }
+}

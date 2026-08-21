@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_JAMAICAN",
+ "enables": {
+  "units": [
+   "UNIT_MAROON"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_JAMAICAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_JAMAICAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

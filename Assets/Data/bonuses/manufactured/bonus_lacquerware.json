@@ -1,0 +1,26 @@
+{
+ "type": "BONUS_LACQUERWARE",
+ "enables": {
+  "units": [
+   "UNIT_CARTWRIGHT"
+  ]
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_LACQUERWARE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_LACQUERWARE",
+  "civilopedia": "TXT_KEY_BONUS_LACQUERWARE_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

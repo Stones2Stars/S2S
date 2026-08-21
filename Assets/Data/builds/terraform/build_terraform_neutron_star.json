@@ -1,0 +1,36 @@
+{
+ "type": "BUILD_TERRAFORM_NEUTRON_STAR",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INDUCED_SUPERNOVA",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_TERRAFORM_NEUTRON_STAR",
+  "terrainChange": "TERRAIN_NEUTRON_STAR"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/worldbuilder/neutron_star.dds"
+  },
+  "hotkey": "KB_T",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_TERRAFORM_NEUTRON_STAR"
+ }
+}

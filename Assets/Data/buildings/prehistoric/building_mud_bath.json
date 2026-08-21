@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_MUD_BATH",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOTROIDS"
+  ]
+ },
+ "whenObsolete": {
+  "research": {
+   "city": {
+    "percent": 5
+   }
+  },
+  "health": {
+   "city": {
+    "flat": 3
+   }
+  },
+  "PROPERTY_DISEASE": {
+   "city": {
+    "flat": -10
+   }
+  }
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_NATUROPATHY",
+    {
+     "any": [
+      "BUILDING_HEALERS_HUT",
+      "BUILDING_DOCTORS_OFFICE",
+      "BUILDING_SURGEONS_OFFICE",
+      "BUILDING_MEDICAL_CLINIC",
+      "BUILDING_APOTHECARY_SHOP",
+      "BUILDING_PHARMACY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_FINE_CLAY",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CLAY",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_HEALTH_SPA",
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 50,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MUD_BATH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MUD_BATH",
+  "civilopedia": "TXT_KEY_BUILDING_MUD_BATH_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,15 @@
+{
+ "type": "PROMOTIONLINE_ENTRAPMENT",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/flaming1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_ENTRAPMENT",
+  "unitCombats": [
+   "UNITCOMBAT_HUNTER",
+   "UNITCOMBAT_CRIMINAL"
+  ]
+ }
+}

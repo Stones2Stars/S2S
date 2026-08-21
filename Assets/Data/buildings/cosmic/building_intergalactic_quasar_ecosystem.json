@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_INTERGALACTIC_QUASAR_ECOSYSTEM",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_TERRAFORMING_BASE",
+    "TECH_GRAND_UNIFICATION_BIOLOGY",
+    {
+     "type": "FEATURE_QUASAR",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 4742,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_QUASAR_ECOSYSTEM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_QUASAR_ECOSYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_QUASAR_ECOSYSTEM_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

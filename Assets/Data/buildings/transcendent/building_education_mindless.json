@@ -1,0 +1,101 @@
+{
+ "type": "BUILDING_EDUCATION_MINDLESS",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_TRANSCENDENT_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_EDUCATION",
+     "scope": "city",
+     "min": -2000000,
+     "max": -35000
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -65
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -65
+  }
+ },
+ "research": {
+  "city": {
+   "flat": -49,
+   "percent": -65
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "any": -6
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "percent": -176
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": -6
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -97
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": -91
+   }
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -130
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 91
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 91
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYEDUCATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EDUCATION_MINDLESS",
+  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

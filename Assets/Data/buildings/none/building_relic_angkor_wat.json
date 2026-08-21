@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_RELIC_ANGKOR_WAT",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 16
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANGKOR_WAT"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RELIC_ANGKOR_WAT",
+  "civilopedia": "TXT_KEY_BUILDING_ANGKOR_WAT_PEDIA",
+  "pediaCategory": "greatWonder",
+  "notConstructible": true,
+  "noInstanceLimit": true,
+  "worth": 12,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

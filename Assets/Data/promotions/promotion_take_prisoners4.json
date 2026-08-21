@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_TAKE_PRISONERS4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_TAKE_PRISONERS5"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_TAKE_PRISONERS3"
+   ]
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_TAKE_PRISONERS": 4
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/TakePrisoner4Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_TAKE_PRISONERS4"
+ }
+}

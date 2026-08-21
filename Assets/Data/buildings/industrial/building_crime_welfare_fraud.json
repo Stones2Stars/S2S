@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_CRIME_WELFARE_FRAUD",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "any": [
+      "CIVIC_SOCIALIZED",
+      "CIVIC_ECO_FRIENDLY"
+     ]
+    },
+    "BUILDING_WELFARE_OFFICE",
+    "TECH_LABOR_UNIONS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 260,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    -1,
+    {
+     "value": -30,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": -10,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 1
+   }
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_WELFARE_FRAUD",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_WELFARE_FRAUD_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,36 @@
+{
+ "type": "BUILDING_SAFETY_AESOPS_FABLES",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_LITERATURE"
+   ]
+  }
+ },
+ "PROPERTY_CRIME": {
+  "empire": {
+   "flat": -5
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SAFETY_AESOPS_FABLES",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SAFETY_AESOPS_FABLES",
+  "civilopedia": "TXT_KEY_BUILDING_SAFETY_AESOPS_FABLES_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

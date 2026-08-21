@@ -1,0 +1,46 @@
+{
+ "type": "PROMOTION_COMBAT_AI4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_NANOIDS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT_AI3"
+   ]
+  }
+ },
+ "experience": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 16
+  }
+ },
+ "heal": {
+  "unit": {
+   "neutral": {
+    "flat": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COMBAT_AI": 4
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,7,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COMBAT_AI4"
+ }
+}

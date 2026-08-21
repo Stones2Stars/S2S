@@ -1,0 +1,110 @@
+{
+ "type": "BUILDING_SHOOTING_CLUB",
+ "enables": {
+  "units": [
+   "UNIT_NIAM_NIAM",
+   "UNIT_PUEBLO_REBEL",
+   "UNIT_SHARPSHOOTER"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MECHANIZED_WARFARE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FIRING_RANGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MATCHLOCK",
+    {
+     "any": [
+      "BUILDING_GUNSMITH",
+      "BUILDING_FACTORY_AMMUNITION",
+      "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_FIREARMS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_AMMUNITION",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_FIRING_RANGE",
+    "BUILDING_AUTOMATED_FIRING_RANGE",
+    "BUILDING_ORBITAL_TARGETS"
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_GUN": {
+     "flat": 3
+    },
+    "UNITCOMBAT_ARCHER": {
+     "flat": 3
+    },
+    "UNITCOMBAT_THROWING": {
+     "flat": 2
+    },
+    "UNITCOMBAT_SIEGE": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 425,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SHOOTING_CLUB",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SHOOTING_CLUB",
+  "civilopedia": "TXT_KEY_BUILDING_SHOOTING_CLUB_PEDIA",
+  "worth": 3,
+  "militaryWorth": 5,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

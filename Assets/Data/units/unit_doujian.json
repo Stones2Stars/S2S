@@ -1,0 +1,147 @@
+{
+ "type": "UNIT_DOUJIAN",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_THREE_KINGDOMS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_SHIPWRIGHT",
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
+    "TECH_ANCIENT_MACHINERY",
+    "TECH_SHIP_BUILDING"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GALLEASS"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 20,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 8
+  }
+ },
+ "skills": [
+  "pillage",
+  "mechanized",
+  "renderBelowWater",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WOODEN_SHIPS",
+ "combatClasses": [
+  "UNITCOMBAT_NAVAL_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_SHORTBOW",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_SHIELD_BUCKLER",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_MARCH",
+   "PROMOTION_MANUEVERING1",
+   "PROMOTION_DRILL1"
+  ]
+ },
+ "cost": {
+  "production": 270,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DOUJIAN",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 2.25,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_DOUJIAN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_DOUJIAN",
+  "civilopedia": "TXT_KEY_UNIT_DOUJIAN_PEDIA",
+  "worth": 1,
+  "militaryWorth": 10,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "minAreaSize": 10,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ATTACK_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_SEA",
+   "UNITAI_RESERVE_SEA",
+   "UNITAI_ESCORT_SEA",
+   "UNITAI_EXPLORE_SEA",
+   "UNITAI_ASSAULT_SEA"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_POLAR",
+   "TERRAIN_TRENCH_TROPICAL"
+  ]
+ }
+}

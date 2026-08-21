@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_RARE_EARTH_MINERALS",
+ "enables": {
+  "buildings": [
+   "BUILDING_SMARTPHONE_MANUFACTURER",
+   "BUILDING_TABLET_MANUFACTURER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_RARE_EARTH_MINERALS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_RARE_EARTH_MINERALS",
+  "civilopedia": "TXT_KEY_BONUS_RARE_EARTH_MINERALS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

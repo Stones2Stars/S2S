@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_WAREHOUSE",
+ "enables": {
+  "buildings": [
+   "BUILDING_IKHANDA",
+   "BUILDING_NAVAL_SHIPPING_WAREHOUSE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REFRIGERATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_WAREHOUSE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MASONRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CEMENT",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_MODERN_WAREHOUSE"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "foodKept": {
+  "city": {
+   "percent": 4
+  }
+ },
+ "cost": {
+  "production": 153,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WAREHOUSE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WAREHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_WAREHOUSE_PEDIA",
+  "worth": 8,
+  "militaryWorth": 4,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

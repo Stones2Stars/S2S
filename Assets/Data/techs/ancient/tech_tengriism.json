@@ -1,0 +1,63 @@
+{
+ "type": "TECH_TENGRIISM",
+ "enables": {
+  "religions": [
+   "RELIGION_TENGRIISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CONSCIOUSNESS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_EQUINE_DOMESTICATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 110
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/tengriism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TENGRIISM2",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TENGRIISM",
+  "civilopedia": "TXT_KEY_TECH_TENGRIISM_PEDIA",
+  "quote": "TXT_KEY_TECH_TENGRIISM_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "gridX": 22,
+  "gridY": 5
+ }
+}

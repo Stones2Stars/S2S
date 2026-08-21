@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_CRIME_CYBERWARFARE",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_CYBERWARFARE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 1200,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "research": {
+  "city": {
+   "percent": -20
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": -50
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 30
+   }
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_CYBERWARFARE",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_CYBERWARFARE_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

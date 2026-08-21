@@ -1,0 +1,129 @@
+{
+ "type": "BUILDING_WORLD_NEWS_NETWORK",
+ "enables": {
+  "buildings": [
+   "BUILDING_WALK_OF_FAME"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_PRESS_AGENCY",
+    "TECH_MASS_MEDIA",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 100
+      }
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "warWeariness": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "anarchy": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_PRESS_AGENCY",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 7080,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 200
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_WNN"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WNN",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_UNIVERSITY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WORLD_NEWS_NETWORK",
+  "civilopedia": "TXT_KEY_BUILDING_WORLD_NEWS_NETWORK_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 12,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

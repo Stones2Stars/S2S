@@ -1,0 +1,28 @@
+{
+ "type": "BONUS_MECHS",
+ "enables": {
+  "buildings": [
+   "BUILDING_FARM_MECH_CONTROL_CENTER",
+   "BUILDING_MINING_MECH_CONTROL_CENTER"
+  ],
+  "units": [
+   "UNIT_ANTI_PERSONNEL_MECH",
+   "UNIT_ASSAULT_MECH",
+   "UNIT_DOLPHIN_MECH",
+   "UNIT_POLICE_MECH",
+   "UNIT_POWER_ARMORED_INFANTRY",
+   "UNIT_WALKER_MECH"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MECHS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MECHS",
+  "civilopedia": "TXT_KEY_BONUS_MECHS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

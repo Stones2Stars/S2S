@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_CROWS_NEST2",
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 100,
+    "unit": "HAS_NAVAL_DISGUISE"
+   },
+   {
+    "value": 100,
+    "unit": "HAS_SUBMARINE"
+   }
+  ]
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CROWS_NEST": 2
+ },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/CrowsNest2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CROWS_NEST2"
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_COLONIZE_MAP_NEARBY_STARS",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_NEARBY_STARS",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_NEARBY_STARS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_INTERSTELLAR_TRAVEL"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

@@ -1,0 +1,42 @@
+{
+ "type": "BUILDING_REGIONAL_PLANNING_COMMISSION",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_NEW_URBANISM",
+    "BUILDING_METROPOLITAN_ADMINISTRATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "cost": {
+  "production": 1540,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_REGIONAL_PLANNING_COMMISSION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_REGIONAL_PLANNING_COMMISSION",
+  "civilopedia": "TXT_KEY_BUILDING_REGIONAL_PLANNING_COMMISSION_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1426,6 +1426,162 @@
 		<French>[ICON_BULLET]%F1 modification de la propagation : %D2</French>
 		<Russian>[ICON_BULLET]%F1 изменение распространения: %D2</Russian>
 	</TEXT>
+	<!-- The §2a YIELD RATE decomposition (setYieldHelp). Every term of the combine gets its own line, because a
+	     single total cannot be reconciled against anything: the whole reason this tooltip exists is so a player
+	     can see WHICH term is wrong, not merely that the number is. -->
+	<!-- The PLOT tooltip's per-yield line, decomposed into the plot package's three stored segments. Same split
+	     the city's plot Σ walks, so a tile that reads wrong here is wrong in the city total too. -->
+	<TEXT>
+		<Tag>TXT_KEY_PLOTHELP_YIELD_TOTAL</Tag>
+		<English>%s1: %s2</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PLOTHELP_YIELD</Tag>
+		<English>%s1: %s2 (nature %s3 [ICON_BULLET] improvement %s4 [ICON_BULLET] route/other %s5)</English>
+	</TEXT>
+	<!-- Shown only while the tile is actually being WORKED: an unworked tile says nothing, which keeps an
+	     empty-tile hover short. It answers why a tile's yield is or is not reaching anyone, since a plot
+	     produces its package either way but only a worked tile joins a city's plot sum. -->
+	<TEXT>
+		<Tag>TXT_KEY_PLOTHELP_WORKED_BY</Tag>
+		<English>Worked by %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_BASE</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Base (multiplied by the percent stack):[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_PLOTS</Tag>
+		<English>[ICON_BULLET]Worked plots: %s1 (from %d2 plots)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_PLOTSEGMENTS</Tag>
+		<English>    nature %s1 [ICON_BULLET] improvements %s2 [ICON_BULLET] routes/other %s3</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_TRADE</Tag>
+		<English>[ICON_BULLET]Trade routes: %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_GOLDENAGE</Tag>
+		<English>[ICON_BULLET]Golden age: %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_UPPERFLAT</Tag>
+		<English>[ICON_BULLET]Empire and team: %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_SPECIALISTS</Tag>
+		<English>[ICON_BULLET]Specialists: %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_PERCENT</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Percent stack: +%d1%[COLOR_REVERT] (city +%d2% [ICON_BULLET] empire +%d3% [ICON_BULLET] team +%d4%)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_CITYFLAT</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Buildings in this city: %s1[COLOR_REVERT] (added after the percent stack)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_TOTAL</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Total: %s1[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_BONUSSTORES</Tag>
+		<English>[ICON_BULLET]Resources held: %d1 traded [ICON_BULLET] %d2 on site</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_NOTAPPLYING</Tag>
+		<English>[COLOR_WARNING_TEXT]Not applying (conditions unmet):[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_REFUSED_FLAT</Tag>
+		<English>[ICON_BULLET]%s1: %s3 [COLOR_WARNING_TEXT]needs %s4[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_YIELDHELP_REFUSED_PERCENT</Tag>
+		<English>[ICON_BULLET]%s1: +%d2% [COLOR_WARNING_TEXT]needs %s4[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_COMMERCEHELP_SHARE</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Slider share: %d1% of %s2 = %s3[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_COMMERCEHELP_DEPOSITS</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]This channel's own sources: %s1[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_COMMERCEHELP_PERCENT</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Percent stack: +%d1%[COLOR_REVERT] (applies to the slider share only)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_COMMERCEHELP_PROCESS</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]From production (process): %s1[COLOR_REVERT] (added after the percent stack)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_COMMERCEHELP_TOTAL</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Total: %s1[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_DEFENSEHELP_TOTAL</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]City defense: +%d1%[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_DEFENSEHELP_FLOOR</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Defense floor: +%d1%[COLOR_REVERT] (defense never falls below this)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GPHELP_BASE</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Base rate: %d1[COLOR_REVERT] (before the percent stack)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GPHELP_MODIFIER</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Percent stack: %d1%[COLOR_REVERT] (100% = unmodified)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GPHELP_RATE</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Great People per turn: %d1[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GPHELP_PROGRESS</Tag>
+		<English>[ICON_BULLET]Progress: %d1 of %d2</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_GPHELP_SPECIALIST</Tag>
+		<English>%s1 (x%d2)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EMPLOYHELP_POPULATION</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Population: %d1[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EMPLOYHELP_WORKING</Tag>
+		<English>[ICON_BULLET]Working tiles: %d1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EMPLOYHELP_SPECIALISTS</Tag>
+		<English>[ICON_BULLET]Specialists: %d1 of %d2 allowed</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EMPLOYHELP_IDLE</Tag>
+		<English>[COLOR_WARNING_TEXT][ICON_BULLET]Unassigned: %d1[COLOR_REVERT] (no option scored above zero)</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EMPLOYHELP_FREE</Tag>
+		<English>[ICON_BULLET]Free specialists: %d1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDINGHELP_STATE_ACTIVE</Tag>
+		<English>[ICON_BULLET][COLOR_POSITIVE_TEXT]Active[COLOR_REVERT] - its effects apply</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDINGHELP_STATE_DORMANT</Tag>
+		<English>[ICON_BULLET][COLOR_WARNING_TEXT]Dormant[COLOR_REVERT] - a requirement to operate is not met, so none of its effects apply</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUILDINGHELP_STATE_OBSOLETE</Tag>
+		<English>[ICON_BULLET][COLOR_WARNING_TEXT]Obsolete[COLOR_REVERT] - superseded by a technology; only its obsolete effects apply</English>
+	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILDINGHELP_STATE_REL_BUILDINGS</Tag>
 		<English>[SPACE]from All State [ICON_RELIGION] Buildings</English>

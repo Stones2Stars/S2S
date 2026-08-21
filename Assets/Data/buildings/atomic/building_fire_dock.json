@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_FIRE_DOCK",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "BUILDING_FIRE_STATION",
+    "BUILDING_HARBORMASTERS_OFFICE",
+    "TECH_FIRE_SUPPRESSION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "cost": {
+  "production": 1540,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FIRE_DOCK",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FIRE_DOCK",
+  "civilopedia": "TXT_KEY_BUILDING_FIRE_BRIGADE_PEDIA",
+  "worth": 6,
+  "militaryWorth": 2,
+  "conquestProbability": 35,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

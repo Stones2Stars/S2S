@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_CHECHEN",
+ "enables": {
+  "units": [
+   "UNIT_GAZAVAT_WARRIORS",
+   "UNIT_IMAM_SHAMIL"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CHECHEN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CHECHEN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

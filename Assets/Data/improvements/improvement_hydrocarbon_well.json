@@ -1,0 +1,155 @@
+{
+ "type": "IMPROVEMENT_HYDROCARBON_WELL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_REFINING",
+     "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "feature": [
+        "FEATURE_TAR_PIT"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_OIL",
+        "BONUS_NATURAL_GAS"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MODERN_SEISMOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_NANOMINING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OIL"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_NATURAL_GAS"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PLASTICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MODERN_SEISMOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_NANOMINING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_DERIVATIVES",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OIL"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_NATURAL_GAS"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 10
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_WATER_POLLUTION": 5,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  }
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_HYDROCARBON_WELL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_HYDROCARBON_WELL",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_HYDROCARBON_WELL_PEDIA",
+  "pillageTo": "IMPROVEMENT_TAR_GATHERER",
+  "advancedStart": {
+   "cost": 60
+  },
+  "pillageGold": 75,
+  "bonuses": {
+   "BONUS_FOSSIL_BEDS": {
+    "discoverRand": 2500
+   },
+   "BONUS_OIL": {
+    "trade": true,
+    "discoverRand": 2500,
+    "depletionRand": 1000
+   },
+   "BONUS_NATURAL_GAS": {
+    "trade": true,
+    "discoverRand": 5000,
+    "depletionRand": 1000
+   }
+  }
+ }
+}

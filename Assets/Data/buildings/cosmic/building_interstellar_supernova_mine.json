@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_INTERSTELLAR_SUPERNOVA_MINE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_CAPTURED_NEUTRON_STARS",
+    "TECH_INDUCED_SUPERNOVA",
+    {
+     "type": "TERRAIN_NEUTRON_STAR",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_GALACTIC",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 125
+  }
+ },
+ "cost": {
+  "production": 6540,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_SUPERNOVA_MINE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_SUPERNOVA_MINE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_SUPERNOVA_MINE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

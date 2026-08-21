@@ -1,0 +1,17 @@
+{
+ "type": "PROMOTIONLINE_RECOVER_TECH",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/RecoverTechPromotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_RECOVER_TECH",
+  "unitCombats": [
+   "UNITCOMBAT_HEALS_TECH"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ]
+ }
+}

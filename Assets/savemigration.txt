@@ -1,0 +1,2305 @@
+|###################################################################|
+| SAVE MIGRATION — retired + renamed serialized fields              |
+| (READ BY THE SAVE READER AT LOAD — this file IS the mechanism)    |
+|###################################################################|
+| The save reader (CvTaggedSaveFormatWrapper) PARSES this file once |
+| at load and self-heals the stream against it, so a removed field  |
+| is FULLY GONE from the object — no member, no read, no write, no  |
+| per-object WRAPPER_SKIP_ELEMENT. This is deployed under Assets/    |
+| so the runtime DLL can read it (gDLL->getModName + Assets\).      |
+|                                                                   |
+| Why full removal: a DELETED member that is still referenced       |
+| anywhere is a COMPILE error (caught); an empty stub silently      |
+| returns a wrong value (hidden). Gone > stubbed.                   |
+|                                                                   |
+| FORMAT (one entry per line; a line starting | = # is ignored):    |
+|   a CUT is the bare tag FIRST on the line (note after, optional): |
+|     ClassName::m_field                  (type note, optional)     |
+|   a RENAME is old -> new; a TYPE rename rides the TYPE:: space:   |
+|     ClassName::m_old -> ClassName::m_new                          |
+|     TYPE::OLD_INFOTYPE -> TYPE::NEW_INFOTYPE                      |
+| There is NO literal CUT:/RENAME: prefix: the reader takes the     |
+| FIRST whitespace-delimited token of each side and keeps it only   |
+| if it contains `::`, so a prefixed line parses to NOTHING -- and  |
+| a wrapped note line must never BEGIN with a Class::field token,   |
+| which registers as an entry (save.md §3).                         |
+| The reader keys on the normalized "Class::field" name (the same   |
+| NormalizeName the dictionary stores). A cut tag is drained where  |
+| it appears; a rename tag is matched against the new member. So    |
+| old saves load clean and the format is NEVER save-breaking as     |
+| long as the entry is listed here.                                 |
+|                                                                   |
+| ⛔ Still true: never leave a live WRAPPER_READ for a deleted tag  |
+| that ISN'T listed here — an unlisted orphan DESYNCS the whole     |
+| downstream read (proven 2026-07-02: gutted tech lists). List it.  |
+|-------------------------------------------------------------------|
+
+| CvUnit::m_iImmobileTimer -- REPLACED by the unit STATUS store (STATUS_PARALYZED). A status is the same thing
+| the timer was -- an applied counter ticking down per turn -- so the timer is the legacy shape of it, not a
+| separate field. REPLACEMENT: CvUnit::m_aiStatusTurns, serialized in its place.
+CvUnit::m_iImmobileTimer
+| CvCity::m_bWeLoveTheKingDay -- REPLACED by the city STATUS store
+| (CITYSTATUS_WE_LOVE_THE_KING_DAY). WLTKD is a ONE-TURN status re-applied each turn while its conditions
+| hold, so the bool was its legacy shape. REPLACEMENT: CvCity::m_aiStatusTurns, serialized in its place.
+CvCity::m_bWeLoveTheKingDay
+========================
+| ⚖ RE-HOMED OBLIGATIONS: every `CascadeWellbeing::*` a wellbeing note below names as the replacement is
+| ARCHIVED with the shadow substrate (SourceArchive/Cascade/), and the intermediate per-term getters those
+| notes describe were deleted with the hard rebuild. The LIVE source of every one of these values is the
+| wellbeing CHANNEL PLANE: the four ordinary channels (happiness/anger/health/unhealth, modifier.md §2b) on
+| the uniform packages, maintained by the spine and read through the getWellbeing group reads and the
+| realized fold -- the consumers were re-pointed onto those reads, never onto revived per-term getters. The
+| notes below stay as the record of WHAT each cut field carried; this line is where the obligation lives now.
+========================
+2026-07-20 — #430 delete-driven legacy cut (CvPlayer civic/trait/project/world wellbeing feeders): the 8 stored
+player-scope wellbeing accumulators fully removed (no member, no read, no write). The getters now read fresh
+deposit-derived cascade recomputes: getCivicHappiness/getCivicHealth -> CascadeWellbeing::civicWellbeing (civic
+happiness.empire/health.empire flats, reproducing the verdict iCivicNet via a bare player ctx);
+getCivilizationHealth -> CascadeWellbeing::civilizationHealth (active-trait health.empire flats = iTraitNet,
+PURE_TRAITS-filtered, matching the verdict -- the legacy accumulator was unfiltered, a documented
+stored-accumulator-drift correction); getProjectHappiness/getProjectHealth -> projectWellbeing (own-team
+completed projects' happiness/health.empire = getGlobalHappiness/Health); getWorldHappiness/getWorldHealth ->
+worldWellbeing (game-created projects' happiness/health.world = getWorldHappiness/Health). CvPlayer::getCivicHealth
+keeps its NPC (barbarian) negative-clamp. CvPlayer::getLargestCityHappiness is DELETED ENTIRELY (its sole consumer
+was CvCity::getLargestCityHappiness, re-pointed to CascadeWellbeing::largestCityWellbeing -> hap.iLargest, which
+already applies the population-rank gate at fill). The 8 change* changers + their processCivics / processTrait / CvTeam::changeProjectCount
+trigger sites are gone; the four AI_makeAssignWorkDirty riders drop (the value is read
+fresh, and the broad civic/trait/project recompute re-dirties via sibling change*/AI_makeProductionDirty). The
+CvHttpServer /computed wellbeing/health/happiness decomposition rows are KEPT (they now read the re-pointed
+cascade getters). Old-save tags drain by name below (no WRAPPER_SKIP_ELEMENT).
+
+CvPlayer::m_iCivicHappiness              (int)
+CvPlayer::m_iCivicHealth                 (int)
+CvPlayer::m_iCivilizationHealth          (int)
+CvPlayer::m_iLargestCityHappiness        (int)
+CvPlayer::m_iProjectHappiness            (int)
+CvPlayer::m_iProjectHealth               (int)
+CvPlayer::m_iWorldHappiness              (int)
+CvPlayer::m_iWorldHealth                 (int)
+
+The per-commerce happiness pool: there is no pool, and no channel. The whole commerceHappiness FAMILY
+DISSOLVES (curate_building CommerceHappinesses) -- a slider rate is a json §3.1 count-scaler TOKEN, so
+"+N happiness at 100% culture" is an ordinary `happiness.city.flat` deposit carrying
+`per: {CULTURE_RATE, each: 100}`, resolved into the realized wellbeing like any other deposit. Wellbeing mints
+zero kinds for it.
+| The getter/changer family and the CommerceInfo iInitialHappiness seed are therefore GONE rather than
+| re-pointed; re-adding any of them beside the wellbeing read would count the same deposit twice.
+| REPLACEMENT: the realized wellbeing read (the deposit is already inside it).
+
+CvCity::m_aiCommerceHappinessPer         (int array, NUM_COMMERCE_TYPES)
+
+Building obsoletion is DERIVED, not stored (owner ruling): the team already owns the tech list, so CvTeam::isObsoleteBuilding
+computes it -- the team holds the building's own obsoleting tech, OR its
+special-building group's (an OR, so the two sources are idempotent by construction). The stored counter and its
+setHasTech maintenance loop are deleted; every consumer reads the same predicate and is unchanged. The counter
+was double-incremented for a grouped member once the group getter went live, which is precisely the failure a
+stored derived value permits and a computed one cannot ([DEC-accumulator-cut-uniform], [DEC-derived-never-trusted]).
+
+CvTeam::m_paiObsoleteBuildingCount       (int class-array, per BuildingTypes)
+========================
+
+========================
+2026-07-19 — #430 unit-plane (withdrawal group): the stored per-unit extra-withdrawal accumulator is removed
+and drained. withdrawalProbability() composes the unit-type base with URS_WITHDRAWAL (the unit RESOLVED plane,
+Cascade/CvUnitResolved.h) -- gathered from info + held promotions + held unit-combat classes, re-derived at
+load, never serialized. The promotion / unit-combat apply folds are gone: they do not mark the cache, the
+SPINE does (SEVT_UNIT_PROMOTION_CHANGED / SEVT_UNIT_COMBAT_CHANGED -> markResolvedValuesDirty).
+The sea-pillage interceptor exchange -- where the unit is formally attacker but really DEFENDER, so no
+withdrawal is allowed -- is the within-frame m_bSuppressWithdrawal flag, NOT serialized and cleared on reset
+(a CvUnit is recycled out of a free list). It replaces a mutate-down-and-restore of the stat, which is the
+snapshot-and-restore of a derived cache superseded-ideas #19 bans.
+The SPECIAL-UNIT (carried-cargo) leg is DROPPED, not re-homed -- owner ruling, see superseded-ideas.
+
+CvUnit::m_iExtraWithdrawal                (int)
+========================
+
+========================
+2026-07-19 — #430 F4 unit-plane (firstStrike + heal groups): the stored per-unit first-strike + heal accumulators
+are removed. CvUnit::getExtraFirstStrikes / getExtraChanceFirstStrikes / getExtraEnemyHeal / getExtraNeutralHeal /
+getExtraFriendlyHeal / getSameTileHeal / getAdjacentTileHeal now read the cascade unit self-accumulator
+(the unit RESOLVED plane (Cascade/CvUnitResolved.h) -- URS_FIRST_STRIKES / URS_FIRST_STRIKE_CHANCE /
+URS_HEAL_{ENEMY,NEUTRAL,FRIENDLY,SAME_TILE,ADJACENT} -- gathered
+on-dirty from the held-set: held promotions + held unit-combat classes (DELTA-ONLY, no unit-type base) via MMKernel::sumUnit
+"firstStrike.unit.strikes"/"firstStrike.unit.chance"/"heal.unit.{enemy,neutral,friendly,sameTile,adjacentTile}"."flat").
+The seven changers + their apply-loop folds (processPromotion / processUnitCombat) are gone -- consolidated to ONE
+markDirty(UPK_ALL) per apply loop; the never-serialized cache re-derives at load. The firstStrike getters keep the
+LIVE commander/commodore fold + std::max(0,·) clamp; the enemy/neutral/friendly heal getters keep the fold (no clamp,
+also reused as spy-mission strengths); sameTile/adjacentTile are raw cache reads.
+
+CvUnit::m_iExtraFirstStrikes             (int)
+CvUnit::m_iExtraChanceFirstStrikes       (int)
+CvUnit::m_iExtraEnemyHeal                (int)
+CvUnit::m_iExtraNeutralHeal              (int)
+CvUnit::m_iExtraFriendlyHeal             (int)
+CvUnit::m_iSameTileHeal                  (int)
+CvUnit::m_iAdjacentTileHeal              (int)
+========================
+
+========================
+2026-07-19 — #430 F4 unit-plane (evasion + intercept + collateral + capture groups): four more stored per-unit
+delta accumulators removed. CvUnit::getExtraEvasion / getExtraIntercept / getExtraCollateralDamage now read the
+cascade unit self-accumulator (the unit RESOLVED plane (Cascade/CvUnitResolved.h) -- URS_EVASION / URS_INTERCEPT /
+URS_COLLATERAL); captureProbabilityTotal / captureResistanceTotal read URS_CAPTURE_PROBABILITY /
+URS_CAPTURE_RESISTANCE. All are gathered on-dirty from the
+held-set: held promotions + held unit-combat classes (DELTA-ONLY, NO unit-type base;
+the consumer composites evasionProbability() / maxInterceptionProbability() / collateralDamage() /
+captureProbabilityTotal() / captureResistanceTotal() add the m_pUnitInfo type base ONCE, and keep their
+commander/commodore + national + local-city folds + clamps) via MMKernel::sumUnit "air.unit.evasion"."percent" /
+"air.unit.intercept"."percent" / "collateral.unit.damage"."percent" / "capture.unit.probability"."flat" /
+"capture.unit.resistance"."flat". The five changers + their apply-loop folds (processPromotion / processUnitCombat)
+are gone -- consolidated into the existing markDirty(UPK_ALL) per apply loop; the never-serialized cache re-derives
+at load. (Collateral: only the damage member migrated; the limit/maxUnits/protection siblings stay legacy.)
+
+CvUnit::m_iExtraIntercept                 (int)
+CvUnit::m_iExtraEvasion                   (int)
+CvUnit::m_iExtraCollateralDamage          (int)
+CvUnit::m_iExtraCaptureProbabilityModifier (int)
+CvUnit::m_iExtraCaptureResistanceModifier (int)
+========================
+
+========================
+2026-07-19 — #430 F4 unit-plane (strength SITUATIONAL combat-% group): the 14 stored per-unit scalar situational
+combat-percent accumulators are removed. CvUnit::getExtra{CityAttack,CityDefense,HillsAttack,HillsDefense}Percent /
+getExtra{AttackCombatModifier,DefenseCombatModifier,VSBarbs,ReligiousCombatModifier,DamageModifier,Unnerve,Enclose,
+Lunge,DynamicDefense} / getExtraStealthCombatModifier now read the cascade unit self-accumulator
+(the unit RESOLVED plane (Cascade/CvUnitResolved.h)'s combat slots -- URS_CITY_ATTACK / URS_CITY_DEFENSE /
+URS_HILLS_ATTACK / URS_HILLS_DEFENSE / URS_COMBAT_ATTACK / URS_COMBAT_DEFENSE / URS_VS_BARBS /
+URS_RELIGIOUS_COMBAT / URS_DAMAGE_MODIFIER / URS_UNNERVE / URS_ENCLOSE / URS_LUNGE / URS_DYNAMIC_DEFENSE /
+URS_STEALTH -- gathered on-dirty from the held-set: held promotions + held unit-combats, DELTA-ONLY --
+the m_pUnitInfo type base is added ONCE by the *Modifier()/*Total() composites, NOT the cascade) via MMKernel::sumUnit
+"strength.unit.<situation>"."percent". The 14 changers + their apply-loop folds (processPromotion /
+processUnitCombat) are gone -- consolidated into the existing markDirty(UPK_ALL) per apply loop; the never-serialized
+cache re-derives at load. The getters keep their LIVE commander/commodore fold (stealth had none) + consumer-side
+gates/clamps (noDefensiveBonus zero, religious sign, COMBAT_WITHOUT_WARNING, max(0,·)/max(-95,·)). The GENERAL
+strength.unit.percent (CvUnit::m_iExtraCombatPercent) migrates the same way for its HELD-SET part
+(URS_STRENGTH_PERCENT), and its cross-unit LOADED-SPECIAL-UNIT contribution (a loaded special-unit
+applies its combat percent to the transport; SPECIALUNIT is not deposit-ported) is folded LIVE at read in
+getExtraCombatPercent by walking the transport's cargo -- so its changer + processLoadedSpecialUnit fold are gone too
+(the load/unload path refreshes the transport's combat-stat UI via setInfoBarDirty).
+
+CvUnit::m_iExtraCombatPercent              (int)
+CvUnit::m_iExtraCityAttackPercent          (int)
+CvUnit::m_iExtraCityDefensePercent         (int)
+CvUnit::m_iExtraHillsAttackPercent         (int)
+CvUnit::m_iExtraHillsDefensePercent        (int)
+CvUnit::m_iExtraAttackCombatModifier       (int)
+CvUnit::m_iExtraDefenseCombatModifier      (int)
+CvUnit::m_iExtraVSBarbs                    (int)
+CvUnit::m_iExtraReligiousCombatModifier    (int)
+CvUnit::m_iExtraDamageModifier             (int)
+CvUnit::m_iExtraUnnerve                    (int)
+CvUnit::m_iExtraEnclose                    (int)
+CvUnit::m_iExtraLunge                      (int)
+CvUnit::m_iExtraDynamicDefense             (int)
+CvUnit::m_iExtraStealthCombatModifier      (int)
+========================
+
+========================
+2026-07-19 — #430 F4 unit-plane (BASE-strength group): the two stored per-unit base-strength accumulators are removed. CvUnit::getExtraStrength
+/ getExtraStrengthModifier now read the cascade unit self-accumulator
+(the unit RESOLVED plane (Cascade/CvUnitResolved.h) -- URS_STRENGTH_FLAT plus the size-modifier slot -- gathered on-dirty from the held-set: held promotions + held
+unit-combats, DELTA-ONLY -- the baseCombatStr*PreCheck consumers add m_iBaseCombat + apply the clamp / ×(100+mod)/100
+size scaling) via MMKernel::sumUnit "strength.unit"."flat" and "strength.unit.sizeModifier"."percent" (the poco load
+addresses, CvUnitCombatInfo.cpp jsonFamVal/jsonFamMemberVal). The two changers (+ the callerless
+setExtraStrengthModifier) and their apply-loop folds (processPromotion / processUnitCombat) are gone -- consolidated
+into the existing markDirty(UPK_ALL) per apply loop (the promotion size-matters recalc trigger bSMrecalc is preserved);
+the never-serialized cache re-derives at load. Neither has a commander or cargo fold. NOTE: strength.unit.sizeModifier
+has zero authorings today (the curator's emit_sizematters writes it into a `sizeMatters` block while the loader reads
+strength.unit.sizeModifier.percent -- a pre-existing curator/loader address mismatch, out of scope here; the gather
+matches the loader address, so it stays 0 = legacy 0 and self-corrects if the curator is fixed).
+
+CvUnit::m_iExtraStrength                   (int)
+CvUnit::m_iExtraStrengthModifier           (int)
+========================
+
+========================
+2026-07-19 — #430 F4 unit-plane (UPKEEP, lands WITH F4 per fixed-point-conformance.md): the per-unit base-magnitude
+upkeep chain migrates onto the cascade; the percent modifier + SizeMatters + empire upkeep mods stay legacy. CvUnit::getExtraUpkeep100
+now reads the cascade unit self-accumulator (the unit RESOLVED plane (Cascade/CvUnitResolved.h) -- URS_UPKEEP_EXTRA,
+UPK_UPKEEP) gathered on-dirty from the held-set (held promotions + held unit-combats) via MMKernel::sumUnit100
+"upkeep.unit.extra"."flat" -- x100-NATIVE (the JSON holds the curator-descaled human; sumUnit100 re-applies the x100
+to match the legacy m_iExtraUpkeep100). CvUnit::getUpkeep100 is now a COMPUTED accessor:
+max(0, 100*getBaseUpkeep + extra) x m_iUpkeepModifier x m_iUpkeepMultiplierSM (both still-legacy members, KEPT +
+serialized). The per-unit push into the player accumulators (calcUpkeep100 -> changeUnitUpkeep) retired: CvPlayer's
+raw civilian/military buckets now recompute-Sigma over live units' getUpkeep100 bucketed by isMilitaryBranch(); the
+serialized CvPlayer push-accumulators are gone. calcUpkeep100 / recalculateUnitUpkeep / changeExtraUpkeep100 (unit)
+and changeUnitUpkeep (player) deleted; the two apply-loop folds retired (extra -> the existing markDirty(UPK_ALL) +
+a player markUnitUpkeepDirty; the percent modifier keeps changeUpkeepModifier). getFinalUnitUpkeepChange restructured
+NON-MUTATING (calcFinalUnitUpkeepFrom prices a hypothetical bucket, no temp add/restore). The never-serialized caches
+re-derive at load (dirty-on-construct/reset).
+
+CvUnit::m_iExtraUpkeep100                  (int)
+CvUnit::m_iUpkeep100                       (int)
+CvPlayer::m_iUnitUpkeepCivilian100         (int64_t)
+CvPlayer::m_iUnitUpkeepMilitary100         (int64_t)
+========================
+
+========================
+2026-07-18 — #430 two-part free-specialist seam (modifier.md par.6): the cascade owns the AMOUNT (fsAmountAny /
+fsAmountByType -- the summed building/civic/trait freeSpecialists deposits), the engine owns PLACEMENT, consumers
+read the OUTPUT (getSpecialistCount + getFreeSpecialistCount). The derivable CvCity free-specialist AMOUNT ledgers
+fully removed (no member, no serialization); the changeFreeSpecialist(Count) process-applies are cut. The
+non-derivable one-shot store (m_paiFreeSpecialistCountUnattributed -- settled GP / MISSION_JOIN) is KEPT and still
+applies its specialist effects at placement.
+
+CvCity::m_iFreeSpecialist                (int)
+CvCity::m_paiFreeSpecialistCount         (int array, per SpecialistTypes)
+CvArea::m_aiFreeSpecialist               (int array, per player)
+CvPlayer::m_iFreeSpecialist              (int)
+CvPlayer::m_paiFreeSpecialistCount       (int array, per SpecialistTypes)
+CvTeam::m_paiFreeSpecialistCount         (int array, per SpecialistTypes)
+========================
+
+========================
+2026-07-17 — #430 dead-array cut: legacy derived accumulators the cascade now owns, fully removed (no member, no
+serialization). m_aiFreeCityCommerce keeps a transitional WRAPPER_SKIP_ELEMENT too (belt-and-suspenders during
+mechanism rollout); m_aiBaseYieldRate is the .txt-ONLY test case (its getter reads the plot-yield sum from source).
+
+CvPlayer::m_aiFreeCityCommerce           (int array, NUM_COMMERCE_TYPES)
+CvCity::m_aiBaseYieldRate                (int array, NUM_YIELD_TYPES)
+========================
+
+========================
+2026-07-17 — #430 dead-array locust sweep: legacy CvCity derived yield/commerce accumulators fully removed (no
+member, no serialization). Each getter recomputes-on-read from current state (getBuildingExtraYield100 /
+getExtraYield100 / getSpecialistYieldTotal / getSpecialistCommerce / getBuildingCommerceModifier), so the stored
+arrays had zero live readers; the cascade owns the value. m_aiSpecialistYieldTotal + m_aiSpecialistCommerce100
+were already skip-read (still written) -- now the writes are gone too. Old-save tags drain by name here.
+
+CvCity::m_aiExtraYield                   (int array, NUM_YIELD_TYPES)
+CvCity::m_aiSpecialistYieldTotal         (int array, NUM_YIELD_TYPES)
+CvCity::m_buildingExtraYield100          (int array, NUM_YIELD_TYPES)
+CvCity::m_aiSpecialistCommerce100        (int array, NUM_COMMERCE_TYPES)
+CvCity::m_buildingCommerceMod            (int array, NUM_COMMERCE_TYPES)
+========================
+
+========================
+2026-07-17 — #430 delete-driven legacy cut (defense cluster): the stored building / bombard / min defense
+accumulators fully removed (no member, no serialization, no changer), and the processBuilding writers with them.
+What serves each value now:
+  m_iBuildingDefense        -> CvCity::getBuildingDefense sums defense.city.amount over the enabler's OPERATING
+                               building set. It is the buildings-only subset ON PURPOSE, serving the
+                               bIgnoreBuilding what-if; the realized read is the whole rolled stack.
+  m_iBuildingBombardDefense -> CvCity::getBombardDefense = cascadeDefense(DEFENSE_BOMBARD), the WHOLE rolled
+                               stack (city buildings + empire traits), capped by MAX_BOMBARD_DEFENSE.
+  m_iExtraMinDefense        -> CvCity::getExtraMinDefense = cascadeDefense(DEFENSE_MIN).
+The stored building-defense value carried a known drift -- the cascade is the sole source.
+
+CvCity::m_iBuildingDefense               (int)
+CvCity::m_iBuildingBombardDefense        (int)
+CvCity::m_iExtraMinDefense               (int)
+========================
+
+========================
+2026-07-17 — #430 delete-driven legacy cut (GP-rate accumulators): the stored base great-people-rate (city) and
+national great-people-rate (player) accumulators fully removed. CvCity::getBaseGreatPeopleRate is the whole
+replacement -- a fresh gather of the greatPeopleRate channel via InfoValuation::realizedAtCity, which IS the
+roll-up over the chain the city sits under (team + empire + city, modifier.md par.1), so the empire-scope trait
+deposits are already inside it and NO empire aggregate is added on top. getNationalGreatPeopleRate is therefore
+gone entirely rather than re-homed: its only consumer was that addition, which double-counted every empire-scope
+deposit once per city. The *Legacy oracle, the changeBaseGreatPeopleRate changer + its Cy binding / WorldBuilder
+callers, and the m_iNationalGreatPeopleRate total-write (the per-unit map m_greatPeopleRateforUnit is kept -- no
+cascade home yet) are gone.
+
+CvCity::m_iBaseGreatPeopleRate           (int)
+CvPlayer::m_iNationalGreatPeopleRate     (int)
+========================
+
+========================
+2026-07-18 — #430 delete-driven legacy cut (empire-commerce lazy-recompute cluster): the stored per-channel
+commerce accumulators + their lazy-recompute machinery fully removed on BOTH objects. CvPlayer::getCommerceRate is
+now the live per-channel sum of the cascade-split city commerce (Σ cities getCommerceRateTimes100 / 100 -- the
+cascade feeds the commerce YIELD, the sliders split per channel per city). Deleted: CvCity/CvPlayer updateCommerce,
+CvPlayer changeCommerceRate, the city->player push, and the dirty flags. setCommerceDirty keeps the building-commerce
+dirty + rank-cache invalidation. (CvCity::m_abCommerceRateDirty was never serialized -- no ledger entry.)
+
+CvCity::m_aiCommerceRate                 (int array, NUM_COMMERCE_TYPES)
+CvPlayer::m_aiCommerceRate               (int array, NUM_COMMERCE_TYPES)
+CvPlayer::m_abCommerceDirty              (bool array, NUM_COMMERCE_TYPES)
+========================
+
+========================
+2026-07-18 — #430 delete-driven legacy cut (city building wellbeing accumulators): the stored city-scope building
+good/bad health + happiness accumulators fully removed. getBuildingGood/BadHealth and getBuildingGood/BadHappiness
+now read the cascade CITY building term (CascadeWellbeing::buildingWellbeing → hea.bld/hap.bld, which already folds
+the per-building event ledger getBuildingHealth/HappyChange); the happiness getters keep the live
+calculatePopulationHappiness fold. The processBuilding accumulation + the changeBuildingGood/Bad* changers are gone;
+setBuildingHappy/HealthChange keep the per-building ledger (m_aBuildingHappy/HealthChange, read by the cascade term)
+and the AI_setAssignWorkDirty governor dirty, dropping only the retired accumulator fold. The stored accumulators
+carried the modifier.md par.2b drift. NOTE: the area/player building-health rollups (CvArea/CvPlayer
+m_iBuildingGood/BadHealth) are a SEPARATE follow-on cut (playerAreaEmpire fold), not this entry.
+
+CvCity::m_iBuildingGoodHealth            (int)
+CvCity::m_iBuildingBadHealth             (int)
+CvCity::m_iBuildingGoodHappiness         (int)
+CvCity::m_iBuildingBadHappiness          (int)
+========================
+
+========================
+2026-07-18 — #430 delete-driven legacy cut (area/player building-HEALTH rollups): the stored area (per-player)
+and empire building good/bad health accumulators fully removed on both objects. CvArea::getBuildingGood/BadHealth
+and CvPlayer::getBuildingGood/BadHealth read the cascade playerAreaEmpire fold (health family) via CascadeWellbeing::buildingHealthArea
+/ buildingHealthEmpire; the changers, the processBuilding area/global-health
+feeders (CvPlayer + CvPlot ownership re-attribution) are gone. This completes the building-HEALTH decomposition
+(city cut in the prior entry). The area/player building-HAPPINESS rollups (m_aiBuildingHappiness / player
+m_iBuildingHappiness) are a SEPARATE follow-on cut.
+
+CvArea::m_aiBuildingGoodHealth           (int array, MAX_PLAYERS)
+CvArea::m_aiBuildingBadHealth            (int array, MAX_PLAYERS)
+CvPlayer::m_iBuildingGoodHealth          (int)
+CvPlayer::m_iBuildingBadHealth           (int)
+========================
+
+========================
+2026-07-18 — #430 delete-driven legacy cut (area/player building-HAPPINESS rollups): the stored area (per-player)
+and empire building happiness accumulators (single signed) fully removed on both objects. CvArea::getBuildingHappiness
+and CvPlayer::getBuildingHappiness read the cascade playerAreaEmpire fold (happiness
+family, NET = iGood + iBad) via CascadeWellbeing::buildingHappinessArea / buildingHappinessEmpire; the changers and
+the processBuilding + CvPlot area/global-happiness feeders are gone. This COMPLETES the building wellbeing cluster
+(city health+happiness + area/player health + now area/player happiness — all on the cascade).
+
+CvArea::m_aiBuildingHappiness            (int array, MAX_PLAYERS)
+CvPlayer::m_iBuildingHappiness           (int)
+========================
+
+========================
+2026-07-18 — #430 delete-driven legacy cut (feature wellbeing accumulators): the stored city feature good/bad
+health + happiness accumulators fully removed. getFeatureGood/BadHealth reads the cascade featSubstrate term;
+getFeatureGood/BadHappiness reads featMember+featSubstrate (the improvement-happiness fold lands here -- the legacy
+getFeatureGoodHappiness bundled feature + improvement happiness) via CascadeWellbeing::featureWellbeing. The
+updateFeatureHealth/updateFeatureHappiness rebuilders (city + the CvPlayer twin + the map-functor) and all their
+CvCity/CvPlayer/CvPlot trigger sites are gone; calculateFeatureHealthPercent stays (the getAdditional* what-if reads
+it). Reads drain via WRAPPER_SKIP_ELEMENT; writes dropped.
+
+CvCity::m_iFeatureGoodHealth             (int)
+CvCity::m_iFeatureBadHealth              (int)
+CvCity::m_iFeatureGoodHappiness          (int)
+CvCity::m_iFeatureBadHappiness           (int)
+========================
+
+========================
+2026-07-18 — #430 delete-driven legacy cut (specialist + extraBuilding wellbeing accumulators): the stored city
+specialist happiness/health and extraBuilding happiness/health accumulators fully removed (no member, no read, no
+write). getSpecialist{GoodHealth,BadHealth,Happiness,Unhappiness} read the cascade spec term
+(CascadeWellbeing.specialistWellbeing -> hap.spec/hea.spec, x100); getExtraBuilding{Good,Bad}{Happiness,Health}
+read the extraB term (CascadeWellbeing.extraBuildingWellbeing -> hap.extraB/hea.extraB, human /100). The
+processSpecialist accumulation, updateExtraBuilding{Happiness,Health} rebuilders + their CvPlayer for_each /
+processBuilding / bulk-flush trigger sites, and the change* changers are gone. The player-side per-building
+m_extraBuildingHappiness/Health map is KEPT (live source: AI/UI/endpoint + the cascade extraB derivation).
+
+CvCity::m_iSpecialistGoodHealth          (int)
+CvCity::m_iSpecialistBadHealth           (int)
+CvCity::m_iSpecialistHappiness           (int)
+CvCity::m_iSpecialistUnhappiness         (int)
+CvCity::m_iExtraBuildingGoodHappiness    (int)
+CvCity::m_iExtraBuildingBadHappiness     (int)
+CvCity::m_iExtraBuildingGoodHealth       (int)
+CvCity::m_iExtraBuildingBadHealth        (int)
+========================
+
+========================
+2026-07-18 — #430 delete-driven legacy cut (religion happiness accumulators, family a): the civic/trait-fed
+religion-happiness accumulators fully removed on both objects. CvCity::getReligionGood/BadHappiness reads the
+cascade religion split (CascadeWellbeing::religionWellbeing); CvPlayer::getStateReligionHappiness /
+getNonStateReligionHappiness read the cascade playerReligionAcc (INITIAL + adopted civics + active traits, the
+trait term being a #430 gap fix -- the civic-only cascade under-counted anti_clerical/aloof/fanatical/spiritual/
+bigot). The city + player updateReligionHappiness rebuilders, the change{State,NonState}ReligionHappiness changers,
+and all their init/civic/trait/recalc feeders + trigger sites are gone. (The building-fed per-religion
+m_paiStateReligionHappiness -- family b -- is a SEPARATE follow-on, not this entry.)
+
+CvCity::m_iReligionGoodHappiness         (int)
+CvCity::m_iReligionBadHappiness          (int)
+CvPlayer::m_iStateReligionHappiness      (int)
+CvPlayer::m_iNonStateReligionHappiness   (int)
+========================
+
+========================
+2026-07-18 — #430 delete-driven legacy cut (religion happiness accumulators, family b): the BUILDING-fed
+per-religion state-religion happiness array (CvCity::m_paiStateReligionHappiness) fully removed. The member +
+its changeStateReligionHappiness changer + the processBuilding apply + the read/write + the Cy binding + the
+WorldBuilder manual transfer are gone. CvCity::getStateReligionHappiness(eReligion) now recomputes fresh from
+the city's ACTIVE buildings whose religion == eReligion (CascadeWellbeing::cityStateReligionHappiness), so
+getCurrentStateReligionHappiness follows for free. This is the FIRST class-array member cut: the orphan tag is a
+CLASS_INT_ARRAY element, drained by the same sm_isCut path (SkipElement handles SAVE_VALUE_TYPE_CLASS_INT_ARRAY --
+reads the classType+numInts header, consumes numInts ints; the separate CLASS_MAP remap element is processed
+silently regardless). The changer's AI_setAssignWorkDirty rider is dropped (same as the pilot building/specialist
+happiness changers): the value is read fresh, and building add/remove re-dirties via processBuilding's other change*.
+
+CvCity::m_paiStateReligionHappiness      (class int array)
+========================
+
+========================
+2026-07-18 — #430 delete-driven legacy cut (CvCity YIELD/COMMERCE accumulators, cut incrementally 1 member/commit):
+the legacy per-source yield/commerce accumulators that fed the now-cascade-only legacy rate sub-getters
+(getBaseYieldRate/getSpecialistYieldTotal/getBuildingCommerce100/...) are removed. The cascade computes each term
+itself (river = the building HAS_RIVER `plots` deposit, ...) or folds it as an isolated input package (trade yield).
+Orphan tags drain as plain int-array elements (SkipElement SAVE_VALUE_TYPE_INT_ARRAY). getTradeYield is NOT cut --
+it is the isolated trade-route input package the cascade folds (modifier.md par.2a), outside cascade derivation scope.
+
+CvCity::m_aiRiverPlotYield                (int array)
+CvCity::m_aiBaseYieldPerPopRate           (int array)
+CvCity::m_aiCorporationYield              (int array)
+CvCity::m_aiExtraSpecialistYield          (int array)
+CvCity::m_aiReligionCommerce              (int array)
+CvCity::m_aiCorporationCommerce           (int array)
+CvCity::m_aiExtraSpecialistCommerce       (int array)
+CvCity::m_aiBuildingCommerce              (int array)
+CvCity::m_aiBuildingCommerceTechChange    (int array)
+CvCity::m_commercePerPopFromBuildings     (int array)
+========================
+
+========================
+2026-07-18 — #430 delete-driven legacy cut (CvPlayer yield/commerce accumulators, cut incrementally): legacy player
+yield/commerce accumulators the cascade computes itself (golden-age = the empire.goldenAge member-mirror; free-city
+yield / specialist-extra / extra-commerce / feature-happiness = trait/civic/building-fed terms). The cascade reads
+NONE of these getters (verified); they fed the now-orphaned legacy sub-getters + decomposition, so the getters return
+0 (exposed) and the accumulators + changers + trait/civic/building feeders are deleted. Orphans drain as plain
+int-array elements (m_paiFeatureHappiness as a class int array).
+
+CvPlayer::m_aiGoldenAgeYield              (int array)
+CvPlayer::m_aiGoldenAgeCommerce           (int array)
+CvPlayer::m_aiFreeCityYield               (int array)
+CvPlayer::m_aiSpecialistExtraYield        (int array)
+CvPlayer::m_aiSpecialistExtraCommerce     (int array)
+CvPlayer::m_aiStateReligionBuildingCommerce (int array)
+CvPlayer::m_extraCommerce                 (int array)
+CvPlayer::m_paiFeatureHappiness           (class int array)
+========================
+
+========================
+2026-07-18 — #430 delete-driven legacy cut (FromTech wellbeing accumulators): the city tech-gated
+building/specialist happiness/health accumulators + the per-tech building maps fully removed. Both tech-gated
+sources ride the cascade already: BUILDING tech-happiness/health -> the iTechGatedNet term (TECH-gated building
+deposits, CascadeWellbeing.techGatedWellbeing); SPECIALIST tech-happiness/health -> the specialist bucket
+hap.spec/hea.spec (the tech entries are conditioned deposits summed by sumUnit100), per the owner "specialist is
+its own bucket regardless of source" ruling. getExtraTechHappinessTotal/HealthTotal now read the cascade
+(building-tech only -- no double-count with the specialist line). The per-tech maps used a decorated
+variable-length format (Size + N x Type/Value); those decorated tags drain by name below.
+
+CvCity::m_iExtraTechSpecialistHappiness   (int)
+CvCity::m_iExtraTechSpecialistHealth      (int)
+CvCity::m_iExtraBuildingHappinessFromTech (int)
+CvCity::m_iExtraBuildingHealthFromTech    (int)
+CvCity::BuildingHappinessFromTechSize     (decorated short)
+CvCity::BuildingHappinessFromTechType     (decorated short, per entry)
+CvCity::BuildingHappinessFromTechValue    (decorated int, per entry)
+CvCity::BuildingHealthFromTechSize        (decorated short)
+CvCity::BuildingHealthFromTechType        (decorated short, per entry)
+CvCity::BuildingHealthFromTechValue       (decorated int, per entry)
+========================
+
+========================
+2026-07-02 — #430 capability cut (CvTeam): the empire-capability counters retired;
+the getters derive from CascadeCapabilities (the cascade union). Skips live in CvTeam::read.
+
+CvTeam::m_iExtraWaterSeeFromCount        (int)
+CvTeam::m_iMapTradingCount               (int)
+CvTeam::m_iTechTradingCount              (int)
+CvTeam::m_iGoldTradingCount              (int)
+CvTeam::m_iCanPassPeaksCount             (int)
+CvTeam::m_iMoveFastPeaksCount            (int)
+CvTeam::m_iCanFoundOnPeaksCount          (int)
+CvTeam::m_iRebaseAnywhereCount           (int)
+CvTeam::m_iEmbassyTradingCount           (int)
+CvTeam::m_iLimitedBordersTradingCount    (int)
+CvTeam::m_iCanFarmDesertCount            (int)
+CvTeam::m_iOpenBordersTradingCount       (int)
+CvTeam::m_iDefensivePactTradingCount     (int)
+CvTeam::m_iPermanentAllianceTradingCount (int)
+CvTeam::m_iVassalTradingCount            (int)
+CvTeam::m_iBridgeBuildingCount           (int)
+CvTeam::m_iIrrigationCount               (int)
+CvTeam::m_iIgnoreIrrigationCount         (int)
+CvTeam::m_iWaterWorkCount                (int)
+CvTeam::m_iRiverTradeCount               (int)
+CvTeam::m_paiTerrainTradeCount           (int class-array, REMAPPED_CLASS_TYPE_TERRAINS)
+========================
+
+========================
+2026-07-02 — #430 capability cut, flip wave #2 (commerce sliders + hasLanguage): the sliders and the
+needLanguage heritage gate derive from CascadeCapabilities. Skips live in CvTeam::read / CvPlayer::read.
+
+CvTeam::m_aiCommerceFlexibleCount        (int array, NUM_COMMERCE_TYPES)
+CvPlayer::m_aiCommerceFlexibleCount      (int array, NUM_COMMERCE_TYPES)
+CvPlayer::m_bHasLanguage                 (bool)
+========================
+
+========================
+2026-07-11 — animal border-ignore: the stored count is removed and drained, and where wild animals may go is now
+decided by the GAME OPTIONS (owner ruling) -- ANIMAL_STAY_OUT bars them from national borders outright,
+ANIMAL_DANGEROUS admits them to borders and improved tiles. The count, its changer and both apply folds
+(processPromotion / processUnitCombat) are gone; nothing is owed.
+The unit's OWN authored `animalIgnoresBorders` skill still reads on the borders tier as HEADROOM -- inert today,
+since only promotions and a unit-combat author it and an info read cannot see those.
+The per-unit TIERS are dropped with it: see superseded-ideas (the PROMOTIONLINE_FERAL territory ladder).
+
+CvUnit::m_iAnimalIgnoresBordersCount     (int)
+========================
+
+CvCity::m_paiFreeBonus                   (class int array, BONUSES)
+========================
+The old MIXED free-bonus ledger (building provides + Python event/WB grants in one serialized array). Retired
+2026-07-15 (no-serialized-caches): the building part is COMPUTED from the processed buildings' provides; the
+event/WB part moved to its own persisted store m_paiFreeBonusEvents (new tag, soft-absent on old saves -- old
+event grants are accepted drift; the array was stub-era polluted anyway). Read is a named skip; the write now
+carries m_paiFreeBonusEvents.
+
+POWER UPDATE: m_iPowerCount is no longer part of this rebuild at all -- power is an AMENITY (owner), read
+from the city's `providesPower` fold, whose own 0 <-> non-zero crossing emits the fact. Its counter, changer
+and Cy binding are gone; nothing is owed.
+
+CvCity bonus-fed derived cluster: m_paiNumBonuses (class int array), m_iBonusGoodHealth, m_iBonusBadHealth,
+m_iBonusGoodHappiness, m_iBonusBadHappiness, m_aiBonusYieldRateModifier, m_aiBonusCommerceRateModifier,
+m_aiBonusCommercePercentChanges, m_iPowerCount; CvPlotGroup::m_paiNumBonuses (+ its "bonusesPresent" bool)
+========================
+Derived caches, never read from a save (reads are named skips; writes KEPT for save-format compat -- the
+m_aiSpecialistCommerce100 precedent). Rebuilt at load by the bonus-network rebuild in CvGame::onFinalInitialized
+(building-power re-sum + updatePlotGroups(reInitialize) recolor, counts folded as each plot joins) through the
+live entry points. The skips + kept writes flush together at the next save-compat break.
+The city-side count is GONE as a member and has NO replacement store: the city holds no bonus mirror at all,
+and getNumBonuses RELAYS through its plot group, which owns the count (enabler.md par.8 RESIDENCY, plus
+state-repositories.md). Its read stays a named skip and its write is dropped (the skip no-ops on a save that
+never wrote it). The plot-group side is the authoritative one and is likewise never trusted from a save --
+the load-end rebuild re-folds it as each plot joins.
+
+Plot-group MEMBERSHIP (CvPlayer::m_plotGroups streamable block; CvPlot::m_aiPlotGroup ids)
+========================
+Derived state (routes + terrain-trade capabilities + ownership), never TRUSTED from a save: the load-end
+rebuild (CvGame::onFinalInitialized, updatePlotGroups(reInitialize)) discards the deserialized groups and
+re-colors from current state. The player plot-group array is a POSITIONAL streamable block (not name-skippable),
+so its bytes are still read-drained and its write KEPT; both retire together at the next save-compat break.
+
+CvCity::m_vDisabledBuildings (dormancy flags)
+========================
+Still read AND written -- but no longer the verdict: it is the PROCESSED-STATE baseline keying the still-
+serialized legacy effect accumulators. The verdict is the enabler operate fixpoint (checkBuildings applies it;
+the load-end cross-city fixpoint reconciles the baseline). The read retires WITH the legacy effect-accumulator
+cluster at the modifier cut, not before (skipping it alone would double-process building effects at load).
+
+========================
+The keyed improvement-yield accumulators (civic/trait/building-global on the player; tech rows on the team) --
+the stored-accumulator drift class (modifier.md par.2b; the engine under-yielded on every improved plot).
+Reads are DRAINED under the original tags (discarded); writes dropped. The TEAM keeps a separate PERSISTED
+event-grant store CvTeam::m_eventGrants, the standardized CvEventGrantStore (Engine/CvEventGrants.h) under its
+own EventGrants* tags, soft-absent on old saves -- the
+Python wonder-event grants, e.g. TSUKIJI; pre-split grants on old saves are accepted drift, the freeBonusEvents
+precedent). The drains flush at the next save-compat break.
+
+========================
+The per-type specialist empire-boost accumulators -- the stored-accumulator drift class. Their building
+feeders were poco STUBS returning 0 (the boosts were curated onto the SPECIALISTS as conditioned empire
+deposits per the deliveryguy own-output ruling), so the wonder/building specialist boosts never reached the
+output. Reads DRAINED under the original tags; writes dropped. Flush at the next save-compat break.
+
+========================
+2026-07-21 -- WRAPPER_SKIP_ELEMENT -> central soft-remove conversion (owner ruling): the lingering per-object skips
+are replaced by the central drain here so the variables go fully dead. The bonus-fed wellbeing scalars, arresting-unit,
+trait-display and combat-focus are fully-removed members (no member, no read, no write). m_paiNumBonuses (city) and
+m_aiYield (plot) are derived, never serialized, and rebuilt on load -- their old serialized tags are drained here.
+CvCity::m_iBonusGoodHealth
+CvCity::m_iBonusBadHealth
+CvCity::m_iBonusGoodHappiness
+CvCity::m_iBonusBadHappiness
+CvCity::m_paiNumBonuses
+CvPlayer::m_iArrestingUnit
+CvPlayer::m_iTraitDisplayCount
+CvPlot::m_aiYield
+CvUnit::m_bCombatFocus
+
+========================
+2026-07-21 -- WRAPPER_SKIP_ELEMENT -> central soft-remove, wave 2 (derived caches only): the lingering per-object
+skips + KEPT writes for the CvCity bonus-fed derived caches (power + the bonus yield/commerce-rate modifiers) and the
+CvPlotGroup network bonus-count cache (with its bonusesPresent guard) are BOTH dropped -- rebuilt at load by the
+bonus-network fold (rebuildBonusPowerAtLoad + the onFinalInitialized recolor), never trusted from a save. NOT event
+stores: the event-granted bonus half is the SEPARATE m_paiFreeBonusEvents store, untouched. Plain named scalar/array
+tags, drained by exact name below.
+(The dead per-Type DECORATED accumulators -- CvPlayer/CvTeam m_ppaai* read in a loop under an [iI]/[newIndex] element
+tag -- are NOT converted: a BRACKETED decorated tag does NOT match a savemigration entry (the normalized dictionary
+name differs from the source literal -- verified live: it silently fails to drain and guts CvPlayer::read), so their
+enum-remapping drain LOOPS stay in read(). Only plain named fields soft-remove; bracketed per-element tags cannot.)
+CvCity::m_iPowerCount
+CvCity::m_aiBonusYieldRateModifier
+CvCity::m_aiBonusCommerceRateModifier
+CvCity::m_aiBonusCommercePercentChanges
+CvPlotGroup::bonusesPresent
+CvPlotGroup::m_paiNumBonuses
+
+The per-turn PROVISIONS cut (the grants machine owns the per-turn apply): the full-heal ledger was a pure sum over
+the city's buildings (maintained only by processBuilding), so it is DERIVED -- the machine reads the composed
+grants.repeatable[] off the operating buildings instead. Plain named scalar, drained by exact name.
+CvCity::m_iNumUnitFullHeal
+========================
+
+The SM BASE-RANK cut (DEC-derived-never-trusted): quality/group/size base totals are pure copies of the unit
+TYPE's load-derived rank -- the info's sum over its combat classes (json.md par.9) -- whose only writer is the
+assignment in processUnitCombat, which never runs on a load (CvUnit::read writes the combat-class set straight
+into the keyed map). Trusting the stored copy pinned the ranks to whatever the save was taken with: re-curate a
+unitcombat *Base and every existing save kept the stale value, silently mis-dividing the SM unit count for every
+unit of that type. Now re-derived from the info in CvUnit::read. The runtime deltas that ride on top
+(m_iExtraQuality/Group/Size) are genuine per-unit state and STAY serialized. Plain named scalars, drained by
+exact name.
+CvUnit::m_iQualityBaseTotal
+CvUnit::m_iGroupBaseTotal
+CvUnit::m_iSizeBaseTotal
+The BUILDING COUNTER-DAMAGE cut: a building damaging a unit that ATTACKS its city is a TRIGGER by shape (a
+happening, a roll, an effect on the attacker), so if the functionality is wanted it is modelled on the trigger
+plane rather than kept as a defense member -- S2S#453. The mechanic was also half-dead: its gate
+isDamageAttackerCapable is a DERIVED flag CvBuildingInfo only ever set from bDamageAllAttackers or an INHERITED
+may-damage list, never from a building's OWN authored list, so the 6 trap buildings carrying a hand-authored
+MayDamageAttackingUnitCombatTypes list never fired at all. Engine path, city count array and curated data are
+all gone. The count array was a per-UnitCombat class array maintained purely from the building side (nothing
+else ever wrote it), so it is derived and carries no state worth keeping. Plain named array, drained by exact
+name.
+CvCity::m_paiDamageAttackingUnitCombatCount
+========================
+| CvCity::m_iLineOfSight -- the city's line-of-sight accumulator. It summed its buildings' sight contribution and
+| was read by NOTHING: no caller anywhere in the engine, not DllExport so the EXE never asked, no Python consumer.
+| A city's sight was a hardcoded changeAdjacentSight(team, 1, ...), so the buildings advertising it in the pedia
+| granted no vision at all. The value is now the cascade's `vision` family at city scope (VISION_ELEVATION -- a
+| building raises its city's lookout), built by the spine like every other channel, so there is nothing to store.
+CvCity::m_iLineOfSight
+========================
+| The four city-scope AMENITY counters. Each was a serialized per-flag counter fed by ONE site
+| (CvCity::processBuilding) and read by one boolean verdict -- the hand-named scalar shape DEC-uniform-cache-shape
+| calls a defect, and the reason a new attribute cost an engine change (a counter, a fact, a predicate) rather
+| than being pure data. The verdict is now the CITY'S AMENITY FOLD (CityContext::amenities, json §8): an
+| id->count dictionary folded from each grantor's `amenities` block off SEVT_BUILDING_PROCESSED, so it is DERIVED
+| and serializes nothing (DEC-derived-never-trusted). REPLACEMENT: CityContext::hasAmenityKey via the
+| CITY_HAS_AMENITY macro -- governmentCenter / abolishedAnger / noUnhealthyPopulation / buildingOnlyHealthy.
+| The SEVT_GOVERNMENT_CENTER_CHANGED fact the first counter emitted survives: the contexts' consumer watches the
+| verdict across the fold and emits the same crossing (ContextConsumer::announceAmenityCrossings).
+CvCity::m_iGovernmentCenterCount
+CvCity::m_iNoUnhappinessCount
+CvCity::m_iNoUnhealthyPopulationCount
+CvCity::m_iBuildingOnlyHealthyCount
+========================
+| The legacy DORMANCY store. m_vDisabledBuildings was a serialized per-city list of buildings the engine had
+| switched off, maintained by CvCity::checkBuildings -- a 283-line per-turn pass that RE-DERIVED the active/dormant
+| verdict for every building of every city from legacy prereq getters (missing bonus, fresh water, civics, war,
+| power, population, religion bans). That is the camouflaged ride-in DEC-calc-zero-ride-in exists to ban: the
+| verdict is a pure function of `requires.operate` and belongs to the ENABLER, which computes it into
+| CvCity::m_operatingBuildings (OperatingBuildings::active, enabler.md §3.2) and serves it on the
+| /computed/enabler/operating/{stored,oracle} routes. A second, serialized copy of a derived verdict is exactly
+| what save.md §5 forbids. REPLACEMENT: the enabler's operating set; dormant == present && !active.
+| Bracket-free decorated tags, so both drain by exact name.
+CvCity::DisabledBuildingsSize
+CvCity::DisabledBuildingsIndex
+========================
+| The RELIGIOUSLY-DISABLED building array. A per-building bool store holding a SECOND copy of an operate verdict:
+| a building whose religion prereq was lost got switched off here, with its own apply and its own player alert.
+| A religion requirement is an ordinary `requires.operate` clause, so the verdict belongs to the enabler's operate
+| fixpoint, which already re-gates it off SEVT_RELIGION_CHANGED. Derived state, so it serializes nothing
+| (DEC-derived-never-trusted); hasFullyActiveBuilding collapses onto isActiveBuilding because there is no longer a
+| second axis to compose. REPLACEMENT: CvCity::isActiveBuilding -> OperatingBuildings::active.
+CvCity::m_pabReligiouslyDisabledBuilding
+========================
+| The BUILDING yield-modifier accumulator. A serialized per-yield int the city maintained by += as buildings came
+| and went, and one of SEVEN hand-named accumulators (bonus / building / event / player / power / area / capital)
+| that getBaseYieldRateModifier then ADDED TOGETHER. Addition is associative, so the split bought nothing the
+| result could see -- it only meant seven serialized stores that could each drift from the data. They are ordinary
+| `<yield>.<scope>.percent` deposits now, folded by the ONE cross-scope roll-up (InfoValuation::rolledLegsAtCity)
+| over the city's chain, with the power / capital / area legs expressed as ordinary conditioned deposits rather
+| than re-tested at the read. Derived, so it serializes nothing (DEC-derived-never-trusted).
+CvCity::m_buildingYieldMod
+========================
+| The per-commerce rate-modifier accumulator. It summed DERIVABLE sources (buildings/civics/traits/techs) and
+| one-shot EVENT grants into a single serialized store, which is why cutting it needed two replacements, not
+| one. REPLACEMENT (derivable half): the cascade's `<commerce>.<scope>.percent`, folded by
+| InfoValuation::rolledLegsAtCity. REPLACEMENT (event half): CvCity::m_eventGrants, the standardized
+| CvEventGrantStore (Engine/CvEventGrants.h) under its own EventGrants* tags -- an event grant is one-shot state
+| nothing can recompute, so it lives in its own serialized store on the object the event granted to, never
+| rolled into a derived accumulator that a rebuild would wipe.
+| Pre-split grants in an existing save are DEEMED LOST (owner): they were rolled into the dirtied cache rather
+| than stored separately, so there is nothing to migrate out.
+CvCity::m_aiCommerceRateModifier
+========================
+| The BUILDING-DEFENSE accumulator. A serialized += store of the city's buildings' defense contribution, which
+| getTotalDefense then weighed against the CULTURE LEVEL's via max(building, natural) before adding the player and
+| bonus terms. There is no natural-defense channel to weigh against: DEFENSE_AMOUNT is ONE channel that buildings
+| (153 files) and culture levels (18) both author, so the cascade holds one additive stack and the max has no
+| counterpart -- a data-led behaviour change, not a lost clamp. The stack has a FLOOR (the `min` kind,
+| getExtraMinDefense) and deliberately NO ceiling. REPLACEMENT: InfoValuation::rolledLegsAtCity over
+| MODFAM_DEFENSE/DEFENSE_AMOUNT; the buildings' own share is computed from the enabler's operating set for the
+| bIgnoreBuilding what-if, so a dormant building defends nothing. Derived, serializes nothing.
+CvCity::m_iBuildingDefense
+========================
+| The remaining per-kind DEFENSE accumulators. Five serialized ints, each a += store of one defense KIND that the
+| vocabulary already names (adjacent damage, dynamic defense, river-attack penalty, and the building/city defense
+| recovery rates). Same shape as the AMOUNT accumulator above and cut the same way: the value is the cascade's
+| `defense.<scope>.<kind>` folded by InfoValuation::rolledLegsAtCity, with the FLAT-vs-PERCENT verdict taken from
+| infoDefenseUnit so it is decided ONCE beside the kind enum rather than per getter. Derived, serializes nothing.
+CvCity::m_iAdjacentDamagePercent
+CvCity::m_iExtraLocalDynamicDefense
+CvCity::m_iExtraRiverDefensePenalty
+CvCity::m_iExtraBuildingDefenseRecoverySpeedModifier
+CvCity::m_iExtraCityDefenseRecoverySpeedModifier
+========================
+| Five single-kind CITY accumulators, each a serialized += store of one (family, kind) slot the cascade owns:
+| espionage defense, the UNDERWORLD pair (insidiousness / investigation -- the in-city criminal contest, json §6;
+| NOT espionage, which carries same-named stats on the separate UNIT plane), the extra trade-route count, and the
+| food-kept percent. All now read InfoValuation::rolledLegsAtCity via CvCity::cascadeValue, whose FLAT-vs-PERCENT
+| leg comes from infoKindUnit -- the vocabulary's verdict, decided once beside the kind enums instead of per
+| getter. The foodKept [0,99] clamp is a real rule of the mechanic and survives at the read. Derived, serializes
+| nothing (DEC-derived-never-trusted).
+CvCity::m_iEspionageDefenseModifier
+CvCity::m_iExtraInsidiousness
+CvCity::m_iExtraInvestigation
+CvCity::m_iExtraTradeRoutes
+CvCity::m_iFoodKeptPercent
+========================
+| The FREE-EXPERIENCE cluster: EIGHT serialized accumulators across CvCity and CvPlayer that getProductionExperience
+| then ADDED TOGETHER -- the city and player flat XP, the city's specialist XP, the per-DOMAIN and per-UNITCOMBAT
+| keyed stores on each scope, and the state-religion XP. Addition is associative, so the split bought nothing the
+| result could see; it only meant eight stores that could each drift from the data, fed by info getters that no
+| longer exist on any rebuilt info (building getFreeExperience / getGlobalFreeExperience / getDomainFreeExperience /
+| getUnitCombatFreeExperience, civic + trait getFreeExperience, specialist getExperience, corporation getFreeXP).
+| REPLACEMENT: the scope-wide legs are ONE InfoValuation::rolledLegsAtCity over MODFAM_EXPERIENCE/EXPERIENCE_AMOUNT
+| (the roll-up sums the city and empire halves already); the KEYED axes stay entry-list reads via
+| CvCity::keyedExperience over the enabler's operating set + assigned specialists + held traits, because a keyed
+| entry deliberately never folds into a scope package (folding it would hand every unit the melee-only XP).
+| Derived, serializes nothing (DEC-derived-never-trusted).
+CvCity::m_iFreeExperience
+CvCity::m_iSpecialistFreeExperience
+CvCity::m_aiDomainFreeExperience
+CvCity::m_paiUnitCombatFreeExperience
+CvPlayer::m_iFreeExperience
+CvPlayer::m_iStateReligionFreeExperience
+CvPlayer::m_paiNationalDomainFreeExperience
+| The player's per-unitcombat free XP was a variable-length block. Bracket-free decorated tags, so all three drain
+| by exact name (the CvCity::DisabledBuildingsSize precedent).
+CvPlayer::iUnitCombatFreeXPSize
+CvPlayer::iUnitCombatFreeXPType
+CvPlayer::iUnitCombatFreeXPCount
+========================
+| The three XP PERCENT members, and the reason they are a clean delete rather than a re-home: each was a hand-named
+| accumulator wrapped in a HARDCODED gate at the read (capital-or-government-centre, state-religion holy city,
+| non-state holy city) -- the condition-as-member shape DEC-conditions-are-predicates retires. The DATA already
+| authors exactly that as `experience.empire.percent` carrying `enabled: "IS_CAPITAL"` and the composed holy-city
+| pair, evaluated at the package fold, so the percent tier came back for free and no gate survives in the getter.
+| Two of the three had NO feeder at all and answered 0 permanently; the third read a trait getter that is gone.
+| REPLACEMENT: the percent leg of the same rolledLegsAtCity read. Derived, serializes nothing.
+CvPlayer::m_iCapitalXPModifier
+CvPlayer::m_iStateReligionHolyCityXPModifier
+CvPlayer::m_iNonStateReligionHolyCityXPModifier
+|
+| CvCity improvement-health accumulators -- CUT with the mechanic itself.
+| The improvement HEALTH term is a deliberate BALANCE-CUT (modifier.md 2b / curate_improvement.py): legacy
+| iHealthPercent is dropped from the data, and the civic per-improvement leg that summed beside it has neither
+| a getter on any info nor a single authoring. So both feeders are gone and updateImprovementHealth could only
+| ever compute 0 -- the members, their getters, the maintainer and its four call sites go with it.
+| REPLACEMENT: none, by ruling -- the term does not survive the cut. Improvement HAPPINESS is unaffected and
+| stays represented (it folds into the feature happiness terms).
+CvCity::m_iImprovementGoodHealth
+CvCity::m_iImprovementBadHealth
+|
+| CvCity maintenance -- the DERIVED value and its hand-named modifier accumulator.
+| m_iMaintenance was a SERIALIZED derived value read back through an ensure-on-read getter -- both halves are
+| defects: derived data serializes NOTHING (save.md 5 / DEC-derived-never-trusted) and a read is a BARE FETCH
+| unconditionally (the ensure() protocol is tombstoned BY NAME, superseded-ideas 14).
+| m_iMaintenanceModifier was one hand-named scalar per channel -- the shape DEC-uniform-cache-shape calls a
+| DEFECT: it cannot be addressed uniformly, so it forces its own bespoke invalidation path.
+| REPLACEMENT: the maintenance channel of the city's cascade package -- the flat leg carries the authored
+| maintenance.city.flat deposits (incl. the negative-gold building fold) and the percent leg IS the modifier
+| stack, both read through the ONE cross-scope roll-up (InfoValuation::rolledLegsAtCity).
+CvCity::m_iMaintenance
+CvCity::m_iMaintenanceModifier
+|
+| CvPlayer / CvTeam / CvArea maintenance -- the hand-named modifier accumulators and the empire TOTAL.
+| Eight per-player scalars, one per (kind x scope) of the maintenance family, plus the team's corporation twin
+| and CvArea's per-player array. Each is the hand-named-scalar shape DEC-uniform-cache-shape calls a DEFECT:
+| it cannot be addressed uniformly, so every one forced its own bespoke invalidation path.
+| Three of them were never KINDS at all but CONDITIONS wearing a member's name (DEC-conditions-are-predicates):
+| coastalDistance is `while coastal`, connectedCity is `while connected to the capital`, and homeArea/otherArea
+| is the IS_HOME_AREA predicate -- json.md 3.5 names that last pair explicitly as the maintenance authoring it
+| retires. CvArea's whole surface existed to express `maintenance increases away from the capital's area`,
+| which IS that predicate, so there is no area scope to keep (state-repositories.md: a landmass is not ownable).
+| m_iTotalMaintenance was a SERIALIZED derived total behind an ensure-on-read getter -- both halves defects.
+| REPLACEMENT: the maintenance channels of the cascade packages, read through the ONE cross-scope roll-up. The
+| empire total is the sum over its cities' realized values, re-summed at the read -- no stored receiver slot.
+CvPlayer::m_iMaintenanceModifier
+CvPlayer::m_iCoastalDistanceMaintenanceModifier
+CvPlayer::m_iConnectedCityMaintenanceModifier
+CvPlayer::m_iDistanceMaintenanceModifier
+CvPlayer::m_iNumCitiesMaintenanceModifier
+CvPlayer::m_iCorporationMaintenanceModifier
+CvPlayer::m_iHomeAreaMaintenanceModifier
+CvPlayer::m_iOtherAreaMaintenanceModifier
+CvPlayer::m_iTotalMaintenance
+CvTeam::m_iCorporationMaintenanceModifier
+CvArea::m_aiMaintenanceModifier
+CvUnit::m_iExtraTrapDamageMax
+CvUnit::m_iExtraTrapDamageMin
+CvUnit::m_iExtraTrapComplexity
+CvUnit::m_iTriggerBeforeAttackCount
+========================
+| RANGED ATTACK (ranged bombard) + OPPORTUNITY FIRE -- the mechanic is REMOVED, and unlike every other entry in
+| this file there is NO REPLACEMENT to name. Ranged bombard did not merely underperform, it BROKE the AI: the
+| bombard step was a turn-satisfying TERMINAL, so a stack that could plink did, reported progress, and never
+| reached the commit-or-withdraw decision (the #410 pseudo-progress class). Opportunity fire went with it -- it
+| gated on the same getDCMBombRange() stat, and its own author's comment records that it has "absolutely zero
+| resistability ... far more powerful than any player determined action".
+| The five stat quartets (damage / damageLimit / damageMaxUnits / bombRange / bombAccuracy, each value+Extra+Base)
+| additionally carried a changeBase* body that LOOPED THE WHOLE UNITCOMBAT REGISTRY -- the whole-registry scan
+| class -- so they die with the mechanic rather than converting.
+| Ranged bombard RETURNS as a ground-up redesign (superseded-ideas #24); nothing here is a starting point for it.
+| KEPT and untouched: the defence-grinding bombard (MISSION_BOMBARD / bombardRate / getDefenseDamage), naval
+| included, and the airplane ranged attack (fighter engage, active defense).
+CvUnit::m_iDCMBombRange
+CvUnit::m_iDCMBombAccuracy
+CvUnit::m_iExtraRBombardDamage
+CvUnit::m_iExtraRBombardDamageLimit
+CvUnit::m_iExtraRBombardDamageMaxUnits
+CvUnit::m_iExtraDCMBombRange
+CvUnit::m_iExtraDCMBombAccuracy
+CvUnit::m_iBaseRBombardDamage
+CvUnit::m_iBaseRBombardDamageLimit
+CvUnit::m_iBaseRBombardDamageMaxUnits
+CvUnit::m_iBaseDCMBombRange
+CvUnit::m_iBaseDCMBombAccuracy
+CvUnit::m_iBombardDirectCount
+CvUnit::m_iRBombardForceAbilityCount
+========================
+| The PLAYER-side CITY-DEFENSE cluster -- three serialized accumulators with, between them, ZERO net consumers.
+| m_iCityDefenseModifier was written only by processBuilding and read only by its own composite getter, which
+| also folded m_iExtraCityDefense (civic-fed) and m_iTraitExtraCityDefense (trait-fed) -- so once CvCity moved
+| its defense read onto the rolled cascade value (cascadeDefense), the whole cluster was write-only state.
+| Each is the hand-named-scalar shape DEC-uniform-cache-shape calls a DEFECT: it cannot be addressed by a
+| derived mask, so every one forced its own bespoke push path out of processBuilding/processCivics/processTrait.
+| REPLACEMENT: the defense channel of the cascade packages, read through the ONE cross-scope roll-up -- the
+| empire leg rolls DOWN into each city's realized defense rather than being summed into a player total.
+CvPlayer::m_iCityDefenseModifier
+CvPlayer::m_iExtraCityDefense
+CvPlayer::m_iTraitExtraCityDefense
+========================
+| The four per-SOURCE INFLATION accumulators -- one hand-named scalar per source kind (civic / tech / building /
+| project), each with its own push out of processCivics / processTech / processBuilding / CvTeam, all summed in
+| ONE place. They do not each earn a replacement getter: the group read answers the TOTAL and per-source
+| attribution is the ORACLE's job, so all four collapse into the empire-scope inflation channel read through
+| CvPlayer::getScalars()[SCALAR_INFLATION].
+| Three of them could only ever read ZERO: iInflationModifier (the building/tech/project tag) is authored in NO
+| legacy XML at all -- only the CIVIC tag iInflation is real, and it is now inflation.empire.percent.
+| The EVENT-granted m_iInflationModifier is NOT part of this and STAYS -- applyEvent is its only writer, which
+| makes it genuine one-shot persisted state rather than a derivable deposit.
+| The finance advisor's per-source breakdown line goes with them (attribution is not a getter's job).
+CvPlayer::m_iCivicInflation
+CvPlayer::m_iTechInflation
+CvPlayer::m_iBuildingInflation
+CvPlayer::m_iProjectInflation
+========================
+| The player ANARCHY modifier -- a hand-named accumulator processBuilding pushed into per building, read by the
+| revolution/conversion timers and the civic + religion anarchy lengths. Every consumer is player-level, so the
+| deposit is EMPIRE scope; the curator had it at city, which no consumer could ever have read.
+| REPLACEMENT: CvPlayer::anarchyModifierScalar() -- the empire-scope anarchy percent through the ONE roll-up.
+CvPlayer::m_iAnarchyModifier
+========================
+| Six more player push-accumulators, each pushed into from processBuilding / processCivics / processTrait and
+| read at a handful of engine sites. They are the hand-named-scalar shape DEC-uniform-cache-shape calls a
+| DEFECT: not addressable by a derived mask, so every one carried its own bespoke push path per source kind.
+| Having several WRITERS never made them live -- an accumulator whose whole job is to accumulate a legacy value
+| IS legacy, so the writer set is deleted with it rather than re-pointed.
+| REPLACEMENT: the empire-scope group reads -- CvPlayer::getScalars() for goldenAgeLength / warWeariness /
+| greatGeneralRate / greatGeneralRateDomestic, and CvPlayer::getCostKinds() for the hurry and upgrade prices.
+CvPlayer::m_iGoldenAgeModifier
+CvPlayer::m_iGlobalHurryModifier
+CvPlayer::m_iUnitUpgradePriceModifier
+CvPlayer::m_iWarWearinessModifier
+CvPlayer::m_iGreatGeneralRateModifier
+CvPlayer::m_iDomesticGreatGeneralRateModifier
+========================
+| The player WORKER-SPEED modifier -- four legacy pushes (building / civic / trait / tech) into one hand-named
+| scalar. workRate is authored at EMPIRE by every source, so the empire-scope read answers it whole.
+| REPLACEMENT: CvPlayer::getScalars()[SCALAR_WORK_RATE].
+CvPlayer::m_iWorkerSpeedModifier
+========================
+| The player GREAT-PEOPLE-RATE modifier -- three legacy pushes (building / civic / trait) into a hand-named
+| scalar. The empire-scope authorings answer through the roll-up.
+| The CITY-scope accumulator is a DIFFERENT thing and stays: great people accrue PER CITY, which is where the
+| bulk of the data is authored. (Great GENERAL is neither -- its points are summed FROM cities into the player
+| counter, so it wants a receiver sum.)
+| REPLACEMENT: CvPlayer::getScalars()[SCALAR_GREAT_PEOPLE_RATE].
+CvPlayer::m_iGreatPeopleRateModifier
+========================
+| The player COMMERCE-RATE-MODIFIER-FROM-BUILDINGS array -- a WRITE-ONLY accumulator: pushed into from
+| processBuilding and from the project path, and read by nothing at all.
+| ⚑ Its project writer was a half-migration in miniature -- already reading the NEW
+| getCommerceModifier(channel, CASC_SCOPE_EMPIRE) while still pushing the result into this legacy array.
+| REPLACEMENT: none needed -- the empire commerce percents answer through the roll-up where they are consumed.
+CvPlayer::m_aiCommerceRateModifierfromBuildings
+========================
+
+| A city-side counter for population staffing a BUILDING. Only PLOTS and SPECIALISTS can be
+| staffed by population, so it had no coherent place in the citizen accounting: pop minus angry
+| is already the whole employed set, split between tile-workers and specialists.
+| It was never wired -- no writer existed, so it read 0 for the life of every save.
+| REPLACEMENT: none -- the quantity it named is not part of the model.
+CvCity::m_iNumPopulationEmployed
+
+========================
+
+| The per-team SDI accumulator, summed from each project's combat.team.nukeInterception as it completed.
+| That member is ruling-16 TRIGGER-PLANE data (a CHANCE -- the odds a nuke is intercepted), deliberately
+| carried unkinded in the vocabulary, so nothing on the modifier surface answers it and no consumer may
+| mint a kind to reach it.
+| REPLACEMENT: the triggers plane -- the authored value becomes the `chance` on its trigger
+| (docs/specs/triggers.md). Until that lands the mechanic is DARK, deliberately: legacy fails loud rather
+| than masking the hole it has not filled.
+CvTeam::m_iNukeInterception
+
+========================
+
+| The per-team tech-share level counts, summed from each project's diplomacy.team.techShare and read by the
+| legacy updateTechShare sharer (acquire a tech once N met teams held it).
+| techShare was a MISCURATE: the N is not a magnitude, it is the fire condition of an onTechResearched
+| trigger whose action grants the tech (owner) -- so the member, its accessors and the sharer all go.
+| REPLACEMENT: the triggers plane, condition `{type: TECH_X, scope: world, min: N}` -- the world tech count
+| the tally now serves (docs/specs/tally.md, docs/specs/triggers.md). The legacy `isHasMet` filter is
+| dropped by ruling and re-addable later as an ordinary predicate.
+CvTeam::m_aiTechShareCount
+
+| The team accumulator for the corp revenue modifier: a serialized incremental total fed only by processTech
+| from a static info field -- the STORED-ACCUMULATOR DRIFT class ([DEC-accumulator-cut-uniform]).
+| REPLACEMENT: CascadeCapabilities::corporationRevenueModifier -- the per-team derived-on-query union over the
+| held techs' `commerce.<scope>.corporation` deposits (ruling 15), which was already built and already the
+| ruled home ("never the legacy team accumulator"). The deleted changer's updateCorporation rider survives at
+| the processTech trigger site ([save.md] §6).
+CvTeam::m_iCorporationRevenueModifier
+
+| The trade-route PROFIT accumulators: serialized incremental totals fed from static info fields -- the
+| STORED-ACCUMULATOR DRIFT class ([DEC-accumulator-cut-uniform]). The city and team plain totals were both
+| accumulating the same channel-agnostic route-profit stage that the cascade roll-up now answers in ONE read
+| (ruling 27); the city one had already lost its feeder and was reading 0.
+| REPLACEMENT: CvCity::getTradeRouteKinds()[TRADE_ROUTE_MODIFIER] -- the team + empire + city roll-up.
+CvCity::m_iTradeRouteModifier
+CvTeam::m_iTradeModifier
+| The team FOREIGN trade total. Its source re-homed to an IS_FOREIGN-CONDITIONED entry on the same
+| tradeRoutes.modifier slot (ruling 11: the foreign variant is a CONDITION, never a kind), which the
+| unconditioned roll-up deliberately excludes -- so this leg reads nothing until the conditioned tail has a
+| read at totalTradeModifier. Exposed rather than masked ([DEC-no-legacy-masking]).
+CvTeam::m_iForeignTradeModifier
+| The trade-mission total. REPLACEMENT: the empire roll-up of tradeMission (authored tradeMission.empire.percent),
+| read at CvUnit's trade-mission gold.
+CvTeam::m_iTradeMissionModifier
+| The per-unit upkeep PERCENTAGE stages. NO REPLACEMENT -- both are removed (superseded-ideas #26: a per-unit
+| percentage multiplying the Size-Matters rank cost). Unit upkeep is FLAT: base (cost.upkeep) + any flat extra
+| (upkeep.unit.extra). Nothing serves these values because nothing should. NB flat is an INTERIM pending the
+| unit-maintenance redesign (roadmap Scope decisions) -- that rework decides the model, not a re-home of these.
+CvUnit::m_iUpkeepModifier
+CvUnit::m_iUpkeepMultiplierSM
+
+| The player's national bombard-defense accumulator. Its only reader was CvCity's bombard-defense getter, which
+| hand-added this empire leg on top of the city one; that getter is now cascadeDefense(DEFENSE_BOMBARD), whose
+| roll-up already folds team + empire + city -- so the 20 trait `defense.empire.bombardDefense` authorings reach
+| the city through the empire package, and adding this on top would have counted them twice. Its writer went
+| with the rebuilt trait info, which carries the deposit rather than a named scalar.
+CvPlayer::m_iNationalBombardDefenseModifier
+
+| The city's per-type manual-assign SPECIALIST SLOT cap. A serialized incremental accumulator maintained by
+| processBuilding and by the team's tech loop, over a quantity the cascade owns -- so it carried save history no
+| live source could reproduce ([DEC-accumulator-cut-uniform]). The value is now a FRESH GATHER at the read:
+| CvCity::getMaxSpecialistCount(eSpecialist) sums its OPERATING buildings' own
+| `allowedSpecialists.city.{SPECIALIST_X}` deposits through InfoValuation::keyedTargetSum, whose keyed twin
+| evaluates the tech-gated tail against the city's contexts -- which is what the deleted team ledger was
+| pre-computing on every tech acquire.
+CvCity::m_paiMaxSpecialistCount
+
+| The unit's ENDURANCE accumulator. The mechanic is dead (owner): no unitcombat, promotion or unit authors an
+| endurance value anywhere in the curated data, so every feed summed to nothing and `enduranceTotal()` returned
+| the info's dead getter plus zero. Its poison sibling went with it -- `poisonProbabilityModifierTotal()` had an
+| EMPTY BODY, i.e. it had already stopped returning anything at all.
+CvUnit::m_iExtraEndurance
+
+| Two CvUnit accumulators whose ONLY feeder was a promotion read that no data authors, so both were frozen at
+| zero. `m_iAirCombatLimitChange` was fed by the promotion `iAirCombatLimitChange` -- no promotion authors an
+| `air` combatLimit row in the curated data, and the legacy XML carries none either, so `airCombatLimit()` now
+| reads the unit info's own value alone. `m_iExtraNumTriggers` was fed by the promotion trigger count, and the
+| TRAP subsystem those triggers served is a removed mechanic (skills.md: `triggerBeforeAttack` is dead), so
+| nothing grants one. Neither had a reader outside CvUnit.
+CvUnit::m_iAirCombatLimitChange
+CvUnit::m_iExtraNumTriggers
+
+| The player's ERA-ADVANCE free-specialist accumulator. It was a refcount of held traits (processTrait +/-1) that
+| CvPlayer::setCurrentEra then read back to hand every city that many typed-free specialists -- the stored
+| accumulator class, replaced by a fact rather than a store. The trait now authors the payload on the TRIGGER
+| plane (`onEraChanged` -> `action.grant.specialists`, json.md §5), and the trigger engine's SEVT_ERA_CHANGED
+| route applies it straight to the cities, so nothing needs to be carried between the trait change and the era
+| advance. Era advance is tech-driven (CvTeam::setHasTech), which is why the era is a happening rather than the
+| trait's own considered action. REPLACEMENT: CvTriggerEngine tr_resolveEraChanged.
+CvPlayer::m_paiEraAdvanceFreeSpecialistCount
+
+| The FREE-BUILDING refcounts, both scopes. A building naming another (or itself) handed it to every city, held
+| as a player refcount plus a per-city mirror and re-asserted by a per-turn checkFreeBuildings sweep. It is a
+| GRANT (owner: "in all scenarios they behave like grants"), so the source now authors grants.buildings at
+| empire scope and the trigger engine places it -- fanning over the cities that already stand, and folding into
+| each city that starts existing afterwards. Nothing needs carrying between the two, so the stores go.
+| The receiving city genuinely HAS the building, which is load-bearing: the authored data gates on holding
+| these targets in over a thousand requires atoms.
+| REPLACEMENT: CvTriggerEngine tr_grantBuildingsFrom + tr_foldOwnerGrantedBuildings.
+CvPlayer::iFreeBuildingCountSize
+CvPlayer::iFreeBuildingCountType
+CvPlayer::iFreeBuildingCountCount
+CvCity::FreeBuildingsSize
+CvCity::FreeBuildingsIndex
+CvCity::FreeAreaBuildingCountSize
+CvCity::FreeAreaBuildingCountType
+CvCity::FreeAreaBuildingCount
+
+| The SPECIALIST EXTRA-COMMERCE accumulators, all three planes. They are the per-specialist commerce bonus in its
+| local (building-in-city), perType (one named specialist) and all (any specialist -- the Sistine shape) forms,
+| pushed by processBuilding / processCivics / processTrait into a player and a city store. The cascade owns them:
+| the curator authors the deposit on the SOURCE at empire scope with a per-SPECIALIST scaler, so the stores were
+| a second copy of a value the packages already carry.
+| ⚠ Their change* riders were audited before the cut: updateExtraSpecialistCommerce had already been gutted to a
+| no-op (it computed a total and discarded it), and the AI_makeAssignWorkDirty / AI_setAssignWorkDirty flips are
+| owed to the citizen-assignment SPINE CONSUMER rather than re-inlined here.
+| REPLACEMENT: the cascade commerce packages ({commerce}.empire.cities with per:{type:SPECIALIST}).
+CvPlayer::m_aiSpecialistExtraCommerce
+CvPlayer::m_ppaaiSpecialistExtraCommerce
+CvCity::m_ppaaiLocalSpecialistExtraCommerce
+
+========================
+2026-08-01 — #430 delete-driven legacy cut (the CvCity per-plot-TYPE yield accumulators): the whole
+getYieldChangeAt cluster is retired by the PLOTS-TARGET fold. A scope-wide source now deposits onto every
+matching plot in scope as <yield>.<scope>.plots.flat gated by a plot predicate (json.md §6.1), which is the ONE
+uniform mechanism the curator names as retiring getYieldChangeAt / getSeaPlotYield / getRiverPlotYield and the
+per-plot-type accumulators with it (curate_building._inject_plots). River is the HAS_RIVER entry, the plot-TYPE
+map is the IS_WATER / IS_LAND+IS_FLATLANDS / HAS_HILLS / HAS_PEAK entries, and the terrain- and
+improvement-keyed maps land plot-scope on their TARGET through the readJson reverse pass.
+| The three maps had NO feeder left in the engine at all -- their change* functions were called from nowhere --
+| so this is a read-and-store cut, not a migration of live state.
+| The per-block decorated tags are BRACKET-FREE (Size / Type / value), so they soft-remove by exact name here
+| (save.md §3; the CvCity::BuildingHappinessFromTechSize precedent), never as a bracketed per-element tag.
+| REPLACEMENT: the plot's own realized yield package -- the plots-target deposits resolve into it at plot scope.
+CvCity::PlotYieldChangesSize              (decorated short)
+CvCity::PlotYieldChangesType              (decorated short, per entry)
+CvCity::PlotYieldChanges                  (decorated int array, per entry)
+CvCity::TerrainYieldChangesSize           (decorated short)
+CvCity::TerrainYieldChangesType           (decorated short, per entry)
+CvCity::TerrainYieldChanges               (decorated int array, per entry)
+CvCity::ImprovementYieldChangesSize       (decorated short)
+CvCity::ImprovementYieldChangesType       (decorated short, per entry)
+CvCity::ImprovementYieldChanges           (decorated int array, per entry)
+========================
+
+========================
+2026-08-01 — #430 delete-driven legacy cut (the CvCity population-growth-rate accumulator): a FLOAT log-space
+store rebuilt every turn by a blanket walk over every building in the game. Three defects in one member: a
+float on a deterministic-lockstep engine, a hand-named scalar no derived mask can address
+([DEC-uniform-cache-shape]), and a self-heal ([DEC-no-self-heal]).
+| BEHAVIOUR CHANGE, stated: the log composed its sources MULTIPLICATIVELY; percents are ADDITIVE deltas that
+| sum and apply once ([modifier.md §2]), so the sources now add.
+| REPLACEMENT: the populationGrowthRate.city cascade channel (the SCALAR_POPULATION_GROWTH_RATE straggler
+| slot), read through InfoValuation::realizedAtCity like every other realized channel.
+CvCity::m_fPopulationgrowthratepercentageLog   (float)
+========================
+#430 delete-driven legacy cut (the CvPlayer population-growth-rate accumulator): the EMPIRE twin of the city
+member above, and the same three defects — a FLOAT log-space store on a deterministic-lockstep engine, a
+hand-named scalar no derived mask can address ([DEC-uniform-cache-shape]), and a per-turn blanket rebuild that
+zeroed it and re-walked every building in the game against every city ([DEC-no-self-heal]).
+| BEHAVIOUR CHANGE, stated: the log composed its sources MULTIPLICATIVELY; percents are ADDITIVE deltas that
+| sum and apply once ([modifier.md §2]), so the sources now add.
+| REPLACEMENT: the growth.empire cascade channel (the SCALAR_GROWTH straggler slot), read through
+| InfoValuation::realizedAtEmpire like every other realized channel.
+CvPlayer::m_fPopulationgrowthratepercentageLog   (float)
+========================
+#430 delete-driven legacy cut (the foreigner-unhappiness accumulator): a per-civic push whose consumer
+recomputed `(100 - ownCulturePercent) * (100/V) / 100` in the city wellbeing fold -- the SAME arithmetic the
+curator already precomputes into the data, so the legacy read double-counted the cascade's own deposit
+([DEC-no-legacy-masking]).
+| REPLACEMENT: the civic's `happiness.empire.flat` telescoping pair on the CULTURE_PERCENTAGE counter
+| (flat -R together with {+R, per CULTURE_PERCENTAGE each 100}, R = 100/V), routed to the anger channel at
+| fill like any other negative wellbeing deposit ([modifier.md §2b]).
+CvPlayer::m_iForeignUnhappyPercent
+========================
+#430 delete-driven legacy cut (the rest of the unit-upkeep cluster): the free allowances, their pop-percent
+twins and the two bucket modifiers were serialized push-accumulators fed by trait/civic deposits the cascade
+now carries at empire scope -- the STORED-ACCUMULATOR DRIFT class ([DEC-accumulator-cut-uniform]).
+| REPLACEMENT: `upkeep.empire.{freeCivilian,freeMilitary}` (FLAT, the reader reduces ×100) and
+| `upkeep.empire.{unitCivilian,unitMilitary}` (PERCENT, unscaled), read through
+| InfoValuation::realizedAtEmpire.
+| ⚑ The BASE and POP-PERCENT members collapse into ONE deposit: the curator folds the pop-scaled leg into the
+| same free kind as a {value, per:{POPULATION, each:100}} entry under the one free-amount sign convention, so
+| there is no second read to re-home.
+| ⚠ The engine's own baseline (BASE_FREE_UNITS_UPKEEP_* global defines) went with them and loses nothing --
+| all four defines are 0, so the push was inert.
+| ⚠ The EVENT grant (CvEventInfo iFreeUnitSupport, 4 authorings) is NOT covered by any of the above: it is
+| genuine one-shot state, so it moved to its own persisted member and is ADDED to the cascade read
+| ([state-repositories.md]: a recompute cache would wipe an event grant).
+CvPlayer::m_iBaseFreeUnitUpkeepCivilian
+CvPlayer::m_iBaseFreeUnitUpkeepMilitary
+CvPlayer::m_iFreeUnitUpkeepCivilianPopPercent
+CvPlayer::m_iFreeUnitUpkeepMilitaryPopPercent
+CvPlayer::m_iCivilianUnitUpkeepMod
+CvPlayer::m_iMilitaryUnitUpkeepMod
+| CvPlayer::m_iCoastalTradeRoutes -- the empire coastal route-count accumulator. Ruling 11 folds a building's
+| iCoastalTradeRoutes into the MEMBERLESS tradeRoutes route count as a HAS_COAST-CONDITIONED empire entry
+| (curate_building _inject_cond), so the value rides the same slot CvCity::getExtraTradeRoutes() already reads
+| and no separate accumulator or per-city isCoastal() test belongs beside it.
+| REPLACEMENT: CvCity::getExtraTradeRoutes() -- the team + empire + city roll-up of MODFAM_TRADE_ROUTES /
+| TRADE_ROUTE_AMOUNT.
+| OBLIGATION NOT YET MET: an empire-scope entry gated on a CITY predicate needs the per-city gate applied
+| AT THE COMBINE ([modifier.md] section 1 names coastal explicitly); InfoValuation::rolledLegsAtCity is a bare
+| package sum today, so the coastal routes are UNSERVED until that gate lands. The hole is deliberate and
+| visible ([DEC-no-legacy-masking]) rather than masked by keeping the accumulator alive.
+CvPlayer::m_iCoastalTradeRoutes
+========================
+| CvUnit::m_bHasHNCapturePromotion -- the hidden-nationality CAPTURE MARK. A unit captured BY a
+| hidden-nationality unit was given a promotion flagged bSetOnHNCapture, stripped again once that unit stood
+| in its owner own territory; this bool recorded that it carried the mark.
+| The mechanic is REMOVED rather than re-homed. It is TRIGGER-SHAPED (a happening, then promote) and NOTHING
+| authors the flag: the tag survives in the unit SCHEMA alone, no promotion record has ever carried it, so
+| both engine loops already found nothing and the bool was never set. That is the building-counter-damage
+| class exactly ([triggers.md]: a verb is not minted speculatively for one mechanic, and the legacy member is
+| not kept alive in the meantime), so it returns -- if wanted -- authored fresh on the trigger plane.
+| REPLACEMENT: none, deliberately -- write-only state for a mechanic that had no data.
+CvUnit::m_bHasHNCapturePromotion
+========================
+The plot's PUSH-MAINTAINED base yield. It was a second copy of a number the cascade already computes: the
+| gather folds the plot's whole substrate -- terrain, feature, route, improvement, resource -- into the plot
+| package against the plot's own eval ctx, so the river-gated entries resolve there too. The store was kept
+| current by four hand-written delta blocks (plot type, terrain, feature, river), which is the drift class
+| ([DEC-accumulator-cut-uniform]) and also what made its one reader look cheap.
+| REPLACEMENT: the plot's own CvCascadePackage. ITS PRE-IMPROVEMENT slot is still owed -- calculateNatureYield
+| wants the pre-improvement, pre-route subset, which the realized package does not separate.
+CvPlot::m_baseYields
+========================
+Trait-fed PLAYER accumulators, cut with the pushes that were their only writer. Each was a hand-maintained
+| sum over the held traits' authored data, and the gather already folds those same modifiers into the
+| player's scope packages -- so the store was a second copy, and an info carries no live data that could be
+| lost with it ([DEC-accumulator-cut-uniform]).
+| REPLACEMENT: the player's own CvCascadePackage, rebuilt from the held-trait facts the save read emits
+| ([DEC-spine-reseed]) -- the per-wonder free specialists are the freeSpecialists FAMILY ([json.md par.9]),
+| not a policy, so they arrive through the same fold.
+CvPlayer::m_aiCapitalYieldRateModifier
+CvPlayer::m_iExtraFreedomFighters
+CvPlayer::m_iFreedomFighterCount
+CvPlayer::m_iFreeSpecialistperNationalWonderCount
+CvPlayer::m_iFreeSpecialistperTeamProjectCount
+CvPlayer::m_iFreeSpecialistperWorldWonderCount
+The empire's LEVEL-EXPERIENCE modifier, cut with the trait push that was its only writer. Its readers ask
+| the player's experience GROUP instead of a hand-named accessor ([DEC-new-getter-surface]); the kind is a
+| PERCENT, so it enters the level identity unscaled.
+| REPLACEMENT: CvPlayer::getExperienceKinds -> EXPERIENCE_LEVEL_MODIFIER.
+CvPlayer::m_iLevelExperienceModifier
+More trait-fed PLAYER accumulators. The empire's own civic-upkeep modifier and its two commerce-modifier
+| planes were sums over authored data the gather already folds into the player's packages, so the readers ask
+| the group and the hand-named accessors go ([DEC-new-getter-surface]).
+| ⚠ The event-granted commerce modifier is NOT among these: its writer is applyEvent, which makes it genuine
+| one-shot state that correctly stays serialized ([save.md par.5]).
+| REPLACEMENT: CvPlayer::getUpkeepKinds -> UPKEEP_CIVIC; the commerce planes roll up through the player's
+| own package (capital is a PREDICATE, not a scope, so its plane is a conditioned deposit rather than a store).
+CvPlayer::m_iUpkeepModifier
+CvPlayer::m_aiCommerceRateModifier
+CvPlayer::m_aiCapitalCommerceRateModifier
+The empire's per-carrier hold allowances and its flight range. Trait-fed sums the gather already folds into
+| the player's packages, so the unit-side readers ask the cargo and air GROUPS and index the kind. All three
+| are FLAT slots, so each reader reduces at its point of use.
+| REPLACEMENT: CvPlayer::getCargoKinds -> CARGO_NAVAL / CARGO_MISSILE; getAirKinds -> AIR_RANGE.
+CvPlayer::m_iNationalNavalCargoSpaceChange
+CvPlayer::m_iNationalMissileCargoSpaceChange
+CvPlayer::m_iNationalFlightOperationRangeChange
+The remaining trait-fed empire modifiers, cut as one batch. Each reader takes its family's GROUP and indexes
+| the kind ([DEC-new-getter-surface]); the gather already folds these from the held traits, so the stores were
+| duplicates and the reseed rebuilds the values on load.
+| ⚠ UNITS are per kind, not per family: the anarchy durations, the religion-spread and great-people
+| modifiers and the empire-scope capture pair are PERCENTS and re-point 1:1, while the trade-route CAP and the
+| attitude delta are FLAT and reduce at the reader.
+| REPLACEMENT: CvPlayer::getDurationKinds / getExperienceKinds / getStateReligionKinds / getCaptureKinds /
+| getTradeRouteKinds / getDiplomacyKinds.
+CvPlayer::m_iCivicAnarchyModifier
+CvPlayer::m_iReligiousAnarchyModifier
+CvPlayer::m_iExpInBorderModifier
+CvPlayer::m_iExtraStateReligionSpreadModifier
+CvPlayer::m_iExtraNonStateReligionSpreadModifier
+CvPlayer::m_iStateReligionGreatPeopleRateModifier
+CvPlayer::m_iExtraNationalCaptureProbabilityModifier
+CvPlayer::m_iExtraNationalCaptureResistanceModifier
+CvPlayer::m_iMaxTradeRoutesAdjustment
+CvPlayer::m_iNationalEnemyWarWearinessModifier
+CvPlayer::m_iAIAttitudeModifier
+The three WONDER build-rate modifiers. `world`/`team`/`national` name the cap SCOPE that makes a building a
+| wonder ([json.md par.4.4]), so each is its own build-rate kind; the reader takes the group and indexes it.
+| All three are percents and carry no scaling.
+| REPLACEMENT: CvPlayer::getBuildRateKinds -> BUILD_RATE_WORLD_WONDER / _TEAM_WONDER / _NATIONAL_WONDER.
+CvPlayer::m_iMaxGlobalBuildingProductionModifier
+CvPlayer::m_iMaxTeamBuildingProductionModifier
+CvPlayer::m_iMaxPlayerBuildingProductionModifier
+The IMPROVEMENT-UPGRADE RATE pair. A source authors BOTH shapes and neither answers the other: the plain
+| `improvementUpgradeRate.empire.percent` folds into the compiled scalar, while the per-improvement
+| `empire.improvements.{IMPROVEMENT_X}` rows are KEYED and are excluded from the scope package by
+| construction, so they are an ENTRY-LIST read over the live sources ([modifier.md] par.5). TRAITS are the
+| only keyed authors, so the reader walks the player's held traits. The kind is a PERCENT and carries no
+| scaling.
+| REPLACEMENT: CvPlayer::getScalars -> SCALAR_IMPROVEMENT_UPGRADE_RATE, plus
+| InfoValuation::keyedTargetSum over the held traits, both in CvPlayer::getImprovementUpgradeProgressRate.
+CvPlayer::m_iImprovementUpgradeRateModifier
+CvPlayer::m_paiImprovementUpgradeRateModifierSpecific
+The HURRY-ANGER modifier, cut on BOTH scopes at once. The city and the player each held a hand-summed leg and
+| the city getter added them; the ONE roll-up over the chain the city sits under answers both, so a building's
+| `hurryAnger.city.percent` and any empire-scope deposit arrive through the same read ([modifier.md] par.1).
+| ⚠ BEHAVIOUR: the legacy city changer re-scaled an in-flight m_iHurryAngerTimer whenever the modifier moved.
+| A computed value has no change moment to hook, so a running timer now resolves against the CURRENT
+| modifier -- the recompute-from-source side ([DEC-accumulator-cut-uniform]).
+| REPLACEMENT: CvCity::getScalars -> SCALAR_HURRY_ANGER_MODIFIER, in CvCity::getHurryAngerModifier.
+CvCity::m_iHurryAngerModifier
+CvPlayer::m_iNationalHurryAngerModifier
+The empire ESPIONAGE-DEFENSE accumulator. Its consumer was already converted: CvCity::getEspionageDefenseModifier
+| reads the cascade slot directly, so this store had neither a feeder nor a reader left and only carried save
+| history no live source could reproduce.
+| REPLACEMENT: CvCity::getEspionageDefenseModifier -> MODFAM_ESPIONAGE_DEFENSE / CHANNEL_AMOUNT.
+CvPlayer::m_iNationalEspionageDefense
+The empire MISSILE-RANGE accumulator, cut as DEAD rather than re-pointed. Its legacy tag `iMissileRange`
+| exists in the XML SCHEMA and nowhere else -- no record has ever authored it -- and the address the curator
+| maps it to (`combat.empire.missileRange`) has no minted kind and zero authorings, so the term was always 0.
+| There was never a second CHANNEL -- only a second STORE that summed nothing: a missile's range is the
+| same mechanic as an airplane's bombard range (owner), so both answer through the ONE `air.range` channel
+| and the empire leg reaches a missile exactly as it reaches a bomber.
+| REPLACEMENT: CvPlayer::getAirKinds -> AIR_RANGE, in CvUnit::airRange (a FLAT slot, reduced at the read).
+CvPlayer::m_iNationalMissileRangeChange
+The trait CITY-START culture and bonus population. Both were writerless empire accumulators whose readers in
+| CvPlayer::found applied 0, so the mechanic was already dead. They are conditional GRANTS living on the
+| FOUNDER -- `grants.culture` / `grants.population` on the settler, gated by the trait ([json.md] par.5) --
+| and the data now authors them there; the invented `cityFounding` block they used to sit in is gone from the
+| spec, the curator, the parser vocabulary and the data.
+| REPLACEMENT: the grants machine, applied off SEVT_CITY_FOUNDED in tr_resolveCityFounded, which reads the
+| founder's CONDITIONED PULSE tail (CvGrants::pulseEntries / pulseEntryCond) and evaluates each entry's own
+| `enabled` through the ONE evaluator. The tail exists because the pulse MAP holds one summed number per
+| channel with nowhere to put a condition -- summing there would hand every civ every trait's bonus.
+CvPlayer::m_iNationalCityStartCulture
+CvPlayer::m_iNationalCityStartBonusPopulation
+The TEAM ROUTE MOVE-COST accumulator. A tech-gated route move delta is authored as a CONDITIONED entry beside
+| the base cost in the ROUTE's own `movement.plot.flat` slot ([modifier.md] par.6 names the route as the worked
+| case), so the value belongs to the route and the team-side store was a second, drifting copy of it -- fed by a
+| whole-registry route walk in processTech, and carrying save history no live source can reproduce.
+| REPLACEMENT: CvRouteInfo::getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT), read in CvPlot::movementCost. The
+| unconditioned base is served today; the tech-gated tail lands when that read evaluates its conditioned entries
+| against the asking team (ROUTE_VACTRAIN under TECH_SKYROADS is the one authoring in the shipped data).
+CvTeam::m_paiRouteChange
+
+========================
+2026-08-03 - the COMBAT-STRENGTH cluster converts to x100-native (fixed-point-and-scales.md 4c-ter, owner ruling:
+the strength legs do not reduce to human until shown in the UI). m_iBaseCombat changed MEANING (human -> x100), which
+the tagged format cannot express on the same tag -- an old save would load 1/100th strength silently. The value is
+therefore re-serialized under the NEW tag CvUnit::m_iBaseCombat100 and the old tag is CUT here. When the old tag is
+absent the reader's sentinel (-1) re-seeds base strength from the unit's type, so a pre-existing save keeps correct
+strength; the only loss is a WorldBuilder per-unit strength override, which reverts to the unit's type base.
+
+CvUnit::m_iBaseCombat                      (int)
+
+========================
+2026-08-03 - two CvUnit accumulators were HARD-DELETED without their tags being listed here, which is the one
+failure the format cannot absorb (save.md par.3): the reader never consumes the orphan, Expect() reads the
+mismatch as "code ahead of stream", and every later read in that object slides onto the wrong tuple. Both were
+found by the load itself -- the stream named m_iExtraVisibilityRange as the tag blocking fifteen consecutive
+CvUnit reads -- rather than by the compiler, which cannot see a member that no longer exists.
+| REPLACEMENT (visibility): the unit's sight is the `vision` family -- strength from the unit + its promotions,
+| elevation from the ground it stands on ([vision.md] par.1/par.2). There is no per-unit accumulator to re-home.
+| REPLACEMENT (poison): none -- `poison` is an inert/edge unit flag ruled OUT of the modifier families
+| ([legacy-value-calc-map.md] par.8), so the value is dropped rather than served.
+
+CvUnit::m_iExtraVisibilityRange            (int)
+CvUnit::m_iExtraPoisonProbabilityModifier  (int)
+
+========================
+2026-08-03 - #430 unit-plane residue: the last three stored per-unit accumulators that DUPLICATED a resolved
+slot are removed. Each was fed by processPromotion + processUnitCombat from exactly the compiled sum the unit
+RESOLVED plane (Cascade/CvUnitResolved.h) already gathers over the same held set, so the value was maintained
+twice and serialized once -- the STORED-ACCUMULATOR DRIFT class ([DEC-accumulator-cut-uniform]).
+| REPLACEMENT (airRange): URS_AIR_RANGE, already the sole reader -- CvUnit::airRange() composites it with the
+| team's domain-moves award and the player's air-range change. getExtraAirRange() had NO caller at all, so the
+| member was fed and stored for nobody.
+| REPLACEMENT (taunt): URS_TAUNT, already the sole reader via CvUnit::tauntTotal(). The member had no getter
+| whatsoever -- only a changer and a save slot.
+| REPLACEMENT (stealthStrikes): URS_STEALTH_STRIKES, which was the inverse case -- the cascade slot was gathered
+| and read by NOBODY while consumers read the legacy member ([DEC-no-legacy-masking]: a live legacy read masks
+| the hole its replacement has not filled, and leaves the new value unverified). CvUnit::stealthStrikesTotal()
+| now reduces that slot at the point of use and is the ONE read; the two CvPlayerAI promotion-valuation sites
+| call it instead of the delta-only getter.
+| BEHAVIOUR, stated rather than hidden ([validation.md]): the slot sums the held set in x100 and reduces ONCE,
+| where the legacy feeds reduced PER CARRIER before summing, so a fractional authored value no longer truncates
+| away per source. And the AI's with-unit branch now weighs the unit's WHOLE stealth-strike value; it previously
+| read the delta only and silently dropped the unit type's own, disagreeing with its own no-unit branch.
+
+CvUnit::m_iExtraAirRange                   (int)
+CvUnit::m_iExtraTaunt                      (int)
+CvUnit::m_iExtraStealthStrikes             (int)
+
+The city's DISABLED-POWER timer, re-homed onto the city STATUS store rather than replaced by a computed
+| value. A blackout is an applied counter that ticks down and is over at zero -- the status model exactly
+| ([state.md], Engine/CvStatus.h) -- so it stops being a hand-named member with its own getter, changer,
+| per-turn decrement and save field. Statuses are not serialized, so this carries NO conversion.
+| BEHAVIOUR: a save taken mid-blackout loads with the power already back on. Owner-ruled and accepted -- a
+| transient counter is not worth a migration for a short-term changeover.
+| REPLACEMENT: CvCity::hasStatus(CITYSTATUS_POWER_DISABLED), read through CvCity::isPowered -- the GATED
+| verdict that composes the amenity's own hasPowerSource with the blackout status.
+CvCity::m_iDisabledPowerTimer
+
+The two remaining per-unit HEAL accumulators, REPLACED by the resolved UNIT plane. Both were hand-named
+| members fed from BOTH processPromotion and processUnitCombat into one slot -- the dual-feed shape -- while
+| every other heal magnitude was already gathered over the unit's held set. They are now the ordinary slots
+| URS_HEAL_VICTORY / URS_HEAL_SUPPORT, so heal is uniform: one gather, one mark, no per-source push.
+| The contributor set is unchanged (victory is authored by promotions only; support by units and promotions),
+| so the value is the same -- what goes is the second maintenance surface, not a term.
+| REPLACEMENT: CvUnit::getVictoryHeal / getNumHealSupportTotal, over Cascade/CvUnitResolved.h.
+CvUnit::m_iVictoryHeal
+CvUnit::m_iExtraNumHealSupport
+
+The last three per-unit HEAL accumulators, REPLACED by the resolved UNIT plane on the same terms as the two
+| above -- each was fed from BOTH processPromotion and processUnitCombat into one hand-named member. With
+| these the heal set is UNIFORM: every unit-scope heal magnitude is a gathered slot, none is pushed.
+| Contributor sets are unchanged, so the values are unchanged.
+| REPLACEMENT: CvUnit::getVictoryStackHeal / getVictoryAdjacentHeal / getSelfHealModifierTotal,
+| over Cascade/CvUnitResolved.h.
+CvUnit::m_iVictoryStackHeal
+CvUnit::m_iVictoryAdjacentHeal
+CvUnit::m_iExtraSelfHealModifier
+
+The two per-turn VICINITY SNAPSHOT arrays. Derived state that was serialized, which the model forbids outright
+| (DEC-derived-never-trusted), and derived for NOBODY: each was rewritten every turn by a full sweep over every
+| bonus id -- through a memoized recompute-on-read that doTurn cleared wholesale the same turn -- and neither
+| had a single reader. The whole loop produced nothing.
+| REPLACEMENT: none is owed. The question they answered is the city's onSite set, which CityContext holds as an
+| event-maintained store (contexts.md) -- a stored fact, not a per-turn recompute.
+CvCity::m_pabHadVicinityBonus
+CvCity::m_pabHadRawVicinityBonus
+
+| CvPlayer::m_aiTradeYieldModifier -- the PER-CHANNEL trade-route yield modifier. Its only live writer was the
+| player-init seed from CvYieldInfo::getTradeModifier() (commerce 100, food 0, production 0); every civic/trait
+| authoring lands in the cascade's tradeRoutes.<scope>.modifier.<channel> slot (json.md par.2, ruling 27), which
+| CvPlayer::getTradeYieldModifier now reads on top of that yield-info identity. The stored array therefore carried
+| values no live source could reproduce -- the STORED-ACCUMULATOR DRIFT class, where the recompute is the correct
+| side ([DEC-accumulator-cut-uniform]).
+CvPlayer::m_aiTradeYieldModifier
+
+| CvPlayer::m_iTradeRoutes -- the empire's extra TRADE ROUTE count. It was fed by two changeTradeRoutes calls
+| (processBuilding at empire scope, processTech at CITY scope) and by NOTHING from traits or civics, which author
+| the large majority of the empire-scope route grants. CvPlayer::getTradeRoutes now reads the cascade's
+| tradeRoutes AMOUNT slot on top of the INITIAL_TRADE_ROUTES define ([DEC-accumulator-cut-uniform]).
+CvPlayer::m_iTradeRoutes
+
+| CvCity::m_aiTradeYield -- the per-city TRADE ROUTE YIELD. It is DERIVED (route profit x the per-channel route
+| modifier, CvCity::calculateTradeYield) and was being read straight back off the save, so a loaded city served a
+| trade yield no live input could reproduce -- London ate 60 food per turn off its routes against a live food
+| route modifier of ZERO. Derived state is never serialized ([DEC-derived-never-trusted]); it is rebuilt at load
+| by the per-player updateTradeRoutes() pass in CvGame::onFinalInitialized.
+CvCity::m_aiTradeYield
+
+| ---- TYPE RENAMES: a renamed Type is NOT a removed one ----
+| The complex-trait re-key (modifier.md par.4) moved EVERY record of the complex set onto its own
+| TRAIT_COMPLEX_ identity -- the prefix states the SET, so folder and prefix agree by construction. A save written before it holds the OLD id, and class reads are allow-missing
+| (save.md par.7) -- which is right for a DELETED Type and wrong here, because the record still exists under a
+| new name. Without these the player silently loses the rung. Translated at the ONE stored-Type resolution
+| point (sm_resolveStoredType). The key is namespaced `TYPE::<INFOTYPE_NAME>` -- the entry reader takes the
+| first ::-bearing token (that is what stops a wrapped prose line registering as an entry), so a bare id
+| would parse to nothing; the TYPE:: namespace satisfies that guard AND cannot collide with Class::field.
+TYPE::TRAIT_AERIAL -> TYPE::TRAIT_COMPLEX_AERIAL1
+TYPE::TRAIT_AERIAL1 -> TYPE::TRAIT_COMPLEX_AERIAL1
+TYPE::TRAIT_AERIAL2 -> TYPE::TRAIT_COMPLEX_AERIAL2
+TYPE::TRAIT_AERIAL3 -> TYPE::TRAIT_COMPLEX_AERIAL3
+TYPE::TRAIT_AGGRESSIVE2 -> TYPE::TRAIT_COMPLEX_AGGRESSIVE2
+TYPE::TRAIT_AGGRESSIVE3 -> TYPE::TRAIT_COMPLEX_AGGRESSIVE3
+TYPE::TRAIT_AGRICULTURAL2 -> TYPE::TRAIT_COMPLEX_AGRICULTURAL2
+TYPE::TRAIT_AGRICULTURAL3 -> TYPE::TRAIT_COMPLEX_AGRICULTURAL3
+TYPE::TRAIT_ALOOF -> TYPE::TRAIT_COMPLEX_ALOOF1
+TYPE::TRAIT_ALOOF1 -> TYPE::TRAIT_COMPLEX_ALOOF1
+TYPE::TRAIT_ALOOF2 -> TYPE::TRAIT_COMPLEX_ALOOF2
+TYPE::TRAIT_ALOOF3 -> TYPE::TRAIT_COMPLEX_ALOOF3
+TYPE::TRAIT_ANTI_CLERICAL2 -> TYPE::TRAIT_COMPLEX_ANTI_CLERICAL2
+TYPE::TRAIT_ANTI_CLERICAL3 -> TYPE::TRAIT_COMPLEX_ANTI_CLERICAL3
+TYPE::TRAIT_BARBARIC2 -> TYPE::TRAIT_COMPLEX_BARBARIC2
+TYPE::TRAIT_BARBARIC3 -> TYPE::TRAIT_COMPLEX_BARBARIC3
+TYPE::TRAIT_BIGOT -> TYPE::TRAIT_COMPLEX_BIGOT1
+TYPE::TRAIT_BIGOT1 -> TYPE::TRAIT_COMPLEX_BIGOT1
+TYPE::TRAIT_BIGOT2 -> TYPE::TRAIT_COMPLEX_BIGOT2
+TYPE::TRAIT_BIGOT3 -> TYPE::TRAIT_COMPLEX_BIGOT3
+TYPE::TRAIT_CARELESS -> TYPE::TRAIT_COMPLEX_CARELESS1
+TYPE::TRAIT_CARELESS1 -> TYPE::TRAIT_COMPLEX_CARELESS1
+TYPE::TRAIT_CARELESS2 -> TYPE::TRAIT_COMPLEX_CARELESS2
+TYPE::TRAIT_CARELESS3 -> TYPE::TRAIT_COMPLEX_CARELESS3
+TYPE::TRAIT_CHARISMATIC2 -> TYPE::TRAIT_COMPLEX_CHARISMATIC2
+TYPE::TRAIT_CHARISMATIC3 -> TYPE::TRAIT_COMPLEX_CHARISMATIC3
+TYPE::TRAIT_CIVILIZED -> TYPE::TRAIT_COMPLEX_CIVILIZED1
+TYPE::TRAIT_CIVILIZED1 -> TYPE::TRAIT_COMPLEX_CIVILIZED1
+TYPE::TRAIT_CIVILIZED2 -> TYPE::TRAIT_COMPLEX_CIVILIZED2
+TYPE::TRAIT_CIVILIZED3 -> TYPE::TRAIT_COMPLEX_CIVILIZED3
+TYPE::TRAIT_COVETOUS -> TYPE::TRAIT_COMPLEX_COVETOUS1
+TYPE::TRAIT_COVETOUS1 -> TYPE::TRAIT_COMPLEX_COVETOUS1
+TYPE::TRAIT_COVETOUS2 -> TYPE::TRAIT_COMPLEX_COVETOUS2
+TYPE::TRAIT_COVETOUS3 -> TYPE::TRAIT_COMPLEX_COVETOUS3
+TYPE::TRAIT_COWARDLY -> TYPE::TRAIT_COMPLEX_COWARDLY1
+TYPE::TRAIT_COWARDLY1 -> TYPE::TRAIT_COMPLEX_COWARDLY1
+TYPE::TRAIT_COWARDLY2 -> TYPE::TRAIT_COMPLEX_COWARDLY2
+TYPE::TRAIT_COWARDLY3 -> TYPE::TRAIT_COMPLEX_COWARDLY3
+TYPE::TRAIT_CREATIVE2 -> TYPE::TRAIT_COMPLEX_CREATIVE2
+TYPE::TRAIT_CREATIVE3 -> TYPE::TRAIT_COMPLEX_CREATIVE3
+TYPE::TRAIT_CROOKED -> TYPE::TRAIT_COMPLEX_CROOKED1
+TYPE::TRAIT_CROOKED1 -> TYPE::TRAIT_COMPLEX_CROOKED1
+TYPE::TRAIT_CROOKED2 -> TYPE::TRAIT_COMPLEX_CROOKED2
+TYPE::TRAIT_CROOKED3 -> TYPE::TRAIT_COMPLEX_CROOKED3
+TYPE::TRAIT_CRUEL2 -> TYPE::TRAIT_COMPLEX_CRUEL2
+TYPE::TRAIT_CRUEL3 -> TYPE::TRAIT_COMPLEX_CRUEL3
+TYPE::TRAIT_DECEIVER2 -> TYPE::TRAIT_COMPLEX_DECEIVER2
+TYPE::TRAIT_DECEIVER3 -> TYPE::TRAIT_COMPLEX_DECEIVER3
+TYPE::TRAIT_DEFENSIVE -> TYPE::TRAIT_COMPLEX_DEFENSIVE1
+TYPE::TRAIT_DEFENSIVE1 -> TYPE::TRAIT_COMPLEX_DEFENSIVE1
+TYPE::TRAIT_DEFENSIVE2 -> TYPE::TRAIT_COMPLEX_DEFENSIVE2
+TYPE::TRAIT_DEFENSIVE3 -> TYPE::TRAIT_COMPLEX_DEFENSIVE3
+TYPE::TRAIT_DYNAMIC -> TYPE::TRAIT_COMPLEX_DYNAMIC1
+TYPE::TRAIT_DYNAMIC1 -> TYPE::TRAIT_COMPLEX_DYNAMIC1
+TYPE::TRAIT_DYNAMIC2 -> TYPE::TRAIT_COMPLEX_DYNAMIC2
+TYPE::TRAIT_DYNAMIC3 -> TYPE::TRAIT_COMPLEX_DYNAMIC3
+TYPE::TRAIT_EFFICIENT -> TYPE::TRAIT_COMPLEX_EFFICIENT1
+TYPE::TRAIT_EFFICIENT1 -> TYPE::TRAIT_COMPLEX_EFFICIENT1
+TYPE::TRAIT_EFFICIENT2 -> TYPE::TRAIT_COMPLEX_EFFICIENT2
+TYPE::TRAIT_EFFICIENT3 -> TYPE::TRAIT_COMPLEX_EFFICIENT3
+TYPE::TRAIT_EXCESSIVE2 -> TYPE::TRAIT_COMPLEX_EXCESSIVE2
+TYPE::TRAIT_EXCESSIVE3 -> TYPE::TRAIT_COMPLEX_EXCESSIVE3
+TYPE::TRAIT_EXPANSIVE2 -> TYPE::TRAIT_COMPLEX_EXPANSIVE2
+TYPE::TRAIT_EXPANSIVE3 -> TYPE::TRAIT_COMPLEX_EXPANSIVE3
+TYPE::TRAIT_FINANCIAL2 -> TYPE::TRAIT_COMPLEX_FINANCIAL2
+TYPE::TRAIT_FINANCIAL3 -> TYPE::TRAIT_COMPLEX_FINANCIAL3
+TYPE::TRAIT_FOREIGN2 -> TYPE::TRAIT_COMPLEX_FOREIGN2
+TYPE::TRAIT_FOREIGN3 -> TYPE::TRAIT_COMPLEX_FOREIGN3
+TYPE::TRAIT_GLOOMY -> TYPE::TRAIT_COMPLEX_GLOOMY1
+TYPE::TRAIT_GLOOMY1 -> TYPE::TRAIT_COMPLEX_GLOOMY1
+TYPE::TRAIT_GLOOMY2 -> TYPE::TRAIT_COMPLEX_GLOOMY2
+TYPE::TRAIT_GLOOMY3 -> TYPE::TRAIT_COMPLEX_GLOOMY3
+TYPE::TRAIT_GLORIOUS -> TYPE::TRAIT_COMPLEX_GLORIOUS1
+TYPE::TRAIT_GLORIOUS1 -> TYPE::TRAIT_COMPLEX_GLORIOUS1
+TYPE::TRAIT_GLORIOUS2 -> TYPE::TRAIT_COMPLEX_GLORIOUS2
+TYPE::TRAIT_GLORIOUS3 -> TYPE::TRAIT_COMPLEX_GLORIOUS3
+TYPE::TRAIT_GLUTTONOUS -> TYPE::TRAIT_COMPLEX_GLUTTONOUS1
+TYPE::TRAIT_GLUTTONOUS1 -> TYPE::TRAIT_COMPLEX_GLUTTONOUS1
+TYPE::TRAIT_GLUTTONOUS2 -> TYPE::TRAIT_COMPLEX_GLUTTONOUS2
+TYPE::TRAIT_GLUTTONOUS3 -> TYPE::TRAIT_COMPLEX_GLUTTONOUS3
+TYPE::TRAIT_GREEDY -> TYPE::TRAIT_COMPLEX_GREEDY1
+TYPE::TRAIT_GREEDY1 -> TYPE::TRAIT_COMPLEX_GREEDY1
+TYPE::TRAIT_GREEDY2 -> TYPE::TRAIT_COMPLEX_GREEDY2
+TYPE::TRAIT_GREEDY3 -> TYPE::TRAIT_COMPLEX_GREEDY3
+TYPE::TRAIT_GRIM -> TYPE::TRAIT_COMPLEX_GRIM1
+TYPE::TRAIT_GRIM1 -> TYPE::TRAIT_COMPLEX_GRIM1
+TYPE::TRAIT_GRIM2 -> TYPE::TRAIT_COMPLEX_GRIM2
+TYPE::TRAIT_GRIM3 -> TYPE::TRAIT_COMPLEX_GRIM3
+TYPE::TRAIT_HONEST -> TYPE::TRAIT_COMPLEX_HONEST1
+TYPE::TRAIT_HONEST1 -> TYPE::TRAIT_COMPLEX_HONEST1
+TYPE::TRAIT_HONEST2 -> TYPE::TRAIT_COMPLEX_HONEST2
+TYPE::TRAIT_HONEST3 -> TYPE::TRAIT_COMPLEX_HONEST3
+TYPE::TRAIT_HUMANITARIAN2 -> TYPE::TRAIT_COMPLEX_HUMANITARIAN2
+TYPE::TRAIT_HUMANITARIAN3 -> TYPE::TRAIT_COMPLEX_HUMANITARIAN3
+TYPE::TRAIT_HUMBLE -> TYPE::TRAIT_COMPLEX_HUMBLE1
+TYPE::TRAIT_HUMBLE1 -> TYPE::TRAIT_COMPLEX_HUMBLE1
+TYPE::TRAIT_HUMBLE2 -> TYPE::TRAIT_COMPLEX_HUMBLE2
+TYPE::TRAIT_HUMBLE3 -> TYPE::TRAIT_COMPLEX_HUMBLE3
+TYPE::TRAIT_HUNTER_GATHERER2 -> TYPE::TRAIT_COMPLEX_HUNTER_GATHERER2
+TYPE::TRAIT_HUNTER_GATHERER3 -> TYPE::TRAIT_COMPLEX_HUNTER_GATHERER3
+TYPE::TRAIT_IDEALISTIC2 -> TYPE::TRAIT_COMPLEX_IDEALISTIC2
+TYPE::TRAIT_IDEALISTIC3 -> TYPE::TRAIT_COMPLEX_IDEALISTIC3
+TYPE::TRAIT_IMPERIALIST2 -> TYPE::TRAIT_COMPLEX_IMPERIALIST2
+TYPE::TRAIT_IMPERIALIST3 -> TYPE::TRAIT_COMPLEX_IMPERIALIST3
+TYPE::TRAIT_IMPULSIVE -> TYPE::TRAIT_COMPLEX_IMPULSIVE1
+TYPE::TRAIT_IMPULSIVE1 -> TYPE::TRAIT_COMPLEX_IMPULSIVE1
+TYPE::TRAIT_IMPULSIVE2 -> TYPE::TRAIT_COMPLEX_IMPULSIVE2
+TYPE::TRAIT_IMPULSIVE3 -> TYPE::TRAIT_COMPLEX_IMPULSIVE3
+TYPE::TRAIT_INDUSTRIOUS2 -> TYPE::TRAIT_COMPLEX_INDUSTRIOUS2
+TYPE::TRAIT_INDUSTRIOUS3 -> TYPE::TRAIT_COMPLEX_INDUSTRIOUS3
+TYPE::TRAIT_INNOVATIVE2 -> TYPE::TRAIT_COMPLEX_PROGRESSIST2
+TYPE::TRAIT_INNOVATIVE3 -> TYPE::TRAIT_COMPLEX_PROGRESSIST3
+TYPE::TRAIT_ISOLATIONIST2 -> TYPE::TRAIT_COMPLEX_ISOLATIONIST2
+TYPE::TRAIT_ISOLATIONIST3 -> TYPE::TRAIT_COMPLEX_ISOLATIONIST3
+TYPE::TRAIT_LAWFUL -> TYPE::TRAIT_COMPLEX_LAWFUL1
+TYPE::TRAIT_LAWFUL1 -> TYPE::TRAIT_COMPLEX_LAWFUL1
+TYPE::TRAIT_LAWFUL2 -> TYPE::TRAIT_COMPLEX_LAWFUL2
+TYPE::TRAIT_LAWFUL3 -> TYPE::TRAIT_COMPLEX_LAWFUL3
+TYPE::TRAIT_LAZY -> TYPE::TRAIT_COMPLEX_LAZY1
+TYPE::TRAIT_LAZY1 -> TYPE::TRAIT_COMPLEX_LAZY1
+TYPE::TRAIT_LAZY2 -> TYPE::TRAIT_COMPLEX_LAZY2
+TYPE::TRAIT_LAZY3 -> TYPE::TRAIT_COMPLEX_LAZY3
+TYPE::TRAIT_LIAR -> TYPE::TRAIT_COMPLEX_LIAR1
+TYPE::TRAIT_LIAR1 -> TYPE::TRAIT_COMPLEX_LIAR1
+TYPE::TRAIT_LIAR2 -> TYPE::TRAIT_COMPLEX_LIAR2
+TYPE::TRAIT_LIAR3 -> TYPE::TRAIT_COMPLEX_LIAR3
+TYPE::TRAIT_MEDICAL -> TYPE::TRAIT_COMPLEX_MEDICAL1
+TYPE::TRAIT_MEDICAL1 -> TYPE::TRAIT_COMPLEX_MEDICAL1
+TYPE::TRAIT_MEDICAL2 -> TYPE::TRAIT_COMPLEX_MEDICAL2
+TYPE::TRAIT_MEDICAL3 -> TYPE::TRAIT_COMPLEX_MEDICAL3
+TYPE::TRAIT_MEEK -> TYPE::TRAIT_COMPLEX_MEEK1
+TYPE::TRAIT_MEEK1 -> TYPE::TRAIT_COMPLEX_MEEK1
+TYPE::TRAIT_MEEK2 -> TYPE::TRAIT_COMPLEX_MEEK2
+TYPE::TRAIT_MEEK3 -> TYPE::TRAIT_COMPLEX_MEEK3
+TYPE::TRAIT_MEGALOMANIAC2 -> TYPE::TRAIT_COMPLEX_MEGALOMANIAC2
+TYPE::TRAIT_MEGALOMANIAC3 -> TYPE::TRAIT_COMPLEX_MEGALOMANIAC3
+TYPE::TRAIT_MINIMALIST -> TYPE::TRAIT_COMPLEX_MINIMALIST1
+TYPE::TRAIT_MINIMALIST1 -> TYPE::TRAIT_COMPLEX_MINIMALIST1
+TYPE::TRAIT_MINIMALIST2 -> TYPE::TRAIT_COMPLEX_MINIMALIST2
+TYPE::TRAIT_MINIMALIST3 -> TYPE::TRAIT_COMPLEX_MINIMALIST3
+TYPE::TRAIT_NAIVE -> TYPE::TRAIT_COMPLEX_NAIVE1
+TYPE::TRAIT_NAIVE1 -> TYPE::TRAIT_COMPLEX_NAIVE1
+TYPE::TRAIT_NAIVE2 -> TYPE::TRAIT_COMPLEX_NAIVE2
+TYPE::TRAIT_NAIVE3 -> TYPE::TRAIT_COMPLEX_NAIVE3
+TYPE::TRAIT_NATURALIST -> TYPE::TRAIT_COMPLEX_NATURALIST1
+TYPE::TRAIT_NATURALIST1 -> TYPE::TRAIT_COMPLEX_NATURALIST1
+TYPE::TRAIT_NATURALIST2 -> TYPE::TRAIT_COMPLEX_NATURALIST2
+TYPE::TRAIT_NATURALIST3 -> TYPE::TRAIT_COMPLEX_NATURALIST3
+TYPE::TRAIT_NEGLIGENT -> TYPE::TRAIT_COMPLEX_NEGLIGENT1
+TYPE::TRAIT_NEGLIGENT1 -> TYPE::TRAIT_COMPLEX_NEGLIGENT1
+TYPE::TRAIT_NEGLIGENT2 -> TYPE::TRAIT_COMPLEX_NEGLIGENT2
+TYPE::TRAIT_NEGLIGENT3 -> TYPE::TRAIT_COMPLEX_NEGLIGENT3
+TYPE::TRAIT_NEGOTIATOR -> TYPE::TRAIT_COMPLEX_NEGOTIATOR1
+TYPE::TRAIT_NEGOTIATOR1 -> TYPE::TRAIT_COMPLEX_NEGOTIATOR1
+TYPE::TRAIT_NEGOTIATOR2 -> TYPE::TRAIT_COMPLEX_NEGOTIATOR2
+TYPE::TRAIT_NEGOTIATOR3 -> TYPE::TRAIT_COMPLEX_NEGOTIATOR3
+TYPE::TRAIT_COMPLEX_NOMADIC -> TYPE::TRAIT_COMPLEX_NOMAD1
+TYPE::TRAIT_COMPLEX_NOMADIC2 -> TYPE::TRAIT_COMPLEX_NOMAD2
+TYPE::TRAIT_COMPLEX_NOMADIC3 -> TYPE::TRAIT_COMPLEX_NOMAD3
+TYPE::TRAIT_COMPLEX_ZEALOUS2 -> TYPE::TRAIT_COMPLEX_FANATICAL2
+TYPE::TRAIT_COMPLEX_ZEALOUS3 -> TYPE::TRAIT_COMPLEX_FANATICAL3
+TYPE::TRAIT_COMPLEX_INNOVATIVE2 -> TYPE::TRAIT_COMPLEX_PROGRESSIST2
+TYPE::TRAIT_COMPLEX_INNOVATIVE3 -> TYPE::TRAIT_COMPLEX_PROGRESSIST3
+TYPE::TRAIT_COMPLEX_NOMADIC1 -> TYPE::TRAIT_COMPLEX_NOMAD1
+TYPE::TRAIT_COMPLEX_ZEALOUS -> TYPE::TRAIT_COMPLEX_FANATICAL1
+TYPE::TRAIT_COMPLEX_ZEALOUS1 -> TYPE::TRAIT_COMPLEX_FANATICAL1
+TYPE::TRAIT_NOMADIC2 -> TYPE::TRAIT_COMPLEX_NOMAD2
+TYPE::TRAIT_NOMADIC3 -> TYPE::TRAIT_COMPLEX_NOMAD3
+TYPE::TRAIT_ORGANIZED2 -> TYPE::TRAIT_COMPLEX_ORGANIZED2
+TYPE::TRAIT_ORGANIZED3 -> TYPE::TRAIT_COMPLEX_ORGANIZED3
+TYPE::TRAIT_PACIFIST -> TYPE::TRAIT_COMPLEX_PACIFIST1
+TYPE::TRAIT_PACIFIST1 -> TYPE::TRAIT_COMPLEX_PACIFIST1
+TYPE::TRAIT_PACIFIST2 -> TYPE::TRAIT_COMPLEX_PACIFIST2
+TYPE::TRAIT_PACIFIST3 -> TYPE::TRAIT_COMPLEX_PACIFIST3
+TYPE::TRAIT_PHILOSOPHICAL2 -> TYPE::TRAIT_COMPLEX_PHILOSOPHICAL2
+TYPE::TRAIT_PHILOSOPHICAL3 -> TYPE::TRAIT_COMPLEX_PHILOSOPHICAL3
+TYPE::TRAIT_PIOUS -> TYPE::TRAIT_COMPLEX_PIOUS1
+TYPE::TRAIT_PIOUS1 -> TYPE::TRAIT_COMPLEX_PIOUS1
+TYPE::TRAIT_PIOUS2 -> TYPE::TRAIT_COMPLEX_PIOUS2
+TYPE::TRAIT_PIOUS3 -> TYPE::TRAIT_COMPLEX_PIOUS3
+TYPE::TRAIT_POLITICIAN2 -> TYPE::TRAIT_COMPLEX_POLITICIAN2
+TYPE::TRAIT_POLITICIAN3 -> TYPE::TRAIT_COMPLEX_POLITICIAN3
+TYPE::TRAIT_POPULIST2 -> TYPE::TRAIT_COMPLEX_POPULIST2
+TYPE::TRAIT_POPULIST3 -> TYPE::TRAIT_COMPLEX_POPULIST3
+TYPE::TRAIT_PRAGMATIC -> TYPE::TRAIT_COMPLEX_PRAGMATIC1
+TYPE::TRAIT_PRAGMATIC1 -> TYPE::TRAIT_COMPLEX_PRAGMATIC1
+TYPE::TRAIT_PRAGMATIC2 -> TYPE::TRAIT_COMPLEX_PRAGMATIC2
+TYPE::TRAIT_PRAGMATIC3 -> TYPE::TRAIT_COMPLEX_PRAGMATIC3
+TYPE::TRAIT_PREEMINENT -> TYPE::TRAIT_COMPLEX_PREEMINENT1
+TYPE::TRAIT_PREEMINENT1 -> TYPE::TRAIT_COMPLEX_PREEMINENT1
+TYPE::TRAIT_PREEMINENT2 -> TYPE::TRAIT_COMPLEX_PREEMINENT2
+TYPE::TRAIT_PREEMINENT3 -> TYPE::TRAIT_COMPLEX_PREEMINENT3
+TYPE::TRAIT_PROGRESSIVE -> TYPE::TRAIT_COMPLEX_PROGRESSIVE1
+TYPE::TRAIT_PROGRESSIVE1 -> TYPE::TRAIT_COMPLEX_PROGRESSIVE1
+TYPE::TRAIT_PROGRESSIVE2 -> TYPE::TRAIT_COMPLEX_PROGRESSIVE2
+TYPE::TRAIT_PROGRESSIVE3 -> TYPE::TRAIT_COMPLEX_PROGRESSIVE3
+TYPE::TRAIT_PROLIFIC -> TYPE::TRAIT_COMPLEX_PROLIFIC1
+TYPE::TRAIT_PROLIFIC1 -> TYPE::TRAIT_COMPLEX_PROLIFIC1
+TYPE::TRAIT_PROLIFIC2 -> TYPE::TRAIT_COMPLEX_PROLIFIC2
+TYPE::TRAIT_PROLIFIC3 -> TYPE::TRAIT_COMPLEX_PROLIFIC3
+TYPE::TRAIT_PROTECTIVE2 -> TYPE::TRAIT_COMPLEX_PROTECTIVE2
+TYPE::TRAIT_PROTECTIVE3 -> TYPE::TRAIT_COMPLEX_PROTECTIVE3
+TYPE::TRAIT_REVOLUTIONARY2 -> TYPE::TRAIT_COMPLEX_REVOLUTIONARY2
+TYPE::TRAIT_REVOLUTIONARY3 -> TYPE::TRAIT_COMPLEX_REVOLUTIONARY3
+TYPE::TRAIT_SCIENTIFIC2 -> TYPE::TRAIT_COMPLEX_SCIENTIFIC2
+TYPE::TRAIT_SCIENTIFIC3 -> TYPE::TRAIT_COMPLEX_SCIENTIFIC3
+TYPE::TRAIT_SEAFARING2 -> TYPE::TRAIT_COMPLEX_SEAFARING2
+TYPE::TRAIT_SEAFARING3 -> TYPE::TRAIT_COMPLEX_SEAFARING3
+TYPE::TRAIT_SLOB -> TYPE::TRAIT_COMPLEX_SLOB1
+TYPE::TRAIT_SLOB1 -> TYPE::TRAIT_COMPLEX_SLOB1
+TYPE::TRAIT_SLOB2 -> TYPE::TRAIT_COMPLEX_SLOB2
+TYPE::TRAIT_SLOB3 -> TYPE::TRAIT_COMPLEX_SLOB3
+TYPE::TRAIT_SPIRITUAL2 -> TYPE::TRAIT_COMPLEX_SPIRITUAL2
+TYPE::TRAIT_SPIRITUAL3 -> TYPE::TRAIT_COMPLEX_SPIRITUAL3
+TYPE::TRAIT_STRATEGIST -> TYPE::TRAIT_COMPLEX_STRATEGIST1
+TYPE::TRAIT_STRATEGIST1 -> TYPE::TRAIT_COMPLEX_STRATEGIST1
+TYPE::TRAIT_STRATEGIST2 -> TYPE::TRAIT_COMPLEX_STRATEGIST2
+TYPE::TRAIT_STRATEGIST3 -> TYPE::TRAIT_COMPLEX_STRATEGIST3
+TYPE::TRAIT_STUBBORN -> TYPE::TRAIT_COMPLEX_STUBBORN1
+TYPE::TRAIT_STUBBORN1 -> TYPE::TRAIT_COMPLEX_STUBBORN1
+TYPE::TRAIT_STUBBORN2 -> TYPE::TRAIT_COMPLEX_STUBBORN2
+TYPE::TRAIT_STUBBORN3 -> TYPE::TRAIT_COMPLEX_STUBBORN3
+TYPE::TRAIT_TEMPERAMENTAL2 -> TYPE::TRAIT_COMPLEX_TEMPERAMENTAL2
+TYPE::TRAIT_TEMPERAMENTAL3 -> TYPE::TRAIT_COMPLEX_TEMPERAMENTAL3
+TYPE::TRAIT_TIMID -> TYPE::TRAIT_COMPLEX_TIMID1
+TYPE::TRAIT_TIMID1 -> TYPE::TRAIT_COMPLEX_TIMID1
+TYPE::TRAIT_TIMID2 -> TYPE::TRAIT_COMPLEX_TIMID2
+TYPE::TRAIT_TIMID3 -> TYPE::TRAIT_COMPLEX_TIMID3
+TYPE::TRAIT_TRADITIONAL -> TYPE::TRAIT_COMPLEX_TRADITIONAL1
+TYPE::TRAIT_TRADITIONAL1 -> TYPE::TRAIT_COMPLEX_TRADITIONAL1
+TYPE::TRAIT_TRADITIONAL2 -> TYPE::TRAIT_COMPLEX_TRADITIONAL2
+TYPE::TRAIT_TRADITIONAL3 -> TYPE::TRAIT_COMPLEX_TRADITIONAL3
+TYPE::TRAIT_UNREFINED -> TYPE::TRAIT_COMPLEX_UNREFINED1
+TYPE::TRAIT_UNREFINED1 -> TYPE::TRAIT_COMPLEX_UNREFINED1
+TYPE::TRAIT_UNREFINED2 -> TYPE::TRAIT_COMPLEX_UNREFINED2
+TYPE::TRAIT_UNREFINED3 -> TYPE::TRAIT_COMPLEX_UNREFINED3
+TYPE::TRAIT_UNSANITARY -> TYPE::TRAIT_COMPLEX_UNSANITARY1
+TYPE::TRAIT_UNSANITARY1 -> TYPE::TRAIT_COMPLEX_UNSANITARY1
+TYPE::TRAIT_UNSANITARY2 -> TYPE::TRAIT_COMPLEX_UNSANITARY2
+TYPE::TRAIT_UNSANITARY3 -> TYPE::TRAIT_COMPLEX_UNSANITARY3
+TYPE::TRAIT_USURPER -> TYPE::TRAIT_COMPLEX_USURPER1
+TYPE::TRAIT_USURPER1 -> TYPE::TRAIT_COMPLEX_USURPER1
+TYPE::TRAIT_USURPER2 -> TYPE::TRAIT_COMPLEX_USURPER2
+TYPE::TRAIT_USURPER3 -> TYPE::TRAIT_COMPLEX_USURPER3
+TYPE::TRAIT_WARMONGER -> TYPE::TRAIT_COMPLEX_WARMONGER1
+TYPE::TRAIT_WARMONGER1 -> TYPE::TRAIT_COMPLEX_WARMONGER1
+TYPE::TRAIT_WARMONGER2 -> TYPE::TRAIT_COMPLEX_WARMONGER2
+TYPE::TRAIT_WARMONGER3 -> TYPE::TRAIT_COMPLEX_WARMONGER3
+TYPE::TRAIT_ZEALOUS2 -> TYPE::TRAIT_COMPLEX_FANATICAL2
+TYPE::TRAIT_ZEALOUS3 -> TYPE::TRAIT_COMPLEX_FANATICAL3
+| The four ANIMAL-resource bonuses whose ids were plural against a family that is otherwise singular
+| (CAMEL / COW / HORSE / PIG / WHALE / CRAB, plus the invariant BISON / DEER / FISH / SHEEP). The plot's
+| bonus is a serialized class enum, and bonuses are the SOFT removal class (save.md par.7: NO_BONUS is a
+| normal state) -- so without these the old id resolves to -1 and every plot holding one SILENTLY loses its
+| resource, which is the exact failure the TYPE:: namespace exists to prevent.
+TYPE::BONUS_ELEPHANTS -> TYPE::BONUS_ELEPHANT
+TYPE::BONUS_BEAVERS -> TYPE::BONUS_BEAVER
+TYPE::BONUS_PARROTS -> TYPE::BONUS_PARROT
+TYPE::BONUS_GUINEA_PIGS -> TYPE::BONUS_GUINEA_PIG
+
+| CvCity::m_iFreshWater -- REPLACED by the `providesFreshWater` AMENITY refcount. The counter was a second,
+| serialized store for a verdict CityContext's amenity dictionary already holds, and its changer had lost every
+| caller, so provider buildings conferred nothing at all. The verdict is now the refcount's own 0 <-> non-zero
+| crossing, announced from AmenityContext like power's and the government centre's.
+| REPLACEMENT: CityContext.amenities[CLS_AMENITY_PROVIDES_FRESH_WATER], derived at load by the event reseed.
+CvCity::m_iFreshWater                    (int)
+
+| CvArea::m_aiCleanPowerCount -- DELETED. There is no "clean power": power is power, and an area-wide power
+| source is an ordinary building granting `providesPower` at EMPIRE scope (building_three_gorges_dam and its
+| five siblings), which lands on every city's amenity refcount through the normal path. The per-(area x team)
+| counter, its spine fact pair and its CyArea bindings were residue from before that and had no authored data
+| feeding them at all. REPLACEMENT: CityContext.amenities[CLS_AMENITY_PROVIDES_POWER].
+CvArea::m_aiCleanPowerCount              (int array, MAX_TEAMS)
+
+| THE TRAP MECHANIC -- killed whole (579034ddb), and NONE of its eleven serialized tags was listed. That is the
+| one hard case save.md par.3 names: an unlisted deleted-read orphan is not drained, so every following tag
+| reads the previous one's slot. Four of them sat INSIDE the per-UNITCOMBAT loop beside healUnitCombatTypeVolume
+| / healUnitCombatTypeAdjacentVolume / targetUnitCombatCount, so a mature save desynced once per
+| (unit x combat class) -- thousands of [SAVEREAD] mismatch lines. Listing them took that to zero.
+| The DECORATED tags are listed in their BARE normalized form (Class::decoration) -- a bracketed entry can
+| never match the normalized tag and silently fails to drain.
+CvUnit::trapImmunityUnitCombatCount        (int, decorated, per UnitCombat)
+CvUnit::extraTrapDisableUnitCombatType     (int, decorated, per UnitCombat)
+CvUnit::extraTrapAvoidanceUnitCombatType   (int, decorated, per UnitCombat)
+CvUnit::extraTrapTriggerUnitCombatType     (int, decorated, per UnitCombat)
+CvUnit::trapSetWithPromotionType           (int, decorated)
+CvUnit::m_iExtraPeaksWorkPercent           (int, decorated)
+CvUnit::m_iExtraTrapDamageMin              (int)
+CvUnit::m_iExtraTrapDamageMax              (int)
+CvUnit::m_iExtraTrapComplexity             (int)
+CvUnit::m_iExtraPoisonProbabilityModifier  (int)
+CvUnit::m_iTriggerBeforeAttackCount        (int)
+
+| CvPlot::m_aiFoundValue -- the AI settle-scoring cache, DE-SERIALIZED (the member stays; only its read + write
+| go). It is a PER-TURN cache: CvPlayerAI::AI_doTurnUnitsPre calls AI_updateFoundValues(true) unconditionally,
+| which clearFoundValue()s every revealed plot at the start of every player's own slice -- so a saved value
+| survived at most from load to that player's first turn and was then overwritten wholesale. save.md par.5:
+| a recompute-only cache is never trusted from a save.
+| It also carried the one CRITICAL read defect in the plot block: the count was read into an UNINITIALIZED
+| char and the array allocated UNGUARDED (`new unsigned int[cFoundValuesPresent]`), alone among the five
+| sibling blocks. On a save whose writer emitted (char)0 the member became non-NULL and ZERO-LENGTH, which
+| defeats all four NULL-only guards in getFoundValue / clearFoundValue / setFoundValue -- an out-of-bounds
+| heap WRITE on reveal, and a 204-byte out-of-bounds READ persisted straight back into the next save.
+| REPLACEMENT: none needed -- CvPlayerAI::AI_updateFoundValues rebuilds it from AI_foundValue on the owning
+| player's first turn slice, exactly as it does on a new game (CvGame::setInitialItems).
+CvPlot::cFoundValuesPresent              (char, decorated)
+CvPlot::m_aiFoundValue                   (uint array, MAX_PLAYERS)
+
+| CvPlayer::m_iCorporateMaintenance -- DE-SERIALIZED and DELETED. It was a stored Sigma over the player's cities
+| of CvCity::calcCorporateMaintenance, and updateCorporateMaintenance() only ran from doTurn under
+| GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS -- so under CLASSIC corporations nothing recomputed it and the
+| serialized value was the ONLY source, frozen at whatever the save carried (0 on a new game) while
+| getCorporateMaintenance() kept feeding calculatePreInflatedCosts as one of the six components
+| (economy.md par."Gold expense"). The stranded-accumulator detector exactly: a maintainer with no reachable
+| call site + a member still serialized + a getter still read = a consumer served a frozen save value.
+| REPLACEMENT: getCorporateMaintenance() is now the cross-scope receiver Sigma, re-summed at the read over the
+| player's cities (state-repositories.md: a receiver total is the Sigma of its members' realized values and
+| nothing is built to avoid that).
+| BEHAVIOUR CHANGE, stated rather than hidden: a CLASSIC-corporations game now pays corporate maintenance
+| instead of a frozen number. That is the defect ending, not a new charge -- corporations are active in both
+| modes (culture-religion-research.md: Classic differs only in manual-vs-autonomous SPREAD).
+CvPlayer::m_iCorporateMaintenance        (int64)
+
+| CvPlayer::m_iCorporateTaxIncome -- DELETED, fully dead. Initialized to 0, serialized both ways, and its ONLY
+| other appearance in the tree was one line inside CvPlayer::read adding it into m_iCorporateMaintenance under
+| an @SAVEBREAK-delete marker. NOTHING ever wrote a non-zero value to it, so it carried 0 forward forever.
+| REPLACEMENT: none -- the quantity never existed.
+CvPlayer::m_iCorporateTaxIncome          (int)
+
+| CvUnit::m_bHasAnyInvisibility -- DE-SERIALIZED (the member stays; only its read + write go). It is a pure
+| DERIVED verdict: setHasAnyInvisibility() recomputes it from the unit's own NO_INVISIBILITY skill, its
+| noInvisibility count and hasInvisibilityType() across every invisible info, and it is maintained at each of
+| its mutation sites. save.md par.5 / DEC-derived-never-trusted: a derived value is never trusted from a save.
+| It matters here rather than being tidiness, because the DERIVATION MOVED: the hide-and-seek collapse
+| (superseded-ideas #35) made the method a SKILL, so a bool written by the pre-collapse derivation loads as a
+| verdict no current input produced -- and the failure direction is FAIL-OPEN TOWARD INVISIBILITY
+| (vision.md par.4), which produces no error, no wrong number and no log line.
+| REPLACEMENT: CvUnit::read recomputes it in its Post Process block, after the promotion and combat-class sets
+| have landed.
+CvUnit::m_bHasAnyInvisibility            (bool)
+
+| CvCity::m_iGreatPeopleRateModifier -- DELETED, a stranded accumulator serving a FROZEN SAVE VALUE. Its only
+| writer was changeGreatPeopleRateModifier, which has had NO call site since the accumulator cut; the member
+| stayed serialized and getTotalGreatPeopleRateModifier kept reading it, so it contributed whatever percentage
+| the save happened to carry (and exactly 0 on a new game) forever.
+| REPLACEMENT: none is owed -- the value is ALREADY in the base. getBaseGreatPeopleRate is a fresh gather,
+| realizedAtCity on MODFAM_GREAT_PEOPLE_RATE/CHANNEL_AMOUNT, and realizedAtCity IS the modifier.md par.2a
+| combine, so both the flats and the percents of that channel resolve inside the base. Re-pointing this getter
+| at the channel's percent side would have applied the same stack a second time; the term is simply removed
+| from getTotalGreatPeopleRateModifier, which now carries only what the channel does NOT (the state-religion
+| kind and the golden-age define).
+CvCity::m_iGreatPeopleRateModifier       (int)
+
+| CvCity::m_iWarWearinessModifier -- DELETED, a stranded accumulator serving a FROZEN SAVE VALUE. Its only
+| writer was changeWarWearinessModifier, callerless since the accumulator cut, while the member stayed
+| serialized and both anger readers kept adding it.
+| REPLACEMENT: aiScalars[SCALAR_WAR_WEARINESS] off the CITY's own getScalars, which is realizedAtCity on the
+| channel and therefore the roll-up over the chain the city sits under (team + empire + city, modifier.md par.1).
+| Both sites previously read the PLAYER's getScalars beside the frozen member, so they now read the city's
+| rolled scalar ONCE instead -- reading the player's beside it would count the empire scope twice.
+| The what-if site keeps its own candidate term (kBuilding's city + empire scalars), which is correct: a
+| candidate building is not in the roll-up yet.
+CvCity::m_iWarWearinessModifier          (int)
+
+| The HEAL CLUSTER -- both members cut TOGETHER, because they are added to each other at one consumer
+| (CvUnit::getHealRateAsType) and so share a scale by arithmetic necessity: converting either alone would
+| need a compensating constant, which is the surviving-fudge-factor tell that the cluster boundary is wrong
+| (fixed-point-and-scales.md par.4c-bis). Both were stranded accumulators serving a FROZEN SAVE VALUE --
+| changeHealRate and CvCity::changeHealUnitCombatTypeVolume were both callerless while the members stayed
+| serialized and CvUnit kept reading them.
+| REPLACEMENT (the scope-wide leg): CvCity::getHealKinds()[HEAL_RATE], the heal family's city-scope package
+| read, which already existed. The amounts are x100, so the two CvUnit readers reduce at their own point of
+| use -- beside the resolvedValue(URS_HEAL_*) / 100 siblings already on those lines.
+| REPLACEMENT (the keyed leg): CvCity::getHealUnitCombatTypeTotal re-pointed onto an entry-list read over the
+| city's OPERATING buildings via InfoValuation::collectHealByUnitCombat -- a keyed deposit is read from the
+| live sources, never folded into a scope package (modifier.md par.5). The unit-side twin of the same name is
+| untouched: it is the live resolved-plane read and is already fed from the same collect.
+| NB the heal MECHANIC is a KEEP-legacy carve-out; what moved is only how the data is FED to it.
+CvCity::m_iHealRate                      (int)
+CvCity::m_paiHealUnitCombatTypeVolume    (int array)
+
+| CvCity::m_iSpecialistInsidiousness / m_iSpecialistInvestigation -- DELETED, stranded accumulators serving a
+| FROZEN SAVE VALUE. Both changers were callerless while the members stayed serialized and both consumers kept
+| adding them.
+| REPLACEMENT: none needed -- the cascade read was ALREADY THERE, on the line above each of them.
+| getExtraInsidiousness / getExtraInvestigation are cascadeValue(MODFAM_UNDERWORLD, UNDERWORLD_*) / 100, the
+| city-scope roll-up, and the SPECIALIST leg is inside it: a specialist's underworld.city deposit is applied
+| into the city package by SEVT_CITY_SPECIALIST_ADDED / _REMOVED with the count as the operator. Two
+| specialists author underworld.city.investigation; 109 buildings author the family at city scope.
+| So these two terms were a double-count waiting to happen and are simply removed, not re-pointed.
+CvCity::m_iSpecialistInsidiousness       (int)
+CvCity::m_iSpecialistInvestigation       (int)
+
+| CvPlayer::m_ppiSpecialistYieldPercentChanges / m_ppiSpecialistCommercePercentChanges -- DELETED.
+| ⚖ A SPECIALIST'S PERCENT GOES IN THE PERCENT PACKAGE (owner). It is an ordinary city modifier: it joins the
+| ONE additive stack with every other source's, sums, and applies once. Not a flat-per-specialist add.
+| REPLACEMENT: already live -- CvModifierConsumer routes a specialist-origin PERCENT into city.getCityPercents()
+| (the origin decides the plane only for the FLATS, because a specialist's flat is tier 1 and a building's tier
+| 2; a percent has no origin to keep apart).
+| The legacy shape was a DOUBLE-COUNT: getAdditionalBaseCommerceRateBySpecialist added the member as a flat
+| addend and then multiplied the total by getTotalCommerceRateModifier -- the stack the percent already sits in.
+| NB no bare tag is listed for these: the tag is a BRACKETED per-element one, which cannot be soft-removed
+| (save.md par.3), so CvPlayer::read keeps the loop as a pure drain into scratch instead.
+
+| PURE DEAD WEIGHT -- serialized, changer callerless, and NO getter consumer anywhere (engine, Cy binding or
+| Python). Nothing read these, so there is no replacement to name and no behaviour to preserve; they were
+| costing only save bytes and an init.
+CvCity::m_iHappinessPercentPerPopulation (int)
+CvPlayer::m_aiSeaPlotYield               (int array)
+CvPlayer::m_iEnslavementChance           (int)
+CvPlayer::m_aiLandmarkYield              (int array)
+CvUnit::m_iNumTimesTriggered             (int)
+
+| CvCity::m_iExtraLocalCaptureProbabilityModifier / m_iExtraLocalCaptureResistanceModifier -- DELETED,
+| stranded accumulators serving a FROZEN SAVE VALUE. Both the set* and change* writers were callerless while
+| the members stayed serialized and all three consumers kept adding them.
+| REPLACEMENT: none needed -- the capture family HAS NO CITY SCOPE (CAPTURE_SCOPES is UNIT | EMPIRE) and the
+| data authors only empire (100) and unit (778), so nothing was ever going to feed a city-scope capture value.
+| Every consumer already reads getCaptureKinds() -- the empire channel -- on the line beside the frozen member,
+| so the local term is simply removed. A data-led behaviour change, stated rather than preserved.
+CvCity::m_iExtraLocalCaptureProbabilityModifier (int)
+CvCity::m_iExtraLocalCaptureResistanceModifier  (int)
+
+| CvCity::m_iForeignTradeRouteModifier / CvPlayer::m_iForeignTradeRouteModifier -- DELETED, stranded
+| accumulators serving a FROZEN SAVE VALUE. The comment already standing above the call site named them:
+| the tradeRoutes group read is "the roll-up over the chain this city sits under (team + empire + city),
+| which is what the two plain accumulators were separately accumulating" -- so both terms were being added
+| on top of a read that supersedes them.
+| REPLACEMENT: getTradeRouteKinds()[TRADE_ROUTE_MODIFIER], already on the line above both.
+| ⚠ The FOREIGN-specific bonus stays honestly UNSERVED, which is the position already recorded at that site:
+| it authors as a conditioned tradeRoutes.empire.modifier entry gated IS_FOREIGN / SHARES_CIVIC, and those
+| predicates read the ROUTE'S PARTNER -- an axis CvCascadeEvalCtx carries no slot for. MISSING MACHINE: the
+| route-partner axis on the eval ctx.
+|
+| CvCity::m_iAirModifier -- DELETED. The air family has NO CITY SCOPE (AIR_SCOPES is UNIT | EMPIRE) and the
+| data authors only empire (6) and unit (156), so nothing could ever feed a city-scope air modifier. Both
+| consumers (air combat damage, air collateral) drop the term; in the first the whole isCity branch collapsed
+| onto the expression the fallthrough already returned. A data-led behaviour change, stated not preserved.
+|
+| CvCity::m_iNukeModifier -- DELETED and RE-POINTED (not dropped): DEFENSE_NUKE is a real kind of the defense
+| family, which does carry city scope, so both CvPlot consumers now read getDefenseKinds()[DEFENSE_NUKE].
+| ⚠ ZERO entities author `nuke` today, so the chain is live-but-inert HEADROOM and every read answers 0 --
+| the corporation-obsolete shape. That is NOT a data gap to fill and NOT a reason to purge the read: it
+| lights up the moment data authors one.
+| The three dead CyCity methods (getForeignTradeRouteModifier / getAirModifier / getNukeModifier) went with
+| them -- each carried NO .def and no Python caller, so they were unbound outlaws.
+CvCity::m_iForeignTradeRouteModifier     (int)
+CvPlayer::m_iForeignTradeRouteModifier   (int)
+CvCity::m_iAirModifier                   (int)
+CvCity::m_iNukeModifier                  (int)
+
+| The player's hurry-inflation modifier -- DELETED with NO REPLACEMENT, deliberately (owner). It was a
+| stranded accumulator serving a FROZEN SAVE VALUE: the changer had no caller left, the member still
+| deserialized, and doAdvancedEconomy still read it to scale the hurried-count decay -- so every game
+| decayed against whatever history a save carried, and a new game against zero.
+| ⛔ NOT re-pointed onto SCALAR_HURRY_INFLATION even though that kind exists and two civics author
+| hurry.empire.inflation. INFLATION IS NOT ACTUALLY USED IN THE GAME TODAY (owner), and when it returns it
+| is modelled as a CASCADE CHANNEL driven by ACTUAL EXPENDITURE -- not by the hurried-count proxy the
+| present formula keys on. Re-pointing would wire a live read onto a mechanic that is being replaced whole,
+| so the consequence is accepted instead: the two authorings stop mattering and the decay runs unmodified.
+| ⚠ The rest of the inflation surface is UNTOUCHED and still live -- getInflationMod10000 / getInflationCost,
+| SCALAR_INFLATION, UPKEEP_INFLATION, and the event-granted modifier (genuine one-shot persisted state).
+CvPlayer::m_iHurryInflationModifier      (int)
+
+| The city's bonus-keyed DEFENSE map -- DELETED with NO REPLACEMENT. It was dead in every direction at once,
+| which is rarer than a stranded accumulator and is why the plain getter grep under-reported it: the changer
+| had no caller, the getter had no caller, AND the map's third reader -- a calculator whose name carries no
+| trace of the member stem -- had no caller either. Nothing wrote it and nothing read it.
+| ⚠ The third reader is the detector's second blind spot working exactly as recorded: grep the MEMBER, never
+| only the getter, or a reader named for its answer instead of its source stays invisible.
+| ⛔ NOT re-pointed: defense is ONE additive stack on the city's percent side and a bonus-keyed defense
+| channel is not part of the model ([modifier.md] §2 -- there is no natural-defense kind and no per-source
+| decomposition), so there is nothing for the term to become.
+| ⚑ These three tags are BRACKET-FREE decorated sub-tags (a Size count plus a Type/value pair per element),
+| which save.md §3 states are safe to soft-remove -- unlike a bracketed per-element tag, whose normalized name
+| cannot match. Each is listed, so the count and every element drain in turn.
+CvCity::BonusDefenseChangesSize          (short)
+CvCity::BonusDefenseChangesType          (short)
+CvCity::BonusDefenseChanges              (int)
+========================
+| The per-improvement free-specialist accumulator: n free specialists per city plot carrying IMPROVEMENT_X.
+| A stranded accumulator by all three legs -- changeImprovementFreeSpecialists had NO caller left, the array
+| kept deserializing, and four consumers read it: totalFreeSpecialists (which re-walked every improvement and
+| added the frozen value on top of the roll-up), the CvPlot improvement-change gate, and two CvCityAI terms.
+| REPLACEMENT: the ordinary cascade deposit the curator already emits -- `freeSpecialists.city.any` carrying
+| `per: {type: IMPROVEMENT_X, scope: city}` (curate_building.py, from the legacy ImprovementFreeSpecialists
+| table), resolved through cascadeCountOf -> CityContext::improvedPlotCount and served by
+| CvCity::getFreeSpecialist. 14 authored deposits across 10 improvement keys.
+| ⚑ The COUNT ROUTE was missing and is wired with this cut (CvModifierConsumer, the improvement leg beside the
+| bonus one): the deposits sit in the COUNT index (gatedByToken), not the atom index, so the "no substrate
+| type-atom route" measurement beside it did not reach them and the count moved with nothing re-resolving it.
+| ⚠ The two CvCityAI terms are DROPPED, not re-pointed: both read the writerless array, so both returned 0 on
+| any new game and contributed nothing. Restoring an AI term wants a read of the per-scaler RATE for a given
+| count-key, which does not exist on the calc surface -- the same missing-read class as the unit-qualified
+| entry sum, and a valuation improvement rather than a migration obligation.
+CvCity::m_paiImprovementFreeSpecialists  (class int array, IMPROVEMENTS)
+========================
+| The military-happiness RATE: how much happiness one stationed military unit is worth, empire-wide.
+| A stranded accumulator on all three legs -- changeHappyPerMilitaryUnit had NO caller left, the int kept
+| deserializing, and nine consumers read it (CvCityAI x6, CvPlayerAI x2, CvCity::getMilitaryHappiness), so
+| every save scaled military happiness by whatever history it carried and every NEW game by zero.
+| REPLACEMENT: CvPlayer::getHappyPerMilitaryUnit now SUMS the `unit:`-qualified entries over the player's live
+| sources (adopted civics + held traits) -- `happiness.empire.cities.{unit: IS_MILITARY}`, 18 authored entries
+| -- through InfoValuation::unitQualifiedRate. The city then folds `perUnit x liveCount` on top, outside every
+| percentage, which CvCity::getMilitaryHappiness already did ([DEC-unit-modifiers-on-top], modifier.md §2b/§6).
+| ⚑ The RATE read is what every other walk on the calc surface deliberately skips, and is why they skip it: a
+| unit-carried value must never enter a cached sum, so it is summed here instead. Until it existed the deposits
+| reached nobody and the qualifier was compiled, cloned and rendered but never read.
+| ⚠ The changer's rider (AI_makeAssignWorkDirty on the unlimited path) needs no new home: a CIVIC change and a
+| TRAIT change are already ruled dirty triggers (citizen-assignment.md), and those are this value's only sources.
+CvPlayer::m_iHappyPerMilitaryUnit        (int)
+========================
+| The per-unitcombat TARGETING count on CvUnit's keyed info: "this unit preferentially targets that class".
+| Stranded on all three legs -- changeTargetUnitCombatCount had NO caller, the decorated tag kept
+| deserializing, and its one reader (hasTargetUnitCombat) was OR'd into the combat targeting test.
+| REPLACEMENT: already wired and sitting in the SAME expression -- the cascade read of
+| `combat.<scope>.targets.{UNITCOMBAT_X}` via InfoValuation::keyedTarget, which is where skills.md §1 re-homed
+| the legacy per-type `targets` table. The accumulator leg was an OR against a frozen zero.
+| ⚑ A BRACKET-FREE decorated sub-tag, so save.md §3 allows the soft-remove; the tag drains by name.
+| ⚠ Do not confuse it with CvUnitInfo::hasTargetUnitCombat -- the INFO-side authored read, which is live.
+CvUnit::targetUnitCombatCount            (decorated int, per UNITCOMBAT)
+========================
+| The player-side "no unhappiness in the capital" gate count.
+| Stranded on all three legs -- changeNoCapitalUnhappiness had NO caller, the int kept deserializing, and two
+| consumers read it (the city's anger-abolish gate and an AI civic valuation).
+| REPLACEMENT: already built end to end. json.md §8 retires the key itself -- it baked the WHERE into its name
+| (the condition-as-member shape) -- so it is ONE key, `abolishedAnger`, gated `IS_CAPITAL`. curate_civic maps
+| bNoCapitalUnhappiness to exactly that pair, civic_cosmic_enlightening authors it, the city holds it in the
+| AMENITY fold (CvCity::isNoUnhappiness == CITY_HAS_AMENITY "abolishedAnger"), and the fold evaluates an
+| entry's condition PER RECEIVER at fold time -- so in a capital the fold already answers true.
+| ⚑ The two legs of `isNoUnhappiness() || isCapital() && owner.isNoCapitalUnhappiness()` were the SAME
+| question: the left already migrated, the right left reading a frozen int beside it.
+| ⚠ ONE stated behaviour change: the AI valuation now discounts happiness in ANY city whose anger is
+| abolished, not only a capital -- the same question asked of the city that actually holds the verdict.
+| ⚠ The changer's riders (AI_setAssignWorkDirty + setInfoDirty on the capital) need no new home: the fold
+| announces its own crossings and a CIVIC change is already a ruled dirty trigger.
+CvPlayer::m_iNoCapitalUnhappiness        (int)
+========================
+| The city's POWER-GATED yield modifier -- the legacy carrier for "this much more yield while the city is
+| powered".
+| Stranded on all three legs -- changePowerYieldRateModifier had NO caller, the array kept deserializing, and
+| an AI building valuation read it to price a power plant.
+| REPLACEMENT: already built AND authored. The value is an ordinary CONDITIONED percent deposit --
+| `<yield>.city.percent` gated `enabled: "HAS_POWER"` (16 authorings today: Manufacturing Plant +40%
+| production while powered, and its kin) -- held in the city's own percent package. Plane C applies and
+| withdraws it on the power crossing: SEVT_CITY_POWER_ADDED / _REMOVED routes
+| DepositIndex::gatedByPredicate(CASC_PRED_HAS_POWER) through mc_applyGated, so the slot is correct at the
+| instant power moves and the accumulator was a frozen twin of it.
+| ⚑ The predicate index is the atom sibling of gatedByType/gatedByToken -- keyed by CvCascPredKind, so a bare
+| predicate gates its deposits exactly as a named type does.
+| ⚠ ONE stated behaviour change, and it removes a garbage input rather than a real one: the AI's building
+| valuation no longer adds a power-unlock term when scoring a power plant. With the writer long dead that term
+| read 0 on every game started since, and stale save history on older ones.
+| ⛔ The honest gap it leaves is the WHAT-IF, not the value: "what would this city's already-held power-gated
+| deposits deliver if power flipped on" has no read on the valuation surface -- CvCascadeHypothetical pins
+| entity ids by edge bucket and a bare predicate is not an entity. Recorded in the todo as the atom-crossing
+| sibling of the per-scaler rate read; do NOT answer it by reviving an accumulator.
+CvCity::m_aiPowerYieldRateModifier       (int array, NUM_YIELD_TYPES)
+========================
+| The five RIDER-FREE per-flag POLICY counters on CvPlayer. Each was a hand-named int that
+| processCivics / processTrait pushed the grantor's OWN authored `policies` block into
+| (`kCivic.providesPolicy(CLS_POLICY_X) ? iChange : 0`).
+| NOT a writerless accumulator -- the changers were live. This is the SECOND MAINTENANCE SURFACE shape the
+| roadmap removes on sight: PolicyContext already folds those same blocks off the same civic / trait facts,
+| so one fact maintained two stores.
+| REPLACEMENT: EmpireContext.policies -- the id->COUNT ContextDict the PLAYER owns (Engine/PolicyContext.h),
+| a self-registering spine consumer in the contexts band, read O(1) as policies().has(CLS_POLICY_X). Every
+| key is authored today: fixedBorders 6, citiesStartWithStateReligion 6, draftsOnCityCapture 4,
+| allReligionsActive 4, extraGoody 2. The boolean reads keep their names and re-body onto the fold -- the
+| POWER-as-amenity precedent exactly ([contexts.md]).
+| ⚑ ONE BUG FIXED, not merely re-homed: m_iAllReligionsActiveCount held TWO policies in one SIGNED int
+| (allReligionsActive positive, bansNonStateReligions negative), so a player holding one grantor of each
+| netted to zero and BOTH hasAllReligionsActive() and hasBannedNonStateReligions() answered FALSE. The data
+| authors the two keys independently and the fold answers them independently.
+| ⚑ The AI's multi-grantor damper (the cross-category half-value guard against oscillating civic choices)
+| asked getAllReligionsActiveCount() > 1 -- a genuine refcount question, so it reads
+| policies().count(CLS_POLICY_ALL_RELIGIONS_ACTIVE) > 1, the one sanctioned reader of the int.
+| ⚠ hasFixedBorders keeps its NPC guard and its GAMEOPTION_CULTURE_FIXED_BORDERS composition: an option
+| composition belongs at the CONSUMING system ([engine.md] § Consuming-system calcs), so only the inner
+| count read moved.
+| ⚠ The FixedBorders push site's AI_makeAssignWorkDirty() was a SEPARATE statement, not a changer rider, and
+| is left standing.
+| ⛔ The other NINE counters in this family are NOT cut here and must not be swept in with them: their
+| changers carry real side-effect riders (GC.getGame().updateTradeRoutes() and kin, gated by the bLimited
+| parameter), so each needs its rider re-homed first ([save.md §6]).
+CvPlayer::m_iAllReligionsActiveCount     (int)
+CvPlayer::m_iFixedBordersCount           (int)
+CvPlayer::m_iCitiesStartwithStateReligionCount (int)
+CvPlayer::m_iDraftsOnCityCaptureCount    (int)
+CvPlayer::m_iExtraGoodyCount             (int)
+========================
+| The DOMAIN production-modifier accumulators, both halves of one composed read: the city's per-domain array
+| and the player's NATIONAL twin (CvCity::getDomainProductionModifier summed the two).
+| Stranded on all three legs -- changeDomainProductionModifier had NO caller, the player's changer reached its
+| setter and nothing reached the changer, both arrays kept deserializing, and two AI ranking heuristics read
+| the composed getter.
+| REPLACEMENT: already built and already the LIVE production path. CvCity::getProductionModifier(UnitTypes)
+| resolves the item's domain through the ONE keyed cascade read --
+| InfoValuation::keyedTarget(MODFAM_BUILD_RATE, keyedTargetSegment("domains"), unit's domain) over the city's
+| OPERATING buildings, plus the empire share from CvPlayer::getProductionModifier. The data authors it:
+| 15 city-scope and 7 empire-scope `buildRate.<scope>.domains.{DOMAIN}` deposits.
+| ⚑ The code says so at the replacement itself (CvCity.cpp, getProductionModifier): "ONE keyed read replaces
+| the per-axis accumulators the city used to keep (unit / domain / unitCombat / military / stateReligion /
+| bonus), each its own array with its own maintenance." These two are that sentence's `domain` entry -- the
+| accumulators outlived the cut that replaced them.
+| ⚠ ONE stated behaviour change, and it removes a frozen input rather than a live one: the two military
+| production-rank heuristics (AI_getMilitaryProductionRateRank and its naval twin) drop their per-domain term.
+| With no writer since the keyed read landed, that term contributed 0 on every game started since and stale
+| save history on older ones; the live getDomainExperience term beside it is untouched.
+| ⛔ The remaining per-axis members from that same sentence are NOT cut here and must not be assumed dead by
+| association: CvCity::m_paiUnitCombatProductionModifier and CvPlayer::m_unitCombatProductionMod are the
+| unitCombat entry, equally writerless, and want their own pass with their own AI read dispositions.
+| ⚑ CyCity::getDomainProductionModifier went with it -- an UNBOUND wrapper method (no .def, no Python caller),
+| so it was dead surface rather than a binding to preserve ([DEC-cy-not-fixed]).
+CvCity::m_aiDomainProductionModifier     (int array, NUM_DOMAIN_TYPES)
+CvPlayer::m_paiNationalDomainProductionModifier (int array, NUM_DOMAIN_TYPES)
+========================
+| The UNITCOMBAT production-modifier accumulators -- the sibling axis of the domain pair above, and the
+| `unitCombat` entry in the same replaced-accumulator sentence at CvCity::getProductionModifier.
+| Stranded on all three legs: changeUnitCombatProductionModifier had NO caller on EITHER class, both stores
+| kept deserializing, and three AI reads consumed them.
+| REPLACEMENT: the LIVE production path, exactly as for domains -- CvCity::getProductionModifier(UnitTypes)
+| resolves the unit's primary combat class AND every sub-class through
+| InfoValuation::keyedTarget(MODFAM_BUILD_RATE, keyedTargetSegment("unitCombats"), ...) over the city's
+| OPERATING buildings, plus the empire share.
+| ⚑ Cutting the reads also removes THREE WHOLE-REGISTRY SWEEPS over GC.getNumUnitCombatInfos() -- the
+| own-data inversion the enabler worklist wants gone independently. Each asked the registry a question the
+| entity's own compiled entries answer ([modifier.md §5]).
+| ⚠ ONE stated behaviour change, removing a frozen input: the production-multiplier estimate and the two
+| military production-rank heuristics drop their per-unitcombat term. With no writer it contributed 0 on
+| every game started since the keyed read landed. The unitcombat EXPERIENCE reads beside them (collected
+| once via collectUnitCombatExperience) are live and untouched.
+| ⚑ THE PLAYER HALF IS A DECORATED VARIABLE-LENGTH BLOCK, drained by naming all THREE of its tags -- the
+| CvCity::BuildingHappinessFromTech{Size,Type,Value} precedent above. Every element carries its OWN unique
+| BRACKET-FREE decorated tag, which save.md §3 permits; consecutive orphans of a named field all drain.
+| ⛔ It is NOT the m_aPropertySpawns shape, which is unremovable for the opposite reason: a count tag named
+| `iNumElts` SHARED by 23 blocks, followed by raw UNTAGGED records. Check which shape a block is before
+| assuming either outcome.
+CvCity::m_paiUnitCombatProductionModifier (int class array, per UNITCOMBAT)
+CvPlayer::iUnitCombatProductionModSize   (decorated short)
+CvPlayer::iUnitCombatProductionModType   (decorated short, per entry)
+CvPlayer::iUnitCombatProductionModCount  (decorated int, per entry)
+========================
+| The per-UNIT keyed production-modifier maps -- the `unit` entry in the same replaced-accumulator sentence
+| at CvCity::getProductionModifier, on both CvCity and CvPlayer.
+| ⚑ DEAD IN BOTH DIRECTIONS, which makes this a DIFFERENT diagnosis from the domain and unitCombat pairs
+| above and is why NO REPLACEMENT IS RECORDED: those two were writerless accumulators whose getters were
+| still READ, so consumers were served frozen save history. These have no writer AND no reader at all --
+| changeUnitProductionModifier was callerless on both classes and getUnitProductionModifier had zero
+| consumers anywhere (engine, AI, Cy binding or Python). Only the serialization kept them alive.
+| ⚠ The third leg was run against the MEMBER, not the getter ([state-repositories.md]): the union of
+| everything touching m_unitProductionMod on either class is clear() + the in-read insert + the write + the
+| two accessors. No third function iterates the map under a name that hides the stem.
+| ⛔ The value they would have carried is served where it always was: the per-unit keyed buildRate is read
+| as an entry-list over the city's OPERATING buildings via
+| InfoValuation::keyedTarget(MODFAM_BUILD_RATE, keyedTargetSegment("units"), ...) plus the empire share --
+| the same live path the domain and unitCombat cuts point at, and it never depended on these maps.
+| ⚑ Both halves are decorated variable-length blocks with per-element BRACKET-FREE tags, so all three tags
+| of each are named (the BuildingHappinessFromTech{Size,Type,Value} precedent).
+| ⚠ CvPlayer::m_buildingProductionMod is NOT dead by association and is deliberately absent here: it has two
+| live writers (processBuilding's keyed buildRate fan and the civic twin). Its CITY namesake is a separate
+| case with its own reader and wants its own pass.
+CvCity::UnitProductionModSize            (decorated short)
+CvCity::UnitProductionModType            (decorated short, per entry)
+CvCity::UnitProductionMod                (decorated int, per entry)
+CvPlayer::iUnitProductionModSize         (decorated short)
+CvPlayer::iUnitProductionModType         (decorated short, per entry)
+CvPlayer::iUnitProductionModCount        (decorated int, per entry)
+========================
+| The EMPIRE military production modifier -- CvPlayer's half of the pair, stranded on all three legs:
+| changeMilitaryProductionModifier had NO caller, the member kept deserializing, and
+| CvPlayer::getProductionModifier(UnitTypes) read it for every military unit.
+| REPLACEMENT: the BUILD_RATE_MILITARY category channel, read as realizedAtEmpire through getBuildRateKinds --
+| the same read the building twin beside it already uses for the wonder categories. `militaryProduction` folds
+| into the buildRate categories ([modifier.md] par.4).
+| ⚑ This RESTORES a value rather than merely re-pointing one: the empire-scope `buildRate.empire.military`
+| rows (overwhelmingly civics) reached production through NOTHING, because the accumulator they would have
+| landed in had no writer. The read answered save history in their place.
+| ⚠ The CITY twin is NOT cut and is NOT dead: CvCity::changeMilitaryProductionModifier is fed live by
+| applyCorporationModifiers (a corporation's city-scope buildRate.city.military, applied +/-1 with the corp),
+| and CvCityAI reads the city getter in three heuristics.
+| ⛔ Two Cy wrappers went with it and neither was a binding to preserve: CyPlayer's was PUBLISHED with no
+| Python caller anywhere in Assets/Python (a dead binding is an outlaw, [DEC-cy-not-fixed]) and CyCity's
+| carried no .def at all, so it was unreachable dead surface.
+CvPlayer::m_iMilitaryProductionModifier   (int)
+========================
+| The CITY military production modifier -- the second half of the pair, and a DIFFERENT defect from its empire
+| twin above: this one had a LIVE writer and no reader worth the name.
+| Its only writer was CvCity::applyCorporationModifiers, pushing the corporation's own
+| buildRate.city.military into the accumulator -- a SECOND MAINTENANCE SURFACE beside the fact the same path
+| already emits. setHasCorporationInternal commits and fires SEVT_CITY_CORPORATION_ADDED / _REMOVED, which the
+| modifier consumer routes through mc_applySource onto the corporation's compiled deposits, so the corp's rows
+| were already landing in the city's package. The push was the duplicate.
+| ⚑ It escaped being a live double-count only because nothing on the PRODUCTION path ever read the
+| accumulator: its three readers were all CvCityAI weighting heuristics, which is why the duplication stayed
+| quiet (a mutation choke point maintaining a derived store beside the
+| fact it emits, its tell being a consumer that never routes on that fact -- validation.md).
+| REPLACEMENT: those three heuristics now read the BUILD_RATE_MILITARY category through getBuildRateKinds
+| (realizedAtCity = team + empire + city), so they see the whole picture instead of the corporation slice.
+| ⚠ STATED BEHAVIOUR CHANGE, and it is a repair: the AI's military-production weights previously saw ONLY
+| corporation contributions. Every building-authored city-scope row and every empire-scope civic row was
+| invisible to them.
+| ⚑ applyCorporationModifiers went with the push -- once the military line was gone its `bValue` parameter was
+| unused and the name described nothing it did; its two surviving headquarters/updateCorporation calls moved to
+| the one call site.
+CvCity::m_iMilitaryProductionModifier    (int)
+========================
+| The CITY building-keyed production modifier map -- read at CvCity::getProductionModifier(BuildingTypes) with
+| no writer left, so the value applied was save history. Unlike the pairs above this was also a HOLE: the
+| city-scope `buildRate.city.buildings.{B}` rows authored on buildings had nowhere to land, so they reached
+| production through nothing at all.
+| REPLACEMENT: the keyed entry-list read over the city's OPERATING buildings ([modifier.md] par.5), filtered to
+| CASC_SCOPE_CITY.
+| ⚑ THE SCOPE FILTER IS LOAD-BEARING, not tidiness. The same address is authored at BOTH scopes on a building,
+| and the EMPIRE half is a live, correct, separate path (processBuilding collects those rows scope-filtered to
+| empire and pushes them to the player, which every city reads). An unfiltered city walk would claim them a
+| second time in the city holding the source. The point-form keyedTarget gained the iScope its collecting twin
+| already carried, for exactly this.
+| ⚠ BOTH scopes are REAL on a building and neither is mis-authored (owner): a city row means "that builds
+| faster HERE", an empire row is the classic wonder effect reaching every city. Collapsing them would silently
+| delete whichever mechanic was not kept.
+| ⛔ CvPlayer::m_buildingProductionMod is NOT this and stays: it is the empire half's live store.
+CvCity::BuildingProductionModSize        (decorated short)
+CvCity::BuildingProductionModType        (decorated short, per entry)
+CvCity::BuildingProductionMod            (decorated int, per entry)
+
+| ── The space-production boost is cut on BOTH scopes, for two different reasons.
+| EVENTS author YIELDS, never production modifiers (owner), and if that is ever wanted it is done properly
+| rather than in this roundabout fashion. `iSpaceProductionMod` was the only production field on an event;
+| with it gone the CITY accumulator had no writer left at all -- its ONLY one was applyEvent.
+| The PLAYER twin was fed by processBuilding off the BUILD_RATE_SPACE category kind, and that kind is itself
+| retired: military and space are PREDICATES on the `units` target, never categories of their own
+| ([modifier.md] §4). Its consumer was getProductionModifier(ProjectTypes) gated on isSpaceship(), which the
+| same ruling says DOES NOT APPLY -- those are vanilla Civ's space-VICTORY parts, not the space UNITS the
+| boost describes.
+| REPLACEMENT: the authored deposit is now `buildRate.<scope>.units.percent {enabled: IS_SPACE}`, served by
+| InfoValuation::candidateTaggedTargetSum off the candidate unit's own tag bitset. ⚠ The CITY-scope rows are
+| served (CvCity::getProductionModifier(UnitTypes)); the EMPIRE-scope rows a capped wonder authors are NOT yet
+| -- a conditioned deposit cannot ride the empire package, and no player-side read walks the owner's buildings
+| for one. That leg is named in the todo; it owes 2 authored rows.
+CvCity::m_iSpaceProductionModifier
+CvPlayer::m_iSpaceProductionModifier
+
+| ── The cultural-victory TARGET is DERIVED, so it stops riding the save. The pair is a MAX over the victory
+| set's validity x authored info data -- rebuilt by CvGame::deriveCulturalVictoryTarget at load, at new-game
+| init, and at setVictoryValid (the ONE validity mutator). The per-turn wipe-and-refill that used to stand in
+| for those triggers is deleted with the serialization.
+CvGame::m_iNumCultureVictoryCities       (int)
+CvGame::m_eCultureVictoryCultureLevel    (int)
+
+| ── The player-side building-COST-modifier accumulator is CUT (the STORED-ACCUMULATOR class). Its writer was
+| already gone -- the curator re-homed the legacy source-keyed cost map onto the TARGET building as conditioned
+| own-cost entries (the C_L culture set: costs.city.percent gated on in-city C_L presence) -- so the map served
+| only frozen save history. The value is now served by CvCity::getProductionNeeded(BuildingTypes) resolving the
+| building's own conditioned costs tail against the city (InfoValuation::expectedSumAt, COSTS_AMOUNT).
+CvPlayer::iBuildingCostModSize
+CvPlayer::iBuildingCostModType
+CvPlayer::iBuildingCostModCount
+
+| ── The processCivics ACCUMULATOR PUSH is CUT (the STORED-ACCUMULATOR class). Three populations, three
+| replacements:
+| (1) The per-flag POLICY counters retire onto the event-fed policy store (PolicyContext -- the
+| EmpireContext.policies union over live civic/trait grantors): the boolean getters (isNoForeignTrade,
+| isNoCorporations, isNoForeignCorporations, isStateReligion, isNoNonStateReligionSpread,
+| isMilitaryFoodProduction, isUpgradeAnywhere, isNonStateReligionCommerce, isInquisitionConditions) read
+| policies().has, and the AI civic-value what-ifs read policies().count with an unconditional vacuum
+| subtraction. The inquisition pair is two DISTINCT policies asked separately (allow held AND disallow not
+| held), never the signed net the old counter carried. The changers' side-effect riders (updateTradeRoutes,
+| updateCorporation, the Score/CityInfo dirty bits) re-homed to CvPlayer::setCivics / processTrait,
+| diff-gated on the policy actually moving.
+CvPlayer::m_iNoForeignTradeCount
+CvPlayer::m_iNoCorporationsCount
+CvPlayer::m_iNoForeignCorporationsCount
+CvPlayer::m_iStateReligionCount
+CvPlayer::m_iNoNonStateReligionSpreadCount
+CvPlayer::m_iMilitaryFoodProductionCount
+CvPlayer::m_iUpgradeAnywhereCount
+CvPlayer::m_iInquisitionCount
+CvPlayer::m_iNonStateReligionCommerceCount
+| (2) The two player-side AMENITY counters were a second surface beside the city amenity fold, whose civic
+| leg already folds every empire grantor into every city -- and NO data authors either key today, so both
+| served only frozen save history. CvCity::isNoUnhealthyPopulation / isBuildingOnlyHealthy are now pure fold
+| reads; the AI civic what-ifs test the fold count (amenityCount <= removable grantors) and read the new
+| ungated bad-building sum instead of the mutate-and-restore probe. The stale verdict bool rides out with
+| them (nothing read it).
+CvPlayer::m_iNoUnhealthyPopulationCount
+CvPlayer::m_iBuildingOnlyHealthyCount
+CvPlayer::m_bInquisitionConditions
+| (3) The keyed buildRate accumulator (civic + held-building empire rows pushed into a serialized map) is
+| replaced by the live keyed walk in CvPlayer::getProductionModifier(BuildingTypes): the trait loop it always
+| had, plus the adopted-civic loop and the held-building loop over
+| InfoValuation::empireBuildingKeyedBuildRateAuthors x getBuildingCount.
+CvPlayer::iBuildingProductionModSize
+CvPlayer::iBuildingProductionModType
+CvPlayer::iBuildingProductionModCount
+| (4) The five reader-less revolution accumulators (nothing in the engine or Python ever read them back --
+| Python reads the INFO getRevolution values directly): cut with NO replacement, deliberately.
+CvPlayer::m_iRevIdxHolyCityGood
+CvPlayer::m_iRevIdxHolyCityBad
+CvPlayer::m_fRevIdxNationalityMod
+CvPlayer::m_fRevIdxBadReligionMod
+CvPlayer::m_fRevIdxGoodReligionMod
+
+|=== The writerless-serialized-accumulator sweep (state-repositories.md THE LEGACY-ACCUMULATOR CUT) ========|
+| Every member below had NO surviving mutator caller (the feeder went with an earlier cut, or never existed
+| in S2S at all), so a consumer was being served a frozen save value. Four groups by replacement:
+| (1) Served by a LIVE cascade read -- the quantity's authored deposits reach the consumer through the
+| maintained packages or an entry-list walk:
+| - hurryCostModifier: civic costs.empire.hurry rides the COSTS_HURRY empire package
+|   (CvPlayer::getCostKinds), already applied beside the old read in the city hurry composition.
+| - taxRateUnhappiness: civic happiness.empire per-GOLD_RATE deposits, maintained in the wellbeing
+|   packages by the slider-rate count route.
+| - healthPercentPerPopulation (CvCity): building health.city.perPopulation deposits in the wellbeing
+|   packages (plane B on the population fact).
+| - minimumDefenseLevel (CvCity): the cascade DEFENSE_MIN floor, CvCity::getExtraMinDefense -- the frozen
+|   member's ==0 early-return was GATING the live floor off entirely.
+| - modifiedBuildingDefenseRecoverySpeedCap (CvCity): recomputed at CvCity::cityDefenseRecoveryRate as the
+|   operating recovery-carrying buildings' own DEFENSE_AMOUNT.
+| - buildWorkerSpeedModifierSpecific: trait workRate.empire.builds keyed rows, read over the held-trait
+|   set at CvPlayer::getWorkRate.
+| - noCivicUpkeepCount: the CIVIC_CATEGORY-gated trait upkeep.empire.civic conditioned entries, evaluated
+|   at CvPlayer::getSingleCivicUpkeep with the ctx civic slot set (InfoValuation::conditionedSum).
+CvPlayer::m_iHurryCostModifier
+CvPlayer::m_iTaxRateUnhappiness
+CvCity::m_iHealthPercentPerPopulation
+CvCity::m_iMinimumDefenseLevel
+CvCity::m_iModifiedBuildingDefenseRecoverySpeedCap
+CvPlayer::m_paiBuildWorkerSpeedModifierSpecific
+CvPlayer::m_paiNoCivicUpkeepCount
+| (2) Curated route exists, authored by NOTHING today -- the id/deposit mapping is live headroom and the
+| verdict correctly reads false/zero until data authors one:
+| - noLandmarkAngerCount: the noLandmarkAnger policy (CvPlayer::isNoLandmarkAnger reads the policy store;
+|   headroom id in CvClassificationIds.h).
+| - landmarkHappiness: the civic iLandmarkHappiness -> happiness.empire.flat mapping (curate_civic), rides
+|   the ordinary empire package when authored.
+CvPlayer::m_iNoLandmarkAngerCount
+CvPlayer::m_iLandmarkHappiness
+| (3) NEVER AUTHORED anywhere (schema-only fields, or feeders that never existed in S2S) -- cut with NO
+| replacement, deliberately: hasCivicOptionCount (no building ever carried CivicOption), upkeepCount
+| (assert-only reader), the two spread accumulators (schema-only civic fields), citySizeBoost (its setter
+| was unreachable since the S2S import), the specialist priority/ban pair (dead city-screen UI), and
+| quarantinedCount (curate_building: bQuarantine is data-dead and deliberately unclassified).
+CvPlayer::m_paiHasCivicOptionCount
+CvPlayer::m_paiUpkeepCount
+CvPlayer::m_iReligionSpreadRate
+CvPlayer::m_iCorporationSpreadModifier
+CvCity::m_iCitySizeBoost
+CvCity::m_iPrioritySpecialist
+CvCity::m_paiSpecialistBannedCount
+CvCity::m_iQuarantinedCount
+| (The two decorated per-element arrays cut in the same sweep -- CvPlayer::m_ppaaiTerrainYieldChange and
+| CvPlayer::m_ppaaiSpecialistExtraYield -- drain in read() loops instead: a bracketed per-element tag
+| cannot be soft-removed here, save.md par.4.)
+
+| ==== The CvUnit hide-and-seek per-type intensity cut ====
+| The retired per-invisible-type table pair's RUNTIME accumulators (superseded-ideas par.35): the contest
+| replacement is the hideAndSeek block (concealment/detection deposits, the method SKILLS) and the seeker
+| registration is plot-side (CvPlot::changeVisibilityCount -> setSpotIntensity). Every member below had no
+| writer and no reader left outside its own serialization. The negates counter's live leg survives inside
+| CvUnit::isNegatesInvisible as the isRevealed() read; counter-detection is a negative detection deposit.
+| The per-type group (one set per authored invisible type, terminated by the Visibilities sentinel):
+CvUnit::Visibilities
+CvUnit::extraVisibilityIntensity
+CvUnit::extraInvisibilityIntensity
+CvUnit::extraVisibilityIntensityRange
+CvUnit::negatesInvisibleCount
+CvUnit::extraVisibilityIntensitySameTile
+| The nine per-(invisible x substrate) sized lists: each wrote a .size then per-element iType1/2/3 locals,
+| and those three local-named tags belonged to these lists ALONE (the AidChange block beside them is
+| decorated), so the elements drain by name:
+CvUnit::m_aExtraInvisibleTerrains.size
+CvUnit::m_aExtraInvisibleFeatures.size
+CvUnit::m_aExtraInvisibleImprovements.size
+CvUnit::m_aExtraVisibleTerrains.size
+CvUnit::m_aExtraVisibleFeatures.size
+CvUnit::m_aExtraVisibleImprovements.size
+CvUnit::m_aExtraVisibleTerrainRanges.size
+CvUnit::m_aExtraVisibleFeatureRanges.size
+CvUnit::m_aExtraVisibleImprovementRanges.size
+CvUnit::iType1
+CvUnit::iType2
+CvUnit::iType3
+
+| The noInvisibility canceller count -- a serialized DERIVED accumulator (a Sigma over the unit's held
+| promotions and combat classes of a static skill, fed by the processPromotion/processUnitCombat batteries).
+| REPLACEMENT: the resolved hideAndSeek fold's noInvisibility net (UnitResolvedHideAndSeek, gathered over
+| info + promotions + combat classes on the promotion/combat facts), read by CvUnit::hasInvisibilityType /
+| setHasAnyInvisibility.
+CvUnit::m_iNoInvisibilityCount
+
+| The per-bonus TRADED import/export counts -- a serialized DERIVED pair. The DEAL is the genuine
+| non-derivable state and it stays serialized ([enabler.md] §8: "bonuses traded away needs to be
+| serialized, otherwise the trade is lost -- so that is the current trade DEAL itself being serialized,
+| not the list"); the per-bonus counts merely FOLLOW from the held deals, so they answer to
+| [DEC-derived-never-trusted] like every other derived value.
+| REPLACEMENT: the load-end re-derivation in CvGame::onFinalInitialized, which walks the held deals and
+| folds each TRADE_RESOURCES item through the live entry points (CvPlayer::changeBonusExport /
+| changeBonusImport -- what CvDeal::startTrade itself calls), immediately BEFORE the plot-group re-color
+| whose CvPlot::updatePlotGroupBonus reads them.
+CvPlayer::iBonusExportSize
+CvPlayer::iBonusExportType
+CvPlayer::iBonusExportCount
+CvPlayer::iBonusImportSize
+CvPlayer::iBonusImportType
+CvPlayer::iBonusImportCount
+
+| The city's workable-radius override -- a serialized value DERIVED from a held amenity. The third ring
+| is conferred by the `adds3rdRing` amenity, which the city's fold already refcounts, so the override
+| answers to [DEC-derived-never-trusted] like every other derived value and must not come off a save.
+| REPLACEMENT: CvCity::hasThirdRing -- the ONE getter owning both sources, the refcounted amenity
+| (CityContext::hasAmenity(CLS_AMENITY_ADDS_3RD_RING)) and the culture level under EXP_LARGER_CITIES.
+CvCity::m_iWorkableRadiusOverride

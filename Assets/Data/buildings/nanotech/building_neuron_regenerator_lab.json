@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_NEURON_REGENERATOR_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_CIRCADIAN_CHAMBER",
+   "BUILDING_DREAM_VISUALIZER",
+   "BUILDING_NEUROTRANSMITTER_MANIPULATOR_LAB",
+   "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_3D_BODY_ATLAS",
+    "TECH_EXOCORTEX_NETWORKS",
+    {
+     "any": [
+      "BUILDING_APPLIED_PSYCHOLOGY_LAB",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SMART_MEDICINE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 16
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_DOCTOR": 1
+  }
+ },
+ "cost": {
+  "production": 4145,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NEURON_REGENERATOR_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NEURON_REGENERATOR_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_NEURON_REGENERATOR_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

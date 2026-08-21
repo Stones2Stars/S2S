@@ -1,0 +1,75 @@
+{
+ "type": "TECH_THERMAL_NEGATION",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_COLD_TOLERANCE",
+   "BONUS_HUMAN_MOD_HEAT_TOLERANCE"
+  ],
+  "buildings": [
+   "BUILDING_HUMAN_MOD_COLD_TOLERANCE",
+   "BUILDING_HUMAN_MOD_HEAT_TOLERANCE",
+   "BUILDING_IO_GEOTHERMAL_POWER_PLANT",
+   "BUILDING_MERCURY_COLONY",
+   "BUILDING_ORBITAL_HEAT_SINK",
+   "BUILDING_VENUS_MAGNESIUM_AND_CALCIUM_MINE"
+  ],
+  "builds": [
+   "BUILD_MERCURY_COLONY"
+  ],
+  "improvements": [
+   "IMPROVEMENT_MERCURY_COLONY"
+  ],
+  "techs": [
+   "TECH_SUBTERRANEAN_EXPLORATION",
+   "TECH_WEATHER_CONTROL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ADVANCED_SHIELDING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GAIA_ECOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 80635
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Buttons/Techs/TechThermalNegation.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_THERMAL_NEGATION",
+  "soundMP": "AS2D_TECH_THERMAL_NEGATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_THERMAL_NEGATION",
+  "civilopedia": "TXT_KEY_TECH_THERMAL_NEGATION_PEDIA",
+  "quote": "TXT_KEY_TECH_THERMAL_NEGATION_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 50,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 118,
+  "gridY": 13
+ }
+}

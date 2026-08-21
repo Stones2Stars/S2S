@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_SMART_DUST_WALLS",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SMART_DUST",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 200
+   },
+   "bombardDefense": {
+    "percent": 50
+   },
+   "buildingDefenseRecovery": {
+    "percent": 200
+   },
+   "cityDefenseRecovery": {
+    "percent": 100
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 5455,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SMART_DUST_WALLS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SMART_DUST_WALLS",
+  "civilopedia": "TXT_KEY_BUILDING_SMART_DUST_WALLS_PEDIA",
+  "worth": 1,
+  "militaryWorth": 2,
+  "conquestProbability": 30,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

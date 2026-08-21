@@ -1,0 +1,127 @@
+{
+ "type": "BUILDING_KEEP_TOWER",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ARTILLERY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BOMBARD_TOWER"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_BOMBARD_TOWER",
+    "BUILDING_ARTILLERY_BATTERY",
+    "BUILDING_AUTO_CANNON_BATTERY",
+    "BUILDING_MISSILE_BATTERY",
+    "BUILDING_RAILGUN_BATTERY",
+    "BUILDING_LASER_BATTERY",
+    "BUILDING_ANTI_MATTER_BATTERY"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 25
+   },
+   "bombardDefense": {
+    "percent": 10
+   },
+   "dynamicDefense": {
+    "percent": 30
+   },
+   "adjacentDamage": {
+    "percent": 25
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "vision": {
+  "city": {
+   "elevation": {
+    "flat": 200
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 300,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_KEEP_TOWER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CASTLE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_KEEP_TOWER",
+  "civilopedia": "TXT_KEY_BUILDING_KEEP_TOWER_PEDIA",
+  "worth": 4,
+  "militaryWorth": 4,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

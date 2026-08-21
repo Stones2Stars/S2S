@@ -1,0 +1,11 @@
+{
+ "type": "PROMOTIONLINE_COVETOUS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCovetous.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_COVETOUS"
+ }
+}

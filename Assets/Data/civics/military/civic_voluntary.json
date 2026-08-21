@@ -1,0 +1,105 @@
+{
+ "type": "CIVIC_VOLUNTARY",
+ "enables": {
+  "buildings": [
+   "BUILDING_RECRUITMENT_CENTER"
+  ]
+ },
+ "research": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": 7
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 10,
+   "domestic": {
+    "percent": 10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "percent": [
+    {
+     "value": 2,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 2,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ]
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "commerce": {
+     "percent": 2
+    }
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -1
+   },
+   "national": {
+    "flat": -2
+   }
+  }
+ },
+ "grants": {
+  "revolution": -25
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/military_volunteer_army.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_VOLUNTARY",
+  "civilopedia": "TXT_KEY_CIVIC_VOLUNTARY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_VOLUNTARY_STRATEGY",
+  "civicOption": "CIVICOPTION_MILITARY",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

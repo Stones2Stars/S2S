@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_DARK_MATTER_REACTOR",
+   "BUILDING_INTERSTELLAR_DYSON_SPHERE_HEAT_RECOVERY",
+   "BUILDING_INTERSTELLAR_PERSONAL_STARCRAFT_FACTORY",
+   "BUILDING_INTERSTELLAR_ZERO_POINT_POWER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_DYSON_SPHERE",
+    "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
+    "TECH_ASTROENGINEERING",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    50,
+    {
+     "value": 12,
+     "enabled": "TECH_FEMTOTECHNOLOGY"
+    },
+    {
+     "value": 12,
+     "enabled": "TECH_ZEPTOTECHNOLOGY"
+    },
+    {
+     "value": 12,
+     "enabled": "TECH_GRAVITRONICS"
+    },
+    {
+     "value": 12,
+     "enabled": "TECH_APPLIED_RELATIVITY"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 3611,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

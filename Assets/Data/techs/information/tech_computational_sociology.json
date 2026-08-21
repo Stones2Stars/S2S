@@ -1,0 +1,69 @@
+{
+ "type": "TECH_COMPUTATIONAL_SOCIOLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_APPLIED_SOCIOLOGY_LAB",
+   "BUILDING_CENTER_FOR_AI_SAFETY",
+   "BUILDING_CENTER_FOR_BIOTECH_SAFETY",
+   "BUILDING_CENTER_FOR_NANOTECH_SAFETY",
+   "BUILDING_SOCIAL_MEDIA_SURVEILLANCE"
+  ],
+  "techs": [
+   "TECH_AFFECTIVE_ALGORITHMS",
+   "TECH_UBIQUITOUS_COMPUTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_VIRTUAL_SOCIETY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DIRECT_MERCHANDISING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 25354
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Buttons/Techs/computational_sociology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_COMPUTATIONAL_SOCIOLOGY",
+  "civilopedia": "TXT_KEY_TECH_COMPUTATIONAL_SOCIOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_COMPUTATIONAL_SOCIOLOGY_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 94,
+  "gridY": 13
+ }
+}

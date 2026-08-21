@@ -1,0 +1,66 @@
+{
+ "type": "TECH_CULTURAL_EVOLUTION",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_COLONY_EUGENICS",
+   "BUILDING_INTERSTELLAR_CULTURE_AGGRESSIVE",
+   "BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL",
+   "BUILDING_INTERSTELLAR_CULTURE_EXPLORATORY",
+   "BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS",
+   "BUILDING_INTERSTELLAR_CULTURE_OBEDIENT",
+   "BUILDING_INTERSTELLAR_CULTURE_PARADISE",
+   "BUILDING_INTERSTELLAR_CULTURE_REBELLIOUS",
+   "BUILDING_INTERSTELLAR_PROGRAMMED_WORK_ETHIC"
+  ],
+  "techs": [
+   "TECH_COSMIC_PERSPECTIVE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_TERRAFORMING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FUSION_SPACECRAFT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 139278
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/cultural_evolution.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CULTURAL_EVOLUTION",
+  "civilopedia": "TXT_KEY_TECH_CULTURAL_EVOLUTION_PEDIA",
+  "quote": "TXT_KEY_TECH_CULTURAL_EVOLUTION_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 127,
+  "gridY": 7
+ }
+}

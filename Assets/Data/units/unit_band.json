@@ -1,0 +1,207 @@
+{
+ "type": "UNIT_BAND",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRIBALISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "dormant": {
+    "all": [
+     "UNIT_TRIBE"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 0
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "skills": [
+  "found",
+  "onlyDefensive",
+  "unlimitedException"
+ ],
+ "tags": [
+  "settler",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SETTLER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EPIC",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SENTRY",
+   "PROMOTION_GUARDIAN_TRIBAL"
+  ],
+  "buildings": [
+   {
+    "building": "BUILDING_STABLE",
+    "enabled": "TECH_STEAM_POWER"
+   },
+   {
+    "building": "BUILDING_BARRACKS",
+    "enabled": "TECH_COLONIALISM"
+   },
+   {
+    "building": "BUILDING_COURTHOUSE",
+    "enabled": "TECH_STEAM_POWER"
+   },
+   {
+    "building": "BUILDING_FISHERMANS_HUT",
+    "enabled": {
+     "all": [
+      "HAS_COAST",
+      "TECH_COLONIALISM"
+     ]
+    }
+   },
+   {
+    "building": "BUILDING_FORGE",
+    "enabled": "TECH_COLONIALISM"
+   },
+   {
+    "building": "BUILDING_GARRISON",
+    "enabled": "TECH_STEAM_POWER"
+   },
+   {
+    "building": "BUILDING_GRANARY",
+    "enabled": "TECH_COLONIALISM"
+   },
+   {
+    "building": "BUILDING_GROCER",
+    "enabled": "TECH_STEAM_POWER"
+   },
+   {
+    "building": "BUILDING_HARBOR",
+    "enabled": {
+     "all": [
+      "HAS_COAST",
+      "TECH_COLONIALISM"
+     ]
+    }
+   },
+   {
+    "building": "BUILDING_LIBRARY",
+    "enabled": "TECH_STEAM_POWER"
+   },
+   {
+    "building": "BUILDING_LIGHTHOUSE",
+    "enabled": {
+     "all": [
+      "HAS_COAST",
+      "TECH_COLONIALISM"
+     ]
+    }
+   },
+   {
+    "building": "BUILDING_MARKET",
+    "enabled": "TECH_COLONIALISM"
+   },
+   {
+    "building": "BUILDING_PORT",
+    "enabled": {
+     "all": [
+      "HAS_COAST",
+      "TECH_STEAM_POWER"
+     ]
+    }
+   },
+   {
+    "building": "BUILDING_PALACE",
+    "enabled": {
+     "type": "BUILDING_PALACE",
+     "scope": "empire",
+     "max": 0
+    }
+   }
+  ],
+  "units": [
+   {
+    "unit": "UNIT_TRIBAL_GUARDIAN",
+    "enabled": {
+     "noneOf": [
+      "BUILDING_C_AC_NEANDERTHAL"
+     ]
+    }
+   },
+   {
+    "unit": "UNIT_NEANDERTHAL_TRIBAL_GUARDIAN",
+    "enabled": "BUILDING_C_AC_NEANDERTHAL"
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BAND_MALE",
+   "meshGroups": {
+    "groupSize": 4,
+    "meleeWaveSize": 4,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_BAND_MALE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_BAND_FEMALE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_BAND_FEMALE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_BAND_CHILD"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_BAND",
+  "civilopedia": "TXT_KEY_UNIT_BAND_PEDIA",
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SETTLE",
+  "formationType": "FORMATION_TYPE_SETTLER",
+  "unitAIs": [
+   "UNITAI_SETTLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

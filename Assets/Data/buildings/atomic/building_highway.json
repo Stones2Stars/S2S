@@ -1,0 +1,115 @@
+{
+ "type": "BUILDING_HIGHWAY",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUTOMATED_HIGHWAY",
+   "BUILDING_EXPRESSWAY",
+   "BUILDING_INTELLIGENT_PAVEMENT",
+   "BUILDING_ROAD_SIGNS",
+   "BUILDING_SOLAR_HIGHWAY",
+   "BUILDING_TRAFFIC_ENGINEERING_AGENCY",
+   "BUILDING_TRAFFIC_SIGNALS",
+   "BUILDING_WIND_TURBINE_HIGHWAY"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TELEPORTATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SKYROAD_CONTROL_TOWER"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_HIGHWAY_SYSTEMS",
+    "BUILDING_ASPHALT_ROADS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_CEMENT",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_OIL",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TAR",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_SKYROAD_CONTROL_TOWER",
+    "BUILDING_TELEPORT_BOOTH"
+   ]
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1,
+   "modifier": {
+    "percent": 8
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 1130,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HIGHWAY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HIGHWAY",
+  "civilopedia": "TXT_KEY_BUILDING_HIGHWAY_PEDIA",
+  "worth": 4,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,104 @@
+{
+ "type": "UNIT_LUNAR_WORKER",
+ "builds": [
+  "BUILD_LUNAR_PATH",
+  "BUILD_PLANETARY_MAGLEV",
+  "BUILD_LUNAR_MINE",
+  "BUILD_COLONY_HYDROPONICS",
+  "BUILD_COLONY_EXTRACTION_FACILITY",
+  "BUILD_COLONY_SOLAR_ARRAY",
+  "BUILD_COLONY_MANUFACTORY",
+  "BUILD_LUNAR_ARCOLOGY",
+  "BUILD_TERRAFORM_MOON",
+  "BUILD_COLONY_HABITAT_SMALL",
+  "BUILD_COLONY_HABITAT_MEDIUM",
+  "BUILD_COLONY_HABITAT_LARGE",
+  "BUILD_COLONY_HABITAT_HUGE"
+ ],
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LUNAR_DROID_FACTORY",
+    "TECH_ANDROIDS"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_LUNAR_WORKER"
+  }
+ },
+ "skills": [
+  "ignoreTerrainCost"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SPACE_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 2000,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WORKER_ANDROID",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_WORKER_ANDROID",
+       "late": "ART_DEF_UNIT_WORKER_ANDROID"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_LUNAR_WORKER",
+  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ],
+  "base": {
+   "workRate": 250
+  }
+ }
+}

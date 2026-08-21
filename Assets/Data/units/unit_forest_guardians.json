@@ -1,0 +1,160 @@
+{
+ "type": "UNIT_FOREST_GUARDIANS",
+ "builds": [
+  "BUILD_FOREST_PRESERVE",
+  "BUILD_TREEFARM",
+  "BUILD_WILDLIFE_SANCTUARY",
+  "BUILD_PLANT_JUNGLE",
+  "BUILD_YOUNG_FOREST",
+  "BUILD_PLANT_BAMBOO",
+  "BUILD_PLANT_SAVANNA",
+  "BUILD_GROW_FOREST",
+  "BUILD_NATURE_PRESERVE"
+ ],
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BATEK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_WILDLIFE_CONSERVATION",
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ECOLOGIST"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 10
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 4
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_ANIMALS": {
+     "heal": 15
+    }
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  },
+  "plot": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -5
+  },
+  "plot": {
+   "flat": -5
+  }
+ },
+ "skills": [
+  "food",
+  "onlyDefensive",
+  "tradable"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_HUNTER",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_RIFLE_BUTT",
+  "UNITCOMBAT_WEAPON_DIST_RIFLE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 545,
+  "upkeep": 3,
+  "hurryCostModifier": 25
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FOREST_GUARDIANS",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_FOREST_GUARDIANS"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_FOREST_GUARDIANS",
+  "civilopedia": "TXT_KEY_UNIT_FOREST_GUARDIANS_PEDIA",
+  "worth": 6,
+  "militaryWorth": 6,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER",
+   "UNITAI_HEALER",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "workRate": 300
+  }
+ }
+}

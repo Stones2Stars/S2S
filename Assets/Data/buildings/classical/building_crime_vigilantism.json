@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_CRIME_VIGILANTISM",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_CODE_OF_LAWS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 500,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5,
+   "percent": 10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -100
+   }
+  }
+ },
+ "underworld": {
+  "city": {
+   "investigation": {
+    "flat": 10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_VIGILANTISM",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_VIGILANTISM_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

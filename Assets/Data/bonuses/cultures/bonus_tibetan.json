@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_TIBETAN",
+ "enables": {
+  "units": [
+   "UNIT_GESAR",
+   "UNIT_TIBETIAN_DOB_DOB",
+   "UNIT_TRISONG_DETSEN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TIBETAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TIBETAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

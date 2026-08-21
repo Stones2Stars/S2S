@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_TREASURY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "CITY",
+     "scope": "empire",
+     "min": 4
+    },
+    "BUILDING_PALACE",
+    "TECH_MONARCHY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "gold": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 400,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TREASURY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TREASURY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MARKETPLACE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TREASURY",
+  "civilopedia": "TXT_KEY_BUILDING_TREASURY_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 3,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,86 @@
+{
+ "type": "TECH_INTERSTELLAR_TRADE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_SOLAR_IMPORTER_EXPORTER",
+   "BUILDING_LASER_STARWAY",
+   "BUILDING_ROGUE_PLANET_BEACON",
+   "BUILDING_ROGUE_PLANET_OUTPOST",
+   "BUILDING_ROGUE_PLANET_REBEL_BASE",
+   "BUILDING_ROGUE_PLANET_SUPPLY_DEPOT",
+   "BUILDING_TRANSTELLAR_BUSSARD_RAMJET_PORT",
+   "BUILDING_TRANSTELLAR_HYDROGEN_MAP",
+   "BUILDING_TRANSTELLAR_LASER_HIGHWAY_RELAY"
+  ],
+  "builds": [
+   "BUILD_INTERSTELLAR_TRADING_POST"
+  ],
+  "improvements": [
+   "IMPROVEMENT_INTERSTELLAR_TRADING_POST"
+  ],
+  "techs": [
+   "TECH_ACNP_PROPULSION",
+   "TECH_FORGE_WORLDS"
+  ],
+  "units": [
+   "UNIT_INTERSTELLAR_WORKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DATA_ARCHIVAL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INTERSTELLAR_COLONIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 154284
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/interstellartrade.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_INTERSTELLAR_TRADE",
+  "soundMP": "AS2D_TECH_INTERSTELLAR_TRADE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_INTERSTELLAR_TRADE",
+  "civilopedia": "TXT_KEY_TECH_INTERSTELLAR_TRADE_PEDIA",
+  "quote": "TXT_KEY_TECH_INTERSTELLAR_TRADE_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 130,
+  "gridY": 9
+ }
+}

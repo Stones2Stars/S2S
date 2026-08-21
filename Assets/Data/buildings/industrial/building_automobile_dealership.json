@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_AUTOMOBILE_DEALERSHIP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_INTERNAL_SHOCKWAVE_ENGINE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AUTOMATED_VEHICLE_DEALERSHIP"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MOTORIZED_TRANSPORTATION",
+    {
+     "any": [
+      "BUILDING_SHOPPING_DISTRICT",
+      "BUILDING_TRADING_POST"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_PETROLEUM_PRODUCTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BIOFUEL",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_AUTOMATED_VEHICLE_DEALERSHIP",
+    "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP",
+    "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 830,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_AUTOMOBILE_DEALERSHIP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_AUTOMOBILE_DEALERSHIP",
+  "civilopedia": "TXT_KEY_BUILDING_AUTOMOBILE_DEALERSHIP_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_LOGISTICS1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_LOGISTICS2"
+  ]
+ },
+ "movement": {
+  "unit": {
+   "moves": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_LOGISTICS": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Logistics1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_PING"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_LOGISTICS1"
+ }
+}

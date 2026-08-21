@@ -1,0 +1,46 @@
+{
+ "type": "PROMOTION_SENTRY",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SENTRY2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_FLANKING1",
+    "PROMOTION_COMBAT3"
+   ]
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SENTRY": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Sentry.dds,Art/Interface/Buttons/Promotions_Atlas.dds,5,6"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SENTRY",
+  "unitCombats": [
+   "UNITCOMBAT_HUNTER",
+   "UNITCOMBAT_MOUNTED"
+  ]
+ }
+}

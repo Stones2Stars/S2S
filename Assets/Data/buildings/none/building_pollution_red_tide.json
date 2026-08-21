@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_POLLUTION_RED_TIDE",
+ "requires": {
+  "operate": {
+   "all": [
+    "HAS_COAST",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_WATER_POLLUTION",
+     "scope": "city",
+     "min": 750,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": -5,
+      "enabled": "IS_WATER"
+     }
+    ]
+   }
+  }
+ },
+ "production": {
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": -2,
+      "enabled": "IS_WATER"
+     }
+    ]
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": -5,
+      "enabled": "IS_WATER"
+     }
+    ]
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYWATERPOLLUTION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_POLLUTION_RED_TIDE",
+  "civilopedia": "TXT_KEY_BUILDING_WATER_POLLUTION_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

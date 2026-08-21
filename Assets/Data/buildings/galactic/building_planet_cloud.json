@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_PLANET_CLOUD",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+    {
+     "type": "BUILDING_ECUMENOPOLIS_EARTH",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+     "scope": "empire",
+     "min": 3,
+     "scaling": "amountBuildings"
+    },
+    "TECH_LAUNCH_ARCOLOGY",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CISLUNAR_ONEILL_CYLINDER": {
+     "flat": 10
+    }
+   }
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 27966,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PLANET_CLOUD"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PLANET_CLOUD",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PLANET_CLOUD",
+  "civilopedia": "TXT_KEY_BUILDING_PLANET_CLOUD_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

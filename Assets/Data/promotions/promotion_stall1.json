@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_STALL1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_STALL2"
+  ]
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "skills": {
+  "unitCombats": [
+   "UNITCOMBAT_PROMOTED_STALL"
+  ]
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_STALL": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Stall1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_STALL1"
+ }
+}

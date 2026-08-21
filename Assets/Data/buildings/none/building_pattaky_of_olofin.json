@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_PATTAKY_OF_OLOFIN",
+ "enables": {
+  "units": [
+   "UNIT_YORUBA_MISSIONARY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PRIESTHOOD",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_YORUBA"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2,
+   "percent": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_YORUBA"
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_YORUBA": {
+    "flat": 2
+   }
+  }
+ },
+ "cost": {
+  "production": 160,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PATTAKY_OF_OLOFIN",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CHRISTIAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PATTAKY_OF_OLOFIN",
+  "civilopedia": "TXT_KEY_BUILDING_PATTAKY_OF_OLOFIN_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "specialBuildingType": "SPECIALBUILDING_TEMPLE",
+  "religion": "RELIGION_YORUBA",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

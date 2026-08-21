@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_MASDAR_CITY",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ECOLOGICAL_ENGINEERING",
+    {
+     "type": "TERRAIN_DESERT",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 12630,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MASDAR_CITY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MASDAR_CITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MASDAR_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_MASDAR_CITY_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

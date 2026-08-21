@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DEEP_SPACE_TEMPERATURE_REGULATOR",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
+    "TECH_ENTROPY_REVERSAL",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 24482,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_TEMPERATURE_REGULATOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_TEMPERATURE_REGULATOR",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_TEMPERATURE_REGULATOR_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

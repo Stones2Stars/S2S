@@ -1,0 +1,116 @@
+{
+ "type": "PROMOTION_SENSORS",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SENSORS2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT3",
+    "PROMOTION_COMBAT_AI1"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 10,
+   "terrain": {
+    "TERRAIN_GRASSLAND": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_PLAINS": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_ICE": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_TUNDRA": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_MARSH": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_DESERT": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_COAST": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_OCEAN": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_COAST_TROPICAL": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_COAST_POLAR": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_OCEAN_TROPICAL": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_OCEAN_POLAR": {
+     "defense": {
+      "percent": 10
+     }
+    }
+   }
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SENSORS": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Sentry.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,4,10"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SENSORS",
+  "unitCombats": [
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_SUBMARINE",
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_GUN"
+  ]
+ }
+}

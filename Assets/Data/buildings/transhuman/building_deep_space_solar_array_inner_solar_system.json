@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_DEEP_SPACE_SOLAR_ARRAY_INNER_SOLAR_SYSTEM",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_ASSEMBLER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_DEEP_SPACE",
+    "TECH_DEEP_SPACE_COLONIES",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_INNER_SOLAR_SYSTEM",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_MERCURY",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_ASTEROID_SURFACE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 823,
+  "hurryModifier": 10000
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_SOLAR_ARRAY_INNER_SOLAR_SYSTEM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_SOLAR_ARRAY_INNER_SOLAR_SYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_SOLAR_ARRAY_INNER_SOLAR_SYSTEM_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

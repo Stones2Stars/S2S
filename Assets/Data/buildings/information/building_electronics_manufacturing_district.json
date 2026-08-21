@@ -1,0 +1,225 @@
+{
+ "type": "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
+ "enables": {
+  "buildings": [
+   "BUILDING_CGI_ANIMATION_STUDIO",
+   "BUILDING_DIGITAL_GLOBE",
+   "BUILDING_ELECTRONIC_PAPER_MAKER",
+   "BUILDING_EVOLUTION_SIMULATOR",
+   "BUILDING_GESTURE_RECOGNITION_SOFTWARE",
+   "BUILDING_SMARTPHONE_MANUFACTURER",
+   "BUILDING_SPEECH_RECOGNITION_SOFTWARE",
+   "BUILDING_TABLET_MANUFACTURER"
+  ],
+  "units": [
+   "UNIT_PROGRAMMER",
+   "UNIT_SOFTWARE_DEVELOPER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MANUFACTURING_DISTRICT",
+    "TECH_RAPID_PROTOTYPING",
+    {
+     "type": "BONUS_PLASTIC",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_COPPER_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_RARE_EARTH_MINERALS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_BLENDER",
+   "BONUS_CALCULATORS",
+   "BONUS_CELLPHONES",
+   "BONUS_COMPUTERS",
+   "BONUS_COPPER_WIRES",
+   "BONUS_DISHWASHERS",
+   "BONUS_DISKETTES",
+   "BONUS_FIBER_OPTIC_CABLES",
+   "BONUS_FLASH_MEMORY_DEVICES",
+   "BONUS_MICROCHIPS",
+   "BONUS_MICROWAVE_OVENS",
+   "BONUS_PERSONAL_ELECTRONICS",
+   "BONUS_POWER_TOOLS",
+   "BONUS_PUNCH_CARDS",
+   "BONUS_RADIOS",
+   "BONUS_REFRIGERATORS",
+   "BONUS_TELEVISIONS",
+   "BONUS_THEREMIN",
+   "BONUS_TRANSISTORS",
+   "BONUS_VACUUM_CLEANERS",
+   "BONUS_VIDEO_GAMES",
+   "BONUS_WASHER_DRYER"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 11,
+     "enabled": "TECH_CLOSED_ECONOMIES"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CERMET",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    90,
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COMPUTERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COPPER_WIRES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_FIBERGLASS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GOLD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_NANOTUBES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_QUANTUM_DOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "foodKept": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 10,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_TECH"
+   }
+  }
+ ],
+ "cost": {
+  "production": 2405,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
+  "civilopedia": "TXT_KEY_BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

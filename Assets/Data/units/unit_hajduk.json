@@ -1,0 +1,273 @@
+{
+ "type": "UNIT_HAJDUK",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEMI_AUTOMATIC_WEAPONS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SERBIAN",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_CONSPIRATORS_HIDEOUT",
+    "TECH_POLITICAL_PHILOSOPHY",
+    "TECH_MATCHLOCK",
+    {
+     "any": [
+      {
+       "type": "BONUS_FIREARMS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_AMMUNITION",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GUNFIGHTER",
+     "UNIT_OUTLAW"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": -10
+   }
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_FLINT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "combat": {
+  "unit": {
+   "lunge": {
+    "percent": 14
+   },
+   "unnerve": {
+    "percent": 14
+   },
+   "stealthStrikes": {
+    "flat": 1
+   },
+   "stealth": {
+    "percent": 30
+   },
+   "targets": {
+    "UNITCOMBAT_EXPLORER": true,
+    "UNITCOMBAT_CANINE": true,
+    "UNITCOMBAT_TRADE": true,
+    "UNITCOMBAT_ENTERTAINER": true,
+    "UNITCOMBAT_CRIMINAL": true,
+    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 17
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 35
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "insidiousness": {
+    "flat": 30
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 30
+  },
+  "plot": {
+   "flat": 15
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_CAPTIVE",
+    "flat": 1
+   }
+  }
+ },
+ "skills": [
+  "alwaysHostile",
+  "assassin",
+  "hiddenNationality",
+  "noCapture",
+  "noDefensiveBonus",
+  "pillage",
+  "blendIntoCity",
+  "counterSpy",
+  "destroy",
+  "ignoreTerrainCost",
+  "ignoreZoneOfControl",
+  "stealPlans",
+  "upgradeAnywhere",
+  "camouflage",
+  "disguised"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_CRIMINAL",
+ "combatClasses": [
+  "UNITCOMBAT_GUN",
+  "UNITCOMBAT_MELEE",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+  "UNITCOMBAT_WEAPON_H2H_KNIFE",
+  "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "hideAndSeek": {
+  "method": "camouflage",
+  "concealment": {
+   "flat": 1000
+  },
+  "detection": [
+   {
+    "value": 200,
+    "unit": "HAS_CAMOUFLAGE"
+   },
+   {
+    "value": 500,
+    "unit": "HAS_DISGUISED"
+   }
+  ]
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_INDUSTRYESPIONAGE",
+   "PROMOTION_COMMANDO",
+   "PROMOTION_MARAUDER",
+   "PROMOTION_LOOTER",
+   "PROMOTION_WOODSMAN1",
+   "PROMOTION_BACKSTAB1",
+   "PROMOTION_BACKSTAB2"
+  ],
+  "greatPersonAction": {
+   "trade": {
+    "base": 50,
+    "multiplier": 1
+   }
+  }
+ },
+ "cost": {
+  "production": 405,
+  "upkeep": 7
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HAJDUK",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_HAJDUK"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_HAJDUK",
+  "civilopedia": "TXT_KEY_UNIT_HAJDUK_PEDIA",
+  "worth": 7,
+  "militaryWorth": 15,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PILLAGE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "espionagePoints": 500,
+  "unitAIs": [
+   "UNITAI_SPY",
+   "UNITAI_PILLAGE"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

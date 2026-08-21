@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_RESCUE_DOG3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_RESCUE_DOG2"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": -5
+  }
+ },
+ "heal": {
+  "unit": {
+   "sameTile": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_RESCUE_DOG": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/rescuedog3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_RESCUE_DOG3"
+ }
+}

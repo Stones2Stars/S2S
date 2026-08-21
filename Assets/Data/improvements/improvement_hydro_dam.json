@@ -1,0 +1,75 @@
+{
+ "type": "IMPROVEMENT_HYDRO_DAM",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HYDROELECTRICITY",
+     "scope": "team"
+    },
+    "IS_FLATLANDS",
+    "HAS_RIVER",
+    "HAS_RIVER"
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    10,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ENVIRONMENTAL_ECONOMICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    4,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WIRELESS_ELECTRICITY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_ENVIRONMENTAL_ECONOMICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_HYDRO_DAM"
+  }
+ },
+ "mapGeneration": {
+  "requiresRiverSide": true
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_HYDRO_DAM",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_HYDRO_DAM_PEDIA",
+  "pillageTo": "IMPROVEMENT_WATERMILL",
+  "advancedStart": {
+   "cost": 64
+  },
+  "pillageGold": 50
+ }
+}

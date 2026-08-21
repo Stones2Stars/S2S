@@ -1,0 +1,53 @@
+{
+ "type": "PROMOTION_CITY_RAIDER5",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CITY_RAIDER4",
+    {
+     "any": [
+      "PROMOTION_COMBAT4"
+     ]
+    }
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 25
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   }
+  }
+ },
+ "skills": {
+  "blitz": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CITYRAIDER": 5
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/CityRaider5.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CITY_RAIDER5"
+ }
+}

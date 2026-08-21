@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_NAMA",
+ "enables": {
+  "units": [
+   "UNIT_HENDRIK_WITBOOI",
+   "UNIT_KHOISAN_RUNNER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_NAMA"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_NAMA",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

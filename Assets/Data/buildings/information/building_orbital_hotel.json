@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_ORBITAL_HOTEL",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FUSION_SPACECRAFT"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TOURISM_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SPACE_TOURISM",
+    {
+     "any": [
+      "BUILDING_EFFECT_LAUNCH_SITE",
+      "BUILDING_COMMERCIAL_SPACEPORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_TOURISM_MEGACOMPLEX"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 2205,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "orbital": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ORBITAL_HOTEL",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ORBITAL_HOTEL"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ORBITAL_HOTEL",
+  "civilopedia": "TXT_KEY_BUILDING_ORBITAL_HOTEL_PEDIA",
+  "centerInCity": true,
+  "worth": 6,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_MORPHOGEN_NANOBOTS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB",
+    "BUILDING_CIRCADIAN_CHAMBER",
+    "TECH_SYNTHETIC_SYNESTHESIA",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 5055,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MORPHOGEN_NANOBOTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MORPHOGEN_NANOBOTS",
+  "civilopedia": "TXT_KEY_BUILDING_MORPHOGEN_NANOBOTS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

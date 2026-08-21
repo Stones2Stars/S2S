@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_TITANIUM_INGOTS",
+ "enables": {
+  "buildings": [
+   "BUILDING_METAMATERIAL_FOUNDRY",
+   "BUILDING_SMITH_TITANIUM"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TITANIUM_INGOTS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TITANIUM_INGOTS",
+  "civilopedia": "TXT_KEY_BONUS_INGOTS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

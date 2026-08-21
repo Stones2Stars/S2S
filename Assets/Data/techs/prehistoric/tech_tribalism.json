@@ -1,0 +1,88 @@
+{
+ "type": "TECH_TRIBALISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISEASE_MALARIA",
+   "BUILDING_DISEASE_SCARLET_FEVER",
+   "BUILDING_LL_MONTE_VERDE",
+   "BUILDING_PESTS_CROWS",
+   "BUILDING_TOTEM_POLE",
+   "BUILDING_VILLAGE_HALL"
+  ],
+  "civics": [
+   "CIVIC_TRIBAL"
+  ],
+  "promotions": [
+   "PROMOTION_UNQUESTIONING_OBEDIENCE1"
+  ],
+  "techs": [
+   "TECH_ANIMISM",
+   "TECH_ARITHMETIC",
+   "TECH_CHIEFDOM"
+  ],
+  "units": [
+   "UNIT_TRIBE"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_BAND"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PORTABLE_SHELTERS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CONDUCT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CARPENTRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 30
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Button_Tribalism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TRIBALISM",
+  "soundMP": "AS2D_TECH_TRIBALISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TRIBALISM",
+  "civilopedia": "TXT_KEY_TECH_TRIBALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_TRIBALISM_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 13,
+  "gridY": 9
+ }
+}

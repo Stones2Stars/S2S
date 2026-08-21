@@ -1,0 +1,108 @@
+{
+ "type": "BUILDING_CARNIVAL",
+ "enables": {
+  "buildings": [
+   "BUILDING_BALLOON_RIDES",
+   "BUILDING_CARNIVAL_BOXING_KANGAROO",
+   "BUILDING_CARNIVAL_DANCING_BEAR",
+   "BUILDING_CARNIVAL_TRAINED_SEAL",
+   "BUILDING_ENCLOSURE_AMPHIBIAN_POND",
+   "BUILDING_ENCLOSURE_BAD_BOYS",
+   "BUILDING_ENCLOSURE_BEAR",
+   "BUILDING_ENCLOSURE_BIG_CAT",
+   "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
+   "BUILDING_ENCLOSURE_MARSUPIAL",
+   "BUILDING_ENCLOSURE_REPTILE",
+   "BUILDING_ENCLOSURE_RODENT",
+   "BUILDING_ENCLOSURE_WOLF"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRADE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MOUNTED": {
+     "flat": 1
+    },
+    "UNITCOMBAT_RECON": {
+     "flat": 2
+    },
+    "UNITCOMBAT_HUNTER": {
+     "flat": 1
+    },
+    "UNITCOMBAT_THROWING": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
+ "cost": {
+  "production": 153,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CARNIVAL"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CARNIVAL"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CARNIVAL",
+  "civilopedia": "TXT_KEY_BUILDING_CARNIVAL_PEDIA",
+  "worth": 3,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 10,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

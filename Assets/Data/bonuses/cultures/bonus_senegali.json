@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_SENEGALI",
+ "enables": {
+  "units": [
+   "UNIT_LEOPOLD_SENGHOR",
+   "UNIT_SABAR_DRUMMER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SENEGALI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SENEGALI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "type": "UNITCOMBAT_CRUISER",
+ "movement": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_OCEAN_POLAR": {
+     "percent": -50
+    },
+    "TERRAIN_OCEAN": {
+     "percent": -50
+    },
+    "TERRAIN_OCEAN_TROPICAL": {
+     "percent": -50
+    }
+   }
+  }
+ },
+ "tags": [
+  "naval"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/cruisers.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CRUISER",
+  "forNavalMilitary": true
+ }
+}

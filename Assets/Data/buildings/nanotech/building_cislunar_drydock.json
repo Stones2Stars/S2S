@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_CISLUNAR_DRYDOCK",
+ "enables": {
+  "units": [
+   "UNIT_CISLUNAR_INVADER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ALUMINUM_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_TITANIUM_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_NANOTUBES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ORBITAL_AIRCRAFT": {
+     "flat": 2
+    },
+    "UNITCOMBAT_EARLY_SPACESHIP": {
+     "flat": 2
+    },
+    "UNITCOMBAT_SOLAR_SAIL_SPACESHIP": {
+     "flat": 2
+    },
+    "UNITCOMBAT_NUCLEAR_SPACESHIP": {
+     "flat": 2
+    },
+    "UNITCOMBAT_ANTIMATTER_SPACESHIP": {
+     "flat": 2
+    },
+    "UNITCOMBAT_WORMHOLE_SPACESHIP": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 3245
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_DRYDOCK",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_DRYDOCK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_DRYDOCK",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_DRYDOCK_PEDIA",
+  "worth": 1,
+  "militaryWorth": 2,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

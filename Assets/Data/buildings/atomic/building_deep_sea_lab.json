@@ -1,0 +1,103 @@
+{
+ "type": "BUILDING_DEEP_SEA_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_MISSION_TO_CHALLENGER_DEEP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "BUILDING_MARINE_BIOLOGY_LAB",
+    "TECH_DEEP_SEA_EXPLORATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_NANOTUBES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TITANIUM_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STEEL_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_METHANE_ICE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HYDROTHERMAL_VENT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SEA_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SEA_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SEA_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,72 @@
+{
+ "type": "TECH_LAUNCH_ARCOLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ELYSIUM",
+   "BUILDING_PLANET_CLOUD",
+   "BUILDING_TRITON_MILITARY_BASE"
+  ],
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING",
+   "TECH_CLOSED_ECONOMIES",
+   "TECH_FUSION_SPACECRAFT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INTERSTELLAR_TRAVEL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COLONY_ARCOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 130429
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/launch_arcology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_LAUNCH_ARCOLOGY",
+  "soundMP": "AS2D_TECH_LAUNCH_ARCOLOGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_LAUNCH_ARCOLOGY",
+  "civilopedia": "TXT_KEY_TECH_LAUNCH_ARCOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_LAUNCH_ARCOLOGY_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 125,
+  "gridY": 5
+ }
+}

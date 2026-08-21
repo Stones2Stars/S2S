@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_TO_THE_DEATH4",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_TO_THE_DEATH3"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 35
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_TO_THE_DEATH": 4
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/ToTheDeath4Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_TO_THE_DEATH4"
+ }
+}

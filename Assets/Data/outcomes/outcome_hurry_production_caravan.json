@@ -1,0 +1,11 @@
+{
+ "type": "OUTCOME_HURRY_PRODUCTION_CARAVAN",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_HURRY_PRODUCTION_CARAVAN",
+  "message": "TXT_KEY_OUTCOME_HURRY_PRODUCTION_CARAVAN_MESSAGE"
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city"
+}

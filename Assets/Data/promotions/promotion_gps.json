@@ -1,0 +1,49 @@
+{
+ "type": "PROMOTION_GPS",
+ "combat": {
+  "unit": {
+   "domain": {
+    "DOMAIN_AIR": {
+     "percent": 15
+    },
+    "DOMAIN_LAND": {
+     "percent": 15
+    },
+    "DOMAIN_SEA": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 5
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Sentry.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,4,10"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_GPS",
+  "unitCombats": [
+   "UNITCOMBAT_MISSILE"
+  ]
+ }
+}

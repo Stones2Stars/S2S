@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_OSTRICH_FEATHERS",
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_OSTRICH_FEATHERS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_OSTRICH_FEATHERS",
+  "civilopedia": "TXT_KEY_BONUS_OSTRICH_FEATHERS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

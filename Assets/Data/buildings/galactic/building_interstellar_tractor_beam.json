@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_INTERSTELLAR_TRACTOR_BEAM",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTERPOINT_STATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_STARPORT",
+    "TECH_WEAPONIZED_GRAVITY_FIELDS",
+    "TECH_ADVANCED_SEEDSHIPS",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 10
+   }
+  }
+ },
+ "cost": {
+  "production": 3212,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_TRACTOR_BEAM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_TRACTOR_BEAM",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_TRACTOR_BEAM_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

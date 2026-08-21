@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_BELIEF_KARMA",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_KARMA"
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "empire": {
+   "flat": -10
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BELIEF_KARMA",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BELIEF_KARMA",
+  "civilopedia": "TXT_KEY_BUILDING_BELIEF_KARMA_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

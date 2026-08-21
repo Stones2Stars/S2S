@@ -1,0 +1,191 @@
+{
+ "type": "CIVIC_CASTE_SYSTEM",
+ "enables": {
+  "buildings": [
+   "BUILDING_BRAHMIN_LIBRARY",
+   "BUILDING_CIVIC_CASTE"
+  ],
+  "specialists": [
+   "SPECIALIST_ENGINEER",
+   "SPECIALIST_MERCHANT",
+   "SPECIALIST_SCIENTIST"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 3,
+   "improvements": {
+    "IMPROVEMENT_FARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FISHING_BOATS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 3,
+   "improvements": {
+    "IMPROVEMENT_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SHAFT_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_MODERN_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_CORE_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_QUARRY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_LUMBERMILL": {
+     "flat": 1
+    },
+    "IMPROVEMENT_TREEFARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HYBRID_FOREST": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    1,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": -1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 15
+   },
+   "numCities": {
+    "percent": 15
+   },
+   "percent": [
+    {
+     "value": 3,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 2,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
+   "corporation": {
+    "percent": 10
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "happiness": {
+    "flat": 1
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": 3
+   },
+   "laborFreedom": {
+    "flat": -3
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": 5,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "grants": {
+  "revolution": 10
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/society_caste.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_CASTE_SYSTEM",
+  "civilopedia": "TXT_KEY_CIVIC_CASTE_SYSTEM_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_CASTE_SYSTEM_STRATEGY",
+  "civicOption": "CIVICOPTION_SOCIETY",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_LOW"
+ }
+}

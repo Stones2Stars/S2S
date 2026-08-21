@@ -1,0 +1,71 @@
+{
+ "type": "TECH_BRANE_CONSTRUCTION",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_BRANESPACE_FOOD_SOURCE",
+   "BUILDING_DISTANT_BRANE_ASSEMBLER",
+   "BUILDING_DISTANT_INTERGALACTIC_BRANEWORKS"
+  ],
+  "builds": [
+   "BUILD_BRANE_FACTORY",
+   "BUILD_BRANE_FARM"
+  ],
+  "improvements": [
+   "IMPROVEMENT_BRANE_FACTORY",
+   "IMPROVEMENT_BRANE_FARM"
+  ],
+  "techs": [
+   "TECH_BRANE_CROSSOVER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TESSERACT_CONSTRUCTION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HYPERLANES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_GREAT_ENGINEER"
+ },
+ "cost": {
+  "research": 581814
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/brane_construction.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_BRANE_CONSTRUCTION",
+  "civilopedia": "TXT_KEY_TECH_BRANE_CONSTRUCTION_PEDIA",
+  "quote": "TXT_KEY_TECH_BRANE_CONSTRUCTION_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 154,
+  "gridY": 5
+ }
+}

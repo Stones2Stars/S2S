@@ -1,0 +1,181 @@
+{
+ "type": "TRAIT_COMPLEX_MEGALOMANIAC1",
+ "excludes": [
+  "TRAIT_COMPLEX_HUMBLE1"
+ ],
+ "food": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    -5,
+    {
+     "value": 10,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
+   "flat": -1
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "worldWonder": {
+    "percent": 10
+   },
+   "teamWonder": {
+    "percent": -10
+   },
+   "nationalWonder": {
+    "percent": -10
+   },
+   "units": {
+    "percent": [
+     {
+      "value": 10,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": [
+    {
+     "value": 15,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": 20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 5
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": -15
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": -20
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": -1
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": 1
+   }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   },
+   {
+    "FLAVOR_ESPIONAGE": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitMegalomaniac.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC1",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_MEGALOMANIAC_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_MEGALOMANIAC_SHORT",
+  "negativeTrait": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_COMPLEX_MEGALOMANIAC2"
+  ]
+ }
+}

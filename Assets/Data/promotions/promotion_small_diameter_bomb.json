@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_SMALL_DIAMETER_BOMB",
+ "combat": {
+  "unit": {
+   "percent": 50
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": -10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Accuracy.dds,Art/Interface/Buttons/Promotions_Atlas.dds,1,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SMALL_DIAMETER_BOMB",
+  "unitCombats": [
+   "UNITCOMBAT_MISSILE"
+  ]
+ }
+}

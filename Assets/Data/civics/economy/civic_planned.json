@@ -1,0 +1,135 @@
+{
+ "type": "CIVIC_PLANNED",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTRAL_BANK",
+   "BUILDING_PLANNING_OFFICE"
+  ],
+  "hurries": [
+   "HURRY_GOLD"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 5,
+   "improvements": {
+    "IMPROVEMENT_PLANTATION": {
+     "flat": 1
+    },
+    "IMPROVEMENT_PASTURE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WORKSHOP": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FACTORY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_MANUFACTURING_COMPLEX": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 7,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
+   "corporation": {
+    "percent": -75
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 3
+    },
+    "production": {
+     "percent": 3
+    },
+    "commerce": {
+     "percent": 3
+    }
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "environmentalProtection": {
+    "flat": -1
+   },
+   "democracyLevel": {
+    "flat": -8
+   }
+  }
+ },
+ "inflation": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": -33
+   }
+  }
+ },
+ "policies": {
+  "noCorporations": true
+ },
+ "grants": {
+  "revolution": 10
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/economy_planned.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_PLANNED",
+  "civilopedia": "TXT_KEY_CIVIC_PLANNED_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_PLANNED_STRATEGY",
+  "civicOption": "CIVICOPTION_ECONOMY",
+  "anarchyLength": 2,
+  "upkeepLevel": "UPKEEP_EXTREME"
+ }
+}

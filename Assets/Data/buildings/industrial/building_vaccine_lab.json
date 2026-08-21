@@ -1,0 +1,116 @@
+{
+ "type": "BUILDING_VACCINE_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_BACTERIOPHAGE_THERAPY_CLINIC",
+   "BUILDING_GENE_FARMING_LAB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_UNIVERSITY",
+    "TECH_ANTIBIOTICS",
+    {
+     "any": [
+      "BUILDING_HOSPITAL",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 7,
+     "enabled": "TECH_BIOLOGICAL_WARFARE"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_GENETICS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_SMART_DRUGS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_ANTI_AGING_MEDICINE"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_GENE_ENHANCEMENT"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_BIOINFORMATICS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_PERSONALIZED_HEALTH"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_EGGS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 800,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VACCINE_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VACCINE_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_VACCINE_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

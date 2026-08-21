@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_LIFE_SILICON_DIOXIDE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_BASE_CHTHONIAN_PLANET",
+    "TECH_POSTHUMANISM",
+    {
+     "type": "MAPCATEGORY_PLASMA",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "production": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 12,
+     "enabled": "TECH_GALACTIC_ECOLOGY"
+    },
+    {
+     "value": 12,
+     "enabled": "TECH_DIRECTED_PANSPERMIA"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_KEPLER_186F_COLONY": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 8568,
+  "hurryModifier": 10000
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LIFE_SILICON_DIOXIDE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_SILICON_DIOXIDE",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_SILICON_DIOXIDE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_MIGHT3",
+ "combat": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MIGHT": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Might3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_MIGHT3",
+  "levelPrereq": 7,
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_MEDIOCRE",
+   "UNITCOMBAT_QUALITY_STANDARD",
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_QUALITY_EPIC",
+   "UNITCOMBAT_QUALITY_DIVINE"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_ANIMAL"
+  ]
+ }
+}

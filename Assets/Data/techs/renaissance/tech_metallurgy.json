@@ -1,0 +1,92 @@
+{
+ "type": "TECH_METALLURGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAUSEWAY",
+   "BUILDING_FOUNDRY",
+   "BUILDING_STAR_FORT"
+  ],
+  "promotions": [
+   "PROMOTION_REPAIR_MECHANICAL3"
+  ],
+  "techs": [
+   "TECH_CHEMISTRY",
+   "TECH_FLINTLOCK",
+   "TECH_NAVAL_CANNON"
+  ],
+  "units": [
+   "UNIT_BRIGANTINE",
+   "UNIT_CULVERIN",
+   "UNIT_FALCONET",
+   "UNIT_GENOAN_MERCENARY",
+   "UNIT_HEAVY_CROSSBOWMAN",
+   "UNIT_MASTER_SAILOR_SLOOP",
+   "UNIT_REPEATING_CROSSBOWMAN",
+   "UNIT_RIBAULDEQUIN",
+   "UNIT_SIEGE_WAGON",
+   "UNIT_SLOOP",
+   "UNIT_TAIRONA_REBELS",
+   "UNIT_UJEN_CHOOHA",
+   "UNIT_VOZOVA_HRADBA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GUNPOWDER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 2528
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 9
+   },
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/metallurgy.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,11"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_METALLURGY",
+  "soundMP": "AS2D_TECH_METALLURGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_METALLURGY",
+  "civilopedia": "TXT_KEY_TECH_METALLURGY_PEDIA",
+  "quote": "TXT_KEY_TECH_METALLURGY_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "militaryWorth": 12,
+  "tradeable": true,
+  "gridX": 52,
+  "gridY": 7
+ }
+}

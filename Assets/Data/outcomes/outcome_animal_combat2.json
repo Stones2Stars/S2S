@@ -1,0 +1,21 @@
+{
+ "type": "OUTCOME_ANIMAL_COMBAT2",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_ANIMAL_COMBAT2",
+  "message": "TXT_KEY_OUTCOME_ANIMAL_COMBAT_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ARENA"
+   ]
+  }
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city",
+ "replaces": [
+  "OUTCOME_ANIMAL_COMBAT1"
+ ]
+}

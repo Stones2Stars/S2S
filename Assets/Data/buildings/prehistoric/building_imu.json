@@ -1,0 +1,132 @@
+{
+ "type": "BUILDING_IMU",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLOOD_DANCE",
+   "BUILDING_BRANDING_HUT",
+   "BUILDING_CAVE_PAINTINGS",
+   "BUILDING_FIRE_DANCE",
+   "BUILDING_RESOURCES_CHARCOAL",
+   "BUILDING_SMOKE_SIGNALS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FIRE_BRIGADES"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CHARCOAL_BURNER"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_EARTH_OVEN",
+    {
+     "any": [
+      "BUILDING_LUMBER_CAMP",
+      "BUILDING_AGROFOREST"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_CHARCOAL_BURNER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PIG",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_POULTRY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COW",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 86,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_IMU",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_IMU",
+  "civilopedia": "TXT_KEY_BUILDING_IMU_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

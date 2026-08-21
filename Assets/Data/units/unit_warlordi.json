@@ -1,0 +1,211 @@
+{
+ "type": "UNIT_WARLORDI",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HERALDRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MILITARY_TRAINING",
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WARLORDII"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_GOLD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_SILVER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_GEMSTONE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_PEARLS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 25
+    },
+    "UNITCOMBAT_MELEE": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 10
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 10
+   },
+   "limit": {
+    "flat": 10
+   },
+   "maxUnits": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_WARLORDIS"
+  }
+ },
+ "skills": [
+  "alwaysHostile",
+  "hiddenNationality",
+  "noCapture",
+  "pillage",
+  "unlimitedException"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_MELEE",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+  "UNITCOMBAT_ARMOR_MEDIUM",
+  "UNITCOMBAT_SHIELD_LARGE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_LEADER"
+  ]
+ },
+ "cost": {
+  "production": 215,
+  "upkeep": 2
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_VWARLORD_ANCIENT",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 5,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_VWARLORD_ANCIENT"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SPEARMAN_BARBARIAN"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_AXEMAN_BARBARIAN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_WARLORDI",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
+  "worth": 3,
+  "militaryWorth": 10,
+  "xpValueAttack": 1,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_GENERAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_GENERAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "workRate": 50
+  }
+ }
+}

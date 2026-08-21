@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_RELIC_ALHAMBRA",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ALHAMBRA"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RELIC_ALHAMBRA",
+  "civilopedia": "TXT_KEY_BUILDING_ALHAMBRA_PEDIA",
+  "pediaCategory": "religious",
+  "notConstructible": true,
+  "noInstanceLimit": true,
+  "worth": 4,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_ISLAM",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

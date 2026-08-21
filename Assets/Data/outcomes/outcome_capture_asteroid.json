@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_CAPTURE_ASTEROID",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_CAPTURE_ASTEROID",
+  "message": "TXT_KEY_OUTCOME_CAPTURE_ASTEROID_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ASTEROID_BELT_PROBES"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

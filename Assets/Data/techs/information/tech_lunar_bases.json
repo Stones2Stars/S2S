@@ -1,0 +1,73 @@
+{
+ "type": "TECH_LUNAR_BASES",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUNAR_OUTPOST",
+   "BUILDING_MILITARY_SPACEPORT"
+  ],
+  "techs": [
+   "TECH_ASTEROID_BELT_PROBES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AQUACULTURE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_RAPID_PROTOTYPING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COMMERCIAL_SPACEFLIGHT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 25354
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/moonbases.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_LUNAR_BASES",
+  "soundMP": "AS2D_TECH_LUNAR_BASES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_LUNAR_BASES",
+  "civilopedia": "TXT_KEY_TECH_LUNAR_BASES_PEDIA",
+  "quote": "TXT_KEY_TECH_LUNAR_BASES_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 94,
+  "gridY": 5
+ }
+}

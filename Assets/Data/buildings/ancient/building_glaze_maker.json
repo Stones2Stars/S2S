@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_GLAZE_MAKER",
+ "enables": {
+  "buildings": [
+   "BUILDING_RED_AND_BLACK_WARE_PAINTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ORNAMENTATION",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SAND",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_POTTERY",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": "TECH_AESTHETICS"
+    }
+   ]
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
+ "cost": {
+  "production": 168,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_GOLD": 2
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GLAZE_MAKER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GLASSMITH"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GLAZE_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_GLAZE_MAKER_PEDIA",
+  "worth": 4,
+  "militaryWorth": 2,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

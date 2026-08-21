@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_PALM_ISLANDS",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
+    "TECH_UNMANNED_NAVAL_VEHICLES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "research": {
+  "empire": {
+   "buildings": {
+    "BUILDING_ENERGY_ISLAND": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 12030,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PALM_ISLANDS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PALM_ISLANDS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PALM_ISLANDS",
+  "civilopedia": "TXT_KEY_BUILDING_PALM_ISLANDS_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

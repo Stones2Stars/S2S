@@ -27,6 +27,16 @@ import os, _winreg
 import cPickle as pickle
 import BugUtil, NaturalWonders
 
+#	The map-gen read surface -- one named accessor per registry, so the bindings list IS this
+#	script's dependency list. The whole-registry ENUMERATION below stays; only where each value
+#	comes from changed.
+BONUS = CyBonusInfo()
+BONUSCLASS = CyBonusClassInfo()
+FEATURE = CyFeatureInfo()
+INFO = CyInfo()
+TERRAIN = CyTerrainInfo()
+WORLD = CyWorldInfo()
+
 ##############################################################################
 ## GLOBAL TUNING VARIABLES: Change these to customize the map results
 ##############################################################################
@@ -396,7 +406,7 @@ class MapConstants:
 		self.iHeight	= MAP.getGridHeight()
 		self.iArea		= self.iWidth * self.iHeight
 		self.iWorldSize	= iWorldSize = MAP.getWorldSize()
-		self.iMaxLakeSize = GC.getWorldInfo(iWorldSize).getOceanMinAreaSize() - 1
+		self.iMaxLakeSize = WORLD.getOceanMinAreaSize(iWorldSize) - 1
 		# Too many meteors will simply destroy the Earth, it also prevent an endless loop if the pangea can't be broken.
 		self.iMaxMeteorCount = 15 + 5 * iWorldSize
 		# Minimum size for a meteor strike that attemps to break pangaeas.
@@ -3034,12 +3044,16 @@ class BonusPlacer:
 		shuffleList(mc.iArea, mapRand, plotIndexList)
 		for i in xrange(iNumBonuses):
 			iBonus = GC.getMapBonus(i)
-			CvBonusInfo = GC.getBonusInfo(iBonus)
 			bonus = BonusArea()
 			bonus.indeXML = iBonus
-			# Calculate desired amount
-			fBaseCount = CvBonusInfo.getRandAppearance() / 100.0
-			iTilesPer = CvBonusInfo.getTilesPer()
+			# Calculate desired amount. The appearance bands are four dice that are SUMMED onto the constant,
+			# drawn here at the caller; every band is drawn even at ceiling 0 because the draw advances the
+			# shared map-RNG seed, and the sequence is what the generated map is made of.
+			iRandAppearance = BONUS.getConstAppearance(iBonus)
+			for iBand in xrange(BONUS.getNumRandAppearanceBands()):
+				iRandAppearance += mapRand.get(BONUS.getRandAppearance(iBonus, iBand), "random%d" % (iBand + 1))
+			fBaseCount = iRandAppearance / 100.0
+			iTilesPer = BONUS.getTilesPer(iBonus)
 			fDensityCount = 0
 			if iTilesPer > 0:
 				iNumPossible = 0
@@ -3050,12 +3064,12 @@ class BonusPlacer:
 			iBonusCount = int(fBonusMult * (fBaseCount + fDensityCount))
 			if iBonusCount < 1:
 				iBonusCount = 1
-			print "%s - Base Count = %.2f - Density Count = %.2f - Multiplier: %.2f\n\tDesired amount = %d" % (CvBonusInfo.getType(), fBaseCount, fDensityCount, fBonusMult, iBonusCount)
+			print "%s - Base Count = %.2f - Density Count = %.2f - Multiplier: %.2f\n\tDesired amount = %d" % (INFO.getType("BONUS_", iBonus), fBaseCount, fDensityCount, fBonusMult, iBonusCount)
 			bonus.desiredBonusCount = iBonusCount
 
 			bonusList.append(bonus)
 			# Check which placement orders are used.
-			iPlaceOrder = CvBonusInfo.getPlacementOrder()
+			iPlaceOrder = BONUS.getPlacementOrder(iBonus)
 			if iPlaceOrder in pOrderDict:
 				pOrderDict[iPlaceOrder].append(iBonus)
 			else:
@@ -3070,11 +3084,10 @@ class BonusPlacer:
 		for i in xrange(iNumBonuses):
 			indeXML = bonusList[i].indeXML
 			bonusDictLoc[indeXML] = i
-			bonusInfo = GC.getBonusInfo(indeXML)
-			if not bonusInfo.isOneArea():
+			if not BONUS.isOneArea(indeXML):
 				continue # Only assign areas to area bonuses.
 			areaSuitabilityList = []
-			minAreaSize = bonusInfo.getMinAreaSize()
+			minAreaSize = BONUS.getMinAreaSize(indeXML)
 			for area in self.areas:
 				if area.getNumTiles() >= minAreaSize:
 					aS = AreaSuitability(area.getID())
@@ -3132,9 +3145,8 @@ class BonusPlacer:
 		#now report resources that simply could not be placed
 		for iOrder, aList in pOrderList:
 			for indeXML in aList:
-				CvBonusInfo = GC.getBonusInfo(indeXML)
 				bonus = bonusList[bonusDictLoc[indeXML]]
-				print "%d - Placed %d, desired %d for %s" %(CvBonusInfo.getPlacementOrder(), bonus.currentBonusCount, bonus.desiredBonusCount, CvBonusInfo.getType())
+				print "%d - Placed %d, desired %d for %s" %(BONUS.getPlacementOrder(indeXML), bonus.currentBonusCount, bonus.desiredBonusCount, INFO.getType("BONUS_", indeXML))
 
 
 	# AIAndy - Changed to start at the end of the last run in the plot list.
@@ -3147,7 +3159,6 @@ class BonusPlacer:
 		GC = CyGlobalContext()
 		MAP = GC.getMap()
 		GAME = GC.getGame()
-		bonusInfo = GC.getBonusInfo(indeXML)
 		plotListLength = len(plotIndexList)
 		lastI = 0
 		# Now, add bonuses.
@@ -3167,9 +3178,9 @@ class BonusPlacer:
 			if self.iPass > 1: # No clustering for second pass
 				break
 			# Clustering
-			iGroupRange = bonusInfo.getGroupRange()
+			iGroupRange = BONUS.getGroupRange(indeXML)
 			if iGroupRange < 1: break
-			iRand = bonusInfo.getGroupRand()
+			iRand = BONUS.getGroupRand(indeXML)
 			if iRand < 1: break
 			# Scale by worldsize
 			if iWorldSize / 3 > 0:
@@ -3193,10 +3204,10 @@ class BonusPlacer:
 						bonus.currentBonusCount += 1
 						iCluster += 1
 						if iCluster == iMaxCluster:
-							print ("Group Placed %d " % iCluster) + bonusInfo.getType()
+							print ("Group Placed %d " % iCluster) + INFO.getType("BONUS_", indeXML)
 							return (lastI + 1) % plotListLength
 			if iCluster:
-				print ("Group Placed %d " % iCluster) + bonusInfo.getType()
+				print ("Group Placed %d " % iCluster) + INFO.getType("BONUS_", indeXML)
 			break
 		return (lastI + 1) % plotListLength
 
@@ -3205,7 +3216,6 @@ class BonusPlacer:
 	def AddEmergencyBonus(self, bonus, plotIndexList, startAtIndex):
 		GC = CyGlobalContext()
 		MAP = GC.getMap()
-		bonusInfo = GC.getBonusInfo(bonus.indeXML)
 		plotListLength = len(plotIndexList)
 		lastI = 0
 		featureForest = GC.getInfoTypeForString("FEATURE_FOREST")
@@ -3229,9 +3239,9 @@ class BonusPlacer:
 				bonus.currentBonusCount += 1
 				#restore the feature if possible
 				if featureEnum == featureForest:
-					if bonusInfo == None or bonusInfo.isFeature(featureEnum):
+					if bonus.indeXML == -1 or BONUS.isFeature(bonus.indeXML, featureEnum):
 						plot.setFeatureType(featureEnum, featureVariety)
-				print "Emergency placement of 1 %(bt)s" % {"bt":bonusInfo.getType()}
+				print "Emergency placement of 1 %(bt)s" % {"bt":INFO.getType("BONUS_", bonus.indeXML)}
 				break
 		lastI = (lastI + 1) % plotListLength
 		return lastI
@@ -3255,19 +3265,17 @@ class BonusPlacer:
 		x = CyPlot.getX()
 		y = CyPlot.getY()
 		areaID = CyPlot.getArea()
-		bonusInfo = GC.getBonusInfo(indeXML)
 		''' Rewrite to something that actually makes sense.
 		if CyPlot.isWater():
 			MAP = GC.getMap()
-			if 100 * MAP.getNumBonusesOnLand(indeXML) / (MAP.getNumBonuses(indeXML) + 1) < bonusInfo.getMinLandPercent():
+			if 100 * MAP.getNumBonusesOnLand(indeXML) / (MAP.getNumBonuses(indeXML) + 1) < BONUS.getMinLandPercent(indeXML):
 				return False
 		'''
 		#Make sure there are no bonuses of the same class (but a different type) nearby:
-		iBonusClass = bonusInfo.getBonusClassType()
-		classInfo = GC.getBonusClassInfo(iBonusClass)
+		iBonusClass = BONUS.getBonusClassType(indeXML)
 		iRange0 = 0
-		if classInfo and self.iPass < 3:
-			iRange0 = classInfo.getUniqueRange()
+		if iBonusClass != -1 and self.iPass < 3:
+			iRange0 = BONUSCLASS.getUniqueRange(iBonusClass)
 			if iRange0 > 0:
 				if self.iPass == 1:
 					iRange0 += (mc.iWorldSize + 1) / 2
@@ -3277,12 +3285,12 @@ class BonusPlacer:
 							CyPlotX = self.plotXY(x, y, dx, dy)
 							if CyPlotX and areaID == CyPlotX.getArea():
 								eOtherBonus = CyPlotX.getBonusType(TeamTypes.NO_TEAM)
-								if eOtherBonus > -1 and GC.getBonusInfo(eOtherBonus).getBonusClassType() == iBonusClass:
+								if eOtherBonus > -1 and BONUS.getBonusClassType(eOtherBonus) == iBonusClass:
 									return False
 			elif iRange0 < 0:
 				iRange0 = 0
 		#Make sure there are no bonuses of the same type nearby:
-		iRange1 = bonusInfo.getUniqueRange()
+		iRange1 = BONUS.getUniqueRange(indeXML)
 		if iRange1 > 0:
 			if self.iPass == 1:
 				iRange1 += mc.iWorldSize
@@ -3301,46 +3309,45 @@ class BonusPlacer:
 		if bFree and plot.getBonusType(TeamTypes.NO_TEAM) != BonusTypes.NO_BONUS:
 			return False
 		GC = CyGlobalContext()
-		bonusInfo = GC.getBonusInfo(indeXML)
 
 		iTemp = plot.getLatitude()
-		if iTemp > bonusInfo.getMaxLatitude() or iTemp < bonusInfo.getMinLatitude():
+		if iTemp > BONUS.getMaxLatitude(indeXML) or iTemp < BONUS.getMinLatitude(indeXML):
 			return False
 
 		if plot.isPeak():
-			if not bonusInfo.isPeaks():
+			if not BONUS.isPeaks(indeXML):
 				return False
 		else:
 			if plot.isHills():
-				if not bonusInfo.isHills():
+				if not BONUS.isHills(indeXML):
 					return False
 			elif plot.isFlatlands():
-				if not bonusInfo.isFlatlands():
+				if not BONUS.isFlatlands(indeXML):
 					return False
 
 			iTerrain = plot.getTerrainType()
 			iFeature = plot.getFeatureType()
-			if bonusInfo.isTerrain(iTerrain):
+			if BONUS.isTerrain(indeXML, iTerrain):
 				ICE = GC.getInfoTypeForString("FEATURE_ICE")
-				if iFeature == ICE and not bonusInfo.isFeature(ICE):
+				if iFeature == ICE and not BONUS.isFeature(indeXML, ICE):
 					# Special case, ice block bonuses, mostly because it looks graphically glitchy.
 					return False
-			elif iFeature == -1 or not bonusInfo.isFeature(iFeature) or not bonusInfo.isFeatureTerrain(iTerrain):
+			elif iFeature == -1 or not BONUS.isFeature(indeXML, iFeature) or not BONUS.isFeatureTerrain(indeXML, iTerrain):
 				return False
 
-		if bonusInfo.isBonusCoastalOnly() and not plot.isCoastal():
+		if BONUS.isBonusCoastalOnly(indeXML) and not plot.isCoastal():
 			return False
 
-		if bonusInfo.isNoRiverSide() and plot.isRiverSide():
+		if BONUS.isNoRiverSide(indeXML) and plot.isRiverSide():
 			return False
 
-		iTemp = bonusInfo.getMinAreaSize()
+		iTemp = BONUS.getMinAreaSize(indeXML)
 		if iTemp > 0:
 			iTemp += 2*mc.iWorldSize
 			if iTemp > 1 and plot.area().getNumTiles() < iTemp:
 				return False
 
-		if (not bIgnoreArea and bonusInfo.isOneArea()
+		if (not bIgnoreArea and BONUS.isOneArea(indeXML)
 		and plot.getArea() not in self.aBonusList[self.bonusDict[indeXML]].areaList
 		or not plot.isPotentialCityWork()
 		): return False
@@ -3354,7 +3361,7 @@ class BonusPlacer:
 		uniqueBonusCount = 0
 		for bonus in self.aBonusList:
 
-			if not GC.getBonusInfo(bonus.indeXML).isOneArea():
+			if not BONUS.isOneArea(bonus.indeXML):
 				continue
 			if areaID in bonus.areaList:
 				uniqueBonusCount += 1
@@ -3365,21 +3372,18 @@ class BonusPlacer:
 		GC = CyGlobalContext()
 		areaID = area.getID()
 		uniqueBonusCount = 0
-		bonusInfo = GC.getBonusInfo(indeXML)
-		eClass = bonusInfo.getBonusClassType()
+		eClass = BONUS.getBonusClassType(indeXML)
 		if eClass == BonusClassTypes.NO_BONUSCLASS:
 			return 0
-		classInfo = GC.getBonusClassInfo(eClass)
-		if classInfo == None:
+		if eClass == -1:
 			return 0
-		iRange = classInfo.getUniqueRange()
+		iRange = BONUSCLASS.getUniqueRange(eClass)
 		if iRange < 1:
 			return 0
 		for bonus in self.aBonusList:
-			bonusInfo = GC.getBonusInfo(bonus.indeXML)
-			if not bonusInfo.isOneArea():
+			if not BONUS.isOneArea(bonus.indeXML):
 				continue
-			if bonusInfo.getBonusClassType() != eClass:
+			if BONUS.getBonusClassType(bonus.indeXML) != eClass:
 				continue
 			if areaID in bonus.areaList:
 				uniqueBonusCount += 1
@@ -3448,11 +3452,10 @@ class StartingPlotFinder:
 				value = 0
 				if bonusEnum != BonusTypes.NO_BONUS:
 					value += 3
-					bonusInfo = GC.getBonusInfo(bonusEnum)
-					if bonusInfo.getTechReveal() == TechTypes.NO_TECH or GC.getTechInfo(bonusInfo.getTechReveal()).getEra() < GAME.getStartEra() + 2:
-						commerce	+= bonusInfo.getYieldChange(YieldTypes.YIELD_COMMERCE)
-						food		+= bonusInfo.getYieldChange(YieldTypes.YIELD_FOOD)
-						production	+= bonusInfo.getYieldChange(YieldTypes.YIELD_PRODUCTION)
+					if BONUS.getTechReveal(bonusEnum) == TechTypes.NO_TECH or INFO.getIntrinsic("TECH_", BONUS.getTechReveal(bonusEnum), IntrinsicSlot.PYINT_ERA) < GAME.getStartEra() + 2:
+						commerce	+= INFO.getFlatYields("BONUS_", bonusEnum, CascScope.CASC_SCOPE_PLOT)[YieldTypes.YIELD_COMMERCE]
+						food		+= INFO.getFlatYields("BONUS_", bonusEnum, CascScope.CASC_SCOPE_PLOT)[YieldTypes.YIELD_FOOD]
+						production	+= INFO.getFlatYields("BONUS_", bonusEnum, CascScope.CASC_SCOPE_PLOT)[YieldTypes.YIELD_PRODUCTION]
 				value += commerce + food + production
 				self.plotvalueList.append(value)
 				self.plotfoodList.append(food)
@@ -3662,13 +3665,11 @@ class StartingPlotFinder:
 			return -1, -1
 		if mc.fMaxStartLat < start.getLatitude():
 			return -1, -1
-		terrainInfo = GC.getTerrainInfo(start.getTerrainType())
-		if not terrainInfo.isFound():
+		if not TERRAIN.isFound(start.getTerrainType()):
 			return -1, -1
 		featureEnum = start.getFeatureType()
 		if featureEnum != FeatureTypes.NO_FEATURE:
-			featureInfo = GC.getFeatureInfo(featureEnum)
-			if featureInfo.isNoCity():
+			if INFO.isUnfoundable(featureEnum):
 				return -1, -1
 		#The StartPlot class has a nifty function to determine salt water vs. fresh
 		totalFood  = 0
@@ -3747,11 +3748,10 @@ class StartingPlotFinder:
 				for b in xrange(iNumBonuses):
 					bonusEnum = bonusList[b]
 					indeXML = bp.aBonusList[bonusEnum].indeXML
-					CvBonusInfo = GC.getBonusInfo(indeXML)
-					if CvBonusInfo.getYieldChange(iYieldType) < 1:
+					if INFO.getFlatYields("BONUS_", indeXML, CascScope.CASC_SCOPE_PLOT)[iYieldType] < 1:
 						continue
-					iTech = CvBonusInfo.getTechReveal()
-					if iTech != -1 and GC.getTechInfo(iTech).getEra() > startEra:
+					iTech = BONUS.getTechReveal(indeXML)
+					if iTech != -1 and INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA) > startEra:
 						continue
 					if not bp.PlotCanHaveBonus(CyPlot, bonusEnum):
 						continue
@@ -3760,8 +3760,7 @@ class StartingPlotFinder:
 					break
 				#restore the feature if possible
 				if featureEnum != FeatureTypes.NO_FEATURE:
-					CvBonusInfo = GC.getBonusInfo(CyPlot.getBonusType(TeamTypes.NO_TEAM))
-					if not CvBonusInfo or CvBonusInfo.isFeature(featureEnum):
+					if CyPlot.getBonusType(TeamTypes.NO_TEAM) == -1 or BONUS.isFeature(CyPlot.getBonusType(TeamTypes.NO_TEAM), featureEnum):
 						CyPlot.setFeatureType(featureEnum, featureVariety)
 
 spf = StartingPlotFinder()
@@ -4620,8 +4619,8 @@ def addFeatures():
 			# Other features
 			if plot.getFeatureType() == FeatureTypes.NO_FEATURE:
 				for iI in xrange(GC.getNumFeatureInfos()):
-					if (GC.getFeatureInfo(iI).getAppearanceProbability() > -1
-					and random() * 10000 < GC.getFeatureInfo(iI).getAppearanceProbability()
+					if (FEATURE.getAppearanceProbability(iI) > -1
+					and random() * 10000 < FEATURE.getAppearanceProbability(iI)
 					and plot.canHaveFeature(iI)):
 						plot.setFeatureType(iI, -1)
 			# Forest and Jungle

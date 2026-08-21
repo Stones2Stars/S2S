@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_FACTORY_IMMUNITY_DRUGS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_POSTHUMANISM"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MEDICAL_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "BUILDING_GENE_FARMING_LAB",
+    "TECH_MOLECULAR_MEDICINE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_MEDICAL_MEGACOMPLEX"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_IMMUNITY_DRUGS"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2205,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACTORY_IMMUNITY_DRUGS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_IMMUNITY_DRUGS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_IMMUNITY_DRUGS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

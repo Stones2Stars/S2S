@@ -1,0 +1,132 @@
+{
+ "type": "BUILDING_SPACE_ELEVATOR",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "VICTORY_SPACE_RACE",
+     "scope": "world"
+    },
+    "TECH_SUPERSTRONG_ALLOYS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": 25,
+      "enabled": "IS_SPACE"
+     }
+    ]
+   },
+   "buildings": {
+    "BUILDING_CISLUNAR_FACTORY": {
+     "percent": 10
+    },
+    "BUILDING_CISLUNAR_SPORTS_ARENA": {
+     "percent": 10
+    },
+    "BUILDING_SOLAR_POWER_SATELLITE": {
+     "percent": 10
+    },
+    "BUILDING_MILITARY_SATELLITES": {
+     "percent": 10
+    },
+    "BUILDING_COMMUNICATIONS_SATELLITE": {
+     "percent": 10
+    },
+    "BUILDING_ORBITAL_HOTEL": {
+     "percent": 10
+    },
+    "BUILDING_TOURISM_MEGACOMPLEX": {
+     "percent": 10
+    }
+   }
+  },
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_NANOTUBES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 24870,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 300
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SPACE_ELEVATOR"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SPACE_ELEVATOR"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_ELEVATOR",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_ELEVATOR_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 20,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

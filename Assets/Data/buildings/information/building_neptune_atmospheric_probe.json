@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_NEPTUNE_ATMOSPHERIC_PROBE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_JOVIAN_EXPLORATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_TRITON_COLONY": {
+     "flat": 20
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 60
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
+ "cost": {
+  "production": 17910
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NEPTUNE_ATMOSPHERE_PROBE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NEPTUNE_ATMOSPHERIC_PROBE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NEPTUNE_ATMOSPHERIC_PROBE",
+  "civilopedia": "TXT_KEY_BUILDING_NEPTUNE_ATMOSPHERIC_PROBE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_GESTURE_RECOGNITION_SOFTWARE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUTOMATED_VEHICLE_DEALERSHIP",
+   "BUILDING_EPSILON_ASSEMBLER",
+   "BUILDING_FACIAL_RECOGNITION_SOFTWARE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_BIOMATHEMATICS",
+    {
+     "any": [
+      "BUILDING_DESIGN_STUDIO",
+      "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 9,
+     "enabled": "TECH_AUTOMATED_URBANIZATION"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_AUTOMATED_ROBOTICS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_DIRECT_MERCHANDISING"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_AUGMENTED_REALITY"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2305,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GESTURE_RECOGNITION_SOFTWARE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GESTURE_RECOGNITION_SOFTWARE",
+  "civilopedia": "TXT_KEY_BUILDING_GESTURE_RECOGNITION_SOFTWARE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

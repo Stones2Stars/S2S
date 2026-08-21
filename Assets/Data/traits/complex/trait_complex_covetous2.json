@@ -1,0 +1,156 @@
+{
+ "type": "TRAIT_COMPLEX_COVETOUS2",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_COMPLEX_COVETOUS3"
+  ],
+  "traits": [
+   "TRAIT_COMPLEX_COVETOUS3"
+  ]
+ },
+ "excludes": [
+  "TRAIT_PROGRESSIST1"
+ ],
+ "production": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "worldWonder": {
+    "percent": -20
+   },
+   "teamWonder": {
+    "percent": -15
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": -1,
+   "percent": -5
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": -1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 1,
+   "modifier": {
+    "percent": [
+     {
+      "value": 10,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": 20
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 15
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 50
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": -10
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -10
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": 20
+   },
+   "upgrade": {
+    "percent": 10
+   }
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_GOLD": -2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCovetous2.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COVETOUS2",
+  "civilopedia": "TXT_KEY_TRAIT_COVETOUS2_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COVETOUS_STRATEGY",
+  "negativeTrait": true,
+  "minAnarchy": 2
+ }
+}

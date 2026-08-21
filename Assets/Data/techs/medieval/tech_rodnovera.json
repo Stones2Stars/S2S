@@ -1,0 +1,59 @@
+{
+ "type": "TECH_RODNOVERA",
+ "enables": {
+  "religions": [
+   "RELIGION_RODNOVERA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEDIEVAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 1132
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/techtree/Rodnovery.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_RODNOVERA",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_RODNOVERA",
+  "civilopedia": "TXT_KEY_TECH_RODNOVERA_PEDIA",
+  "quote": "TXT_KEY_TECH_RODNOVERA_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 8,
+  "gridX": 42,
+  "gridY": 5
+ }
+}

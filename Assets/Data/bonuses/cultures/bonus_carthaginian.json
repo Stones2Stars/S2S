@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_CARTHAGINIAN",
+ "enables": {
+  "units": [
+   "UNIT_DIDO",
+   "UNIT_HAMILCAR",
+   "UNIT_SACRED_BAND"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CARTHAGINIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CARTHAGINIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

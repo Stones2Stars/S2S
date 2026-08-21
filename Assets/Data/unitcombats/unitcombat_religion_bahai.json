@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_RELIGION_BAHAI",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/religion_bahai.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_RELIGION_BAHAI",
+  "religion": "RELIGION_BAHAI"
+ }
+}

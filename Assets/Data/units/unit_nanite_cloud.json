@@ -1,0 +1,130 @@
+{
+ "type": "UNIT_NANITE_CLOUD",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_NANOTROIDS",
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 5
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 360
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 100
+   },
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 10
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 30
+   }
+  }
+ },
+ "skills": [
+  "canMoveAllTerrain",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_NANITE",
+ "combatClasses": [
+  "UNITCOMBAT_SWARM",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_ANIMAL_COMBAT_DEVOUR",
+  "UNITCOMBAT_MOTILITY_AERIAL",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_TRILLIONS",
+  "UNITCOMBAT_SIZE_MICROSCOPIC",
+  "UNITCOMBAT_HEALS_AS_NANOMORPH"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SENSORS",
+   "PROMOTION_BLITZ",
+   "PROMOTION_NANOIDS"
+  ]
+ },
+ "cost": {
+  "production": 9756,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NANITE_CLOUD",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_NANITE_CLOUD"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_NANITE_CLOUD",
+  "civilopedia": "TXT_KEY_UNIT_NANITE_CLOUD_PEDIA",
+  "worth": 5,
+  "militaryWorth": 2100,
+  "xpValueAttack": 3,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_ATTACK",
+   "UNITAI_CITY_SPECIAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "airCombat": 100,
+   "airCombatLimit": 100
+  }
+ }
+}

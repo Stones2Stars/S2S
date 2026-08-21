@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_SERBIAN",
+ "enables": {
+  "units": [
+   "UNIT_HAJDUK",
+   "UNIT_STEPHEN_UROS_IV_DUSAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SERBIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SERBIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

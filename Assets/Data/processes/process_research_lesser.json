@@ -1,0 +1,19 @@
+{
+ "type": "PROCESS_RESEARCH_LESSER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Process/processresearchlesser.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROCESS_LESSER_RESEARCH"
+ },
+ "conversion": {
+  "research": 40
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ALPHABET"
+  ]
+ }
+}

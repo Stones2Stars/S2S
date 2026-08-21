@@ -1,0 +1,172 @@
+{
+ "type": "BUILDING_CHEOMSEONGDAE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SATELLITES"
+  ]
+ },
+ "whenObsolete": {
+  "culture": {
+   "city": {
+    "flat": 8
+   }
+  },
+  "greatPeopleRate": {
+   "city": {
+    "flat": 2
+   }
+  },
+  "PROPERTY_EDUCATION": {
+   "city": {
+    "flat": 2
+   }
+  },
+  "PROPERTY_TOURISM": {
+   "city": {
+    "flat": 5
+   }
+  }
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MASONRY",
+    "TECH_STARGAZING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_MARBLE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "grants": {
+  "freeTechs": 1
+ },
+ "cost": {
+  "production": 1038,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 200
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_GOLD": 4
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CHEOMSEONGDAE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CHEOMSEONGDAE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CHEOMSEONGDAE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CHEOMSEONGDAE",
+  "civilopedia": "TXT_KEY_BUILDING_CHEOMSEONGDAE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 14,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

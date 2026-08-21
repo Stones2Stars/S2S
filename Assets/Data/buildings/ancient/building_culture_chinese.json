@@ -1,0 +1,117 @@
+{
+ "type": "BUILDING_CULTURE_CHINESE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_ASIAN",
+    "BUILDING_C_L_ASIAN",
+    "TECH_ANCESTOR_WORSHIP",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SILK",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_CHINESE"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_GREAT_WALL_OF_CHINA": {
+     "percent": 10
+    },
+    "BUILDING_SILK_ROAD": {
+     "percent": 10
+    },
+    "BUILDING_THREE_GORGES_DAM": {
+     "percent": 10
+    },
+    "BUILDING_TERRACOTTA_ARMY": {
+     "percent": 10
+    },
+    "BUILDING_WUDANG_MOUNTAIN": {
+     "percent": 10
+    },
+    "BUILDING_QUANZHEN_SCHOOL": {
+     "percent": 10
+    },
+    "BUILDING_BEZEKLIK_CAVES": {
+     "percent": 10
+    },
+    "BUILDING_SUN_TZUS_ART_OF_WAR": {
+     "percent": 10
+    },
+    "BUILDING_PORCELAIN_TOWER": {
+     "percent": 10
+    },
+    "BUILDING_TEMPLE_OF_HEAVEN": {
+     "percent": 10
+    },
+    "BUILDING_BIRDS_NEST_STADIUM": {
+     "percent": 10
+    },
+    "BUILDING_FAMEN_TEMPLE": {
+     "percent": 10
+    },
+    "BUILDING_TAIPEI_101": {
+     "percent": 10
+    },
+    "BUILDING_MARCO_POLOS_EMBASSY": {
+     "percent": 10
+    },
+    "BUILDING_SHAOLIN_TEMPLE": {
+     "percent": 10
+    },
+    "BUILDING_BANK_OF_CHINA_TOWER": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 792,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_CHINESE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_CHINESE",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_CHINESE_PEDIA",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

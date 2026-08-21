@@ -1,0 +1,100 @@
+{
+ "type": "IMPROVEMENT_INTERGALACTIC_RESEARCH_BASE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INTERGALACTIC_COLONIZATION",
+     "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_LOCAL_GROUP",
+        "TERRAIN_VIRGO_SUPERCLUSTER",
+        "TERRAIN_OBSERVABLE_UNIVERSE",
+        "TERRAIN_INTERGALACTIC_VOID"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_XENOFLORA",
+        "BONUS_XENOFAUNA",
+        "BONUS_ABANDONED_CIVILIZATION",
+        "BONUS_ABANDONED_MEGASTRUCTURE"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_XENOFLORA"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_XENOFAUNA"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    10,
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_ABANDONED_CIVILIZATION"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_ABANDONED_MEGASTRUCTURE"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_INTERGALACTIC_RESEARCH_BASE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_INTERGALACTIC_RESEARCH_BASE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_INTERGALACTIC_RESEARCH_BASE_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200,
+  "bonuses": {
+   "BONUS_XENOFLORA": {
+    "trade": true
+   },
+   "BONUS_XENOFAUNA": {
+    "trade": true
+   },
+   "BONUS_ABANDONED_CIVILIZATION": {
+    "trade": true
+   },
+   "BONUS_ABANDONED_MEGASTRUCTURE": {
+    "trade": true
+   }
+  }
+ }
+}

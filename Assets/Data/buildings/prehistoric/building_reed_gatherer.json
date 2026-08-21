@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_REED_GATHERER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SENTIENT_EARTH"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AGROFOREST"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GATHERING",
+    {
+     "type": "FEATURE_SWAMP",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_AGROFOREST"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_REEDS"
+  ]
+ },
+ "food": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_REED_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_REED_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_REED_GATHERER_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

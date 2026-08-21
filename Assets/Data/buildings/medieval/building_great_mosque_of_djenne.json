@@ -1,0 +1,250 @@
+{
+ "type": "BUILDING_GREAT_MOSQUE_OF_DJENNE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ALGEBRA",
+    "STATE_RELIGION_IN_CITY",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_DESERT",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_DUNES",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "terrains": {
+    "TERRAIN_DESERT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "city": {
+   "terrains": {
+    "TERRAIN_DESERT": {
+     "flat": 2
+    },
+    "TERRAIN_DUNES": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "terrains": {
+    "TERRAIN_DESERT": {
+     "flat": 2
+    },
+    "TERRAIN_DUNES": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_JEWISH_SYNAGOGUE": {
+     "percent": 10
+    },
+    "BUILDING_ISLAMIC_MOSQUE": {
+     "percent": 10
+    },
+    "BUILDING_HINDU_MANDIR": {
+     "percent": 10
+    },
+    "BUILDING_BUDDHIST_STUPA": {
+     "percent": 10
+    },
+    "BUILDING_CONFUCIAN_ACADEMY": {
+     "percent": 10
+    },
+    "BUILDING_CHRISTIAN_CATHEDRAL": {
+     "percent": 10
+    },
+    "BUILDING_TAOIST_PAGODA": {
+     "percent": 10
+    },
+    "BUILDING_HELLENIC_PANTHEON": {
+     "percent": 10
+    },
+    "BUILDING_ZOROASTRIAN_PANTHEON": {
+     "percent": 10
+    },
+    "BUILDING_TEMPLE_OF_MUT": {
+     "percent": 10
+    },
+    "BUILDING_TEMPLE_OF_TLALOC": {
+     "percent": 10
+    },
+    "BUILDING_VOODOO_MARKET": {
+     "percent": 10
+    },
+    "BUILDING_EJE_SONG": {
+     "percent": 10
+    },
+    "BUILDING_KING_GESAR_SONG": {
+     "percent": 10
+    },
+    "BUILDING_TENGRI_SONG": {
+     "percent": 10
+    },
+    "BUILDING_SIKH_CATHEDRAL": {
+     "percent": 10
+    },
+    "BUILDING_SHINTO_JINGU": {
+     "percent": 10
+    },
+    "BUILDING_SPIRITS_ALLIANCE": {
+     "percent": 10
+    },
+    "BUILDING_SPIRITS_LEGACY": {
+     "percent": 10
+    },
+    "BUILDING_SCIENTOLOGY_CATHEDRAL": {
+     "percent": 10
+    },
+    "BUILDING_JAIN_CATHEDRAL": {
+     "percent": 10
+    },
+    "BUILDING_NATURE_ALLIANCE": {
+     "percent": 10
+    },
+    "BUILDING_NATURE_LEGACY": {
+     "percent": 10
+    },
+    "BUILDING_CAO_DAI_CATHEDRAL": {
+     "percent": 10
+    },
+    "BUILDING_CANAANITE_CATHEDRAL": {
+     "percent": 10
+    },
+    "BUILDING_BAHAI_DAR_BE_MEHR": {
+     "percent": 10
+    },
+    "BUILDING_ASATRU_CATHEDRAL": {
+     "percent": 10
+    },
+    "BUILDING_ANDEAN_CATHEDRAL": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 2280,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_GOLD": 6
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_DJENNE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GREAT_MOSQUE_OF_DJENNE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ISLAMIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GREAT_MOSQUE_OF_DJENNE",
+  "civilopedia": "TXT_KEY_BUILDING_GREAT_MOSQUE_OF_DJENNE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 12,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

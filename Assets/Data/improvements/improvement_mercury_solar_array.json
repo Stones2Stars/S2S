@@ -1,0 +1,38 @@
+{
+ "type": "IMPROVEMENT_MERCURY_SOLAR_ARRAY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DEEP_SPACE_COLONIES",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_MERCURY"
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 8
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_MERCURY_SOLAR_ARRAY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_MERCURY_SOLAR_ARRAY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_MERCURY_SOLAR_ARRAY_PEDIA",
+  "extraterrestrial": true,
+  "advancedStart": {
+   "cost": -1
+  },
+  "pillageGold": 50,
+  "outsideBorders": true
+ }
+}

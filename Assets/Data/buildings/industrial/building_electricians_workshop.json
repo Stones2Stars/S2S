@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_ELECTRICIANS_WORKSHOP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HYPERMARKET"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_POWER_LINES",
+    "TECH_ELECTRICITY",
+    {
+     "any": [
+      "BUILDING_SHOPPING_DISTRICT",
+      "BUILDING_TRADING_POST"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_HYPERMARKET"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 770,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ELECTRICIANS_WORKSHOP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ELECTRICIANS_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_ELECTRICIANS_WORKSHOP_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

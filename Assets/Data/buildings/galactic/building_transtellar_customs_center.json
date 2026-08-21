@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_TRANSTELLAR_CUSTOMS_CENTER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TRANSTELLAR_REST_STOP",
+    "TECH_GALACTIC_FEDERATION",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -5
+   }
+  }
+ },
+ "cost": {
+  "production": 4555,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_CUSTOMS_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_CUSTOMS_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_CUSTOMS_CENTER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

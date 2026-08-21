@@ -1,0 +1,16 @@
+{
+ "type": "SPECIALUNIT_CAPTIVE",
+ "combat": {
+  "unit": {
+   "percent": -5
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": -10
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALUNIT_CAPTIVE"
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_SHIP_COMMAND",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/CommodoreCommand1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SHIP_COMMAND",
+  "unitCombats": [
+   "UNITCOMBAT_COMMODORE"
+  ]
+ }
+}

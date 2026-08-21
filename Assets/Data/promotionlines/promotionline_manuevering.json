@@ -1,0 +1,18 @@
+{
+ "type": "PROMOTIONLINE_MANUEVERING",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Manuevering1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_MANUEVERING",
+  "unitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS"
+  ],
+  "notOnDomains": [
+   "DOMAIN_LAND",
+   "DOMAIN_AIR"
+  ]
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "type": "BONUS_ALICE_MATTER",
+ "enables": {
+  "buildings": [
+   "BUILDING_FEYMARCH"
+  ],
+  "units": [
+   "UNIT_WORLDSHIP4"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ALICE_MATTER"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ALICE_MATTER",
+  "civilopedia": "TXT_KEY_BONUS_ALICE_MATTER_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

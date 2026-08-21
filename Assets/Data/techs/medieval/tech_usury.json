@@ -1,0 +1,85 @@
+{
+ "type": "TECH_USURY",
+ "enables": {
+  "buildings": [
+   "BUILDING_BAILIWICK",
+   "BUILDING_CRIME_EMBEZZLEMENT",
+   "BUILDING_CRIME_EXTORTION",
+   "BUILDING_CRIME_TAX_EVASION",
+   "BUILDING_CULTURE_GUARANI",
+   "BUILDING_DEBTORS_PRISON",
+   "BUILDING_FOUNDATION",
+   "BUILDING_GAMBLING_HALL",
+   "BUILDING_GUILD_MERCHANTS",
+   "BUILDING_LOAN_SHARK",
+   "BUILDING_LOAN_SHARK_UNSANCTIONED",
+   "BUILDING_TOLL_HOUSE"
+  ],
+  "civics": [
+   "CIVIC_PHILANTHROPIC"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_SCHEMES4",
+   "PROMOTION_CONNIVING4",
+   "PROMOTION_CORRUPTION4"
+  ],
+  "techs": [
+   "TECH_BANKING",
+   "TECH_TORTURE"
+  ],
+  "units": [
+   "UNIT_CUTTHROAT",
+   "UNIT_KARAI_PYHARE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CIVIL_SERVICE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_YEOMANRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1445
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/Usury.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,4,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_USURY",
+  "soundMP": "AS2D_TECH_USURY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_USURY",
+  "civilopedia": "TXT_KEY_TECH_USURY_PEDIA",
+  "quote": "TXT_KEY_TECH_USURY_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 16,
+  "tradeable": true,
+  "gridX": 45,
+  "gridY": 17
+ }
+}

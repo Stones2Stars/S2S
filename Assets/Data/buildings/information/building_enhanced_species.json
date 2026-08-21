@@ -1,0 +1,921 @@
+{
+ "type": "BUILDING_ENHANCED_SPECIES",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_GENOMIC_ENCYCLOPEDIA"
+   ]
+  }
+ },
+ "food": {
+  "empire": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_BARLEY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_CORN",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_POTATOES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_RICE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_WHEAT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_BISON",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_COW",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_DEER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_KANGAROO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_PIG",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_MAMMOTH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_RABBIT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_SEA_LION_AND_SEAL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_WALRUS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_CLAM",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_CRAB",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_FISH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_LOBSTER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_SHRIMP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_ALMONDS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_APPLE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_BANANA",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COCOA",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_COCONUT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_DATES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_FIG",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_LEMONS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_MANGO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_MELONS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_PAPAYA",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_PISTACHIO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_POMEGRANATE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_PRICKLY_PEAR",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_PUMPKIN",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_SQUASH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_MUSHROOMS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_CAMEL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_DONKEY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_HORSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_LLAMA",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_POULTRY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_OLIVES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GRAPES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_PEYOTE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_GUINEA_PIG",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_GUAVAS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_KAVA",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_BISON",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_COW",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DEER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_KANGAROO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_PIG",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_MAMMOTH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SEA_LION_AND_SEAL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_WALRUS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CLAM",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COCONUT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PRICKLY_PEAR",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_CAMEL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_DONKEY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_HORSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_LLAMA",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_ELEPHANT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_RUBBER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PEARLS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_COFFEE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FLAX",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_RESIN",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DOG",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_MAMMOTH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_RABBIT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_SEA_LION_AND_SEAL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_FISH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_COCA",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_COCOA",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COCONUT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_CAMEL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_HORSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LLAMA",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_ELEPHANT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_RUBBER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OLIVES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_PEARLS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_MUREX",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_SILK",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_GRAPES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_HEMP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_COFFEE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_COTTON",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_SPICES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_SUGAR",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_TEA",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_TOBACCO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_FLAX",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_OPIUM",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_RESIN",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_VANILLA",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_INDIGO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GUINEA_PIG",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_PARROT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GUAVAS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_CAT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_DOG",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ENHANCED_SPECIES",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ENHANCED_SPECIES",
+  "civilopedia": "TXT_KEY_BUILDING_ENHANCED_SPECIES_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

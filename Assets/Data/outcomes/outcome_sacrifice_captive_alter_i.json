@@ -1,0 +1,21 @@
+{
+ "type": "OUTCOME_SACRIFICE_CAPTIVE_ALTER_I",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_SACRIFICE_CAPTIVE",
+  "message": "TXT_KEY_OUTCOME_SACRIFICE_CAPTIVE_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE"
+   ]
+  }
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city",
+ "replaces": [
+  "OUTCOME_SACRIFICE_CAPTIVE"
+ ]
+}

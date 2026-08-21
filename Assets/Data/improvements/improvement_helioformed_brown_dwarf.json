@@ -1,0 +1,62 @@
+{
+ "type": "IMPROVEMENT_HELIOFORMED_BROWN_DWARF",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ARTIFICIAL_STARS",
+     "scope": "team"
+    },
+    {
+     "feature": [
+      "FEATURE_BROWN_DWARF"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 7
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    7,
+    {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_APPLIED_RELATIVITY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    7,
+    {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_STELLAR_ENGINE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_HELIOFORMED_BROWN_DWARF"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_HELIOFORMED_BROWN_DWARF",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_HELIOFORMED_BROWN_DWARF_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

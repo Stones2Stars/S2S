@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_COAL_FIRED_DYNAMO",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FUSION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HIGH_TECH_COAL_POWER_PLANT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_POWER_LINES",
+    "TECH_ELECTRICITY",
+    "TECH_STEAMPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEAMPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "BONUS_COAL",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_HIGH_TECH_COAL_POWER_PLANT",
+    "BUILDING_D_T_FUSION_POWER_PLANT",
+    "BUILDING_D_HE3_FUSION_PLANT",
+    "BUILDING_HE3_FUSION_POWER_PLANT",
+    "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+    "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 9
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -6
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "cost": {
+  "production": 770,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_COAL_FIRED_DYNAMO",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_COAL_FIRED_DYNAMO",
+  "civilopedia": "TXT_KEY_BUILDING_COAL_FIRED_DYNAMO_PEDIA",
+  "worth": 5,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_STEAM",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,19 @@
+{
+ "type": "PROCESS_SPY_LESSER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Process/spyprocesslesser.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROCESS_SPY_LESSER"
+ },
+ "conversion": {
+  "espionage": 40
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_DIPLOMACY"
+  ]
+ }
+}

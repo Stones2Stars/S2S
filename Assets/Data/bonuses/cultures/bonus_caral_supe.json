@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_CARAL_SUPE",
+ "enables": {
+  "units": [
+   "UNIT_AGAPARO",
+   "UNIT_KON_TIKI"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CARAL_SUPE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CARAL_SUPE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

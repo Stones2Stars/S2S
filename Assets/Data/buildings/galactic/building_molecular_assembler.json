@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_MOLECULAR_ASSEMBLER",
+ "enables": {
+  "buildings": [
+   "BUILDING_4D_PRINTING_STUDIO"
+  ],
+  "units": [
+   "UNIT_MACHINIST",
+   "UNIT_REPLICATION_MECHANIC"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MACROSCOPIC_SUPERPOSITION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ATOMIC_ASSEMBLER"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ALPHA_ASSEMBLER",
+    "TECH_MOLECULAR_ASSEMBLY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_ATOMIC_ASSEMBLER",
+    "BUILDING_QUANTUM_ASSEMBLER",
+    "BUILDING_MATERIALIZER"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_PARTS",
+   "BONUS_REPLICATORS"
+  ]
+ },
+ "production": {
+  "city": {
+   "percent": [
+    40,
+    {
+     "value": 25,
+     "enabled": "HAS_POWER"
+    }
+   ],
+   "flat": [
+    {
+     "value": 11,
+     "enabled": "TECH_PICOTECHNOLOGY"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 4
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 10,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL"
+   }
+  }
+ ],
+ "cost": {
+  "production": 10155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MOLECULAR_ASSEMBLER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MOLECULAR_ASSEMBLER",
+  "civilopedia": "TXT_KEY_BUILDING_MOLECULAR_ASSEMBLER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

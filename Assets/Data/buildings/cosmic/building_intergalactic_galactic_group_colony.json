@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ERIDANUS_CLUSTER_COLONY",
+   "BUILDING_FORNAX_CLUSTER_COLONY",
+   "BUILDING_INTERGALACTIC_BLACK_HOLE_ERA_SURVIVAL_PLAN",
+   "BUILDING_INTERGALACTIC_LOGISTICS_CENTER",
+   "BUILDING_INTERGALACTIC_SUPERCLUSTER_COLONY",
+   "BUILDING_MAFFEI_GROUP_COLONY",
+   "BUILDING_SCULPTOR_GROUP_COLONY",
+   "BUILDING_VIRGO_CLUSTER_COLONY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
+    "TECH_INTERGROUP_TRAVEL",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_VIRGO_SUPERCLUSTER",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_OBSERVABLE_UNIVERSE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -5
+   }
+  }
+ },
+ "cost": {
+  "production": 3301,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

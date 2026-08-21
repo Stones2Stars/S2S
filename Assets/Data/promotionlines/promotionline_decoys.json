@@ -1,0 +1,18 @@
+{
+ "type": "PROMOTIONLINE_DECOYS",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Decoys1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_DECOYS",
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_EXPLORER"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ]
+ }
+}

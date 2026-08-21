@@ -1,0 +1,174 @@
+{
+ "type": "UNIT_F4_PHANTOM",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_SEMICONDUCTORS",
+    "TECH_JET_PROPULSION",
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_ALUMINUM_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      "BUILDING_MILITARY_AIRBASE",
+      "BUILDING_AEROSPACE_COMPLEX"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_F18_HORNET"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 30
+    },
+    "UNITCOMBAT_STEAM_SHIPS": {
+     "percent": 10
+    },
+    "UNITCOMBAT_DIESEL_SHIPS": {
+     "percent": -5
+    }
+   },
+   "domain": {
+    "DOMAIN_SEA": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "airBombRate": {
+    "flat": 14
+   }
+  }
+ },
+ "range": {
+  "unit": {
+   "flat": 9
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 100
+   }
+  }
+ },
+ "skills": [
+  "ignoreBuildingDefense",
+  "mechanized",
+  "dcmFighterEngage"
+ ],
+ "tags": [
+  "military",
+  "airUnit",
+  "fighter"
+ ],
+ "combatClass": "UNITCOMBAT_JET_FIGHTERS",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_A2G_TORPEDO",
+  "UNITCOMBAT_WEAPON_A2G_SHORT_RANGE_MISSILE",
+  "UNITCOMBAT_ARMOR_AIRCRAFT",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 1150,
+  "upkeep": 3
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_F4_PHANTOM",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 0.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_F4_PHANTOM"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_F4_PHANTOM",
+  "civilopedia": "TXT_KEY_UNIT_F4_PHANTOM_PEDIA",
+  "help": "TXT_KEY_UNIT_CARRIER_OPS_HELP",
+  "worth": 4,
+  "militaryWorth": 16,
+  "xpValueAttack": 4,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_DEFENSE_AIR",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_DEFENSE_AIR",
+   "UNITAI_CARRIER_AIR"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "airCombat": 54,
+   "airCombatLimit": 50,
+   "airUnitCap": 1
+  }
+ }
+}

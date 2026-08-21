@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_INTERNET_OF_THINGS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CLOUD_SERVER",
+    "TECH_RAPID_PROTOTYPING",
+    "TECH_DIGITIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_DIGITAL_OFFICES": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MECHATRONICS_LAB": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 4810,
+  "complexityModifier": 2
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_INTERNET_OF_THINGS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERNET_OF_THINGS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERNET_OF_THINGS",
+  "civilopedia": "TXT_KEY_BUILDING_INTERNET_OF_THINGS_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

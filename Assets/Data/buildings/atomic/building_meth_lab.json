@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_METH_LAB",
+ "enables": {
+  "units": [
+   "UNIT_HEZBOLLAH",
+   "UNIT_STREET_GANG"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MATERIALS_CONGLOMERATE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LABORATORY",
+    "TECH_URBAN_CULTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_MATERIALS_CONGLOMERATE",
+    "BUILDING_ORDINANCE_DRUG_PROHIBITION"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_METHAMPHETAMINE"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 50
+   }
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "chance": {
+    "per": "PROPERTY_CRIME"
+   },
+   "action": {
+    "grant": {
+     "units": [
+      "UNIT_STREET_GANG"
+     ]
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 1685,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_METH_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_METH_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_METH_LAB_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

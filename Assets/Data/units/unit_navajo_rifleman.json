@@ -1,0 +1,222 @@
+{
+ "type": "UNIT_NAVAJO_RIFLEMAN",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SUPERSTRONG_ALLOYS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_NAVAJO",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_MILITARY_SCIENCE",
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GUERRILLA"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_FLINT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "combat": {
+  "unit": {
+   "lunge": {
+    "percent": 15
+   },
+   "enclose": {
+    "percent": 15
+   },
+   "unnerve": {
+    "percent": 15
+   },
+   "stealthStrikes": {
+    "flat": 1
+   },
+   "stealth": {
+    "percent": 30
+   },
+   "terrain": {
+    "TERRAIN_DESERT": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_PLAINS": {
+     "attack": {
+      "percent": 25
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 50
+    }
+   },
+   "targets": {
+    "UNITCOMBAT_MOUNTED": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 26
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 2
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "plot": {
+   "flat": 10
+  }
+ },
+ "skills": [
+  "alwaysHostile",
+  "hiddenNationality",
+  "pillage",
+  "destroy",
+  "ignoreTerrainCost",
+  "ignoreZoneOfControl",
+  "noNonOwnedCityEntry",
+  "sabotage",
+  "stealPlans",
+  "upgradeAnywhere",
+  "ignoreNoEntryLevel",
+  "camouflage"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "troop"
+ ],
+ "combatClass": "UNITCOMBAT_RUFFIAN",
+ "combatClasses": [
+  "UNITCOMBAT_STRIKE_TEAM",
+  "UNITCOMBAT_GUN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_AXE",
+  "UNITCOMBAT_WEAPON_DIST_RIFLE",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 400
+  },
+  "detection": {
+   "value": 300,
+   "unit": "HAS_CAMOUFLAGE"
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_LOOTER",
+   "PROMOTION_COMMANDO",
+   "PROMOTION_MARAUDER",
+   "PROMOTION_SENTRY",
+   "PROMOTION_WARMTH1"
+  ]
+ },
+ "cost": {
+  "production": 787,
+  "upkeep": 6
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NAVAJO_RIFLEMAN",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 3,
+      "define": {
+       "early": "ART_DEF_UNIT_NAVAJO_RIFLEMAN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_NAVAJO_RIFLEMAN",
+  "civilopedia": "TXT_KEY_UNIT_NAVAJO_RIFLEMAN_PEDIA",
+  "worth": 8,
+  "militaryWorth": 26,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PILLAGE",
+  "formationType": "FORMATION_TYPE_RANGED",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE",
+   "UNITAI_PILLAGE_COUNTER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

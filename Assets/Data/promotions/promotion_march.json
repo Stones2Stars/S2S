@@ -1,0 +1,57 @@
+{
+ "type": "PROMOTION_MARCH",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT4",
+    "PROMOTION_DRILL4"
+   ]
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "skills": {
+  "alwaysHeal": true
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/March.dds,Art/Interface/Buttons/Promotions_Atlas.dds,2,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_MARCH",
+  "unitCombats": [
+   "UNITCOMBAT_HEALTH_CARE",
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_HUNTER",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_HELICOPTER",
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS",
+   "UNITCOMBAT_SUBMARINE",
+   "UNITCOMBAT_CLONES",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_STRIKE_TEAM"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ]
+ }
+}

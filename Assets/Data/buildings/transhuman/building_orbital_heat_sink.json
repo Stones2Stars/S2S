@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_ORBITAL_HEAT_SINK",
+ "enables": {
+  "buildings": [
+   "BUILDING_ECUMENOPOLIS_EARTH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_STRATOSPHERIC_TOWER",
+    "TECH_THERMAL_NEGATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 6655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ORBITAL_HEAT_SINK",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ORBITAL_HEAT_SINK",
+  "civilopedia": "TXT_KEY_BUILDING_ORBITAL_HEAT_SINK_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

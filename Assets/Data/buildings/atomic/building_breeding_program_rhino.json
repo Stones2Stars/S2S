@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_BREEDING_PROGRAM_RHINO",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_RHINOCEROS",
+   "BUILDING_RESOURCES_CARCASS",
+   "BUILDING_RESOURCES_IVORY"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SENTIENT_EARTH"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ANIMAL_PRESERVE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ZOO",
+    "TECH_ECOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_PIG",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_ELEPHANT",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_ANIMAL_PRESERVE"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BREEDING_PROGRAM_RHINO",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BREEDING_PROGRAM_RHINO",
+  "civilopedia": "TXT_KEY_BUILDING_BREEDING_PROGRAM_RHINO_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

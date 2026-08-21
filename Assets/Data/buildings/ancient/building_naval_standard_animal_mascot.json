@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT",
+ "enables": {
+  "buildings": [
+   "BUILDING_TRADITION_NAVAL_MASCOT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SAILING",
+    {
+     "any": [
+      "BUILDING_WONDERS_OF_THE_DEEP",
+      "BUILDING_FOLKLORE_T_LEVIATHAN",
+      "BUILDING_FOLKLORE_T_SHARKS",
+      "BUILDING_FOLKLORE_T_RAY",
+      "BUILDING_FOLKLORE_GIANT_SQUID"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "flat": 1
+    },
+    "UNITCOMBAT_STEAM_SHIPS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 264,
+  "countModifier": 2
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT",
+  "civilopedia": "TXT_KEY_BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT_PEDIA",
+  "worth": 2,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_MILITARY",
+  "freeStartEra": "C2C_ERA_CLASSICAL",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

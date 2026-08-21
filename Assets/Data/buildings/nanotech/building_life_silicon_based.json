@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_LIFE_SILICON_BASED",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LUNAR_SILICON_PROCESSING_FACILITY",
+    "TECH_HYPOTHETICAL_BIOCHEMISTRY",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 10,
+     "enabled": "TECH_GAIA_ECOLOGY"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    200,
+    {
+     "value": 10,
+     "enabled": "TECH_NUTRACEUTICAL_ANIMALS"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_ADAPTIVE_RADIATION"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 11,
+     "enabled": "TECH_ECOSYNTHESIS"
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_TERRAFORMED_LUNA": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 3963,
+  "hurryModifier": 10000
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LIFE_SILICON_BASED",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_SILICON_BASED",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_SILICON_BASED_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

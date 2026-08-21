@@ -1,0 +1,133 @@
+{
+ "type": "TECH_COPPER_WORKING",
+ "enables": {
+  "bonuses": [
+   "BONUS_COPPER_INGOTS",
+   "BONUS_COPPER_ORE",
+   "BONUS_COPPER_WARES",
+   "BONUS_ZINC_ORE"
+  ],
+  "buildings": [
+   "BUILDING_CAHOKIA_MOUNDS",
+   "BUILDING_CULTURE_AKKADIAN",
+   "BUILDING_CULTURE_ASSYRIAN",
+   "BUILDING_CULTURE_ATHENIAN",
+   "BUILDING_CULTURE_AYMARA",
+   "BUILDING_CULTURE_CARTHAGINIAN",
+   "BUILDING_CULTURE_GREEK",
+   "BUILDING_CULTURE_INCAN",
+   "BUILDING_CULTURE_JAVANESE",
+   "BUILDING_CULTURE_KONGOLESE",
+   "BUILDING_CULTURE_LONGOBARDIAN",
+   "BUILDING_CULTURE_MACEDONIAN",
+   "BUILDING_CULTURE_MEDIAN",
+   "BUILDING_CULTURE_NAMA",
+   "BUILDING_CULTURE_PILAGA",
+   "BUILDING_CULTURE_SEMANG",
+   "BUILDING_CULTURE_TROJAN",
+   "BUILDING_CULTURE_XIA",
+   "BUILDING_CULTURE_YAGHAN",
+   "BUILDING_CULTURE_YAGUA",
+   "BUILDING_CULTURE_ZULU",
+   "BUILDING_MINE_COPPER",
+   "BUILDING_MINE_ZINC",
+   "BUILDING_NATIONAL_SMELTER_COPPER",
+   "BUILDING_SMELTER_COPPER"
+  ],
+  "techs": [
+   "TECH_METAL_CASTING",
+   "TECH_PLOUGH"
+  ],
+  "units": [
+   "UNIT_APOLLONIAN_GUARD",
+   "UNIT_ASSYRIAN_REDU",
+   "UNIT_DUGUNDIZ",
+   "UNIT_GREEK_PHALANX",
+   "UNIT_HUAMINCA",
+   "UNIT_HYPASPISTAI",
+   "UNIT_JAVELINEER",
+   "UNIT_KANDAKE_VETERANS",
+   "UNIT_KHANUNGESE",
+   "UNIT_KHOISAN_RUNNER",
+   "UNIT_LIGHT_HOPLITE",
+   "UNIT_MALI_SKIRMISHER",
+   "UNIT_MAPINGUARI",
+   "UNIT_MEDE_RETINUES",
+   "UNIT_MORAN",
+   "UNIT_NUKULEKA_WARRIORS",
+   "UNIT_POMBOS",
+   "UNIT_SACRED_BAND",
+   "UNIT_SCORTAMAREVA",
+   "UNIT_SPEARMAN",
+   "UNIT_SPIRIT_WALKER",
+   "UNIT_SUMERIAN_VULTURE",
+   "UNIT_TARUMA_WARRIOR",
+   "UNIT_THORAX_HOPLITE",
+   "UNIT_VANAU_WARRIOR",
+   "UNIT_YAGHAN_HUNTERS",
+   "UNIT_YU_SPEARMAN",
+   "UNIT_ZULU_IMPI"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_LOG_RAM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STANDARDIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HEAT_TREATMENT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MINING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 144
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/copperworking.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_COPPER_WORKING",
+  "soundMP": "AS2D_TECH_COPPER_WORKING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_COPPER_WORKING",
+  "civilopedia": "TXT_KEY_TECH_COPPER_WORKING_PEDIA",
+  "quote": "TXT_KEY_TECH_COPPER_WORKING_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 24,
+  "gridY": 7
+ }
+}

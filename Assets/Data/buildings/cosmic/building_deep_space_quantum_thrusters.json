@@ -1,0 +1,40 @@
+{
+ "type": "BUILDING_DEEP_SPACE_QUANTUM_THRUSTERS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
+    "TECH_QUANTUM_RAMJET",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 19766,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_QUANTUM_THRUSTERS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_QUANTUM_THRUSTERS",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_QUANTUM_THRUSTERS_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

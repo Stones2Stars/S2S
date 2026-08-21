@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_COMMAND5",
+ "enables": {
+  "promotions": [
+   "PROMOTION_COMMAND6"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMMAND4",
+    {
+     "any": [
+      "PROMOTION_GENERAL_STAFF4"
+     ]
+    }
+   ]
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COMMAND": 5
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/CommanderCommand5.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COMMAND5",
+  "controlPoints": 1
+ }
+}

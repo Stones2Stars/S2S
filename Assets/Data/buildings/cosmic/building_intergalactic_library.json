@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_INTERGALACTIC_LIBRARY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_RESEARCH_BASE",
+    "TECH_CULTURAL_LONGEVITY",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 2853,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_LIBRARY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_LIBRARY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_LIBRARY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

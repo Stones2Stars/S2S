@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_GREEK",
+ "enables": {
+  "units": [
+   "UNIT_GREEK_PHALANX",
+   "UNIT_KOLOKOTRONIS",
+   "UNIT_ODYSSEUS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_GREEK"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_GREEK",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

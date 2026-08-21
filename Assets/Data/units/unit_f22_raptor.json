@@ -1,0 +1,148 @@
+{
+ "type": "UNIT_F22_RAPTOR",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_WAR_SIMULATIONS",
+    "TECH_STEALTH",
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_ALUMINUM_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      "BUILDING_MILITARY_AIRBASE",
+      "BUILDING_AEROSPACE_COMPLEX"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SCRAMJET"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "bombard": {
+  "unit": {
+   "airBombRate": {
+    "flat": 15
+   }
+  }
+ },
+ "range": {
+  "unit": {
+   "flat": 16
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 80
+   },
+   "evasion": {
+    "percent": 30
+   }
+  }
+ },
+ "skills": [
+  "ignoreBuildingDefense",
+  "mechanized",
+  "dcmFighterEngage"
+ ],
+ "tags": [
+  "military",
+  "airUnit"
+ ],
+ "combatClass": "UNITCOMBAT_STEALTH",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_DIST_SHORT_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_DIST_MEDIUM_RANGE_MISSILE",
+  "UNITCOMBAT_WEAPON_A2G_GUIDED",
+  "UNITCOMBAT_ARMOR_AIRCRAFT",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_AIRCRAFT",
+  "UNITCOMBAT_HEALS_AS_TECH"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 1894,
+  "upkeep": 11
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_F22_RAPTOR",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 0.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_F22_RAPTOR"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_F22_RAPTOR",
+  "civilopedia": "TXT_KEY_UNIT_F22_RAPTOR_PEDIA",
+  "worth": 4,
+  "militaryWorth": 32,
+  "xpValueAttack": 4,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_ATTACK_AIR",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_AIR"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "airCombat": 120,
+   "airCombatLimit": 65,
+   "airUnitCap": 1
+  }
+ }
+}

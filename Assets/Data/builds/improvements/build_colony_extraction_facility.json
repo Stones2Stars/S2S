@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_COLONY_EXTRACTION_FACILITY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_MANUFACTURING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_COLONY_EXTRACTION_FACILITY"
+ },
+ "cost": {
+  "gold": 500,
+  "time": 1200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Structures/Improvements/habitats/button.dds"
+  },
+  "hotkey": "KB_T"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_MINE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_COLONY_EXTRACTION_FACILITY"
+ }
+}

@@ -1,0 +1,250 @@
+{
+ "type": "UNIT_SENTINEL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_POLICE_PRECINCT",
+    "TECH_TERRA_COMPUTER",
+    {
+     "type": "BONUS_SUPERSTRONG_ALLOYS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_ORGANIC_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_LEVITATION_GENERATORS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_ANTI_GRAVITY_FIELD_GENERATORS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": 25
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 5
+  }
+ },
+ "combat": {
+  "unit": {
+   "enclose": {
+    "percent": 35
+   },
+   "dynamicDefense": {
+    "percent": 35
+   },
+   "stealthStrikes": {
+    "flat": 4
+   },
+   "stealth": {
+    "percent": 90
+   },
+   "targets": {
+    "UNITCOMBAT_CRIMINAL": true
+   },
+   "defenders": {
+    "UNITCOMBAT_CRIMINAL": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 220
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 50
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 4
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 20
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 40
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "investigation": {
+    "flat": 200
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -50
+  },
+  "plot": {
+   "flat": -32
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": {
+     "all": [
+      "IS_LAND",
+      "IS_PEOPLE",
+      "!IS_VTOL"
+     ]
+    },
+    "flat": 1
+   }
+  }
+ },
+ "skills": [
+  "noCapture",
+  "counterSpy",
+  "ignoreTerrainCost",
+  "mechanized",
+  "passage",
+  "fliesToMove",
+  "tradable",
+  "collateralImmune"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "troop"
+ ],
+ "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT",
+ "combatClasses": [
+  "UNITCOMBAT_ROBOT",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_LASER",
+  "UNITCOMBAT_WEAPON_DIST_FROST",
+  "UNITCOMBAT_WEAPON_DIST_ELECTRICAL",
+  "UNITCOMBAT_WEAPON_DIST_HEAT",
+  "UNITCOMBAT_WEAPON_DIST_SONIC",
+  "UNITCOMBAT_WEAPON_H2H_LASER",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_SHIELD_ENERGY",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_HOVERING",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 500,
+    "unit": "HAS_DISGUISED"
+   },
+   {
+    "value": 600,
+    "unit": "HAS_POLITICAL"
+   },
+   {
+    "value": 300,
+    "unit": "HAS_CAMOUFLAGE"
+   },
+   {
+    "value": 100,
+    "unit": "HAS_INVISIBLE"
+   }
+  ]
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SENTRY"
+  ]
+ },
+ "cost": {
+  "production": 7000,
+  "upkeep": 16
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SENTINEL",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SENTINEL"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_SENTINEL",
+  "civilopedia": "TXT_KEY_UNIT_SENTINEL_PEDIA",
+  "worth": 24,
+  "militaryWorth": 90,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_PROPERTY_CONTROL",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_INVESTIGATOR",
+   "UNITAI_SEE_INVISIBLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,234 @@
+{
+ "type": "UNIT_GREAT_ADMIRAL",
+ "requires": {
+  "build": {
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_SAILOR_WAR_CANOE",
+     "UNIT_MASTER_SAILOR_KAYAK",
+     "UNIT_MASTER_SAILOR_UBOAT",
+     "UNIT_MASTER_SAILOR_EARLY_CARRIER"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "skills": [
+  "greatGeneral"
+ ],
+ "tags": [
+  "landUnit",
+  "people",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_PRODIGY",
+ "combatClasses": [
+  "UNITCOMBAT_CAPTAIN",
+  "UNITCOMBAT_COMMODORE",
+  "UNITCOMBAT_ATTACHE",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_REMOVE_WV_SLAVERY",
+    "requires": {
+     "outcome": "OUTCOME_REMOVE_WV_SLAVERY",
+     "plot": "IS_OWNED"
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doRemoveWVSlavery"
+    }
+   },
+   {
+    "mission": "MISSION_REMOVE_WV_CANNIBALISM",
+    "requires": {
+     "outcome": "OUTCOME_REMOVE_WV_CANNIBALISM",
+     "plot": "IS_OWNED"
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doRemoveWVCannibalism"
+    }
+   },
+   {
+    "mission": "MISSION_REMOVE_WV_HUMAN_SACRIFICE",
+    "requires": {
+     "outcome": "OUTCOME_REMOVE_WV_HUMAN_SACRIFICE",
+     "plot": "IS_OWNED"
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doRemoveWVHumanSacrifice"
+    }
+   }
+  ]
+ },
+ "grants": {
+  "greatPeople": [
+   "SPECIALIST_GREAT_ADMIRAL"
+  ],
+  "buildings": [
+   {
+    "building": "BUILDING_TRADITION_SEA_HUNTING"
+   },
+   {
+    "building": "BUILDING_TRADITION_NAVAL_MASCOT"
+   },
+   {
+    "building": "BUILDING_SECRET_ARMY_BASE"
+   },
+   {
+    "building": "BUILDING_NATIONAL_COURIER_SYSTEM"
+   },
+   {
+    "building": "BUILDING_MILITARY_ACADEMY"
+   },
+   {
+    "building": "BUILDING_HQ_SAFARI_HUNTERS"
+   },
+   {
+    "building": "BUILDING_HQ_ULTIMATE_SOLDIERS"
+   }
+  ]
+ },
+ "cost": {
+  "upkeep": 5
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ADMIRAL_ANCIENT",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_ADMIRAL_ANCIENT",
+       "middle": "ART_DEF_UNIT_ADMIRAL_INDUSTRIAL",
+       "late": "ART_DEF_UNIT_ADMIRAL_MODERN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_GREAT_ADMIRAL",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_ADMIRALS_PEDIA",
+  "spawnOnly": true,
+  "worth": 25,
+  "militaryWorth": 75,
+  "commandRange": 1,
+  "controlPoints": 5,
+  "leaderExperience": 30,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_GREAT_ADMIRAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "leaderPromotion": "PROMOTION_LEADER",
+  "unitAIs": [
+   "UNITAI_GREAT_ADMIRAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "uniqueNames": [
+   "TXT_KEY_GREAT_PERSON_AHMAD_IBN_MAJID",
+   "TXT_KEY_GREAT_PERSON_ALVARO_DE_BAZAN",
+   "TXT_KEY_GREAT_PERSON_AREND_DICKMANN",
+   "TXT_KEY_GREAT_PERSON_ARIABIGNES",
+   "TXT_KEY_GREAT_PERSON_ARTEMISIA_I_OF_CARIA",
+   "TXT_KEY_GREAT_PERSON_CHUICHI_NAGUMO",
+   "TXT_KEY_GREAT_PERSON_DAVID_DIXON_PORTER",
+   "TXT_KEY_GREAT_PERSON_ENRICO_MILLO",
+   "TXT_KEY_GREAT_PERSON_ERIK_THE_RED",
+   "TXT_KEY_GREAT_PERSON_EUSTACHIUS_DE_LANNOY",
+   "TXT_KEY_GREAT_PERSON_FERNANDO_SANCHEZ_DE_TOVAR",
+   "TXT_KEY_GREAT_PERSON_FREYGEIRR",
+   "TXT_KEY_GREAT_PERSON_FYODOR_USHAKOV",
+   "TXT_KEY_GREAT_PERSON_GAIUS_DUILIUS",
+   "TXT_KEY_GREAT_PERSON_GAIUS_LIVIUS_SALINATOR",
+   "TXT_KEY_GREAT_PERSON_GEMINUS",
+   "TXT_KEY_GREAT_PERSON_GIOVANNI_ANDREA_DORIA",
+   "TXT_KEY_GREAT_PERSON_GREAT_ADMIRAL",
+   "TXT_KEY_GREAT_PERSON_GUAN_TIANPEI",
+   "TXT_KEY_GREAT_PERSON_HANNIBAL_GISCO",
+   "TXT_KEY_GREAT_PERSON_HANNO_I_THE_GREAT",
+   "TXT_KEY_GREAT_PERSON_HANNO_THE_NAVIGATOR",
+   "TXT_KEY_GREAT_PERSON_HENRY_THE_NAVIGATOR",
+   "TXT_KEY_GREAT_PERSON_HORATIO_NELSON",
+   "TXT_KEY_GREAT_PERSON_HUGO_BIERMANN",
+   "TXT_KEY_GREAT_PERSON_INGVAR_THE_FAR_TRAVELLED",
+   "TXT_KEY_GREAT_PERSON_INIGO_CAMPIONI",
+   "TXT_KEY_GREAT_PERSON_ISOROKU_YAMAMOTO",
+   "TXT_KEY_GREAT_PERSON_IVAN_KRUZENSHTERN",
+   "TXT_KEY_GREAT_PERSON_IVAR_THE_BONELESS",
+   "TXT_KEY_GREAT_PERSON_JISABURO_OZAWA",
+   "TXT_KEY_GREAT_PERSON_JOHN_JELLICOE",
+   "TXT_KEY_GREAT_PERSON_JOHN_OF_AUSTRIA",
+   "TXT_KEY_GREAT_PERSON_KARL_DOENITZ",
+   "TXT_KEY_GREAT_PERSON_KIWA",
+   "TXT_KEY_GREAT_PERSON_LAGERTHA",
+   "TXT_KEY_GREAT_PERSON_LIU_GUANXIONG",
+   "TXT_KEY_GREAT_PERSON_LOUIS_DE_LATOUCHE_TREVILLE",
+   "TXT_KEY_GREAT_PERSON_LYSANDER",
+   "TXT_KEY_GREAT_PERSON_MAHMOUD_FAHMY",
+   "TXT_KEY_GREAT_PERSON_MANUEL_PESSANHA",
+   "TXT_KEY_GREAT_PERSON_MARCIUS_AGRIPPA",
+   "TXT_KEY_GREAT_PERSON_MARCUS_LURIUS",
+   "TXT_KEY_GREAT_PERSON_MARTHANDA_VARMA",
+   "TXT_KEY_GREAT_PERSON_MICHIEL_DE_RUYTER",
+   "TXT_KEY_GREAT_PERSON_MIKLOS_HORTHY",
+   "TXT_KEY_GREAT_PERSON_MUZAFFAR_HASSAN",
+   "TXT_KEY_GREAT_PERSON_PAVEL_NAKHIMOV",
+   "TXT_KEY_GREAT_PERSON_PEDRO_DE_MENEZES",
+   "TXT_KEY_GREAT_PERSON_PIYALE_PASHA",
+   "TXT_KEY_GREAT_PERSON_PLINY_THE_ELDER",
+   "TXT_KEY_GREAT_PERSON_PYTHAGORAS_THE_SPARTAN",
+   "TXT_KEY_GREAT_PERSON_RAMON_DE_BONIFAZ",
+   "TXT_KEY_GREAT_PERSON_RAUD_THE_STRONG",
+   "TXT_KEY_GREAT_PERSON_REGULUS",
+   "TXT_KEY_GREAT_PERSON_REINHARD_SCHEER",
+   "TXT_KEY_GREAT_PERSON_ROBERT_SURCOUF",
+   "TXT_KEY_GREAT_PERSON_ROBIN_K_DHOWAN",
+   "TXT_KEY_GREAT_PERSON_SHI_LANG",
+   "TXT_KEY_GREAT_PERSON_SINAN_PASHA",
+   "TXT_KEY_GREAT_PERSON_SIR_FRANCIS_DRAKE",
+   "TXT_KEY_GREAT_PERSON_TAMOS",
+   "TXT_KEY_GREAT_PERSON_THEMISTOCLES",
+   "TXT_KEY_GREAT_PERSON_TOGO_HEIHACHIRO",
+   "TXT_KEY_GREAT_PERSON_TURGUT_REIS",
+   "TXT_KEY_GREAT_PERSON_WILHELM_VON_TEGETTHOFF",
+   "TXT_KEY_GREAT_PERSON_WILLIAM_HALSEY",
+   "TXT_KEY_GREAT_PERSON_WU_SHENGLI",
+   "TXT_KEY_GREAT_PERSON_ZHENG_HE"
+  ]
+ }
+}

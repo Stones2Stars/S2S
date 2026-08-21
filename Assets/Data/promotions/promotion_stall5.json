@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_STALL5",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_STALL4"
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_STALL": 5
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Stall5Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_STALL5"
+ }
+}

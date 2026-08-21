@@ -1,0 +1,78 @@
+{
+ "type": "BONUS_MAMMOTH",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_MAMMOTH",
+   "BUILDING_BREEDING_PROGRAM_MAMMOTH",
+   "BUILDING_CAMP_DIPROTODON",
+   "BUILDING_CAMP_GIANT_BISON",
+   "BUILDING_CAMP_MAMMOTH",
+   "BUILDING_CAMP_MEGALOCEROS",
+   "BUILDING_CAMP_MEGATHERIUM",
+   "BUILDING_CAMP_WOOLLY_RHINO",
+   "BUILDING_CARRION_GATHERER",
+   "BUILDING_CULTURE_SIBERIAN",
+   "BUILDING_DIG_SITE_MAMMOTH_FOSSILS",
+   "BUILDING_REMAINS_MAMMOTH"
+  ],
+  "units": [
+   "UNIT_BALLISTA_MAMMOTH",
+   "UNIT_BOMBARD_MAMMOTH",
+   "UNIT_NEANDERTHAL_MAMMOTH_RIDER",
+   "UNIT_NEANDERTHAL_SHEPHERD",
+   "UNIT_SHEPHERD",
+   "UNIT_TAMED_MAMMOTH",
+   "UNIT_TRAINED_MAMMOTH",
+   "UNIT_WAR_MAMMOTH"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MAMMOTH"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 3,
+  "constAppearance": 200,
+  "minAreaSize": 5,
+  "minLatitude": 50,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "uniqueRange": 6,
+  "hills": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MAMMOTH",
+  "civilopedia": "TXT_KEY_BONUS_MAMMOTH_PEDIA",
+  "bonusClassType": "BONUSCLASS_STRATEGIC",
+  "source": "natural"
+ }
+}

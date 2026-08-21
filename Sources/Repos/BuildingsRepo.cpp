@@ -4,7 +4,7 @@
 #include "CvGameCoreDLL.h"
 #include "BuildingsRepo.h"
 #include "CvBuildingInfo.h"
-#include "CvGlobals.h"
+#include "Defines/CvGlobals.h"
 
 BuildingsRepo& BuildingsRepo::get()
 {
@@ -31,28 +31,23 @@ void BuildingsRepo::rebuild()
 	m_byReligion.resize(iNumReligions);
 	m_worldWonders.clear();
 	m_withFreeStartEra.clear();
-	m_autoBuildings.clear();
 
 	for (int iI = 0; iI < iNumBuildings; ++iI)
 	{
 		const CvBuildingInfo& kBuilding = GC.getBuildingInfo((BuildingTypes)iI);
 
-		const int iReligion = kBuilding.getReligionType();
+		const int iReligion = kBuilding.getReligion();
 		if (iReligion >= 0 && iReligion < iNumReligions)
 		{
 			m_byReligion[iReligion].push_back((BuildingTypes)iI);
 		}
-		if (kBuilding.getMaxGlobalInstances() != -1)
+		if (kBuilding.getAllowed()->cap(ALLOWEDCAP_WORLD) != -1)
 		{
 			m_worldWonders.push_back((BuildingTypes)iI);
 		}
 		if (kBuilding.getFreeStartEra() != NO_ERA)
 		{
 			m_withFreeStartEra.push_back((BuildingTypes)iI);
-		}
-		if (kBuilding.isAutoBuild())
-		{
-			m_autoBuildings.push_back((BuildingTypes)iI);
 		}
 	}
 	// Iteration over [0, iNumBuildings) guarantees each bucket is ascending,
@@ -78,7 +73,3 @@ const std::vector<BuildingTypes>& BuildingsRepo::withFreeStartEra() const
 	return m_withFreeStartEra;
 }
 
-const std::vector<BuildingTypes>& BuildingsRepo::autoBuildings() const
-{
-	return m_autoBuildings;
-}

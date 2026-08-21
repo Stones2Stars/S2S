@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_INTERSTELLAR_FARM",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_AEROPONICS_ARCOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+    "TECH_INTERSTELLAR_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_PLASMA",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 2249,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_FARM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_FARM_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "type": "PROMOTIONLINE_PROTECTIVE_PROMOTION",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PromotionProtective.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_PROTECTIVE_PROMOTION",
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_MISSIONARY",
+   "UNITCOMBAT_EXECUTIVE"
+  ]
+ }
+}

@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_FARM_FLOWER_INDIGO",
+ "enables": {
+  "buildings": [
+   "BUILDING_DYE_MAKER",
+   "BUILDING_FACTORY_DYE",
+   "BUILDING_RESOURCES_FLOWERS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_INDUSTRIAL_ECOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GREENHOUSE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FLORISTRY",
+    {
+     "any": [
+      "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+      "BUILDING_APIARY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_INDIGO",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ],
+   "dormant": [
+    "BUILDING_GREENHOUSE"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 270,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FARM_FLOWER_INDIGO",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_FLOWER_INDIGO",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_FLOWER_INDIGO_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

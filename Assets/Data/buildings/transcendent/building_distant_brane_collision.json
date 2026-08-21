@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_DISTANT_BRANE_COLLISION",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_NON_ORIENTABLE_WORMHOLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_BRANE_ASSEMBLER",
+    {
+     "type": "BUILDING_DISTANT_BRANE_THRUSTER",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_BRANE_CROSSOVER",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 60
+  }
+ },
+ "cost": {
+  "production": 2666,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_BRANE_COLLISION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_BRANE_COLLISION",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_BRANE_COLLISION_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

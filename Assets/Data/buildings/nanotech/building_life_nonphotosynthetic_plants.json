@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_LIFE_NONPHOTOSYNTHETIC_PLANTS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TRANSGENICS_LAB",
+    "TECH_HYPOTHETICAL_BIOCHEMISTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "food": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    20,
+    {
+     "value": 11,
+     "enabled": "TECH_ADAPTIVE_RADIATION"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 9310,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LIFE_NONPHOTOSYNTHETIC_PLANTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_NONPHOTOSYNTHETIC_PLANTS",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_NONPHOTOSYNTHETIC_PLANTS_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

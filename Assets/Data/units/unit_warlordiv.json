@@ -1,0 +1,228 @@
+{
+ "type": "UNIT_WARLORDIV",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LOGISTICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_MILITARY_SCIENCE",
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WARLORDV"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 4
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_GOLD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_SILVER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_GEMSTONE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_PEARLS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 25
+   },
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 100
+    },
+    "UNITCOMBAT_MELEE": {
+     "percent": 100
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 40
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 16
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 40
+   },
+   "limit": {
+    "flat": 40
+   },
+   "maxUnits": {
+    "flat": 4
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_WARLORDIVS"
+  }
+ },
+ "skills": [
+  "alwaysHostile",
+  "hiddenNationality",
+  "noCapture",
+  "pillage",
+  "unlimitedException"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_GUN",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_LEADER"
+  ]
+ },
+ "cost": {
+  "production": 630,
+  "upkeep": 11
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_VWARLORD_INDUSTRIAL",
+   "meshGroups": {
+    "groupSize": 4,
+    "rangedWaveSize": 5,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_VWARLORD_INDUSTRIAL"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_CANNON"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_RIFLEMAN"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_GRENADIER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_WARLORDIV",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
+  "worth": 10,
+  "militaryWorth": 40,
+  "xpValueAttack": 1,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_GENERAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_GENERAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "workRate": 85
+  }
+ }
+}

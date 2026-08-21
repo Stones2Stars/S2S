@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_NEOM",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_AUTOMATED_URBANIZATION",
+    {
+     "any": [
+      "BUILDING_SELF_CONSTRUCTION_FIRM",
+      "BUILDING_INTERTEMPORAL_CONSTRUCTION_FIRM"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 20
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_MEGATOWER_HOLOGRAM_ADVERTISING_CROWN_SECTION": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 2
+  }
+ },
+ "cost": {
+  "production": 22830,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NEOM"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NEOM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NEOM",
+  "civilopedia": "TXT_KEY_BUILDING_NEOM_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

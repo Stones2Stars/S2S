@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_TIME_MANIFOLD",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MULTIDIMENSIONAL_TIME",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_TIME_MANIFOLD"
+ },
+ "cost": {
+  "gold": 700,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/time_manifold.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_TIME_MANIFOLD"
+ }
+}

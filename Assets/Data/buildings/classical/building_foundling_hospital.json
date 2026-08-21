@@ -1,0 +1,103 @@
+{
+ "type": "BUILDING_FOUNDLING_HOSPITAL",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ANCIENT_MEDICINE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    "CIVIC_CHURCH"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": -50,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 486,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_FOUNDLING_HOSPITAL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FOUNDLING_HOSPITAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FOUNDLING_HOSPITAL",
+  "civilopedia": "TXT_KEY_BUILDING_FOUNDLING_HOSPITAL_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 8,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

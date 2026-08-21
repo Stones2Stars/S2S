@@ -1,0 +1,97 @@
+{
+ "type": "BUILDING_WATER_PUMPING_STATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_DOWNDRAFT_TOWER",
+   "BUILDING_FIRE_HYDRANTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_WATER_TOWER",
+    "TECH_SCREW_PROPELLER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_FRESHWATER",
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_ALUMINUM_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STEEL_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -15
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "cost": {
+  "production": 655,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WATER_PUMPING_STATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WATER_PUMPING_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_WATER_PUMPING_STATION_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

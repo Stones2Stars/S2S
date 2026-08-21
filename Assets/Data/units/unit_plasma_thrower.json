@@ -1,0 +1,155 @@
+{
+ "type": "UNIT_PLASMA_THROWER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PLASMA_GENERATORS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_ELECTRIC_ARC_WEAPONRY"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 20
+   },
+   "cityDefense": {
+    "percent": 20
+   },
+   "feature": {
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": 25
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 100
+    },
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 100
+    },
+    "UNITCOMBAT_TRACKED": {
+     "percent": -25
+    },
+    "UNITCOMBAT_ASSAULT_MECH": {
+     "percent": -25
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 85
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 100
+   },
+   "limit": {
+    "flat": 50
+   },
+   "maxUnits": {
+    "flat": 6
+   }
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "troop"
+ ],
+ "combatClass": "UNITCOMBAT_SIEGE",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SIEGE_FIELD",
+  "UNITCOMBAT_SIEGE_ENERGY",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_FLAMETHROWER",
+  "UNITCOMBAT_WEAPON_DIST_FLAME",
+  "UNITCOMBAT_ARMOR_MODERN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 3045,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PLASMA_THROWER",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 3,
+    "rangedWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_PLASMA_THROWER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_PLASMA_THROWER",
+  "civilopedia": "TXT_KEY_UNIT_PLASMA_THROWER_PEDIA",
+  "worth": 4,
+  "militaryWorth": 105,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_CITY_SPECIAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_CITY_SPECIAL",
+   "UNITAI_COLLATERAL",
+   "UNITAI_CITY_COUNTER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

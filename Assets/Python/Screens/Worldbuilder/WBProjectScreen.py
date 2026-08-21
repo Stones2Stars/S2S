@@ -5,7 +5,12 @@ import WBPlayerScreen
 import WBPlayerUnits
 import WBInfoScreen
 import WorldBuilder
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
 iChange = 1
 iChangeType = 1

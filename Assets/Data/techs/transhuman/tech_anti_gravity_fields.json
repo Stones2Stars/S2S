@@ -1,0 +1,72 @@
+{
+ "type": "TECH_ANTI_GRAVITY_FIELDS",
+ "enables": {
+  "bonuses": [
+   "BONUS_ANTI_GRAVITY_FIELD_GENERATORS"
+  ],
+  "buildings": [
+   "BUILDING_AERIAL_CITY",
+   "BUILDING_FACTORY_ANTI_GRAVITY_FIELD_GENERATORS",
+   "BUILDING_GRAVITY_TRAPS"
+  ],
+  "techs": [
+   "TECH_BINARY_PSYCHOKINESIS",
+   "TECH_ORBITAL_MEGASTRUCTURES",
+   "TECH_SHIELDING"
+  ],
+  "units": [
+   "UNIT_NANITE_REPAIR_CLOUD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SYNERGETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WEIGHTLESS_FLIGHT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 70029
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Buttons/Techs/TechAntiGravityFields.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ANTI_GRAVITY_FIELDS",
+  "soundMP": "AS2D_TECH_ANTI_GRAVITY_FIELDS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ANTI_GRAVITY_FIELDS",
+  "civilopedia": "TXT_KEY_TECH_ANTI_GRAVITY_FIELDS_PEDIA",
+  "quote": "TXT_KEY_TECH_ANTI_GRAVITY_FIELDS_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 50,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 114,
+  "gridY": 3
+ }
+}

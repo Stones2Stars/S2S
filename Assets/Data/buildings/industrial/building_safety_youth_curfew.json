@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_SAFETY_YOUTH_CURFEW",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_COMPULSORY_EDUCATION"
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": [
+    {
+     "value": -50,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": [
+    {
+     "value": 50,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_CRIME": {
+  "empire": {
+   "flat": -50
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SAFETY_YOUTH_CURFEW",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SAFETY_YOUTH_CURFEW",
+  "civilopedia": "TXT_KEY_BUILDING_SAFETY_YOUTH_CURFEW_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

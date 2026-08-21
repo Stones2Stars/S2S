@@ -1,0 +1,80 @@
+{
+ "type": "TECH_PRIESTHOOD",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARK_OF_THE_COVENANT",
+   "BUILDING_CULTURE_SABBATEAN",
+   "BUILDING_PETRA",
+   "BUILDING_TEMPLE_OF_ISIS",
+   "BUILDING_TOWER_OF_SILENCE"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_TEMPLE"
+  ],
+  "techs": [
+   "TECH_CANDLE_MAKING",
+   "TECH_DIVINATION",
+   "TECH_DUALISM",
+   "TECH_ORATORY"
+  ],
+  "units": [
+   "UNIT_KHAEMWASET",
+   "UNIT_ROMULUS",
+   "UNIT_SHEBA",
+   "UNIT_SHOSHENQ_I"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POLYTHEISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CEREMONY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 187
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": ",Art/Interface/Buttons/TechTree/Priesthood.dds,Art/Interface/Buttons/TechTree_Atlas.dds,5,11"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PRIESTHOOD",
+  "soundMP": "AS2D_TECH_MP_PRIESTHOOD"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PRIESTHOOD",
+  "civilopedia": "TXT_KEY_TECH_PRIESTHOOD_PEDIA",
+  "quote": "TXT_KEY_TECH_PRIESTHOOD_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "gridX": 26,
+  "gridY": 17
+ }
+}

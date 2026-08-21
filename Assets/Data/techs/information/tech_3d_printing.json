@@ -1,0 +1,72 @@
+{
+ "type": "TECH_3D_PRINTING",
+ "enables": {
+  "buildings": [
+   "BUILDING_3D_PRINTING_MILL",
+   "BUILDING_MAKERSPACE",
+   "BUILDING_NEON_BOUTIQUE"
+  ],
+  "builds": [
+   "BUILD_MAGLEV"
+  ],
+  "promotions": [
+   "PROMOTION_REPAIR_MECHANICAL7"
+  ],
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ],
+  "units": [
+   "UNIT_REPLICATION_MECHANIC"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_3D_MODELLING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_VIRTUAL_REALITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 22847
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_GOLD": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/3dprinting.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_3D_PRINTING",
+  "soundMP": "AS2D_TECH_3D_PRINTING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_3D_PRINTING",
+  "civilopedia": "TXT_KEY_TECH_3D_PRINTING_PEDIA",
+  "quote": "TXT_KEY_TECH_3D_PRINTING_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 91,
+  "gridY": 9
+ }
+}

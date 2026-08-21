@@ -1,0 +1,102 @@
+{
+ "type": "BUILDING_CULTURE_ROMAN",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_EUROPEAN",
+    "BUILDING_C_L_EUROPEAN",
+    "TECH_WRITING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_OLIVES",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ROMAN"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_CIRCUS_MAXIMUS": {
+     "percent": 10
+    },
+    "BUILDING_FLAVIAN_AMPHITHEATRE": {
+     "percent": 10
+    },
+    "BUILDING_HADRIANS_WALL": {
+     "percent": 10
+    },
+    "BUILDING_PONT_DU_GARD": {
+     "percent": 10
+    },
+    "BUILDING_LEANING_TOWER_OF_PISA": {
+     "percent": 10
+    },
+    "BUILDING_LEONARDOS_WORKSHOP": {
+     "percent": 10
+    },
+    "BUILDING_MARCO_POLOS_EMBASSY": {
+     "percent": 10
+    },
+    "BUILDING_PIAZZA_SAN_MARCO": {
+     "percent": 10
+    },
+    "BUILDING_SAINT_MARKS_BASILICA": {
+     "percent": 10
+    },
+    "BUILDING_VENETIAN_ARSENAL": {
+     "percent": 10
+    },
+    "BUILDING_VIA_APPIA": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 1056,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_ROMAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_ROMAN",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_ROMAN_PEDIA",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

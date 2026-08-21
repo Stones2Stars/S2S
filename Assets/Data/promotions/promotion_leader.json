@@ -1,0 +1,56 @@
+{
+ "type": "PROMOTION_LEADER",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ADHERENT",
+   "PROMOTION_BERZERKER1",
+   "PROMOTION_CRUSADER",
+   "PROMOTION_FLOWER_WAR",
+   "PROMOTION_GENTLEMEN",
+   "PROMOTION_HEROIC",
+   "PROMOTION_HOLY_TRINITY",
+   "PROMOTION_KANAI",
+   "PROMOTION_LEADERSHIP",
+   "PROMOTION_MARTIAL_ARTS3",
+   "PROMOTION_MORALE",
+   "PROMOTION_MOUNTAIN_LEADER",
+   "PROMOTION_MUJAHID",
+   "PROMOTION_ORDER_OF_ORMAZD",
+   "PROMOTION_PHARAOH",
+   "PROMOTION_TACTICS",
+   "PROMOTION_WALL_BREAKER",
+   "PROMOTION_ZEN"
+  ]
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "costs": {
+  "unit": {
+   "upgrade": {
+    "percent": -50
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat5.dds,Art/Interface/Buttons/Warlords_Atlas_1.dds,5,10"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_GREAT_GENERAL",
+  "unitCombats": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_NAVAL_COMBATANT"
+  ],
+  "leader": true
+ }
+}

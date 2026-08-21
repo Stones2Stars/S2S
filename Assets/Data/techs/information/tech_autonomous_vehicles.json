@@ -1,0 +1,76 @@
+{
+ "type": "TECH_AUTONOMOUS_VEHICLES",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUTOMATED_PARKING_GARAGE",
+   "BUILDING_AUTOMATED_PORT",
+   "BUILDING_AUTOMATED_TAXI_SERVICE",
+   "BUILDING_AUTOMATED_VEHICLE_DEALERSHIP",
+   "BUILDING_AUTONOMOUS_MINE",
+   "BUILDING_DIGITAL_LOGISTICS_CENTER",
+   "BUILDING_PERSONAL_RAPID_TRAIN",
+   "BUILDING_PRECISION_FARM",
+   "BUILDING_UNMANNED_MARKET"
+  ],
+  "techs": [
+   "TECH_AFFECTIVE_ALGORITHMS",
+   "TECH_MEGACITIES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_VIRTUAL_SOCIETY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MACHINE_LEARNING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 25354
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 4
+   },
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Buttons/Techs/autonomous_vehicles.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_AUTONOMOUS_VEHICLES",
+  "civilopedia": "TXT_KEY_TECH_AUTONOMOUS_VEHICLES_PEDIA",
+  "quote": "TXT_KEY_TECH_AUTONOMOUS_VEHICLES_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 94,
+  "gridY": 11
+ }
+}

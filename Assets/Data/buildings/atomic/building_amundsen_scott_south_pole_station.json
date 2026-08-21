@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_AMUNDSEN_SCOTT_SOUTH_POLE_STATION",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CLIMATE_MODELS",
+    {
+     "type": "FEATURE_ICE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": [
+    20,
+    {
+     "value": 8,
+     "enabled": "TECH_EXOPLANET_DISCOVERY"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_IMAGINARY_PHYSICS"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 9240,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_AMUNDSEN_SCOTT_SOUTH_POLE_STATION"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_AMUNDSEN_SCOTT_SOUTH_POLE_STATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_AMUNDSEN_SCOTT_SOUTH_POLE_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_AMUNDSEN_SCOTT_SOUTH_POLE_STATION_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

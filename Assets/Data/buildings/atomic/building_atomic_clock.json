@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_ATOMIC_CLOCK",
+ "enables": {
+  "buildings": [
+   "BUILDING_GLOBAL_POSITIONING_SYSTEM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_PHYSICS_LAB",
+    "TECH_MODERN_PHYSICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": {
+    "value": 8,
+    "enabled": "TECH_COMMUNICATION_NETWORKS"
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 8,
+     "enabled": "TECH_IMAGINARY_PHYSICS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_QUANTUM_TELEPORTATION"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_SUPERSTRING_THEORY"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 1130,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ATOMIC_CLOCK",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ATOMIC_CLOCK",
+  "civilopedia": "TXT_KEY_BUILDING_ATOMIC_CLOCK_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

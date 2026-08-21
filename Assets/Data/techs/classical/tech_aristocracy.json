@@ -1,0 +1,76 @@
+{
+ "type": "TECH_ARISTOCRACY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_FRENCH"
+  ],
+  "civics": [
+   "CIVIC_BOURGEOIS"
+  ],
+  "promotions": [
+   "PROMOTION_SILVER_TONGUE3"
+  ],
+  "techs": [
+   "TECH_MEDIEVAL_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_NOBLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FALCONRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MOSAIC_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 904
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_RELIGION": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_CULTURE": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/Civics/Hereditary_Rule.dds,Art/Interface/Buttons/Civics_Civilizations_Religions_Atlas.dds,3,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ARISTOCRACY",
+  "soundMP": "AS2D_TECH_ARISTOCRACY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ARISTOCRACY",
+  "civilopedia": "TXT_KEY_TECH_ARISTOCRACY_PEDIA",
+  "quote": "TXT_KEY_TECH_ARISTOCRACY_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "tradeable": true,
+  "gridX": 40,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,117 @@
+{
+ "type": "BUILDING_TREE_PLATFORMS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CARPENTRY",
+    {
+     "any": [
+      {
+       "type": "FEATURE_FOREST_YOUNG",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_ANCIENT",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_BURNT",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_JUNGLE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ROPE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BAMBOO",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "vision": {
+  "city": {
+   "elevation": {
+    "flat": 100
+   }
+  }
+ },
+ "cost": {
+  "production": 68,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TREE_PLATFORMS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TREE_PLATFORMS",
+  "civilopedia": "TXT_KEY_BUILDING_TREE_PLATFORMS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

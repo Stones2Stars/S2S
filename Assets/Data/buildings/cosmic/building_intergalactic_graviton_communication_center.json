@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_INTERGALACTIC_GRAVITON_COMMUNICATION_CENTER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_DYSON_SPHERES",
+    "BUILDING_INTERGALACTIC_RESEARCH_BASE",
+    "TECH_LUMINAL_BEINGS",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 4742,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_GRAVITON_COMMUNICATION_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_GRAVITON_COMMUNICATION_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_GRAVITON_COMMUNICATION_CENTER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

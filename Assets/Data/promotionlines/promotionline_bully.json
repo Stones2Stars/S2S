@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTIONLINE_BULLY",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Bully1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BULLY",
+  "unitCombats": [
+   "UNITCOMBAT_SIZE_TINY",
+   "UNITCOMBAT_SIZE_SMALL",
+   "UNITCOMBAT_SIZE_MEDIUM",
+   "UNITCOMBAT_SIZE_LARGE",
+   "UNITCOMBAT_SIZE_HUGE",
+   "UNITCOMBAT_SIZE_GARGANTUAN",
+   "UNITCOMBAT_SIZE_COLOSSAL"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_CAPTAIN",
+   "UNITCOMBAT_CIVILIAN"
+  ]
+ }
+}

@@ -1,0 +1,145 @@
+{
+ "type": "UNIT_WALKER_MECH",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MECHS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_CYBERNETICS"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HITECH_ROBOT",
+     "UNIT_SENTINEL"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityDefense": {
+    "percent": 40
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HELICOPTER": {
+     "percent": 25
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 100
+    },
+    "UNITCOMBAT_TRACKED": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 190
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 50
+  }
+ },
+ "skills": [
+  "pillage",
+  "ignoreBuildingDefense",
+  "mechanized",
+  "collateralImmune"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ASSAULT_MECH",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_ION",
+  "UNITCOMBAT_WEAPON_DIST_LASER",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_SHIELD_ENERGY",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_URBAN_TACTICS1",
+   "PROMOTION_URBAN_TACTICS2",
+   "PROMOTION_MARCH"
+  ]
+ },
+ "cost": {
+  "production": 5200,
+  "upkeep": 16,
+  "hurryCostModifier": 50
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WALKER_MECH",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "rangedWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 3,
+      "define": {
+       "early": "ART_DEF_UNIT_WALKER_MECH"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_WALKER_MECH",
+  "civilopedia": "TXT_KEY_UNIT_WALKER_MECH_PEDIA",
+  "worth": 6,
+  "militaryWorth": 400,
+  "xpValueAttack": 6,
+  "xpValueDefense": 6,
+  "conscription": 14,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_COLLATERAL",
+   "UNITAI_ESCORT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

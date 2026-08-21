@@ -1,0 +1,236 @@
+{
+ "type": "UNIT_ASSASSIN",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MATCHLOCK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ASSASSINS_DEN",
+    "TECH_CODE_OF_LAWS"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CUTTHROAT",
+     "UNIT_SHARPSHOOTER"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": -5
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 10
+   },
+   "lunge": {
+    "percent": 10
+   },
+   "unnerve": {
+    "percent": 10
+   },
+   "stealthStrikes": {
+    "flat": 1
+   },
+   "stealth": {
+    "percent": 20
+   },
+   "targets": {
+    "UNITCOMBAT_TRADE": true,
+    "UNITCOMBAT_EXPLORER": true,
+    "UNITCOMBAT_CANINE": true,
+    "UNITCOMBAT_HEALTH_CARE": true,
+    "UNITCOMBAT_ENTERTAINER": true,
+    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 8
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -10
+   },
+   "resistance": {
+    "flat": 20
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "insidiousness": {
+    "flat": 20
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 20
+  },
+  "plot": {
+   "flat": 10
+  }
+ },
+ "skills": [
+  "alwaysHostile",
+  "assassin",
+  "hiddenNationality",
+  "noCapture",
+  "noDefensiveBonus",
+  "pillage",
+  "blendIntoCity",
+  "counterSpy",
+  "destroy",
+  "ignoreTerrainCost",
+  "ignoreZoneOfControl",
+  "stealPlans",
+  "upgradeAnywhere",
+  "camouflage",
+  "disguised"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_STRIKE_TEAM",
+ "combatClasses": [
+  "UNITCOMBAT_CRIMINAL",
+  "UNITCOMBAT_THROWING",
+  "UNITCOMBAT_MELEE",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_KNIFE",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "hideAndSeek": {
+  "method": "camouflage",
+  "concealment": {
+   "flat": 700
+  },
+  "detection": [
+   {
+    "value": 300,
+    "unit": "HAS_CAMOUFLAGE"
+   },
+   {
+    "value": 300,
+    "unit": "HAS_DISGUISED"
+   }
+  ]
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_INDUSTRYESPIONAGE",
+   "PROMOTION_COMMANDO",
+   "PROMOTION_MARAUDER",
+   "PROMOTION_SENTRY"
+  ],
+  "greatPersonAction": {
+   "trade": {
+    "base": 40,
+    "multiplier": 1
+   }
+  }
+ },
+ "cost": {
+  "production": 260,
+  "upkeep": 5
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ASSASSIN",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_ASSASSIN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_ASSASSIN",
+  "civilopedia": "TXT_KEY_UNIT_ASSASSIN_PEDIA",
+  "worth": 5,
+  "militaryWorth": 8,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PILLAGE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "espionagePoints": 100,
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE",
+   "UNITAI_PILLAGE_COUNTER",
+   "UNITAI_SPY",
+   "UNITAI_INFILTRATOR"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

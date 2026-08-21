@@ -1,0 +1,48 @@
+{
+ "type": "BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX",
+ "enables": {
+  "buildings": [
+   "BUILDING_TRANSTELLAR_ARTIFICIAL_ROCKY_PLANET",
+   "BUILDING_TRANS_STELLAR_QUARK_FUSION_POWER_PLANT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FORGE_WORLDS",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "cost": {
+  "production": 2856,
+  "hurryModifier": 10000
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

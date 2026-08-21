@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_DISEASE_TYPHOID_FEVER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SMART_DRUGS"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_SEDENTARY_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_DISEASE",
+     "scope": "city",
+     "min": 500,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": -6
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -7
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -6
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -6
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -6,
+    {
+     "value": -50,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_SANITATION"
+    },
+    {
+     "value": 2,
+     "enabled": "TECH_MODERN_SANITATION"
+    }
+   ]
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYDISEASE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISEASE_TYPHOID_FEVER",
+  "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

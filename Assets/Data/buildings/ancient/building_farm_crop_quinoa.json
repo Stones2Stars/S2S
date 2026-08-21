@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_FARM_CROP_QUINOA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_GRAINS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FARMSCRAPER_III"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_AGRICULTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_WHEAT",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_CORN",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_FARMSCRAPER_III"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 118,
+  "sizeModifier": 3,
+  "countModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FARM_CROP_QUINOA",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_CROP_QUINOA",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_QUINOA_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

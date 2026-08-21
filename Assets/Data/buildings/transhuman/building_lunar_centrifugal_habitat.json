@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_LUNAR_CENTRIFUGAL_HABITAT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LUNAR_MANUFACTURING_PLANT",
+    "TECH_HYPERMAGNETICS",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 1526,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUNAR_CENTRIFUGAL_HABITAT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_CENTRIFUGAL_HABITAT",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_CENTRIFUGAL_HABITAT_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

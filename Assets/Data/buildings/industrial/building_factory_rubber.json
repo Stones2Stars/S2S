@@ -1,0 +1,125 @@
+{
+ "type": "BUILDING_FACTORY_RUBBER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MATERIALS_CONGLOMERATE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_REFINING",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT",
+      "BUILDING_FACTORY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_RUBBER",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_SULPHUR",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_LEAD_INGOTS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_MATERIALS_CONGLOMERATE"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_VULCANIZED_RUBBER"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -2,
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_RUBBER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 710,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACTORY_RUBBER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_RUBBER_FACTORY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_RUBBER",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_RUBBER_PEDIA",
+  "worth": 6,
+  "militaryWorth": 30,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

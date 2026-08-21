@@ -1,0 +1,94 @@
+{
+ "type": "TECH_EDUCATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLUE_MOSQUE",
+   "BUILDING_CULTURE_COLOMBIAN",
+   "BUILDING_CULTURE_CZECH",
+   "BUILDING_CULTURE_TANZANIAN",
+   "BUILDING_CULTURE_THAI",
+   "BUILDING_DOSAN_SEOWON",
+   "BUILDING_HOUSING_FRATERNITY_HOUSE",
+   "BUILDING_LAW_SCHOOL",
+   "BUILDING_PALACE_OF_POTALA",
+   "BUILDING_SALON",
+   "BUILDING_SULTAN_QABOOS_GRAND_MOSQUE",
+   "BUILDING_THE_BRIHADEESWARAR_TEMPLE",
+   "BUILDING_UNIVERSITY"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_TEACH3",
+   "PROMOTION_EDUCATE4"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_GROUP_ELITE_UNIVERSITIES"
+  ],
+  "techs": [
+   "TECH_ACOUSTICS",
+   "TECH_ALGEBRA",
+   "TECH_ANATOMY",
+   "TECH_COMPASS"
+  ],
+  "units": [
+   "UNIT_AMINA",
+   "UNIT_BAIBARS",
+   "UNIT_BARQUQ",
+   "UNIT_HIDEYOSHI",
+   "UNIT_JACHAL",
+   "UNIT_KHALID",
+   "UNIT_PETER_CLAVER",
+   "UNIT_PHILIP_THE_BOLD",
+   "UNIT_TAEJO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PAPER",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_STAINED_GLASS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1820
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 9
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/Education.dds,Art/Interface/Buttons/TechTree_Atlas.dds,5,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_EDUCATION",
+  "soundMP": "AS2D_TECH_MP_EDUCATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_EDUCATION",
+  "civilopedia": "TXT_KEY_TECH_EDUCATION_PEDIA",
+  "quote": "TXT_KEY_TECH_EDUCATION_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 48,
+  "gridY": 9
+ }
+}

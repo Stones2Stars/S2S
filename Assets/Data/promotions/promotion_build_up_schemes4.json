@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTION_BUILD_UP_SCHEMES4",
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 4
+  },
+  "plot": {
+   "flat": 4
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_SCHEMES": 4
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Schemes4Buildup.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_SCHEMES4"
+ }
+}

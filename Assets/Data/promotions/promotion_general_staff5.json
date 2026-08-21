@@ -1,0 +1,39 @@
+{
+ "type": "PROMOTION_GENERAL_STAFF5",
+ "enables": {
+  "promotions": [
+   "PROMOTION_GENERAL_STAFF6"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_GENERAL_STAFF4",
+    {
+     "any": [
+      "PROMOTION_COMMAND4"
+     ]
+    }
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 2
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_GENERAL_STAFF": 5
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/CommanderGeneralStaff5.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_GENERAL_STAFF5"
+ }
+}

@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_ELECTROACTIVE_POLYMERS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ELECTRONIC_PAPER_MAKER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ELECTROACTIVE_POLYMERS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ELECTROACTIVE_POLYMERS",
+  "civilopedia": "TXT_KEY_BONUS_ELECTROACTIVE_POLYMERS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

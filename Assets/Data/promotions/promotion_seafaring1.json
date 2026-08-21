@@ -1,0 +1,41 @@
+{
+ "type": "PROMOTION_SEAFARING1",
+ "movement": {
+  "unit": {
+   "moves": {
+    "flat": 1
+   }
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SEAFARING_PROMOTION": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionSeafaring.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SEAFARING1",
+  "unitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS",
+   "UNITCOMBAT_JET_SHIPS",
+   "UNITCOMBAT_SHOCKWAVE_SHIPS",
+   "UNITCOMBAT_DROID_SHIPS",
+   "UNITCOMBAT_LEVITATION_SHIPS",
+   "UNITCOMBAT_TROID_SHIPS",
+   "UNITCOMBAT_GRAVITY_DRIVE_SHIPS"
+  ]
+ }
+}

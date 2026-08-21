@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_ASTEROID_PIRATE_BASE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FUSION_SPACECRAFT",
+    {
+     "type": "TERRAIN_ASTEROID_SURFACE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": 5
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 5111,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ASTEROID_PIRATE_BASE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ASTEROID_PIRATE_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_ASTEROID_PIRATE_BASE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

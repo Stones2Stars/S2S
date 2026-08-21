@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_HUASTEC",
+ "enables": {
+  "units": [
+   "UNIT_BALAMOB_SLINGER",
+   "UNIT_KUCUMATZ",
+   "UNIT_PLUMED_ARCHER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HUASTEC"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HUASTEC",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

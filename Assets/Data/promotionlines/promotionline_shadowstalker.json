@@ -1,0 +1,16 @@
+{
+ "type": "PROMOTIONLINE_SHADOWSTALKER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/shadowstalker1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SHADOWSTALKER",
+  "unitCombats": [
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_STRIKE_TEAM",
+   "UNITCOMBAT_FELINE"
+  ]
+ }
+}

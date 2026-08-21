@@ -1,0 +1,97 @@
+{
+ "type": "BONUS_MUSHROOMS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLACK_TRUFFLE_GATHERER",
+   "BUILDING_BOLETE_GATHERER",
+   "BUILDING_CHANTERELLE_GATHERER",
+   "BUILDING_CHILD_LABOR_CREW",
+   "BUILDING_CORAL_TOOTH_MUSHROOM_GATHERER",
+   "BUILDING_CULTURE_CARIB",
+   "BUILDING_CULTURE_GOTH",
+   "BUILDING_CULTURE_KURDISH",
+   "BUILDING_CULTURE_MUISCA",
+   "BUILDING_CULTURE_PICTISH",
+   "BUILDING_CULTURE_QIANG",
+   "BUILDING_FARM_CROP_CAULIFLOWER_MUSHROOM",
+   "BUILDING_FARM_CROP_CORN_SMUT",
+   "BUILDING_FARM_CROP_ENOKITAKE_MUSHROOM",
+   "BUILDING_FARM_CROP_OYSTER_MUSHROOM",
+   "BUILDING_FARM_CROP_PORTOBELLO_MUSHROOM",
+   "BUILDING_FARM_CROP_SHIITAKE_MUSHROOM",
+   "BUILDING_FARM_CROP_SHIMEJI_MUSHROOM",
+   "BUILDING_FARM_CROP_SNOW_FUNGUS",
+   "BUILDING_FARM_CROP_STRAW_MUSHROOM",
+   "BUILDING_FARM_CROP_WHITE_MUSHROOM",
+   "BUILDING_FLY_AGARIC_GATHERER",
+   "BUILDING_GRAND_SKY_FESTIVAL",
+   "BUILDING_HEDGEHOG_MUSHROOM_GATHERER",
+   "BUILDING_MOREL_MUSHROOM_GATHERER",
+   "BUILDING_MUSHROOM_GATHERER",
+   "BUILDING_NATURE_ALTAR_MUSHROOMS",
+   "BUILDING_NATURE_CIRCLE_MUSHROOMS",
+   "BUILDING_PINE_MUSHROOM_GATHERER",
+   "BUILDING_SHAGGY_PARASOL_MUSHROOM_GATHERER",
+   "BUILDING_WHITE_TRUFFLE_GATHERER"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MUSHROOMS"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "groupRange": 1,
+  "groupRand": 16,
+  "hills": true,
+  "flatlands": true,
+  "normalize": true,
+  "validFeatures": [
+   "FEATURE_JUNGLE",
+   "FEATURE_FOREST",
+   "FEATURE_FOREST_ANCIENT",
+   "FEATURE_BAMBOO"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_MARSH",
+   "TERRAIN_PLAINS",
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_TAIGA"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MUSHROOMS",
+  "civilopedia": "TXT_KEY_BONUS_MUSHROOMS_PEDIA",
+  "bonusClassType": "BONUSCLASS_CROP",
+  "source": "natural"
+ }
+}

@@ -1,0 +1,146 @@
+{
+ "type": "UNIT_NEANDERTHAL_MASTER_CHASER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRACKING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_NEANDERTHAL",
+    "BUILDING_C_L_NEANDERTHAL",
+    "TECH_PERSISTENCE_HUNTING"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_NEANDERTHAL_MASTER_TRACKER"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": -75
+   },
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL_COMBAT_FLEEING": {
+     "percent": 50
+    },
+    "UNITCOMBAT_ANIMAL_COMBAT_RAGING": {
+     "percent": -50
+    },
+    "UNITCOMBAT_ANIMAL_COMBAT_HERDING": {
+     "percent": -25
+    },
+    "UNITCOMBAT_ANIMAL_COMBAT_HIDING": {
+     "percent": -25
+    },
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 25
+    }
+   },
+   "targets": {
+    "UNITCOMBAT_ANIMAL": true,
+    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "skills": [
+  "assassin",
+  "noBadGoodies"
+ ],
+ "tags": [
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_HUNTER",
+ "combatClasses": [
+  "UNITCOMBAT_EXPLORER",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_FIST",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_BY_THE_HORNS",
+   "PROMOTION_MASTER_HUNTER1"
+  ]
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MASTER_CHASER",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MASTER_CHASER"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MASTER_HUNTER_DOG"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_NEANDERTHAL_MASTER_CHASER",
+  "civilopedia": "TXT_KEY_UNIT_MASTER_HUNTER_PEDIA",
+  "spawnOnly": true,
+  "worth": 1,
+  "militaryWorth": 1,
+  "xpValueAttack": 1,
+  "xpValueDefense": 2,
+  "animalCombat": 125,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_HUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_HUNTER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_HUNTER_ESCORT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

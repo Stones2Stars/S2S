@@ -1,0 +1,71 @@
+{
+ "type": "TECH_GRAVITY_CONTROL",
+ "enables": {
+  "bonuses": [
+   "BONUS_GRAVITY_GENERATORS"
+  ],
+  "buildings": [
+   "BUILDING_ARTIFICIAL_VENUS_ROTATION",
+   "BUILDING_FACTORY_GRAVITY_GENERATORS",
+   "BUILDING_INTERSTELLAR_GRAVITON_DETECTOR",
+   "BUILDING_VENUS_SKY_ARCOLOGY"
+  ],
+  "techs": [
+   "TECH_ADVANCED_SEEDSHIPS",
+   "TECH_JOVIAN_TERRAFORMING",
+   "TECH_PLANET_ENGINEERING",
+   "TECH_WEAPONIZED_GRAVITY_FIELDS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TELEPORTATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLANET_CRACKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 159944
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Buttons/Techs/TechGravityControl.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GRAVITY_CONTROL",
+  "soundMP": "AS2D_TECH_GRAVITY_CONTROL"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_GRAVITY_CONTROL",
+  "civilopedia": "TXT_KEY_TECH_GRAVITY_CONTROL_PEDIA",
+  "quote": "TXT_KEY_TECH_GRAVITY_CONTROL_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 50,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 131,
+  "gridY": 13
+ }
+}

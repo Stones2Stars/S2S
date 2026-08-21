@@ -1,0 +1,92 @@
+{
+ "type": "BUILDING_DEPARTMENT_OF_EDUCATION",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_UNIVERSITY",
+    "TECH_COMPULSORY_EDUCATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ELEMENTARY_SCHOOL",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 1740,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_DEPARTMENT_EDUCATION"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEPARTMENT_OF_EDUCATION",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SCHOOL"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEPARTMENT_OF_EDUCATION",
+  "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_EDUCATION_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 3,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

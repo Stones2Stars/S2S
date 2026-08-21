@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_SPYMASTERS_OFFICE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_KINGS_COUNCIL",
+    "TECH_PARLIAMENTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      "CIVIC_MONARCHY",
+      "CIVIC_FEUDAL"
+     ]
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 368,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SPYMASTERS_OFFICE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SPYMASTERS_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_SPYMASTERS_OFFICE_PEDIA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

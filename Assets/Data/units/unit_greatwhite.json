@@ -1,0 +1,175 @@
+{
+ "type": "UNIT_GREATWHITE",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 4,
+   "title": "TXT_KEY_GROUPTITLE_LONE"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_PACK"
+  }
+ ],
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 4
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 40
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "blendIntoCity"
+ ],
+ "tags": [
+  "seaUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SEA_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_FISH",
+  "UNITCOMBAT_FISH_SHARK",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+  "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_EPIC",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "requires": {
+     "outcome": "OUTCOME_TALES_SEA"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_TALESOF_GREATWHITE",
+     "toCity": true
+    },
+    "food": {
+     "base": 80,
+     "random": 20
+    },
+    "production": {
+     "base": 58,
+     "random": 42
+    },
+    "commerce": {
+     "base": 20,
+     "random": 20
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE_SEA_LARGE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_GREATWHITE"
+    },
+    "food": {
+     "base": 80,
+     "random": 20
+    },
+    "production": {
+     "base": 58,
+     "random": 42
+    },
+    "commerce": {
+     "base": 20,
+     "random": 20
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 90,
+    "food": {
+     "base": 80,
+     "random": 20
+    },
+    "production": {
+     "base": 58,
+     "random": 42
+    },
+    "commerce": {
+     "base": 20,
+     "random": 20
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GREATWHITE",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 2.25,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_GREATWHITE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_GREATWHITE",
+  "civilopedia": "TXT_KEY_UNIT_GREATWHITE_SHARK_PEDIA",
+  "spawnOnly": true,
+  "xpValueAttack": 12,
+  "xpValueDefense": 7,
+  "aggression": 2,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_TRENCH_POLAR"
+  ]
+ }
+}

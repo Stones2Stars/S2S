@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_HIMYARITE",
+ "enables": {
+  "units": [
+   "UNIT_ABU_KARIBA",
+   "UNIT_MYRH_CARAVAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HIMYARITE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HIMYARITE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

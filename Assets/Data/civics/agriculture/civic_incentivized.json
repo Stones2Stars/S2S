@@ -1,0 +1,81 @@
+{
+ "type": "CIVIC_INCENTIVIZED",
+ "enables": {
+  "buildings": [
+   "BUILDING_FARMERS_MARKET"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 6
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 4
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": -20
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   },
+   "numCities": {
+    "percent": 10
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 7
+    },
+    "production": {
+     "percent": 2
+    },
+    "commerce": {
+     "percent": 7
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/agriculture_subsidized.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_INCENTIVIZED",
+  "civilopedia": "TXT_KEY_CIVIC_INCENTIVIZED_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_INCENTIVIZED_STRATEGY",
+  "civicOption": "CIVICOPTION_AGRICULTURE",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

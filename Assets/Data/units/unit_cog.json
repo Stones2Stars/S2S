@@ -1,0 +1,158 @@
+{
+ "type": "UNIT_COG",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SHIPWRIGHT",
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
+    "TECH_RUDDER"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_FLUYT"
+    ]
+   }
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 20,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 6
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_LAND",
+    "flat": 4
+   }
+  }
+ },
+ "skills": [
+  "pillage",
+  "mechanized",
+  "renderBelowWater",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WOODEN_SHIPS",
+ "combatClasses": [
+  "UNITCOMBAT_TRANSPORT",
+  "UNITCOMBAT_NAVAL_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_SHORTBOW",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 280,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_COG",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 2.25,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_COG"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_COG",
+  "civilopedia": "TXT_KEY_UNIT_COG_PEDIA",
+  "worth": 1,
+  "militaryWorth": 4,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "minAreaSize": 10,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ASSAULT_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ASSAULT_SEA",
+   "UNITAI_SETTLER_SEA",
+   "UNITAI_MISSIONARY_SEA",
+   "UNITAI_SPY_SEA"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_TROPICAL",
+   "TERRAIN_TRENCH_POLAR"
+  ],
+  "terrainPassableTechs": [
+   {
+    "TERRAIN_OCEAN": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_OCEAN_POLAR": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_OCEAN_TROPICAL": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH_TROPICAL": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH_POLAR": "TECH_ASTRONOMY"
+   }
+  ]
+ }
+}

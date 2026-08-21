@@ -1,0 +1,69 @@
+{
+ "type": "TECH_ATOMPUNK",
+ "enables": {
+  "bonuses": [
+   "BONUS_ATOMPUNK"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_PUNK_ATOM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ROCKETRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_POP_ART",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NUCLEAR_POWER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 13181
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/retrospace.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ATOMPUNK",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ATOMPUNK",
+  "civilopedia": "TXT_KEY_TECH_ATOMPUNK_PEDIA",
+  "quote": "TXT_KEY_TECH_ATOMPUNK_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 10,
+  "gridX": 80,
+  "gridY": 13,
+  "tradeable": true
+ }
+}

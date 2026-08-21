@@ -1,0 +1,253 @@
+{
+ "type": "UNIT_KARAI_PYHARE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RIFLING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_GUARANI",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_THIEVES_HIDEOUT",
+    "TECH_USURY",
+    {
+     "any": [
+      "BUILDING_LOCKSMITH",
+      "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
+      "BUILDING_BIOMETRIC_SECURITY_SYSTEM"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_SCOUNDREL",
+     "UNIT_PARTISAN"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": -6
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "combat": {
+  "unit": {
+   "lunge": {
+    "percent": 12
+   },
+   "enclose": {
+    "percent": 8
+   },
+   "unnerve": {
+    "percent": 12
+   },
+   "stealthStrikes": {
+    "flat": 1
+   },
+   "stealth": {
+    "percent": 20
+   },
+   "targets": {
+    "UNITCOMBAT_EXPLORER": true,
+    "UNITCOMBAT_HEALTH_CARE": true,
+    "UNITCOMBAT_CANINE": true,
+    "UNITCOMBAT_TRADE": true,
+    "UNITCOMBAT_ENTERTAINER": true,
+    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 12
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "insidiousness": {
+    "flat": 25
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 25
+  },
+  "plot": {
+   "flat": 25
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_CAPTIVE",
+    "flat": 1
+   }
+  }
+ },
+ "skills": [
+  "alwaysHostile",
+  "assassin",
+  "hiddenNationality",
+  "pillage",
+  "blendIntoCity",
+  "barbCoExist",
+  "counterSpy",
+  "destroy",
+  "ignoreTerrainCost",
+  "ignoreZoneOfControl",
+  "stealPlans",
+  "upgradeAnywhere",
+  "camouflage",
+  "disguised"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "troop"
+ ],
+ "combatClass": "UNITCOMBAT_CRIMINAL",
+ "combatClasses": [
+  "UNITCOMBAT_RUFFIAN",
+  "UNITCOMBAT_THROWING",
+  "UNITCOMBAT_MELEE",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_SHORT_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_KNIFE",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "hideAndSeek": {
+  "method": "camouflage",
+  "concealment": {
+   "flat": 1000
+  },
+  "detection": [
+   {
+    "value": 300,
+    "unit": "HAS_CAMOUFLAGE"
+   },
+   {
+    "value": 400,
+    "unit": "HAS_DISGUISED"
+   }
+  ]
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_INDUSTRYESPIONAGE",
+   "PROMOTION_COMMANDO",
+   "PROMOTION_MARAUDER",
+   "PROMOTION_LOOTER",
+   "PROMOTION_FORESTRY",
+   "PROMOTION_DRILL1",
+   "PROMOTION_DRILL2"
+  ],
+  "greatPersonAction": {
+   "trade": {
+    "base": 60,
+    "multiplier": 1
+   }
+  }
+ },
+ "cost": {
+  "production": 365,
+  "upkeep": 6
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KARAI_PYHARE",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_KARAI_PYHARE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_KARAI_PYHARE",
+  "civilopedia": "TXT_KEY_UNIT_KARAI_PYHARE_PEDIA",
+  "worth": 6,
+  "militaryWorth": 11,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PILLAGE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "espionagePoints": 100,
+  "unitAIs": [
+   "UNITAI_SPY",
+   "UNITAI_PILLAGE",
+   "UNITAI_ATTACK"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

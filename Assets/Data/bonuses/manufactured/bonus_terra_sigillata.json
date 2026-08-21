@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_TERRA_SIGILLATA",
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TERRA_SIGILLATA"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TERRA_SIGILLATA",
+  "civilopedia": "TXT_KEY_BONUS_TERRA_SIGILLATA_PEDIA",
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
+ }
+}

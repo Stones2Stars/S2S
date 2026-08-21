@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_INTERSTELLAR_DEGENERATE_ERA_SURVIVAL_PLAN",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET",
+    "BUILDING_INTERSTELLAR_ADAPTED_HUMANS",
+    "TECH_IMMORTALITY",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_TIME_CRYSTALS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 6020,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_DEGENERATE_ERA_SURVIVAL_PLAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_DEGENERATE_ERA_SURVIVAL_PLAN",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DEGENERATE_ERA_SURVIVAL_PLAN_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

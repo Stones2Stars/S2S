@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_DESIGNER_PROBIOTICS_CLINIC",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PICOTECHNOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HEALTHCARE_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_BACTERIUM_BIOFORGE",
+    "TECH_BACTERIUM_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STIM_PACKS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_DOCTOR": 1
+  }
+ },
+ "cost": {
+  "production": 2865,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DESIGNER_PROBIOTICS_CLINIC",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DESIGNER_PROBIOTICS_CLINIC",
+  "civilopedia": "TXT_KEY_BUILDING_DESIGNER_PROBIOTICS_CLINIC_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

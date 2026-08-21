@@ -1,0 +1,116 @@
+{
+ "type": "BUILDING_GARBAGE_COLLECTION_AGENCY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MOTORIZED_TRANSPORTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_PETROLEUM_PRODUCTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BIOFUEL",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  },
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "TECH_ANDROIDS"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_TELEPORTATION"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1660,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GCA"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GARBAGE_COLLECTION_AGENCY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GARBAGE_DUMP"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GARBAGE_COLLECTION_AGENCY",
+  "civilopedia": "TXT_KEY_BUILDING_GARBAGE_COLLECTION_AGENCY_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 2,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

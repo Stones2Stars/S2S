@@ -1,0 +1,175 @@
+{
+ "type": "UNIT_COW",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 3,
+   "title": "TXT_KEY_GROUPTITLE_SOLITARY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 4,
+   "title": "TXT_KEY_GROUPTITLE_GROUP"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 5,
+   "title": "TXT_KEY_GROUPTITLE_MOB"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_COMPANY",
+   "chance": 3,
+   "title": "TXT_KEY_GROUPTITLE_HERD"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_BATTALION",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_DROVE"
+  }
+ ],
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "skills": [
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_RECKLESS_ANIMAL",
+  "UNITCOMBAT_MAMMAL_BOVINE",
+  "UNITCOMBAT_ATTACK_FORM_COLLISION_PIERCING",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_HEAD_BUTT",
+  "UNITCOMBAT_ANIMAL_COMBAT_HERDING",
+  "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+  "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_HORNED",
+  "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+  "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+  "UNITCOMBAT_ANIMAL_COMBAT_WARNING",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "requires": {
+     "outcome": "OUTCOME_BONUS_SPAWNED"
+    },
+    "chance": 2,
+    "places": "BONUS_COW",
+    "food": {
+     "base": 180,
+     "random": 180
+    },
+    "production": {
+     "base": 27,
+     "random": 27
+    },
+    "commerce": {
+     "base": 13,
+     "random": 5
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 3,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_COW",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 180,
+     "random": 180
+    },
+    "production": {
+     "base": 27,
+     "random": 27
+    },
+    "commerce": {
+     "base": 13,
+     "random": 5
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WILD_COW",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WILD_COW"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_COW",
+  "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
+  "spawnOnly": true,
+  "xpValueAttack": 5,
+  "xpValueDefense": 3,
+  "aggression": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "featureImpassable": [
+   "FEATURE_JUNGLE",
+   "FEATURE_MANGROVE",
+   "FEATURE_SWAMP"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_DUNES",
+   "TERRAIN_ICE",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_TAIGA"
+  ]
+ }
+}

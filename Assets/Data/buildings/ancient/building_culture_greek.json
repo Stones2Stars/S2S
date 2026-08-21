@@ -1,0 +1,105 @@
+{
+ "type": "BUILDING_CULTURE_GREEK",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_EUROPEAN",
+    "BUILDING_C_L_EUROPEAN",
+    "TECH_COPPER_WORKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MARBLE",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_GREEK"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_THE_COLOSSUS": {
+     "percent": 10
+    },
+    "BUILDING_THE_ORACLE": {
+     "percent": 10
+    },
+    "BUILDING_PLATOS_ACADEMY": {
+     "percent": 10
+    },
+    "BUILDING_ARCHIMEDES_WORKSHOP": {
+     "percent": 10
+    },
+    "BUILDING_THE_NECROMANTEION": {
+     "percent": 10
+    },
+    "BUILDING_OLYMPIC_GAMES": {
+     "percent": 10
+    },
+    "BUILDING_HIPPOCRATIC_OATH": {
+     "percent": 10
+    },
+    "BUILDING_THE_PARTHENON": {
+     "percent": 10
+    },
+    "BUILDING_PHIDIAS_STATUE_WORKSHOP": {
+     "percent": 10
+    },
+    "BUILDING_THEATRE_OF_DIONYSUS": {
+     "percent": 10
+    },
+    "BUILDING_PERGAMON_ALTAR": {
+     "percent": 10
+    },
+    "BUILDING_ROSETTA_STONE": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 876,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_GREEK",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_GREEK",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_GREEK_PEDIA",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

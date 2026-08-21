@@ -1,0 +1,149 @@
+{
+ "type": "BUILDING_GUARD_STATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+  ],
+  "units": [
+   "UNIT_CITY_GUARD",
+   "UNIT_ENFORCERS",
+   "UNIT_GUARD",
+   "UNIT_HARAPPA_WATCHER",
+   "UNIT_HOPLOMACHUS",
+   "UNIT_HUACA_GUARDIANS",
+   "UNIT_NEANDERTHAL_ENFORCER",
+   "UNIT_NEANDERTHAL_WATCHER",
+   "UNIT_ORONAO_WATCHER",
+   "UNIT_PATROLS",
+   "UNIT_PETRA_GUARD",
+   "UNIT_TOWN_WATCHMEN",
+   "UNIT_TREASURE_GUARD",
+   "UNIT_WATCHER"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CRIMINOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SHERIFFS_OFFICE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FLINTLOCK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_MARBLE",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_SHERIFFS_OFFICE",
+    "BUILDING_POLICE_STATION",
+    "BUILDING_POLICE_PRECINCT"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10,
+   "percent": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 20
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "underworld": {
+  "city": {
+   "investigation": {
+    "flat": 30
+   }
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_INVESTIGATOR": 3
+  }
+ },
+ "cost": {
+  "production": 455,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GUARD_STATION",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_JAIL"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GUARD_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_GUARD_STATION_PEDIA",
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

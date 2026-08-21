@@ -1,0 +1,143 @@
+{
+ "type": "BUILDING_MADISON_AVENUE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ANDROIDS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SKYSCRAPER",
+    {
+     "type": "BUILDING_ADVERTISING_AGENCY",
+     "scope": "empire",
+     "min": 6,
+     "scaling": "amountBuildings"
+    },
+    "TECH_CONSUMERISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "percent": 12
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_ADVERTISING_AGENCY": {
+     "flat": 2
+    },
+    "BUILDING_BAZAAR": {
+     "flat": 1
+    },
+    "BUILDING_GROCER": {
+     "flat": 1
+    },
+    "BUILDING_MARKET": {
+     "flat": 1
+    },
+    "BUILDING_SHOPPING_DISTRICT": {
+     "flat": 2
+    },
+    "BUILDING_SUPERMARKET": {
+     "flat": 2
+    },
+    "BUILDING_MALL": {
+     "flat": 2
+    },
+    "BUILDING_HYPERMARKET": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_ADVERTISING_AGENCY": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2,
+   "SPECIALIST_MERCHANT": 2
+  }
+ },
+ "cost": {
+  "production": 6180,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MADISON_AVENUE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MADISON_AVENUE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MADISON_AVENUE",
+  "civilopedia": "TXT_KEY_BUILDING_MADISON_AVENUE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

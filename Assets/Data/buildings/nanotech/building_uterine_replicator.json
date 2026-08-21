@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_UTERINE_REPLICATOR",
+ "enables": {
+  "buildings": [
+   "BUILDING_GAMMA_ASSEMBLER",
+   "BUILDING_RESURRECTION_HUB"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ASTROANTHROPOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_NANOMORPHIC_REPLICATOR"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ANTHROPOMORPHICS_LAB",
+    "BUILDING_CYBERNETIC_ORGAN_LAB",
+    "TECH_CYBERNETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_NANOMORPHIC_REPLICATOR"
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_WORKER_ANDROID": {
+     "percent": 10
+    },
+    "UNIT_CYBORG": {
+     "percent": 10
+    },
+    "UNIT_FERAL": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -15
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 4655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_UTERINE_REPLICATOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_UTERINE_REPLICATOR",
+  "civilopedia": "TXT_KEY_BUILDING_UTERINE_REPLICATOR_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

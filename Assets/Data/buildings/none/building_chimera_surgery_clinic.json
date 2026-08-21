@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_CHIMERA_SURGERY_CLINIC",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_PLASTIC_SURGERY_CLINIC",
+    "BUILDING_BIOPUNK_LAB",
+    "TECH_BIOPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BIOPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ],
+   "dormant": [
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5,
+   "percent": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5,
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 3665,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CHIMERA_SURGERY_CLINIC",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CHIMERA_SURGERY_CLINIC",
+  "civilopedia": "TXT_KEY_BUILDING_CHIMERA_SURGERY_CLINIC_PEDIA",
+  "specialBuildingType": "SPECIALBUILDING_PUNK_BIO",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

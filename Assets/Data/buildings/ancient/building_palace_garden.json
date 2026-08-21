@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_PALACE_GARDEN",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRENCH_WARFARE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_IMPERIAL_FORTRESS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GARDENING",
+    {
+     "any": [
+      "BUILDING_PALACE",
+      "BUILDING_FORBIDDEN_PALACE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_IMPERIAL_FORTRESS"
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "heal": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 168,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PALACE_GARDEN",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PALACE_GARDEN",
+  "civilopedia": "TXT_KEY_BUILDING_PALACE_GARDEN_PEDIA",
+  "centerInCity": true,
+  "worth": 4,
+  "militaryWorth": 2,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

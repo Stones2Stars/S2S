@@ -1,0 +1,14 @@
+{
+ "type": "PROCESS_RESEARCH",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Process/ProcessResearch.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROCESS_RESEARCH"
+ },
+ "conversion": {
+  "research": 50
+ }
+}

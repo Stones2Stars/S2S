@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_OPTRONIC_SUPERCOMPUTER",
+ "enables": {
+  "buildings": [
+   "BUILDING_HUMAN_MOD_TRANSAPIENT",
+   "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CLOUD_SERVER",
+    "TECH_OPTRONICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    {
+     "value": 10,
+     "enabled": "TECH_TECHNOLOGICAL_SINGULARITY"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    20,
+    {
+     "value": 11,
+     "enabled": "TECH_DATA_ARCHIVAL"
+    },
+    {
+     "value": 12,
+     "enabled": "TECH_ULTRACOMPUTING"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    40,
+    {
+     "value": 11,
+     "enabled": "TECH_DATA_ARCHIVAL"
+    },
+    {
+     "value": 12,
+     "enabled": "TECH_ULTRACOMPUTING"
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 5655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_OPTRONIC_SUPERCOMPUTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_OPTRONIC_SUPERCOMPUTER",
+  "civilopedia": "TXT_KEY_BUILDING_OPTRONIC_SUPERCOMPUTER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

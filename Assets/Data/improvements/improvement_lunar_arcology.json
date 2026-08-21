@@ -1,0 +1,58 @@
+{
+ "type": "IMPROVEMENT_LUNAR_ARCOLOGY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_MEGASTRUCTURES",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_LUNAR_DOME",
+      "TERRAIN_LUNAR_MARE",
+      "TERRAIN_LUNAR_HIGHLAND",
+      "TERRAIN_LUNAR_REGOLITH",
+      "TERRAIN_LUNAR_RILLE",
+      "TERRAIN_GREEN_MOON"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PARATERRAFORMING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 12
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_LUNAR_ARCOLOGY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_LUNAR_ARCOLOGY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_LUNAR_ARCOLOGY_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

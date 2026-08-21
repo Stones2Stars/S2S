@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_FORENSICS_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_PRECRIME_UNIT",
+   "BUILDING_STEM_CELL_LAB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LABORATORY",
+    "TECH_FORENSICS",
+    {
+     "any": [
+      "BUILDING_POLICE_STATION",
+      "BUILDING_POLICE_PRECINCT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 8,
+     "enabled": "TECH_KNOWLEDGE_MANAGEMENT"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_GENOMIC_ENCYCLOPEDIA"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_GENE_JURISPRUDENCE"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "underworld": {
+  "city": {
+   "investigation": {
+    "flat": 25
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 1845,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FORENSICS_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FORENSICS_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_FORENSICS_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

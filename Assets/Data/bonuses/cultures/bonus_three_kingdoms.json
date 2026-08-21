@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_THREE_KINGDOMS",
+ "enables": {
+  "units": [
+   "UNIT_CAO_CAO",
+   "UNIT_DOUJIAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_THREE_KINGDOMS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_THREE_KINGDOMS",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

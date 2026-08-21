@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_HERD_POULTRY",
+ "enables": {
+  "buildings": [
+   "BUILDING_FLOCKS_OF_DUCK",
+   "BUILDING_FLOCKS_OF_PEACOCK",
+   "BUILDING_FLOCKS_OF_TURKEY",
+   "BUILDING_RESOURCES_EGGS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INDUSTRIAL_FARMS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_POULTRY_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_PEACOCK",
+      "BUILDING_FOLKLORE_PHEASANT",
+      "BUILDING_FOLKLORE_WILD_TURKEY",
+      "BUILDING_FOLKLORE_DUCK"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_POULTRY"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 250,
+  "sizeModifier": 1,
+  "countModifier": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HERD_POULTRY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "SND_AMB_HORSE_COBBLESTONES"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HERD_POULTRY",
+  "civilopedia": "TXT_KEY_BUILDING_HERD_POULTRY_PEDIA",
+  "worth": 3,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

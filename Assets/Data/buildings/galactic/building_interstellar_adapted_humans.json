@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_INTERSTELLAR_ADAPTED_HUMANS",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_DEGENERATE_ERA_SURVIVAL_PLAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ADAPTIVE_RADIATION",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_GALACTIC",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_UNIVERSAL",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "foodKept": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 2536,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_ADAPTED_HUMANS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_ADAPTED_HUMANS",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_ADAPTED_HUMANS_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC",
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

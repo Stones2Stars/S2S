@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_LUMBER_GATHERER",
+ "enables": {
+  "buildings": [
+   "BUILDING_BONFIRE",
+   "BUILDING_FIRE_PIT",
+   "BUILDING_RESOURCES_WOOD"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LUMBER_CAMP"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GATHERING",
+    {
+     "any": [
+      {
+       "type": "FEATURE_FOREST_YOUNG",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_ANCIENT",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_BURNT",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_JUNGLE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_LUMBER_CAMP",
+    "BUILDING_AGROFOREST"
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUMBER_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUMBER_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_LUMBER_GATHERER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

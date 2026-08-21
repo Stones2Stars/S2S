@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_SERVANTS_QUARTERS",
+ "enables": {
+  "buildings": [
+   "BUILDING_GUILD_SERVANTS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRENCH_WARFARE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_IMPERIAL_FORTRESS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CIVIL_SERVICE",
+    {
+     "any": [
+      "BUILDING_PALACE",
+      "BUILDING_FORBIDDEN_PALACE",
+      "BUILDING_CASTLE",
+      "BUILDING_STAR_FORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_IMPERIAL_FORTRESS"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 3
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_NOBLE": 1
+  }
+ },
+ "cost": {
+  "production": 300,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SERVANTS_QUARTERS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SERVANTS_QUARTERS",
+  "civilopedia": "TXT_KEY_BUILDING_SERVANTS_QUARTERS_PEDIA",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

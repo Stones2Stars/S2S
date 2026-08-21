@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_PLANET_NINE_COLONY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_ECOSYSTEM",
+    "TECH_NUCLEAR_PULSE_PROPULSION",
+    {
+     "type": "FEATURE_SEDNOID",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_SEDNA_COLONY"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "empire": {
+   "buildings": {
+    "BUILDING_ROGUE_PLANET_OUTPOST": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 13235,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PLANET_NINE_COLONY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PLANET_NINE_COLONY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PLANET_NINE_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_PLANET_NINE_COLONY_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

@@ -5,10 +5,19 @@ from CvPythonExtensions import *
 import CvScreenEnums
 
 # globals
+# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
-TRNSLTR = CyTranslator()
+INFO = CyInfo()   # entity data: the context serves settings, CyInfo serves entities
+# The per-info accessor for this registry. Named reads, because these values belong to ESPIONAGEMISSION_ alone
+# -- asking the generic slot plane for them is what silently classified NO mission and crashed this screen.
+ESPIONAGEMISSION = CyEspionageMissionInfo()
 GAME = GC.getGame()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
+TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class CvEspionageAdvisor:
 
 	def __init__(self):
@@ -105,8 +114,8 @@ class TheScreen:
 		self.aPlayerList = aList
 
 		# Declare constants
-		self.charBeaker			= u'%c' % GC.getCommerceInfo(CommerceTypes.COMMERCE_RESEARCH).getChar()
-		self.charEsp			= u'%c' % GC.getCommerceInfo(CommerceTypes.COMMERCE_ESPIONAGE).getChar()
+		self.charBeaker			= u'%c' % TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH)
+		self.charEsp			= u'%c' % TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_ESPIONAGE)
 		self.charCross			= u'%c' % GAME.getSymbolID(FontSymbols.CROSSED_CHAR)
 		self.charLifeSupportSS	= u'%c' %(GAME.getSymbolID(FontSymbols.HAPPY_CHAR) - 21)
 		self.ANGRY_CIV_CHAR				= GAME.getSymbolID(FontSymbols.ANGRY_CIV_CHAR)
@@ -114,14 +123,21 @@ class TheScreen:
 		iFontTitle = FontTypes.TITLE_FONT
 
 		# mission constants
-		for iMissionLoop in range(GC.getNumEspionageMissionInfos()):
-			pMission = GC.getEspionageMissionInfo(iMissionLoop)
-			if pMission.getCost() != -1 and pMission.isPassive():
-				if pMission.isInvestigateCity():
+		#	Seeded first: the loop below only assigns inside its branch, so a data set with no matching
+		#	mission left these UNBOUND and every later read raised AttributeError on the instance rather
+		#	than reporting a missing mission. -1 is the id space's own "none".
+		self.MissionInvestigateCity = -1
+		self.MissionSeeDemo = -1
+		self.MissionSeeResearch = -1
+		self.MissionCityVisibility = -1
+		for kMission in INFO.getIndex("ESPIONAGEMISSION_"):
+			iMissionLoop = kMission["id"]
+			if ESPIONAGEMISSION.getCost(iMissionLoop) != -1 and ESPIONAGEMISSION.isPassive(iMissionLoop):
+				if ESPIONAGEMISSION.isInvestigateCity(iMissionLoop):
 					self.MissionInvestigateCity = iMissionLoop
-				elif pMission.isSeeDemographics():
+				elif ESPIONAGEMISSION.isSeeDemographics(iMissionLoop):
 					self.MissionSeeDemo = iMissionLoop
-				elif pMission.isSeeResearch():
+				elif ESPIONAGEMISSION.isSeeResearch(iMissionLoop):
 					self.MissionSeeResearch = iMissionLoop
 				else:
 					self.MissionCityVisibility = iMissionLoop
@@ -136,7 +152,7 @@ class TheScreen:
 		screen.setLabel("EA_Header", "", uFontEdge + TRNSLTR.getText("TXT_KEY_HUD_BUTTON_ADVISOR_INTELLIGENCE",()), 1<<2, iResX / 2, 2, 0, iFontTitle, iWidGen, 0, 0)
 		screen.setText("EA_Btn_Exit", "", uFontEdge + TRNSLTR.getText("TXT_WORD_EXIT",()), 1<<1, iResX - 16, 0, 0, iFontTitle, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1)
 
-		iCol = GC.getCOLOR_YELLOW()
+		iCol = GC.getInfoTypeForString("COLOR_YELLOW")
 		szTxt = uFontEdge + TRNSLTR.getText("TXT_KEY_ESPIONAGE_MISSIONS_TAB", ())
 		szTxtCol = TRNSLTR.changeTextColor(szTxt, iCol)
 		dX = iResX / 2
@@ -235,7 +251,7 @@ class TheScreen:
 			screen.setLabelAt(self.getNextWidgetName(), LeaderPanel, szText, 1<<0, 0, SIZE - y4, 0, iFontTitle, iWidGen, 0, 0)
 			# leader image
 			leaderBtn = "LeaderBtn" + szPlayerX
-			Btn = GC.getLeaderHeadInfo(CyPlayerX.getLeaderType()).getButton()
+			Btn = INFO.getButton("LEADER_", CyPlayerX.getLeaderType())
 			screen.addCheckBoxGFCAt(PanelLeft, leaderBtn, Btn, artPath0, x1, y1, SIZE, SIZE, iWidGen, 0, 0, iBtnLabel, False)
 			x1 += SIZE
 			# leader name
@@ -425,12 +441,13 @@ class TheScreen:
 		screen.setStyle(LIST, "Table_StandardCiv_Style")
 		iCount = 0
 		for iMissionX in range(GC.getNumEspionageMissionInfos()):
-			pMission = GC.getEspionageMissionInfo(iMissionX)
 			# Filter
-			if pMission.getCost() == -1 or not pMission.isTargetsCity(): continue
-			if pMission.getTechPrereq() != -1 and not CyTeamAct.isHasTech(pMission.getTechPrereq()): continue
+			if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_COST) == -1: continue
+			if not INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_TARGETS_CITY): continue
+			iTechPrereq = INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_TECH_PREREQ)
+			if iTechPrereq != -1 and not CyTeamAct.isHasTech(iTechPrereq): continue
 			# Carry on
-			szText = uFont2 + pMission.getDescription()
+			szText = uFont2 + INFO.getDescription("ESPIONAGEMISSION_", iMissionX)
 			screen.appendListBoxStringNoUpdate(LIST, szText, iWidGen, iMissionX, 0, 1<<0)
 			# Default active mission
 			if self.iMissionAct == -1:
@@ -490,11 +507,11 @@ class TheScreen:
 
 		iCityActID = self.iCityActID
 		iCount = 0
-		for CyCity in CyPlayer.cities():
-			if CyCity.isRevealed(iTeamAct, False):
-				szText = uFont2 + CyCity.getName()
-				screen.appendListBoxStringNoUpdate(LIST, szText, iWidGen, CyCity.getID(), 0, 1<<0)
-				iCityID = CyCity.getID()
+		#	The id enumeration: a CyCity carries only its identity, so the reads are addressed by (owner, id).
+		for iCityID in GC.getPlayer(iPlayer).getCityIds():
+			if GC.getPlayer(iPlayer).getCity(iCityID).isRevealedTo(iTeamAct):
+				szText = uFont2 + GC.getPlayer(iPlayer).getCity(iCityID).getName()
+				screen.appendListBoxStringNoUpdate(LIST, szText, iWidGen, iCityID, 0, 1<<0)
 
 				if iCityActID == -1:
 					self.iCityActID = iCityActID = iCityID
@@ -503,7 +520,8 @@ class TheScreen:
 					screen.setSelectedListBoxStringGFC(LIST, iCount)
 				iCount += 1
 
-				iCost = CyPlayerAct.getEspionageMissionCost(iMissionAct, iPlayer, CyCity.plot(), -1)
+				aCityPos = GC.getPlayer(iPlayer).getCity(iCityID).getPosition()
+				iCost = CyPlayerAct.getEspionageMissionCost(iMissionAct, iPlayer, CyMap().plot(aCityPos[0], aCityPos[1]), -1)
 				if iCost > -1:
 					szCost = uFont2
 					if iCost <= iEP:
@@ -537,11 +555,10 @@ class TheScreen:
 		else: CyPlot = None
 
 		for iMissionX in range(GC.getNumEspionageMissionInfos()):
-			pMission = GC.getEspionageMissionInfo(iMissionX)
-			if pMission.getCost() == -1: continue
-			iTech = pMission.getTechPrereq()
-			bTargetCity = pMission.isTargetsCity()
-			if pMission.isPassive():
+			if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_COST) == -1: continue
+			iTech = INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_TECH_PREREQ)
+			bTargetCity = INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_TARGETS_CITY)
+			if INFO.getIntrinsic("ESPIONAGEMISSION_", iMissionX, IntrinsicSlot.PYINT_ESPIONAGE_IS_PASSIVE):
 				if bMissionList != bTargetCity:
 					iCost = CyPlayerAct.getEspionageMissionCost(iMissionX, iPlayer, CyPlot, -1)
 					if iCost == -1: continue
@@ -550,9 +567,9 @@ class TheScreen:
 						szCost += "<color=0,255,0>"
 					szCost += str(iCost)
 
-					szText = uFont2 + pMission.getDescription()
+					szText = uFont2 + INFO.getDescription("ESPIONAGEMISSION_", iMissionX)
 					if iTech != -1 and not CyTeamAct.isHasTech(iTech):
-						szText += " (<color=255,0,0>%s</color>)" %(GC.getTechInfo(pMission.getTechPrereq()).getDescription())
+						szText += " (<color=255,0,0>%s</color>)" %(INFO.getDescription("TECH_", iTech))
 
 					iRow = screen.appendTableRow(EffectsTable)
 					screen.setTableText(EffectsTable, 0, iRow, szText, "", iWidGen, 0, 0, 1<<0)
@@ -566,9 +583,9 @@ class TheScreen:
 					szCost += "<color=0,255,0>"
 				szCost += str(iCost)
 
-				szText = uFont2 + pMission.getDescription()
+				szText = uFont2 + INFO.getDescription("ESPIONAGEMISSION_", iMissionX)
 				if iTech != -1 and not CyTeamAct.isHasTech(iTech):
-					szText += " (<color=255,0,0>%s</color>)" %(GC.getTechInfo(pMission.getTechPrereq()).getDescription())
+					szText += " (<color=255,0,0>%s</color>)" %(INFO.getDescription("TECH_", iTech))
 
 				iRow = screen.appendTableRow(TABLE)
 				screen.setTableText(TABLE, 0, iRow, szText, "", iWidGen, 0, 0, 1<<0)
@@ -660,7 +677,7 @@ class TheScreen:
 			else:
 				bSeeDetails = False
 
-			artPath = GC.getLeaderHeadInfo(CyPlayerX.getLeaderType()).getButton()
+			artPath = INFO.getButton("LEADER_", CyPlayerX.getLeaderType())
 
 			# top leader icon
 			screen.setImageButtonAt(self.getNextWidgetName(), TopPanel, artPath, iRow * W_CELL + X_OFFSET, 0, SIZE, SIZE, iWidGen, iPlayerX, 0)

@@ -1,0 +1,112 @@
+{
+ "type": "CIVIC_CAPITALIST",
+ "food": {
+  "empire": {
+   "percent": 4
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 4
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 4
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    3,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "flat": -2
+    },
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "freeSpecialists": {
+  "empire": {
+   "any": 1
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 1,
+   "modifier": {
+    "food": {
+     "percent": 3
+    },
+    "production": {
+     "percent": 3
+    },
+    "commerce": {
+     "percent": 3
+    }
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/labor_capitalist.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_CAPITALIST",
+  "civilopedia": "TXT_KEY_CIVIC_CAPITALIST_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_CAPITALIST_STRATEGY",
+  "civicOption": "CIVICOPTION_WORKFORCE",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_POYA",
+ "enables": {
+  "units": [
+   "UNIT_NAHUAL",
+   "UNIT_POYA_LONGSPEARS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_POYA"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_POYA",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

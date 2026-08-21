@@ -1,0 +1,41 @@
+{
+ "type": "PROMOTION_MOUNTAINEER",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT3",
+    {
+     "any": [
+      "PROMOTION_GUERILLA3"
+     ]
+    }
+   ]
+  }
+ },
+ "skills": {
+  "canPassPeaks": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Explorer1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_MOUNTAINEER",
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_HUNTER",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_WORKER"
+  ]
+ }
+}

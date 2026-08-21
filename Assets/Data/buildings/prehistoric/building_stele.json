@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_STELE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRANSHUMANISM"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FUNERARY_SERVICES"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CEREMONIAL_BURIAL",
+    {
+     "any": [
+      "BUILDING_BURIAL_TRADITION_CAVE",
+      "BUILDING_BURIAL_TRADITION_EARTH",
+      "BUILDING_BURIAL_TRADITION_FIRE",
+      "BUILDING_BURIAL_TRADITION_SKY",
+      "BUILDING_BURIAL_TRADITION_SEA"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_MARBLE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CEMENT",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_FUNERARY_SERVICES",
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 86,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_STELE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_OBELISK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_STELE",
+  "civilopedia": "TXT_KEY_BUILDING_STELE_PEDIA",
+  "centerInCity": true,
+  "worth": 2,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

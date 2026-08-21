@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_AMBER_GATHERER",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_GEMSTONE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOMINING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MINE_AMBER"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_BARTER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "BONUS_AMBER",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_MINE_AMBER",
+    "BUILDING_CORE_MINE"
+   ]
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 148,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_AMBER_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_AMBER_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_AMBER_GATHERER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

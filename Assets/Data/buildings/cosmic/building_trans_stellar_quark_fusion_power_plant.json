@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_TRANS_STELLAR_QUARK_FUSION_POWER_PLANT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX",
+    "TECH_FEMTOTECHNOLOGY",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 5269,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRANS_STELLAR_QUARK_FUSION_POWER_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRANS_STELLAR_QUARK_FUSION_POWER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_TRANS_STELLAR_QUARK_FUSION_POWER_PLANT_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

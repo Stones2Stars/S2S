@@ -1,0 +1,253 @@
+{
+ "type": "BUILDING_MOTORCYCLE_CLUB",
+ "enables": {
+  "units": [
+   "UNIT_BIKER_GANG"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPREHENSIVE_CYBERNETICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MASS_MEDIA",
+    {
+     "any": [
+      "BUILDING_AUTO_REPAIR_SHOP",
+      "BUILDING_HYPERMARKET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_PARTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TIRES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PETROLEUM_PRODUCTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BIOFUEL",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HEMP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MUSHROOMS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_POISON",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OPIUM",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PEYOTE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DRUGS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_AUTOMOBILES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TIRES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LSD",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ECSTASY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_METHAMPHETAMINE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 25
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "chance": {
+    "per": "PROPERTY_CRIME"
+   },
+   "action": {
+    "grant": {
+     "units": [
+      "UNIT_BIKER_GANG"
+     ]
+    }
+   }
+  },
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 6,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL"
+   }
+  }
+ ],
+ "cost": {
+  "production": 1180,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MOTORCYCLE_CLUB",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MARKETPLACE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MOTORCYCLE_CLUB",
+  "civilopedia": "TXT_KEY_BUILDING_MOTORCYCLE_CLUB_PEDIA",
+  "worth": 2,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

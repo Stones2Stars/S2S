@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_ODEON",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REALISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_POETRY",
+    "TECH_CONSTRUCTION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_HELLENISM"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
+ "cost": {
+  "production": 280,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ODEON"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COLOSSEUM"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ODEON",
+  "civilopedia": "TXT_KEY_BUILDING_ODEON_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 5,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

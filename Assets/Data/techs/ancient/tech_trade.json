@@ -1,0 +1,135 @@
+{
+ "type": "TECH_TRADE",
+ "enables": {
+  "bonuses": [
+   "BONUS_PEARLS"
+  ],
+  "buildings": [
+   "BUILDING_BAZAAR",
+   "BUILDING_CARAVAN_POST",
+   "BUILDING_CARNIVAL",
+   "BUILDING_CARNIVAL_BOXING_KANGAROO",
+   "BUILDING_CARNIVAL_DANCING_BEAR",
+   "BUILDING_CARNIVAL_TRAINED_SEAL",
+   "BUILDING_CRIME_BLACK_MARKETS",
+   "BUILDING_CRIME_SHOPLIFTING",
+   "BUILDING_CRIME_SOLICITING",
+   "BUILDING_CULTURE_CANARI",
+   "BUILDING_CULTURE_GOKTURK",
+   "BUILDING_CULTURE_HAUSA",
+   "BUILDING_CULTURE_HIMYARITE",
+   "BUILDING_CULTURE_HOPEWELL",
+   "BUILDING_CULTURE_LUBA",
+   "BUILDING_CULTURE_LYDIAN",
+   "BUILDING_CULTURE_MOHAWK",
+   "BUILDING_CULTURE_NOK",
+   "BUILDING_CULTURE_POYA",
+   "BUILDING_CULTURE_PUNTIC",
+   "BUILDING_CULTURE_QUERANDI",
+   "BUILDING_CULTURE_SASSANIAN",
+   "BUILDING_CULTURE_TAJIK",
+   "BUILDING_CULTURE_TOTONAC",
+   "BUILDING_DISEASE_DIPHTHERIA",
+   "BUILDING_ENCLOSURE_AMPHIBIAN_POND",
+   "BUILDING_ENCLOSURE_BAD_BOYS",
+   "BUILDING_ENCLOSURE_BEAR",
+   "BUILDING_ENCLOSURE_BIG_CAT",
+   "BUILDING_ENCLOSURE_BIRD",
+   "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
+   "BUILDING_ENCLOSURE_MARSUPIAL",
+   "BUILDING_ENCLOSURE_PRIMATE",
+   "BUILDING_ENCLOSURE_REPTILE",
+   "BUILDING_ENCLOSURE_RODENT",
+   "BUILDING_ENCLOSURE_WOLF",
+   "BUILDING_FARM_ANIMAL_OXEN",
+   "BUILDING_GROCER",
+   "BUILDING_JADE_IMPORTER",
+   "BUILDING_MARKET",
+   "BUILDING_SLAVE_COMPOUND_COMMERCE",
+   "BUILDING_SLAVE_MARKET",
+   "BUILDING_TAPESTRY_MAKERS_WORKSHOP",
+   "BUILDING_TRADING_POST"
+  ],
+  "civics": [
+   "CIVIC_TRADE",
+   "CIVIC_TRADE_LANGUAGE"
+  ],
+  "processes": [
+   "PROCESS_WEALTH_LESSER"
+  ],
+  "promotions": [
+   "PROMOTION_CARAVAN_CIRCLE_THE_WAGONS"
+  ],
+  "techs": [
+   "TECH_CAMELID_DOMESTICATION",
+   "TECH_PIRACY",
+   "TECH_SPECIALIZATION",
+   "TECH_SUNDIAL",
+   "TECH_WRITING"
+  ],
+  "units": [
+   "UNIT_ARJOS",
+   "UNIT_BEAD_HUCKSTER",
+   "UNIT_COPENA_MERCHANT",
+   "UNIT_FOOD_CARAVAN",
+   "UNIT_MAIZE_CARAVAN",
+   "UNIT_MEIONE_CARAVAN",
+   "UNIT_MYRH_CARAVAN",
+   "UNIT_NOK_MERCHANTS",
+   "UNIT_RESIN_CARAVAN",
+   "UNIT_TRADE_CARAVAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NEGOTIATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "research": 164
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/Currency.dds,Art/Interface/Buttons/Warlords_Atlas_1.dds,5,12"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TRADE",
+  "soundMP": "AS2D_TECH_TRADE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TRADE",
+  "civilopedia": "TXT_KEY_TECH_TRADE_PEDIA",
+  "quote": "TXT_KEY_TECH_TRADE_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 25,
+  "gridY": 5
+ }
+}

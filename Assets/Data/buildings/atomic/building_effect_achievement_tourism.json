@@ -1,0 +1,36 @@
+{
+ "type": "BUILDING_EFFECT_ACHIEVEMENT_TOURISM",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_TOURISM"
+   ]
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "empire": {
+   "flat": 10
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ACHIEVEMENT_TOURISM_EFFECT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_TOURISM",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_TOURISM_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

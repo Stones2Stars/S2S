@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_STEWARDS_OFFICE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_KINGS_COUNCIL",
+    "TECH_PARLIAMENTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      "CIVIC_MONARCHY",
+      "CIVIC_FEUDAL"
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 15
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": -10,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "production": 368,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_STEWARDS_OFFICE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_STEWARDS_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_STEWARDS_OFFICE_PEDIA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

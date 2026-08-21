@@ -1,0 +1,61 @@
+{
+ "type": "TECH_ALPHA_POINT",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASCENSION_GATE",
+   "BUILDING_HYPERSPACE_LANDSCAPE_MULTIVERSE",
+   "BUILDING_OMNIVERSE",
+   "BUILDING_UBIQUITOUS_SUBDIMENSIONAL_UNIVERSE"
+  ],
+  "techs": [
+   "TECH_FUTURE_TECH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRANSFINITE_COMPUTATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_REALITY_REPROGRAMMING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 686864
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/self_creation.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ALPHA_POINT",
+  "civilopedia": "TXT_KEY_TECH_ALPHA_POINT_PEDIA",
+  "quote": "TXT_KEY_TECH_ALPHA_POINT_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 159,
+  "gridY": 7
+ }
+}

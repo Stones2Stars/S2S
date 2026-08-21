@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_GASTRONOMY_LAB",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CULINARY_SCHOOL",
+    "BUILDING_LABORATORY",
+    "TECH_GASTRONOMY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BLENDER",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_REFRIGERATORS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 8,
+     "enabled": "TECH_GENESIS_BIOLOGY"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_AUGMENTED_CONSUMABLES"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GASTRONOMY_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GASTRONOMY_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_GASTRONOMY_LAB_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

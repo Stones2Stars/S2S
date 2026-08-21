@@ -1,0 +1,162 @@
+{
+ "type": "UNIT_CRAB",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_SOLITARY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 4,
+   "title": "TXT_KEY_GROUPTITLE_SOME"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_COLLECTION"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_COMPANY",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_GATHERING"
+  }
+ ],
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "seaUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SEA_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_INVERTEBRATE",
+  "UNITCOMBAT_INVERTEBRATE_CRUSTACEAN",
+  "UNITCOMBAT_ANIMAL_COMBAT_BURROWING",
+  "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
+  "UNITCOMBAT_ANIMAL_COMBAT_NIP",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHELLED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+  "UNITCOMBAT_SPEED_SLOW",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_INCAPABLE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_DIMINUTIVE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "requires": {
+     "outcome": "OUTCOME_BONUS_SPAWNED"
+    },
+    "chance": 2,
+    "places": "BONUS_CRAB",
+    "food": 2,
+    "commerce": 1
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_TALES_SEA"
+    },
+    "chance": 8,
+    "spawns": {
+     "unit": "UNIT_TALESOF_CRAB",
+     "toCity": true
+    },
+    "food": 2,
+    "commerce": 1
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE_SEA_SMALL"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_CRAB"
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 85,
+    "food": 2,
+    "commerce": 1
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CRAB",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 2.25,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_CRAB"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_CRAB",
+  "civilopedia": "TXT_KEY_UNIT_CRAB_PEDIA",
+  "spawnOnly": true,
+  "xpValueAttack": 2,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_POLAR",
+   "TERRAIN_TRENCH_TROPICAL",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_DEEP_TROPICAL"
+  ]
+ }
+}

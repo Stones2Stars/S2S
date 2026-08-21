@@ -1,0 +1,52 @@
+{
+ "type": "RELIGION_CANAANISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_CANAANITE_CATHEDRAL",
+   "BUILDING_CANAANITE_MONASTERY",
+   "BUILDING_CANAANITE_TEMPLE"
+  ],
+  "units": [
+   "UNIT_CANAANITE_MISSIONARY"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_CANAANISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_CANAANISM"
+     }
+    }
+   ]
+  }
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 23,
+   "icon": "Art/Interface/Buttons/religions/Canaanism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Canaanism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Canaanism.dds",
+   "movie": {
+    "file": "Art/CutScene/Canaanism_Generic_Found.nif",
+    "sound": "AS2D_BUILD_CANAANITE_MOVIE"
+   }
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_CANAANITE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CANAANISM",
+  "adjective": "TXT_KEY_TECH_CANAANISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_CANAANISM_PEDIA",
+  "spreadFactor": 15
+ }
+}

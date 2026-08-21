@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_SAMI",
+ "enables": {
+  "units": [
+   "UNIT_AILI_KESKITALO",
+   "UNIT_REINDEER_RIDER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SAMI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SAMI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

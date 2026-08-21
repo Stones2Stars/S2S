@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_INTERSTELLAR_BLACK_HOLE_INTERIOR_PLANET",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_EVENT_HORIZON_PROBE",
+    "TECH_HORIZON_BREAKING",
+    {
+     "any": [
+      {
+       "type": "FEATURE_BLACK_HOLE",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_SUPERMASSIVE_BLACK_HOLE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 10510,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_BLACK_HOLE_INTERIOR_PLANET",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_BLACK_HOLE_INTERIOR_PLANET",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BLACK_HOLE_INTERIOR_PLANET_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

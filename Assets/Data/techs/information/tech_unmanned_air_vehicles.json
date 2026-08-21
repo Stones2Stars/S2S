@@ -1,0 +1,66 @@
+{
+ "type": "TECH_UNMANNED_AIR_VEHICLES",
+ "enables": {
+  "bonuses": [
+   "BONUS_UNMANNED_AIRCRAFTS"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_UNMANNED_AIRCRAFTS"
+  ],
+  "techs": [
+   "TECH_SPACE_TOURISM",
+   "TECH_UNMANNED_NAVAL_VEHICLES"
+  ],
+  "units": [
+   "UNIT_DRONE",
+   "UNIT_UAV"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STEALTH",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 20610
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/uav.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,2,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_UNMANNED_AIR_VEHICLES",
+  "soundMP": "AS2D_TECH_UNMANNED_AIR_VEHICLES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_UNMANNED_AIR_VEHICLES",
+  "civilopedia": "TXT_KEY_TECH_UNMANNED_AIR_VEHICLES_PEDIA",
+  "quote": "TXT_KEY_TECH_UNMANNED_AIR_VEHICLES_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 88,
+  "gridY": 1
+ }
+}

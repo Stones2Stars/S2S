@@ -1,0 +1,15 @@
+{
+ "type": "PROMOTIONLINE_HILL_WORKER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/workerhills1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_HILL_WORKER",
+  "unitCombats": [
+   "UNITCOMBAT_WORKER",
+   "UNITCOMBAT_COMBAT_WORKER"
+  ]
+ }
+}

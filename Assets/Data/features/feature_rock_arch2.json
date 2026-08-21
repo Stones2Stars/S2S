@@ -1,0 +1,60 @@
+{
+ "type": "FEATURE_ROCK_ARCH2",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": {
+    "type": "POPULATION",
+    "scope": "city",
+    "min": 4
+   },
+   "action": {
+    "destroy": "self"
+   }
+  }
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_ROCK_ARCH2"
+  }
+ },
+ "sound": {
+  "footsteps": [
+   {
+    "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_HUMAN_LOW": "AS3D_UN_FOOT_UNIT_LOW_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL": "AS3D_UN_ANIMAL_FOOT_LARGE_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL_LOW": "AS3D_UN_ANIMAL_FOOT_LARGE_LOW_MUD"
+   }
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_OUTCROP",
+  "civilopedia": "TXT_KEY_FEATURE_OUTCROP_PEDIA",
+  "appearance": 50,
+  "validTerrains": [
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES",
+   "TERRAIN_BADLAND",
+   "TERRAIN_SCRUB"
+  ],
+  "graphicalOnly": true
+ }
+}

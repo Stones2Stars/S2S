@@ -1,0 +1,16 @@
+{
+ "type": "VOTE_SINGLE_CURRENCY",
+ "voteSource": [
+  "DIPLOVOTE_UN"
+ ],
+ "threshold": {
+  "population": 51,
+  "minVoters": 3
+ },
+ "effect": {
+  "tradeRoutes": 1
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_SINGLE_CURRENCY"
+ }
+}

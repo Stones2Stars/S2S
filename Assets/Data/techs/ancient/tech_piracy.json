@@ -1,0 +1,83 @@
+{
+ "type": "TECH_PIRACY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_OMANI",
+   "BUILDING_SMUGGLERS_SHANTY"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_SCHEMES3",
+   "PROMOTION_WAYLAY3"
+  ],
+  "techs": [
+   "TECH_LOCKS"
+  ],
+  "units": [
+   "UNIT_ARABIAN_GALLIOT",
+   "UNIT_BOROBUDUR",
+   "UNIT_COG_MERCHANT",
+   "UNIT_GALLIOT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NAVAL_WARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRADE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 187
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/piracy.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PIRACY",
+  "soundMP": "AS2D_TECH_PIRACY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PIRACY",
+  "civilopedia": "TXT_KEY_TECH_PIRACY_PEDIA",
+  "quote": "TXT_KEY_TECH_PIRACY_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 26,
+  "gridY": 5
+ }
+}

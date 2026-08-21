@@ -1,0 +1,25 @@
+{
+ "type": "BONUS_HIDE",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_CLOTHING",
+   "BUILDING_FACTORY_LEATHER",
+   "BUILDING_HOUSING_ANIMAL_HIDE_TENTS",
+   "BUILDING_HOUSING_TIPIS",
+   "BUILDING_SEAMSTRESS",
+   "BUILDING_TANNERY",
+   "BUILDING_TEXTILE_MILL"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HIDE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HIDE",
+  "civilopedia": "TXT_KEY_BONUS_HIDE_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

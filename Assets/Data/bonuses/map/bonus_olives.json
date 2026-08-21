@@ -1,0 +1,88 @@
+{
+ "type": "BONUS_OLIVES",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_IRAQI",
+   "BUILDING_CULTURE_KHAZAR",
+   "BUILDING_CULTURE_ROMAN",
+   "BUILDING_CULTURE_SYRIAN",
+   "BUILDING_CULTURE_TAJIK",
+   "BUILDING_FARM_ANIMAL_GOOSE",
+   "BUILDING_FARM_CROP_ARTICHOKE",
+   "BUILDING_FARM_CROP_BLACK_PEPPER",
+   "BUILDING_FARM_CROP_BROCCOLI",
+   "BUILDING_FARM_CROP_GOOSEBERRY",
+   "BUILDING_FARM_CROP_LETTUCE",
+   "BUILDING_FARM_CROP_OAT",
+   "BUILDING_GROVE_MACADAMIA",
+   "BUILDING_NATURE_ALTAR_OLIVES",
+   "BUILDING_NATURE_CIRCLE_OLIVES",
+   "BUILDING_ORCHARD_APRICOT",
+   "BUILDING_ORCHARD_OLIVE",
+   "BUILDING_PLANTATION_PLANTAIN"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 3
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_OLIVES"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 5,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "minLatitude": 20,
+  "maxLatitude": 50,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "groupRange": 1,
+  "groupRand": 16,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validFeatures": [
+   "FEATURE_FOREST",
+   "FEATURE_FOREST_ANCIENT",
+   "FEATURE_FLOOD_PLAINS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS",
+   "TERRAIN_LUSH",
+   "TERRAIN_SCRUB"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_OLIVES",
+  "civilopedia": "TXT_KEY_BONUS_OLIVES_PEDIA",
+  "bonusClassType": "BONUSCLASS_LUXURY",
+  "source": "natural"
+ }
+}

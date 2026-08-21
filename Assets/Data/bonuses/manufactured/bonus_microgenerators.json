@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_MICROGENERATORS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOLUMINESCENT_BOUTIQUE",
+   "BUILDING_FACTORY_NANOGENERATORS",
+   "BUILDING_UBIQUITOUS_SENSORS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MICROGENERATORS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MICROGENERATORS",
+  "civilopedia": "TXT_KEY_BONUS_MICROGENERATORS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

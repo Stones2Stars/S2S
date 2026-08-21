@@ -1,0 +1,95 @@
+{
+ "type": "TECH_FASCISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_BERLIN_WALL",
+   "BUILDING_CHECKPOINT",
+   "BUILDING_FANATIC_COMPOUND",
+   "BUILDING_HOMELAND_SECURITY_AGENCY",
+   "BUILDING_INTERROGATION_BUILDING",
+   "BUILDING_MT_RUSHMORE"
+  ],
+  "civics": [
+   "CIVIC_MARTIAL_LAW",
+   "CIVIC_SINGLE_PARTY",
+   "CIVIC_TOTALITARIANISM"
+  ],
+  "promotions": [
+   "PROMOTION_PATROL"
+  ],
+  "techs": [
+   "TECH_GUERRILLA_WARFARE"
+  ],
+  "units": [
+   "UNIT_EVO_MORALES",
+   "UNIT_JUAN_PERON",
+   "UNIT_KHANUNG",
+   "UNIT_SADDAM_HUSSEIN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRENCH_WARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PROPAGANDA",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "canTrade": {
+  "permanentAlliance": true
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_GREAT_GENERAL"
+ },
+ "cost": {
+  "research": 9889
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Fascism.dds,Art/Interface/Buttons/TechTree_Atlas.dds,8,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_FASCISM",
+  "soundMP": "AS2D_TECH_MP_FASCISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_FASCISM",
+  "civilopedia": "TXT_KEY_TECH_FASCISM_PEDIA",
+  "quote": "TXT_KEY_TECH_FASCISM_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 73,
+  "gridY": 9
+ }
+}

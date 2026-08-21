@@ -1,0 +1,66 @@
+{
+ "type": "TECH_DADA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CABARET_VOLTAIRE"
+  ],
+  "techs": [
+   "TECH_SURREALISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MODERN_ART",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 11196
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/dada.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_DADA",
+  "soundMP": "AS2D_TECH_DADA"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_DADA",
+  "civilopedia": "TXT_KEY_TECH_DADA_PEDIA",
+  "quote": "TXT_KEY_TECH_DADA_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 76,
+  "gridY": 3
+ }
+}

@@ -1,0 +1,137 @@
+{
+ "type": "BUILDING_ANDEAN_CATHEDRAL",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ANDEAN_TEMPLE",
+    "TECH_MUSICAL_NOTATION",
+    {
+     "any": [
+      "BUILDING_CITY_COUNCIL",
+      "BUILDING_METROPOLITAN_ADMINISTRATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_ANDEANISM"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 2,
+   "percent": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2,
+   "percent": 2
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_GOLD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_ANDEANISM"
+     }
+    }
+   ]
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_ANDEANISM": {
+    "flat": 3
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 2
+  }
+ },
+ "cost": {
+  "production": 280,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANDEAN_CATHEDRAL"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ANDEAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANDEAN_CATHEDRAL",
+  "civilopedia": "TXT_KEY_BUILDING_ANDEAN_CATHEDRAL_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 6,
+  "specialBuildingType": "SPECIALBUILDING_CATHEDRAL",
+  "religion": "RELIGION_ANDEANISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

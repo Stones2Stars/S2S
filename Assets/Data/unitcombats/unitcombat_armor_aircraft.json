@@ -1,0 +1,14 @@
+{
+ "type": "UNITCOMBAT_ARMOR_AIRCRAFT",
+ "tags": [
+  "air"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/armor_type.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ARMOR_AIRCRAFT"
+ }
+}

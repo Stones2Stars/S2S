@@ -1,0 +1,15 @@
+{
+ "type": "PROMOTIONLINE_SHRAPNEL_SHOWER",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/ShrapnelShower1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SHRAPNEL_SHOWER",
+  "unitCombats": [
+   "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+   "UNITCOMBAT_WEAPON_DIST_RAPID_RAILGUN"
+  ]
+ }
+}

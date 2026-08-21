@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_SOLAR_MATRIOSHKA_BRAIN",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER",
+    {
+     "type": "BUILDING_SOLAR_DYSON_SPHERE",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_STELLAR_COMPUTING",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 1500
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_COMPUTRONIUM",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "grants": {
+  "freeTechs": 1
+ },
+ "cost": {
+  "production": 47590,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SOLAR_MATRIOSHKA_BRAIN"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SOLAR_MATRIOSHKA_BRAIN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SOLAR_MATRIOSHKA_BRAIN",
+  "civilopedia": "TXT_KEY_BUILDING_SOLAR_MATRIOSHKA_BRAIN_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

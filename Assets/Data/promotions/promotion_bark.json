@@ -1,0 +1,50 @@
+{
+ "type": "PROMOTION_BARK",
+ "enables": {
+  "promotions": [
+   "PROMOTION_HERDING1"
+  ]
+ },
+ "combat": {
+  "unit": {
+   "taunt": {
+    "flat": 25
+   },
+   "enclose": {
+    "percent": 15
+   },
+   "unitCombat": {
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 25
+    },
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/bark.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BARK",
+  "unitCombats": [
+   "UNITCOMBAT_CANINE"
+  ]
+ }
+}

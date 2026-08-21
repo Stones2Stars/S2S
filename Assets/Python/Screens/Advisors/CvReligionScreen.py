@@ -11,11 +11,17 @@ import BugCore
 AdvisorOpt = BugCore.game.Advisors
 
 # globals
+# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 ArtFileMgr = CyArtFileMgr()
 localText = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class CvReligionScreen:
 	"Religion Advisor Screen"
 
@@ -211,11 +217,11 @@ class CvReligionScreen:
 		for iRel in self.RELIGIONS:
 			szButtonName = self.getReligionButtonName(iRel)
 			if GAME.getReligionGameTurnFounded(iRel) >= 0:
-				screen.addCheckBoxGFCAt(szArea, szButtonName, GC.getReligionInfo(iRel).getButton(), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), self.X_SCROLLABLE_RELIGION_AREA + xLoop - 25, self.Y_SCROLLABLE_RELIGION_AREA + 5, self.BUTTON_SIZE, self.BUTTON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1, ButtonStyles.BUTTON_STYLE_LABEL, False)
+				screen.addCheckBoxGFCAt(szArea, szButtonName, INFO.getButton("RELIGION_", iRel), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), self.X_SCROLLABLE_RELIGION_AREA + xLoop - 25, self.Y_SCROLLABLE_RELIGION_AREA + 5, self.BUTTON_SIZE, self.BUTTON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1, ButtonStyles.BUTTON_STYLE_LABEL, False)
 			else:
 				screen.setImageButtonAt(szButtonName, szArea, GC.getReligionInfo(iRel).getButtonDisabled(), self.X_SCROLLABLE_RELIGION_AREA + xLoop - 25, self.Y_SCROLLABLE_RELIGION_AREA + 5, self.BUTTON_SIZE, self.BUTTON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1)
 			szName = self.getReligionTextName(iRel)
-			szLabel = GC.getReligionInfo(iRel).getDescription()
+			szLabel = INFO.getDescription("RELIGION_", iRel)
 			screen.setLabelAt(szName, szArea, szLabel, 1<<2, self.X_SCROLLABLE_RELIGION_AREA + xLoop, self.Y_RELIGION_NAME, self.DZ, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 			xLoop += self.DX_RELIGION
 
@@ -256,7 +262,9 @@ class CvReligionScreen:
 				if pHolyCity is None:
 					szFounded = localText.getText("TXT_KEY_NONE", ())
 					screen.setLabelAt("", szArea, szFounded, 1<<2, xLoop, self.Y_HOLY_CITY, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-				elif not pHolyCity.isRevealed(GC.getPlayer(self.iActivePlayer).getTeam(), False):
+				#	The handle carries the ADDRESS (owner + id) and nothing else, so the fog verdict and the
+				#	name are both asked of CyState by that address ([patterns.md] THE IDENTITY SET).
+				elif not pHolyCity.isRevealedTo(GC.getPlayer(self.iActivePlayer).getTeam()):
 					szFounded = localText.getText("TXT_KEY_UNKNOWN", ())
 					screen.setLabelAt("", szArea, szFounded, 1<<2, xLoop, self.Y_HOLY_CITY, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 				else:
@@ -288,10 +296,12 @@ class CvReligionScreen:
 
 			for cityX in cityList:
 
-				for iRel in self.RELIGIONS:
+				#	ONE crossing per city for the religions it HAS, then filter -- instead of asking the
+				#	city once per religion. The rows are [religionId, bIsHolyCity].
+				for kReligion in cityX.getReligions():
 					# count the number of cities
-					if cityX.isHasReligion(iRel):
-						iCities[iRel] += 1
+					if kReligion[0] in self.RELIGIONS:
+						iCities[kReligion[0]] += 1
 
 			# number of cities...
 			iY = self.Y_INFLUENCE + 20
@@ -353,7 +363,7 @@ class CvReligionScreen:
 		self.bBUGConstants = True
 
 		# BUG additions
-		self.hammerIcon = u"%c" %(GC.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar())
+		self.hammerIcon = u"%c" %(TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_PRODUCTION))
 
 		# Special symbols for building, wonder and project views
 		self.objectIsPresent = "x"
@@ -362,12 +372,12 @@ class CvReligionScreen:
 		self.objectUnderConstruction = self.hammerIcon
 
 		# add the colors dependant on the statuses
-		self.objectHave = localText.changeTextColor (self.objectIsPresent, GC.getCOLOR_GREEN()) #"x"
-		self.objectNotPossible = localText.changeTextColor (self.objectIsNotPresent, GC.getCOLOR_RED()) #"-"
-		self.objectPossible = localText.changeTextColor (self.objectCanBeBuild, GC.getCOLOR_BLUE()) #"o"
-		self.objectHaveObsolete = localText.changeTextColor (self.objectIsPresent, GC.getCOLOR_WHITE()) #"x"
-		self.objectNotPossibleConcurrent = localText.changeTextColor (self.objectIsNotPresent, GC.getCOLOR_YELLOW()) #"-"
-		self.objectPossibleConcurrent = localText.changeTextColor (self.objectCanBeBuild, GC.getCOLOR_YELLOW()) #"o"
+		self.objectHave = localText.changeTextColor (self.objectIsPresent, GC.getInfoTypeForString("COLOR_GREEN")) #"x"
+		self.objectNotPossible = localText.changeTextColor (self.objectIsNotPresent, GC.getInfoTypeForString("COLOR_RED")) #"-"
+		self.objectPossible = localText.changeTextColor (self.objectCanBeBuild, GC.getInfoTypeForString("COLOR_BLUE")) #"o"
+		self.objectHaveObsolete = localText.changeTextColor (self.objectIsPresent, GC.getInfoTypeForString("COLOR_WHITE")) #"x"
+		self.objectNotPossibleConcurrent = localText.changeTextColor (self.objectIsNotPresent, GC.getInfoTypeForString("COLOR_YELLOW")) #"-"
+		self.objectPossibleConcurrent = localText.changeTextColor (self.objectCanBeBuild, GC.getInfoTypeForString("COLOR_YELLOW")) #"o"
 
 		self.szCities = localText.getText("TXT_KEY_BUG_RELIGIOUS_CITY", ())
 		self.szTemples = localText.getText("TXT_KEY_BUG_RELIGIOUS_TEMPLE", ())
@@ -435,7 +445,7 @@ class CvReligionScreen:
 
 			for iRel in range(self.NUM_RELIGIONS):   # columns for religious icons
 				if GAME.getReligionGameTurnFounded(iRel) >= 0:
-					szReligionIcon = u"<font=2>%c</font>" %(GC.getReligionInfo(iRel).getChar())
+					szReligionIcon = u"<font=2>%c</font>" %(TEXT.getSymbolChar("RELIGION_", iRel))
 					screen.setTableColumnHeader(self.TABLE_ID, self.COL_FIRST_RELIGION + iRel, szReligionIcon, 25)
 
 			# column for religious impact
@@ -448,18 +458,22 @@ class CvReligionScreen:
 				screen.setTableText(self.TABLE_ID, self.COL_ZOOM_CITY, i, "" , self.zoomArt, WidgetTypes.WIDGET_ZOOM_CITY, cityX.getOwner(), cityX.getID(), 1<<0)
 				screen.setTableText(self.TABLE_ID, self.COL_CITY_NAME, i, cityX.getName(), "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 
+				#	ONE crossing answers BOTH questions below: the rows are [religionId, bIsHolyCity] over
+				#	exactly the religions this city HAS, so neither is asked per religion.
 				lReligions = []
-				for iRel in range(self.NUM_RELIGIONS):
-					if cityX.isHasReligion(iRel):
-						lReligions.append(iRel)
+				lHolyCity = []
+				for kReligion in cityX.getReligions():
+					lReligions.append(kReligion[0])
+					if kReligion[1]:
+						lHolyCity.append(kReligion[0])
 
 				for iRel in range(self.NUM_RELIGIONS):
 					if GAME.getReligionGameTurnFounded(iRel) >= 0:
 						szReligionIcon = ""
-						if cityX.isHolyCityByType(iRel):
-							szReligionIcon = u"<font=2>%c</font>" %(GC.getReligionInfo(iRel).getHolyCityChar())
+						if iRel in lHolyCity:
+							szReligionIcon = u"<font=2>%c</font>" %(TEXT.getHolyCitySymbolChar(iRel))
 						elif iRel in lReligions:
-							szReligionIcon = u"<font=2>%c</font>" %(GC.getReligionInfo(iRel).getChar())
+							szReligionIcon = u"<font=2>%c</font>" %(TEXT.getSymbolChar("RELIGION_", iRel))
 
 						screen.setTableText(self.TABLE_ID, self.COL_FIRST_RELIGION + iRel, i, szReligionIcon, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<2)
 
@@ -474,7 +488,8 @@ class CvReligionScreen:
 							sHelp += szTempBuffer
 							bFirst = False
 				else:
-					sHelp = CyGameTextMgr().getReligionHelpCity(iLinkReligion, cityX, False, False, True, False)
+					#	The composer takes the city by ADDRESS now, not as a handle.
+					sHelp = CyGameTextMgr().getReligionHelpCity(iLinkReligion, cityX.getOwner(), cityX.getID(), False, False, True, False)
 
 				screen.setTableText(self.TABLE_ID, self.COL_EFFECTS, i, sHelp, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 
@@ -502,11 +517,11 @@ class CvReligionScreen:
 						lHolyCity.append(iI)
 
 				for iI in lHolyCity:
-					szCityName += u"%c" % GC.getReligionInfo(iI).getHolyCityChar()
+					szCityName += u"%c" % TEXT.getHolyCitySymbolChar(iI)
 
 				for iI in lReligions:
 					if iI not in lHolyCity:
-						szCityName += u"%c" % GC.getReligionInfo(iI).getChar()
+						szCityName += u"%c" % TEXT.getSymbolChar("RELIGION_", iI)
 
 				szCityName += cityX.getName()[0:17] + "  "
 

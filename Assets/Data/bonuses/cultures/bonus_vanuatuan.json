@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_VANUATUAN",
+ "enables": {
+  "units": [
+   "UNIT_JOHN_FRUM",
+   "UNIT_VANAU_WARRIOR"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_VANUATUAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_VANUATUAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

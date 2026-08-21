@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_ECOLOGICAL_AWAKENING",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_NANOPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOPUNK",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": 10,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "foodKept": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 5,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 5,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 3525
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_ECOLOGICAL_AWAKENING",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ECOLOGICAL_AWAKENING",
+  "civilopedia": "TXT_KEY_BUILDING_ECOLOGICAL_AWAKENING_PEDIA",
+  "specialBuildingType": "SPECIALBUILDING_PUNK_NANO",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,125 @@
+{
+ "type": "BUILDING_HOUSE_OF_PARLIAMENT",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_POLITICAL_PHILOSOPHY",
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CEMENT",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "disabled": "IS_GOVERNMENT_CENTER"
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    "CIVIC_LEGISLATURE",
+    {
+     "any": [
+      {
+       "type": "BONUS_FIBERGLASS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_GLASSWARE",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "occupationTime": {
+  "city": {
+   "percent": 75
+  }
+ },
+ "cost": {
+  "production": 850,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true,
+  "governmentCenter": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_HOUSE_OF_PARLIMENT"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HOUSE_OF_PARLIAMENT",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COURTHOUSE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSE_OF_PARLIAMENT",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSE_OF_PARLIAMENT_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 10,
+  "militaryWorth": 5,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

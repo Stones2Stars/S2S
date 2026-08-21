@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_MARTIAN_CAVE_DWELLING",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOSHIELDING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MARTIAN_SKYSCRAPER"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_MARTIAN",
+    "TECH_PLANETARY_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_MARTIAN_SKYSCRAPER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 702,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_CAVE_DWELLING",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_CAVE_DWELLING",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_CAVE_DWELLING_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

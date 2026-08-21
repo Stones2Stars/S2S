@@ -1,0 +1,84 @@
+{
+ "type": "TECH_SPACE_STATIONS",
+ "enables": {
+  "buildings": [
+   "BUILDING_MIR",
+   "BUILDING_SKYLAB",
+   "BUILDING_SPACE_LABORATORY",
+   "BUILDING_SPACE_STATION"
+  ],
+  "builds": [
+   "BUILD_SPACE_STATION_LV1"
+  ],
+  "improvements": [
+   "IMPROVEMENT_SPACE_STATION_LV1"
+  ],
+  "projects": [
+   "PROJECT_INTERNATIONAL_SPACE_STATION"
+  ],
+  "techs": [
+   "TECH_INFORMATION_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_SPACE_SHUTTLE",
+   "UNIT_SS1_REWARD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FIRE_SUPPRESSION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASTRO_ENVIRONMENTAL_SYSTEMS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 16099
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Space_stations.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,16"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SPACE_STATIONS",
+  "soundMP": "AS2D_TECH_SPACE_STATIONS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SPACE_STATIONS",
+  "civilopedia": "TXT_KEY_TECH_SPACE_STATIONS_PEDIA",
+  "quote": "TXT_KEY_TECH_SPACE_STATIONS_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 85,
+  "gridY": 11
+ }
+}

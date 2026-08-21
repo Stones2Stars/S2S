@@ -1,0 +1,21 @@
+{
+ "type": "UNITCOMBAT_TROID_SHIPS",
+ "tags": [
+  "naval"
+ ],
+ "hideAndSeek": {
+  "detection": {
+   "value": 300,
+   "unit": "HAS_NAVAL_DISGUISE"
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/troid_ships.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_TROID_SHIPS",
+  "forNavalMilitary": true
+ }
+}

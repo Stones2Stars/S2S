@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_CRIME_EXTORTION",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_USURY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 275,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_EXTORTION",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_EXTORTION_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

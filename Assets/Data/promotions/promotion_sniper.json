@@ -1,0 +1,55 @@
+{
+ "type": "PROMOTION_SNIPER",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT4"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "moveDiscount": {
+    "flat": 1
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -20
+   },
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "skills": {
+  "blitz": true,
+  "enemyRoute": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/OldSniper.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SNIPER",
+  "unitCombats": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_ASSAULT_MECH",
+   "UNITCOMBAT_ROBOT"
+  ]
+ }
+}

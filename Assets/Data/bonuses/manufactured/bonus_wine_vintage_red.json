@@ -1,0 +1,28 @@
+{
+ "type": "BONUS_WINE_VINTAGE_RED",
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_WINE_VINTAGE_RED"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_WINE_VINTAGE_RED",
+  "civilopedia": "TXT_KEY_BONUS_VINTAGE_WINE_PEDIA",
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
+ }
+}

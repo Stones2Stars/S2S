@@ -1,0 +1,81 @@
+{
+ "type": "TECH_VIRTUAL_SOCIETY",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_DIGITAL_IDENTITY"
+  ],
+  "buildings": [
+   "BUILDING_HUMAN_MOD_DIGITAL_IDENTITY",
+   "BUILDING_ONLINE_UNIVERSITY",
+   "BUILDING_SANITATION_CHAMBER",
+   "BUILDING_SOCIAL_CREDIT_SYSTEM",
+   "BUILDING_THINK_TANK",
+   "BUILDING_VIRTUAL_WORLD"
+  ],
+  "civics": [
+   "CIVIC_ONLINE",
+   "CIVIC_TECHNOCRACY"
+  ],
+  "techs": [
+   "TECH_AUGMENTED_REALITY",
+   "TECH_AUTONOMOUS_VEHICLES",
+   "TECH_COMPUTATIONAL_SOCIOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEDIA_PSYCHOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WEARABLE_COMPUTERS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 24485
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Virtualsociety.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_VIRTUAL_SOCIETY",
+  "soundMP": "AS2D_TECH_VIRTUAL_SOCIETY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_VIRTUAL_SOCIETY",
+  "civilopedia": "TXT_KEY_TECH_VIRTUAL_SOCIETY_PEDIA",
+  "quote": "TXT_KEY_TECH_VIRTUAL_SOCIETY_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 93,
+  "gridY": 17
+ }
+}

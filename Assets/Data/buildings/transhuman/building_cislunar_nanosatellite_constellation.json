@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_CISLUNAR_NANOSATELLITE_CONSTELLATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_CLAYTRONIC_STATION",
+   "BUILDING_CISLUNAR_DYSON_HARROP_SATELLITE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_MICROSATELLITE_CONSTELLATION",
+    "TECH_ASTROGATION_CONSTELLATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    },
+    {
+     "type": "BONUS_ORGANIC_PHOTONIC_CELLS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "cost": {
+  "production": 5655,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "orbital": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_NANOSATELLITE_CONSTELLATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_NANOSATELLITE_CONSTELLATION",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_NANOSATELLITE_CONSTELLATION_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

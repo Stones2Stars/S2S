@@ -1,0 +1,99 @@
+{
+ "type": "TECH_THEOLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHURCH_SCHOOL",
+   "BUILDING_CULTURE_BYZANTINE",
+   "BUILDING_CULTURE_ESTONIAN",
+   "BUILDING_CULTURE_ETHIOPIAN",
+   "BUILDING_CULTURE_IRANIAN",
+   "BUILDING_CULTURE_POLISH",
+   "BUILDING_CULTURE_SELJUK",
+   "BUILDING_CULTURE_SPANISH",
+   "BUILDING_CULTURE_TUNISIAN",
+   "BUILDING_CULTURE_YEMENI",
+   "BUILDING_EL_CAMINO_DE_SANTIAGO",
+   "BUILDING_HAGIA_SOPHIA",
+   "BUILDING_HOLY_SEE_LIBRARY",
+   "BUILDING_HOUSE_OF_WISDOM",
+   "BUILDING_KRAK_DES_CHEVALIERS",
+   "BUILDING_SEMINARY"
+  ],
+  "civics": [
+   "CIVIC_RELIGIOUS",
+   "CIVIC_THEOCRACY"
+  ],
+  "techs": [
+   "TECH_FUNDAMENTALISM",
+   "TECH_PAPACY",
+   "TECH_PAPER",
+   "TECH_PLAGUE_MEDICINE"
+  ],
+  "units": [
+   "UNIT_ALP_ARSLAN",
+   "UNIT_AL_AGHLAB",
+   "UNIT_ARWA_AL_SULAYHI",
+   "UNIT_DAMBALLA",
+   "UNIT_EL_CID",
+   "UNIT_EZANA",
+   "UNIT_JADWIGA",
+   "UNIT_MONK",
+   "UNIT_QUADO",
+   "UNIT_TRISONG_DETSEN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEDITATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_REINCARNATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEDIEVAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1132
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": ",Art/Interface/Buttons/TechTree/Theology.dds,Art/Interface/Buttons/TechTree_Atlas.dds,5,12"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_THEOLOGY",
+  "soundMP": "AS2D_TECH_MP_THEOLOGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_THEOLOGY",
+  "civilopedia": "TXT_KEY_TECH_THEOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_THEOLOGY_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 42,
+  "gridY": 1
+ }
+}

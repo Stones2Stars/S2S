@@ -1,0 +1,58 @@
+{
+ "type": "IMPROVEMENT_LISTENING_NODE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_DEFENSES",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_CISLUNAR_SPACE",
+      "TERRAIN_ORBIT"
+     ]
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 15
+   },
+   "amount": {
+    "percent": 10
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "elevation": {
+    "flat": 400
+   }
+  }
+ },
+ "characteristics": [
+  "bombardable"
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_LISTENING_NODE"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_LISTENING_NODE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_OBSERVATION_POST_PEDIA",
+  "extraterrestrial": true,
+  "advancedStart": {
+   "cost": 400
+  },
+  "outsideBorders": true,
+  "militaryStructure": true,
+  "upgradeRequiresFortify": true
+ }
+}

@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_DALI_THEATRE_AND_MUSEUM",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_THEATRE",
+    "TECH_SURREALISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2
+  }
+ },
+ "cost": {
+  "production": 7080,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_DALI_THEATRE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DALI_THEATRE_AND_MUSEUM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DALI_THEATRE_AND_MUSEUM",
+  "civilopedia": "TXT_KEY_BUILDING_DALI_THEATRE_AND_MUSEUM_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

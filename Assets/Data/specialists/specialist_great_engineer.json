@@ -1,0 +1,53 @@
+{
+ "type": "SPECIALIST_GREAT_ENGINEER",
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 2,
+      "enabled": {
+       "type": "BUILDING_BAUHAUS_SCHOOL",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_WORKER": {
+     "flat": 2
+    },
+    "UNITCOMBAT_SEA_WORKER": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/Great_Engineer.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/Great_Engineer.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_GREAT_ENGINEER",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_ARCHITECTURAL"
+  ]
+ }
+}

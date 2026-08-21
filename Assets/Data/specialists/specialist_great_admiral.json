@@ -1,0 +1,48 @@
+{
+ "type": "SPECIALIST_GREAT_ADMIRAL",
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BUILDING_BAYREUTH_FESTSPIELHAUS",
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_NAVAL_COMBATANT": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/specialist_great_admiral.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/specialist_great_admiral.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_GREAT_ADMIRAL",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_ADMIRALS_PEDIA",
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_MILITARY"
+  ]
+ }
+}

@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_DANCE_HALL",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLOOD_DANCE",
+   "BUILDING_DANCE_FOX",
+   "BUILDING_FERTILITY_DANCE",
+   "BUILDING_HAREMS",
+   "BUILDING_MOON_DANCE",
+   "BUILDING_NATURE_DANCE",
+   "BUILDING_RAIN_DANCE",
+   "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT",
+   "BUILDING_WAR_DANCE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ONLINE_COMMUNITY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_NIGHT_CLUB"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FOLK_DANCE",
+    {
+     "any": [
+      "BUILDING_BARTER_POST",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_NIGHT_CLUB"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_TOBACCO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 2
+  }
+ },
+ "cost": {
+  "production": 125,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DANCE_HALL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DANCE_HALL",
+  "civilopedia": "TXT_KEY_BUILDING_DANCE_HALL_PEDIA",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "type": "BUILDING_EFFECT_HERITAGE_BISON",
+ "enables": {
+  "buildings": [
+   "BUILDING_MILITARY_STANDARD_BISON"
+  ],
+  "units": [
+   "UNIT_BISON_RIDER"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_HERITAGE",
+    "TECH_MEGAFAUNA_DOMESTICATION"
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_HERITAGE_BISON",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_BISON",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BISON_PEDIA",
+  "notConstructible": true,
+  "worth": 2,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

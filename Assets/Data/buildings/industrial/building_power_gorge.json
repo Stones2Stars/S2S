@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_POWER_GORGE",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_HYDROELECTRICITY"
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "flat": 25
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 10
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 10
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true,
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_POWER_GORGE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_POWER_GORGE",
+  "civilopedia": "TXT_KEY_BUILDING_POWER_GORGE_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

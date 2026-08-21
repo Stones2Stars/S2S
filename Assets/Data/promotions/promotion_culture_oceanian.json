@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTION_CULTURE_OCEANIAN",
+ "ui": {
+  "art": {
+   "icon": "art/Embassy/art/cultureoceanian.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CULTURE_OCEANIAN",
+  "unitCombats": [
+   "UNITCOMBAT_SETTLER"
+  ]
+ }
+}

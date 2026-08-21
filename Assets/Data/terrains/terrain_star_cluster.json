@@ -1,0 +1,37 @@
+{
+ "type": "TERRAIN_STAR_CLUSTER",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/star_cluster.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_TERRAIN_STAR_CLUSTER"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TERRAIN_STAR_CLUSTER",
+  "civilopedia": "TXT_KEY_TERRAIN_STAR_CLUSTER_PEDIA",
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

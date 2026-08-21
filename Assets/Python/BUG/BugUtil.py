@@ -117,12 +117,16 @@
 ## Author: EmperorFool
 
 from CvPythonExtensions import *
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state.
+STATE = CyState()
 import ColorUtil
 import CvEventInterface
 import sys
 import time
 import traceback
 import types
+GC = CyGlobalContext()
+GAME = GC.getGame()
 
 ## Text Formatting and Processing
 
@@ -248,7 +252,7 @@ def log(level, message, args=()):
 
 def logToScreen(message):
 	"""Displays the message in the on-screen message area after escaping < and >."""
-	if CyGame().isFinalInitialized():
+	if STATE.isFinalInitialized():
 		CyInterface().addImmediateMessage(escapeXml(message), "")
 
 def logToFile(message):

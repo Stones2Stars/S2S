@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_SU_SONGS_WORKSHOP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ELECTRONICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "TECH_WATERWHEELS",
+    "TECH_CALENDAR",
+    {
+     "any": [
+      "BUILDING_WATERCLOCK",
+      "BUILDING_TOWNCLOCK"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "percent": 12
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 2,
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_WATERCLOCK",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 1680,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SU_SONG"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SU_SONGS_WORKSHOP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SU_SONGS_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_SU_SONGS_WORKSHOP_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

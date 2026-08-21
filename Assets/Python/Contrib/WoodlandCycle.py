@@ -2,9 +2,16 @@
 from CvPythonExtensions import *
 import CvUtil#, BugUtil
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
-MAP = GC.getMap()
+INFO = CyInfo()
 GAME = GC.getGame()
+MAP = GC.getMap()
+STATE = CyState()
+ACT = CyAct()   # the ACTION surface
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
 class WoodlandCycle:
@@ -33,7 +40,8 @@ class WoodlandCycle:
 			if plot.isWater() or plot.isPeak(): continue
 			plots.append(plot)
 		self.iMaxIndex = len(plots)
-		self.iFactorGS = GC.getGameSpeedInfo(GAME.getGameSpeedType()).getSpeedPercent()
+		# speed.world.percent is a straggler scalar on the gamespeed info, not a bespoke accessor.
+		self.iFactorGS = INFO.getScalar("GAMESPEED_", GAME.getGameSpeedType(), InfoScalar.SCALAR_SPEED, CascScope.CASC_SCOPE_WORLD, CascUnit.CASC_UNIT_PERCENT)
 
 	# Called at the beginning of the end of each turn
 	def onBeginGameTurn(self, argsList):
@@ -138,14 +146,15 @@ class WoodlandCycle:
 					CyEngine().triggerEffect(GC.getInfoTypeForString('EFFECT_FOREST_FIRE'), point)
 					CyAudioGame().Play3DSound("AS3D_FOREST_FIRE", point.x, point.y, point.z)
 
-				for CyUnit in plot.units():
-					if CyUnit.canFight():
-						iHP = CyUnit.getHP()
+				for pUnit in plot.units():
+					if pUnit.canFight():
+						iHP = pUnit.getHP()
 						iDamage = 5 + GAME.getSorenRandNum(29, "Ouch")
 						if iHP > iDamage:
-							CyUnit.changeDamage(iDamage, -1)
+							# the WRITE goes to the action surface, which routes through the engine's own setter
+							ACT.setUnitDamage(pUnit.getOwner(), pUnit.getID(), pUnit.getMaxHP() - (iHP - iDamage), -1)
 						else:
 							if bActivePlayer:
-								CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_FOREST_FIRE_UNIT_LOST",(CyUnit.getName(),)), iPlayer, 6, eColor=ColorTypes(9))
-							CyUnit.kill(False, -1)
+								CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_FOREST_FIRE_UNIT_LOST",(pUnit.getName(),)), iPlayer, 6, eColor=ColorTypes(9))
+							ACT.killUnit(pUnit.getOwner(), pUnit.getID(), False, -1)
 		#timer.log()

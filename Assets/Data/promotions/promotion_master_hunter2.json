@@ -1,0 +1,42 @@
+{
+ "type": "PROMOTION_MASTER_HUNTER2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_MASTER_HUNTER3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_MASTER_HUNTER1"
+   ]
+  }
+ },
+ "skills": {
+  "river": true
+ },
+ "hideAndSeek": {
+  "detection": {
+   "value": 100,
+   "unit": "HAS_CAMOUFLAGE"
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MASTER_HUNTER": 2
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Master_hunter2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_MASTER_HUNTER2",
+  "levelPrereq": 5,
+  "unitCombats": [
+   "UNITCOMBAT_HUNTER"
+  ]
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_GAME_THEORY_RESEARCH_CENTER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MATHEMATICS_DEPARTMENT",
+    "TECH_DECRYPTION_MACHINES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 1030,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GAME_THEORY_RESEARCH_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GAME_THEORY_RESEARCH_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_GAME_THEORY_RESEARCH_CENTER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

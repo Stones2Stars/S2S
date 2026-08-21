@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_CULTURE_XIONGNU",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_ASIAN",
+    "BUILDING_C_L_ASIAN",
+    "TECH_ANIMAL_RIDING",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_GRASSLAND",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_PLAINS",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_GOLD_ORE",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_XIONGNU"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 876,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_XIONGNU",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_XIONGNU",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_XIONGNU_PEDIA",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

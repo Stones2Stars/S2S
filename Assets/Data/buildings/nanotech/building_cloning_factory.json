@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_CLONING_FACTORY",
+ "enables": {
+  "buildings": [
+   "BUILDING_BODY_EXCHANGE_CLINIC",
+   "BUILDING_CRIME_UNLICENSED_CLONING",
+   "BUILDING_GESTATION_TANKS",
+   "BUILDING_ORGANIC_COMPUTER_LAB"
+  ],
+  "units": [
+   "UNIT_CYBORG"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CLONING_LABORATORY",
+    "BUILDING_FACTORY",
+    "TECH_MAINSTREAM_CLONING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 3525,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CLONING_FACTORY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CLONING_FACTORY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CLONING_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_CLONING_FACTORY_PEDIA",
+  "worth": 6,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

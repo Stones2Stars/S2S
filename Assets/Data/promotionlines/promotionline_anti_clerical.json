@@ -1,0 +1,11 @@
+{
+ "type": "PROMOTIONLINE_ANTI_CLERICAL",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPolitician.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_ANTI_CLERICAL"
+ }
+}

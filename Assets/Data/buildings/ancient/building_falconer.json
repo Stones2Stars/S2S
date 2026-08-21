@@ -1,0 +1,101 @@
+{
+ "type": "BUILDING_FALCONER",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FEATHERS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FALCONRY_SCHOOL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FALCONRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_POULTRY",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_GRAPES",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_FALCONRY_SCHOOL"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": -1,
+     "enabled": "TECH_INDUSTRIALISM"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 160,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FALCONER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FALCONER",
+  "civilopedia": "TXT_KEY_BUILDING_FALCONER_PEDIA",
+  "worth": 4,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

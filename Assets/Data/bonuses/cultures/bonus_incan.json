@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_INCAN",
+ "enables": {
+  "units": [
+   "UNIT_HUAMINCA",
+   "UNIT_MANCO_CAPAC",
+   "UNIT_TUPAC_YUPANQUI"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_INCAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_INCAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

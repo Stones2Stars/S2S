@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_PERSEUS_ARM_COLONY",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS",
+    {
+     "type": "TERRAIN_MILKY_WAY",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_NORMA_AND_OUTER_ARM_COLONY",
+    "BUILDING_SCUTUM_CRUX_ARM_COLONY",
+    "BUILDING_CARINA_AND_SAGITTARIUS_ARM_COLONY"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 250
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST": {
+     "flat": 20
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 33800,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PERSEUS_ARM"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PERSEUS_ARM_COLONY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PERSEUS_ARM_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_PERSEUS_ARM_COLONY_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

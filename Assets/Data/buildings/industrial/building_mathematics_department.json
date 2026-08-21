@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_MATHEMATICS_DEPARTMENT",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARXIV",
+   "BUILDING_CHURCH_TURING_THESIS",
+   "BUILDING_COMPUTER_SCIENCE_DEPARTMENT",
+   "BUILDING_FERMATS_LAST_THEOREM",
+   "BUILDING_FOUR_COLOR_THEOREM",
+   "BUILDING_GAME_THEORY_RESEARCH_CENTER",
+   "BUILDING_GODELS_INCOMPLETENESS_THEOREMS",
+   "BUILDING_HILBERTS_PROBLEMS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_UNIVERSITY",
+    "TECH_STATISTICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    21,
+    {
+     "value": 7,
+     "enabled": "TECH_ABSTRACT_MATHEMATICS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_CHAOS_THEORY"
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 630,
+  "sizeModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MATHEMATICS_DEPARTMENT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MATHEMATICS_DEPARTMENT",
+  "civilopedia": "TXT_KEY_BUILDING_MATHEMATICS_DEPARTMENT_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

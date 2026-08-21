@@ -1,0 +1,105 @@
+{
+ "type": "BUILDING_LAVA_ROCK_GATHERER",
+ "enables": {
+  "buildings": [
+   "BUILDING_WATERPROOF_CEMENT_MAKER"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_EARTHWORKS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GATHERING",
+    {
+     "any": [
+      {
+       "type": "FEATURE_VOLCANO_ACTIVE",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_VOLCANO_DORMANT",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_FUJI",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_SOPKA",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_KRAKATOA",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_KILIMANJARO",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_MODERN_EARTHWORKS"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_OBSIDIAN",
+   "BONUS_PUMICE_STONE"
+  ]
+ },
+ "production": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LAVA_ROCK_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LAVA_ROCK_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_LAVA_ROCK_GATHERER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

@@ -1,0 +1,78 @@
+{
+ "type": "TECH_MODERN_SEISMOLOGY",
+ "enables": {
+  "bonuses": [
+   "BONUS_GEOTHERMAL_ENERGY",
+   "BONUS_METHANE_ICE",
+   "BONUS_RARE_EARTH_MINERALS"
+  ],
+  "buildings": [
+   "BUILDING_MODERN_EARTHWORKS",
+   "BUILDING_RARE_EARTH_MINERAL_MINE"
+  ],
+  "builds": [
+   "BUILD_GROUNDWATER_WELL",
+   "BUILD_MODERN_MINE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_GROUNDWATER_WELL",
+   "IMPROVEMENT_MODERN_MINE"
+  ],
+  "techs": [
+   "TECH_VOLCANOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DEEP_SEA_EXPLORATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 13724
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Modern_seismology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MODERN_SEISMOLOGY",
+  "soundMP": "AS2D_TECH_MODERN_SEISMOLOGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MODERN_SEISMOLOGY",
+  "civilopedia": "TXT_KEY_TECH_MODERN_SEISMOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_MODERN_SEISMOLOGY_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 81,
+  "gridY": 15
+ }
+}

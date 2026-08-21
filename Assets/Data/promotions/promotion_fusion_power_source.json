@@ -1,0 +1,44 @@
+{
+ "type": "PROMOTION_FUSION_POWER_SOURCE",
+ "enables": {
+  "promotions": [
+   "PROMOTION_POWER_SOURCE_UPGRADE1",
+   "PROMOTION_SELF_DESTRUCT",
+   "PROMOTION_SHIELDING1"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_REINFORCED_STRUCTURE"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_ROBOT": {
+     "percent": 15
+    },
+    "UNITCOMBAT_ASSAULT_MECH": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,8,7"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FUSION_POWER_SOURCE",
+  "unitCombats": [
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_ASSAULT_MECH"
+  ]
+ }
+}

@@ -1,0 +1,89 @@
+{
+ "type": "PROMOTION_GENTLEMEN",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LEADER"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": -25
+   },
+   "cityDefense": {
+    "percent": 50
+   },
+   "feature": {
+    "FEATURE_JUNGLE": {
+     "defense": {
+      "percent": -25
+     }
+    },
+    "FEATURE_FOREST": {
+     "defense": {
+      "percent": -25
+     }
+    },
+    "FEATURE_BAMBOO": {
+     "defense": {
+      "percent": -25
+     }
+    },
+    "FEATURE_FOREST_YOUNG": {
+     "defense": {
+      "percent": -25
+     }
+    },
+    "FEATURE_FOREST_BURNT": {
+     "defense": {
+      "percent": -25
+     }
+    },
+    "FEATURE_FOREST_ANCIENT": {
+     "defense": {
+      "percent": -25
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_ARCHER": {
+     "percent": 25
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   },
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/confucianism_promo.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_GENTLEMEN",
+  "stateReligionPrereq": "RELIGION_CONFUCIANISM",
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_THROWING"
+  ]
+ }
+}

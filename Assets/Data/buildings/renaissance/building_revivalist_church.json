@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_REVIVALIST_CHURCH",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CHRISTIAN_TEMPLE",
+    "TECH_CRITICAL_THOUGHT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_CHRISTIANITY",
+    {
+     "any": [
+      "CIVIC_STATE_CHURCH",
+      "CIVIC_FREE_CHURCH",
+      "CIVIC_SECULARISM"
+     ]
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 455,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_REVIVALIST_CHURCH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_REVIVALIST_CHURCH",
+  "civilopedia": "TXT_KEY_BUILDING_REVIVALIST_CHURCH_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 5,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,57 @@
+{
+ "type": "PROMOTION_DRILL2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_AMBUSH",
+   "PROMOTION_CHARGE",
+   "PROMOTION_COVER3",
+   "PROMOTION_DRILL3",
+   "PROMOTION_FIREARMS3",
+   "PROMOTION_FORMATION",
+   "PROMOTION_PINCH3",
+   "PROMOTION_SHOCK3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_DRILL1"
+   ]
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "protection": {
+    "percent": 10
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_DRILL": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Drill2.dds,Art/Interface/Buttons/Promotions_Atlas.dds,3,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_DRILL2"
+ }
+}

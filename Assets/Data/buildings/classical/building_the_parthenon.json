@@ -1,0 +1,131 @@
+{
+ "type": "BUILDING_THE_PARTHENON",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SCIENTIFIC_METHOD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HELLENIC_PANTHEON",
+    "TECH_AESTHETICS",
+    "TECH_CONSTRUCTION",
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_HELLENISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MARBLE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "RELIGION_HELLENISM"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 10,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  },
+  "empire": {
+   "percent": 50
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_HELLENISM": {
+    "flat": 3
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1,
+   "SPECIALIST_ARTIST": 1,
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 1566,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PARTHENON"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_THE_PARTHENON"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_PARTHENON"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_THE_PARTHENON",
+  "civilopedia": "TXT_KEY_BUILDING_THE_PARTHENON_PEDIA",
+  "pediaCategory": "religious",
+  "stateReligionCommerce": {
+   "research": 1,
+   "culture": 1
+  },
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "religion": "RELIGION_HELLENISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

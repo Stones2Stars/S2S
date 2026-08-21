@@ -1,0 +1,33 @@
+{
+  "type": "BUILDING_GNARL_ABOMINATION",
+
+  "enables": {
+    "gizmos": ["GIZMO_NONSENSE"],
+    "units": "UNIT_NOT_AN_ARRAY"
+  },
+  "obsoletes": "everything-everywhere",
+
+  "requires": {
+    "maintain": { "all": [] },
+    "build": {
+      "all": "this-should-be-an-array",
+      "any": [
+        [ { "type": "BONUS_X", "scope": "galaxy", "wat": 1 } ]
+      ],
+      "noneOf": [ { "scope": "city", "min": 1 } ],
+      "enabled": 42,
+      "disabled": "IS_GNARLY_NONEXISTENT"
+    },
+    "operate": {
+      "all": [ { "IS_GNARLY_OBJECT_PREDICATE": 1 } ]
+    }
+  },
+
+  "grants": "a-pile-of-freebies",
+
+  "happiness": { "galaxy": { "flat": 2 } },
+  "food": { "city": "heaps-of-food" },
+  "production": { "city": { "flat": "lots" } },
+  "gold": { "city": { "flat": { "GREMLIN": 5 } } },
+  "research": { "city": { "flat": { "value": 1, "per": { "type": "X", "wat": 2 } } } }
+}

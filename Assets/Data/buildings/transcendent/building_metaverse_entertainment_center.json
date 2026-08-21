@@ -1,0 +1,103 @@
+{
+ "type": "BUILDING_METAVERSE_ENTERTAINMENT_CENTER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_METAVERSE",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_HYPERSPACE",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_GALACTIC",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_SOLAR_SYSTEM",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MARTIAN",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_VENUSIAN",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_JOVIAN",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_LUNAR",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_CISLUNAR",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_TITANIC",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_UNIVERSAL",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_DISTANT",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2000,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_METAVERSE_ENTERTAINMENT_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_METAVERSE_ENTERTAINMENT_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_METAVERSE_ENTERTAINMENT_CENTER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE",
+   "MAPCATEGORY_GALACTIC",
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_MARTIAN",
+   "MAPCATEGORY_VENUSIAN",
+   "MAPCATEGORY_JOVIAN",
+   "MAPCATEGORY_LUNAR",
+   "MAPCATEGORY_CISLUNAR",
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_TITANIC",
+   "MAPCATEGORY_UNIVERSAL",
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

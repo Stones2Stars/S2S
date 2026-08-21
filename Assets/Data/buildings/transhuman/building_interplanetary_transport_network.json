@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_INTERPLANETARY_TRANSPORT_NETWORK",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_CISLUNAR",
+    "TECH_ASTROGATION_CONSTELLATION",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CISLUNAR_SPACEPORT": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 10179,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_INTERPLANETARY_TRANSPORT_NETWORK"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERPLANETARY_TRANSPORT_NETWORK",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERPLANETARY_TRANSPORT_NETWORK",
+  "civilopedia": "TXT_KEY_BUILDING_INTERPLANETARY_TRANSPORT_NETWORK_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

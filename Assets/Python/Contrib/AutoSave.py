@@ -3,12 +3,18 @@
 #from CvPythonExtensions import CyInterface
 from CvPythonExtensions import *
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
+INFO = CyInfo()
 CyIF = CyInterface()
-GAME = GC.getGame()
-MAP = GC.getMap()
 TRNSLTR = CyTranslator()
 import TextUtil
+GAME = GC.getGame()
+MAP = GC.getMap()
 
 
 
@@ -85,7 +91,7 @@ def save(type, prefix, iTurn):
 		dir += '-' + GC.getLeaderHeadInfo(CyPlayer.getLeaderType()).getText()[:8]
 
 	dir += '-' + GC.getEraInfo(GAME.getCurrentEra()).getText()[:8]
-	dir += '-' + GC.getGameSpeedInfo(GAME.getGameSpeedType()).getText()[:5]
+	dir += '-' + INFO.getDescription("GAMESPEED_", GAME.getGameSpeedType())[:5]
 	dir += '-' + GC.getWorldInfo(MAP.getWorldSize()).getText()[:5]
 	dir += '-' + GC.getHandicapInfo(CyPlayer.getHandicapType()).getText()[:5]
 	dir += ".CivBeyondSwordSave"

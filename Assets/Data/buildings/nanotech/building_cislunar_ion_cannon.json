@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_CISLUNAR_ION_CANNON",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_DILATON_GENERATOR",
+   "BUILDING_ZEUS_CANNON"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ION_BEAMS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 30
+   },
+   "bombardDefense": {
+    "percent": 10
+   },
+   "dynamicDefense": {
+    "percent": 10
+   },
+   "adjacentDamage": {
+    "percent": 10
+   }
+  }
+ },
+ "vision": {
+  "city": {
+   "elevation": {
+    "flat": 100
+   }
+  }
+ },
+ "cost": {
+  "production": 1279,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_ION_CANNON",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_ION_CANNON",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_ION_CANNON_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

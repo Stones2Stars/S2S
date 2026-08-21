@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_GUARANI",
+ "enables": {
+  "units": [
+   "UNIT_ANTONIO_RUIZ_DE_MONTOYA",
+   "UNIT_KARAI_PYHARE"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_GUARANI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_GUARANI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

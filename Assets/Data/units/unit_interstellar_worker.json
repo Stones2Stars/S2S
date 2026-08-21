@@ -1,0 +1,126 @@
+{
+ "type": "UNIT_INTERSTELLAR_WORKER",
+ "builds": [
+  "BUILD_WORMHOLE",
+  "BUILD_INTERSTELLAR_TRADING_POST",
+  "BUILD_SUPERNOVA_MINE",
+  "BUILD_TERRAFORMED_PLANET",
+  "BUILD_ARTIFICIAL_PLANET",
+  "BUILD_STAR_SCOOP",
+  "BUILD_BLUE_SUPERGIANT_COLONY",
+  "BUILD_BIOTIC_NEUTRON_STAR",
+  "BUILD_NEUTRON_STAR_COLONY",
+  "BUILD_HELIOFORMED_BROWN_DWARF",
+  "BUILD_TERRAFORM_NEUTRON_STAR",
+  "BUILD_INTERSTELLAR_COLONY",
+  "BUILD_DYSON_SPHERE",
+  "BUILD_INTERSTELLAR_BASE",
+  "BUILD_INTERSTELLAR_RESEARCH_BASE"
+ ],
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+    "TECH_INTERSTELLAR_TRADE"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 24
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_INTERSTELLAR_WORKER"
+  }
+ },
+ "skills": [
+  "ignoreTerrainCost"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SPACE_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_NUCLEAR_SPACESHIP",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 5000,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_INTERSTELLAR_WORKER",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_INTERSTELLAR_WORKER",
+       "late": "ART_DEF_UNIT_INTERSTELLAR_WORKER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_INTERSTELLAR_WORKER",
+  "civilopedia": "TXT_KEY_UNIT_INTERSTELLAR_WORKER_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_ORION_ARM",
+   "TERRAIN_MILKY_WAY",
+   "TERRAIN_GALACTIC_CORE"
+  ],
+  "terrainPassableTechs": [
+   {
+    "TERRAIN_ORION_ARM": "TECH_ADVANCED_SEEDSHIPS"
+   },
+   {
+    "TERRAIN_MILKY_WAY": "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS"
+   },
+   {
+    "TERRAIN_GALACTIC_CORE": "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS"
+   }
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "workRate": 250
+  }
+ }
+}

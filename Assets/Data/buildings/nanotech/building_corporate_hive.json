@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_CORPORATE_HIVE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MARKET_RESEARCH",
+    "TECH_MEGACORPORATIONS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 3525,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CORPORATE_HIVE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATE_HIVE",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATE_HIVE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

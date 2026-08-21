@@ -1,0 +1,144 @@
+{
+ "type": "UNIT_STORY_TELLER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ORAL_TRADITION"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_BARD"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_STORY_TELLER"
+  }
+ },
+ "skills": [
+  "rivalTerritory",
+  "tradable"
+ ],
+ "tags": [
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_ENTERTAINER",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_ENTERTAIN_CITY",
+    "outcomes": [
+     {
+      "requires": {
+       "outcome": "OUTCOME_ENTERTAIN_CITY"
+      },
+      "chance": 70,
+      "consumes": true,
+      "revolution": 2,
+      "culture": 4
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_ENTERTAIN_CITY_EXALTED"
+      },
+      "chance": 30,
+      "promotes": "PROMOTION_EXPERIENCED_ARTIST",
+      "revolution": 3,
+      "culture": 6
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_RAIN_DANCE"
+   },
+   {
+    "building": "BUILDING_WAR_DANCE"
+   },
+   {
+    "building": "BUILDING_FIRE_DANCE"
+   },
+   {
+    "building": "BUILDING_NATURE_DANCE"
+   },
+   {
+    "building": "BUILDING_MOON_DANCE"
+   },
+   {
+    "building": "BUILDING_FERTILITY_DANCE"
+   },
+   {
+    "building": "BUILDING_BLOOD_DANCE"
+   }
+  ]
+ },
+ "cost": {
+  "production": 16,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_STORY_TELLER",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_STORY_TELLER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_STORY_TELLER",
+  "civilopedia": "TXT_KEY_UNIT_STORY_TELLER_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_CULTURE",
+  "unitAIs": [
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

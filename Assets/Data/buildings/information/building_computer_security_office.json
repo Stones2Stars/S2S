@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_COMPUTER_SECURITY_OFFICE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_CYBERWARFARE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "cost": {
+  "production": 2005,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_COMPUTER_SECURITY_OFFICE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_COMPUTER_SECURITY_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_COMPUTER_SECURITY_OFFICE_PEDIA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

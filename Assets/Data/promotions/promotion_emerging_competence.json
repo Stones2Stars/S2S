@@ -1,0 +1,33 @@
+{
+ "type": "PROMOTION_EMERGING_COMPETENCE",
+ "skills": {
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_POOR"
+  ],
+  "removesUnitCombats": [
+   "UNITCOMBAT_QUALITY_INFERIOR"
+  ]
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/UnitCombatClasses/Quality3UnitCombat.fw.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_EMERGING_COMPETENCE",
+  "replacesUnitCombat": "UNITCOMBAT_QUALITY_INFERIOR",
+  "levelPrereq": 2,
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_ANIMAL"
+  ],
+  "zeroesXP": true
+ },
+ "sizeMatters": {
+  "quality": 1
+ }
+}

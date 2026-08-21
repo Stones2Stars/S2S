@@ -1,0 +1,136 @@
+{
+ "type": "UNIT_TESLA_INFANTRY",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_WIRELESS_ELECTRICITY"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 25
+   },
+   "cityDefense": {
+    "percent": 25
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HELICOPTER": {
+     "percent": 100
+    },
+    "UNITCOMBAT_WHEELED": {
+     "percent": 50
+    },
+    "UNITCOMBAT_TRACKED": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 110
+   },
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 10
+   }
+  }
+ },
+ "skills": [
+  "pillage",
+  "ignoreBuildingDefense"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_HITECH",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_ENERGY_GLOVES",
+  "UNITCOMBAT_WEAPON_DIST_ELECTRICAL",
+  "UNITCOMBAT_ARMOR_MODERN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_BATTALION",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_URBAN_TACTICS1",
+   "PROMOTION_URBAN_TACTICS2"
+  ]
+ },
+ "cost": {
+  "production": 3000,
+  "upkeep": 1,
+  "hurryCostModifier": 50
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TESLA_INFANTRY",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "rangedWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_TESLA_INFANTRY"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_TESLA_INFANTRY",
+  "civilopedia": "TXT_KEY_UNIT_TESLA_INFANTRY_PEDIA",
+  "worth": 6,
+  "militaryWorth": 400,
+  "xpValueAttack": 6,
+  "xpValueDefense": 6,
+  "conscription": 14,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_COLLATERAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,36 @@
+{
+ "type": "BUILD_PLACE_ASTEROID",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTEROID_BELT_PROBES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_PLACE_ASTEROID",
+  "featureChange": "FEATURE_ASTEROIDS"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Units/Transport.dds,Art/Interface/Buttons/FinalFrontier2_Atlas.dds,5,4"
+  },
+  "hotkey": "KB_A",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_PLACE_ASTEROID"
+ }
+}

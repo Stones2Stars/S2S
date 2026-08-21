@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DEEP_SPACE_ANTIMATTER_RESEARCH_CENTER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_FUSION_CORE",
+    "TECH_ANTIMATTER_PRODUCTION",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 4123,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_ANTIMATTER_RESEARCH_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_ANTIMATTER_RESEARCH_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_ANTIMATTER_RESEARCH_CENTER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

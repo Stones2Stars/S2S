@@ -1,496 +1,192 @@
-//------------------------------------------------------------------------------------------------
-//  FILE:    CvPropertyInfo.cpp
-//------------------------------------------------------------------------------------------------
-#include "CvGameCoreDLL.h"
-#include "CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "CvPlayerAI.h"
-#include "CvPython.h"
-#include "CvXMLLoadUtility.h"
-#include "CvXMLLoadUtilityModTools.h"
-#include "CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
+//
+//	CvPropertyInfo -- see the header. The composed units (grants/modifiers) carry the property's cascade data via
+//	the base dispatch; mapFrom below reads the property's TYPED scalars (the AI value-normalization band, targetLevel +
+//	its per-era overrides, the sourceDrain flag) that live outside the composed sections.
+//
+
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
 #include "CvPropertyInfo.h"
+#include "CvJsonParse.h"          // jsonChildObj / jsonIdInt / jsonIdBool / jsonIdStr / jsonResolveId
+#include "CvModifiers.h"      // getModifiers() walk -> the property's own decay/per-pop families
+#include "Property/CvPropertyBridge.h" // the JSON->BoolExpr translator (property-audit.md increment 4)
+#include "Defines/CvGlobals.h"    // GC.getInfoTypeForString (self property id)
 
-/************************************************************************************************/
-/* MODULAR_LOADING_CONTROL				 END												  */
-/************************************************************************************************/
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//
-//  class : CvPropertyInfo
-//
-//  DESC:   Contains info about generic properties which can be added to buildings
-//
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-CvPropertyInfo::CvPropertyInfo() :
-								// Hand-written (non-declarative) fields only - the rest is initialized by initDataMembers()
-								m_iChar(0), // runtime GameFont char, set later via setChar
-								m_eAIScaleType(AISCALE_NONE)
+// ai.scale -- the curator emits the AIScaleTypes enum name prefix-stripped + lowercased (AISCALE_CITY -> "city";
+// "none" is never emitted). AIScaleTypes is a FIXED C-enum (CvEnums.h), NOT a registered info type, so map the tokens
+// explicitly rather than via GC.getInfoTypeForString. Unknown/absent -> AISCALE_NONE.
+static AIScaleTypes aiScaleFromString(const std::string& s)
 {
-	PROFILE_EXTRA_FUNC();
-	CvInfoUtil(this).initDataMembers();
+	if (s == "city")   return AISCALE_CITY;
+	if (s == "area")   return AISCALE_AREA;
+	if (s == "player") return AISCALE_PLAYER;
+	if (s == "team")   return AISCALE_TEAM;
+	return AISCALE_NONE;
+}
 
-	for (int i=0; i < NUM_GAMEOBJECTS; i++)
+// A `properties.changePropagation` from/to scope token -> the legacy game-object type ("empire" is the json
+// spelling of the player scope; the legacy XML pair was GAMEOBJECT_CITY -> GAMEOBJECT_PLAYER).
+static GameObjectTypes jsonGameObjectScope(const std::string& s)
+{
+	if (s == "game")                    return GAMEOBJECT_GAME;
+	if (s == "team")                    return GAMEOBJECT_TEAM;
+	if (s == "empire" || s == "player") return GAMEOBJECT_PLAYER;
+	if (s == "city"   || s == "cities") return GAMEOBJECT_CITY;
+	if (s == "unit"   || s == "units")  return GAMEOBJECT_UNIT;
+	if (s == "plot"   || s == "plots")  return GAMEOBJECT_PLOT;
+	return NO_GAMEOBJECT;
+}
+
+CvPropertyInfo::CvPropertyInfo()
+	: m_iAIWeight(0), m_eAIScaleType(AISCALE_NONE), m_iFontButtonIndex(-1),
+	  m_iOperationalRangeMin(-500), m_iOperationalRangeMax(500),
+	  m_iTargetLevel(0), m_iTrainReluctance(1), m_bSourceDrain(false), m_iChar(0)
+{}
+
+void CvPropertyInfo::mapFrom(const picojson::value& entity)
+{
+	CvInfo::mapFrom(entity);   // base: text + the composed grants/modifiers section dispatch
+	if (!entity.is<picojson::object>()) return;
+	const picojson::object& o = entity.get<picojson::object>();
+
+	// ai bucket -- AI value-normalization scalars, read AS-IS (curator did NOT x100 these; they are AI-native ints)
+	if (const picojson::object* ai = jsonChildObj(o, "ai"))
 	{
-		for (int j=0; j < NUM_GAMEOBJECTS; j++)
+		m_iAIWeight        = jsonIdInt(*ai, "weight");            // ai.weight
+		m_iTrainReluctance = jsonIdInt(*ai, "trainReluctance", 1);  // ai.trainReluctance; legacy load default 1 -- 0 collapses the AI training threshold
+		std::string szScale;
+		if (jsonIdStr(*ai, "scale", szScale)) m_eAIScaleType = aiScaleFromString(szScale);  // ai.scale
+		if (const picojson::object* orange = jsonChildObj(*ai, "operationalRange"))
 		{
-			m_aaiChangePropagator[i][j] = 0;
+			m_iOperationalRangeMin = jsonIdInt(*orange, "min", -500);  // ai.operationalRange.min; legacy load default -500
+			m_iOperationalRangeMax = jsonIdInt(*orange, "max", 500);   // ai.operationalRange.max; legacy load default 500 ((max-min) divides in CvCityAI)
 		}
 	}
-}
 
-
-CvPropertyInfo::~CvPropertyInfo()
-{
-	PROFILE_EXTRA_FUNC();
-	foreach_(const PropertyBuilding& propBuilding, m_aPropertyBuildings)
+	// targetLevel -- the isolated equilibrium field: a bare number (flat base), OR { base, byEra:{ ERA_x: n } }
+	picojson::object::const_iterator tl = o.find("targetLevel");
+	if (tl != o.end())
 	{
-		GC.removeDelayedResolution((int*)&propBuilding.eBuilding);
-	}
-
-	foreach_(const PropertyPromotion& propPromotion, m_aPropertyPromotions)
-	{
-		GC.removeDelayedResolution((int*)&propPromotion.ePromotion);
-	}
-}
-
-
-void CvPropertyInfo::getDataMembers(CvInfoUtil& util)
-{
-	// Declared in the legacy getCheckSum order for the wrapped subset; FontButtonIndex is parked
-	// last because the legacy checksum deliberately omits it. The class keeps an explicit
-	// getCheckSum: AIScaleType (non-info enum, no InfoClassTraits => no addEnum), the 2D
-	// ChangePropagator array, the TargetLevelbyEraTypes pair-vector and the delayed-resolution
-	// PropertyBuildings/PropertyPromotions walks stay hand-written and sit mid-order in it.
-	// The CvWString display texts also stay hand-written (only CvString is wrapper-expressible).
-	util
-		.add(m_bSourceDrain, L"bSourceDrain")
-		.add(m_bOAType, L"bOAType")
-		.add(m_iAIWeight, L"iAIWeight")
-		.add(m_iOperationalRangeMin, L"iOperationalRangeMin", -500)
-		.add(m_iOperationalRangeMax, L"iOperationalRangeMax", 500)
-		.add(m_iTargetLevel, L"iTargetLevel")
-		.add(m_iTrainReluctance, L"iTrainReluctance", 1)
-		.add(m_PropertyManipulators)
-		// Not in the legacy checksum:
-		.add(m_iFontButtonIndex, L"FontButtonIndex")
-	;
-}
-
-
-bool CvPropertyInfo::read(CvXMLLoadUtility* pXML)
-{
-
-	PROFILE_EXTRA_FUNC();
-	if (!CvInfoBase::read(pXML))
-	{
-		return false;
-	}
-
-	CvInfoUtil(this).readXml(pXML);
-
-	// Hand-written: CvWString members (only CvString is wrapper-expressible)
-	pXML->GetOptionalChildXmlValByName(m_szValueDisplayText, L"ValueDisplayText");
-	pXML->GetOptionalChildXmlValByName(m_szChangeDisplayText, L"ChangeDisplayText");
-	pXML->GetOptionalChildXmlValByName(m_szChangeAllCitiesDisplayText, L"ChangeAllCitiesDisplayText");
-	pXML->GetOptionalChildXmlValByName(m_szPrereqMinDisplayText, L"PrereqMinDisplayText");
-	pXML->GetOptionalChildXmlValByName(m_szPrereqMaxDisplayText, L"PrereqMaxDisplayText");
-
-	// Hand-written: AIScaleTypes is not an info class (no InfoClassTraits), so addEnum can't be used
-	CvString szTextVal;
-	pXML->GetOptionalChildXmlValByName(szTextVal, L"AIScaleType");
-	m_eAIScaleType = (AIScaleTypes) pXML->GetInfoClass(szTextVal);
-
-	if(pXML->TryMoveToXmlFirstChild(L"ChangePropagators"))
-	{
-		if(pXML->TryMoveToXmlFirstChild())
+		if (tl->second.is<double>())
 		{
-			if (pXML->TryMoveToXmlFirstOfSiblings(L"ChangePropagator"))
+			m_iTargetLevel = (int)tl->second.get<double>();
+		}
+		else if (tl->second.is<picojson::object>())
+		{
+			const picojson::object& tlo = tl->second.get<picojson::object>();
+			m_iTargetLevel = jsonIdInt(tlo, "base");
+			if (const picojson::object* byEra = jsonChildObj(tlo, "byEra"))
 			{
-				do
+				for (picojson::object::const_iterator it = byEra->begin(); it != byEra->end(); ++it)
 				{
-					int iChangePercent;
-					CvString from;
-					pXML->GetChildXmlValByName(from, L"GameObjectTypeFrom");
-					int eFrom = pXML->GetInfoClass(from);
-					CvString to;
-					pXML->GetChildXmlValByName(to, L"GameObjectTypeTo");
-					int eTo = pXML->GetInfoClass(to);
-					pXML->GetChildXmlValByName(&iChangePercent, L"iChangePercent");
-					if (eFrom == -1 || eTo == -1)
-					{
-						CvXMLLoadUtility::showXMLError("ChangePropagator From (%s) and To (%s) must both be valid", from.c_str(), to.c_str());
-					}
-					else
-					{
-						m_aaiChangePropagator[eFrom][eTo] = iChangePercent;
-					}
+					if (!it->second.is<double>()) continue;
+					const int iEra = jsonResolveId(it->first);   // ERA_* -> era id (unresolved surfaces via jsonResolveId)
+					if (iEra >= 0) m_aTargetLevelbyEraTypes[iEra] = (int)it->second.get<double>();
 				}
-				while(pXML->TryMoveToXmlNextSibling());
 			}
-			pXML->MoveToXmlParent();
 		}
-		pXML->MoveToXmlParent();
 	}
 
-	if(pXML->TryMoveToXmlFirstChild(L"PropertyBuildings"))
+	// identity: the property-system behaviour flag + the UI font-button index
+	if (const picojson::object* io = jsonChildObj(o, "identity"))
 	{
-		int i = 0;
-		const int iNum = pXML->GetXmlChildrenNumber(L"PropertyBuilding" );
-		m_aPropertyBuildings.resize(iNum); // Important to keep the delayed resolution pointers correct
-
-		if(pXML->TryMoveToXmlFirstChild())
-		{
-			if (pXML->TryMoveToXmlFirstOfSiblings(L"PropertyBuilding"))
-			{
-				do
-				{
-					pXML->GetChildXmlValByName(&(m_aPropertyBuildings[i].iMinValue), L"iMinValue");
-					pXML->GetChildXmlValByName(&(m_aPropertyBuildings[i].iMaxValue), L"iMaxValue");
-					pXML->GetChildXmlValByName(szTextVal, L"BuildingType");
-					GC.addDelayedResolution((int*)&(m_aPropertyBuildings[i].eBuilding), szTextVal);
-					i++;
-				}
-				while(pXML->TryMoveToXmlNextSibling(L"PropertyBuilding"));
-			}
-			pXML->MoveToXmlParent();
-		}
-		pXML->MoveToXmlParent();
+		m_bSourceDrain = jsonIdBool(*io, "sourceDrain");                          // identity.sourceDrain
+		if (io->find("fontButtonIndex") != io->end())
+			m_iFontButtonIndex = jsonIdInt(*io, "fontButtonIndex");               // identity.fontButtonIndex (keep -1 when absent)
 	}
 
-	if(pXML->TryMoveToXmlFirstChild(L"PropertyPromotions"))
+	// identity.text.prereqMin / prereqMax -- the prereq display TXT_KEYs. Ruling 6: `text` is NOT a family --
+	// the TXT_KEY references re-homed under `identity` with the rest of the TEXT (verified vs shipped property
+	// JSON: identity.text.{value,change,changeAllCities,prereqMin,prereqMax}).
+	const picojson::object* pIdentity = jsonChildObj(o, "identity");
+	if (const picojson::object* txt = pIdentity != NULL ? jsonChildObj(*pIdentity, "text") : NULL)
 	{
-		int i = 0;
-		const int iNum = pXML->GetXmlChildrenNumber(L"PropertyPromotion");
-		m_aPropertyPromotions.resize(iNum); // Important to keep the delayed resolution pointers correct
-
-		if(pXML->TryMoveToXmlFirstChild())
-		{
-			if (pXML->TryMoveToXmlFirstOfSiblings(L"PropertyPromotion"))
-			{
-				do
-				{
-					pXML->GetChildXmlValByName(&(m_aPropertyPromotions[i].iMinValue), L"iMinValue");
-					pXML->GetChildXmlValByName(&(m_aPropertyPromotions[i].iMaxValue), L"iMaxValue");
-					pXML->GetChildXmlValByName(szTextVal, L"PromotionType");
-					GC.addDelayedResolution((int*)&(m_aPropertyPromotions[i].ePromotion), szTextVal);
-					i++;
-				} while(pXML->TryMoveToXmlNextSibling(L"PropertyPromotion"));
-			}
-			pXML->MoveToXmlParent();
-		}
-		pXML->MoveToXmlParent();
+		std::string szMin;
+		if (jsonIdStr(*txt, "prereqMin", szMin) && !szMin.empty()) m_szPrereqMinDisplayText = CvWString(szMin.c_str());
+		std::string szMax;
+		if (jsonIdStr(*txt, "prereqMax", szMax) && !szMax.empty()) m_szPrereqMaxDisplayText = CvWString(szMax.c_str());
 	}
 
-	m_aTargetLevelbyEraTypes.clear();
-	if (pXML->TryMoveToXmlFirstChild(L"TargetLevelbyEraTypes"))
+	// -- the property-engine SOURCE bridge (property-audit.md increments A/B/4; docs/specs/validation.md §observation surface (data migration is never deferred) / AGENTS.md §Build And Test (no XML-into-game for replaced infos)).
+	// The KEEP-legacy CvPropertySolver reads m_PropertyManipulators; feed the property's OWN manipulators from the
+	// curated JSON: decay (<self>.{city|plot}.percent -> CvPropertySourceDecay toward targetLevel), the per-POPULATION
+	// baseline (<self>.city.flat + per:POPULATION -> AttributeConstant), the spatial diffuse propagators (the
+	// `properties.diffuse[]` block, incl. the translated IS_OWNED gate), and the change-propagation table.
+	const PropertyTypes eSelf = (PropertyTypes)GC.getInfoTypeForString(getType(), true);
+	if (eSelf != NO_PROPERTY)
 	{
-		const int iNumSibs = pXML->GetXmlChildrenNumber();
-
-		if (0 < iNumSibs)
+		// clear-and-refill per the CvInfo.h idempotency contract (mapFrom re-runs on the aliased pass).
+		m_PropertyManipulators.clear();
+		m_changePropagation.clear();
+		const int iTarget = getTargetLevel();
+		const std::vector<CvModEntry*>& ownEntries = getModifiers()->entries();
+		for (size_t i = 0; i < ownEntries.size(); ++i)
 		{
-			if (pXML->TryMoveToXmlFirstChild())
+			const CvModEntry* e = ownEntries[i];
+			if (e->family != MODFAM_PROPERTY || e->propertyFk != (int)eSelf) continue;
+			if (e->nSeg != 2) continue;   // <self>.{city|plot} exactly
+			if (e->scope != CASC_SCOPE_CITY && e->scope != CASC_SCOPE_PLOT) continue;
+			if (e->enabled != NULL || e->disabled != NULL) continue;   // no property authors a conditioned own-source; fail-closed skip
+			const GameObjectTypes eObj = (e->scope == CASC_SCOPE_PLOT) ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
+			// ⛔ The DECAY rate is a PERCENT, and a percent is NOT scaled (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)) -- it arrives as
+			// the human percent the decay source consumes, so it does NOT take the reduction its FLAT neighbours
+			// below do. Dividing it truncates a single-digit rate to zero and switches decay off entirely.
+			if (e->unit == CASC_UNIT_PERCENT)
+				m_PropertyManipulators.addDecaySource(eSelf, e->value, iTarget, eObj);
+			else if (e->unit == CASC_UNIT_FLAT && e->hasPer && e->perType == "POPULATION")
+				m_PropertyManipulators.addAttributeConstantSource(eSelf, ATTRIBUTE_POPULATION, e->value / 100, eObj);
+			else if (e->unit == CASC_UNIT_FLAT && !e->hasPer)
+				m_PropertyManipulators.addConstantSource(eSelf, e->value / 100, eObj);
+		}
+		if (const picojson::object* po = jsonChildObj(o, "properties"))
+		{
+			picojson::object::const_iterator dit = po->find("diffuse");
+			if (dit != po->end() && dit->second.is<picojson::array>())
 			{
-				for (int j = 0; j < iNumSibs; ++j)
+				const picojson::array& arr = dit->second.get<picojson::array>();
+				for (size_t i = 0; i < arr.size(); ++i)
 				{
-					if (pXML->GetChildXmlVal(szTextVal))
+					if (!arr[i].is<picojson::object>()) continue;
+					const picojson::object& dd = arr[i].get<picojson::object>();
+					// A gated diffuse (`enabled` = a bare predicate string -- the crime/disease plot->plots
+					// IS_OWNED) translates to a legacy tag test (increment 4); an unknown gate skips the
+					// propagator -- fail closed, never over-apply.
+					const BoolExpr* pActive = NULL;
+					picojson::object::const_iterator eit = dd.find("enabled");
+					if (eit != dd.end())
 					{
-						EraTypes eEra = (EraTypes)pXML->GetInfoClass(szTextVal);
-						int iLevel;
-						pXML->GetNextXmlVal(&iLevel);
-						m_aTargetLevelbyEraTypes.push_back(std::make_pair(eEra, iLevel));
-
-						pXML->MoveToXmlParent();
+						std::string en;
+						jsonIdStr(dd, "enabled", en);
+						pActive = CascadePropertyBridge::predStringToBoolExpr(en);
+						if (pActive == NULL) continue;
 					}
-
-					if (!pXML->TryMoveToXmlNextSibling())
-					{
-						break;
-					}
-
+					std::string from, to, rel;
+					jsonIdStr(dd, "from", from); jsonIdStr(dd, "to", to); jsonIdStr(dd, "relation", rel);
+					const GameObjectTypes eFrom = (from == "plot" || from == "plots") ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
+					const GameObjectTypes eTo   = (to == "plot"   || to == "plots")   ? GAMEOBJECT_PLOT : GAMEOBJECT_CITY;
+					const RelationTypes eRel = (rel == "samePlot") ? RELATION_SAME_PLOT : RELATION_NEAR;
+					m_PropertyManipulators.addDiffusePropagator(eSelf, jsonIdInt(dd, "percent"), eFrom, eTo, eRel, jsonIdInt(dd, "distance"), pActive);
 				}
-
-				pXML->MoveToXmlParent();
 			}
-		}
-
-		pXML->MoveToXmlParent();
-	}
-
-	return true;
-}
-
-
-void CvPropertyInfo::copyNonDefaults(const CvPropertyInfo* pClassInfo)
-{
-	PROFILE_EXTRA_FUNC();
-	const CvWString wDefault = CvWString::format(L"").GetCString();
-
-	CvInfoBase::copyNonDefaults(pClassInfo);
-
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-
-	if (getAIScaleType() == AISCALE_NONE) m_eAIScaleType = pClassInfo->getAIScaleType();
-	if (getValueDisplayText() == NULL || getValueDisplayText() == wDefault) m_szValueDisplayText = pClassInfo->getValueDisplayText();
-	if (getChangeDisplayText() == NULL || getChangeDisplayText() == wDefault) m_szChangeDisplayText = pClassInfo->getChangeDisplayText();
-	if (getChangeAllCitiesDisplayText() == NULL || getChangeAllCitiesDisplayText() == wDefault) m_szChangeAllCitiesDisplayText = pClassInfo->getChangeAllCitiesDisplayText();
-	if (getPrereqMinDisplayText() == NULL || getPrereqMinDisplayText() == wDefault) m_szPrereqMinDisplayText = pClassInfo->getPrereqMinDisplayText();
-	if (getPrereqMaxDisplayText() == NULL || getPrereqMaxDisplayText() == wDefault) m_szPrereqMaxDisplayText = pClassInfo->getPrereqMaxDisplayText();
-
-	for (int i=0; i < NUM_GAMEOBJECTS; i++)
-	{
-		for (int j=0; j < NUM_GAMEOBJECTS; j++)
-		{
-			if (m_aaiChangePropagator[i][j] == 0)
+			// properties.changePropagation[] -> the change-propagation table (the FLAMMABILITY City->Player 100%
+			// rollup): a VALUE change on `from` propagates percent-scaled onto every related `to` object
+			// (CvProperties::propagateChange reads getChangePropagator per game-object type pair).
+			picojson::object::const_iterator cit = po->find("changePropagation");
+			if (cit != po->end() && cit->second.is<picojson::array>())
 			{
-				m_aaiChangePropagator[i][j] = pClassInfo->getChangePropagator((GameObjectTypes)i,(GameObjectTypes)j);
+				const picojson::array& arr = cit->second.get<picojson::array>();
+				for (size_t i = 0; i < arr.size(); ++i)
+				{
+					if (!arr[i].is<picojson::object>()) continue;
+					const picojson::object& cc = arr[i].get<picojson::object>();
+					std::string from, to;
+					jsonIdStr(cc, "from", from); jsonIdStr(cc, "to", to);
+					const GameObjectTypes eFrom = jsonGameObjectScope(from);
+					const GameObjectTypes eTo   = jsonGameObjectScope(to);
+					const int iPercent = jsonIdInt(cc, "percent");
+					if (eFrom != NO_GAMEOBJECT && eTo != NO_GAMEOBJECT && iPercent != 0)
+						m_changePropagation[(int)eFrom * NUM_GAMEOBJECTS + (int)eTo] = iPercent;
+				}
 			}
 		}
 	}
-
-	if (getNumPropertyBuildings() == 0)
-	{
-		const int iNum = pClassInfo->getNumPropertyBuildings();
-		m_aPropertyBuildings.resize(iNum);
-		for (int i=0; i<iNum; i++)
-		{
-			m_aPropertyBuildings[i] = pClassInfo->getPropertyBuilding(i);
-			GC.copyNonDefaultDelayedResolution((int*)&(m_aPropertyBuildings[i].eBuilding), (int*)&(pClassInfo->getPropertyBuilding(i).eBuilding));
-		}
-	}
-
-	if (getNumPropertyPromotions() == 0)
-	{
-		const int iNum = pClassInfo->getNumPropertyPromotions();
-		m_aPropertyPromotions.resize(iNum);
-		for (int i=0; i<iNum; i++)
-		{
-			m_aPropertyPromotions[i] = pClassInfo->getPropertyPromotion(i);
-			GC.copyNonDefaultDelayedResolution((int*)&(m_aPropertyPromotions[i].ePromotion), (int*)&(pClassInfo->getPropertyPromotion(i).ePromotion));
-		}
-	}
-
-	if (getNumTargetLevelbyEraTypes()==0)
-	{
-		for (int i=0; i < pClassInfo->getNumTargetLevelbyEraTypes(); i++)
-		{
-			m_aTargetLevelbyEraTypes.push_back(std::make_pair((EraTypes)i, pClassInfo->getTargetLevelbyEraType(i)));
-		}
-	}
 }
-
-
-// Explicit (not delegated to CvInfoUtil) on purpose: the hand-written fields (AIScaleType, the
-// TargetLevelbyEraTypes pair-vector, the 2D ChangePropagator array, PropertyBuildings and
-// PropertyPromotions) sit mid-order in the legacy checksum, and the legacy checksum deliberately
-// omits the (read) FontButtonIndex. Keep this byte-identical to the legacy order.
-void CvPropertyInfo::getCheckSum(uint32_t& iSum) const
-{
-	PROFILE_EXTRA_FUNC();
-	CheckSum(iSum, m_bSourceDrain);
-	CheckSum(iSum, m_bOAType);
-	CheckSum(iSum, m_iAIWeight);
-	CheckSum(iSum, m_eAIScaleType);
-	CheckSum(iSum, m_iOperationalRangeMin);
-	CheckSum(iSum, m_iOperationalRangeMax);
-	CheckSum(iSum, m_iTargetLevel);
-	CheckSum(iSum, m_iTrainReluctance);
-	CheckSumC(iSum, m_aTargetLevelbyEraTypes);
-
-	for (int i=0; i < NUM_GAMEOBJECTS; i++)
-	{
-		for (int j=0; j < NUM_GAMEOBJECTS; j++)
-		{
-			CheckSum(iSum, m_aaiChangePropagator[i][j]);
-		}
-	}
-
-	foreach_(const PropertyBuilding& propBuilding, m_aPropertyBuildings)
-	{
-		CheckSum(iSum, propBuilding.iMinValue);
-		CheckSum(iSum, propBuilding.iMaxValue);
-		CheckSum(iSum, (int)propBuilding.eBuilding);
-	}
-
-	foreach_(const PropertyPromotion& propPromotion, m_aPropertyPromotions)
-	{
-		CheckSum(iSum, propPromotion.iMinValue);
-		CheckSum(iSum, propPromotion.iMaxValue);
-		CheckSum(iSum, (int)propPromotion.ePromotion);
-	}
-
-	m_PropertyManipulators.getCheckSum(iSum);
-}
-
-
-int CvPropertyInfo::getChar() const
-{
-	return m_iChar;
-}
-
-
-void CvPropertyInfo::setChar(int i)
-{
-	m_iChar = i;
-}
-
-
-int CvPropertyInfo::getFontButtonIndex() const
-{
-	return m_iFontButtonIndex;
-}
-
-
-bool CvPropertyInfo::isSourceDrain() const
-{
-	return m_bSourceDrain;
-}
-
-
-bool CvPropertyInfo::isOAType() const
-{
-	return m_bOAType;
-}
-
-
-int	CvPropertyInfo::getAIWeight() const
-{
-	return m_iAIWeight;
-}
-
-
-int	CvPropertyInfo::getOperationalRangeMin() const
-{
-	return m_iOperationalRangeMin;
-}
-
-
-int	CvPropertyInfo::getOperationalRangeMax() const
-{
-	return m_iOperationalRangeMax;
-}
-
-
-int	CvPropertyInfo::getTargetLevel() const
-{
-	return m_iTargetLevel;
-}
-
-
-int	CvPropertyInfo::getTrainReluctance() const
-{
-	return m_iTrainReluctance;
-}
-
-
-AIScaleTypes CvPropertyInfo::getAIScaleType() const
-{
-	return m_eAIScaleType;
-}
-
-
-CvWString CvPropertyInfo::getValueDisplayText() const
-{
-	return m_szValueDisplayText;
-}
-
-
-CvWString CvPropertyInfo::getChangeDisplayText() const
-{
-	return m_szChangeDisplayText;
-}
-
-
-CvWString CvPropertyInfo::getChangeAllCitiesDisplayText() const
-{
-	return m_szChangeAllCitiesDisplayText;
-}
-
-
-CvWString CvPropertyInfo::getPrereqMinDisplayText() const
-{
-	return m_szPrereqMinDisplayText;
-}
-
-
-CvWString CvPropertyInfo::getPrereqMaxDisplayText() const
-{
-	return m_szPrereqMaxDisplayText;
-}
-
-
-int CvPropertyInfo::getChangePropagator(const GameObjectTypes eFrom, const GameObjectTypes eTo) const
-{
-	FASSERT_BOUNDS(0, NUM_GAMEOBJECTS, eFrom);
-	FASSERT_BOUNDS(0, NUM_GAMEOBJECTS, eTo);
-	return m_aaiChangePropagator[eFrom][eTo];
-}
-
-
-const PropertyBuilding& CvPropertyInfo::getPropertyBuilding(int index) const
-{
-	FASSERT_BOUNDS(0, getNumPropertyBuildings(), index);
-	return m_aPropertyBuildings[index];
-}
-
-
-int CvPropertyInfo::getNumPropertyBuildings() const
-{
-	return (int)m_aPropertyBuildings.size();
-}
-
-
-const PropertyPromotion& CvPropertyInfo::getPropertyPromotion(int index) const
-{
-	FASSERT_BOUNDS(0, getNumPropertyPromotions(), index);
-	return m_aPropertyPromotions[index];
-}
-
-
-int CvPropertyInfo::getNumPropertyPromotions() const
-{
-	return (int)m_aPropertyPromotions.size();
-}
-
-
-int CvPropertyInfo::getNumTargetLevelbyEraTypes() const
-{
-	return m_aTargetLevelbyEraTypes.size();
-}
-
-
-int CvPropertyInfo::getTargetLevelbyEraType(int iIndex) const
-{
-	PROFILE_EXTRA_FUNC();
-	for (EraArray::const_iterator it = m_aTargetLevelbyEraTypes.begin(); it != m_aTargetLevelbyEraTypes.end(); ++it)
-	{
-		if ((*it).first == (EraTypes)iIndex)
-		{
-			return (*it).second;
-		}
-	}
-	return 0;
-}
-
-
-bool CvPropertyInfo::isTargetLevelbyEraType(int iIndex) const
-{
-	PROFILE_EXTRA_FUNC();
-	for (EraArray::const_iterator it = m_aTargetLevelbyEraTypes.begin(); it != m_aTargetLevelbyEraTypes.end(); ++it)
-	{
-		if ((*it).first == (EraTypes)iIndex)
-		{
-			return true;
-		}
-	}
-	return false;
-}
-

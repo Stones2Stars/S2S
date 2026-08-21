@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_11",
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_12",
+    "BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_13"
+   ],
+   "all": [
+    "BUILDING_PALACE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_EDUCATION",
+     "scope": "city",
+     "min": 25000,
+     "max": 2000000
+    }
+   ]
+  }
+ },
+ "anarchy": {
+  "city": {
+   "percent": 55
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYEDUCATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EDUCATION_ARGUMENTATIVE_AWARENESS_11",
+  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

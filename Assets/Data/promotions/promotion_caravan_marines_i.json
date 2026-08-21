@@ -1,0 +1,38 @@
+{
+ "type": "PROMOTION_CARAVAN_MARINES_I",
+ "enables": {
+  "promotions": [
+   "PROMOTION_CARAVAN_MARINES_II",
+   "PROMOTION_CARAVAN_SEA_MOVEMENT_I"
+  ]
+ },
+ "combat": {
+  "unit": {
+   "percent": 5,
+   "defense": {
+    "percent": 5
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CARAVAN_MARINES": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/CaravanMarines1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_CARAVAN_MARINES_I"
+ }
+}

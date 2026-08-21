@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_HOUSING_HIGH_TECH_APARTMENTS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_INTERSTELLAR_COLONIZATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HOUSING_COLONY_ARCOLOGY"
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "HAS_FRESHWATER",
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    "BUILDING_WATER_PIPES",
+    "BUILDING_SEWER_SYSTEM",
+    "BUILDING_TELEPHONE_NETWORK",
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_RAPID_PROTOTYPING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "dormant": [
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HOUSING_HIGH_TECH_APARTMENTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_HIGH_TECH_APARTMENTS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_HIGH_TECH_APARTMENTS_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

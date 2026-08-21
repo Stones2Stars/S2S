@@ -1,0 +1,93 @@
+{
+ "type": "FEATURE_VERY_TALL_GRASS",
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "plot": {
+   "percent": 10
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 5
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_AIR_POLLUTION": -2,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  },
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_WATER_POLLUTION": -1,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  },
+  {
+   "trigger": {
+    "type": "POPULATION",
+    "scope": "city",
+    "min": 3
+   },
+   "action": {
+    "destroy": "self"
+   }
+  }
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_VERY_TALL_GRASS"
+  }
+ },
+ "sound": {
+  "footsteps": [
+   {
+    "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_HUMAN_LOW": "AS3D_UN_FOOT_UNIT_LOW_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL": "AS3D_UN_ANIMAL_FOOT_LARGE_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL_LOW": "AS3D_UN_ANIMAL_FOOT_LARGE_LOW_MUD"
+   }
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_VERY_TALL_GRASS",
+  "civilopedia": "TXT_KEY_FEATURE_VERY_TALL_GRASS_PEDIA",
+  "appearance": 500,
+  "growth": 20,
+  "validTerrains": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS",
+   "TERRAIN_MARSH",
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_ROCKY",
+   "TERRAIN_SCRUB"
+  ]
+ }
+}

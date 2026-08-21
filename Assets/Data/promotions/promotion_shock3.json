@@ -1,0 +1,39 @@
+{
+ "type": "PROMOTION_SHOCK3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SHOCK2",
+    {
+     "any": [
+      "PROMOTION_COMBAT2",
+      "PROMOTION_DRILL2"
+     ]
+    }
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 30
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SHOCK": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Shock3.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,2,12"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SHOCK3"
+ }
+}

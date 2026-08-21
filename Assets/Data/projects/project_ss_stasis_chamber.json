@@ -1,0 +1,28 @@
+{
+ "type": "PROJECT_SS_STASIS_CHAMBER",
+ "allowed": {
+  "team": 1
+ },
+ "victory": {
+  "thresholds": {
+   "VICTORY_SPACE_RACE": 1
+  }
+ },
+ "cost": {
+  "create": 62440
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Buildings/SS_StasisChamber.dds,Art/Interface/Buttons/Buildings_Atlas.dds,6,10"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROJECT_SS_STASIS_CHAMBER",
+  "civilopedia": "TXT_KEY_PROJECT_SS_STASIS_CHAMBER_PEDIA",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "launchesVictory": "VICTORY_SPACE_RACE",
+  "spaceship": true
+ }
+}

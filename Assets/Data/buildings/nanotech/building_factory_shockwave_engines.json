@@ -1,0 +1,104 @@
+{
+ "type": "BUILDING_FACTORY_SHOCKWAVE_ENGINES",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_NANOTECH_COMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "BUILDING_ADVANCED_QUALITY_CONTROL",
+    "TECH_INTERNAL_SHOCKWAVE_ENGINE",
+    {
+     "type": "BONUS_METAMATERIALS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_LIQUID_METAL",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PLASMA_GENERATORS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_NANOTECH_COMPLEX"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_SHOCKWAVE_ENGINES"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 9,
+     "enabled": "TECH_WARMACHINES"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_SKYROADS"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 3665,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACTORY_SHOCKWAVE_ENGINES",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_SHOCKWAVE_ENGINES",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_SHOCKWAVE_ENGINES_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

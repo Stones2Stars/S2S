@@ -1,0 +1,18 @@
+{
+ "type": "PROMOTIONLINE_POUNCE",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Pounce1Buildup.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_POUNCE",
+  "unitCombats": [
+   "UNITCOMBAT_ANIMAL_COMBAT_POUNCE"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
+ }
+}

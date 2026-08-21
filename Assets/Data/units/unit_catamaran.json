@@ -1,0 +1,151 @@
+{
+ "type": "UNIT_CATAMARAN",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPASS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_POLYNESIAN",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_CANOE_BUILDER",
+    {
+     "HAS_COAST": {
+      "minArea": 5
+     }
+    },
+    "TECH_SAILING"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CARAVEL"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 20,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 35
+  }
+ },
+ "skills": [
+  "pillage",
+  "mechanized",
+  "noBadGoodies",
+  "rivalTerritory",
+  "renderBelowWater",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WOODEN_SHIPS",
+ "combatClasses": [
+  "UNITCOMBAT_EXPLORER",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_OAR",
+  "UNITCOMBAT_WEAPON_DIST_JAVELIN",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 145,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CATAMARAN",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 2.25,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_CATAMARAN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_CATAMARAN",
+  "civilopedia": "TXT_KEY_UNIT_CATAMARAN_PEDIA",
+  "worth": 1,
+  "militaryWorth": 3,
+  "xpValueAttack": 2,
+  "xpValueDefense": 1,
+  "animalCombat": 25,
+  "minAreaSize": 5,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ATTACK_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_SEA",
+   "UNITAI_ASSAULT_SEA",
+   "UNITAI_SETTLER_SEA",
+   "UNITAI_MISSIONARY_SEA",
+   "UNITAI_SPY_SEA"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_POLAR",
+   "TERRAIN_TRENCH_TROPICAL"
+  ]
+ }
+}

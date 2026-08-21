@@ -1,0 +1,80 @@
+{
+ "type": "TECH_PERSONAL_ROBOTS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANDROID_BROTHEL",
+   "BUILDING_ANDROID_SERVANT_STORE",
+   "BUILDING_ARTIFICIAL_CHILD_ADOPTION_AGENCY",
+   "BUILDING_CRIME_ASIMOV_TAMPERING"
+  ],
+  "techs": [
+   "TECH_BINARY_LEGISLATION",
+   "TECH_TRANSHUMAN_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_WORKER_ANDROID"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_FORTY_NINER",
+   "UNIT_STEAMPUNK_WORKER",
+   "UNIT_WORKER_MODERN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ELECTROMAGNETIC_VOLTAGE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_UNIVERSAL_TRANSLATOR",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "research": 49574
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/personal_robots.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PERSONAL_ROBOTS",
+  "soundMP": "AS2D_TECH_PERSONAL_ROBOTS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PERSONAL_ROBOTS",
+  "civilopedia": "TXT_KEY_TECH_PERSONAL_ROBOTS_PEDIA",
+  "quote": "TXT_KEY_TECH_PERSONAL_ROBOTS_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 109,
+  "gridY": 7
+ }
+}

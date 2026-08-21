@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_QUANTIFIED_HEALTH_CENTER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PICOTECHNOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HEALTHCARE_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_WEARABLE_COMPUTERS",
+    {
+     "any": [
+      "BUILDING_MALL",
+      "BUILDING_HYPERMARKET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CELLPHONES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "cost": {
+  "production": 2305,
+  "countModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_QUANTIFIED_HEALTH_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_QUANTIFIED_HEALTH_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_QUANTIFIED_HEALTH_CENTER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

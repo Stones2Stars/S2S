@@ -1,0 +1,134 @@
+{
+ "type": "BUILDING_RATIONAL_CITY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHRONOPOLIS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MEGATOWER_PARK_LEVEL",
+    "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+    "TECH_UTOPIA_DESTINY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HUMAN_MOD_ENLIGHTENED",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HUMAN_MOD_ENLIGHTENED",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 13,
+     "enabled": "TECH_OMNIBENEVOLENT_MANDATE"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "cost": {
+  "production": 5255,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RATIONAL_CITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RATIONAL_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_RATIONAL_CITY_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

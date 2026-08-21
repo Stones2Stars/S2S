@@ -1,0 +1,238 @@
+{
+ "type": "UNIT_SWAT_TEAM",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_POLICE_PRECINCT",
+    "TECH_FORENSICS",
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_TIRES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_PERSONAL_ELECTRONICS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_KEVLAR",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_RADIOS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_PETROLEUM_PRODUCTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BIOFUEL",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_POLICE_MECH"
+    ]
+   }
+  }
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": 15
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "combat": {
+  "unit": {
+   "enclose": {
+    "percent": 25
+   },
+   "dynamicDefense": {
+    "percent": 25
+   },
+   "stealthStrikes": {
+    "flat": 3
+   },
+   "stealth": {
+    "percent": 70
+   },
+   "targets": {
+    "UNITCOMBAT_CRIMINAL": true
+   },
+   "defenders": {
+    "UNITCOMBAT_CRIMINAL": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 45
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 2
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 30
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -40
+  },
+  "plot": {
+   "flat": -24
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": {
+     "all": [
+      "IS_LAND",
+      "IS_PEOPLE",
+      "!IS_VTOL"
+     ]
+    },
+    "flat": 1
+   }
+  }
+ },
+ "skills": [
+  "noCapture",
+  "counterSpy",
+  "mechanized",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "troop"
+ ],
+ "combatClass": "UNITCOMBAT_LAW_ENFORCEMENT",
+ "combatClasses": [
+  "UNITCOMBAT_WHEELED",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_GRENADE",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 600,
+    "unit": "HAS_DISGUISED"
+   },
+   {
+    "value": 400,
+    "unit": "HAS_POLITICAL"
+   },
+   {
+    "value": 100,
+    "unit": "HAS_CAMOUFLAGE"
+   }
+  ]
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 1825,
+  "upkeep": 13
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SWAT_TEAM",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SWAT_TEAM"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_SWAT_TEAM",
+  "civilopedia": "TXT_KEY_UNIT_SWAT_TEAM_PEDIA",
+  "worth": 10,
+  "militaryWorth": 30,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_RANGED",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_PROPERTY_CONTROL",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_INVESTIGATOR",
+   "UNITAI_SEE_INVISIBLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

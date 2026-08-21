@@ -1,0 +1,168 @@
+{
+ "type": "BUILDING_TRAVEL_AGENCY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SPACE_TOURISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MODERN_OFFICES",
+    "TECH_TOURISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_COMMERCIAL_AIRPORT": {
+     "percent": 10
+    },
+    "BUILDING_VACATION_RESORT": {
+     "percent": 10
+    },
+    "BUILDING_STATE_PARK": {
+     "percent": 10
+    },
+    "BUILDING_CRUISE_SHIP_PORT": {
+     "percent": 10
+    },
+    "BUILDING_UNESCO_HERITAGE_SITE": {
+     "percent": 10
+    },
+    "BUILDING_AMUSEMENT_PARK": {
+     "percent": 10
+    },
+    "BUILDING_WATER_PARK": {
+     "percent": 10
+    },
+    "BUILDING_NATIONAL_SPORTS_LEAGUE": {
+     "percent": 10
+    },
+    "BUILDING_HOTEL": {
+     "percent": 10
+    },
+    "BUILDING_MOTEL": {
+     "percent": 10
+    },
+    "BUILDING_TOURIST_TRAP": {
+     "percent": 10
+    },
+    "BUILDING_PUBLIC_BEACH": {
+     "percent": 10
+    },
+    "BUILDING_CAMP_GROUNDS": {
+     "percent": 10
+    },
+    "BUILDING_POLAR_HOTEL": {
+     "percent": 10
+    },
+    "BUILDING_OUTBACK_HOTEL": {
+     "percent": 10
+    },
+    "BUILDING_SAFARI_HOTEL": {
+     "percent": 10
+    },
+    "BUILDING_JUNGLE_TREEHOUSE_HOTEL": {
+     "percent": 10
+    },
+    "BUILDING_WILD_WEST_HOTEL": {
+     "percent": 10
+    },
+    "BUILDING_RIVER_RAFTING_DOCK": {
+     "percent": 10
+    },
+    "BUILDING_ATHLETIC_MEGACOMPLEX": {
+     "percent": 10
+    },
+    "BUILDING_TELEPORT_BOOTH": {
+     "percent": 10
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "percent": 10
+    },
+    "BUILDING_TOURISM_MEGACOMPLEX": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 2560,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TRAVEL_AGENCY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRAVEL_AGENCY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_EARLY_AIRPORT"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRAVEL_AGENCY",
+  "civilopedia": "TXT_KEY_BUILDING_TRAVEL_AGENCY_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 2,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

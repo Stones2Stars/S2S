@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_EDUCATE10",
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_EDUCATE": 10
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Educate10Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_EDUCATE10"
+ }
+}

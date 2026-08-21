@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_MIGHT13",
+ "combat": {
+  "unit": {
+   "flat": 30
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MIGHT": 13
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Might13Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_MIGHT13",
+  "levelPrereq": 27,
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_DIVINE"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_ANIMAL"
+  ]
+ }
+}

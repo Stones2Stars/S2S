@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_FREE_PORT",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "TECH_ECONOMICS",
+    {
+     "any": [
+      "BUILDING_PORT",
+      "BUILDING_COMMERCIAL_PORT",
+      "BUILDING_INTERNATIONAL_PORT",
+      "BUILDING_OCEAN_ADMINISTRATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_FREE_MARKET"
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": [
+     5,
+     {
+      "value": 10,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
+   }
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 535,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FREE_PORT",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_INTERNATIONAL_PORT"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FREE_PORT",
+  "civilopedia": "TXT_KEY_BUILDING_FREE_PORT_PEDIA",
+  "worth": 3,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

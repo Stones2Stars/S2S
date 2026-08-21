@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_PROGRAMMABLE_PLANT_FARM",
+ "enables": {
+  "buildings": [
+   "BUILDING_CYBER_CHLOROPLASTIDA_BLOOM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB",
+    "BUILDING_CHEMOSYNTHESIS_PLANT_FARM",
+    "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SUPERSTRONG_ALLOYS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_CYBERNETIC_CHLOROPLASTS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -100
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -100
+  }
+ },
+ "cost": {
+  "production": 5055,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROGRAMMABLE_PLANT_FARM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PROGRAMMABLE_PLANT_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_PROGRAMMABLE_PLANT_FARM_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

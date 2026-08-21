@@ -1,0 +1,34 @@
+{
+ "type": "BUILDING_STORAGE_EMPIRE",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_STORAGE_PIT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ECONOMY_STORAGE_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_ECONOMY_PEDIA",
+  "help": "TXT_KEY_BUILDING_ECONOMY_HELP",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

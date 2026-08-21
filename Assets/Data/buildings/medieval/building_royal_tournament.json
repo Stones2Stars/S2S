@@ -1,0 +1,127 @@
+{
+ "type": "BUILDING_ROYAL_TOURNAMENT",
+ "enables": {
+  "buildings": [
+   "BUILDING_CIRCUS_MAXIMUS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COUNTERCULTURE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SPEEDWAY"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TOURNAMENTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_HORSE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_ELEPHANT",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CAMEL",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_SPEEDWAY"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_KNIGHTS_STABLE": {
+     "percent": 10
+    },
+    "BUILDING_MODERN_STABLE": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MOUNTED": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 380,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_JOUST",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COLOSSEUM"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ROYAL_TOURNAMENT",
+  "civilopedia": "TXT_KEY_BUILDING_ROYAL_TOURNAMENT_PEDIA",
+  "worth": 8,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "type": "BUILDING_EFFECT_GALACTIC_ECONOMY",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_THOUGHT",
+   "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
+   "BUILDING_INTERSTELLAR_ETERNAL_INTELLIGENCE",
+   "BUILDING_UNIVERSAL_ECONOMY"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_FOLDING_SPACE"
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_GALACTIC_ECONOMY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_GALACTIC_ECONOMY",
+  "civilopedia": "TXT_KEY_BUILDING_GALACTIC_ECONOMY_PEDIA",
+  "notConstructible": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

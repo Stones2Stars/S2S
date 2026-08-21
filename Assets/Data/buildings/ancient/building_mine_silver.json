@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_MINE_SILVER",
+ "enables": {
+  "buildings": [
+   "BUILDING_SMELTER_SILVER"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CORE_MINE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MINING_CAMP",
+    "TECH_MINING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SILVER_ORE",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ],
+   "dormant": [
+    "BUILDING_CORE_MINE"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -1,
+    {
+     "value": -20,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 132,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MINE_SILVER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_SILVER",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_SILVER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

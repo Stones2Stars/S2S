@@ -1,6 +1,9 @@
 # Claude Code local settings (per-developer; keep skills/ shared)
 .claude/settings.local.json
 
+# Local machine config (per-developer game paths, etc.); .env.example is the tracked template
+.env
+
 # Live-game benchmark data (per-developer; the README documenting the scheme stays tracked)
 /Benchmarks/*
 !/Benchmarks/README.md
@@ -8,6 +11,7 @@
 # Compiled Object files
 *.obj
 
+/obj
 # Precompiled Headers
 *.pch
 
@@ -45,7 +49,6 @@ Tools/Autocorrect/Autocorrect.log
 
 test-gen.bat
 
-CHANGELOG.md
 
 Autocorrect.log
 
@@ -95,3 +98,16 @@ Tools/ReadJson/readjson.exe
 Tools/ReadJson/testOutput/
 Tools/ReadJson/_conformance.txt
 Tools/ReadJson/_render.txt
+Sources/sweep_tmp
+
+# Stray scratchpad junk: when a tool writes to the Windows scratchpad path "C:\Users\...\AppData\Local\Temp\claude\
+# ...\scratchpad\X" inside a Bash/Unix context, the backslashes are stripped + the drive colon mangled, so the whole
+# path lands as a literal filename in the repo root. Guard so they never pile up in git status / get committed. (Real
+# fix: tools must write temp files via a forward-slash path or mktemp, never a backslash Windows path under Bash.)
+*AppDataLocalTempclaude*
+# per-session docs-gate acknowledgment markers (the .claude/hooks/docs-gate.py hook)
+.claude/docs-ack/
+
+# Python bytecode, anywhere -- the per-directory rules above kept missing new locations
+__pycache__/
+*.pyc

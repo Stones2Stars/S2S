@@ -1,0 +1,13 @@
+{
+  "entity": "HurryInfo",
+  "rootElement": "HurryInfo",
+  "glob": "**/CIV4HurryInfo.xml",
+  "channels": {},
+  "inversionsOut": {},
+  "enablerEdges": {},
+  "prereqs": [],
+  "cost": [],
+  "art": ["Button"],
+  "identity": ["Type", "Description", "iGoldPerProduction", "iProductionPerPopulation", "bAnger"],
+  "boostsIn": []
+}

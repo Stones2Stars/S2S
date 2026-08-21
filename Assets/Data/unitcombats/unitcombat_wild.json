@@ -1,0 +1,40 @@
+{
+ "type": "UNITCOMBAT_WILD",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -1000
+   }
+  }
+ },
+ "skills": {
+  "noCapture": true
+ },
+ "tags": [
+  "wild"
+ ],
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 1000,
+    "unit": "HAS_DISGUISED"
+   },
+   {
+    "value": 1000,
+    "unit": "HAS_POLITICAL"
+   },
+   {
+    "value": 100,
+    "unit": "HAS_CAMOUFLAGE"
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/wild.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_WILD"
+ }
+}

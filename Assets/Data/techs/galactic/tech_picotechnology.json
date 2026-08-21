@@ -1,0 +1,66 @@
+{
+ "type": "TECH_PICOTECHNOLOGY",
+ "enables": {
+  "bonuses": [
+   "BONUS_COMPUTRONIUM"
+  ],
+  "buildings": [
+   "BUILDING_ATOMIC_FIREPROOFING",
+   "BUILDING_COMPUTRONIUM_MAKER",
+   "BUILDING_INTERSTELLAR_COMPUTRONIUM_FACTORY",
+   "BUILDING_OMEGA_ASSEMBLER",
+   "BUILDING_PICOTECH_COMPLEX"
+  ],
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY",
+   "TECH_STELLAR_ENGINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ARTIFICIAL_PLANETS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WEAPONIZED_ANTIMATTER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 179514
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/picotechnology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PICOTECHNOLOGY",
+  "civilopedia": "TXT_KEY_TECH_PICOTECHNOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_PICOTECHNOLOGY_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 134,
+  "gridY": 1
+ }
+}

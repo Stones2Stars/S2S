@@ -1,0 +1,56 @@
+{
+ "type": "PROMOTION_INITIATIVE4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_COMMAND1",
+   "PROMOTION_MOUNTAIN_LEADER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_INITIATIVE3",
+    {
+     "any": [
+      "PROMOTION_MORALE5",
+      "PROMOTION_TACTICS4"
+     ]
+    }
+   ]
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   },
+   "chance": {
+    "flat": 2
+   }
+  }
+ },
+ "heal": {
+  "unit": {
+   "adjacentTile": {
+    "flat": 5
+   }
+  }
+ },
+ "skills": {
+  "onslaught": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_INITIATIVE": 4
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/initiative4.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_INITIATIVE4"
+ }
+}

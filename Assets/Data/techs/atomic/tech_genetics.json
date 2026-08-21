@@ -1,0 +1,71 @@
+{
+ "type": "TECH_GENETICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_GENE_FORGERY",
+   "BUILDING_MECHANICAL_ORGANS_LAB",
+   "BUILDING_MRI_LAB",
+   "BUILDING_SVALBARD_GLOBAL_SEED_VAULT"
+  ],
+  "projects": [
+   "PROJECT_HUMAN_GENOME_PROJECT"
+  ],
+  "techs": [
+   "TECH_GENE_MANIPULATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MOLECULAR_BIOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "research": 15474
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Genetics.dds,Art/Interface/Buttons/TechTree_Atlas.dds,3,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENETICS",
+  "soundMP": "AS2D_TECH_MP_GENETICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_GENETICS",
+  "civilopedia": "TXT_KEY_TECH_GENETICS_PEDIA",
+  "quote": "TXT_KEY_TECH_GENETICS_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 84,
+  "gridY": 7
+ }
+}

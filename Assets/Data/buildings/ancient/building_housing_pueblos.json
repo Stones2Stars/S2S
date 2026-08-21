@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_HOUSING_PUEBLOS",
+ "enables": {
+  "buildings": [
+   "BUILDING_KIVA"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SURVEYING"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_MASONRY",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_DESERT",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_SCRUB",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "dormant": [
+    "BUILDING_HOUSING_SLUMS",
+    "BUILDING_HOUSING_SHANTY_TOWN",
+    "BUILDING_HOUSING_GHETTOS",
+    "BUILDING_HOUSING_INNER_CITY",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HOUSING_PUEBLOS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_PUEBLOS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_PUEBLOS_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

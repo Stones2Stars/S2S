@@ -1,0 +1,48 @@
+{
+ "type": "IMPROVEMENT_SOLAR_TRADING_POST",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MAGNETIC_SAILS",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_INNER_SOLAR_SYSTEM",
+      "TERRAIN_OUTER_SOLAR_SYSTEM",
+      "TERRAIN_TRANSNEPTUNIAN_SPACE"
+     ]
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    8,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PLANETARY_TRADE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_SOLAR_TRADING_POST"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_SOLAR_TRADING_POST",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SOLAR_TRADING_POST_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

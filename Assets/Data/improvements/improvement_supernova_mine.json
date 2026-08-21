@@ -1,0 +1,55 @@
+{
+ "type": "IMPROVEMENT_SUPERNOVA_MINE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INDUCED_SUPERNOVA",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_NEUTRON_STAR"
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    25,
+    {
+     "value": 5,
+     "enabled": {
+      "type": "TECH_ZEPTOTECHNOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "type": "TECH_OMEGA_MINUS_ENGINEERING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_SUPERNOVA_MINE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_SUPERNOVA_MINE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SUPERNOVA_MINE_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

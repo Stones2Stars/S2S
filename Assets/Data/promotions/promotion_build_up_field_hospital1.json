@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_BUILD_UP_FIELD_HOSPITAL1",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_FIRST_AID_PEOPLE1"
+   ]
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 1
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_PEOPLE": {
+     "heal": 3,
+     "adjacentHeal": 1
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_FIELD_HOSPITAL": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/FieldHospital1BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_FIELD_HOSPITAL1"
+ }
+}

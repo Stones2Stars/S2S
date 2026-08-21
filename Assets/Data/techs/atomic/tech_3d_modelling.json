@@ -1,0 +1,58 @@
+{
+ "type": "TECH_3D_MODELLING",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAD_STUDIO",
+   "BUILDING_CGI_ANIMATION_STUDIO"
+  ],
+  "techs": [
+   "TECH_3D_PRINTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MICROPROCESSOR",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 15474
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_GOLD": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/3d_modeling.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_3D_MODELLING",
+  "soundMP": "AS2D_TECH_3D_MODELLING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_3D_MODELLING",
+  "civilopedia": "TXT_KEY_TECH_3D_MODELLING_PEDIA",
+  "quote": "TXT_KEY_TECH_3D_MODELLING_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 84,
+  "gridY": 19
+ }
+}

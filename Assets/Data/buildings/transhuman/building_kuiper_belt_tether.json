@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_KUIPER_BELT_TETHER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_KUIPER_BELT_OUTPOST",
+    "TECH_ASTEROID_EXTRACTION",
+    {
+     "type": "TERRAIN_KUIPER_BELT_OBJECT",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 2363,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_KUIPER_BELT_TETHER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_KUIPER_BELT_TETHER",
+  "civilopedia": "TXT_KEY_BUILDING_KUIPER_BELT_TETHER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

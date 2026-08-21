@@ -1,0 +1,97 @@
+{
+ "type": "BUILDING_LUMBER_CAMP",
+ "enables": {
+  "buildings": [
+   "BUILDING_BONFIRE",
+   "BUILDING_FIRE_PIT",
+   "BUILDING_GUILD_WOODCUTTERS",
+   "BUILDING_IMU",
+   "BUILDING_LUMBER_MILL",
+   "BUILDING_RESOURCES_WOOD"
+  ],
+  "units": [
+   "UNIT_LOG_RAM",
+   "UNIT_NEANDERTHAL_LOG_RAM"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SENTIENT_EARTH"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AGROFOREST"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_WOODWORKING",
+    {
+     "any": [
+      {
+       "type": "FEATURE_FOREST_YOUNG",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_ANCIENT",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_BURNT",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_JUNGLE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_AGROFOREST"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3,
+   "improvements": {
+    "IMPROVEMENT_LUMBERMILL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 62,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUMBER_CAMP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUMBER_CAMP",
+  "civilopedia": "TXT_KEY_BUILDING_LUMBER_CAMP_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

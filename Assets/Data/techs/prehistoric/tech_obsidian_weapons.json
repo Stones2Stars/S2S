@@ -1,0 +1,93 @@
+{
+ "type": "TECH_OBSIDIAN_WEAPONS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_AZTEC",
+   "BUILDING_CULTURE_MAYAN",
+   "BUILDING_CULTURE_MIXTEC",
+   "BUILDING_CULTURE_NAZCA",
+   "BUILDING_CULTURE_TLATILCO",
+   "BUILDING_CULTURE_TLAXCALTEC",
+   "BUILDING_CULTURE_TOLTEC",
+   "BUILDING_CULTURE_ZAPOTEC"
+  ],
+  "units": [
+   "UNIT_AZTEC_JAGUAR",
+   "UNIT_COYOTE_RUNNER",
+   "UNIT_CUACHIC",
+   "UNIT_LIGHTNING_WARRIOR",
+   "UNIT_MAPINGUARI_OBSIDIAN",
+   "UNIT_MAYA_HOLKAN",
+   "UNIT_NAZCA_HEADHUNTERS",
+   "UNIT_NEANDERTHAL_OBSIDIAN_AXEMAN",
+   "UNIT_NEANDERTHAL_OBSIDIAN_MACEMAN",
+   "UNIT_NEANDERTHAL_OBSIDIAN_SPEARMAN",
+   "UNIT_NEANDERTHAL_OBSIDIAN_SWORDSMAN",
+   "UNIT_OBSIDIAN_AXEMAN",
+   "UNIT_OBSIDIAN_MACEMAN",
+   "UNIT_OBSIDIAN_SPEARMAN",
+   "UNIT_OBSIDIAN_SWORDSMAN",
+   "UNIT_OLMEC_EAGLE_WARRIOR",
+   "UNIT_TLATILCO_WAR_PRIEST",
+   "UNIT_TLAXCALTEC_WARRIOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SPEAR_MAKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AXE_MAKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HEAT_TREATMENT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "cost": {
+  "research": 34
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/obsidianweapons.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_OBSIDIAN_WEAPONS",
+  "soundMP": "AS2D_TECH_OBSIDIAN_WEAPONS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_OBSIDIAN_WEAPONS",
+  "civilopedia": "TXT_KEY_TECH_OBSIDIAN_WEAPONS_PEDIA",
+  "quote": "TXT_KEY_TECH_OBSIDIAN_WEAPONS_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 14,
+  "gridY": 3
+ }
+}

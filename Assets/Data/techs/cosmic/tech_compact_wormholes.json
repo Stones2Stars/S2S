@@ -1,0 +1,65 @@
+{
+ "type": "TECH_COMPACT_WORMHOLES",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_WORMHOLE_TO_EARTH",
+   "BUILDING_MICRO_WORMHOLE"
+  ],
+  "builds": [
+   "BUILD_COMPACT_WORMHOLE"
+  ],
+  "techs": [
+   "TECH_SPACETIME_ECONOMICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_REACTIONLESS_DRIVE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 338869
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/microwormholes.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_COMPACT_WORMHOLES",
+  "civilopedia": "TXT_KEY_TECH_COMPACT_WORMHOLES_PEDIA",
+  "quote": "TXT_KEY_TECH_COMPACT_WORMHOLES_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 145,
+  "gridY": 19
+ }
+}

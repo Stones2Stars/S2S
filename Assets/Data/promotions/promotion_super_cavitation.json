@@ -1,0 +1,40 @@
+{
+ "type": "PROMOTION_SUPER_CAVITATION",
+ "movement": {
+  "unit": {
+   "moves": {
+    "flat": 2
+   }
+  }
+ },
+ "combat": {
+  "unit": {
+   "domain": {
+    "DOMAIN_SEA": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/attack1.dds,Art/RoM_Promotions_Atlas.dds,1,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SUPER_CAVITATION",
+  "unitCombats": [
+   "UNITCOMBAT_SUBMARINE"
+  ]
+ }
+}

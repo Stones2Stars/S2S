@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_JORDANIAN",
+ "enables": {
+  "units": [
+   "UNIT_ABDULLAH_II",
+   "UNIT_ROYAL_SPECIAL_FORCES"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_JORDANIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_JORDANIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

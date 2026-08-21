@@ -1,0 +1,76 @@
+{
+ "type": "TECH_NANOROBOTICS",
+ "enables": {
+  "bonuses": [
+   "BONUS_REPLICATORS"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_DIGITIZED_MEMBRANES",
+   "BUILDING_NANOBOTIC_PRINTING_MILL",
+   "BUILDING_NANOBOT_WALLS",
+   "BUILDING_REPLICATOR_PLANT",
+   "BUILDING_UTILITY_FOG"
+  ],
+  "promotions": [
+   "PROMOTION_NANOIDS"
+  ],
+  "techs": [
+   "TECH_AMPLIFIED_WAVELENGTHS",
+   "TECH_PHOTON_THERMODYNAMICS",
+   "TECH_PLANETARY_ECONOMICS"
+  ],
+  "units": [
+   "UNIT_FUSION_CRUISER",
+   "UNIT_NANITE_SWARM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NANOELECTRONICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 42984
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/nanobotics2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NANOROBOTICS",
+  "soundMP": "AS2D_TECH_NANOROBOTICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NANOROBOTICS",
+  "civilopedia": "TXT_KEY_TECH_NANOROBOTICS_PEDIA",
+  "quote": "TXT_KEY_TECH_NANOROBOTICS_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 105,
+  "gridY": 7
+ }
+}

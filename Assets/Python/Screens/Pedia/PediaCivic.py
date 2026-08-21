@@ -1,6 +1,9 @@
 # Pedia overhaul by Toffer for Caveman2Cosmos.
 
 from CvPythonExtensions import *
+GC = CyGlobalContext()
+INFO = CyInfo()
+TRNSLTR = CyTranslator()
 
 class Page:
 
@@ -30,9 +33,7 @@ class Page:
 		self.W_STATS = W_3RD_PP - S_ICON1 + 8
 
 	def interfaceScreen(self, iTheCivic):
-		GC = CyGlobalContext()
 		TRNSLTR = CyTranslator()
-		CvTheCivicInfo = GC.getCivicInfo(iTheCivic)
 		screen = self.main.screen()
 
 		iWidGeneral		= WidgetTypes.WIDGET_GENERAL
@@ -54,32 +55,36 @@ class Page:
 		H_MID_ROW = self.H_MID_ROW
 
 		# Main Panel
-		screen.setText(self.main.getNextWidgetName(), "", uFontEdge + CvTheCivicInfo.getDescription(), 1<<0, X_COL_1, 0, 0, FontTypes.TITLE_FONT, iWidGeneral, 0, 0)
+		screen.setText(self.main.getNextWidgetName(), "", uFontEdge + INFO.getDescription("CIVIC_", iTheCivic), 1<<0, X_COL_1, 0, 0, FontTypes.TITLE_FONT, iWidGeneral, 0, 0)
 		screen.addPanel( self.main.getNextWidgetName(), "", "", False, False, X_COL_1 + 4, Y_TOP_ROW + 3, W_3RD_PP, H_TOP_ROW, PanelStyles.PANEL_STYLE_MAIN)
-		screen.addDDSGFC(self.main.getNextWidgetName(), CvTheCivicInfo.getButton(), X_COL_1 - 2, Y_TOP_ROW + 7, S_ICON1, S_ICON1, iWidGeneral, -1, -1 )
+		screen.addDDSGFC(self.main.getNextWidgetName(), INFO.getButton("CIVIC_", iTheCivic), X_COL_1 - 2, Y_TOP_ROW + 7, S_ICON1, S_ICON1, iWidGeneral, -1, -1 )
 		# Stats
 		panelName = self.main.getNextWidgetName()
 		screen.addListBoxGFC(panelName, "", self.X_STATS, Y_STATS, self.W_STATS, H_TOP_ROW - 12, TableStyles.TABLE_STYLE_EMPTY)
 		screen.enableSelect(panelName, False)
-		iCivicOptionType = CvTheCivicInfo.getCivicOptionType()
+		iCivicOptionType = INFO.civicOptions().getValue(iTheCivic)
 		if iCivicOptionType != -1:
-			screen.appendListBoxString(panelName, uFont4b + GC.getCivicOptionInfo(iCivicOptionType).getDescription(), iWidGeneral, 0, 0, 1<<0)
-		pUpkeepInfo = GC.getUpkeepInfo(CvTheCivicInfo.getUpkeep())
-		if pUpkeepInfo:
-			screen.appendListBoxString(panelName, uFont3b + pUpkeepInfo.getDescription(), iWidGeneral, 0, 0, 1<<0)
+			screen.appendListBoxString(panelName, uFont4b + INFO.getDescription("CIVICOPTION_", iCivicOptionType), iWidGeneral, 0, 0, 1<<0)
+		#  The civic names its upkeep CLASS and the upkeep entity owns the text, so the id crosses and the
+		#  identity plane names it -- rather than a second info object being fetched to be asked one question.
+		iUpkeep = INFO.getCivicUpkeep(iTheCivic)
+		if iUpkeep != -1:
+			screen.appendListBoxString(panelName, uFont3b + INFO.getDescription("UPKEEP_", iUpkeep), iWidGeneral, 0, 0, 1<<0)
 		# Requires
-		iTech = CvTheCivicInfo.getTechPrereq()
-		if iTech != -1:
+		#  A civic may be gated by more than one tech, so this reads the edge list rather than one id.
+		aTechs = INFO.getEdgeIds("CIVIC_", iTheCivic, EdgeFamily.EDGEF_ENABLED_BY, EdgeBucket.EDGEB_TECHS)
+		if aTechs:
 			panelName = self.main.getNextWidgetName()
 			szRequires = TRNSLTR.getText("TXT_KEY_PEDIA_REQUIRES", ()) + ":"
 			screen.addPanel(panelName, szRequires, "", False, True, X_COL_1 + W_3RD_PP - 108, Y_STATS - 8, 100, H_BOT_ROW, PanelStyles.PANEL_STYLE_EMPTY)
 			screen.attachLabel(panelName, "", "<font=4b>| ")
-			screen.attachImageButton(panelName, "", GC.getTechInfo(iTech).getButton(), enumGBS, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iTech, 2, False)
+			for iTech in aTechs:
+				screen.attachImageButton(panelName, "", INFO.getButton("TECH_", iTech), enumGBS, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iTech, 2, False)
 			screen.attachLabel(panelName, "", "<font=4b> |")
 		# Strategy
 		szStrategy = TRNSLTR.getText("TXT_KEY_PEDIA_STRATEGY", ())
 		screen.addPanel(self.main.getNextWidgetName(), szStrategy, "", True, True, X_COL_2, Y_TOP_ROW, W_2_3Rd_PP, H_TOP_ROW, iPanelBlue50)
-		szStrategy = uFont2 + CvTheCivicInfo.getStrategy()
+		szStrategy = uFont2 + INFO.getStrategy("CIVIC_", iTheCivic)
 		screen.addMultilineText(self.main.getNextWidgetName(), szStrategy, X_COL_2 + 4, Y_TOP_ROW + 32, W_2_3Rd_PP - 8, H_TOP_ROW - 40, iWidGeneral, -1, -1, 1<<0)
 		# Effects
 		screen.addPanel(self.main.getNextWidgetName(), TRNSLTR.getText("TXT_KEY_PEDIA_EFFECTS", ()), "", True, False, X_COL_2, Y_MID_ROW, W_2_3Rd_PP, H_MID_ROW, iPanelBlue50)
@@ -88,5 +93,5 @@ class Page:
 		# History
 		szHistory = TRNSLTR.getText("TXT_KEY_PEDIA_HISTORY", ())
 		screen.addPanel(self.main.getNextWidgetName(), szHistory, "", True, True, X_COL_1, Y_MID_ROW, W_3RD_PP, H_MID_ROW, iPanelBlue50)
-		szText = uFont2 + CvTheCivicInfo.getCivilopedia()
+		szText = uFont2 + INFO.getCivilopedia("CIVIC_", iTheCivic)
 		screen.addMultilineText(self.main.getNextWidgetName(), szText, X_COL_1 + 4, Y_MID_ROW + 32, W_3RD_PP - 8, H_MID_ROW - 40, iWidGeneral, -1, -1, 1<<0)

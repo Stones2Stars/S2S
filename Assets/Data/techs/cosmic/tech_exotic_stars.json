@@ -1,0 +1,73 @@
+{
+ "type": "TECH_EXOTIC_STARS",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_ELECTROWEAK_STAR_BASE",
+   "BUILDING_INTERGALACTIC_QUARK_STAR_BASE",
+   "BUILDING_INTERGALACTIC_STRANGE_STAR_CITY",
+   "BUILDING_MILKY_WAY_CORE_TERAEARTH"
+  ],
+  "techs": [
+   "TECH_INDUCED_SUPERNOVA",
+   "TECH_ZEPTOTECHNOLOGY",
+   "TECH_ZERO_POINT_ENERGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PARTICLE_GENETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INTERGALACTIC_COLONIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_EXTREME_ENERGY_WEAPONS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 291683
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/exotic_star_colonization.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_EXOTIC_STARS",
+  "civilopedia": "TXT_KEY_TECH_EXOTIC_STARS_PEDIA",
+  "quote": "TXT_KEY_TECH_EXOTIC_STARS_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 141,
+  "gridY": 7
+ }
+}

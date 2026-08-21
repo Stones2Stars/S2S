@@ -1,0 +1,35 @@
+{
+ "type": "SPECIALIST_GREAT_MERCHANT",
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_TRADE": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/Great_Merchant.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/Great_Merchant.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_GREAT_MERCHANT",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_ECONOMIC"
+  ]
+ }
+}

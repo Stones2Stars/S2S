@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_POST_OFFICE",
+ "enables": {
+  "buildings": [
+   "BUILDING_MAIL_ORDER_CATALOGUE",
+   "BUILDING_NATIONAL_CENSUS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HYPERMARKET"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SOCIAL_CONTRACT",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT",
+      "BUILDING_MODERN_OFFICES"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PAPER",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_HYPERMARKET"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "cost": {
+  "production": 475,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_POST_OFFICE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_POST_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_POST_OFFICE_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

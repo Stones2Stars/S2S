@@ -1,0 +1,77 @@
+{
+ "type": "TECH_OIL_LAMPS",
+ "enables": {
+  "bonuses": [
+   "BONUS_FISH_OIL",
+   "BONUS_GHEE_OIL"
+  ],
+  "buildings": [
+   "BUILDING_CULTURE_WAYANA",
+   "BUILDING_FISH_OIL_MAKER",
+   "BUILDING_GHEE_MAKER",
+   "BUILDING_OIL_LAMPS"
+  ],
+  "techs": [
+   "TECH_LEISURE"
+  ],
+  "units": [
+   "UNIT_AKAVAI",
+   "UNIT_ARSONIST"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STANDARDIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FERMENTATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "cost": {
+  "research": 164
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/oillamps.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_OIL_LAMPS",
+  "soundMP": "AS2D_TECH_OIL_LAMPS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_OIL_LAMPS",
+  "civilopedia": "TXT_KEY_TECH_OIL_LAMPS_PEDIA",
+  "quote": "TXT_KEY_TECH_OIL_LAMPS_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "gridX": 25,
+  "gridY": 3
+ }
+}

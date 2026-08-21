@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_MARS_CYCLER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COMMERCIAL_SPACEPORT",
+    "TECH_PLANETARY_TRADE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "gold": {
+  "city": {
+   "flat": 600
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_MARS_CYCLER"
+   }
+  ]
+ },
+ "cost": {
+  "production": 10110
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MARS_CYCLER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARS_CYCLER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARS_CYCLER",
+  "civilopedia": "TXT_KEY_BUILDING_MARS_CYCLER_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

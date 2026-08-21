@@ -1,0 +1,24 @@
+{
+ "type": "BONUS_NANOPUNK",
+ "enables": {
+  "buildings": [
+   "BUILDING_COSMOPOLITAN_AWAKENING",
+   "BUILDING_CULTURAL_AWAKENING",
+   "BUILDING_ECOLOGICAL_AWAKENING",
+   "BUILDING_POLITICAL_AWAKENING",
+   "BUILDING_SPIRITUAL_AWAKENING",
+   "BUILDING_TECHNOLOGICAL_AWAKENING"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_NANOPUNK"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_NANOPUNK",
+  "civilopedia": "TXT_KEY_BONUS_NANOPUNK_PEDIA",
+  "bonusClassType": "BONUSCLASS_GENMODS",
+  "source": "culture"
+ }
+}

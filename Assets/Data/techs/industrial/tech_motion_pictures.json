@@ -1,0 +1,75 @@
+{
+ "type": "TECH_MOTION_PICTURES",
+ "enables": {
+  "bonuses": [
+   "BONUS_HIT_MOVIES"
+  ],
+  "buildings": [
+   "BUILDING_ANIMAL_ACTOR_STUDIO",
+   "BUILDING_CIVILIZED_JEWELERS_STORE",
+   "BUILDING_DRIVE_IN_MOVIE_THEATER",
+   "BUILDING_GRAUMANS_CHINESE_THEATRE",
+   "BUILDING_HOLLYWOOD",
+   "BUILDING_HQ_CIVILIZED_JEWELERS_INC",
+   "BUILDING_HQ_RED_CURTAINS",
+   "BUILDING_MOVIE_STUDIO",
+   "BUILDING_MOVIE_THEATRE",
+   "BUILDING_RED_CURTAINS_THEATRE"
+  ],
+  "techs": [
+   "TECH_ANIMATION",
+   "TECH_PROPAGANDA",
+   "TECH_TELEVISION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INCANDESCENT_LIGHTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 7356
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_CULTURE": 9
+   },
+   {
+    "FLAVOR_RELIGION": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": ",Art/Interface/Buttons/TechTree/motionpictures.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,12"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MOTION_PICTURES",
+  "soundMP": "AS2D_TECH_MOTION_PICTURES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MOTION_PICTURES",
+  "civilopedia": "TXT_KEY_TECH_MOTION_PICTURES_PEDIA",
+  "quote": "TXT_KEY_TECH_MOTION_PICTURES_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 69,
+  "gridY": 3
+ }
+}

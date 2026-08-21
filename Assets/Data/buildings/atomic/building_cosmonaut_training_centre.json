@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_COSMONAUT_TRAINING_CENTRE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LABORATORY",
+    "TECH_ASTRO_ENVIRONMENTAL_SYSTEMS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "research": {
+  "city": {
+   "percent": 17
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": 50,
+      "enabled": "IS_MILITARY"
+     },
+     {
+      "value": 15,
+      "enabled": "IS_SPACE"
+     }
+    ]
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 3080,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_COSMONAUT_TRAINING_CENTRE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_COSMONAUT_TRAINING_CENTRE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_COSMONAUT_TRAINING_CENTRE",
+  "civilopedia": "TXT_KEY_BUILDING_COSMONAUT_TRAINING_CENTRE_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 10,
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

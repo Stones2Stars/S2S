@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_INANNA",
+ "experience": {
+  "unit": {
+   "percent": 15
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 10
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat1.dds,Art/Interface/Buttons/GodsOfOld_Atlas.dds,1,8"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_INANNA",
+  "stateReligionPrereq": "RELIGION_MESOPOTAMISM",
+  "unitCombats": [
+   "UNITCOMBAT_MELEE"
+  ]
+ }
+}

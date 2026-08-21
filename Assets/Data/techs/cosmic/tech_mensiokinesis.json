@@ -1,0 +1,68 @@
+{
+ "type": "TECH_MENSIOKINESIS",
+ "enables": {
+  "bonuses": [
+   "BONUS_CHAOS_WANDS"
+  ],
+  "buildings": [
+   "BUILDING_GODWHEEL",
+   "BUILDING_MAGITEK_COMBAT_ARENA",
+   "BUILDING_SPELLCASTERS_HUT",
+   "BUILDING_SUPERHERO_GUILD",
+   "BUILDING_TRANSTELLAR_ALDERSON_DISK_FANTASY_ZONE"
+  ],
+  "techs": [
+   "TECH_MATERIALIZATION",
+   "TECH_PANPSYCHISM",
+   "TECH_STRING_MANIPULATION",
+   "TECH_TRANSCENDENT_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_QUANTUM_RAMJET",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NOOGENESIS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 366008
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/mensiokinesis.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MENSIOKINESIS",
+  "civilopedia": "TXT_KEY_TECH_MENSIOKINESIS_PEDIA",
+  "quote": "TXT_KEY_TECH_MENSIOKINESIS_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 147,
+  "gridY": 5
+ }
+}

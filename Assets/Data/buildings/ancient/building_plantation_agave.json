@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_PLANTATION_AGAVE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FERMENTATION",
+    {
+     "type": "TERRAIN_DESERT",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PRICKLY_PEAR",
+     "scope": "city",
+     "connection": "onSite"
+    },
+    {
+     "type": "BONUS_SUGAR",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ],
+   "dormant": [
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 146,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PLANTATION_AGAVE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_AGAVE",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_AGAVE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

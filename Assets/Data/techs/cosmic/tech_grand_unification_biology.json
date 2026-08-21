@@ -1,0 +1,72 @@
+{
+ "type": "TECH_GRAND_UNIFICATION_BIOLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_QUASAR_ECOSYSTEM",
+   "BUILDING_INTERSTELLAR_NEUTRON_STAR_COLONY"
+  ],
+  "builds": [
+   "BUILD_BIOTIC_NEUTRON_STAR"
+  ],
+  "improvements": [
+   "IMPROVEMENT_BIOTIC_NEUTRON_STAR"
+  ],
+  "techs": [
+   "TECH_PANPSYCHISM",
+   "TECH_TRANSCENDENT_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_LIFE_SWARM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NEUTRONIUM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PURE_INFORMATION_SOCIETY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 366008
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/grand_unification_biology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_GRAND_UNIFICATION_BIOLOGY",
+  "civilopedia": "TXT_KEY_TECH_GRAND_UNIFICATION_BIOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_GRAND_UNIFICATION_BIOLOGY_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 147,
+  "gridY": 11
+ }
+}

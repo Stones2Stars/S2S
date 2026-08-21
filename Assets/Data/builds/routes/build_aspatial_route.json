@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_ASPATIAL_ROUTE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SPATIAL_TRANSCENDENCE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "route": "ROUTE_ASPATIAL_ROUTE"
+ },
+ "cost": {
+  "gold": 150,
+  "time": 800
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/aspatial_route.dds"
+  },
+  "hotkey": "KB_R"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_SHOVEL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_ASPATIAL_ROUTE"
+ }
+}

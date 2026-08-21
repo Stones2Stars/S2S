@@ -1,0 +1,11 @@
+{
+ "type": "PROMOTIONLINE_PRAGMATIC",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPragmatic.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_PRAGMATIC"
+ }
+}

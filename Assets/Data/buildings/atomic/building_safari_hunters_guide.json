@@ -1,0 +1,105 @@
+{
+ "type": "BUILDING_SAFARI_HUNTERS_GUIDE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TOURISM",
+    "TECH_CORPORATION",
+    {
+     "any": [
+      "BUILDING_MODERN_OFFICES",
+      "BUILDING_OFFICIUM"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CORPORATION_SAFARI"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ELEPHANT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DEER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BEAVER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WHALE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 1280,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 8
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SAFARI_HUNTERS_GUIDE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SAFARI_HUNTERS_GUIDE",
+  "civilopedia": "TXT_KEY_BUILDING_SAFARI_HUNTERS_GUIDE_PEDIA",
+  "worth": 8,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_CORPORATION",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

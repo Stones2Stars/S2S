@@ -1,0 +1,86 @@
+{
+ "type": "UNITCOMBAT_SUBDUED_MEDIUM",
+ "upkeep": {
+  "unit": {
+   "extra": {
+    "flat": 0.4
+   }
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_RECORD_TALE",
+    "outcomes": [
+     {
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_RECORD_TALE_ORAL"
+      },
+      "chance": 100,
+      "culture": 8
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_RECORD_TALE_ORAL_STORY"
+      },
+      "chance": 100,
+      "culture": 9
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_RECORD_TALE_ORAL_CAVE"
+      },
+      "chance": 100,
+      "culture": 10
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_RECORD_TALE_LASCAUX"
+      },
+      "chance": 100,
+      "culture": 11
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_RECORD_TALE_FRESCO"
+      },
+      "chance": 100,
+      "culture": 12
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_RECORD_TALE_SCRIBE"
+      },
+      "chance": 100,
+      "research": 9,
+      "culture": 12
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_RECORD_TALE_LIBRARY"
+      },
+      "chance": 100,
+      "research": 11,
+      "culture": 10
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_RECORD_TALE_UNIVERSITY"
+      },
+      "chance": 100,
+      "research": 13,
+      "culture": 8
+     }
+    ]
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/subdued.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SUBDUED"
+ }
+}

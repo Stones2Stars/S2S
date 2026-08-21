@@ -1,0 +1,161 @@
+{
+ "type": "UNIT_WALKER_ARTILLERY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_SUPERSTRONG_ALLOYS",
+    {
+     "any": [
+      {
+       "type": "BONUS_ALUMINUM_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_NANOTUBES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 160
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 30
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 200
+   },
+   "limit": {
+    "flat": 75
+   },
+   "maxUnits": {
+    "flat": 15
+   }
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage",
+  "ignoreBuildingDefense",
+  "mechanized",
+  "tradable",
+  "collateralImmune"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SIEGE",
+ "combatClasses": [
+  "UNITCOMBAT_ROBOT",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SIEGE_URBAN",
+  "UNITCOMBAT_SIEGE_FIELD",
+  "UNITCOMBAT_SIEGE_ROCKETRY",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_ION",
+  "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+  "UNITCOMBAT_WEAPON_DIST_LONG_RANGE_MISSILE",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_SHIELD_ENERGY",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_RUGGED1",
+   "PROMOTION_RUGGED2",
+   "PROMOTION_RUGGED3"
+  ]
+ },
+ "cost": {
+  "production": 5000,
+  "upkeep": 11
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WALKER_ARTILLERY",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "rangedWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WALKER_ARTILLERY"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_WALKER_ARTILLERY",
+  "civilopedia": "TXT_KEY_UNIT_WALKER_ARTILLERY_PEDIA",
+  "worth": 6,
+  "militaryWorth": 350,
+  "xpValueAttack": 6,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_COLLATERAL",
+   "UNITAI_CITY_COUNTER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combatLimit": 90
+  }
+ }
+}

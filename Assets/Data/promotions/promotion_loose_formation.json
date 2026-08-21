@@ -1,0 +1,58 @@
+{
+ "type": "PROMOTION_LOOSE_FORMATION",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT2"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 15
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/loose.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_LOOSE_FORMATION",
+  "unitCombats": [
+   "UNITCOMBAT_EXPLORER"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS",
+   "UNITCOMBAT_SUBMARINE"
+  ]
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_CHIMU",
+ "enables": {
+  "units": [
+   "UNIT_ACALAPUA",
+   "UNIT_YUPANQUI_BOWMAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CHIMU"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CHIMU",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

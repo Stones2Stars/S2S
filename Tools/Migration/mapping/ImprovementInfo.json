@@ -1,0 +1,70 @@
+{
+  "entity": "ImprovementInfo",
+  "rootElement": "ImprovementInfo",
+  "glob": "**/CIV4ImprovementInfos.xml",
+  "channels": {
+    "iCulture": {"scope": "plot", "channel": "culture", "kind": "flat"},
+    "iDefenseModifier": {"scope": "plot", "channel": "defense", "kind": "percent", "member": "amount"},
+    "iVisibilityChange": {"scope": "plot", "channel": "vision", "kind": "flat", "member": "visibilityRange"},
+    "iSeeFrom": {"scope": "plot", "channel": "vision", "kind": "flat", "member": "seeFrom"},
+    "_NOTE": "curate_improvement.families overrides these (plot scope). REMOVED misclassified channels (owner+classify 2026-06-16): iHealthPercent (drop, balance-cut as source); bCarriesIrrigation/bActsAsCity/bIsZOCSource/bIsUniversalTradeBonusProvider (identity capability flags, NOT enabler channels)."
+  },
+  "inversionsOut": {
+    "TechYieldChanges": {"destEntity": "CvTechInfo", "shape": "yield.team.improvements.{IMPROVEMENT}.flat (curate_tech TECH_BOOSTS)"},
+    "RouteYieldChanges": {"destEntity": "CvRouteInfo", "shape": "yield.plot.improvements.{IMPROVEMENT}.flat (curate_route ROUTE_BOOSTS)"}
+  },
+  "enablerEdges": {},
+  "prereqs": [
+    "PrereqTech",
+    "TerrainMakesValids",
+    "FeatureMakesValids",
+    "PrereqNatureYields",
+    "bRequiresFeature",
+    "bRequiresFlatlands",
+    "bRequiresIrrigation",
+    "bFreshWaterMakesValid",
+    "bHillsMakesValid",
+    "bPeakMakesValid",
+    "bRiverSideMakesValid"
+  ],
+  "cost": [
+    "iAdvancedStartCost"
+  ],
+  "art": [
+    "ArtDefineTag",
+    "WorldSoundscapeAudioScript"
+  ],
+  "identity": [
+    "Type",
+    "Description",
+    "Civilopedia",
+    "Help",
+    "BonusTypeStructs",
+    "YieldChanges",
+    "IrrigatedYieldChange",
+    "RiverSideYieldChange",
+    "PropertyManipulators",
+    "ImprovementUpgrade",
+    "ImprovementPillage",
+    "AlternativeImprovementUpgradeTypes",
+    "iUpgradeTime",
+    "bUpgradeRequiresFortify",
+    "iPillageGold",
+    "iCultureRange",
+    "iUniqueRange",
+    "iAirBombDefense",
+    "bBombardable",
+    "bMilitaryStructure",
+    "bPeakImprovement",
+    "bWaterImprovement",
+    "bOutsideBorders",
+    "bGraphicalOnly",
+    "bPlacesTerrain",
+    "bPlacesFeature",
+    "iFeatureGrowth",
+    "bGoody",
+    "iGoodyRange",
+    "iTilesPerGoody"
+  ],
+  "boostsIn": ["buildingBoosts"]
+}

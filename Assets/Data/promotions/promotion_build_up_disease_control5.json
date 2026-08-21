@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTION_BUILD_UP_DISEASE_CONTROL5",
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  },
+  "plot": {
+   "flat": -5
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_DISEASE_CONTROL": 5
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/DiseaseControl5BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_DISEASE_CONTROL5",
+  "minEra": "C2C_ERA_RENAISSANCE"
+ }
+}

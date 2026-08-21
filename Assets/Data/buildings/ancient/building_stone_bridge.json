@@ -1,0 +1,110 @@
+{
+ "type": "BUILDING_STONE_BRIDGE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENGINEERING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BRICK_BRIDGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "TECH_MASONRY",
+    {
+     "any": [
+      "BUILDING_TRAILS",
+      "BUILDING_ROADS",
+      "BUILDING_PAVED_ROADS",
+      "BUILDING_ASPHALT_ROADS",
+      "BUILDING_SKYROAD_CONTROL_TOWER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STONE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_BRICK_BRIDGE",
+    "BUILDING_COVERED_BRIDGE",
+    "BUILDING_VIADUCT",
+    "BUILDING_CAUSEWAY",
+    "BUILDING_CHAIN_BRIDGE",
+    "BUILDING_TRUSS_BRIDGE",
+    "BUILDING_SMALL_STEEL_ARCH_BRIDGE",
+    "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+    "BUILDING_SMALL_SUSPENSION_BRIDGE",
+    "BUILDING_LARGE_SUSPENSION_BRIDGE",
+    "BUILDING_TELEPORT_BOOTH"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 4,
+   "percent": 4
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": -1
+   },
+   "riverDefensePenalty": {
+    "percent": 12
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1,
+   "modifier": {
+    "percent": 8
+   }
+  }
+ },
+ "cost": {
+  "production": 153,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_STONE_BRIDGE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_STONE_BRIDGE",
+  "civilopedia": "TXT_KEY_BUILDING_STONE_BRIDGE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -3
+  }
+ }
+}

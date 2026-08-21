@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_MOON_ROCK_LAB",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_LUNAR_EXPLORATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_MOON_ROCKS"
+  ]
+ },
+ "research": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 3210
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MOON_ROCK_LAB"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MOON_ROCK_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MOON_ROCK_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_MOON_ROCK_LAB_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

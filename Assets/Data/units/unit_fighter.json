@@ -1,0 +1,155 @@
+{
+ "type": "UNIT_FIGHTER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_ADVANCED_AVIATION",
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      "BUILDING_MILITARY_AIRBASE",
+      "BUILDING_AEROSPACE_COMPLEX"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_F4_PHANTOM"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_NUCLEAR_SHIPS": {
+     "percent": -40
+    },
+    "UNITCOMBAT_DIESEL_SHIPS": {
+     "percent": -20
+    },
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 20
+    }
+   },
+   "domain": {
+    "DOMAIN_SEA": {
+     "percent": 100
+    }
+   }
+  }
+ },
+ "bombard": {
+  "unit": {
+   "airBombRate": {
+    "flat": 10
+   }
+  }
+ },
+ "range": {
+  "unit": {
+   "flat": 6
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 20
+   }
+  }
+ },
+ "skills": [
+  "ignoreBuildingDefense",
+  "mechanized",
+  "dcmFighterEngage",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "airUnit",
+  "fighter"
+ ],
+ "combatClass": "UNITCOMBAT_EARLY_FIGHTERS",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_A2G_TORPEDO",
+  "UNITCOMBAT_ARMOR_AIRCRAFT",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 1110,
+  "upkeep": 2
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PROPERLLER_NAVAL_FIGHTER",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 0.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_PROPERLLER_NAVAL_FIGHTER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_FIGHTER",
+  "civilopedia": "TXT_KEY_UNIT_FIGHTER_PEDIA",
+  "help": "TXT_KEY_UNIT_CARRIER_OPS_HELP",
+  "worth": 3,
+  "militaryWorth": 76,
+  "xpValueAttack": 6,
+  "xpValueDefense": 6,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_DEFENSE_AIR",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_DEFENSE_AIR",
+   "UNITAI_CARRIER_AIR"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "airCombat": 28,
+   "airCombatLimit": 50,
+   "airUnitCap": 1
+  }
+ }
+}

@@ -1,0 +1,107 @@
+{
+ "type": "BUILDING_MURANO_GLASSMAKERS",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_GLAZE_MAKER",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_LEAD_GLASS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   {
+    "BONUS_CRYSTAL_GLASSWARE": 6
+   }
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1,
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 2640,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MURANO_GLASSMAKERS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MURANO_GLASSMAKERS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GLASSMITH"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MURANO_GLASSMAKERS",
+  "civilopedia": "TXT_KEY_BUILDING_CRYSTAL_GLASSWARE_WORKSHOP_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 4,
+  "militaryWorth": 2,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

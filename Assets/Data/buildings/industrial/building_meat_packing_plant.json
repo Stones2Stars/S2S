@@ -1,0 +1,136 @@
+{
+ "type": "BUILDING_MEAT_PACKING_PLANT",
+ "enables": {
+  "buildings": [
+   "BUILDING_GUILD_BUTCHERS",
+   "BUILDING_RESOURCES_LARD"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PLANETARY_ECONOMICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "TECH_REFRIGERATION",
+    {
+     "any": [
+      "BUILDING_SLAUGHTERHOUSE",
+      "BUILDING_INDUSTRIAL_FARMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_RAW_MEAT"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_DEER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_COW",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_PIG",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_POULTRY",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SALT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 800,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MEAT_PACKING_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MEAT_PACKING_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_MEAT_PACKING_PLANT_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

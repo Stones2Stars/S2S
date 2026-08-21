@@ -1,0 +1,69 @@
+{
+ "type": "TECH_COSMIC_GOVERNANCE",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERSPACE_GOVERNING_COUNCIL",
+   "BUILDING_HYPERSPACE_SIMULATED_CIVILIZATION",
+   "BUILDING_ROKOS_BASILISK"
+  ],
+  "techs": [
+   "TECH_COSMIC_WARFARE",
+   "TECH_PARAMETER_TUNING",
+   "TECH_SENTIENT_ENERGY_FIELDS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PANPSYCHISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MATERIALIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ENDLESS_EXPLORATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 545221
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/cosmic_governance.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_COSMIC_GOVERNANCE",
+  "civilopedia": "TXT_KEY_TECH_COSMIC_GOVERNANCE_PEDIA",
+  "quote": "TXT_KEY_TECH_COSMIC_GOVERNANCE_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 152,
+  "gridY": 15
+ }
+}

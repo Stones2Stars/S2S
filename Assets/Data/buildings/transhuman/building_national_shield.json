@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_NATIONAL_SHIELD",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INDUSTRIAL_PARK",
+    "TECH_ADVANCED_SHIELDING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ADVANCED_SHIELDING",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 38430,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NATIONAL_SHIELD"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NATIONAL_SHIELD",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_SHIELD",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_SHIELD_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

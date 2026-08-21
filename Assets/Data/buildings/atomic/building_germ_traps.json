@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_GERM_TRAPS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ELECTRIC_ARC_WEAPONRY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ROBOTIC_TRAPS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_BIOLOGICAL_WARFARE_LAB",
+    "TECH_BIOLOGICAL_WARFARE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_ROBOTIC_TRAPS",
+    "BUILDING_EMP_TRAPS",
+    "BUILDING_NANOBOT_TRAPS",
+    "BUILDING_GRAVITY_TRAPS"
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 30
+   }
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 1180,
+  "countModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GERM_TRAPS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_NANOFACTORY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GERM_TRAPS",
+  "civilopedia": "TXT_KEY_BUILDING_GERM_TRAPS_PEDIA",
+  "militaryWorth": 7,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

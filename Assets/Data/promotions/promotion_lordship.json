@@ -1,0 +1,49 @@
+{
+ "type": "PROMOTION_LORDSHIP",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BARD1",
+   "PROMOTION_DEDICATION",
+   "PROMOTION_LOCALLORD",
+   "PROMOTION_OFFICER_COMMISSION",
+   "PROMOTION_OVERWHELM",
+   "PROMOTION_TACTICIAN"
+  ]
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "collateral": {
+  "unit": {
+   "protection": {
+    "percent": 20
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/LedbyNoble.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_LORDSHIP",
+  "unitCombats": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_NAVAL_COMBATANT"
+  ],
+  "leader": true
+ }
+}

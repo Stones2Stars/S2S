@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_DEEP_SPACE_ALIEN_SIGNAL_DECODER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_BISHOP_RING",
+    "TECH_INTERSTELLAR_COMMUNICATION",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    200,
+    {
+     "value": 11,
+     "enabled": "TECH_NEUTRINO_COMMUNICATIONS"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 11,
+     "enabled": "TECH_NEUTRINO_COMMUNICATIONS"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 6326,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_ALIEN_SIGNAL_DECODER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_ALIEN_SIGNAL_DECODER",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_ALIEN_SIGNAL_DECODER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

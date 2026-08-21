@@ -1,0 +1,39 @@
+{
+ "type": "BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALTAR_FOR_HUMAN_SACRIFICE"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+   ],
+   "all": [
+    "TECH_SACRIFICE_CULT"
+   ]
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE",
+  "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_HUMAN_SACRIFICE_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

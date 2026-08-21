@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_CALIFORNIAN",
+ "enables": {
+  "units": [
+   "UNIT_FORTY_NINER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CALIFORNIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CALIFORNIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

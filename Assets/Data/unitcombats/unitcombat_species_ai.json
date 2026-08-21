@@ -1,0 +1,11 @@
+{
+ "type": "UNITCOMBAT_SPECIES_AI",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/species_ai.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SPECIES_AI"
+ }
+}

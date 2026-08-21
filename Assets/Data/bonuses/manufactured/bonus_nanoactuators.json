@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_NANOACTUATORS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANTHROPOMORPHICS_LAB"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_NANOACTUATORS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_NANOACTUATORS",
+  "civilopedia": "TXT_KEY_BONUS_NANOACTUATORS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

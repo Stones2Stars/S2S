@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_MEGATOWER_MALL_LEVEL",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MEGATOWER",
+    "TECH_NANO_ARCHITECTURE",
+    {
+     "any": [
+      "BUILDING_MALL",
+      "BUILDING_HYPERMARKET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_METAMATERIALS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    8,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TRANSPARENT_ALUMINUM",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 3245,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MEGATOWER_MALL_LEVEL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MEGATOWER_MALL_LEVEL",
+  "civilopedia": "TXT_KEY_BUILDING_MEGATOWER_MALL_LEVEL_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

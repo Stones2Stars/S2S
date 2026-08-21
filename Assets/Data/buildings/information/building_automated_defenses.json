@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_AUTOMATED_DEFENSES",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MILITARY_ROBOTICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_ROBOTIC"
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_AMMUNITION",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 50
+   },
+   "airDefense": {
+    "percent": -25
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ROBOT": {
+     "flat": 2
+    },
+    "UNITCOMBAT_ASSAULT_MECH": {
+     "flat": 2
+    },
+    "UNITCOMBAT_DREADNOUGHT": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 2865,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_AUTOMATED_DEFENSES"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CLONING_FACTORY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_AUTOMATED_DEFENSES",
+  "civilopedia": "TXT_KEY_BUILDING_AUTOMATED_DEFENSES_PEDIA",
+  "worth": 8,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

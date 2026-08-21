@@ -1,0 +1,17 @@
+{
+ "type": "UNITCOMBAT_COMMANDER",
+ "skills": {
+  "cannotMergeSplit": true
+ },
+ "tags": [
+  "commander"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/commanders.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_COMMANDER"
+ }
+}

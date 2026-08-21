@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_CRIME_MILITARY_DESERTION",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_MILITARY_TRAINING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 585,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": -30,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": 30
+   }
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 4
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_MILITARY_DESERTION",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_MILITARY_DESERTION_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

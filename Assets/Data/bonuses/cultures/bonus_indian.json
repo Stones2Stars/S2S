@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_INDIAN",
+ "enables": {
+  "units": [
+   "UNIT_AURANGZEB",
+   "UNIT_CHANDRAGUPTA_MAURYA",
+   "UNIT_URUMI_SWORDSMAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_INDIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_INDIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

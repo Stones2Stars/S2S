@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_ANIMAL_TRAINER_GIRAFFE",
+ "enables": {
+  "buildings": [
+   "BUILDING_HERITAGE_GIRAFFE",
+   "BUILDING_MILITARY_STANDARD_GIRAFFE"
+  ],
+  "units": [
+   "UNIT_GIRAFFE_ARCHER",
+   "UNIT_GIRAFFE_CARABINIER",
+   "UNIT_GIRAFFE_CAVALRY",
+   "UNIT_GIRAFFE_CROSSBOW",
+   "UNIT_GIRAFFE_CUIRASSIER",
+   "UNIT_GIRAFFE_DRAGOON",
+   "UNIT_GIRAFFE_TRENCH_CAVALRY",
+   "UNIT_URBAN_GIRAFFEMAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "latitude": {
+      "max": 45
+     }
+    },
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_GIRAFFE",
+      "BUILDING_CAMP_GIRAFFE",
+      "BUILDING_BREEDING_PROGRAM_GIRAFFE",
+      "BUILDING_ANIMAL_PRESERVE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1038,
+  "sizeModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GIRAFFE_TRAINER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_GIRAFFE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_GIRAFFE",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_GIRAFFE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 4,
+  "militaryWorth": 2,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

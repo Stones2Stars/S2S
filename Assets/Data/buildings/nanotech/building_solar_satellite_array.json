@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_SOLAR_SATELLITE_ARRAY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_FACTORY",
+    {
+     "type": "BUILDING_LUNAR_LAUNCH_SITE",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_LUNAR_SILICON_PROCESSING_FACILITY",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_LUNAR_MANUFACTURING",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "gold": {
+  "city": {
+   "flat": 2000
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_SOLAR_POWER_SATELLITE",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 2106,
+  "hurryModifier": 10000
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CISLUNAR_SOLAR_SATELLITES"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SOLAR_SATELLITE_ARRAY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SOLAR_SATELLITE_ARRAY",
+  "civilopedia": "TXT_KEY_BUILDING_SOLAR_SATELLITE_ARRAY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

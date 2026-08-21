@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_POUNCE1",
+ "combat": {
+  "unit": {
+   "stealth": {
+    "percent": 5
+   },
+   "lunge": {
+    "percent": 10
+   },
+   "stealthStrikes": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_POUNCE": 1
+ },
+ "enabled": "GAMEOPTION_COMBAT_WITHOUT_WARNING",
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Pounce1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_POUNCE1"
+ }
+}

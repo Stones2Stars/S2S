@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_ACCURACY3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_ACCURACY2"
+   ]
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_ACCURACY": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Accuracy3.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,2,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_ACCURACY3"
+ }
+}

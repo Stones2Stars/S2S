@@ -1,0 +1,206 @@
+{
+ "type": "UNIT_GUERRILLA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SUPERSTRONG_ALLOYS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_REBEL_CAMP",
+    "TECH_GUERRILLA_WARFARE",
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MSNIPER"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "combat": {
+  "unit": {
+   "lunge": {
+    "percent": 16
+   },
+   "enclose": {
+    "percent": 16
+   },
+   "unnerve": {
+    "percent": 16
+   },
+   "stealthStrikes": {
+    "flat": 2
+   },
+   "stealth": {
+    "percent": 50
+   },
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE_DEFENSIVE": {
+     "percent": 50
+    }
+   },
+   "targets": {
+    "UNITCOMBAT_EXPLORER": true,
+    "UNITCOMBAT_CIVILIAN": true,
+    "UNITCOMBAT_CANINE": true,
+    "UNITCOMBAT_SIEGE_DEFENSIVE": true,
+    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 60
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 40
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 2
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 30
+  },
+  "plot": {
+   "flat": 60
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": "IS_CAPTIVE",
+    "flat": 1
+   }
+  }
+ },
+ "skills": [
+  "alwaysHostile",
+  "assassin",
+  "hiddenNationality",
+  "pillage",
+  "counterSpy",
+  "destroy",
+  "ignoreTerrainCost",
+  "ignoreZoneOfControl",
+  "noNonOwnedCityEntry",
+  "sabotage",
+  "stealPlans",
+  "upgradeAnywhere",
+  "ignoreNoEntryLevel",
+  "camouflage"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "troop"
+ ],
+ "combatClass": "UNITCOMBAT_STRIKE_TEAM",
+ "combatClasses": [
+  "UNITCOMBAT_GUN",
+  "UNITCOMBAT_RUFFIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
+  "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 500
+  },
+  "detection": {
+   "value": 400,
+   "unit": "HAS_CAMOUFLAGE"
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_LOOTER",
+   "PROMOTION_COMMANDO",
+   "PROMOTION_MARAUDER",
+   "PROMOTION_SENTRY",
+   "PROMOTION_AMBUSH"
+  ]
+ },
+ "cost": {
+  "production": 1250,
+  "upkeep": 9
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GUERILLA",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 3,
+      "define": {
+       "early": "ART_DEF_UNIT_GUERILLA"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_GUERRILLA",
+  "civilopedia": "TXT_KEY_UNIT_GUERRILLA_PEDIA",
+  "worth": 10,
+  "militaryWorth": 40,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PILLAGE",
+  "formationType": "FORMATION_TYPE_RANGED",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE",
+   "UNITAI_PILLAGE_COUNTER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

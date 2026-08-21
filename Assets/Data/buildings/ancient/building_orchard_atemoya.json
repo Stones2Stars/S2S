@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_ORCHARD_ATEMOYA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FRUIT"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FARMSCRAPER_III"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ORCHARDS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_PAPAYA",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_APPLE",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_FARMSCRAPER_III"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 139,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ORCHARD_ATEMOYA",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ORCHARD_ATEMOYA",
+  "civilopedia": "TXT_KEY_BUILDING_ORCHARD_ATEMOYA_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

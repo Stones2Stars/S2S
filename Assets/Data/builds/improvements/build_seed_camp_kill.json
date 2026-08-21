@@ -1,0 +1,35 @@
+{
+ "type": "BUILD_SEED_CAMP_KILL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GATHERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_SEED_CAMP"
+ },
+ "cost": {
+  "gold": 4,
+  "time": 202
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/Button_GrainGather.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_SEED_CAMP_KILL",
+  "consumesUnit": true
+ }
+}

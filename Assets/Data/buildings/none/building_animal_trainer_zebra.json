@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_ANIMAL_TRAINER_ZEBRA",
+ "enables": {
+  "buildings": [
+   "BUILDING_HERITAGE_ZEBRA",
+   "BUILDING_MILITARY_STANDARD_ZEBRA"
+  ],
+  "units": [
+   "UNIT_ZEBRA_ARCHER",
+   "UNIT_ZEBRA_CAVALRY",
+   "UNIT_ZEBRA_CHARIOT",
+   "UNIT_ZEBRA_CUIRASSIER",
+   "UNIT_ZEBRA_KNIGHT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "latitude": {
+      "max": 45
+     }
+    },
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_HERD_ZEBRA",
+      "BUILDING_CAMP_ZEBRA",
+      "BUILDING_FOLKLORE_ZEBRA",
+      "BUILDING_BREEDING_PROGRAM_ZEBRA",
+      "BUILDING_ANIMAL_PRESERVE",
+      "BUILDING_INDUSTRIAL_FARMS",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1038,
+  "sizeModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ZEBRA_RIDER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_ZEBRA",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_ZEBRA",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_ZEBRA_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 4,
+  "militaryWorth": 2,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

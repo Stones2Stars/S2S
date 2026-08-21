@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_REPAIR_AIRCRAFT7",
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 1
+   },
+   "victoryAdjacent": {
+    "flat": 5
+   },
+   "victoryStack": {
+    "flat": 7
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_AIRCRAFT": {
+     "heal": 8,
+     "adjacentHeal": 5
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_REPAIR_AIRCRAFT": 7
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/RepairAircraft7Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_REPAIR_AIRCRAFT7"
+ }
+}

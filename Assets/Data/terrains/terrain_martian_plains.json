@@ -1,0 +1,34 @@
+{
+ "type": "TERRAIN_MARTIAN_PLAINS",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Plains.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_TERRAIN_MARTIAN_PLAINS"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_PLAINS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_TERRAIN_MARTIAN_PLAINS",
+  "civilopedia": "TXT_KEY_TERRAIN_MARTIAN_PLAINS_PEDIA",
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

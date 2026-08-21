@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_CANADIAN",
+ "enables": {
+  "units": [
+   "UNIT_ARTHUR_CURRIE",
+   "UNIT_CANADIAN_MOUNTIE",
+   "UNIT_ISAAC_BROCK"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CANADIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CANADIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

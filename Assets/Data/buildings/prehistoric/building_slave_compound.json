@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_SLAVE_COMPOUND",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND_COMMERCE",
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION",
+   "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT",
+   "BUILDING_SLAVE_COMPOUND_FOOD",
+   "BUILDING_SLAVE_COMPOUND_INDUSTRY",
+   "BUILDING_SLAVE_COMPOUND_MILITARY_SUPPORT",
+   "BUILDING_SLAVE_COMPOUND_SANITATION"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+   ],
+   "all": [
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE",
+    "TECH_SLAVERY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": -5,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SLAVES": 1
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SLAVE_MARKET",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SLAVE_MARKET"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SLAVE_COMPOUND",
+  "civilopedia": "TXT_KEY_BUILDING_SLAVE_COMPOUND_PEDIA",
+  "help": "TXT_KEY_BUILDING_SLAVE_COMPOUND_HELP",
+  "notConstructible": true,
+  "worth": 3,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

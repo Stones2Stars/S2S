@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_INTERSTELLAR_XENOARCHEOLOGIST",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_XENODIPLOMACY",
+    {
+     "any": [
+      "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+      "BUILDING_SPACE_COLONY_MILKY_WAY"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 2536,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_XENOARCHEOLOGIST",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_XENOARCHEOLOGIST",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_XENOARCHEOLOGIST_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

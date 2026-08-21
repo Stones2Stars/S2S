@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTIONLINE_PINCH",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Pinch.dds,Art/Interface/Buttons/Promotions_Atlas.dds,3,5"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_PINCH",
+  "unitCombats": [
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_HELICOPTER",
+   "UNITCOMBAT_CLONES",
+   "UNITCOMBAT_ASSAULT_MECH",
+   "UNITCOMBAT_DREADNOUGHT"
+  ],
+  "notOnDomains": [
+   "DOMAIN_SEA"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ]
+ }
+}

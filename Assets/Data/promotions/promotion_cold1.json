@@ -1,0 +1,71 @@
+{
+ "type": "PROMOTION_COLD1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_COLD2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT1"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_TAIGA": {
+     "attack": {
+      "percent": 5
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_TUNDRA": {
+     "attack": {
+      "percent": 5
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_PERMAFROST": {
+     "attack": {
+      "percent": 5
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_ICE": {
+     "attack": {
+      "percent": 5
+     },
+     "defense": {
+      "percent": 10
+     }
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COLD": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Cold1.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,5,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COLD1",
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
+ }
+}

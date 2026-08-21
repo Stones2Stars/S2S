@@ -1,0 +1,68 @@
+{
+ "type": "PROMOTION_GREEN_WARDEN",
+ "combat": {
+  "unit": {
+   "feature": {
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "FEATURE_BAMBOO": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "FEATURE_FOREST_YOUNG": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "FEATURE_FOREST_BURNT": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "FEATURE_FOREST_ANCIENT": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/shamrock.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_GREEN_WARDEN"
+ }
+}

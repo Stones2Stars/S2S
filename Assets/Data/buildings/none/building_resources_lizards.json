@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_RESOURCES_LIZARDS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ARTIFICIAL_LIFE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_REPET"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_REPET"
+   ],
+   "all": [
+    {
+     "any": [
+      "BUILDING_LIZARD_HUNTERS_CAMP",
+      "BUILDING_ENCLOSURE_REPTILE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_LIZARDS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESOURCES_LIZARDS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_LIZARDS",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

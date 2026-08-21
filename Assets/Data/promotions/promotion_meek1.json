@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_MEEK1",
+ "combat": {
+  "unit": {
+   "breakdownChance": {
+    "flat": -1
+   },
+   "cityAttack": {
+    "percent": -15
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MEEK_PROMOTION": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionMeek.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_MEEK1",
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT"
+  ]
+ }
+}

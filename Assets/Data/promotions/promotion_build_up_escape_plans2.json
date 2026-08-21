@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_BUILD_UP_ESCAPE_PLANS2",
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_ESCAPE_PLANS": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/EscapePlans2BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_ESCAPE_PLANS2"
+ }
+}

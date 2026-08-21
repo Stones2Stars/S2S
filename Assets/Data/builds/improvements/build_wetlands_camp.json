@@ -1,0 +1,33 @@
+{
+ "type": "BUILD_WETLANDS_CAMP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_WETLANDS_CAMP"
+ },
+ "cost": {
+  "gold": 20,
+  "time": 400
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/wetlands_camp.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_WETLANDS_CAMP"
+ }
+}

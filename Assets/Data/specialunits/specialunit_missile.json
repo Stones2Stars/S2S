@@ -1,0 +1,7 @@
+{
+ "type": "SPECIALUNIT_MISSILE",
+ "identity": {
+  "description": "TXT_KEY_SPECIALUNIT_MISSILE",
+  "cityLoad": true
+ }
+}

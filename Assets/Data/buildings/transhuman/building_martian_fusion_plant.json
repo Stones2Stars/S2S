@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_MARTIAN_FUSION_PLANT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MARTIAN_DEUTERIUM_MINE",
+    "BUILDING_SPACE_COLONY_MARTIAN",
+    "TECH_UNIFICATION_PHYSICS",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    100,
+    {
+     "value": 10,
+     "enabled": "TECH_ARTIFICIAL_NUCLEOSYNTHESIS"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_ATOMIZATION_FIELD"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 1921,
+  "hurryModifier": 10000
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_FUSION_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_FUSION_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_FUSION_PLANT_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

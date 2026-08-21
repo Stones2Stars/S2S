@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DISTANT_KLEIN_BOTTLE_UNIVERSE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_NON_ORIENTABLE_WORMHOLE",
+    "TECH_MANIFOLD_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ANTIMATTER"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 2914,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_KLEIN_BOTTLE_UNIVERSE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_KLEIN_BOTTLE_UNIVERSE",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_KLEIN_BOTTLE_UNIVERSE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

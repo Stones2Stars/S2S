@@ -1,0 +1,128 @@
+{
+ "type": "BUILDING_TOWN_PATROL",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+  ],
+  "units": [
+   "UNIT_ENFORCERS",
+   "UNIT_HARAPPA_WATCHER",
+   "UNIT_HOPLOMACHUS",
+   "UNIT_HUACA_GUARDIANS",
+   "UNIT_NEANDERTHAL_ENFORCER",
+   "UNIT_NEANDERTHAL_WATCHER",
+   "UNIT_ORONAO_WATCHER",
+   "UNIT_PATROLS",
+   "UNIT_PETRA_GUARD",
+   "UNIT_TOWN_WATCHMEN",
+   "UNIT_TREASURE_GUARD",
+   "UNIT_WATCHER"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GUARDHOUSE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_LAW_ENFORCEMENT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_GUARDHOUSE",
+    "BUILDING_GUARD_STATION",
+    "BUILDING_SHERIFFS_OFFICE",
+    "BUILDING_POLICE_STATION",
+    "BUILDING_POLICE_PRECINCT"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 5,
+     "enabled": "TECH_DIVINE_RIGHT"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 5
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "underworld": {
+  "city": {
+   "investigation": {
+    "flat": 20
+   }
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_INVESTIGATOR": 1
+  }
+ },
+ "cost": {
+  "production": 234,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TOWN_PATROL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TOWN_PATROL",
+  "civilopedia": "TXT_KEY_BUILDING_TOWN_PATROL_PEDIA",
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

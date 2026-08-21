@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_ORDINANCE_EFFECT_AUTOMOBILE_EMISSION_REDUCTION_ACT",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TELEPORT_BOOTH"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_TELEPORT_BOOTH"
+   ],
+   "all": [
+    "TECH_ECOLOGY"
+   ]
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "empire": {
+   "flat": -50
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ORDINANCE_AUTOMOBILE_EMISSION_REDUCTION_ACT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_AUTOMOBILE_EMISSION_REDUCTION_ACT",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_AUTOMOBILE_EMISSION_REDUCTION_ACT_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

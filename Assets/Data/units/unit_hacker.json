@@ -1,0 +1,252 @@
+{
+ "type": "UNIT_HACKER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPREHENSIVE_CYBERNETICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_CELLPHONES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_BLACK_HAT_HIDEOUT",
+    "TECH_CYBERWARFARE",
+    {
+     "type": "BONUS_PERSONAL_ELECTRONICS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_FLASH_MEMORY_DEVICES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_DISKETTES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_TECHNARCHIST"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": -20
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "lunge": {
+    "percent": 28
+   },
+   "unnerve": {
+    "percent": 28
+   },
+   "stealthStrikes": {
+    "flat": 4
+   },
+   "stealth": {
+    "percent": 80
+   },
+   "unitCombat": {
+    "UNITCOMBAT_SPECIES_AI": {
+     "percent": 400
+    },
+    "UNITCOMBAT_HITECH": {
+     "percent": 300
+    },
+    "UNITCOMBAT_ASSAULT_MECH": {
+     "percent": 300
+    }
+   },
+   "targets": {
+    "UNITCOMBAT_SPECIES_AI": true,
+    "UNITCOMBAT_HITECH": true,
+    "UNITCOMBAT_ASSAULT_MECH": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 50
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 70
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": -40
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "insidiousness": {
+    "flat": 150
+   }
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 1
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_TECH": {
+     "heal": 35,
+     "adjacentHeal": 15
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 90
+  },
+  "plot": {
+   "flat": 45
+  }
+ },
+ "skills": [
+  "alwaysHostile",
+  "assassin",
+  "hiddenNationality",
+  "noCapture",
+  "noDefensiveBonus",
+  "blendIntoCity",
+  "counterSpy",
+  "destroy",
+  "ignoreZoneOfControl",
+  "sabotage",
+  "stealPlans",
+  "upgradeAnywhere",
+  "disguised",
+  "political"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_CRIMINAL",
+ "combatClasses": [
+  "UNITCOMBAT_HITECH",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_SPRAY",
+  "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_TECH"
+ ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 800
+  },
+  "detection": [
+   {
+    "value": 200,
+    "unit": "HAS_DISGUISED"
+   },
+   {
+    "value": 600,
+    "unit": "HAS_POLITICAL"
+   }
+  ]
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO",
+   "PROMOTION_INDUSTRYESPIONAGE"
+  ],
+  "greatPersonAction": {
+   "trade": {
+    "base": 250,
+    "multiplier": 1
+   }
+  }
+ },
+ "cost": {
+  "production": 2005,
+  "upkeep": 15
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HACKER",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_HACKER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_HACKER",
+  "civilopedia": "TXT_KEY_UNIT_HACKER_PEDIA",
+  "worth": 15,
+  "militaryWorth": 60,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_INFILTRATOR",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "espionagePoints": 5000,
+  "unitAIs": [
+   "UNITAI_SPY",
+   "UNITAI_PILLAGE",
+   "UNITAI_INFILTRATOR"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

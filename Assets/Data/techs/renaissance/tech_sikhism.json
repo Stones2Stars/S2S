@@ -1,0 +1,59 @@
+{
+ "type": "TECH_SIKHISM",
+ "enables": {
+  "religions": [
+   "RELIGION_SIKHISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HUMANISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 2528
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/sikhism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SIKHISM",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SIKHISM",
+  "civilopedia": "TXT_KEY_TECH_SIKHISM_PEDIA",
+  "quote": "TXT_KEY_TECH_SIKHISM_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "gridX": 52,
+  "gridY": 11,
+  "worth": 8
+ }
+}

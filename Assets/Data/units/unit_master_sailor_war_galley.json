@@ -1,0 +1,155 @@
+{
+ "type": "UNIT_MASTER_SAILOR_WAR_GALLEY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEAFARING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
+    "TECH_NAVAL_WARFARE"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MASTER_SAILOR_TRIREME"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 6
+  }
+ },
+ "skills": [
+  "pillage",
+  "mechanized",
+  "noBadGoodies",
+  "renderBelowWater",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "seaUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WOODEN_SHIPS",
+ "combatClasses": [
+  "UNITCOMBAT_NAVAL_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_OAR",
+  "UNITCOMBAT_WEAPON_DIST_SHORTBOW",
+  "UNITCOMBAT_ARMOR_NAVAL",
+  "UNITCOMBAT_SHIELD_SMALL",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_NAVIGATION1",
+   "PROMOTION_SEA_HUNTER2"
+  ]
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WARGALLEY",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 2.25,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WARGALLEY"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_MASTER_SAILOR_WARGALLEY",
+  "civilopedia": "TXT_KEY_UNIT_WARGALLEY_PEDIA",
+  "spawnOnly": true,
+  "worth": 1,
+  "militaryWorth": 7,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "minAreaSize": 10,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ASSAULT_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK_SEA",
+   "UNITAI_ESCORT_SEA",
+   "UNITAI_ASSAULT_SEA",
+   "UNITAI_SETTLER_SEA",
+   "UNITAI_MISSIONARY_SEA",
+   "UNITAI_SPY_SEA"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_SEA_TROPICAL",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_DEEP_TROPICAL",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_TROPICAL",
+   "TERRAIN_TRENCH_POLAR"
+  ],
+  "terrainPassableTechs": [
+   {
+    "TERRAIN_SEA_TROPICAL": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA_POLAR": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA_DEEP": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA_DEEP_POLAR": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA_DEEP_TROPICAL": "TECH_SEAFARING"
+   }
+  ]
+ }
+}

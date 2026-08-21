@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_SKYLAB",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_JET_PROPULSION_LABORATORY",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_SPACE_STATIONS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CISLUNAR_INFLATABLE_HABITAT": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 10110
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SKYLAB"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SKYLAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SKYLAB",
+  "civilopedia": "TXT_KEY_BUILDING_SKYLAB_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

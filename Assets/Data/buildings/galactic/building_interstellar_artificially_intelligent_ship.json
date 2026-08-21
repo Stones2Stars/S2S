@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_INTERSTELLAR_ARTIFICIALLY_INTELLIGENT_SHIP",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_INTERSTELLAR_TRAVEL",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_INTERSTELLAR",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 1192,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_ARTIFICIALLY_INTELLIGENT_SHIP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_ARTIFICIALLY_INTELLIGENT_SHIP",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_ARTIFICIALLY_INTELLIGENT_SHIP_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR",
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

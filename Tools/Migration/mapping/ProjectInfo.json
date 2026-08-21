@@ -1,0 +1,40 @@
+{
+  "entity": "ProjectInfo",
+  "rootElement": "ProjectInfo",
+  "glob": "**/CIV4ProjectInfo.xml",
+  "channels": {
+    "CommerceModifiers": { "scope": "city", "channel": "commerce", "kind": "percent", "valueKeys": ["gold", "research", "culture", "espionage"] },
+    "YieldModifiers": { "scope": "city", "channel": "yield", "kind": "percent", "valueKeys": ["food", "production", "commerce"] },
+    "iNukeInterception": { "scope": "player", "channel": "nukeInterception", "kind": "percent" },
+    "iGlobalMaintenanceModifier": { "scope": "player", "channel": "maintenance", "kind": "percent" },
+    "iGlobalHealth": { "scope": "player", "channel": "health", "kind": "flat" },
+    "iGlobalHappiness": { "scope": "player", "channel": "happiness", "kind": "flat" },
+    "iNumCitiesMaintenanceModifier": { "scope": "player", "channel": "maintenance", "kind": "percent" },
+    "iWorldHealth": { "scope": "team", "channel": "health", "kind": "flat" },
+    "iWorldTradeRoutes": { "scope": "team", "channel": "tradeRoutes", "kind": "flat" },
+    "iTechShare": { "scope": "player", "channel": "techShare", "kind": "flat" },
+    "iWorldHappiness": { "scope": "team", "channel": "happiness", "kind": "flat" }
+  },
+  "inversionsOut": {
+    "BonusProductionModifiers": { "destEntity": "CvBonusInfo", "shape": "projectProductionModifier.{PROJECT}" }
+  },
+  "enablerEdges": {},
+  "prereqs": ["TechPrereq", "VictoryPrereq", "PrereqProjects"],
+  "cost": ["iCost"],
+  "art": ["Button", "MovieDefineTag"],
+  "identity": [
+    "Type",
+    "Description",
+    "Civilopedia",
+    "MapCategoryTypes",
+    "iMaxTeamInstances",
+    "iMaxGlobalInstances",
+    "bSpaceship",
+    "VictoryThresholds",
+    "VictoryMinThresholds",
+    "EveryoneSpecialBuilding",
+    "iVictoryDelayPercent",
+    "iSuccessRate"
+  ],
+  "boostsIn": []
+}

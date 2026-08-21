@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_HOUSING_PROJECTS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COLONY_ARCOLOGY"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "HAS_FRESHWATER",
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    "BUILDING_WATER_PIPES",
+    "BUILDING_SEWER_SYSTEM",
+    "BUILDING_SKYSCRAPER",
+    "TECH_CIVIL_ENGINEERING",
+    "TECH_TELEPHONE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "dormant": [
+    "BUILDING_HOUSING_HABITATION_PODS",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 9
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HOUSING_PROJECTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_PROJECTS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_PROJECTS_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

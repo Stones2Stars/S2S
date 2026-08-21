@@ -1,0 +1,77 @@
+{
+ "type": "TECH_COLONY_ARCOLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_BISHOP_RING",
+   "BUILDING_EUROPA_CITY",
+   "BUILDING_HALO",
+   "BUILDING_HOUSING_COLONY_ARCOLOGY",
+   "BUILDING_SATURN_CLOUD_CITY",
+   "BUILDING_TALL_TOWER",
+   "BUILDING_URANUS_FLOATING_CITY"
+  ],
+  "builds": [
+   "BUILD_JOVIAN_FLOATING_CITY",
+   "BUILD_JOVIAN_SCOOP",
+   "BUILD_SATELLITE_STATION"
+  ],
+  "improvements": [
+   "IMPROVEMENT_JOVIAN_FLOATING_CITY",
+   "IMPROVEMENT_JOVIAN_SCOOP",
+   "IMPROVEMENT_SATELLITE_STATION"
+  ],
+  "techs": [
+   "TECH_LAUNCH_ARCOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GALACTIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 126324
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/colonyarcology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_COLONY_ARCOLOGY",
+  "soundMP": "AS2D_TECH_COLONY_ARCOLOGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_COLONY_ARCOLOGY",
+  "civilopedia": "TXT_KEY_TECH_COLONY_ARCOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_COLONY_ARCOLOGY_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 124,
+  "gridY": 5
+ }
+}

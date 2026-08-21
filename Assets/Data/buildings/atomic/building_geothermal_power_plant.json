@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_GEOTHERMAL_POWER_PLANT",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ENHANCED_GEOTHERMAL_SYSTEM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "BUILDING_POWER_LINES",
+    "TECH_VOLCANOLOGY",
+    {
+     "type": "IMPROVEMENT_GEOTHERMAL_FACTORY",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_GEOTHERMAL_ENERGY",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ],
+   "dormant": [
+    "BUILDING_ENHANCED_GEOTHERMAL_SYSTEM",
+    "BUILDING_RENEWABLE_MEGACOMPLEX"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 1475,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GEOTHERMAL_POWER_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GEOTHERMAL_POWER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_GEOTHERMAL_POWER_PLANT_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

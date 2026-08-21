@@ -1,0 +1,85 @@
+{
+ "type": "TECH_SONAR",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SONAR"
+  ],
+  "techs": [
+   "TECH_DEEP_SEA_EXPLORATION",
+   "TECH_RADAR"
+  ],
+  "units": [
+   "UNIT_DESTROYER",
+   "UNIT_MASTER_SAILOR_DESTROYER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SUBMARINE_WARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ELECTRONICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "domainMoves": {
+  "empire": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 11196
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": ",Art/Interface/Buttons/TechTree/Sonar.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,6,16"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SONAR",
+  "soundMP": "AS2D_TECH_SONAR"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SONAR",
+  "civilopedia": "TXT_KEY_TECH_SONAR_PEDIA",
+  "quote": "TXT_KEY_TECH_SONAR_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 76,
+  "gridY": 17
+ }
+}

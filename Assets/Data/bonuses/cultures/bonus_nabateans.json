@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_NABATEANS",
+ "enables": {
+  "units": [
+   "UNIT_ARETAS_III",
+   "UNIT_PETRA_GUARD"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_NABATEANS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_NABATEANS",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

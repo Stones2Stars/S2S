@@ -1,0 +1,102 @@
+{
+ "type": "BUILDING_WIND_WATER_PUMP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MANUFACTURING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_WATER_PUMPING_STATION"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_WATER_TOWER",
+    "TECH_REPLACEABLE_PARTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_FRESHWATER",
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_ALUMINUM_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STEEL_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_WATER_PUMPING_STATION"
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 555,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WIND_WATER_PUMP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WIND_WATER_PUMP",
+  "civilopedia": "TXT_KEY_BUILDING_WIND_WATER_PUMP_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

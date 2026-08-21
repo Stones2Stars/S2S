@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_ELECTRIC_CHAIR",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEBTORS_PRISON"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CRYONICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LETHAL_INJECTION"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COURTHOUSE",
+    "BUILDING_JAIL",
+    "TECH_CRIMINOLOGY",
+    "TECH_ELECTRICITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_LETHAL_INJECTION"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -25
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "cost": {
+  "production": 800,
+  "countModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ELECTRIC_CHAIR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ELECTRIC_CHAIR",
+  "civilopedia": "TXT_KEY_BUILDING_ELECTRIC_CHAIR_PEDIA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

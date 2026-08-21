@@ -1,0 +1,108 @@
+{
+ "type": "BUILDING_ASTROLOGY_SCHOOL",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALMAGEST"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPULSORY_EDUCATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_OBSERVATORY"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ASTROLOGY",
+    {
+     "any": [
+      "BUILDING_BARTER_POST",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_PAPER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SCROLLS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TABLETS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_OBSERVATORY",
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 3,
+     "enabled": "TECH_GEOCENTRISM"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 192,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ASTROLOGY_SCHOOL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ASTROLOGY_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_ASTROLOGY_SCHOOL_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

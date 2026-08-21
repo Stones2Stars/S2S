@@ -1,0 +1,44 @@
+{
+ "type": "PROMOTION_CROOKED",
+ "combat": {
+  "unit": {
+   "stealthStrikes": {
+    "flat": 1
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "underworld": {
+  "unit": {
+   "insidiousness": {
+    "flat": 10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  },
+  "plot": {
+   "flat": 5
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionCrooked.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CROOKED",
+  "unitCombats": [
+   "UNITCOMBAT_CRIMINAL"
+  ]
+ }
+}

@@ -1,0 +1,99 @@
+{
+ "type": "TECH_MEDIEVAL_LIFESTYLE",
+ "enables": {
+  "buildings": [
+   "BUILDING_EDUCATION_ABSURD",
+   "BUILDING_EDUCATION_KNOWLEDGEABLE",
+   "BUILDING_EDUCATION_KNOWLEDGE_BASE_MEDIEVAL",
+   "BUILDING_TOURISM_LEVEL_3"
+  ],
+  "promotions": [
+   "PROMOTION_MIGHT4"
+  ],
+  "techs": [
+   "TECH_ASATRU",
+   "TECH_CIVIL_SERVICE",
+   "TECH_ENGINEERING",
+   "TECH_FIRE_BRIGADES",
+   "TECH_RODNOVERA",
+   "TECH_SMITHING",
+   "TECH_THEOLOGY",
+   "TECH_VASSALAGE"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_COTTAGE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MUSICAL_NOTATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GEOCENTRISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PAVED_ROADS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARISTOCRACY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1040
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/medievallifestyle.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MEDIEVAL_LIFESTYLE",
+  "soundMP": "AS2D_TECH_MEDIEVAL_LIFESTYLE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MEDIEVAL_LIFESTYLE",
+  "civilopedia": "TXT_KEY_TECH_MEDIEVAL_LIFESTYLE_PEDIA",
+  "quote": "TXT_KEY_TECH_MEDIEVAL_LIFESTYLE_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 41,
+  "gridY": 9
+ }
+}

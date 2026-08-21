@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_CASTLE_GATEHOUSE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRENCH_WARFARE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_IMPERIAL_FORTRESS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_CASTLE",
+      "BUILDING_STAR_FORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_IMPERIAL_FORTRESS"
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "noEntryLevel": {
+    "percent": 30
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -7
+  }
+ },
+ "cost": {
+  "production": 300,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CASTLE_GATEHOUSE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CASTLE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CASTLE_GATEHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_CASTLE_GATEHOUSE_PEDIA",
+  "worth": 8,
+  "militaryWorth": 10,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

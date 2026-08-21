@@ -1,0 +1,71 @@
+{
+ "type": "TECH_SCULPTURE",
+ "enables": {
+  "bonuses": [
+   "BONUS_SCULPTURES"
+  ],
+  "buildings": [
+   "BUILDING_APADANA_PALACE",
+   "BUILDING_SCULPTORS_WORKSHOP",
+   "BUILDING_THE_GREAT_PYRAMID",
+   "BUILDING_THE_GREAT_SPHINX",
+   "BUILDING_VALLEY_OF_THE_KINGS"
+  ],
+  "techs": [
+   "TECH_LEISURE",
+   "TECH_ORNAMENTATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MASONRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 187
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_RELIGION": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/Stone_working.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,5,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SCULPTURE",
+  "soundMP": "AS2D_TECH_SCULPTURE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SCULPTURE",
+  "civilopedia": "TXT_KEY_TECH_SCULPTURE_PEDIA",
+  "quote": "TXT_KEY_TECH_SCULPTURE_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "gridX": 26,
+  "gridY": 11
+ }
+}

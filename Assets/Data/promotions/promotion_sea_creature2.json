@@ -1,0 +1,85 @@
+{
+ "type": "PROMOTION_SEA_CREATURE2",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SEA_CREATURE1"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_OCEAN_TROPICAL": {
+     "attack": {
+      "percent": 20
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_COAST_TROPICAL": {
+     "attack": {
+      "percent": 20
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_OCEAN_POLAR": {
+     "attack": {
+      "percent": 20
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_COAST_POLAR": {
+     "attack": {
+      "percent": 20
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_OCEAN": {
+     "attack": {
+      "percent": 20
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_COAST": {
+     "attack": {
+      "percent": 20
+     },
+     "defense": {
+      "percent": 20
+     }
+    }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SEA_CREATURE": 2
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/seacreature2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SEA_CREATURE2"
+ }
+}

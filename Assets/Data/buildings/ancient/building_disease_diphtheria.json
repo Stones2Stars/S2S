@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_DISEASE_DIPHTHERIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MODERN_HEALTH_CARE"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_TRADE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_DISEASE",
+     "scope": "city",
+     "min": 350,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": -4
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -6
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -4,
+    {
+     "value": -40,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_SANITATION"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_MODERN_SANITATION"
+    }
+   ]
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYDISEASE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISEASE_DIPHTHERIA",
+  "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,46 @@
+{
+ "type": "PROMOTION_LAND_WARRIOR3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LAND_WARRIOR2"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "domain": {
+    "DOMAIN_LAND": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   },
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "skills": {
+  "blitz": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_LAND_WARRIOR": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/roadwar3.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,6,8"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_LAND_WARRIOR3"
+ }
+}

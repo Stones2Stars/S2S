@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_JADE_GATHERER",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_GEMSTONE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOMINING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MINE_JADE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SOFT_HAMMER_PERCUSSION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "BONUS_JADE",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_MINE_JADE",
+    "BUILDING_CORE_MINE"
+   ]
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 60,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_JADE_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_JADE_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_JADE_GATHERER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

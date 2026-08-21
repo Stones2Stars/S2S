@@ -1,0 +1,136 @@
+{
+ "type": "CIVIC_PATRIARCHY",
+ "food": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 4
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    1,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
+    "percent": 10
+   },
+   "resistance": {
+    "percent": 10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 15
+   },
+   "numCities": {
+    "percent": 15
+   },
+   "percent": [
+    {
+     "value": 3,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 3,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ]
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 2
+    },
+    "production": {
+     "percent": 2
+    },
+    "commerce": {
+     "percent": 2
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": 10,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/power_patriarchy.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_PATRIARCHY",
+  "civilopedia": "TXT_KEY_CIVIC_PATRIARCHY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_PATRIARCHY_STRATEGY",
+  "civicOption": "CIVICOPTION_POWER",
+  "upkeepLevel": "UPKEEP_LOW"
+ }
+}

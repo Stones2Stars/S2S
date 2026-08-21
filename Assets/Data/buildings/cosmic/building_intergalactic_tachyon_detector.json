@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_INTERGALACTIC_TACHYON_DETECTOR",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_TACHYON_COMMUNICATION_CENTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_SUPERCOMPUTER",
+    "TECH_TACHYON_COMMUNICATIONS",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 4742,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_TACHYON_DETECTOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_TACHYON_DETECTOR",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_TACHYON_DETECTOR_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

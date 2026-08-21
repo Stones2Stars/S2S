@@ -1,0 +1,37 @@
+{
+ "type": "BUILDING_CIVIC_POST_SCARCITY",
+ "requires": {
+  "operate": {
+   "all": [
+    "CIVIC_AUTOMATED",
+    "BUILDING_PALACE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CIVIC_POST_SCARCITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CIVIC_POST_SCARCITY",
+  "civilopedia": "TXT_KEY_BUILDING_CIVIC_POST_SCARCITY_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

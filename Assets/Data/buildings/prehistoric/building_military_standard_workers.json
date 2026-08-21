@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_MILITARY_STANDARD_WORKERS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_AVIATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+    "TECH_CULTURAL_IDENTITY",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_NINE_BANDED_ARMADILLO",
+      "BUILDING_FOLKLORE_GLYPTODON",
+      "BUILDING_FOLKLORE_GROUND_SLOTH"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      "HERITAGE_FOLKLORE_AARDVARK",
+      "HERITAGE_FOLKLORE_ANTEATER",
+      "HERITAGE_FOLKLORE_BEAVER"
+     ]
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 72,
+  "countModifier": 2
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MILITARY_STANDARD_WORKERS",
+  "civilopedia": "TXT_KEY_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT_PEDIA",
+  "help": "TXT_KEY_BUILDING_MILITARY_STANDARD_WORKERS_HELP",
+  "worth": 1,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_GROWTH",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

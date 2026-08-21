@@ -1,0 +1,94 @@
+{
+ "type": "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+ "enables": {
+  "bonuses": [
+   "BONUS_CYBERNETIC_CHLOROPLASTS"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_CYBERNETIC_CHLOROPLASTS",
+   "BUILDING_GAMMA_ASSEMBLER",
+   "BUILDING_MARTIAN_CYBERNETIC_CHLOROPLAST_IMPORTER",
+   "BUILDING_PHOTOSYNTHESIS_BOUTIQUE",
+   "BUILDING_PROGRAMMABLE_PLANT_FARM",
+   "BUILDING_VENUS_CITY",
+   "BUILDING_VENUS_DEUTERIUM_EXPORTER",
+   "BUILDING_VENUS_GOVERNING_COUNCIL",
+   "BUILDING_VENUS_TRADING_POST"
+  ],
+  "techs": [
+   "TECH_KUIPER_BELT_EXPLORATION",
+   "TECH_NOVO_PALEONTOLOGY",
+   "TECH_SIMULATED_REALITY",
+   "TECH_UTOPIA_DESTINY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DESIGNER_MICROBIOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HYPOTHETICAL_BIOCHEMISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSHUMAN_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "research": 63426
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/leafpower222.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+  "soundMP": "AS2D_TECH_ARTIFICIAL_PHOTOSYNTHESIS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+  "civilopedia": "TXT_KEY_TECH_ARTIFICIAL_PHOTOSYNTHESIS_PEDIA",
+  "quote": "TXT_KEY_TECH_ARTIFICIAL_PHOTOSYNTHESIS_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 111,
+  "gridY": 3
+ }
+}

@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_TENGRII_HORSE_TRAINER",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_HORSE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_VERTICAL_FLIGHT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "STATE_RELIGION": "RELIGION_TENGRIISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "RELIGION_TENGRIISM"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 98,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TENGRII_HORSE_TRAINER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SIBERIAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TENGRII_HORSE_TRAINER",
+  "civilopedia": "TXT_KEY_BUILDING_TENGRII_HORSE_TRAINER_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 4,
+  "religion": "RELIGION_TENGRIISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

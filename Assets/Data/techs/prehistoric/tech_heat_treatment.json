@@ -1,0 +1,74 @@
+{
+ "type": "TECH_HEAT_TREATMENT",
+ "enables": {
+  "buildings": [
+   "BUILDING_BRANDING_HUT",
+   "BUILDING_CULTURE_MAPUCHE"
+  ],
+  "techs": [
+   "TECH_COPPER_WORKING",
+   "TECH_OBSIDIAN_WEAPONS"
+  ],
+  "units": [
+   "UNIT_IRONWOOD_SPEARMAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MICROLITH",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FIRE_MAKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 26
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/heattreatment.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_HEAT_TREATMENT",
+  "soundMP": "AS2D_TECH_HEAT_TREATMENT"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_HEAT_TREATMENT",
+  "civilopedia": "TXT_KEY_TECH_HEAT_TREATMENT_PEDIA",
+  "quote": "TXT_KEY_TECH_HEAT_TREATMENT_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 12,
+  "gridY": 3
+ }
+}

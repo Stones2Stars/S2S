@@ -1,0 +1,149 @@
+{
+ "type": "BUILDING_CHARCOAL_BURNER",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLOOD_DANCE",
+   "BUILDING_BRANDING_HUT",
+   "BUILDING_CAVE_PAINTINGS",
+   "BUILDING_FIRE_DANCE",
+   "BUILDING_FUNERAL_PYRE",
+   "BUILDING_GREAT_BONFIRE",
+   "BUILDING_SMOKE_SIGNALS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_METAL_CASTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_CHARCOAL"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PIG",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_POULTRY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COW",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1,
+   "improvements": {
+    "IMPROVEMENT_LUMBERMILL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 7,
+     "enabled": "TECH_CONSUMERISM"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 153,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CHARCOAL_BURNER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CHARCOAL_BURNER",
+  "civilopedia": "TXT_KEY_BUILDING_CHARCOAL_BURNER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

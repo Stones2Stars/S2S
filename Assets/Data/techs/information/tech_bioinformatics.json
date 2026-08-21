@@ -1,0 +1,72 @@
+{
+ "type": "TECH_BIOINFORMATICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOINFORMATICS_LAB",
+   "BUILDING_ONLINE_GENEALOGY_CENTER"
+  ],
+  "promotions": [
+   "PROMOTION_DISEASE_CONTROL8"
+  ],
+  "techs": [
+   "TECH_BIOMATHEMATICS",
+   "TECH_GENOMIC_ENCYCLOPEDIA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_KNOWLEDGE_MANAGEMENT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GENETIC_BIOCHEMISTRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 22847
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Bioinformatics.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_BIOINFORMATICS",
+  "soundMP": "AS2D_TECH_BIOINFORMATICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_BIOINFORMATICS",
+  "civilopedia": "TXT_KEY_TECH_BIOINFORMATICS_PEDIA",
+  "quote": "TXT_KEY_TECH_BIOINFORMATICS_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 91,
+  "gridY": 1
+ }
+}

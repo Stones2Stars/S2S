@@ -1,0 +1,107 @@
+{
+ "type": "BUILDING_WOODWIND_INSTRUMENT_MAKER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPOSITES"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MUSIC_FACTORY"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SIMPLE_WOOD_WORKING",
+    {
+     "any": [
+      "BUILDING_STORAGE_PIT",
+      "BUILDING_GRANARY",
+      "BUILDING_MODERN_GRANARY",
+      "BUILDING_BARTER_POST",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_MUSIC_FACTORY"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_WOODWIND_INSTRUMENTS"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 2,
+     "enabled": "TECH_FOLK_MUSIC"
+    },
+    {
+     "value": 3,
+     "enabled": "TECH_MUSICAL_NOTATION"
+    },
+    {
+     "value": 4,
+     "enabled": "TECH_ACOUSTICS"
+    },
+    {
+     "value": 5,
+     "enabled": "TECH_MILITARY_TRADITION"
+    },
+    {
+     "value": 6,
+     "enabled": "TECH_RADIO"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_MASS_MEDIA"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 50,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WOODWIND_INSTRUMENT_MAKER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WOODWIND_INSTRUMENT_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_WOODWIND_INSTRUMENT_MAKER_PEDIA",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

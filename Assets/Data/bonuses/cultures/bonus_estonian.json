@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_ESTONIAN",
+ "enables": {
+  "units": [
+   "UNIT_ERNA",
+   "UNIT_JURI_ULUOTS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ESTONIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ESTONIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

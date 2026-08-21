@@ -1,0 +1,86 @@
+{
+ "type": "TECH_ANCIENT_MEDICINE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ACHIEVEMENT_MEDICAL",
+   "BUILDING_APOTHECARY_SHOP",
+   "BUILDING_CULTURE_CHIPPEWA",
+   "BUILDING_EFFECT_ACHIEVEMENT_MEDICAL",
+   "BUILDING_FOUNDLING_HOSPITAL",
+   "BUILDING_HIPPOCRATIC_OATH",
+   "BUILDING_PLAGUE_HOSPITAL"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_DISEASE_CONTROL3",
+   "PROMOTION_DISEASE_CONTROL3",
+   "PROMOTION_FIRST_AID_PEOPLE2",
+   "PROMOTION_SELF_HEAL3"
+  ],
+  "techs": [
+   "TECH_DRUG_TRADE",
+   "TECH_SANITATION"
+  ],
+  "units": [
+   "UNIT_APOTHECARY",
+   "UNIT_FADY_SHAMAN",
+   "UNIT_MIDEWIWIN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SOAP_MAKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_VETERINARY_MEDICINE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LAW_ENFORCEMENT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 614
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/ancientmedicine.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ANCIENT_MEDICINE",
+  "soundMP": "AS2D_TECH_ANCIENT_MEDICINE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ANCIENT_MEDICINE",
+  "civilopedia": "TXT_KEY_TECH_ANCIENT_MEDICINE_PEDIA",
+  "quote": "TXT_KEY_TECH_ANCIENT_MEDICINE_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "tradeable": true,
+  "gridX": 36,
+  "gridY": 17
+ }
+}

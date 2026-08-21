@@ -1,0 +1,64 @@
+{
+ "type": "TECH_PLANET_SCANNING",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_BIOMARKER_CATALOGUE",
+   "BUILDING_INTERSTELLAR_PLANETARY_AWARENESS",
+   "BUILDING_INTERSTELLAR_PRISON_PLANET",
+   "BUILDING_TRANSTELLAR_SCOUTING_FLEET"
+  ],
+  "techs": [
+   "TECH_ARTIFICIAL_PLANETS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANET_SCOUTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FORGE_WORLDS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 166029
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/planet_scanning.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PLANET_SCANNING",
+  "civilopedia": "TXT_KEY_TECH_PLANET_SCANNING_PEDIA",
+  "quote": "TXT_KEY_TECH_PLANET_SCANNING_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 132,
+  "gridY": 5
+ }
+}

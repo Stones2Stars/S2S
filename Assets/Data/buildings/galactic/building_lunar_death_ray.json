@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_LUNAR_DEATH_RAY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LUNAR_ARCOLOGY",
+    "TECH_WEAPONIZED_DISINTEGRATION",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 50
+   },
+   "bombardDefense": {
+    "percent": 20
+   },
+   "dynamicDefense": {
+    "percent": 20
+   },
+   "adjacentDamage": {
+    "percent": 20
+   }
+  }
+ },
+ "vision": {
+  "city": {
+   "elevation": {
+    "flat": 100
+   }
+  }
+ },
+ "cost": {
+  "production": 4144,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUNAR_DEATH_RAY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_DEATH_RAY",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_DEATH_RAY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

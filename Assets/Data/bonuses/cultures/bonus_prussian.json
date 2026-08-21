@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_PRUSSIAN",
+ "enables": {
+  "units": [
+   "UNIT_UHLAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PRUSSIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PRUSSIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

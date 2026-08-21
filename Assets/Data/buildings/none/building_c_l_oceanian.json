@@ -1,0 +1,145 @@
+{
+ "type": "BUILDING_C_L_OCEANIAN",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_ABORIGINE",
+   "BUILDING_CULTURE_AMIS",
+   "BUILDING_CULTURE_ANDAMANESE",
+   "BUILDING_CULTURE_AUSTRALIAN",
+   "BUILDING_CULTURE_BANDANESE",
+   "BUILDING_CULTURE_BATEK",
+   "BUILDING_CULTURE_CHAMORRAN",
+   "BUILDING_CULTURE_DAYAK",
+   "BUILDING_CULTURE_FIJIAN",
+   "BUILDING_CULTURE_HAWAIIAN",
+   "BUILDING_CULTURE_ILOCANO",
+   "BUILDING_CULTURE_JAVANESE",
+   "BUILDING_CULTURE_MALAGASY",
+   "BUILDING_CULTURE_MANI",
+   "BUILDING_CULTURE_MAORI",
+   "BUILDING_CULTURE_MARIC",
+   "BUILDING_CULTURE_MELANESIAN",
+   "BUILDING_CULTURE_MICRONESIAN",
+   "BUILDING_CULTURE_NEW_ZEALANDER",
+   "BUILDING_CULTURE_NOONGAR",
+   "BUILDING_CULTURE_ORANG_ASLI",
+   "BUILDING_CULTURE_PAPUAN",
+   "BUILDING_CULTURE_POLYNESIAN",
+   "BUILDING_CULTURE_RAPA_NUI",
+   "BUILDING_CULTURE_SAMOAN",
+   "BUILDING_CULTURE_SEMANG",
+   "BUILDING_CULTURE_SUNDANESE",
+   "BUILDING_CULTURE_TAGALOG",
+   "BUILDING_CULTURE_TAHITIAN",
+   "BUILDING_CULTURE_TASMANIAN",
+   "BUILDING_CULTURE_TIWI",
+   "BUILDING_CULTURE_TONGAN",
+   "BUILDING_CULTURE_VANATUAN",
+   "BUILDING_CULTURE_WARAY",
+   "BUILDING_CULTURE_YOLNGU",
+   "BUILDING_DANCE_HAKA",
+   "BUILDING_EMU_EGG_CARVER",
+   "BUILDING_HAWAIIAN_SURFBOARD_CARVER",
+   "BUILDING_RAINBOW_SERPENT_BREEDER",
+   "BUILDING_WALKABOUT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_OCEANIAN",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "costs": {
+  "city": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_AFRICAN"
+    },
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_ASIAN"
+    },
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_EUROPEAN"
+    },
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_MIDDLE_EASTERN"
+    },
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_NEANDERTHAL"
+    },
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_NORTH_AMERICAN"
+    },
+    {
+     "value": -5,
+     "enabled": "BUILDING_C_L_OCEANIAN"
+    },
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_SOUTH_AMERICAN"
+    }
+   ]
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_CULTURE_OCEANIAN",
+       "enabled": "IS_SETTLER"
+      }
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 1
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_OCEANIAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_C_L_OCEANIAN",
+  "civilopedia": "TXT_KEY_BUILDING_C_L_PEDIA",
+  "help": "TXT_KEY_BUILDING_C_L_HELP",
+  "conquestProbability": 85,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

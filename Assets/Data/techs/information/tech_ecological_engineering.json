@@ -1,0 +1,82 @@
+{
+ "type": "TECH_ECOLOGICAL_ENGINEERING",
+ "enables": {
+  "bonuses": [
+   "BONUS_GEOTHERMAL_ENERGY"
+  ],
+  "buildings": [
+   "BUILDING_ARTIFICIAL_TREE_FARM",
+   "BUILDING_CARBON_EXCHANGE",
+   "BUILDING_ECOSCRAPER",
+   "BUILDING_GARDENS_BY_THE_BAY",
+   "BUILDING_MASDAR_CITY",
+   "BUILDING_POLLUTION_SCRUBBERS",
+   "BUILDING_RIVER_SEWAGE_TREATMENT_PLANT",
+   "BUILDING_SEA_TREE"
+  ],
+  "builds": [
+   "BUILD_CLEAR_FALLOUT_FAST"
+  ],
+  "techs": [
+   "TECH_INDUSTRIAL_ECOLOGY"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_SCRUB_FALLOUT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RENEWABLE_ENERGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BIOMATERIALS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 22074
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/forestry.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,6"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ECOLOGICAL_ENGINEERING",
+  "soundMP": "AS2D_TECH_ECOLOGICAL_ENGINEERING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ECOLOGICAL_ENGINEERING",
+  "civilopedia": "TXT_KEY_TECH_ECOLOGICAL_ENGINEERING_PEDIA",
+  "quote": "TXT_KEY_TECH_ECOLOGICAL_ENGINEERING_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 90,
+  "gridY": 1
+ }
+}

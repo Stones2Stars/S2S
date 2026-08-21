@@ -1,0 +1,23 @@
+{
+ "type": "BONUS_FLOWERS",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_PERFUME",
+   "BUILDING_FLORIST",
+   "BUILDING_PERFUME_MAKER",
+   "BUILDING_PESTS_APHIDS",
+   "BUILDING_PESTS_SLUGS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_FLOWERS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_FLOWERS",
+  "civilopedia": "TXT_KEY_BONUS_FLOWERS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

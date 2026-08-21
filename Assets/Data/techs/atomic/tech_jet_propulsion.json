@@ -1,0 +1,86 @@
+{
+ "type": "TECH_JET_PROPULSION",
+ "enables": {
+  "bonuses": [
+   "BONUS_JET_ENGINES"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_JET_ENGINES"
+  ],
+  "promotions": [
+   "PROMOTION_REPAIR_AIRCRAFT3"
+  ],
+  "techs": [
+   "TECH_ADVANCED_ROCKETRY",
+   "TECH_SUPERSONIC_FLIGHT"
+  ],
+  "units": [
+   "UNIT_AIRSETTLER",
+   "UNIT_B52_BOMBER",
+   "UNIT_CARRIER",
+   "UNIT_EARLYJET",
+   "UNIT_F104_STARFIGHTER",
+   "UNIT_F111_AARDVARK",
+   "UNIT_F4_PHANTOM",
+   "UNIT_JET_TECHNICIAN",
+   "UNIT_MASTER_SAILOR_CARRIER",
+   "UNIT_MRBM",
+   "UNIT_RECON_PLANE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ROCKETRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MANUFACTURING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADVANCED_AVIATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 12657
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/JetEngines.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,5,9"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_JET_PROPULSION",
+  "soundMP": "AS2D_TECH_JET_PROPULSION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_JET_PROPULSION",
+  "civilopedia": "TXT_KEY_TECH_JET_PROPULSION_PEDIA",
+  "quote": "TXT_KEY_TECH_JET_PROPULSION_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 79,
+  "gridY": 11
+ }
+}

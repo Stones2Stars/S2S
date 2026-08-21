@@ -1,0 +1,97 @@
+{
+ "type": "TECH_MODERN_PHYSICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TESTING_LAB",
+   "BUILDING_ATOMIC_CLOCK",
+   "BUILDING_LABORATORY",
+   "BUILDING_STANDARD_MODEL"
+  ],
+  "techs": [
+   "TECH_ADVANCED_AVIATION",
+   "TECH_MICROWAVES",
+   "TECH_SEMICONDUCTORS"
+  ]
+ },
+ "obsoletes": {
+  "buildings": [
+   "BUILDING_ANDEAN_MONASTERY",
+   "BUILDING_ASATRU_MONASTERY",
+   "BUILDING_BAHAI_MONASTERY",
+   "BUILDING_BUDDHIST_MONASTERY",
+   "BUILDING_CALMACEC",
+   "BUILDING_CANAANITE_MONASTERY",
+   "BUILDING_CAO_DAI_MONASTERY",
+   "BUILDING_CHRISTIAN_MONASTERY",
+   "BUILDING_CONFUCIAN_MONASTERY",
+   "BUILDING_HELLENIC_GYMNASIA",
+   "BUILDING_HINDU_MONASTERY",
+   "BUILDING_HOUNFOR",
+   "BUILDING_IDOL",
+   "BUILDING_ISLAMIC_MONASTERY",
+   "BUILDING_JAIN_MONASTERY",
+   "BUILDING_JEWISH_MONASTERY",
+   "BUILDING_SHINTO_MONASTERY",
+   "BUILDING_TAOIST_MONASTERY",
+   "BUILDING_TEMPLE_OF_CHONS",
+   "BUILDING_ZOROASTRIAN_SHRINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COSMOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ELECTRONICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FISSION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_SCIENTIST"
+ },
+ "cost": {
+  "research": 11196
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/AdvancedCalculus.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MODERN_PHYSICS",
+  "soundMP": "AS2D_TECH_MODERN_PHYSICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MODERN_PHYSICS",
+  "civilopedia": "TXT_KEY_TECH_MODERN_PHYSICS_PEDIA",
+  "quote": "TXT_KEY_TECH_MODERN_PHYSICS_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 76,
+  "gridY": 1
+ }
+}

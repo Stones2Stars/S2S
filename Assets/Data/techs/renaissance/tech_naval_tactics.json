@@ -1,0 +1,78 @@
+{
+ "type": "TECH_NAVAL_TACTICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_NAVAL_ACADEMY"
+  ],
+  "techs": [
+   "TECH_SEXTANT"
+  ],
+  "units": [
+   "UNIT_CHILEAN_CORVETTE",
+   "UNIT_SHIP_OF_THE_LINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NAVAL_CANNON",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NAVIGATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FLINTLOCK",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "domainMoves": {
+  "empire": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 3074
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/NavalTactics.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,13"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NAVAL_TACTICS",
+  "soundMP": "AS2D_TECH_NAVAL_TACTICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NAVAL_TACTICS",
+  "civilopedia": "TXT_KEY_TECH_NAVAL_TACTICS_PEDIA",
+  "quote": "TXT_KEY_TECH_NAVAL_TACTICS_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 55,
+  "gridY": 3
+ }
+}

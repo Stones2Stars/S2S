@@ -1,0 +1,161 @@
+{
+ "type": "UNIT_GUARDDOG",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_DOG",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_GUARD_DOG_TRAINER",
+    "TECH_LEADERSHIP",
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_POLICE_DOG"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "combat": {
+  "unit": {
+   "lunge": {
+    "percent": 15
+   },
+   "enclose": {
+    "percent": 15
+   },
+   "unnerve": {
+    "percent": 15
+   },
+   "dynamicDefense": {
+    "percent": 15
+   },
+   "stealth": {
+    "percent": 30
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 15
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   }
+  }
+ },
+ "skills": [
+  "noCapture",
+  "noDefensiveBonus",
+  "counterSpy",
+  "ignoreTerrainCost",
+  "passage",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_LAW_ENFORCEMENT",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_CANINE",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_ANIMAL_COMBAT_SCRATCH",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+  "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_WARNING",
+  "UNITCOMBAT_ANIMAL_COMBAT_PACK_HUNTER",
+  "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_SMALL",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "hideAndSeek": {
+  "detection": {
+   "value": 300,
+   "unit": "HAS_CAMOUFLAGE"
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 319,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GUARDDOG",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_GUARDDOG"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_GUARDDOG",
+  "civilopedia": "TXT_KEY_UNIT_WARDOG_PEDIA",
+  "worth": 6,
+  "militaryWorth": 12,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "animalCombat": 25,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PILLAGE_COUNTER",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_PILLAGE_COUNTER",
+   "UNITAI_HUNTER_ESCORT",
+   "UNITAI_SEE_INVISIBLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

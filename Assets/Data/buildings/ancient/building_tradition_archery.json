@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_TRADITION_ARCHERY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MILITARY_TRADITION"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_BRONZE_WORKING",
+    {
+     "any": [
+      "BUILDING_FLETCHERS_HUT",
+      "BUILDING_EFFECT_TRADITION_ARCHERY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_TRADITION_ARCHERY"
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TRADITION_ARCHERY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_TRADITION_ARCHERY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRADITION_ARCHERY",
+  "civilopedia": "TXT_KEY_BUILDING_TRADITION_ARCHERY_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "notConstructible": true,
+  "worth": 4,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

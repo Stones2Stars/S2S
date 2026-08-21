@@ -1,0 +1,17 @@
+{
+ "type": "UNITCOMBAT_WORKER",
+ "skills": {
+  "cannotMergeSplit": true
+ },
+ "tags": [
+  "worker"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/workers.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_WORKER"
+ }
+}

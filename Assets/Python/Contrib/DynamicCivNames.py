@@ -13,8 +13,13 @@ import TextUtil
 import SdToolKit as SDTK
 import RevUtils
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 GAME = GC.getGame()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
 bEnabled = False
@@ -159,7 +164,7 @@ def setNewNameByCivics(iPlayer):
 
 	if not newCivDesc == GC.getPlayer(iPlayer).getCivilizationDescription(0):
 		szMessage = TRNSLTR.getText("TXT_KEY_MOD_DCN_NEWCIV_NAME_DESC", (newCivDesc,))
-		CyInterface().addMessage(iPlayer, False, GC.getEVENT_MESSAGE_TIME(), szMessage, None, InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_HIGHLIGHT_TEXT"), -1, -1, False, False)
+		CyInterface().addMessage(iPlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), szMessage, None, InterfaceMessageTypes.MESSAGE_TYPE_INFO, None, GC.getInfoTypeForString("COLOR_HIGHLIGHT_TEXT"), -1, -1, False, False)
 
 	GC.getPlayer(iPlayer).setCivName(newCivDesc, newCivShort, newCivAdj)
 

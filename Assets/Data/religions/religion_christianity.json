@@ -1,0 +1,102 @@
+{
+ "type": "RELIGION_CHRISTIANITY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHRISTIAN_CATHEDRAL",
+   "BUILDING_CHRISTIAN_MONASTERY",
+   "BUILDING_CHRISTIAN_TEMPLE",
+   "BUILDING_CITADEL",
+   "BUILDING_HOLY_SEE_LIBRARY",
+   "BUILDING_KINGS_CRUSADE",
+   "BUILDING_REVIVALIST_CHURCH",
+   "BUILDING_SAINT_MARKS_BASILICA"
+  ],
+  "units": [
+   "UNIT_CHRISTIAN_MISSIONARY",
+   "UNIT_CRUSADER"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_CHRISTIANITY"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 6,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_CHRISTIANITY"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_CHRISTIANITY"
+     }
+    }
+   ]
+  }
+ },
+ "grants": {
+  "freeUnit": "UNIT_CHRISTIAN_MISSIONARY",
+  "numFreeUnits": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 1,
+   "icon": "Art/Interface/Buttons/Religions/Christianity.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Christianity.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Christianity.dds",
+   "movie": {
+    "file": "Art/Movies/Religion/Christianity/Chr_Found.nif",
+    "sound": "AS2D_BUILD_CHRISTIAN_MOVIE"
+   }
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_CHRISTIAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CHRISTIANITY",
+  "adjective": "TXT_KEY_TECH_CHRISTIANITY_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_CHRISTIANITY_PEDIA",
+  "spreadFactor": 50
+ }
+}

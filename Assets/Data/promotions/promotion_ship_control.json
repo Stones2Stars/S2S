@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_SHIP_CONTROL",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SHIP_COMMAND1"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SHIP_INITIATIVE3",
+    {
+     "any": [
+      "PROMOTION_SHIP_TACTICS3"
+     ]
+    }
+   ]
+  }
+ },
+ "skills": {
+  "zoneOfControl": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/shipControl.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SHIP_CONTROL",
+  "unitCombats": [
+   "UNITCOMBAT_COMMODORE"
+  ]
+ }
+}

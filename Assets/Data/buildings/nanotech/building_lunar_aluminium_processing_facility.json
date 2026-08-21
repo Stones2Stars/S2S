@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_LUNAR_ALUMINIUM_PROCESSING_FACILITY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LUNAR_ROCK_QUARRY",
+    "TECH_LUNAR_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_BAUXITE_ORE",
+     "scope": "city",
+     "connection": "onSite"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ALUMINUM_WARES"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": {
+    "value": 200,
+    "enabled": "TECH_LUNAR_TRADE"
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 225,
+  "hurryModifier": 10000
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUNAR_ALUMINIUM_PROCESSING_FACILITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_ALUMINIUM_PROCESSING_FACILITY",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_ALUMINIUM_PROCESSING_FACILITY_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

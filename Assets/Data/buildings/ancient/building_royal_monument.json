@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_ROYAL_MONUMENT",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MONARCHY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "CIVIC_MONARCHY",
+    {
+     "type": "BONUS_MARBLE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -15
+  }
+ },
+ "cost": {
+  "production": 200,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ROYAL_MONUMENT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_OBELISK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ROYAL_MONUMENT",
+  "civilopedia": "TXT_KEY_BUILDING_ROYAL_MONUMENT_PEDIA",
+  "worth": 2,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

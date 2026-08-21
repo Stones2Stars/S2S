@@ -1,0 +1,46 @@
+{
+ "type": "FEATURE_PLATY_ULURU",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 5
+   }
+  }
+ },
+ "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
+  "nukeImmune",
+  "ignoreTerrainCulture"
+ ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_ULURU"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_ULURU",
+  "civilopedia": "TXT_KEY_FEATURE_ULURU_PEDIA",
+  "requiresFlatlands": true,
+  "validTerrains": [
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB"
+  ]
+ }
+}

@@ -1,0 +1,161 @@
+{
+ "type": "CIVIC_LEGISLATURE",
+ "enables": {
+  "buildings": [
+   "BUILDING_HOUSE_OF_PARLIAMENT",
+   "BUILDING_POLIS_COUNCIL"
+  ],
+  "hurries": [
+   "HURRY_GOLD"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_AGORA": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": 5
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
+    "percent": 5
+   },
+   "resistance": {
+    "percent": 5
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 7
+   },
+   "numCities": {
+    "percent": 10
+   },
+   "percent": [
+    {
+     "value": 4,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 4,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ]
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 4
+    },
+    "production": {
+     "percent": 4
+    },
+    "commerce": {
+     "percent": 3
+    }
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "greatPeopleRate": {
+    "percent": 5
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": -2
+   },
+   "democracyLevel": {
+    "flat": 10
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": 10,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "policies": {
+  "canDoElection": true
+ },
+ "grants": {
+  "revolution": -20
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/power_legislature.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_LEGISLATURE",
+  "civilopedia": "TXT_KEY_CIVIC_LEGISLATURE_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_LEGISLATURE_STRATEGY",
+  "civicOption": "CIVICOPTION_POWER",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

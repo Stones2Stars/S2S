@@ -1,0 +1,20 @@
+{
+ "type": "PROMOTION_REMOVE_STAY_THE_HAND_STATUS",
+ "promotionLine": {
+  "PROMOTIONLINE_STAY_THE_HAND": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/RemoveStayTheHandStatus.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_REMOVE_STAY_THE_HAND",
+  "status": true,
+  "quick": true,
+  "removeAfterSet": true
+ }
+}

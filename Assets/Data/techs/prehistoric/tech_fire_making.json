@@ -1,0 +1,76 @@
+{
+ "type": "TECH_FIRE_MAKING",
+ "enables": {
+  "buildings": [
+   "BUILDING_BONFIRE",
+   "BUILDING_FUNERAL_PYRE",
+   "BUILDING_GREAT_BONFIRE",
+   "BUILDING_SMOKE_SIGNALS",
+   "BUILDING_TORCHES"
+  ],
+  "civics": [
+   "CIVIC_BURN_GARBAGE"
+  ],
+  "techs": [
+   "TECH_ANIMISM",
+   "TECH_HEAT_TREATMENT",
+   "TECH_TANNING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COOKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SIMPLE_WOOD_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "research": 23
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Button_TheFire.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_FIRE_MAKING",
+  "soundMP": "AS2D_TECH_FIRE_MAKING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_FIRE_MAKING",
+  "civilopedia": "TXT_KEY_TECH_FIRE_MAKING_PEDIA",
+  "quote": "TXT_KEY_TECH_FIRE_MAKING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 11,
+  "gridY": 7
+ }
+}

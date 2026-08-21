@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_PEAT_CUTTER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_IRON_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_PEAT_CUTTER"
+ },
+ "cost": {
+  "gold": 12,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/Button_StoneToolsWorkshop.dds"
+  },
+  "hotkey": "KB_U"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_PEAT_CUTTER"
+ }
+}

@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_DESERT_CAMP_KILL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NATUROPATHY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_DESERT_CAMP"
+ },
+ "cost": {
+  "gold": 4,
+  "time": 405
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/desert_camp.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_DESERT_CAMP_KILL",
+  "consumesUnit": true
+ }
+}

@@ -1,0 +1,212 @@
+{
+ "type": "UNIT_WARCAT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_HERITAGE_BIG_CATS",
+    "TECH_MILITARY_TRAINING",
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    },
+    {
+     "any": [
+      "BUILDING_BARRACKS",
+      "BUILDING_GARRISON",
+      "BUILDING_MILITARY_BASE"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GUARDCAT"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_CAT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "combat": {
+  "unit": {
+   "lunge": {
+    "percent": 20
+   },
+   "unnerve": {
+    "percent": 10
+   },
+   "dynamicDefense": {
+    "percent": 10
+   },
+   "stealthStrikes": {
+    "flat": 2
+   },
+   "stealth": {
+    "percent": 20
+   },
+   "flanking": {
+    "UNITCOMBAT_RUFFIAN": {
+     "percent": 25
+    },
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 25
+    },
+    "UNITCOMBAT_STRIKE_TEAM": {
+     "percent": 50
+    }
+   },
+   "targets": {
+    "UNITCOMBAT_STRIKE_TEAM": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 10
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 35
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 2
+   }
+  }
+ },
+ "skills": [
+  "alwaysHostile",
+  "hiddenNationality",
+  "noCapture",
+  "noDefensiveBonus",
+  "ignoreTerrainCost",
+  "ignoreZoneOfControl",
+  "noNonOwnedCityEntry",
+  "ignoreNoEntryLevel",
+  "camouflage"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_FELINE",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_ANIMAL",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_ROARING",
+  "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
+  "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "hideAndSeek": {
+  "method": "camouflage",
+  "concealment": {
+   "flat": 400
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 216,
+  "upkeep": 4
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WARCAT",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WARCAT"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_WARCAT",
+  "civilopedia": "TXT_KEY_UNIT_WARCAT_PEDIA",
+  "worth": 5,
+  "militaryWorth": 10,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PILLAGE_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE_COUNTER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

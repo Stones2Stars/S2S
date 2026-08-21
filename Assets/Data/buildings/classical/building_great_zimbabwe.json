@@ -1,0 +1,109 @@
+{
+ "type": "BUILDING_GREAT_ZIMBABWE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_IMPERIALISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CITY_PLANNING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 1458,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GREAT_ZIMBABWE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GREAT_ZIMBABWE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GREAT_ZIMBABWE",
+  "civilopedia": "TXT_KEY_BUILDING_GREAT_ZIMBABWE_PEDIA",
+  "help": "TXT_KEY_BUILDING_GREAT_ZIMBABWE_HELP",
+  "pediaCategory": "greatWonder",
+  "worth": 12,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

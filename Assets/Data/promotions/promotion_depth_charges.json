@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_DEPTH_CHARGES",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SONAR"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_SUBMARINE": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/DepthCharges.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_DEPTH_CHARGES",
+  "unitCombats": [
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS"
+  ]
+ }
+}

@@ -1,0 +1,68 @@
+{
+ "type": "TECH_WOMENS_SUFFRAGE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_DOMESTIC_VIOLENCE",
+   "BUILDING_CRIME_SEXUAL_HARASSMENT",
+   "BUILDING_DAY_CARE_CENTER",
+   "BUILDING_HOUSING_SORORITY_HOUSE",
+   "BUILDING_NATIONAL_ALCOHOL_PROHIBITION",
+   "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION",
+   "BUILDING_SPEAKEASY",
+   "BUILDING_WOMENS_SUFFRAGE"
+  ],
+  "techs": [
+   "TECH_ATOMIC_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LABOR_UNIONS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 7008
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   },
+   {
+    "FLAVOR_ESPIONAGE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/womenssuffrage.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_WOMENS_SUFFRAGE",
+  "soundMP": "AS2D_TECH_WOMENS_SUFFRAGE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_WOMENS_SUFFRAGE",
+  "civilopedia": "TXT_KEY_TECH_WOMENS_SUFFRAGE_PEDIA",
+  "quote": "TXT_KEY_TECH_WOMENS_SUFFRAGE_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 32,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 68,
+  "gridY": 17
+ }
+}

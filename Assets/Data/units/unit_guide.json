@@ -1,0 +1,105 @@
+{
+ "type": "UNIT_GUIDE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_EXPLORATION"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_EXPLORER"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 4
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 50
+  }
+ },
+ "skills": [
+  "noBadGoodies",
+  "passage",
+  "upgradeAnywhere",
+  "tradable"
+ ],
+ "tags": [
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_RECON",
+ "combatClasses": [
+  "UNITCOMBAT_EXPLORER",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_AXE",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 105,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GUIDE_EUROPEAN",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_GUIDE_EUROPEAN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_GUIDE",
+  "civilopedia": "TXT_KEY_UNIT_GUIDE_PEDIA",
+  "worth": 1,
+  "xpValueAttack": 4,
+  "xpValueDefense": 4,
+  "animalCombat": 25,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_EXPLORE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_EXPLORE",
+   "UNITAI_HUNTER_ESCORT",
+   "UNITAI_ESCORT"
+  ],
+  "notUnitAIs": [
+   "UNITAI_HUNTER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

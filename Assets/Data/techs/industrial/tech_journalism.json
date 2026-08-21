@@ -1,0 +1,61 @@
+{
+ "type": "TECH_JOURNALISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_TYPEWRITERS",
+   "BUILDING_NEWS_STAND",
+   "BUILDING_PRESS_AGENCY"
+  ],
+  "techs": [
+   "TECH_CRIMINOLOGY",
+   "TECH_MARXISM",
+   "TECH_TELEGRAPH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PHOTOGRAPHY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 5460
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 3
+   },
+   {
+    "FLAVOR_GOLD": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/journalism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_JOURNALISM",
+  "soundMP": "AS2D_TECH_JOURNALISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_JOURNALISM",
+  "civilopedia": "TXT_KEY_TECH_JOURNALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_JOURNALISM_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 63,
+  "gridY": 1
+ }
+}

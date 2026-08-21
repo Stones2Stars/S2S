@@ -1,0 +1,92 @@
+{
+ "type": "BUILDING_WATER_RACEWAY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WEATHER_CONTROL"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ATHLETIC_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "TECH_WATER_SPORTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_ATHLETIC_MEGACOMPLEX"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 770,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 4
+   },
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 3
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WATER_RACEWAY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WAVERACING"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WATER_RACEWAY",
+  "civilopedia": "TXT_KEY_BUILDING_WATER_RACEWAY_PEDIA",
+  "worth": 8,
+  "militaryWorth": 4,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

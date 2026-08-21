@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_WARRIORS_INTUITION1",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT1"
+   ]
+  }
+ },
+ "hideAndSeek": {
+  "detection": {
+   "value": 100,
+   "unit": "HAS_CAMOUFLAGE"
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_WARRIORS_INTUITION": 1
+ },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/WarriorIntuition1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_WARRIORS_INTUITION1"
+ }
+}

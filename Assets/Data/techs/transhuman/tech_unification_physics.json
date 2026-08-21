@@ -1,0 +1,79 @@
+{
+ "type": "TECH_UNIFICATION_PHYSICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_PARTICLE_ACCELERATOR",
+   "BUILDING_MARTIAN_DEUTERIUM_MINE",
+   "BUILDING_MARTIAN_FUSION_PLANT"
+  ],
+  "techs": [
+   "TECH_BINARY_SUBCONSCIOUSNESS",
+   "TECH_FROST_BEAMS",
+   "TECH_HYPERMAGNETICS",
+   "TECH_KUIPER_BELT_EXPLORATION",
+   "TECH_SIMULATED_REALITY",
+   "TECH_UTOPIA_DESTINY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LEVITATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CLOAKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSHUMAN_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 63426
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/unificationphysics.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_UNIFICATION_PHYSICS",
+  "soundMP": "AS2D_TECH_UNIFICATION_PHYSICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_UNIFICATION_PHYSICS",
+  "civilopedia": "TXT_KEY_TECH_UNIFICATION_PHYSICS_PEDIA",
+  "quote": "TXT_KEY_TECH_UNIFICATION_PHYSICS_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 111,
+  "gridY": 7
+ }
+}

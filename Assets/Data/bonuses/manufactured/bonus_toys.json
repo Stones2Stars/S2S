@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_TOYS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMATRONICS_WORKSHOP",
+   "BUILDING_TOY_STORE"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TOYS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TOYS",
+  "civilopedia": "TXT_KEY_BONUS_TOYS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

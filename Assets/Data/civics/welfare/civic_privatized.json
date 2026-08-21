@@ -1,0 +1,126 @@
+{
+ "type": "CIVIC_PRIVATIZED",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHAMBER_OF_COMMERCE"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": -1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "buildings": {
+    "BUILDING_BULLSEYE_STORE": {
+     "flat": 1
+    },
+    "BUILDING_MOBBY_MEATS_STORE": {
+     "flat": 1
+    },
+    "BUILDING_MALLWART_STORE": {
+     "flat": 1
+    },
+    "BUILDING_EAST_WEST_TRADERS_STORE": {
+     "flat": 1
+    },
+    "BUILDING_SUPERMARKET": {
+     "flat": 1
+    },
+    "BUILDING_MALL": {
+     "flat": 1
+    },
+    "BUILDING_HYPERMARKET": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": 10
+   },
+   "percent": [
+    {
+     "value": 4,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 5,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
+   "corporation": {
+    "percent": -45
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": 1
+   },
+   "national": {
+    "flat": -2
+   }
+  }
+ },
+ "grants": {
+  "revolution": 15
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/welfare_corporate.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_PRIVATIZED",
+  "civilopedia": "TXT_KEY_CIVIC_PRIVATIZED_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_PRIVATIZED_STRATEGY",
+  "civicOption": "CIVICOPTION_WELFARE",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

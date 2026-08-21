@@ -1,0 +1,21 @@
+{
+ "type": "OUTCOME_ANIMAL_RECORD_TALE_FRESCO",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_ANIMAL_RECORD_TALE_FRESCO",
+  "message": "TXT_KEY_OUTCOME_ANIMAL_RECORD_TALE_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FRESCO_MURAL"
+   ]
+  }
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city",
+ "replaces": [
+  "OUTCOME_ANIMAL_RECORD_TALE_ORAL"
+ ]
+}

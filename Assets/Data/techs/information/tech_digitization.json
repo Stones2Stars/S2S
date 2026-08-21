@@ -1,0 +1,67 @@
+{
+ "type": "TECH_DIGITIZATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLACKNET",
+   "BUILDING_BLOGS",
+   "BUILDING_DIGITAL_ART_MUSEUM",
+   "BUILDING_E_STOCK_MARKET",
+   "BUILDING_INTERNET_OF_THINGS"
+  ],
+  "techs": [
+   "TECH_MEDIA_PSYCHOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ONLINE_COMMUNITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 22847
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/digitization.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_DIGITIZATION",
+  "soundMP": "AS2D_TECH_DIGITIZATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_DIGITIZATION",
+  "civilopedia": "TXT_KEY_TECH_DIGITIZATION_PEDIA",
+  "quote": "TXT_KEY_TECH_DIGITIZATION_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 91,
+  "gridY": 13
+ }
+}

@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_HYPERSPACE_NEW_BIG_BANG",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE",
+    {
+     "type": "BUILDING_DISTANT_DARK_ERA_SURVIVAL_PLAN",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_REALITY_REPROGRAMMING",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 3423,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYPERSPACE_NEW_BIG_BANG",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_NEW_BIG_BANG",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_NEW_BIG_BANG_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

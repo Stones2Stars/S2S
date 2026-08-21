@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_LIFE_SUPERCRITICAL_CO2",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_BASE_SUPER_EARTH",
+    "TECH_PLANET_ENGINEERING",
+    "TECH_ADAPTIVE_RADIATION",
+    {
+     "type": "MAPCATEGORY_PLASMA",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 12,
+     "enabled": "TECH_GALACTIC_ECOLOGY"
+    },
+    {
+     "value": 12,
+     "enabled": "TECH_DIRECTED_PANSPERMIA"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_KEPLER_22B_COLONY": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 7608,
+  "hurryModifier": 10000
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LIFE_SUPERCRITICAL_CO2",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_SUPERCRITICAL_CO2",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_SUPERCRITICAL_CO2_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

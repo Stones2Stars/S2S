@@ -1,0 +1,101 @@
+{
+ "type": "UNIT_SPECIAL_AGENT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTELLIGENCE_AGENCY",
+    "TECH_ELECTRONICS"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "skills": [
+  "counterSpy",
+  "ignoreTerrainCost",
+  "investigate",
+  "alwaysInvisible",
+  "rivalTerritory"
+ ],
+ "tags": [
+  "spy",
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_SPY",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO",
+   "PROMOTION_IMPROVISE1",
+   "PROMOTION_SECURITY1",
+   "PROMOTION_ESCAPE1"
+  ]
+ },
+ "cost": {
+  "production": 811,
+  "upkeep": 1000
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SPECIAL_AGENT",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SPECIAL_AGENT"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_SPECIAL_AGENT",
+  "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SPY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "espionagePoints": 500,
+  "unitAIs": [
+   "UNITAI_SPY"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

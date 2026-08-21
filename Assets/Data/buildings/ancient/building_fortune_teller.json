@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_FORTUNE_TELLER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRANSHUMANISM"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_PSYCHIC_ADVISOR"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ASTROLOGY",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_PSYCHIC_ADVISOR",
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 192,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FORTUNE_TELLER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FORTUNE_TELLER",
+  "civilopedia": "TXT_KEY_BUILDING_FORTUNE_TELLER_PEDIA",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_CULTURAL_AWAKENING",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_NANOPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOPUNK",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 10,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "cost": {
+  "production": 3525
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_CULTURAL_AWAKENING",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURAL_AWAKENING",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURAL_AWAKENING_PEDIA",
+  "specialBuildingType": "SPECIALBUILDING_PUNK_NANO",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "type": "ROUTE_HYPERLANE",
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 10
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/hyperlane.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_ROUTE_HYPERLANE",
+  "value": 5,
+  "advancedStart": {
+   "cost": 30
+  }
+ }
+}

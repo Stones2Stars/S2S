@@ -4,14 +4,20 @@ from CvPythonExtensions import *
 import HandleInputUtil
 import UnitUpgradesGraph
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
+MAP = GC.getMap()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class Pedia:
 
 	def __init__(self, screenId):
-		import HelperFunctions
-		self.HF = HelperFunctions.HelperFunctions([0])
 
 		self.screenId = screenId
 		self.bNotPedia = True
@@ -101,10 +107,10 @@ class Pedia:
 
 		# Initialize category classes
 		G = GC.getGame()
-		PRODUCTION	= u'%c' %GC.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar()
-		COMMERCE	= u'%c' %GC.getYieldInfo(YieldTypes.YIELD_COMMERCE).getChar()
-		GOLD		= u'%c' %GC.getCommerceInfo(CommerceTypes.COMMERCE_GOLD).getChar()
-		BEAKER		= u'%c' %GC.getCommerceInfo(CommerceTypes.COMMERCE_RESEARCH).getChar()
+		PRODUCTION	= u'%c' %TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_PRODUCTION)
+		COMMERCE	= u'%c' %TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_COMMERCE)
+		GOLD		= u'%c' %TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_GOLD)
+		BEAKER		= u'%c' %TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH)
 		STRENGHT	= u'%c' %G.getSymbolID(FontSymbols.STRENGTH_CHAR)
 		MOVES		= u'%c' %G.getSymbolID(FontSymbols.MOVES_CHAR)
 		SILVERSTAR	= u'%c' %G.getSymbolID(FontSymbols.SILVER_STAR_CHAR)
@@ -223,7 +229,7 @@ class Pedia:
 		self.iNumEras = iNumEras = GC.getNumEraInfos()
 		szEraList.append(szCatAllEras)
 		for i in xrange(iNumEras):
-			szEraList.append(GC.getEraInfo(i).getDescription())
+			szEraList.append(INFO.getDescription("C2C_ERA_", i))
 		szTechSubCatList = list(szEraList)
 		szTechSubCatList.append(szChronology)
 		PEDIA_SUB_CONCEPTS 		= [szCatConcepts, szCatConceptsNew, szCatStrategy, szCatShortcuts, szCatHints, szCatEras]
@@ -448,39 +454,29 @@ class Pedia:
 			if not szSubCat:
 				if iObjectType == -1: # When right clicking the research bar in game.
 					iObjectType = self.CyPlayer.getCurrentResearch()
-				CvTechInfo = GC.getTechInfo(iObjectType)
 				if self.SECTION == [iCategory, self.szCatAllEras] or self.SECTION == [iCategory, self.szChronology]:
 					szSubCat = self.SECTION[1]
 				else:
-					iEra = CvTechInfo.getEra() + 1
+					iEra = INFO.getIntrinsic("TECH_", iObjectType, IntrinsicSlot.PYINT_ERA) + 1
 					szSubCat = self.mapSubCat.get(iCategory)[iEra]
-				print "Selected: %s", CvTechInfo.getDescription()
+				print "Selected: %s", INFO.getDescription("TECH_", iObjectType)
 
 		elif iCategory == self.PEDIA_UNITS_0:
 			bFuncByGroupCat = True
 			self.iGroupCategory = iGroupCategory = iCategory
-			CvUnitInfo = GC.getUnitInfo(iObjectType)
-			CvBonusInfo = GC.getBonusInfo(CvUnitInfo.getPrereqAndBonus())
-			if CvBonusInfo:
-				iBonusClassType = CvBonusInfo.getBonusClassType()
-			else:
-				iBonusClassType = None
-			iDefaultUnitAIType = CvUnitInfo.getDefaultUnitAIType()
-			aListAI = [UnitAITypes.UNITAI_MISSIONARY]
-			iCost = CvUnitInfo.getProductionCost()
-			if iDefaultUnitAIType in (UnitAITypes.UNITAI_ANIMAL, UnitAITypes.UNITAI_SUBDUED_ANIMAL):
+			if INFO.isAnimal(iObjectType):
 				iCategory = self.PEDIA_UNITS_2
 				szSubCat = self.mapSubCat.get(iCategory)[2]
-			elif (iDefaultUnitAIType in aListAI):
+			elif INFO.canSpreadReligion(iObjectType):
 				iCategory = self.PEDIA_UNITS_2
 				szSubCat = self.mapSubCat.get(iCategory)[3]
-			elif iCost <= 0:
+			elif INFO.getIntrinsic("UNIT_", iObjectType, IntrinsicSlot.PYINT_COST) <= 0:
 				iCategory = self.PEDIA_UNITS_2
 				szSubCat = self.mapSubCat.get(iCategory)[4]
-			elif CvUnitInfo.getMaxGlobalInstances() == 1: ## World Unit
+			elif INFO.isWorldUnit(iObjectType):
 				iCategory = self.PEDIA_UNITS_2
 				szSubCat = self.mapSubCat.get(iCategory)[0]
-			elif iBonusClassType == GC.getInfoTypeForString("BONUSCLASS_CULTURE"):
+			elif self.isCultureUnit(iObjectType):
 				iCategory = self.PEDIA_UNITS_2
 				szSubCat = self.mapSubCat.get(iCategory)[1]
 			else:
@@ -488,9 +484,9 @@ class Pedia:
 				if self.SECTION == [iCategory, self.szCatAllEras]:
 					szSubCat = self.SECTION[1]
 				else:
-					iEra = self.getUnitEra(CvUnitInfo)
+					iEra = self.getUnitEra(iObjectType)
 					szSubCat = self.mapSubCat.get(iCategory)[iEra]
-			print "Selected: %s", CvUnitInfo.getDescription()
+			print "Selected: %s", INFO.getDescription("UNIT_", iObjectType)
 
 		elif iCategory in (self.PEDIA_UNITS_1, self.PEDIA_UNITS_2):
 			bFuncByGroupCat = True
@@ -499,27 +495,25 @@ class Pedia:
 		elif iCategory == self.PEDIA_PROMOTIONS:
 			bFuncByCat = True
 			if not szSubCat:
-				CvPromotionInfo = GC.getPromotionInfo(iObjectType)
-				iPromotionType = self.getPromotionType(CvPromotionInfo)
+				iPromotionType = self.getPromotionType(iObjectType)
 				szSubCat = self.mapSubCat.get(iCategory)[iPromotionType]
-				print "Selected: %s", CvPromotionInfo.getDescription()
+				print "Selected: %s", INFO.getDescription("PROMOTION_", iObjectType)
 
 		elif iCategory == self.PEDIA_BUILDINGS_0:
 			bFuncByGroupCat = True
 			self.iGroupCategory = iGroupCategory = iCategory
-			CvBuildingInfo = GC.getBuildingInfo(iObjectType)
-			iBuildingType = self.getBuildingType(CvBuildingInfo, iObjectType)
-			if iBuildingType != -1:
+			szCategory = INFO.getPediaCategory("BUILDING_", iObjectType)
+			if szCategory in self.PEDIA_BUILDING_BUCKETS:
 				iCategory = self.PEDIA_BUILDINGS_2
-				szSubCat = self.mapSubCat.get(iCategory)[iBuildingType]
+				szSubCat = self.mapSubCat.get(iCategory)[self.PEDIA_BUILDING_BUCKETS.index(szCategory)]
 			else:
 				iCategory = self.PEDIA_BUILDINGS_1
 				if self.SECTION == [iCategory, self.szCatAllEras]:
 					szSubCat = self.SECTION[1]
 				else:
-					iEra = self.getBuildingEra(CvBuildingInfo)
+					iEra = self.getBuildingEra(iObjectType)
 					szSubCat = self.mapSubCat.get(iCategory)[iEra]
-			print "Selected: %s", CvBuildingInfo.getDescription()
+			print "Selected: %s", INFO.getDescription("BUILDING_", iObjectType)
 
 		elif iCategory in (self.PEDIA_BUILDINGS_1, self.PEDIA_BUILDINGS_2):
 			bFuncByGroupCat = True
@@ -528,22 +522,23 @@ class Pedia:
 		elif iCategory == self.PEDIA_BONUSES:
 			bFuncByCat = True
 			if not szSubCat:
-				CvBonusInfo = GC.getBonusInfo(iObjectType)
-				if CvBonusInfo.isMapBonus():
+				iBonusClass = INFO.getIntrinsic("BONUS_", iObjectType, IntrinsicSlot.PYINT_BONUS_CLASS)
+				if INFO.getIntrinsic("BONUS_", iObjectType, IntrinsicSlot.PYINT_IS_MAP_BONUS):
 					## Map resource
 					szSubCat = self.mapSubCat.get(iCategory)[0]
-				elif CvBonusInfo.getBonusClassType() != GC.getInfoTypeForString("BONUSCLASS_CULTURE") and CvBonusInfo.getBonusClassType() != GC.getInfoTypeForString("BONUSCLASS_GENMODS") and CvBonusInfo.getBonusClassType() != GC.getInfoTypeForString("BONUSCLASS_WONDER"):
-					## Manufactured resource
-					szSubCat = self.mapSubCat.get(iCategory)[1]
-				elif CvBonusInfo.getBonusClassType() == GC.getInfoTypeForString("BONUSCLASS_CULTURE"):
+				elif iBonusClass == GC.getInfoTypeForString("BONUSCLASS_CULTURE"):
 					## Culture resource
 					szSubCat = self.mapSubCat.get(iCategory)[2]
-				elif CvBonusInfo.getBonusClassType() == GC.getInfoTypeForString("BONUSCLASS_GENMODS"):
+				elif iBonusClass == GC.getInfoTypeForString("BONUSCLASS_GENMODS"):
 					## Genmod resources
 					szSubCat = self.mapSubCat.get(iCategory)[3]
-				else: ## Wonder resource
+				elif iBonusClass == GC.getInfoTypeForString("BONUSCLASS_WONDER"):
+					## Wonder resource
 					szSubCat = self.mapSubCat.get(iCategory)[4]
-				print "Selected: %s", CvBonusInfo.getDescription()
+				else:
+					## Manufactured resource
+					szSubCat = self.mapSubCat.get(iCategory)[1]
+				print "Selected: %s", INFO.getDescription("BONUS_", iObjectType)
 
 		elif iCategory == self.PEDIA_LANDSCAPE:
 			if szSubCat == "Terrain":
@@ -551,7 +546,7 @@ class Pedia:
 			elif szSubCat == "Feature":
 				szSubCatSimple = szSubCat
 				bFuncBySubCatSimple = True
-				if GC.getFeatureInfo(iObjectType).getType().find("FEATURE_PLATY_") == -1:
+				if INFO.getType("FEATURE_", iObjectType).find("FEATURE_PLATY_") == -1:
 					szSubCat = self.mapSubCat.get(iCategory)[1]
 				else: ## Natural Wonder
 					szSubCat = self.mapSubCat.get(iCategory)[2]
@@ -594,7 +589,7 @@ class Pedia:
 					szSubCatSimple = szSubCat
 					bFuncBySubCatSimple = True
 					bNewConcept = True
-					szInfoType = GC.getNewConceptInfo(iObjectType).getType()
+					szInfoType = INFO.getType("NEWCONCEPT_", iObjectType)
 					print "Selected concept type %s" %(szInfoType)
 					if szInfoType.find("STRATEGY") != -1:
 						szSubCat = self.mapSubCat.get(iCategory)[2]
@@ -623,9 +618,9 @@ class Pedia:
 			panelName = self.getNextWidgetName()
 			screen.addPanel(panelName, "", "", True, True, self.X_PEDIA_PAGE, self.Y_PEDIA_PAGE, self.W_PEDIA_PAGE, self.H_PEDIA_PAGE, PanelStyles.PANEL_STYLE_BLUE50)
 			if bNewConcept:
-				szText = GC.getNewConceptInfo(iObjectType).getCivilopedia()
+				szText = INFO.getCivilopedia("NEWCONCEPT_", iObjectType)
 			else:
-				szText = GC.getConceptInfo(iObjectType).getCivilopedia()
+				szText = INFO.getCivilopedia("CONCEPT_", iObjectType)
 			screen.attachMultilineText(panelName, "", szText, WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 		elif bFuncByGroupCat:
 			self.mapScreenFunctions[iGroupCategory].interfaceScreen(iObjectType)
@@ -695,7 +690,7 @@ class Pedia:
 	def placeTechs(self):
 		print "Creating item list for category: Technologies"
 		self.aList = self.getSortedTechList()
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, GC.getTechInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, "TECH_")
 
 	def getSortedTechList(self):
 		aList = []
@@ -705,13 +700,11 @@ class Pedia:
 		if szSubCat == szChronology:
 			aListDict = {}
 			for i in xrange(GC.getNumTechInfos()):
-				CvTechInfo = GC.getTechInfo(i)
-				if CvTechInfo.isDisable():
-					print ("Disabled tech", CvTechInfo.getDescription())
+				if INFO.getIntrinsic("TECH_", i, IntrinsicSlot.PYINT_IS_DISABLED):
 					continue
-				iX = CvTechInfo.getGridX()
-				iY = CvTechInfo.getGridY()
-				aListDict[(iX, iY)] = (CvTechInfo.getDescription(), i)
+				iX = INFO.getIntrinsic("TECH_", i, IntrinsicSlot.PYINT_GRID_X)
+				iY = INFO.getIntrinsic("TECH_", i, IntrinsicSlot.PYINT_GRID_Y)
+				aListDict[(iX, iY)] = (INFO.getDescription("TECH_", i), i)
 				aList.append((iX, iY))
 		else:
 			if szSubCat == self.szCatAllEras:
@@ -719,16 +712,14 @@ class Pedia:
 			else:
 				bAll = False
 			for i in xrange(GC.getNumTechInfos()):
-				CvTechInfo = GC.getTechInfo(i)
-				if CvTechInfo.isDisable():
-					print ("Disabled tech", CvTechInfo.getDescription())
+				if INFO.getIntrinsic("TECH_", i, IntrinsicSlot.PYINT_IS_DISABLED):
 					continue
 				if bAll:
-					aList.append((CvTechInfo.getDescription(), i))
+					aList.append((INFO.getDescription("TECH_", i), i))
 				else:
-					iEra = CvTechInfo.getEra() + 1
+					iEra = INFO.getIntrinsic("TECH_", i, IntrinsicSlot.PYINT_ERA) + 1
 					if szSubCat == aSubCatList[iEra]:
-						aList.append((CvTechInfo.getDescription(), i))
+						aList.append((INFO.getDescription("TECH_", i), i))
 		if szSubCat == szChronology:
 			aList.sort()
 			for i in xrange(len(aList)):
@@ -742,84 +733,70 @@ class Pedia:
 	def placeUnits(self):
 		print "Creating item list for category: Units"
 		self.aList = self.getSortedUnitList(False, False, False, False, False)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, GC.getUnitInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, "UNIT_")
 
 	def placeWorldUnits(self):
 		print "Creating item list for category: Heroes"
 		self.aList = self.getSortedUnitList(True, False, False, False, False)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, GC.getUnitInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, "UNIT_")
 
 	def placeAnimals(self):
 		print "Creating item list for category: Animals"
 		self.aList = self.getSortedUnitList(False, True, False, False, False)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, GC.getUnitInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, "UNIT_")
 
 	def placeCulturalUnits(self):
 		print "Creating item list for category: Cultural"
 		self.aList = self.getSortedUnitList(False, False, True, False, False)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, GC.getUnitInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, "UNIT_")
 
 	def placeSpreadUnits(self):
 		print "Creating item list for category: Corporate/Religion spreading Units"
 		self.aList = self.getSortedUnitList(False, False, False, True, False)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, GC.getUnitInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, "UNIT_")
 
 	def placeMiscUnits(self):
 		print "Creating item list for category: Misc Units"
 		self.aList = self.getSortedUnitList(False, False, False, False, True)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, GC.getUnitInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, "UNIT_")
 
 	def getSortedUnitList(self, bWorld, bAnimals, bCultural, bSpread, bMisc):
 		aList = []
 		iCategory, szSubCat = self.SECTION
 		aSubCatList = self.mapSubCat.get(iCategory)
-		bValid = False
-		for i in xrange(GC.getNumUnitInfos()):
-			CvUnitInfo = GC.getUnitInfo(i)
-			CvBonusInfo = GC.getBonusInfo(CvUnitInfo.getPrereqAndBonus())
-			if CvBonusInfo:
-				iBonusClassType = CvBonusInfo.getBonusClassType()
-			else:
-				iBonusClassType = None
-			iDefaultUnitAIType = CvUnitInfo.getDefaultUnitAIType()
-			aListAI = [UnitAITypes.UNITAI_MISSIONARY]
-			iCost = CvUnitInfo.getProductionCost()
-			if iDefaultUnitAIType in (UnitAITypes.UNITAI_ANIMAL, UnitAITypes.UNITAI_SUBDUED_ANIMAL):
-				if bAnimals:
-					bValid = True
-				else:
+		for kEntry in INFO.getIndex("UNIT_"):
+			i = kEntry["id"]
+			bValid = False
+			if INFO.isAnimal(i):
+				if not bAnimals:
 					continue
-			elif (iDefaultUnitAIType in aListAI):
-				if bSpread:
-					bValid = True
-				else:
+				bValid = True
+			elif INFO.canSpreadReligion(i):
+				if not bSpread:
 					continue
-			elif iCost <= 0:
-				if bMisc:
-					bValid = True
-				else:
+				bValid = True
+			elif INFO.getIntrinsic("UNIT_", i, IntrinsicSlot.PYINT_COST) <= 0:
+				if not bMisc:
 					continue
-			elif CvUnitInfo.getMaxGlobalInstances() == 1:
-				if bWorld:
-					bValid = True
-				else:
+				bValid = True
+			elif INFO.isWorldUnit(i):
+				if not bWorld:
 					continue
-			elif iBonusClassType == GC.getInfoTypeForString("BONUSCLASS_CULTURE"):
-				if bCultural:
-					bValid = True
-				else:
+				bValid = True
+			elif self.isCultureUnit(i):
+				if not bCultural:
 					continue
+				bValid = True
 			elif bWorld or bAnimals or bCultural or bSpread or bMisc:
 				continue
 			elif szSubCat == self.szCatAllEras:
 				bValid = True
 			else:
-				iEra = self.getUnitEra(CvUnitInfo)
+				iEra = self.getUnitEra(i)
 				if szSubCat == aSubCatList[iEra]:
 					bValid = True
 			if bValid:
-				aList.append((CvUnitInfo.getDescription(), i))
-				bValid = False
+				aList.append((kEntry["description"], i))
 		aList.sort()
 		return aList
 
@@ -827,139 +804,108 @@ class Pedia:
 	def placePromotions(self):
 		print "Creating item list for category: Promotions"
 		self.aList = self.getPromotionList(0)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, GC.getPromotionInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, "PROMOTION_")
 
 	def placeBuildUp(self):
 		print "Creating item list for category: Build Up"
 		self.aList = self.getPromotionList(1)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, GC.getPromotionInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, "PROMOTION_")
 
 	def placeStatus(self):
 		print "Creating item list for category: Status"
 		self.aList = self.getPromotionList(2)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, GC.getPromotionInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, "PROMOTION_")
 
 	def getPromotionList(self, iType):
 		aList = []
-		for iPromotion in xrange(GC.getNumPromotionInfos()):
-			CvPromotionInfo = GC.getPromotionInfo(iPromotion)
-			szPromoName = CvPromotionInfo.getDescription()
-			iPromotionType = self.getPromotionType(CvPromotionInfo)
-			if iType == iPromotionType:
-				aList.append((szPromoName, iPromotion))
+		for kEntry in INFO.getIndex("PROMOTION_"):
+			if iType == self.getPromotionType(kEntry["id"]):
+				aList.append((kEntry["description"], kEntry["id"]))
 		aList.sort()
 		return aList
 
-	def getPromotionType(self, CvPromotionInfo):
-		CvPromotionLineInfo = GC.getPromotionLineInfo(CvPromotionInfo.getPromotionLine())
-		bBuildUp = False
-		if CvPromotionLineInfo != None:
-			if CvPromotionLineInfo.isBuildUp():
-				bBuildUp = True
-		if CvPromotionInfo.isStatus():
+	def getPromotionType(self, iPromotion):
+		if INFO.isStatusPromotion(iPromotion):
 			return 2
-		elif bBuildUp:
+		if INFO.isBuildUpPromotion(iPromotion):
 			return 1
-		else:
-			return 0
+		return 0
 
 	# Building Lists
 	def placeBuildings(self):
 		print "Category: Buildings"
 		self.aList = self.getBuildingList(-1)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, GC.getBuildingInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, "BUILDING_")
 
 	def placeNationalWonders(self):
 		print "Category: National Wonders"
 		self.aList = self.getBuildingList(0)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, GC.getBuildingInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, "BUILDING_")
 
 	def placeGreatWonders(self):
 		print "Category: Great Wonders"
 		self.aList = self.getBuildingList(1)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, GC.getBuildingInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, "BUILDING_")
 
 	def placeGroupWonders(self):
 		print "Category: Group Wonders"
 		self.aList = self.getBuildingList(2)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, GC.getBuildingInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, "BUILDING_")
 
 	def placeSpeBuildings(self):
 		print "Category: Special Buildings"
 		self.aList = self.getBuildingList(3)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, GC.getBuildingInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, "BUILDING_")
 
 	def placeCulBuildings(self):
 		print "Category: Culture Buildings"
 		self.aList = self.getBuildingList(4)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, GC.getBuildingInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, "BUILDING_")
 
 	def placeRelBuildings(self):
 		print "Category: Religious Buildings"
 		self.aList = self.getBuildingList(5)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, GC.getBuildingInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, "BUILDING_")
 
 	def placeAniBuildings(self):
 		print "Category: Animalistic Buildings"
 		self.aList = self.getBuildingList(6)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, GC.getBuildingInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, "BUILDING_")
 
 	def placeSpaceBuildings(self):
 		print "Category: Space Buildings"
 		self.aList = self.getBuildingList(7)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, GC.getBuildingInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, "BUILDING_")
+
+	#	The pedia BUCKET is authored data now (identity.pediaCategory, json.md §7), so this filters the index
+	#	instead of re-deriving a taxonomy. ONE crossing for the registry, and the classifier that read seven
+	#	legacy getters plus a substring match on the localized DISPLAY NAME is gone with it.
+	PEDIA_BUILDING_BUCKETS = ["nationalWonder", "greatWonder", "groupWonder", "specialBuilding",
+	                          "culture", "religious", "animalistic", "space"]
 
 	def getBuildingList(self, iBuildingType):
 		aList = []
 		iCategory, szSubCat = self.SECTION
 		aSubCatList = self.mapSubCat.get(iCategory)
-		bValid = False
-		for i in xrange(GC.getNumBuildingInfos()):
-			CvBuildingInfo = GC.getBuildingInfo(i)
-			if CvBuildingInfo.isGraphicalOnly():
-				continue
-			if iBuildingType != -1:
-				if self.getBuildingType(CvBuildingInfo, i) == iBuildingType:
-					bValid = True
-			elif self.getBuildingType(CvBuildingInfo, i) == -1:
-				if szSubCat == self.szCatAllEras:
-					bValid = True
-				else:
-					iEra = self.getBuildingEra(CvBuildingInfo)
-					if szSubCat == aSubCatList[iEra]:
-						bValid = True
-			if bValid:
-				aList.append((CvBuildingInfo.getDescription(), i))
-				bValid = False
+		szWanted = ""
+		if iBuildingType != -1:
+			szWanted = self.PEDIA_BUILDING_BUCKETS[iBuildingType]
+		for kEntry in INFO.getIndex("BUILDING_"):
+			szCategory = kEntry["pediaCategory"]
+			if szWanted:
+				if szCategory != szWanted:
+					continue
+			else:
+				#	The ORDINARY bucket is the absent one, sub-bucketed by era.
+				if szCategory:
+					continue
+				if szSubCat != self.szCatAllEras:
+					iEra = self.getBuildingEra(kEntry["id"])
+					if szSubCat != aSubCatList[iEra]:
+						continue
+			aList.append((kEntry["description"], kEntry["id"]))
 		aList.sort()
 		return aList
-
-	def getBuildingType(self, CvBuildingInfo, iBuilding):
-		szStrat = CvBuildingInfo.getDescription()
-
-		if GC.getInfoTypeForString("MAPCATEGORY_EARTH") not in CvBuildingInfo.getMapCategories():
-			return 7
-
-		iSpecialBuilding = CvBuildingInfo.getSpecialBuildingType()
-
-		if iSpecialBuilding != -1:
-			if iSpecialBuilding == GC.getInfoTypeForString("SPECIALBUILDING_C2C_CULTURE"):
-				return 4
-			if GC.getSpecialBuildingInfo(iSpecialBuilding).getType().find("_GROUP_") != -1:
-				return 2
-		if szStrat.find("Folklore -", 0, 10) + szStrat.find("Folklore (E) -", 0, 14) + szStrat.find("Folklore (T) -", 0, 14) + szStrat.find("Enclosure -", 0, 11) + szStrat.find("Remains -", 0, 9) != -5:
-			return 6
-		if CvBuildingInfo.getReligionType() != -1 or CvBuildingInfo.getPrereqReligion() != -1:
-			return 5
-		if CvBuildingInfo.getProductionCost() == -1 or CvBuildingInfo.isAutoBuild():
-			return 3
-		if isWorldWonder(iBuilding):
-			return 1
-		if isNationalWonder(iBuilding):
-			return 0
-
-		return -1
-
 
 	def placeUnitTree(self):
 		print "Category: Unit Tree"
@@ -1000,44 +946,43 @@ class Pedia:
 
 	def placeUnitCombats(self):
 		print "Category: Unit Combat Types"
-		self.aList = self.getSortedList(GC.getNumUnitCombatInfos(), GC.getUnitCombatInfo)
-		self.placeItems("UnitCombats", GC.getUnitCombatInfo)
+		self.aList = self.getSortedList("UNITCOMBAT_")
+		self.placeItems("UnitCombats", "UNITCOMBAT_")
 
 
 	def placeProjects(self):
 		print "Category: Projects"
-		self.aList = self.getSortedList(GC.getNumProjectInfos(), GC.getProjectInfo)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROJECT, GC.getProjectInfo)
+		self.aList = self.getSortedList("PROJECT_")
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROJECT, "PROJECT_")
 
 	def placeSpecialists(self):
 		print "Category: Specialists"
-		self.aList = self.getSortedList(GC.getNumSpecialistInfos(), GC.getSpecialistInfo)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPECIALIST, GC.getSpecialistInfo)
+		self.aList = self.getSortedList("SPECIALIST_")
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_SPECIALIST, "SPECIALIST_")
 
 
 	def placeTerrains(self):
 		print "Category: Terrains"
-		self.aList = self.getSortedList(GC.getNumTerrainInfos(), GC.getTerrainInfo)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_TERRAIN, GC.getTerrainInfo)
+		self.aList = self.getSortedList("TERRAIN_")
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_TERRAIN, "TERRAIN_")
 
 	def placeFeatures(self):
 		print "Category: Features"
 		self.aList = self.getFeatureList(False)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_FEATURE, GC.getFeatureInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_FEATURE, "FEATURE_")
 
 	def placeNaturalWonders(self):
 		print "Category: Natural Wonders"
 		self.aList = self.getFeatureList(True)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_FEATURE, GC.getFeatureInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_FEATURE, "FEATURE_")
 
 	def getFeatureList(self, bNaturalWonder):
 		aList = []
-		for iFeature in xrange(GC.getNumFeatureInfos()):
-			CvFeatureInfo = GC.getFeatureInfo(iFeature)
-			if not CvFeatureInfo.isGraphicalOnly():
-				if (CvFeatureInfo.getType().find("_PLATY_") > -1) == bNaturalWonder:
-					szName = CvFeatureInfo.getDescription()
-					aList.append((szName, iFeature))
+		for kEntry in INFO.getIndex("FEATURE_"):
+			if kEntry["graphicalOnly"]:
+				continue
+			if (kEntry["type"].find("_PLATY_") > -1) == bNaturalWonder:
+				aList.append((kEntry["description"], kEntry["id"]))
 		aList.sort()
 		return aList
 
@@ -1045,46 +990,47 @@ class Pedia:
 	def placeMapBonuses(self):
 		print "Category: Map Bonuses"
 		self.aList = self.getBonusList(0)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, GC.getBonusInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, "BONUS_")
 
 	def placeManufacturedBonuses(self):
 		print "Category: Other Bonuses"
 		self.aList = self.getBonusList(1)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, GC.getBonusInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, "BONUS_")
 
 	def placeCulturalBonuses(self):
 		print "Category: Culture Bonuses"
 		self.aList = self.getBonusList(2)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, GC.getBonusInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, "BONUS_")
 
 	def placeTechnoculturalBonuses(self):
 		print "Category: Genmod Bonuses"
 		self.aList = self.getBonusList(3)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, GC.getBonusInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, "BONUS_")
 
 	def placeWonderBonuses(self):
 		print "Category: Wonder Bonuses"
 		self.aList = self.getBonusList(4)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, GC.getBonusInfo)
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, "BONUS_")
 
 	def getBonusList(self, iType):
 		aList = []
 		BONUSCLASS_CULTURE = GC.getInfoTypeForString("BONUSCLASS_CULTURE")
 		BONUSCLASS_GENMODS = GC.getInfoTypeForString("BONUSCLASS_GENMODS")
 		BONUSCLASS_WONDER = GC.getInfoTypeForString("BONUSCLASS_WONDER")
-		for iBonus in xrange(GC.getNumBonusInfos()):
-			CvBonusInfo = GC.getBonusInfo(iBonus)
-			szName = CvBonusInfo.getDescription()
-			if CvBonusInfo.isMapBonus(): # A map resource
+		for kEntry in INFO.getIndex("BONUS_"):
+			iBonus = kEntry["id"]
+			szName = kEntry["description"]
+			iBonusClass = INFO.getIntrinsic("BONUS_", iBonus, IntrinsicSlot.PYINT_BONUS_CLASS)
+			if INFO.getIntrinsic("BONUS_", iBonus, IntrinsicSlot.PYINT_IS_MAP_BONUS): # A map resource
 				if not iType:
 					aList.append((szName, iBonus))
-			elif BONUSCLASS_WONDER > -1 and CvBonusInfo.getBonusClassType() == BONUSCLASS_WONDER:
+			elif BONUSCLASS_WONDER > -1 and iBonusClass == BONUSCLASS_WONDER:
 				if iType == 4:
 					aList.append((szName, iBonus))
-			elif BONUSCLASS_GENMODS > -1 and CvBonusInfo.getBonusClassType() == BONUSCLASS_GENMODS:
+			elif BONUSCLASS_GENMODS > -1 and iBonusClass == BONUSCLASS_GENMODS:
 				if iType == 3:
 					aList.append((szName, iBonus))
-			elif BONUSCLASS_CULTURE > -1 and CvBonusInfo.getBonusClassType() == BONUSCLASS_CULTURE:
+			elif BONUSCLASS_CULTURE > -1 and iBonusClass == BONUSCLASS_CULTURE:
 				if iType == 2:
 					aList.append((szName, iBonus))
 			elif iType == 1:
@@ -1095,74 +1041,88 @@ class Pedia:
 
 	def placeImprovements(self):
 		print "Category: Improvements"
-		self.aList = self.getSortedList(GC.getNumImprovementInfos(), GC.getImprovementInfo)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_IMPROVEMENT, GC.getImprovementInfo)
+		self.aList = self.getSortedList("IMPROVEMENT_")
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_IMPROVEMENT, "IMPROVEMENT_")
 
 	def placeRoutes(self):
 		print "Category: Routes"
-		self.aList = self.getSortedList(GC.getNumRouteInfos(), GC.getRouteInfo)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_ROUTE, GC.getRouteInfo)
+		self.aList = self.getSortedList("ROUTE_")
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_ROUTE, "ROUTE_")
 
 	def placeBuilds(self):
 		print "Category: Worker Builds"
-		self.aList = self.getSortedList(GC.getNumBuildInfos(), GC.getBuildInfo)
-		self.placeItems("Builds", GC.getBuildInfo)
+		self.aList = self.getSortedList("BUILD_")
+		self.placeItems("Builds", "BUILD_")
 
 	def placeCivs(self):
 		print "Category: Civilizations"
-		self.aList = self.getSortedList(GC.getNumCivilizationInfos(), GC.getCivilizationInfo)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIV, GC.getCivilizationInfo)
+		self.aList = self.getSortedList("CIVILIZATION_")
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIV, "CIVILIZATION_")
 
 	def placeLeaders(self):
 		print "Category: Leaders"
-		self.aList = self.getSortedList(GC.getNumLeaderHeadInfos(), GC.getLeaderHeadInfo)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_LEADER, GC.getLeaderHeadInfo)
+		self.aList = self.getSortedList("LEADER_")
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_LEADER, "LEADER_")
 
 	def getLeaderList(self):
-		return self.getSortedList(GC.getNumLeaderHeadInfos(), GC.getLeaderHeadInfo)
+		return self.getSortedList("LEADER_")
 
 	def placeTraits(self):
 		print "Category: Traits"
-		self.aList = self.getSortedList(GC.getNumTraitInfos(), GC.getTraitInfo)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_TRAIT, GC.getTraitInfo)
+		self.aList = self.getSortedList("TRAIT_")
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_TRAIT, "TRAIT_")
 
 	def placeCivics(self):
 		print "Category: Civics"
-		self.aList = self.getSortedList(GC.getNumCivicInfos(), GC.getCivicInfo)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIVIC, GC.getCivicInfo)
+		self.aList = self.getSortedList("CIVIC_")
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIVIC, "CIVIC_")
 
 	def placeReligions(self):
 		print "Category: Religion"
-		self.aList = self.getSortedList(GC.getNumReligionInfos(), GC.getReligionInfo)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_RELIGION, GC.getReligionInfo)
+		self.aList = self.getSortedList("RELIGION_")
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_RELIGION, "RELIGION_")
 
 	def placeHeritage(self):
 		print "Category: Heritage"
-		self.aList = self.getSortedList(GC.getNumHeritageInfos(), GC.getHeritageInfo)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_HERITAGE, GC.getHeritageInfo)
+		self.aList = self.getSortedList("HERITAGE_")
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_HERITAGE, "HERITAGE_")
 
 	def placeCorporations(self):
 		print "Category: Corporations"
-		self.aList = self.getSortedList(GC.getNumCorporationInfos(), GC.getCorporationInfo)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_CORPORATION, GC.getCorporationInfo)
+		self.aList = self.getSortedList("CORPORATION_")
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_JUMP_TO_CORPORATION, "CORPORATION_")
 
 	def placeConcepts(self):
 		print "Category: Concepts"
-		self.aList = self.getSortedList(GC.getNumConceptInfos(), GC.getConceptInfo)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_DESCRIPTION, GC.getConceptInfo)
+		self.aList = self.getSortedList("CONCEPT_")
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_DESCRIPTION, "CONCEPT_")
+
+	#	The NewConcept registry holds three display sets distinguished only by a marker in the TYPE key.
+	#	szWanted "" is the ordinary set (neither marker); otherwise it selects that marker.
+	#	⚠ The prefix is NEWCONCEPT_, never CONCEPT_: both registries author CONCEPT_* ids, so the authored
+	#	token cannot tell them apart and routing on it answers from whichever the dispatch reached first.
+	def getNewConceptList(self, szWanted):
+		aList = []
+		for kEntry in INFO.getIndex("NEWCONCEPT_"):
+			szType = kEntry["type"]
+			bShortcut = szType.find("SHORTCUTS") != -1
+			bStrategy = szType.find("STRATEGY") != -1
+			if szWanted == "SHORTCUTS":
+				if not bShortcut:
+					continue
+			elif szWanted == "STRATEGY":
+				if not bStrategy:
+					continue
+			elif bShortcut or bStrategy:
+				continue
+			aList.append((kEntry["description"], kEntry["id"]))
+		aList.sort()
+		return aList
 
 	def placeBTSConcepts(self):
 		print "Category: BTS Concepts"
-		self.aList = self.getSortedList(GC.getNumNewConceptInfos(), self.getNewConceptInfo)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_DESCRIPTION, self.getNewConceptInfo)
-
-	def getNewConceptInfo(self, id):
-		print "Category: C2C Concepts"
-		info = GC.getNewConceptInfo(id)
-		type = info.getType()
-		if type.find("SHORTCUTS") != -1 or type.find("STRATEGY") != -1:
-			return None
-		return info
+		self.aList = self.getNewConceptList("")
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_DESCRIPTION, "NEWCONCEPT_")
 
 	def placeHints(self):
 		self.aList = []
@@ -1193,42 +1153,28 @@ class Pedia:
 		eWidGen	= WidgetTypes.WIDGET_GENERAL
 
 		aList = []
-		iEras = GC.getNumEraInfos()
-		screen.setLabel("PediaMainItemListCount", "", self.aFontList[0] + "# %d" % iEras, 1<<0, self.W_CATEGORIES, 2, 0, FontTypes.TITLE_FONT, eWidGen, 1, 1)
-		iEra = 0
-		while iEra < iEras:
-			CvEraInfo = GC.getEraInfo(iEra)
-			szName = CvEraInfo.getDescription()
-			aList.append((szName, iEra))
+		aEras = INFO.getIndex("C2C_ERA_")
+		screen.setLabel("PediaMainItemListCount", "", self.aFontList[0] + "# %d" % len(aEras), 1<<0, self.W_CATEGORIES, 2, 0, FontTypes.TITLE_FONT, eWidGen, 1, 1)
+		for kEntry in aEras:
+			szName = kEntry["description"]
+			aList.append((szName, kEntry["id"]))
 			screen.appendListBoxStringNoUpdate(szItemList, self.aFontList[4] + szName, eWidGen, 1, 1, 1<<0)
-			iEra += 1
 
 		screen.updateListBox(szItemList)
 		self.aList = aList
 
 	def placeShortcuts(self):
 		print "Category: Shortcuts"
-		self.aList = self.getSortedList(GC.getNumNewConceptInfos(), self.getShortcutInfo)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_DESCRIPTION, self.getShortcutInfo)
-
-	def getShortcutInfo(self, id):
-		info = GC.getNewConceptInfo(id)
-		if info.getType().find("SHORTCUTS") != -1:
-			return info
-		return None
+		self.aList = self.getNewConceptList("SHORTCUTS")
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_DESCRIPTION, "NEWCONCEPT_")
 
 	def placeStrategy(self):
-		self.aList = self.getSortedList(GC.getNumNewConceptInfos(), self.getStrategyInfo)
-		self.placeItems(WidgetTypes.WIDGET_PEDIA_DESCRIPTION, self.getStrategyInfo)
+		self.aList = self.getNewConceptList("STRATEGY")
+		self.placeItems(WidgetTypes.WIDGET_PEDIA_DESCRIPTION, "NEWCONCEPT_")
 
-	def getStrategyInfo(self, id):
-		info = GC.getNewConceptInfo(id)
-		if info.getType().find("STRATEGY") != -1:
-			return info
-		return None
-
-
-	def placeItems(self, widget, info):
+	#	szPrefix names the registry the rows came from -- it supplies the art in ONE crossing, and it is what
+	#	tells the two CONCEPT registries apart (they share an authored prefix, so nothing else can).
+	def placeItems(self, widget, szPrefix):
 		screen = self.screen()
 		szItemList = "PediaMainItemList"
 		screen.clearListBoxGFC(szItemList)
@@ -1238,7 +1184,6 @@ class Pedia:
 		screen.setStyle(szItemList, "Table_StandardCiv_Style")
 		screen.enableSelect(szItemList, False)
 
-		getConceptInfo = GC.getConceptInfo
 		szFont3 = self.aFontList[4]
 		iPedConcept = CivilopediaPageTypes.CIVILOPEDIA_PAGE_CONCEPT
 		iPedConcNew = CivilopediaPageTypes.CIVILOPEDIA_PAGE_CONCEPT_NEW
@@ -1251,9 +1196,14 @@ class Pedia:
 			widget = WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT
 		else:
 			bOffset = False
+		#	The registry's art, fetched ONCE for the whole list rather than per row: a boost::python call costs
+		#	far more than the lookup inside it, and this redraws on every category click.
+		mapButton = {}
+		for kEntry in INFO.getIndex(szPrefix):
+			mapButton[kEntry["id"]] = kEntry["button"]
 		i = 0
 		for item in self.aList:
-			if info == getConceptInfo:
+			if szPrefix == "CONCEPT_":
 				data1 = iPedConcept
 				data2 = item[1]
 				szName = szFont3 + item[0]
@@ -1269,7 +1219,7 @@ class Pedia:
 
 				data2 = 0
 
-				szName = '<img=%s size=%d></img> %s' %(info(item[1]).getButton(), sIcon, szFont3 + item[0])
+				szName = '<img=%s size=%d></img> %s' %(mapButton.get(item[1], ""), sIcon, szFont3 + item[0])
 			screen.appendListBoxStringNoUpdate(szItemList, szName, widget, data1, data2, 1<<0)
 			i += 1
 		screen.updateListBox(szItemList)
@@ -1295,96 +1245,61 @@ class Pedia:
 		return szName
 
 
-	def getSortedList(self, numInfos, getInfo):
-		list = []
-		for i in xrange(numInfos):
-			item = getInfo(i)
-			if item:
-				bValid = True
-				try:
-					bValid = not item.isGraphicalOnly()
-				except:
-					pass
-				if (bValid):
-					list.append((item.getDescription(), i))
-		list.sort()
-		return list
+	#	ONE crossing for the whole registry, not one per entity: the per-type INDEX carries the description, the
+	#	id and the art-only marker together, which is the shape every enumeration here actually asks for.
+	def getSortedList(self, szPrefix):
+		aList = []
+		for kEntry in INFO.getIndex(szPrefix):
+			#	An art-only entity carries no page to show, so it never enters a listing.
+			if kEntry["graphicalOnly"]:
+				continue
+			aList.append((kEntry["description"], kEntry["id"]))
+		aList.sort()
+		return aList
 
-	def getBuildingEra(self, CvBuildingInfo):
+	#	The pedia's era BAND for a building: the era of the LATEST tech that unlocks it, 1-based.
+	#	⛔ It reads EDGEF_ENABLED_BY, which is the family that exists for exactly this question -- entities
+	#	naming this building in their own `enables`. That is NOT the merged EDGEF_RELATED bucket, so an
+	#	OBSOLETING tech can never band a building ([CvEdges.h]: ENABLED_BY exists to separate the two).
+	#	It replaces a hand-walk of prereq/special-building/religion/folklore/GOM legs that reconstructed,
+	#	one leg at a time, the single list the reverse pass already lands on the building.
+	def getBuildingEra(self, iBuilding):
 		iEra = 0
+		for iTech in INFO.getEdgeIds("BUILDING_", iBuilding, EdgeFamily.EDGEF_ENABLED_BY, EdgeBucket.EDGEB_TECHS):
+			iTechEra = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA)
+			if iTechEra > iEra:
+				iEra = iTechEra
+		#	A buildable building tied to no tech bands with the earliest era rather than dropping out of the list.
+		if iEra == 0 and INFO.getIntrinsic("BUILDING_", iBuilding, IntrinsicSlot.PYINT_COST) > 0:
+			return 1
+		return iEra + 1
 
-		#Main tech requirement
-		if CvBuildingInfo.getPrereqAndTech() != -1:
-			iEra = GC.getTechInfo(CvBuildingInfo.getPrereqAndTech()).getEra()
+	#	Does this unit need a CULTURE-class resource. The unit's own bonus references answer it, so nothing
+	#	sweeps the bonus registry. ⚠ EDGEF_RELATED is a MERGED bucket ([enabler.md] §2), so this reads as ANY
+	#	referenced bonus rather than as the mandatory one -- safe here, because a superset only widens a
+	#	display bucket, and never as a gate.
+	def isCultureUnit(self, iUnit):
+		iCultureClass = GC.getInfoTypeForString("BONUSCLASS_CULTURE")
+		for iBonus in INFO.getEdgeIds("UNIT_", iUnit, EdgeFamily.EDGEF_RELATED, EdgeBucket.EDGEB_BONUSES):
+			if INFO.getIntrinsic("BONUS_", iBonus, IntrinsicSlot.PYINT_BONUS_CLASS) == iCultureClass:
+				return True
+		return False
 
-		#Tech Type requirement
-		for iTech in CvBuildingInfo.getPrereqAndTechs():
-			if GC.getTechInfo(iTech).getEra() > iEra:
-				iEra = GC.getTechInfo(iTech).getEra()
-
-		#Tech requirement as defined in special building infos (core tech)
-		if CvBuildingInfo.getSpecialBuildingType() != -1:
-			iTech = GC.getSpecialBuildingInfo(CvBuildingInfo.getSpecialBuildingType()).getTechPrereq()
-			if iTech != -1 and GC.getTechInfo(iTech).getEra() > iEra:
-				iEra = GC.getTechInfo(iTech).getEra()
-
-		#Tech requirement derived from location of religion in tech tree
-		if CvBuildingInfo.getPrereqReligion() != -1:
-			iTech = GC.getReligionInfo(CvBuildingInfo.getPrereqReligion()).getTechPrereq()
-			if GC.getTechInfo(iTech).getEra() > iEra:
-				iEra = GC.getTechInfo(iTech).getEra()
-		if CvBuildingInfo.getReligionType() != -1:
-			iTech = GC.getReligionInfo(CvBuildingInfo.getReligionType()).getTechPrereq()
-			if GC.getTechInfo(iTech).getEra() > iEra:
-				iEra = GC.getTechInfo(iTech).getEra()
-		if CvBuildingInfo.getPrereqStateReligion() != -1:
-			iTech = GC.getReligionInfo(CvBuildingInfo.getPrereqStateReligion()).getTechPrereq()
-			if GC.getTechInfo(iTech).getEra() > iEra:
-				iEra = GC.getTechInfo(iTech).getEra()
-
-		#Folklore handling - X Require tech requirement is treated as one of tech requirements of building, assuming X Require is main building requirement.
-		if CvBuildingInfo.getType().find("BUILDING_FOLKLORE_",0,18) != -1 or CvBuildingInfo.getType().find("BUILDING_PRESENCE_OF_",0,21) != -1:
-			iPrereqBuilding = GC.getInfoTypeForString("BUILDING_FOLKLORE_REQUIREMENT")
-			if GC.getTechInfo(GC.getBuildingInfo(iPrereqBuilding).getPrereqAndTech()).getEra() > iEra:
-				iEra = GC.getTechInfo(GC.getBuildingInfo(iPrereqBuilding).getPrereqAndTech()).getEra()
-
-		#Tech GOM requirements
-		aTechGOMReqList = []
-		for i in range(2):
-			aTechGOMReqList.append([])
-		self.HF.getGOMReqs(CvBuildingInfo.getConstructCondition(), GOMTypes.GOM_TECH, aTechGOMReqList)
-
-		#Extract GOM AND requirements
-		for iTech in xrange(len(aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND])):
-			if GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech]).getEra() > iEra:
-				iEra = GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_AND][iTech]).getEra()
-
-		#Extract GOM OR requirements - those are OR type requirements, so pick earliest one.
-		aEraList = []
-		for iTech in xrange(len(aTechGOMReqList[BoolExprTypes.BOOLEXPR_OR])):
-			aEraList.append(GC.getTechInfo(aTechGOMReqList[BoolExprTypes.BOOLEXPR_OR][iTech]).getEra())
-		if len(aEraList) > 0 and min(aEraList) > iEra:
-			iEra = min(aEraList)
-
-		if iEra == 0 and CvBuildingInfo.getProductionCost() > 0:
-			return 1 #Put it in Prehistoric era - buildable building wasn't tied in any way to tech
-		else:
+	#	The unit's era BAND, the twin of getBuildingEra above and read off the same unlock edge.
+	def getUnitEra(self, iUnit):
+		iEra = 0
+		bTech = False
+		for iTech in INFO.getEdgeIds("UNIT_", iUnit, EdgeFamily.EDGEF_ENABLED_BY, EdgeBucket.EDGEB_TECHS):
+			bTech = True
+			iTechEra = INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA)
+			if iTechEra > iEra:
+				iEra = iTechEra
+		if bTech:
 			return iEra + 1
-
-	def getUnitEra(self, CvUnitInfo):
-		CvTechInfo = GC.getTechInfo(CvUnitInfo.getPrereqAndTech())
-		iCost = CvUnitInfo.getProductionCost()
-		if CvTechInfo == None and iCost < 1:
-			iEra = 0
-		elif CvTechInfo == None and iCost >= 1:
-			iEra = 1
-		else:
-			iEra = CvTechInfo.getEra() + 1
-		for iType in CvUnitInfo.getPrereqAndTechs():
-			iEraTemp = GC.getTechInfo(iType).getEra() + 1
-			if iEraTemp > iEra:
-				iEra = iEraTemp
-		return iEra
+		#	Untied to any tech: a buildable unit bands with the earliest era, a costless one ahead of it.
+		if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_COST) < 1:
+			return 0
+		return 1
 
 	# Interaction Functions
 	def link(self, szLink):
@@ -1486,11 +1401,9 @@ class Pedia:
 				elif szPrefix == "BUILD":
 					return self.pediaJump(self.PEDIA_SPECIAL, "Build", iType)
 				elif szPrefix == "CONCEPT":
-					CvInfoBase = GC.getConceptInfo(iType)
-					if CvInfoBase is not None and CvInfoBase.getType() == szLink:
+					if INFO.getType("CONCEPT_", iType) == szLink:
 						return self.pediaJump(self.PEDIA_CONCEPTS, "", iType)
-					CvInfoBase = GC.getNewConceptInfo(iType)
-					if CvInfoBase is not None and CvInfoBase.getType() == szLink:
+					if INFO.getType("NEWCONCEPT_", iType) == szLink:
 						return self.pediaJump(self.PEDIA_CONCEPTS, "NEW", iType)
 				elif aSplit[1] == "ERA":
 					return self.pediaJump(self.PEDIA_CONCEPTS, "Eras", iType)
@@ -1559,9 +1472,9 @@ class Pedia:
 					else:
 						self.tooltip.handle(screen, szSplit[-1].replace("_", " "))
 				elif "UNIT" in szSplit:
-					self.tooltip.handle(screen, CyGameTextMgr().getUnitHelp(ID, False, True, True, None))
+					self.tooltip.handle(screen, CyGameTextMgr().getUnitHelp(ID, False, True, True, -1, -1))
 				elif "BUILDING" in szSplit:
-					self.tooltip.handle(screen, CyGameTextMgr().getBuildingHelp(ID, False, None, False, False, True))
+					self.tooltip.handle(screen, CyGameTextMgr().getBuildingHelp(ID, False, -1, -1, False, False, True))
 				elif "PROMO" in szSplit:
 					self.tooltip.handle(screen, CyGameTextMgr().getPromotionHelp(ID, False))
 				elif "TECH" in szSplit:
@@ -1581,23 +1494,23 @@ class Pedia:
 				elif "ROUTE" in szSplit:
 					self.tooltip.handle(screen, CyGameTextMgr().getRouteHelp(ID, False))
 				elif "PROJECT" in szSplit:
-					self.tooltip.handle(screen, CyGameTextMgr().getProjectHelp(ID, False, None))
+					self.tooltip.handle(screen, CyGameTextMgr().getProjectHelp(ID, False, -1, -1))
 				elif "TRAIT" in szSplit:
 					self.tooltip.handle(screen, CyGameTextMgr().parseTraits(ID, False, False))
 				elif "LEADER" in szSplit:
 					self.tooltip.handle(screen, CyGameTextMgr().parseLeaderTraits(ID, False, False))
 				elif "BUILD" in szSplit:
-					self.tooltip.handle(screen, GC.getBuildInfo(ID).getDescription())
+					self.tooltip.handle(screen, INFO.getDescription("BUILD_", ID))
 				elif "RELIGION" in szSplit:
 					self.tooltip.handle(screen, CyGameTextMgr().parseReligionInfo(ID, False))
 				elif "HERITAGE" in szSplit:
-					self.tooltip.handle(screen, CyGameTextMgr().getHeritageHelp(ID, None, True, False, False))
+					self.tooltip.handle(screen, CyGameTextMgr().getHeritageHelp(ID, -1, -1, True, False, False))
 				elif "COMBAT" in szSplit:
 					self.tooltip.handle(screen, CyGameTextMgr().getUnitCombatHelp(ID, False))
 				elif "CONCEPT" in szSplit:
-					self.tooltip.handle(screen, GC.getConceptInfo(ID).getDescription())
+					self.tooltip.handle(screen, INFO.getDescription("CONCEPT_", ID))
 				elif "CONCEPT_NEW" in szSplit:
-					self.tooltip.handle(screen, GC.getNewConceptInfo(ID).getDescription())
+					self.tooltip.handle(screen, INFO.getDescription("NEWCONCEPT_", ID))
 				return 1
 			return
 
@@ -1744,17 +1657,17 @@ class Pedia:
 				elif self.SECTION[1] == TRNSLTR.getText("TXT_KEY_PEDIA_CATEGORY_IMPROVEMENT", ()):
 					screen.addImprovementGraphicGFC("Preview|Max", iData1, 0, 0, self.xRes, self.yRes, WidgetTypes.WIDGET_GENERAL, 0, 0, -20, 30, 0.7, True)
 			elif szSplit[1] == "Quote":
-				szSound = GC.getTechInfo(ID).getSound()
-				CyAudioGame().Play2DSound(szSound)
+				CyAudioGame().Play2DSound(INFO.getSound("TECH_", ID))
 			elif szSplit[1] == "Movie":
+				# Both author ui.art.movie.defineTag, so ONE path resolves either -- ART stays an unmigrated
+				# boundary, so JSON carries the tag and ARTFILEMGR turns it into a file.
 				if szSplit[2] == "PROJECT":
-					ArtDef = GC.getProjectInfo(ID).getMovieArtDef()
-					if not ArtDef: return
-					path = CyArtFileMgr().getMovieArtInfo(ArtDef).getPath()
+					ArtDef = INFO.getMovieDefineTag("PROJECT_", ID)
 				elif szSplit[2] == "BUILDING":
-					path = GC.getBuildingInfo(ID).getMovie()
-					if not path: return
+					ArtDef = INFO.getMovieDefineTag("BUILDING_", ID)
 				else: return
+				if not ArtDef: return
+				path = CyArtFileMgr().getMovieArtInfo(ArtDef).getPath()
 				self.bMovie = True
 				screen.playMovie(path, self.X_PEDIA_PAGE, self.Y_PEDIA_PAGE, 720, 480, 0)
 		elif szSplit[0] == "Letter":

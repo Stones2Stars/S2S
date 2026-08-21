@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_PROGRAMMED_WORK_ETHIC"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CULTURAL_EVOLUTION",
+    {
+     "type": "MAPCATEGORY_GALACTIC",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_INTERSTELLAR_CULTURE_AGGRESSIVE",
+    "BUILDING_INTERSTELLAR_CULTURE_EXPLORATORY",
+    "BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS",
+    "BUILDING_INTERSTELLAR_CULTURE_OBEDIENT",
+    "BUILDING_INTERSTELLAR_CULTURE_PARADISE",
+    "BUILDING_INTERSTELLAR_CULTURE_REBELLIOUS"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "cost": {
+  "production": 1757,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC"
+  ]
+ }
+}

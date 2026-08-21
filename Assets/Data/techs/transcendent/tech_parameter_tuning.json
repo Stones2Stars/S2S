@@ -1,0 +1,73 @@
+{
+ "type": "TECH_PARAMETER_TUNING",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_BIG_BANG_POWER_PLANT",
+   "BUILDING_DISTANT_LOCALIZED_BIG_RIP",
+   "BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE",
+   "BUILDING_HYPERSPACE_PICARD_HORN",
+   "BUILDING_HYPERSPACE_POINCARE_DODECAHEDRAL_SPACE"
+  ],
+  "techs": [
+   "TECH_DIRECTED_COSMIC_EVOLUTION",
+   "TECH_MANIFOLD_COLONIZATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EXPERIMENTAL_COSMOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COSMIC_GOVERNANCE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ENTROPY_REVERSAL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_SCIENTIST"
+ },
+ "cost": {
+  "research": 601234
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/parameter_tuning.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PARAMETER_TUNING",
+  "civilopedia": "TXT_KEY_TECH_PARAMETER_TUNING_PEDIA",
+  "quote": "TXT_KEY_TECH_PARAMETER_TUNING_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 155,
+  "gridY": 9
+ }
+}

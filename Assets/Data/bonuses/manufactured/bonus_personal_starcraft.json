@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_PERSONAL_STARCRAFT",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_TOURIST_AGENCY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PERSONAL_STARCRAFT"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PERSONAL_STARCRAFT",
+  "civilopedia": "TXT_KEY_BONUS_PERSONAL_STARCRAFT_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

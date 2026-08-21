@@ -1,0 +1,69 @@
+{
+ "type": "TECH_BOTANY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARBORETUM",
+   "BUILDING_BOTANICAL_GARDENS"
+  ],
+  "techs": [
+   "TECH_MARINE_BIOLOGY",
+   "TECH_PALEONTOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CROP_ROTATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BIOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 3704
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Botany.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_BOTANY",
+  "soundMP": "AS2D_TECH_BOTANY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_BOTANY",
+  "civilopedia": "TXT_KEY_TECH_BOTANY_PEDIA",
+  "quote": "TXT_KEY_TECH_BOTANY_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 58,
+  "gridY": 5
+ }
+}

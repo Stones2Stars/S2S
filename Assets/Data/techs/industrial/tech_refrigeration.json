@@ -1,0 +1,109 @@
+{
+ "type": "TECH_REFRIGERATION",
+ "enables": {
+  "bonuses": [
+   "BONUS_ICE_CREAM",
+   "BONUS_REFRIGERATORS"
+  ],
+  "buildings": [
+   "BUILDING_BIG_MCDOWELLS_RESTAURANT",
+   "BUILDING_BURGERWORLD_RESTAURANT",
+   "BUILDING_CEREAL_MILLS_FACTORY",
+   "BUILDING_CURLING_SHEET",
+   "BUILDING_DIVE_BAR",
+   "BUILDING_FACTORY_GHEE_OIL",
+   "BUILDING_FACTORY_PASTA",
+   "BUILDING_FACTORY_PERFUME",
+   "BUILDING_FACTORY_REFRIGERATORS",
+   "BUILDING_FACTORY_ROASTED_COFFEE",
+   "BUILDING_HOCKEY_RINK",
+   "BUILDING_HQ_BIG_MCDOWELLS",
+   "BUILDING_HQ_BURGERWORLD",
+   "BUILDING_HQ_CEREAL_MILLS",
+   "BUILDING_HQ_MOBBY_MEATS_INTERNATIONAL",
+   "BUILDING_ICE_CREAM_PARLOR",
+   "BUILDING_ICE_RINK",
+   "BUILDING_LIQUOR_STORE",
+   "BUILDING_MEAT_PACKING_PLANT",
+   "BUILDING_MOBBY_MEATS_STORE",
+   "BUILDING_MODERN_MILL",
+   "BUILDING_TSUKIJI_FISH_MARKET"
+  ],
+  "builds": [
+   "BUILD_FACTORY",
+   "BUILD_RAILROAD"
+  ],
+  "techs": [
+   "TECH_ATOMIC_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FOOD_PRESERVATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEDICINE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ELECTRICITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "canFarmDesert": true
+ },
+ "domainMoves": {
+  "empire": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 7008
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   },
+   {
+    "FLAVOR_GOLD": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Refrigeration.dds,Art/Interface/Buttons/TechTree_Atlas.dds,1,7"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_REFRIGERATION",
+  "soundMP": "AS2D_TECH_MP_REFRIGERATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_REFRIGERATION",
+  "civilopedia": "TXT_KEY_TECH_REFRIGERATION_PEDIA",
+  "quote": "TXT_KEY_TECH_REFRIGERATION_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 68,
+  "gridY": 7
+ }
+}

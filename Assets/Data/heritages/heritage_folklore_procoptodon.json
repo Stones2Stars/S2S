@@ -1,0 +1,101 @@
+{
+ "type": "HERITAGE_FOLKLORE_PROCOPTODON",
+ "enables": {
+  "heritages": [
+   "HERITAGE_FOLKLORE_PALEOLITHIC_MARSUPIAL",
+   "HERITAGE_TAXON_MARSUPIALIA"
+  ]
+ },
+ "research": {
+  "empire": {
+   "flat": [
+    {
+     "value": 0.4,
+     "enabled": {
+      "type": "ERA",
+      "min": 1
+     }
+    },
+    {
+     "value": -0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 2
+     }
+    },
+    {
+     "value": -0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 3
+     }
+    },
+    {
+     "value": -0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 4
+     }
+    },
+    {
+     "value": -0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 5
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": [
+    {
+     "value": 0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 1
+     }
+    },
+    {
+     "value": 0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 2
+     }
+    },
+    {
+     "value": 0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 3
+     }
+    },
+    {
+     "value": 0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 4
+     }
+    },
+    {
+     "value": 0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 5
+     }
+    }
+   ]
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/Procoptodon.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_HERITAGE_FOLKLORE_PROCOPTODON",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+  "needsLanguage": true
+ }
+}

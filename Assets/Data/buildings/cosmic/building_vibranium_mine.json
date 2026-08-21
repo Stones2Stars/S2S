@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_VIBRANIUM_MINE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_OMEGA_POINT"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MATERIALIZATION_COMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CORE_MINE",
+    "TECH_ZEPTOTECHNOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_MATERIALIZATION_COMPLEX"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_VIBRANIUM"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 17055,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VIBRANIUM_MINE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VIBRANIUM_MINE",
+  "civilopedia": "TXT_KEY_BUILDING_VIBRANIUM_MINE_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

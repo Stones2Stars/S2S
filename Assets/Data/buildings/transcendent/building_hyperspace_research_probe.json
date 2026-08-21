@@ -1,0 +1,44 @@
+{
+ "type": "BUILDING_HYPERSPACE_RESEARCH_PROBE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 1261,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYPERSPACE_RESEARCH_PROBE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_RESEARCH_PROBE",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_RESEARCH_PROBE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

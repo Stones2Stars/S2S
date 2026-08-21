@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_ADVANCED_IRONWORKS",
+ "enables": {
+  "buildings": [
+   "BUILDING_EIFFEL_TOWER",
+   "BUILDING_RESOURCES_IRON_INGOTS",
+   "BUILDING_RESOURCES_STEEL_INGOTS",
+   "BUILDING_STATUE_OF_LIBERTY"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_METALS_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ASSEMBLY_PLANT",
+    "TECH_ADVANCED_METALLURGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_IRON_ORE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_METALS_MEGACOMPLEX"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_IRON_WARES",
+   "BONUS_STEEL_WARES"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 9,
+     "enabled": "TECH_ELECTRIC_ARC_WEAPONRY"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 990,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ADVANCED_IRONWORKS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ADVANCED_IRONWORKS",
+  "civilopedia": "TXT_KEY_BUILDING_ADVANCED_IRONWORKS_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

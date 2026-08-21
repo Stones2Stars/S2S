@@ -1,0 +1,27 @@
+{
+ "type": "UNITCOMBAT_MOUNT_BEAR",
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 20
+   }
+  }
+ },
+ "tags": [
+  "mounted"
+ ],
+ "hideAndSeek": {
+  "detection": {
+   "value": 100,
+   "unit": "HAS_CAMOUFLAGE"
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/mount_bear.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_MOUNT_BEAR"
+ }
+}

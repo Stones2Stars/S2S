@@ -1,0 +1,54 @@
+{
+ "type": "TECH_CALCULUS",
+ "enables": {
+  "buildings": [
+   "BUILDING_KERALA_SCHOOL_OF_MATHEMATICS"
+  ],
+  "techs": [
+   "TECH_PHYSICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SCIENTIFIC_METHOD",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 3274
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/calculus.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CALCULUS",
+  "soundMP": "AS2D_TECH_CALCULUS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CALCULUS",
+  "civilopedia": "TXT_KEY_TECH_CALCULUS_PEDIA",
+  "quote": "TXT_KEY_TECH_CALCULUS_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 56,
+  "gridY": 13
+ }
+}

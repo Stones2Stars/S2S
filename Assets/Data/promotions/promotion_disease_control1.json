@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_DISEASE_CONTROL1",
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  },
+  "plot": {
+   "flat": -1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_DISEASE_CONTROL": 1
+ },
+ "ai": {
+  "unitCombatWeights": {
+   "UNITCOMBAT_HEALTH_CARE": 50
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/DiseaseControl1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_DISEASE_CONTROL1"
+ }
+}

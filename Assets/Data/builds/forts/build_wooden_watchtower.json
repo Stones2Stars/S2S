@@ -1,0 +1,36 @@
+{
+ "type": "BUILD_WOODEN_WATCHTOWER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_WOODEN_WATCHTOWER"
+ },
+ "cost": {
+  "gold": 4,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/tower/art/wooden_tower.dds"
+  },
+  "hotkey": "KB_F",
+  "shiftDown": true,
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_WOODEN_WATCHTOWER"
+ }
+}

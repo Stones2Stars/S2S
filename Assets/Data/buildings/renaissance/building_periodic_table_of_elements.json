@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_PERIODIC_TABLE_OF_ELEMENTS",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CHEMISTRY",
+    {
+     "any": [
+      "BUILDING_CHEMISTRY_LAB",
+      "BUILDING_CHEMICALS_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CHEMISTRY_LAB": {
+     "percent": 10
+    },
+    "BUILDING_CHEMICALS_DISTRICT": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 2970,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PERIODIC_TABLE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PERIODIC_TABLE_OF_ELEMENTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PERIODIC_TABLE_OF_ELEMENTS",
+  "civilopedia": "TXT_KEY_BUILDING_PERIODIC_TABLE_OF_ELEMENTS_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

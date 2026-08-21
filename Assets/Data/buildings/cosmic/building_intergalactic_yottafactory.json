@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_INTERGALACTIC_YOTTAFACTORY",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_BIRCH_PLANET",
+   "BUILDING_INTERGALACTIC_SHKADOV_THRUSTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
+    "TECH_DARK_ENERGY_HARVESTING",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 4492,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_YOTTAFACTORY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_YOTTAFACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_YOTTAFACTORY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

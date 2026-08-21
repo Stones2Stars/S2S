@@ -10536,7 +10536,6 @@
 			<Era>C2C_ERA_MEDIEVAL</Era>
 			<iAsset>24</iAsset>
 			<bTrade>1</bTrade>
-			<bExtraWaterSeeFrom>1</bExtraWaterSeeFrom>
 			<iGridX>45</iGridX>
 			<iGridY>11</iGridY>
 			<Flavors>

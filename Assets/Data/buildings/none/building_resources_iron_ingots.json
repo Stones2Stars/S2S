@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_RESOURCES_IRON_INGOTS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_METALS_MEGACOMPLEX"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_METALS_MEGACOMPLEX"
+   ],
+   "all": [
+    {
+     "any": [
+      "BUILDING_ADVANCED_IRONWORKS",
+      "BUILDING_IRON_RECLAMATION_PLANT",
+      "BUILDING_NATIONAL_SMELTER_IRON",
+      "BUILDING_SMELTER_IRON"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_IRON_INGOTS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESOURCES_IRON_INGOTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_IRON_INGOTS",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

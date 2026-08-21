@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_MUSHROOM_GATHERER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GATHERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "BONUS_MUSHROOMS",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "food": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": [
+    -1,
+    {
+     "value": 1,
+     "enabled": "TECH_HERBALISM"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MUSHROOM_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MUSHROOM_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_MUSHROOM_GATHERER_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

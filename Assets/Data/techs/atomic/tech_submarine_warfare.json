@@ -1,0 +1,81 @@
+{
+ "type": "TECH_SUBMARINE_WARFARE",
+ "enables": {
+  "promotions": [
+   "PROMOTION_DEPTH_CHARGES"
+  ],
+  "techs": [
+   "TECH_DIESELPUNK",
+   "TECH_SONAR"
+  ],
+  "units": [
+   "UNIT_CARGO_SHIP",
+   "UNIT_LIBERTY_MERCHANT",
+   "UNIT_MASTER_SAILOR_UBOAT",
+   "UNIT_OIL_TANKER",
+   "UNIT_QSHIP",
+   "UNIT_SUBMARINE",
+   "UNIT_UBOAT"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_BANYAN_XEBEC",
+   "UNIT_CLIPPER_MERCHANT",
+   "UNIT_SUGAR_CLIPPER",
+   "UNIT_TRADE_JUNK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GYROCOMPASS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADVANCED_METALLURGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NAVAL_FLIGHT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 10309
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/nukesub.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,13"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SUBMARINE_WARFARE",
+  "soundMP": "AS2D_TECH_SUBMARINE_WARFARE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SUBMARINE_WARFARE",
+  "civilopedia": "TXT_KEY_TECH_SUBMARINE_WARFARE_PEDIA",
+  "quote": "TXT_KEY_TECH_SUBMARINE_WARFARE_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 74,
+  "gridY": 17
+ }
+}

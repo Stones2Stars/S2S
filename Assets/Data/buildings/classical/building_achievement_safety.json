@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_ACHIEVEMENT_SAFETY",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_CODE_OF_LAWS",
+    "TECH_WRITING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_ACHIEVEMENT_SAFETY"
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SAFETY_A"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SAFETY_A",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ACHIEVEMENT_SAFETY",
+  "civilopedia": "TXT_KEY_BUILDING_ACHIEVEMENT_SAFETY_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "notConstructible": true,
+  "worth": 10,
+  "specialBuildingType": "SPECIALBUILDING_ACHIEVEMENT",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

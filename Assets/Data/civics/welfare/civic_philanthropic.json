@@ -1,0 +1,145 @@
+{
+ "type": "CIVIC_PHILANTHROPIC",
+ "enables": {
+  "buildings": [
+   "BUILDING_FOUNDATION"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_ARENA": {
+     "flat": 1
+    },
+    "BUILDING_COLOSSEUM": {
+     "flat": 1
+    },
+    "BUILDING_MINOR_LEAGUE_STADIUM": {
+     "flat": 1
+    },
+    "BUILDING_MAJOR_LEAGUE_STADIUM": {
+     "flat": 1
+    },
+    "BUILDING_MOVIE_THEATRE": {
+     "flat": 1
+    },
+    "BUILDING_CIRCUS_MAXIMUS": {
+     "flat": 1
+    },
+    "BUILDING_BROADWAY": {
+     "flat": 1
+    },
+    "BUILDING_HOLLYWOOD": {
+     "flat": 1
+    },
+    "BUILDING_RED_CROSS": {
+     "flat": 2
+    },
+    "BUILDING_PLANNING_OFFICE": {
+     "flat": -2
+    },
+    "BUILDING_SOCIAL_JUSTICE_ORGANIZATION": {
+     "flat": -2
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "buildings": {
+    "BUILDING_DOCTORS_OFFICE": {
+     "flat": 3
+    },
+    "BUILDING_SURGEONS_OFFICE": {
+     "flat": 3
+    },
+    "BUILDING_MEDICAL_CLINIC": {
+     "flat": 3
+    },
+    "BUILDING_RED_CROSS": {
+     "flat": 2
+    },
+    "BUILDING_HOUSING_LONGHOUSE": {
+     "flat": 1
+    },
+    "BUILDING_HOUSING_PUEBLOS": {
+     "flat": 1
+    },
+    "BUILDING_HOUSING_SLUMS": {
+     "flat": 1
+    },
+    "BUILDING_HOUSING_SHANTY_TOWN": {
+     "flat": 1
+    },
+    "BUILDING_HOUSING_GHETTOS": {
+     "flat": 1
+    },
+    "BUILDING_HOUSING_INNER_CITY": {
+     "flat": 1
+    },
+    "BUILDING_HOUSING_PROJECTS": {
+     "flat": 1
+    },
+    "BUILDING_HOUSING_HABITATION_PODS": {
+     "flat": 1
+    },
+    "BUILDING_HOUSING_ARCOLOGY_SLUMS": {
+     "flat": 1
+    },
+    "BUILDING_HOUSING_COLONY_ARCOLOGY": {
+     "flat": 1
+    },
+    "BUILDING_LAUNCH_ARCOLOGY": {
+     "flat": 1
+    },
+    "BUILDING_HEALTHCARE_MEGACOMPLEX": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "corporation": {
+    "percent": -45
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -1
+   }
+  }
+ },
+ "grants": {
+  "revolution": 10
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/welfare_private.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_PHILANTHROPIC",
+  "civilopedia": "TXT_KEY_CIVIC_PHILANTHROPIC_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_PHILANTHROPIC_STRATEGY",
+  "civicOption": "CIVICOPTION_WELFARE",
+  "upkeepLevel": "UPKEEP_LOW"
+ }
+}

@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_SAILS",
+ "enables": {
+  "buildings": [
+   "BUILDING_SHIPWRIGHT"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SAILS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SAILS",
+  "civilopedia": "TXT_KEY_BONUS_SAILS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

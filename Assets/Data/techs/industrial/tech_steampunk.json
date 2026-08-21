@@ -1,0 +1,74 @@
+{
+ "type": "TECH_STEAMPUNK",
+ "enables": {
+  "bonuses": [
+   "BONUS_STEAMPUNK"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_PUNK_STEAM"
+  ],
+  "units": [
+   "UNIT_CLOUD_DESTROYER",
+   "UNIT_NAUTILUS",
+   "UNIT_STEAMPUNK_WORKER",
+   "UNIT_STEAM_TANK",
+   "UNIT_WAR_WHEEL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MILITARY_SCIENCE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_STEAM_POWER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 5460
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/steampunk.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_STEAMPUNK",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_STEAMPUNK",
+  "civilopedia": "TXT_KEY_TECH_STEAMPUNK_PEDIA",
+  "quote": "TXT_KEY_TECH_STEAMPUNK_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "gridX": 63,
+  "gridY": 13,
+  "tradeable": true,
+  "worth": 40
+ }
+}

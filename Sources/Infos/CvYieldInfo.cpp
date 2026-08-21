@@ -2,19 +2,19 @@
 //  FILE:    CvYieldInfo.cpp
 //------------------------------------------------------------------------------------------------
 #include "CvGameCoreDLL.h"
-#include "CvArtFileMgr.h"
+#include "UI/CvArtFileMgr.h"
 #include "CvBuildingInfo.h"
 #include "CvHeritageInfo.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
+#include "AI/CvGameAI.h"
+#include "UI/CvGameTextMgr.h"
+#include "Defines/CvGlobals.h"
 #include "CvInfos.h"
 #include "CvInfoUtil.h"
-#include "CvPlayerAI.h"
-#include "CvPython.h"
-#include "CvXMLLoadUtility.h"
-#include "CvXMLLoadUtilityModTools.h"
-#include "CheckSum.h"
+#include "AI/CvPlayerAI.h"
+#include "Infrastructure/CvPython.h"
+#include "Infrastructure/CvXMLLoadUtility.h"
+#include "Infrastructure/CvXMLLoadUtilityModTools.h"
+#include "Tools/CheckSum.h"
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
 #include "CvYieldInfo.h"
@@ -138,7 +138,7 @@ int CvYieldInfo::getColorType() const
 
 const char* CvYieldInfo::getSymbolPath(int i) const
 {
-	FASSERT_BOUNDS(0, GC.getDefineINT("MAX_YIELD_STACK"), i);
+	FASSERT_BOUNDS(0, GC.getMAX_YIELD_STACK(), i);
 	return m_paszSymbolPath ? m_paszSymbolPath[i] : reinterpret_cast<const char*>(-1);
 }
 
@@ -149,7 +149,7 @@ void CvYieldInfo::getDataMembers(CvInfoUtil& util)
 	// - m_iChar is a non-XML runtime GameFont field (setChar) — not declared, and (matching legacy)
 	//   not checksummed either.
 	// - m_paszSymbolPath stays hand-written in read()/copyNonDefaults()/dtor: a CvString array
-	//   sized by GC.getDefineINT("MAX_YIELD_STACK") with no matching wrapper.
+	//   sized by GC.getMAX_YIELD_STACK() with no matching wrapper.
 	// - getCheckSum() is NOT delegated (see comment there): the legacy checksum omits m_iColorType,
 	//   which IS read; declared order = legacy checksum order, ColorType last.
 	util
@@ -184,14 +184,14 @@ bool CvYieldInfo::read(CvXMLLoadUtility* pXML)
 	if (pXML->TryMoveToXmlFirstChild(L"SymbolPaths"))
 	{
 		iNumSibs = pXML->GetXmlChildrenNumber();
-		FAssertMsg((0 < GC.getDefineINT("MAX_YIELD_STACK")) ,"Allocating zero or less memory in SetGlobalYieldInfo");
-		m_paszSymbolPath = new CvString[GC.getDefineINT("MAX_YIELD_STACK")];
+		FAssertMsg((0 < GC.getMAX_YIELD_STACK()) ,"Allocating zero or less memory in SetGlobalYieldInfo");
+		m_paszSymbolPath = new CvString[GC.getMAX_YIELD_STACK()];
 
 		if (0 < iNumSibs)
 		{
 			if (pXML->GetChildXmlVal(szTextVal))
 			{
-				FAssertMsg((iNumSibs <= GC.getDefineINT("MAX_YIELD_STACK")) ,"There are more siblings than memory allocated for them in SetGlobalYieldInfo");
+				FAssertMsg((iNumSibs <= GC.getMAX_YIELD_STACK()) ,"There are more siblings than memory allocated for them in SetGlobalYieldInfo");
 				for (j=0;j<iNumSibs;j++)
 				{
 					m_paszSymbolPath[j] = szTextVal;
@@ -210,8 +210,8 @@ bool CvYieldInfo::read(CvXMLLoadUtility* pXML)
 	else
 	{
 		CvString cDefault = CvString::format("").GetCString();
-		m_paszSymbolPath = new CvString[GC.getDefineINT("MAX_YIELD_STACK")];
-		for ( int i = 0; i < GC.getDefineINT("MAX_YIELD_STACK"); i++)
+		m_paszSymbolPath = new CvString[GC.getMAX_YIELD_STACK()];
+		for ( int i = 0; i < GC.getMAX_YIELD_STACK(); i++)
 		{
 			m_paszSymbolPath[i] = cDefault;
 		}
@@ -230,7 +230,7 @@ void CvYieldInfo::copyNonDefaults(const CvYieldInfo* pClassInfo)
 
 	CvInfoUtil(this).copyNonDefaults(pClassInfo);
 
-	for ( int i = 0; i < GC.getDefineINT("MAX_YIELD_STACK"); i++)
+	for ( int i = 0; i < GC.getMAX_YIELD_STACK(); i++)
 	{
 		if ( m_paszSymbolPath[i] == cDefault)
 		{

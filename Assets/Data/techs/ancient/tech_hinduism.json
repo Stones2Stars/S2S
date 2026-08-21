@@ -1,0 +1,63 @@
+{
+ "type": "TECH_HINDUISM",
+ "enables": {
+  "religions": [
+   "RELIGION_HINDUISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_KARMA",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SCRIPTURES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 348
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/Hinduism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_REINCARNATION",
+  "soundMP": "AS2D_TECH_REINCARNATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_HINDUISM",
+  "civilopedia": "TXT_KEY_TECH_HINDUISM_PEDIA",
+  "quote": "TXT_KEY_TECH_HINDUISM_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "gridX": 31,
+  "gridY": 7
+ }
+}

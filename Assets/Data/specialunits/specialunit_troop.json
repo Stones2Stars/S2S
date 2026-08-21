@@ -1,0 +1,6 @@
+{
+ "type": "SPECIALUNIT_TROOP",
+ "identity": {
+  "description": "TXT_KEY_SPECIALUNIT_TROOP"
+ }
+}

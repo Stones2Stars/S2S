@@ -1,0 +1,43 @@
+{
+ "type": "PROMOTION_CRUEL1",
+ "combat": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": -10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 1
+  },
+  "plot": {
+   "flat": 1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CRUEL_PROMOTION": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionCruel.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CRUEL1",
+  "unitCombats": [
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_STRIKE_TEAM",
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_GUN"
+  ]
+ }
+}

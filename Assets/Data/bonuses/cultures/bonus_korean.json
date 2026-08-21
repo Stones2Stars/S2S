@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_KOREAN",
+ "enables": {
+  "units": [
+   "UNIT_GWANGGAETO",
+   "UNIT_KOREAN_HWACHA",
+   "UNIT_YI_SUN_SIN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_KOREAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_KOREAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

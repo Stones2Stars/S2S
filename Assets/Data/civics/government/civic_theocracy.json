@@ -1,0 +1,353 @@
+{
+ "type": "CIVIC_THEOCRACY",
+ "enables": {
+  "buildings": [
+   "BUILDING_HILL_OF_TARA"
+  ],
+  "specialists": [
+   "SPECIALIST_PRIEST"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": [
+    3,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    3,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": [
+    3,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    4,
+    {
+     "value": 4,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
+   "buildings": {
+    "BUILDING_TEOTIHUACAN": {
+     "percent": 10
+    },
+    "BUILDING_PIR_E_SABZ": {
+     "percent": 20
+    },
+    "BUILDING_THE_DAI_MIAO": {
+     "percent": 20
+    },
+    "BUILDING_THE_KONG_MIAO": {
+     "percent": 20
+    },
+    "BUILDING_THE_MAHABODHI": {
+     "percent": 20
+    },
+    "BUILDING_THE_KASHI_VISHWANATH": {
+     "percent": 20
+    },
+    "BUILDING_THE_MASJID_AL_HARAM": {
+     "percent": 20
+    },
+    "BUILDING_THE_CHURCH_OF_THE_NATIVITY": {
+     "percent": 20
+    },
+    "BUILDING_THE_TEMPLE_OF_SOLOMON": {
+     "percent": 20
+    },
+    "BUILDING_PATTAKY_OF_OLODUMARE": {
+     "percent": 15
+    },
+    "BUILDING_THE_TOMB_OF_ANSYEN_BON": {
+     "percent": 15
+    },
+    "BUILDING_KHAN_TENGRI": {
+     "percent": 15
+    },
+    "BUILDING_THE_GOLDEN_TEMPLE": {
+     "percent": 15
+    },
+    "BUILDING_THE_ISE_JINGU": {
+     "percent": 15
+    },
+    "BUILDING_SCIENTOLOGY_SEDE": {
+     "percent": 15
+    },
+    "BUILDING_ARKONA": {
+     "percent": 15
+    },
+    "BUILDING_MORMAN_SHRINE": {
+     "percent": 15
+    },
+    "BUILDING_BABEL_TOWER": {
+     "percent": 15
+    },
+    "BUILDING_STATUE_OF_GOMATESHWARA": {
+     "percent": 15
+    },
+    "BUILDING_GREAT_TEMPLE_TAY_NINH": {
+     "percent": 15
+    },
+    "BUILDING_CANAANITE_SHRINE": {
+     "percent": 15
+    },
+    "BUILDING_SHRINE_OF_BAB": {
+     "percent": 15
+    },
+    "BUILDING_THE_ODINS_SANCTUARY": {
+     "percent": 15
+    },
+    "BUILDING_CORICANCHA": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    3,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
+   "buildings": {
+    "BUILDING_THE_STATUE_OF_ZEUS": {
+     "percent": 20
+    },
+    "BUILDING_THE_MASJID_AL_HARAM": {
+     "percent": 5
+    },
+    "BUILDING_THE_CHURCH_OF_THE_NATIVITY": {
+     "percent": 5
+    },
+    "BUILDING_THE_TEMPLE_OF_SOLOMON": {
+     "percent": 5
+    },
+    "BUILDING_MORMAN_SHRINE": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    5,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
+   "buildings": {
+    "BUILDING_TEOTIHUACAN": {
+     "percent": 20
+    },
+    "BUILDING_THE_KARNAK_TEMPLE_COMPLEX": {
+     "percent": 20
+    },
+    "BUILDING_THE_KONG_MIAO": {
+     "percent": 10
+    },
+    "BUILDING_THE_MAHABODHI": {
+     "percent": 10
+    },
+    "BUILDING_THE_KASHI_VISHWANATH": {
+     "percent": 5
+    },
+    "BUILDING_KHAN_TENGRI": {
+     "percent": 20
+    },
+    "BUILDING_THE_ISE_JINGU": {
+     "percent": 20
+    },
+    "BUILDING_SPIRITS_ANSWER": {
+     "percent": 20
+    },
+    "BUILDING_OLDOINYO_NGAI": {
+     "percent": 20
+    },
+    "BUILDING_BABEL_TOWER": {
+     "percent": 20
+    },
+    "BUILDING_NATURE_ANSWER": {
+     "percent": 20
+    },
+    "BUILDING_GREAT_TEMPLE_TAY_NINH": {
+     "percent": 20
+    },
+    "BUILDING_CORICANCHA": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    4,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": [
+    2,
+    {
+     "value": -3,
+     "per": {
+      "type": "CITY",
+      "above": "CITY_LIMIT"
+     },
+     "enabled": "GAMEOPTION_EXP_OVEREXPANSION_PENALTIES"
+    }
+   ]
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
+    "percent": -10
+   },
+   "resistance": {
+    "percent": 20
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 20
+   },
+   "numCities": {
+    "percent": 15
+   },
+   "percent": [
+    {
+     "value": 7,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 5,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
+   "corporation": {
+    "percent": 5
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "greatPeopleRate": {
+    "percent": 25
+   },
+   "happiness": {
+    "flat": 2
+   },
+   "buildingProduction": {
+    "percent": 10
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "holyCityGood": {
+    "flat": 1
+   },
+   "holyCityBad": {
+    "flat": 2
+   },
+   "religiousFreedom": {
+    "flat": -20
+   },
+   "democracyLevel": {
+    "flat": -20
+   }
+  }
+ },
+ "policies": {
+  "canDoElection": true
+ },
+ "grants": {
+  "revolution": 50
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/government_theocracy.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_THEOCRACY",
+  "civilopedia": "TXT_KEY_CIVIC_THEOCRACY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_THEOCRACY_STRATEGY",
+  "civicOption": "CIVICOPTION_GOVERNMENT",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM",
+  "cityLimit": 15,
+  "weLoveTheKing": "TXT_KEY_CIVIC_WE_LOVE_THE_HIGH_PRIEST"
+ }
+}

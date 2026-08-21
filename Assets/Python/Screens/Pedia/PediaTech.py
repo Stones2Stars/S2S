@@ -1,13 +1,15 @@
 # Pedia overhaul by Toffer for Caveman2Cosmos.
 
 from CvPythonExtensions import *
+INFO = CyInfo()
+STATE = CyState()
+ENUMS = CyEnums()
+TRNSLTR = CyTranslator()
+TEXT = CyGameTextMgr()
 
 class PediaTech:
 
 	def __init__(self, parent, H_BOT_ROW):
-		import HelperFunctions
-		self.HF = HelperFunctions.HelperFunctions([0])
-
 		self.main = parent
 
 		H_PEDIA_PAGE = parent.H_PEDIA_PAGE
@@ -46,11 +48,8 @@ class PediaTech:
 
 
 	def interfaceScreen(self, iTheTech):
-		GC = CyGlobalContext()
 		TRNSLTR = CyTranslator()
-		CvTheTechInfo = GC.getTechInfo(iTheTech)
 		screen = self.main.screen()
-		CyPlayer = self.main.CyPlayer
 		aName = self.main.getNextWidgetName
 
 		eWidGen				= WidgetTypes.WIDGET_GENERAL
@@ -85,58 +84,68 @@ class PediaTech:
 		S_BOT_ROW = self.S_BOT_ROW
 
 		# Main Panel
-		screen.setText(aName(), "", szfontEdge + CvTheTechInfo.getDescription(), 1<<0, X_COL_1, 0, 0, eFontTitle, eWidGen, 0, 0)
+		screen.setText(aName(), "", szfontEdge + INFO.getDescription("TECH_", iTheTech), 1<<0, X_COL_1, 0, 0, eFontTitle, eWidGen, 0, 0)
 		Pnl = aName()
 		screen.addPanel(Pnl, "", "", False, False, X_COL_1 - 3, Y_TOP_ROW_1 + 2, W_COL_1 + 8, H_TOP_ROW + 2, PanelStyles.PANEL_STYLE_MAIN)
 		Img = "Preview|Quote|TECH|ToolTip" + str(iTheTech)
 		self.main.aWidgetBucket.append(Img)
-		screen.setImageButtonAt(Img, Pnl, CvTheTechInfo.getButton(), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
+		screen.setImageButtonAt(Img, Pnl, INFO.getButton("TECH_", iTheTech), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
 		# Stats
 		Pnl = aName()
 		screen.addListBoxGFC(Pnl, "", self.X_STATS, self.Y_STATS, self.W_STATS, H_TOP_ROW - 12, TableStyles.TABLE_STYLE_EMPTY)
 		screen.enableSelect(Pnl, False)
 
-		iEra = CvTheTechInfo.getEra()
-		if CyPlayer:
-			szTechCost = TRNSLTR.getText("TXT_KEY_PEDIA_COST", (GC.getTeam(CyPlayer.getTeam()).getResearchCost(iTheTech),))
-		else:
-			szTechCost = TRNSLTR.getText("%d1_Num", (CvTheTechInfo.getResearchCost(),))
-		szCostText = szTechCost + u"%c" % (GC.getCommerceInfo(CommerceTypes.COMMERCE_RESEARCH).getChar())
-		screen.appendListBoxStringNoUpdate(Pnl, szfont4b + GC.getEraInfo(iEra).getDescription(), eWidGen, 0, 0, 1<<2)
+		iEra = INFO.getIntrinsic("TECH_", iTheTech, IntrinsicSlot.PYINT_ERA)
+
+		# The COST is two different questions, and the page asks whichever it can answer.
+		# In a running game what matters is what THIS TEAM pays -- computed game state, scaled by gamespeed,
+		# era, handicap and team size -- so it is asked of the STATE plane. Out of game there is no team, and
+		# the authored base cost on the info is the honest answer.
+		iCost = -1
+		iPlayer = STATE.getActivePlayer()
+		if iPlayer >= 0:
+			iTeam = STATE.getPlayerTeam(iPlayer)
+			if iTeam >= 0:
+				iCost = STATE.getTechResearchCost(iTeam, iTheTech)
+		if iCost < 0:
+			iCost = INFO.getIntrinsic("TECH_", iTheTech, IntrinsicSlot.PYINT_COST)
+		szCostText = TRNSLTR.getText("%d1_Num", (iCost,)) + u"%c" % (TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH))
+
+		screen.appendListBoxStringNoUpdate(Pnl, szfont4b + INFO.getDescription("C2C_ERA_", iEra), eWidGen, 0, 0, 1<<2)
 		screen.appendListBoxStringNoUpdate(Pnl, szfont4b + szCostText, eWidGen, 0, 0, 1<<2)
 
-		iHappiness = CvTheTechInfo.getHappiness()
-		iHealth = CvTheTechInfo.getHealth()
-		iTradeRoutes = CvTheTechInfo.getTradeRoutes()
+		# Wellbeing is FOUR channels, read as the group. A source depositing a negative value is routed to the
+		# opposing channel at fill, so there is no sign to branch on here -- happiness and anger are separate
+		# answers, as are health and unhealth. Flats are x100, so each reduces at this point of use.
+		aWellbeing = INFO.getWellbeing("TECH_", iTheTech, CascScope.CASC_SCOPE_EMPIRE)
 		szText = ""
-		bPlus = False
-		if iHappiness:
-			if iHappiness > 0:
-				szText += "<color=0,230,0,255>%d" %iHappiness + unichr(8850)
-			else:
-				szText += "<color=255,0,0,255>%d" %-iHappiness + unichr(8851)
-			bPlus = True
-		if iHealth:
-			if bPlus:
-				szText += " "
-			else:
-				bPlus = True
-			if iHealth > 0:
-				szText += "<color=0,230,0,255>%d" %iHealth + unichr(8852)
-			else:
-				szText += "<color=255,0,0,255>%d" %-iHealth + unichr(8853)
+		for iChannel, iGlyph, szColour in (
+			(WellbeingChannel.WELLBEING_HAPPINESS, 8850, "0,230,0,255"),
+			(WellbeingChannel.WELLBEING_ANGER,     8851, "255,0,0,255"),
+			(WellbeingChannel.WELLBEING_HEALTH,    8852, "0,230,0,255"),
+			(WellbeingChannel.WELLBEING_UNHEALTH,  8853, "255,0,0,255")):
+			iValue = aWellbeing[iChannel] / 100
+			if iValue:
+				if szText:
+					szText += " "
+				szText += "<color=%s>%d%s" % (szColour, iValue, unichr(iGlyph))
+
+		# The route COUNT is a flat amount like any other, so it is x100 too.
+		iTradeRoutes = INFO.getIntrinsic("TECH_", iTheTech, IntrinsicSlot.PYINT_TRADE_ROUTE_AMOUNT) / 100
 		if iTradeRoutes:
-			if bPlus:
+			if szText:
 				szText += " "
 			if iTradeRoutes < 0:
 				szText += "<color=255,0,0,255>"
 			else:
 				szText += "<color=0,230,0,255>"
-			szText += "%d" %iTradeRoutes + unichr(8860)
+			szText += "%d" % iTradeRoutes + unichr(8860)
 		if szText:
 			screen.appendListBoxStringNoUpdate(Pnl, szfont3b + szText, eWidGen, 0, 0, 1<<2)
 
-		iWorkerSpeedModifier = CvTheTechInfo.getWorkerSpeedModifier()
+		# A PERCENT is never scaled, so this one is read as authored.
+		iWorkerSpeedModifier = INFO.getScalar("TECH_", iTheTech, InfoScalar.SCALAR_WORK_RATE,
+			CascScope.CASC_SCOPE_EMPIRE, CascUnit.CASC_UNIT_PERCENT)
 		if iWorkerSpeedModifier:
 			if iWorkerSpeedModifier < 0:
 				szText = "<color=255,0,0,255>"
@@ -146,33 +155,24 @@ class PediaTech:
 			screen.appendListBoxStringNoUpdate(Pnl, szfont3b + szText, eWidGen, 0, 0, 1<<2)
 
 		screen.updateListBox(Pnl)
+
+		# "What does this tech unlock?" is the tech's OWN forward edge -- a list it already carries, landed at
+		# load. Asking it backwards (sweep every building, test whether this tech is required) is the whole-
+		# database scan the edge families exist to delete, and it is how these three panels used to be built.
+		aBuildings = INFO.getEdgeIds("TECH_", iTheTech, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_BUILDINGS)
+		aProjects = INFO.getEdgeIds("TECH_", iTheTech, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_PROJECTS)
+		aUnits = INFO.getEdgeIds("TECH_", iTheTech, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_UNITS)
+		aLeadsTo = INFO.getEdgeIds("TECH_", iTheTech, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_TECHS)
+
 		# Buildings Enabled
-		aList1 = []
-		aList2 = []
-		aList3 = []
-		for iBuilding in range(GC.getNumBuildingInfos()):
-			#Supports GOM type tech requirement
-			aGOMTechReqList = []
-			for i in range(2):
-				aGOMTechReqList.append([])
-			self.HF.getGOMReqs(GC.getBuildingInfo(iBuilding).getConstructCondition(), GOMTypes.GOM_TECH, aGOMTechReqList)
-			if isTechRequiredForBuilding(iTheTech, iBuilding) or iTheTech in aGOMTechReqList[BoolExprTypes.BOOLEXPR_AND] or iTheTech in aGOMTechReqList[BoolExprTypes.BOOLEXPR_OR]:
-				aList1.append(iBuilding)
-		for iProject in range(GC.getNumProjectInfos()):
-			if isTechRequiredForProject(iTheTech, iProject):
-				aList2.append(iProject)
-		if aList1 or aList2:
+		if aBuildings or aProjects:
 			Pnl = aName()
 			szBuildingsEnabled = TRNSLTR.getText("TXT_KEY_PEDIA_BUILDINGS_ENABLED", ())
 			screen.addPanel(Pnl, szBuildingsEnabled, "", False, True, X_COL_1, Y_BOT_ROW_1, W_PEDIA_PAGE, H_BOT_ROW, ePnlBlue50)
-			if aList1:
-				for i in range(len(aList1)):
-					screen.attachImageButton(Pnl, "", GC.getBuildingInfo(aList1[i]).getButton(), enumGBS, eWidJuToBuilding, aList1[i], 1, False)
-				aList1 = []
-			if aList2:
-				for i in range(len(aList2)):
-					screen.attachImageButton(Pnl, "", GC.getProjectInfo(aList2[i]).getButton(), enumGBS, eWidJuToProject, aList2[i], 1, False)
-				aList2 = []
+			for iBuilding in aBuildings:
+				screen.attachImageButton(Pnl, "", INFO.getButton("BUILDING_", iBuilding), enumGBS, eWidJuToBuilding, iBuilding, 1, False)
+			for iProject in aProjects:
+				screen.attachImageButton(Pnl, "", INFO.getButton("PROJECT_", iProject), enumGBS, eWidJuToProject, iProject, 1, False)
 		else:
 			Y_BOT_ROW_3 += H_BOT_ROW
 			Y_BOT_ROW_2 += H_BOT_ROW
@@ -180,100 +180,49 @@ class PediaTech:
 			H_HISTORY += H_BOT_ROW
 			H_SPECIAL += H_BOT_ROW
 		# Units Enabled
-		for iUnit in range(GC.getNumUnitInfos()):
-			#Supports GOM type tech requirement
-			aGOMTechReqList = []
-			for i in range(2):
-				aGOMTechReqList.append([])
-			self.HF.getGOMReqs(GC.getUnitInfo(iUnit).getTrainCondition(), GOMTypes.GOM_TECH, aGOMTechReqList)
-			if isTechRequiredForUnit(iTheTech, iUnit) or iTheTech in aGOMTechReqList[BoolExprTypes.BOOLEXPR_AND] or iTheTech in aGOMTechReqList[BoolExprTypes.BOOLEXPR_OR]:
-				aList1.append(iUnit)
-		if aList1:
+		if aUnits:
 			Pnl = aName()
 			screen.addPanel(Pnl, TRNSLTR.getText("TXT_KEY_PEDIA_UNITS_ENABLED", ()), "", False, True, X_COL_1, Y_BOT_ROW_2, W_PEDIA_PAGE, H_BOT_ROW, ePnlBlue50)
-			for i in range(len(aList1)):
-				screen.attachImageButton(Pnl, "", GC.getUnitInfo(aList1[i]).getButton(), enumGBS, eWidJuToUnit, aList1[i], 1, False)
-			aList1 = []
+			for iUnit in aUnits:
+				screen.attachImageButton(Pnl, "", INFO.getButton("UNIT_", iUnit), enumGBS, eWidJuToUnit, iUnit, 1, False)
 		else:
 			Y_BOT_ROW_3 += H_BOT_ROW
 			Y_STRATEGY += H_BOT_ROW
 			H_HISTORY += H_BOT_ROW
 			H_SPECIAL += H_BOT_ROW
-		# Requires
+
+		# Requires -- the TECH prereqs only.
+		# The AND and OR groups are two published lists precisely because the merged edge family cannot tell an
+		# enabling tech from an obsoleting one, and a prereq strip drawing "&" between them has ALL semantics.
+		# A tech's BUILDING prereqs (two techs author one, both as OR-groups) are NOT drawn here: the composer
+		# renders the whole requires tree as prose in the Special panel below, minimum counts included, so an
+		# icon strip beside it would be a second reading of the same clause.
 		Pnl = aName()
 		screen.addPanel(Pnl, "", "", False, True, X_COL_1, Y_BOT_ROW_3, W_COL_3, H_BOT_ROW, ePnlBlue50)
 		szText = szfont3b + TRNSLTR.getText("TXT_KEY_PEDIA_REQUIRES", ())
 		screen.setLabelAt(aName(), Pnl, szText, 1<<2, W_COL_3 / 2, 2, 0, eFontTitle, eWidGen, 0, 0)
-		AND = ["TXT", "<font=4b>&#38", 1<<2, 10, 14]
 		OR = ["TXT", "<font=4b>||", 1<<2, 6, 10]
 		braL = ["TXT", "<font=4b> {", 1<<0, 0, 14]
 		braR = ["TXT", "<font=4b>} ", 1<<0, 0, 14]
-		PF = "ToolTip|JumpTo|"
+		szChild = "ToolTip|JumpTo|TECH"
+		aList1 = []
 		n = 0
-		szChild = PF + "TECH"
-		# Tech Req
-		for iType in CvTheTechInfo.getPrereqAndTechs():
-			aList1.append([szChild + str(iType) + "|" + str(n), GC.getTechInfo(iType).getButton()])
+		for iType in INFO.getIdList("TECH_", iTheTech, IdListSlot.PYLIST_PREREQ_AND_TECHS):
+			aList1.append([szChild + str(iType) + "|" + str(n), INFO.getButton("TECH_", iType)])
 			n += 1
-		nOr = 0
-		for iType in CvTheTechInfo.getPrereqOrTechs():
-			aList2.append(iType)
-			nOr += 1
-		if aList2:
-			if nOr > 1:
+		aOrTechs = INFO.getIdList("TECH_", iTheTech, IdListSlot.PYLIST_PREREQ_OR_TECHS)
+		if aOrTechs:
+			if len(aOrTechs) > 1:
 				aList1.append(braL)
-			iType = aList2.pop(0)
-			aList1.append([szChild + str(iType) + "|" + str(n), GC.getTechInfo(iType).getButton()])
-			n += 1
-			for iType in aList2:
-				aList1.append(OR)
-				aList1.append([szChild + str(iType) + "|" + str(n), GC.getTechInfo(iType).getButton()])
-				n += 1
-			if nOr > 1:
-				aList1.append(braR)
-			aList2 = []
-
-		# Building Req
-		szChild = PF + "BUILDING"
-		for i in range(CvTheTechInfo.getNumPrereqBuildings()):
-			iAmount = CvTheTechInfo.getPrereqBuildingMinimumRequired(i)
-			if iAmount > 0:
-				iType = CvTheTechInfo.getPrereqBuildingType(i)
-				aList2.append((iType, iAmount))
-		nOr = 0
-		for i in range(CvTheTechInfo.getNumPrereqOrBuildings()):
-			iAmount = CvTheTechInfo.getPrereqOrBuildingMinimumRequired(i)
-			if iAmount > 0:
-				iType = CvTheTechInfo.getPrereqOrBuildingType(i)
-				aList3.append((iType, iAmount))
-				nOr += 1
-		if aList2 or aList3:
-			if aList1:
-				aList1.append(AND)
-
-			if aList2:
-				for iType, iAmount in aList2:
-					if iAmount > 1:
-						aList1.append(["TXT", "<font=4b>%d" % iAmount, 1<<1, 16, 0])
-					aList1.append([szChild + str(iType) + "|" + str(n), GC.getBuildingInfo(iType).getButton()])
-					n += 1
-
-			if aList3:
-				if nOr > 1:
-					aList1.append(braL)
-				iType, iAmount = aList3.pop(0)
-				if iAmount > 1:
-					aList1.append(["TXT", "<font=4b>%d" % iAmount, 1<<1, 16, 0])
-				aList1.append([szChild + str(iType) + "|" + str(n), GC.getBuildingInfo(iType).getButton()])
-				n += 1
-				for iType, iAmount in aList3:
+			bFirst = True
+			for iType in aOrTechs:
+				if not bFirst:
 					aList1.append(OR)
-					if iAmount > 1:
-						aList1.append(["TXT", "<font=4b>%d" % iAmount, 1<<1, 16, 0])
-					aList1.append([szChild + str(iType) + "|" + str(n), GC.getBuildingInfo(iType).getButton()])
-					n += 1
-				if nOr > 1:
-					aList1.append(braR)
+				bFirst = False
+				aList1.append([szChild + str(iType) + "|" + str(n), INFO.getButton("TECH_", iType)])
+				n += 1
+			if len(aOrTechs) > 1:
+				aList1.append(braR)
 
 		if aList1:
 			Pnl = aName()
@@ -291,33 +240,32 @@ class PediaTech:
 					x += S_BOT_ROW + 4
 			screen.hide(Pnl)
 			screen.show(Pnl)
-		# Leads To
+		# Leads To -- the same forward edge, pointed at the tech bucket.
 		Pnl = aName()
-
 		screen.addPanel(Pnl, TRNSLTR.getText("TXT_KEY_PEDIA_LEADS_TO", ()), "", False, True, self.X_COL_3, Y_BOT_ROW_3, W_COL_3, H_BOT_ROW, ePnlBlue50)
-		for i in xrange(CvTheTechInfo.getNumLeadsToTechs()):
-			iTechX = CvTheTechInfo.getLeadsToTech(i)
-			screen.attachImageButton(Pnl, "", GC.getTechInfo(iTechX).getButton(), enumGBS, eWidJuToDerTech, iTechX, 1, False)
+		for iTechX in aLeadsTo:
+			screen.attachImageButton(Pnl, "", INFO.getButton("TECH_", iTechX), enumGBS, eWidJuToDerTech, iTechX, 1, False)
 
 		# Quote
-		szTxt = CvTheTechInfo.getQuote()
+		szTxt = INFO.getQuote("TECH_", iTheTech)
 		if szTxt:
 			szQuote = TRNSLTR.getText("TXT_KEY_PEDIA_QUOTE", ())
 			screen.addPanel(aName(), szQuote, "", True, False, X_COL_2, Y_TOP_ROW_1, W_COL_2, H_TOP_ROW, ePnlBlue50)
 			screen.addMultilineText(aName(), szfont2 + szTxt, X_COL_2 + 4, Y_TOP_ROW_1 + 32, W_COL_2 - 8, H_TOP_ROW - 40, eWidGen, 0, 0, 1<<0)
 
-		# Special
-		szSpecial = CyGameTextMgr().getTechHelp(iTheTech, True, False, False, False, -1)[1:]
-		if iTheTech == GC.getInfoTypeForString("TECH_COLONIALISM"):
+		# Special -- the composer's own body: the entry lines per family, the unlock edges, and the requires
+		# tree rendered clause by clause.
+		szSpecial = TEXT.getTechHelp(iTheTech, True, False, False, False, -1)[1:]
+		if iTheTech == ENUMS.getInfoType("TECH_COLONIALISM"):
 			szSpecial += TRNSLTR.getText("TXT_KEY_COLONAILISM_EXTRA_POP", ())
-		elif iTheTech == GC.getInfoTypeForString("TECH_STEAM_POWER"):
+		elif iTheTech == ENUMS.getInfoType("TECH_STEAM_POWER"):
 			szSpecial += TRNSLTR.getText("TXT_KEY_STEAM_POWER_EXTRA_POP", ())
 		# History
 		szTxt = ""
-		szTemp = CvTheTechInfo.getStrategy()
+		szTemp = INFO.getStrategy("TECH_", iTheTech)
 		if szTemp:
 			szTxt += szfont2b + TRNSLTR.getText("TXT_KEY_CIVILOPEDIA_STRATEGY", ()) + szfont2 + szTemp + "\n\n"
-		szTemp = CvTheTechInfo.getCivilopedia()
+		szTemp = INFO.getCivilopedia("TECH_", iTheTech)
 		if szTemp:
 			szTxt += szfont2b + TRNSLTR.getText("TXT_KEY_CIVILOPEDIA_BACKGROUND", ()) + szfont2 + szTemp
 

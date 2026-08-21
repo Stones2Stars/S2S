@@ -1,0 +1,142 @@
+{
+ "type": "BUILDING_MATSUMOTO_CASTLE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMMUNISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FEUDALISM",
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_SHINTO"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_SHINTO",
+    {
+     "any": [
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    8,
+    {
+     "value": 8,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_LOOTER"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 1860,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 8
+   },
+   {
+    "FLAVOR_MILITARY": 8
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MATSUMOTO_CASTLE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MATSUMOTO_CASTLE"
+  }
+ },
+ "sound": {
+  "construct": "SND_BUILD_SHINTO"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MATSUMOTO_CASTLE",
+  "civilopedia": "TXT_KEY_BUILDING_MATSUMOTO_CASTLE_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 12,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "religion": "RELIGION_SHINTO",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

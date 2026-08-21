@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_SLAVE_MARKET",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE",
+    "TECH_TRADE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SETTLED_SLAVE": 1
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_ZOROASTRIANISM": {
+    "flat": -1
+   }
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SLAVES": 2
+  }
+ },
+ "cost": {
+  "production": 153,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GOLD": 2
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SLAVE_MARKET",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SLAVE_MARKET"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SLAVE_MARKET",
+  "civilopedia": "TXT_KEY_BUILDING_SLAVE_MARKET_PEDIA",
+  "help": "TXT_KEY_BUILDING_SLAVE_MARKET_HELP",
+  "worth": 3,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

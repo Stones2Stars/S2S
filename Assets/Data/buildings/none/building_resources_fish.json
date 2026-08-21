@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_RESOURCES_FISH",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_AUTOMATED_URBANIZATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AQUAFARM"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_AQUAFARM"
+   ],
+   "all": [
+    {
+     "any": [
+      "BUILDING_NET_ANCHOVY",
+      "BUILDING_NETS_COD",
+      "BUILDING_NET_EEL",
+      "BUILDING_NET_FLOUNDER",
+      "BUILDING_MACKEREL_NETS",
+      "BUILDING_MARLIN_NETS",
+      "BUILDING_PARROTFISH_NETS",
+      "BUILDING_NET_SALMON",
+      "BUILDING_NET_SARDINE",
+      "BUILDING_NET_SEA_BASS",
+      "BUILDING_NET_SHARK",
+      "BUILDING_NET_SNAPPER",
+      "BUILDING_SWORDFISH_NETS",
+      "BUILDING_NET_TUNA"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_RAW_FISH"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESOURCES_FISH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_FISH",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

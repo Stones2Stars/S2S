@@ -1,0 +1,108 @@
+{
+ "type": "BUILDING_LYE_MAKER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NOVUS_CHEMISTRY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_LYE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SOAP_MAKING",
+    {
+     "type": "BONUS_BARRELS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      "BUILDING_BARTER_POST",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_STRAW",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_GRASS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_FACTORY_LYE",
+    "BUILDING_CHEMICALS_DISTRICT"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_LYE"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 160,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LYE_MAKER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LYE_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_LYE_MAKER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

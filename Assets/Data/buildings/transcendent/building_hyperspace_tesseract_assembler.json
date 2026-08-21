@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_HYPERSPACE_TESSERACT_ASSEMBLER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HYPERFACTORY",
+    "TECH_TESSERACT_CONSTRUCTION",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_TESSERACT"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 1713,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYPERSPACE_TESSERACT_ASSEMBLER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_TESSERACT_ASSEMBLER",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_TESSERACT_ASSEMBLER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

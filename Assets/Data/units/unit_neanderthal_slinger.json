@@ -1,0 +1,150 @@
+{
+ "type": "UNIT_NEANDERTHAL_SLINGER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_NEANDERTHAL",
+    "BUILDING_C_L_NEANDERTHAL",
+    "TECH_BINDING"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ARCHER"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityDefense": {
+    "percent": 20
+   },
+   "hillsDefense": {
+    "percent": 20
+   },
+   "unitCombat": {
+    "UNITCOMBAT_ARCHER": {
+     "percent": 25
+    },
+    "UNITCOMBAT_MELEE": {
+     "percent": 25
+    },
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 7
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 2
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 2
+   },
+   "limit": {
+    "flat": 7
+   },
+   "maxUnits": {
+    "flat": 1
+   }
+  }
+ },
+ "skills": [
+  "pillage"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_THROWING",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_NEANDERTHAL",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_CLUB",
+  "UNITCOMBAT_WEAPON_DIST_SLING",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_SHIELD_SMALL",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 37,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NEANDERTHAL_SLINGER",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "rangedWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_NEANDERTHAL_SLINGER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_NEANDERTHAL_SLINGER",
+  "civilopedia": "TXT_KEY_UNIT_SLINGER_PEDIA",
+  "worth": 2,
+  "militaryWorth": 2,
+  "xpValueAttack": 2,
+  "xpValueDefense": 2,
+  "conscription": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_CITY_DEFENSE",
+  "formationType": "FORMATION_TYPE_NO_SIEGE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_ESCORT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

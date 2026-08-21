@@ -1,0 +1,248 @@
+{
+ "type": "UNIT_MOBSTER_CAR",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CONSUMERISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_MOB_STOREFRONT",
+    "TECH_MOTORIZED_TRANSPORTATION",
+    "TECH_SEMI_AUTOMATIC_WEAPONS",
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_TIRES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ROBBER"
+    ]
+   }
+  }
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": -12
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 4
+  }
+ },
+ "combat": {
+  "unit": {
+   "lunge": {
+    "percent": 20
+   },
+   "unnerve": {
+    "percent": 20
+   },
+   "stealthStrikes": {
+    "flat": 2
+   },
+   "stealth": {
+    "percent": 45
+   },
+   "targets": {
+    "UNITCOMBAT_EXPLORER": true,
+    "UNITCOMBAT_CANINE": true,
+    "UNITCOMBAT_TRADE": true,
+    "UNITCOMBAT_ENTERTAINER": true,
+    "UNITCOMBAT_CRIMINAL": true,
+    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 40
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 50
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 2
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "insidiousness": {
+    "flat": 60
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 50
+  },
+  "plot": {
+   "flat": 25
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": {
+     "all": [
+      "IS_LAND",
+      "IS_PEOPLE",
+      "!IS_VTOL"
+     ]
+    },
+    "flat": 2
+   }
+  }
+ },
+ "skills": [
+  "alwaysHostile",
+  "assassin",
+  "hiddenNationality",
+  "noCapture",
+  "noDefensiveBonus",
+  "pillage",
+  "blendIntoCity",
+  "counterSpy",
+  "destroy",
+  "ignoreZoneOfControl",
+  "stealPlans",
+  "upgradeAnywhere",
+  "disguised",
+  "political"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "troop"
+ ],
+ "combatClass": "UNITCOMBAT_CRIMINAL",
+ "combatClasses": [
+  "UNITCOMBAT_WHEELED",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 800
+  },
+  "detection": [
+   {
+    "value": 600,
+    "unit": "HAS_DISGUISED"
+   },
+   {
+    "value": 200,
+    "unit": "HAS_POLITICAL"
+   }
+  ]
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO",
+   "PROMOTION_MARAUDER",
+   "PROMOTION_LOOTER",
+   "PROMOTION_INDUSTRYESPIONAGE"
+  ],
+  "greatPersonAction": {
+   "trade": {
+    "base": 125,
+    "multiplier": 1
+   }
+  }
+ },
+ "cost": {
+  "production": 700,
+  "upkeep": 10
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MOBSTER_CAR",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MOBSTER_CAR"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_MOBSTER_CAR",
+  "civilopedia": "TXT_KEY_UNIT_MOBSTER_CAR_PEDIA",
+  "worth": 10,
+  "militaryWorth": 29,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_INFILTRATOR",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "espionagePoints": 750,
+  "unitAIs": [
+   "UNITAI_PILLAGE",
+   "UNITAI_SPY",
+   "UNITAI_INFILTRATOR"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

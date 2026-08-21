@@ -2,6 +2,7 @@
 # Toffer - Option screen for city related options.
 #
 from CvPythonExtensions import *
+TRNSLTR = CyTranslator()
 
 class CityOptions:
 	def __init__(self, screen, mainInterface):

@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_IO_GEOTHERMAL_POWER_PLANT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_IO_BASE",
+    "TECH_THERMAL_NEGATION",
+    {
+     "type": "TERRAIN_IO",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 11,
+     "enabled": "TECH_PLANET_CRACKING"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 2104,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_IO_GEOTHERMAL_POWER_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_IO_GEOTHERMAL_POWER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_IO_GEOTHERMAL_POWER_PLANT_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

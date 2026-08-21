@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_MANI",
+ "enables": {
+  "units": [
+   "UNIT_MALGAQ",
+   "UNIT_MANIQ_SPEAKER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MANI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MANI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

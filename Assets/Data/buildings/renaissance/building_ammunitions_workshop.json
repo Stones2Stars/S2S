@@ -1,0 +1,149 @@
+{
+ "type": "BUILDING_AMMUNITIONS_WORKSHOP",
+ "enables": {
+  "units": [
+   "UNIT_ACVSAM",
+   "UNIT_ARTILLERY",
+   "UNIT_HALFTRACK",
+   "UNIT_LIGHT_AA",
+   "UNIT_LIGHT_ARTILLERY",
+   "UNIT_MOBILE_ARTILLERY",
+   "UNIT_NLOS_CANNON",
+   "UNIT_ROCKET_ARTILLERY",
+   "UNIT_SAM_INFANTRY"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MILITARY_ROBOTICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_AMMUNITION"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_EXPLOSIVES",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT",
+      "BUILDING_FACTORY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STEEL_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BRONZE_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_COPPER_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_FACTORY_AMMUNITION",
+    "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_AMMUNITION"
+  ]
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": 10,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 495,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_AMMUNITIONS_WORKSHOP",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_IRONWORKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_AMMUNITIONS_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_AMMUNITIONS_WORKSHOP_PEDIA",
+  "worth": 6,
+  "militaryWorth": 30,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

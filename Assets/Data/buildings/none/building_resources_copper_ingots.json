@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_RESOURCES_COPPER_INGOTS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_METALS_MEGACOMPLEX"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_METALS_MEGACOMPLEX"
+   ],
+   "all": [
+    {
+     "any": [
+      "BUILDING_ADVANCED_COPPERWORKS",
+      "BUILDING_COPPER_RECLAMATION_PLANT",
+      "BUILDING_NATIONAL_SMELTER_COPPER",
+      "BUILDING_SMELTER_COPPER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_COPPER_INGOTS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESOURCES_COPPER_INGOTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_COPPER_INGOTS",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

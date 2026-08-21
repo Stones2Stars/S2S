@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_MARTIAN_ARCOLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_MARTIAN_CLAYTRONIC_CITY",
+   "BUILDING_MARTIAN_DEATH_RAY",
+   "BUILDING_MARTIAN_ECUMENOPOLIS",
+   "BUILDING_MARTIAN_STARPORT",
+   "BUILDING_RING_OF_MARS",
+   "BUILDING_TERRAFORMED_MARS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MARTIAN_MEGACITY",
+    "TECH_PLANETARY_MEGASTRUCTURES",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MARTIAN_CROPS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -10
+   }
+  }
+ },
+ "cost": {
+  "production": 5294,
+  "hurryModifier": 10000
+ },
+ "amenities": {
+  "adds3rdRing": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_ARCOLOGY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_ARCOLOGY",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_ARCOLOGY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

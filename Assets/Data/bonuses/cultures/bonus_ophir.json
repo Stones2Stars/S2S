@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_OPHIR",
+ "enables": {
+  "units": [
+   "UNIT_LOPHORON",
+   "UNIT_TREASURE_GUARD"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_OPHIR"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_OPHIR",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

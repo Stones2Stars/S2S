@@ -1,0 +1,54 @@
+{
+ "type": "SPECIALIST_GREAT_ARTIST",
+ "commerce": {
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 5,
+      "enabled": {
+       "type": "BUILDING_WALK_OF_FAME",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    12,
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BUILDING_WARHOLS_FACTORY",
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ENTERTAINER": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/Great_Artist.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/Great_Artist.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_GREAT_ARTIST",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_CULTURAL"
+  ]
+ }
+}

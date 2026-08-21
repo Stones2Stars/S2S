@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_SKYHOOK",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COMMERCIAL_SPACEPORT",
+    "TECH_HYPERSONIC_FLIGHT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_SPACE_COLONY_CISLUNAR": {
+     "flat": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 6770
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SKYHOOK"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SKYHOOK",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SKYHOOK",
+  "civilopedia": "TXT_KEY_BUILDING_SKYHOOK_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

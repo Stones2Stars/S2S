@@ -1,0 +1,61 @@
+{
+ "type": "PROMOTION_FORESTRY",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_WOODSMAN3"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "feature": {
+    "FEATURE_JUNGLE": {
+     "percent": -50
+    },
+    "FEATURE_FOREST": {
+     "percent": -50
+    },
+    "FEATURE_BAMBOO": {
+     "percent": -50
+    },
+    "FEATURE_FOREST_YOUNG": {
+     "percent": -50
+    },
+    "FEATURE_FOREST_BURNT": {
+     "percent": -50
+    },
+    "FEATURE_FOREST_ANCIENT": {
+     "percent": -50
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Forestry.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FORESTRY",
+  "unitCombats": [
+   "UNITCOMBAT_HUNTER",
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_CLONES"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ]
+ }
+}

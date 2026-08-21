@@ -1,0 +1,85 @@
+{
+ "type": "TECH_ORAL_TRADITION",
+ "enables": {
+  "buildings": [
+   "BUILDING_CREATION_MYTH",
+   "BUILDING_FOLKLORE_BELUGA",
+   "BUILDING_FOLKLORE_T_LEVIATHAN",
+   "BUILDING_FOLKLORE_T_SHARKS",
+   "BUILDING_KNOWLEDGE_INHERITANCE",
+   "BUILDING_STORYTELLER",
+   "BUILDING_WONDERS_OF_THE_DEEP"
+  ],
+  "civics": [
+   "CIVIC_ORAL_TRADITION"
+  ],
+  "heritages": [
+   "HERITAGE_FOLKLORE_UNICORN"
+  ],
+  "processes": [
+   "PROCESS_RESEARCH_MEAGER"
+  ],
+  "promotions": [
+   "PROMOTION_SILVER_TONGUE1"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_FOLKLORE_EXPLORATION"
+  ],
+  "techs": [
+   "TECH_PREHISTORIC_MUSIC"
+  ],
+  "units": [
+   "UNIT_STORY_TELLER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LANGUAGE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "research": 5
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Button_OralTradition.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ORAL_TRADITION",
+  "soundMP": "AS2D_TECH_ORAL_TRADITION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ORAL_TRADITION",
+  "civilopedia": "TXT_KEY_TECH_ORAL_TRADITION_PEDIA",
+  "quote": "TXT_KEY_TECH_ORAL_TRADITION_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 3,
+  "gridY": 17
+ }
+}

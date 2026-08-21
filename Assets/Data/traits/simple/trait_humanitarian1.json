@@ -1,0 +1,163 @@
+{
+ "type": "TRAIT_HUMANITARIAN1",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_COMPLEX_HUMANITARIAN2"
+  ]
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_GROVE": {
+     "percent": 20
+    },
+    "BUILDING_CASTLE_GARDEN": {
+     "percent": 20
+    },
+    "BUILDING_CITY_PARK": {
+     "percent": 20
+    },
+    "BUILDING_REHABILITATION_CENTER": {
+     "percent": 20
+    },
+    "BUILDING_BARBER_SHOP": {
+     "percent": 20
+    },
+    "BUILDING_HEALERS_HUT": {
+     "percent": 20
+    },
+    "BUILDING_DOCTORS_OFFICE": {
+     "percent": 20
+    },
+    "BUILDING_HOSPITAL": {
+     "percent": 20
+    },
+    "BUILDING_RETIREMENT_HOME": {
+     "percent": 20
+    },
+    "BUILDING_SOCIAL_JUSTICE_ORGANIZATION": {
+     "percent": 20
+    },
+    "BUILDING_HYPERMARKET": {
+     "percent": 20
+    },
+    "BUILDING_SURGEONS_OFFICE": {
+     "percent": 20
+    },
+    "BUILDING_MEDICAL_CLINIC": {
+     "percent": 20
+    },
+    "BUILDING_HEALTHCARE_MEGACOMPLEX": {
+     "percent": 20
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_HEALERS_HUT": {
+     "flat": 1
+    },
+    "BUILDING_DOCTORS_OFFICE": {
+     "flat": 1
+    },
+    "BUILDING_HOSPITAL": {
+     "flat": 1
+    },
+    "BUILDING_RED_CROSS": {
+     "flat": 1
+    },
+    "BUILDING_SURGEONS_OFFICE": {
+     "flat": 1
+    },
+    "BUILDING_MEDICAL_CLINIC": {
+     "flat": 1
+    },
+    "BUILDING_HEALTHCARE_MEGACOMPLEX": {
+     "flat": 1
+    }
+   },
+   "cities": {
+    "flat": 2,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": 20
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_NATURE_PRESERVE": {
+     "percent": 75
+    }
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 20
+   },
+   "attitude": {
+    "flat": 2
+   },
+   "enemyWarWeariness": {
+    "percent": 20
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": {
+    "value": -2,
+    "per": {
+     "type": "POPULATION",
+     "each": 3,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 6
+   },
+   {
+    "FLAVOR_GOLD": -1
+   },
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitHumanitarian.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_HUMANITARIAN0",
+  "civilopedia": "TXT_KEY_TRAIT_HUMANITARIAN_PEDIA",
+  "shortDescription": "TXT_KEY_TRAIT_HUMANITARIAN_SHORT"
+ }
+}

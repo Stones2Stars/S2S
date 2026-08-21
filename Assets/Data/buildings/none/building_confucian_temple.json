@@ -1,0 +1,126 @@
+{
+ "type": "BUILDING_CONFUCIAN_TEMPLE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHANGDEOKGUNG",
+   "BUILDING_CONFUCIAN_ACADEMY",
+   "BUILDING_SIX_HARMONIES_PAGODA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PRIESTHOOD",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "RELIGION_CONFUCIANISM",
+    {
+     "any": [
+      {
+       "type": "BONUS_BOOKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PAPER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SCROLLS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TABLETS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_CONFUCIANISM"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1
+  }
+ },
+ "cost": {
+  "production": 252,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CONFUCIAN_TEMPLE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CONFUCIAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CONFUCIAN_TEMPLE",
+  "civilopedia": "TXT_KEY_BUILDING_CONFUCIAN_TEMPLE_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 4,
+  "specialBuildingType": "SPECIALBUILDING_TEMPLE",
+  "religion": "RELIGION_CONFUCIANISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

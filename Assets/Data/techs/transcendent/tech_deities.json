@@ -1,0 +1,68 @@
+{
+ "type": "TECH_DEITIES",
+ "enables": {
+  "buildings": [
+   "BUILDING_NATURE_GODDESS",
+   "BUILDING_SEA_GOD",
+   "BUILDING_SKY_GOD",
+   "BUILDING_UNDERWORLD_GODDESS"
+  ],
+  "civics": [
+   "CIVIC_APOTHEOSIS"
+  ],
+  "techs": [
+   "TECH_ALTERNATE_HISTORY_EXPLORATION",
+   "TECH_ATEMPORAL_BEINGS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COSMIC_WARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HYPERINTELLIGENCE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 601234
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/deities.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_DEITIES",
+  "civilopedia": "TXT_KEY_TECH_DEITIES_PEDIA",
+  "quote": "TXT_KEY_TECH_DEITIES_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 155,
+  "gridY": 1
+ }
+}

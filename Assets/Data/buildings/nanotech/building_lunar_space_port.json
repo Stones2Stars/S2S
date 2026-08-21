@@ -1,0 +1,107 @@
+{
+ "type": "BUILDING_LUNAR_SPACE_PORT",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUNAR_COMETARY_BOMBARDMENT",
+   "BUILDING_LUNAR_HOTEL",
+   "BUILDING_MITHRIL_FOUNDRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LUNAR_LAUNCH_SITE",
+    "TECH_LUNAR_TOURISM",
+    {
+     "type": "BONUS_PLASTIC",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_ROCKET_FUEL",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SYNTHETIC_RUBBER",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_STEEL_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TITANIUM_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_ALUMINUM_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 5,
+   "modifier": {
+    "percent": 100
+   }
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "cost": {
+  "production": 1300,
+  "hurryModifier": 10000
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUNAR_SPACE_PORT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_SPACE_PORT",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_SPACE_PORT_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

@@ -1,0 +1,114 @@
+{
+ "type": "UNIT_COSMIC_WORK_CREW",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_GALACTIC_PORT",
+    "TECH_GALACTIFORMING"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 24
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_COSMIC_WORK_CREW"
+  }
+ },
+ "skills": [
+  "canMoveAllTerrain",
+  "canMoveImpassable",
+  "ignoreTerrainCost"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SPACE_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_ANTIMATTER_SPACESHIP",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "greatPersonAction": {
+   "hurry": {
+    "base": 300
+   }
+  }
+ },
+ "cost": {
+  "production": 12342,
+  "upkeep": 1,
+  "hurryCostModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_COSMIC_WORK_CREW",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_COSMIC_WORK_CREW",
+       "late": "ART_DEF_UNIT_COSMIC_WORK_CREW"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_COSMIC_WORK_CREW",
+  "civilopedia": "TXT_KEY_UNIT_COSMIC_WORK_CREW_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH",
+   "MAPCATEGORY_CISLUNAR",
+   "MAPCATEGORY_LUNAR",
+   "MAPCATEGORY_MARTIAN",
+   "MAPCATEGORY_VENUSIAN",
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_JOVIAN",
+   "MAPCATEGORY_TITANIC",
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_GALACTIC",
+   "MAPCATEGORY_MILKY_WAY",
+   "MAPCATEGORY_UNIVERSAL"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "workRate": 350
+  }
+ }
+}

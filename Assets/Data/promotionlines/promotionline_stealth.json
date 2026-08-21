@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTIONLINE_STEALTH",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/roadwar1.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,4,11"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_STEALTH",
+  "unitCombats": [
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_CLONES",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_SUBMARINE",
+   "UNITCOMBAT_NUCLEAR_SHIPS"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ]
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_CATALONIAN",
+ "enables": {
+  "units": [
+   "UNIT_BALLESTER",
+   "UNIT_JAMES_I"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CATALONIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CATALONIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

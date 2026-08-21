@@ -1,94 +1,13 @@
-//------------------------------------------------------------------------------------------------
-//  FILE:    CvCivicOptionInfo.cpp
-//------------------------------------------------------------------------------------------------
-#include "CvGameCoreDLL.h"
-#include "CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "CvPlayerAI.h"
-#include "CvPython.h"
-#include "CvXMLLoadUtility.h"
-#include "CvXMLLoadUtilityModTools.h"
-#include "CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
+//
+//	CvCivicOptionInfo::mapFrom -- a civic option is a pure structural axis (type + description on the base; no
+//	families / enables / prereqs). This override exists for uniformity + as the home for any future option-level typed
+//	member; today it is exactly the base read. See header.
+//
+
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
 #include "CvCivicOptionInfo.h"
 
-
-//======================================================================================================
-//					CvCivicOptionInfo
-//======================================================================================================
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   CvCivicOptionInfo()
-//
-//  PURPOSE :   Default constructor
-//
-//------------------------------------------------------------------------------------------------------
-CvCivicOptionInfo::CvCivicOptionInfo() :
-	// m_pabTraitNoUpkeep is a deprecated, non-XML array (its read is commented out); every XML-backed
-	// field is declared in getDataMembers() and defaulted by initDataMembers() below.
-	m_pabTraitNoUpkeep(NULL)
+void CvCivicOptionInfo::mapFrom(const picojson::value& entity)
 {
-	CvInfoUtil(this).initDataMembers();
+	CvInfo::mapFrom(entity);   // core reading (type + description) + availability -- nothing else on a civic option
 }
-
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   ~CvCivicOptionInfo()
-//
-//  PURPOSE :   Default destructor
-//
-//------------------------------------------------------------------------------------------------------
-CvCivicOptionInfo::~CvCivicOptionInfo()
-{
-	//SAFE_DELETE_ARRAY(m_pabTraitNoUpkeep);
-}
-
-
-bool CvCivicOptionInfo::isPolicy() const
-{
-	return m_bPolicy;
-}
-
-//bool CvCivicOptionInfo::getTraitNoUpkeep(int i) const
-//{
-//	FASSERT_BOUNDS(0, GC.getNumTraitInfos(), i);
-//	return m_pabTraitNoUpkeep ? m_pabTraitNoUpkeep[i] : false;
-//}
-
-void CvCivicOptionInfo::getDataMembers(CvInfoUtil& util)
-{
-	util
-		.add(m_bPolicy, L"bPolicy")
-	;
-}
-
-
-bool CvCivicOptionInfo::read(CvXMLLoadUtility* pXML)
-{
-	if (!CvInfoBase::read(pXML))
-	{
-		return false;
-	}
-
-	CvInfoUtil(this).readXml(pXML);
-
-	return true;
-}
-
-
-void CvCivicOptionInfo::copyNonDefaults(const CvCivicOptionInfo* pClassInfo)
-{
-	CvInfoBase::copyNonDefaults(pClassInfo);
-
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-}
-

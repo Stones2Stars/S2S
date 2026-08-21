@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_MITHRIL",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MITHRIL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MITHRIL",
+  "civilopedia": "TXT_KEY_BONUS_MITHRIL_PEDIA",
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
+ }
+}

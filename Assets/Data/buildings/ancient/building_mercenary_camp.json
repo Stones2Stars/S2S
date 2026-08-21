@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_MERCENARY_CAMP",
+ "enables": {
+  "buildings": [
+   "BUILDING_MERCENARY_STABLES"
+  ],
+  "units": [
+   "UNIT_BANDIT_FOOTPAD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_BRONZE_WORKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MELEE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": 5
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 184,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MERCENARY_CAMP",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_KNIGHT_STABLE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MERCENARY_CAMP",
+  "civilopedia": "TXT_KEY_BUILDING_MERCENARY_CAMP_PEDIA",
+  "worth": 1,
+  "militaryWorth": 3,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

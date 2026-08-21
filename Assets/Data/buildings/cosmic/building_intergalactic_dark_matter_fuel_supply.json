@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_INTERGALACTIC_DARK_MATTER_FUEL_SUPPLY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_SUPERMASSIVE_BLACK_HOLE_PLANT",
+    "TECH_DARK_MATTER_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DARK_MATTER",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 4004,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_DARK_MATTER_FUEL_SUPPLY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_DARK_MATTER_FUEL_SUPPLY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_DARK_MATTER_FUEL_SUPPLY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

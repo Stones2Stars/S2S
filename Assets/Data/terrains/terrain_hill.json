@@ -1,0 +1,50 @@
+{
+ "type": "TERRAIN_HILL",
+ "food": {
+  "plot": {
+   "flat": -1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_RIVER"
+    }
+   ]
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Hill.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_TERRAIN_HILL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TERRAIN_HILL",
+  "civilopedia": "TXT_KEY_TERRAIN_HILL_PEDIA",
+  "buildTimeModifier": 25
+ },
+ "vision": {
+  "plot": {
+   "elevation": {
+    "flat": 100
+   }
+  }
+ }
+}

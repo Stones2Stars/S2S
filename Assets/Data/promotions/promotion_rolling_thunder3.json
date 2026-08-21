@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTION_ROLLING_THUNDER3",
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_ROLLING_THUNDER": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/RollingThunder3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_ROLLING_THUNDER3"
+ }
+}

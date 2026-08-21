@@ -1,0 +1,73 @@
+{
+ "type": "TECH_COSMIC_ENGINEERING",
+ "enables": {
+  "buildings": [
+   "BUILDING_CFA2_GREAT_WALL_COLONY",
+   "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
+   "BUILDING_HERCULES_CORONA_BOREALIS_GREAT_WALL_COLONY",
+   "BUILDING_INTERGALACTIC_MEGAGALAXY_CAPITOL",
+   "BUILDING_INTERGALACTIC_MERGED_MEGAGALAXY",
+   "BUILDING_SLOAN_GREAT_WALL_COLONY",
+   "BUILDING_UNIVERSAL_ECONOMY"
+  ],
+  "builds": [
+   "BUILD_SUPERCLUSTER_COLONY"
+  ],
+  "improvements": [
+   "IMPROVEMENT_SUPERCLUSTER_COLONY"
+  ],
+  "techs": [
+   "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+   "TECH_HORIZON_BREAKING",
+   "TECH_STRING_MANIPULATION",
+   "TECH_TRANSCENDENT_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PURE_INFORMATION_SOCIETY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DARK_ENERGY_HARVESTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 366008
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/cosmic_engineering.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_COSMIC_ENGINEERING",
+  "civilopedia": "TXT_KEY_TECH_COSMIC_ENGINEERING_PEDIA",
+  "quote": "TXT_KEY_TECH_COSMIC_ENGINEERING_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 147,
+  "gridY": 15
+ }
+}

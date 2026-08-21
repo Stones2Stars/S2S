@@ -1,0 +1,99 @@
+{
+ "type": "TECH_CALENDAR",
+ "enables": {
+  "bonuses": [
+   "BONUS_INCENSE"
+  ],
+  "buildings": [
+   "BUILDING_MAUSOLEUM_OF_MAUSSOLLOS",
+   "BUILDING_PYRAMID_OF_THE_MAGICIAN",
+   "BUILDING_PYRAMID_OF_THE_MOON",
+   "BUILDING_PYRAMID_OF_THE_SUN",
+   "BUILDING_ROYAL_TOMB",
+   "BUILDING_SU_SONGS_WORKSHOP",
+   "BUILDING_TEMPLE_OF_AH_CACAO",
+   "BUILDING_WATERCLOCK"
+  ],
+  "builds": [
+   "BUILD_PLANTATION"
+  ],
+  "improvements": [
+   "IMPROVEMENT_PLANTATION"
+  ],
+  "techs": [
+   "TECH_CALLIGRAPHY",
+   "TECH_NAGHUALISM",
+   "TECH_SPICE_TRADE",
+   "TECH_WEATHER_LORE"
+  ],
+  "units": [
+   "UNIT_GOLIATH",
+   "UNIT_GWANGGAETO",
+   "UNIT_HUANTAR",
+   "UNIT_KUKULCAN",
+   "UNIT_MERLIN"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_PLANT_PICKING_CAMP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTROLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GEOMETRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 554
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/Calendar.dds,Art/Interface/Buttons/TechTree_Atlas.dds,3,9"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CALENDAR",
+  "soundMP": "AS2D_TECH_MP_CALENDAR"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CALENDAR",
+  "civilopedia": "TXT_KEY_TECH_CALENDAR_PEDIA",
+  "quote": "TXT_KEY_TECH_CALENDAR_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 35,
+  "gridY": 9
+ }
+}

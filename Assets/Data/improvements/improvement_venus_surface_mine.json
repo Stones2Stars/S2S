@@ -1,0 +1,58 @@
+{
+ "type": "IMPROVEMENT_VENUS_SURFACE_MINE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ABYSS_COLONIZATION",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_VENUS",
+      "TERRAIN_VENUS_HIGHLANDS",
+      "TERRAIN_VENUS_LOWLANDS"
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    10,
+    {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_NANOMINING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_PLANETARY_TRADE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_VENUS_SURFACE_MINE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_VENUS_SURFACE_MINE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_VENUS_SURFACE_MINE_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

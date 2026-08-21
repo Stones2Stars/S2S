@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_BUILD_UP_CONTROL_CENTER1",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_RECOVER_TECH1"
+   ]
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 1
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_TECH": {
+     "heal": 3,
+     "adjacentHeal": 1
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_CONTROL_CENTER": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/ControlCenter1BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_CONTROL_CENTER1"
+ }
+}

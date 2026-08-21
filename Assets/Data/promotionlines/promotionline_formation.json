@@ -1,0 +1,16 @@
+{
+ "type": "PROMOTIONLINE_FORMATION",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Formation.dds,Art/Interface/Buttons/Promotions_Atlas.dds,1,2"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_FORMATION",
+  "unitCombats": [
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_GUN"
+  ]
+ }
+}

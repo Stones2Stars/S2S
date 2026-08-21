@@ -1,0 +1,93 @@
+{
+ "type": "BUILDING_GAS_LAMPS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ORGANIC_PHOTONICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ELECTRIC_LAMPS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GAS_LIGHTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_NATURAL_GAS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_HYDROGEN",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_ELECTRIC_LAMPS",
+    "BUILDING_OLED_LAMPS"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 680,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GAS_LAMPS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GAS_LAMPS",
+  "civilopedia": "TXT_KEY_BUILDING_GAS_LAMPS_PEDIA",
+  "worth": 4,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

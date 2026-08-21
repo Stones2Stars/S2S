@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_EXPLORE_SS2",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_SS2",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_SS2_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SPACE_TOURISM"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

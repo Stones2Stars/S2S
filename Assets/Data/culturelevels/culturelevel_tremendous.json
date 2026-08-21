@@ -1,0 +1,21 @@
+{
+ "type": "CULTURELEVEL_TREMENDOUS",
+ "allowed": {
+  "worldWonders": 9,
+  "teamWonders": 9,
+  "nationalWonders": 21
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 37
+   }
+  }
+ },
+ "enabled": "GAMEOPTION_CULTURE_REALISTIC_SPREAD",
+ "identity": {
+  "description": "TXT_KEY_CULTURELEVEL_TREMENDOUS",
+  "cityRadius": 3,
+  "cultureThreshold": 66560
+ }
+}

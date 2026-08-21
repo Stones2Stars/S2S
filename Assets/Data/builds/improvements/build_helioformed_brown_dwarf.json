@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_HELIOFORMED_BROWN_DWARF",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ARTIFICIAL_STARS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_HELIOFORMED_BROWN_DWARF"
+ },
+ "cost": {
+  "gold": 700,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/helioform.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_HELIOFORMED_BROWN_DWARF"
+ }
+}

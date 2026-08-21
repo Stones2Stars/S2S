@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_RACIAL_PROFILING",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SOCIAL_CALCULUS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GENETIC_PROFILING"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MANAGEMENT",
+    {
+     "any": [
+      "BUILDING_POLICE_STATION",
+      "BUILDING_POLICE_PRECINCT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_GENETIC_PROFILING"
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    -5,
+    {
+     "value": -1,
+     "enabled": "TECH_MINORITY_RIGHTS"
+    }
+   ]
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 830,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RACIAL_PROFILING",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RACIAL_PROFILING",
+  "civilopedia": "TXT_KEY_BUILDING_RACIAL_PROFILING_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

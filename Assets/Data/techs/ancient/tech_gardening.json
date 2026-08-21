@@ -1,0 +1,78 @@
+{
+ "type": "TECH_GARDENING",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASSASSIN_BUG_SANCTUARY",
+   "BUILDING_BUTTERFLY_SANCTUARY",
+   "BUILDING_CICADA_SANCTUARY",
+   "BUILDING_COMMUNITY_GARDEN",
+   "BUILDING_CRICKET_SANCTUARY",
+   "BUILDING_DRAGONFLY_SANCTUARY",
+   "BUILDING_FIREFLY_SANCTUARY",
+   "BUILDING_GOLIATH_BEETLE_SANCTUARY",
+   "BUILDING_HERCULES_BEETLE_SANCTUARY",
+   "BUILDING_JUNEBUG_SANCTUARY",
+   "BUILDING_LADYBUG_SANCTUARY",
+   "BUILDING_PALACE_GARDEN",
+   "BUILDING_PAVILION",
+   "BUILDING_PRAYING_MANTIS_SANCTUARY",
+   "BUILDING_SCARAB_BEETLE_SANCTUARY",
+   "BUILDING_SCORPION_SANCTUARY",
+   "BUILDING_THE_HANGING_GARDENS",
+   "BUILDING_WEAVING_SPIDER_SANCTUARY"
+  ],
+  "techs": [
+   "TECH_CUISINE",
+   "TECH_VETERINARY_MEDICINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_IRRIGATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 213
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/gardening.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GARDENING",
+  "soundMP": "AS2D_TECH_GARDENING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_GARDENING",
+  "civilopedia": "TXT_KEY_TECH_GARDENING_PEDIA",
+  "quote": "TXT_KEY_TECH_GARDENING_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 27,
+  "gridY": 5
+ }
+}

@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_MILKY_WAY_CORE_COLONY",
+ "enables": {
+  "buildings": [
+   "BUILDING_MILKY_WAY_CORE_TERAEARTH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_KUGELBLITZ_POWER_PLANT",
+    "TECH_APPLIED_RELATIVITY",
+    {
+     "type": "TERRAIN_GALACTIC_CORE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 9410,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MILKY_WAY_CORE_COLONY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MILKY_WAY_CORE_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_MILKY_WAY_CORE_COLONY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

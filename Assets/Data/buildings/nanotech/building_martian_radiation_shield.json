@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_MARTIAN_RADIATION_SHIELD",
+ "enables": {
+  "buildings": [
+   "BUILDING_MARTIAN_BIOFACTORY",
+   "BUILDING_MARTIAN_HYDROPONICS_COMPLEX",
+   "BUILDING_MARTIAN_VERTICAL_FARM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_MARTIAN",
+    "TECH_ELECTROMAGNETIC_FIELD_SHIELDING",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 905,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_RADIATION_SHIELD",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_RADIATION_SHIELD",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_RADIATION_SHIELD_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

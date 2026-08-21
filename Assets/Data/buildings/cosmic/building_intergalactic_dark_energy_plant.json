@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_INTERGALACTIC_DARK_ENERGY_PLANT",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_DARK_MATTER_CITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
+    "BUILDING_INTERGALACTIC_MINE",
+    "TECH_DARK_ENERGY_HARVESTING",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    300,
+    {
+     "value": 50,
+     "enabled": "TECH_HYPERSTRUCTURE_ENGINEERING"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 4492,
+  "hurryModifier": 10000
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_DARK_ENERGY_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_DARK_ENERGY_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_DARK_ENERGY_PLANT_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

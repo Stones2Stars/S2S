@@ -1,0 +1,41 @@
+{
+ "type": "SPECIALIST_GREAT_SCIENTIST",
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_WORKER": {
+     "flat": 1
+    },
+    "UNITCOMBAT_SEA_WORKER": {
+     "flat": 1
+    },
+    "UNITCOMBAT_ENTERTAINER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/Great_Scientist.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/Great_Scientist.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_GREAT_SCIENTIST",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_RESEARCH"
+  ]
+ }
+}

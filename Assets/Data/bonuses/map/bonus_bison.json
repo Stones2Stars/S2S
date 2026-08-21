@@ -1,0 +1,82 @@
+{
+ "type": "BONUS_BISON",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_BISON",
+   "BUILDING_BREEDING_PROGRAM_BISON",
+   "BUILDING_BREEDING_PROGRAM_HIPPO",
+   "BUILDING_BREEDING_PROGRAM_MUSKOX",
+   "BUILDING_BUFFALO_JUMP",
+   "BUILDING_CAMP_BISON",
+   "BUILDING_CAMP_GIANT_BISON",
+   "BUILDING_CAMP_HIPPO",
+   "BUILDING_CAMP_MUSKOX",
+   "BUILDING_CARRION_GATHERER",
+   "BUILDING_CULTURE_BLACKFOOT",
+   "BUILDING_CULTURE_HELVETIAN",
+   "BUILDING_CULTURE_HERERO",
+   "BUILDING_CULTURE_POLISH",
+   "BUILDING_CULTURE_SIOUX",
+   "BUILDING_CULTURE_UKRAINIAN",
+   "BUILDING_HEDGEHOG_MUSHROOM_GATHERER",
+   "BUILDING_HOUSING_TIPIS",
+   "BUILDING_INVOCATION_HUT_BISON",
+   "BUILDING_RIDING_SCHOOL",
+   "BUILDING_SHAMANISTIC_TEMPLE_BISON"
+  ],
+  "units": [
+   "UNIT_BISON_RIDER",
+   "UNIT_NEANDERTHAL_SHEPHERD",
+   "UNIT_SHEPHERD",
+   "UNIT_TAMED_BISON",
+   "UNIT_TAMED_BUFFALO"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_BISON"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 6,
+  "constAppearance": 200,
+  "minAreaSize": 3,
+  "maxLatitude": 65,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "uniqueRange": 5,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS",
+   "TERRAIN_SCRUB",
+   "TERRAIN_LUSH"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_BISON",
+  "civilopedia": "TXT_KEY_BONUS_BISON_PEDIA",
+  "bonusClassType": "BONUSCLASS_LIVESTOCK",
+  "source": "natural"
+ }
+}

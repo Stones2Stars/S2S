@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_MOUNTAIN_CLIMBING_SITE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WEATHER_CONTROL"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ATHLETIC_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MOUNTAINEERING",
+    {
+     "type": "TERRAIN_PEAK",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_ATHLETIC_MEGACOMPLEX"
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": "TECH_TOURISM"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 368,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MOUNTAIN_CLIMBING_SITE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MOUNTAIN_CLIMBING_SITE",
+  "civilopedia": "TXT_KEY_BUILDING_MOUNTAIN_CLIMBING_SITE_PEDIA",
+  "militaryWorth": 1,
+  "conquestProbability": 30,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_HUMAN_MOD_ENLIGHTENED",
+ "enables": {
+  "buildings": [
+   "BUILDING_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS",
+   "BUILDING_HUMAN_MOD_INDEFINITE_LIFESPAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HUMAN_MOD_ENLIGHTENED"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HUMAN_MOD_ENLIGHTENED",
+  "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
+  "bonusClassType": "BONUSCLASS_GENMODS",
+  "source": "manufactured"
+ }
+}

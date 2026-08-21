@@ -1,0 +1,87 @@
+{
+ "type": "IMPROVEMENT_MUSHROOM_GATHERER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GATHERING",
+     "scope": "team"
+    },
+    {
+     "bonus": [
+      "BONUS_MUSHROOMS"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_AGRICULTURE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_FUNGICULTURE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MUSHROOMS"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_BARTER",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_TRADE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MUSHROOMS"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_MUSHROOM_GATHERING_CAMP"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_MUSHROOM_GATHERER",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_MUSHROOM_GATHERER_PEDIA",
+  "upgradeTime": 20,
+  "pillageGold": 7,
+  "upgradesTo": "IMPROVEMENT_VERTICAL_FARM",
+  "bonuses": {
+   "BONUS_MUSHROOMS": {
+    "trade": true
+   }
+  }
+ }
+}

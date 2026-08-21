@@ -1,0 +1,118 @@
+{
+ "type": "BUILDING_TREE_NURSERY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SENTIENT_EARTH"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AGROFOREST"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GUILDS",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_GRASSLAND",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_LUSH",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_PLAINS",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_ROCKY",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_BADLAND",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_JAGGED",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_DESERT",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_SCRUB",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_TAIGA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_TUNDRA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_MUDDY",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_MARSH",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_AGROFOREST"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 332,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TREE_NURSERY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TREE_NURSERY",
+  "civilopedia": "TXT_KEY_BUILDING_TREE_NURSERY_PEDIA",
+  "worth": 3,
+  "militaryWorth": 1,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

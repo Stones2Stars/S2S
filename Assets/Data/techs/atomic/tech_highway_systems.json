@@ -1,0 +1,76 @@
+{
+ "type": "TECH_HIGHWAY_SYSTEMS",
+ "enables": {
+  "buildings": [
+   "BUILDING_EXPRESSWAY",
+   "BUILDING_HIGHWAY",
+   "BUILDING_ROUTE_66",
+   "BUILDING_ROUTE_66_TERMINUS",
+   "BUILDING_SMALL_SUSPENSION_BRIDGE"
+  ],
+  "builds": [
+   "BUILD_HIGHWAY"
+  ],
+  "techs": [
+   "TECH_MANUFACTURING",
+   "TECH_TOURISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLASTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_APPLIED_ECONOMICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 11196
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/highwaysystem.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_HIGHWAY_SYSTEMS",
+  "soundMP": "AS2D_TECH_HIGHWAY_SYSTEMS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_HIGHWAY_SYSTEMS",
+  "civilopedia": "TXT_KEY_TECH_HIGHWAY_SYSTEMS_PEDIA",
+  "quote": "TXT_KEY_TECH_HIGHWAY_SYSTEMS_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 76,
+  "gridY": 7
+ }
+}

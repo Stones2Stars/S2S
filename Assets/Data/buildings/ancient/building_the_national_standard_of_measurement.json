@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_THE_NATIONAL_STANDARD_OF_MEASUREMENT",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    "TECH_STANDARDIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "food": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NATIONAL_STANDARD_OF_MEASUREMENT"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_THE_NATIONAL_STANDARD_OF_MEASUREMENT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_THE_NATIONAL_STANDARD_OF_MEASUREMENT",
+  "civilopedia": "TXT_KEY_BUILDING_THE_NATIONAL_STANDARD_OF_MEASUREMENT_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "notConstructible": true,
+  "worth": 10,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

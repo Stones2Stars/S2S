@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_DISEASE_COMMON_COLD",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SMART_DRUGS"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_DISEASE",
+     "scope": "city",
+     "min": 30,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -1,
+    {
+     "value": -5,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYDISEASE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISEASE_COMMON_COLD",
+  "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

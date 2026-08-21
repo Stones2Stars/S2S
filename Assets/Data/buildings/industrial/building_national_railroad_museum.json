@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_NATIONAL_RAILROAD_MUSEUM",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MUSEUM",
+    "TECH_RAILROAD",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 6,
+     "enabled": "TECH_MASS_TRANSIT"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_MAGNETIC_LEVITATION"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_SUPERSONIC_RAILS"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "cost": {
+  "production": 1310,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_RAILROAD_MUSEUM"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NATIONAL_RAILROAD_MUSEUM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_RAILROAD_MUSEUM",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_RAILROAD_MUSEUM_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,89 @@
+{
+ "type": "IMPROVEMENT_VILLAGE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CITY_PLANNING",
+     "scope": "team"
+    },
+    {
+     "natureYield": {
+      "food": 1
+     }
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_GRASSLAND",
+        "TERRAIN_PLAINS",
+        "TERRAIN_LUSH",
+        "TERRAIN_SCRUB",
+        "TERRAIN_MUDDY"
+       ]
+      },
+      "HAS_FRESHWATER"
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ENGINEERING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    9,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CIVIL_SERVICE",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "plot": {
+   "flat": 10
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_VILLAGE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_VILLAGE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_VILLAGE_PEDIA",
+  "advancedStart": {
+   "cost": -1
+  },
+  "upgradeTime": 30,
+  "pillageGold": 80,
+  "cultureRange": 0,
+  "pillageTo": "IMPROVEMENT_HAMLET",
+  "upgradesTo": "IMPROVEMENT_TOWN"
+ }
+}

@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_BELT_AND_ROAD_INITIATIVE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MEGACITIES",
+    {
+     "any": [
+      "BUILDING_INTERNATIONAL_PORT",
+      "BUILDING_OCEAN_ADMINISTRATION",
+      "BUILDING_HYBRID_AIRSHIP_PORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 60
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_INTERNATIONAL_PORT",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 15750,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ONE_BELT_ONE_ROAD"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BELT_AND_ROAD_INITIATIVE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BELT_AND_ROAD_INITIATIVE",
+  "civilopedia": "TXT_KEY_BUILDING_BELT_AND_ROAD_INITIATIVE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

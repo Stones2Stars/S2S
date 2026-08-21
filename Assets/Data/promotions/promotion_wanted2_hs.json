@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_WANTED2_HS",
+ "skills": {
+  "upgradeAnywhere": false,
+  "assassin": false,
+  "camouflage": true,
+  "disguised": true,
+  "political": true,
+  "navalDisguise": true,
+  "invisible": true
+ },
+ "hideAndSeek": {
+  "concealment": {
+   "flat": -500
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_WANTED_HS": 2
+ },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Wanted2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_WANTED2",
+  "help": "TXT_KEY_PROMOTION_WANTED_HELP",
+  "setOnInvestigated": true
+ }
+}

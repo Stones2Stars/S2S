@@ -1,0 +1,128 @@
+{
+ "type": "UNIT_FLORENCE_NIGHTINGALE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ENGLISH",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_MEDICINE"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_AMBULANCE"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 10
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 4
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_PEOPLE": {
+     "heal": 20
+    },
+    "UNITCOMBAT_HEALS_AS_ANIMALS": {
+     "heal": 10
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -20
+  },
+  "plot": {
+   "flat": -10
+  }
+ },
+ "skills": [
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_HERO",
+ "combatClasses": [
+  "UNITCOMBAT_HEALTH_CARE",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_HANDGUN",
+  "UNITCOMBAT_WEAPON_DIST_HANDGUN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EPIC",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_PEOPLE",
+  "UNITCOMBAT_HEALS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 3080,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FLORENCE_NIGHTINGALE",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_FLORENCE_NIGHTINGALE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_FLORENCE_NIGHTINGALE",
+  "civilopedia": "TXT_KEY_UNIT_FLORENCE_NIGHTINGALE_PEDIA",
+  "worth": 8,
+  "militaryWorth": 20,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_RESERVE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_RESERVE",
+   "UNITAI_HEALER",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": -1
+  }
+ }
+}

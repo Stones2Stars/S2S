@@ -1,0 +1,68 @@
+{
+ "type": "TECH_DRAMA",
+ "enables": {
+  "buildings": [
+   "BUILDING_COSTUME_SHOP",
+   "BUILDING_DRAMA_SCHOOL",
+   "BUILDING_THEATRE",
+   "BUILDING_THEATRE_OF_DIONYSUS"
+  ],
+  "techs": [
+   "TECH_MUSICAL_NOTATION",
+   "TECH_POETRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AESTHETICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "canSetCultureRate": true
+ },
+ "cost": {
+  "research": 824
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 10
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": ",Art/Interface/Buttons/TechTree/Drama.dds,Art/Interface/Buttons/TechTree_Atlas.dds,2,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_DRAMA",
+  "soundMP": "AS2D_TECH_MP_DRAMA"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_DRAMA",
+  "civilopedia": "TXT_KEY_TECH_DRAMA_PEDIA",
+  "quote": "TXT_KEY_TECH_DRAMA_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 39,
+  "gridY": 5
+ }
+}

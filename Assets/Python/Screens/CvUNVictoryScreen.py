@@ -5,7 +5,14 @@ import CvScreenEnums
 import math
 
 # globals
-gc = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
+INFO = CyInfo()
+gc = GC   # this module spells it lowercase
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 ArtFileMgr = CyArtFileMgr()
 localText = CyTranslator()
 
@@ -93,7 +100,7 @@ class CvUnVictoryScreen:
 		iCount = 0
 		leaderMap = { }
 		# Count all other leaders
-		for iPlayer in range(gc.getMAX_PLAYERS()):
+		for iPlayer in range(GC.getMAX_PLAYERS()):
 			player = gc.getPlayer(iPlayer)
 			if (player.isAlive() and iPlayer != self.iActiveLeader and not player.isNPC() and not player.isMinorCiv()):
 				leaderMap[iPlayer] = iCount
@@ -129,7 +136,7 @@ class CvUnVictoryScreen:
 			fY = int(fLeaderArcTop + fRadius * math.sin(deltaTheta * leaderMap[iPlayer]) - iLeaderHeight/2)
 
 			szLeaderHead = self.getNextWidgetName()
-			screen.addDDSGFC(szLeaderHead, gc.getLeaderHeadInfo(player.getLeaderType()).getButton(), int(fX), int(fY), iLeaderWidth, iLeaderHeight, WidgetTypes.WIDGET_GENERAL, -1, -1)
+			screen.addDDSGFC(szLeaderHead, INFO.getButton("LEADER_", player.getLeaderType()), int(fX), int(fY), iLeaderWidth, iLeaderHeight, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 			szName = self.getNextWidgetName()
 			szText = u"<font=3>" + player.getName() + u"</font>"

@@ -1,0 +1,148 @@
+{
+ "type": "BUILDING_WATCH_TOWER",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENGINEERING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GUARD_TOWER"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MATHEMATICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_GUARD_TOWER",
+    "BUILDING_KEEP_TOWER",
+    "BUILDING_BOMBARD_TOWER",
+    "BUILDING_ARTILLERY_BATTERY",
+    "BUILDING_AUTO_CANNON_BATTERY",
+    "BUILDING_MISSILE_BATTERY",
+    "BUILDING_RAILGUN_BATTERY",
+    "BUILDING_LASER_BATTERY",
+    "BUILDING_ANTI_MATTER_BATTERY"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 15
+   },
+   "bombardDefense": {
+    "percent": 5
+   },
+   "dynamicDefense": {
+    "percent": 15
+   },
+   "adjacentDamage": {
+    "percent": 15
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "vision": {
+  "city": {
+   "elevation": {
+    "flat": 200
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "cost": {
+  "production": 216,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WATCH_TOWER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CASTLE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WATCH_TOWER",
+  "civilopedia": "TXT_KEY_BUILDING_WATCH_TOWER_PEDIA",
+  "worth": 4,
+  "militaryWorth": 4,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -3
+  }
+ }
+}

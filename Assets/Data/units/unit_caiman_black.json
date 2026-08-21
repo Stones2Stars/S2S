@@ -1,0 +1,168 @@
+{
+ "type": "UNIT_CAIMAN_BLACK",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 40,
+   "title": "TXT_KEY_GROUPTITLE_LONE"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 4,
+   "title": "TXT_KEY_GROUPTITLE_BASK"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_CONGREGATION"
+  }
+ ],
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "targets": {
+    "UNITCOMBAT_ANIMAL_BIRD": true,
+    "UNITCOMBAT_MAMMAL_CERVID": true,
+    "UNITCOMBAT_MAMMAL_RODENT": true,
+    "UNITCOMBAT_MAMMAL_TAPIR": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 5
+  }
+ },
+ "skills": [
+  "assassin",
+  "blendIntoCity"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_REPTILE",
+  "UNITCOMBAT_REPTILE_CROCODILIAN",
+  "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+  "UNITCOMBAT_ANIMAL_COMBAT_HARD_PLATED",
+  "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
+  "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+  "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+  "UNITCOMBAT_ANIMAL_COMBAT_TAIL",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_CAIMAN",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 110,
+     "random": 110
+    },
+    "production": {
+     "base": 12,
+     "random": 11
+    },
+    "commerce": {
+     "base": 8,
+     "random": 8
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CAIMAN_BLACK",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_CAIMAN_BLACK"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_CAIMAN_BLACK",
+  "civilopedia": "TXT_KEY_UNIT_CAIMAN_BLACK_PEDIA",
+  "spawnOnly": true,
+  "xpValueAttack": 10,
+  "xpValueDefense": 6,
+  "aggression": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "featureImpassable": [
+   "FEATURE_FOREST",
+   "FEATURE_FOREST_ANCIENT",
+   "FEATURE_MANGROVE"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES",
+   "TERRAIN_HILL",
+   "TERRAIN_ICE",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_LAKE_SHORE",
+   "TERRAIN_JAGGED",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_SCRUB",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ],
+  "featurePassableTechs": [
+   {
+    "FEATURE_FLOOD_PLAINS": "NONE"
+   },
+   {
+    "FEATURE_SWAMP": "NONE"
+   }
+  ]
+ }
+}

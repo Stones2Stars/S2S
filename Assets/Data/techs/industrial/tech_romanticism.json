@@ -1,0 +1,64 @@
+{
+ "type": "TECH_ROMANTICISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_IMPERIAL_FORTRESS",
+   "BUILDING_NEUSCHWANSTEIN",
+   "BUILDING_WINTER_CHALET"
+  ],
+  "techs": [
+   "TECH_REALISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FREE_ARTISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INDUSTRIAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 5187
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 8
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/romanticism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ROMANTICISM",
+  "soundMP": "AS2D_TECH_ROMANTICISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ROMANTICISM",
+  "civilopedia": "TXT_KEY_TECH_ROMANTICISM_PEDIA",
+  "quote": "TXT_KEY_TECH_ROMANTICISM_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "gridX": 62,
+  "gridY": 17
+ }
+}

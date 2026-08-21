@@ -1,0 +1,49 @@
+{
+ "type": "PROMOTION_FUSION_SHELLS",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_RAD_SHELLS"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_TRACKED": {
+     "percent": 40
+    }
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 50
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/FussionShell.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FUSION_SHELLS",
+  "unitCombats": [
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_ASSAULT_MECH"
+  ]
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_MEDIAN",
+ "enables": {
+  "units": [
+   "UNIT_CYAXARES",
+   "UNIT_MEDE_RETINUES"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MEDIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MEDIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

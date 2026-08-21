@@ -1,0 +1,10 @@
+{
+  "type": "BUILDING_BROKEN_CONTAINERS",
+  "requires": {
+    "build": {
+      "any": "this-should-be-a-list-of-or-groups",
+      "noneOf": "this-should-be-an-array-too"
+    }
+  },
+  "food": { "city": { "flat": { "value": 1, "per": "per-should-be-an-object" } } }
+}

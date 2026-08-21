@@ -1,0 +1,127 @@
+{
+ "type": "BUILDING_LDS_MEETINGHOUSE",
+ "enables": {
+  "buildings": [
+   "BUILDING_LDS_MISSIONARY_TRAINING_CENTRE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PRIESTHOOD",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BOOKS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "RELIGION_MORMON",
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CEMENT",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_MORMON"
+     }
+    }
+   ]
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_MORMON": {
+    "flat": 2
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1
+  }
+ },
+ "cost": {
+  "production": 770,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LDS_MEETINGHOUSE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MORMON"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LDS_MEETINGHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_LDS_MEETINGHOUSE_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 4,
+  "specialBuildingType": "SPECIALBUILDING_TEMPLE",
+  "religion": "RELIGION_MORMON",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

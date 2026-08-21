@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_SYRIAN",
+ "enables": {
+  "units": [
+   "UNIT_SIAM_ELEPHANT"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SYRIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SYRIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

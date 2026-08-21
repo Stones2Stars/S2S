@@ -1,0 +1,334 @@
+{
+ "type": "HANDICAP_AI_BOOSTED",
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 160
+   },
+   "numCities": {
+    "percent": 140
+   },
+   "colony": {
+    "percent": 140
+   },
+   "corporation": {
+    "percent": 140
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "unit": {
+    "percent": 140,
+    "ai": {
+     "percent": 5
+    }
+   },
+   "civic": {
+    "percent": 140,
+    "ai": {
+     "percent": [
+      25,
+      {
+       "value": -5,
+       "per": "ERA"
+      },
+      5
+     ]
+    }
+   },
+   "inflation": {
+    "percent": 110,
+    "ai": {
+     "percent": [
+      30,
+      {
+       "value": -5,
+       "per": "ERA"
+      },
+      5
+     ]
+    }
+   },
+   "supply": {
+    "ai": {
+     "percent": [
+      5,
+      {
+       "value": -5,
+       "per": "ERA"
+      },
+      5
+     ]
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -2
+  }
+ },
+ "growth": {
+  "empire": {
+   "ai": {
+    "percent": [
+     50,
+     {
+      "value": -5,
+      "per": "ERA"
+     },
+     5
+    ]
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "train": {
+    "ai": {
+     "percent": [
+      44,
+      {
+       "value": -5,
+       "per": "ERA"
+      },
+      5
+     ]
+    }
+   },
+   "construct": {
+    "ai": {
+     "percent": [
+      30,
+      {
+       "value": -5,
+       "per": "ERA"
+      },
+      5
+     ]
+    }
+   },
+   "create": {
+    "ai": {
+     "percent": [
+      65,
+      {
+       "value": -5,
+       "per": "ERA"
+      },
+      5
+     ]
+    }
+   },
+   "research": {
+    "ai": {
+     "percent": [
+      79,
+      {
+       "value": -5,
+       "per": "ERA"
+      },
+      5
+     ]
+    }
+   },
+   "upgrade": {
+    "ai": {
+     "percent": [
+      5,
+      {
+       "value": -5,
+       "per": "ERA"
+      },
+      5
+     ]
+    }
+   }
+  },
+  "world": {
+   "train": {
+    "ai": {
+     "percent": 65
+    }
+   },
+   "construct": {
+    "ai": {
+     "percent": 65
+    }
+   },
+   "create": {
+    "ai": {
+     "percent": 65
+    }
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "ai": {
+    "percent": [
+     70,
+     {
+      "value": 5,
+      "per": "ERA"
+     },
+     -5
+    ]
+   }
+  }
+ },
+ "diplomacy": {
+  "team": {
+   "noTechTrade": {
+    "percent": -95
+   },
+   "techTradeKnown": {
+    "percent": 90
+   }
+  },
+  "empire": {
+   "declareWar": {
+    "ai": {
+     "percent": 100
+    }
+   },
+   "warWeariness": {
+    "ai": {
+     "percent": [
+      30,
+      {
+       "value": -5,
+       "per": "ERA"
+      },
+      5
+     ]
+    }
+   }
+  }
+ },
+ "combat": {
+  "world": {
+   "animal": {
+    "ai": {
+     "percent": -70
+    }
+   },
+   "subdueAnimal": {
+    "ai": {
+     "percent": 210
+    }
+   },
+   "barbarian": {
+    "ai": {
+     "percent": -70
+    }
+   }
+  }
+ },
+ "barbarians": {
+  "world": {
+   "animalAttackProb": {
+    "percent": 90
+   },
+   "waterTilesPerUnit": {
+    "flat": 30
+   },
+   "tilesPerCity": {
+    "flat": 10
+   },
+   "cityCreationTurns": {
+    "flat": 30
+   },
+   "cityCreationProb": {
+    "percent": 24
+   },
+   "defenders": {
+    "flat": 10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 6,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": -5,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "grants": {
+  "startingGold": 8,
+  "ai": {
+   "startingDefenseUnits": 7,
+   "startingExploreUnits": 6,
+   "startingWorkerUnits": 4
+  }
+ },
+ "ai": {
+  "unitUpkeepEraModifier": -5
+ },
+ "identity": {
+  "description": "TXT_KEY_HANDICAP_AI_BOOSTED",
+  "help": "TXT_KEY_HANDICAP_AI_BOOSTED_HELP",
+  "advancedStart": {
+   "pointsMod": 100,
+   "aiPercent": 240
+  },
+  "goodies": [
+   "GOODY_MAP",
+   "GOODY_MAP",
+   "GOODY_MAP",
+   "GOODY_MAP",
+   "GOODY_MAP",
+   "GOODY_MAP",
+   "GOODY_WISE_WOMAN",
+   "GOODY_MEDICINE_MAN",
+   "GOODY_EXPERIENCE",
+   "GOODY_LOW_ANCIENT_EXPERIENCE",
+   "GOODY_LOW_CLASSICAL_EXPERIENCE",
+   "GOODY_LOW_MEDIEVAL_EXPERIENCE",
+   "GOODY_LOW_RENAISSANCE_EXPERIENCE",
+   "GOODY_HIGH_PREHISTORIC_EXPERIENCE",
+   "GOODY_HIGH_ANCIENT_EXPERIENCE",
+   "GOODY_HIGH_CLASSICAL_EXPERIENCE",
+   "GOODY_HIGH_MEDIEVAL_EXPERIENCE",
+   "GOODY_HIGH_RENAISSANCE_EXPERIENCE",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_GOLD"
+  ]
+ }
+}

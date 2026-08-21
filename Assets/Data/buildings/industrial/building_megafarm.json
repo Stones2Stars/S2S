@@ -1,0 +1,111 @@
+{
+ "type": "BUILDING_MEGAFARM",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_AGRICULTURAL_ENGINEERING",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_GRASSLAND",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_LUSH",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_PLAINS",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_DESERT",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_SCRUB",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_TAIGA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_MUDDY",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_CORPORATE_OWNED"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 740,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MEGAFARM",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COMMUNITY_GARDEN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MEGAFARM",
+  "civilopedia": "TXT_KEY_BUILDING_MEGAFARM_PEDIA",
+  "worth": 3,
+  "militaryWorth": 1,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

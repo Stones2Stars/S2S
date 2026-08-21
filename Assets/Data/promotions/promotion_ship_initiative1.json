@@ -1,0 +1,44 @@
+{
+ "type": "PROMOTION_SHIP_INITIATIVE1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SHIP_INITIATIVE2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_SHIP_MORALE3",
+    "PROMOTION_SHIP_TACTICS1"
+   ]
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "heal": {
+  "unit": {
+   "sameTile": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SHIP_INITIATIVE": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/shipInitiative1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SHIP_INITIATIVE1"
+ }
+}

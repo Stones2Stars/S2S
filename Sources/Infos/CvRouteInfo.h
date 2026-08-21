@@ -1,74 +1,96 @@
 #pragma once
+#ifndef CV_JSON_ROUTE_INFO_H
+#define CV_JSON_ROUTE_INFO_H
 
-#ifndef CV_ROUTE_INFO_H
-#define CV_ROUTE_INFO_H
+//
+//	CvRouteInfo -- the ROUTE poco rebuilt to the exemplar surface (patterns.md § THE GETTER SETUP).
+//	Styled for the JSON anatomy (json.md §2): the route's OWN tile output (modifier.md §5 plot-substrate
+//	own-output) lives on the compiled modifier surface -- the point reads fetch the unconditioned plot flats;
+//	the improvement-keyed yield boosts (the governing-deliverer shape, modifier.md §4: the route governs the
+//	improvements it upgrades, {yield}.plot.improvements.{IMP}) and the tech-conditioned move deltas
+//	(movement.plot.flat, enabled:{tech}) are compiled keyed/conditioned entries -- entry-list reads by design.
+//	Base traversal cost is intrinsic self-data (identity.movementCost / flatMovementCost). The bonus
+//	prerequisites are the LOAD-reconstructed forward FKs (store-inverted onto the bonus's enables.routes /
+//	enables.routesAnd, un-inverted by CvReversePass). No legacy-mirror modifier member survives
+//	(docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
+//
 
-#include "CvInfoBase.h"
+#include "CvInfo.h"
+#include <map>
+#include "Defines/CvEnums.h"   // BonusTypes / NO_BONUS
+#include <vector>
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//
-//  class : CvRouteInfo
-//
-//  DESC:
-//
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class CvRouteInfo
-	: public CvInfoBase
-	, private bst::noncopyable
+class CvRouteInfo : public CvInfo
 {
-	//---------------------------PUBLIC INTERFACE---------------------------------
 public:
-
 	CvRouteInfo();
-	virtual ~CvRouteInfo();
 
-	int getAdvancedStartCost() const;
+	virtual void mapFrom(const picojson::value& entity);
 
-	int getValue() const;
-	int getMovementCost() const;
-	int getFlatMovementCost() const;
-	int getPrereqBonus() const;
+	// ======================= 1. SECTIONS -- whole typed objects =======================
+	virtual const CvEdges*     getEdges()     const { return &m_edges; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 
-	bool isSeaTunnel() const;
+	// ======================= 2. MODIFIER GROUPS -- point reads over the compiled sums ========================
+	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. Census
+	// participation: food/production/commerce plot flats -- the route's own tile output; the
+	// plot.improvements.{IMP} keyed rows and the tech-conditioned movement deltas stay entry-list reads.)
+	// <yield>.plot.improvements.{IMPROVEMENT_*}.flat -- the yield this route adds to ONE improvement.
+	// The governing-deliverer shape (modifier.md §4: a route upgrading improvements lives on the ROUTE,
+	// keyed by target), so it is read per improvement and NEVER folded scope-wide (§5). Materialized at
+	// mapFrom; 0 = none.
+	int getImprovementYield(int iImprovement, YieldTypes eYield) const
+	{
+		std::map<int, int>::const_iterator it =
+			m_improvementYield.find(iImprovement * NUM_YIELD_TYPES + (int)eYield);
+		return it != m_improvementYield.end() ? it->second : 0;
+	}
+	int getFlatYield(YieldTypes eYield, CvCascScope eScope) const
+	{ return flatWithFans(infoYieldFamily(eYield), CHANNEL_AMOUNT, eScope); }
 
-	// Arrays
-	int getYieldChange(int i) const;
-	int* getYieldChangeArray() const;
-	int getTechMovementChange(int i) const;
+	// ======================= 3. INTRINSIC -- bare typed reads (the census identity set) ======================
+	int getValue() const { return m_iValue; }                       // identity.value (route quality rank)
+	int getAdvancedStartCost() const { return m_iAdvancedStartCost; } // identity.advancedStart.cost
+	// The substrate's own base movement cost, served as the family it is authored in
+	// ([modifier.md] par.6: a plot substrate's base movement cost IS the `movement` family). x100 native like
+	// every compiled sum -- the reader reduces at its point of use (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
+	int getFlatMovement(MovementKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_MOVEMENT, eKind, eScope, CASC_UNIT_FLAT); }
+	bool isSeaTunnel() const { return m_bSeaTunnel; }               // identity.seaTunnel
+	int getZobristValue() const { return m_iZobristValue; }
 
-	int getCategory(int i) const;
-	int getNumCategories() const;
-	bool isCategory(int i) const;
+	// --- the LOAD-reconstructed bonus-prerequisite forward FKs (CvReversePass::
+	// rp_reconstructRouteBonusPrereqs: the single AND prereq from the bonus's enables.routesAnd, the OR-list
+	// from enables.routes -- the two buckets keep AND vs OR distinct, e.g. railroad needs steel-wares AND
+	// coal/oil). The writers are the reverse pass's load-window setters. ---
+	int getPrereqBonus() const { return m_ePrereqBonus; }
+	void setPrereqBonus(BonusTypes eBonus) { m_ePrereqBonus = eBonus; }
+	const std::vector<BonusTypes>& getPrereqOrBonuses() const { return m_aePrereqOrBonuses; }
+	void addPrereqOrBonus(BonusTypes eBonus) { m_aePrereqOrBonuses.push_back(eBonus); }
 
-	const std::vector<BonusTypes>& getPrereqOrBonuses() const;
-
+	// The KEEP-legacy property engine's per-turn SOURCES (property-audit.md). The gather roster walks
+	// a route, so the container must exist -- but NO route authors a PROPERTY_* family today, so it is
+	// accurately EMPTY rather than stubbed: it fills the moment such a deposit is curated.
 	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
-	//	This really belongs on CvInfoBase but you can't change the size of that
-	//	object without crashing the core engine :-(
-	inline int getZobristValue() const { return m_zobristValue; }
 
-	void getDataMembers(CvInfoUtil& util);
-	bool read(CvXMLLoadUtility* pXML);
-	void copyNonDefaults(const CvRouteInfo* pClassInfo);
-	void getCheckSum(uint32_t& iSum) const;
+protected:
+	virtual CvEdges*     mutEdges()     { return &m_edges; }
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
 
 private:
-	CvPropertyManipulators m_PropertyManipulators;
+	std::map<int, int> m_improvementYield;   // (improvement*NUM_YIELD+yield) -> flat, materialized at mapFrom
+	// --- the composed section units ---
+	CvEdges     m_edges;
+	CvModifiers m_modifiers;
 
-	int m_iAdvancedStartCost;
+	// --- the intrinsic identity members (materialized once at mapFrom; getters are bare reads) ---
 	int m_iValue;
-	int m_iMovementCost;
-	int m_iFlatMovementCost;
-	int m_iPrereqBonus;
-	int m_zobristValue;
-
+	int m_iAdvancedStartCost;
+	int m_iZobristValue;               // map-hash drawn from the synced RNG in the ctor (OOS-load-bearing)
 	bool m_bSeaTunnel;
-
-	// Arrays
-	int* m_piYieldChange;
-	int* m_piTechMovementChange;
-	std::vector<int> m_aiCategories;
-	std::vector<BonusTypes> m_piPrereqOrBonuses;
+	BonusTypes m_ePrereqBonus;                     // load-reconstructed single AND prereq (CvReversePass)
+	std::vector<BonusTypes> m_aePrereqOrBonuses;   // load-reconstructed OR-list (CvReversePass)
+	CvPropertyManipulators m_PropertyManipulators;   // fed from the PROPERTY_* families (CascadePropertyBridge)
 };
 
-#endif // CV_ROUTE_INFO_H
+#endif // CV_JSON_ROUTE_INFO_H

@@ -1,8 +1,15 @@
 from CvPythonExtensions import *
 import CvUtil
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
+STATE = CyState()
+ACT = CyAct()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
 
@@ -61,23 +68,23 @@ def doRemoveWVSlavery(argsList):
 			iCityY = city.getY()
 			# Remove the main slavery building
 			if city.hasBuilding(iWVSlavery):
-				city.changeHasBuilding(iWVSlavery, False)
+				ACT.setCityBuilding(city.getOwner(), city.getID(), iWVSlavery, False)
 
 			# Sell the Slave market if one exists
 			if city.hasBuilding(iSlaveMarket):
 
-				city.changeHasBuilding(iSlaveMarket, False)
+				ACT.setCityBuilding(city.getOwner(), city.getID(), iSlaveMarket, False)
 
 				iSum += iCost
 
 				if bMessage:
 					msg = TRNSLTR.getText("TXT_KEY_MSG_SLAVE_MARKET_SOLD", (sCityName,))
-					CvUtil.sendMessage(msg, iPlayer, 16, GC.getBuildingInfo(iSlaveMarket).getButton(), ColorTypes(8), iCityX, iCityY, True, True, 0, "AS2D_BUILD_BANK")
+					CvUtil.sendMessage(msg, iPlayer, 16, INFO.getButton("BUILDING_", iSlaveMarket), ColorTypes(8), iCityX, iCityY, True, True, 0, "AS2D_BUILD_BANK")
 
 			# Remove all other Slavery Buildings if they exist
 			for ibuilding in aiSlaveBuildings:
 				if city.hasBuilding(ibuilding):
-					city.changeHasBuilding(ibuilding, False)
+					ACT.setCityBuilding(city.getOwner(), city.getID(), ibuilding, False)
 
 			iFreeSlaves = 0
 			for i in xrange(GC.getNumSpecialistInfos()):
@@ -90,39 +97,39 @@ def doRemoveWVSlavery(argsList):
 
 					if i == iSlaveEntertain:
 						for j in xrange(iCount):
-							player.initUnit(iUnitEntertain, iCityX, iCityY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+							player.createUnit(iUnitEntertain, iCityX, iCityY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 						if bMessage:
-							msg = TRNSLTR.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, GC.getUnitInfo(iUnitEntertain).getDescription(), iCount))
+							msg = TRNSLTR.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, INFO.getDescription("UNIT_", iUnitEntertain), iCount))
 							CvUtil.sendMessage(msg, iPlayer, 12, 'Art/Interface/Buttons/Civics/Serfdom.dds', ColorTypes(44), iCityX, iCityY, True, True)
 
 					elif i == iSlaveProd:
 						for j in xrange(iCount):
-							player.initUnit(iUnitMerCaravan, iCityX, iCityY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+							player.createUnit(iUnitMerCaravan, iCityX, iCityY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 						if bMessage:
-							msg = TRNSLTR.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, GC.getUnitInfo(iUnitMerCaravan).getDescription(), iCount))
+							msg = TRNSLTR.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, INFO.getDescription("UNIT_", iUnitMerCaravan), iCount))
 							CvUtil.sendMessage(msg, iPlayer, 12, 'Art/Interface/Buttons/Civics/Serfdom.dds', ColorTypes(44), iCityX, iCityY, True, True)
 
 					elif i == iSlaveFood:
 						for j in xrange(iCount):
-							player.initUnit(iUnitMerCaravan, iCityX, iCityY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+							player.createUnit(iUnitMerCaravan, iCityX, iCityY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 						if bMessage:
-							msg = TRNSLTR.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, GC.getUnitInfo(iUnitMerCaravan).getDescription(), iCount))
+							msg = TRNSLTR.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, INFO.getDescription("UNIT_", iUnitMerCaravan), iCount))
 							CvUtil.sendMessage(msg, iPlayer, 12, 'Art/Interface/Buttons/Civics/Serfdom.dds', ColorTypes(44), iCityX, iCityY, True, True)
 
 					elif i == iSlaveHealth:
 						for j in xrange(iCount):
-							player.initUnit(iUnitHealth, iCityX, iCityY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+							player.createUnit(iUnitHealth, iCityX, iCityY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 						if bMessage:
-							msg = TRNSLTR.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, GC.getUnitInfo(iUnitHealth).getDescription(), iCount))
+							msg = TRNSLTR.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, INFO.getDescription("UNIT_", iUnitHealth), iCount))
 							CvUtil.sendMessage(msg, iPlayer, 16, 'Art/Interface/Buttons/Civics/Serfdom.dds', ColorTypes(44), iCityX, iCityY, True, True)
 
 					else: iFreeSlaves += iCount
 
 			if iFreeSlaves > 0:
 				for j in xrange(iFreeSlaves):
-					player.initUnit(iUnitFreedSlave, iCityX, iCityY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+					player.createUnit(iUnitFreedSlave, iCityX, iCityY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 				if bMessage:
-					msg = TRNSLTR.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, GC.getUnitInfo(iUnitFreedSlave).getDescription(), iFreeSlaves))
+					msg = TRNSLTR.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, INFO.getDescription("UNIT_", iUnitFreedSlave), iFreeSlaves))
 					CvUtil.sendMessage(msg, iPlayer, 16, 'Art/Interface/Buttons/Civics/Serfdom.dds', ColorTypes(44), iCityX, iCityY, True, True)
 
 		if iSum > 0:
@@ -145,9 +152,9 @@ def doRemoveWVCannibalism(argsList):
 		else:
 			iType0 = GC.getInfoTypeForString("BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE")
 			for CyCity in CyPlayer.cities():
-				CyCity.changeHasBuilding(iType, False)
+				ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iType, False)
 				if iType0 > -1:
-					CyCity.changeHasBuilding(iType0, False)
+					ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iType0, False)
 
 			if iPlayer == GC.getGame().getActivePlayer():
 				CvUtil.sendImmediateMessage(TRNSLTR.getText("TXT_KEY_MSG_NO_CANNIBALISM", ()))
@@ -168,17 +175,17 @@ def doRemoveWVHumanSacrifice(argsList):
 		for CyCity in CyPlayer.cities():
 			# Remove the main worldview building
 			if CyCity.hasBuilding(iWVSacrifice):
-				CyCity.changeHasBuilding(iWVSacrifice, False)
+				ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iWVSacrifice, False)
 				CyAudioGame().Play2DSound("AS2D_DISCOVERBONUS")
 
 				CyInterface().addMessage(CyPlayer.getID(),False,25,TRNSLTR.getText("TXT_KEY_MSG_NO_HUMAN_SACRIFICE",(CyCity.getName(),)),"AS2D_BUILD_BANK",InterfaceMessageTypes.MESSAGE_TYPE_INFO,CyUnit.getButton(),ColorTypes(8),CyCity.getX(),CyCity.getY(),True,True)
 
 			# Remove the worldview token building
-			CyCity.changeHasBuilding(iToken, False)
+			ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iToken, False)
 
 			# Remove the human sacrifice altar
 			if CyCity.hasBuilding(iAltar):
-				CyCity.changeHasBuilding(iAltar, False)
+				ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iAltar, False)
 
 def getNumNonSpecialistSlaves(argsList):
 	# Returns the number of non specialist slave specialists more than the number of specialist slave specialists
@@ -468,7 +475,7 @@ def canBuildCowBonus(argsList):
 	# Check if plot has a city or any map bonus.
 	if not pPlot.isFlatlands() or pPlot.isCity() or pPlot.getBonusType(-1) > -1: return 0
 	# Check if Feature or Terrain makes invalid.
-	if pPlot.getFeatureType() not in (GC.getFEATURE_FLOOD_PLAINS(), GC.getInfoTypeForString("FEATURE_SAVANNA"), -1): return 0
+	if pPlot.getFeatureType() not in (GC.getInfoTypeForString("FEATURE_FLOOD_PLAINS"), GC.getInfoTypeForString("FEATURE_SAVANNA"), -1): return 0
 	if pPlot.getTerrainType() not in (GC.getInfoTypeForString("TERRAIN_GRASSLAND"), GC.getInfoTypeForString("TERRAIN_PLAINS")): return 0
 	return 1
 
@@ -492,7 +499,7 @@ def canBuildCowBonusAndPasture(argsList):
 	# Check if Feature or Terrain makes invalid.
 	if pPlot.getFeatureType() in (GC.getInfoTypeForString("FEATURE_SWAMP"), GC.getInfoTypeForString("FEATURE_PEAT_BOG")): return 0
 	if pPlot.getTerrainType() in (
-		GC.getInfoTypeForString("TERRAIN_SALT_FLATS"),	GC.getInfoTypeForString("TERRAIN_DUNES"),		GC.getTERRAIN_DESERT(),
+		GC.getInfoTypeForString("TERRAIN_SALT_FLATS"),	GC.getInfoTypeForString("TERRAIN_DUNES"),		GC.getInfoTypeForString("TERRAIN_DESERT"),
 		GC.getInfoTypeForString("TERRAIN_TAIGA"),		GC.getInfoTypeForString("TERRAIN_ICE"),			GC.getInfoTypeForString("TERRAIN_TUNDRA"),
 		GC.getInfoTypeForString("TERRAIN_PERMAFROST"),	GC.getInfoTypeForString("TERRAIN_JAGGED"),	GC.getInfoTypeForString("TERRAIN_BADLAND"),
 		GC.getInfoTypeForString("TERRAIN_BARREN"), 		GC.getInfoTypeForString("TERRAIN_MARSH")
@@ -516,7 +523,7 @@ def canBuildHorseBonus(argsList):
 	# Check if plot has a city or any map bonus.
 	if not pPlot.isFlatlands() or pPlot.isCity() or pPlot.getBonusType(-1) > -1: return 0
 	# Check if Feature or Terrain makes invalid.
-	if pPlot.getFeatureType() not in (GC.getFEATURE_FLOOD_PLAINS(), GC.getInfoTypeForString("FEATURE_SAVANNA"), -1): return 0
+	if pPlot.getFeatureType() not in (GC.getInfoTypeForString("FEATURE_FLOOD_PLAINS"), GC.getInfoTypeForString("FEATURE_SAVANNA"), -1): return 0
 	if pPlot.getTerrainType() not in (GC.getInfoTypeForString("TERRAIN_GRASSLAND"), GC.getInfoTypeForString("TERRAIN_PLAINS")): return 0
 	return 1
 
@@ -540,7 +547,7 @@ def canBuildHorseBonusAndPasture(argsList):
 	# Check if Feature or Terrain makes invalid.
 	if pPlot.getFeatureType() in (GC.getInfoTypeForString("FEATURE_SWAMP"), GC.getInfoTypeForString("FEATURE_PEAT_BOG")): return 0
 	if pPlot.getTerrainType() in (
-		GC.getInfoTypeForString("TERRAIN_SALT_FLATS"),	GC.getInfoTypeForString("TERRAIN_DUNES"),	GC.getTERRAIN_DESERT(),
+		GC.getInfoTypeForString("TERRAIN_SALT_FLATS"),	GC.getInfoTypeForString("TERRAIN_DUNES"),	GC.getInfoTypeForString("TERRAIN_DESERT"),
 		GC.getInfoTypeForString("TERRAIN_TAIGA"),		GC.getInfoTypeForString("TERRAIN_ICE"),		GC.getInfoTypeForString("TERRAIN_TUNDRA"),
 		GC.getInfoTypeForString("TERRAIN_PERMAFROST"),	GC.getInfoTypeForString("TERRAIN_JAGGED"),	GC.getInfoTypeForString("TERRAIN_BADLAND"),
 		GC.getInfoTypeForString("TERRAIN_BARREN"), 		GC.getInfoTypeForString("TERRAIN_MARSH")
@@ -565,7 +572,7 @@ def canBuildDonkeyBonus(argsList):
 	# Check if plot has a city or any map bonus.
 	if pPlot.isCity() or pPlot.getBonusType(-1) > -1: return 0
 	# Check if Feature or Terrain makes invalid.
-	if pPlot.getFeatureType() not in (GC.getFEATURE_FLOOD_PLAINS(), GC.getInfoTypeForString("FEATURE_SAVANNA"), -1): return 0
+	if pPlot.getFeatureType() not in (GC.getInfoTypeForString("FEATURE_FLOOD_PLAINS"), GC.getInfoTypeForString("FEATURE_SAVANNA"), -1): return 0
 	if pPlot.getTerrainType() not in (GC.getInfoTypeForString("TERRAIN_GRASSLAND"), GC.getInfoTypeForString("TERRAIN_PLAINS"), GC.getInfoTypeForString("TERRAIN_SCRUB")): return 0
 	return 1
 
@@ -589,7 +596,7 @@ def canBuildDonkeyBonusAndPasture(argsList):
 	# Check if Feature or Terrain makes invalid.
 	if pPlot.getFeatureType() in (GC.getInfoTypeForString("FEATURE_SWAMP"), GC.getInfoTypeForString("FEATURE_PEAT_BOG")): return 0
 	if pPlot.getTerrainType() in (
-		GC.getInfoTypeForString("TERRAIN_SALT_FLATS"),	GC.getInfoTypeForString("TERRAIN_DUNES"),	GC.getTERRAIN_DESERT(),
+		GC.getInfoTypeForString("TERRAIN_SALT_FLATS"),	GC.getInfoTypeForString("TERRAIN_DUNES"),	GC.getInfoTypeForString("TERRAIN_DESERT"),
 		GC.getInfoTypeForString("TERRAIN_TAIGA"),		GC.getInfoTypeForString("TERRAIN_ICE"),		GC.getInfoTypeForString("TERRAIN_TUNDRA"),
 		GC.getInfoTypeForString("TERRAIN_PERMAFROST"),	GC.getInfoTypeForString("TERRAIN_JAGGED"),	GC.getInfoTypeForString("TERRAIN_BADLAND"),
 		GC.getInfoTypeForString("TERRAIN_BARREN"), 		GC.getInfoTypeForString("TERRAIN_MARSH")
@@ -614,7 +621,7 @@ def canBuildSheepBonus(argsList):
 	# Check if plot has a city or any map bonus.
 	if not pPlot.isHills() or pPlot.isCity() or pPlot.getBonusType(-1) > -1: return 0
 	# Check if Feature or Terrain makes invalid.
-	if pPlot.getFeatureType() not in (GC.getFEATURE_FLOOD_PLAINS(), GC.getInfoTypeForString("FEATURE_SAVANNA"), -1): return 0
+	if pPlot.getFeatureType() not in (GC.getInfoTypeForString("FEATURE_FLOOD_PLAINS"), GC.getInfoTypeForString("FEATURE_SAVANNA"), -1): return 0
 	if pPlot.getTerrainType() not in (GC.getInfoTypeForString("TERRAIN_GRASSLAND"), GC.getInfoTypeForString("TERRAIN_PLAINS")): return 0
 	return 1
 
@@ -638,7 +645,7 @@ def canBuildSheepBonusAndPasture(argsList):
 	# Check if Feature or Terrain makes invalid.
 	if pPlot.getFeatureType() in (GC.getInfoTypeForString("FEATURE_SWAMP"), GC.getInfoTypeForString("FEATURE_PEAT_BOG")): return 0
 	if pPlot.getTerrainType() in (
-		GC.getInfoTypeForString("TERRAIN_SALT_FLATS"),	GC.getInfoTypeForString("TERRAIN_DUNES"),		GC.getTERRAIN_DESERT(),
+		GC.getInfoTypeForString("TERRAIN_SALT_FLATS"),	GC.getInfoTypeForString("TERRAIN_DUNES"),		GC.getInfoTypeForString("TERRAIN_DESERT"),
 		GC.getInfoTypeForString("TERRAIN_TAIGA"),		GC.getInfoTypeForString("TERRAIN_ICE"),			GC.getInfoTypeForString("TERRAIN_TUNDRA"),
 		GC.getInfoTypeForString("TERRAIN_PERMAFROST"),	GC.getInfoTypeForString("TERRAIN_JAGGED"),	GC.getInfoTypeForString("TERRAIN_BADLAND"),
 		GC.getInfoTypeForString("TERRAIN_BARREN"), 		GC.getInfoTypeForString("TERRAIN_MARSH")
@@ -663,7 +670,7 @@ def canBuildCamelBonus(argsList):
 	# Check if plot has a city or any map bonus.
 	if pPlot.isCity() or pPlot.getBonusType(-1) > -1: return 0
 	# Check if Feature or Terrain makes invalid.
-	if pPlot.getTerrainType() not in (GC.getInfoTypeForString("TERRAIN_DUNES"), GC.getTERRAIN_DESERT(), GC.getInfoTypeForString("TERRAIN_SCRUB")): return 0
+	if pPlot.getTerrainType() not in (GC.getInfoTypeForString("TERRAIN_DUNES"), GC.getInfoTypeForString("TERRAIN_DESERT"), GC.getInfoTypeForString("TERRAIN_SCRUB")): return 0
 	return 1
 
 def doBuildCamelBonus(argsList):
@@ -684,7 +691,7 @@ def canBuildCamelBonusAndPasture(argsList):
 	# Check if plot has a city or any map bonus.
 	if pPlot.isCity() or pPlot.getBonusType(-1) > -1: return 0
 	# Check if Feature or Terrain makes invalid.
-	if pPlot.getTerrainType() not in (GC.getInfoTypeForString("TERRAIN_DUNES"), GC.getTERRAIN_DESERT(), GC.getInfoTypeForString("TERRAIN_SCRUB")): return 0
+	if pPlot.getTerrainType() not in (GC.getInfoTypeForString("TERRAIN_DUNES"), GC.getInfoTypeForString("TERRAIN_DESERT"), GC.getInfoTypeForString("TERRAIN_SCRUB")): return 0
 	return 1
 
 def doBuildCamelBonusAndPasture(argsList):
@@ -706,7 +713,7 @@ def canBuildLlamaBonus(argsList):
 	if pPlot.isCity() or pPlot.getBonusType(-1) > -1: return 0
 	# Check if Feature or Terrain makes invalid.
 	if pPlot.getTerrainType() not in (
-		GC.getInfoTypeForString("TERRAIN_BARREN"),	GC.getTERRAIN_DESERT(),	GC.getInfoTypeForString("TERRAIN_SCRUB"),
+		GC.getInfoTypeForString("TERRAIN_BARREN"),	GC.getInfoTypeForString("TERRAIN_DESERT"),	GC.getInfoTypeForString("TERRAIN_SCRUB"),
 		GC.getInfoTypeForString("TERRAIN_ROCKEY"),	GC.getInfoTypeForString("TERRAIN_BADLAND")
 		): return 0
 	return 1
@@ -730,7 +737,7 @@ def canBuildLlamaBonusAndPasture(argsList):
 	if pPlot.isCity() or pPlot.getBonusType(-1) > -1: return 0
 	# Check if Feature or Terrain makes invalid.
 	if pPlot.getTerrainType() not in (
-		GC.getInfoTypeForString("TERRAIN_BARREN"),	GC.getTERRAIN_DESERT(),	GC.getInfoTypeForString("TERRAIN_SCRUB"),
+		GC.getInfoTypeForString("TERRAIN_BARREN"),	GC.getInfoTypeForString("TERRAIN_DESERT"),	GC.getInfoTypeForString("TERRAIN_SCRUB"),
 		GC.getInfoTypeForString("TERRAIN_ROCKEY"),	GC.getInfoTypeForString("TERRAIN_BADLAND")
 		): return 0
 	return 1
@@ -754,8 +761,8 @@ def canBuildPigBonus(argsList):
 	if pPlot.isCity() or pPlot.getBonusType(-1) > -1: return 0
 	# Check if Feature or Terrain makes invalid.
 	if pPlot.getFeatureType() not in (
-		GC.getFEATURE_FOREST(), GC.getInfoTypeForString("FEATURE_FOREST_ANCIENT"),
-		GC.getFEATURE_JUNGLE(), GC.getFEATURE_FLOOD_PLAINS()
+		GC.getInfoTypeForString("FEATURE_FOREST"), GC.getInfoTypeForString("FEATURE_FOREST_ANCIENT"),
+		GC.getInfoTypeForString("FEATURE_JUNGLE"), GC.getInfoTypeForString("FEATURE_FLOOD_PLAINS")
 		): return 0
 	if pPlot.getTerrainType() not in (
 		GC.getInfoTypeForString("TERRAIN_SCRUB"), GC.getInfoTypeForString("TERRAIN_GRASSLAND"), GC.getInfoTypeForString("TERRAIN_PLAINS"),

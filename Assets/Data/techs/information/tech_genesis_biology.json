@@ -1,0 +1,72 @@
+{
+ "type": "TECH_GENESIS_BIOLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOMORPHICS_LAB",
+   "BUILDING_GENETICA_APPAREL_SHOP",
+   "BUILDING_GENETICA_SALON",
+   "BUILDING_SPECIES_RECOVERY_CENTER"
+  ],
+  "techs": [
+   "TECH_GENE_ENHANCEMENT",
+   "TECH_LIQUID_METALS",
+   "TECH_NANOTECH_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AFFECTIVE_ALGORITHMS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BACTERIUM_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 29220
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Gbiology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENESIS_BIOLOGY",
+  "soundMP": "AS2D_TECH_GENESIS_BIOLOGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_GENESIS_BIOLOGY",
+  "civilopedia": "TXT_KEY_TECH_GENESIS_BIOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_GENESIS_BIOLOGY_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 98,
+  "gridY": 1
+ }
+}

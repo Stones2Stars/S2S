@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_TENGRI_SONG",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SHAMANS_YURTA",
+    {
+     "type": "BUILDING_EJE_SONG",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    {
+     "STATE_RELIGION": "RELIGION_TENGRIISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_TENGRIISM"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2,
+   "percent": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_TENGRIISM"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 2
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_WIND_HORSE2"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 98,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TENGRI_SONG",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SIBERIAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TENGRI_SONG",
+  "civilopedia": "TXT_KEY_BUILDING_TENGRI_SONG_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 6,
+  "religion": "RELIGION_TENGRIISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

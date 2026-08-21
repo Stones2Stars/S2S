@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_INTERPLANETARY_RAIL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_MARTIAN_ARCOLOGY",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_FEMTOTECHNOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MARTIAN_MAGLEV_TERMINAL": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 28310
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_INTERPLANETARY_RAIL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERPLANETARY_RAIL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERPLANETARY_RAIL",
+  "civilopedia": "TXT_KEY_BUILDING_INTERPLANETARY_RAIL_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

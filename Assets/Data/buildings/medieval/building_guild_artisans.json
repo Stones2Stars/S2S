@@ -1,0 +1,108 @@
+{
+ "type": "BUILDING_GUILD_ARTISANS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_APPLIED_ECONOMICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_INVENTION",
+    "TECH_GUILDS",
+    {
+     "any": [
+      "BUILDING_CRAFTS_HUT",
+      "BUILDING_MALL",
+      "BUILDING_HYPERMARKET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CRAFTS_HUT": {
+     "flat": 5
+    },
+    "BUILDING_MALL": {
+     "flat": 5
+    },
+    "BUILDING_HYPERMARKET": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 688,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GUILD_CRAFTS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GUILD_ARTISANS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GUILD_ARTISANS",
+  "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "specialBuildingType": "SPECIALBUILDING_GUILD",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

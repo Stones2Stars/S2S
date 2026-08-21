@@ -1,0 +1,78 @@
+{
+ "type": "TECH_AXE_MAKING",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_IROQUOIS",
+   "BUILDING_CULTURE_LIANGZHU",
+   "BUILDING_CULTURE_SIOUX",
+   "BUILDING_LL_CACTUS_HILL"
+  ],
+  "promotions": [
+   "PROMOTION_FOREST_WORKER1"
+  ],
+  "techs": [
+   "TECH_OBSIDIAN_WEAPONS",
+   "TECH_WOODWORKING"
+  ],
+  "units": [
+   "UNIT_JADE_AXEMAN",
+   "UNIT_NATIVE_AMERICA_DOG_SOLDIER",
+   "UNIT_NEANDERTHAL_STONE_AGE_AXEMAN",
+   "UNIT_STONE_AXEMAN",
+   "UNIT_TOMAHAWK_THROWER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMPOSITE_TOOLS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MICROLITH",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SIMPLE_WOOD_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 20
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/axemaking.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_AXE_MAKING",
+  "soundMP": "AS2D_TECH_AXE_MAKING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_AXE_MAKING",
+  "civilopedia": "TXT_KEY_TECH_AXE_MAKING_PEDIA",
+  "quote": "TXT_KEY_TECH_AXE_MAKING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 10,
+  "gridY": 9
+ }
+}

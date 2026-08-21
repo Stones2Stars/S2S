@@ -1,0 +1,79 @@
+{
+ "type": "TECH_LEVITATION",
+ "enables": {
+  "bonuses": [
+   "BONUS_LEVITATION_GENERATORS"
+  ],
+  "buildings": [
+   "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP",
+   "BUILDING_FACTORY_LEVITATION_GENERATORS",
+   "BUILDING_NEUROINDUCTION_FIELD"
+  ],
+  "civics": [
+   "CIVIC_OFF_PLANET_DUMPING"
+  ],
+  "techs": [
+   "TECH_UNIFICATION_PHYSICS"
+  ],
+  "units": [
+   "UNIT_FUTURE_ARMOR",
+   "UNIT_LEVITATION_ARTILLERY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_QUANTUM_COMPUTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SKYROADS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 47795
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Antigrav.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_LEVITATION",
+  "soundMP": "AS2D_TECH_LEVITATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_LEVITATION",
+  "civilopedia": "TXT_KEY_TECH_LEVITATION_PEDIA",
+  "quote": "TXT_KEY_TECH_LEVITATION_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 108,
+  "gridY": 3
+ }
+}

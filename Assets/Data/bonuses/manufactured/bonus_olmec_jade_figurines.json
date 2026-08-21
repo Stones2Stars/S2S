@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_OLMEC_JADE_FIGURINES",
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_OLMEC_JADE_FIGURINES"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_OLMEC_JADE_FIGURINES",
+  "civilopedia": "TXT_KEY_BONUS_OLMEC_JADE_FIGURINES_PEDIA",
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
+ }
+}

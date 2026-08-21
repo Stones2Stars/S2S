@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_LUNAR_SOIL_GENERATOR",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUNAR_SEA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LUNAR_ALGAE_FARM",
+    "TECH_PARATERRAFORMING",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 2982,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUNAR_SOIL_GENERATOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_SOIL_GENERATOR",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_SOIL_GENERATOR_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

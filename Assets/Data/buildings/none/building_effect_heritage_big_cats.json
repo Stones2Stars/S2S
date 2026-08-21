@@ -1,0 +1,43 @@
+{
+ "type": "BUILDING_EFFECT_HERITAGE_BIG_CATS",
+ "enables": {
+  "buildings": [
+   "BUILDING_MILITARY_STANDARD_BIG_CATS",
+   "BUILDING_POLICE_CAT_TRAINER"
+  ],
+  "units": [
+   "UNIT_FELINE_SUPERIOR",
+   "UNIT_GUARDCAT",
+   "UNIT_POLICE_CAT",
+   "UNIT_TRAINEDCAT",
+   "UNIT_WARCAT"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_MEGAFAUNA_DOMESTICATION"
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_HERITAGE_BIG_CATS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_BIG_CATS",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BIG_CAT_PEDIA",
+  "notConstructible": true,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

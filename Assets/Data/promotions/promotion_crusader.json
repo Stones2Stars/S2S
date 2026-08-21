@@ -1,0 +1,51 @@
+{
+ "type": "PROMOTION_CRUSADER",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LEADER"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 25
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 20
+   }
+  }
+ },
+ "pillage": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "skills": {
+  "enemyRoute": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Christianity_promo.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CRUSADER",
+  "stateReligionPrereq": "RELIGION_CHRISTIANITY",
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_THROWING"
+  ]
+ }
+}

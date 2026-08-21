@@ -1,0 +1,34 @@
+{
+ "type": "BONUS_TAR",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASPHALT_ROADS",
+   "BUILDING_EXPRESSWAY",
+   "BUILDING_GRAND_FIRE_FESTIVAL",
+   "BUILDING_HIGHWAY",
+   "BUILDING_KEROSENE_DISTILLERY",
+   "BUILDING_PARKING_LOT",
+   "BUILDING_ROUTE_66",
+   "BUILDING_TAR_REFINERY"
+  ],
+  "units": [
+   "UNIT_AKAVAI",
+   "UNIT_ANCIENT_FLAMETHROWER",
+   "UNIT_ARSONIST",
+   "UNIT_CARTWRIGHT",
+   "UNIT_PEN_HUO_QI",
+   "UNIT_POST_APOCALYPTIC_GRENADIER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TAR"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TAR",
+  "civilopedia": "TXT_KEY_BONUS_TAR_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

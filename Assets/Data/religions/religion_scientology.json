@@ -1,0 +1,96 @@
+{
+ "type": "RELIGION_SCIENTOLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_SCIENTOLOGY_CATHEDRAL",
+   "BUILDING_SCIENTOLOGY_MONASTERY",
+   "BUILDING_SCIENTOLOGY_TEMPLE"
+  ],
+  "units": [
+   "UNIT_SCIENTOLOGY_MISSIONARY"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_SCIENTOLOGY"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_SCIENTOLOGY"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_SCIENTOLOGY"
+     }
+    }
+   ]
+  }
+ },
+ "grants": {
+  "freeUnit": "UNIT_SCIENTOLOGY_MISSIONARY",
+  "numFreeUnits": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 7
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 28,
+   "icon": "Art/Interface/Buttons/Religions/Martianism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_scientology.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Martianism.dds",
+   "movie": {
+    "file": "Art/Cutscene/Scientology_Generic_Found.nif",
+    "sound": "AS2D_BUILD_NORDDIC_MOVIE"
+   }
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_ZORO"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SCIENTOLOGY",
+  "adjective": "TXT_KEY_TECH_SCIENTOLOGY_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_SCIENTOLOGY_PEDIA",
+  "spreadFactor": 5
+ }
+}

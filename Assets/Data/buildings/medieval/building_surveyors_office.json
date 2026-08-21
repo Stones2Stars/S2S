@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_SURVEYORS_OFFICE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SATELLITES"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CONSTRUCTION_FIRM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SURVEYING",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT",
+      "BUILDING_MODERN_OFFICES"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_CONSTRUCTION_FIRM"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 15
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": -15,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "production": 310,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SURVEYORS_OFFICE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SURVEYORS_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_SURVEYORS_OFFICE_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

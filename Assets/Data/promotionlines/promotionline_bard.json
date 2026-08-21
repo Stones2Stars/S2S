@@ -1,0 +1,19 @@
+{
+ "type": "PROMOTIONLINE_BARD",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Bard1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BARD",
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_GUN"
+  ]
+ }
+}

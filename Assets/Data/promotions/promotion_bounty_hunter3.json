@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_BOUNTY_HUNTER3",
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 3
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BOUNTY_HUNTER": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/BountyHunter3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "cargo": {
+   "smSpace": 27
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BOUNTY_HUNTER3"
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "type": "BONUS_MEDICAL_TRICORDERS",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUTODOCTOR"
+  ]
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MEDICAL_TRICORDERS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MEDICAL_TRICORDERS",
+  "civilopedia": "TXT_KEY_BONUS_MEDICAL_TRICORDERS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

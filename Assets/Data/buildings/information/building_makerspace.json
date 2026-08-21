@@ -1,0 +1,92 @@
+{
+ "type": "BUILDING_MAKERSPACE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ROBOTICS_LAB",
+    "TECH_3D_PRINTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 8,
+     "enabled": "TECH_RAPID_PROTOTYPING"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 9,
+     "enabled": "TECH_MESH_NETWORKS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_DIRECT_MERCHANDISING"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_REPLICATORS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 2205,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MAKERSPACE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MAKERSPACE",
+  "civilopedia": "TXT_KEY_BUILDING_MAKERSPACE_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

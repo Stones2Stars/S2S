@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_LIFE_HYDROGEN_PEROXIDE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_HYPOTHETICAL_BIOCHEMISTRY",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_TERRAFORMED_MARS": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 4733,
+  "hurryModifier": 10000
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LIFE_HYDROGEN_PEROXIDE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_HYDROGEN_PEROXIDE",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_HYDROGEN_PEROXIDE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

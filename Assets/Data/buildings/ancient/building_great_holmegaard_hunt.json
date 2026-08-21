@@ -1,0 +1,113 @@
+{
+ "type": "BUILDING_GREAT_HOLMEGAARD_HUNT",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RIFLING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ARCHERY",
+    {
+     "any": [
+      "BUILDING_FLETCHERS_HUT",
+      "BUILDING_EFFECT_TRADITION_ARCHERY",
+      "BUILDING_HUNTING_INSTRUCTIONS",
+      "BUILDING_MASTER_HUNTER_TRADITION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BONE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "food": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_HUNTER1",
+       "enabled": "IS_RECON"
+      },
+      "PROMOTION_HUNTER2"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 236,
+  "sizeModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_HHUNTINGBOW"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GREAT_HOLMEGAARD_HUNT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GREAT_HOLMEGAARD_HUNT",
+  "civilopedia": "TXT_KEY_BUILDING_GREAT_HOLMEGAARD_HUNT_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,80 @@
+{
+ "type": "TECH_SATELLITES",
+ "enables": {
+  "buildings": [
+   "BUILDING_DARPA",
+   "BUILDING_MILITARY_SATELLITES",
+   "BUILDING_MODERN_CARTOGRAPHER",
+   "BUILDING_PROJECT_MERCURY",
+   "BUILDING_WEMBLEY_STADIUM"
+  ],
+  "promotions": [
+   "PROMOTION_URBAN_TACTICS1"
+  ],
+  "techs": [
+   "TECH_ASTRONAUTICS",
+   "TECH_CLIMATE_MODELS"
+  ],
+  "units": [
+   "UNIT_LOE_REWARD",
+   "UNIT_SATELLITE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SOLAR_POWER",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADVANCED_ROCKETRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "hasWholeMapRevealed": true
+ },
+ "cost": {
+  "research": 13724
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Satellites.dds,Art/Interface/Buttons/TechTree_Atlas.dds,7,7"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SATELLITES",
+  "soundMP": "AS2D_TECH_MP_SATELLITES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SATELLITES",
+  "civilopedia": "TXT_KEY_TECH_SATELLITES_PEDIA",
+  "quote": "TXT_KEY_TECH_SATELLITES_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 81,
+  "gridY": 11
+ }
+}

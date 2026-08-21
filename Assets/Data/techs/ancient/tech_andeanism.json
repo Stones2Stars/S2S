@@ -1,0 +1,63 @@
+{
+ "type": "TECH_ANDEANISM",
+ "enables": {
+  "religions": [
+   "RELIGION_ANDEANISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DUALISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DIVINATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 242
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/techtree/andeanism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ANDEANISM",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ANDEANISM",
+  "civilopedia": "TXT_KEY_TECH_ANDEANISM_PEDIA",
+  "quote": "TXT_KEY_TECH_ANDEANISM_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "gridX": 28,
+  "gridY": 19
+ }
+}

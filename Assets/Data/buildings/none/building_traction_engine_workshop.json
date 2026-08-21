@@ -1,0 +1,109 @@
+{
+ "type": "BUILDING_TRACTION_ENGINE_WORKSHOP",
+ "enables": {
+  "units": [
+   "UNIT_STEAM_TANK",
+   "UNIT_WAR_WHEEL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_STEAMPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEAMPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_TIRES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_RUBBER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 6,
+   "percent": [
+    {
+     "value": 10,
+     "enabled": "HAS_POWER"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 5,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL"
+   }
+  }
+ ],
+ "cost": {
+  "production": 655,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRACTION_ENGINE_WORKSHOP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRACTION_ENGINE_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_TRACTION_ENGINE_WORKSHOP_PEDIA",
+  "worth": 5,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_STEAM",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

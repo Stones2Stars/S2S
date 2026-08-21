@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_GUANCHES",
+ "enables": {
+  "units": [
+   "UNIT_BENCOMO",
+   "UNIT_MADEIRA_AXEMAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_GUANCHES"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_GUANCHES",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

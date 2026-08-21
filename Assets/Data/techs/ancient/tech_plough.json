@@ -1,0 +1,97 @@
+{
+ "type": "TECH_PLOUGH",
+ "enables": {
+  "bonuses": [
+   "BONUS_VEGETABLES"
+  ],
+  "buildings": [
+   "BUILDING_CULTURE_MISSISSIPPIAN",
+   "BUILDING_CULTURE_ZUNI",
+   "BUILDING_FARM_CROP_ARTICHOKE",
+   "BUILDING_FARM_CROP_CARROT",
+   "BUILDING_FARM_CROP_CASSAVA",
+   "BUILDING_FARM_CROP_CAULIFLOWER",
+   "BUILDING_FARM_CROP_GARLIC",
+   "BUILDING_FARM_CROP_KALE",
+   "BUILDING_FARM_CROP_LEEK",
+   "BUILDING_FARM_CROP_ONION",
+   "BUILDING_FARM_CROP_POTATO",
+   "BUILDING_FARM_CROP_SPINACH",
+   "BUILDING_FARM_CROP_SWEET_POTATO",
+   "BUILDING_PESTS_APHIDS",
+   "BUILDING_PESTS_SLUGS",
+   "BUILDING_PLANTATION_PEANUT",
+   "BUILDING_PLANTATION_TARO"
+  ],
+  "techs": [
+   "TECH_IRRIGATION"
+  ],
+  "units": [
+   "UNIT_CIBOLA_PEASANT",
+   "UNIT_LULE_NOMADS",
+   "UNIT_MAHOGANY_WOODCUTTER",
+   "UNIT_PACKMULE",
+   "UNIT_RIVER_WORKER",
+   "UNIT_WORKANIMAL",
+   "UNIT_WORKBUFFALO",
+   "UNIT_WORKCAMEL",
+   "UNIT_WORKELEPHANT",
+   "UNIT_WORKLLAMA",
+   "UNIT_WORKMAMMOTH",
+   "UNIT_WORKMULE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EQUINE_DOMESTICATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COPPER_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 164
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/plough2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PLOUGH",
+  "soundMP": "AS2D_TECH_PLOUGH"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PLOUGH",
+  "civilopedia": "TXT_KEY_TECH_PLOUGH_PEDIA",
+  "quote": "TXT_KEY_TECH_PLOUGH_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "gridX": 25,
+  "gridY": 7
+ }
+}

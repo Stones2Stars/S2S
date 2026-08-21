@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_DISEASE_SYPHILIS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HOMO_SUPERIOR"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_POLYTHEISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_DISEASE",
+     "scope": "city",
+     "min": 550,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": -6
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -8
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -7
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -7
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -6,
+    {
+     "value": -25,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYDISEASE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISEASE_SYPHILIS",
+  "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

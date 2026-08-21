@@ -1,0 +1,124 @@
+{
+ "type": "BUILDING_CHEMISTRY_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_ELECTROACTIVE_POLYMERS",
+   "BUILDING_MOLECULAR_BIOLOGY_LAB",
+   "BUILDING_PERIODIC_TABLE_OF_ELEMENTS",
+   "BUILDING_RESOURCES_CHEMICALS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ANIMAMATERIALS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CHEMICALS_DISTRICT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_UNIVERSITY",
+    "TECH_CHEMISTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_GLASSWARE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_CHEMICALS_DISTRICT"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_POISON"
+  ]
+ },
+ "research": {
+  "city": {
+   "flat": [
+    15,
+    {
+     "value": 6,
+     "enabled": "TECH_ORGANIC_CHEMISTRY"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_NOVUS_CHEMISTRY"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 17
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 495,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CHEMISTRY_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CHEMISTRY_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_CHEMISTRY_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

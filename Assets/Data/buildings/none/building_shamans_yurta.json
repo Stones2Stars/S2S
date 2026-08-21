@@ -1,0 +1,130 @@
+{
+ "type": "BUILDING_SHAMANS_YURTA",
+ "enables": {
+  "buildings": [
+   "BUILDING_EJE_SONG",
+   "BUILDING_KING_GESAR_SONG",
+   "BUILDING_TENGRI_SONG"
+  ],
+  "units": [
+   "UNIT_TENGRI_MISSIONARY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_LEATHER",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "RELIGION_TENGRIISM",
+    {
+     "any": [
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": 15,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_TENGRIISM"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1
+  }
+ },
+ "cost": {
+  "production": 98,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SHAMANS_YURTA"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SIBERIAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SHAMANS_YURTA",
+  "civilopedia": "TXT_KEY_BUILDING_SHAMANS_YURTA_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 4,
+  "specialBuildingType": "SPECIALBUILDING_MONASTERY_II",
+  "religion": "RELIGION_TENGRIISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

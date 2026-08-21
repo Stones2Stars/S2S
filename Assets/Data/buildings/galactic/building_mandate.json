@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_MANDATE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_XENODIPLOMACY",
+    {
+     "any": [
+      "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+      "BUILDING_SPACE_COLONY_MILKY_WAY"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": 100,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "foodKept": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": -5
+   }
+  }
+ },
+ "cost": {
+  "production": 10144,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PROTOS_MANDATE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MANDATE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MANDATE",
+  "civilopedia": "TXT_KEY_BUILDING_MANDATE_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

@@ -1,0 +1,76 @@
+{
+ "type": "TECH_INTERNAL_SHOCKWAVE_ENGINE",
+ "enables": {
+  "bonuses": [
+   "BONUS_SHOCKWAVE_ENGINES"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_SHOCKWAVE_ENGINES",
+   "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP"
+  ],
+  "techs": [
+   "TECH_MAGNETIC_SAILS",
+   "TECH_PHOTON_THERMODYNAMICS",
+   "TECH_WARMACHINES"
+  ],
+  "units": [
+   "UNIT_SHOCKWAVE_APC"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HYPERSONIC_FLIGHT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ACOUSTIC_WEAPONRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 40165
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/lengine.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_INTERNAL_SHOCKWAVE_ENGINE",
+  "soundMP": "AS2D_TECH_INTERNAL_SHOCKWAVE_ENGINE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_INTERNAL_SHOCKWAVE_ENGINE",
+  "civilopedia": "TXT_KEY_TECH_INTERNAL_SHOCKWAVE_ENGINE_PEDIA",
+  "quote": "TXT_KEY_TECH_INTERNAL_SHOCKWAVE_ENGINE_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 103,
+  "gridY": 13
+ }
+}

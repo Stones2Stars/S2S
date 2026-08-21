@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_MORSE_CODE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_DIRECT_MERCHANDISING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TELEGRAPH",
+    {
+     "any": [
+      "BUILDING_TELEGRAPH_STATION",
+      "BUILDING_TELEPHONE_NETWORK"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_TELEGRAPH_STATION": {
+     "percent": 10
+    },
+    "BUILDING_TELEPHONE_NETWORK": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 4260,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MORSE_CODE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MORSE_CODE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MORSE_CODE",
+  "civilopedia": "TXT_KEY_BUILDING_MORSE_CODE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

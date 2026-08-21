@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_GALACTIC_PORT",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_CAPITOL",
+   "BUILDING_STARGATE"
+  ],
+  "units": [
+   "UNIT_COSMIC_WORK_CREW",
+   "UNIT_SHAPESHIFTING_WORK_CREW"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_STARPORT",
+    "TECH_SPACE_CREASING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 12,
+     "enabled": "TECH_INTERGALACTIC_COLONIZATION"
+    },
+    {
+     "value": 13,
+     "enabled": "TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION"
+    },
+    {
+     "value": 13,
+     "enabled": "TECH_INTERGROUP_TRAVEL"
+    },
+    {
+     "value": 12,
+     "enabled": "TECH_INTERCLUSTER_TRAVEL"
+    },
+    {
+     "value": 12,
+     "enabled": "TECH_QUANTUM_RAMJET"
+    },
+    {
+     "value": 13,
+     "enabled": "TECH_HORIZON_BREAKING"
+    },
+    {
+     "value": 12,
+     "enabled": "TECH_REACTIONLESS_DRIVE"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PERSONAL_STARCRAFT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 14155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GALACTIC_PORT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GALACTIC_PORT",
+  "civilopedia": "TXT_KEY_BUILDING_GALACTIC_PORT_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

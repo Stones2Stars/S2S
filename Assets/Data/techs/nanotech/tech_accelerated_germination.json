@@ -1,0 +1,74 @@
+{
+ "type": "TECH_ACCELERATED_GERMINATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHEMOSYNTHESIS_PLANT_FARM",
+   "BUILDING_FARM_NANOBOT_CONTROL_CENTER",
+   "BUILDING_MISSION_TO_CALLISTO"
+  ],
+  "techs": [
+   "TECH_DESIGNER_MICROBIOLOGY",
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NOVUS_CHEMISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_VERTICAL_FARMING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WIRELESS_ELECTRICITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 44505
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/germination.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ACCELERATED_GERMINATION",
+  "soundMP": "AS2D_TECH_ACCELERATED_GERMINATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ACCELERATED_GERMINATION",
+  "civilopedia": "TXT_KEY_TECH_ACCELERATED_GERMINATION_PEDIA",
+  "quote": "TXT_KEY_TECH_ACCELERATED_GERMINATION_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 106,
+  "gridY": 5
+ }
+}

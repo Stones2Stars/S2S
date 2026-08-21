@@ -1,0 +1,25 @@
+{
+ "type": "UNITCOMBAT_SIEGE",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -20
+   },
+   "resistance": {
+    "flat": -20
+   }
+  }
+ },
+ "tags": [
+  "siege"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/siege_weapons.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SIEGE",
+  "forMilitary": true
+ }
+}

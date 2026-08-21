@@ -1,0 +1,76 @@
+{
+ "type": "TECH_DIRECT_MERCHANDISING",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLOCKCHAIN_AUTHENTICATION",
+   "BUILDING_BLOCKCHAIN_FINANCIAL_SERVICES",
+   "BUILDING_DIGITAL_VOTING",
+   "BUILDING_SMART_CONTRACTS"
+  ],
+  "techs": [
+   "TECH_AUGMENTED_REALITY",
+   "TECH_COMPUTATIONAL_SOCIOLOGY",
+   "TECH_PERSONALIZED_HEALTH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DERIVATIVES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WEARABLE_COMPUTERS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEDIA_PSYCHOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 24485
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Dmerch.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_DIRECT_MERCHANDISING",
+  "soundMP": "AS2D_TECH_DIRECT_MERCHANDISING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_DIRECT_MERCHANDISING",
+  "civilopedia": "TXT_KEY_TECH_DIRECT_MERCHANDISING_PEDIA",
+  "quote": "TXT_KEY_TECH_DIRECT_MERCHANDISING_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 93,
+  "gridY": 13
+ }
+}

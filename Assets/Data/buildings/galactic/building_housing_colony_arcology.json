@@ -1,0 +1,109 @@
+{
+ "type": "BUILDING_HOUSING_COLONY_ARCOLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_BED_N_BREAKFAST",
+   "BUILDING_BOSTON_ARCOLOGY",
+   "BUILDING_CLIMATE_CONTROLLED_ARCOLOGY",
+   "BUILDING_DRUGLORDS_MANSON",
+   "BUILDING_KIVA",
+   "BUILDING_LEAN_LINEAR_CITY",
+   "BUILDING_LUXURY_FURNITURE_WORKSHOP",
+   "BUILDING_LYCEUM",
+   "BUILDING_MAUSOLEUM",
+   "BUILDING_MESA_VERDE",
+   "BUILDING_NUDGING_SPACE_ARCOLOGY",
+   "BUILDING_PARK_ARCOLOGY",
+   "BUILDING_SHIMIZU_MEGA_CITY_PYRAMID",
+   "BUILDING_TALL_TOWER",
+   "BUILDING_ULTIMA_TOWER",
+   "BUILDING_X_SEED_4000"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ULTIMA_ARCHITECTURE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LAUNCH_ARCOLOGY"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COLONY_ARCOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_LAUNCH_ARCOLOGY"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 65
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 105
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 17
+  }
+ },
+ "vision": {
+  "city": {
+   "elevation": {
+    "flat": 100
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 8405,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HOUSING_COLONY_ARCOLOGY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_COLONY_ARCOLOGY",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_COLONY_ARCOLOGY_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "type": "IMPROVEMENT_LAND_WORKED",
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": -1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_LAND_WORKED"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_LAND_WORKED",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_LAND_WORKED_PEDIA",
+  "advancedStart": {
+   "cost": -1
+  },
+  "graphicalOnly": true
+ }
+}

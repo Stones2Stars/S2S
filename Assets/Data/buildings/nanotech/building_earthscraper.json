@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_EARTHSCRAPER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SUPERSTRONG_ALLOYS",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_PEAK",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_HILL",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SUPERSTRONG_ALLOYS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 4145,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EARTHSCRAPER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EARTHSCRAPER",
+  "civilopedia": "TXT_KEY_BUILDING_EARTHSCRAPER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,64 @@
+{
+ "type": "PROMOTION_MARTIAL_ARTS2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_MARTIAL_ARTS3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_MARTIAL_ARTS"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 15
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 10
+    },
+    "UNITCOMBAT_THROWING": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   },
+   "resistance": {
+    "flat": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MARTIAL_ARTS": 2
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Sports/Buttons/Martial_Arts2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_MARTIAL_ARTS2",
+  "notOnDomains": [
+   "DOMAIN_SEA"
+  ]
+ }
+}

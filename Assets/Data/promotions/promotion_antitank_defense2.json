@@ -1,0 +1,44 @@
+{
+ "type": "PROMOTION_ANTITANK_DEFENSE2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ANTITANK_DEFENSE3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_ANTITANK_DEFENSE1"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WHEELED": {
+     "percent": 15
+    },
+    "UNITCOMBAT_TRACKED": {
+     "percent": 15
+    },
+    "UNITCOMBAT_DREADNOUGHT": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_ANTITANK_DEFENSE": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/antitank2.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,4,14"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_ANTITANK_DEFENSE2"
+ }
+}

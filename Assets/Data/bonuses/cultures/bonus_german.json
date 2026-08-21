@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_GERMAN",
+ "enables": {
+  "units": [
+   "UNIT_ERWIN_ROMMEL",
+   "UNIT_FREDERICK_BARBAROSSA",
+   "UNIT_GERMAN_PANZER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_GERMAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_GERMAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

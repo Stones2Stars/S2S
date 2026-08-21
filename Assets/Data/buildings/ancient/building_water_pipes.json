@@ -1,0 +1,172 @@
+{
+ "type": "BUILDING_WATER_PIPES",
+ "enables": {
+  "buildings": [
+   "BUILDING_DESALINATION_PLANT",
+   "BUILDING_FIRE_HYDRANTS",
+   "BUILDING_FOUNTAIN",
+   "BUILDING_HOUSING_APARTMENTS",
+   "BUILDING_HOUSING_ARCOLOGY_SLUMS",
+   "BUILDING_HOUSING_ARCOLOGY_SUBURBS",
+   "BUILDING_HOUSING_ARCOLOGY_UPPER_CLASS",
+   "BUILDING_HOUSING_BOONDOCKS",
+   "BUILDING_HOUSING_CHATEAU",
+   "BUILDING_HOUSING_CONDOMINIUMS",
+   "BUILDING_HOUSING_DUGOUTS",
+   "BUILDING_HOUSING_GHETTOS",
+   "BUILDING_HOUSING_HABITATION_PODS",
+   "BUILDING_HOUSING_HIGHRISES",
+   "BUILDING_HOUSING_HIGH_TECH_APARTMENTS",
+   "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
+   "BUILDING_HOUSING_HIGH_TECH_HIGHRISES",
+   "BUILDING_HOUSING_HOLO_SUITES",
+   "BUILDING_HOUSING_INNER_CITY",
+   "BUILDING_HOUSING_MANSIONS",
+   "BUILDING_HOUSING_MID_CLASS_SKYPAD_APARTMENTS",
+   "BUILDING_HOUSING_PENTHOUSE_SUITES",
+   "BUILDING_HOUSING_PROJECTS",
+   "BUILDING_HOUSING_SMART_HOMES",
+   "BUILDING_HOUSING_SUBURBS",
+   "BUILDING_HYDROGEN_GENERATOR",
+   "BUILDING_HYDROPONICS_LAB",
+   "BUILDING_LAS_MEDULAS",
+   "BUILDING_PLUMBERS_WORKSHOP",
+   "BUILDING_PUBLIC_RESTROOMS",
+   "BUILDING_SANITATION_CHAMBER",
+   "BUILDING_WATER_PARK",
+   "BUILDING_WATER_TOWER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PLUMBING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_FRESHWATER",
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_LEAD_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_ALUMINUM_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STEEL_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 30,
+     "enabled": {
+      "type": "BONUS_WATERPROOF_CEMENT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_LEAD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_IRON_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PLASTIC",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_NANOTUBES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "cost": {
+  "production": 184,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WATER_PIPES",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WATER_PIPES",
+  "civilopedia": "TXT_KEY_BUILDING_WATER_PIPES_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

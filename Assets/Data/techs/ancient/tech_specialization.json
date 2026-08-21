@@ -1,0 +1,126 @@
+{
+ "type": "TECH_SPECIALIZATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TAMER_COMPLEX",
+   "BUILDING_EFFECT_TRADITION_WORK_ETHIC",
+   "BUILDING_TRADITION_WORK_ETHIC"
+  ],
+  "civics": [
+   "CIVIC_SPECIALIZED"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_CLEVERNESS4"
+  ],
+  "techs": [
+   "TECH_BRONZE_WORKING",
+   "TECH_CUISINE",
+   "TECH_GEARS",
+   "TECH_LOCKS",
+   "TECH_PLUMBING"
+  ],
+  "units": [
+   "UNIT_TAMED_AARDVARK",
+   "UNIT_TAMED_ASIANBEAR",
+   "UNIT_TAMED_BAIRDS_TAPIR",
+   "UNIT_TAMED_BISON",
+   "UNIT_TAMED_BLACKBEAR",
+   "UNIT_TAMED_BLACK_RHINO",
+   "UNIT_TAMED_BOAR",
+   "UNIT_TAMED_BRAZILIAN_TAPIR",
+   "UNIT_TAMED_BROWNBEAR",
+   "UNIT_TAMED_BUFFALO",
+   "UNIT_TAMED_CAMEL",
+   "UNIT_TAMED_CATTLE",
+   "UNIT_TAMED_CAVEBEAR",
+   "UNIT_TAMED_DONKEY",
+   "UNIT_TAMED_DUCK",
+   "UNIT_TAMED_ELEPHANT",
+   "UNIT_TAMED_GIRAFFE",
+   "UNIT_TAMED_GRIZZLY",
+   "UNIT_TAMED_HIPPO",
+   "UNIT_TAMED_HORSE",
+   "UNIT_TAMED_INDIAN_RHINO",
+   "UNIT_TAMED_JAVA_RHINO",
+   "UNIT_TAMED_LION",
+   "UNIT_TAMED_LIZARD",
+   "UNIT_TAMED_LLAMA",
+   "UNIT_TAMED_MALAYAN_TAPIR",
+   "UNIT_TAMED_MAMMOTH",
+   "UNIT_TAMED_MOUNTAIN_TAPIR",
+   "UNIT_TAMED_MUSKOX",
+   "UNIT_TAMED_PANDA_BEAR",
+   "UNIT_TAMED_PANTHER",
+   "UNIT_TAMED_POLARBEAR",
+   "UNIT_TAMED_REDPANDA",
+   "UNIT_TAMED_SHEEP",
+   "UNIT_TAMED_SLOTHBEAR",
+   "UNIT_TAMED_SNAKE",
+   "UNIT_TAMED_SPECTACLEDBEAR",
+   "UNIT_TAMED_SUNBEAR",
+   "UNIT_TAMED_TURKEY",
+   "UNIT_TAMED_WHITE_RHINO",
+   "UNIT_TAMED_WOLF"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_TAMED_DONKEY_PAIR",
+   "UNIT_TAMED_HORSE_PAIR",
+   "UNIT_TAMED_WOLF_PAIR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRADE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LEISURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "cost": {
+  "research": 242
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/specialization.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SPECIALIZATION",
+  "soundMP": "AS2D_TECH_SPECIALIZATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SPECIALIZATION",
+  "civilopedia": "TXT_KEY_TECH_SPECIALIZATION_PEDIA",
+  "quote": "TXT_KEY_TECH_SPECIALIZATION_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 28,
+  "gridY": 5
+ }
+}

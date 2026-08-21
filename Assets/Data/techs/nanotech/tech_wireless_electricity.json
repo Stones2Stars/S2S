@@ -1,0 +1,79 @@
+{
+ "type": "TECH_WIRELESS_ELECTRICITY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANTHROPOMORPHICS_LAB",
+   "BUILDING_MINING_MECH_CONTROL_CENTER",
+   "BUILDING_WIRELESS_ELECTRIC_FENCE",
+   "BUILDING_WIRELESS_GRID"
+  ],
+  "techs": [
+   "TECH_ACCELERATED_GERMINATION",
+   "TECH_AMPLIFIED_WAVELENGTHS",
+   "TECH_EXOCORTEX_NETWORKS",
+   "TECH_INTERACTIVE_GLASS",
+   "TECH_PHOTON_THERMODYNAMICS",
+   "TECH_SUPERSONIC_RAILS"
+  ],
+  "units": [
+   "UNIT_TESLA_INFANTRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AUTOMATED_URBANIZATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ELECTROMAGNETIC_FIELD_SHIELDING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 42984
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/wireless_electricity.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_WIRELESS_ELECTRICITY",
+  "soundMP": "AS2D_TECH_WIRELESS_ELECTRICITY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_WIRELESS_ELECTRICITY",
+  "civilopedia": "TXT_KEY_TECH_WIRELESS_ELECTRICITY_PEDIA",
+  "quote": "TXT_KEY_TECH_WIRELESS_ELECTRICITY_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 105,
+  "gridY": 5
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTION_BUILD_UP_CRIME_FIGHTING4",
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -4
+  },
+  "plot": {
+   "flat": -4
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_CRIME_FIGHTING": 4
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/CrimeFighting4BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_CRIME_FIGHTING4",
+  "minEra": "C2C_ERA_MEDIEVAL"
+ }
+}

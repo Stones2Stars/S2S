@@ -1,0 +1,83 @@
+{
+ "type": "TECH_INTERGALACTIC_COLONIZATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANDROMEDA_COLONY",
+   "BUILDING_INTERGALACTIC_ANCIENT_CIVILIZATION",
+   "BUILDING_INTERGALACTIC_ASTROPOLIS",
+   "BUILDING_INTERGALACTIC_CULTURE",
+   "BUILDING_INTERGALACTIC_GALACTIC_COLONY",
+   "BUILDING_INTERGALACTIC_GOVERNMENT",
+   "BUILDING_INTERGALACTIC_STARPORT",
+   "BUILDING_INTERSTELLAR_HYPERVELOCITY_STAR",
+   "BUILDING_LARGE_MAGELLANIC_CLOUD_COLONY",
+   "BUILDING_SAGITTARIUS_DWARF_ELLIPTICAL_GALAXY_COLONY",
+   "BUILDING_SMALL_MAGELLANIC_CLOUD_COLONY",
+   "BUILDING_TRIANGULUM_COLONY"
+  ],
+  "builds": [
+   "BUILD_INTERGALACTIC_COLONY",
+   "BUILD_INTERGALACTIC_RESEARCH_BASE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_INTERGALACTIC_COLONY",
+   "IMPROVEMENT_INTERGALACTIC_RESEARCH_BASE"
+  ],
+  "techs": [
+   "TECH_EXOTIC_STARS",
+   "TECH_GALACTIC_ENGINEERING",
+   "TECH_INTERGROUP_TRAVEL",
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NEUTRINO_COMMUNICATIONS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SPACE_CREASING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 271404
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/intergalactic_travel.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_INTERGALACTIC_COLONIZATION",
+  "civilopedia": "TXT_KEY_TECH_INTERGALACTIC_COLONIZATION_PEDIA",
+  "quote": "TXT_KEY_TECH_INTERGALACTIC_COLONIZATION_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 139,
+  "gridY": 17
+ }
+}

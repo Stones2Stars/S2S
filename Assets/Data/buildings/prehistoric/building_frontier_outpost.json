@@ -1,0 +1,133 @@
+{
+ "type": "BUILDING_FRONTIER_OUTPOST",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MATHEMATICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FORTIFIED_OUTPOST"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CARPENTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BAMBOO",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_FORTIFIED_OUTPOST",
+    "BUILDING_WATCH_TOWER",
+    "BUILDING_GUARD_TOWER",
+    "BUILDING_KEEP_TOWER",
+    "BUILDING_BOMBARD_TOWER",
+    "BUILDING_AUTO_CANNON_BATTERY",
+    "BUILDING_MISSILE_BATTERY",
+    "BUILDING_ARTILLERY_BATTERY",
+    "BUILDING_RAILGUN_BATTERY",
+    "BUILDING_LASER_BATTERY",
+    "BUILDING_ANTI_MATTER_BATTERY"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": "TECH_NEGOTIATION"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 5
+   },
+   "dynamicDefense": {
+    "percent": 5
+   },
+   "adjacentDamage": {
+    "percent": 5
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "vision": {
+  "city": {
+   "elevation": {
+    "flat": 100
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "cost": {
+  "production": 68,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FRONTIER_OUTPOST",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_PYRAMID"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FRONTIER_OUTPOST",
+  "civilopedia": "TXT_KEY_BUILDING_FRONTIER_OUTPOST_PEDIA",
+  "worth": 2,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

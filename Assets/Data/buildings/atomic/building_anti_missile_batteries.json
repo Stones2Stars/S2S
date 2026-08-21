@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_ANTI_MISSILE_BATTERIES",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ADVANCED_SHIELDING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ARCOLOGY_SHIELDING"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GUIDED_WEAPONS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_ARCOLOGY_SHIELDING",
+    "BUILDING_ADVANCED_SHIELDING"
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 25
+   },
+   "bombardDefense": {
+    "percent": 25
+   },
+   "nukeDefense": {
+    "percent": -25
+   },
+   "airDefense": {
+    "percent": -25
+   }
+  }
+ },
+ "cost": {
+  "production": 1605,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANTI_MISSILE_BATTERIES"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANTI_MISSILE_BATTERIES",
+  "civilopedia": "TXT_KEY_BUILDING_ANTI_MISSILE_BATTERIES_PEDIA",
+  "worth": 1,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

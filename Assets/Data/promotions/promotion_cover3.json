@@ -1,0 +1,39 @@
+{
+ "type": "PROMOTION_COVER3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COVER2",
+    {
+     "any": [
+      "PROMOTION_COMBAT2",
+      "PROMOTION_DRILL2"
+     ]
+    }
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_ARCHER": {
+     "percent": 30
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COVER": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Cover3.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,2,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COVER3"
+ }
+}

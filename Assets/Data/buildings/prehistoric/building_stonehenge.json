@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_STONEHENGE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MODERN_SANITATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MEGALITH_CONSTRUCTION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STONE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    8,
+    {
+     "value": 8,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_MONUMENT",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 624,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 200
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_STONEHENGE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_STONEHENGE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_STONEHENGE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_STONEHENGE",
+  "civilopedia": "TXT_KEY_BUILDING_STONEHENGE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

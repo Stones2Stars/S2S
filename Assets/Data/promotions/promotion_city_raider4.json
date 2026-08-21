@@ -1,0 +1,43 @@
+{
+ "type": "PROMOTION_CITY_RAIDER4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_CITY_RAIDER5"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CITY_RAIDER3"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 25
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CITYRAIDER": 4
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CityRaider4.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,4,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CITYRAIDER4"
+ }
+}

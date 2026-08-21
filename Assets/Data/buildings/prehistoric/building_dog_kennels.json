@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_DOG_KENNELS",
+ "enables": {
+  "units": [
+   "UNIT_TAMED_WOLF",
+   "UNIT_TAMED_WOLF_PAIR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CANINE_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_DOG_BREEDER",
+      "BUILDING_REPET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ANIMAL": {
+     "flat": 1
+    },
+    "UNITCOMBAT_CANINE": {
+     "flat": 2
+    },
+    "UNITCOMBAT_RECON": {
+     "flat": 1
+    },
+    "UNITCOMBAT_HUNTER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 92,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_MILITARY": 2
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DOG"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DOG_KENNELS",
+  "civilopedia": "TXT_KEY_BUILDING_DOG_KENNELS_PEDIA",
+  "worth": 1,
+  "advisor": "ADVISOR_MILITARY",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_COMMAND1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_COMMAND2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CONTROL",
+    {
+     "any": [
+      "PROMOTION_INITIATIVE4"
+     ]
+    }
+   ]
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COMMAND": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/CommanderCommand1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COMMAND1",
+  "controlPoints": 1
+ }
+}

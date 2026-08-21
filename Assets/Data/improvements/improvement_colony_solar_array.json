@@ -1,0 +1,89 @@
+{
+ "type": "IMPROVEMENT_COLONY_SOLAR_ARRAY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_MANUFACTURING",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_LUNAR_DOME",
+      "TERRAIN_LUNAR_MARE",
+      "TERRAIN_LUNAR_HIGHLAND",
+      "TERRAIN_LUNAR_REGOLITH",
+      "TERRAIN_LUNAR_RILLE",
+      "TERRAIN_GREEN_MOON",
+      "TERRAIN_MARTIAN_ICE",
+      "TERRAIN_MARTIAN_PERMAFROST",
+      "TERRAIN_MARTIAN_DESERT",
+      "TERRAIN_MARTIAN_DUNES",
+      "TERRAIN_MARTIAN_BARREN",
+      "TERRAIN_MARTIAN_PLAINS",
+      "TERRAIN_GREEN_MARS",
+      "TERRAIN_VENUS",
+      "TERRAIN_VENUS_HIGHLANDS",
+      "TERRAIN_VENUS_LOWLANDS"
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ENVIRONMENTAL_ECONOMICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PLANETARY_ECONOMICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ENVIRONMENTAL_ECONOMICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PLANETARY_ECONOMICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_SOLAR_PANELS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_COLONY_SOLAR_ARRAY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SOLAR_PANEL_PEDIA",
+  "extraterrestrial": true,
+  "advancedStart": {
+   "cost": -1
+  },
+  "pillageGold": 50
+ }
+}

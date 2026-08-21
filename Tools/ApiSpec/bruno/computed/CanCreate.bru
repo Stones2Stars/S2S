@@ -1,0 +1,20 @@
+meta {
+  name: computed/canCreate
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{baseUrl}}/computed/canCreate?type=PROJECT_APOLLO_PROGRAM&player=0
+  body: none
+  auth: none
+}
+
+params:query {
+  type: PROJECT_APOLLO_PROGRAM
+  player: 0
+}
+
+docs {
+  Engine canCreate verdict.
+}

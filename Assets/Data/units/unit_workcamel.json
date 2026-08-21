@@ -1,0 +1,181 @@
+{
+ "type": "UNIT_WORKCAMEL",
+ "builds": [
+  "BUILD_FORTIFIED_CAVE",
+  "BUILD_WOODEN_WATCHTOWER",
+  "BUILD_TRAIL",
+  "BUILD_WOODEN_PALISADE",
+  "BUILD_RESOURCE_OUTPOST",
+  "BUILD_BURN_VEGETATION",
+  "BUILD_EARLY_QUARRY",
+  "BUILD_FRUIT_PICKING_CAMP",
+  "BUILD_GRAPE_PICKING_CAMP",
+  "BUILD_FORTIFIED_CAVE_WITH_CACHE",
+  "BUILD_HUNTING_CAMP",
+  "BUILD_PLANT_PICKING_CAMP",
+  "BUILD_SEED_CAMP",
+  "BUILD_STONE_TOOLS_WORKSHOP",
+  "BUILD_COTTAGE",
+  "BUILD_EARLY_MOUNTAIN_MINE",
+  "BUILD_LUMBERJACK",
+  "BUILD_MINE",
+  "BUILD_PATH",
+  "BUILD_STONE_WATCHTOWER",
+  "BUILD_TAR_GATHERER",
+  "BUILD_DESERT_CAMP",
+  "BUILD_HUNTING_PRESERVE",
+  "BUILD_JUNGLE_CAMP",
+  "BUILD_REMOVE_VEGETATION",
+  "BUILD_SALT_GATHERER",
+  "BUILD_THATCH_CUTTER",
+  "BUILD_WETLANDS_CAMP",
+  "BUILD_MUSHROOM_GATHERER",
+  "BUILD_ORCHARD",
+  "BUILD_PASTURE",
+  "BUILD_SILK_FARM",
+  "BUILD_WINERY",
+  "BUILD_FARM",
+  "BUILD_QUARRY",
+  "BUILD_GEOGLYPH",
+  "BUILD_MACHU_PICCHU",
+  "BUILD_HAMLET",
+  "BUILD_FORT",
+  "BUILD_RESOURCE_SETTLEMENT",
+  "BUILD_PAVED_ROAD",
+  "BUILD_WATERMILL",
+  "BUILD_WORKSHOP",
+  "BUILD_DRAIN_SWAMP",
+  "BUILD_LUMBERMILL",
+  "BUILD_PEAT_CUTTER",
+  "BUILD_PLANTATION",
+  "BUILD_ROAD",
+  "BUILD_VILLAGE",
+  "BUILD_WINDMILL",
+  "BUILD_MOUNTAIN_MINE",
+  "BUILD_YOUNG_FOREST",
+  "BUILD_TOWN",
+  "BUILD_REMOVE_ROCK_FORMATION",
+  "BUILD_SHAFT_MINE",
+  "BUILD_ARCHEOLOGICAL_SITE",
+  "BUILD_FOSSIL_DIG_SITE",
+  "BUILD_STEEL_WATCHTOWER",
+  "BUILD_COMMAND_BUNKER",
+  "BUILD_RESOURCE_TOWN",
+  "BUILD_FACTORY",
+  "BUILD_RAILROAD",
+  "BUILD_FOREST_PRESERVE",
+  "BUILD_HYDROCARBON_WELL",
+  "BUILD_HYDRO_DAM",
+  "BUILD_RADIO_TOWER",
+  "BUILD_SUBURBS"
+ ],
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LOGISTICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ANIMAL_TRAINER_CAMEL",
+    "TECH_PLOUGH"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WORKER_INDUSTRIAL"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_WORKCAMEL"
+  }
+ },
+ "skills": [
+  "food",
+  "tradable"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_ANIMAL_DRAWN",
+  "UNITCOMBAT_ASSISTED_CAMEL",
+  "UNITCOMBAT_QUALITY_POOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_DESERT_WORKER1",
+   "PROMOTION_DESERT_WORKER2"
+  ]
+ },
+ "cost": {
+  "production": 140,
+  "upkeep": 3
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WORK_CAMEL",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WORK_CAMEL"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WORKER",
+       "late": "ART_DEF_UNIT_WORKERMODERN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_WORKCAMEL",
+  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "workRate": 120
+  }
+ }
+}

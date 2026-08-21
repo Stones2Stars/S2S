@@ -1,0 +1,69 @@
+{
+ "type": "BONUS_GEOTHERMAL_ENERGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ENHANCED_GEOTHERMAL_SYSTEM",
+   "BUILDING_GEOTHERMAL_POWER_PLANT"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_GEOTHERMAL_ENERGY"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "minAreaSize": 10,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "hills": true,
+  "flatlands": true,
+  "noRiverSide": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_MARSH",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_GEOTHERMAL_ENERGY",
+  "civilopedia": "TXT_KEY_BONUS_GEOTHERMAL_ENERGY_PEDIA",
+  "bonusClassType": "BONUSCLASS_PRODUCTION",
+  "source": "natural"
+ }
+}

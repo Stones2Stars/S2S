@@ -1,0 +1,123 @@
+{
+ "type": "BUILDING_KENTUCKY_DERBY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ANIMAL_TRAINER_HORSE",
+    {
+     "type": "BUILDING_ANIMAL_RACE_TRACK",
+     "scope": "empire",
+     "min": 3,
+     "scaling": "amountBuildings"
+    },
+    "TECH_LAWN_SPORTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_ANIMAL_RACE_TRACK": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_TAMED_HORSE": {
+     "percent": 10
+    },
+    "UNIT_TAMED_HORSE_PAIR": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_ANIMAL_RACE_TRACK": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 4620,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_KENTUCKY_DERBY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_KENTUCKY_DERBY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_KENTUCKY_DERBY",
+  "civilopedia": "TXT_KEY_BUILDING_KENTUCKY_DERBY_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

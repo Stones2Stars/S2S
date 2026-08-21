@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_REMAINS_HAASTS_EAGLE",
+ "requires": {
+  "operate": {
+   "all": [
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    "BUILDING_FOLKLORE_HAASTS_EAGLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 5,
+     "enabled": "TECH_BIOLOGY"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_PALEONTOLOGY_LAB": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "enabled": "TECH_BIOLOGY"
+   }
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_REMAINS_HAASTS_EAGLE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_REMAINS_HAASTS_EAGLE",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+  "pediaCategory": "animalistic",
+  "notConstructible": true,
+  "worth": 1,
+  "conquestProbability": 90,
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

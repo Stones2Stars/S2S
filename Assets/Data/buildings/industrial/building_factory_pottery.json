@@ -1,0 +1,134 @@
+{
+ "type": "BUILDING_FACTORY_POTTERY",
+ "enables": {
+  "buildings": [
+   "BUILDING_GUILD_POTTERS",
+   "BUILDING_PORCELAIN_WORKSHOP",
+   "BUILDING_RED_AND_BLACK_WARE_PAINTER",
+   "BUILDING_TERRACOTTA_WORKSHOP",
+   "BUILDING_TERRA_SIGILLATA_WORKSHOP"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOROBOTICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MANUFACTURING_DISTRICT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "TECH_ASSEMBLY_LINE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_FINE_CLAY",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CLAY",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_MANUFACTURING_DISTRICT"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_POTTERY"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COPPER_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LEAD_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_LEAD_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 710,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACTORY_POTTERY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_POTTERY",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_POTTERY_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

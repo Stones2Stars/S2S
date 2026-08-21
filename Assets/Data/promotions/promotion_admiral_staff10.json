@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_ADMIRAL_STAFF10",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_ADMIRAL_STAFF9",
+    {
+     "any": [
+      "PROMOTION_SHIP_COMMAND9"
+     ]
+    }
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 2
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_ADMIRAL_STAFF": 10
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/commodoreAdmiralStaff10.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_ADMIRAL_STAFF10"
+ }
+}

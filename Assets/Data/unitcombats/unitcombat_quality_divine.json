@@ -1,0 +1,26 @@
+{
+ "type": "UNITCOMBAT_QUALITY_DIVINE",
+ "experience": {
+  "unit": {
+   "percent": -75
+  }
+ },
+ "hideAndSeek": {
+  "detection": {
+   "value": 1300,
+   "unit": "HAS_SIZE"
+  }
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "sizeMatters": {
+  "qualityBase": 10
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/combat_quality_divine.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_QUALITY_DIVINE"
+ }
+}

@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_TRADITION_HUNTER",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_HUNTING",
+    {
+     "any": [
+      "BUILDING_MASTER_HUNTER",
+      "BUILDING_MASTER_HUNTER_TRADITION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_MASTER_HUNTER_TRADITION"
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TRADITION_HUNTER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRADITION_HUNTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRADITION_HUNTER",
+  "civilopedia": "TXT_KEY_BUILDING_MASTER_HUNTER_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "notConstructible": true,
+  "worth": 1,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

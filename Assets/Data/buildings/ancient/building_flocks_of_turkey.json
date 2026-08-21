@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_FLOCKS_OF_TURKEY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FOLKLORE_WILD_TURKEY",
+    "TECH_POULTRY_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_HERD_POULTRY",
+      "BUILDING_INDUSTRIAL_FARMS",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 250,
+  "sizeModifier": 1,
+  "countModifier": 1
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FLOCKS_OF_TURKEY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FLOCKS_OF_TURKEY",
+  "civilopedia": "TXT_KEY_BUILDING_FLOCKS_OF_TURKEY_PEDIA",
+  "worth": 2,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "type": "BONUS_FRUIT",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOFUEL_REFINERY",
+   "BUILDING_DISTILLERY",
+   "BUILDING_DRIED_FRUIT_MAKER",
+   "BUILDING_FACTORY_TANNIN",
+   "BUILDING_PESTS_APHIDS",
+   "BUILDING_PESTS_SLUGS",
+   "BUILDING_TANNIN_MAKER",
+   "BUILDING_ULTRAFUEL_REFINERY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_FRUIT"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_FRUIT",
+  "civilopedia": "TXT_KEY_BONUS_FRUIT_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

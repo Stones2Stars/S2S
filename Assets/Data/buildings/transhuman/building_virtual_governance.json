@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_VIRTUAL_GOVERNANCE",
+ "enables": {
+  "buildings": [
+   "BUILDING_VIRTUAL_WORLD_DESIGN_CENTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_VIRTUAL_ECONOMY",
+    "TECH_BINARY_LEGISLATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 5055,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VIRTUAL_GOVERNANCE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VIRTUAL_GOVERNANCE",
+  "civilopedia": "TXT_KEY_BUILDING_VIRTUAL_GOVERNANCE_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

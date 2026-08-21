@@ -1,0 +1,171 @@
+{
+ "type": "BUILDING_EU_MONTPELLIER_UNIVERSITY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_UNIVERSITY",
+    "BUILDING_ANATOMY_LAB",
+    {
+     "type": "BUILDING_UNIVERSITY",
+     "scope": "empire",
+     "min": 4,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_ANATOMY_LAB",
+     "scope": "empire",
+     "min": 4,
+     "scaling": "amountBuildings"
+    },
+    "TECH_ANATOMY",
+    "TECH_EDUCATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_DOCTOR": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_HEALTH_CARE": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_DOCTOR": 3
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_DISEASE_CONTROL1",
+       "enabled": "IS_MEDIC"
+      }
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 1520,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 50
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MONTPELLIER_UNIVERSITY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EU_MONTPELLIER_UNIVERSITY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EU_MONTPELLIER_UNIVERSITY",
+  "civilopedia": "TXT_KEY_BUILDING_EU_MONTPELLIER_UNIVERSITY_PEDIA",
+  "pediaCategory": "groupWonder",
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_DOCTOR",
+  "specialBuildingType": "SPECIALBUILDING_GROUP_ELITE_UNIVERSITIES",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

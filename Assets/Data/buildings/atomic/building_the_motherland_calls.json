@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_THE_MOTHERLAND_CALLS",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COMPOSITES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 5,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_PATRIOTIC1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 10110,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_THE_MOTHERLAND_CALLS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_THE_MOTHERLAND_CALLS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_THE_MOTHERLAND_CALLS",
+  "civilopedia": "TXT_KEY_BUILDING_THE_MOTHERLAND_CALLS_PEDIA",
+  "help": "TXT_KEY_BUILDING_THE_MOTHERLAND_CALLS_HELP",
+  "pediaCategory": "greatWonder",
+  "worth": 16,
+  "militaryWorth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

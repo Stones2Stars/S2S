@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_CISLUNAR_REFUELING_STATION",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_DOCKING_BAY",
+    {
+     "type": "BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_LUNAR_MANUFACTURING",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ROCKET_FUEL"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 702,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_REFUELING_STATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_REFUELING_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_REFUELING_STATION_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

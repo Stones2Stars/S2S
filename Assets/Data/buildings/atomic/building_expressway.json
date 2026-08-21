@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_EXPRESSWAY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TELEPORTATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SKYROAD_CONTROL_TOWER"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_HIGHWAY_SYSTEMS",
+    "BUILDING_HIGHWAY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_OIL",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TAR",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_SKYROAD_CONTROL_TOWER",
+    "BUILDING_TELEPORT_BOOTH"
+   ]
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1,
+   "modifier": {
+    "percent": 8
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 1130,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EXPRESSWAY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SKYSCRAPER"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EXPRESSWAY",
+  "civilopedia": "TXT_KEY_BUILDING_EXPRESSWAY_PEDIA",
+  "worth": 7,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

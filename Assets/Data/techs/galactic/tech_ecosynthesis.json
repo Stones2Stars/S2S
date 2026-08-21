@@ -1,0 +1,79 @@
+{
+ "type": "TECH_ECOSYNTHESIS",
+ "enables": {
+  "bonuses": [
+   "BONUS_YGGDRASIL_SEEDS"
+  ],
+  "buildings": [
+   "BUILDING_DEEP_SPACE_RECREATED_ECOSYSTEM",
+   "BUILDING_EDEN",
+   "BUILDING_INTERSTELLAR_TERRAFORMED_PLANET",
+   "BUILDING_INTERSTELLAR_WORLDHOUSE",
+   "BUILDING_INTERSTELLAR_ZOO"
+  ],
+  "builds": [
+   "BUILD_TERRAFORMED_PLANET"
+  ],
+  "improvements": [
+   "IMPROVEMENT_TERRAFORMED_PLANET"
+  ],
+  "techs": [
+   "TECH_ASTROIMPERIALISM",
+   "TECH_JOVIAN_TERRAFORMING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GERONTOCRACY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_POSTHUMANISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ACNP_PROPULSION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 166029
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/ecosynthesis.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ECOSYNTHESIS",
+  "civilopedia": "TXT_KEY_TECH_ECOSYNTHESIS_PEDIA",
+  "quote": "TXT_KEY_TECH_ECOSYNTHESIS_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 132,
+  "gridY": 7
+ }
+}

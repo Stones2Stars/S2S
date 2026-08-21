@@ -1,0 +1,125 @@
+{
+ "type": "C2C_ERA_MEDIEVAL",
+ "costs": {
+  "world": {
+   "train": {
+    "percent": 100
+   },
+   "construct": {
+    "percent": 100
+   },
+   "create": {
+    "percent": 100
+   },
+   "research": {
+    "percent": 250
+   },
+   "researchCutBelowEra": {
+    "percent": 30
+   },
+   "build": {
+    "percent": 110
+   },
+   "improvementUpgrade": {
+    "percent": 100
+   }
+  }
+ },
+ "growth": {
+  "world": {
+   "percent": 120
+  }
+ },
+ "greatPeopleRate": {
+  "world": {
+   "percent": 200
+  }
+ },
+ "durations": {
+  "world": {
+   "civicAnarchy": {
+    "percent": 80
+   },
+   "religiousAnarchy": {
+    "percent": 80
+   }
+  }
+ },
+ "eventChance": {
+  "world": {
+   "flat": 8
+  }
+ },
+ "grants": {
+  "startingUnitMultiplier": 2,
+  "startingDefenseUnits": 2,
+  "startingWorkerUnits": 1,
+  "startingExploreUnits": 1,
+  "startingGold": 1000
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/mainscreen/Era/Medieval.dds"
+  }
+ },
+ "sound": {
+  "soundtrackSpace": 200,
+  "soundtracks": [
+   "AS2D_DRONOLANSTOWER",
+   "AS2D_MEDIEVALEPICTHEME_1",
+   "AS2D_MEDIEVALEPICTHEME_2",
+   "AS2D_MEDIEVALEPICTHEME_3",
+   "AS2D_MEDIEVALEPICTHEME_4",
+   "AS2D_SONG_VIKING",
+   "AS2D_SONG_CIV_III_MID_ASIAN",
+   "AS2D_SONG_CONQUESTS_JAPANESE_1",
+   "AS2D_SONG_CHINESE_ADAM",
+   "AS2D_SONG_CIV_III_MID_EUROPE",
+   "AS2D_SONG_CIV_III_MOD_CELTIC",
+   "AS2D_SONG_CONQUESTS_FANTASY1",
+   "AS2D_SONG_CONQUESTS_FANTASY2",
+   "AS2D_ALLEGRI_MISERERE",
+   "AS2D_ANONYMOUS_AY_SANTA_MARIA",
+   "AS2D_ANONYMOUS_LA_GAMBA",
+   "AS2D_BRUMEL_GLORIA",
+   "AS2D_CHANT_DEUS",
+   "AS2D_CHANT_LAUDATE",
+   "AS2D_CHANT_REGEN",
+   "AS2D_DE_LA_TORRE_ALTA",
+   "AS2D_DESPREZ_EL_GRILLO",
+   "AS2D_DESPREZ_LAMENT",
+   "AS2D_LASSUS_ALMA_REDEMPTORIS",
+   "AS2D_OCKEGHEM_INTEMERATA",
+   "AS2D_OCKEGHEM_KYRIE",
+   "AS2D_ORTIZ_RECERCADA",
+   "AS2D_PALESTRINA_CREDO",
+   "AS2D_PALESTRINA_GLORIA",
+   "AS2D_PRAETORIUS_BALLET",
+   "AS2D_PRAETORIUS_BRANSLE",
+   "AS2D_PRAETORIUS_VOLTE",
+   "AS2D_SHEPPARD_MEDIA_VITA"
+  ],
+  "citySoundscapes": [
+   {
+    "CITYSIZE_SMALL": "ASSS_CITY_MIDDLE_SMALL_SELECT_AMB"
+   },
+   {
+    "CITYSIZE_MEDIUM": "ASSS_CITY_MIDDLE_SMALL_SELECT_AMB"
+   },
+   {
+    "CITYSIZE_LARGE": "ASSS_CITY_MIDDLE_LARGE_SELECT_AMB"
+   }
+  ],
+  "unitVictory": "AS2D_VICTORY_MIDDLE",
+  "unitDefeat": "AS2D_LOSS_MIDDLE"
+ },
+ "identity": {
+  "description": "TXT_KEY_ERA_MEDIEVAL",
+  "strategy": "TXT_KEY_ERA_MEDIEVAL_STRATEGY",
+  "order": 4,
+  "advancedStart": 4000,
+  "historicalStartYear": 450,
+  "historicalEndYear": 1400,
+  "normalSpeedTurns": 120
+ }
+}

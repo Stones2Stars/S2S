@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_CULTURE_INDIAN",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_ASIAN",
+    "BUILDING_C_L_ASIAN",
+    "TECH_POLYTHEISM",
+    {
+     "type": "FEATURE_JUNGLE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SPICES",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_INDIAN"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_TAJ_MAHAL": {
+     "percent": 10
+    },
+    "BUILDING_EAST_INDIA_COMPANY": {
+     "percent": 10
+    },
+    "BUILDING_AKSHARDHAM": {
+     "percent": 10
+    },
+    "BUILDING_MEENAKSHI_TEMPLE": {
+     "percent": 10
+    },
+    "BUILDING_THE_BRIHADEESWARAR_TEMPLE": {
+     "percent": 10
+    },
+    "BUILDING_GREAT_BATH_OF_MOHENJO_DARO": {
+     "percent": 10
+    },
+    "BUILDING_KERALA_SCHOOL_OF_MATHEMATICS": {
+     "percent": 10
+    },
+    "BUILDING_LOTUS_TEMPLE": {
+     "percent": 10
+    },
+    "BUILDING_DELHI_MUMBAI_INDUSTRIAL_CORRIDOR": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 792,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_INDIAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_INDIAN",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_INDIAN_PEDIA",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_RESOURCES_TITANIUM_INGOTS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_METALS_MEGACOMPLEX"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_METALS_MEGACOMPLEX"
+   ],
+   "all": [
+    {
+     "any": [
+      "BUILDING_NATIONAL_SMELTER_TITANIUM",
+      "BUILDING_SMELTER_TITANIUM",
+      "BUILDING_TITANIUM_RECLAMATION_PLANT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_TITANIUM_INGOTS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESOURCES_TITANIUM_INGOTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_TITANIUM_INGOTS",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

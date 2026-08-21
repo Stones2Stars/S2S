@@ -1,0 +1,30 @@
+{
+ "type": "BONUS_ANDROIDS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANDROID_BROTHEL",
+   "BUILDING_ANDROID_PARENTS",
+   "BUILDING_ANDROID_SERVANT_STORE",
+   "BUILDING_ARTIFICIAL_CHILD_ADOPTION_AGENCY",
+   "BUILDING_AUTODOCTOR",
+   "BUILDING_SOCIABLE_ROBOTS",
+   "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB"
+  ],
+  "units": [
+   "UNIT_ANDROID_INFANTRY",
+   "UNIT_ANTHROID_INFANTRY",
+   "UNIT_SENTROID_INFANTRY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ANDROIDS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ANDROIDS",
+  "civilopedia": "TXT_KEY_BONUS_ANDROIDS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

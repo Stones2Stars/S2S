@@ -1,0 +1,18 @@
+{
+ "type": "PROMOTIONLINE_NEGLIGENT_PROMOTION",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PromotionNegligent.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_NEGLIGENT_PROMOTION",
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_MISSIONARY",
+   "UNITCOMBAT_EXECUTIVE"
+  ]
+ }
+}

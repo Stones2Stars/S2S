@@ -1,0 +1,24 @@
+{
+ "type": "CULTURELEVEL_POOR",
+ "allowed": {
+  "worldWonders": 1,
+  "teamWonders": 1,
+  "nationalWonders": 4
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 3
+   }
+  }
+ },
+ "replacedBy": {
+  "cultureLevel": "CULTURELEVEL_ALT_POOR",
+  "onGameOption": "GAMEOPTION_CULTURE_1_CITY_TILE_FOUNDING"
+ },
+ "identity": {
+  "description": "TXT_KEY_CULTURELEVEL_POOR",
+  "cityRadius": 2,
+  "cultureThreshold": 0
+ }
+}

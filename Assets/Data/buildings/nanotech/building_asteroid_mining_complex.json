@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_ASTEROID_MINING_COMPLEX",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_CISLUNAR_ASTEROID_MINE",
+     "scope": "empire",
+     "min": 2,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_MAGLEV_LAUNCHER",
+     "scope": "empire",
+     "min": 2,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_LUNAR_LAUNCH_SITE",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_SKYHOOK",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_LUNAR_TRADE",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "gold": {
+  "city": {
+   "flat": 4000
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_ASTEROID_MINING_COMPLEX",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 6311,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ASTEROID_MINING_COMPLEX"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ASTEROID_MINING_COMPLEX",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ASTEROID_MINING_COMPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_ASTEROID_MINING_COMPLEX_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

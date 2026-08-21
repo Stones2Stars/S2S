@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_FIRE_HANGAR",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FLIGHT",
+    {
+     "any": [
+      "BUILDING_AIRPORT",
+      "BUILDING_COMMERCIAL_AIRPORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_FRESHWATER"
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": "TECH_FIRE_SUPPRESSION"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "cost": {
+  "production": 950,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FIRE_HANGAR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FIRE_HANGAR",
+  "civilopedia": "TXT_KEY_BUILDING_FIRE_HANGAR_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

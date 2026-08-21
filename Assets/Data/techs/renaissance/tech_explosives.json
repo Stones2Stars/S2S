@@ -1,0 +1,117 @@
+{
+ "type": "TECH_EXPLOSIVES",
+ "enables": {
+  "bonuses": [
+   "BONUS_AMMUNITION"
+  ],
+  "buildings": [
+   "BUILDING_AMMUNITIONS_WORKSHOP",
+   "BUILDING_CULTURE_CAMBEBA"
+  ],
+  "builds": [
+   "BUILD_CORE_MINE",
+   "BUILD_FACTORY",
+   "BUILD_FARM",
+   "BUILD_HYDROCARBON_WELL",
+   "BUILD_MANUFACTURING_COMPLEX",
+   "BUILD_MODERN_MINE",
+   "BUILD_PAVED_ROAD",
+   "BUILD_PLANT_BAMBOO",
+   "BUILD_PLANT_JUNGLE",
+   "BUILD_PLANT_SAVANNA",
+   "BUILD_RECLAIM_LAND",
+   "BUILD_REMOVE_ROCK_FORMATION",
+   "BUILD_SHAFT_MINE",
+   "BUILD_SOLAR_PANELS",
+   "BUILD_SUBURBS",
+   "BUILD_TERRAFORM_DESERT",
+   "BUILD_TERRAFORM_DUNES",
+   "BUILD_TERRAFORM_GRASS",
+   "BUILD_TERRAFORM_LUSH",
+   "BUILD_TERRAFORM_MUDDY",
+   "BUILD_TERRAFORM_PERMAFROST",
+   "BUILD_TERRAFORM_PLAINS",
+   "BUILD_TERRAFORM_ROCKY",
+   "BUILD_TERRAFORM_SCRUB",
+   "BUILD_TERRAFORM_TAIGA",
+   "BUILD_TERRAFORM_TUNDRA",
+   "BUILD_TOWN",
+   "BUILD_VERTICAL_FARM",
+   "BUILD_VILLAGE",
+   "BUILD_WINERY",
+   "BUILD_YOUNG_FOREST"
+  ],
+  "improvements": [
+   "IMPROVEMENT_SHAFT_MINE"
+  ],
+  "promotions": [
+   "PROMOTION_CHEMICAL1"
+  ],
+  "techs": [
+   "TECH_MINE_WARFARE",
+   "TECH_RIFLING"
+  ],
+  "units": [
+   "UNIT_CABANAGEM_REBEL",
+   "UNIT_GREAT_BOMBARD",
+   "UNIT_GRENADIER",
+   "UNIT_JADID_GRENADIERS",
+   "UNIT_ORGAN_GUN",
+   "UNIT_TWAFO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SCIENTIFIC_METHOD",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FLINTLOCK",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 3274
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/Explosives.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_EXPLOSIVES",
+  "soundMP": "AS2D_TECH_EXPLOSIVES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_EXPLOSIVES",
+  "civilopedia": "TXT_KEY_TECH_EXPLOSIVES_PEDIA",
+  "quote": "TXT_KEY_TECH_EXPLOSIVES_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "militaryWorth": 8,
+  "tradeable": true,
+  "gridX": 56,
+  "gridY": 5
+ }
+}

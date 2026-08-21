@@ -1,0 +1,82 @@
+{
+ "type": "TECH_ARTIFICIAL_EVOLUTION",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_LUNARIS",
+   "BONUS_HUMAN_MOD_MARTIAN"
+  ],
+  "buildings": [
+   "BUILDING_HUMAN_MOD_LUNARIS",
+   "BUILDING_HUMAN_MOD_MARTIAN",
+   "BUILDING_INCUBATION_CENTER"
+  ],
+  "techs": [
+   "TECH_BOTANICAL_ALCHEMY",
+   "TECH_EVOLVED_CONSTRUCTION",
+   "TECH_MIND_UPLOADING",
+   "TECH_NUTRACEUTICAL_ANIMALS",
+   "TECH_WHOLE_BRAIN_EMULATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_UTOPIA_DESTINY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_QUADRUPLE_HELIX",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NOVO_PALEONTOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 67710
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/artificialevolution3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ARTIFICIAL_EVOLUTION",
+  "soundMP": "AS2D_TECH_ARTIFICIAL_EVOLUTION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ARTIFICIAL_EVOLUTION",
+  "civilopedia": "TXT_KEY_TECH_ARTIFICIAL_EVOLUTION_PEDIA",
+  "quote": "TXT_KEY_TECH_ARTIFICIAL_EVOLUTION_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 50,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 113,
+  "gridY": 15
+ }
+}

@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_CAT_SHRINE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PALEONTOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FELINE_DOMESTICATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CAT",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "RELIGION_KEMETISM"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 146,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CAT_SHRINE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CAT_SHRINE",
+  "civilopedia": "TXT_KEY_BUILDING_CAT_SHRINE_PEDIA",
+  "pediaCategory": "religious",
+  "advisor": "ADVISOR_RELIGION",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,80 @@
+{
+ "type": "TECH_CURRENCY",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUCTION_HOUSE",
+   "BUILDING_BROTHEL",
+   "BUILDING_CRIME_BLACKMAIL",
+   "BUILDING_CRIME_PICKPOCKETING",
+   "BUILDING_RIVER_AUTHORITY"
+  ],
+  "civics": [
+   "CIVIC_COINAGE",
+   "CIVIC_MERCENARIES"
+  ],
+  "processes": [
+   "PROCESS_WEALTH"
+  ],
+  "techs": [
+   "TECH_DEMOCRACY",
+   "TECH_INSURANCE",
+   "TECH_SPICE_TRADE"
+  ],
+  "units": [
+   "UNIT_KARIKALA_CHOLA",
+   "UNIT_LOPHORON",
+   "UNIT_PIYE",
+   "UNIT_RED_CHIEF"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BRASS_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "canTrade": {
+  "gold": true
+ },
+ "cost": {
+  "research": 499
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/Currency.dds,Art/Interface/Buttons/TechTree_Atlas.dds,7,9"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CURRENCY",
+  "soundMP": "AS2D_TECH_MP_CURRENCY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CURRENCY",
+  "civilopedia": "TXT_KEY_TECH_CURRENCY_PEDIA",
+  "quote": "TXT_KEY_TECH_CURRENCY_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 34,
+  "gridY": 11
+ }
+}

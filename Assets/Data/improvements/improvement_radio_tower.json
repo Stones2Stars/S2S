@@ -1,0 +1,53 @@
+{
+ "type": "IMPROVEMENT_RADIO_TOWER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RADIO",
+     "scope": "team"
+    },
+    "HAS_PEAK",
+    "HAS_PEAK"
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    4,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WIRELESS_ELECTRICITY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "plot": {
+   "flat": 30
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_RADIO_TOWER"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_RADIO_TOWER",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_RADIO_TOWER_PEDIA",
+  "advancedStart": {
+   "cost": 50
+  },
+  "outsideBorders": true,
+  "cultureRange": 1
+ }
+}

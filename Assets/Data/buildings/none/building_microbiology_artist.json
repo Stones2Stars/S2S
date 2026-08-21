@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_MICROBIOLOGY_ARTIST",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MICROBIOLOGY_LAB",
+    "TECH_BIOPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BIOPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_ARTIST": 1
+  }
+ },
+ "cost": {
+  "production": 3665,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MICROBIOLOGY_ARTIST",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MICROBIOLOGY_ARTIST",
+  "civilopedia": "TXT_KEY_BUILDING_MICROBIOLOGY_ARTIST_PEDIA",
+  "specialBuildingType": "SPECIALBUILDING_PUNK_BIO",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

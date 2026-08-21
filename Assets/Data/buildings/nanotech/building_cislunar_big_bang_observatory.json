@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_CISLUNAR_BIG_BANG_OBSERVATORY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_FACTORY",
+    "BUILDING_CISLUNAR_SATELLITE_FACTORY",
+    "BUILDING_CISLUNAR_TELESCOPE",
+    "TECH_AMPLIFIED_WAVELENGTHS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1000
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 1144,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_BIG_BANG_OBSERVATORY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_BIG_BANG_OBSERVATORY",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_BIG_BANG_OBSERVATORY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

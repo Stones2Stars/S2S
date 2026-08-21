@@ -1,0 +1,76 @@
+{
+ "type": "TECH_VERTICAL_FLIGHT",
+ "enables": {
+  "bonuses": [
+   "BONUS_HELICOPTERS"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_HELICOPTERS",
+   "BUILDING_HELICOPTER_TRAINING_CENTER"
+  ],
+  "promotions": [
+   "PROMOTION_POLICING7"
+  ],
+  "techs": [
+   "TECH_ASTRONAUTICS"
+  ],
+  "units": [
+   "UNIT_AH64_GUNSHIP",
+   "UNIT_EARLY_MEDIVAC",
+   "UNIT_GUNSHIP",
+   "UNIT_MODERN_MEDIVAC",
+   "UNIT_POLICE_HELICOPTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ZEPPELINS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADVANCED_AVIATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 12657
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/VerticalFlight.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,7,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_VERTICAL_FLIGHT",
+  "soundMP": "AS2D_TECH_VERTICAL_FLIGHT"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_VERTICAL_FLIGHT",
+  "civilopedia": "TXT_KEY_TECH_VERTICAL_FLIGHT_PEDIA",
+  "quote": "TXT_KEY_TECH_VERTICAL_FLIGHT_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 79,
+  "gridY": 9
+ }
+}

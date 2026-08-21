@@ -1,0 +1,64 @@
+{
+ "type": "TECH_COSMIC_PERSPECTIVE",
+ "enables": {
+  "buildings": [
+   "BUILDING_10000_YEAR_CLOCK",
+   "BUILDING_KUIPER_BELT_ENZMANN_STARSHIP",
+   "BUILDING_KUIPER_BELT_INTERSTELLAR_SUPPLY_BASE"
+  ],
+  "civics": [
+   "CIVIC_COSMIC_ENLIGHTENING"
+  ],
+  "techs": [
+   "TECH_DATA_ARCHIVAL",
+   "TECH_INTERSTELLAR_COLONIZATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CULTURAL_EVOLUTION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LUNAR_TERRAFORMING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 144040
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/cosmic_perspective.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_COSMIC_PERSPECTIVE",
+  "civilopedia": "TXT_KEY_TECH_COSMIC_PERSPECTIVE_PEDIA",
+  "quote": "TXT_KEY_TECH_COSMIC_PERSPECTIVE_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 128,
+  "gridY": 11
+ }
+}

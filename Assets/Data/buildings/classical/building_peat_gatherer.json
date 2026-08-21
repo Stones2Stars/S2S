@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_PEAT_GATHERER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_EARTHWORKS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_IRON_WORKING",
+    {
+     "type": "FEATURE_PEAT_BOG",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_MODERN_EARTHWORKS"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_PEAT"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 216,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PEAT_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PEAT_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_PEAT_GATHERER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

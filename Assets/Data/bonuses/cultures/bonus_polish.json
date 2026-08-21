@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_POLISH",
+ "enables": {
+  "units": [
+   "UNIT_CASIMIR",
+   "UNIT_JADWIGA",
+   "UNIT_WINGED_CAVALRY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_POLISH"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_POLISH",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

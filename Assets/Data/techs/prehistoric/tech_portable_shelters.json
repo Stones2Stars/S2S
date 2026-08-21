@@ -1,0 +1,74 @@
+{
+ "type": "TECH_PORTABLE_SHELTERS",
+ "enables": {
+  "buildings": [
+   "BUILDING_HOUSING_TIPIS",
+   "BUILDING_HOUSING_YURTS",
+   "BUILDING_TRAVOIS_MAKER"
+  ],
+  "promotions": [
+   "PROMOTION_BUSHWHACK2",
+   "PROMOTION_CAUTIOUS3"
+  ],
+  "techs": [
+   "TECH_STONE_BUILDING",
+   "TECH_TRIBALISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SKINNING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRACKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 20
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/portableshelter.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PORTABLE_SHELTERS",
+  "soundMP": "AS2D_TECH_PORTABLE_SHELTERS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PORTABLE_SHELTERS",
+  "civilopedia": "TXT_KEY_TECH_PORTABLE_SHELTERS_PEDIA",
+  "quote": "TXT_KEY_TECH_PORTABLE_SHELTERS_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "tradeable": true,
+  "gridX": 10,
+  "gridY": 11
+ }
+}

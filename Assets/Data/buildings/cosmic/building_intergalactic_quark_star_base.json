@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_INTERGALACTIC_QUARK_STAR_BASE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_STRANGE_STAR_CITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_STARPORT",
+    "TECH_EXOTIC_STARS",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 3301,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_QUARK_STAR_BASE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_QUARK_STAR_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_QUARK_STAR_BASE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_HURON",
+ "enables": {
+  "units": [
+   "UNIT_HURON_MANLET"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HURON"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HURON",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

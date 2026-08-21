@@ -1,0 +1,78 @@
+{
+ "type": "TECH_STARGAZING",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHEOMSEONGDAE",
+   "BUILDING_SERPENT_MOUND",
+   "BUILDING_STARGAZERS_HUT"
+  ],
+  "builds": [
+   "BUILD_GEOGLYPH"
+  ],
+  "improvements": [
+   "IMPROVEMENT_GEOGLYPH"
+  ],
+  "techs": [
+   "TECH_DIVINATION",
+   "TECH_NGAIISM",
+   "TECH_SUNDIAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ANCESTOR_WORSHIP",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_EXPLORATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 144
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/stargazing.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_STARGAZING",
+  "soundMP": "AS2D_TECH_STARGAZING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_STARGAZING",
+  "civilopedia": "TXT_KEY_TECH_STARGAZING_PEDIA",
+  "quote": "TXT_KEY_TECH_STARGAZING_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 16,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 24,
+  "gridY": 3
+ }
+}

@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_MARTIAN_ALGAE_DESIGNER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MARTIAN_CITY",
+    "BUILDING_MARTIAN_BIOFACTORY",
+    "TECH_DYSTOPIA_PATHOGENS",
+    "TECH_DESIGNER_MICROBIOLOGY",
+    "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ULTRAFUEL"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 1577,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_ALGAE_DESIGNER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_ALGAE_DESIGNER",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_ALGAE_DESIGNER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

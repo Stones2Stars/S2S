@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_TORTURE_CHAMBER",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERROGATION_CHAIR",
+   "BUILDING_INTESTINAL_RATS",
+   "BUILDING_IRON_MAIDEN",
+   "BUILDING_JUDAS_CRADLE",
+   "BUILDING_SCAVENGERS_DAUGHTER",
+   "BUILDING_THE_RACK",
+   "BUILDING_THUMBSCREW"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PSYCHOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_JAIL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DUNGEON",
+    "TECH_TORTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_JAIL"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "research": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 356,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TORTURE_CHAMBER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_JAIL"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TORTURE_CHAMBER",
+  "civilopedia": "TXT_KEY_BUILDING_TORTURE_CHAMBER_PEDIA",
+  "worth": 4,
+  "militaryWorth": 4,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

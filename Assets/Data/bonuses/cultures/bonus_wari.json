@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_WARI",
+ "enables": {
+  "units": [
+   "UNIT_ORONAO_WATCHER",
+   "UNIT_PAAKA"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_WARI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_WARI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_ANIMAL_TRAINER_BUFFALO",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TAMER_COMPLEX",
+   "BUILDING_CARAVAN_POST"
+  ],
+  "units": [
+   "UNIT_WORKBUFFALO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_EQUINE_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_HERD_BUFFALO",
+      "BUILDING_FARM_ANIMAL_OXEN",
+      "BUILDING_INDUSTRIAL_FARMS",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 125,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_BUFFALO",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BUFFALO",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BUFFALO_PEDIA",
+  "worth": 2,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

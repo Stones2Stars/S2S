@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_BANDANESE",
+ "enables": {
+  "units": [
+   "UNIT_BOROBUDUR",
+   "UNIT_ORANG_KAYA"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_BANDANESE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_BANDANESE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

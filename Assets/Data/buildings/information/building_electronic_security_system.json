@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
+ "enables": {
+  "units": [
+   "UNIT_BEGGAR",
+   "UNIT_BURGLAR",
+   "UNIT_CUTTHROAT",
+   "UNIT_KARAI_PYHARE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_BINARY_LEGISLATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BIOMETRIC_SECURITY_SYSTEM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_FIBER_OPTICS",
+    {
+     "any": [
+      "BUILDING_POLICE_STATION",
+      "BUILDING_POLICE_PRECINCT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_BIOMETRIC_SECURITY_SYSTEM"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 11
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 5
+   }
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "cost": {
+  "production": 1845,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ELECTRONIC_SECURITY_SYSTEM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ELECTRONIC_SECURITY_SYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_ELECTRONIC_SECURITY_SYSTEM_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

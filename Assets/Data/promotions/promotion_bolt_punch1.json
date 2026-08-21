@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTION_BOLT_PUNCH1",
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 3
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BOLT_PUNCH": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/BoltPunch1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BOLT_PUNCH1"
+ }
+}

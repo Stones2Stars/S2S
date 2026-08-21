@@ -1,0 +1,80 @@
+{
+ "type": "TRAIT_TEMPERAMENTAL",
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": 20,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "experience": {
+  "empire": {
+   "levelModifier": {
+    "percent": 5
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 5
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "distanceModifier": {
+    "percent": 5
+   }
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitTemperamental.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_TEMPERAMENTAL",
+  "civilopedia": "TXT_KEY_TRAIT_TEMPERAMENTAL_PEDIA",
+  "shortDescription": "TXT_KEY_TRAIT_TEMPERAMENTAL_SHORT",
+  "negativeTrait": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_TEMPERAMENTAL1"
+  ]
+ }
+}

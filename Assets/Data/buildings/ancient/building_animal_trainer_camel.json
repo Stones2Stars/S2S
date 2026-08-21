@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_ANIMAL_TRAINER_CAMEL",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TAMER_COMPLEX",
+   "BUILDING_CARAVAN_POST",
+   "BUILDING_KNIGHTS_STABLE",
+   "BUILDING_MODERN_STABLE",
+   "BUILDING_STABLE"
+  ],
+  "units": [
+   "UNIT_ARABIA_CAMELARCHER",
+   "UNIT_BACTRIAN_CATAPHRACT",
+   "UNIT_CAMEL_ARCHER",
+   "UNIT_CAMEL_CAVALRY",
+   "UNIT_CAMEL_CUIRASSIER",
+   "UNIT_CAMEL_GUNNER",
+   "UNIT_CAMEL_KNIGHT",
+   "UNIT_CAMEL_RIDER",
+   "UNIT_CAMEL_TRENCH_CAVALRY",
+   "UNIT_MAMELUK",
+   "UNIT_MEHARISTS",
+   "UNIT_TAMED_CAMEL",
+   "UNIT_TUAREG_CAMEL",
+   "UNIT_WORKCAMEL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CAMELID_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_FARM_ANIMAL_CAMEL",
+      "BUILDING_HERD_CAMEL",
+      "BUILDING_CENTRAL_BREEDER_CAMEL",
+      "BUILDING_INDUSTRIAL_FARMS",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CAMEL",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 160,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_CAMEL",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_CAMEL",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_CAMEL_PEDIA",
+  "worth": 4,
+  "militaryWorth": 6,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

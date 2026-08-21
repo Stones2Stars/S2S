@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_CENTAURUS_SUPERCLUSTER_COLONY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_SUPERCLUSTER_COLONY",
+    "TECH_INTERCLUSTER_TRAVEL",
+    {
+     "type": "TERRAIN_OBSERVABLE_UNIVERSE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_COMA_SUPERCLUSTER_COLONY",
+    "BUILDING_HYDRA_SUPERCLUSTER_COLONY",
+    "BUILDING_PERSEUS_PISCES_SUPERCLUSTER_COLONY"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERGALACTIC_SUPERCLUSTER_COLONY": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 16984,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CENTAURUS_SUPERCLUSTER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CENTAURUS_SUPERCLUSTER_COLONY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CENTAURUS_SUPERCLUSTER_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_CENTAURUS_SUPERCLUSTER_COLONY_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_CHAFF",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_IMPROVED_RADAR"
+   ]
+  }
+ },
+ "air": {
+  "unit": {
+   "evasion": {
+    "percent": 15
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/jetplane.dds,Art/RoM_Promotions_atlas.dds,5,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CHAFF",
+  "unitCombats": [
+   "UNITCOMBAT_HELICOPTER",
+   "UNITCOMBAT_JET_FIGHTERS",
+   "UNITCOMBAT_BOMBERS",
+   "UNITCOMBAT_SUPERSONIC_PLANES",
+   "UNITCOMBAT_STEALTH"
+  ]
+ }
+}

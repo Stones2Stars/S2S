@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_SPACE_COLONY_TRANSTELLAR",
+ "enables": {
+  "buildings": [
+   "BUILDING_PROJECT_ICARUS",
+   "BUILDING_TRANSTELLAR_HYDROGEN_MAP",
+   "BUILDING_TRANSTELLAR_SUBTERRANEAN_CITY",
+   "BUILDING_TRANSTELLAR_SUBTERRANEAN_FARM"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_INTERSTELLAR_TRAVEL",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -15
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SPACE_COLONY_TRANSTELLAR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_COLONY_TRANSTELLAR",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_TRANSTELLAR_PEDIA",
+  "pediaCategory": "space",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

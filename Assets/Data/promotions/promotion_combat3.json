@@ -1,0 +1,46 @@
+{
+ "type": "PROMOTION_COMBAT3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BLITZ",
+   "PROMOTION_CHARGE3",
+   "PROMOTION_COMBAT4",
+   "PROMOTION_FANATIC",
+   "PROMOTION_FORMATION3",
+   "PROMOTION_MOUNTAINEER",
+   "PROMOTION_PARAMEDIC3",
+   "PROMOTION_PROJECTION2",
+   "PROMOTION_SENSORS",
+   "PROMOTION_SENTRY",
+   "PROMOTION_SHADOWSTALKER1",
+   "PROMOTION_STALK_PREY",
+   "PROMOTION_WARRIORS_INTUITION2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT2"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COMBAT": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat3.dds,Art/Interface/Buttons/Promotions_Atlas.dds,2,6"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COMBAT3"
+ }
+}

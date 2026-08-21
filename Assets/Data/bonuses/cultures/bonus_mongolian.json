@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_MONGOLIAN",
+ "enables": {
+  "units": [
+   "UNIT_MONGOL_KESHIK",
+   "UNIT_OGODAI",
+   "UNIT_SUBOTEI"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MONGOLIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MONGOLIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

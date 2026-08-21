@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_GO_TO_MAP_MARS",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_MARS",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_MARS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PLANETARY_EXPLORATION"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

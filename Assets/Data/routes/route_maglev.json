@@ -1,0 +1,117 @@
+{
+ "type": "ROUTE_MAGLEV",
+ "food": {
+  "plot": {
+   "improvements": {
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "plot": {
+   "improvements": {
+    "IMPROVEMENT_MOUNTAIN_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_MODERN_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SHAFT_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_QUARRY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HYBRID_FOREST": {
+     "flat": 1
+    },
+    "IMPROVEMENT_TREEFARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_LUMBERMILL": {
+     "flat": 1
+    },
+    "IMPROVEMENT_MANUFACTURING_COMPLEX": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FACTORY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WORKSHOP": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1,
+   "improvements": {
+    "IMPROVEMENT_ARCHEOLOGICAL_SITE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_NATURE_PRESERVE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FOSSIL_DIG_SITE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HYBRID_FOREST": {
+     "flat": 1
+    },
+    "IMPROVEMENT_TREEFARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_LUMBERMILL": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SUBURBS": {
+     "flat": 2
+    },
+    "IMPROVEMENT_TOWN": {
+     "flat": 2
+    },
+    "IMPROVEMENT_VILLAGE": {
+     "flat": 2
+    },
+    "IMPROVEMENT_MANUFACTURING_COMPLEX": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FACTORY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_FOREST_PRESERVE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 22
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/BuildMaglev.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_ROUTE_MAGLEV",
+  "value": 8,
+  "advancedStart": {
+   "cost": 24
+  }
+ }
+}

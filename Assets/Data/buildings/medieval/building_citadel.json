@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_CITADEL",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ARTILLERY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_CASTLE",
+      "BUILDING_STAR_FORT",
+      "BUILDING_IMPERIAL_FORTRESS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_CHRISTIANITY"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 50
+   },
+   "bombardDefense": {
+    "percent": 20
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_SIEGE": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 310,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_ESPIONAGE": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CITADEL"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CASTLE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CITADEL",
+  "civilopedia": "TXT_KEY_BUILDING_CITADEL_PEDIA",
+  "pediaCategory": "religious",
+  "centerInCity": true,
+  "worth": 2,
+  "militaryWorth": 3,
+  "conquestProbability": 40,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

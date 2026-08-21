@@ -1,0 +1,110 @@
+{
+ "type": "BUILDING_INTELLIGENT_PAVEMENT",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TELEPORT_BOOTH"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_AUTOMATED_URBANIZATION",
+    {
+     "any": [
+      "BUILDING_ASPHALT_ROADS",
+      "BUILDING_HIGHWAY",
+      "BUILDING_SKYROAD_CONTROL_TOWER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DYE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_PLASTIC",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_FIBERGLASS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_TELEPORT_BOOTH"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 3805,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTELLIGENT_PAVEMENT",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTELLIGENT_PAVEMENT",
+  "civilopedia": "TXT_KEY_BUILDING_INTELLIGENT_PAVEMENT_PEDIA",
+  "worth": 4,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

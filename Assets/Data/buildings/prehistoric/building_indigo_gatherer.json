@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_INDIGO_GATHERER",
+ "enables": {
+  "buildings": [
+   "BUILDING_DYE_MAKER"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_AGRICULTURAL_ENGINEERING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FARM_FLOWER_INDIGO"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_NATURAL_PIGMENTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "BONUS_INDIGO",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_FARM_FLOWER_INDIGO",
+    "BUILDING_GREENHOUSE"
+   ]
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 70,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INDIGO_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INDIGO_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_INDIGO_GATHERER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

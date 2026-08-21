@@ -1,0 +1,54 @@
+{
+ "type": "FEATURE_CRATER_MEDIUM",
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 25
+   }
+  }
+ },
+ "characteristics": [
+  "unimprovable"
+ ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": {
+    "type": "POPULATION",
+    "scope": "city",
+    "min": 30
+   },
+   "action": {
+    "destroy": "self"
+   }
+  }
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_CRATER_MEDIUM"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_CRATER_MEDIUM",
+  "civilopedia": "TXT_KEY_FEATURE_CRATER_PEDIA",
+  "appearance": 300,
+  "noAdjacent": true,
+  "requiresFlatlands": true,
+  "validTerrains": [
+   "TERRAIN_LUNAR_REGOLITH",
+   "TERRAIN_LUNAR_MARE",
+   "TERRAIN_LUNAR_HIGHLAND",
+   "TERRAIN_LUNAR_DOME",
+   "TERRAIN_LUNAR_RILLE"
+  ]
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY",
+ "enables": {
+  "units": [
+   "UNIT_ATTACKSHIP",
+   "UNIT_WORLDSHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_DOCKING_BAY",
+    "BUILDING_DEEP_SPACE_FACTORY",
+    "TECH_NUCLEAR_PULSE_PROPULSION",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    50,
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_ULTRAFUEL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 3308,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

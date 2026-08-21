@@ -1,0 +1,89 @@
+{
+ "type": "TECH_TRAILS",
+ "enables": {
+  "buildings": [
+   "BUILDING_TRAILS"
+  ],
+  "builds": [
+   "BUILD_TRAIL"
+  ],
+  "promotions": [
+   "PROMOTION_CARAVAN_MOVEMENT_I",
+   "PROMOTION_FORESTRY",
+   "PROMOTION_STREET_FIGHTER1",
+   "PROMOTION_WOODSMAN2"
+  ],
+  "techs": [
+   "TECH_PERSISTENCE_HUNTING",
+   "TECH_SKINNING"
+  ],
+  "units": [
+   "UNIT_NEANDERTHAL_SCOUT",
+   "UNIT_SCOUT"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_WANDERER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NOMADISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 3
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_RELIGION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/tracking.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TRAILS",
+  "soundMP": "AS2D_TECH_TRAILS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TRAILS",
+  "civilopedia": "TXT_KEY_TECH_TRAILS_PEDIA",
+  "quote": "TXT_KEY_TECH_TRAILS_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 2,
+  "gridY": 5
+ }
+}

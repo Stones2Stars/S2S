@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_TRANSTELLAR_HIVEMIND",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TRANSTELLAR_SCOUTING_FLEET",
+    "TECH_SPECIES_AMALGAMATION",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": 10,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -20
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "cost": {
+  "production": 4789,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_HIVEMIND",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_HIVEMIND",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_HIVEMIND_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

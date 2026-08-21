@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_WEATHER_STATION",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MODERN_OFFICES",
+    "TECH_LONG_RANGE_FORECASTING",
+    {
+     "any": [
+      "BUILDING_BROADCAST_TOWER",
+      "BUILDING_COMMUNICATION_TOWER",
+      "BUILDING_NETWORK_NODE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_WEATHER_FORECAST_LAND",
+      "PROMOTION_WEATHER_FORECAST_AIR",
+      "PROMOTION_WEATHER_FORECAST_NAVAL"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 1475,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WEATHER_STATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WEATHER_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_WEATHER_STATION_PEDIA",
+  "worth": 5,
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,86 @@
+{
+ "type": "RELIGION_YORUBA",
+ "enables": {
+  "buildings": [
+   "BUILDING_PATTAKY_OF_OBATALA",
+   "BUILDING_PATTAKY_OF_OGGUN",
+   "BUILDING_PATTAKY_OF_OLOFIN",
+   "BUILDING_PATTAKY_OF_OLOKUN",
+   "BUILDING_PATTAKY_OF_OSHOSI"
+  ],
+  "units": [
+   "UNIT_YORUBA_MISSIONARY"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_YORUBA"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_YORUBA"
+     }
+    }
+   ]
+  }
+ },
+ "grants": {
+  "freeUnit": "UNIT_YORUBA_MISSIONARY",
+  "numFreeUnits": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 18,
+   "icon": "Art/Interface/Buttons/Religions/Yoruba.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Yoruba.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Yoruba.dds",
+   "movie": {
+    "file": "Art/Cutscene/Yoruba_Generic_Found.nif",
+    "sound": "AS2D_BUILD_YORUBA_MOVIE"
+   }
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_YORUBA"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_YORUBA",
+  "adjective": "TXT_KEY_TECH_YORUBA_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_YORUBA_PEDIA",
+  "spreadFactor": 10
+ }
+}

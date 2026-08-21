@@ -1,0 +1,42 @@
+{
+ "type": "PROMOTION_PARAMEDIC3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_PARAMEDIC2",
+    "PROMOTION_COMBAT3"
+   ]
+  }
+ },
+ "heal": {
+  "unit": {
+   "sameTile": {
+    "flat": 5
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_PARAMEDIC": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/paramedic3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_PARAMEDIC3"
+ }
+}

@@ -1,0 +1,239 @@
+{
+ "type": "UNIT_SPECIAL_FORCES",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SUPERSTRONG_ALLOYS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_BIVOUAC_GROUNDS",
+    "TECH_LASER",
+    "TECH_GUERRILLA_WARFARE",
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HTSNIPER",
+     "UNIT_SPECIAL_INFANTRY"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 2,
+   "dropRange": {
+    "flat": 7
+   }
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 25
+   },
+   "lunge": {
+    "percent": 18
+   },
+   "unnerve": {
+    "percent": 18
+   },
+   "stealthStrikes": {
+    "flat": 3
+   },
+   "stealth": {
+    "percent": 65
+   },
+   "breakdownChance": {
+    "flat": 25
+   },
+   "breakdownDamage": {
+    "flat": 5
+   },
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE_GUNPOWDER": {
+     "percent": 50
+    },
+    "UNITCOMBAT_SIEGE_ROCKETRY": {
+     "percent": 50
+    }
+   },
+   "flanking": {
+    "UNITCOMBAT_SIEGE_GUNPOWDER": {
+     "percent": 50
+    },
+    "UNITCOMBAT_SIEGE_ROCKETRY": {
+     "percent": 50
+    }
+   },
+   "targets": {
+    "UNITCOMBAT_EXPLORER": true,
+    "UNITCOMBAT_CANINE": true,
+    "UNITCOMBAT_SIEGE_GUNPOWDER": true,
+    "UNITCOMBAT_SIEGE_ROCKETRY": true,
+    "UNITCOMBAT_PROMOTED_ARMED_GUARD": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 75
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 2
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 2
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 5
+   },
+   "evasion": {
+    "percent": 25
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 15
+   }
+  }
+ },
+ "skills": [
+  "assassin",
+  "pillage",
+  "counterSpy",
+  "destroy",
+  "ignoreBuildingDefense",
+  "ignoreTerrainCost",
+  "ignoreZoneOfControl",
+  "rivalTerritory",
+  "sabotage",
+  "stealPlans",
+  "ignoreNoEntryLevel",
+  "camouflage"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "troop"
+ ],
+ "combatClass": "UNITCOMBAT_STRIKE_TEAM",
+ "combatClasses": [
+  "UNITCOMBAT_GUN",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_MODERN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "hideAndSeek": {
+  "method": "camouflage",
+  "concealment": {
+   "flat": 700
+  },
+  "detection": {
+   "value": 500,
+   "unit": "HAS_CAMOUFLAGE"
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SNIPER",
+   "PROMOTION_SENTRY",
+   "PROMOTION_AMBUSH"
+  ]
+ },
+ "cost": {
+  "production": 1620,
+  "upkeep": 11
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SPECIAL_FORCES_GERMAN",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_SPECIAL_FORCES_GERMAN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_SPECIAL_FORCES",
+  "civilopedia": "TXT_KEY_UNIT_SPECIAL_FORCES_PEDIA",
+  "worth": 15,
+  "militaryWorth": 55,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_RANGED",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PARADROP",
+   "UNITAI_PILLAGE_COUNTER",
+   "UNITAI_PILLAGE"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

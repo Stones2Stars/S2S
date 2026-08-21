@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_JAPANESE",
+ "enables": {
+  "units": [
+   "UNIT_HIDEYOSHI",
+   "UNIT_JAPAN_SAMURAI",
+   "UNIT_YAMAMOTO"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_JAPANESE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_JAPANESE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

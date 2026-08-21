@@ -1,0 +1,102 @@
+{
+ "type": "BUILDING_SILICON_VALLEY",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COMPUTER_NETWORKS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_COMPUTER_NETWORK",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 8850,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 300
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SILICON_VALLEY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SILICON_VALLEY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_LABORATORY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SILICON_VALLEY",
+  "civilopedia": "TXT_KEY_BUILDING_SILICON_VALLEY_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 20,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

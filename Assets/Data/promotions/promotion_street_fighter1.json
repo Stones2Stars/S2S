@@ -1,0 +1,49 @@
+{
+ "type": "PROMOTION_STREET_FIGHTER1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_STREET_FIGHTER2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT2"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 10
+   },
+   "cityDefense": {
+    "percent": 10
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_STREET_FIGHTER": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/StreetFighterPromotion1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_STREET_FIGHTER1"
+ }
+}

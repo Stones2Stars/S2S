@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_ACHIEVEMENT_POLITICAL",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_WRITING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 8
+  }
+ },
+ "freeSpecialists": {
+  "empire": {
+   "any": 1
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_POLITICAL_ACHIEVEMENT"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ACHIEVEMENT_POLITICAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ACHIEVEMENT_POLITICAL",
+  "civilopedia": "TXT_KEY_BUILDING_ACHIEVEMENT_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "notConstructible": true,
+  "worth": 10,
+  "specialBuildingType": "SPECIALBUILDING_ACHIEVEMENT",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

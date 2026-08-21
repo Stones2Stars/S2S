@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_MISSION_TO_MARS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COMMERCIAL_SPACEPORT",
+    "TECH_ASTEROID_BELT_PROBES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MARTIAN_HYDROPONICS_ARRAY": {
+     "flat": 3
+    },
+    "BUILDING_MARTIAN_HYDROPONICS_COMPLEX": {
+     "flat": 3
+    },
+    "BUILDING_MARTIAN_VERTICAL_FARM": {
+     "flat": 3
+    },
+    "BUILDING_MARTIAN_EXPANDED_HABITAT": {
+     "flat": 3
+    },
+    "BUILDING_MARTIAN_SKYSCRAPER": {
+     "flat": 3
+    },
+    "BUILDING_MARTIAN_SOLAR_ARRAY": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "cost": {
+  "production": 15750
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MISSION_MARS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MISSION_TO_MARS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MISSION_TO_MARS",
+  "civilopedia": "TXT_KEY_BUILDING_MISSION_TO_MARS_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

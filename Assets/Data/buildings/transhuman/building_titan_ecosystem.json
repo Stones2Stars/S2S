@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_TITAN_ECOSYSTEM",
+ "enables": {
+  "buildings": [
+   "BUILDING_TERRAFORMED_TITAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TITAN_BIOFACTORY",
+    "TECH_SPECULATIVE_PHYSIOLOGY",
+    {
+     "type": "MAPCATEGORY_TITANIC",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "cost": {
+  "production": 1650,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TITAN_ECOSYSTEM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TITAN_ECOSYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_TITAN_ECOSYSTEM_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_TITANIC"
+  ]
+ }
+}

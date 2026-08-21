@@ -1,0 +1,110 @@
+{
+ "type": "BUILDING_EDUCATION_FARCICAL",
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EDUCATION_DIMWITTED",
+    "BUILDING_EDUCATION_RIDICULOUS",
+    "BUILDING_EDUCATION_PREPOSTEROUS",
+    "BUILDING_EDUCATION_IDIOCRACY",
+    "BUILDING_EDUCATION_IGNORANCE",
+    "BUILDING_EDUCATION_BEWILDERED",
+    "BUILDING_EDUCATION_MINDLESS"
+   ],
+   "all": [
+    "TECH_INDUSTRIAL_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_EDUCATION",
+     "scope": "city",
+     "min": -2000000,
+     "max": -5000
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -30
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -30
+  }
+ },
+ "research": {
+  "city": {
+   "flat": -12,
+   "percent": -30
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "any": -3
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "percent": -36
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": -3
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -16
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": -21
+   }
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -60
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 21
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 21
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYEDUCATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EDUCATION_FARCICAL",
+  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

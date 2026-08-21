@@ -1,0 +1,64 @@
+{
+ "type": "TECH_CELEBRATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_EFFECT_FERTILITY_FESTIVAL",
+   "BUILDING_FERTILITY_FESTIVAL",
+   "BUILDING_GRAND_EARTH_FESTIVAL",
+   "BUILDING_GRAND_FIRE_FESTIVAL",
+   "BUILDING_GRAND_MARINE_FESTIVAL",
+   "BUILDING_GRAND_SKY_FESTIVAL"
+  ],
+  "techs": [
+   "TECH_MYSTICISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EARTH_OVEN",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CEREMONIAL_BURIAL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 45
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/celebration.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CELEBRATION",
+  "soundMP": "AS2D_TECH_CELEBRATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CELEBRATION",
+  "civilopedia": "TXT_KEY_TECH_CELEBRATION_PEDIA",
+  "quote": "TXT_KEY_TECH_CELEBRATION_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 16,
+  "gridY": 15
+ }
+}

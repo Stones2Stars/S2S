@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_CANARI",
+ "enables": {
+  "units": [
+   "UNIT_CANARI_BOWMANS",
+   "UNIT_YUPANQUI"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CANARI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CANARI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

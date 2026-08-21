@@ -1,0 +1,66 @@
+{
+ "type": "IMPROVEMENT_INTERSTELLAR_COLONY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ADVANCED_SEEDSHIPS",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_ORION_ARM",
+      "TERRAIN_MILKY_WAY",
+      "TERRAIN_GALACTIC_CORE",
+      "TERRAIN_NEBULA",
+      "TERRAIN_STAR_CLUSTER"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_FEMTOTECHNOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_FEMTOTECHNOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 12
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_INTERSTELLAR_COLONY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_INTERSTELLAR_COLONY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_INTERSTELLAR_COLONY_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

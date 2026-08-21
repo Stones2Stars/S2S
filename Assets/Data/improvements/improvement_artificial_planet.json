@@ -1,0 +1,47 @@
+{
+ "type": "IMPROVEMENT_ARTIFICIAL_PLANET",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ARTIFICIAL_PLANETS",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_MILKY_WAY",
+      "TERRAIN_GALACTIC_CORE",
+      "TERRAIN_ORION_ARM",
+      "TERRAIN_TRANSTELLAR_SPACE"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 20
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_ARTIFICIAL_PLANET"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_ARTIFICIAL_PLANET",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_ARTIFICIAL_PLANET_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

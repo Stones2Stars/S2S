@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_GUARDIAN3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_GUARDIAN2"
+   ]
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_GUARDIAN": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/patrol3.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,3,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_GUARDIAN3"
+ }
+}

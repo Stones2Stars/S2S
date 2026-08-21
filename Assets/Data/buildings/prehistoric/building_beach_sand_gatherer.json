@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_BEACH_SAND_GATHERER",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_SAND"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_EARTHWORKS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "TECH_NATURAL_PIGMENTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_MODERN_EARTHWORKS"
+   ]
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 70,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BEACH_SAND_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BEACH_SAND_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_BEACH_SAND_GATHERER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

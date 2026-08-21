@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_ZULU",
+ "enables": {
+  "units": [
+   "UNIT_NDLELA",
+   "UNIT_ZULU_IMPI"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ZULU"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ZULU",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

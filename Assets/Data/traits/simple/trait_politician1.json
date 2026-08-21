@@ -1,0 +1,139 @@
+{
+ "type": "TRAIT_POLITICIAN1",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_COMPLEX_POLITICIAN2"
+  ]
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_BALLROOM": {
+     "percent": 20
+    },
+    "BUILDING_GROVE": {
+     "percent": 20
+    },
+    "BUILDING_CASTLE_GARDEN": {
+     "percent": 20
+    },
+    "BUILDING_CITY_PARK": {
+     "percent": 20
+    },
+    "BUILDING_THRONE_ROOM": {
+     "percent": 20
+    },
+    "BUILDING_TOLL_HOUSE": {
+     "percent": 20
+    },
+    "BUILDING_STATE_PARK": {
+     "percent": 20
+    },
+    "BUILDING_SOCIAL_SERVICES": {
+     "percent": 20
+    },
+    "BUILDING_PUBLIC_TRANSPORTATION": {
+     "percent": 20
+    },
+    "BUILDING_PUBLIC_POOL": {
+     "percent": 20
+    },
+    "BUILDING_POLIS_COUNCIL": {
+     "percent": 20
+    },
+    "BUILDING_CUSTOMS_OFFICE": {
+     "percent": 20
+    },
+    "BUILDING_ATHLETIC_MEGACOMPLEX": {
+     "percent": 20
+    },
+    "BUILDING_IMPERIAL_FORTRESS": {
+     "percent": 20
+    },
+    "BUILDING_TELEPORT_BOOTH": {
+     "percent": 20
+    }
+   },
+   "units": {
+    "percent": [
+     {
+      "value": -10,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_POLIS_COUNCIL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": -25
+   },
+   "freeMilitary": {
+    "flat": -8
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": -30
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": -1
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_LOYALTY",
+       "enabled": "IS_SPY"
+      }
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 6
+   },
+   {
+    "FLAVOR_ESPIONAGE": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPolitician.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_POLITICIAN0",
+  "civilopedia": "TXT_KEY_TRAIT_POLITICIAN_PEDIA",
+  "shortDescription": "TXT_KEY_TRAIT_POLITICIAN_SHORT"
+ }
+}

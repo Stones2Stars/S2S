@@ -1,0 +1,76 @@
+{
+ "type": "TECH_GAMES",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAPTURE_THE_FLAG",
+   "BUILDING_HOPSCOTCH",
+   "BUILDING_HOT_POTATO",
+   "BUILDING_JUGGLING",
+   "BUILDING_JUMP_ROPE",
+   "BUILDING_PLAYING_FIELDS"
+  ],
+  "promotions": [
+   "PROMOTION_BACK_DOWN4"
+  ],
+  "techs": [
+   "TECH_CONDUCT",
+   "TECH_THEFT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COUNTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CULTURAL_IDENTITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 15
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/Games.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GAMES",
+  "soundMP": "AS2D_TECH_GAMES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_GAMES",
+  "civilopedia": "TXT_KEY_TECH_GAMES_PEDIA",
+  "quote": "TXT_KEY_TECH_GAMES_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 8,
+  "gridY": 15
+ }
+}

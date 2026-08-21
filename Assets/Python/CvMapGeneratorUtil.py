@@ -2,6 +2,18 @@
 ## Copyright Firaxis Games 2005
 from CvPythonExtensions import *
 
+# the map-gen accessors -- the bindings list IS this module's dependency list
+CLIMATE = CyClimateInfo()
+BONUS = CyBonusInfo()
+FEATURE = CyFeatureInfo()
+SEALEVEL = CySeaLevelInfo()
+
+GC = CyGlobalContext()
+INFO = CyInfo()
+WORLD = CyWorldInfo()
+GAME = GC.getGame()
+MAP = GC.getMap()
+
 """
 NOTES ABOUT THE MAP UTILITIES
 
@@ -36,14 +48,14 @@ class FractalWorld:
 		self.hillsFrac = CyFractal()
 		self.peaksFrac = CyFractal()
 		# init User Input variances
-		self.seaLevelChange = self.GC.getSeaLevelInfo(self.map.getSeaLevel()).getSeaLevelChange()
+		self.seaLevelChange = SEALEVEL.getSeaLevelChange(self.map.getSeaLevel())
 		self.seaLevelMax = 100
 		self.seaLevelMin = 0
-		self.hillGroupOneRange = self.GC.getClimateInfo(self.map.getClimate()).getHillRange()
+		self.hillGroupOneRange = CLIMATE.getHillRange(self.map.getClimate())
 		self.hillGroupOneBase = 25
-		self.hillGroupTwoRange = self.GC.getClimateInfo(self.map.getClimate()).getHillRange()
+		self.hillGroupTwoRange = CLIMATE.getHillRange(self.map.getClimate())
 		self.hillGroupTwoBase = 75
-		self.peakPercent = self.GC.getClimateInfo(self.map.getClimate()).getPeakPercent()
+		self.peakPercent = CLIMATE.getPeakPercent(self.map.getClimate())
 		self.stripRadius = 15
 
 	def checkForOverrideDefaultUserInputVariances(self):
@@ -766,11 +778,11 @@ class MultilayeredFractal:
 		regionPeaksFrac.fracInit(iRegionWidth, iRegionHeight, iRegionHillsGrain+1, self.dice, iRegionTerrainFlags, iRegionFracXExp, iRegionFracYExp)
 
 		iWaterThreshold = regionContinentsFrac.getHeightFromPercent(water)
-		iHillsBottom1 = regionHillsFrac.getHeightFromPercent(max((25 - self.GC.getClimateInfo(self.map.getClimate()).getHillRange()), 0))
-		iHillsTop1 = regionHillsFrac.getHeightFromPercent(min((25 + self.GC.getClimateInfo(self.map.getClimate()).getHillRange()), 100))
-		iHillsBottom2 = regionHillsFrac.getHeightFromPercent(max((75 - self.GC.getClimateInfo(self.map.getClimate()).getHillRange()), 0))
-		iHillsTop2 = regionHillsFrac.getHeightFromPercent(min((75 + self.GC.getClimateInfo(self.map.getClimate()).getHillRange()), 100))
-		iPeakThreshold = regionPeaksFrac.getHeightFromPercent(self.GC.getClimateInfo(self.map.getClimate()).getPeakPercent())
+		iHillsBottom1 = regionHillsFrac.getHeightFromPercent(max((25 - CLIMATE.getHillRange(self.map.getClimate())), 0))
+		iHillsTop1 = regionHillsFrac.getHeightFromPercent(min((25 + CLIMATE.getHillRange(self.map.getClimate())), 100))
+		iHillsBottom2 = regionHillsFrac.getHeightFromPercent(max((75 - CLIMATE.getHillRange(self.map.getClimate())), 0))
+		iHillsTop2 = regionHillsFrac.getHeightFromPercent(min((75 + CLIMATE.getHillRange(self.map.getClimate())), 100))
+		iPeakThreshold = regionPeaksFrac.getHeightFromPercent(CLIMATE.getPeakPercent(self.map.getClimate()))
 
 		# Loop through the region's plots
 		for x in range(iRegionWidth):
@@ -972,7 +984,7 @@ class TerrainGenerator:
 		self.GC = CyGlobalContext()
 		self.map = CyMap()
 
-		grain_amount += self.GC.getWorldInfo(self.map.getWorldSize()).getTerrainGrainChange()
+		grain_amount += WORLD.getTerrainGrainChange(self.map.getWorldSize())
 
 		self.grain_amount = grain_amount
 
@@ -989,7 +1001,7 @@ class TerrainGenerator:
 		self.rainmap=CyFractal()
 		self.variation=CyFractal()
 
-		iDesertPercent += self.GC.getClimateInfo(self.map.getClimate()).getDesertPercentChange()
+		iDesertPercent += CLIMATE.getDesertPercentChange(self.map.getClimate())
 		iDesertPercent = min(iDesertPercent, 50)
 		iDesertPercent = max(iDesertPercent, 0)
 
@@ -1007,12 +1019,12 @@ class TerrainGenerator:
 		self.iMountainTopPercent = 75
 		self.iMountainBottomPercent = 60
 
-		fIceLatitude += self.GC.getClimateInfo(self.map.getClimate()).getSnowLatitudeChange()
+		fIceLatitude += CLIMATE.getSnowLatitudeChange(self.map.getClimate())
 		fIceLatitude = min(fIceLatitude, 1.0)
 		fIceLatitude = max(fIceLatitude, 0.0)
 		self.fIceLatitude = fIceLatitude
 
-		fTundraLatitude += self.GC.getClimateInfo(self.map.getClimate()).getTundraLatitudeChange()
+		fTundraLatitude += CLIMATE.getTundraLatitudeChange(self.map.getClimate())
 		fTundraLatitude = min(fTundraLatitude, 1.0)
 		fTundraLatitude = max(fTundraLatitude, 0.0)
 		self.fTundraLatitude = fTundraLatitude
@@ -1050,7 +1062,7 @@ class TerrainGenerator:
 		self.terrainRockyCold = self.GC.getInfoTypeForString("TERRAIN_JAGGED")
 		self.terrainRocky = self.GC.getInfoTypeForString("TERRAIN_ROCKY")
 		self.terrainRockyArid = self.GC.getInfoTypeForString("TERRAIN_BADLAND")
-		self.terrainDesert = self.GC.getTERRAIN_DESERT()
+		self.terrainDesert = self.GC.getInfoTypeForString("TERRAIN_DESERT")
 		self.terrainPlains = self.GC.getInfoTypeForString("TERRAIN_PLAINS")
 		self.terrainGrass = self.GC.getInfoTypeForString("TERRAIN_GRASSLAND")
 		self.terrainMarsh = self.GC.getInfoTypeForString("TERRAIN_MARSH")
@@ -1177,7 +1189,7 @@ class FeatureGenerator:
 		self.iJunglePercent = iJunglePercent
 		self.iForestPercent = iForestPercent
 
-		iFeatureGrain = GC.getWorldInfo(MAP.getWorldSize()).getFeatureGrainChange()
+		iFeatureGrain = WORLD.getFeatureGrainChange(MAP.getWorldSize())
 
 		self.jungle_grain = jungle_grain + iFeatureGrain
 		self.forest_grain = forest_grain + iFeatureGrain
@@ -1198,8 +1210,8 @@ class FeatureGenerator:
 
 	def __initFeatureTypes(self):
 		self.featureIce = self.GC.getInfoTypeForString("FEATURE_ICE")
-		self.featureJungle = self.GC.getFEATURE_JUNGLE()
-		self.featureForest = self.GC.getFEATURE_FOREST()
+		self.featureJungle = self.GC.getInfoTypeForString("FEATURE_JUNGLE")
+		self.featureForest = self.GC.getInfoTypeForString("FEATURE_FOREST")
 
 	def addFeatures(self):
 		"adds features to all plots as appropriate"
@@ -1217,11 +1229,10 @@ class FeatureGenerator:
 		pPlot = self.map.sPlot(iX, iY)
 
 		for iI in xrange(self.GC.getNumFeatureInfos()):
-			if (self.GC.getFeatureInfo(iI).getAppearanceProbability() > -1
+			if (FEATURE.getAppearanceProbability(iI) > -1
 			and pPlot.canHaveFeature(iI)
-			and self.mapRand.get(10000, "Add Feature PYTHON") < self.GC.getFeatureInfo(iI).getAppearanceProbability()):
+			and self.mapRand.get(10000, "Add Feature PYTHON") < FEATURE.getAppearanceProbability(iI)):
 				variety = -1
-				varietynum = self.GC.getFeatureInfo(iI).getNumVarieties()
 				if varietynum > 1:
 					variety = self.mapRand.get(varietynum, "Add Feature PYTHON")
 				pPlot.setFeatureType(iI, variety)
@@ -1243,15 +1254,15 @@ class FeatureGenerator:
 				pPlot.setFeatureType(self.featureIce, -1)
 			else:
 				rand = self.mapRand.get(100, "Add Ice PYTHON")/100.0
-				if rand < 8 * (lat - (1.0 - (self.GC.getClimateInfo(self.map.getClimate()).getRandIceLatitude() / 2.0))):
+				if rand < 8 * (lat - (1.0 - (CLIMATE.getRandIceLatitude(self.map.getClimate()) / 2.0))):
 					pPlot.setFeatureType(self.featureIce, -1)
-				elif rand < 4 * (lat - (1.0 - self.GC.getClimateInfo(self.map.getClimate()).getRandIceLatitude())):
+				elif rand < 4 * (lat - (1.0 - CLIMATE.getRandIceLatitude(self.map.getClimate()))):
 					pPlot.setFeatureType(self.featureIce, -1)
 
 	def addJunglesAtPlot(self, pPlot, iX, iY, lat):
 		if pPlot.canHaveFeature(self.featureJungle):
 			iJungleHeight = self.jungles.getHeight(iX, iY)
-			if self.iJungleTop >= iJungleHeight >= self.iJungleBottom + (self.iJungleTop - self.iJungleBottom)*self.GC.getClimateInfo(self.map.getClimate()).getJungleLatitude()*lat:
+			if self.iJungleTop >= iJungleHeight >= self.iJungleBottom + (self.iJungleTop - self.iJungleBottom)*CLIMATE.getJungleLatitude(self.map.getClimate())*lat:
 				pPlot.setFeatureType(self.featureJungle, -1)
 
 	def addForestsAtPlot(self, pPlot, iX, iY, lat):
@@ -1318,7 +1329,7 @@ class BonusBalancer:
 		"Returns True if we can place a bonus here"
 
 		if (not bIgnoreOneArea
-		and self.GC.getBonusInfo(eBonus).isOneArea()
+		and BONUS.isOneArea(eBonus)
 		and self.map.getNumBonuses(eBonus) > 0
 		and self.map.getArea(pPlot.getArea()).getNumBonuses(eBonus) == 0
 		):
@@ -1336,7 +1347,6 @@ class BonusBalancer:
 					return False
 
 		if not bIgnoreUniqueRange:
-			uniqueRange = self.GC.getBonusInfo(eBonus).getUniqueRange()
 			for iDX in range(-uniqueRange, uniqueRange+1):
 				for iDY in range(-uniqueRange, uniqueRange+1):
 					plotX = plotXY(iX, iY, iDX, iDY)
@@ -1370,7 +1380,7 @@ class BonusBalancer:
 
 					for i in range(GC.getNumMapBonuses()):
 						iBonus = GC.getMapBonus(i)
-						szType = GC.getBonusInfo(iBonus).getType()
+						szType = INFO.getType("BONUS_", iBonus)
 						if szType in resources_placed or szType not in self.resourcesToBalance:
 							continue
 
@@ -1499,13 +1509,13 @@ def c2CMapReport(sWhen):
 
 	# Display actual Mod-Terrain
 	for ter in countTerrain:
-		type_string = GC.getTerrainInfo(ter).getType()
+		type_string = INFO.getType("TERRAIN_", ter)
 		sprint += "[MGU]   Terrain: #%2i - %s ( %i ) \n" % (ter, type_string, countTerrain[ter])
 	sprint += "\n"
 
 	# Display actual Mod-Features
 	for feat in countFeature:
-		type_string = GC.getFeatureInfo(feat).getType()
+		type_string = INFO.getType("FEATURE_", feat)
 		sprint += "[MGU]   Feature: #%2i - %s ( %i ) \n" % (feat, type_string, countFeature[feat])
 	sprint += "\n"
 
@@ -1515,9 +1525,9 @@ def c2CMapReport(sWhen):
 
 		region = "North American"
 		if (region, iBonus) in countResource:
-			sprint += "[MGU]   Bonus: #%2i - %s ( %s - %i ) " % (iBonus, GC.getBonusInfo(iBonus).getType(), region, countResource[region, iBonus])
+			sprint += "[MGU]   Bonus: #%2i - %s ( %s - %i ) " % (iBonus, INFO.getType("BONUS_", iBonus), region, countResource[region, iBonus])
 		else:
-			sprint += "[MGU]   Bonus: #%2i - %s ( %s - %i ) " % (iBonus, GC.getBonusInfo(iBonus).getType(), region, 0)
+			sprint += "[MGU]   Bonus: #%2i - %s ( %s - %i ) " % (iBonus, INFO.getType("BONUS_", iBonus), region, 0)
 		region = "European"
 		if (region, iBonus) in countResource:
 			sprint += "( %s - %i ) " % (region, countResource[region, iBonus])
@@ -1548,7 +1558,7 @@ def c2CMapReport(sWhen):
 
 	# Display actual Mod-Improvements
 	for imp in countImprovement:
-		sprint += "[MGU]   Improvement: #%3i  %s ( %i ) \n" % (imp, GC.getImprovementInfo(imp).getType(), countImprovement[imp])
+		sprint += "[MGU]   Improvement: #%3i  %s ( %i ) \n" % (imp, INFO.getType("IMPROVEMENT_", imp), countImprovement[imp])
 	sprint += "\n[MGU] ####################################################################### C2C:Map Statistics ###"
 	print sprint
 
@@ -1581,8 +1591,8 @@ def placeC2CBonuses():
 	iDeer = GC.getInfoTypeForString("BONUS_DEER")
 	iBison = GC.getInfoTypeForString("BONUS_BISON")
 	iRabbit = GC.getInfoTypeForString("BONUS_RABBIT")
-	iGuineaPig = GC.getInfoTypeForString("BONUS_GUINEA_PIGS")
-	iElephant = GC.getInfoTypeForString("BONUS_ELEPHANTS")
+	iGuineaPig = GC.getInfoTypeForString("BONUS_GUINEA_PIG")
+	iElephant = GC.getInfoTypeForString("BONUS_ELEPHANT")
 	aNotInNewWorld = [
 		GC.getInfoTypeForString("BONUS_HORSE"),
 		GC.getInfoTypeForString("BONUS_DONKEY"),

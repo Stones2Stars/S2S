@@ -1,0 +1,26 @@
+{
+ "type": "SPECIALIST_ANDROID_WORKER",
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/android.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/android.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_ANDROID_WORKER",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_CIVILIAN"
+  ]
+ }
+}

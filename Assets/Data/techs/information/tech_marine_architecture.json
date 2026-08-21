@@ -1,0 +1,83 @@
+{
+ "type": "TECH_MARINE_ARCHITECTURE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ENERGY_ISLAND",
+   "BUILDING_KHAZAR_ISLANDS",
+   "BUILDING_OCEAN_CITY",
+   "BUILDING_OCEAN_SPIRAL",
+   "BUILDING_OCEAN_THERMAL_POWER_PLANT",
+   "BUILDING_SEASTEAD",
+   "BUILDING_UNDERWATER_HOTEL"
+  ],
+  "builds": [
+   "BUILD_SUBMERGED_TOWN",
+   "BUILD_TUNNEL"
+  ],
+  "improvements": [
+   "IMPROVEMENT_SUBMERGED_TOWN"
+  ],
+  "techs": [
+   "TECH_NANOTECH_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_SUBMERGED_TOWN_PLATFORM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MICROGENERATORS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEGACITIES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 28189
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Marinearchitecture.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MARINE_ARCHITECTURE",
+  "soundMP": "AS2D_TECH_MARINE_ARCHITECTURE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MARINE_ARCHITECTURE",
+  "civilopedia": "TXT_KEY_TECH_MARINE_ARCHITECTURE_PEDIA",
+  "quote": "TXT_KEY_TECH_MARINE_ARCHITECTURE_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 97,
+  "gridY": 7
+ }
+}

@@ -1,0 +1,84 @@
+{
+ "type": "TECH_ARMORED_VEHICLES",
+ "enables": {
+  "bonuses": [
+   "BONUS_TANKS"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_TANKS"
+  ],
+  "techs": [
+   "TECH_DIESELPUNK",
+   "TECH_MECHANIZED_WARFARE"
+  ],
+  "units": [
+   "UNIT_ARMORED_CAR",
+   "UNIT_EARLY_TANK",
+   "UNIT_MASTER_SAILOR_WW1_DESTROYER",
+   "UNIT_WW1_DESTROYER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ARTILLERY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADVANCED_METALLURGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 10309
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/blitzkrieg.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,5,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ARMORED_VEHICLES",
+  "soundMP": "AS2D_TECH_ARMORED_VEHICLES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ARMORED_VEHICLES",
+  "civilopedia": "TXT_KEY_TECH_ARMORED_VEHICLES_PEDIA",
+  "quote": "TXT_KEY_TECH_ARMORED_VEHICLES_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 74,
+  "gridY": 11
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "type": "BONUS_SQUASH",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_ZENU",
+   "BUILDING_FARM_CROP_CALABASH",
+   "BUILDING_FARM_CROP_CUCUMBER",
+   "BUILDING_FARM_CROP_SQUASH",
+   "BUILDING_FARM_CROP_ZUCCHINI",
+   "BUILDING_NATURE_ALTAR_SQUASH",
+   "BUILDING_NATURE_CIRCLE_SQUASH",
+   "BUILDING_SHAGGY_PARASOL_MUSHROOM_GATHERER"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SQUASH"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 150,
+  "minAreaSize": 3,
+  "maxLatitude": 40,
+  "rands": {
+   "iRandApp1": 30,
+   "iRandApp2": 30,
+   "iRandApp3": 30,
+   "iRandApp4": 30
+  },
+  "tilesPer": 72,
+  "groupRange": 1,
+  "groupRand": 14,
+  "area": true,
+  "hills": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SQUASH",
+  "civilopedia": "TXT_KEY_BONUS_SQUASH_PEDIA",
+  "bonusClassType": "BONUSCLASS_CROP",
+  "source": "natural"
+ }
+}

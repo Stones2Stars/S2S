@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_VIRTUAL_WORLD_DATA_ANALYSIS",
+ "enables": {
+  "buildings": [
+   "BUILDING_SIMULATED_WORLD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_VIRTUAL_WORLD",
+    "TECH_MASS_SURVEILLANCE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_DIGITAL_IDENTITY",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 3385,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VIRTUAL_WORLD_DATA_ANALYSIS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VIRTUAL_WORLD_DATA_ANALYSIS",
+  "civilopedia": "TXT_KEY_BUILDING_VIRTUAL_WORLD_DATA_ANALYSIS_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

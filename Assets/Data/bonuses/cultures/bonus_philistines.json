@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_PHILISTINES",
+ "enables": {
+  "units": [
+   "UNIT_GOLIATH",
+   "UNIT_LIGHT_HOPLITE"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PHILISTINES"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PHILISTINES",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

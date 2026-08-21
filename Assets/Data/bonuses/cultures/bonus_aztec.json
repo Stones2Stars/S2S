@@ -1,0 +1,24 @@
+{
+ "type": "BONUS_AZTEC",
+ "enables": {
+  "buildings": [
+   "BUILDING_BALL_COURT"
+  ],
+  "units": [
+   "UNIT_AZTEC_JAGUAR",
+   "UNIT_HUITZILOPOCHTLI",
+   "UNIT_ITZCOATL"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_AZTEC"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_AZTEC",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

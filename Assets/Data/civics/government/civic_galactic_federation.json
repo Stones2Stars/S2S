@@ -1,0 +1,152 @@
+{
+ "type": "CIVIC_GALACTIC_FEDERATION",
+ "production": {
+  "empire": {
+   "percent": 15
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": [
+    5,
+    {
+     "value": 15,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    10,
+    {
+     "value": 20,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 8
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 35
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 15
+   },
+   "numCities": {
+    "percent": 15
+   },
+   "percent": [
+    {
+     "value": 15,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 20,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ]
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": -1
+   },
+   "democracyLevel": {
+    "flat": 7
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": 10,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "policies": {
+  "canDoElection": true
+ },
+ "grants": {
+  "revolution": 25
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/government_galactic_federation.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_GALACTIC_FEDERATION",
+  "civilopedia": "TXT_KEY_CIVIC_GALACTIC_FEDERATION_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_GALACTIC_FEDERATION_STRATEGY",
+  "civicOption": "CIVICOPTION_GOVERNMENT",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_HIGH",
+  "weLoveTheKing": "TXT_KEY_CIVIC_WE_LOVE_PRIME_MINISTER"
+ }
+}

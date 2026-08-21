@@ -1,0 +1,101 @@
+{
+ "type": "BUILDING_WONDER_OF_NATURE_BARRINGER_CRATER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_LANGUAGE",
+    {
+     "type": "FEATURE_PLATY_BARRINGER_CRATER",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 10,
+     "enabled": "TECH_TOURISM"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 10,
+     "enabled": "TECH_SPACE_STATIONS"
+    },
+    {
+     "value": 5,
+     "enabled": "TECH_ASTRONOMY"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": {
+    "value": 5,
+    "enabled": "TECH_EXPLORATION"
+   }
+  }
+ },
+ "cost": {
+  "production": 10,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_BARRINGER_CRATER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_BARRINGER_CRATER",
+  "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_BARRINGER_CRATER_PEDIA",
+  "worth": 4,
+  "conquestProbability": 70,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_FACTORY_PERFUME",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ANIMAMATERIALS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CHEMICALS_DISTRICT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "TECH_REFRIGERATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_FLOWERS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SPICES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CHEMICALS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_CHEMICALS_DISTRICT"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_PERFUME"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 800,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACTORY_PERFUME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_PERFUME",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_PERFUME_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,140 @@
+{
+ "type": "BUILDING_WONDER_OF_NATURE_DEAD_SEA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_SALT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_LANGUAGE",
+    {
+     "type": "FEATURE_PLATY_DEAD_SEA",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 10,
+     "enabled": "TECH_TOURISM"
+    },
+    {
+     "value": 3,
+     "enabled": "TECH_TRADE"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 5,
+     "enabled": "TECH_EDUCATION"
+    },
+    {
+     "value": 5,
+     "enabled": "TECH_CHEMISTRY"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 10,
+     "enabled": "TECH_MONOTHEISM"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": "TECH_ANIMISM"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_ANCIENT_MEDICINE"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_MEDICINE"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_MOLECULAR_MEDICINE"
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": {
+    "value": 5,
+    "enabled": "TECH_EXPLORATION"
+   }
+  }
+ },
+ "cost": {
+  "production": 10,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_DEAD_SEA",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_DEAD_SEA",
+  "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_DEAD_SEA_PEDIA",
+  "worth": 4,
+  "conquestProbability": 70,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

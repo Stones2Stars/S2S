@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_NEANDERTHAL_CAVES",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_L_NEANDERTHAL",
+    "TECH_CAVE_DWELLING",
+    {
+     "type": "FEATURE_CAVES",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": "TECH_PETROGLYPHS"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 50
+   },
+   "bombardDefense": {
+    "percent": 20
+   }
+  }
+ },
+ "cost": {
+  "production": 10,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NEANDERTHAL_CAVES",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NEANDERTHAL_CAVES",
+  "civilopedia": "TXT_KEY_BUILDING_NEANDERTHAL_CAVES_PEDIA",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

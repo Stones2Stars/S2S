@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_SLAVE_MASTER1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SLAVE_MASTER2"
+  ]
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 4
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SLAVE_MASTER": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/SlaveMaster1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SLAVE_MASTER1"
+ }
+}

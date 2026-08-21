@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_SHAMANISTIC_TEMPLE_COW",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SHAMANISTIC_TEMPLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_SHAMANISM",
+    {
+     "type": "BONUS_COW",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": [
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_COW",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 80,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SHAMANISTIC_TEMPLE_COW"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SHAMAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SHAMANISTIC_TEMPLE_COW",
+  "civilopedia": "TXT_KEY_BUILDING_SHAMANISTIC_TEMPLE_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 4,
+  "advisor": "ADVISOR_RELIGION",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

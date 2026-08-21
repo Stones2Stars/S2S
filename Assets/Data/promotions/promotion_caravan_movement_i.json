@@ -1,0 +1,39 @@
+{
+ "type": "PROMOTION_CARAVAN_MOVEMENT_I",
+ "enables": {
+  "promotions": [
+   "PROMOTION_CARAVAN_MOVEMENT_II"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CARAVAN_GUARD_I"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "moves": {
+    "flat": 1
+   }
+  }
+ },
+ "skills": {
+  "enemyRoute": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CARAVAN_MOVEMENT": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CaravanMovement1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_CARAVAN_MOVEMENT_I"
+ }
+}

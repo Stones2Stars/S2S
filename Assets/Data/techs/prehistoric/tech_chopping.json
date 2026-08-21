@@ -1,0 +1,65 @@
+{
+ "type": "TECH_CHOPPING",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SHOCK2"
+  ],
+  "techs": [
+   "TECH_CARVING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SOFT_HAMMER_PERCUSSION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 11
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/chopping.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CHOPPING",
+  "soundMP": "AS2D_TECH_CHOPPING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CHOPPING",
+  "civilopedia": "TXT_KEY_TECH_CHOPPING_PEDIA",
+  "quote": "TXT_KEY_TECH_CHOPPING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 6,
+  "gridY": 7
+ }
+}

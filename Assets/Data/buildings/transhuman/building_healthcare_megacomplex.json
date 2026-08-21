@@ -1,0 +1,383 @@
+{
+ "type": "BUILDING_HEALTHCARE_MEGACOMPLEX",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUGMENTED_ORGAN_LAB",
+   "BUILDING_CENTERS_FOR_DISEASE_CONTROL",
+   "BUILDING_CITY_MORGUE",
+   "BUILDING_CURE_FOR_ALZHEIMERS",
+   "BUILDING_FERTILITY_CLINIC",
+   "BUILDING_GENE_FARMING_LAB",
+   "BUILDING_GOBEKLI_TEPE",
+   "BUILDING_GUILD_APOTHECARIES",
+   "BUILDING_MEDICAL_DIAGNOSTAT",
+   "BUILDING_NATIONAL_MEDICAL_DATABASE",
+   "BUILDING_NEURON_REGENERATOR_LAB",
+   "BUILDING_RED_CROSS",
+   "BUILDING_REJUVENATION_TANK",
+   "BUILDING_RESEARCH_HOSPITAL",
+   "BUILDING_SOMA_DISPENSARY",
+   "BUILDING_VACCINE_LAB"
+  ],
+  "units": [
+   "UNIT_AMBULANCE",
+   "UNIT_AMBULANCE_II",
+   "UNIT_APOTHECARY",
+   "UNIT_DR",
+   "UNIT_EARLY_MEDIVAC",
+   "UNIT_FADY_SHAMAN",
+   "UNIT_FIELD_VET",
+   "UNIT_HEALER",
+   "UNIT_HOSPITAL_SHIP_2",
+   "UNIT_KALLAWAYA",
+   "UNIT_MANIQ_SPEAKER",
+   "UNIT_MEDEVAC_DROPSHIP",
+   "UNIT_MEDIC",
+   "UNIT_MEDICAL_LAB_TECH",
+   "UNIT_MEDICAL_VET",
+   "UNIT_MEDICINE_MAN",
+   "UNIT_MIDEWIWIN",
+   "UNIT_MODERN_MEDIVAC",
+   "UNIT_MONK",
+   "UNIT_NEANDERTHAL_HEALER",
+   "UNIT_SURGEON",
+   "UNIT_TLATILCO_WAR_PRIEST",
+   "UNIT_VET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HOLODECK",
+    "TECH_NANOTROIDS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HEMP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COCOA",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PEYOTE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OPIUM",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ],
+   "percent": 1
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100,
+   "percent": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_MEDIC": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    73,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HEMP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OPIUM",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TOBACCO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_OBSIDIAN",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CHEMICALS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DRUGS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ECSTASY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HYPOSPRAYS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_IMMUNITY_DRUGS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LSD",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_METHAMPHETAMINE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "type": "BONUS_PHARMACEUTICALS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_REPLACEMENT_ORGANS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BONUS_SMART_MEDICINE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_LEAD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "any": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 1
+    },
+    "UNITCOMBAT_HEALS_PEOPLE": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -350
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1,
+   "SPECIALIST_SCIENTIST": 2,
+   "SPECIALIST_DOCTOR": 15
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": "full",
+    "count": 1
+   }
+  },
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 40,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE"
+   }
+  },
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 30,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_ANIMALS"
+   }
+  },
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_SELF_HEAL1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 7805,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HEALTHCARE_MEGACOMPLEX",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HEALTHCARE_MEGACOMPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_HEALTHCARE_MEGACOMPLEX_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

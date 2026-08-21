@@ -1,0 +1,39 @@
+{
+ "type": "PROMOTION_BLOODHOUND1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BLOODHOUND2"
+  ]
+ },
+ "combat": {
+  "unit": {
+   "percent": 5,
+   "unitCombat": {
+    "UNITCOMBAT_CRIMINAL": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 2
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BLOODHOUND": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/bloodhound1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BLOODHOUND1"
+ }
+}

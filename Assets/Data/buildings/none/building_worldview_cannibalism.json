@@ -1,0 +1,43 @@
+{
+ "type": "BUILDING_WORLDVIEW_CANNIBALISM",
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+   ],
+   "all": [
+    "BUILDING_PALACE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WORLDVIEW_CANNIBALISM",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SLAVE_MARKET"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WORLDVIEW_CANNIBALISM",
+  "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_CANNIBALISM_PEDIA",
+  "help": "TXT_KEY_BUILDING_WORLDVIEW_CANNIBALISM_HELP",
+  "notConstructible": true,
+  "worth": 3,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

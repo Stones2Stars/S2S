@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_DISTANT_HOTEL_INFINITE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_BUBBLE_TRANSFER_STATION",
+    "TECH_TRANSFINITE_STRUCTURES",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 160
+  }
+ },
+ "cost": {
+  "production": 3166,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_HOTEL_INFINITE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_HOTEL_INFINITE",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_HOTEL_INFINITE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

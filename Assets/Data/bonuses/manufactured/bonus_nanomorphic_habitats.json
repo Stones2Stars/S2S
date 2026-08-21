@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_NANOMORPHIC_HABITATS",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_MCKENDREE_CYLINDER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_NANOMORPHIC_HABITATS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_NANOMORPHIC_HABITATS",
+  "civilopedia": "TXT_KEY_BONUS_NANOMORPHIC_HABITATS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

@@ -1,0 +1,63 @@
+{
+ "type": "TECH_ULTIMA_ARCHITECTURE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_TOPOPOLIS",
+   "BUILDING_RAK_MESBA",
+   "BUILDING_TRANSTELLAR_ALDERSON_DISK",
+   "BUILDING_TRANSTELLAR_ALDERSON_DISK_MENAGERIE",
+   "BUILDING_TRANSTELLAR_TERRACITY"
+  ],
+  "techs": [
+   "TECH_EXTREME_ENERGY_WEAPONS",
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_APPLIED_RELATIVITY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FEMTOTECHNOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 271404
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/ultima_architecture.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ULTIMA_ARCHITECTURE",
+  "civilopedia": "TXT_KEY_TECH_ULTIMA_ARCHITECTURE_PEDIA",
+  "quote": "TXT_KEY_TECH_ULTIMA_ARCHITECTURE_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 139,
+  "gridY": 5
+ }
+}

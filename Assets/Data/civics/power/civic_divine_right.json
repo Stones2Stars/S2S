@@ -1,0 +1,163 @@
+{
+ "type": "CIVIC_DIVINE_RIGHT",
+ "enables": {
+  "buildings": [
+   "BUILDING_EL_ESCORIAL"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": [
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": [
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": -1,
+      "religion": "!IS_STATE_RELIGION"
+     }
+    ]
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
+    "percent": 5
+   },
+   "resistance": {
+    "percent": 10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 12
+   },
+   "numCities": {
+    "percent": 10
+   },
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 5,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
+   "corporation": {
+    "percent": 5
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": [
+     {
+      "value": 15,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "production": {
+     "percent": 2
+    },
+    "commerce": {
+     "percent": 3
+    }
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitudeShare": {
+    "flat": -1
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "greatPeopleRate": {
+    "percent": 10
+   },
+   "unitProduction": {
+    "percent": 10
+   },
+   "buildingProduction": {
+    "percent": 10
+   },
+   "freeExperience": {
+    "flat": 1
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "democracyLevel": {
+    "flat": -20
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/power_divine_right.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_DIVINE_RIGHT",
+  "civilopedia": "TXT_KEY_CIVIC_DIVINE_RIGHT_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_DIVINE_RIGHT_STRATEGY",
+  "civicOption": "CIVICOPTION_POWER",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

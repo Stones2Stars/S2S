@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_DRAMA_SCHOOL",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_THEATRE",
+    "TECH_DRAMA",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 3
+  }
+ },
+ "cost": {
+  "production": 270,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DRAMA_SCHOOL",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_THEATRE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DRAMA_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_DRAMA_SCHOOL_PEDIA",
+  "centerInCity": true,
+  "worth": 2,
+  "militaryWorth": 1,
+  "conquestProbability": 75,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

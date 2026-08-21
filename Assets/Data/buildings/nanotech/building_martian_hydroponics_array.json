@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_MARTIAN_HYDROPONICS_ARRAY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_BOTANICAL_ALCHEMY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MARTIAN_HYDROPONICS_COMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_MARTIAN",
+    "TECH_PLANETARY_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_MARTIAN_HYDROPONICS_COMPLEX",
+    "BUILDING_MARTIAN_VERTICAL_FARM"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_MARTIAN_VEGETABLES"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 702,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_HYDROPONICS_ARRAY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_HYDROPONICS_ARRAY",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_HYDROPONICS_ARRAY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

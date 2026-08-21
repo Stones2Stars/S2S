@@ -1,0 +1,143 @@
+{
+ "type": "UNIT_MONK",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SOAP",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "STATE_RELIGION_IN_CITY",
+    "TECH_THEOLOGY",
+    {
+     "type": "BONUS_SCROLLS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      "BUILDING_APOTHECARY_SHOP",
+      "BUILDING_PHARMACY",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_AMBULANCE",
+     "UNIT_MECHANIC"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "dynamicDefense": {
+    "percent": 20
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 9
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 4
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_PEOPLE": {
+     "heal": 5
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  },
+  "plot": {
+   "flat": -3
+  }
+ },
+ "skills": [
+  "pillage",
+  "onlyDefensive",
+  "stateReligion"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_HEALTH_CARE",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_STAFF",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 270,
+  "upkeep": 3
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MONK",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 3,
+      "define": {
+       "early": "ART_DEF_UNIT_MONK"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_MONK",
+  "civilopedia": "TXT_KEY_UNIT_MONK_PEDIA",
+  "help": "TXT_KEY_UNIT_MONK_HELP",
+  "worth": 5,
+  "militaryWorth": 9,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_RESERVE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_RESERVE",
+   "UNITAI_HEALER",
+   "UNITAI_PROPERTY_CONTROL",
+   "UNITAI_ESCORT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

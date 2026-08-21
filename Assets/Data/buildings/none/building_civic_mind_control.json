@@ -1,0 +1,37 @@
+{
+ "type": "BUILDING_CIVIC_MIND_CONTROL",
+ "requires": {
+  "operate": {
+   "all": [
+    "CIVIC_MIND_CONTROL",
+    "BUILDING_PALACE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CIVIC_MIND_CONTROL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CIVIC_MIND_CONTROL",
+  "civilopedia": "TXT_KEY_BUILDING_CIVIC_MIND_CONTROL_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

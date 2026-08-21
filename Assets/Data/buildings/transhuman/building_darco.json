@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_DARCO",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CYBERNETIC_ORGAN_LAB",
+    "TECH_COMPREHENSIVE_CYBERNETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_CYBERNETIC_ORGAN_LAB",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 35430,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_DARCO"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DARCO",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DARCO",
+  "civilopedia": "TXT_KEY_BUILDING_DARCO_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

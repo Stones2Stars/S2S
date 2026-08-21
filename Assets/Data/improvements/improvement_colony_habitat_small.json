@@ -1,0 +1,59 @@
+{
+ "type": "IMPROVEMENT_COLONY_HABITAT_SMALL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_COLONIZATION",
+     "scope": "team"
+    },
+    "IS_FLATLANDS",
+    {
+     "terrain": [
+      "TERRAIN_LUNAR_DOME",
+      "TERRAIN_LUNAR_MARE",
+      "TERRAIN_LUNAR_HIGHLAND",
+      "TERRAIN_LUNAR_REGOLITH",
+      "TERRAIN_LUNAR_RILLE",
+      "TERRAIN_GREEN_MOON",
+      "TERRAIN_MARTIAN_ICE",
+      "TERRAIN_MARTIAN_PERMAFROST",
+      "TERRAIN_MARTIAN_DESERT",
+      "TERRAIN_MARTIAN_DUNES",
+      "TERRAIN_MARTIAN_BARREN",
+      "TERRAIN_MARTIAN_PLAINS",
+      "TERRAIN_GREEN_MARS"
+     ]
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_COLONY_HABITAT_SMALL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_COLONY_HABITAT_SMALL",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_COTTAGE_PEDIA",
+  "extraterrestrial": true,
+  "advancedStart": {
+   "cost": -1
+  },
+  "upgradeTime": 10,
+  "pillageGold": 10,
+  "upgradesTo": "IMPROVEMENT_COLONY_HABITAT_MEDIUM"
+ }
+}

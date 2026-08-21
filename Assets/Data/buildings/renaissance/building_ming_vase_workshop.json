@@ -1,0 +1,123 @@
+{
+ "type": "BUILDING_MING_VASE_WORKSHOP",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_L_ASIAN",
+    {
+     "type": "BUILDING_GLAZE_MAKER",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_FREE_ARTISTRY",
+    {
+     "any": [
+      "BUILDING_PORCELAIN_WORKSHOP",
+      "BUILDING_FACTORY_PORCELAIN_WARES",
+      "BUILDING_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FINE_CLAY",
+     "scope": "city",
+     "connection": "onSite"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   {
+    "BONUS_MING_VASE": 6
+   }
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 2550,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MING_VASE_WORKSHOP"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MING_VASE_WORKSHOP",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GLASSMITH"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MING_VASE_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_MING_VASE_WORKSHOP_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 4,
+  "militaryWorth": 2,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,127 @@
+{
+ "type": "BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES",
+ "enables": {
+  "buildings": [
+   "BUILDING_ORDINANCE_AUTOMOBILE_EMISSION_REDUCTION_ACT",
+   "BUILDING_ORDINANCE_CARPOOL",
+   "BUILDING_ORDINANCE_COMMUTER_SHUTTLE_SERVICE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MODERN_OFFICES",
+    "TECH_MOTORIZED_TRANSPORTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_PETROLEUM_PRODUCTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BIOFUEL",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_FREIGHT": {
+     "percent": 10
+    },
+    "UNIT_MOTORCYCLE": {
+     "percent": 10
+    },
+    "UNIT_JEEP": {
+     "percent": 10
+    },
+    "UNIT_HUMVEE": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_URBAN_TACTICS1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 1660,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_DEPARTMENT_VEHICLES"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES",
+  "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

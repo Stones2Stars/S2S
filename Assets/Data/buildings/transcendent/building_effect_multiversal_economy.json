@@ -1,0 +1,36 @@
+{
+ "type": "BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_ASCENDED_PLANET",
+   "BUILDING_HEAVEN",
+   "BUILDING_INTERGALACTIC_ASCENDED_GALAXY",
+   "BUILDING_INTERSTELLAR_ASCENDED_STAR_SYSTEM",
+   "BUILDING_OMNIVERSE"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_REALITY_REPROGRAMMING"
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
+  "civilopedia": "TXT_KEY_BUILDING_MULTIVERSAL_ECONOMY_PEDIA",
+  "notConstructible": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

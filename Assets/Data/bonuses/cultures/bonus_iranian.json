@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_IRANIAN",
+ "enables": {
+  "units": [
+   "UNIT_KHOMEINI",
+   "UNIT_PASDARAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_IRANIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_IRANIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

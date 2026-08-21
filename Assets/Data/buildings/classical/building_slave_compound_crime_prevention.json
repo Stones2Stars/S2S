@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION",
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+   ],
+   "all": [
+    "BUILDING_SLAVE_COMPOUND",
+    "TECH_SANITATION",
+    {
+     "any": [
+      "BUILDING_SENTRY_POST",
+      "BUILDING_WATCH_TOWER",
+      "BUILDING_BOMBARD_TOWER",
+      "BUILDING_GUARD_TOWER",
+      "BUILDING_KEEP_TOWER",
+      "BUILDING_ARTILLERY_BATTERY",
+      "BUILDING_AUTO_CANNON_BATTERY",
+      "BUILDING_MISSILE_BATTERY",
+      "BUILDING_RAILGUN_BATTERY",
+      "BUILDING_LASER_BATTERY",
+      "BUILDING_ANTI_MATTER_BATTERY",
+      "BUILDING_TOWN_WATCH",
+      "BUILDING_TOWN_PATROL",
+      "BUILDING_GUARDHOUSE",
+      "BUILDING_GUARD_STATION",
+      "BUILDING_SHERIFFS_OFFICE",
+      "BUILDING_POLICE_STATION",
+      "BUILDING_POLICE_PRECINCT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SLAVES": 1
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SLAVE_MARKET"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION",
+  "civilopedia": "TXT_KEY_BUILDING_SLAVE_COMPOUND_PEDIA",
+  "help": "TXT_KEY_BUILDING_SLAVE_COMPOUND_HELP",
+  "notConstructible": true,
+  "worth": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

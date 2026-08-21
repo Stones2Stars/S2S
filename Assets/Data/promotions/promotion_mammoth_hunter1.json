@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_MAMMOTH_HUNTER1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_MAMMOTH_HUNTER2"
+  ]
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MAMMAL_PACHYDERM": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MAMMOTH_HUNTER": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/MammothHunter1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_MAMMOTH_HUNTER1"
+ }
+}

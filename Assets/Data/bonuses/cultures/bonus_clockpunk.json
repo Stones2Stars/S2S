@@ -1,0 +1,30 @@
+{
+ "type": "BONUS_CLOCKPUNK",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUTOMATION_CLOCK",
+   "BUILDING_CLOCKWORK_WORKSHOP",
+   "BUILDING_ORCHESTRION_THEATER",
+   "BUILDING_ORNITHOPTER_AERIE",
+   "BUILDING_STEP_RECKONER_MANUFACTURE"
+  ],
+  "units": [
+   "UNIT_CLOCKWORK_GOLEM",
+   "UNIT_DAVINCI_TANK",
+   "UNIT_ORNITHOPTER",
+   "UNIT_REPEATING_CROSSBOWMAN",
+   "UNIT_ZEPHYR"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CLOCKPUNK"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CLOCKPUNK",
+  "civilopedia": "TXT_KEY_BONUS_CLOCKPUNK_PEDIA",
+  "bonusClassType": "BONUSCLASS_GENMODS",
+  "source": "culture"
+ }
+}

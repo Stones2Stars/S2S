@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_HEMP_FIBERS",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_CLOTH",
+   "BUILDING_TAPESTRY_MAKERS_WORKSHOP",
+   "BUILDING_WEAVER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HEMP_FIBERS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HEMP_FIBERS",
+  "civilopedia": "TXT_KEY_BONUS_HEMP_FIBERS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

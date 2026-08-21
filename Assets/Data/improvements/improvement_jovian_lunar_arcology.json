@@ -1,0 +1,77 @@
+{
+ "type": "IMPROVEMENT_JOVIAN_LUNAR_ARCOLOGY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_MEGASTRUCTURES",
+     "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_IO",
+        "TERRAIN_GANYMEDE",
+        "TERRAIN_EUROPA",
+        "TERRAIN_CALLISTO",
+        "TERRAIN_TITAN",
+        "TERRAIN_ENCELADUS",
+        "TERRAIN_UMBRIEL",
+        "TERRAIN_TRITON"
+       ]
+      },
+      {
+       "feature": [
+        "FEATURE_SMALL_MOON"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_EXTRATERRESTRIAL_MICROBES"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 7
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_JOVIAN_LUNAR_ARCOLOGY"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_JOVIAN_LUNAR_ARCOLOGY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_JOVIAN_LUNAR_ARCOLOGY_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200,
+  "pillageTo": "IMPROVEMENT_JOVIAN_LUNAR_BASE",
+  "bonuses": {
+   "BONUS_EXTRATERRESTRIAL_MICROBES": {
+    "trade": true
+   }
+  }
+ }
+}

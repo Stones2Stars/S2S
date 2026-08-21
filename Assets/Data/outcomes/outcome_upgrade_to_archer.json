@@ -1,0 +1,19 @@
+{
+ "type": "OUTCOME_UPGRADE_TO_ARCHER",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_UPGRADE_TO_ARCHER",
+  "message": "TXT_KEY_OUTCOME_UPGRADE_TO_ARCHER_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ARCHERY",
+    "BUILDING_FLETCHERS_HUT"
+   ]
+  }
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city"
+}

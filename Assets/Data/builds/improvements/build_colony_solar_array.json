@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_COLONY_SOLAR_ARRAY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_MANUFACTURING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_COLONY_SOLAR_ARRAY"
+ },
+ "cost": {
+  "gold": 300,
+  "time": 1000
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Structures/Improvements/habitats/button.dds"
+  },
+  "hotkey": "KB_T"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_MINE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_COLONY_SOLAR_ARRAY"
+ }
+}

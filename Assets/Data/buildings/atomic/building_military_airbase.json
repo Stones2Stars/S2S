@@ -1,0 +1,143 @@
+{
+ "type": "BUILDING_MILITARY_AIRBASE",
+ "enables": {
+  "buildings": [
+   "BUILDING_FLIGHT_SCHOOL",
+   "BUILDING_FLIGHT_SIMULATOR",
+   "BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR",
+   "BUILDING_MANHATTAN_PROJECT",
+   "BUILDING_MILITARY_SPACEPORT",
+   "BUILDING_NATIONAL_AEROSPACE_AGENCY",
+   "BUILDING_TEST_PILOT_INSTITUTE"
+  ],
+  "units": [
+   "UNIT_B1_LANCER",
+   "UNIT_B52_BOMBER",
+   "UNIT_F104_STARFIGHTER",
+   "UNIT_F111_AARDVARK",
+   "UNIT_F14_TOMCAT",
+   "UNIT_F18_HORNET",
+   "UNIT_F22_RAPTOR",
+   "UNIT_F4_PHANTOM",
+   "UNIT_FIGHTER",
+   "UNIT_JET_FIGHTER",
+   "UNIT_MIG_29",
+   "UNIT_P51_MUSTANG"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PLANETARY_DEFENSES"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AEROSPACE_COMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_AVIATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_AEROSPACE_COMPLEX"
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "domains": {
+    "DOMAIN_AIR": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "defense": {
+  "city": {
+   "airDefense": {
+    "percent": -10
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_HELICOPTER": {
+     "flat": 3
+    }
+   },
+   "domains": {
+    "DOMAIN_AIR": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 6,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+   }
+  }
+ ],
+ "cost": {
+  "production": 1030,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_AIRBASE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MILITARY_AIRBASE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MILITARY_AIRBASE",
+  "civilopedia": "TXT_KEY_BUILDING_MILITARY_AIRBASE_PEDIA",
+  "worth": 5,
+  "militaryWorth": 4,
+  "airlift": 1,
+  "airUnitCapacity": 5,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

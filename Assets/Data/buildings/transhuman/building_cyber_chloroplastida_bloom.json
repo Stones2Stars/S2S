@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_CYBER_CHLOROPLASTIDA_BLOOM",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_PROGRAMMABLE_PLANT_FARM",
+    "BUILDING_ANIMA_CHAMBER",
+    "BUILDING_PARK_ARCOLOGY",
+    "TECH_ARTIFICIAL_LIFE",
+    "TECH_ORGANIC_CITIES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CYBERNETIC_CHLOROPLASTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    "CIVIC_ECO_FRIENDLY"
+   ]
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -200
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -200
+  }
+ },
+ "cost": {
+  "production": 5905,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CYBER_CHLOROPLASTIDA_BLOOM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CYBER_CHLOROPLASTIDA_BLOOM",
+  "civilopedia": "TXT_KEY_BUILDING_CYBER_CHLOROPLASTIDA_BLOOM_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

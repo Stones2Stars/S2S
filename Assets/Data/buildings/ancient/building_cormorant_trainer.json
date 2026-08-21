@@ -1,0 +1,116 @@
+{
+ "type": "BUILDING_CORMORANT_TRAINER",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FEATHERS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INDUSTRIAL_FARMS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "TECH_POULTRY_DOMESTICATION",
+    "TECH_FISHING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_POULTRY",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_FISH",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1,
+   "percent": [
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_FISH",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 7,
+     "enabled": "TECH_TOURISM"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 125,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CORMORANT_TRAINER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CORMORANT_TRAINER",
+  "civilopedia": "TXT_KEY_BUILDING_CORMORANT_TRAINER_PEDIA",
+  "worth": 4,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,127 @@
+{
+ "type": "BUILDING_SMITHSONIAN_INSTITUTION",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MUSEUM",
+    {
+     "type": "BUILDING_MUSEUM",
+     "scope": "empire",
+     "min": 3,
+     "scaling": "amountBuildings"
+    },
+    "TECH_SCIENTIFIC_METHOD",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ANCIENT_RELICS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1,
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_MUSEUM",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 2850,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SMITHSONIAN"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SMITHSONIAN_INSTITUTION",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MUSEUM"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SMITHSONIAN_INSTITUTION",
+  "civilopedia": "TXT_KEY_BUILDING_SMITHSONIAN_INSTITUTION_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

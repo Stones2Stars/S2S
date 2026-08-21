@@ -1,0 +1,81 @@
+{
+ "type": "TECH_DEEP_SPACE_COLONIES",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_ASSEMBLER",
+   "BUILDING_DEEP_SPACE_HOUSING_MANAGEMENT",
+   "BUILDING_DEEP_SPACE_HOUSING_WORKERS",
+   "BUILDING_DEEP_SPACE_HYDROPONICS",
+   "BUILDING_DEEP_SPACE_SOLAR_ARRAY_INNER_SOLAR_SYSTEM",
+   "BUILDING_DEEP_SPACE_SOLAR_ARRAY_OUTER_SOLAR_SYSTEM",
+   "BUILDING_DEEP_SPACE_TELESCOPE",
+   "BUILDING_SPACE_COLONY_DEEP_SPACE"
+  ],
+  "builds": [
+   "BUILD_MERCURY_SOLAR_ARRAY"
+  ],
+  "improvements": [
+   "IMPROVEMENT_MERCURY_SOLAR_ARRAY"
+  ],
+  "techs": [
+   "TECH_KUIPER_BELT_EXPLORATION"
+  ],
+  "units": [
+   "UNIT_ONEILLSETTLER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_MANUFACTURING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LUNAR_TRADE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSHUMAN_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 63426
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/deep_space_colonies.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_DEEP_SPACE_COLONIES",
+  "civilopedia": "TXT_KEY_TECH_DEEP_SPACE_COLONIES_PEDIA",
+  "quote": "TXT_KEY_TECH_DEEP_SPACE_COLONIES_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 111,
+  "gridY": 1
+ }
+}

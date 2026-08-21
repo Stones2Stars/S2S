@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_EFFECT_LAUNCH_SITE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BAIKONUR_COSMODROME",
+   "BUILDING_CISLUNAR_FACTORY",
+   "BUILDING_CISLUNAR_LABS",
+   "BUILDING_CISLUNAR_MEDICAL_LAB",
+   "BUILDING_COMMUNICATIONS_SATELLITE",
+   "BUILDING_GARBAGE_SPACEPORT",
+   "BUILDING_MILITARY_SATELLITES",
+   "BUILDING_ORBITAL_HOTEL",
+   "BUILDING_PROJECT_GEMINI",
+   "BUILDING_PROJECT_MERCURY",
+   "BUILDING_PROPAGANDA_SATELLITES",
+   "BUILDING_SOLAR_POWER_SATELLITE",
+   "BUILDING_SPACE_LABORATORY",
+   "BUILDING_SPACE_STATION",
+   "BUILDING_SPACE_STATION_TOURS",
+   "BUILDING_SPUTNIK"
+  ],
+  "units": [
+   "UNIT_LUNAR_ROVER",
+   "UNIT_MAGSAIL_WORKER",
+   "UNIT_PLANET_PROBE",
+   "UNIT_SATELLITE",
+   "UNIT_SOLARSAIL_WORKER",
+   "UNIT_SPACE_SHUTTLE"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_ADVANCED_ROCKETRY"
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_LAUNCH_SITE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_LAUNCH_SITE",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_LAUNCH_SITE_PEDIA",
+  "notConstructible": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

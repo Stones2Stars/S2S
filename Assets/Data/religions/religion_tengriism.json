@@ -1,0 +1,87 @@
+{
+ "type": "RELIGION_TENGRIISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_EJE_SONG",
+   "BUILDING_GER",
+   "BUILDING_KING_GESAR_SONG",
+   "BUILDING_SHAMANS_YURTA",
+   "BUILDING_TENGRII_HORSE_TRAINER",
+   "BUILDING_TENGRI_SONG"
+  ],
+  "units": [
+   "UNIT_TENGRI_MISSIONARY"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_TENGRIISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_TENGRIISM"
+     }
+    }
+   ]
+  }
+ },
+ "grants": {
+  "freeUnit": "UNIT_TENGRI_MISSIONARY",
+  "numFreeUnits": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 14,
+   "icon": "Art/Interface/Buttons/Religions/Siberian.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_tengriism.dds",
+   "genericTechButton": "Art/Interface/Buttons/Religions/Siberian.dds",
+   "movie": {
+    "file": "Art/Cutscene/Tengri_Generic_Found.nif",
+    "sound": "AS2D_BUILD_SIBERIAN_MOVIE"
+   }
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_SIBERIAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TENGRIISM",
+  "adjective": "TXT_KEY_TECH_TENGRIISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_TENGRIISM_PEDIA",
+  "spreadFactor": 10
+ }
+}

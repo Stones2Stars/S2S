@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_KIVA",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MASONRY",
+    {
+     "any": [
+      "BUILDING_HOUSING_PUEBLOS",
+      "BUILDING_HOUSING_CLIFF_DWELLING",
+      "BUILDING_HOUSING_SLUMS",
+      "BUILDING_HOUSING_SHANTY_TOWN",
+      "BUILDING_HOUSING_GHETTOS",
+      "BUILDING_HOUSING_HIGHRISES",
+      "BUILDING_HOUSING_INNER_CITY",
+      "BUILDING_HOUSING_HIGH_TECH_HIGHRISES",
+      "BUILDING_HOUSING_COLONY_ARCOLOGY",
+      "BUILDING_LAUNCH_ARCOLOGY"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "TERRAIN_DESERT",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_SCRUB",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STONE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "CIVIC_FOLKLORE",
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 153,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_KIVA",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_KIVA",
+  "civilopedia": "TXT_KEY_BUILDING_KIVA_PEDIA",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,75 @@
+{
+ "type": "CIVIC_EUDAIMONIA",
+ "food": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 4
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": 5
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -1
+   },
+   "national": {
+    "flat": -1
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -40
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -40
+  }
+ },
+ "grants": {
+  "revolution": -15
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/welfare_utility_maximization.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_EUDAIMONIA",
+  "civilopedia": "TXT_KEY_CIVIC_EUDAIMONIA_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_EUDAIMONIA_STRATEGY",
+  "civicOption": "CIVICOPTION_WELFARE",
+  "upkeepLevel": "UPKEEP_EXTREME"
+ }
+}

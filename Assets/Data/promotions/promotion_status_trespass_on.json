@@ -1,0 +1,39 @@
+{
+ "type": "PROMOTION_STATUS_TRESPASS_ON",
+ "enables": {
+  "promotions": [
+   "PROMOTION_STATUS_TRESPASS_OFF"
+  ]
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": -1
+   }
+  }
+ },
+ "skills": {
+  "excile": false,
+  "barbCoExist": false,
+  "blendIntoCity": false,
+  "assassin": false,
+  "stealthDefense": false,
+  "defenseOnly": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_TRESPASS": 2
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/buttons/Promotions/StatusTrespass.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_STATUS_TRESPASS_ON",
+  "help": "TXT_KEY_PROMOTION_DEPLETE_MP_HELP",
+  "status": true
+ }
+}

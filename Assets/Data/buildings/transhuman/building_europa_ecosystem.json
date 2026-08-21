@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_EUROPA_ECOSYSTEM",
+ "enables": {
+  "buildings": [
+   "BUILDING_EUROPA_VERTICAL_REEF"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SPECULATIVE_PHYSIOLOGY",
+    {
+     "type": "TERRAIN_EUROPA",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_TERRAFORMED_EUROPA": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 1650,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EUROPA_ECOSYSTEM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EUROPA_ECOSYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_EUROPA_ECOSYSTEM_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

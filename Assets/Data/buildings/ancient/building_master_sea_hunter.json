@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_MASTER_SEA_HUNTER",
+ "enables": {
+  "buildings": [
+   "BUILDING_TRADITION_SEA_HUNTING"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SATELLITES"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_SAILING"
+   ]
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "flat": 2
+    },
+    "UNITCOMBAT_STEAM_SHIPS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_SEA_HUNTER1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MASTER_SEA_HUNTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MASTER_SEA_HUNTER",
+  "civilopedia": "TXT_KEY_BUILDING_MASTER_SEA_HUNTER_PEDIA",
+  "notConstructible": true,
+  "worth": 1,
+  "militaryWorth": 4,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 10,
+  "freeStartEra": "C2C_ERA_CLASSICAL",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

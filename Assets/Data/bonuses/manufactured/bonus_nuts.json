@@ -1,0 +1,23 @@
+{
+ "type": "BONUS_NUTS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CONFECTIONERS_WORKSHOP",
+   "BUILDING_FACTORY_MARZIPAN",
+   "BUILDING_FACTORY_NUTELLA",
+   "BUILDING_FACTORY_TANNIN",
+   "BUILDING_TANNIN_MAKER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_NUTS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_NUTS",
+  "civilopedia": "TXT_KEY_BONUS_NUTS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

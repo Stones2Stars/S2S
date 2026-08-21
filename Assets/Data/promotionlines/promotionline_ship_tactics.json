@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_SHIP_TACTICS",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/shipTactics1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SHIP_TACTICS",
+  "unitCombats": [
+   "UNITCOMBAT_COMMODORE"
+  ]
+ }
+}

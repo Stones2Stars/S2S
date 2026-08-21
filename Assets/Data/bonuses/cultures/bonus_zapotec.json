@@ -1,0 +1,22 @@
+{
+ "type": "BONUS_ZAPOTEC",
+ "enables": {
+  "buildings": [
+   "BUILDING_BALL_COURT"
+  ],
+  "units": [
+   "UNIT_LIGHTNING_WARRIOR"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ZAPOTEC"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ZAPOTEC",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

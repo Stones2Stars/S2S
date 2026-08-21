@@ -1,0 +1,99 @@
+{
+ "type": "TECH_ARCHERY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_ANDAMANESE",
+   "BUILDING_CULTURE_BABYLONIAN",
+   "BUILDING_CULTURE_CELTIBERIAN",
+   "BUILDING_CULTURE_HEMUDU",
+   "BUILDING_CULTURE_HUASTEC",
+   "BUILDING_CULTURE_LUNDA",
+   "BUILDING_CULTURE_MALAGASY",
+   "BUILDING_CULTURE_NUBIAN",
+   "BUILDING_CULTURE_SEMINOLE",
+   "BUILDING_CULTURE_TUPI",
+   "BUILDING_CULTURE_ZIMBABWEAN",
+   "BUILDING_FLETCHERS_HUT",
+   "BUILDING_GREAT_HOLMEGAARD_HUNT"
+  ],
+  "promotions": [
+   "PROMOTION_BUSHWHACK3",
+   "PROMOTION_CARAVAN_GUARD_II",
+   "PROMOTION_CARAVAN_MARINES_II",
+   "PROMOTION_COVER"
+  ],
+  "techs": [
+   "TECH_NAVAL_WARFARE"
+  ],
+  "units": [
+   "UNIT_AGUEYBANA_II",
+   "UNIT_ANDAMAN_PYGMIES",
+   "UNIT_ARCHER",
+   "UNIT_BABYLON_BOWMAN",
+   "UNIT_BLACKWOOD_ARCHER",
+   "UNIT_CHARIOTARCHER",
+   "UNIT_DAREN",
+   "UNIT_DEERRIDER",
+   "UNIT_HEMUDU_HUNTERS",
+   "UNIT_KIKKULI_CHARIOT",
+   "UNIT_KUSH_ARCHER",
+   "UNIT_PLUMED_ARCHER",
+   "UNIT_REINDEER_RIDER",
+   "UNIT_SHAK",
+   "UNIT_SHARKTOOTH_ARCHER",
+   "UNIT_SHENGJUN",
+   "UNIT_SURKU"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 84
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Archery.dds,Art/Interface/Buttons/TechTree_Atlas.dds,4,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ARCHERY",
+  "soundMP": "AS2D_TECH_MP_ARCHERY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ARCHERY",
+  "civilopedia": "TXT_KEY_TECH_ARCHERY_PEDIA",
+  "quote": "TXT_KEY_TECH_ARCHERY_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 20,
+  "gridY": 3
+ }
+}

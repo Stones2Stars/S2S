@@ -1,0 +1,117 @@
+{
+ "type": "BUILDING_HAREMS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LEGALIZED_GAMBLING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BROTHEL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PREHISTORIC_DANCE",
+    {
+     "any": [
+      "BUILDING_DANCE_HUT",
+      "BUILDING_DANCE_HALL",
+      "BUILDING_NIGHT_CLUB"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_BROTHEL",
+    "BUILDING_GENTLEMANS_CLUB",
+    "BUILDING_ANDROID_BROTHEL",
+    "BUILDING_ORDINANCE_PROSTITUTION_BAN"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": -2,
+     "enabled": "TECH_TRADE"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "TECH_TRADE"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_TOBACCO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_ESPIONAGE": 3
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HAREMS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HAREMS",
+  "civilopedia": "TXT_KEY_BUILDING_HAREMS_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

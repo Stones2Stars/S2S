@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_HQ_CREATIVE_CONSTRUCTIONS",
+ "enables": {
+  "corporations": [
+   "CORPORATION_4"
+  ],
+  "units": [
+   "UNIT_EXECUTIVE_4"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    "TECH_COMBUSTION",
+    "TECH_CORPORATION",
+    {
+     "any": [
+      "BUILDING_MODERN_OFFICES",
+      "BUILDING_OFFICIUM",
+      "BUILDING_SKYSCRAPER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "headquarters": "CORPORATION_4",
+ "disabled": "GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS",
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CORPORATION_4"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_CREATIVE_CONSTRUCTIONS",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_4_PEDIA",
+  "pediaCategory": "greatWonder",
+  "notConstructible": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "specialBuildingType": "SPECIALBUILDING_CORPORATION_HQ",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,42 @@
+{
+ "type": "PROJECT_SS_DOCKING_BAY",
+ "allowed": {
+  "team": 1
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "victory": {
+  "thresholds": {
+   "VICTORY_SPACE_RACE": 1
+  }
+ },
+ "cost": {
+  "create": 53240
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Buildings/SS_DockingBay.dds,Art/Interface/Buttons/Buildings_Atlas.dds,6,6"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROJECT_SS_DOCKING_BAY",
+  "civilopedia": "TXT_KEY_PROJECT_SS_DOCKING_BAY_PEDIA",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "launchesVictory": "VICTORY_SPACE_RACE",
+  "spaceship": true
+ }
+}

@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_INTERSTELLAR_STADIUM",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_OLYMPICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_XENODIPLOMACY",
+    {
+     "any": [
+      "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+      "BUILDING_SPACE_COLONY_MILKY_WAY"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 2536,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_STADIUM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_STADIUM",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_STADIUM_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

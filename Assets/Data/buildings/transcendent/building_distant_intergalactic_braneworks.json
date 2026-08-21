@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_DISTANT_INTERGALACTIC_BRANEWORKS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_DARK_FLOW_GENERATOR",
+    "TECH_BRANE_CONSTRUCTION",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 2422,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_INTERGALACTIC_BRANEWORKS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_INTERGALACTIC_BRANEWORKS",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_INTERGALACTIC_BRANEWORKS_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_URANUS_HELIUM_3_MINE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_UMBRIEL_COLONY",
+    "TECH_NUCLEAR_PULSE_PROPULSION",
+    {
+     "type": "TERRAIN_URANUS",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HELIUM_3"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_HELIUM_3_IMPORTER",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 9926,
+  "hurryModifier": 10000
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_URANUS_MINE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_URANUS_HELIUM_3_MINE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_URANUS_HELIUM_3_MINE",
+  "civilopedia": "TXT_KEY_BUILDING_URANUS_HELIUM_3_MINE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

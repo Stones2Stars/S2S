@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_ACHIEVEMENT_SEAFARING",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
+    "TECH_WRITING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "food": {
+  "empire": {
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "IS_WATER"
+     }
+    ]
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "experience": {
+  "city": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_COAST"
+    }
+   ]
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SEAFARING_ACHIEVEMENT"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ACHIEVEMENT_SEAFARING",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ACHIEVEMENT_SEAFARING",
+  "civilopedia": "TXT_KEY_BUILDING_ACHIEVEMENT_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "notConstructible": true,
+  "worth": 10,
+  "specialBuildingType": "SPECIALBUILDING_ACHIEVEMENT",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

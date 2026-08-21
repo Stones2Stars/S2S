@@ -1,0 +1,51 @@
+{
+ "type": "PROMOTION_QUICK_MARCH_STATUS_HS",
+ "movement": {
+  "unit": {
+   "moves": {
+    "flat": 1
+   },
+   "moveDiscount": {
+    "flat": 2
+   }
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": -50,
+   "breakdownChance": {
+    "flat": -20
+   },
+   "breakdownDamage": {
+    "flat": -2
+   }
+  }
+ },
+ "hideAndSeek": {
+  "detection": {
+   "value": 1000,
+   "unit": "HAS_CAMOUFLAGE"
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_ENHANCED_MARCH": 3
+ },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "disabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/QuickMarchStatus.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_QUICK_MARCH_STATUS",
+  "negatesInvisibility": [
+   "INVISIBLE_CAMOUFLAGE"
+  ],
+  "status": true,
+  "quick": true
+ }
+}

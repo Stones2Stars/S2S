@@ -1,0 +1,64 @@
+{
+ "type": "TECH_ENCRYPTION_MACHINES",
+ "enables": {
+  "bonuses": [
+   "BONUS_PUNCH_CARDS"
+  ],
+  "buildings": [
+   "BUILDING_AUTOMATED_SWITCHBOARD",
+   "BUILDING_BELL_LABS",
+   "BUILDING_INTELLIGENCE_AGENCY",
+   "BUILDING_TABULATION_FIRM"
+  ],
+  "techs": [
+   "TECH_DECRYPTION_MACHINES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GYROCOMPASS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ABSTRACT_MATHEMATICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 9889
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/encryptionmachines.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ENCRYPTION_MACHINES",
+  "soundMP": "AS2D_TECH_ENCRYPTION_MACHINES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ENCRYPTION_MACHINES",
+  "civilopedia": "TXT_KEY_TECH_ENCRYPTION_MACHINES_PEDIA",
+  "quote": "TXT_KEY_TECH_ENCRYPTION_MACHINES_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 73,
+  "gridY": 1
+ }
+}

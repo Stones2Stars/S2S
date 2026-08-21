@@ -1,0 +1,86 @@
+{
+ "type": "TECH_SANITATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_BARBER_SHOP",
+   "BUILDING_CISTERN",
+   "BUILDING_GARDEROBE",
+   "BUILDING_HOUSING_DOMUS",
+   "BUILDING_HOUSING_HOVELS",
+   "BUILDING_HOUSING_INSULAE",
+   "BUILDING_HOUSING_PALACES",
+   "BUILDING_HOUSING_SLUMS",
+   "BUILDING_HOUSING_VILLAS",
+   "BUILDING_LANDFILL",
+   "BUILDING_PESTS_SEAGULLS",
+   "BUILDING_PIR_E_NARAKI",
+   "BUILDING_PUBLIC_POOL",
+   "BUILDING_SEWER_SYSTEM",
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION",
+   "BUILDING_SLAVE_COMPOUND_SANITATION",
+   "BUILDING_STREET_CLEANER"
+  ],
+  "civics": [
+   "CIVIC_LANDFILLS"
+  ],
+  "techs": [
+   "TECH_CIVIL_SERVICE",
+   "TECH_FIRE_BRIGADES",
+   "TECH_RAT_CATCHING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ANCIENT_MEDICINE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CANAL_SYSTEMS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 824
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Sanitation.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,5,15"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SANITATION",
+  "soundMP": "AS2D_TECH_SANITATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SANITATION",
+  "civilopedia": "TXT_KEY_TECH_SANITATION_PEDIA",
+  "quote": "TXT_KEY_TECH_SANITATION_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 24,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "gridX": 39,
+  "gridY": 11
+ }
+}

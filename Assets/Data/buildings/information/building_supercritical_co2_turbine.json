@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_SUPERCRITICAL_CO2_TURBINE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_INDUSTRIAL_ECOLOGY",
+    {
+     "any": [
+      "BUILDING_HIGH_TECH_COAL_POWER_PLANT",
+      "BUILDING_ENHANCED_GEOTHERMAL_SYSTEM",
+      "BUILDING_RENEWABLE_MEGACOMPLEX",
+      "BUILDING_GENERATION_IV_REACTOR",
+      "BUILDING_D_T_FUSION_POWER_PLANT",
+      "BUILDING_D_HE3_FUSION_PLANT",
+      "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+      "BUILDING_HE3_FUSION_POWER_PLANT",
+      "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 2505,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SUPERCRITICAL_CO2_TURBINE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SUPERCRITICAL_CO2_TURBINE",
+  "civilopedia": "TXT_KEY_BUILDING_SUPERCRITICAL_CO2_TURBINE_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

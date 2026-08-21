@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
+ "enables": {
+  "units": [
+   "UNIT_TAMED_AARDVARK",
+   "UNIT_TAMED_BAIRDS_TAPIR",
+   "UNIT_TAMED_BISON",
+   "UNIT_TAMED_BLACK_RHINO",
+   "UNIT_TAMED_BOAR",
+   "UNIT_TAMED_BRAZILIAN_TAPIR",
+   "UNIT_TAMED_BUFFALO",
+   "UNIT_TAMED_CATTLE",
+   "UNIT_TAMED_GIRAFFE",
+   "UNIT_TAMED_HIPPO",
+   "UNIT_TAMED_INDIAN_RHINO",
+   "UNIT_TAMED_JAVA_RHINO",
+   "UNIT_TAMED_MALAYAN_TAPIR",
+   "UNIT_TAMED_MOUNTAIN_TAPIR",
+   "UNIT_TAMED_MUSKOX",
+   "UNIT_TAMED_WHITE_RHINO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRADE",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_T_FLIGHTLESS_BIRDS",
+      "BUILDING_FOLKLORE_T_ANTELOPE",
+      "BUILDING_FOLKLORE_T_RHINOCEROSES",
+      "BUILDING_FOLKLORE_T_BULL"
+     ]
+    },
+    {
+     "any": [
+      "BUILDING_CARNIVAL",
+      "BUILDING_ZOO"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      "HERITAGE_TAXON_SUIDAE",
+      "HERITAGE_TAXON_ELEPHANTIDAE",
+      "HERITAGE_TAXON_TAPIRIDAE",
+      "HERITAGE_TAXON_HIPPOPOTAMIDAE",
+      "HERITAGE_TAXON_MONOTREMATA"
+     ]
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": [
+    {
+     "value": 1,
+     "enabled": "TECH_SCIENTIFIC_METHOD"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 306,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ENCLOSURE_EXOTIC_HERBIVORE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ENCLOSURE_EXOTIC_HERBIVORE",
+  "civilopedia": "TXT_KEY_BUILDING_ENCLOSURE_EXOTIC_HERBIVORE_PEDIA",
+  "pediaCategory": "animalistic",
+  "worth": 2,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

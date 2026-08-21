@@ -1,0 +1,113 @@
+// gameAI.cpp
+#include "CvGameCoreDLL.h"
+#include "Infos/CvClassificationIds.h"   // the generated SKILL_/TAG_/CAPABILITY_ id table
+
+#include "Tools/FProfiler.h"
+
+#include "CvGameAI.h"
+#include "Defines/CvGlobals.h"
+#include "Defines/CvGlobals.h"
+#include "CvInfos.h"
+#include "CvPlayerAI.h"
+#include "CvTeamAI.h"
+
+// Public Functions...
+
+CvGameAI::CvGameAI()
+{
+	AI_reset();
+}
+
+
+CvGameAI::~CvGameAI()
+{
+	AI_uninit();
+}
+
+
+void CvGameAI::AI_init()
+{
+	AI_reset();
+
+	//--------------------------------
+	// Init other game data
+}
+
+
+void CvGameAI::AI_uninit()
+{
+}
+
+
+void CvGameAI::AI_reset()
+{
+	AI_uninit();
+
+	m_iPad = 0;
+
+	CvUnitAI::AI_clearCaches();
+}
+
+
+void CvGameAI::AI_updateAssignWork()
+{
+	PROFILE_FUNC();
+
+	int iI;
+
+	for (iI = 0; iI < MAX_PLAYERS; iI++)
+	{
+		CvPlayer& kLoopPlayer = GET_PLAYER((PlayerTypes)iI);
+		if (GET_TEAM(kLoopPlayer.getTeam()).isHuman() && kLoopPlayer.isAlive())
+		{
+			kLoopPlayer.AI_updateAssignWork();
+		}
+	}
+}
+
+
+int CvGameAI::AI_combatValue(const UnitTypes eUnit) const
+{
+	int iValue = 100;
+	const CvUnitInfo& unit = GC.getUnitInfo(eUnit);
+
+	if (unit.getDomain() == DOMAIN_AIR)
+	{
+		iValue *= unit.getAirCombat();
+	}
+	else
+	{
+		iValue *= (unit.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100);
+		//TB Combat Mods Begin
+		// TOOD: rethink these calculations
+		//iValue += (((100 * unit.getCombatModifier(COMBAT_DAMAGE_MODIFIER, CASC_SCOPE_UNIT))/100)/5);
+		//TB Combat Mods End
+
+		iValue *= 100 + (2 * (unit.getScalar(SCALAR_FIRST_STRIKES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100) + (unit.getScalar(SCALAR_FIRST_STRIKE_CHANCES, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100)) * GC.getCOMBAT_DAMAGE() / 5;
+		iValue /= 100;
+	}
+
+	iValue /= getBestLandUnitCombat();
+
+	return iValue;
+}
+
+
+void CvGameAI::read(FDataStreamBase* pStream)
+{
+	CvGame::read(pStream);
+
+	pStream->Read(&m_iPad);
+}
+
+
+void CvGameAI::write(FDataStreamBase* pStream)
+{
+	CvGame::write(pStream);
+
+	pStream->Write(m_iPad);
+}
+
+// Protected Functions...
+
+// Private Functions...

@@ -1,0 +1,135 @@
+{
+ "type": "BUILDING_ARTILLERY_BATTERY",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ADVANCED_ROCKETRY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AUTO_CANNON_BATTERY"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ARTILLERY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_AMMUNITION",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CEMENT",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_AUTO_CANNON_BATTERY",
+    "BUILDING_MISSILE_BATTERY",
+    "BUILDING_RAILGUN_BATTERY",
+    "BUILDING_LASER_BATTERY",
+    "BUILDING_ANTI_MATTER_BATTERY"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 40
+   },
+   "bombardDefense": {
+    "percent": 20
+   },
+   "dynamicDefense": {
+    "percent": 50
+   },
+   "adjacentDamage": {
+    "percent": 35
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "vision": {
+  "city": {
+   "elevation": {
+    "flat": 200
+   }
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -7
+  }
+ },
+ "cost": {
+  "production": 830,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ARTILLERY_BATTERY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COMMAND_BUNKER"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ARTILLERY_BATTERY",
+  "civilopedia": "TXT_KEY_BUILDING_ARTILLERY_BATTERY_PEDIA",
+  "worth": 8,
+  "militaryWorth": 8,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

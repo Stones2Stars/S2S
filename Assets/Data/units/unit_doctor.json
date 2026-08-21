@@ -1,0 +1,198 @@
+{
+ "type": "UNIT_DOCTOR",
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "skills": [
+  "goldenAge"
+ ],
+ "tags": [
+  "landUnit",
+  "people",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_PRODIGY",
+ "combatClasses": [
+  "UNITCOMBAT_HEALTH_CARE",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_REMOVE_WV_SLAVERY",
+    "requires": {
+     "outcome": "OUTCOME_REMOVE_WV_SLAVERY",
+     "plot": "IS_OWNED"
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doRemoveWVSlavery"
+    }
+   },
+   {
+    "mission": "MISSION_REMOVE_WV_CANNIBALISM",
+    "requires": {
+     "outcome": "OUTCOME_REMOVE_WV_CANNIBALISM",
+     "plot": "IS_OWNED"
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doRemoveWVCannibalism"
+    }
+   },
+   {
+    "mission": "MISSION_REMOVE_WV_HUMAN_SACRIFICE",
+    "requires": {
+     "outcome": "OUTCOME_REMOVE_WV_HUMAN_SACRIFICE",
+     "plot": "IS_OWNED"
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doRemoveWVHumanSacrifice"
+    }
+   }
+  ]
+ },
+ "grants": {
+  "greatPeople": [
+   "SPECIALIST_GREAT_DOCTOR"
+  ],
+  "goldenAge": true,
+  "buildings": [
+   {
+    "building": "BUILDING_HEALTH_SPA"
+   },
+   {
+    "building": "BUILDING_UNIVERSAL_HEALTH_CARE"
+   }
+  ],
+  "greatPersonAction": {
+   "discover": {
+    "base": 100000,
+    "multiplier": 2
+   }
+  }
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 1
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FEMALE_PROPHET",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_FEMALE_PROPHET",
+       "late": "ART_DEF_UNIT_GREAT_DOCTOR"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_DOCTOR",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_DOCTOR_PEDIA",
+  "spawnOnly": true,
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPHET",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_PROPHET"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "uniqueNames": [
+   "TXT_KEY_GREAT_PERSON_ALLEN_WHIPPLE",
+   "TXT_KEY_GREAT_PERSON_AMATO_LUSITANO",
+   "TXT_KEY_GREAT_PERSON_AMBROISE_PARE",
+   "TXT_KEY_GREAT_PERSON_ANDREAS_VESALIUS",
+   "TXT_KEY_GREAT_PERSON_AVICENNA",
+   "TXT_KEY_GREAT_PERSON_CARL_JUNG",
+   "TXT_KEY_GREAT_PERSON_CARL_WOOD",
+   "TXT_KEY_GREAT_PERSON_CARLO_URBANI",
+   "TXT_KEY_GREAT_PERSON_CHAKRAPANI_DATTA",
+   "TXT_KEY_GREAT_PERSON_CHARLES_J_H_NICOLLE",
+   "TXT_KEY_GREAT_PERSON_CHARLES_MAYO",
+   "TXT_KEY_GREAT_PERSON_CHARLES_R_DREW",
+   "TXT_KEY_GREAT_PERSON_CHRISTIAAN_BARNARD",
+   "TXT_KEY_GREAT_PERSON_CHRISTIAAN_EIJKMAN",
+   "TXT_KEY_GREAT_PERSON_CLAUDIUS_GALENUS_OF_PERGAMUM",
+   "TXT_KEY_GREAT_PERSON_DANIEL_CARLETON_GAJDUSEK",
+   "TXT_KEY_GREAT_PERSON_EDWARD_JENNER",
+   "TXT_KEY_GREAT_PERSON_EGAS_MONIZ",
+   "TXT_KEY_GREAT_PERSON_ERNST_HAECKEL",
+   "TXT_KEY_GREAT_PERSON_FREDERICK_BANTING",
+   "TXT_KEY_GREAT_PERSON_GARCIA_DE_ORTA",
+   "TXT_KEY_GREAT_PERSON_GEORGE_MINOT",
+   "TXT_KEY_GREAT_PERSON_GIROLAMO_FRACASTORO",
+   "TXT_KEY_GREAT_PERSON_GREAT_DOCTOR",
+   "TXT_KEY_GREAT_PERSON_HIPPOCRATES",
+   "TXT_KEY_GREAT_PERSON_IBN_RUSHD",
+   "TXT_KEY_GREAT_PERSON_IGNAZ_SEMMELWEIS",
+   "TXT_KEY_GREAT_PERSON_JEAN_ASTRUC",
+   "TXT_KEY_GREAT_PERSON_JEAN_MARTIN_CHARCOT",
+   "TXT_KEY_GREAT_PERSON_JOHN_SNOW",
+   "TXT_KEY_GREAT_PERSON_JOSEPH_LISTER",
+   "TXT_KEY_GREAT_PERSON_JOSEPH_RANSOHOFF",
+   "TXT_KEY_GREAT_PERSON_LEE_JONG_WOOK",
+   "TXT_KEY_GREAT_PERSON_MADHAVAKARA",
+   "TXT_KEY_GREAT_PERSON_MARCELLO_MALPIGHI",
+   "TXT_KEY_GREAT_PERSON_MOSHE_BEN_MAIMON",
+   "TXT_KEY_GREAT_PERSON_NORMAN_BETHUNE",
+   "TXT_KEY_GREAT_PERSON_OLE_WORMIUS",
+   "TXT_KEY_GREAT_PERSON_OTTO_MEYERHOF",
+   "TXT_KEY_GREAT_PERSON_PIERRE_FAUCHARD",
+   "TXT_KEY_GREAT_PERSON_RENE_THEOPHILE_LAENNEC",
+   "TXT_KEY_GREAT_PERSON_RICHARD_LOWER",
+   "TXT_KEY_GREAT_PERSON_ROBERT_KOCH",
+   "TXT_KEY_GREAT_PERSON_RUDOLF_WEIGL",
+   "TXT_KEY_GREAT_PERSON_SAMUEL_HAHNEMANN",
+   "TXT_KEY_GREAT_PERSON_SHAPUR_E_SAHL",
+   "TXT_KEY_GREAT_PERSON_SIGMUND_FREUD",
+   "TXT_KEY_GREAT_PERSON_SIR_MAGDI_YACOUB",
+   "TXT_KEY_GREAT_PERSON_SUSHRUTA",
+   "TXT_KEY_GREAT_PERSON_THEODOR_BILLROTH",
+   "TXT_KEY_GREAT_PERSON_THEODOR_KOCHER",
+   "TXT_KEY_GREAT_PERSON_THOMAS_SYDENHAM",
+   "TXT_KEY_GREAT_PERSON_VIRGINIA_APGAR",
+   "TXT_KEY_GREAT_PERSON_WILDER_PENFIELD",
+   "TXT_KEY_GREAT_PERSON_WILLIAM_HARVEY",
+   "TXT_KEY_GREAT_PERSON_WILLIAM_MAYO",
+   "TXT_KEY_GREAT_PERSON_WILLIAM_MCBRIDE",
+   "TXT_KEY_GREAT_PERSON_WILLIAM_OSLER",
+   "TXT_KEY_GREAT_PERSON_WILLIAM_WORRALL_MAYO",
+   "TXT_KEY_GREAT_PERSON_ZAKARIA_AL_RAZI"
+  ]
+ }
+}

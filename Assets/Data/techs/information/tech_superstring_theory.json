@@ -1,0 +1,74 @@
+{
+ "type": "TECH_SUPERSTRING_THEORY",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLOAN_DIGITAL_SKY_SURVEY",
+   "BUILDING_WILKINSON_MICROWAVE_ANISOTROPY_PROBE"
+  ],
+  "projects": [
+   "PROJECT_THEORY_OF_EVERYTHING"
+  ],
+  "techs": [
+   "TECH_IMAGINARY_PHYSICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NANOTECHNOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CHAOS_THEORY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_SCIENTIST"
+ },
+ "cost": {
+  "research": 21329
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/Superstring.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,1,2"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SUPERSTRING_THEORY",
+  "soundMP": "AS2D_TECH_SUPERSTRING_THEORY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SUPERSTRING_THEORY",
+  "civilopedia": "TXT_KEY_TECH_SUPERSTRING_THEORY_PEDIA",
+  "quote": "TXT_KEY_TECH_SUPERSTRING_THEORY_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 89,
+  "gridY": 17
+ }
+}

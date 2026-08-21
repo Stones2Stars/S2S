@@ -1,0 +1,136 @@
+{
+ "type": "BUILDING_POLICE_ACADEMY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH",
+   "BUILDING_ORDINANCE_YOUTH_CURFEW"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_UNIVERSITY",
+    "TECH_CRIMINOLOGY",
+    {
+     "any": [
+      "BUILDING_POLICE_STATION",
+      "BUILDING_POLICE_PRECINCT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "espionage": {
+  "city": {
+   "flat": 5,
+   "percent": 50
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_RIOTPOLICE": {
+     "percent": 10
+    },
+    "UNIT_POLICE_DOG": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -50
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -24
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_INVESTIGATOR": 2
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_SAFETY_POLICE_ACADEMY"
+   }
+  ]
+ },
+ "cost": {
+  "production": 1600,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   },
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_POLICE_ACADEMY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_POLICE_ACADEMY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_POLICE_STATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_POLICE_ACADEMY",
+  "civilopedia": "TXT_KEY_BUILDING_POLICE_ACADEMY_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 1,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

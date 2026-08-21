@@ -1,0 +1,113 @@
+{
+ "type": "UNIT_NEANDERTHAL_WANDERER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PERSISTENCE_HUNTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_NEANDERTHAL",
+    "BUILDING_C_L_NEANDERTHAL",
+    "TECH_NOMADISM"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_NEANDERTHAL_SCOUT",
+     "UNIT_NEANDERTHAL_CHASER"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "skills": [
+  "blendIntoCity",
+  "barbCoExist",
+  "noBadGoodies",
+  "rivalTerritory",
+  "upgradeAnywhere"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_RECON",
+ "combatClasses": [
+  "UNITCOMBAT_EXPLORER",
+  "UNITCOMBAT_SPECIES_NEANDERTHAL",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_STAFF",
+  "UNITCOMBAT_WEAPON_DIST_ROCK",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 12,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NEANDERTHAL_WANDERER",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_NEANDERTHAL_WANDERER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_NEANDERTHAL_WANDERER",
+  "civilopedia": "TXT_KEY_UNIT_WANDERER_PEDIA",
+  "worth": 2,
+  "militaryWorth": 1,
+  "xpValueAttack": 3,
+  "xpValueDefense": 3,
+  "animalCombat": 50,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_EXPLORE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_EXPLORE",
+   "UNITAI_PILLAGE",
+   "UNITAI_HUNTER",
+   "UNITAI_HUNTER_ESCORT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

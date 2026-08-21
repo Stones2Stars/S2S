@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_WASTE_INCINERATOR_POWER_PLANT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_POWER_LINES",
+    "BUILDING_LANDFILL",
+    "BUILDING_RECYCLING_CENTER",
+    "TECH_RECYCLING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      "CIVIC_WASTE_TO_ENERGY",
+      "CIVIC_WASTE_IMPORTATION",
+      "CIVIC_LANDFILLS"
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 1475,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WASTE_INCINERATOR_POWER_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WASTE_INCINERATOR_POWER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_WASTE_INCINERATOR_POWER_PLANT_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

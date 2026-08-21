@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_UKRAINIAN",
+ "enables": {
+  "units": [
+   "UNIT_SVIATOSLAV_I",
+   "UNIT_ZAPOROZKI_KOZAK"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_UKRAINIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_UKRAINIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

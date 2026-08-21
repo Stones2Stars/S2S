@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_WELSH",
+ "enables": {
+  "units": [
+   "UNIT_YEOMAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_WELSH"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_WELSH",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

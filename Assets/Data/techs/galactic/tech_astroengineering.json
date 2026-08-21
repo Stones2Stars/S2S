@@ -1,0 +1,74 @@
+{
+ "type": "TECH_ASTROENGINEERING",
+ "enables": {
+  "buildings": [
+   "BUILDING_EFFECT_SOLAR_DYSON_SPHERE",
+   "BUILDING_INTERSTELLAR_DYSON_SHUTTER",
+   "BUILDING_INTERSTELLAR_DYSON_SPHERE",
+   "BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER",
+   "BUILDING_INTERSTELLAR_SPHEREWORLD",
+   "BUILDING_SOLAR_DYSON_SPHERE"
+  ],
+  "builds": [
+   "BUILD_DYSON_SPHERE"
+  ],
+  "civics": [
+   "CIVIC_ENERGY"
+  ],
+  "improvements": [
+   "IMPROVEMENT_DYSON_SPHERE"
+  ],
+  "techs": [
+   "TECH_ARTIFICIAL_STARS",
+   "TECH_STELLAR_COMPUTING",
+   "TECH_WORMHOLE_COMMUNICATIONS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STAR_LIFTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLANET_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 172549
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/astroengineering.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ASTROENGINEERING",
+  "civilopedia": "TXT_KEY_TECH_ASTROENGINEERING_PEDIA",
+  "quote": "TXT_KEY_TECH_ASTROENGINEERING_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 133,
+  "gridY": 15
+ }
+}

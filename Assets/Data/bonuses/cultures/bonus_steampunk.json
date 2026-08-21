@@ -1,0 +1,30 @@
+{
+ "type": "BONUS_STEAMPUNK",
+ "enables": {
+  "buildings": [
+   "BUILDING_COAL_FIRED_DYNAMO",
+   "BUILDING_MAD_SCIENTISTS_CASTLE",
+   "BUILDING_MUNICIPAL_COMPUTING_ENGINE",
+   "BUILDING_NEMOS_NAVAL_ACADEMY",
+   "BUILDING_PANOPTICON_PRISON",
+   "BUILDING_PEAT_FIRED_DYNAMO",
+   "BUILDING_TRACTION_ENGINE_WORKSHOP",
+   "BUILDING_WOOD_FIRED_DYNAMO"
+  ],
+  "units": [
+   "UNIT_CLOUD_DESTROYER",
+   "UNIT_STEAMPUNK_WORKER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_STEAMPUNK"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_STEAMPUNK",
+  "civilopedia": "TXT_KEY_BONUS_STEAMPUNK_PEDIA",
+  "bonusClassType": "BONUSCLASS_GENMODS",
+  "source": "culture"
+ }
+}

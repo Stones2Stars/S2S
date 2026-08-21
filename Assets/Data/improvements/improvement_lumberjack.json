@@ -1,0 +1,177 @@
+{
+ "type": "IMPROVEMENT_LUMBERJACK",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    },
+    "HAS_FEATURE",
+    {
+     "any": [
+      {
+       "feature": [
+        "FEATURE_FOREST",
+        "FEATURE_FOREST_ANCIENT",
+        "FEATURE_BAMBOO",
+        "FEATURE_JUNGLE",
+        "FEATURE_MANGROVE"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_APPLE",
+        "BONUS_HEMP",
+        "BONUS_RESIN",
+        "BONUS_PRIME_TIMBER"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_APPLE"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_THE_WHEEL",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CONSTRUCTION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_APPLE"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HEMP"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RESIN"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PRIME_TIMBER"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_TRADE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MATHEMATICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_APPLE"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HEMP"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RESIN"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PRIME_TIMBER"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_LUMBERJACK"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_LUMBERJACK",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_LUMBERYARD_PEDIA",
+  "upgradeTime": 10,
+  "pillageGold": 10,
+  "pillageTo": "IMPROVEMENT_WOOD_GATHERER",
+  "upgradesTo": "IMPROVEMENT_LUMBERMILL",
+  "bonuses": {
+   "BONUS_APPLE": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_HEMP": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_MUSHROOMS": {
+    "discoverRand": 5000
+   },
+   "BONUS_OLIVES": {
+    "discoverRand": 5000
+   },
+   "BONUS_RESIN": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_TEA": {
+    "discoverRand": 5000
+   },
+   "BONUS_PRIME_TIMBER": {
+    "trade": true,
+    "discoverRand": 5000
+   }
+  }
+ }
+}

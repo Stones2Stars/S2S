@@ -1,0 +1,91 @@
+{
+ "type": "TECH_REPRESENTATIVE_DEMOCRACY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_AMERICAN",
+   "BUILDING_DISTRICT_OFFICE",
+   "BUILDING_HUMAN_RIGHTS_DECLARATION",
+   "BUILDING_INDEPENDENCE_HALL",
+   "BUILDING_PRESIDENTIAL_MONUMENT",
+   "BUILDING_STATUE_OF_LIBERTY"
+  ],
+  "civics": [
+   "CIVIC_DEMOCRACY",
+   "CIVIC_INCENTIVIZED",
+   "CIVIC_SEPARATION_OF_POWER",
+   "CIVIC_SUBSIDIZED"
+  ],
+  "techs": [
+   "TECH_INDUSTRIAL_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_ADELARD_GODBOUT",
+   "UNIT_AILI_KESKITALO",
+   "UNIT_BENAZIR_BHUTTO",
+   "UNIT_BENJAMIN_MKAPA",
+   "UNIT_DEDAN_KIMATHI",
+   "UNIT_DOS_SANTOS",
+   "UNIT_JOZE_PUCNIK",
+   "UNIT_LEOPOLD_SENGHOR",
+   "UNIT_OBAFEMI_AWOLOWO",
+   "UNIT_PHILIBERT_TSIRANANA",
+   "UNIT_THOMAS_JEFFERSON",
+   "UNIT_TOMAS_MASARYK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NATIONALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 4174
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/Democracy.dds,Art/Interface/Buttons/TechTree_Atlas.dds,8,9"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_REPRESENTATIVE_DEMOCRACY",
+  "soundMP": "AS2D_TECH_REPRESENTATIVE_DEMOCRACY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_REPRESENTATIVE_DEMOCRACY",
+  "civilopedia": "TXT_KEY_TECH_REPRESENTATIVE_DEMOCRACY_PEDIA",
+  "quote": "TXT_KEY_TECH_REPRESENTATIVE_DEMOCRACY_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 60,
+  "gridY": 9
+ }
+}

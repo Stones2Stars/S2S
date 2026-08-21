@@ -1,0 +1,83 @@
+{
+ "type": "TECH_WARMACHINES",
+ "enables": {
+  "buildings": [
+   "BUILDING_ADVANCED_FLOODWALL",
+   "BUILDING_MINING_MECH_CONTROL_CENTER"
+  ],
+  "techs": [
+   "TECH_ANDROIDS",
+   "TECH_ION_BEAMS"
+  ],
+  "units": [
+   "UNIT_ANTI_PERSONNEL_MECH",
+   "UNIT_CISLUNAR_INVADER",
+   "UNIT_DROPSHIP",
+   "UNIT_FUSION_CRUISER",
+   "UNIT_HITECH_HOVERCRAFT",
+   "UNIT_WARBOT_INFANTRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BIOMETRIC_WARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AUTOMATED_ROBOTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INTERNAL_SHOCKWAVE_ENGINE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOELECTRONICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 42984
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/Mech_Warfare1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_WARMACHINES",
+  "soundMP": "AS2D_TECH_WARMACHINES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_WARMACHINES",
+  "civilopedia": "TXT_KEY_TECH_WARMACHINES_PEDIA",
+  "quote": "TXT_KEY_TECH_WARMACHINES_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 105,
+  "gridY": 9
+ }
+}

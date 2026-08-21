@@ -1,0 +1,11 @@
+{
+ "type": "UNITCOMBAT_MAMMAL_TAPIR",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/mammal.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_MAMMAL_TAPIR"
+ }
+}

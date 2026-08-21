@@ -1,0 +1,55 @@
+{
+ "type": "TECH_CLOUD_PATTERNS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CLOUD_OBSERVERS_HUT"
+  ],
+  "techs": [
+   "TECH_WEATHER_LORE"
+  ],
+  "units": [
+   "UNIT_VIRACOCHA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEAFARING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 348
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/CloudPatterns.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CLOUD_PATTERNS",
+  "soundMP": "AS2D_TECH_CLOUD_PATTERNS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CLOUD_PATTERNS",
+  "civilopedia": "TXT_KEY_TECH_CLOUD_PATTERNS_PEDIA",
+  "quote": "TXT_KEY_TECH_CLOUD_PATTERNS_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 16,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 31,
+  "gridY": 1
+ }
+}

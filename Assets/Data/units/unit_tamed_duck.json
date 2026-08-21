@@ -1,0 +1,143 @@
+{
+ "type": "UNIT_TAMED_DUCK",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ANIMAL_TAMER_COMPLEX",
+    "BUILDING_ENCLOSURE_BIRD",
+    "BUILDING_FOLKLORE_DUCK",
+    "TECH_SPECIALIZATION"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityDefense": {
+    "percent": -80
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "tradable"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_TAMED",
+  "UNITCOMBAT_ANIMAL_BIRD",
+  "UNITCOMBAT_BIRD_WATERFOWL",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_PECK",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_PATHETIC",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_TINY",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_GOVERNORS_PETS"
+   },
+   {
+    "building": "BUILDING_GOVERNORS_MENAGERIE"
+   },
+   {
+    "building": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
+   },
+   {
+    "building": "BUILDING_ENCLOSURE_BIRD"
+   },
+   {
+    "building": "BUILDING_FEATHER_WORKER"
+   },
+   {
+    "building": "BUILDING_HERD_POULTRY"
+   },
+   {
+    "building": "BUILDING_FARM_ANIMAL_DUCK"
+   },
+   {
+    "building": "BUILDING_ZOO"
+   },
+   {
+    "building": "BUILDING_TAXIDERMIST"
+   },
+   {
+    "building": "BUILDING_FLOCKS_OF_DUCK"
+   }
+  ]
+ },
+ "cost": {
+  "production": 133
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_DUCK",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_DUCK"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_MALE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_TAMED_DUCK",
+  "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",
+  "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
+  "worth": 1,
+  "militaryWorth": 1,
+  "xpValueAttack": 2,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "notUnitAIs": [
+   "UNITAI_WORKER",
+   "UNITAI_EXPLORE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": -1
+  }
+ }
+}

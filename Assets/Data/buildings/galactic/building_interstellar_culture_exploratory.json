@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_INTERSTELLAR_CULTURE_EXPLORATORY",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CULTURAL_EVOLUTION",
+    {
+     "type": "MAPCATEGORY_GALACTIC",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_INTERSTELLAR_CULTURE_AGGRESSIVE",
+    "BUILDING_INTERSTELLAR_CULTURE_COMMERCIAL",
+    "BUILDING_INTERSTELLAR_CULTURE_INDUSTRIOUS",
+    "BUILDING_INTERSTELLAR_CULTURE_OBEDIENT",
+    "BUILDING_INTERSTELLAR_CULTURE_PARADISE",
+    "BUILDING_INTERSTELLAR_CULTURE_REBELLIOUS"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "cost": {
+  "production": 1757,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CULTURE_EXPLORATORY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_EXPLORATORY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CULTURE_EXPLORATORY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC"
+  ]
+ }
+}

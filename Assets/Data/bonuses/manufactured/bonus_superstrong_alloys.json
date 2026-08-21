@@ -1,0 +1,29 @@
+{
+ "type": "BONUS_SUPERSTRONG_ALLOYS",
+ "enables": {
+  "buildings": [
+   "BUILDING_DIAMOND_NANOTHREAD_FOUNDRY",
+   "BUILDING_EARTHSCRAPER",
+   "BUILDING_HE3_FUSION_POWER_PLANT",
+   "BUILDING_JETSTREAM_POWER_PLANT",
+   "BUILDING_OCEAN_FLOOR_CITY",
+   "BUILDING_PROGRAMMABLE_PLANT_FARM",
+   "BUILDING_SUPERSTRONG_ALLOY_WALLS"
+  ],
+  "units": [
+   "UNIT_WARLORDVII",
+   "UNIT_WARLORDVIIS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SUPERSTRONG_ALLOYS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SUPERSTRONG_ALLOYS",
+  "civilopedia": "TXT_KEY_BONUS_SUPERSTRONG_ALLOYS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

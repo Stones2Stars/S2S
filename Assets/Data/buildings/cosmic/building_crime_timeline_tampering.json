@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_CRIME_TIMELINE_TAMPERING",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_TIME_TRAVEL",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 1950,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": -50
+  }
+ },
+ "research": {
+  "city": {
+   "percent": -50
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": -50
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": -50
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 6
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": 500
+   }
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 100
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "chance": {
+    "per": "PROPERTY_CRIME"
+   },
+   "action": {
+    "grant": {
+     "units": [
+      "UNIT_TECHNARCHIST"
+     ]
+    }
+   }
+  }
+ ],
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_TIMELINE_TAMPERING",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_TIMELINE_TAMPERING_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

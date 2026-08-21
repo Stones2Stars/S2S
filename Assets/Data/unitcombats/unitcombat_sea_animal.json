@@ -1,0 +1,33 @@
+{
+ "type": "UNITCOMBAT_SEA_ANIMAL",
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 1000
+   }
+  }
+ },
+ "tags": [
+  "animal"
+ ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  },
+  "detection": {
+   "value": 100,
+   "unit": "HAS_SUBMARINE"
+  }
+ },
+ "skills": [
+  "submarine"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/whales.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SEA_ANIMAL"
+ }
+}

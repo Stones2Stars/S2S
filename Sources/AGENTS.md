@@ -12,6 +12,29 @@ root `AGENTS.md`.
 - Keep one primary class per file.
 - Keep include guards and `#pragma once` for headers.
 - Follow formatting/style from `Sources/.editorconfig`.
+- **One statement per line; one variable declaration per statement (owner).** Never smash multiple declarations
+  or statements onto one line (`std::ostringstream ss; ss << f.rdbuf();` is the banned shape) — code is written
+  for the human reading it.
+- **No 2-letter or cryptic-abbreviation identifiers (owner)** — no `ss`, `fd`, `cx`, `pg`; names are spelled out
+  in full for locals, parameters, members, and enum entries alike (the no-abbreviated-parameters ruling in
+  [cascade.md](../docs/cascade.md), generalized to every identifier).
+  **⛔ THE REASON IS ANTI-CONCEALMENT, not style (owner): *"it is not unknown for agents to hide poor
+  implementation behind abbreviated variables, that I don't immediately catch."*** An unreadable name defeats
+  REVIEW — the owner cannot audit what they cannot read, so the abbreviation is where a weak or wrong structure
+  survives unexamined. ⚑ The worked case: a family of `s_op*` file-statics read as one uniform "operate index",
+  and a plan doc accordingly described them as one thing to retire wholesale. Spelled out, they were **two
+  genuinely different classes** — per-id reverse buckets, and coarse axis-flag lists that are correct as they are
+  and must NOT be converged. The names were the only thing hiding that. ⇒ Treat an abbreviated identifier as a
+  review-blocker on sight, and rename it before reasoning about the code it names.
+  **⚖ THE ONE SANCTIONED ABBREVIATION — a FILE-SCOPE PREFIX, anchored by its own FILE (owner):** *"when the prefix
+  is in the name of the file, it makes sense to have the prefix; it does not make sense to have it as a standalone
+  collection somewhere."* A short prefix on the file-static helpers of ONE translation unit is legitimate — the
+  unity build shares a TU, so file-scope helpers need collision-proofing, and **the FILENAME supplies the
+  expansion**, so the reader is never guessing (`gt_` reads as gather because it lives in the gather file, and
+  nowhere else). **The test is correspondence:** the prefix abbreviates the file it lives in, and appears in NO
+  other file. ⛔ What is banned is the free-floating collection — a prefix naming some *concept* rather than its
+  file, so nothing on screen expands it. That is what the renamed operate-index statics were: an `op` family
+  inside the enabler-kernel file, anchored to nothing.
 - The DLL must remain compliant with the existing build chain.
 - Do not update, replace, or modernize the build chain/toolchain.
 
@@ -32,10 +55,11 @@ root `AGENTS.md`.
   define `FASSERT_ENABLE`, per `fbuild.bff` — *not* the `.vcxproj`). FinalRelease is the build players
   run, so to verify anything in a FinalRelease run use the gated logging system (`[PERF]` via
   `gPerfLogLevel`/`Autolog__LogLevelPerf`, or a `log<Domain>AI` helper), which ships in every DLL —
-  see `docs/dev/reference/observability/ai-logging-reference.md`.
-- `fbuild.bff` is the source-of-truth for compiled directories (the `.vcxproj` is IDE-only).
-  New `Sources/<Dir>/` must be added to `fbuild.bff`'s `.UnityInputPath` (~line 201) **and** the `.vcxproj`(+`.filters`),
-  or FastBuild fails at link with `LNK2001` while the IDE compiles fine.
+  see `docs/spine.md`.
+- `fbuild.bff` is the source-of-truth for compiled directories (the `.vcxproj` is IDE-only). **fbuild RECURSIVELY
+  globs** every `.cpp` under `$SOURCE_DIR$`, so a new `Sources/<Dir>/` is compiled **automatically — no
+  `.UnityInputPath` edit needed** (regen the `.vcxproj`(+`.filters`) for IDE display only).
+  With recursive globbing an `LNK2001` means a genuinely **missing definition**, not a missing `.UnityInputPath` entry.
 - Full dev bootstrap: `DevSetup.bat`. XML validation: `Tools/XmlValidator.exe -a`.
   Python callbacks: `Tools/XMLTools/verify-python-callbacks.py`.
 - See the root `AGENTS.md` for full build details.
@@ -43,10 +67,10 @@ root `AGENTS.md`.
 ## Conventions
 
 - Prefer minimal, local changes in large core files. **"Minimal, local" bounds the SIZE of an edit, NOT the
-  SCOPE of the work (owner clarification 2026-06-20):** a targeted fix inside a tightly-coupled core file stays
-  minimal — don't sprawl it or gratuitously refactor around it — but this is **no brake** on deliberate
-  structural rework (the #428/#430 cascade, the docs rebuild, dissolving the `Cv*AI` god-classes), which is
-  large by design and answers to [DEC-proper-once](../docs/dev/architecture/decisions.md#dec-proper-once).
+  SCOPE of the work:** a targeted fix inside a tightly-coupled core file stays minimal — don't sprawl it or
+  gratuitously refactor around it — but this is **no brake** on deliberate structural rework (the cascade, the
+  docs rebuild, dissolving the `Cv*AI` god-classes), which is large by design and answers to
+  the "build the proper structure once" rule (`AGENTS.md` Conventions § Design).
 - Preserve save compatibility by default; for intentional save breaks, coordinate and mark with `@SAVEBREAK` where relevant.
 - If C++ changes affect XML/Python interfaces, validate related XML and callback references.
 
@@ -58,11 +82,11 @@ root `AGENTS.md`.
 
 ## Reference Docs
 
-- **Developer docs index: [`docs/dev/README.md`](../docs/dev/README.md)** — split into
-  `docs/dev/reference/` (how the code works today, one note per class/system) and
-  `docs/dev/plans/` (refactor scopes, rollouts, removal maps, standing initiatives).
+- **Developer docs index: [`docs/README.md`](../docs/README.md)** — split into
+  `docs/reference/` (how the code works today, one note per class/system) and
+  `docs/plans/` (refactor scopes, rollouts, removal maps, standing initiatives).
   Player-facing documentation lives separately under the top-level `docs/` folder.
-- When you add a dev note: behaviour-as-it-is → `docs/dev/reference/`; intended change → `docs/dev/plans/`.
+- When you add a dev note: behaviour-as-it-is → `docs/reference/`; intended change → `docs/plans/`.
 - Setup flow: `DevSetup.bat`
 - CI flow: `appveyor.yml`
 - Source formatting policy: `Sources/.editorconfig`

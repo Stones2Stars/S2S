@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_ALGAE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOFUEL_REFINERY",
+   "BUILDING_LUNAR_IRON_PROCESSING_FACILITY",
+   "BUILDING_ULTRAFUEL_REFINERY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ALGAE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ALGAE",
+  "civilopedia": "TXT_KEY_BONUS_ALGAE_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

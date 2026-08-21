@@ -1,0 +1,78 @@
+{
+ "type": "BONUS_RESIN",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_CHECHEN",
+   "BUILDING_CULTURE_LITHUANIAN",
+   "BUILDING_CULTURE_TLAXCALTEC",
+   "BUILDING_FACTORY_LACQUERWARE",
+   "BUILDING_GROVE_ACACIA",
+   "BUILDING_GROVE_RESIN",
+   "BUILDING_LACQUERWARE_MAKER",
+   "BUILDING_LACQUERWARE_WORKSHOP",
+   "BUILDING_MOPANE_MOTH_GATHERER"
+  ],
+  "units": [
+   "UNIT_CARTWRIGHT"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 20
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_RESIN"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 200,
+  "minLandPercent": 70,
+  "uniqueRange": 6,
+  "hills": true,
+  "flatlands": true,
+  "validFeatures": [
+   "FEATURE_SAVANNA",
+   "FEATURE_JUNGLE",
+   "FEATURE_FOREST",
+   "FEATURE_FOREST_ANCIENT",
+   "FEATURE_BAMBOO"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS",
+   "TERRAIN_LUSH",
+   "TERRAIN_MARSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_ROCKY",
+   "TERRAIN_TAIGA",
+   "TERRAIN_SCRUB"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_RESIN",
+  "civilopedia": "TXT_KEY_BONUS_RESIN_PEDIA",
+  "bonusClassType": "BONUSCLASS_PRODUCTION",
+  "source": "natural"
+ }
+}

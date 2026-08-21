@@ -1,0 +1,39 @@
+{
+ "type": "IMPROVEMENT_PEAT_CUTTER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_IRON_WORKING",
+     "scope": "team"
+    },
+    "HAS_FEATURE",
+    {
+     "feature": [
+      "FEATURE_PEAT_BOG"
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_PEAT_CUTTER"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_PEAT_CUTTER",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_PEAT_CUTTER_PEDIA",
+  "pillageGold": 8
+ }
+}

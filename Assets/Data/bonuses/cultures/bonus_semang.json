@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_SEMANG",
+ "enables": {
+  "units": [
+   "UNIT_KHANUNG",
+   "UNIT_KHANUNGESE"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SEMANG"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SEMANG",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

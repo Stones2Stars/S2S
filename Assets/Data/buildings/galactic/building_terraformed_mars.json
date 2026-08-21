@@ -1,0 +1,111 @@
+{
+ "type": "BUILDING_TERRAFORMED_MARS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MARTIAN_ARCOLOGY",
+    {
+     "type": "BUILDING_MARTIAN_CO2_SUBLIMATION",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_MARTIAN_BIOTIC_SEA",
+     "scope": "empire",
+     "min": 2,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_MARTIAN_AMMONIA_BOMBARDMENT",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_MARTIAN_CFC_GENERATOR",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_MARTIAN_ECOPOIESIS_REACTOR",
+     "scope": "empire",
+     "min": 3,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_MARTIAN_MAGNETIC_FIELD_GENERATOR",
+     "scope": "empire",
+     "min": 2,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_MARTIAN_FARM",
+     "scope": "empire",
+     "min": 2,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_MARTIAN_ORBITAL_MIRROR_ARRAY",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_PLANETARY_TERRAFORMING",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_TERRAFORMED_MARS"
+   }
+  ]
+ },
+ "cost": {
+  "production": 27966,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MARS_TERRA"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TERRAFORMED_MARS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TERRAFORMED_MARS",
+  "civilopedia": "TXT_KEY_BUILDING_TERRAFORMED_MARS_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

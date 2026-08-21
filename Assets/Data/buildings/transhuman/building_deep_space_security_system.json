@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_DEEP_SPACE_SECURITY_SYSTEM",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_HOUSING_MANAGEMENT",
+    "BUILDING_DEEP_SPACE_SIMULATED_WORLD",
+    "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+    "TECH_MOLECULAR_SCANNING",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "cost": {
+  "production": 2645,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_SECURITY_SYSTEM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_SECURITY_SYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_SECURITY_SYSTEM_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

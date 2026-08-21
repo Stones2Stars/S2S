@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_FIRECRACKERS",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_FIRECRACKERS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_FIRECRACKERS",
+  "civilopedia": "TXT_KEY_BONUS_FIRECRACKERS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

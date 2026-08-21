@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_SEMANTIC_WEB",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_NATURAL_LANGUAGE_ALGORITHMS",
+    "TECH_ONTOLOGICAL_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_E_STOCK_MARKET": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "buildings": {
+    "BUILDING_NATURAL_LANGUAGE_ALGORITHMS": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 7330,
+  "complexityModifier": 2
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SEMANTIC_WEB"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SEMANTIC_WEB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SEMANTIC_WEB",
+  "civilopedia": "TXT_KEY_BUILDING_SEMANTIC_WEB_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

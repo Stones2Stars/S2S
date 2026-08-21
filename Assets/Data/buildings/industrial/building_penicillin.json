@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_PENICILLIN",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ANTIBIOTICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_DOCTOR": 2
+  }
+ },
+ "cost": {
+  "production": 4800,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 8
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PENICILLIN"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PENICILLIN",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COLOSSUS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PENICILLIN",
+  "civilopedia": "TXT_KEY_BUILDING_PENICILLIN_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 14,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_DOCTOR",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,183 @@
+{
+ "type": "UNIT_REEF_SHARK",
+ "groupSpawn": [
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SOLO",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_SOLITARY"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_PARTY",
+   "chance": 2,
+   "title": "TXT_KEY_GROUPTITLE_GROUP_SMALL"
+  },
+  {
+   "unitCombat": "UNITCOMBAT_GROUP_SQUAD",
+   "chance": 1,
+   "title": "TXT_KEY_GROUPTITLE_AGGREGATION"
+  }
+ ],
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "combat": {
+  "unit": {
+   "targets": {
+    "UNITCOMBAT_ANIMAL_INVERTEBRATE": true,
+    "UNITCOMBAT_FISH_BONEY": true,
+    "UNITCOMBAT_FISH_RAY": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 50
+  }
+ },
+ "skills": [
+  "assassin",
+  "noDefensiveBonus",
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "seaUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SEA_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_FISH",
+  "UNITCOMBAT_RECKLESS_ANIMAL",
+  "UNITCOMBAT_FISH_SHARK",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+  "UNITCOMBAT_ANIMAL_COMBAT_PACK_HUNTER",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "requires": {
+     "outcome": "OUTCOME_TALES_SEA"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_TALESOF_REEF_SHARK",
+     "toCity": true
+    },
+    "food": {
+     "base": 5,
+     "random": 25
+    },
+    "production": {
+     "base": 1,
+     "random": 6
+    },
+    "commerce": {
+     "base": 2,
+     "random": 8
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE_SEA_LARGE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_REEF_SHARK"
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 90,
+    "food": {
+     "base": 5,
+     "random": 25
+    },
+    "production": {
+     "base": 1,
+     "random": 6
+    },
+    "commerce": {
+     "base": 2,
+     "random": 12
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_REEF_SHARK",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 2.25,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_REEF_SHARK"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_REEF_SHARK",
+  "civilopedia": "TXT_KEY_UNIT_REEF_SHARK_PEDIA",
+  "spawnOnly": true,
+  "xpValueAttack": 5,
+  "xpValueDefense": 3,
+  "aggression": 2,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_COAST",
+   "TERRAIN_COAST_DEEP",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_TROPICAL"
+  ]
+ }
+}

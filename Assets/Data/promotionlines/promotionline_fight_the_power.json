@@ -1,0 +1,23 @@
+{
+ "type": "PROMOTIONLINE_FIGHT_THE_POWER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/FightThePower1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_FIGHT_THE_POWER",
+  "unitCombats": [
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_RUFFIAN",
+   "UNITCOMBAT_STRIKE_TEAM",
+   "UNITCOMBAT_PIRATE"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_LAW_ENFORCEMENT"
+  ]
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_SICILIAN",
+ "enables": {
+  "units": [
+   "UNIT_ARCHIMEDES",
+   "UNIT_GASTRAPHETES"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SICILIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SICILIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

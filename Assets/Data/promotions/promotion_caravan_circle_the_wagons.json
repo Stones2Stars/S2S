@@ -1,0 +1,123 @@
+{
+ "type": "PROMOTION_CARAVAN_CIRCLE_THE_WAGONS",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CARAVAN_GUARD_I"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 10,
+   "terrain": {
+    "TERRAIN_GRASSLAND": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_LUSH": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_PLAINS": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_BARREN": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_PERMAFROST": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_ROCKY": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_BADLAND": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_JAGGED": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_DESERT": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_SCRUB": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_DUNES": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_SALT_FLATS": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_TAIGA": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_TUNDRA": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_ICE": {
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_MARSH": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_MUDDY": {
+     "defense": {
+      "percent": 5
+     }
+    }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CircleWagons.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_CARAVAN_CIRCLE_THE_WAGONS",
+  "unitCombats": [
+   "UNITCOMBAT_TRADE"
+  ]
+ }
+}

@@ -1,0 +1,86 @@
+{
+ "type": "RELIGION_SHINTO",
+ "enables": {
+  "buildings": [
+   "BUILDING_ITSUKUSHIMA_SHRINE",
+   "BUILDING_MATSUMOTO_CASTLE",
+   "BUILDING_SHINTO_JINGU",
+   "BUILDING_SHINTO_MONASTERY",
+   "BUILDING_SHINTO_TEMPLE"
+  ],
+  "units": [
+   "UNIT_SHINTO_MISSIONARY"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_SHINTO"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_SHINTO"
+     }
+    }
+   ]
+  }
+ },
+ "grants": {
+  "freeUnit": "UNIT_SHINTO_MISSIONARY",
+  "numFreeUnits": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 19,
+   "icon": "Art/Interface/Buttons/Religions/Shintoism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Shintoism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Shintoism.dds",
+   "movie": {
+    "file": "Art/Cutscene/Shinto_Generic_Found.nif",
+    "sound": "AS2D_BUILD_SHINTO_MOVIE"
+   }
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_SHINTO"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SHINTO",
+  "adjective": "TXT_KEY_TECH_SHINTO_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_SHINTO_PEDIA",
+  "spreadFactor": 20
+ }
+}

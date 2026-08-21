@@ -1,0 +1,23 @@
+{
+ "type": "PROMOTIONLINE_BARRAGE",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Barrage1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,4,1"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BARRAGE",
+  "unitCombats": [
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS",
+   "UNITCOMBAT_ASSAULT_MECH",
+   "UNITCOMBAT_DREADNOUGHT"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SIEGE_GATECRASHER"
+  ]
+ }
+}

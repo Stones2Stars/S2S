@@ -1,0 +1,26 @@
+{
+ "BUILDING_VALLEY_OF_THE_KINGS": { "requires": { "operate": { "all": [
+  "BUILDING_THE_GREAT_PYRAMID",
+  "BUILDING_THE_GREAT_SPHINX",
+  { "type": "POPULATION", "scope": "city", "min": 3 },
+  "TECH_SCULPTURE",
+  { "type": "MAPCATEGORY_EARTH", "scope": "plot" }
+ ] } } },
+ "BUILDING_HOUSING_STONE_HUTS": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -3 } } },
+ "BUILDING_HOUSING_CAVE_DWELLING": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -3 } } },
+ "BUILDING_EARTH_WALL": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -3 } } },
+ "BUILDING_STONE_BRIDGE": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -3 } } },
+ "BUILDING_WALLS": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -5 } } },
+ "BUILDING_DEPARTMENT_OF_WATER": { "PROPERTY_FLAMMABILITY": { "empire": { "flat": -8 } } },
+ "BUILDING_PLUMBERS_WORKSHOP": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -5 } } },
+ "BUILDING_TOWN_WATCH": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -3 } } },
+ "BUILDING_BATH_HOUSE": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -8 } } },
+ "BUILDING_SEWER_SYSTEM": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -5 } } },
+ "BUILDING_FOUNTAIN": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -3 } } },
+ "BUILDING_WATCH_TOWER": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -3 } } },
+ "BUILDING_CONCRETE_MASON": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -8 } } },
+ "BUILDING_WATERPROOF_CEMENT_MAKER": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -5 } } },
+ "BUILDING_BRICK_BRIDGE": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -3 } } },
+ "BUILDING_MOAT": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -12 } } },
+ "BUILDING_GUILD_MASONS": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -6 } } }
+}

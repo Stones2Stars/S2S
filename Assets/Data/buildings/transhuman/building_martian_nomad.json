@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_MARTIAN_NOMAD",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MARTIAN_MEGACITY",
+    "TECH_ADVANCED_WARMACHINES",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 60
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "cost": {
+  "production": 3362,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_NOMAD",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_NOMAD",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_NOMAD_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

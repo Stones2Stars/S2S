@@ -1,0 +1,125 @@
+{
+ "type": "UNIT_GEAR_MECHANIC",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_CLOCKWORKS",
+    {
+     "type": "BONUS_TOOLS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      "BUILDING_WATCHMAKERS_SHOP",
+      "BUILDING_HYPERMARKET"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MACHINIST"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 7
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 6
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_MECHANICAL": {
+     "heal": 13,
+     "adjacentHeal": 1
+    },
+    "UNITCOMBAT_HEALS_AS_AIRCRAFT": {
+     "heal": 3
+    }
+   }
+  }
+ },
+ "skills": [
+  "onlyDefensive"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_MELEE",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_HAMMER",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_MECHANICAL",
+  "UNITCOMBAT_HEALS_AIRCRAFT"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 268,
+  "upkeep": 4,
+  "hurryCostModifier": 25
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GEAR_MECHANIC",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_GEAR_MECHANIC"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_GEAR_MECHANIC",
+  "civilopedia": "TXT_KEY_UNIT_GEAR_MECHANIC_PEDIA",
+  "worth": 4,
+  "militaryWorth": 7,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_HEALER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_HEALER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

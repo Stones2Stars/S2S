@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_SMART_CONTRACTS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_BLOCKCHAIN_AUTHENTICATION",
+    "TECH_DIRECT_MERCHANDISING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 2405,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SMART_CONTRACTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SMART_CONTRACTS",
+  "civilopedia": "TXT_KEY_BUILDING_SMART_CONTRACTS_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

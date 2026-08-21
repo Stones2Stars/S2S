@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_MARTIAN_CYBERNETIC_CHLOROPLAST_IMPORTER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_MARS_CYCLER",
+    "BUILDING_MARTIAN_CITY",
+    "TECH_PLANETARY_TRADE",
+    "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_CYBERNETIC_CHLOROPLASTS"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 60
+  }
+ },
+ "cost": {
+  "production": 1921,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_CYBERNETIC_CHLOROPLAST_IMPORTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_CYBERNETIC_CHLOROPLAST_IMPORTER",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_CYBERNETIC_CHLOROPLAST_IMPORTER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

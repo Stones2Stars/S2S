@@ -1,0 +1,141 @@
+{
+ "type": "UNIT_ECOLOGIST",
+ "builds": [
+  "BUILD_FOREST_PRESERVE",
+  "BUILD_TREEFARM",
+  "BUILD_WILDLIFE_SANCTUARY",
+  "BUILD_PLANT_JUNGLE",
+  "BUILD_YOUNG_FOREST",
+  "BUILD_PLANT_BAMBOO",
+  "BUILD_PLANT_SAVANNA",
+  "BUILD_GROW_FOREST",
+  "BUILD_NATURE_PRESERVE",
+  "BUILD_HYBRID_FOREST",
+  "BUILD_SANITIZE"
+ ],
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_ECOLOGY"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 15
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 4
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_ANIMALS": {
+     "heal": 20
+    }
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -10
+  },
+  "plot": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -10
+  },
+  "plot": {
+   "flat": -10
+  }
+ },
+ "skills": [
+  "food",
+  "onlyDefensive",
+  "tradable"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_RIFLE_BUTT",
+  "UNITCOMBAT_WEAPON_DIST_RIFLE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 1075,
+  "upkeep": 5,
+  "hurryCostModifier": 25
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ECOLOGIST",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_ECOLOGIST"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_ECOLOGIST",
+  "civilopedia": "TXT_KEY_UNIT_ECOLOGIST_PEDIA",
+  "worth": 12,
+  "militaryWorth": 12,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER",
+   "UNITAI_HEALER",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "workRate": 175
+  }
+ }
+}

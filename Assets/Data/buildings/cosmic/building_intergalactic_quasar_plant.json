@@ -1,0 +1,44 @@
+{
+ "type": "BUILDING_INTERGALACTIC_QUASAR_PLANT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_MINE",
+    "TECH_OMEGA_MINUS_ENGINEERING",
+    {
+     "type": "FEATURE_QUASAR",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "cost": {
+  "production": 4492,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_QUASAR_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_QUASAR_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_QUASAR_PLANT_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

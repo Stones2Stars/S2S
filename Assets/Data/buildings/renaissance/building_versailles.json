@@ -1,0 +1,108 @@
+{
+ "type": "BUILDING_VERSAILLES",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_DIVINE_RIGHT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "disabled": "IS_GOVERNMENT_CENTER"
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 10,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "occupationTime": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 2640,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true,
+  "governmentCenter": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_VERSAILLES"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VERSAILLES"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VERSAILLES",
+  "civilopedia": "TXT_KEY_BUILDING_VERSAILLES_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 16,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

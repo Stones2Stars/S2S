@@ -86,7 +86,6 @@
 	<ElementType name="bTrade" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bDisable" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bGoodyTech" content="textOnly" dt:type="boolean"/>
-	<ElementType name="bExtraWaterSeeFrom" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bMapCentering" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bMapVisible" content="textOnly" dt:type="boolean"/>
 	<ElementType name="bMapTrading" content="textOnly" dt:type="boolean"/>
@@ -199,7 +198,6 @@
 		<element type="bTrade" minOccurs="0"/>
 		<element type="bDisable" minOccurs="0"/>
 		<element type="bGoodyTech" minOccurs="0"/>
-		<element type="bExtraWaterSeeFrom" minOccurs="0"/>
 		<element type="bMapCentering" minOccurs="0"/>
 		<element type="bMapVisible" minOccurs="0"/>
 		<element type="bMapTrading" minOccurs="0"/>

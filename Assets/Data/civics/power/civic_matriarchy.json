@@ -1,0 +1,120 @@
+{
+ "type": "CIVIC_MATRIARCHY",
+ "food": {
+  "empire": {
+   "percent": 4
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
+    "percent": 20
+   },
+   "resistance": {
+    "percent": -10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 15
+   },
+   "numCities": {
+    "percent": 15
+   },
+   "percent": [
+    {
+     "value": 3,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 2,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ]
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 4
+    },
+    "production": {
+     "percent": 2
+    },
+    "commerce": {
+     "percent": 1
+    }
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 10
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "greatPeopleRate": {
+    "percent": 5
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/power_matriarchy.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_MATRIARCHY",
+  "civilopedia": "TXT_KEY_CIVIC_MATRIARCHY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_MATRIARCHY_STRATEGY",
+  "civicOption": "CIVICOPTION_POWER",
+  "upkeepLevel": "UPKEEP_LOW"
+ }
+}

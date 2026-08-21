@@ -1,0 +1,42 @@
+{
+ "type": "PROJECT_SS_COCKPIT",
+ "allowed": {
+  "team": 1
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_COPPER_ORE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "victory": {
+  "thresholds": {
+   "VICTORY_SPACE_RACE": 1
+  }
+ },
+ "cost": {
+  "create": 57640
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Buildings/SS_Cockpit.dds,Art/Interface/Buttons/Buildings_Atlas.dds,5,6"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROJECT_SS_COCKPIT",
+  "civilopedia": "TXT_KEY_PROJECT_SS_COCKPIT_PEDIA",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "launchesVictory": "VICTORY_SPACE_RACE",
+  "spaceship": true
+ }
+}

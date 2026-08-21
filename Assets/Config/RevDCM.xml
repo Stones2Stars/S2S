@@ -18,18 +18,7 @@
 				<change module="RevDCM" function="changedDYNAMIC_CIV_NAMES"/>
 			</option>
 		</section>
-		<section id="RevDCM_seige">
-			<option id="DCM_RANGE_BOMBARD" key="DCM_RANGE_BOMBARD" type="boolean" default="True" get="isDCM_RANGE_BOMBARD" set="setDCM_RANGE_BOMBARD">
-				<change module="RevDCM" function="changedDCM_RANGE_BOMBARD"/>
-			</option>
-			<option id="DCM_OPP_FIRE" key="DCM_OPP_FIRE" type="boolean" default="False" get="isDCM_OPP_FIRE" set="setDCM_OPP_FIRE">
-				<change module="RevDCM" function="changedDCM_OPP_FIRE"/>
-			</option>
-		</section>
 		<section id="RevDCM_air">
-			<option id="DCM_AIR_BOMBING" key="DCM_AIR_BOMBING" type="boolean" default="False" get="isDCM_AIR_BOMBING" set="setDCM_AIR_BOMBING">
-				<change module="RevDCM" function="changedDCM_AIR_BOMBING"/>
-			</option>
 			<option id="DCM_ACTIVE_DEFENSE" key="DCM_ACTIVE_DEFENSE" type="boolean" default="False" get="isDCM_ACTIVE_DEFENSE" set="setDCM_ACTIVE_DEFENSE">
 				<change module="RevDCM" function="changedDCM_ACTIVE_DEFENSE"/>
 			</option>

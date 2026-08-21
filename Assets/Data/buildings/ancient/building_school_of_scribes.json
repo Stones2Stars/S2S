@@ -1,0 +1,127 @@
+{
+ "type": "BUILDING_SCHOOL_OF_SCRIBES",
+ "enables": {
+  "buildings": [
+   "BUILDING_BRAHMIN_LIBRARY",
+   "BUILDING_CALLIGRAPHY_SCHOOL",
+   "BUILDING_CREATION_MYTH",
+   "BUILDING_PLATOS_ACADEMY",
+   "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_EDUCATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LIBRARY"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_WRITING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_TABLETS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SCROLLS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PAPER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_LIBRARY"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_DIPLOMAT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 176,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SCHOOL_OF_SCRIBES",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_LIBRARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SCHOOL_OF_SCRIBES",
+  "civilopedia": "TXT_KEY_BUILDING_SCHOOL_OF_SCRIBES_PEDIA",
+  "worth": 3,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

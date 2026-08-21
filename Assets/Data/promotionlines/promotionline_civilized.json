@@ -1,0 +1,11 @@
+{
+ "type": "PROMOTIONLINE_CIVILIZED",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCivilized.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_CIVILIZED"
+ }
+}

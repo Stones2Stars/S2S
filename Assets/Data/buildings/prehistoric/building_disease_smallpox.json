@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_DISEASE_SMALLPOX",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ANTIBIOTICS"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_ANIMAL_HUSBANDRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_DISEASE",
+     "scope": "city",
+     "min": 700,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": -8
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -9
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -9
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -8
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -8,
+    {
+     "value": -70,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYDISEASE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISEASE_SMALLPOX",
+  "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

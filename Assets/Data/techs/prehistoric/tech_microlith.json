@@ -1,0 +1,64 @@
+{
+ "type": "TECH_MICROLITH",
+ "enables": {
+  "buildings": [
+   "BUILDING_MICROLITH_WORKSHOP"
+  ],
+  "techs": [
+   "TECH_AXE_MAKING",
+   "TECH_HEAT_TREATMENT",
+   "TECH_SPEAR_MAKING",
+   "TECH_STONE_BUILDING",
+   "TECH_TATTOOS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FLINT_KNAPPING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 15
+  }
+ },
+ "cost": {
+  "research": 17
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/Button_Microlith.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MICROLITH",
+  "soundMP": "AS2D_TECH_MICROLITH"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MICROLITH",
+  "civilopedia": "TXT_KEY_TECH_MICROLITH_PEDIA",
+  "quote": "TXT_KEY_TECH_MICROLITH_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 6,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 9,
+  "gridY": 9
+ }
+}

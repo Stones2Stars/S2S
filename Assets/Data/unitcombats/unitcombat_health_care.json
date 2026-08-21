@@ -1,0 +1,17 @@
+{
+ "type": "UNITCOMBAT_HEALTH_CARE",
+ "skills": {
+  "cannotMergeSplit": true
+ },
+ "tags": [
+  "medic"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/healthcare_units.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_HEALTH_CARE"
+ }
+}

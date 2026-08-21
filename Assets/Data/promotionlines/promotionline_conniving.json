@@ -1,0 +1,18 @@
+{
+ "type": "PROMOTIONLINE_CONNIVING",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Conniving1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_CONNIVING",
+  "unitCombats": [
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_PIRATE"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ]
+ }
+}

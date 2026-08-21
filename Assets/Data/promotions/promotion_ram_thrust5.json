@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_RAM_THRUST5",
+ "combat": {
+  "unit": {
+   "breakdownChance": {
+    "flat": 20
+   },
+   "breakdownDamage": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_RAM_THRUST": 5
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/RamThrust5.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_RAM_THRUST5"
+ }
+}

@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_FEYMARCH",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_BIRCH_PLANET",
+    "TECH_METAVERSE",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ALICE_MATTER",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 2000
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_MAGITEK_COMBAT_ARENA",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 21020,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_FEYMARCH"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FEYMARCH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FEYMARCH",
+  "civilopedia": "TXT_KEY_BUILDING_FEYMARCH_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

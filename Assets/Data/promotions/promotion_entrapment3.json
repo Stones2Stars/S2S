@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_ENTRAPMENT3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_ENTRAPMENT2"
+   ]
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_ENTRAPMENT": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/ensnare3promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_ENTRAPMENT3"
+ }
+}

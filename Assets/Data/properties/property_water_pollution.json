@@ -1,0 +1,81 @@
+{
+ "type": "PROPERTY_WATER_POLLUTION",
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "percent": 6,
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
+   }
+  },
+  "plot": {
+   "percent": 6
+  }
+ },
+ "properties": {
+  "diffuse": [
+   {
+    "from": "city",
+    "to": "plots",
+    "relation": "near",
+    "distance": 1,
+    "percent": 5
+   },
+   {
+    "from": "plot",
+    "to": "city",
+    "relation": "samePlot",
+    "percent": 12
+   },
+   {
+    "from": "plot",
+    "to": "plots",
+    "relation": "near",
+    "distance": 1,
+    "percent": 4
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_POLLUTION_MINOR_GROUNDWATER_POLLUTION",
+   "BUILDING_POLLUTION_MODERATE_GROUNDWATER_POLLUTION",
+   "BUILDING_POLLUTION_MAJOR_GROUNDWATER_POLLUTION",
+   "BUILDING_POLLUTION_MINOR_RIVER_POLLUTION",
+   "BUILDING_POLLUTION_MODERATE_RIVER_POLLUTION",
+   "BUILDING_POLLUTION_MAJOR_RIVER_POLLUTION",
+   "BUILDING_POLLUTION_MINOR_COASTAL_POLLUTION",
+   "BUILDING_POLLUTION_MODERATE_COASTAL_POLLUTION",
+   "BUILDING_POLLUTION_MAJOR_COASTAL_POLLUTION",
+   "BUILDING_POLLUTION_RED_TIDE",
+   "BUILDING_POLLUTION_REEF_BLEACHING",
+   "BUILDING_POLLUTION_TOXIC_HYDROSPHERE"
+  ]
+ },
+ "targetLevel": 0,
+ "ai": {
+  "weight": -50,
+  "scale": "city",
+  "trainReluctance": 10,
+  "operationalRange": {
+   "min": -1000,
+   "max": 3000
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROPERTY_WATER_POLLUTION",
+  "sourceDrain": true,
+  "fontButtonIndex": 2,
+  "text": {
+   "value": "TXT_KEY_PROPERTY_WATER_POLLUTION_DISPLAY",
+   "change": "TXT_KEY_PROPERTY_WATER_POLLUTION_CHANGE",
+   "changeAllCities": "TXT_KEY_PROPERTY_WATER_POLLUTION_CHANGE_ALL_CITIES",
+   "prereqMin": "TXT_KEY_PROPERTY_WATER_POLLUTION_PREREQ_MIN",
+   "prereqMax": "TXT_KEY_PROPERTY_WATER_POLLUTION_PREREQ_MAX"
+  }
+ }
+}

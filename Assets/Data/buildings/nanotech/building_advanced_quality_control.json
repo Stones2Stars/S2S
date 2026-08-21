@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_ADVANCED_QUALITY_CONTROL",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_NANOGENERATORS",
+   "BUILDING_FACTORY_SHOCKWAVE_ENGINES",
+   "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_MESH_NETWORKS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": "HAS_POWER"
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": 25,
+      "enabled": "IS_SPACE"
+     }
+    ]
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 3385,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ADVANCED_QUALITY_CONTROL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ADVANCED_QUALITY_CONTROL",
+  "civilopedia": "TXT_KEY_BUILDING_ADVANCED_QUALITY_CONTROL_PEDIA",
+  "worth": 8,
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

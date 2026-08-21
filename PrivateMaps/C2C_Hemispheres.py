@@ -15,6 +15,11 @@ import CvMapGeneratorUtil
 from CvMapGeneratorUtil import TerrainGenerator
 from CvMapGeneratorUtil import FeatureGenerator
 
+#	The map-gen read surface -- one named accessor per registry, so the bindings list IS this
+#	script's dependency list. The whole-registry ENUMERATION below stays; only where each value
+#	comes from changed.
+SEALEVEL = CySeaLevelInfo()
+
 def getDescription():
 	#TODO: get my own text string
 	return "TXT_KEY_MAP_SCRIPT_LEFT_AND_RIGHT_DESCR"
@@ -149,7 +154,7 @@ class BnSMultilayeredFractal(CvMapGeneratorUtil.MultilayeredFractal):
 		global ySplitRoll
 		global yPortionRoll
 
-		iSeaLevelChange = self.GC.getSeaLevelInfo(self.map.getSeaLevel()).getSeaLevelChange()
+		iSeaLevelChange = SEALEVEL.getSeaLevelChange(self.map.getSeaLevel())
 
 		print("getSeaLevelChange", iSeaLevelChange)
 

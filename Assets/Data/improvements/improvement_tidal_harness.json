@@ -1,0 +1,88 @@
+{
+ "type": "IMPROVEMENT_TIDAL_HARNESS",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECOLOGY",
+     "scope": "team"
+    },
+    "IS_WATER",
+    {
+     "terrain": [
+      "TERRAIN_COAST",
+      "TERRAIN_COAST_POLAR",
+      "TERRAIN_COAST_TROPICAL"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": -2
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    4,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WIRELESS_ELECTRICITY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WEATHER_CONTROL",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WIRELESS_ELECTRICITY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WEATHER_CONTROL",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_TIDAL_HARNESS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_TIDAL_HARNESS",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_TIDAL_HARNESS_PEDIA",
+  "advancedStart": {
+   "cost": 30
+  },
+  "pillageGold": 5
+ }
+}

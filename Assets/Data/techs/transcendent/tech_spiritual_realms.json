@@ -1,0 +1,69 @@
+{
+ "type": "TECH_SPIRITUAL_REALMS",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_DARK_WORLD",
+   "BUILDING_DISTANT_DREAM_WORLD",
+   "BUILDING_DISTANT_SPIRIT_WORLD",
+   "BUILDING_REALM_OF_ENLIGHTENMENT",
+   "BUILDING_REALM_OF_TORMENT",
+   "BUILDING_REALM_OF_TRANQUILITY"
+  ],
+  "builds": [
+   "BUILD_SPIRITUAL_REALM"
+  ],
+  "improvements": [
+   "IMPROVEMENT_SPIRITUAL_REALM"
+  ],
+  "techs": [
+   "TECH_ARCHETYPAL_VECTOR_SPACES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_UNIVERSAL_SINGULARITY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ATEMPORAL_BEINGS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 642419
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/spiritual_realms.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SPIRITUAL_REALMS",
+  "civilopedia": "TXT_KEY_TECH_SPIRITUAL_REALMS_PEDIA",
+  "quote": "TXT_KEY_TECH_SPIRITUAL_REALMS_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 157,
+  "gridY": 13
+ }
+}

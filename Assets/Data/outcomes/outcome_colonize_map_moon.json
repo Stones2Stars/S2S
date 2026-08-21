@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_COLONIZE_MAP_MOON",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_MOON",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_MOON"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_LUNAR_COLONIZATION"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

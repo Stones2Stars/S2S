@@ -1,0 +1,329 @@
+#pragma once
+
+//  $Header:
+//------------------------------------------------------------------------------------------------
+//
+//  FILE:    CvGameTextMgr.h
+//
+//  AUTHOR:  Jesse Smith  --  10/2004
+//
+//  PURPOSE: Group of functions to manage CIV Game Text
+//
+//------------------------------------------------------------------------------------------------
+//  Copyright (c) 2004 Firaxis Games, Inc. All rights reserved.
+//------------------------------------------------------------------------------------------------
+#ifndef CIV4_GAME_TEXT_MGR_H
+#define CIV4_GAME_TEXT_MGR_H
+
+#pragma warning( disable: 4251 )	// needs to have dll-interface to be used by clients of class
+
+#include "Infos/CvEdges.h"   // EnEdgeBucket -- the gate axis appendEntryLinesFiltered narrows on
+
+#define ENABLE_ROLES_HOVER
+
+class CounterSet;
+class CvCity;
+class CvDeal;
+class CvInfo;
+class CvClassificationBlock;   // appendClassificationLines renders an entity's §8/§9 block keys
+class CvCondition;             // buildRequiresClauses renders one requires tree, clause by clause
+class CvPopupInfo;
+class CvPlayer;
+
+//
+// Class:		CvGameTextMgr
+// Purpose:		Manages Game Text...
+class CvGameTextMgr
+{
+	friend class CvGlobals;
+	CounterSet* inspectUnitCombatCounters;
+public:
+	// singleton accessor
+	DllExport static CvGameTextMgr& GetInstance();
+
+	CvGameTextMgr();
+	virtual ~CvGameTextMgr();
+
+	DllExport void Initialize();
+	DllExport void DeInitialize();
+	DllExport void Reset();
+
+	int getCurrentLanguage() const;
+
+	DllExport void setTimeStr(CvWString& szString, int iGameTurn, bool bSave);
+	void setYearStrAC(CvWString& szString, int iyear, bool bSave);
+	void setYearStr(CvWString& szString, int iGameTurn, bool bSave, CalendarTypes eCalendar, int iStartYear, GameSpeedTypes eSpeed);
+	void setDateStr(CvWString& szString, int iGameTurn, bool bSave, CalendarTypes eCalendar, int iStartYear, GameSpeedTypes eSpeed);
+	void setInterfaceTime(CvWString& szString, PlayerTypes ePlayer);
+	void setOOSSeeds(CvWString& szString, PlayerTypes ePlayer);
+	void setNetStats(CvWString& szString, PlayerTypes ePlayer);
+	DllExport void setMinimizePopupHelp(CvWString& szString, const CvPopupInfo & info);
+
+	void setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, bool bOneLine = false, bool bShort = false, bool bdarkColor = false);
+	void setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bool bOneLine, bool bShort);
+	bool setCombatPlotHelp(CvWStringBuffer &szString, CvPlot* pPlot, bool bAssassinate = false);
+	bool setMinimalCombatPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool bAssassinate = false);
+	bool setAssassinatePlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, CvUnit* pAttacker, CvUnit* pDefender);
+	// bBreakdown = decompose each yield into its stored segments. OFF by default: the census is a diagnostic
+	// read, and putting it in every ordinary map hover buries the number a player actually came for.
+	void setPlotHelp(CvWStringBuffer &szString, CvPlot* pPlot, bool bBreakdown = false);
+	// WHO holds a plot and who is taking it: the current owner, then every player's culture SHARE on it,
+	// strongest first, then the cultural owner when it differs from the holder. Cultural ownership is a CONTEST,
+	// so it is a per-player list and never one total ([culture-religion-research.md]).
+	void appendPlotCultureLines(CvWStringBuffer& szString, const CvPlot* pPlot) const;
+	void setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity);
+	void setScoreHelp(CvWStringBuffer &szString, PlayerTypes ePlayer);
+
+	void parseBuildUp(CvWStringBuffer &szHelpString, PromotionLineTypes eTrait, CivilizationTypes eCivilization = NO_CIVILIZATION);
+	void parseTraits(CvWStringBuffer &szHelpString, TraitTypes eTrait, bool bDawnOfMan = false, bool bEffectsOnly = false);
+
+	DllExport void parseLeaderTraits(CvWStringBuffer &szInfoText, LeaderHeadTypes eLeader = NO_LEADER, CivilizationTypes eCivilization = NO_CIVILIZATION, bool bDawnOfMan = false, bool bCivilopediaText = false);
+	DllExport void parseLeaderShortTraits(CvWStringBuffer &szInfoText, LeaderHeadTypes eLeader);
+	DllExport void parseCivInfos(CvWStringBuffer &szHelpString, CivilizationTypes eCivilization, bool bDawnOfMan = false, bool bLinks = true);
+
+	void parseSpecialistHelp(CvWStringBuffer &szHelpString, SpecialistTypes eSpecialist, CvCity* pCity, bool bCivilopediaText = false);
+	void parseSpecialistHelpActual(CvWStringBuffer &szHelpString, SpecialistTypes eSpecialist, CvCity* pCity, bool bCivilopediaText = false, int iChange = 0);
+	void parseFreeSpecialistHelp(CvWStringBuffer &szHelpString, const CvCity& kCity);
+	void parsePromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes ePromotion, const wchar_t* pcNewline = NEWLINE);
+	void parsePromotionHelpInternal(CvWStringBuffer &szBuffer, PromotionTypes ePromotion, const wchar_t* pcNewline, bool bAccrueLines);
+	void parseCivicInfo(CvWStringBuffer &szBuffer, CivicTypes eCivic, bool bCivilopediaText = false, bool bPlayerContext = false, bool bSkipName = false);
+	void parsePlayerTraits(CvWStringBuffer &szBuffer, PlayerTypes ePlayer);
+	void parsePlayerHasFixedBorders(CvWStringBuffer &szBuffer, PlayerTypes eThisPlayer);
+	void parseLeaderHeadHelp(CvWStringBuffer &szBuffer, PlayerTypes eThisPlayer, PlayerTypes eOtherPlayer);
+	void parseGreatPeopleHelp(CvWStringBuffer &szBuffer, CvCity& city);
+	void parseGreatGeneralHelp(CvWStringBuffer &szBuffer, CvPlayer& kPlayer);
+	void setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool bCivilopediaText = false, bool bPlayerContext = false, bool bStrategyText = false, bool bTreeInfo = true, TechTypes eFromTech = NO_TECH);
+	void setBasicUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool bCivilopediaText = false);
+	void setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool bCivilopediaText = false, CvCity* pCity = NULL, bool bConscript = false, bool bTBUnitView1 = false, bool bTBUnitView2 = false, bool bTBUnitView3 = false);
+	void setUnitExperienceHelp(CvWStringBuffer &szBuffer, CvWString szStart, UnitTypes eUnit, CvCity* pCity, bool bConscript = false);
+	void setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool bCivilopediaText = false, bool bStrategyText = false, bool bTechChooserText = false, CvCity* pCity = NULL);
+	void appendBuildingOperatingState(CvWStringBuffer& szBuffer, const BuildingTypes eBuilding, const CvCity* pCity);
+	void setBuildingHelp(
+		CvWStringBuffer &szBuffer, const BuildingTypes eBuilding, const bool bActual, CvCity* pCity = NULL,
+		const bool bCivilopediaText = false, const bool bStrategyText = false, const bool bTechChooserText = false
+	);
+	void setHeritageHelp(CvWStringBuffer &szBuffer, const HeritageTypes eType, CvCity* pCity = NULL, const bool bCivilopediaText = false, const bool bStrategyText = false, const bool bTechChooserText = false);
+	void setBuildingActualEffects(CvWStringBuffer &szBuffer, const CvWString& szStart, BuildingTypes eBuilding, const CvCity* pCity, bool bNewLine = true);
+
+	void setProjectHelp(CvWStringBuffer &szBuffer, ProjectTypes eProject, bool bCivilopediaText = false, CvCity* pCity = NULL);
+	void setProcessHelp(CvWStringBuffer &szBuffer, ProcessTypes eProcess);
+	void setGoodHealthHelp(CvWStringBuffer &szBuffer, CvCity& city);
+	void setBadHealthHelp(CvWStringBuffer &szBuffer, CvCity& city);
+	void parseHappinessHelp(CvWStringBuffer& szBuffer);
+	void setAngerHelp(CvWStringBuffer &szBuffer, CvCity& city);
+	void setHappyHelp(CvWStringBuffer &szBuffer, CvCity& city);
+	void setYieldChangeHelp(CvWStringBuffer &szBuffer, const CvWString& szStart, const CvWString& szSpace, const CvWString& szEnd, const int* piYieldChange, bool bPercent = false, bool bNewLine = true);
+	void listCommerceChange(CvWStringBuffer &szBuffer, const CvWString& szStart, const CvWString& szEnd, const int* aList, bool bPercent = false);
+	void setYieldPerPopChangeHelp(CvWStringBuffer &szBuffer, const CvWString& szStart, const CvWString& szSpace, const CvWString& szEnd, const int* piYieldChange, bool bPercent = false, bool bNewLine = true);
+	void setCommerceTimes100ChangeHelp(CvWStringBuffer &szBuffer, const CvWString& szStart, const CvWString& szSpace, const CvWString& szEnd, const int* piCommerceChange, bool bNewLine = false, bool bStarted = false);
+	bool setResumableYieldChangeHelp(CvWStringBuffer &szBuffer, const CvWString& szStart, const CvWString& szSpace, const CvWString& szEnd, const int* piYieldChange, bool bPercent = false, bool bNewLine = true, bool bStarted = false, bool bPerPop = false);
+	bool setResumableCommerceTimes100ChangeHelp(CvWStringBuffer &szBuffer, const CvWString& szStart, const CvWString& szSpace, const CvWString& szEnd, const int* piCommerceChange, bool bNewLine, bool bStarted = false);
+	bool setResumableGoodBadChangeHelp(CvWStringBuffer &szBuffer, const CvWString& szStart, const CvWString& szSpace, const CvWString& szEnd, int iGood, int iGoodSymbol, int iBad, int iBadSymbol, bool bPercent = false, bool bNewLine = false, bool bStarted = false);
+	bool setResumableValueChangeHelp(CvWStringBuffer &szBuffer, const CvWString& szStart, const CvWString& szSpace, const CvWString& szEnd, int iValue, int iSymbol, bool bPercent = false, bool bNewLine = false, bool bStarted = false);
+	bool setResumableValueTimes100ChangeHelp(CvWStringBuffer &szBuffer, const CvWString& szStart, const CvWString& szSpace, const CvWString& szEnd, int iValue, int iSymbol, bool bNewLine = false, bool bStarted = false);
+	void setBonusHelp(CvWStringBuffer &szBuffer, BonusTypes eBonus, bool bCivilopediaText = false);
+	void setBonusTradeHelp(CvWStringBuffer &szBuffer, BonusTypes eBonus, bool bCivilopediaText, PlayerTypes eTradePlayer);
+	void setReligionHelp(CvWStringBuffer &szBuffer, ReligionTypes eReligion, bool bCivilopedia = false);
+	void setReligionHelpCity(CvWStringBuffer &szBuffer, ReligionTypes eReligion, CvCity *pCity, bool bCityScreen = false, bool bForceReligion = false, bool bForceState = false, bool bNoStateReligion = false);
+	void setCorporationHelp(CvWStringBuffer &szBuffer, CorporationTypes eCorporation, bool bCivilopedia = false);
+	void setCorporationHelpCity(CvWStringBuffer &szBuffer, CorporationTypes eCorporation, CvCity *pCity, bool bCityScreen = false, bool bForceCorporation = false);
+	void setPromotionHelp(CvWStringBuffer &szBuffer, PromotionTypes ePromotion, bool bCivilopediaText = false);
+	void setBuildUpHelp(CvWStringBuffer &szBuffer, PromotionLineTypes ePromotionLine);
+	void setTraitHelp(CvWStringBuffer &szBuffer, TraitTypes eTrait);
+	void setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes eUnitCombat, bool bCivilopediaText = false) const;
+	// COMPOSERS CONSUME RENDERED LINES, they never hand-assemble from getters (patterns.md § THE GETTER
+	// SETUP category 5, the CvCombatModel::computeCombatPreview detailLines pattern). Appends one localized
+	// line per compiled entry of a family -- magnitude, unit, target, scope, per-scaler and conditions all
+	// rendered by the ONE renderer, so a new channel needs no composer edit at all.
+	void appendEntryLines(CvWStringBuffer& szBuffer, const CvInfo& info, ModifierFamily eFamily) const;
+	// The same walk, NARROWED -- because a widget often represents one slice of a family rather than the whole
+	// of it, and the two ways a slice is expressed are the two filters here. TARGET: the entry's keyed
+	// named-entity (domainMoves keyed by DOMAIN_*, so the per-domain widget shows only its own domain).
+	// GATE: what the entry's condition NAMES, which is how a CROSS-ENTITY question is asked -- a tech carries no
+	// movement family, so "which routes does this tech speed up" is the ROUTE's movement entry gated on the tech
+	// ([modifier.md] par.6). Pass -1 / NO_EDGEB to disable a filter; appendEntryLines is this with both off.
+	void appendEntryLinesFiltered(CvWStringBuffer& szBuffer, const CvInfo& info, ModifierFamily eFamily,
+		int iTargetFk, EnEdgeBucket eGateBucket, int iGateId) const;
+	void appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& info, const ModifierFamily* aeFamilies, int iFamilyCount) const;
+	// ONE `enables`-family EDGE list -> one "Unlocks: A, B, C" line. The info already CARRIES its edge lists (the
+	// readJson reverse pass lands them at load, docs/cascade.md §1 (reverse lookups are populated once, at load)), so this is a forward list read of the
+	// authored handful -- never the whole-database scan the backwards question would be.
+	// ⚖ Capped at a handful by default and UNCAPPED under ALT -- the obvious data at rest, the verbose version
+	// under the same hotkey the plot-yield breakdown already uses; the remainder is always shown as "+N more"
+	// rather than silently dropped.
+	void appendEdgeLines(CvWStringBuffer& szBuffer, const CvInfo& info,
+		EnEdgeFamily eFamily, const char* szHeadingKey) const;
+	// ONE source's contribution to a city-scope family (its heading + its own entry lines), and the WALK over
+	// every live source that feeds one: the city's operating buildings, the empire's adopted civics and held
+	// traits, and the city's culture level. This is the ATTRIBUTION half of a decomposition census -- a total
+	// with no named sources answers nothing when it is wrong ([http-endpoints.md] the census shape).
+	void appendSourceIfAny(CvWStringBuffer& szBuffer, const CvInfo& source, ModifierFamily eFamily) const;
+	void appendCitySourceLines(CvWStringBuffer& szBuffer, const CvCity& city, ModifierFamily eFamily) const;
+	// The §8/§9 CLASSIFICATION twin of the two above: an entity's authored block keys, rendered one per line
+	// through the ONE name renderer. What a capability/canTrade/canWorkOn block GRANTS is not a magnitude, so it
+	// has no compiled entry to hand appendEntryLines -- which is why the widget cases that ask about one were the
+	// only ones with nothing to call (docs/architecture/patterns.md §DRY (single implementation): one renderer, not a builder per key).
+	void appendClassificationLines(CvWStringBuffer& szBuffer, const CvClassificationBlock* pBlock) const;
+	// ONE key of a block, for a widget that represents a single granted ability rather than the whole set.
+	void appendClassificationKey(CvWStringBuffer& szBuffer, const CvClassificationBlock* pBlock, const char* szKey) const;
+	// The §5 PROVISIONS twin of the two renderers above: what the entity's CONSIDERED ACTION hands over. A grant
+	// is neither a magnitude nor a block key -- it is an entity handed to the player -- so it gets its own
+	// renderer rather than being hand-listed per composer (docs/architecture/patterns.md §DRY (single implementation)). A conditioned entry
+	// carries its condition, because rendering one unconditionally claims something the data does not say.
+	void appendGrantLines(CvWStringBuffer& szBuffer, const CvInfo& info) const;
+	// WHY the enabler refuses a candidate, in one line ([enabler.md] par.6). The gate STORED the reason, so this
+	// reads it rather than re-deriving it -- a second evaluation here could disagree with the verdict it claims
+	// to explain (docs/architecture/patterns.md §DRY (single implementation)). Without it a greyed row says only "unavailable", which leaves the
+	// player, and the AI reading the same tri-state, to guess what would unblock it.
+	void appendGateReason(CvWStringBuffer& szBuffer, unsigned char eReason) const;
+	// The derived PRICE, and the hammers this city has already banked into it (rendered only when non-zero).
+	void appendBuildingProductionCost(CvWStringBuffer& szBuffer, BuildingTypes eBuilding, const CvCity* pCity) const;
+	// The unit twin of the above -- same plane, same fallbacks, so the two entity tooltips state their price alike.
+	void appendUnitProductionCost(CvWStringBuffer& szBuffer, UnitTypes eUnit, const CvCity* pCity) const;
+	void setImprovementHelp(CvWStringBuffer &szBuffer, ImprovementTypes eImprovement, FeatureTypes eFeature = NO_FEATURE, bool bCivilopediaText = false);
+	void setRouteHelp(CvWStringBuffer &szBuffer, RouteTypes eRoute, bool bCivilopediaText = false);
+	void setTerrainHelp(CvWStringBuffer &szBuffer, TerrainTypes eTerrain, bool bCivilopediaText = false);
+	void setFeatureHelp(CvWStringBuffer &szBuffer, FeatureTypes eFeature, bool bCivilopediaText = false);
+	void setFoodHelp(CvWStringBuffer &szBuffer, CvCity& city);
+	void setProductionHelp(CvWStringBuffer &szBuffer, CvCity& city);
+	void setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, CommerceTypes eCommerceType);
+	void setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldTypes eYieldType);
+	void setConvertHelp(CvWStringBuffer& szBuffer, PlayerTypes ePlayer, ReligionTypes eReligion);
+	void setRevolutionHelp(CvWStringBuffer& szBuffer, PlayerTypes ePlayer);
+	void setVassalRevoltHelp(CvWStringBuffer& szBuffer, TeamTypes eMaster, TeamTypes eVassal);
+	void setEventHelp(CvWStringBuffer& szBuffer, EventTypes eEvent, int iEventTriggeredId, PlayerTypes ePlayer);
+	void setTradeRouteHelp(CvWStringBuffer &szBuffer, int iRoute, CvCity* pCity);
+	void setEspionageCostHelp(CvWStringBuffer &szBuffer, EspionageMissionTypes eMission, PlayerTypes eTargetPlayer, const CvPlot* pPlot, int iExtraData, const CvUnit* pSpyUnit);
+	// WHAT the mission does to its target, beside what it costs. Hand-composed by design: a mission's effect is
+	// not a deposit into a channel, so no compiled entry exists for the ONE renderer to turn into a line -- this
+	// is a BLOCK, which is the composer's own job ([patterns.md] THE DIVISION OF LABOUR).
+	void appendEspionageMissionEffect(CvWStringBuffer& szBuffer, EspionageMissionTypes eMission,
+		PlayerTypes eTargetPlayer, const CvPlot* pPlot, int iExtraData) const;
+	void setEspionageMissionHelp(CvWStringBuffer &szBuffer, const CvUnit* pUnit);
+
+	void buildObsoleteString( CvWStringBuffer& szBuffer, int iItem, bool bList = false, bool bPlayerContext = false );
+	void buildObsoleteBonusString( CvWStringBuffer& szBuffer, int iItem, bool bList = false, bool bPlayerContext = false);
+	void buildObsoleteSpecialString( CvWStringBuffer& szBuffer, int iItem, bool bList = false, bool bPlayerContext = false );
+	void buildMoveString( CvWStringBuffer& szBuffer, TechTypes eTech, bool bList = false, bool bPlayerContext = false );
+	void buildFreeUnitString( CvWStringBuffer& szBuffer, TechTypes eTech, bool bList = false, bool bPlayerContext = false );
+	void buildFeatureProductionString( CvWStringBuffer& szBuffer, TechTypes eTech, bool bList = false, bool bPlayerContext = false );
+	void buildWorkerRateString( CvWStringBuffer& szBuffer, TechTypes eTech, bool bList = false, bool bPlayerContext = false );
+	void buildTradeRouteString( CvWStringBuffer& szBuffer, TechTypes eTech, bool bList = false, bool bPlayerContext = false );
+	void buildHealthRateString( CvWStringBuffer& szBuffer, TechTypes eTech, bool bList = false, bool bPlayerContext = false );
+	void buildHappinessRateString( CvWStringBuffer& szBuffer, TechTypes eTech, bool bList = false, bool bPlayerContext = false );
+	void buildFreeTechString( CvWStringBuffer& szBuffer, TechTypes eTech, bool bList = false, bool bPlayerContext = false );
+	void buildImprovementString(CvWStringBuffer& szBuffer, TechTypes eTech, BuildTypes eBuild, bool bList = false, bool bPlayerContext = false);
+	void buildDomainExtraMovesString( CvWStringBuffer& szBuffer, TechTypes eTech, int iCommerceType, bool bList = false, bool bPlayerContext = false );
+	void buildAdjustString( CvWStringBuffer& szBuffer, TechTypes eTech, int iCommerceType, bool bList = false, bool bPlayerContext = false );
+	void buildTerrainTradeString( CvWStringBuffer& szBuffer, TechTypes eTech, int iTerrainType, bool bList = false, bool bPlayerContext = false );
+	void buildSpecialBuildingString( CvWStringBuffer& szBuffer, TechTypes eTech, int iBuildingType, bool bList = false, bool bPlayerContext = false );
+	// The int is an IMPROVEMENT id, not a yield -- the widget asks what this tech does to that improvement's output.
+	void buildYieldChangeString( CvWStringBuffer& szBuffer, TechTypes eTech, int iImprovement, bool bList = false, bool bPlayerContext = false );
+	void getDefenseHelp(CvWStringBuffer &szBuffer, CvCity& city);
+	void setEmploymentHelp(CvWStringBuffer &szBuffer, CvCity& city);
+
+	bool buildBonusRevealString( CvWStringBuffer& szBuffer, TechTypes eTech, int iBonusType, bool bFirst, bool bList = false, bool bPlayerContext = false );
+	bool buildCivicRevealString( CvWStringBuffer& szBuffer, TechTypes eTech, int iCivicType, bool bFirst, bool bList = false, bool bPlayerContext = false );
+	bool buildProcessInfoString( CvWStringBuffer& szBuffer, TechTypes eTech, int iProcessType, bool bFirst, bool bList = false, bool bPlayerContext = false );
+	bool buildFoundReligionString( CvWStringBuffer& szBuffer, TechTypes eTech, int iReligionType, bool bFirst, bool bList = false, bool bPlayerContext = false );
+	bool buildFoundCorporationString( CvWStringBuffer& szBuffer, TechTypes eTech, int iCorporationType, bool bFirst, bool bList = false, bool bPlayerContext = false );
+	void buildHintsList(CvWStringBuffer& szBuffer);
+	void buildBuildingRequiresString(CvWStringBuffer& szBuffer, BuildingTypes eBuilding, bool bCivilopediaText, bool bTechChooserText, const CvCity* pCity);
+	// A requires tree rendered CLAUSE BY CLAUSE, each coloured by its own verdict against the city -- so the
+	// tooltip says which requirement is MISSING rather than restating the whole list. NULL city = no verdict.
+	void buildRequiresClauses(CvWStringBuffer& szBuffer, const CvCondition* pRoot, const CvCity* pCity) const;
+	// #195 Phase 2: render a single "in-city-vicinity" requirement (terrain / feature /
+	// improvement) from the unified prerequisite model, replacing the per-type hand-rolled
+	// loops in buildBuildingRequiresString.
+	// #195 Phase 2: status-aware renderer for a model requirement. Filters by what the city
+	// already has (via CvGameObject::hasGOM, the same read the construct-condition uses) and
+	// renders the unmet items as a "Requires: <links>" list (AND for REQUIRE_ALL, OR otherwise).
+	// szRequiresKey selects the leading label so callers can distinguish build-time gates from
+	// operating gates (e.g. TXT_KEY_REQUIRES_TO_OPERATE for prereq bonuses -- see #325).
+	// #195 Phase 2: format one GOM (type,id) as a clickable <link>description</link>.
+	bool buildRequirementItemLink(GOMTypes eGOM, int iId, CvWString& szOut) const;
+	// #195 Phase 2: civic requirements use a different UX -- show ALL prereq civics coloured
+	// by have (green) / need (red), not just the unmet ones. Returns whether this requirement
+	// is satisfied (all for REQUIRE_ALL; any-or-empty for REQUIRE_ANY) for the active-civics note.
+
+	DllExport void buildCityBillboardIconString( CvWStringBuffer& szBuffer, CvCity* pCity);
+	DllExport void buildCityBillboardCityNameString( CvWStringBuffer& szBuffer, CvCity* pCity);
+	DllExport void buildCityBillboardProductionString( CvWStringBuffer& szBuffer, CvCity* pCity);
+	DllExport void buildCityBillboardCitySizeString( CvWStringBuffer& szBuffer, CvCity* pCity, const NiColorA& kColor);
+	DllExport void getCityBillboardFoodbarColors(CvCity* pCity, std::vector<NiColorA>& aColors);
+	DllExport void getCityBillboardProductionbarColors(CvCity* pCity, std::vector<NiColorA>& aColors);
+
+
+	void getWarplanString(CvWStringBuffer& szString, WarPlanTypes eWarPlan);
+	void getAttitudeString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer, PlayerTypes eTargetPlayer);
+	void getEspionageString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer, PlayerTypes eTargetPlayer);
+	void getTradeString(CvWStringBuffer& szBuffer, const TradeData& tradeData, PlayerTypes ePlayer1, PlayerTypes ePlayer2);
+	void getDealString(CvWStringBuffer& szString, CvDeal& deal, PlayerTypes ePlayerPerspective = NO_PLAYER);
+	void getDealString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer1, PlayerTypes ePlayer2, const CLinkList<TradeData>* pListPlayer1, const CLinkList<TradeData>* pListPlayer2, PlayerTypes ePlayerPerspective = NO_PLAYER);
+	void getActiveDealsString(CvWStringBuffer& szString, PlayerTypes eThisPlayer, PlayerTypes eOtherPlayer);
+	void getOtherRelationsString(CvWStringBuffer& szString, PlayerTypes eThisPlayer, PlayerTypes eOtherPlayer);
+	void getAllRelationsString(CvWStringBuffer& szString, TeamTypes eThisTeam);
+	void getActiveTeamRelationsString(CvWStringBuffer& szString, TeamTypes eThisTeam);
+	void getOtherRelationsString(CvWStringBuffer& szString, TeamTypes eThisTeam, TeamTypes eOtherTeam, TeamTypes eSkipTeam);
+
+	void buildFinanceSpecialistGoldString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer) const;
+	void buildFinanceInflationString(CvWStringBuffer& szDetails, PlayerTypes ePlayer) const;
+	void buildFinanceUnitUpkeepString(CvWStringBuffer& szDetails, PlayerTypes ePlayer) const;
+	void buildFinanceAwaySupplyString(CvWStringBuffer& szDetails, PlayerTypes ePlayer) const;
+	void buildFinanceCityMaintString(CvWStringBuffer& szDetails, PlayerTypes ePlayer) const;
+	void buildFinanceCivicUpkeepString(CvWStringBuffer& szDetails, PlayerTypes ePlayer) const;
+	void buildFinanceForeignIncomeString(CvWStringBuffer& szDetails, PlayerTypes ePlayer) const;
+
+	DllExport void getTradeScreenTitleIcon(CvString& szButton, CvWidgetDataStruct& widgetData, PlayerTypes ePlayer);
+	DllExport void getTradeScreenIcons(std::vector< std::pair<CvString, CvWidgetDataStruct> >& aIconInfos, PlayerTypes ePlayer);
+	DllExport void getTradeScreenHeader(CvWString& szHeader, PlayerTypes ePlayer, PlayerTypes eOtherPlayer, bool bAttitude);
+
+	void buildDomesticTradeString(CvWStringBuffer& szDetails, PlayerTypes ePlayer) const;
+	void buildForeignTradeString(CvWStringBuffer& szDetails, PlayerTypes ePlayer) const;
+	void buildTradeString(CvWStringBuffer& szBuffer, PlayerTypes ePlayer, PlayerTypes eWithPlayer=NO_PLAYER, bool bDomestic=true, bool bForeign=true, bool bHeading=true) const;
+
+	DllExport void getGlobeLayerName(GlobeLayerTypes eType, int iOption, CvWString& strName);
+
+	DllExport void getPlotHelp(CvPlot* pMouseOverPlot, CvCity* pCity, CvPlot* pFlagPlot, bool bAlt, CvWStringBuffer& strHelp);
+	void getRebasePlotHelp(const CvPlot* pPlot, CvWString& strHelp) const;
+	DllExport void getInterfaceCenterText(CvWString& strText);
+	DllExport void getTurnTimerText(CvWString& strText);
+	DllExport void getFontSymbols(std::vector< std::vector<wchar_t> >& aacSymbols, std::vector<int>& aiMaxNumRows);
+	DllExport void assignFontIds(int iFirstSymbolCode, int iPadAmount);
+
+	DllExport void getCityDataForAS(std::vector<CvWBData>& mapCityList, std::vector<CvWBData>& mapBuildingList, std::vector<CvWBData>& mapAutomateList);
+	DllExport void getImprovementDataForAS(std::vector<CvWBData>& mapImprovementList, std::vector<CvWBData>& mapRouteList);
+	DllExport void getVisibilityDataForAS(std::vector<CvWBData>& mapVisibilityList);
+	DllExport void getTechDataForAS(std::vector<CvWBData>& mapTechList);
+
+	DllExport void getUnitDataForWB(std::vector<CvWBData>& mapUnitData);
+	DllExport void getBuildingDataForWB(bool bStickyButton, std::vector<CvWBData>& mapBuildingData);
+	DllExport void getTerrainDataForWB(std::vector<CvWBData>& mapTerrainData, std::vector<CvWBData>& mapFeatureData, std::vector<CvWBData>& mapPlotData, std::vector<CvWBData>& mapRouteData);
+	DllExport void getTerritoryDataForWB(std::vector<CvWBData>& mapTerritoryData);
+	DllExport void getTechDataForWB(std::vector<CvWBData>& mapTechData);
+	DllExport void getPromotionDataForWB(std::vector<CvWBData>& mapPromotionData);
+	//void getTraitDataForWB(std::vector<CvWBData>& mapTraitData) const;
+	DllExport void getBonusDataForWB(std::vector<CvWBData>& mapBonusData);
+	DllExport void getImprovementDataForWB(std::vector<CvWBData>& mapImprovementData);
+	//void getRouteDataForWB(std::vector<CvWBData>& mapRouteData) const;
+	DllExport void getReligionDataForWB(bool bHolyCity, std::vector<CvWBData>& mapReligionData);
+	DllExport void getCorporationDataForWB(bool bHeadquarters, std::vector<CvWBData>& mapCorporationData);
+
+	void setFlagHelp(CvWStringBuffer& szBuffer);
+
+	// AIAndy: Game object relation texts
+	void getGameObjectName(CvWString& szString, GameObjectTypes eObject) const;
+	void buildGameObjectRelationString(CvWStringBuffer& szBuffer, GameObjectTypes eObject, RelationTypes eRelation, int iData) const;
+
+private:
+	void eventTechHelp(CvWStringBuffer& szBuffer, EventTypes eEvent, TechTypes eTech, PlayerTypes ePlayer, PlayerTypes eOtherPlayer) const;
+	void eventGoldHelp(CvWStringBuffer& szBuffer, EventTypes eEvent, PlayerTypes ePlayer, PlayerTypes eOtherPlayer) const;
+
+	void setCityPlotYieldValueString(CvWStringBuffer& szString, CvCity* pCity, int iIndex, bool bAvoidGrowth, bool bIgnoreGrowth, bool bIgnoreFood = false) const;
+	void setYieldValueString(CvWStringBuffer& szString, int iValue, bool bActive = false, bool bMakeWhitespace = false) const;
+};
+
+// Singleton Accessor
+#define GAMETEXT CvGameTextMgr::GetInstance()
+
+#endif

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_KHWARAZMIAN",
+ "enables": {
+  "units": [
+   "UNIT_ASVARAN_SARDAR",
+   "UNIT_MINGBURNU"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_KHWARAZMIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_KHWARAZMIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

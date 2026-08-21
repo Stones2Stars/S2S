@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE",
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+   ],
+   "all": [
+    {
+     "type": "BUILDING_WORLDVIEW_CANNIBALISM",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    -1,
+    {
+     "value": -3,
+     "enabled": "TECH_PHILOSOPHY"
+    },
+    {
+     "value": -4,
+     "enabled": "TECH_CODE_OF_LAWS"
+    },
+    {
+     "value": -3,
+     "enabled": "TECH_HUMANISM"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE",
+  "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_CANNIBALISM_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "forceNoPrereqScaling": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

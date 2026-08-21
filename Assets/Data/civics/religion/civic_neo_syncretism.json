@@ -1,0 +1,70 @@
+{
+ "type": "CIVIC_NEO_SYNCRETISM",
+ "gold": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "religion": "!IS_STATE_RELIGION"
+     }
+    ]
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -1
+   },
+   "national": {
+    "flat": -1
+   },
+   "badReligionMod": {
+    "percent": -200
+   },
+   "religiousFreedom": {
+    "flat": 8
+   }
+  }
+ },
+ "policies": {
+  "disallowInquisitions": true
+ },
+ "grants": {
+  "revolution": -15
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/religion_syncretism.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_NEO_SYNCRETISM",
+  "civilopedia": "TXT_KEY_CIVIC_NEO_SYNCRETISM_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_NEO_SYNCRETISM_STRATEGY",
+  "civicOption": "CIVICOPTION_RELIGION",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_LOW"
+ }
+}

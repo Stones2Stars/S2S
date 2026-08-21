@@ -1,0 +1,97 @@
+{
+ "type": "BUILDING_FERTILITY_CLINIC",
+ "enables": {
+  "buildings": [
+   "BUILDING_PHENOTYPE_STUDIO"
+  ],
+  "units": [
+   "UNIT_CHROME_INFANTRY"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ASTROANTHROPOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_NANOMORPHIC_REPLICATOR"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_STEM_CELL_LAB",
+    "TECH_GENETIC_BIOCHEMISTRY",
+    {
+     "any": [
+      "BUILDING_MEDICAL_CLINIC",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_NANOMORPHIC_REPLICATOR"
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_DOCTOR": 1
+  }
+ },
+ "cost": {
+  "production": 2105,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FERTILITY_CLINIC",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FERTILITY_CLINIC",
+  "civilopedia": "TXT_KEY_BUILDING_FERTILITY_CLINIC_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

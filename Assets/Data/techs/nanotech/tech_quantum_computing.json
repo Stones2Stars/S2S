@@ -1,0 +1,75 @@
+{
+ "type": "TECH_QUANTUM_COMPUTING",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+   "BUILDING_QUANTUM_SUPERCOMPUTER"
+  ],
+  "promotions": [
+   "PROMOTION_QUANTUM_ALGORITHMS"
+  ],
+  "techs": [
+   "TECH_BATTLEFIELD_SPORTS",
+   "TECH_CYBERSOCIAL_INTEGRATION",
+   "TECH_ELECTROMAGNETIC_VOLTAGE",
+   "TECH_LEVITATION"
+  ],
+  "units": [
+   "UNIT_SERVICE_DROID",
+   "UNIT_SYSTEMS_ANALYST"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PHOTON_THERMODYNAMICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AMPLIFIED_WAVELENGTHS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 46107
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/quantum_computing.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_QUANTUM_COMPUTING",
+  "soundMP": "AS2D_TECH_QUANTUM_COMPUTING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_QUANTUM_COMPUTING",
+  "civilopedia": "TXT_KEY_TECH_QUANTUM_COMPUTING_PEDIA",
+  "quote": "TXT_KEY_TECH_QUANTUM_COMPUTING_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 107,
+  "gridY": 9
+ }
+}

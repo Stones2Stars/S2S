@@ -1,0 +1,39 @@
+{
+ "type": "BUILDING_RELIC_OLD_CITY_WALLS",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RELIC_OLD_CITY_WALLS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RELIC_OLD_CITY_WALLS",
+  "civilopedia": "TXT_KEY_BUILDING_WALLS_PEDIA",
+  "notConstructible": true,
+  "worth": 1,
+  "conquestProbability": 80,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

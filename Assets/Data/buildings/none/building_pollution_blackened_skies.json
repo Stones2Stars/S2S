@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_POLLUTION_BLACKENED_SKIES",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_AIR_POLLUTION",
+     "scope": "city",
+     "min": 1950,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": -20,
+   "plots": {
+    "flat": [
+     {
+      "value": -10,
+      "enabled": "IS_WATER"
+     }
+    ]
+   }
+  }
+ },
+ "production": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYPOLLUTION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_POLLUTION_BLACKENED_SKIES",
+  "civilopedia": "TXT_KEY_BUILDING_AIR_POLLUTION_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

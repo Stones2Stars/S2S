@@ -1,0 +1,136 @@
+{
+ "type": "BUILDING_MUSEUM",
+ "enables": {
+  "buildings": [
+   "BUILDING_AZADI_TOWER",
+   "BUILDING_DIGITAL_ART_MUSEUM",
+   "BUILDING_GETTY_CENTER",
+   "BUILDING_LA_BREA_TAR_PITS",
+   "BUILDING_MUSEUM_OF_HUMANITY",
+   "BUILDING_NATIONAL_RAILROAD_MUSEUM",
+   "BUILDING_SMITHSONIAN_INSTITUTION"
+  ],
+  "units": [
+   "UNIT_LARA_CROFT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SCIENTIFIC_METHOD",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CEMENT",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_MARBLE",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ANCIENT_RELICS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ANCIENT_RELICS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 475,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MUSEUM",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MUSEUM"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MUSEUM",
+  "civilopedia": "TXT_KEY_BUILDING_MUSEUM_PEDIA",
+  "worth": 3,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

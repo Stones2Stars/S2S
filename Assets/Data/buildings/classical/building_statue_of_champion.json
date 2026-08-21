@@ -1,0 +1,147 @@
+{
+ "type": "BUILDING_STATUE_OF_CHAMPION",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_BINARY_PSYCHOKINESIS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COMBAT_SPORTS",
+    {
+     "any": [
+      "BUILDING_ARENA",
+      "BUILDING_COLOSSEUM",
+      "BUILDING_FLAVIAN_AMPHITHEATRE",
+      "BUILDING_MINOR_LEAGUE_STADIUM",
+      "BUILDING_MAJOR_LEAGUE_STADIUM"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SCULPTURES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CEMENT",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ],
+   "percent": 2
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -50
+  }
+ },
+ "cost": {
+  "production": 468,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_KINGS_SAGA"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_KINGS_SAGA"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_OBELISK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_STATUE_OF_CHAMPION",
+  "civilopedia": "TXT_KEY_BUILDING_STATUE_OF_CHAMPION_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 2,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

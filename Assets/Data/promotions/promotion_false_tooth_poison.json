@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_FALSE_TOOTH_POISON",
+ "combat": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 50
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/FalseToothPoisonPromotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FALSE_TOOTH_POISON",
+  "unitCombats": [
+   "UNITCOMBAT_CRIMINAL"
+  ]
+ }
+}

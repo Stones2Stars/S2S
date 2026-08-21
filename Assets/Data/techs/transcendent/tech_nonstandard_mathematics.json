@@ -1,0 +1,62 @@
+{
+ "type": "TECH_NONSTANDARD_MATHEMATICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_RECURSIVE_WORLD",
+   "BUILDING_HYPERSPACE_GAME_OF_LIFE",
+   "BUILDING_HYPERSPACE_QUANTUM_GRAPH_MANIFESTATION",
+   "BUILDING_HYPERSPACE_QUATERNIONIC_PROJECTIVE_SPACE_COLONY",
+   "BUILDING_LIFE_TRUE_VACUUM"
+  ],
+  "techs": [
+   "TECH_SIMULATION_AWARENESS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRANSFINITE_STRUCTURES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MULTIDIMENSIONAL_TIME",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 664224
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/nonstandard_mathematics.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NONSTANDARD_MATHEMATICS",
+  "civilopedia": "TXT_KEY_TECH_NONSTANDARD_MATHEMATICS_PEDIA",
+  "quote": "TXT_KEY_TECH_NONSTANDARD_MATHEMATICS_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 158,
+  "gridY": 15
+ }
+}

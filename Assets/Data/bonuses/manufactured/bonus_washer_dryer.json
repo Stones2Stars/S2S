@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_WASHER_DRYER",
+ "enables": {
+  "buildings": [
+   "BUILDING_APPLIANCE_STORE",
+   "BUILDING_PLASTIC_RECLAMATION_PLANT"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_WASHER_DRYER"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_WASHER_DRYER",
+  "civilopedia": "TXT_KEY_BONUS_WASHER_DRYER_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

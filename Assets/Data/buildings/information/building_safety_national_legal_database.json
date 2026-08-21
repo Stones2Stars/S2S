@@ -1,0 +1,41 @@
+{
+ "type": "BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_CLOUD_COMPUTING"
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "empire": {
+   "flat": -15
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE",
+  "civilopedia": "TXT_KEY_BUILDING_SAFETY_NATIONAL_LEGAL_DATABASE_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

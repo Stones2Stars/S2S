@@ -1,0 +1,72 @@
+{
+ "type": "TECH_ONTOLOGICAL_ENGINEERING",
+ "enables": {
+  "buildings": [
+   "BUILDING_EVOLUTIONARY_ALGORITHMS",
+   "BUILDING_KNOWLEDGE_NAVIGATOR",
+   "BUILDING_SEMANTIC_WEB"
+  ],
+  "techs": [
+   "TECH_ANTI_AGING_MEDICINE",
+   "TECH_AUTOMATED_URBANIZATION",
+   "TECH_BIOMIMETICS",
+   "TECH_NOVUS_CHEMISTRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_THOUGHT_SCANNING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AUTOMATED_ROBOTICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 40165
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Ontologicalengineering.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ONTOLOGICAL_ENGINEERING",
+  "soundMP": "AS2D_TECH_ONTOLOGICAL_ENGINEERING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ONTOLOGICAL_ENGINEERING",
+  "civilopedia": "TXT_KEY_TECH_ONTOLOGICAL_ENGINEERING_PEDIA",
+  "quote": "TXT_KEY_TECH_ONTOLOGICAL_ENGINEERING_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 103,
+  "gridY": 15
+ }
+}

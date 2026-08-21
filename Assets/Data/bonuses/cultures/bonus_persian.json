@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_PERSIAN",
+ "enables": {
+  "units": [
+   "UNIT_PERSIA_IMMORTAL",
+   "UNIT_ROSTAM",
+   "UNIT_SHAPUR"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PERSIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PERSIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

@@ -1,0 +1,235 @@
+{
+ "type": "CIVIC_DESPOTISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRYOGENIC_PRISON",
+   "BUILDING_ELYSIUM",
+   "BUILDING_HIGHWAYMANS_HIDEOUT",
+   "BUILDING_HILL_OF_TARA",
+   "BUILDING_MAD_SCIENTISTS_CASTLE",
+   "BUILDING_MONUMENT_OF_THE_DICTATOR",
+   "BUILDING_PIRATES_COVE",
+   "BUILDING_ROYAL_TOMB",
+   "BUILDING_SMUGGLERS_SHANTY"
+  ],
+  "units": [
+   "UNIT_ASSAULT_SHIP",
+   "UNIT_BARBARY_CORSAIR",
+   "UNIT_DRAGON_SHIP_PIRATE",
+   "UNIT_LIBURNA",
+   "UNIT_MALACCAN_PIRATE",
+   "UNIT_MASTER_SAILOR_UBOAT",
+   "UNIT_PRIVATEER",
+   "UNIT_RAZZIA_PIRATES",
+   "UNIT_SAMBUK",
+   "UNIT_TAHITIAN_RIDERS",
+   "UNIT_TORPEDO_BOAT",
+   "UNIT_UBOAT",
+   "UNIT_UNMANNED_PIRATE_SKIFF"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": [
+    3,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": [
+    1,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    {
+     "value": -1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    -1,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": [
+    {
+     "value": -5,
+     "per": {
+      "type": "CITY",
+      "above": "CITY_LIMIT"
+     },
+     "enabled": "GAMEOPTION_EXP_OVEREXPANSION_PENALTIES"
+    }
+   ],
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "unit": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": 10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 25
+   },
+   "numCities": {
+    "percent": 20
+   },
+   "percent": [
+    {
+     "value": 3,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 2,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ]
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": [
+     {
+      "value": 10,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -5
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": 3
+   },
+   "democracyLevel": {
+    "flat": -30
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": 10,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "policies": {
+  "fixedBorders": true
+ },
+ "grants": {
+  "revolution": -100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/government_despotism.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_DESPOTISM",
+  "civilopedia": "TXT_KEY_CIVIC_DESPOTISM_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_DESPOTISM_STRATEGY",
+  "civicOption": "CIVICOPTION_GOVERNMENT",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_LOW",
+  "cityLimit": 8,
+  "weLoveTheKing": "TXT_KEY_CIVIC_WE_LOVE_DESPOT"
+ }
+}

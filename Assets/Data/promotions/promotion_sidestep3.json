@@ -1,0 +1,38 @@
+{
+ "type": "PROMOTION_SIDESTEP3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SIDESTEP2",
+    {
+     "any": [
+      "PROMOTION_COMBAT1"
+     ]
+    }
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_THROWING": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SIDESTEP": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/SidestepPromotion3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SIDESTEP3"
+ }
+}

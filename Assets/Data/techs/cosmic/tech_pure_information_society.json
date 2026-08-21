@@ -1,0 +1,68 @@
+{
+ "type": "TECH_PURE_INFORMATION_SOCIETY",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_BLACK_HOLE_ERA_SURVIVAL_PLAN",
+   "BUILDING_INTERGALACTIC_KOLMOGOROV_TRANSPORTER",
+   "BUILDING_INTERSTELLAR_STAR_COLONY",
+   "BUILDING_SOUL_REPLICATOR"
+  ],
+  "civics": [
+   "CIVIC_IMMATERIAL",
+   "CIVIC_KNOWLEDGE",
+   "CIVIC_POST_BORDERS"
+  ],
+  "techs": [
+   "TECH_COSMIC_ENGINEERING",
+   "TECH_GRAND_UNIFICATION_BIOLOGY",
+   "TECH_SHAPESHIFTING",
+   "TECH_TRANSCENDENT_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MACROSCOPIC_SUPERPOSITION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 352130
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/pure_information_society.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PURE_INFORMATION_SOCIETY",
+  "civilopedia": "TXT_KEY_TECH_PURE_INFORMATION_SOCIETY_PEDIA",
+  "quote": "TXT_KEY_TECH_PURE_INFORMATION_SOCIETY_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 146,
+  "gridY": 11
+ }
+}

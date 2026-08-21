@@ -1,0 +1,63 @@
+{
+ "type": "TECH_LONG_RANGE_FORECASTING",
+ "enables": {
+  "buildings": [
+   "BUILDING_WEATHER_STATION"
+  ],
+  "techs": [
+   "TECH_CLIMATE_MODELS"
+  ],
+  "units": [
+   "UNIT_SKI_PATROL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_METEOROLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PERSONAL_COMPUTERS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "research": 14287
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Long-RangeForecasting.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_LONG_RANGE_FORECASTING",
+  "soundMP": "AS2D_TECH_LONG_RANGE_FORECASTING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_LONG_RANGE_FORECASTING",
+  "civilopedia": "TXT_KEY_TECH_LONG_RANGE_FORECASTING_PEDIA",
+  "quote": "TXT_KEY_TECH_LONG_RANGE_FORECASTING_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 82,
+  "gridY": 19
+ }
+}

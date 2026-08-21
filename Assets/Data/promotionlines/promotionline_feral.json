@@ -1,0 +1,19 @@
+{
+ "type": "PROMOTIONLINE_FERAL",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Feral1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_FERAL",
+  "unitCombats": [
+   "UNITCOMBAT_WILD"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_BIRD_PENGUIN",
+   "UNITCOMBAT_REPTILE_TURTLE",
+   "UNITCOMBAT_SPECIES_NEANDERTHAL"
+  ]
+ }
+}

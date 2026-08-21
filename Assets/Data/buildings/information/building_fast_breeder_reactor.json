@@ -1,0 +1,92 @@
+{
+ "type": "BUILDING_FAST_BREEDER_REACTOR",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FUSION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GENERATION_IV_REACTOR"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "BUILDING_FACTORY",
+    "TECH_SUPERCONDUCTORS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_URANIUM",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_HEAVY_WATER",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_GENERATION_IV_REACTOR",
+    "BUILDING_D_T_FUSION_POWER_PLANT",
+    "BUILDING_D_HE3_FUSION_PLANT",
+    "BUILDING_HE3_FUSION_POWER_PLANT",
+    "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+    "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20,
+   "percent": 20
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "cost": {
+  "production": 1845,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FAST_BREEDER_REACTOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FAST_BREEDER_REACTOR",
+  "civilopedia": "TXT_KEY_BUILDING_FAST_BREEDER_REACTOR_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

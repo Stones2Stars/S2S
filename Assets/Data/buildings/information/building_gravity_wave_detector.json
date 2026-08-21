@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_GRAVITY_WAVE_DETECTOR",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LABORATORY",
+    "TECH_IMAGINARY_PHYSICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    12,
+    {
+     "value": 9,
+     "enabled": "TECH_AMPLIFIED_WAVELENGTHS"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_UNIFICATION_PHYSICS"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 2205,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GRAVITY_WAVE_DETECTOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GRAVITY_WAVE_DETECTOR",
+  "civilopedia": "TXT_KEY_BUILDING_GRAVITY_WAVE_DETECTOR_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

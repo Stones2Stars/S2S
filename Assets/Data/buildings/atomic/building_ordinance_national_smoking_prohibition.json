@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_ORDINANCE_NATIONAL_SMOKING_PROHIBITION",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SUPREME_COURT",
+    "TECH_URBAN_CULTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ORDINANCE_SMOKING_PROHIBITION"
+   }
+  ]
+ },
+ "cost": {
+  "production": 1685,
+  "complexityModifier": 1
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ORDINANCE_NATIONAL_SMOKING_PROHIBITION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_NATIONAL_SMOKING_PROHIBITION",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_NATIONAL_SMOKING_PROHIBITION_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,119 @@
+{
+ "type": "UNIT_FOOD_SUPPLY_TRAIN",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_CASTLE",
+      "BUILDING_STAR_FORT",
+      "BUILDING_IMPERIAL_FORTRESS"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_FOOD_FREIGHT"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_FOOD_SUPPLY_TRAIN"
+  }
+ },
+ "skills": [
+  "noCapture",
+  "noNonTypeProdMods",
+  "onlyDefensive",
+  "rivalTerritory"
+ ],
+ "tags": [
+  "merchant",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_TRADE",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_STAFF",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_MOTILITY_ANIMAL_DRAWN",
+  "UNITCOMBAT_ASSISTED_MULE",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "greatPersonAction": {
+   "food": {
+    "base": 204
+   }
+  }
+ },
+ "cost": {
+  "production": 240,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_FOOD_SUPPLY_TRAIN",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_FOOD_SUPPLY_TRAIN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_FOOD_SUPPLY_TRAIN",
+  "civilopedia": "TXT_KEY_CONCEPT_FOOD_CARAVAN_PEDIA",
+  "worth": 1,
+  "animalCombat": 100,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MERCHANT",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_MERCHANT",
+   "UNITAI_ENGINEER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_EXPLORE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

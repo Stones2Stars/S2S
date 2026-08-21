@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_NANOTECH_COMPLEX",
+ "enables": {
+  "buildings": [
+   "BUILDING_DELTA_ASSEMBLER",
+   "BUILDING_HUMANOID_DESIGNER",
+   "BUILDING_MINING_BOT_CONTROL_CENTER"
+  ],
+  "units": [
+   "UNIT_WORKER_ANDROID"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MANUFACTURING_DISTRICT",
+    "TECH_ATOMIC_SCALE_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ANDROIDS",
+   "BONUS_ANTI_GRAVITY_FIELD_GENERATORS",
+   "BONUS_BIONIC_SUITS",
+   "BONUS_DIGITIZED_MEMBRANES",
+   "BONUS_EXOSKELETONS",
+   "BONUS_HOLOGRAPHIC_PROJECTORS",
+   "BONUS_LEVITATION_GENERATORS",
+   "BONUS_MECHS",
+   "BONUS_MICROGENERATORS",
+   "BONUS_NANOACTUATORS",
+   "BONUS_NANOGENERATORS",
+   "BONUS_ORGANIC_COMPUTERS",
+   "BONUS_PLASMA_GENERATORS",
+   "BONUS_SERVICE_BOTS",
+   "BONUS_SHOCKWAVE_ENGINES"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ANDROID_WORKER": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 2,
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 5,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+   }
+  },
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 5,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_NAVAL"
+   }
+  },
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 5,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_SPACECRAFT"
+   }
+  }
+ ],
+ "cost": {
+  "production": 9105,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NANOTECH_COMPLEX",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NANOTECH_COMPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_NANOTECH_COMPLEX_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

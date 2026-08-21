@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_INTERSTELLAR_GALACTIC_AC",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_SUPERCOMPUTER",
+    {
+     "type": "BUILDING_MULTIVAC",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_DEEP_SPACE_MICROVAC",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_UNIFICATION_MATHEMATICS",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 6278,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_GALACTIC_AC",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_GALACTIC_AC",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_GALACTIC_AC_PEDIA",
+  "pediaCategory": "space",
+  "forceNoPrereqScaling": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

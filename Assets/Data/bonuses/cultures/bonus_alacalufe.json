@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_ALACALUFE",
+ "enables": {
+  "units": [
+   "UNIT_HALAKWULUP",
+   "UNIT_PATAGONIAN_ARCHER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ALACALUFE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ALACALUFE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

@@ -1,0 +1,136 @@
+{
+ "type": "BUILDING_STAR_FORT",
+ "enables": {
+  "buildings": [
+   "BUILDING_BALISTRARIA",
+   "BUILDING_BALLISTA_TURRET",
+   "BUILDING_BALLROOM",
+   "BUILDING_CANNON_TURRET",
+   "BUILDING_CASTLE_DRAWBRIDGE",
+   "BUILDING_CASTLE_GARDEN",
+   "BUILDING_CASTLE_GATEHOUSE",
+   "BUILDING_CASTLE_KEEP",
+   "BUILDING_CATACOMBS",
+   "BUILDING_CITADEL",
+   "BUILDING_DUNGEON",
+   "BUILDING_EDINBURGH_CASTLE",
+   "BUILDING_HIMEJI_SAMURAI_CASTLE",
+   "BUILDING_MOAT",
+   "BUILDING_MUIDERSLOT_CASTLE",
+   "BUILDING_SERVANTS_QUARTERS",
+   "BUILDING_THRONE_ROOM"
+  ],
+  "units": [
+   "UNIT_FOOD_SUPPLY_TRAIN"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRENCH_WARFARE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_IMPERIAL_FORTRESS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_METALLURGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_IMPERIAL_FORTRESS"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 75
+   },
+   "bombardDefense": {
+    "percent": 50
+   },
+   "min": {
+    "percent": 25
+   },
+   "noEntryLevel": {
+    "percent": 25
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 425,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_STAR_FORT",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CASTLE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_STAR_FORT",
+  "civilopedia": "TXT_KEY_BUILDING_STAR_FORT_PEDIA",
+  "worth": 2,
+  "militaryWorth": 4,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

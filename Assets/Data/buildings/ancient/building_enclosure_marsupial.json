@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_ENCLOSURE_MARSUPIAL",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRADE",
+    {
+     "any": [
+      "BUILDING_CARNIVAL",
+      "BUILDING_ZOO"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    "HERITAGE_TAXON_MARSUPIALIA"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 5,
+     "enabled": "TECH_SCIENTIFIC_METHOD"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_RECON": {
+     "flat": 1
+    },
+    "UNITCOMBAT_HUNTER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 306,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ENCLOSURE_MARSUPIAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ENCLOSURE_MARSUPIAL",
+  "civilopedia": "TXT_KEY_BUILDING_WILD_ANIMAL_CAGE_PEDIA",
+  "pediaCategory": "animalistic",
+  "worth": 2,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,208 @@
+{
+ "type": "UNIT_NEANDERTHAL_SHEPHERD",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_NEANDERTHAL",
+    "BUILDING_C_L_NEANDERTHAL",
+    "TECH_ANIMAL_HUSBANDRY",
+    {
+     "any": [
+      {
+       "type": "BONUS_BISON",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_DEER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_GUINEA_PIG",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_KANGAROO",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_ELEPHANT",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_MAMMOTH",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_RABBIT",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BEAVER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PIG",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SHEEP",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_DOG",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_COW",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CAMEL",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_DONKEY",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_HORSE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_LLAMA",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_VET"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 4
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_ANIMALS": {
+     "heal": 5
+    },
+    "UNITCOMBAT_HEALS_AS_PEOPLE": {
+     "heal": 2
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  },
+  "plot": {
+   "flat": -1
+  }
+ },
+ "skills": [
+  "onlyDefensive"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_HEALTH_CARE",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_NEANDERTHAL",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_STAFF",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_ANIMALS",
+  "UNITCOMBAT_HEALS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 107,
+  "upkeep": 2,
+  "hurryCostModifier": 25
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NEANDERTHAL_SHEPHERD",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_NEANDERTHAL_SHEPHERD"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_NEANDERTHAL_SHEPHERD",
+  "civilopedia": "TXT_KEY_UNIT_SHEPHERD_PEDIA",
+  "worth": 2,
+  "militaryWorth": 3,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_HEALER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_HEALER",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

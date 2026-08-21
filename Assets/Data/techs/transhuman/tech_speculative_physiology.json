@@ -1,0 +1,76 @@
+{
+ "type": "TECH_SPECULATIVE_PHYSIOLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_EUROPA_ECOSYSTEM",
+   "BUILDING_EUROPA_VERTICAL_REEF",
+   "BUILDING_LIFE_JOVIAN_CLOUDS",
+   "BUILDING_MARTIAN_ZOO",
+   "BUILDING_TITAN_ECOSYSTEM"
+  ],
+  "techs": [
+   "TECH_HUMAN_TRANSMUTATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORGANIC_CITIES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COMPREHENSIVE_CYBERNETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_LIFE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 75052
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/speculativephysiology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SPECULATIVE_PHYSIOLOGY",
+  "soundMP": "AS2D_TECH_SPECULATIVE_PHYSIOLOGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SPECULATIVE_PHYSIOLOGY",
+  "civilopedia": "TXT_KEY_TECH_SPECULATIVE_PHYSIOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_SPECULATIVE_PHYSIOLOGY_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 116,
+  "gridY": 15
+ }
+}

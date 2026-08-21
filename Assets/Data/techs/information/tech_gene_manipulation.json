@@ -1,0 +1,83 @@
+{
+ "type": "TECH_GENE_MANIPULATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_GENE_FARMING_LAB"
+  ],
+  "builds": [
+   "BUILD_SANITIZE",
+   "BUILD_SANITIZE_WATER"
+  ],
+  "techs": [
+   "TECH_CLONING",
+   "TECH_NANOTECHNOLOGY"
+  ],
+  "units": [
+   "UNIT_POISON_NUKE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GENETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INFORMATION_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "research": 19916
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/dna_button_04.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,6,5"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENE_MANIPULATION",
+  "soundMP": "AS2D_TECH_GENE_MANIPULATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_GENE_MANIPULATION",
+  "civilopedia": "TXT_KEY_TECH_GENE_MANIPULATION_PEDIA",
+  "quote": "TXT_KEY_TECH_GENE_MANIPULATION_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 87,
+  "gridY": 5
+ }
+}

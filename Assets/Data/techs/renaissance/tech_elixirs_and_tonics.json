@@ -1,0 +1,69 @@
+{
+ "type": "TECH_ELIXIRS_AND_TONICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_SNAKE_OIL_SALES",
+   "BUILDING_SURGEONS_OFFICE"
+  ],
+  "promotions": [
+   "PROMOTION_DISEASE_CONTROL5"
+  ],
+  "techs": [
+   "TECH_MODERN_SANITATION",
+   "TECH_ORGANIC_CHEMISTRY"
+  ],
+  "units": [
+   "UNIT_KALLAWAYA",
+   "UNIT_SURGEON"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BIOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 3704
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "art/buttons/techs/ElixirsandTonicsTech.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ELIXIRS_AND_TONICS",
+  "soundMP": "AS2D_TECH_ELIXIRS_AND_TONICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ELIXIRS_AND_TONICS",
+  "civilopedia": "TXT_KEY_TECH_ELIXIRS_AND_TONICS_PEDIA",
+  "quote": "TXT_KEY_TECH_ELIXIRS_AND_TONICS_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 58,
+  "gridY": 1
+ }
+}

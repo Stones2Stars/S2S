@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_EXAVERSE_PORTAL",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_TIMEHOLE",
+    {
+     "type": "BUILDING_TERAVERSE_PORTAL",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_PETAVERSE_PORTAL",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_GIGAVERSE_PORTAL",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_MACROVERSE_TRAVERSAL",
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "cost": {
+  "production": 11410,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EXAVERSE_PORTAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EXAVERSE_PORTAL",
+  "civilopedia": "TXT_KEY_BUILDING_EXAVERSE_PORTAL_PEDIA",
+  "pediaCategory": "space",
+  "forceNoPrereqScaling": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

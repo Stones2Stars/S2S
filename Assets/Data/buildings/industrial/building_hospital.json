@@ -1,0 +1,192 @@
+{
+ "type": "BUILDING_HOSPITAL",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTERS_FOR_DISEASE_CONTROL",
+   "BUILDING_CITY_MORGUE",
+   "BUILDING_INCUBATION_CENTER",
+   "BUILDING_MEDICAL_CLINIC",
+   "BUILDING_MEGATOWER_MEDICAL_LEVEL",
+   "BUILDING_MRI_LAB",
+   "BUILDING_NATIONAL_MEDICAL_DATABASE",
+   "BUILDING_RED_CROSS",
+   "BUILDING_RESEARCH_HOSPITAL",
+   "BUILDING_VACCINE_LAB"
+  ],
+  "units": [
+   "UNIT_AMBULANCE",
+   "UNIT_AMBULANCE_II",
+   "UNIT_EARLY_MEDIVAC",
+   "UNIT_HOSPITAL_SHIP_2",
+   "UNIT_MEDIC"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PICOTECHNOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HEALTHCARE_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MEDICINE",
+    {
+     "type": "BONUS_PHARMACEUTICALS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CEMENT",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OBSIDIAN",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LEAD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SMART_MEDICINE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_IMMUNITY_DRUGS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_REPLACEMENT_ORGANS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PHARMACEUTICALS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_DOCTOR": 5
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 7,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_PEOPLE"
+   }
+  }
+ ],
+ "cost": {
+  "production": 770,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HOSPITAL"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HOSPITAL"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HOSPITAL",
+  "civilopedia": "TXT_KEY_BUILDING_HOSPITAL_PEDIA",
+  "worth": 5,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

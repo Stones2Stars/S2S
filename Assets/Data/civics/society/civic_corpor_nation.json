@@ -1,0 +1,185 @@
+{
+ "type": "CIVIC_CORPOR_NATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_MEGACORPORATE_HEADQUARTERS"
+  ],
+  "specialBuildingsWaived": [
+   "SPECIALBUILDING_CORPORATION_HQ"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    1,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 4,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 4
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": -15,
+      "per": {
+       "type": "POPULATION",
+       "each": 100,
+       "scope": "city"
+      }
+     }
+    ]
+   },
+   "buildings": {
+    "BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE": {
+     "flat": -5
+    },
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "capture": {
+  "empire": {
+   "resistance": {
+    "percent": -5
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   },
+   "numCities": {
+    "percent": 10
+   },
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 7,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
+   "corporation": {
+    "percent": -10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeCivilian": {
+    "flat": 10
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 3
+    },
+    "production": {
+     "percent": 3
+    },
+    "commerce": {
+     "percent": 3
+    }
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitudeShare": {
+    "flat": 1
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": 2
+   },
+   "national": {
+    "flat": -1
+   },
+   "laborFreedom": {
+    "flat": -5
+   }
+  }
+ },
+ "grants": {
+  "revolution": 10
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/society_corpor_nation.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_CORPOR_NATION",
+  "civilopedia": "TXT_KEY_CIVIC_CORPOR_NATION_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_CORPOR_NATION_STRATEGY",
+  "civicOption": "CIVICOPTION_SOCIETY",
+  "anarchyLength": 2,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

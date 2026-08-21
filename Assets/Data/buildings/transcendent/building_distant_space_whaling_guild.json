@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DISTANT_SPACE_WHALING_GUILD",
+ "enables": {
+  "buildings": [
+   "BUILDING_LIFE_TRUE_VACUUM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_DISTANT",
+    "TECH_ENDLESS_EXPLORATION",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 1713,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_SPACE_WHALING_GUILD",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_SPACE_WHALING_GUILD",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_SPACE_WHALING_GUILD_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

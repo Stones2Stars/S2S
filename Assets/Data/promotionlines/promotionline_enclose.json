@@ -1,0 +1,23 @@
+{
+ "type": "PROMOTIONLINE_ENCLOSE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Enclose1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_ENCLOSE",
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_RUFFIAN",
+   "UNITCOMBAT_STRIKE_TEAM"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_EXPLORER"
+  ]
+ }
+}

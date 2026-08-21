@@ -1,0 +1,298 @@
+{
+ "type": "UNIT_PLANET_PROBE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ROCKET_FUEL",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_EFFECT_LAUNCH_SITE",
+    "TECH_PLANETARY_EXPLORATION"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 3
+ },
+ "movement": {
+  "unit": {
+   "flat": 12
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_PLANET_PROBE"
+  }
+ },
+ "skills": [
+  "canMoveAllTerrain",
+  "canMoveImpassable",
+  "ignoreTerrainCost"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SPACE_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_EARLY_SPACESHIP",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_EXPLORE_INNER_SOLAR_SYSTEM",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_INNER_SOLAR_SYSTEM"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreInnerSolarSystem",
+     "code": "from CvPythonExtensions import *\nimport random\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tvalid_terrain_strings = ['INNER_SOLAR_SYSTEM']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_INNER_SOLAR_SYSTEM_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore Inner Solar System\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_OUTER_SOLAR_SYSTEM",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_OUTER_SOLAR_SYSTEM"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreOuterSolarSystem",
+     "code": "from CvPythonExtensions import *\nimport random\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tvalid_terrain_strings = ['OUTER_SOLAR_SYSTEM']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_OUTER_SOLAR_SYSTEM_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore Outer Solar System\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_TRANSNEPTUNIAN",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_TRANSNEPTUNIAN"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreTransneptunian",
+     "code": "from CvPythonExtensions import *\nimport random\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tvalid_terrain_strings = ['TRANSNEPTUNIAN_SPACE']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_TRANSNEPTUNIAN_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore Transneptunian Space\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_MERCURY",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_PLANET"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreMercury",
+     "code": "from CvPythonExtensions import CyGlobalContext\nfrom CvPythonExtensions import *\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\treturn False\n\tvalid_terrain_strings = ['MERCURY']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_MERCURY_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore this planet.\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_VENUS",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_PLANET"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreVenus",
+     "code": "from CvPythonExtensions import CyGlobalContext\nfrom CvPythonExtensions import *\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\treturn False\n\tvalid_terrain_strings = ['VENUS','VENUS_LOWLANDS','VENUS_HIGHLANDS']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_VENUS_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore this planet.\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_MARS",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_PLANET"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreMars",
+     "code": "from CvPythonExtensions import CyGlobalContext\nfrom CvPythonExtensions import *\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\treturn False\n\tvalid_terrain_strings = ['MARTIAN_ICE','MARTIAN_PERMAFROST','MARTIAN_DUNES','MARTIAN_BARREN','MARTIAN_PLAINS','MARTIAN_ROCKY','MARTIAN_DESERT','GREEN_MARS']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_MARS_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore this planet.\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_ASTEROID",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_ASTEROID"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreAsteroid",
+     "code": "from CvPythonExtensions import CyGlobalContext\nfrom CvPythonExtensions import *\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\treturn False\n\tvalid_terrain_strings = ['ASTEROID_SURFACE']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_ASTEROID_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore this planet.\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_JUPITER",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_PLANET"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreJupiter",
+     "code": "from CvPythonExtensions import CyGlobalContext\nfrom CvPythonExtensions import *\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\treturn False\n\tvalid_terrain_strings = ['JUPITER']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_JUPITER_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore this planet.\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_SATURN",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_PLANET"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreSaturn",
+     "code": "from CvPythonExtensions import CyGlobalContext\nfrom CvPythonExtensions import *\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\treturn False\n\tvalid_terrain_strings = ['SATURN']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_SATURN_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore this planet.\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_EUROPA",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_JMOON"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreEuropa",
+     "code": "from CvPythonExtensions import CyGlobalContext\nfrom CvPythonExtensions import *\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\treturn False\n\tvalid_terrain_strings = ['EUROPA']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_EUROPA_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore this planet.\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_TITAN",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_JMOON"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreTitan",
+     "code": "from CvPythonExtensions import CyGlobalContext\nfrom CvPythonExtensions import *\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\treturn False\n\tvalid_terrain_strings = ['TITAN']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_TITAN_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore this planet.\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_URANUS",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_PLANET"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreUranus",
+     "code": "from CvPythonExtensions import CyGlobalContext\nfrom CvPythonExtensions import *\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\treturn False\n\tvalid_terrain_strings = ['URANUS']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_URANUS_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore this planet.\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_NEPTUNE",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_PLANET"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreNeptune",
+     "code": "from CvPythonExtensions import CyGlobalContext\nfrom CvPythonExtensions import *\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\treturn False\n\tvalid_terrain_strings = ['NEPTUNE']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_NEPTUNE_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore this planet.\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_KBO",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_ASTEROID"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreKBO",
+     "code": "from CvPythonExtensions import CyGlobalContext\nfrom CvPythonExtensions import *\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\treturn False\n\tvalid_terrain_strings = ['KUIPER_BELT_OBJECT']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_KBO_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore this planet.\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_SEDNOID",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_SEDNOID"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreSednoid",
+     "code": "from CvPythonExtensions import CyGlobalContext\nfrom CvPythonExtensions import *\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\treturn False\n\treturn gc.getInfoTypeForString(\"FEATURE_SEDNOID\") == plot.getFeatureType()\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_SEDNOID_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore this planet.\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_SOLAR_SYSTEM_LIFE",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_SOLAR_SYSTEM_LIFE"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreInterstellarLife",
+     "code": "from CvPythonExtensions import *\nimport random\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tvalid_bonus_strings = ['EXTRATERRESTRIAL_MICROBES']\n\tvalid_bonuses = [gc.getInfoTypeForString('BONUS_'+t) for t in valid_bonus_strings]\n\treturn plot.getBonusType(unit.getTeam()) in valid_bonuses\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_SOLAR_SYSTEM_LIFE_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore a nearby star\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   }
+  ]
+ },
+ "cost": {
+  "production": 2306,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PLANET_PROBE",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_PLANET_PROBE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_PLANET_PROBE",
+  "civilopedia": "TXT_KEY_UNIT_PLANET_PROBE_PEDIA",
+  "help": "TXT_KEY_UNIT_SPACEUNIT_HELP",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH",
+   "MAPCATEGORY_CISLUNAR",
+   "MAPCATEGORY_LUNAR",
+   "MAPCATEGORY_MARTIAN",
+   "MAPCATEGORY_VENUSIAN",
+   "MAPCATEGORY_JOVIAN",
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_TITANIC"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_TRANSNEPTUNIAN_SPACE"
+  ],
+  "terrainPassableTechs": [
+   {
+    "TERRAIN_TRANSNEPTUNIAN_SPACE": "TECH_MAGNETIC_SAILS"
+   }
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "workRate": 250
+  }
+ }
+}

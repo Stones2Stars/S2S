@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_ECUMENOPOLIS_EARTH",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_PALACE",
+    "BUILDING_ORBITAL_HEAT_SINK",
+    "TECH_PLANETARY_MEGASTRUCTURES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_ARCOLOGY": {
+     "flat": 3
+    },
+    "BUILDING_HOUSING_COLONY_ARCOLOGY": {
+     "flat": 3
+    },
+    "BUILDING_LAUNCH_ARCOLOGY": {
+     "flat": 3
+    },
+    "BUILDING_STRATOSPHERIC_TOWER": {
+     "flat": 3
+    },
+    "BUILDING_SPACESCRAPER": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 46830,
+  "sizeModifier": 3,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ECUMENOPOLIS_EARTH"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ECUMENOPOLIS_EARTH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ECUMENOPOLIS_EARTH",
+  "civilopedia": "TXT_KEY_BUILDING_ECUMENOPOLIS_EARTH_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

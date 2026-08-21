@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_WAR_DANCE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DANCE_HAKA"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MILITARY_SCIENCE"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_PREHISTORIC_DANCE",
+    {
+     "any": [
+      "BUILDING_DANCE_HUT",
+      "BUILDING_DANCE_HALL",
+      "BUILDING_NIGHT_CLUB"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": 5,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_WAR_CRY"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WAR_DANCE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WAR_DANCE",
+  "civilopedia": "TXT_KEY_BUILDING_WAR_DANCE_PEDIA",
+  "notConstructible": true,
+  "worth": 1,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

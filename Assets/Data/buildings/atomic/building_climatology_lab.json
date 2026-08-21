@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_CLIMATOLOGY_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOSPHERE_2",
+   "BUILDING_CLIMATE_SATELLITE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_METEOROLOGY_LAB",
+    "TECH_CLIMATE_MODELS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 8,
+     "enabled": "TECH_ECOLOGICAL_ENGINEERING"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 1540,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CLIMATOLOGY_LAB"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CLIMATOLOGY_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_CLIMATOLOGY_LAB_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

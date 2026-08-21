@@ -4,7 +4,13 @@ from CvPythonExtensions import *
 import re
 
 # globals
-gc = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
+gc = GC   # this module spells it lowercase
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 ArtFileMgr = CyArtFileMgr()
 localText = CyTranslator()
 

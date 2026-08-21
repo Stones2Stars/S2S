@@ -1406,716 +1406,12 @@
 			<Button>Art/Interface/Buttons/units/sparth/categories/speed_fast.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_COLLISION_BLUNT</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_COLLISION_BLUNT</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
 			<Type>UNITCOMBAT_ATTACK_FORM_COLLISION_PIERCING</Type>
 			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_COLLISION_PIERCING</Description>
 			<Categories>
 				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
 			</Categories>
 			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_SELF_DETONATION</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_SELF_DETONATION</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_TRAMPLE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_TRAMPLE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_H2H_BLUNT</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_H2H_BLUNT</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_H2H_PIERCING</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_H2H_PIERCING</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_H2H_SLASHING</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_H2H_SLASHING</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_H2H_FIRE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_H2H_FIRE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_H2H_ELECTRICITY</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_H2H_ELECTRICITY</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_H2H_FROST</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_H2H_FROST</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_H2H_POISON</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_H2H_POISON</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_H2H_THERMONUCLEAR</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_H2H_THERMONUCLEAR</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_H2H_EXPLOSIVE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_H2H_EXPLOSIVE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_H2H_DISINTIGRATION</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_H2H_DISINTIGRATION</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_H2H_LASER</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_H2H_LASER</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_H2H_HEAT</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_H2H_HEAT</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_H2H_SONIC</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_H2H_SONIC</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_H2H_PSYCH</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_H2H_PSYCH</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_H2H_CYBER</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_H2H_CYBER</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_H2H_BIOLOGICAL</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_H2H_BIOLOGICAL</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_H2H_EMP</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_H2H_EMP</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_SIDEARM_BLUNT</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_SIDEARM_BLUNT</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_sidearm.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_SIDEARM_PIERCING</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_SIDEARM_PIERCING</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_sidearm.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_SIDEARM_SLASHING</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_SIDEARM_SLASHING</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_sidearm.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_SIDEARM_FIRE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_SIDEARM_FIRE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_sidearm.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_SIDEARM_ELECTRICITY</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_SIDEARM_ELECTRICITY</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_sidearm.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_SIDEARM_FROST</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_SIDEARM_FROST</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_sidearm.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_SIDEARM_POISON</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_SIDEARM_POISON</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_sidearm.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_SIDEARM_THERMONUCLEAR</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_SIDEARM_THERMONUCLEAR</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_sidearm.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_SIDEARM_EXPLOSIVE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_SIDEARM_EXPLOSIVE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_sidearm.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_SIDEARM_DISINTIGRATION</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_SIDEARM_DISINTIGRATION</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_sidearm.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_SIDEARM_LASER</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_SIDEARM_LASER</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_sidearm.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_SIDEARM_HEAT</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_SIDEARM_HEAT</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_sidearm.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_SIDEARM_SONIC</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_SIDEARM_SONIC</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_sidearm.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_SIDEARM_PSYCH</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_SIDEARM_PSYCH</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_sidearm.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_SIDEARM_CYBER</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_SIDEARM_CYBER</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_sidearm.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_SIDEARM_BIOLOGICAL</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_SIDEARM_BIOLOGICAL</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_sidearm.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_SIDEARM_EMP</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_SIDEARM_EMP</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_sidearm.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_DISTANCE_BLUNT</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_DISTANCE_BLUNT</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_DISTANCE_PIERCING</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_DISTANCE_PIERCING</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_DISTANCE_SLASHING</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_DISTANCE_SLASHING</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_DISTANCE_FIRE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_DISTANCE_FIRE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_DISTANCE_ELECTRICITY</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_DISTANCE_ELECTRICITY</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_DISTANCE_FROST</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_DISTANCE_FROST</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_DISTANCE_POISON</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_DISTANCE_POISON</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_DISTANCE_THERMONUCLEAR</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_DISTANCE_THERMONUCLEAR</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_DISTANCE_EXPLOSIVE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_DISTANCE_EXPLOSIVE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_DISTANCE_DISINTIGRATION</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_DISTANCE_DISINTIGRATION</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_DISTANCE_LASER</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_DISTANCE_LASER</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_DISTANCE_HEAT</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_DISTANCE_HEAT</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_DISTANCE_SONIC</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_DISTANCE_SONIC</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_DISTANCE_PSYCH</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_DISTANCE_PSYCH</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_DISTANCE_CYBER</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_DISTANCE_CYBER</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_DISTANCE_BIOLOGICAL</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_DISTANCE_BIOLOGICAL</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_DISTANCE_EMP</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_DISTANCE_EMP</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_BACKUP_BLUNT</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_BACKUP_BLUNT</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_BACKUP_PIERCING</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_BACKUP_PIERCING</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_BACKUP_SLASHING</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_BACKUP_SLASHING</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_BACKUP_FIRE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_BACKUP_FIRE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_BACKUP_ELECTRICITY</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_BACKUP_ELECTRICITY</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_BACKUP_FROST</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_BACKUP_FROST</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_BACKUP_POISON</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_BACKUP_POISON</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_BACKUP_THERMONUCLEAR</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_BACKUP_THERMONUCLEAR</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_BACKUP_EXPLOSIVE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_BACKUP_EXPLOSIVE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_BACKUP_DISINTIGRATION</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_BACKUP_DISINTIGRATION</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_BACKUP_LASER</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_BACKUP_LASER</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_BACKUP_HEAT</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_BACKUP_HEAT</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_BACKUP_SONIC</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_BACKUP_SONIC</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_BACKUP_PSYCH</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_BACKUP_PSYCH</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_BACKUP_CYBER</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_BACKUP_CYBER</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_BACKUP_BIOLOGICAL</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_BACKUP_BIOLOGICAL</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_BACKUP_EMP</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_BACKUP_EMP</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_A2G_BLUNT</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_A2G_BLUNT</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_air2ground.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_A2G_PIERCING</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_A2G_PIERCING</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_air2ground.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_A2G_SLASHING</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_A2G_SLASHING</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_air2ground.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_A2G_FIRE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_A2G_FIRE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_air2ground.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_A2G_ELECTRICITY</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_A2G_ELECTRICITY</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_air2ground.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_A2G_FROST</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_A2G_FROST</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_air2ground.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_A2G_POISON</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_A2G_POISON</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_air2ground.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_A2G_THERMONUCLEAR</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_A2G_THERMONUCLEAR</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_air2ground.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_A2G_EXPLOSIVE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_A2G_EXPLOSIVE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_air2ground.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_A2G_DISINTIGRATION</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_A2G_DISINTIGRATION</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_air2ground.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_A2G_LASER</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_A2G_LASER</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_air2ground.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_A2G_HEAT</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_A2G_HEAT</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_air2ground.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_A2G_SONIC</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_A2G_SONIC</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_air2ground.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_A2G_PSYCH</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_A2G_PSYCH</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_air2ground.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_A2G_CYBER</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_A2G_CYBER</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_air2ground.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_A2G_BIOLOGICAL</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_A2G_BIOLOGICAL</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_air2ground.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ATTACK_FORM_A2G_EMP</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ATTACK_FORM_A2G_EMP</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ATTACK_FORM</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/attack_air2ground.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY</Type>
@@ -2376,14 +1672,6 @@
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_H2H_ENERGY_GLOVES</Type>
 			<Description>TXT_KEY_UNITCOMBAT_WEAPON_H2H_ENERGY_GLOVES</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_H2H</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_h2h.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_H2H_EMP</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_H2H_EMP</Description>
 			<Categories>
 				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_H2H</Category>
 			</Categories>
@@ -2820,24 +2108,8 @@
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_backup.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_DETONATE_DYNAMITE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_DETONATE_DYNAMITE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_DETONATE</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_detonate.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DETONATE_GUIDED</Type>
 			<Description>TXT_KEY_UNITCOMBAT_WEAPON_DETONATE_GUIDED</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_DETONATE</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_detonate.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_DETONATE_CHEMICAL</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_DETONATE_CHEMICAL</Description>
 			<Categories>
 				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_DETONATE</Category>
 			</Categories>
@@ -2886,22 +2158,6 @@
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_A2G_RADIOACTIVE</Type>
 			<Description>TXT_KEY_UNITCOMBAT_WEAPON_A2G_RADIOACTIVE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_AIR2GROUND</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_a2g.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_A2G_CHEMICAL</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_A2G_CHEMICAL</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_AIR2GROUND</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_a2g.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_A2G_BIOLOGICAL</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_A2G_BIOLOGICAL</Description>
 			<Categories>
 				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_AIR2GROUND</Category>
 			</Categories>
@@ -2992,14 +2248,6 @@
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_ARMOR_AIRCRAFT</Type>
 			<Description>TXT_KEY_UNITCOMBAT_ARMOR_AIRCRAFT</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMORS</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_type.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_SPACECRAFT</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_SPACECRAFT</Description>
 			<Categories>
 				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMORS</Category>
 			</Categories>
@@ -6675,390 +5923,6 @@
 			<Button>Art/Interface/Buttons/units/sparth/categories/group_countless.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_TYPE_PADDED</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_TYPE_PADDED</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_TYPES</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_type.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_TYPE_WOVEN</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_TYPE_WOVEN</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_TYPES</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_type.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_TYPE_HIDE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_TYPE_HIDE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_TYPES</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_type.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_TYPE_WOOD</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_TYPE_WOOD</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_TYPES</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_type.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_TYPE_CHAIN</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_TYPE_CHAIN</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_TYPES</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_type.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_TYPE_RING</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_TYPE_RING</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_TYPES</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_type.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_TYPE_SCALE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_TYPE_SCALE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_TYPES</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_type.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_TYPE_BANDED</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_TYPE_BANDED</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_TYPES</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_type.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_TYPE_PLATE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_TYPE_PLATE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_TYPES</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_type.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_TYPE_VEST</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_TYPE_VEST</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_TYPES</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_type.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_TYPE_BOMBSUIT</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_TYPE_BOMBSUIT</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_TYPES</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_type.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_TYPE_EXOSKELETAL</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_TYPE_EXOSKELETAL</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_TYPES</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_type.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_TYPE_GELL</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_TYPE_GELL</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_TYPES</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_type.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_TYPE_BELT</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_TYPE_BELT</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_TYPES</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_type.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_TYPE_EXTERIOR</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_TYPE_EXTERIOR</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_TYPES</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_type.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_TYPE_CHARGED</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_TYPE_CHARGED</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_TYPES</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_type.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_BARK</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_BARK</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_BAMBOO</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_BAMBOO</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_RATTAN</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_RATTAN</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_FABRIC</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_FABRIC</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_SOFT_LEATHER</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_SOFT_LEATHER</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_HARD_LEATHER</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_HARD_LEATHER</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_COPPER</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_COPPER</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_BRONZE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_BRONZE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_IRON</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_IRON</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_BONE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_BONE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_STEEL</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_STEEL</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_CERAMIC</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_CERAMIC</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_KEVLAR</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_KEVLAR</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_POLY</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_POLY</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_TWARON</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_TWARON</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_GELL</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_GELL</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_ALUMINUM</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_ALUMINUM</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_TITANIUM</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_TITANIUM</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_URANIUM</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_URANIUM</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_PLASTIC</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_PLASTIC</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_COMPOSITE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_COMPOSITE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_ARMOR_MATERIAL_NANOFIBER</Type>
-			<Description>TXT_KEY_UNITCOMBAT_ARMOR_MATERIAL_NANOFIBER</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_ARMOR_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/armor_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_MATERIAL_WOOD</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_MATERIAL_WOOD</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELD_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_MATERIAL_BONE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_MATERIAL_BONE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELD_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_MATERIAL_HARD_LEATHER</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_MATERIAL_HARD_LEATHER</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELD_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_MATERIAL_COPPER</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_MATERIAL_COPPER</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELD_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_MATERIAL_BRONZE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_MATERIAL_BRONZE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELD_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_MATERIAL_IRON</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_MATERIAL_IRON</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELD_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_MATERIAL_STEEL</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_MATERIAL_STEEL</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELD_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_MATERIAL_CERAMIC</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_MATERIAL_CERAMIC</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELD_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_MATERIAL_PLASTIC</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_MATERIAL_PLASTIC</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELD_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_MATERIAL_FIELD</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_MATERIAL_FIELD</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELD_MATERIAL</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_material.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
 			<Type>UNITCOMBAT_QUALITY_INCAPABLE</Type>
 			<Description>TXT_KEY_UNITCOMBAT_QUALITY_INCAPABLE</Description>
 			<Categories>
@@ -7640,14 +6504,6 @@
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_HANDHELD_RAILGUN</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_HANDHELD_RAILGUN</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_RAPID_RAILGUN</Type>
 			<Description>TXT_KEY_UNITCOMBAT_WEAPON_DIST_RAPID_RAILGUN</Description>
 			<Categories>
@@ -7662,14 +6518,6 @@
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_RAPID_RAILGUN</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_RAPID_RAILGUN</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_HEAVY_RAILGUN</Type>
 			<Description>TXT_KEY_UNITCOMBAT_WEAPON_DIST_HEAVY_RAILGUN</Description>
 			<Categories>
@@ -7682,14 +6530,6 @@
 			<iRBombardDamageMaxUnitsBase>2</iRBombardDamageMaxUnitsBase>
 			<bRBombardDirect>1</bRBombardDirect>
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_HEAVY_RAILGUN</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_HEAVY_RAILGUN</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_NAVAL_COMBATANT</Type>
@@ -7743,14 +6583,6 @@
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_COILGUN</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_COILGUN</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_IMPROVED_LASER</Type>
 			<Description>TXT_KEY_UNITCOMBAT_WEAPON_DIST_IMPROVED_LASER</Description>
 			<Categories>
@@ -7765,28 +6597,12 @@
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_IMPROVED_LASER</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_IMPROVED_LASER</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_IMPROVED_SONIC</Type>
 			<Description>TXT_KEY_UNITCOMBAT_WEAPON_DIST_IMPROVED_SONIC</Description>
 			<Categories>
 				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_DISTANCE</Category>
 			</Categories>
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_IMPROVED_SONIC</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_IMPROVED_SONIC</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_PLASMA</Type>
@@ -7797,14 +6613,6 @@
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_PLASMA</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_PLASMA</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_GRAVITY</Type>
 			<Description>TXT_KEY_UNITCOMBAT_WEAPON_DIST_GRAVITY</Description>
 			<Categories>
@@ -7813,28 +6621,12 @@
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_GRAVITY</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_GRAVITY</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_ANTIMATTER</Type>
 			<Description>TXT_KEY_UNITCOMBAT_WEAPON_DIST_ANTIMATTER</Description>
 			<Categories>
 				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_DISTANCE</Category>
 			</Categories>
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_ANTIMATTER</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_ANTIMATTER</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_DISINTIGRATION</Type>
@@ -7851,28 +6643,12 @@
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_DISINTIGRATION</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_DISINTIGRATION</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_ACOUSTOPHORESIS</Type>
 			<Description>TXT_KEY_UNITCOMBAT_WEAPON_DIST_ACOUSTOPHORESIS</Description>
 			<Categories>
 				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_DISTANCE</Category>
 			</Categories>
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_ACOUSTOPHORESIS</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_ACOUSTOPHORESIS</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_PATHOGEN_DELIVERY</Type>
@@ -7883,28 +6659,12 @@
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_PATHOGEN_DELIVERY</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_PATHOGEN_DELIVERY</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_IMPROVED_PATHOGENS</Type>
 			<Description>TXT_KEY_UNITCOMBAT_WEAPON_DIST_IMPROVED_PATHOGENS</Description>
 			<Categories>
 				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_DISTANCE</Category>
 			</Categories>
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_IMPROVED_PATHOGENS</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_IMPROVED_PATHOGENS</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_ADVANCED_PATHOGENS</Type>
@@ -7915,28 +6675,12 @@
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_ADVANCED_PATHOGENS</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_ADVANCED_PATHOGENS</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_IMPROVED_ELECTRIC</Type>
 			<Description>TXT_KEY_UNITCOMBAT_WEAPON_DIST_IMPROVED_ELECTRIC</Description>
 			<Categories>
 				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_DISTANCE</Category>
 			</Categories>
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_IMPROVED_ELECTRIC</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_IMPROVED_ELECTRIC</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_IMPROVED_EMP</Type>
@@ -7947,28 +6691,12 @@
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_IMPROVED_EMP</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_IMPROVED_EMP</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_MAGNETIC</Type>
 			<Description>TXT_KEY_UNITCOMBAT_WEAPON_DIST_MAGNETIC</Description>
 			<Categories>
 				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_DISTANCE</Category>
 			</Categories>
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_MAGNETIC</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_MAGNETIC</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_NANOSPRAY</Type>
@@ -7979,28 +6707,12 @@
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_NANOSPRAY</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_NANOSPRAY</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_TECHNO_TELEPATHIC</Type>
 			<Description>TXT_KEY_UNITCOMBAT_WEAPON_DIST_TECHNO_TELEPATHIC</Description>
 			<Categories>
 				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_DISTANCE</Category>
 			</Categories>
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_TECHNO_TELEPATHIC</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_TECHNO_TELEPATHIC</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_TELEPATHY</Type>
@@ -8011,14 +6723,6 @@
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_TELEPATHY</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_TELEPATHY</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_PSYCHOKINESIS</Type>
 			<Description>TXT_KEY_UNITCOMBAT_WEAPON_DIST_PSYCHOKINESIS</Description>
 			<Categories>
@@ -8027,28 +6731,12 @@
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_PSYCHOKINESIS</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_PSYCHOKINESIS</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_IMPROVED_NANO</Type>
 			<Description>TXT_KEY_UNITCOMBAT_WEAPON_DIST_IMPROVED_NANO</Description>
 			<Categories>
 				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_DISTANCE</Category>
 			</Categories>
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_IMPROVED_NANO</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_IMPROVED_NANO</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_MASS_DRIVER</Type>
@@ -8065,28 +6753,12 @@
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_MASS_DRIVER</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_MASS_DRIVER</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_IMPROVED_FROST</Type>
 			<Description>TXT_KEY_UNITCOMBAT_WEAPON_DIST_IMPROVED_FROST</Description>
 			<Categories>
 				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_DISTANCE</Category>
 			</Categories>
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_IMPROVED_FROST</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_IMPROVED_FROST</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_WEAPON_DIST_FUSION_CANNON</Type>
@@ -8101,110 +6773,6 @@
 			<iRBombardDamageMaxUnitsBase>3</iRBombardDamageMaxUnitsBase>
 			<bRBombardDirect>1</bRBombardDirect>
 			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_WEAPON_BACKUP_FUSION_CANNON</Type>
-			<Description>TXT_KEY_UNITCOMBAT_WEAPON_BACKUP_FUSION_CANNON</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_WEAPONS_BACKUP</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/wields_distance_backup.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_SONIC</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_SONIC</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELDS</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_sonic.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_ELECTROMAGNETIC</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_ELECTROMAGNETIC</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELDS</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_ekectromagnetic.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_FORCE_FIELD</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_FORCE_FIELD</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELDS</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_force_field.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_REINFORCED_FORCE_FIELD</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_REINFORCED_FORCE_FIELD</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELDS</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_reinforced_force_field.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_CRYSTAL</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_CRYSTAL</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELDS</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_crystal.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_SHRAPNEL</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_SHRAPNEL</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELDS</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_shrapnel.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_PHOTON</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_PHOTON</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELDS</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_photon.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_THERMAL_NEGATION</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_THERMAL_NEGATION</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELDS</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_thermal_negation.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_NANO</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_NANO</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELDS</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_nano.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_ATTOMETER</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_ATTOMETER</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELDS</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_attometer.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_TRANSTANGIBLE</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_TRANSTANGIBLE</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELDS</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_transtangible.dds</Button>
-		</UnitCombatInfo>
-		<UnitCombatInfo>
-			<Type>UNITCOMBAT_SHIELD_GRAVITY</Type>
-			<Description>TXT_KEY_UNITCOMBAT_SHIELD_GRAVITY</Description>
-			<Categories>
-				<Category>CATEGORY_UNITCOMBAT_GROUP_SHIELDS</Category>
-			</Categories>
-			<Button>Art/Interface/Buttons/units/sparth/categories/shield_gravity.dds</Button>
 		</UnitCombatInfo>
 		<UnitCombatInfo>
 			<Type>UNITCOMBAT_HOLOGRAPHIC_DIVERSIONS</Type>

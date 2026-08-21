@@ -1,0 +1,312 @@
+{
+ "type": "LEADER_HIAWATHA",
+ "traits": [
+  "TRAIT_SPIRITUAL",
+  "TRAIT_HUMANITARIAN",
+  "TRAIT_HUNTER_GATHERER",
+  "TRAIT_SPIRITUAL1",
+  "TRAIT_HUMANITARIAN1",
+  "TRAIT_HUNTER_GATHERER1"
+ ],
+ "complexTraits": [
+  "TRAIT_COMPLEX_SPIRITUAL1",
+  "TRAIT_COMPLEX_HUMANITARIAN1",
+  "TRAIT_COMPLEX_HUNTER_GATHERER1"
+ ],
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 3
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   }
+  ],
+  "personality": {
+   "wonderConstructRand": 20,
+   "baseAttitude": 2,
+   "basePeaceWeight": 8,
+   "peaceWeightRand": 3,
+   "espionageWeight": 100,
+   "buildUnitProb": 30,
+   "vassalPowerModifier": -20,
+   "freedomAppreciation": 10
+  },
+  "war": {
+   "refuseToTalkWarThreshold": 5,
+   "maxWarRand": 300,
+   "maxWarNearbyPowerRatio": 80,
+   "maxWarDistantPowerRatio": 60,
+   "maxWarMinAdjacentLandPercent": 3,
+   "limitedWarRand": 200,
+   "limitedWarPowerRatio": 100,
+   "dogpileWarRand": 65,
+   "makePeaceRand": 10,
+   "declareWarTradeRand": 60,
+   "demandRebukedSneakProb": 50,
+   "demandRebukedWarProb": 15,
+   "baseAttackOddsChange": 2,
+   "attackOddsChangeRand": 8
+  },
+  "victory": {
+   "culture": 5,
+   "space": 5,
+   "conquest": 55,
+   "domination": 45,
+   "diplomacy": 10
+  },
+  "trade": {
+   "noTechTradeThreshold": 12,
+   "techTradeKnownPercent": 35,
+   "maxGoldPercent": 30,
+   "maxGoldPerTurnPercent": 12
+  },
+  "attitude": {
+   "betterRankDifference": {
+    "change": 4
+   },
+   "closeBorders": {
+    "change": -2
+   },
+   "lostWar": {
+    "change": -1
+   },
+   "atWar": {
+    "divisor": -5,
+    "changeLimit": 5
+   },
+   "atPeace": {
+    "divisor": 60,
+    "changeLimit": 1
+   },
+   "sameReligion": {
+    "change": 1,
+    "divisor": 10,
+    "changeLimit": 4
+   },
+   "differentReligion": {
+    "change": -1,
+    "divisor": -5,
+    "changeLimit": -1
+   },
+   "bonusTrade": {
+    "divisor": 50,
+    "changeLimit": 2
+   },
+   "openBorders": {
+    "divisor": 25,
+    "changeLimit": 2
+   },
+   "defensivePact": {
+    "divisor": 12,
+    "changeLimit": 2
+   },
+   "shareWar": {
+    "change": 1,
+    "divisor": 8,
+    "changeLimit": 2
+   },
+   "favoriteCivic": {
+    "change": 1,
+    "divisor": 10,
+    "changeLimit": 4
+   }
+  },
+  "refuse": {
+   "demandTribute": "ATTITUDE_PLEASED",
+   "noGiveHelp": "ATTITUDE_PLEASED",
+   "tech": "ATTITUDE_FURIOUS",
+   "strategicBonus": "ATTITUDE_FURIOUS",
+   "happinessBonus": "ATTITUDE_FURIOUS",
+   "healthBonus": "ATTITUDE_FURIOUS",
+   "map": "ATTITUDE_CAUTIOUS",
+   "declareWar": "ATTITUDE_CAUTIOUS",
+   "declareWarThem": "ATTITUDE_CAUTIOUS",
+   "stopTrading": "ATTITUDE_PLEASED",
+   "stopTradingThem": "ATTITUDE_CAUTIOUS",
+   "adoptCivic": "ATTITUDE_PLEASED",
+   "convertReligion": "ATTITUDE_CAUTIOUS",
+   "openBorders": "ATTITUDE_FURIOUS",
+   "defensivePact": "ATTITUDE_CAUTIOUS",
+   "permanentAlliance": "ATTITUDE_CAUTIOUS",
+   "vassal": "ATTITUDE_CAUTIOUS"
+  },
+  "memory": {
+   "decay": {
+    "MEMORY_GIVE_HELP": 200,
+    "MEMORY_REFUSED_HELP": 50,
+    "MEMORY_ACCEPT_DEMAND": 100,
+    "MEMORY_REJECTED_DEMAND": 100,
+    "MEMORY_ACCEPTED_RELIGION": 500,
+    "MEMORY_DENIED_RELIGION": 50,
+    "MEMORY_ACCEPTED_CIVIC": 200,
+    "MEMORY_DENIED_CIVIC": 150,
+    "MEMORY_ACCEPTED_JOIN_WAR": 100,
+    "MEMORY_DENIED_JOIN_WAR": 150,
+    "MEMORY_ACCEPTED_STOP_TRADING": 50,
+    "MEMORY_DENIED_STOP_TRADING": 50,
+    "MEMORY_STOPPED_TRADING_RECENT": 50,
+    "MEMORY_MADE_DEMAND_RECENT": 50,
+    "MEMORY_CANCELLED_OPEN_BORDERS": 10,
+    "MEMORY_TRADED_TECH_TO_US": 150,
+    "MEMORY_RECEIVED_TECH_FROM_ANY": 20,
+    "MEMORY_VOTED_AGAINST_US": 10,
+    "MEMORY_VOTED_FOR_US": 10,
+    "MEMORY_EVENT_GOOD_TO_US": 100,
+    "MEMORY_EVENT_BAD_TO_US": 100,
+    "MEMORY_INQUISITION": 25
+   },
+   "attitudePercent": {
+    "MEMORY_DECLARED_WAR": -300,
+    "MEMORY_DECLARED_WAR_ON_FRIEND": -300,
+    "MEMORY_HIRED_WAR_ALLY": -300,
+    "MEMORY_NUKED_US": -600,
+    "MEMORY_NUKED_FRIEND": -200,
+    "MEMORY_USED_NUKE": -100,
+    "MEMORY_RAZED_CITY": -300,
+    "MEMORY_RAZED_HOLY_CITY": -300,
+    "MEMORY_SPY_CAUGHT": -50,
+    "MEMORY_GIVE_HELP": 200,
+    "MEMORY_REFUSED_HELP": -100,
+    "MEMORY_ACCEPT_DEMAND": 50,
+    "MEMORY_REJECTED_DEMAND": -100,
+    "MEMORY_ACCEPTED_RELIGION": 100,
+    "MEMORY_DENIED_RELIGION": -100,
+    "MEMORY_ACCEPTED_CIVIC": 400,
+    "MEMORY_DENIED_CIVIC": -100,
+    "MEMORY_DENIED_JOIN_WAR": -100,
+    "MEMORY_ACCEPTED_STOP_TRADING": 100,
+    "MEMORY_DENIED_STOP_TRADING": -100,
+    "MEMORY_STOPPED_TRADING": -100,
+    "MEMORY_HIRED_TRADE_EMBARGO": -100,
+    "MEMORY_MADE_DEMAND": -100,
+    "MEMORY_TRADED_TECH_TO_US": 100,
+    "MEMORY_VOTED_AGAINST_US": -100,
+    "MEMORY_VOTED_FOR_US": 100,
+    "MEMORY_EVENT_GOOD_TO_US": 100,
+    "MEMORY_EVENT_BAD_TO_US": -100,
+    "MEMORY_LIBERATED_CITIES": 100,
+    "MEMORY_INQUISITION": -100
+   }
+  },
+  "contact": {
+   "rand": {
+    "CONTACT_RELIGION_PRESSURE": 100,
+    "CONTACT_CIVIC_PRESSURE": 2,
+    "CONTACT_JOIN_WAR": 20,
+    "CONTACT_STOP_TRADING": 100,
+    "CONTACT_GIVE_HELP": 1000,
+    "CONTACT_ASK_FOR_HELP": 1000,
+    "CONTACT_DEMAND_TRIBUTE": 1000,
+    "CONTACT_OPEN_BORDERS": 5,
+    "CONTACT_DEFENSIVE_PACT": 20,
+    "CONTACT_PERMANENT_ALLIANCE": 20,
+    "CONTACT_PEACE_TREATY": 20,
+    "CONTACT_TRADE_TECH": 100,
+    "CONTACT_TRADE_BONUS": 50,
+    "CONTACT_TRADE_MAP": 2
+   },
+   "delay": {
+    "CONTACT_RELIGION_PRESSURE": 30,
+    "CONTACT_CIVIC_PRESSURE": 10,
+    "CONTACT_JOIN_WAR": 20,
+    "CONTACT_STOP_TRADING": 50,
+    "CONTACT_GIVE_HELP": 30,
+    "CONTACT_ASK_FOR_HELP": 30,
+    "CONTACT_DEMAND_TRIBUTE": 50,
+    "CONTACT_OPEN_BORDERS": 10,
+    "CONTACT_DEFENSIVE_PACT": 20,
+    "CONTACT_PERMANENT_ALLIANCE": 20,
+    "CONTACT_PEACE_TREATY": 10,
+    "CONTACT_TRADE_TECH": 30,
+    "CONTACT_TRADE_BONUS": 10,
+    "CONTACT_TRADE_MAP": 20
+   }
+  },
+  "noWarProb": {
+   "ATTITUDE_ANNOYED": 30,
+   "ATTITUDE_CAUTIOUS": 80,
+   "ATTITUDE_PLEASED": 90,
+   "ATTITUDE_FRIENDLY": 100
+  },
+  "favorites": {
+   "civic": "CIVIC_PACIFISM",
+   "religion": "RELIGION_SHAMANISM"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_LEADER_HIAWATHA"
+  }
+ },
+ "sound": {
+  "diploIntroMusicPeace": {
+   "C2C_ERA_PREHISTORIC": "AS2D_DIPLO_NORTH_AMERICA_EARLY",
+   "C2C_ERA_ANCIENT": "AS2D_DIPLO_NORTH_AMERICA_EARLY",
+   "C2C_ERA_CLASSICAL": "AS2D_DIPLO_NORTH_AMERICA_EARLY",
+   "C2C_ERA_MEDIEVAL": "AS2D_DIPLO_NORTH_AMERICA_EARLY",
+   "C2C_ERA_RENAISSANCE": "AS2D_DIPLO_NORTH_AMERICA_LATE",
+   "C2C_ERA_INDUSTRIAL": "AS2D_DIPLO_NORTH_AMERICA_LATE",
+   "C2C_ERA_ATOMIC": "AS2D_DIPLO_NORTH_AMERICA_LATE",
+   "C2C_ERA_INFORMATION": "AS2D_DIPLO_NORTH_AMERICA_LATE",
+   "C2C_ERA_NANOTECH": "AS2D_DIPLO_NORTH_AMERICA_LATE",
+   "C2C_ERA_TRANSHUMAN": "AS2D_DIPLO_NORTH_AMERICA_LATE",
+   "C2C_ERA_GALACTIC": "AS2D_DIPLO_NORTH_AMERICA_LATE",
+   "C2C_ERA_COSMIC": "AS2D_DIPLO_NORTH_AMERICA_LATE",
+   "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_NORTH_AMERICA_LATE",
+   "C2C_ERA_FUTURE": "AS2D_DIPLO_NORTH_AMERICA_LATE"
+  },
+  "diploMusicPeace": {
+   "C2C_ERA_PREHISTORIC": "AS2D_DIPLO_NORTH_AMERICA_EARLY",
+   "C2C_ERA_ANCIENT": "AS2D_DIPLO_NORTH_AMERICA_EARLY",
+   "C2C_ERA_CLASSICAL": "AS2D_DIPLO_NORTH_AMERICA_EARLY",
+   "C2C_ERA_MEDIEVAL": "AS2D_DIPLO_NORTH_AMERICA_EARLY",
+   "C2C_ERA_RENAISSANCE": "AS2D_DIPLO_NORTH_AMERICA_LATE",
+   "C2C_ERA_INDUSTRIAL": "AS2D_DIPLO_NORTH_AMERICA_LATE",
+   "C2C_ERA_ATOMIC": "AS2D_DIPLO_NORTH_AMERICA_LATE",
+   "C2C_ERA_INFORMATION": "AS2D_DIPLO_NORTH_AMERICA_LATE",
+   "C2C_ERA_NANOTECH": "AS2D_DIPLO_NORTH_AMERICA_LATE",
+   "C2C_ERA_TRANSHUMAN": "AS2D_DIPLO_NORTH_AMERICA_LATE",
+   "C2C_ERA_GALACTIC": "AS2D_DIPLO_NORTH_AMERICA_LATE",
+   "C2C_ERA_COSMIC": "AS2D_DIPLO_NORTH_AMERICA_LATE",
+   "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_NORTH_AMERICA_LATE",
+   "C2C_ERA_FUTURE": "AS2D_DIPLO_NORTH_AMERICA_LATE"
+  },
+  "diploIntroMusicWar": [
+   "C2C_ERA_PREHISTORIC",
+   "C2C_ERA_ANCIENT",
+   "C2C_ERA_CLASSICAL",
+   "C2C_ERA_MEDIEVAL",
+   "C2C_ERA_RENAISSANCE",
+   "C2C_ERA_INDUSTRIAL",
+   "C2C_ERA_ATOMIC",
+   "C2C_ERA_INFORMATION",
+   "C2C_ERA_NANOTECH",
+   "C2C_ERA_TRANSHUMAN",
+   "C2C_ERA_GALACTIC",
+   "C2C_ERA_COSMIC",
+   "C2C_ERA_TRANSCENDENT",
+   "C2C_ERA_FUTURE"
+  ],
+  "diploMusicWar": {
+   "C2C_ERA_PREHISTORIC": "AS2D_DIPLO_WARDRUMS_EARLY",
+   "C2C_ERA_ANCIENT": "AS2D_DIPLO_WARDRUMS_EARLY",
+   "C2C_ERA_CLASSICAL": "AS2D_DIPLO_WARDRUMS_EARLY",
+   "C2C_ERA_MEDIEVAL": "AS2D_DIPLO_WARDRUMS_MIDDLE",
+   "C2C_ERA_RENAISSANCE": "AS2D_DIPLO_WARDRUMS_MIDDLE",
+   "C2C_ERA_INDUSTRIAL": "AS2D_DIPLO_WARDRUMS_LATE",
+   "C2C_ERA_ATOMIC": "AS2D_DIPLO_WARDRUMS_LATE",
+   "C2C_ERA_INFORMATION": "AS2D_DIPLO_WARDRUMS_LATE",
+   "C2C_ERA_NANOTECH": "AS2D_DIPLO_WARDRUMS_LATE",
+   "C2C_ERA_TRANSHUMAN": "AS2D_DIPLO_WARDRUMS_LATE",
+   "C2C_ERA_GALACTIC": "AS2D_DIPLO_WARDRUMS_LATE",
+   "C2C_ERA_COSMIC": "AS2D_DIPLO_WARDRUMS_LATE",
+   "C2C_ERA_TRANSCENDENT": "AS2D_DIPLO_WARDRUMS_LATE",
+   "C2C_ERA_FUTURE": "AS2D_DIPLO_WARDRUMS_LATE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_LEADER_HIAWATHA",
+  "civilopedia": "TXT_KEY_LEADER_HIAWATHA_PEDIA"
+ }
+}

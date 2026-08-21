@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DEEP_SPACE_HYDROPONICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_ECOSYSTEM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_DEEP_SPACE",
+    "TECH_DEEP_SPACE_COLONIES",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 823,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_HYDROPONICS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_HYDROPONICS",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_HYDROPONICS_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

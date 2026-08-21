@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_WARRIORS_HUT",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_WARFARE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_TRIBAL_WARFARE"
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "domains": {
+    "DOMAIN_LAND": {
+     "percent": 5
+    }
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MELEE": {
+     "flat": 2
+    },
+    "UNITCOMBAT_THROWING": {
+     "flat": 1
+    },
+    "UNITCOMBAT_ARCHER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 92,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WARRIORS_HUT",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_TOTEM"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WARRIORS_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_WARRIORS_HUT_PEDIA",
+  "worth": 1,
+  "militaryWorth": 1,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

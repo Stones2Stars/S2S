@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_EXPLORE_BRACEWELL",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_GALACTIC",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_GALACTIC_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ACNP_PROPULSION"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

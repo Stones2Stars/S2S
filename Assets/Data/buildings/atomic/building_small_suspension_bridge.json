@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_SMALL_SUSPENSION_BRIDGE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BUNGEE_JUMPING_SITE",
+   "BUILDING_GOLDEN_GATE_BRIDGE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TELEPORTATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LARGE_SUSPENSION_BRIDGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "TECH_HIGHWAY_SYSTEMS",
+    {
+     "any": [
+      "BUILDING_ASPHALT_ROADS",
+      "BUILDING_SKYROAD_CONTROL_TOWER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_LARGE_SUSPENSION_BRIDGE",
+    "BUILDING_TELEPORT_BOOTH"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 13,
+   "percent": 13
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": -1
+   },
+   "riverDefensePenalty": {
+    "percent": 39
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 13
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1,
+   "modifier": {
+    "percent": 26
+   }
+  }
+ },
+ "cost": {
+  "production": 1130,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SMALL_SUSPENSION_BRIDGE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SMALL_SUSPENSION_BRIDGE",
+  "civilopedia": "TXT_KEY_BUILDING_SMALL_SUSPENSION_BRIDGE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

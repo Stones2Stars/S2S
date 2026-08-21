@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_MINE_PYRITE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_EARTHWORKS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MINING_CAMP",
+    "TECH_GUNPOWDER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_IRON_ORE",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_SULPHUR",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_MODERN_EARTHWORKS"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_PYRITE"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -1,
+    {
+     "value": -25,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 410,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MINE_PYRITE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_PYRITE",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_PYRITE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

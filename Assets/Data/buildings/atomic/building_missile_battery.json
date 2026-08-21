@@ -1,0 +1,129 @@
+{
+ "type": "BUILDING_MISSILE_BATTERY",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ELECTRIC_ARC_WEAPONRY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_RAILGUN_BATTERY"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ADVANCED_ROCKETRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_RAILGUN_BATTERY",
+    "BUILDING_LASER_BATTERY",
+    "BUILDING_ANTI_MATTER_BATTERY"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_MICROCHIPS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 60
+   },
+   "bombardDefense": {
+    "percent": 20
+   },
+   "airDefense": {
+    "percent": -20
+   },
+   "dynamicDefense": {
+    "percent": 70
+   },
+   "adjacentDamage": {
+    "percent": 40
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "vision": {
+  "city": {
+   "elevation": {
+    "flat": 200
+   }
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -9
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MISSILE_BATTERY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COMMAND_BUNKER"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MISSILE_BATTERY",
+  "civilopedia": "TXT_KEY_BUILDING_MISSILE_BATTERY_PEDIA",
+  "worth": 8,
+  "militaryWorth": 8,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

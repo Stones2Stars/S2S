@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_ICELANDIC",
+ "enables": {
+  "units": [
+   "UNIT_LEIDANG"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ICELANDIC"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ICELANDIC",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

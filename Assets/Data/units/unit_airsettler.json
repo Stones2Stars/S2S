@@ -1,0 +1,186 @@
+{
+ "type": "UNIT_AIRSETTLER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_JET_ENGINES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_COMMERCIAL_AIRPORT",
+    "TECH_JET_PROPULSION",
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 24
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_CAPTIVE_CIVILIAN"
+  }
+ },
+ "skills": [
+  "canMoveAllTerrain",
+  "food",
+  "found"
+ ],
+ "tags": [
+  "settler",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SETTLER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_POOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_STABLE",
+    "enabled": "TECH_STEAM_POWER"
+   },
+   {
+    "building": "BUILDING_BARRACKS",
+    "enabled": "TECH_COLONIALISM"
+   },
+   {
+    "building": "BUILDING_COURTHOUSE",
+    "enabled": "TECH_STEAM_POWER"
+   },
+   {
+    "building": "BUILDING_FISHERMANS_HUT",
+    "enabled": {
+     "all": [
+      "HAS_COAST",
+      "TECH_COLONIALISM"
+     ]
+    }
+   },
+   {
+    "building": "BUILDING_FORGE",
+    "enabled": "TECH_COLONIALISM"
+   },
+   {
+    "building": "BUILDING_GARRISON",
+    "enabled": "TECH_STEAM_POWER"
+   },
+   {
+    "building": "BUILDING_GRANARY",
+    "enabled": "TECH_COLONIALISM"
+   },
+   {
+    "building": "BUILDING_GROCER",
+    "enabled": "TECH_STEAM_POWER"
+   },
+   {
+    "building": "BUILDING_HARBOR",
+    "enabled": {
+     "all": [
+      "HAS_COAST",
+      "TECH_COLONIALISM"
+     ]
+    }
+   },
+   {
+    "building": "BUILDING_LIBRARY",
+    "enabled": "TECH_STEAM_POWER"
+   },
+   {
+    "building": "BUILDING_LIGHTHOUSE",
+    "enabled": {
+     "all": [
+      "HAS_COAST",
+      "TECH_COLONIALISM"
+     ]
+    }
+   },
+   {
+    "building": "BUILDING_MARKET",
+    "enabled": "TECH_COLONIALISM"
+   },
+   {
+    "building": "BUILDING_PORT",
+    "enabled": {
+     "all": [
+      "HAS_COAST",
+      "TECH_STEAM_POWER"
+     ]
+    }
+   },
+   {
+    "building": "BUILDING_PALACE",
+    "enabled": {
+     "type": "BUILDING_PALACE",
+     "scope": "empire",
+     "max": 0
+    }
+   }
+  ]
+ },
+ "cost": {
+  "upkeep": 10
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AIRCRAFT_SETTLER",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 0.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_AIRCRAFT_SETTLER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_AIRSETTLER",
+  "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
+  "help": "TXT_KEY_UNIT_AIRSETTLER_HELP",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SETTLE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_SETTLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

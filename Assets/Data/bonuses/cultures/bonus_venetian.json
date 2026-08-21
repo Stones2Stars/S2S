@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_VENETIAN",
+ "enables": {
+  "units": [
+   "UNIT_ENRICO_DANDOLO",
+   "UNIT_GALLIOT"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_VENETIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_VENETIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

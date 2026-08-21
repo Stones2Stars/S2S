@@ -1,0 +1,88 @@
+{
+ "type": "BONUS_POTATOES",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_INCAN",
+   "BUILDING_CULTURE_IRISH",
+   "BUILDING_CULTURE_ZUNI",
+   "BUILDING_FACTORY_POTATO_CHIPS",
+   "BUILDING_FARM_CROP_BELL_PEPPER",
+   "BUILDING_FARM_CROP_BROCCOLI",
+   "BUILDING_FARM_CROP_CABBAGE",
+   "BUILDING_FARM_CROP_CARROT",
+   "BUILDING_FARM_CROP_CASSAVA",
+   "BUILDING_FARM_CROP_CAULIFLOWER",
+   "BUILDING_FARM_CROP_CUCUMBER",
+   "BUILDING_FARM_CROP_GARLIC",
+   "BUILDING_FARM_CROP_KALE",
+   "BUILDING_FARM_CROP_LEEK",
+   "BUILDING_FARM_CROP_ONION",
+   "BUILDING_FARM_CROP_POTATO",
+   "BUILDING_FARM_CROP_SPINACH",
+   "BUILDING_FARM_CROP_SWEET_POTATO",
+   "BUILDING_FARM_CROP_TOMATO",
+   "BUILDING_FARM_CROP_TURNIP",
+   "BUILDING_FARM_FLOWER_IRIS",
+   "BUILDING_HOT_POTATO",
+   "BUILDING_NATURE_ALTAR_POTATO_GOD",
+   "BUILDING_NATURE_CIRCLE_POTATOES_GOD",
+   "BUILDING_PLANTATION_PEANUT",
+   "BUILDING_PLANTATION_TARO",
+   "BUILDING_TEMPLE_OF_KI_POTATO"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 2
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_POTATOES"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 6,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "minLatitude": 30,
+  "maxLatitude": 60,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 92,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_PLAINS",
+   "TERRAIN_ROCKY",
+   "TERRAIN_TAIGA"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_POTATOES",
+  "civilopedia": "TXT_KEY_BONUS_POTATOES_PEDIA",
+  "bonusClassType": "BONUSCLASS_CROP",
+  "source": "natural"
+ }
+}

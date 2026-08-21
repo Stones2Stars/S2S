@@ -1,0 +1,49 @@
+{
+ "type": "PROMOTION_SEA_HUNTER_GREAT",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SEA_HUNTER3"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_SEA_ANIMAL": {
+     "percent": 20
+    },
+    "UNITCOMBAT_MOTILITY_AERIAL": {
+     "percent": 10
+    },
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": -5
+    }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "skills": {
+  "blitz": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SEA_HUNTER": 4
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/seahunter4.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SEA_HUNTER_GREAT"
+ }
+}

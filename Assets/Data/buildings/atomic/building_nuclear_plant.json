@@ -1,0 +1,114 @@
+{
+ "type": "BUILDING_NUCLEAR_PLANT",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_INDUSTRIAL_ECOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FAST_BREEDER_REACTOR"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "BUILDING_POWER_LINES",
+    {
+     "type": "BUILDING_TOXIC_WASTE_DUMP",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_NUCLEAR_POWER",
+    {
+     "type": "BONUS_HEAVY_WATER",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_URANIUM",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "type": "BONUS_LEAD_WARES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_FAST_BREEDER_REACTOR",
+    "BUILDING_GENERATION_IV_REACTOR",
+    "BUILDING_D_T_FUSION_POWER_PLANT",
+    "BUILDING_D_HE3_FUSION_PLANT",
+    "BUILDING_HE3_FUSION_POWER_PLANT",
+    "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+    "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1280,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NUCLEAR_PLANT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_PLANTNUCLEAR"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NUCLEAR_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_NUCLEAR_PLANT_PEDIA",
+  "forceNoPrereqScaling": true,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

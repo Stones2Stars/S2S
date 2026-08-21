@@ -1,0 +1,17 @@
+{
+ "type": "UNITCOMBAT_HELICOPTER",
+ "skills": {
+  "fliesToMove": true
+ },
+ "tags": [
+  "air"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/helicopters.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_HELICOPTER"
+ }
+}

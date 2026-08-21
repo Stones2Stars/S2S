@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DISTANT_HYPERPORT",
+ "enables": {
+  "units": [
+   "UNIT_HYPERSHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_COSMOPOLIS",
+    "TECH_HYPERLANES",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 1945,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_HYPERPORT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_HYPERPORT",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_HYPERPORT_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

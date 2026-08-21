@@ -1,0 +1,97 @@
+{
+ "type": "BUILDING_BALLOON_RIDES",
+ "enables": {
+  "buildings": [
+   "BUILDING_BALLOON_FESTIVAL"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_BALLOON_WARFARE",
+    {
+     "any": [
+      "BUILDING_FAIRGROUNDS",
+      "BUILDING_CARNIVAL",
+      "BUILDING_AMUSEMENT_PARK",
+      "BUILDING_CITY_PARK",
+      "BUILDING_AIRFIELD",
+      "BUILDING_AEROSPACE_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 7,
+     "enabled": "TECH_TOURISM"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 6,
+     "enabled": "TECH_EXPRESSIONISM"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 680,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BALLOON_RIDES",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MARKETPLACE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BALLOON_RIDES",
+  "civilopedia": "TXT_KEY_BUILDING_BALLOON_RIDES_PEDIA",
+  "worth": 2,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

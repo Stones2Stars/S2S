@@ -1,0 +1,59 @@
+{
+ "type": "PROMOTION_HUNTING_SIGHT2",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_HUNTING_SIGHT1",
+    {
+     "any": [
+      "PROMOTION_HUNTER2"
+     ]
+    }
+   ]
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 100,
+    "unit": "HAS_SIZE"
+   },
+   {
+    "value": 100,
+    "unit": "HAS_CAMOUFLAGE"
+   }
+  ]
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_HUNTING_SIGHT": 2
+ },
+ "ai": {
+  "unitCombatWeights": {
+   "UNITCOMBAT_HUNTER": 20
+  }
+ },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Sentry2.dds,Art/Interface/Buttons/FinalFrontier1_Atlas.dds,5,10"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_HUNTING_SIGHT2",
+  "unitCombats": [
+   "UNITCOMBAT_HUNTER",
+   "UNITCOMBAT_CANINE",
+   "UNITCOMBAT_FELINE"
+  ]
+ }
+}

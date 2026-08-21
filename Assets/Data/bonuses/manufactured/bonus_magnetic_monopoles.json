@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_MAGNETIC_MONOPOLES",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_PROTON_DECAY_GENERATOR",
+   "BUILDING_INTERSTELLAR_HYPERMAGLEV"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MAGNETIC_MONOPOLES"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MAGNETIC_MONOPOLES",
+  "civilopedia": "TXT_KEY_BONUS_MAGNETIC_MONOPOLES_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

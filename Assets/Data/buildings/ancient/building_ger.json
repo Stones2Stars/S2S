@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_GER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CITY_PLANNING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ANIMAL_RIDING",
+    {
+     "any": [
+      "BUILDING_STABLE",
+      "BUILDING_KNIGHTS_STABLE",
+      "BUILDING_MODERN_STABLE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "RELIGION_TENGRIISM"
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MOUNTED": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 3,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_ANIMALS"
+   }
+  }
+ ],
+ "cost": {
+  "production": 146,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_STABLE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GER",
+  "civilopedia": "TXT_KEY_BUILDING_GER_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 2,
+  "militaryWorth": 4,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

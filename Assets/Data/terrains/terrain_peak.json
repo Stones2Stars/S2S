@@ -1,0 +1,56 @@
+{
+ "type": "TERRAIN_PEAK",
+ "food": {
+  "plot": {
+   "flat": -2
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    -1,
+    {
+     "value": 1,
+     "enabled": "HAS_RIVER"
+    }
+   ]
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface\\Buttons\\WorldBuilder\\feature_peak.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_TERRAIN_PEAK"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TERRAIN_PEAK",
+  "civilopedia": "TXT_KEY_TERRAIN_PEAK_PEDIA",
+  "buildTimeModifier": 75
+ },
+ "vision": {
+  "plot": {
+   "elevation": {
+    "flat": 300
+   }
+  }
+ }
+}

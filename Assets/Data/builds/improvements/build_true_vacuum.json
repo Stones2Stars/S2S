@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_TRUE_VACUUM",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CONTROLLED_VACUUM_COLLAPSE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_TRUE_VACUUM"
+ },
+ "cost": {
+  "gold": 1500,
+  "time": 3000
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/true_vacuum.dds"
+  },
+  "hotkey": "KB_M"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_TRUE_VACUUM"
+ }
+}

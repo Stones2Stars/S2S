@@ -1,0 +1,43 @@
+{
+ "type": "SPECIALIST_GREAT_MILITARY_INSTRUCTOR",
+ "gold": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BUILDING_BAYREUTH_FESTSPIELHAUS",
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": ",Art/Interface/MainScreen/CityScreen/Great_Engineer.dds,Art/Interface/Buttons/Warlords_Atlas_2.dds,2,6",
+   "icon": ",Art/Interface/MainScreen/CityScreen/Great_Engineer.dds,Art/Interface/Buttons/Warlords_Atlas_2.dds,2,6"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_GREAT_MILITARY_INSTRUCTOR",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_MILITARY"
+  ]
+ }
+}

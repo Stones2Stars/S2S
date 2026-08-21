@@ -1,0 +1,73 @@
+{
+ "type": "PROMOTION_WETLAND3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_WETLAND2"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_LUSH": {
+     "percent": -50
+    },
+    "TERRAIN_MUDDY": {
+     "percent": -50
+    },
+    "TERRAIN_MARSH": {
+     "percent": -50
+    }
+   }
+  }
+ },
+ "combat": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_LUSH": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_MUDDY": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_MARSH": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_WETLAND": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Tweaks/art/wetlandcombat3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_WETLAND3",
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
+ }
+}

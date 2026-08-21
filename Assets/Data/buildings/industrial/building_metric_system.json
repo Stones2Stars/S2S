@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_METRIC_SYSTEM",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_STATISTICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": [
+    15,
+    {
+     "value": 7,
+     "enabled": "TECH_MODERN_PHYSICS"
+    },
+    {
+     "value": 6,
+     "enabled": "TECH_ORGANIC_CHEMISTRY"
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 2
+  }
+ },
+ "cost": {
+  "production": 3780,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_METRIC_SYSTEM"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_METRIC_SYSTEM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_METRIC_SYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_METRIC_SYSTEM_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

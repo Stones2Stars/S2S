@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_CISLUNAR_CLOAKING",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_AEROGEL_SHIELDING",
+    "BUILDING_CISLUNAR_MATERIALS_LAB",
+    "TECH_CLOAKING",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": [
+    20,
+    {
+     "value": 11,
+     "enabled": "TECH_PHASING"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 1577,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_CLOAKING",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_CLOAKING",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_CLOAKING_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

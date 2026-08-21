@@ -1,206 +1,91 @@
-//------------------------------------------------------------------------------------------------
-//  FILE:    CvVictoryInfo.cpp
-//------------------------------------------------------------------------------------------------
-#include "CvGameCoreDLL.h"
-#include "CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "CvPlayerAI.h"
-#include "CvPython.h"
-#include "CvXMLLoadUtility.h"
-#include "CvXMLLoadUtilityModTools.h"
-#include "CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
+//
+//	CvVictoryInfo -- the victory poco's own typed reading on top of the base section dispatch (see the header).
+//	mapFrom materializes the bespoke §9 `condition` unit + the movie intrinsic ONCE
+//	(docs/architecture/patterns.md §Materialize at mapFrom). Idempotent by contract (reset-first unit, unconditional assigns).
+//
+
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
+#include "CvInfos.h"              // umbrella: keeps the unity batch's info-type defs whole (leakage guard)
+#include "AI/CvGameAI.h"
 #include "CvVictoryInfo.h"
+#include "CvJsonParse.h"          // jsonChildObj / jsonIdInt / jsonIdBool / jsonIdFk / jsonIdStr
 
 
-//======================================================================================================
-//					CvVictoryInfo
-//======================================================================================================
+CvVictoryInfo::Condition::Condition()
+{
+	reset();
+}
 
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   CvVictoryInfo()
-//
-//  PURPOSE :   Default constructor
-//
-//------------------------------------------------------------------------------------------------------
+
+// The unit's full redefinition (the mapFrom idempotency contract, CvInfo.h).
+void CvVictoryInfo::Condition::reset()
+{
+	for (int iFlag = 0; iFlag < NUM_VICTORY_CONDITION_FLAGS; iFlag++)
+	{
+		flags[iFlag] = false;
+	}
+	for (int iValue = 0; iValue < NUM_VICTORY_CONDITION_VALUES; iValue++)
+	{
+		values[iValue] = 0;
+	}
+	cityCultureLevel = -1;   // NO_CULTURELEVEL -- only the cultural victory authors a level
+}
+
+
 CvVictoryInfo::CvVictoryInfo()
 {
-	CvInfoUtil(this).initDataMembers();
 }
 
 
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   ~CvVictoryInfo()
-//
-//  PURPOSE :   Default destructor
-//
-//------------------------------------------------------------------------------------------------------
-CvVictoryInfo::~CvVictoryInfo() {}
-
-
-int CvVictoryInfo::getPopulationPercentLead() const
-{
-	return m_iPopulationPercentLead;
-}
-
-
-int CvVictoryInfo::getLandPercent() const
-{
-	return m_iLandPercent;
-}
-
-
-int CvVictoryInfo::getMinLandPercent() const
-{
-	return m_iMinLandPercent;
-}
-
-
-int CvVictoryInfo::getReligionPercent() const
-{
-	return m_iReligionPercent;
-}
-
-
-int CvVictoryInfo::getCityCulture() const
-{
-	return m_iCityCulture;
-}
-
-
-int CvVictoryInfo::getNumCultureCities() const
-{
-	return m_iNumCultureCities;
-}
-
-
-int CvVictoryInfo::getTotalCultureRatio() const
-{
-	return m_iTotalCultureRatio;
-}
-
-
-int CvVictoryInfo::getVictoryDelayTurns() const
-{
-	return m_iVictoryDelayTurns;
-}
-
-
-bool CvVictoryInfo::isTargetScore() const
-{
-	return m_bTargetScore;
-}
-
-
-bool CvVictoryInfo::isEndScore() const
-{
-	return m_bEndScore;
-}
-
-
-bool CvVictoryInfo::isConquest() const
-{
-	return m_bConquest;
-}
-
-
-bool CvVictoryInfo::isDiploVote() const
-{
-	return m_bDiploVote;
-}
-
-
+// EXE-bound (DllExport) -- the closed .exe imports this symbol, so the read stays out-of-line.
 bool CvVictoryInfo::isPermanent() const
 {
-	return m_bPermanent;
+	return m_condition.flags[VICTORY_CONDITION_PERMANENT];
 }
 
 
-const char* CvVictoryInfo::getMovie() const
+// condition.* -> the typed unit (bool rules + numeric thresholds; cityCulture is a CULTURELEVEL_* FK,
+// absent -> -1); the victory movie is ui.art.movie.file (the base consumes only ui.art.icon).
+void CvVictoryInfo::mapFrom(const picojson::value& entity)
 {
-	return m_szMovie;
-}
+	CvInfo::mapFrom(entity);   // core reading (type / text keys / button) + the section dispatch
 
+	// idempotency (CvInfo.h): the full-registry re-run fully redefines every materialized member
+	m_condition.reset();
+	m_szMovie.clear();
 
-bool CvVictoryInfo::isTotalVictory() const
-{
-	return m_bTotalVictory;
-}
-
-
-
-void CvVictoryInfo::getDataMembers(CvInfoUtil& util)
-{
-	util
-		.add(m_bTargetScore, L"bTargetScore")
-		.add(m_bEndScore, L"bEndScore")
-		.add(m_bConquest, L"bConquest")
-		.add(m_bDiploVote, L"bDiploVote")
-		.add(m_bPermanent, L"bPermanent")
-		.add(m_bTotalVictory, L"bTotalVictory")
-		.add(m_iPopulationPercentLead, L"iPopulationPercentLead")
-		.add(m_iLandPercent, L"iLandPercent")
-		.add(m_iMinLandPercent, L"iMinLandPercent")
-		.add(m_iReligionPercent, L"iReligionPercent")
-		.add(m_iNumCultureCities, L"iNumCultureCities")
-		.add(m_iTotalCultureRatio, L"iTotalCultureRatio")
-		.add(m_iVictoryDelayTurns, L"iVictoryDelayTurns")
-		.addEnumAsInt(m_iCityCulture, L"CityCulture")
-		.add(m_szMovie, L"VictoryMovie")
-	;
-}
-
-
-//
-// read from xml
-//
-bool CvVictoryInfo::read(CvXMLLoadUtility* pXML)
-{
-	if (!CvInfoBase::read(pXML))
+	if (!entity.is<picojson::object>())
 	{
-		return false;
+		return;
+	}
+	const picojson::object& entityObj = entity.get<picojson::object>();
+
+	if (const picojson::object* pCondition = jsonChildObj(entityObj, "condition"))
+	{
+		m_condition.flags[VICTORY_CONDITION_CONQUEST]      = jsonIdBool(*pCondition, "conquest");
+		m_condition.flags[VICTORY_CONDITION_DIPLO_VOTE]    = jsonIdBool(*pCondition, "diploVote");
+		m_condition.flags[VICTORY_CONDITION_TARGET_SCORE]  = jsonIdBool(*pCondition, "targetScore");
+		m_condition.flags[VICTORY_CONDITION_END_SCORE]     = jsonIdBool(*pCondition, "endScore");
+		m_condition.flags[VICTORY_CONDITION_PERMANENT]     = jsonIdBool(*pCondition, "permanent");
+		m_condition.flags[VICTORY_CONDITION_TOTAL_VICTORY] = jsonIdBool(*pCondition, "totalVictory");
+		m_condition.values[VICTORY_CONDITION_LAND_PERCENT]            = jsonIdInt(*pCondition, "landPercent");
+		m_condition.values[VICTORY_CONDITION_MIN_LAND_PERCENT]        = jsonIdInt(*pCondition, "minLandPercent");
+		m_condition.values[VICTORY_CONDITION_POPULATION_PERCENT_LEAD] = jsonIdInt(*pCondition, "populationPercentLead");
+		m_condition.values[VICTORY_CONDITION_RELIGION_PERCENT]        = jsonIdInt(*pCondition, "religionPercent");
+		m_condition.values[VICTORY_CONDITION_NUM_CULTURE_CITIES]      = jsonIdInt(*pCondition, "numCultureCities");
+		m_condition.values[VICTORY_CONDITION_DELAY_TURNS]             = jsonIdInt(*pCondition, "delayTurns");
+		m_condition.cityCultureLevel = jsonIdFk(*pCondition, "cityCulture");
 	}
 
-	CvInfoUtil(this).readXml(pXML);
-
-	return true;
+	// ui.art.movie.file -- the victory movie art
+	if (const picojson::object* pUi = jsonChildObj(entityObj, "ui"))
+	{
+		if (const picojson::object* pArt = jsonChildObj(*pUi, "art"))
+		{
+			if (const picojson::object* pMovie = jsonChildObj(*pArt, "movie"))
+			{
+				jsonIdStr(*pMovie, "file", m_szMovie);
+			}
+		}
+	}
 }
-
-
-void CvVictoryInfo::copyNonDefaults(const CvVictoryInfo* pClassInfo)
-{
-	CvInfoBase::copyNonDefaults(pClassInfo);
-
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-}
-
-
-void CvVictoryInfo::getCheckSum(uint32_t& iSum) const
-{
-	// NOTE: kept explicit (not delegated to CvInfoUtil) to preserve the exact legacy checksum, which
-	// historically omits m_bTotalVictory and m_szMovie. Folding those in would change the value.
-	CheckSum(iSum, m_iPopulationPercentLead);
-	CheckSum(iSum, m_iLandPercent);
-	CheckSum(iSum, m_iMinLandPercent);
-	CheckSum(iSum, m_iReligionPercent);
-	CheckSum(iSum, m_iCityCulture);
-	CheckSum(iSum, m_iNumCultureCities);
-	CheckSum(iSum, m_iTotalCultureRatio);
-	CheckSum(iSum, m_iVictoryDelayTurns);
-
-	CheckSum(iSum, m_bTargetScore);
-	CheckSum(iSum, m_bEndScore);
-	CheckSum(iSum, m_bConquest);
-	CheckSum(iSum, m_bDiploVote);
-	CheckSum(iSum, m_bPermanent);
-}
-

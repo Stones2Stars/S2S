@@ -1,0 +1,24 @@
+{
+ "type": "BUILD_BONUS_LEMONS",
+ "produces": {
+  "improvement": "IMPROVEMENT_BONUS_LEMONS"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Bonus/lemon.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_IRRIGATE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_LEMONS",
+  "consumesUnit": true
+ }
+}

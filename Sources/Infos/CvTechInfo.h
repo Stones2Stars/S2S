@@ -1,233 +1,163 @@
 #pragma once
+#ifndef CV_JSON_TECH_INFO_H
+#define CV_JSON_TECH_INFO_H
 
-#ifndef CV_TECH_INFO_H
-#define CV_TECH_INFO_H
+//
+//	CvTechInfo -- the TECH poco rebuilt to the full exemplar surface (patterns.md § THE GETTER SETUP: the four
+//	read categories, nothing else). Styled for the JSON anatomy (json.md §2); every magnitude read is a
+//	load-compiled fetch (docs/architecture/patterns.md §Materialize at mapFrom); kind and scope are separate parameters
+//	(docs/architecture/patterns.md §The coherent surface (scope is a separate axis)); no legacy getter name returns (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
+//
+//	A tech's UNLOCK surface (units/buildings/.../other techs) is store-inverted onto those entities'
+//	`enables.*` -- base availability data, never poco getters. The tech-side FORWARD views that survive are
+//	the enabler.md §2 reconstructions: the multi-parent prereqs walked out of the composed requires.build tree
+//	(the child retains them -- curate_tech keeps AndPreReqs/OrPreReqs on the child), and the leadsTo reverse
+//	index built at load by the general reverse pass from exactly those retained prereqs.
+//
 
-#include "CvInfoBase.h"
+#include "CvInfo.h"
+#include "CvJsonParse.h"       // mapValueOrDefault -- the ONE sparse id-map point read
+#include "Defines/CvEnums.h"   // TechTypes / NO_GAMEOPTION consumers' enums
+#include "Defines/CvStructs.h" // PrereqBuilding -- the requires.build BUILDING_ OR-group's (building, min) pair
+#include <set>
+#include <map>
+#include <vector>
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//
-//  class : CvTechInfo
-//
-//  DESC:
-//
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class CvTechInfo
-	: public CvInfoBase
-	, private bst::noncopyable
+class CvTechInfo : public CvInfo
 {
-//---------------------------PUBLIC INTERFACE---------------------------------
 public:
-
 	CvTechInfo();
-	virtual ~CvTechInfo();
 
-	int getAdvisorType() const;
-	int getAIWeight() const;
-	int getAITradeModifier() const;
-	int getResearchCost() const;
-	int getEra() const;
-	int getTradeRoutes() const;
-	int getFeatureProductionModifier() const;
-	int getWorkerSpeedModifier() const;
+	virtual void mapFrom(const picojson::value& entity);
 
-	int getMaintenanceModifier() const;
-	int getDistanceMaintenanceModifier() const;
-	int getNumCitiesMaintenanceModifier() const;
-	int getCoastalDistanceMaintenanceModifier() const;
+	// ======================= 1. SECTIONS -- whole typed objects =======================
+	virtual const CvRequires*  getRequires()  const { return &m_requires; }
+	virtual const CvEdges*     getEdges()     const { return &m_edges; }
+	virtual const CvAllowed*   getAllowed()   const { return &m_allowed; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvClassificationBlock* getCapabilities() const { return &m_capabilities; }
+	virtual const CvClassificationBlock* getCanTrade()     const { return &m_canTrade; }
+	virtual const CvClassificationBlock* getCanWorkOn()    const { return &m_canWorkOn; }
 
-	int getFirstFreeUnit() const;
-	int getFirstFreeProphet() const;
-	int getHealth() const;
-	int getHappiness() const;
-	int getFirstFreeTechs() const;
-	int getAssetValue() const;
-	int getPowerValue() const;
+	// ======================= 2. CLASSIFICATION -- O(1) bitset tests, hold-vs-provide in the NAME (json §8) ====
+	// A tech PROVIDES a capability to the empire while held (the grantor direction; capabilities.md -- the
+	// empire's active set is the keyed union the PLAYER maintains off these facts).
+	bool providesCapabilities() const                { return !m_capabilities.isEmpty(); }
+	// The capability-plane SIBLING blocks (capabilities.md; json §2 auxiliary): sections the trade-table /
+	// trade-route / canWork systems union over live sources. `canTrade` and `canWorkOn` carry their OWN generated
+	// id domains (CLSD_CANTRADE / CLSD_CANWORKON) so a holder can refcount them like any other keyed store; their
+	// key spaces are disjoint registries and are never merged. `canTradeOn` carries real TERRAIN_ FKs already.
+	const std::set<int>& getCanTradeOnTerrains() const { return m_canTradeOnTerrains; }
+	bool canTradeOnTerrain(int iTerrain) const           { return m_canTradeOnTerrains.count(iTerrain) != 0; }
 
-	int getGridX() const;
-	int getGridY() const;
+	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums ========================
+	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. Census
+	// participation: health/happiness empire flats; tradeRoutes city routes-count + empire route-profit
+	// modifier incl. the IS_FOREIGN conditioned extra; commerce.empire.corporation + maintenance.empire.
+	// corporation, ruling 15; workRate / featureProduction / tradeMission / inflation are getScalar
+	// stragglers; domainMoves.empire.domains.{DOMAIN} and freeSpecialists.team.{SPECIALIST} are keyed shapes --
+	// entry-list reads by design.)
+	int getTradeRoute(TradeRouteKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_TRADE_ROUTES, eKind, eScope, infoKindUnit(MODFAM_TRADE_ROUTES, eKind)); }
+	int getMaintenanceModifier(MaintenanceKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_MAINTENANCE, eKind, eScope, CASC_UNIT_PERCENT); }
+	// Ruling 15: legacy corporationRevenue = the commerce channel family's `corporation` source-component kind.
+	int getCorporationCommerceModifier(CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_COMMERCE, CHANNEL_CORPORATION, eScope, CASC_UNIT_PERCENT); }
 
-	bool isRepeat() const;
-	bool isTrade() const;
-	bool isDisable() const;
-	bool isGoodyTech() const;
-	bool isExtraWaterSeeFrom() const;
-	bool isMapCentering() const;
-	bool isMapVisible() const;
-	bool isMapTrading() const;
-	bool isTechTrading() const;
-	bool isGoldTrading() const;
-	bool isOpenBordersTrading() const;
-	bool isDefensivePactTrading() const;
-	bool isPermanentAllianceTrading() const;
-	bool isVassalStateTrading() const;
-	bool isBridgeBuilding() const;
-	bool isIrrigation() const;
-	bool isIgnoreIrrigation() const;
-	bool isWaterWork() const;
-	bool isRiverTrade() const;
-	inline bool isLanguage() const { return m_bLanguage;}
+	// ======================= 4. INTRINSIC -- bare typed reads (the census identity set) ======================
+	int getResearchCost() const { return m_iResearchCost; }   // cost.research (plane-1 actual cost, ruling 18)
+	int getEra() const          { return m_iEra; }            // identity.era (ERA_* FK)
+	int getAdvisor() const      { return m_iAdvisor; }        // ui.art.advisor (ADVISOR_* FK)
+	int getGridX() const        { return m_iGridX; }          // identity.gridX (tech-tree layout)
+	int getGridY() const        { return m_iGridY; }
+	// The two AI valuation magnitudes are ×100 (identity.worth/militaryWorth author fractional human values;
+	// docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): the name says the VALUE, the scale is always ×100).
+	int getWorth() const         { return m_iWorth; }
+	int getMilitaryWorth() const { return m_iMilitaryWorth; }
+	bool isRepeat() const    { return m_bRepeat; }     // identity.repeat (repeatable research)
+	bool isTradeable() const { return m_bTradeable; }  // identity.tradeable (may appear in tech trades)
+	bool isDisable() const   { return m_bDisable; }    // identity.disable
+	bool isGoodyTech() const { return m_bGoodyTech; }  // identity.goodyTech (tribal-hut eligible)
+	int getAIWeight() const        { return m_iAIWeight; }        // ai.behaviour.weight
+	int getAITradeModifier() const { return m_iAITradeModifier; } // ai.behaviour.tradeModifier
+	int getFlavorValue(int iFlavor) const                         // ai.flavours {FLAVOR: weight}
+	{
+		return mapValueOrDefault(m_flavours, iFlavor);
+	}
+	const char* getSound() const   { return m_szSound.c_str(); }     // sound.sound (tech-completed jingle)
+	const char* getSoundMP() const { return m_szSoundMP.c_str(); }   // sound.soundMP
+	// identity.quote -- RESOLVES the TXT_KEY via gDLL->getText (the raw key showed "TXT_KEY_..._QUOTE" in the
+	// tech splash). std::wstring return: Boost.Python 1.32 has a std::wstring converter, none for CvWString.
+	virtual std::wstring getQuote() const;
 
-	bool isCanPassPeaks() const;
-	bool isMoveFastPeaks() const;
-	bool isCanFoundOnPeaks() const;
-	bool isEmbassyTrading() const;
-	bool isEnableDarkAges() const;
-	bool isRebaseAnywhere() const;
-	bool isEnablesDesertFarming() const;
-	int getInflationModifier() const;
-	int getGlobalTradeModifier() const;
-	int getGlobalForeignTradeModifier() const;
-	int getTradeMissionModifier() const;
-	int getCorporationRevenueModifier() const;
-	int getCorporationMaintenanceModifier() const;
-	int getFreeSpecialistCount(int i) const;
-	int getPrereqGameOption() const;
-
-	int getNumPrereqBuildings() const;
-	const PrereqBuilding& getPrereqBuilding(int iIndex) const;
-	int getPrereqBuildingType(int iIndex) const;
-	int getPrereqBuildingMinimumRequired(int iIndex) const;
-
-	int getNumPrereqOrBuildings() const;
-	const PrereqBuilding& getPrereqOrBuilding(int iIndex) const;
-	int getPrereqOrBuildingType(int iIndex) const;
-	int getPrereqOrBuildingMinimumRequired(int iIndex) const;
-
-	int getCategory(int i) const;
-	int getNumCategories() const;
-	bool isCategory(int i) const;
-
-	bool isGlobal() const;
-
-	bool getDCMAirBombTech1() const;
-	bool getDCMAirBombTech2() const;
-
-
-	std::wstring getQuote() const;
-	const char* getQuoteKey() const;
-	const char* getSound() const;
-	const char* getSoundMP() const;
-
-	int getDomainExtraMoves(int i) const;
-	int getFlavorValue(int i) const;
-
-	const std::vector<TechTypes>& getPrereqOrTechs() const;
-	const std::vector<TechTypes>& getPrereqAndTechs() const;
-
-	bool isCommerceFlexible(int i) const;
-	bool isTerrainTrade(int i) const;
-
-	int getCommerceModifier(int i) const;
-	int* getCommerceModifierArray() const;
-
-	void getDataMembers(CvInfoUtil& util);
-	bool read(CvXMLLoadUtility* pXML);
-	void copyNonDefaults(const CvTechInfo* pClassInfo);
-	void getCheckSum(uint32_t& iSum) const;
-
-	void doPostLoadCaching(uint32_t iThis);
+	// --- the FORWARD prereq views walked from the composed requires.build tree (enabler.md §2: the tech case
+	// reconstructs from the child's RETAINED requires.build.all/.any) ---
+	const std::vector<TechTypes>& getPrereqAndTechs() const { return m_aePrereqAndTechs; }
+	const std::vector<TechTypes>& getPrereqOrTechs() const  { return m_aePrereqOrTechs; }
+	const std::vector<PrereqBuilding>& getPrereqOrBuildings() const { return m_aPrereqOrBuildings; }
+	// --- the leadsTo REVERSE index (which techs list THIS tech as a prereq) -- built at load by
+	// the general reverse pass from the retained prereq views above; the writer is load-window-only ---
 	const std::set<TechTypes>& getLeadsToTechs() const { return m_leadsTo; }
+	void addLeadsToTech(TechTypes eTech) { m_leadsTo.insert(eTech); }
+	void clearLeadsTo() { m_leadsTo.clear(); }   // clear-first: the reverse pass runs in BOTH load phases
+
+	virtual const CvTriggers*  getTriggers()  const { return &m_triggers; }   // §5 -- triggers + the folded grants
 
 protected:
-
-	int m_iAdvisorType;
-	int m_iAIWeight;
-	int m_iAITradeModifier;
-	int m_iResearchCost;
-	int m_iEra;
-	int m_iTradeRoutes;
-	int m_iFeatureProductionModifier;
-	int m_iWorkerSpeedModifier;
-
-	int m_iMaintenanceModifier;
-	int m_iDistanceMaintenanceModifier;
-	int m_iNumCitiesMaintenanceModifier;
-	int m_iCoastalDistanceMaintenanceModifier;
-
-	int m_iFirstFreeUnit;
-	int m_iFirstFreeProphet;
-	int m_iHealth;
-	int m_iHappiness;
-	int m_iFirstFreeTechs;
-	int m_iAssetValue;
-	int m_iPowerValue;
-
-	int m_iGridX;
-	int m_iGridY;
-
-	int m_iInflationModifier;
-	int m_iGlobalTradeModifier;
-	int m_iGlobalForeignTradeModifier;
-	int m_iTradeMissionModifier;
-	int m_iCorporationRevenueModifier;
-	int m_iCorporationMaintenanceModifier;
-	int m_iPrereqGameOption;
-
-	bool m_bRepeat;
-	bool m_bTrade;
-	bool m_bDisable;
-	bool m_bGoodyTech;
-	bool m_bExtraWaterSeeFrom;
-	bool m_bMapCentering;
-	bool m_bMapVisible;
-	bool m_bMapTrading;
-	bool m_bTechTrading;
-	bool m_bGoldTrading;
-	bool m_bOpenBordersTrading;
-	bool m_bDefensivePactTrading;
-	bool m_bPermanentAllianceTrading;
-	bool m_bVassalStateTrading;
-	bool m_bBridgeBuilding;
-	bool m_bIrrigation;
-	bool m_bIgnoreIrrigation;
-	bool m_bWaterWork;
-	bool m_bRiverTrade;
-	bool m_bLanguage;
-	bool m_bDCMAirBombTech1;
-	bool m_bDCMAirBombTech2;
-	bool m_bGlobal;
-	bool m_bCanPassPeaks;
-	bool m_bMoveFastPeaks;
-	bool m_bCanFoundOnPeaks;
-	bool m_bEmbassyTrading;
-	bool m_bEnableDarkAges;
-	bool m_bRebaseAnywhere;
-	bool m_bEnablesDesertFarming;
-
-	CvString m_szQuoteKey;
-	CvString m_szSound;
-	CvString m_szSoundMP;
-
-
-	int* m_piDomainExtraMoves;
-	int* m_piFlavorValue;
-	int* m_piCommerceModifier;
-	int* m_piFreeSpecialistCount;
-
-	bool* m_pbCommerceFlexible;
-	std::vector<TerrainTypes> m_aeTerrainTrade;
-
-	std::vector<int> m_aiCategories;
-
-	std::vector<TechTypes> m_piPrereqOrTechs;
-	std::vector<TechTypes> m_piPrereqAndTechs;
-
-	std::vector<PrereqBuilding> m_aPrereqBuilding;
-	std::vector<PrereqBuilding> m_aPrereqOrBuilding;
+	virtual CvRequires*  mutRequires()  { return &m_requires; }
+	virtual CvEdges*     mutEdges()     { return &m_edges; }
+	virtual CvAllowed*   mutAllowed()   { return &m_allowed; }
+	virtual CvTriggers*  mutTriggers()  { return &m_triggers; }
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvClassificationBlock* mutCapabilities() { return &m_capabilities; }
+	virtual CvClassificationBlock* mutCanTrade()     { return &m_canTrade; }
+	virtual CvClassificationBlock* mutCanWorkOn()    { return &m_canWorkOn; }
 
 private:
-	std::set<TechTypes> m_leadsTo;
-	void setLeadsTo(const TechTypes eTech);
-public:
-	int getNumLeadsToTechs() const { return m_leadsTo.size(); }
-	int getLeadsToTech(const int iCount) const
-	{
-		PROFILE_EXTRA_FUNC();
-		std::set<TechTypes>::const_iterator itr = m_leadsTo.begin();
-		for (int i = 0; i < iCount; i++) itr++;
-		return *itr;
-	}
+	// --- the composed section units ---
+	CvRequires  m_requires;
+	CvEdges     m_edges;
+	CvAllowed   m_allowed;
+	CvTriggers  m_triggers;
+	CvModifiers m_modifiers;
+	CvClassificationBlock m_capabilities;
+
+	// --- the bespoke capability-plane sibling blocks (typed sections; capabilities.md) ---
+	CvClassificationBlock m_canTrade;        // canTrade:{item:true} -- trade-table items/agreements (CLSD_CANTRADE)
+	std::set<int> m_canTradeOnTerrains;      // canTradeOn:{terrains:[TERRAIN_..]} -- FK ids
+	CvClassificationBlock m_canWorkOn;       // canWorkOn:{class:true} -- workable plot classes (CLSD_CANWORKON)
+
+	// --- the intrinsic identity members (materialized once at mapFrom; getters are bare reads) ---
+	int m_iResearchCost;
+	int m_iEra;
+	int m_iAdvisor;
+	int m_iGridX;
+	int m_iGridY;
+	int m_iWorth;
+	int m_iMilitaryWorth;
+	bool m_bRepeat;
+	bool m_bTradeable;
+	bool m_bDisable;
+	bool m_bGoodyTech;
+	int m_iAIWeight;
+	int m_iAITradeModifier;
+	std::map<int, int> m_flavours;           // FlavorTypes -> weight (ai.flavours)
+	std::string m_szSound;
+	std::string m_szSoundMP;
+	CvWString m_szQuoteKey;
+
+	// --- the forward prereq views + the leadsTo reverse index (load-window writes only) ---
+	std::vector<TechTypes> m_aePrereqAndTechs;         // team-scope TECH_ atoms in requires.build.all (incl. folded 1-member ORs)
+	std::vector<TechTypes> m_aePrereqOrTechs;          // FIRST multi-member TECH any-group under requires.build.all
+	std::vector<PrereqBuilding> m_aPrereqOrBuildings;  // the requires.build.all[].any[] BUILDING_ OR-group ((building, min) pairs)
+	std::set<TechTypes> m_leadsTo;                     // filled by the reverse pass (rp_deriveTechLeadsTo)
 };
 
-#endif // CV_TECH_INFO_H
+// The synthetic TECH_GAME_START root (no engine id -- lives OFF the InfoRepo; readjson.md §5.1): the universal
+// start node whose enables/capabilities seed every player's HAVE. Created on first use; cascadeStartNodeReset()
+// destroys it before a re-map (write-once discipline: a re-map gets a FRESH object, never re-parses into a stale one).
+CvTechInfo& cascadeStartNode();
+void cascadeStartNodeReset();
+
+#endif // CV_JSON_TECH_INFO_H

@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_STREET_FIGHTER",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/StreetFighterPromotion1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_STREET_FIGHTER",
+  "unitCombats": [
+   "UNITCOMBAT_MELEE"
+  ]
+ }
+}

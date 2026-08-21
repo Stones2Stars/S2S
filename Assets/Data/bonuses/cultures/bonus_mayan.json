@@ -1,0 +1,24 @@
+{
+ "type": "BONUS_MAYAN",
+ "enables": {
+  "buildings": [
+   "BUILDING_BALL_COURT"
+  ],
+  "units": [
+   "UNIT_KUKULCAN",
+   "UNIT_MAYA_HOLKAN",
+   "UNIT_TECUN_UMAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MAYAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MAYAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

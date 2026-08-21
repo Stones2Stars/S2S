@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_4D_PRINTING_STUDIO",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MICROMECHANICS",
+    {
+     "any": [
+      "BUILDING_3D_PRINTING_MILL",
+      "BUILDING_NANOBOTIC_PRINTING_MILL",
+      "BUILDING_MOLECULAR_ASSEMBLER",
+      "BUILDING_ATOMIC_ASSEMBLER",
+      "BUILDING_QUANTUM_ASSEMBLER",
+      "BUILDING_MATERIALIZER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 2745,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_4D_PRINTING_STUDIO",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_4D_PRINTING_STUDIO",
+  "civilopedia": "TXT_KEY_BUILDING_4D_PRINTING_STUDIO_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

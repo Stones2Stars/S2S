@@ -1,0 +1,52 @@
+{
+ "type": "PROMOTION_QUANTUM_ALGORITHMS",
+ "enables": {
+  "promotions": [
+   "PROMOTION_GLOBAL_AWERENESS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_FUZZY_LOGIC",
+    {
+     "any": [
+      "PROMOTION_COMBAT_AI2"
+     ]
+    }
+   ]
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 2
+   },
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Drill2.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,2,5"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_QUANTUM_ALGORITHMS",
+  "unitCombats": [
+   "UNITCOMBAT_ASSAULT_MECH",
+   "UNITCOMBAT_ROBOT"
+  ]
+ }
+}

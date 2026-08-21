@@ -1,0 +1,89 @@
+{
+ "type": "TECH_TAXONOMY",
+ "enables": {
+  "heritages": [
+   "HERITAGE_TAXON_AMPHIBIA",
+   "HERITAGE_TAXON_ARACHNIDA",
+   "HERITAGE_TAXON_CANIDAE",
+   "HERITAGE_TAXON_CROCODILIA",
+   "HERITAGE_TAXON_ELEPHANTIDAE",
+   "HERITAGE_TAXON_FELINAE",
+   "HERITAGE_TAXON_HIPPOPOTAMIDAE",
+   "HERITAGE_TAXON_HYAENIDAE",
+   "HERITAGE_TAXON_MARSUPIALIA",
+   "HERITAGE_TAXON_MONOTREMATA",
+   "HERITAGE_TAXON_MUSTELOIDEA",
+   "HERITAGE_TAXON_PANTHERINAE",
+   "HERITAGE_TAXON_REPTILIA",
+   "HERITAGE_TAXON_RODENTIA",
+   "HERITAGE_TAXON_SERPENTES",
+   "HERITAGE_TAXON_SPHENISCIDAE",
+   "HERITAGE_TAXON_SQUAMATA",
+   "HERITAGE_TAXON_STRIGIFORMES",
+   "HERITAGE_TAXON_SUIDAE",
+   "HERITAGE_TAXON_TAPIRIDAE",
+   "HERITAGE_TAXON_TESTUDINES"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_FOLKLORE_TAXONOMY"
+  ],
+  "techs": [
+   "TECH_APICULTURE",
+   "TECH_FUNGICULTURE",
+   "TECH_POLYTHEISM",
+   "TECH_STANDARDIZATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AGRICULTURE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COMMUNITY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_IDEOGRAMS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 96
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/taxonomy.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TAXONOMY",
+  "soundMP": "AS2D_TECH_TAXONOMY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TAXONOMY",
+  "civilopedia": "TXT_KEY_TECH_TAXONOMY_PEDIA",
+  "quote": "TXT_KEY_TECH_TAXONOMY_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 21,
+  "gridY": 1
+ }
+}

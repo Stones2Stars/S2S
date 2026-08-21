@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_LUNAR_DROID_FACTORY",
+ "enables": {
+  "units": [
+   "UNIT_LUNAR_WORKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LUNAR_ASSEMBLY_PLANT",
+    "TECH_ANDROIDS",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_PARTS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ANDROIDS"
+  ]
+ },
+ "production": {
+  "city": {
+   "percent": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": {
+    "value": 200,
+    "enabled": "TECH_LUNAR_TRADE"
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 2
+  }
+ },
+ "cost": {
+  "production": 1500,
+  "hurryModifier": 10000
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUNAR_DROID_FACTORY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_DROID_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_DROID_FACTORY_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_EVOLUTIONARY_ALGORITHMS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANTHROPOMORPHICS_LAB",
+   "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS",
+   "BUILDING_FACTORY_BIONIC_SUITS",
+   "BUILDING_MINING_MECH_CONTROL_CENTER",
+   "BUILDING_NOVUS_REFINERY",
+   "BUILDING_SUPERSTRONG_ALLOY_FOUNDRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_NATURAL_LANGUAGE_ALGORITHMS",
+    "BUILDING_EVOLUTION_SIMULATOR",
+    "TECH_NANOELECTRONICS",
+    "TECH_ONTOLOGICAL_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 9,
+     "enabled": "TECH_BIONICS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_ANDROIDS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_DROIDS"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_SPECIES_UPLIFTING"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_ARTIFICIAL_EVOLUTION"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_ARTIFICIAL_LIFE"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 3805,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EVOLUTIONARY_ALGORITHMS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EVOLUTIONARY_ALGORITHMS",
+  "civilopedia": "TXT_KEY_BUILDING_EVOLUTIONARY_ALGORITHMS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

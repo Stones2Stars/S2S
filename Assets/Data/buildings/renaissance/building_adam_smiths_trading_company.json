@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_ADAM_SMITHS_TRADING_COMPANY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MICROPROCESSOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_UNIVERSITY",
+    "TECH_ECONOMICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 25
+   }
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 2
+  }
+ },
+ "cost": {
+  "production": 3210,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true,
+  "forceAllTradeRoutes": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ADAM_SMITH"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ADAM_SMITHS_TRADING_COMPANY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COLOSSUS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ADAM_SMITHS_TRADING_COMPANY",
+  "civilopedia": "TXT_KEY_BUILDING_ADAM_SMITHS_TRADING_COMPANY_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_NET_ANCHOVY",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FISH"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_AUTOMATED_URBANIZATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AQUAFARM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FISHING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FISHING_NETS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_FISH",
+     "scope": "city",
+     "connection": "onSite"
+    },
+    {
+     "type": "BONUS_PEARLS",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ],
+   "dormant": [
+    "BUILDING_AQUAFARM"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 92,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NET_ANCHOVY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NET_ANCHOVY",
+  "civilopedia": "TXT_KEY_BUILDING_NET_ANCHOVY_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_CARPENTER",
+ "enables": {
+  "buildings": [
+   "BUILDING_COOPER",
+   "BUILDING_FURNITURE_MAKER",
+   "BUILDING_GUILD_CARPENTERS",
+   "BUILDING_PULLEY_WHEEL",
+   "BUILDING_SHIPWRIGHT",
+   "BUILDING_SIEGE_WEAPONS_WORKSHOP",
+   "BUILDING_TREADMILL_CRANE"
+  ],
+  "units": [
+   "UNIT_BATTERING_RAM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CARPENTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": [
+    10,
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ],
+   "improvements": {
+    "IMPROVEMENT_LUMBERMILL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": -10,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "production": 68,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CARPENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CARPENTER",
+  "civilopedia": "TXT_KEY_BUILDING_CARPENTER_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

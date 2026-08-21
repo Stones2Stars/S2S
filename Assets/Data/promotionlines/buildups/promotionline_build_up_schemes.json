@@ -1,0 +1,23 @@
+{
+ "type": "PROMOTIONLINE_BUILD_UP_SCHEMES",
+ "buildUp": {
+  "active": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Schemes1Buildup.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_SCHEMES",
+  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_SCHEMES_HELP",
+  "unitCombats": [
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_RUFFIAN",
+   "UNITCOMBAT_PIRATE"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ]
+ }
+}

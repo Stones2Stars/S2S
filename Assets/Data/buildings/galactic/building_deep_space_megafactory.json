@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_DEEP_SPACE_MEGAFACTORY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_BISHOP_RING",
+    "BUILDING_DEEP_SPACE_ADVANCED_RECYCLING",
+    "BUILDING_DEEP_SPACE_MAGLEV",
+    "BUILDING_DEEP_SPACE_ORGANIC_VOLATILE_EXTRACTION",
+    "TECH_FORGE_WORLDS",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ADVANCED_REPLICATORS"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 8676,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_MEGAFACTORY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_MEGAFACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_MEGAFACTORY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

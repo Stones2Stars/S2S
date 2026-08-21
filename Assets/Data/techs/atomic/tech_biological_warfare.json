@@ -1,0 +1,74 @@
+{
+ "type": "TECH_BIOLOGICAL_WARFARE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOLOGICAL_WARFARE_LAB",
+   "BUILDING_GERM_TRAPS",
+   "BUILDING_SECRET_ARMY_BASE"
+  ],
+  "promotions": [
+   "PROMOTION_ANTIBIOLOGICAL",
+   "PROMOTION_CHEMICAL2"
+  ],
+  "techs": [
+   "TECH_ASTROBIOLOGY",
+   "TECH_MOLECULAR_BIOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GUERRILLA_WARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PHYSICAL_CHEMISTRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 11665
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/BioTech.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_BIOLOGICAL_WARFARE",
+  "soundMP": "AS2D_TECH_BIOLOGICAL_WARFARE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_BIOLOGICAL_WARFARE",
+  "civilopedia": "TXT_KEY_TECH_BIOLOGICAL_WARFARE_PEDIA",
+  "quote": "TXT_KEY_TECH_BIOLOGICAL_WARFARE_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 77,
+  "gridY": 13
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_LIANGZHU_JADES",
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_LIANGZHU_JADES"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_LIANGZHU_JADES",
+  "civilopedia": "TXT_KEY_BONUS_LIANGZHU_JADES_PEDIA",
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
+ }
+}

@@ -1,0 +1,68 @@
+{
+ "type": "TECH_TATTOOS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLOODHUNTRESSS_HUT",
+   "BUILDING_CULTURE_MAORI",
+   "BUILDING_TATTOOER"
+  ],
+  "techs": [
+   "TECH_ANIMISM"
+  ],
+  "units": [
+   "UNIT_TEWHATEWHA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PERSONAL_ADORNMENTS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MICROLITH",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NATUROPATHY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 23
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/tattoos.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TATTOOS",
+  "soundMP": "AS2D_TECH_TATTOOS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TATTOOS",
+  "civilopedia": "TXT_KEY_TECH_TATTOOS_PEDIA",
+  "quote": "TXT_KEY_TECH_TATTOOS_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 11,
+  "gridY": 13
+ }
+}

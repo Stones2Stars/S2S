@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_PURE_ORGANIC_CITY",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ORGANIC_CITIES",
+    "TECH_BIOPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BIOPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": 20
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": -50,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": -300
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 250
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -500
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -500
+  }
+ },
+ "cost": {
+  "production": 5905,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PURE_ORGANIC_CITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PURE_ORGANIC_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_PURE_ORGANIC_CITY_PEDIA",
+  "specialBuildingType": "SPECIALBUILDING_PUNK_BIO",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

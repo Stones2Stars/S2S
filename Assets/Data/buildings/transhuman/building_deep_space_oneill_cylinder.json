@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_BIOFORMING_STUDIO",
+   "BUILDING_DEEP_SPACE_BISHOP_RING",
+   "BUILDING_DEEP_SPACE_CLOAKING",
+   "BUILDING_DEEP_SPACE_ECOSYSTEM",
+   "BUILDING_DEEP_SPACE_FACTORY",
+   "BUILDING_DEEP_SPACE_INDUSTRIALIZED_ASTEROID",
+   "BUILDING_DEEP_SPACE_MAGLEV",
+   "BUILDING_DEEP_SPACE_ORGANIC_VOLATILE_EXTRACTION",
+   "BUILDING_DEEP_SPACE_PRISON",
+   "BUILDING_DEEP_SPACE_SECURITY_SYSTEM",
+   "BUILDING_DEEP_SPACE_SHIELDING",
+   "BUILDING_LASER_STARWAY",
+   "BUILDING_SATURN_CLOUD_CITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_CISLUNAR_ECONOMY",
+    "BUILDING_SPACE_COLONY_DEEP_SPACE",
+    "TECH_ORBITAL_MEGASTRUCTURES",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -5
+   }
+  }
+ },
+ "cost": {
+  "production": 1452,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_ONEILL_CYLINDER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

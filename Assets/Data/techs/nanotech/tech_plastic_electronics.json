@@ -1,0 +1,64 @@
+{
+ "type": "TECH_PLASTIC_ELECTRONICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ELECTRONIC_PAPER_MAKER",
+   "BUILDING_HYPERMARKET",
+   "BUILDING_LUNAR_SHIPYARD"
+  ],
+  "techs": [
+   "TECH_ELECTROMAGNETIC_FIELD_SHIELDING",
+   "TECH_NANOELECTRONICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HOLOGRAPHICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 40165
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/wearable_computer.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PLASTIC_ELECTRONICS",
+  "soundMP": "AS2D_TECH_PLASTIC_ELECTRONICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PLASTIC_ELECTRONICS",
+  "civilopedia": "TXT_KEY_TECH_PLASTIC_ELECTRONICS_PEDIA",
+  "quote": "TXT_KEY_TECH_PLASTIC_ELECTRONICS_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 103,
+  "gridY": 9
+ }
+}

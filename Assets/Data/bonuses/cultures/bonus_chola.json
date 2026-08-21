@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_CHOLA",
+ "enables": {
+  "units": [
+   "UNIT_KALLARANI",
+   "UNIT_KARIKALA_CHOLA",
+   "UNIT_RAJARAJA_CHOLA"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CHOLA"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CHOLA",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

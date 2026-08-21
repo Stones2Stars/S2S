@@ -1,0 +1,27 @@
+{
+ "type": "BONUS_GRASS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BASKETMAKER",
+   "BUILDING_BASKET_MAKERS_WORKSHOP",
+   "BUILDING_BIOFUEL_REFINERY",
+   "BUILDING_FACTORY_BASKETS",
+   "BUILDING_FACTORY_LYE",
+   "BUILDING_HOUSING_GRASS_HUTS",
+   "BUILDING_HYDROCARBON_REFINERY",
+   "BUILDING_LYE_MAKER",
+   "BUILDING_ULTRAFUEL_REFINERY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_GRASS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_GRASS",
+  "civilopedia": "TXT_KEY_BONUS_GRASS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

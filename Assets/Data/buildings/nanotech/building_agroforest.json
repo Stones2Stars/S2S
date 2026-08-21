@@ -1,0 +1,127 @@
+{
+ "type": "BUILDING_AGROFOREST",
+ "enables": {
+  "buildings": [
+   "BUILDING_BONFIRE",
+   "BUILDING_BOTANICAL_GARDENS",
+   "BUILDING_DYE_MAKER",
+   "BUILDING_FACTORY_DYE",
+   "BUILDING_FIRE_PIT",
+   "BUILDING_GUILD_WOODCUTTERS",
+   "BUILDING_IMU"
+  ],
+  "units": [
+   "UNIT_LOG_RAM",
+   "UNIT_NEANDERTHAL_LOG_RAM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ENVIRONMENTAL_ECONOMICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_BAMBOO",
+   "BONUS_BARK",
+   "BONUS_BUGS",
+   "BONUS_GRASS",
+   "BONUS_OLIVE_OIL",
+   "BONUS_REEDS",
+   "BONUS_STRAW",
+   "BONUS_VINES",
+   "BONUS_WOOD"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 60
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    70,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ],
+   "improvements": {
+    "IMPROVEMENT_LUMBERMILL": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 170
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 130
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 14
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 4315,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_AGROFOREST",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_AGROFOREST",
+  "civilopedia": "TXT_KEY_BUILDING_AGROFOREST_PEDIA",
+  "worth": 3,
+  "militaryWorth": 1,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

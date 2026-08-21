@@ -1,0 +1,113 @@
+{
+ "type": "UNIT_ATTACKSHIP",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY",
+    "TECH_FUSION_SPACECRAFT"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 10
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 10
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 180
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 2
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 3
+   },
+   "limit": {
+    "flat": 10
+   },
+   "maxUnits": {
+    "flat": 1
+   }
+  }
+ },
+ "skills": [
+  "canMoveAllTerrain",
+  "canMoveImpassable"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_NUCLEAR_SPACESHIP",
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 4850,
+  "upkeep": 11,
+  "hurryCostModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ATTACKSHIP",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_ATTACKSHIP"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_ATTACKSHIP",
+  "civilopedia": "TXT_KEY_UNIT_ATTACKSHIP_PEDIA",
+  "worth": 1,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_ATTACK_CITY"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "combatLimit": 100
+  }
+ }
+}

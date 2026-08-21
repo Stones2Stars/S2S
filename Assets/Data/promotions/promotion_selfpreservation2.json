@@ -1,0 +1,55 @@
+{
+ "type": "PROMOTION_SELFPRESERVATION2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SELFPRESERVATION3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_OPERATIONS2",
+    {
+     "any": [
+      "PROMOTION_SELFPRESERVATION1"
+     ]
+    }
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 15
+   }
+  }
+ },
+ "heal": {
+  "unit": {
+   "enemy": {
+    "flat": 3
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -2
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SELFPRESERVATION": 2
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/SelfPreservation2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SELFPRESERVATION2"
+ }
+}

@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_CHOCOLATE",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_NUTELLA"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CHOCOLATE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CHOCOLATE",
+  "civilopedia": "TXT_KEY_BONUS_CHOCOLATE_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

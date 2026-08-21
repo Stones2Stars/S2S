@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_MALAGASY",
+ "enables": {
+  "units": [
+   "UNIT_FADY_SHAMAN",
+   "UNIT_PHILIBERT_TSIRANANA"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MALAGASY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MALAGASY",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

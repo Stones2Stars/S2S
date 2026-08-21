@@ -1,0 +1,650 @@
+{
+ "entity": "ImprovementInfo",
+ "isSource": false,
+ "exeLink": {
+  "dllExportCount": 3,
+  "notes": "Exactly 3 DllExport getters on CvImprovementInfo: isGoody() (h:21), isRequiresRiverSide() (h:22), getArtInfo() (h:97). So bGoody + bRequiresRiverSide are EXE-constrained (getters must stay served); all else is data-free."
+ },
+ "summary": "Improvement is a plot-leaf TARGET (Terrain/Feature peer): carries its OWN plot-scope modifiers (yield/defense/culture/vision), NOT a source (isSource=false). Mapping has the buried-in-identity + wrong-scope:city trap caught on Terrain/Feature: all yield/defense/culture/vision deposits are PLOT scope (CvPlot calculateImprovementYieldChange 8208-8276, getDefenseModifier 4428, culture 6587, vision CvUnit 10785 / CvPlot 2519). TechYieldChanges invert onto tech (DROP); RouteYieldChanges already folded onto route (curate_route.py:45-47 VERIFIED, DROP). Placement-validity cluster is consumed SOLELY by CvPlot::canHaveImprovement (3010-3202) reading only ImprovementInfo, hit on non-build paths too -> recommend improvement.requires.build (CRUX). Persistent plot-capability flags (bActsAsCity/bCarriesIrrigation/bIsZOCSource/bBonusTrade/bIsUniversalTradeBonusProvider) = identity capability flags per Terrain bFound precedent, NOT grants. Upgrade/Pillage = lifecycle. iHealthPercent = drop(balance-cut as source). Per-bonus DepletionRand KEPT (gated); root iDepletionRand dead.",
+ "ownFields": [
+  {
+   "field": "Type",
+   "disposition": "identity",
+   "notes": "Enum key IMPROVEMENT_* (CvInfoBase). 266/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "Description",
+   "disposition": "identity",
+   "notes": "TXT_KEY display name -> reserved text (de-Hungarian per Terrain). Mapping wrongly under identity-art spread.",
+   "confidence": "high"
+  },
+  {
+   "field": "Civilopedia",
+   "disposition": "identity",
+   "notes": "TXT_KEY pedia body -> reserved text.",
+   "confidence": "high"
+  },
+  {
+   "field": "Help",
+   "disposition": "identity",
+   "notes": "Optional TXT_KEY (1/266); pedia uses getTextKeyWide. Reserved text, effectively inert.",
+   "confidence": "high"
+  },
+  {
+   "field": "ArtDefineTag",
+   "disposition": "art",
+   "consumer": "getArtInfo h:97 (DllExport); CvPlot.cpp:12699 soundscape sibling",
+   "notes": "On-map graphic FK -> world.art.icon (no Button). 266/266. EXE-constrained via getArtInfo.",
+   "confidence": "high"
+  },
+  {
+   "field": "WorldSoundscapeAudioScript",
+   "disposition": "art",
+   "consumer": "CvPlot.cpp:12699",
+   "notes": "Soundscape script -> sound.soundscape (curate_common.ART_BLOCK). 2/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "YieldChanges",
+   "disposition": "modifier-family",
+   "family": "food/production/commerce",
+   "scope": "plot",
+   "unit": "flat",
+   "consumer": "CvPlot.cpp:8212",
+   "notes": "Primary own payload, per-yield plot deposit. MAPPING ERROR: buried in identity -> un-bury. 131/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "RiverSideYieldChange",
+   "disposition": "modifier-family",
+   "family": "food/production/commerce",
+   "scope": "plot",
+   "unit": "flat",
+   "consumer": "CvPlot.cpp:8216 (only if isRiverSide)",
+   "notes": "enabled:HAS_RIVER (bare predicate, Feature.RiverYieldChange precedent). 5/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "IrrigatedYieldChange",
+   "disposition": "modifier-family",
+   "family": "food/production/commerce",
+   "scope": "plot",
+   "unit": "flat",
+   "consumer": "CvPlot.cpp:8221 (gated isIrrigationAvailable)",
+   "notes": "enabled:HAS_IRRIGATION (new plot-state predicate parallel to HAS_RIVER; FLAG name for owner). 3/266.",
+   "confidence": "med"
+  },
+  {
+   "field": "PrereqNatureYields",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3170",
+   "notes": "Per-yield MIN nature-yield placement threshold (NOT a modifier). Placement-validity cluster (CRUX). 6/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "TechYieldChanges",
+   "disposition": "inverted-to-tech",
+   "consumer": "CvPlot.cpp:8254; CvTeam.cpp:6119",
+   "notes": "Inverts ONTO tech (enabled:hasTech keep-on-source). DROP from improvement JSON. 89/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "RouteYieldChanges",
+   "disposition": "already-on-route",
+   "consumer": "CvPlot.cpp:8246; folded curate_route.py:45-47",
+   "notes": "VERIFIED folded onto route (ROUTE_BOOSTS -> yield.plot.improvements.{IMPROVEMENT}.flat). DROP from improvement. Mapping shape string at ImprovementInfo.json:18 is STALE; curate_route render is authoritative. 24/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "BonusTypeStructs.YieldChanges",
+   "disposition": "modifier-family",
+   "family": "food/production/commerce",
+   "scope": "plot",
+   "unit": "flat",
+   "consumer": "CvPlot.cpp:8274",
+   "notes": "Per-bonus plot yield deposit, enabled:HAS_BONUS{bonus}. Nested in CvImprovementBonusInfo. 60/266 parents.",
+   "confidence": "high"
+  },
+  {
+   "field": "BonusTypeStructs.bBonusMakesValid",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3100",
+   "notes": "Per-bonus placement gate (CRUX). Nested per-bonus.",
+   "confidence": "high"
+  },
+  {
+   "field": "BonusTypeStructs.bBonusObsoleteBonusMakesValid",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3152-3153",
+   "notes": "Per-bonus placement atom 'bonus present AND obsolete'; tech condition satisfied via the BONUS's own getTechObsolete (already inverted at Bonus pass) - do NOT author a fresh tech clause here. Module-only.",
+   "confidence": "high"
+  },
+  {
+   "field": "BonusTypeStructs.bBonusTrade",
+   "disposition": "identity",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3051/3102; isImprovementBonusTrade cpp:309",
+   "notes": "Per-bonus PERSISTENT capability ('mine connects iron'); identity/capability flag inside the per-bonus nested shape, sibling of bBonusMakesValid - NOT grants (one-shot section).",
+   "confidence": "high"
+  },
+  {
+   "field": "BonusTypeStructs.DiscoverRand",
+   "disposition": "RNG-out",
+   "consumer": "CvPlot.cpp:746; AI capability test CvCityAI.cpp:8247,10406 (>0)",
+   "notes": "Per-bonus RNG: odds improvement discovers a bonus -> identity/probability; AI also reads as boolean capability (>0). Preserve value. Module-only.",
+   "confidence": "high"
+  },
+  {
+   "field": "BonusTypeStructs.DepletionRand",
+   "disposition": "RNG-out",
+   "consumer": "CvPlot.cpp:837 (gated MODDERGAMEOPTION_RESOURCE_DEPLETION cpp:825)",
+   "notes": "KEEP (live gated mechanic). Per-bonus identity/probability. Distinct from dead root iDepletionRand. Module-only.",
+   "confidence": "high"
+  },
+  {
+   "field": "PrereqTech",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3036",
+   "notes": "Improvement's own placeability tech (re-checked on upgrade/event paths bypassing a build). DISTINCT from BuildInfo.TechPrereq. requires.build.all confirm; FLAG coupling. 195/266. [INVARIANT: gates BUILD/canHaveImprovement only; engine direct setImprovementType (raze->ruins, found->city) BYPASSES it - verified setImprovementType does not re-validate. TECH_DUMMY (IMPROVEMENT_CITY) => never worker-buildable, correct; city-ruins has no PrereqTech+no Build => safe.]",
+   "confidence": "high"
+  },
+  {
+   "field": "iAdvancedStartCost",
+   "disposition": "identity",
+   "consumer": "CvPlayer.cpp:17689",
+   "notes": "Advanced-start placement gold -> identity.advancedStart.cost (Route/Handicap/Era precedent), NOT production-cost family. 80/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "iPillageGold",
+   "disposition": "lifecycle",
+   "consumer": "CvUnitAI.cpp:25065; Python CvGameUtils.py:172",
+   "notes": "Gold on pillage -> pillage lifecycle outcome (only improvement-keyed Python consumer). 131/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "iAirBombDefense",
+   "disposition": "RNG-out",
+   "consumer": "CvUnit.cpp:7126/22376/23267 (SorenRandNum roll); also AI defense scalar CvPlot.cpp:7389 (/10) + destructible gate 7430",
+   "notes": "Air-bomb resistance: engine mechanic is the roll -> identity/probability, NOT a cascade modifier; doubles as an AI defense-weight scalar. 74/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "iDefenseModifier",
+   "disposition": "modifier-family",
+   "family": "defense",
+   "scope": "plot",
+   "unit": "percent",
+   "consumer": "CvPlot.cpp:4428 (+= into the percent accumulator terrain/feature feed)",
+   "notes": "Fort tile-defense -> defense.plot.amount.percent (Terrain/Feature precedent, owner-ruled 2026-06-16). MAPPING ERROR scope:city -> plot. 25/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "iCulture",
+   "disposition": "modifier-family",
+   "family": "culture",
+   "scope": "plot",
+   "unit": "flat",
+   "consumer": "CvPlot.cpp:6587 (Super Forts pushCultureFromImprovement)",
+   "notes": "Plot culture deposit. MAPPING ERROR scope:city -> plot. Pairs with iCultureRange. 29/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "iCultureRange",
+   "disposition": "identity",
+   "consumer": "CvPlot.cpp:6589",
+   "notes": "Radius parameter of the iCulture deposit (not an additive deposit). Keep with culture block. 14/266.",
+   "confidence": "med"
+  },
+  {
+   "field": "iVisibilityChange",
+   "disposition": "vision-block",
+   "scope": "plot",
+   "unit": "flat",
+   "consumer": "CvUnit.cpp:10785",
+   "notes": "Extra unit sight on plot -> dedicated vision block (modifier-spec 0.8). Member name e.g. vision.plot.visibilityRange.flat - FLAG member vocabulary for owner (Feature iSeeThrough precedent). MAPPING ERROR scope:city. 14/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "iSeeFrom",
+   "disposition": "vision-block",
+   "scope": "plot",
+   "unit": "flat",
+   "consumer": "CvPlot.cpp:2519/2552",
+   "notes": "Watchtower see-from level -> same vision block (vision.plot.seeFrom.flat), grouped with iVisibilityChange. FLAG member name. 12/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "iUniqueRange",
+   "disposition": "mapGeneration",
+   "consumer": "CvPlot.cpp:3423",
+   "notes": "Min spacing between same improvements -> mapGeneration.uniqueRange (BonusClass precedent). 30/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "iGoodyUniqueRange (iGoodyRange)",
+   "disposition": "mapGeneration",
+   "consumer": "CvMapGenerator.cpp:793",
+   "notes": "NAME DIFFERS member<-tag. Goody spacing -> mapGeneration (with bGoody). 3/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "iTilesPerGoody",
+   "disposition": "mapGeneration",
+   "consumer": "CvMapGenerator.cpp:782",
+   "notes": "Goody density -> mapGeneration. 2/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "iFeatureGrowthProbability (iFeatureGrowth)",
+   "disposition": "identity",
+   "consumer": "CvPlot.cpp:10786",
+   "notes": "NAME DIFFERS. Per-turn RNG odds plot grows a feature -> identity/world-state (RNG). 3/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "iUpgradeTime",
+   "disposition": "lifecycle",
+   "consumer": "CvGame.cpp:3267",
+   "notes": "Turns to auto-upgrade -> upgrade lifecycle (with ImprovementUpgrade). 65/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "ImprovementUpgrade",
+   "disposition": "lifecycle",
+   "consumer": "CvGameCoreUtils.cpp:244; CvPlot.cpp:896",
+   "notes": "Auto-upgrade target FK -> upgrade lifecycle. 64/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "AlternativeImprovementUpgradeTypes",
+   "disposition": "lifecycle",
+   "consumer": "CvPlot.cpp:910/7458",
+   "notes": "Alternate upgrade targets -> upgrade lifecycle. 5/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "bUpgradeRequiresFortify",
+   "disposition": "lifecycle",
+   "consumer": "CvPlot.cpp:672/939",
+   "notes": "Upgrade requires fortified unit -> upgrade lifecycle. 21/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "ImprovementPillage",
+   "disposition": "lifecycle",
+   "consumer": "CvPlayer.cpp:16528; CvUnit.cpp:7162",
+   "notes": "What it degrades to when pillaged -> pillage lifecycle. 57/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "bBombardable",
+   "disposition": "lifecycle",
+   "consumer": "CvPlot.cpp:3989",
+   "notes": "Can take bombard damage -> defense-damage lifecycle (pairs with iDefenseModifier). 24/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "FeatureChangeTypes",
+   "disposition": "lifecycle",
+   "consumer": "CvPlot.cpp:7483",
+   "notes": "Improvement->feature transform on placement -> lifecycle/grants. 2/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "bChangeRemove",
+   "disposition": "lifecycle",
+   "consumer": "CvPlot.cpp:7510",
+   "notes": "On placement, removes prior improvement -> placement-transform lifecycle. 2/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "bPlacesBonus",
+   "disposition": "identity",
+   "consumer": "NONE (isPlacesBonus inline, zero readers; getBonusChange is the wired edge)",
+   "notes": "UNWIRED-BUT-POPULATED (65/266). cat-ii noise paired with the live BonusChange edge. FLAG revive-vs-drop before drop. [OWNER: random-spawn mechanic (e.g. apple bonus under a lumberjack); keep on identity for now, needs its OWN pass, OUT OF SCOPE #428.]",
+   "confidence": "low"
+  },
+  {
+   "field": "bPlacesFeature",
+   "disposition": "identity",
+   "consumer": "NONE (FeatureChangeTypes is the wired edge)",
+   "notes": "UNWIRED (13/266). Likely redundant with FeatureChangeTypes presence. FLAG cat ii/iii. [OWNER: random-spawn mechanic (e.g. apple bonus under a lumberjack); keep on identity for now, needs its OWN pass, OUT OF SCOPE #428.]",
+   "confidence": "low"
+  },
+  {
+   "field": "bPlacesTerrain",
+   "disposition": "identity",
+   "consumer": "NONE found",
+   "notes": "UNWIRED (19/266). Terrain change is a BuildInfo concept. FLAG cat ii/iii. [OWNER: random-spawn mechanic (e.g. apple bonus under a lumberjack); keep on identity for now, needs its OWN pass, OUT OF SCOPE #428.]",
+   "confidence": "low"
+  },
+  {
+   "field": "BonusChange",
+   "disposition": "drop",
+   "consumer": "CvPlot.cpp:7490 (LIVE) + pedia CvGameTextMgr.cpp:23794/23797",
+   "notes": "DEAD-IN-DATA (0/266) but getter LIVE (changes plot bonus on placement, pairs with bPlacesBonus). Drop-as-unpopulated; mechanic intact.",
+   "confidence": "high"
+  },
+  {
+   "field": "TerrainMakesValids",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3141",
+   "notes": "Terrains where buildable -> CRUX placement-validity. NAME DIFFERS (list wrapper). 137/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "FeatureMakesValids",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3148 + 3031 (overrides feature isNoImprovement forbid)",
+   "notes": "Features where buildable AND per-improvement exception to feature blanket-forbid. Improvement-owned both ways (CRUX). 38/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "bHillsMakesValid",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3142",
+   "notes": "CRUX placement-validity (IS_HILLS predicate). 8/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "bFreshWaterMakesValid",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3143",
+   "notes": "CRUX placement-validity (IS_FRESHWATER). 8/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "bRiverSideMakesValid",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3144",
+   "notes": "CRUX placement-validity (allows river-side; distinct from bRequiresRiverSide which mandates). 2/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "bPeakMakesValid",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3084",
+   "notes": "CRUX placement-validity (IS_PEAK). Distinct from bPeakImprovement. 3/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "bRequiresFlatlands",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3120",
+   "notes": "CRUX placement-validity invalidator (IS_FLATLANDS). 16/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "bRequiresFeature",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3121; CvCityAI.cpp:7724",
+   "notes": "CRUX placement-validity (any feature present). 13/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "bRequiresIrrigation",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3114",
+   "notes": "requires.build.all HAS_IRRIGATION (isIrrigationAvailable, CvPlot:3114). FARM, DESERT_CAMP.",
+   "confidence": "high"
+  },
+  {
+   "field": "bRequiresRiverSide",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3177 (isRequiresRiverSide DllExport h:22)",
+   "notes": "CRUX placement-validity, EXE-CONSTRAINED (getter must stay served). 2/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "bNoFreshWater",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3119",
+   "notes": "CRUX placement-validity negative (invalid on fresh water). 1/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "bWaterImprovement",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3069/3074 (water/land placement gate, both ways)",
+   "notes": "Structurally an identity flag but consumed purely as a placement gate (CRUX). FLAG gate-vs-identity. 20/266.",
+   "confidence": "med"
+  },
+  {
+   "field": "bPeakImprovement",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3078-3091 (peak-only gate, both ways)",
+   "notes": "CRUX placement-validity; pairs with bPeakMakesValid. Could be identity - FLAG. 4/266.",
+   "confidence": "med"
+  },
+  {
+   "field": "bOutsideBorders",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:5225",
+   "notes": "Buildable/persists outside cultural borders -> placement/territory predicate. Could be identity. FLAG. 59/266.",
+   "confidence": "med"
+  },
+  {
+   "field": "bCanMoveSeaUnits",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3123/5543 (canal placement gate); CvUnitAI.cpp:21434",
+   "notes": "DEAD-IN-DATA (0/266) but LIVE consumer (canal). Drop-as-unpopulated; mechanic intact.",
+   "confidence": "med"
+  },
+  {
+   "field": "bNotOnAnyBonus",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3043 (placement invalidator)",
+   "notes": "DEAD-IN-DATA (0/266) but LIVE consumer. Drop-as-unpopulated; engine TODO suggests it should move to BuildInfo. mechanic intact.",
+   "confidence": "med"
+  },
+  {
+   "field": "MapCategoryTypes",
+   "disposition": "requires-build",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:3058 (isMapCategory membership gate)",
+   "notes": "DEAD-IN-DATA (0/266) but LIVE consumer. Drop-as-unpopulated OR keep empty identity-array (Terrain precedent). FLAG omit-or-keep.",
+   "confidence": "med"
+  },
+  {
+   "field": "bIsZOCSource",
+   "disposition": "identity",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:13076; AI weight 7391",
+   "notes": "Improvement projects zone-of-control -> PERSISTENT plot-capability flag (identity, Terrain bFound precedent), NOT grants (one-shot section). Mapping scope:city wrong. 9/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "bActsAsCity",
+   "disposition": "identity",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:12944",
+   "notes": "Fort acts as city for defense/garrison/healing -> PERSISTENT plot-capability flag (identity), NOT grants. Mapping scope:city wrong. 19/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "bCarriesIrrigation",
+   "disposition": "identity",
+   "scope": "plot",
+   "consumer": "CvPlot.cpp:1960/1980; CvUnitAI.cpp:21286",
+   "notes": "identity.carriesIrrigation:true — KEEP (improvement must retain carry-ability; propagation live in updateIrrigated, CvPlot:6290). Carry is team-tech-gated (CvTeam::isIrrigation <- TECH_CANAL_SYSTEMS), enforced engine-side; no tech clause on the improvement. Carriers: ORCHARD/PLANTATION/VERTICAL_FARM/FARM/GROUNDWATER_WELL.",
+   "confidence": "high"
+  },
+  {
+   "field": "bIsUniversalTradeBonusProvider",
+   "disposition": "identity",
+   "scope": "plot",
+   "consumer": "isImprovementBonusTrade(-1) OR-fold: CvImprovementInfo.cpp:313/315; readers CvCityAI.cpp:7695/8256/10662, CvDLLWidgetData.cpp:2777/3106, CvGameInterface.cpp:234+",
+   "notes": "LIVE capability (NOT unwired): 'trades ALL bonuses on its plot', universal sibling of per-bonus bBonusTrade. -> identity capability flag. Owner-flagged lynchpin; the workflow's zero-reader claim grepped only the unused direct getter.",
+   "confidence": "high"
+  },
+  {
+   "field": "bMilitaryStructure",
+   "disposition": "identity",
+   "consumer": "CvPlot.cpp:3475/7387; CvUnitAI.cpp:12652",
+   "notes": "AI classification flag (military improvement). 19/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "bExtraterresial",
+   "disposition": "identity",
+   "consumer": "NONE (only header inline getter h:42; zero real readers)",
+   "notes": "UNWIRED-BUT-POPULATED (78/266). Verified cat-ii (authored with intent, consumer never written). FLAG revive-vs-drop before drop. [OWNER: spacemap stuff, leave on identity for now.]",
+   "confidence": "low"
+  },
+  {
+   "field": "bGraphicalOnly",
+   "disposition": "identity",
+   "notes": "Pure decoration flag (101/266) -> base-class identity (Feature bGraphicalOnly precedent, moved out of art).",
+   "confidence": "high"
+  },
+  {
+   "field": "bGoody",
+   "disposition": "identity",
+   "consumer": "CvMapGenerator.cpp:138 (isGoody DllExport h:21)",
+   "notes": "Goody-hut flag, EXE-CONSTRAINED (getter must stay served). Bundled with goody mapGeneration. 2/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "iHealthPercent",
+   "disposition": "drop-balance-cut",
+   "consumer": "CvCity.cpp:19917; CvCityAI.cpp:8345,12234; CvGameTextMgr.cpp:19293/19499 (many live readers)",
+   "notes": "OWNER-RULED balance-cut: drop AS A SOURCE FROM IMPROVEMENTS; health percent capability kept globally. composite (read folds iHealth*100). 13/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "iHappiness",
+   "disposition": "drop",
+   "consumer": "CvCity.cpp:9316 (getter LIVE)",
+   "notes": "DEAD-IN-DATA (0/266) but getHappiness has live readers. Drop-as-unpopulated; would be city-scope happiness modifier if authored.",
+   "confidence": "high"
+  },
+  {
+   "field": "root iDepletionRand",
+   "disposition": "drop",
+   "consumer": "NONE (no getter, no reader)",
+   "notes": "TRULY DEAD (0/266, no getter exposed). Drop cat i. Per-bonus DepletionRand is the live one.",
+   "confidence": "high"
+  },
+  {
+   "field": "Categories",
+   "disposition": "drop",
+   "consumer": "NONE (improvement getCategory has zero callers; grep hits are CvBuildInfo's)",
+   "notes": "TRULY DEAD (0/266, no consumer). Drop cat i (same as Terrain's dead Categories).",
+   "confidence": "high"
+  },
+  {
+   "field": "bNational",
+   "disposition": "drop",
+   "consumer": "CvPlayer.cpp:7588 (getter LIVE)",
+   "notes": "DEAD-IN-DATA (0/266) but live national-instance-limit consumer. Drop-as-unpopulated; mechanic intact.",
+   "confidence": "high"
+  },
+  {
+   "field": "bGlobal",
+   "disposition": "drop",
+   "consumer": "CvPlayer.cpp:7590 (getter LIVE)",
+   "notes": "DEAD-IN-DATA (0/266) but live global-instance-limit consumer. Drop-as-unpopulated; mechanic intact.",
+   "confidence": "high"
+  },
+  {
+   "field": "Button",
+   "disposition": "drop",
+   "consumer": "getButton resolves via getArtInfo (no stored member)",
+   "notes": "No own data, no <Button> authored (button lives on the worker BuildInfo). Drop.",
+   "confidence": "high"
+  },
+  {
+   "field": "PropertyManipulators",
+   "disposition": "property-v3",
+   "scope": "plot",
+   "consumer": "CvGameObject.cpp:733 (LIVE gather)",
+   "notes": "Crime/disease/pollution sources+manipulators on plot -> parked raw in properties (defer to properties-first-class/#429); preserve-don't-drop (Feature precedent). 18/266.",
+   "confidence": "high"
+  },
+  {
+   "field": "m_improvementBuildTypes (getBuildTypes)",
+   "disposition": "drop",
+   "consumer": "doPostLoadCaching cpp:949 (runtime-derived)",
+   "notes": "Reverse index (Builds producing this improvement), NOT authored XML. Emit nothing; authoritative direction is BuildInfo.getImprovement (load-derived reverse, enabler-spec 5).",
+   "confidence": "high"
+  }
+ ],
+ "inboundBoosts": [
+  {
+   "field": "TechYieldChanges",
+   "decision": "inverted-to-tech",
+   "sourceEntity": "ImprovementInfo (self, downward)",
+   "notes": "Per-tech plot yield boost inverts ONTO the tech as enabled:hasTech improvementYieldChanges deposits (kept-on-source, spec 0.4). DROPPED from improvement JSON. mapping.inversionsOut -> CvTechInfo. CvPlot.cpp:8254."
+  },
+  {
+   "field": "RouteYieldChanges",
+   "decision": "already-on-route",
+   "sourceEntity": "ImprovementInfo (self)",
+   "notes": "VERIFIED folded onto the ROUTE at curate_route.py:45-47 (ROUTE_BOOSTS -> yield.plot.improvements.{IMPROVEMENT}.flat, plot scope). Keep-on-source (route). DROPPED from improvement. ImprovementInfo.json:18 mapping shape string is stale. CvPlot.cpp:8246."
+  },
+  {
+   "field": "ImprovementYieldChanges",
+   "decision": "keep-on-source",
+   "sourceEntity": "CvBuildingInfo",
+   "notes": "Building's per-improvement worked-tile yield stays on the building, gated by the improvement (deliveryguy/keep-on-source, modifier-spec 6.1). Nothing inverts onto the improvement. Verify field name at building pass; consumer CvPlot.cpp:8264."
+  },
+  {
+   "field": "ImprovementYieldChanges / ImprovementHappiness/Health",
+   "decision": "keep-on-source",
+   "sourceEntity": "CvCivicInfo",
+   "notes": "Civic-delivered per-improvement yield/happiness stays on the civic, gated by the improvement (keep-on-source). VERIFIED consumer CvPlot.cpp:8259 reads Civic.getImprovementYieldChanges. No improvement getter for it. Confirm field names at civic pass."
+  },
+  {
+   "field": "getImprovement / improvement-keyed builds",
+   "decision": "keep-on-source",
+   "sourceEntity": "CvBuildInfo",
+   "notes": "The worker BUILD owns the action that PLACES the improvement (button, action-tech getTechPrereq:27, getObsoleteTech, time/cost, getImprovement:28, PlaceBonusTypes, TerrainStructs/FeatureStructs build-time+removal, its OWN getMapCategories:53). Edge authored on the build; reverse is load-derived cold-path pedia."
+  }
+ ],
+ "openQuestions": [
+  "CRUX - placement-validity home: the entire MakesValid/Requires cluster (TerrainMakesValids, FeatureMakesValids, per-bonus bBonusMakesValid/bBonusObsoleteBonusMakesValid, b{Hills,FreshWater,RiverSide,Peak}MakesValid, bRequires{Flatlands,Feature,Irrigation,RiverSide}, bNoFreshWater, bWaterImprovement, bPeakImprovement, PrereqNatureYields, improvement PrereqTech) is consumed SOLELY by CvPlot::canHaveImprovement (3010-3202), reads ONLY the ImprovementInfo, and is hit on NON-build paths (upgrades, events). BuildInfo.h confirms Build independently owns its action wrapper (getImprovement:28, getTechPrereq:27, getObsoleteTech, time/cost, Terrain/FeatureStructs, PlaceBonusTypes, its OWN getMapCategories:53). RECOMMENDATION: home it in improvement.requires.build (plot-scope predicates: terrain/feature/bonus membership atoms + plot self-report HAS_RIVER/HAS_IRRIGATION/IS_FLATLANDS/IS_HILLS/IS_PEAK/IS_FRESHWATER), authored on the improvement; leave BuildInfo to own the ACTION wrapper. Do NOT split placement across both entities or duplicate onto BuildInfo. WAIT for owner pass.",
+  "grants-section discipline (Lens-B fix): the reserved `grants` section is ONLY one-time provisions + entity lists (Civic/Religion/Trait/Bonus precedent). The persistent plot-capability flags (bActsAsCity, bCarriesIrrigation, bIsZOCSource, per-bonus bBonusTrade, bIsUniversalTradeBonusProvider) are now classified identity capability flags (Terrain bFound precedent), NOT grants. Confirm.",
+  "iHealthPercent balance-cut: confirm OWNER-RULED drop AS A SOURCE FROM IMPROVEMENTS (many live readers: CvCity.cpp:19917, CvCityAI.cpp:8345/12234, CvGameTextMgr; the health `percent` capability kept globally, just not sourced from improvements). disposition=drop-balance-cut.",
+  "HAS_IRRIGATION predicate (IrrigatedYieldChange CvPlot:8221 + bRequiresIrrigation 3114 + bCarriesIrrigation): no irrigation plot-state predicate exists yet (parallel to the new HAS_RIVER). FLAG the predicate name for owner pass before authoring.",
+  "Vision-block member vocabulary: iVisibilityChange + iSeeFrom are the improvement's first vision members (vision.plot.*); name them explicitly (e.g. vision.plot.visibilityRange.flat + vision.plot.seeFrom.flat) and FLAG for owner, mirroring Feature's iSeeThrough-as-first-member. Wider vision rework is a separate owner pass outside #428.",
+  "UNWIRED-BUT-POPULATED set - do NOT silently drop (all verified reader-less, header inline getter only): bExtraterresial (78), bPlacesBonus (65), bPlacesTerrain (19), bPlacesFeature (13), bIsUniversalTradeBonusProvider (18). All cat-ii; confirm revive-vs-drop with owner. bPlacesBonus is cat-ii noise paired with the live BonusChange edge (CvPlot:7490 + pedia 23794).",
+  "Low-confidence dispositions to confirm: bWaterImprovement/bPeakImprovement/bOutsideBorders (placement-gate vs identity), iCultureRange (range member vs identity), MapCategoryTypes (omit vs keep empty identity-array per Terrain precedent), bCanMoveSeaUnits/bNotOnAnyBonus (live consumer but 0 records - drop-as-unpopulated).",
+  "RNG fields with dual AI semantics: getAirBombDefense (roll CvUnit:7126 AND AI defense scalar CvPlot:7389) and getImprovementBonusDiscoverRand (roll CvPlot:746 AND AI capability test >0 CvCityAI:8247/10406) stay identity/probability (NOT cascade modifiers) - the engine mechanic is the roll, not an additive deposit. Confirm."
+ ],
+ "_verification": {
+  "method": "classify-improvement workflow (8 agents): 4 understand -> synthesize -> 2 adversarial verify -> finalize",
+  "lensA_deadVsLive_verdict": "DRAFT SOUND on the dead-vs-live + drop-framework lens. Every field marked drop/dead/RNG/lifecycle was re-checked against actual C++ (and Python where relevant) and NONE is misfiled. Confirmed genuinely reader-less (cat-ii, getter-only): bExtraterresial, bPlacesBonus, bPlacesTerrain, bPlacesFeature, bIsUniversalTradeBonusProvider. Confirmed 0/266-but-LIVE (drop-as-unpopulated, mechanic intact): BonusChange (CvPlot:7490 + pedia), bCanMoveSeaUnits (CvPlot:3123/5543 canal), bNotOnAnyBonus (CvPlot:3043), iHappiness/bNational/bGlobal. Confirmed truly dead (cat-i): root iDepletionRand, Categories. Co",
+  "lensB_familyScopeOwnership_verdict": "PASS WITH CORRECTIONS. Lens-B (family/scope/ownership): the draft's core is CORRECT and verified at the consumers â€” all own output (YieldChanges 8212, RiverSideYieldChange 8216, IrrigatedYieldChange 8221, BonusYield 8274, iDefenseModifier 4428, iCulture 6587, iSeeFrom 2519/2552, iVisibilityChange CvUnit 10785) is rightly PLOT scope (the draft correctly flags the mapping's buried-in-identity + scope:city traps, matching the Terrain/Feature fix). Inversions are right and verified: TechYieldChanges->tech (drop), RouteYieldChanges already-on-route (curate_route.py:46, drop). Keep-on-source for i"
+ },
+ "ownerRulings_2026_06_16": {
+  "placement_home": "DOUBLE MAPPING: improvement/feature/bonus first ENABLE all allowed builds, then `requires` reigns in to actual allowed. The IMPROVEMENT carries its own placement requires.build (plot predicates) because EVENTS place improvements directly (no hard build link) and must be gated too; BuildInfo ALSO gates its action path (#23). Both gate, deliberately — not redundant, two placement paths (build action vs direct event).",
+  "plot_predicates": "INTRODUCE (parameter-free -> bare per enabler-spec 3): HAS_IRRIGATION, IS_FLATLANDS, IS_HILLS, IS_PEAK, IS_FRESHWATER; HAS_BONUS:{BONUS_X} parameterized -> object. Plot self-reports; the terrain/plot system's predicate surface.",
+  "vision_members": "vision.plot.visibilityRange.flat (iVisibilityChange) + vision.plot.seeFrom.flat (iSeeFrom).",
+  "iHealthPercent": "CONFIRMED drop-balance-cut (source from improvements cut; health percent capability kept globally).",
+  "unwired_flags": "bExtraterresial -> identity (spacemap, leave for now). bPlaces{Bonus,Feature,Terrain} -> identity (a 'random spawn' mechanic, e.g. apple bonus under a lumberjack; LEAVE for now, the mechanic needs its OWN pass, OUT OF SCOPE for #428 - FLAG). bIsUniversalTradeBonusProvider -> identity LIVE CAPABILITY (NOT unwired): consumed via isImprovementBonusTrade(-1) OR-fold (CvImprovementInfo.cpp:313/315), read across trade logic (CvCityAI/CvDLLWidgetData/CvGameInterface). Owner-flagged lynchpin; workflow missed it (grepped only the direct getter).",
+  "irrigation": "THREE-PART (owner 2026-06-16): (1) bRequiresIrrigation -> requires.build.all HAS_IRRIGATION (=isIrrigationAvailable: freshwater OR adjacent irrigated; the 'check' is easy/live). (2) bCarriesIrrigation -> identity.carriesIrrigation:true, MUST be KEPT (the improvement must not lose its ability to carry irrigation; actual propagation is live code updateIrrigated). Carriers: ORCHARD/PLANTATION/VERTICAL_FARM/FARM/GROUNDWATER_WELL. (3) Carrying is TECH-GATED at TEAM level, NOT on the improvement: isPotentialIrrigation() requires CvTeam::isIrrigation(), unlocked by TECH_CANAL_SYSTEMS <bIrrigation> (already captured curate_tech bIrrigation->irrigation team-enabler). Engine ANDs improvement.carriesIrrigation with team.isIrrigation at runtime; the improvement authors NO tech clause for carrying.",
+  "placement_gate_scope_INVARIANT": "requires.build gates ONLY: worker BUILD + canHaveImprovement-checked paths (worker-build UI CvDLLButtonPopup, AI plot-eval CvCity:1814, map-gen CvMapGenerator:147, advanced-start CvPlayer:17703, upgrade CvPlot:875, pedia) AND generic EVENT improvement-placement (route events through canHaveImprovement so an event can't place a disallowed improvement = the owner 'double mapping'). The engine's SANCTIONED OUTCOME placements stay PRIVILEGED direct setImprovementType and MUST remain ungated: raze->IMPROVEMENT_CITY_RUINS (CvCity.cpp:1144), found->IMPROVEMENT_CITY. setImprovementType() does NOT re-validate (verified) so today this is safe; the *may*-break is ONLY if #430 routes the raze/found path through requires.build. IMPROVEMENT_CITY's TECH_DUMMY correctly makes it never worker-buildable (no break: cities are engine-placed, not built); IMPROVEMENT_CITY_RUINS has no PrereqTech and no Build (build gate moot/safe, owner). FLAG #430 + the deferred outcome/instance-lifecycle system. LOCKED (owner 2026-06-16): setImprovementType stays a SEPARATE NON-CHECKING ACTOR — the direct placement path deliberately does not consult requires.build; this preserves all existing behaviour (raze->ruins, found->city) and breaks nothing. The cascade gate is the build/canHaveImprovement/event layer ABOVE it. USAGE CONVENTION (owner 2026-06-16): setImprovementType is the unconditional DOER; the CHECK (canHaveImprovement -> requires.build) is the CALLER's responsibility, run BEFORE setImprovementType in the NORMAL path (events + worker builds: check-then-set, so they respect requires.build). Calling setImprovementType DIRECTLY without a prior check is the sanctioned exception for engine outcomes that must always place (raze->ruins, found->city). So the gate lives in the caller's check, not in the setter. FUTURE: merge check+set with an explicit skip-check flag (default checked) -> issue Stones2Stars/S2S#437 (out of #428 scope)."
+ }
+}

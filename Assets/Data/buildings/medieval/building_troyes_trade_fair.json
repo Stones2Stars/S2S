@@ -1,0 +1,141 @@
+{
+ "type": "BUILDING_TROYES_TRADE_FAIR",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAILROAD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CHARTERS",
+    {
+     "any": [
+      "BUILDING_MARKET",
+      "BUILDING_SUPERMARKET",
+      "BUILDING_HYPERMARKET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_SCARBOROUGH_FAIR"
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_BAZAAR": {
+     "flat": 2
+    },
+    "BUILDING_GROCER": {
+     "flat": 2
+    },
+    "BUILDING_MARKET": {
+     "flat": 2
+    },
+    "BUILDING_MALL": {
+     "flat": 2
+    },
+    "BUILDING_SUPERMARKET": {
+     "flat": 2
+    },
+    "BUILDING_HYPERMARKET": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 2
+  }
+ },
+ "cost": {
+  "production": 2136,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TROYES_FAIR"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TROYES_TRADE_FAIR"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TROYES_TRADE_FAIR",
+  "civilopedia": "TXT_KEY_BUILDING_TROYES_TRADE_FAIR_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

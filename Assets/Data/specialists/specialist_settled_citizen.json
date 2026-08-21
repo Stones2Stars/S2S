@@ -1,0 +1,55 @@
+{
+ "type": "SPECIALIST_SETTLED_CITIZEN",
+ "food": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CIVILIAN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/Citizen.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/Citizen.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_SETTLED_CITIZEN",
+  "civilopedia": "TXT_KEY_SPECIALIST_SETTLED_CITIZEN_PEDIA",
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_CIVILIAN"
+  ]
+ }
+}

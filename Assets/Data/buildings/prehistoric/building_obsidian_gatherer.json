@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_OBSIDIAN_GATHERER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_OBSIDIAN_QUARRY"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GATHERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "BONUS_OBSIDIAN",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_OBSIDIAN_QUARRY"
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LAVA_ROCK_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_OBSIDIAN_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_LAVA_ROCK_GATHERER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

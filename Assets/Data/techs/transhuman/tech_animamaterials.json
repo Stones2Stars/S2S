@@ -1,0 +1,87 @@
+{
+ "type": "TECH_ANIMAMATERIALS",
+ "enables": {
+  "bonuses": [
+   "BONUS_CLAYTRONIC_ATOMS",
+   "BONUS_DEEP_SPACE_NANOBOTS"
+  ],
+  "buildings": [
+   "BUILDING_ANIMAMATERIAL_FACTORY",
+   "BUILDING_CLAYTRONIC_FIRE_SUPPRESSION",
+   "BUILDING_DEEP_SPACE_FACTORY",
+   "BUILDING_MARTIAN_ALBEDO_REDUCTION",
+   "BUILDING_MARTIAN_CFC_GENERATOR",
+   "BUILDING_MARTIAN_MEGACITY"
+  ],
+  "techs": [
+   "TECH_ADVANCED_SHIELDING",
+   "TECH_ADVANCED_WARMACHINES",
+   "TECH_BINARY_PSYCHOKINESIS",
+   "TECH_PHOTONIC_SATELLITES"
+  ],
+  "units": [
+   "UNIT_NANITE_REPAIR_CLOUD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NANOMINING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_LIFE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TECHNOLOGICAL_SINGULARITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 75052
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/animamaterials.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ANIMAMATERIALS",
+  "soundMP": "AS2D_TECH_ANIMAMATERIALS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ANIMAMATERIALS",
+  "civilopedia": "TXT_KEY_TECH_ANIMAMATERIALS_PEDIA",
+  "quote": "TXT_KEY_TECH_ANIMAMATERIALS_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 116,
+  "gridY": 3
+ }
+}

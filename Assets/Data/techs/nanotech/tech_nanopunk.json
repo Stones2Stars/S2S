@@ -1,0 +1,72 @@
+{
+ "type": "TECH_NANOPUNK",
+ "enables": {
+  "bonuses": [
+   "BONUS_NANOPUNK"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_PUNK_NANO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MASS_SURVEILLANCE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HYPERSONIC_FLIGHT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOGENERATORS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 38858
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/nanopunk.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NANOPUNK",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NANOPUNK",
+  "civilopedia": "TXT_KEY_TECH_NANOPUNK_PEDIA",
+  "quote": "TXT_KEY_TECH_NANOPUNK_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "gridX": 102,
+  "gridY": 11,
+  "tradeable": true
+ }
+}

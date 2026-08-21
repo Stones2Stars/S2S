@@ -1,0 +1,39 @@
+{
+ "type": "PROMOTION_FORMATION3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_FORMATION2",
+    {
+     "any": [
+      "PROMOTION_COMBAT3",
+      "PROMOTION_DRILL3"
+     ]
+    }
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 30
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FORMATION": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Formation3.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,7,5"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FORMATION3"
+ }
+}

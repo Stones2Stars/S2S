@@ -1,0 +1,33 @@
+{
+ "type": "PROMOTION_RED_TAPE2",
+ "underworld": {
+  "unit": {
+   "insidiousness": {
+    "flat": 4
+   }
+  }
+ },
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  }
+ },
+ "skills": [
+  "political"
+ ],
+ "promotionLine": {
+  "PROMOTIONLINE_RED_TAPE": 2
+ },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/RedTape2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_RED_TAPE2"
+ }
+}

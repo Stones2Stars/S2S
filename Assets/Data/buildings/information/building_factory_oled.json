@@ -1,0 +1,119 @@
+{
+ "type": "BUILDING_FACTORY_OLED",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ANIMAMATERIALS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CHEMICALS_DISTRICT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "BUILDING_BIOINFORMATICS_LAB",
+    "TECH_ORGANIC_PHOTONICS",
+    {
+     "type": "BONUS_BIOPOLYMERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_ENZYMES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_GLASSWARE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_CHEMICALS_DISTRICT"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ORGANIC_PHOTONIC_CELLS"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 8,
+     "enabled": "TECH_GENESIS_BIOLOGY"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_MARINE_ARCHITECTURE"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_GENE_ENHANCEMENT"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_VERTICAL_FARMING"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_ARTIFICIAL_PHOTOSYNTHESIS"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_ORGANIC_CITIES"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2405,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACTORY_OLED",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_OLED",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_OLED_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

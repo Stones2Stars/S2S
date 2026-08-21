@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_CLIMATE_SATELLITE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CLIMATOLOGY_LAB",
+    "TECH_CLIMATE_MODELS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": {
+    "value": 8,
+    "enabled": "TECH_ECOLOGICAL_ENGINEERING"
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1540
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CLIMATE_SATELLITE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CLIMATE_SATELLITE",
+  "civilopedia": "TXT_KEY_BUILDING_CLIMATE_SATELLITE_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

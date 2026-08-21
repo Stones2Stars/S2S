@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DEEP_SPACE_JOVIAN_TROJAN_MINE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_DOCKING_BAY",
+    "TECH_ASTEROID_EXTRACTION",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_NANOTUBES"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 2363,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_JOVIAN_TROJAN_MINE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_JOVIAN_TROJAN_MINE",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_JOVIAN_TROJAN_MINE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

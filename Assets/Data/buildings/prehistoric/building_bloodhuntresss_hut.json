@@ -1,0 +1,101 @@
+{
+ "type": "BUILDING_BLOODHUNTRESSS_HUT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_BLOOD_DANCE",
+    "TECH_TATTOOS",
+    {
+     "any": [
+      "BUILDING_TATTOOER",
+      "BUILDING_TATTOO_PARLOR",
+      "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      "CIVIC_ANARCHISM",
+      "CIVIC_CHIEFDOM"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_CARCASS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "TECH_SACRIFICE_CULT"
+    }
+   ]
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 62,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BLOODHUNTRESSS_HUT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BLOODHUNTRESSS_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_BLOODHUNTRESSS_HUT_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

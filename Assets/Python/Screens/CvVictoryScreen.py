@@ -3,8 +3,16 @@ from CvPythonExtensions import *
 import AttitudeUtil
 
 # globals
+# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
+BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
+VICTORY = CyVictoryInfo()   # the per-info accessor: the whole `condition` block in two grouped reads
+CULTURELEVEL = CyCultureLevelInfo()   # the culture threshold a city counts toward, per (level x gamespeed)
 GAME = GC.getGame()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
 
@@ -75,8 +83,8 @@ class CvVictoryScreen:
 		screen.setLabel("VS_Header", "", szfontEdge + TRNSLTR.getText("TXT_WORD_GAME",()), 1<<2, xRes / 2, 2, 0, eFontTitle, eWidGen, 1, 2)
 		screen.setText("VS_Btn_Exit", "", szfontEdge + TRNSLTR.getText("TXT_WORD_EXIT",()), 1<<1, xRes - 16, 0, 0, eFontTitle, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1)
 
-		self.COLOR_GREEN = GC.getCOLOR_GREEN()
-		self.COLOR_YELLOW = iCol = GC.getCOLOR_YELLOW()
+		self.COLOR_GREEN = GC.getInfoTypeForString("COLOR_GREEN")
+		self.COLOR_YELLOW = iCol = GC.getInfoTypeForString("COLOR_YELLOW")
 		szTxt = szfontEdge + TRNSLTR.getText("TXT_KEY_MAIN_MENU_VICTORIES", ())
 		szTxtCol = TRNSLTR.changeTextColor(szTxt, iCol)
 		dX = xRes / 4
@@ -256,9 +264,9 @@ class CvVictoryScreen:
 		# Vote
 		aiVoteBuilding = []
 		for i in xrange(GC.getNumBuildingInfos()):
-			CvBuildingInfo = GC.getBuildingInfo(i)
+			iVoteSource = BUILDING.getVoteSource(i)
 			for j in xrange(GC.getNumVoteSourceInfos()):
-				if CvBuildingInfo.getVoteSourceType() == j:
+				if iVoteSource == j:
 					iUNTeam = -1
 					bUnknown = True
 
@@ -311,8 +319,7 @@ class CvVictoryScreen:
 		szTable = self.getNextWidgetName()
 		# Mastery
 		for iLoopVC in xrange(GC.getNumVictoryInfos()):
-			CvVictoryInfo = GC.getVictoryInfo(iLoopVC)
-			if CvVictoryInfo.isTotalVictory():
+			if VICTORY.conditionFlag(iLoopVC, VictoryConditionFlag.VICTORY_CONDITION_TOTAL_VICTORY):
 				if GAME.isVictoryValid(iLoopVC):
 
 					if iBestTeam != -1 and bMetHuman:
@@ -333,7 +340,7 @@ class CvVictoryScreen:
 					del xRes, dx, a18thX, iTemp1, iTemp2, iTemp3
 
 					# Headings
-					szVictoryType = ufont3b + CvVictoryInfo.getDescription()
+					szVictoryType = ufont3b + INFO.getDescription("VICTORY_", iLoopVC)
 					if iMaxTurns > iTurn:
 						szVictoryType += ufont2 + "\t\t(" + TRNSLTR.getText("TXT_KEY_MISC_TURNS_LEFT", (iMaxTurns - iTurn,)) + ")"
 
@@ -421,7 +428,7 @@ class CvVictoryScreen:
 								religionPercent = GAME.calculateReligionPercent(iLoopReligion)
 
 								iRow = screen.appendTableRow(szTable)
-								screen.setTableText(szTable, 0, iRow, ufont2 + GC.getReligionInfo(iLoopReligion).getDescription(), "", eWidGen, 1, 2, 1<<1)
+								screen.setTableText(szTable, 0, iRow, ufont2 + INFO.getDescription("RELIGION_", iLoopReligion), "", eWidGen, 1, 2, 1<<1)
 								screen.setTableText(szTable, 1, iRow, ufont2 + (u"%d%%" % religionPercent), "", eWidGen, 1, 2, 1<<0)
 
 								#Only get points for the TOP religion score.
@@ -444,7 +451,7 @@ class CvVictoryScreen:
 								iRefRow += 1
 								if iRefRow > iRow:
 									iRow = screen.appendTableRow(szTable)
-								screen.setTableText(szTable, 3, iRefRow, ufont2 + (u"%s: %i%%" %(GC.getReligionInfo(iLoopReligion).getDescription(), religionPercent)), "", eWidGen, 1, 2, 1<<0)
+								screen.setTableText(szTable, 3, iRefRow, ufont2 + (u"%s: %i%%" %(INFO.getDescription("RELIGION_", iLoopReligion), religionPercent)), "", eWidGen, 1, 2, 1<<0)
 						if not iReligionFound:
 							iRefRow += 1
 							screen.setTableText(szTable, 3, iRefRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_NO_HOLY", ()), "", eWidGen, 1, 2, 1<<0)
@@ -512,7 +519,7 @@ class CvVictoryScreen:
 								if GC.getProjectInfo(i).getVictoryThreshold(iL) > 0:
 									if GC.getProjectInfo(i).isSpaceship():
 										iRow = screen.appendTableRow(szTable)
-										screen.setTableText(szTable, 0, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILDING", (GC.getProjectInfo(i).getVictoryThreshold(iL), GC.getProjectInfo(i).getTextKey())), "", eWidGen, 1, 2, 1<<1)
+										screen.setTableText(szTable, 0, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILDING", (GC.getProjectInfo(i).getVictoryThreshold(iL), INFO.getTextKey("PROJECT_", i))), "", eWidGen, 1, 2, 1<<1)
 
 										if self.teamLaunchedShip(iTeamAct) != 1:
 											screen.setTableText(szTable, 1, iRow, ufont2 + str(CyTeam.getProjectCount(i)), "", eWidGen, 1, 2, 1<<0)
@@ -582,8 +589,7 @@ class CvVictoryScreen:
 		szUnknown = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_UNKNOWN", ())
 		szTeamName = CyTeam.getName()
 		for iLoopVC in xrange(GC.getNumVictoryInfos()):
-			CvVictoryInfo = GC.getVictoryInfo(iLoopVC)
-			if CvVictoryInfo.isTargetScore(): continue
+			if VICTORY.conditionFlag(iLoopVC, VictoryConditionFlag.VICTORY_CONDITION_TARGET_SCORE): continue
 			if GAME.isVictoryValid(iLoopVC):
 				if iRow:
 					screen.appendTableRow(szTable)
@@ -591,13 +597,13 @@ class CvVictoryScreen:
 
 				iRow = screen.appendTableRow(szTable)
 
-				szText = ufont3b + CvVictoryInfo.getDescription()
+				szText = ufont3b + INFO.getDescription("VICTORY_", iLoopVC)
 
 				iCategoryRow = iRow
 				screen.setTableText(szTable, 0, iRow, szText, "", eWidGen, 1, 2, 1<<1)
 				bSpaceshipFound = False
 
-				if CvVictoryInfo.isEndScore():
+				if VICTORY.conditionFlag(iLoopVC, VictoryConditionFlag.VICTORY_CONDITION_END_SCORE):
 					if iMaxTurns > iTurn:
 						szText = ufont2 + TRNSLTR.getText("TXT_KEY_MISC_TURNS_LEFT", (iMaxTurns - iTurn,))
 						screen.setTableText(szTable, 1, iRow, szText, "", eWidGen, 1, 2, 1<<2)
@@ -611,7 +617,7 @@ class CvVictoryScreen:
 						screen.setTableText(szTable, 2, iRow, ufont2 + GC.getTeam(iBestScoreTeam).getName() + ":", "", eWidGen, 1, 2, 1<<0)
 						screen.setTableText(szTable, 3, iRow, ufont2 + (u"%d" % iBestScore), "", eWidGen, 1, 2, 1<<0)
 
-				if CvVictoryInfo.isConquest():
+				if VICTORY.conditionFlag(iLoopVC, VictoryConditionFlag.VICTORY_CONDITION_CONQUEST):
 					iRow = screen.appendTableRow(szTable)
 					screen.setTableText(szTable, 0, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_ELIMINATE_ALL", ()), "", eWidGen, 1, 2, 1<<1)
 					szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_RIVALS_LEFT", ()) + " "
@@ -648,28 +654,20 @@ class CvVictoryScreen:
 						screen.setTableText(szTable, 2, iRow, ufont2 + GC.getTeam(iBestLandTeam).getName() + ":", "", eWidGen, 1, 2, 1<<0)
 						screen.setTableText(szTable, 3, iRow, ufont2 + (u"%.2f%%" % (iBestLand * 100 / iTotalLand)), "", eWidGen, 1, 2, 1<<0)
 
-				if CvVictoryInfo.getReligionPercent() > 0:
+				if VICTORY.conditionValue(iLoopVC, VictoryConditionValue.VICTORY_CONDITION_RELIGION_PERCENT) > 0:
 					iRow = screen.appendTableRow(szTable)
-					szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_PERCENT_RELIGION", (CvVictoryInfo.getReligionPercent(),))
+					szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_PERCENT_RELIGION", (VICTORY.conditionValue(iLoopVC, VictoryConditionValue.VICTORY_CONDITION_RELIGION_PERCENT),))
 					screen.setTableText(szTable, 0, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<1)
 					if iOurReligion != -1:
-						szText = GC.getReligionInfo(iOurReligion).getDescription() + u": %d%%" % ourReligionPercent
+						szText = INFO.getDescription("RELIGION_", iOurReligion) + u": %d%%" % ourReligionPercent
 						screen.setTableText(szTable, 1, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<2)
 					else:
 						szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_NO_HOLY", ())
 						screen.setTableText(szTable, 1, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<2)
 					if iBestReligion != -1:
-						szText = GC.getReligionInfo(iBestReligion).getDescription() + u": %d%%" % bestReligionPercent
+						szText = INFO.getDescription("RELIGION_", iBestReligion) + u": %d%%" % bestReligionPercent
 						screen.setTableText(szTable, 2, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<0)
 
-				if CvVictoryInfo.getTotalCultureRatio() > 0:
-					iRow = screen.appendTableRow(szTable)
-					szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_PERCENT_CULTURE", (int((100.0 * iBestCulture) / CvVictoryInfo.getTotalCultureRatio()),))
-					screen.setTableText(szTable, 0, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<1)
-					screen.setTableText(szTable, 1, iRow, ufont2 + unicode(iOurCulture), "", eWidGen, 1, 2, 1<<2)
-					if iBestCultureTeam  != -1:
-						screen.setTableText(szTable, 2, iRow, ufont2 + GC.getTeam(iBestCultureTeam).getName() + ":", "", eWidGen, 1, 2, 1<<0)
-						screen.setTableText(szTable, 3, iRow, ufont2 + unicode(iBestCulture), "", eWidGen, 1, 2, 1<<0)
 
 				iBestBuildingTeam = -1
 				bestBuilding = 0
@@ -690,7 +688,7 @@ class CvVictoryScreen:
 					if GC.getBuildingInfo(i).getVictoryThreshold(iLoopVC) > 0:
 						iRow = screen.appendTableRow(szTable)
 						szNumber = unicode(GC.getBuildingInfo(i).getVictoryThreshold(iLoopVC))
-						szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILDING", (szNumber, GC.getBuildingInfo(i).getTextKey()))
+						szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILDING", (szNumber, INFO.getTextKey("BUILDING_", i)))
 						screen.setTableText(szTable, 0, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<1)
 						screen.setTableText(szTable, 1, iRow, ufont2 + str(CyTeam.getBuildingCount(i)), "", eWidGen, 1, 2, 1<<2)
 						if iBestBuildingTeam != -1:
@@ -799,7 +797,7 @@ class CvVictoryScreen:
 									iSSColor = self.COLOR_GREEN
 								elif bOwnProject >= CvProjectInfo.getVictoryMinThreshold(iLoopVC):
 									iSSColor = self.COLOR_YELLOW
-								elif CyTeamBest.isHasTech(iReqTech) and (CyTeam.isHasTech(iReqTech) or CyPlayer.canResearch(iReqTech, True, True)):
+								elif CyTeamBest.isHasTech(iReqTech) and (CyTeam.isHasTech(iReqTech) or ENABLER.getTechAvailability(CyPlayer.getID(), iReqTech) == EnablerState.ENABLER_LISTED):
 									iSSColor = GC.getInfoTypeForString("COLOR_PLAYER_ORANGE")
 
 								if iSSColor > 0:
@@ -809,10 +807,10 @@ class CvVictoryScreen:
 								screen.setTableText(szTable, 2, iRow, ufont2 + sSSPlayer, "", eWidGen, 1, 2, 1<<0)
 								screen.setTableText(szTable, 3, iRow, ufont2 + sSSCount, "", eWidGen, 1, 2, 1<<0)
 
-				if CvVictoryInfo.isDiploVote() and not GAME.isOption(GameOptionTypes.GAMEOPTION_ENABLE_UNITED_NATIONS):
+				if VICTORY.conditionFlag(iLoopVC, VictoryConditionFlag.VICTORY_CONDITION_DIPLO_VOTE) and not GAME.isOption(GameOptionTypes.GAMEOPTION_ENABLE_UNITED_NATIONS):
 					for (iVoteBuilding, iUNTeam, bUnknown) in aiVoteBuilding:
 						iRow = screen.appendTableRow(szTable)
-						szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_ELECTION", (GC.getBuildingInfo(iVoteBuilding).getTextKey(),))
+						szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_ELECTION", (INFO.getTextKey("BUILDING_", iVoteBuilding),))
 						screen.setTableText(szTable, 0, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<1)
 						if iUNTeam != -1:
 							if bUnknown:
@@ -823,22 +821,22 @@ class CvVictoryScreen:
 						else:
 							screen.setTableText(szTable, 1, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_NOT_BUILT", ()), "", eWidGen, 1, 2, 1<<2)
 
-				eVictoryCulture = CvVictoryInfo.getCityCulture()
+				eVictoryCulture = VICTORY.getCityCulture(iLoopVC)
 				if eVictoryCulture != CultureLevelTypes.NO_CULTURELEVEL:
 
-					iNumCultureCities = CvVictoryInfo.getNumCultureCities()
+					iNumCultureCities = VICTORY.conditionValue(iLoopVC, VictoryConditionValue.VICTORY_CONDITION_NUM_CULTURE_CITIES)
 					if iNumCultureCities > 0:
-						ourBestCities = self.getListCultureCities(iActivePlayer, CvVictoryInfo)[0:iNumCultureCities]
+						ourBestCities = self.getListCultureCities(iActivePlayer, iLoopVC)[0:iNumCultureCities]
 
 						iBestCulturePlayer = -1
 						bestCityCulture = 0
-						maxCityCulture = GC.getCultureLevelInfo(eVictoryCulture).getSpeedThreshold(GAME.getGameSpeedType())
+						maxCityCulture = CULTURELEVEL.getSpeedThreshold(eVictoryCulture, GAME.getGameSpeedType())
 
 						for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 							CyPlayerX = GC.getPlayer(iPlayerX)
 							if CyPlayerX.isAlive() and not CyPlayerX.isMinorCiv() and not CyPlayerX.isNPC():
 								if iPlayerX != iActivePlayer and (CyTeam.isHasMet(CyPlayerX.getTeam()) or bDebugModeDLL):
-									theirBestCities = self.getListCultureCities(iPlayerX, CvVictoryInfo)[0:iNumCultureCities]
+									theirBestCities = self.getListCultureCities(iPlayerX, iLoopVC)[0:iNumCultureCities]
 
 									iTotalCulture = 0
 									for loopCity in theirBestCities:
@@ -852,12 +850,12 @@ class CvVictoryScreen:
 										iBestCulturePlayer = iPlayerX
 
 						if iBestCulturePlayer != -1:
-							theirBestCities = self.getListCultureCities(iBestCulturePlayer, CvVictoryInfo)[0:iNumCultureCities]
+							theirBestCities = self.getListCultureCities(iBestCulturePlayer, iLoopVC)[0:iNumCultureCities]
 						else:
 							theirBestCities = []
 
 						iRow = screen.appendTableRow(szTable)
-						szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_CITY_CULTURE", (iNumCultureCities, GC.getCultureLevelInfo(eVictoryCulture).getTextKey()))
+						szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_CITY_CULTURE", (iNumCultureCities, INFO.getTextKey("CULTURELEVEL_", eVictoryCulture)))
 						screen.setTableText(szTable, 0, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<1)
 
 						for i in xrange(iNumCultureCities):
@@ -872,7 +870,7 @@ class CvVictoryScreen:
 									elif ourBestCities[i][2] < 1000:
 										szText += TRNSLTR.getText("TXT_KEY_MISC_TURNS_LEFT", (ourBestCities[i][2],))
 									else:
-										szText += GC.getCultureLevelInfo(ourBestCities[i][1].getCultureLevel()).getDescription()
+										szText += INFO.getDescription("CULTURELEVEL_", ourBestCities[i][1].getCultureLevel())
 									screen.setTableText(szTable, 1, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<2)
 
 								if len(theirBestCities) > i:
@@ -882,7 +880,7 @@ class CvVictoryScreen:
 									elif theirBestCities[i][2] < 1000:
 										szText += TRNSLTR.getText("TXT_KEY_MISC_TURNS_LEFT", (theirBestCities[i][2],))
 									else:
-										szText += GC.getCultureLevelInfo(theirBestCities[i][1].getCultureLevel()).getDescription()
+										szText += INFO.getDescription("CULTURELEVEL_", theirBestCities[i][1].getCultureLevel())
 									screen.setTableText(szTable, 2, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<0)
 							else:
 								break
@@ -923,13 +921,13 @@ class CvVictoryScreen:
 			szTxt = ufont1 + "\t<color=200,200,200>(" + szTxt + ")\n"
 			screen.appendListBoxStringNoUpdate(szSettingsTable, szTxt, eWidGen, 1, 2, 1<<0)
 
-		szTxt = BULLET + ufont2 + TRNSLTR.getText("TXT_KEY_SETTINGS_DIFFICULTY_GAME", (GC.getHandicapInfo(GAME.getHandicapType()).getTextKey(),))
+		szTxt = BULLET + ufont2 + TRNSLTR.getText("TXT_KEY_SETTINGS_DIFFICULTY_GAME", (INFO.getTextKey("HANDICAP_", GAME.getHandicapType()),))
 		screen.appendListBoxStringNoUpdate(szSettingsTable, szTxt, eWidGen, 1, 2, 1<<0)
 
-		szTxt = BULLET + ufont2 + TRNSLTR.getText("TXT_KEY_SETTINGS_DIFFICULTY_PLAYER", (GC.getHandicapInfo(CyPlayer.getHandicapType()).getTextKey(),))
+		szTxt = BULLET + ufont2 + TRNSLTR.getText("TXT_KEY_SETTINGS_DIFFICULTY_PLAYER", (INFO.getTextKey("HANDICAP_", CyPlayer.getHandicapType()),))
 		screen.appendListBoxStringNoUpdate(szSettingsTable, szTxt, eWidGen, 1, 2, 1<<0)
 
-		szTxt = BULLET + ufont2 + TRNSLTR.getText("TXT_KEY_SETTINGS_GAME_SPEED", (GC.getGameSpeedInfo(GAME.getGameSpeedType()).getTextKey(),))
+		szTxt = BULLET + ufont2 + TRNSLTR.getText("TXT_KEY_SETTINGS_GAME_SPEED", (INFO.getTextKey("GAMESPEED_", GAME.getGameSpeedType()),))
 		screen.appendListBoxStringNoUpdate(szSettingsTable, szTxt, eWidGen, 1, 2, 1<<0)
 
 		CyMap = GC.getMap()
@@ -944,17 +942,17 @@ class CvVictoryScreen:
 			szTxt = "\t" + ufont1 + TRNSLTR.getText("TXT_KEY_MAP_WRAP_FLAT", ())
 		screen.appendListBoxStringNoUpdate(szSettingsTable, szTxt, eWidGen, 1, 2, 1<<0)
 
-		szTxt = "\t" + ufont1 + TRNSLTR.getText("TXT_KEY_SETTINGS_MAP_SIZE", (GC.getWorldInfo(CyMap.getWorldSize()).getTextKey(),))
+		szTxt = "\t" + ufont1 + TRNSLTR.getText("TXT_KEY_SETTINGS_MAP_SIZE", (INFO.getTextKey("WORLDSIZE_", CyMap.getWorldSize()),))
 		szTxt += u"  (%dx%d)" %(CyMap.getGridWidth(), CyMap.getGridHeight())
 		screen.appendListBoxStringNoUpdate(szSettingsTable, szTxt, eWidGen, 1, 2, 1<<0)
 
-		szTxt = "\t" + ufont1 + TRNSLTR.getText("TXT_KEY_SETTINGS_CLIMATE", (GC.getClimateInfo(CyMap.getClimate()).getTextKey(),))
+		szTxt = "\t" + ufont1 + TRNSLTR.getText("TXT_KEY_SETTINGS_CLIMATE", (INFO.getTextKey("CLIMATE_", CyMap.getClimate()),))
 		screen.appendListBoxStringNoUpdate(szSettingsTable, szTxt, eWidGen, 1, 2, 1<<0)
 
-		szTxt = "\t" + ufont1 + TRNSLTR.getText("TXT_KEY_SETTINGS_SEA_LEVEL", (GC.getSeaLevelInfo(CyMap.getSeaLevel()).getTextKey(),)) + "\n"
+		szTxt = "\t" + ufont1 + TRNSLTR.getText("TXT_KEY_SETTINGS_SEA_LEVEL", (INFO.getTextKey("SEALEVEL_", CyMap.getSeaLevel()),)) + "\n"
 		screen.appendListBoxStringNoUpdate(szSettingsTable, szTxt, eWidGen, 1, 2, 1<<0)
 
-		szTxt = BULLET + TRNSLTR.getText("TXT_KEY_SETTINGS_STARTING_ERA", (GC.getEraInfo(GAME.getStartEra()).getTextKey(),))
+		szTxt = BULLET + TRNSLTR.getText("TXT_KEY_SETTINGS_STARTING_ERA", (INFO.getTextKey("C2C_ERA_", GAME.getStartEra()),))
 		screen.appendListBoxStringNoUpdate(szSettingsTable, szTxt, eWidGen, 1, 2, 1<<0)
 
 		screen.updateListBox(szSettingsTable)
@@ -972,7 +970,7 @@ class CvVictoryScreen:
 			szTxt = ""
 			for i in xrange(GC.getNumMPOptionInfos()):
 				if GAME.isMPOption(i):
-					szTxt += BULLET + ufont2 + GC.getMPOptionInfo(i).getDescription() + "\n"
+					szTxt += BULLET + ufont2 + INFO.getDescription("MPOPTION_", i) + "\n"
 
 			if GAME.getMaxTurns() > 0:
 				szTxt += ufont1 + u"\t%s %d" % (TRNSLTR.getText("TXT_KEY_TURN_LIMIT_TAG", ()), GAME.getMaxTurns()) + "\n"
@@ -988,7 +986,7 @@ class CvVictoryScreen:
 
 		for i in xrange(GC.getNumGameOptionInfos()):
 			if GAME.isOption(i):
-				screen.appendListBoxStringNoUpdate(szOptionsTable, BULLET + ufont2 + GC.getGameOptionInfo(i).getDescription(), eWidGen, 1, 2, 1<<0)
+				screen.appendListBoxStringNoUpdate(szOptionsTable, BULLET + ufont2 + INFO.getDescription("GAMEOPTION_", i), eWidGen, 1, 2, 1<<0)
 
 		if GAME.hasSkippedSaveChecksum():
 			szTxt = ufont2 + TRNSLTR.getText("TXT_KEY_BUFFYWARNING_CHECKSUM_SKIPPED", ())
@@ -1033,9 +1031,9 @@ class CvVictoryScreen:
 
 		aiVoteBuilding = []
 		for i in xrange(GC.getNumBuildingInfos()):
-			CvBuildingInfo = GC.getBuildingInfo(i)
+			iVoteSource = BUILDING.getVoteSource(i)
 			for j in xrange(GC.getNumVoteSourceInfos()):
-				if CvBuildingInfo.getVoteSourceType() == j:
+				if iVoteSource == j:
 					iUNTeam = -1
 					bUnknown = True
 
@@ -1096,7 +1094,7 @@ class CvVictoryScreen:
 							szTxt = TRNSLTR.getText("TXT_KEY_POPUP_ELECTION_OPTION", ("", GAME.getVoteRequired(iLoop, i), iCount))
 							screen.setTableText(szTable, 0, iRow, uFont + szTxt, "", eWidGen, 1, 2, 1<<2)
 
-						screen.setTableText(szTable, 1, iRow, uFont + GC.getVoteInfo(iLoop).getDescription(), "", eWidGen, 1, 2, 1<<0)
+						screen.setTableText(szTable, 1, iRow, uFont + INFO.getDescription("VOTE_", iLoop), "", eWidGen, 1, 2, 1<<0)
 
 
 # BUG Additions Start
@@ -1162,7 +1160,7 @@ class CvVictoryScreen:
 		kVoteSource = GC.getVoteSourceInfo(iVoteBody)
 		sTableHeader = "<font=4b>" + kVoteSource.getDescription().upper() + "</font>"
 		if GAME.getVoteSourceReligion(iVoteBody) != -1:
-			sTableHeader += " (" + GC.getReligionInfo(GAME.getVoteSourceReligion(iVoteBody)).getDescription() + ")"
+			sTableHeader += " (" + INFO.getDescription("RELIGION_", GAME.getVoteSourceReligion(iVoteBody)) + ")"
 
 		screen.setTableText(szHeading, 0, iRow, sTableHeader, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 
@@ -1219,14 +1217,14 @@ class CvVictoryScreen:
 
 		if iRelVote != -1 and iUNVote != -1:  # both AP and UN are active
 			iX = 20
-			szTxt = GC.getVoteSourceInfo(iRelVote).getDescription()
+			szTxt = INFO.getDescription("VOTESOURCE_", iRelVote)
 			if iVoteBody == iRelVote:
 				szTxt = TRNSLTR.changeTextColor(szTxt, iYellow)
 
 			screen.setText("VoteAP", "", szTxt, 1<<0, iX, 688, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 			iX += 10 + CyInterface().determineWidth(szTxt)
-			szTxt = GC.getVoteSourceInfo(iUNVote).getDescription()
+			szTxt = INFO.getDescription("VOTESOURCE_", iUNVote)
 			if iVoteBody == iUNVote:
 				szTxt = TRNSLTR.changeTextColor(szTxt, iYellow)
 
@@ -1430,26 +1428,26 @@ class CvVictoryScreen:
 		if not bWinner:
 			return -1
 		if iVoteCand > iVoteReq and bVictoryVote:
-			return GC.getCOLOR_RED()
+			return GC.getInfoTypeForString("COLOR_RED")
 		if iVoteTotal > iVoteReq:
 			return self.COLOR_GREEN
 		return -1
 
 
-	def getListCultureCities(self, iPlayer, CvVictoryInfo):
+	def getListCultureCities(self, iPlayer, iVictory):
 
 		if iPlayer != -1:
 			CyPlayer = GC.getPlayer(iPlayer)
 			if CyPlayer.isAlive():
-				iThreshold = GC.getCultureLevelInfo(CvVictoryInfo.getCityCulture()).getSpeedThreshold(GAME.getGameSpeedType())
+				iThreshold = CULTURELEVEL.getSpeedThreshold(VICTORY.getCityCulture(iVictory), GAME.getGameSpeedType())
 				aList = []
 
 				for CyCity in CyPlayer.cities():
-					iRate = CyCity.getCommerceRateTimes100(CommerceTypes.COMMERCE_CULTURE)
+					iRate = CyCity.getCommerces()[CommerceTypes.COMMERCE_CULTURE]
 					if not iRate:
 						iTurns = -1
 					else:
-						iCultureLeftTimes100 = 100 * iThreshold - CyCity.getCultureTimes100(CyCity.getOwner())
+						iCultureLeftTimes100 = 100 * iThreshold - CyCity.getCultureForPlayer(iPlayer)
 						iTurns = int((iCultureLeftTimes100 + iRate - 1) / iRate)
 					aList.append((CyCity.getCulture(iPlayer), CyCity, iTurns))
 
@@ -1478,7 +1476,7 @@ class CvVictoryScreen:
 	def getMonumentalCities(self, iTeam):
 		iMonumentalCities = 0
 		iTeamCities = 0
-		iThreshold = GC.getCultureLevelInfo(GC.getNumCultureLevelInfos()-1).getSpeedThreshold(GAME.getGameSpeedType())
+		iThreshold = CULTURELEVEL.getSpeedThreshold(GC.getNumCultureLevelInfos()-1, GAME.getGameSpeedType())
 
 		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 			CyPlayerX = GC.getPlayer(iPlayerX)
@@ -1598,9 +1596,9 @@ class CvVictoryScreen:
 
 	def getAP_UN_OwnerTeam(self):
 		for i in xrange(GC.getNumBuildingInfos()):
-			CvBuildingInfo = GC.getBuildingInfo(i)
+			iVoteSource = BUILDING.getVoteSource(i)
 			for j in xrange(GC.getNumVoteSourceInfos()):
-				if CvBuildingInfo.getVoteSourceType() == j:
+				if iVoteSource == j:
 					for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
 						CyPlayerX = GC.getPlayer(iPlayerX)
 						if CyPlayerX.isAlive() and not CyPlayerX.isMinorCiv() and CyPlayerX.hasBuilding(i):
@@ -1683,8 +1681,11 @@ class CvVictoryScreen:
 				self.iTab = 0
 				self.showVictoryConditionScreen(screen)
 		elif iCode == NotifyCode.NOTIFY_CLICKED:
-			if NAME.startswith("VS_Tab"):
-				ID = int(NAME[-1])
+			#	Parse the WHOLE suffix, and only when it is one: the widgets are VS_Tab0..VS_Tab3, so a name
+			#	with no numeric tail is not a tab and must not be parsed as one (a bare "VS_Tab" raised
+			#	ValueError on int('b')). Reading NAME[-1] was also wrong for any tab index above 9.
+			if NAME.startswith("VS_Tab") and NAME[6:].isdigit():
+				ID = int(NAME[6:])
 				screen.hide("VS_Col_Tab" + str(self.iTab))
 				screen.show("VS_Tab" + str(self.iTab))
 				screen.hide("VS_Tab" + str(ID))

@@ -1,0 +1,15 @@
+{
+ "type": "UNITCOMBAT_BIOLOGICAL",
+ "skills": {
+  "cannotMergeSplit": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/biological_warfare.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_BIOLOGICAL",
+  "forMilitary": true
+ }
+}

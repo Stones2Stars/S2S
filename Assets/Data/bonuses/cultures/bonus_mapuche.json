@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_MAPUCHE",
+ "enables": {
+  "units": [
+   "UNIT_IRONWOOD_SPEARMAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MAPUCHE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MAPUCHE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

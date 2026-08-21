@@ -1,0 +1,432 @@
+{
+ "type": "BUILDING_MASTER_HUNTER",
+ "enables": {
+  "buildings": [
+   "BUILDING_HAWKING_HUT",
+   "BUILDING_TRADITION_HUNTER"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEMI_AUTOMATIC_WEAPONS"
+  ]
+ },
+ "whenObsolete": {
+  "food": {
+   "city": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BONUS_SEA_LION_AND_SEAL",
+       "scope": "city",
+       "min": 1
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BONUS_KANGAROO",
+       "scope": "city",
+       "min": 1
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BONUS_BEAVER",
+       "scope": "city",
+       "min": 1
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BONUS_WALRUS",
+       "scope": "city",
+       "min": 1
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BONUS_RABBIT",
+       "scope": "city",
+       "min": 1
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BONUS_MAMMOTH",
+       "scope": "city",
+       "min": 1
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BONUS_DEER",
+       "scope": "city",
+       "min": 1
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BONUS_BISON",
+       "scope": "city",
+       "min": 1
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BONUS_ELEPHANT",
+       "scope": "city",
+       "min": 1
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BONUS_PIG",
+       "scope": "city",
+       "min": 1
+      }
+     }
+    ]
+   }
+  },
+  "commerce": {
+   "city": {
+    "flat": 2
+   }
+  },
+  "happiness": {
+   "city": {
+    "flat": 1
+   }
+  },
+  "health": {
+   "city": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BONUS_DEER",
+       "scope": "city",
+       "min": 1
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BONUS_BISON",
+       "scope": "city",
+       "min": 1
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BONUS_KANGAROO",
+       "scope": "city",
+       "min": 1
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BONUS_SEA_LION_AND_SEAL",
+       "scope": "city",
+       "min": 1
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BONUS_BEAVER",
+       "scope": "city",
+       "min": 1
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BONUS_WALRUS",
+       "scope": "city",
+       "min": 1
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BONUS_ELEPHANT",
+       "scope": "city",
+       "min": 1
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BONUS_RABBIT",
+       "scope": "city",
+       "min": 1
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BONUS_MAMMOTH",
+       "scope": "city",
+       "min": 1
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BONUS_PIG",
+       "scope": "city",
+       "min": 1
+      }
+     }
+    ]
+   }
+  },
+  "experience": {
+   "city": {
+    "unitCombats": {
+     "UNITCOMBAT_HUNTER": {
+      "flat": 3
+     }
+    }
+   }
+  },
+  "PROPERTY_EDUCATION": {
+   "city": {
+    "flat": 1
+   }
+  }
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_MASTER_HUNTER_TRADITION"
+   ],
+   "all": [
+    "TECH_TRACKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SEA_LION_AND_SEAL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_KANGAROO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BEAVER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WALRUS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_RABBIT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MAMMOTH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DEER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BISON",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ELEPHANT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PIG",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DEER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BISON",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_KANGAROO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SEA_LION_AND_SEAL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BEAVER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WALRUS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ELEPHANT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_RABBIT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MAMMOTH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PIG",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_HUNTER": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MASTER_HUNTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MASTER_HUNTER",
+  "civilopedia": "TXT_KEY_BUILDING_MASTER_HUNTER_PEDIA",
+  "notConstructible": true,
+  "worth": 1,
+  "militaryWorth": 4,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 10,
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

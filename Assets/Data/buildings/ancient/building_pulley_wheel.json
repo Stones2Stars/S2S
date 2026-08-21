@@ -1,0 +1,114 @@
+{
+ "type": "BUILDING_PULLEY_WHEEL",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_STEAM_POWER"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TREADMILL_CRANE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CARPENTER",
+    "TECH_PULLEY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ROPE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_TREADMILL_CRANE",
+    "BUILDING_STEAM_CRANE",
+    "BUILDING_MODERN_CRANE",
+    "BUILDING_HIGH_TECH_CRANE"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": -10,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   },
+   "buildings": {
+    "BUILDING_WALLS": {
+     "percent": 10
+    },
+    "BUILDING_HIGH_WALLS": {
+     "percent": 10
+    },
+    "BUILDING_BARRICADES": {
+     "percent": 10
+    },
+    "BUILDING_CEMENT_BARRIER": {
+     "percent": 10
+    },
+    "BUILDING_METAMATERIAL_WALLS": {
+     "percent": 10
+    },
+    "BUILDING_SUPERSTRONG_ALLOY_WALLS": {
+     "percent": 10
+    },
+    "BUILDING_MEGASTRONG_ALLOY_WALLS": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 146,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PULLEY_WHEEL",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PULLEY_WHEEL",
+  "civilopedia": "TXT_KEY_BUILDING_PULLEY_WHEEL_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

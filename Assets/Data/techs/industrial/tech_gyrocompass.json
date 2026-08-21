@@ -1,0 +1,77 @@
+{
+ "type": "TECH_GYROCOMPASS",
+ "enables": {
+  "techs": [
+   "TECH_ENCRYPTION_MACHINES",
+   "TECH_SUBMARINE_WARFARE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SCREW_PROPELLER",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HYDROELECTRICITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "domainMoves": {
+  "empire": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 7356
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/gyrocompass.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_GYROCOMPASS",
+  "civilopedia": "TXT_KEY_TECH_GYROCOMPASS_PEDIA",
+  "quote": "TXT_KEY_TECH_GYROCOMPASS_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 69,
+  "gridY": 13
+ }
+}

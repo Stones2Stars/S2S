@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_HUMAN_MOD_ROBOTIC_BODY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ANIMA_CHAMBER",
+    "TECH_COMPREHENSIVE_CYBERNETICS",
+    "TECH_ARTIFICIAL_LIFE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_DIGITAL_IDENTITY",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_ROBOTIC_BODY"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MARTIAN_ELECTRONICS_FACTORY": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 11810
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_ROBOTIC_BODY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_ROBOTIC_BODY",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_ROBOTIC_BODY_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

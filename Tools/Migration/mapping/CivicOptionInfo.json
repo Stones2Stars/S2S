@@ -1,0 +1,13 @@
+{
+  "entity": "CivicOptionInfo",
+  "rootElement": "CivicOptionInfo",
+  "glob": "**/CIV4CivicOptionInfos.xml",
+  "channels": {},
+  "inversionsOut": {},
+  "enablerEdges": {},
+  "prereqs": [],
+  "cost": [],
+  "art": [],
+  "identity": ["Type", "Description"],
+  "boostsIn": []
+}

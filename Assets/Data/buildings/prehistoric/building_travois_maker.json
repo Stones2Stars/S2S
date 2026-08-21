@@ -1,0 +1,115 @@
+{
+ "type": "BUILDING_TRAVOIS_MAKER",
+ "enables": {
+  "buildings": [
+   "BUILDING_AERIAL_BASKET_ROPEWAYS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MACHINERY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_WHEELWRIGHT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PORTABLE_SHELTERS",
+    {
+     "any": [
+      "BUILDING_STORAGE_PIT",
+      "BUILDING_GRANARY",
+      "BUILDING_MODERN_GRANARY",
+      "BUILDING_BARTER_POST",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BAMBOO",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_WHEELWRIGHT",
+    "BUILDING_CARRIAGE_BUILDER",
+    "BUILDING_FACTORY_AUTOMOBILES",
+    "BUILDING_SELF_ASSEMBLY_FACTORY"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 56,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRAVOIS_MAKER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SIEGE_WORKSHOP"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRAVOIS_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_TRAVOIS_MAKER_PEDIA",
+  "conquestProbability": 33,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

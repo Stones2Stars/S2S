@@ -1,0 +1,157 @@
+{
+ "type": "CIVIC_SOCIALIZED",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_WELFARE_FRAUD",
+   "BUILDING_SOCIAL_JUSTICE_ORGANIZATION",
+   "BUILDING_WELFARE_OFFICE"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "percent": -4
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": -1
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1,
+   "buildings": {
+    "BUILDING_SOCIAL_JUSTICE_ORGANIZATION": {
+     "flat": -1
+    },
+    "BUILDING_RETIREMENT_HOME": {
+     "flat": 1
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "buildings": {
+    "BUILDING_DOCTORS_OFFICE": {
+     "flat": 2
+    },
+    "BUILDING_SURGEONS_OFFICE": {
+     "flat": 2
+    },
+    "BUILDING_HOSPITAL": {
+     "flat": 3
+    },
+    "BUILDING_CENTERS_FOR_DISEASE_CONTROL": {
+     "flat": 2
+    },
+    "BUILDING_MEDICAL_CLINIC": {
+     "flat": 2
+    },
+    "BUILDING_HOUSING_SLUMS": {
+     "flat": 1
+    },
+    "BUILDING_HOUSING_SHANTY_TOWN": {
+     "flat": 1
+    },
+    "BUILDING_HOUSING_GHETTOS": {
+     "flat": 1
+    },
+    "BUILDING_HOUSING_INNER_CITY": {
+     "flat": 1
+    },
+    "BUILDING_HOUSING_PROJECTS": {
+     "flat": 1
+    },
+    "BUILDING_HOUSING_HABITATION_PODS": {
+     "flat": 1
+    },
+    "BUILDING_HOUSING_ARCOLOGY_SLUMS": {
+     "flat": 1
+    },
+    "BUILDING_HOUSING_COLONY_ARCOLOGY": {
+     "flat": 1
+    },
+    "BUILDING_LAUNCH_ARCOLOGY": {
+     "flat": 1
+    },
+    "BUILDING_RETIREMENT_HOME": {
+     "flat": 2
+    },
+    "BUILDING_REHABILITATION_CENTER": {
+     "flat": 1
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "flat": 1
+    },
+    "BUILDING_HEALTHCARE_MEGACOMPLEX": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   },
+   "numCities": {
+    "percent": 10
+   },
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 3,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
+   "corporation": {
+    "percent": 30
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 10
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -3
+   },
+   "national": {
+    "flat": -3
+   }
+  }
+ },
+ "grants": {
+  "revolution": -25
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/welfare_socialized.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_SOCIALIZED",
+  "civilopedia": "TXT_KEY_CIVIC_SOCIALIZED_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_SOCIALIZED_STRATEGY",
+  "civicOption": "CIVICOPTION_WELFARE",
+  "anarchyLength": 2,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

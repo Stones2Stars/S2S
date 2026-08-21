@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_MACHU_PICCHU_PLANS",
+ "enables": {
+  "builds": [
+   "BUILD_MACHU_PICCHU"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MACHU_PICCHU_PLANS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MACHU_PICCHU_PLANS",
+  "civilopedia": "TXT_KEY_BONUS_MACHU_PICCHU_PLANS_PEDIA",
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
+ }
+}

@@ -1,0 +1,99 @@
+{
+ "type": "TECH_HERALDRY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_ALBANIAN",
+   "BUILDING_CULTURE_AUSTRIAN",
+   "BUILDING_CULTURE_FINNISH",
+   "BUILDING_CULTURE_GHURID",
+   "BUILDING_CULTURE_KIPCHAK",
+   "BUILDING_CULTURE_MOLLO",
+   "BUILDING_CULTURE_NORMAN",
+   "BUILDING_CULTURE_PORTUGUESE",
+   "BUILDING_CULTURE_SUNDANESE",
+   "BUILDING_GUILD_DRAPERS",
+   "BUILDING_GUILD_TAILORS"
+  ],
+  "techs": [
+   "TECH_ARMOR_CRAFTING"
+  ],
+  "units": [
+   "UNIT_AFONSO_HENRIQUES",
+   "UNIT_ALA_AL_DIN_HUSAYN",
+   "UNIT_ALUNA_SHAMAN",
+   "UNIT_ASVARAN_SARDAR",
+   "UNIT_BEAR_KNEE",
+   "UNIT_CASIMIR",
+   "UNIT_ENTERTAINER",
+   "UNIT_FUNJ_CAVALRY",
+   "UNIT_HEAVY_CAVALRY",
+   "UNIT_HEAVY_TARKHAN",
+   "UNIT_HENRY_THE_LION",
+   "UNIT_HUYAN_ZHUO",
+   "UNIT_JAIPONGAN_DANCER",
+   "UNIT_KALYAGA",
+   "UNIT_KETABDAR",
+   "UNIT_NORMAN_KNIGHT",
+   "UNIT_SABAR_DRUMMER",
+   "UNIT_SIPAHI",
+   "UNIT_WANQARA",
+   "UNIT_WARLORDII",
+   "UNIT_WARLORDIIS"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_WARLORDI"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_YEOMANRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1445
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": ",Art/Interface/Buttons/TechTree/heraldry.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,6,8"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_HERALDRY",
+  "soundMP": "AS2D_TECH_HERALDRY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_HERALDRY",
+  "civilopedia": "TXT_KEY_TECH_HERALDRY_PEDIA",
+  "quote": "TXT_KEY_TECH_HERALDRY_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 45,
+  "gridY": 19
+ }
+}

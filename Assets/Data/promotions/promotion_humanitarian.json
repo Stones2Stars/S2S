@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_HUMANITARIAN",
+ "heal": {
+  "unit": {
+   "sameTile": {
+    "flat": 5
+   },
+   "support": {
+    "flat": 1
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -1
+  },
+  "plot": {
+   "flat": -1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionHumanitarian.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_HUMANITARIAN",
+  "unitCombats": [
+   "UNITCOMBAT_HEALTH_CARE",
+   "UNITCOMBAT_RECON"
+  ]
+ }
+}

@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_INTERSTELLAR_BASE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WEAPONIZED_GRAVITY_FIELDS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_INTERSTELLAR_BASE"
+ },
+ "cost": {
+  "gold": 400,
+  "time": 3000
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/interstellar_military_base.dds"
+  },
+  "hotkey": "KB_F"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_INTERSTELLAR_BASE"
+ }
+}

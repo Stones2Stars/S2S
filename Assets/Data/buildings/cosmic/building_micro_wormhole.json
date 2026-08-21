@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_MICRO_WORMHOLE",
+ "enables": {
+  "buildings": [
+   "BUILDING_INVERSE_CITY",
+   "BUILDING_MULTIVERSE_CITY"
+  ],
+  "units": [
+   "UNIT_HYPERINTELLIGENT_WORK_CREW"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TELEPORT_BOOTH",
+    "TECH_COMPACT_WORMHOLES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 3
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 18355,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MICRO_WORMHOLE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MICRO_WORMHOLE",
+  "civilopedia": "TXT_KEY_BUILDING_MICRO_WORMHOLE_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

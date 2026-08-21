@@ -1,0 +1,85 @@
+{
+ "type": "TECH_LEAD_GLASS",
+ "enables": {
+  "bonuses": [
+   "BONUS_CRYSTAL_GLASSWARE"
+  ],
+  "buildings": [
+   "BUILDING_MURANO_GLASSMAKERS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FREE_ARTISTRY",
+     "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "type": "BUILDING_GLASSBLOWERS_WORKSHOP",
+       "scope": "empire",
+       "min": 1
+      },
+      {
+       "type": "BUILDING_FACTORY_GLASSWARE",
+       "scope": "empire",
+       "min": 1
+      },
+      {
+       "type": "BUILDING_MANUFACTURING_DISTRICT",
+       "scope": "empire",
+       "min": 1
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 2701
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/GlassBlowing.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,7"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_LEAD_GLASS",
+  "soundMP": "AS2D_TECH_LEAD_GLASS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_LEAD_GLASS",
+  "civilopedia": "TXT_KEY_TECH_LEAD_GLASS_PEDIA",
+  "quote": "TXT_KEY_TECH_LEAD_GLASS_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 16,
+  "militaryWorth": 4,
+  "gridX": 53,
+  "gridY": 19
+ }
+}

@@ -1,0 +1,87 @@
+{
+ "type": "TECH_PHOTON_THERMODYNAMICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_PHASED_ARRAY_OPTICS",
+   "BUILDING_MARTIAN_BROADBAND",
+   "BUILDING_VENUS_BROADBAND"
+  ],
+  "projects": [
+   "PROJECT_LASER_AUTO_DEFENSES"
+  ],
+  "techs": [
+   "TECH_ION_BEAMS",
+   "TECH_ORBITAL_FLIGHT",
+   "TECH_QUANTUM_COMPUTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INTERNAL_SHOCKWAVE_ENGINE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NOVUS_CHEMISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOROBOTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADVANCED_COMPUTERS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WIRELESS_ELECTRICITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 44505
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/photonthermodynamics.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PHOTON_THERMODYNAMICS",
+  "soundMP": "AS2D_TECH_PHOTON_THERMODYNAMICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PHOTON_THERMODYNAMICS",
+  "civilopedia": "TXT_KEY_TECH_PHOTON_THERMODYNAMICS_PEDIA",
+  "quote": "TXT_KEY_TECH_PHOTON_THERMODYNAMICS_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 106,
+  "gridY": 1
+ }
+}

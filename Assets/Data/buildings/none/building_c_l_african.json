@@ -1,0 +1,163 @@
+{
+ "type": "BUILDING_C_L_AFRICAN",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_AKA",
+   "BUILDING_CULTURE_AKSUMITE",
+   "BUILDING_CULTURE_ALGERIAN",
+   "BUILDING_CULTURE_ANGOLAN",
+   "BUILDING_CULTURE_ASHANTI",
+   "BUILDING_CULTURE_AZANDE",
+   "BUILDING_CULTURE_BEDOUIN",
+   "BUILDING_CULTURE_BENIN",
+   "BUILDING_CULTURE_BERBER",
+   "BUILDING_CULTURE_CARTHAGINIAN",
+   "BUILDING_CULTURE_DAHOMEY",
+   "BUILDING_CULTURE_EGYPTIAN",
+   "BUILDING_CULTURE_ETHIOPIAN",
+   "BUILDING_CULTURE_FULANI",
+   "BUILDING_CULTURE_FURAWI",
+   "BUILDING_CULTURE_GHANA",
+   "BUILDING_CULTURE_GUANCHES",
+   "BUILDING_CULTURE_HAUSA",
+   "BUILDING_CULTURE_HERERO",
+   "BUILDING_CULTURE_HYKSOSI",
+   "BUILDING_CULTURE_KANEM_BORNU",
+   "BUILDING_CULTURE_KENYAN",
+   "BUILDING_CULTURE_KITARAN",
+   "BUILDING_CULTURE_KONGOLESE",
+   "BUILDING_CULTURE_KONJO",
+   "BUILDING_CULTURE_KUSHITE",
+   "BUILDING_CULTURE_LIBYAN",
+   "BUILDING_CULTURE_LUBA",
+   "BUILDING_CULTURE_LUNDA",
+   "BUILDING_CULTURE_MALINESE",
+   "BUILDING_CULTURE_MAMELUK",
+   "BUILDING_CULTURE_MASAI",
+   "BUILDING_CULTURE_MERINA",
+   "BUILDING_CULTURE_MOROCCAN",
+   "BUILDING_CULTURE_MUTAPA",
+   "BUILDING_CULTURE_NAMA",
+   "BUILDING_CULTURE_NIGERIAN",
+   "BUILDING_CULTURE_NOK",
+   "BUILDING_CULTURE_NUBIAN",
+   "BUILDING_CULTURE_NUMIDIAN",
+   "BUILDING_CULTURE_PUNTIC",
+   "BUILDING_CULTURE_RHODESIAN",
+   "BUILDING_CULTURE_SENEGALI",
+   "BUILDING_CULTURE_SENNAR",
+   "BUILDING_CULTURE_SOMALI",
+   "BUILDING_CULTURE_SONGHAI",
+   "BUILDING_CULTURE_SOUTH_AFRICAN",
+   "BUILDING_CULTURE_SUDANESE",
+   "BUILDING_CULTURE_SWAHILI",
+   "BUILDING_CULTURE_SWAZI",
+   "BUILDING_CULTURE_TANZANIAN",
+   "BUILDING_CULTURE_TUAREG",
+   "BUILDING_CULTURE_TUNISIAN",
+   "BUILDING_CULTURE_ZANZIBARI",
+   "BUILDING_CULTURE_ZIMBABWEAN",
+   "BUILDING_CULTURE_ZULU",
+   "BUILDING_HIERACOSPHINX_BREEDER",
+   "BUILDING_NOK_SCULPTURE_WORKSHOP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_AFRICAN",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "costs": {
+  "city": {
+   "percent": [
+    {
+     "value": -5,
+     "enabled": "BUILDING_C_L_AFRICAN"
+    },
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_ASIAN"
+    },
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_EUROPEAN"
+    },
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_MIDDLE_EASTERN"
+    },
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_NEANDERTHAL"
+    },
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_NORTH_AMERICAN"
+    },
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_OCEANIAN"
+    },
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_SOUTH_AMERICAN"
+    }
+   ]
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_CULTURE_AFRICAN",
+       "enabled": "IS_SETTLER"
+      }
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 1
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_AFRICAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_C_L_AFRICAN",
+  "civilopedia": "TXT_KEY_BUILDING_C_L_PEDIA",
+  "help": "TXT_KEY_BUILDING_C_L_HELP",
+  "conquestProbability": 85,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,123 @@
+{
+ "type": "UNIT_BIOLOGICAL_WARFARE_MISSILE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_BIOLOGICAL_WARFARE_LAB",
+    "TECH_GUIDED_WEAPONS"
+   ],
+   "disabled": "NO_NUKES"
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 100
+   },
+   "limit": {
+    "flat": 60
+   },
+   "maxUnits": {
+    "flat": 8
+   }
+  }
+ },
+ "range": {
+  "unit": {
+   "flat": 4
+  }
+ },
+ "air": {
+  "unit": {
+   "evasion": {
+    "percent": 65
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_BIOLOGICAL_WARFARE_MISSILE"
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "ignoreBuildingDefense",
+  "mechanized",
+  "suicide",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "airUnit",
+  "missile"
+ ],
+ "combatClass": "UNITCOMBAT_MISSILE",
+ "combatClasses": [
+  "UNITCOMBAT_BALLISTIC",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_WARHEAD",
+  "UNITCOMBAT_WEAPON_DETONATE_BIOLOGICAL",
+  "UNITCOMBAT_MOTILITY_UNMANNED",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_HUGE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 1765,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BIOLOGICAL_WARFARE_MISSILE",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 10,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_BIOLOGICAL_WARFARE_MISSILE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_BIOLOGICAL_WARFARE_MISSILE",
+  "civilopedia": "TXT_KEY_UNIT_BIOLOGICAL_WARFARE_MISSILE_PEDIA",
+  "worth": 3,
+  "militaryWorth": 120,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_MISSILE_AIR",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_MISSILE_AIR",
+   "UNITAI_ATTACK_AIR"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": 90
+  },
+  "base": {
+   "airCombat": 40,
+   "airCombatLimit": 100
+  }
+ }
+}

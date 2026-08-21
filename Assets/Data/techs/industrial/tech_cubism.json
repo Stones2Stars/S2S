@@ -1,0 +1,59 @@
+{
+ "type": "TECH_CUBISM",
+ "enables": {
+  "techs": [
+   "TECH_MODERN_ART"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_IMPRESSIONISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PSYCHOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 7718
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/cubism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CUBISM",
+  "soundMP": "AS2D_TECH_CUBISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CUBISM",
+  "civilopedia": "TXT_KEY_TECH_CUBISM_PEDIA",
+  "quote": "TXT_KEY_TECH_CUBISM_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 21,
+  "militaryWorth": 7,
+  "tradeable": true,
+  "gridX": 70,
+  "gridY": 1
+ }
+}

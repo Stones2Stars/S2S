@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_CYBERIMMUNIOLOGY_THERAPY_CLINIC",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_VIROTHERAPY_CLINIC",
+    "BUILDING_NEUROTRANSMITTER_MANIPULATOR_LAB",
+    "BUILDING_REJUVENATION_TANK",
+    "TECH_CYBERIMMUNOLOGY",
+    {
+     "type": "BONUS_NANOBOTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_METAMATERIALS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NOVUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_DOCTOR": 1
+  }
+ },
+ "cost": {
+  "production": 4485,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CYBERIMMUNIOLOGY_THERAPY_CLINIC",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CYBERIMMUNIOLOGY_THERAPY_CLINIC",
+  "civilopedia": "TXT_KEY_BUILDING_CYBERIMMUNIOLOGY_THERAPY_CLINIC_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

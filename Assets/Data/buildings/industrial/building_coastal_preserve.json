@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_COASTAL_PRESERVE",
+ "enables": {
+  "buildings": [
+   "BUILDING_SEA_TREE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "TECH_WILDLIFE_CONSERVATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 7,
+     "enabled": "TECH_TOURISM"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "TECH_SENTIENT_EARTH"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "TECH_ECOLOGICAL_ENGINEERING"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "cost": {
+  "production": 680,
+  "sizeModifier": 3,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_COASTAL_PRESERVE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_COASTAL_PRESERVE",
+  "civilopedia": "TXT_KEY_BUILDING_COASTAL_PRESERVE_PEDIA",
+  "worth": 3,
+  "militaryWorth": 1,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTIONLINE_CHARGE",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Charge.dds,Art/Interface/Buttons/Promotions_Atlas.dds,1,5"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_CHARGE",
+  "unitCombats": [
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_HELICOPTER",
+   "UNITCOMBAT_ASSAULT_MECH",
+   "UNITCOMBAT_DREADNOUGHT",
+   "UNITCOMBAT_CLONES"
+  ],
+  "notOnDomains": [
+   "DOMAIN_SEA"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ]
+ }
+}

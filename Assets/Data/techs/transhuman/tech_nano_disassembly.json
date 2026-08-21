@@ -1,0 +1,65 @@
+{
+ "type": "TECH_NANO_DISASSEMBLY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CLAYTRONIC_TOWER"
+  ],
+  "promotions": [
+   "PROMOTION_HEAL4"
+  ],
+  "techs": [
+   "TECH_NANOTROIDS"
+  ],
+  "units": [
+   "UNIT_ANIMA_REPAIR_CLOUD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SENTIENT_EARTH",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOSHIELDING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 86834
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Buttons/Techs/TechNanodisassembly.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NANO_DISASSEMBLY",
+  "soundMP": "AS2D_TECH_NANO_DISASSEMBLY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NANO_DISASSEMBLY",
+  "civilopedia": "TXT_KEY_TECH_NANO_DISASSEMBLY_PEDIA",
+  "quote": "TXT_KEY_TECH_NANO_DISASSEMBLY_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 50,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 120,
+  "gridY": 7
+ }
+}

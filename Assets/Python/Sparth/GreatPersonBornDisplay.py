@@ -13,7 +13,12 @@ def init():
 init()
 
 # globals
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
 g_GreatPeople = {
 	"UNIT_PROPHET"			: "ART_DEF_BACKGROUND_PROPHET",

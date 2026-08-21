@@ -1,0 +1,136 @@
+{
+ "type": "BUILDING_FARM_SUPPLY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FARMSCRAPER_I"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CHEMISTRY",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "IMPROVEMENT_FARM",
+       "scope": "plot"
+      },
+      {
+       "type": "IMPROVEMENT_VERTICAL_FARM",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_FARMSCRAPER_I"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    {
+     "value": 6,
+     "enabled": "TECH_REFRIGERATION"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_GENE_MANIPULATION"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_LONG_RANGE_FORECASTING"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_CHEMICALS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "type": "BONUS_FERTILIZERS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 495,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FARM_SUPPLY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FARM_SUPPLY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_SUPPLY",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_SUPPLY_PEDIA",
+  "worth": 6,
+  "militaryWorth": 3,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

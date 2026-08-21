@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_TRANSATLANTIC_TUNNEL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
+    "TECH_SUPERSTRONG_ALLOYS",
+    {
+     "any": [
+      "BUILDING_MAGLEV_RAILS",
+      "BUILDING_VACTRAIN_TERMINAL",
+      "BUILDING_GRAVITY_TRAIN"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 24870,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TRANSATLANTIC_TUNNEL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRANSATLANTIC_TUNNEL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSATLANTIC_TUNNEL",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSATLANTIC_TUNNEL_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

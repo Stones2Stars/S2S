@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_ORDINANCE_EFFECT_TIRE_RECYCLING_PROGRAM",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_RECYCLING"
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "empire": {
+   "flat": -25
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_TIRE_RECYCLING_PROGRAM",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_EFFECT_TIRE_RECYCLING_PROGRAM_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

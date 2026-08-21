@@ -1,0 +1,40 @@
+{
+ "type": "PROMOTION_FERAL3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_FERAL2"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "attack": {
+    "percent": 30
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": -10
+  }
+ },
+ "skills": {
+  "stampede": true,
+  "animalIgnoresBorders": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FERAL": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Feral3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FERAL3"
+ }
+}

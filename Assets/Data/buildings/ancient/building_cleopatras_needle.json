@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_CLEOPATRAS_NEEDLE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "CITY",
+     "scope": "empire",
+     "min": 3
+    },
+    "TECH_IDEOGRAMS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "percent": 12
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 708,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CLEOPATRA_NEEDLE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CLEOPATRAS_NEEDLE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CLEOPATRAS_NEEDLE",
+  "civilopedia": "TXT_KEY_BUILDING_CLEOPATRAS_NEEDLE_PEDIA",
+  "help": "TXT_KEY_BUILDING_CLEOPATRAS_NEEDLE_HELP",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

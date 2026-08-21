@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_CARBON_EXCHANGE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SENTIENT_EARTH"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ECOSYSTEM_SERVICES_MARKET"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ECOLOGICAL_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_ECOSYSTEM_SERVICES_MARKET"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "cost": {
+  "production": 2105,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CARBON_EXCHANGE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CARBON_EXCHANGE",
+  "civilopedia": "TXT_KEY_BUILDING_CARBON_EXCHANGE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,97 @@
+{
+ "type": "C2C_ERA_COSMIC",
+ "costs": {
+  "world": {
+   "train": {
+    "percent": 100
+   },
+   "construct": {
+    "percent": 100
+   },
+   "create": {
+    "percent": 100
+   },
+   "research": {
+    "percent": 650
+   },
+   "researchCutBelowEra": {
+    "percent": 100
+   },
+   "build": {
+    "percent": 100
+   },
+   "improvementUpgrade": {
+    "percent": 100
+   }
+  }
+ },
+ "growth": {
+  "world": {
+   "percent": 100
+  }
+ },
+ "greatPeopleRate": {
+  "world": {
+   "percent": 120
+  }
+ },
+ "durations": {
+  "world": {
+   "civicAnarchy": {
+    "percent": 80
+   },
+   "religiousAnarchy": {
+    "percent": 80
+   }
+  }
+ },
+ "eventChance": {
+  "world": {
+   "flat": 10
+  }
+ },
+ "grants": {
+  "startingUnitMultiplier": 3,
+  "startingDefenseUnits": 3,
+  "startingWorkerUnits": 3,
+  "startingExploreUnits": 2,
+  "startingGold": 80000,
+  "freePopulation": 5
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/mainscreen/Era/Cosmic.dds"
+  }
+ },
+ "sound": {
+  "soundtrackSpace": 40,
+  "soundtracks": [
+   "AS2D_FINAL_FRONTIER",
+   "AS2D_HOLSTLEVINEMARS",
+   "AS2D_HOLSTLEVINEMERCURY",
+   "AS2D_HOLSTLEVINENEPTUNE"
+  ],
+  "citySoundscapes": [
+   {
+    "CITYSIZE_SMALL": "ASSS_CITY_TRANSHUMAN_SMALL_SELECT_AMB"
+   },
+   {
+    "CITYSIZE_MEDIUM": "ASSS_CITY_TRANSHUMAN_LARGE_SELECT_AMB"
+   },
+   {
+    "CITYSIZE_LARGE": "ASSS_CITY_TRANSHUMAN_LARGE_SELECT_AMB"
+   }
+  ],
+  "unitVictory": "AS2D_VICTORY_LATE",
+  "unitDefeat": "AS2D_LOSS_LATE"
+ },
+ "identity": {
+  "description": "TXT_KEY_ERA_COSMIC",
+  "strategy": "TXT_KEY_ERA_COSMIC_STRATEGY",
+  "order": 12,
+  "advancedStart": 1024000,
+  "historicalStartYear": 3000,
+  "historicalEndYear": 4000,
+  "normalSpeedTurns": 100
+ }
+}

@@ -1,0 +1,48 @@
+{
+ "type": "PROMOTION_BARD1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BARD2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_LORDSHIP"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityDefense": {
+    "percent": 10
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": -5
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BARD": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Bard1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BARD1"
+ }
+}

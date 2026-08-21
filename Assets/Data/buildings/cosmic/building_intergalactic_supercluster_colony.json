@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_INTERGALACTIC_SUPERCLUSTER_COLONY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTAURUS_SUPERCLUSTER_COLONY",
+   "BUILDING_CFA2_GREAT_WALL_COLONY",
+   "BUILDING_COMA_SUPERCLUSTER_COLONY",
+   "BUILDING_COSMIC_EXPANSION_POWER_PLANT",
+   "BUILDING_HERCULES_CORONA_BOREALIS_GREAT_WALL_COLONY",
+   "BUILDING_HYDRA_SUPERCLUSTER_COLONY",
+   "BUILDING_PERSEUS_PISCES_SUPERCLUSTER_COLONY",
+   "BUILDING_SLOAN_GREAT_WALL_COLONY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
+    "TECH_INTERCLUSTER_TRAVEL",
+    {
+     "type": "TERRAIN_OBSERVABLE_UNIVERSE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 9
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -5
+   }
+  }
+ },
+ "cost": {
+  "production": 4246,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_SUPERCLUSTER_COLONY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_SUPERCLUSTER_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_SUPERCLUSTER_COLONY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

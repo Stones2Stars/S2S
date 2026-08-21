@@ -1,0 +1,71 @@
+{
+ "type": "BONUS_COCOA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CATCHER_QUETZAL",
+   "BUILDING_CHILD_LABOR_CREW",
+   "BUILDING_CULTURE_BELGIAN",
+   "BUILDING_CULTURE_MIXTEC",
+   "BUILDING_CULTURE_WAYANA",
+   "BUILDING_GROVE_HAZELNUT",
+   "BUILDING_PLANTATION_COCOA",
+   "BUILDING_SCORPION_GATHERER"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_COCOA"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 8,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "maxLatitude": 25,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 40,
+  "uniqueRange": 2,
+  "area": true,
+  "flatlands": true,
+  "noRiverSide": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_LUSH"
+  ],
+  "validFeatures": [
+   "FEATURE_JUNGLE"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_MUDDY"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_COCOA",
+  "civilopedia": "TXT_KEY_BONUS_COCOA_PEDIA",
+  "bonusClassType": "BONUSCLASS_LUXURY",
+  "source": "natural"
+ }
+}

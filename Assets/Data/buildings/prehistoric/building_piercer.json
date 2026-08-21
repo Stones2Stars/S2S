@@ -1,0 +1,101 @@
+{
+ "type": "BUILDING_PIERCER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRANSHUMANISM"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_PIERCING_SHOP"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PERSONAL_ADORNMENTS",
+    {
+     "any": [
+      "BUILDING_STORAGE_PIT",
+      "BUILDING_GRANARY",
+      "BUILDING_MODERN_GRANARY",
+      "BUILDING_BARTER_POST",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_JEWELRY",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BONE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_IVORY",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_PIERCING_SHOP",
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 50,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PIERCER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PIERCER",
+  "civilopedia": "TXT_KEY_BUILDING_PIERCER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_RELIGION_TAOISM",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/religion_taosim.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_RELIGION_TAOISM",
+  "religion": "RELIGION_TAOISM"
+ }
+}

@@ -1,0 +1,173 @@
+{
+ "type": "UNIT_TAMED_WOLF_PAIR",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SPECIALIZATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DOG_KENNELS",
+    "TECH_THE_WHEEL",
+    {
+     "any": [
+      "HERITAGE_FOLKLORE_WOLF",
+      "HERITAGE_FOLKLORE_WOLF_DIRE",
+      "HERITAGE_FOLKLORE_WOLF_ETHIOPIAN",
+      "HERITAGE_TAXON_CANIDAE"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_TAMED_WOLF"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 7
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "onlyDefensive",
+  "tradable"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_TAMED",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_CANINE",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+  "UNITCOMBAT_ANIMAL_COMBAT_SCRATCH",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+  "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_WARNING",
+  "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_PACK_HUNTER",
+  "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_SMALL",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
+   },
+   {
+    "building": "BUILDING_MILITARY_STANDARD_CANINES"
+   },
+   {
+    "building": "BUILDING_DOG_BREEDER"
+   },
+   {
+    "building": "BUILDING_DOG_KENNELS"
+   },
+   {
+    "building": "BUILDING_GOVERNORS_MENAGERIE"
+   },
+   {
+    "building": "BUILDING_GOVERNORS_PETS"
+   },
+   {
+    "building": "BUILDING_GUARD_DOG_TRAINER"
+   },
+   {
+    "building": "BUILDING_HERDING_DOG_TRAINER"
+   },
+   {
+    "building": "BUILDING_HUNTING_DOG_TRAINER"
+   },
+   {
+    "building": "BUILDING_POLICE_DOG_TRAINER"
+   },
+   {
+    "building": "BUILDING_SLED_DOG_TRAINER"
+   },
+   {
+    "building": "BUILDING_TAXIDERMIST"
+   },
+   {
+    "building": "BUILDING_WAR_DOG_TRAINER"
+   },
+   {
+    "building": "BUILDING_ENCLOSURE_WOLF"
+   },
+   {
+    "building": "BUILDING_ZOO"
+   }
+  ]
+ },
+ "cost": {
+  "production": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TAMED_WOLF",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 3,
+      "define": {
+       "early": "ART_DEF_UNIT_TAMED_WOLF"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_TAMED_WOLF_PAIR",
+  "civilopedia": "TXT_KEY_UNIT_TAMED_ANIMAL_PEDIA",
+  "help": "TXT_KEY_UNIT_TAMED_ANIMALS_HELP",
+  "worth": 1,
+  "militaryWorth": 1,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "notUnitAIs": [
+   "UNITAI_WORKER",
+   "UNITAI_EXPLORE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

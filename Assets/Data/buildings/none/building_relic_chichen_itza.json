@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_RELIC_CHICHEN_ITZA",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 12
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CHICHEN_ITZA"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RELIC_CHICHEN_ITZA",
+  "civilopedia": "TXT_KEY_BUILDING_CHICHEN_ITZA_PEDIA",
+  "pediaCategory": "greatWonder",
+  "notConstructible": true,
+  "noInstanceLimit": true,
+  "worth": 5,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

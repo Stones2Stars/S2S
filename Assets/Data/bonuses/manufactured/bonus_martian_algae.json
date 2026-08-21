@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_MARTIAN_ALGAE",
+ "enables": {
+  "buildings": [
+   "BUILDING_MARTIAN_CITY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MARTIAN_ALGAE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MARTIAN_ALGAE",
+  "civilopedia": "TXT_KEY_BONUS_MARTIAN_ALGAE_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

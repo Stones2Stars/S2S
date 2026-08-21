@@ -1,0 +1,21 @@
+{
+ "type": "OUTCOME_ANIMAL_COMBAT3",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_ANIMAL_COMBAT3",
+  "message": "TXT_KEY_OUTCOME_ANIMAL_COMBAT_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COLOSSEUM"
+   ]
+  }
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city",
+ "replaces": [
+  "OUTCOME_ANIMAL_COMBAT1"
+ ]
+}

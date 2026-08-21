@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_PORTRAIT_PAINTER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PLASTIC_ELECTRONICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_PHOTOGRAPHY_STUDIO"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_OIL_PAINTING",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DYE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_PHOTOGRAPHY_STUDIO",
+    "BUILDING_HYPERMARKET"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
+ "cost": {
+  "production": 410,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PORTRAIT_PAINTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PORTRAIT_PAINTER",
+  "civilopedia": "TXT_KEY_BUILDING_PORTRAIT_PAINTER_PEDIA",
+  "worth": 1,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

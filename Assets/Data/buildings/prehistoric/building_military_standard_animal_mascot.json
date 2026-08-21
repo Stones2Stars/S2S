@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+ "enables": {
+  "buildings": [
+   "BUILDING_MILITARY_STANDARD_BEARS",
+   "BUILDING_MILITARY_STANDARD_BIG_CATS",
+   "BUILDING_MILITARY_STANDARD_BISON",
+   "BUILDING_MILITARY_STANDARD_CANINES",
+   "BUILDING_MILITARY_STANDARD_DEER",
+   "BUILDING_MILITARY_STANDARD_GIRAFFE",
+   "BUILDING_MILITARY_STANDARD_RHINOCEROS",
+   "BUILDING_MILITARY_STANDARD_WORKERS",
+   "BUILDING_MILITARY_STANDARD_ZEBRA",
+   "BUILDING_TRADITION_MILITARY_STANDARD_MASCOT"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_AVIATION"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_CULTURAL_IDENTITY"
+   ]
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_CIVILIAN": {
+     "flat": 1
+    },
+    "UNITCOMBAT_COMBATANT": {
+     "flat": 1
+    },
+    "UNITCOMBAT_EXPLORER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+  "civilopedia": "TXT_KEY_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT_PEDIA",
+  "notConstructible": true,
+  "worth": 1,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_MILITARY",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

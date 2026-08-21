@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_LUNAR_CONCRETE_MILL",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LUNAR_ROCK_QUARRY",
+    "BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
+    "TECH_LUNAR_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_CEMENT"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 2,
+   "percent": 300
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": -300,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "cost": {
+  "production": 100,
+  "hurryModifier": 10000
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUNAR_CONCRETE_MILL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_CONCRETE_MILL",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_CONCRETE_MILL_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

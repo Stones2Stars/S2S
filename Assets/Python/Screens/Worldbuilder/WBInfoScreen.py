@@ -6,7 +6,14 @@ import WBPromotionScreen
 import WBPlayerScreen
 import WBProjectScreen
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
+MAP = GC.getMap()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
 iMode = 0
 iSelectedPlayer = -1
@@ -224,7 +231,7 @@ class WBInfoScreen:
 				iCount += 1
 				sColor = u"<color=%d,%d,%d,%d>" %(pPlayer.getPlayerTextColorR(), pPlayer.getPlayerTextColorG(), pPlayer.getPlayerTextColorB(), pPlayer.getPlayerTextColorA())
 				sText = sColor + pCity.getName()
-				sButton = GC.getCivilizationInfo(pCity.getCivilizationType()).getButton()
+				sButton = INFO.getButton("CIVILIZATION_", pCity.getCivilizationType())
 				screen.setTableText("PlotTable", iColumn, iRow, "<font=3>" + sText + "</color></font>", sButton, WidgetTypes.WIDGET_PYTHON, 7200 + iPlayer, iCity, 1<<0)
 				screen.minimapFlashPlot(iX, iY, iColorB, -1)
 				if lSelectedItem == lPlots:
@@ -248,7 +255,7 @@ class WBInfoScreen:
 				if iOwner > -1:
 					pPlayer = GC.getPlayer(iOwner)
 					sColor = u"<color=%d,%d,%d,%d>" %(pPlayer.getPlayerTextColorR(), pPlayer.getPlayerTextColorG(), pPlayer.getPlayerTextColorB(), pPlayer.getPlayerTextColorA())
-					sButton = GC.getCivilizationInfo(pPlayer.getCivilizationType()).getButton()
+					sButton = INFO.getButton("CIVILIZATION_", pPlayer.getCivilizationType())
 				sText = u"%s(%d, %d)" % (sColor, iX, iY)
 				screen.setTableText("PlotTable", iColumn, iRow, "<font=3>" + sText + "</color></font>", sButton, WidgetTypes.WIDGET_PYTHON, 1027, iX * 10000 + iY, 1<<2)
 				screen.minimapFlashPlot(iX, iY, iColorB, -1)
@@ -268,7 +275,7 @@ class WBInfoScreen:
 				pPlayer = GC.getPlayer(iPlayer)
 				iLeader = pPlayer.getLeaderType()
 				sColor = u"<color=%d,%d,%d,%d>" %(pPlayer.getPlayerTextColorR(), pPlayer.getPlayerTextColorG(), pPlayer.getPlayerTextColorB(), pPlayer.getPlayerTextColorA())
-				sButton = GC.getLeaderHeadInfo(iLeader).getButton()
+				sButton = INFO.getButton("LEADER_", iLeader)
 				sText = u"%s%s" % (sColor, pPlayer.getName())
 				screen.setTableText("PlotTable", iColumn, iRow, "<font=3>" + sText + "</color></font>", sButton, WidgetTypes.WIDGET_PYTHON, 7876, iPlayer * 10000 + iLeader, 1<<0)
 

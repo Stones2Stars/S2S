@@ -1,0 +1,60 @@
+{
+ "type": "IMPROVEMENT_FORTIFIED_CAVE_WITH_CACHE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POTTERY",
+     "scope": "team"
+    },
+    {
+     "feature": [
+      "FEATURE_CAVES"
+     ]
+    }
+   ]
+  }
+ },
+ "culture": {
+  "plot": {
+   "flat": 5
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 90
+   },
+   "amount": {
+    "percent": 25
+   }
+  }
+ },
+ "characteristics": [
+  "actsAsCity",
+  "bombardable"
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_FORTIFIED_CAVE_WITH_CACHE"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 0
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_FORTIFIED_CAVE_WITH_CACHE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_FORTIFIED_CAVE_PEDIA",
+  "advancedStart": {
+   "cost": 10
+  },
+  "upgradeTime": 10,
+  "outsideBorders": true,
+  "militaryStructure": true,
+  "pillageTo": "IMPROVEMENT_FORTIFIED_CAVE",
+  "upgradesTo": "IMPROVEMENT_FORT",
+  "cultureRange": 1,
+  "upgradeRequiresFortify": true,
+  "universalBonusTrade": true
+ }
+}

@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_STARGAZERS_HUT",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANTIKYTHERA_MECHANISM",
+   "BUILDING_GRAND_SKY_FESTIVAL"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPULSORY_EDUCATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_OBSERVATORY"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_STARGAZING",
+    {
+     "any": [
+      "BUILDING_STORAGE_PIT",
+      "BUILDING_GRANARY",
+      "BUILDING_MODERN_GRANARY",
+      "BUILDING_BARTER_POST",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_OBSERVATORY",
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 146,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_STARGAZERS_HUT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_STARGAZERS_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_STARGAZERS_HUT_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

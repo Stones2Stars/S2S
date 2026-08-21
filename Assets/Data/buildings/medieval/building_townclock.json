@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_TOWNCLOCK",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUTOMATION_CLOCK",
+   "BUILDING_BIG_BEN",
+   "BUILDING_GATE_OF_THE_SUN",
+   "BUILDING_SU_SONGS_WORKSHOP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CLOCKWORKS",
+    {
+     "any": [
+      "BUILDING_FORGE",
+      "BUILDING_FOUNDRY",
+      "BUILDING_METALS_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2,
+   "percent": 15
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "cost": {
+  "production": 356,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CLOCK",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_TOWNCLOCK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TOWNCLOCK",
+  "civilopedia": "TXT_KEY_BUILDING_TOWNCLOCK_PEDIA",
+  "centerInCity": true,
+  "worth": 4,
+  "militaryWorth": 5,
+  "conquestProbability": 85,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,73 +1,51 @@
-//------------------------------------------------------------------------------------------------
-//  FILE:    CvGameSpeedInfo.cpp
-//------------------------------------------------------------------------------------------------
-#include "CvGameCoreDLL.h"
-#include "CvGameAI.h"
-#include "CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "CvXMLLoadUtility.h"
+//
+//	CvGameSpeedInfo -- the gamespeed poco's exemplar reads (see the header). The legacy scalar MIRRORS are
+//	DEAD (wave D): the base dispatch compiles the two authored world percents into m_modifiers and every read
+//	is a compiled-slot fetch through the base getScalar (docs/architecture/patterns.md §Materialize at mapFrom -- no raw-JSON family
+//	walker survives). The derived era-pacing reads below consume ONLY info data (this speed percent +
+//	CvEraInfo's year span / Normal-speed turn count).
+//
+
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
+#include "CvInfos.h"              // umbrella: keeps the unity batch's info-type defs whole (leakage guard)
+#include "AI/CvGameAI.h"
+#include "Defines/CvGlobals.h"
 #include "CvEraInfo.h"
 #include "CvGameSpeedInfo.h"
 
 
-//======================================================================================================
-//					CvGameSpeedInfo
-//======================================================================================================
-
 CvGameSpeedInfo::CvGameSpeedInfo()
 {
-	CvInfoUtil(this).initDataMembers();
 }
 
 
-// Every XML-backed field is declared here (#196); read/copy/checksum all derive from it.
-void CvGameSpeedInfo::getDataMembers(CvInfoUtil& util)
+namespace
 {
-	util
-		.add(m_iSpeedPercent, L"iSpeedPercent")
-		.add(m_iUnitYieldScalePercent, L"iUnitYieldScalePercent", 100)
-	;
-}
-
-
-int CvGameSpeedInfo::getSpeedPercent() const
-{
-	return m_iSpeedPercent;
-}
-
-
-int CvGameSpeedInfo::getHammerCostPercent() const
-{
-	if (GC.getGame().isOption(GAMEOPTION_EXP_UPSCALED_BUILDING_AND_UNIT_COSTS))
+	// This speed's pace percent (normal = 100). A PERCENT IS NOT SCALED (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)), so the read is
+	// already the human percent and NOTHING is reduced here.
+	// ⚠ Takes the info explicitly, so it answers "THIS speed's percent" -- CvGameSpeedScale::speedPercent()
+	// answers "the RUNNING game's", and is what a live-state caller must use instead of re-reading the scalar.
+	int gs_speedPercent(const CvGameSpeedInfo& kSpeed)
 	{
-		return getModifiedIntValue(m_iSpeedPercent, GC.getUPSCALED_HAMMER_COST_MODIFIER());
+		return kSpeed.getScalar(SCALAR_SPEED, CASC_SCOPE_WORLD, CASC_UNIT_PERCENT);
 	}
-	return m_iSpeedPercent;
-}
-
-
-int CvGameSpeedInfo::getUnitYieldScalePercent() const
-{
-	return m_iUnitYieldScalePercent;
 }
 
 
 int CvGameSpeedInfo::getTurnsInEra(int iEra) const
 {
 	FASSERT_BOUNDS(0, GC.getNumEraInfos(), iEra);
-	return std::max(1, (GC.getEraInfo((EraTypes)iEra).getNormalSpeedTurns() * m_iSpeedPercent + 50) / 100);
+	return std::max(1, (GC.getEraInfo((EraTypes)iEra).getNormalSpeedTurns() * gs_speedPercent(*this) + 50) / 100);
 }
 
 
 int CvGameSpeedInfo::getEraStartTurn(int iEra) const
 {
-	PROFILE_EXTRA_FUNC();
 	FASSERT_BOUNDS(0, GC.getNumEraInfos(), iEra);
 	int iTurn = 0;
-	for (int i = 0; i < iEra; i++)
+	for (int iPriorEra = 0; iPriorEra < iEra; iPriorEra++)
 	{
-		iTurn += getTurnsInEra(i);
+		iTurn += getTurnsInEra(iPriorEra);
 	}
 	return iTurn;
 }
@@ -75,11 +53,10 @@ int CvGameSpeedInfo::getEraStartTurn(int iEra) const
 
 int CvGameSpeedInfo::getTotalTurns() const
 {
-	PROFILE_EXTRA_FUNC();
 	int iTurns = 0;
-	for (int i = 0; i < GC.getNumEraInfos(); i++)
+	for (int iEra = 0; iEra < GC.getNumEraInfos(); iEra++)
 	{
-		iTurns += getTurnsInEra(i);
+		iTurns += getTurnsInEra(iEra);
 	}
 	return iTurns;
 }
@@ -96,26 +73,9 @@ int CvGameSpeedInfo::getTicksPerTurnInEra(int iEra) const
 }
 
 
-bool CvGameSpeedInfo::read(CvXMLLoadUtility* pXML)
+// #430: the JSON load hook. The §6 families (speed.world.percent + missionYieldMultiplier.world.percent)
+// compile into m_modifiers via the base section dispatch -- nothing type-specific to materialize here.
+void CvGameSpeedInfo::mapFrom(const picojson::value& entity)
 {
-	if (!CvInfoBase::read(pXML))
-	{
-		return false;
-	}
-	CvInfoUtil(this).readXml(pXML);
-
-	return true;
-}
-
-
-void CvGameSpeedInfo::copyNonDefaults(const CvGameSpeedInfo* pClassInfo)
-{
-	CvInfoBase::copyNonDefaults(pClassInfo);
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-}
-
-
-void CvGameSpeedInfo::getCheckSum(uint32_t& iSum) const
-{
-	CvInfoUtil(this).checkSum(iSum);
+	CvInfo::mapFrom(entity);   // core reading (type / text keys / button) + the section dispatch (compiles m_modifiers)
 }

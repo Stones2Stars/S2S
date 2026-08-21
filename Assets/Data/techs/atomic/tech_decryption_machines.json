@@ -1,0 +1,56 @@
+{
+ "type": "TECH_DECRYPTION_MACHINES",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHURCH_TURING_THESIS",
+   "BUILDING_CRYPTOLOGY_CENTER",
+   "BUILDING_GAME_THEORY_RESEARCH_CENTER"
+  ],
+  "techs": [
+   "TECH_EARLY_COMPUTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ENCRYPTION_MACHINES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 10309
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/decryptionmachines.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_DECRYPTION_MACHINES",
+  "soundMP": "AS2D_TECH_DECRYPTION_MACHINES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_DECRYPTION_MACHINES",
+  "civilopedia": "TXT_KEY_TECH_DECRYPTION_MACHINES_PEDIA",
+  "quote": "TXT_KEY_TECH_DECRYPTION_MACHINES_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 74,
+  "gridY": 1
+ }
+}

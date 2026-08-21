@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTION_BUILD_UP_TRAP_HUNTING4",
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_TRAP_HUNTING": 4
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/TrapHunting4BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_TRAP_HUNTING4"
+ }
+}

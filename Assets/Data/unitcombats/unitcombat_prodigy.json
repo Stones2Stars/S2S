@@ -1,0 +1,17 @@
+{
+ "type": "UNITCOMBAT_PRODIGY",
+ "skills": {
+  "cannotMergeSplit": true
+ },
+ "tags": [
+  "prodigy"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/prodigy.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_PRODIGY"
+ }
+}

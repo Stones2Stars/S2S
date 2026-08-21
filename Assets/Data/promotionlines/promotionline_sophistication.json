@@ -1,0 +1,18 @@
+{
+ "type": "PROMOTIONLINE_SOPHISTICATION",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Sophistication1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SOPHISTICATION",
+  "unitCombats": [
+   "UNITCOMBAT_SPECIES_HUMAN"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_ANIMAL",
+   "UNITCOMBAT_PACIFIST"
+  ]
+ }
+}

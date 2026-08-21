@@ -1,0 +1,102 @@
+{
+ "type": "TECH_LUNAR_COLONIZATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUNAR_ALGAE_FARM",
+   "BUILDING_LUNAR_ALUMINIUM_PROCESSING_FACILITY",
+   "BUILDING_LUNAR_BIOMASS_POWERPLANT",
+   "BUILDING_LUNAR_CHEMICAL_STORAGE",
+   "BUILDING_LUNAR_CONCRETE_MILL",
+   "BUILDING_LUNAR_FERTILIZER_STORAGE",
+   "BUILDING_LUNAR_GLASS_FACTORY",
+   "BUILDING_LUNAR_HYDROPONICS_FARM",
+   "BUILDING_LUNAR_IRON_PROCESSING_FACILITY",
+   "BUILDING_LUNAR_LAUNCH_SITE",
+   "BUILDING_LUNAR_MAGNESIUM_EXTRACTION_FACILITY",
+   "BUILDING_LUNAR_MANGANESE_EXTRACTION_FACILITY",
+   "BUILDING_LUNAR_ORGANIC_MATERIAL_STORAGE",
+   "BUILDING_LUNAR_ROCK_QUARRY",
+   "BUILDING_LUNAR_SOLAR_PANELS",
+   "BUILDING_LUNAR_TITANIUM_PROCESSING_FACILITY",
+   "BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
+   "BUILDING_SPACE_COLONY_LUNAR_BASE"
+  ],
+  "builds": [
+   "BUILD_COLONY_HABITAT_SMALL",
+   "BUILD_LUNAR_BASE",
+   "BUILD_LUNAR_MINING_OUTPOST",
+   "BUILD_LUNAR_PATH"
+  ],
+  "improvements": [
+   "IMPROVEMENT_COLONY_HABITAT_SMALL",
+   "IMPROVEMENT_LUNAR_BASE",
+   "IMPROVEMENT_LUNAR_MINING_OUTPOST"
+  ],
+  "techs": [
+   "TECH_LUNAR_MANUFACTURING",
+   "TECH_MEGACORPORATIONS",
+   "TECH_PLANETARY_COLONIZATION"
+  ],
+  "units": [
+   "UNIT_LUNARSETTLER",
+   "UNIT_LUNAR_BULLDOZER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NANO_ARCHITECTURE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 37614
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/lunarcolonization.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+  "soundMP": "AS2D_TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_LUNAR_COLONIZATION",
+  "civilopedia": "TXT_KEY_TECH_LUNAR_COLONIZATION_PEDIA",
+  "quote": "TXT_KEY_TECH_LUNAR_COLONIZATION_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 101,
+  "gridY": 3
+ }
+}

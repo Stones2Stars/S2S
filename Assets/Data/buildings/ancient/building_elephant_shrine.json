@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_ELEPHANT_SHRINE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PALEONTOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_REINCARNATION",
+    "TECH_ELEPHANT_DOMESTICATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ELEPHANT",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "RELIGION_HINDUISM"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 200,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ELEPHANT_SHRINE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ELEPHANT_SHRINE",
+  "civilopedia": "TXT_KEY_BUILDING_ELEPHANT_SHRINE_PEDIA",
+  "pediaCategory": "religious",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 10000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

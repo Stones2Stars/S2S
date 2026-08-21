@@ -1,0 +1,157 @@
+{
+ "type": "UNIT_SUBDUED_HAAST_EAGLE",
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_SUBDUED_HAAST_EAGLE"
+  }
+ },
+ "skills": [
+  "onlyDefensive",
+  "tradable"
+ ],
+ "tags": [
+  "landUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SUBDUED",
+ "combatClasses": [
+  "UNITCOMBAT_SUBDUED_MEDIUM",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_ANIMALS",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_SLAY_ANIMAL",
+    "requires": {
+     "outcome": "OUTCOME_SLAY_ANIMAL"
+    },
+    "chance": 100,
+    "food": {
+     "base": 4,
+     "random": 3
+    },
+    "production": 1,
+    "commerce": {
+     "base": 4,
+     "random": 5
+    }
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_GOVERNORS_PETS"
+   },
+   {
+    "building": "BUILDING_GOVERNORS_MENAGERIE"
+   },
+   {
+    "building": "BUILDING_MASTER_HUNTER"
+   },
+   {
+    "building": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
+   },
+   {
+    "building": "BUILDING_ENCLOSURE_BIRD"
+   },
+   {
+    "building": "BUILDING_FOLKLORE_T_BIRDS"
+   },
+   {
+    "building": "BUILDING_FOLKLORE_T_RAPTORS"
+   },
+   {
+    "building": "BUILDING_FOLKLORE_HAASTS_EAGLE"
+   },
+   {
+    "building": "BUILDING_REMAINS_HAASTS_EAGLE"
+   },
+   {
+    "building": "BUILDING_FOLKLORE_E_SKY"
+   },
+   {
+    "building": "BUILDING_FOLKLORE_E_PHOENIX"
+   },
+   {
+    "building": "BUILDING_FALCONER"
+   },
+   {
+    "building": "BUILDING_HAWKING_HUT"
+   },
+   {
+    "building": "BUILDING_FEATHER_WORKER"
+   },
+   {
+    "building": "BUILDING_FOLKLORE_PALEOLITHIC_BIRDS"
+   },
+   {
+    "building": "BUILDING_FALCONRY_SCHOOL"
+   },
+   {
+    "building": "BUILDING_ZOO"
+   },
+   {
+    "building": "BUILDING_TAXIDERMIST"
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HAAST_EAGLE",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_HAAST_EAGLE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_MALE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_SUBDUED_HAAST_EAGLE",
+  "civilopedia": "TXT_KEY_UNIT_HAAST_EAGLE_PEDIA",
+  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
+  "spawnOnly": true,
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

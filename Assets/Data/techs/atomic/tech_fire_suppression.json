@@ -1,0 +1,71 @@
+{
+ "type": "TECH_FIRE_SUPPRESSION",
+ "enables": {
+  "buildings": [
+   "BUILDING_FIRE_DOCK"
+  ],
+  "techs": [
+   "TECH_SPACE_STATIONS"
+  ],
+  "units": [
+   "UNIT_MODERN_FLAMETHROWER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTRONAUTICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "research": 14870
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 6
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Fire_Suppression.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_FIRE_SUPPRESSION",
+  "soundMP": "AS2D_TECH_FIRE_SUPPRESSION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_FIRE_SUPPRESSION",
+  "civilopedia": "TXT_KEY_TECH_FIRE_SUPPRESSION_PEDIA",
+  "quote": "TXT_KEY_TECH_FIRE_SUPPRESSION_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "gridX": 83,
+  "gridY": 13
+ }
+}

@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_FLIGHT_SCHOOL",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HOLOGRAPHIC_SCHOOL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FLIGHT",
+    {
+     "any": [
+      "BUILDING_AIRFIELD",
+      "BUILDING_AIRPORT",
+      "BUILDING_COMMERCIAL_AIRPORT",
+      "BUILDING_MILITARY_AIRBASE",
+      "BUILDING_AEROSPACE_COMPLEX",
+      "BUILDING_COMMERCIAL_SPACEPORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "experience": {
+  "city": {
+   "domains": {
+    "DOMAIN_AIR": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "cost": {
+  "production": 950,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FLIGHT_SCHOOL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FLIGHT_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_FLIGHT_SCHOOL_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

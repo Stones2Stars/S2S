@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_INSTIGATOR2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_INSTIGATOR3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_INSTIGATOR1"
+   ]
+  }
+ },
+ "heal": {
+  "unit": {
+   "enemy": {
+    "flat": 50
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_INSTIGATOR": 2
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Instigator2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_PING"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_INSTIGATOR2"
+ }
+}

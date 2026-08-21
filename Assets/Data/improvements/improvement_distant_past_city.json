@@ -1,0 +1,42 @@
+{
+ "type": "IMPROVEMENT_DISTANT_PAST_CITY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TIME_REVERSAL",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_DISTANT_PAST"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 10
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 30
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_DISTANT_PAST_CITY"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_DISTANT_PAST_CITY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_DISTANT_PAST_CITY_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_TEMPLE_OF_KI_RICE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TEMPLE_OF_KI",
+    "TECH_POLYTHEISM",
+    "TECH_PRIESTHOOD",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_MESOPOTAMISM",
+    {
+     "type": "BONUS_RICE",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": [
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_RICE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 160,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TEMPLE_OF_KI_RICE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MESOPOTAMIAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TEMPLE_OF_KI_RICE",
+  "civilopedia": "TXT_KEY_BUILDING_KI_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 4,
+  "specialBuildingType": "SPECIALBUILDING_TEMPLE",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

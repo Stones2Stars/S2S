@@ -1,0 +1,93 @@
+{
+ "type": "TECH_PALEONTOLOGY",
+ "enables": {
+  "bonuses": [
+   "BONUS_FOSSILS",
+   "BONUS_FOSSIL_BEDS"
+  ],
+  "buildings": [
+   "BUILDING_DIG_SITE_AMMONITE_FOSSILS",
+   "BUILDING_DIG_SITE_ARCHAEOPTERYX_FOSSILS",
+   "BUILDING_DIG_SITE_DIMETRODON_FOSSILS",
+   "BUILDING_DIG_SITE_ICHTHYOSTEGA_FOSSILS",
+   "BUILDING_DIG_SITE_MAMMOTH_FOSSILS",
+   "BUILDING_DIG_SITE_NEANDERTHAL_FOSSILS",
+   "BUILDING_DIG_SITE_PETRIFIED_WOOD",
+   "BUILDING_DIG_SITE_PLESIOSAUR_FOSSILS",
+   "BUILDING_DIG_SITE_PTERODACTYL_FOSSILS",
+   "BUILDING_DIG_SITE_SHARK_TEETH",
+   "BUILDING_DIG_SITE_SMILODON_FOSSILS",
+   "BUILDING_DIG_SITE_TRICERATOPS_FOSSILS",
+   "BUILDING_DIG_SITE_TRILOBITE_FOSSILS",
+   "BUILDING_DIG_SITE_VELOCIRAPTOR_FOSSILS",
+   "BUILDING_LA_BREA_TAR_PITS",
+   "BUILDING_PALEONTOLOGY_LAB"
+  ],
+  "builds": [
+   "BUILD_FOSSIL_DIG_SITE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_FOSSIL_DIG_SITE"
+  ],
+  "projects": [
+   "PROJECT_THEORY_OF_EVOLUTION"
+  ],
+  "techs": [
+   "TECH_PSYCHOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GEOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ZOOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BOTANY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 3934
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/palentology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PALEONTOLOGY",
+  "soundMP": "AS2D_TECH_PALEONTOLOGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PALEONTOLOGY",
+  "civilopedia": "TXT_KEY_TECH_PALEONTOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_PALEONTOLOGY_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 59,
+  "gridY": 3
+ }
+}

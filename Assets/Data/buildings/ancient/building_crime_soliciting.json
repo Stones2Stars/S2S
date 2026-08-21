@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_CRIME_SOLICITING",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_TRADE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 250,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 2
+   }
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_SOLICITING",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_SOLICITING_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

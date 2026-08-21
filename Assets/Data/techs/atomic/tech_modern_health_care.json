@@ -1,0 +1,76 @@
+{
+ "type": "TECH_MODERN_HEALTH_CARE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTERS_FOR_DISEASE_CONTROL",
+   "BUILDING_CRIME_ELDER_ABUSE",
+   "BUILDING_CRIME_MEDICAL_FRAUD",
+   "BUILDING_CRIME_ORGAN_TRAFFICKING",
+   "BUILDING_GYM",
+   "BUILDING_LASER_EYE_SURGERY_CLINIC",
+   "BUILDING_LETHAL_INJECTION",
+   "BUILDING_MEDICAL_CLINIC",
+   "BUILDING_PLASTIC_SURGERY_CLINIC",
+   "BUILDING_REHABILITATION_CENTER",
+   "BUILDING_RETIREMENT_HOME"
+  ],
+  "promotions": [
+   "PROMOTION_DISEASE_CONTROL7",
+   "PROMOTION_FIRST_AID_ANIMALS5",
+   "PROMOTION_FIRST_AID_PEOPLE5"
+  ],
+  "techs": [
+   "TECH_INFORMATION_LIFESTYLE",
+   "TECH_MOLECULAR_BIOLOGY"
+  ],
+  "units": [
+   "UNIT_MODERN_MEDIVAC"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CONGLOMERATES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 12657
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/Biotechnics.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MODERN_HEALTH_CARE",
+  "soundMP": "AS2D_TECH_MODERN_HEALTH_CARE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MODERN_HEALTH_CARE",
+  "civilopedia": "TXT_KEY_TECH_MODERN_HEALTH_CARE_PEDIA",
+  "quote": "TXT_KEY_TECH_MODERN_HEALTH_CARE_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 79,
+  "gridY": 7
+ }
+}

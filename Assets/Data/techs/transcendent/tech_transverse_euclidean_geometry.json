@@ -1,0 +1,78 @@
+{
+ "type": "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_HIGH_DIMENSIONAL"
+  ],
+  "buildings": [
+   "BUILDING_HUMAN_MOD_HIGH_DIMENSIONAL",
+   "BUILDING_HYPERCITY",
+   "BUILDING_HYPERFACTORY",
+   "BUILDING_HYPERSPACE_GENESIS_COLONY",
+   "BUILDING_LIFE_HYPERSPACE"
+  ],
+  "techs": [
+   "TECH_CONTROLLED_VACUUM_COLLAPSE",
+   "TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION",
+   "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY",
+   "TECH_TESSERACT_CONSTRUCTION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TACHYON_COMMUNICATIONS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 511504
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/transverseduclideangeometry.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TRANVERSE_EUCLIDEAN_GEOMETRY",
+  "soundMP": "AS2D_TECH_TRANVERSE_EUCLIDEAN_GEOMETRY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
+  "civilopedia": "TXT_KEY_TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY_PEDIA",
+  "quote": "TXT_KEY_TECH_TRANVERSE_EUCLIDEAN_GEOMETRY_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 150,
+  "gridY": 7
+ }
+}

@@ -1,0 +1,71 @@
+{
+ "type": "TECH_ARCHEOLOGY",
+ "enables": {
+  "bonuses": [
+   "BONUS_ANCIENT_RELICS"
+  ],
+  "buildings": [
+   "BUILDING_ANTIQUE_SHOP",
+   "BUILDING_ARCHAEOLOGY_LAB",
+   "BUILDING_GENEALOGY_CENTER",
+   "BUILDING_ROSETTA_STONE"
+  ],
+  "techs": [
+   "TECH_PSYCHOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MUMMIFICATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BIOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GEOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 3704
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/archeology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ARCHEOLOGY",
+  "soundMP": "AS2D_TECH_ARCHEOLOGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ARCHEOLOGY",
+  "civilopedia": "TXT_KEY_TECH_ARCHEOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_ARCHEOLOGY_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 58,
+  "gridY": 11
+ }
+}

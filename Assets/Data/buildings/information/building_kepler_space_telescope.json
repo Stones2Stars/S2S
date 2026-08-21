@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_KEPLER_SPACE_TELESCOPE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_JET_PROPULSION_LABORATORY",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_EXOPLANET_DISCOVERY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_JET_PROPULSION_LABORATORY": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 11550
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_KEPLER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_KEPLER_SPACE_TELESCOPE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_KEPLER_SPACE_TELESCOPE",
+  "civilopedia": "TXT_KEY_BUILDING_KEPLER_SPACE_TELESCOPE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

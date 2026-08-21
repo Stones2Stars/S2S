@@ -1,0 +1,255 @@
+{
+ "type": "UNIT_SETTLER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SEDENTARY_LIFESTYLE"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_COLONIST"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_CAPTIVE_CIVILIAN"
+  }
+ },
+ "skills": [
+  "food",
+  "found"
+ ],
+ "tags": [
+  "settler",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SETTLER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_BATTALION",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_STABLE",
+    "enabled": "TECH_STEAM_POWER"
+   },
+   {
+    "building": "BUILDING_BARRACKS",
+    "enabled": "TECH_COLONIALISM"
+   },
+   {
+    "building": "BUILDING_COURTHOUSE",
+    "enabled": "TECH_STEAM_POWER"
+   },
+   {
+    "building": "BUILDING_FISHERMANS_HUT",
+    "enabled": {
+     "all": [
+      "HAS_COAST",
+      "TECH_COLONIALISM"
+     ]
+    }
+   },
+   {
+    "building": "BUILDING_FORGE",
+    "enabled": "TECH_COLONIALISM"
+   },
+   {
+    "building": "BUILDING_GARRISON",
+    "enabled": "TECH_STEAM_POWER"
+   },
+   {
+    "building": "BUILDING_GRANARY",
+    "enabled": "TECH_COLONIALISM"
+   },
+   {
+    "building": "BUILDING_GROCER",
+    "enabled": "TECH_STEAM_POWER"
+   },
+   {
+    "building": "BUILDING_HARBOR",
+    "enabled": {
+     "all": [
+      "HAS_COAST",
+      "TECH_COLONIALISM"
+     ]
+    }
+   },
+   {
+    "building": "BUILDING_LIBRARY",
+    "enabled": "TECH_STEAM_POWER"
+   },
+   {
+    "building": "BUILDING_LIGHTHOUSE",
+    "enabled": {
+     "all": [
+      "HAS_COAST",
+      "TECH_COLONIALISM"
+     ]
+    }
+   },
+   {
+    "building": "BUILDING_MARKET",
+    "enabled": "TECH_COLONIALISM"
+   },
+   {
+    "building": "BUILDING_PORT",
+    "enabled": {
+     "all": [
+      "HAS_COAST",
+      "TECH_STEAM_POWER"
+     ]
+    }
+   },
+   {
+    "building": "BUILDING_PALACE",
+    "enabled": {
+     "type": "BUILDING_PALACE",
+     "scope": "empire",
+     "max": 0
+    }
+   }
+  ],
+  "culture": [
+   {
+    "value": 5,
+    "enabled": "TRAIT_CREATIVE"
+   },
+   {
+    "value": 5,
+    "enabled": "TRAIT_CREATIVE1"
+   },
+   {
+    "value": 10,
+    "enabled": "TRAIT_COMPLEX_CREATIVE2"
+   },
+   {
+    "value": 20,
+    "enabled": "TRAIT_COMPLEX_CREATIVE3"
+   },
+   {
+    "value": 5,
+    "enabled": "TRAIT_COMPLEX_PROGRESSIST2"
+   },
+   {
+    "value": 10,
+    "enabled": "TRAIT_COMPLEX_PROGRESSIST3"
+   },
+   {
+    "value": 5,
+    "enabled": "TRAIT_COMPLEX_PROLIFIC1"
+   },
+   {
+    "value": 5,
+    "enabled": "TRAIT_COMPLEX_PROLIFIC2"
+   }
+  ],
+  "population": [
+   {
+    "value": 1,
+    "enabled": "TRAIT_COMPLEX_PROLIFIC1"
+   },
+   {
+    "value": 1,
+    "enabled": "TRAIT_COMPLEX_PROLIFIC2"
+   },
+   {
+    "value": 1,
+    "enabled": "TRAIT_COMPLEX_PROLIFIC3"
+   }
+  ]
+ },
+ "cost": {
+  "upkeep": 4
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SETTLER_MALE",
+   "meshGroups": {
+    "groupSize": 7,
+    "meleeWaveSize": 7,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_MALE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_HORSE_PACK"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_DOG"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_CHILD"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_FEMALE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_FEMALE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_CHILD"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_SETTLER",
+  "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SETTLE",
+  "formationType": "FORMATION_TYPE_SETTLER",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_SETTLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

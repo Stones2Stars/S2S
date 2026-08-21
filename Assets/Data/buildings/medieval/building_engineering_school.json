@@ -1,0 +1,147 @@
+{
+ "type": "BUILDING_ENGINEERING_SCHOOL",
+ "enables": {
+  "buildings": [
+   "BUILDING_BAUHAUS_SCHOOL",
+   "BUILDING_CLOCKWORK_WORKSHOP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT",
+      "BUILDING_UNIVERSITY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_TABLETS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SCROLLS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PAPER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BOOKS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 4,
+     "enabled": "TECH_ARCHITECTURE"
+    },
+    {
+     "value": 4,
+     "enabled": "TECH_SURVEYING"
+    },
+    {
+     "value": 6,
+     "enabled": "TECH_CIVIL_ENGINEERING"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_MEGASTRUCTURE_ENGINEERING"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_ECOLOGICAL_ENGINEERING"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_MARINE_ARCHITECTURE"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_ORBITAL_MEGASTRUCTURES"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_LUNAR_MEGASTRUCTURES"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_PLANETARY_MEGASTRUCTURES"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_ATOMIC_SCALE_ENGINEERING"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_COLONY_ARCOLOGY"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 3
+  }
+ },
+ "cost": {
+  "production": 300,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ENGINEERING_SCHOOL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ENGINEERING_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_ENGINEERING_SCHOOL_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

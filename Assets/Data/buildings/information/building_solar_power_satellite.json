@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_SOLAR_POWER_SATELLITE",
+ "enables": {
+  "buildings": [
+   "BUILDING_MICROWAVE_POWER_PLANT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "TECH_MICROWAVE_WEAPONRY",
+    {
+     "any": [
+      "BUILDING_EFFECT_LAUNCH_SITE",
+      "BUILDING_COMMERCIAL_SPACEPORT",
+      "BUILDING_MILITARY_SPACEPORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 2405,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SOLAR_POWER_SATELLITE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SPACEWAY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SOLAR_POWER_SATELLITE",
+  "civilopedia": "TXT_KEY_BUILDING_SOLAR_POWER_SATELLITE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

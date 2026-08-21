@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_HARBORMASTERS_OFFICE",
+ "enables": {
+  "buildings": [
+   "BUILDING_COAST_GUARD_STATION",
+   "BUILDING_DRYDOCK",
+   "BUILDING_FIRE_DOCK",
+   "BUILDING_MARINA",
+   "BUILDING_NAVAL_SHIPPING_WAREHOUSE",
+   "BUILDING_NAVAL_YARD",
+   "BUILDING_PIER",
+   "BUILDING_REPAIR_DOCK",
+   "BUILDING_SEAWALLS",
+   "BUILDING_SHIPYARD",
+   "BUILDING_ZHENG_HES_VOYAGE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "TECH_SEAFARING",
+    {
+     "any": [
+      "BUILDING_HARBOR",
+      "BUILDING_PORT",
+      "BUILDING_COMMERCIAL_PORT",
+      "BUILDING_INTERNATIONAL_PORT",
+      "BUILDING_OCEAN_ADMINISTRATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "experience": {
+  "city": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 192,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HARBORMASTERS_OFFICE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HARBOR"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HARBORMASTERS_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_HARBORMASTERS_OFFICE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

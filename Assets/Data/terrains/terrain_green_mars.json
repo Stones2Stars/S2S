@@ -1,0 +1,45 @@
+{
+ "type": "TERRAIN_GREEN_MARS",
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface\\Buttons\\WorldBuilder\\Terrain_Grass.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_TERRAIN_GRASSLAND"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_TUNDRA_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_TERRAIN_GREEN_MARS",
+  "civilopedia": "TXT_KEY_TERRAIN_GREEN_MARS_PEDIA",
+  "found": true,
+  "buildTimeModifier": 50,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

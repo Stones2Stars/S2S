@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_TITAN_FERTILIZER_PLANT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_TITAN_BASE",
+    "TECH_ABYSS_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_TITANIC",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_FERTILIZERS"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 1452,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TITAN_FERTILIZER_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TITAN_FERTILIZER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_TITAN_FERTILIZER_PLANT_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_TITANIC"
+  ]
+ }
+}

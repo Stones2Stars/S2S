@@ -1,0 +1,61 @@
+{
+ "type": "TECH_ARITHMETIC",
+ "enables": {
+  "buildings": [
+   "BUILDING_AERIAL_BASKET_ROPEWAYS",
+   "BUILDING_TAXPERSON"
+  ],
+  "techs": [
+   "TECH_MEGALITH_CONSTRUCTION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BARTER",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRIBALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 34
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/arithmetic.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ARITHMETIC",
+  "soundMP": "AS2D_TECH_ARITHMETIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ARITHMETIC",
+  "civilopedia": "TXT_KEY_TECH_ARITHMETIC_PEDIA",
+  "quote": "TXT_KEY_TECH_ARITHMETIC_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 14,
+  "gridY": 7
+ }
+}

@@ -1,0 +1,64 @@
+{
+ "type": "TECH_BRASS_WORKING",
+ "enables": {
+  "bonuses": [
+   "BONUS_BRASS_INGOTS",
+   "BONUS_BRASS_WARES",
+   "BONUS_ELECTRUM_INGOTS",
+   "BONUS_ELECTRUM_WARES"
+  ],
+  "buildings": [
+   "BUILDING_SMELTER_BRASS",
+   "BUILDING_SMELTER_ELECTRUM",
+   "BUILDING_SMITH_BRASS",
+   "BUILDING_SMITH_ELECTRUM"
+  ],
+  "techs": [
+   "TECH_CURRENCY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CLASSICAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 448
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/brassworking.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_BRASS_WORKING",
+  "soundMP": "AS2D_TECH_BRASS_WORKING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_BRASS_WORKING",
+  "civilopedia": "TXT_KEY_TECH_BRASS_WORKING_PEDIA",
+  "quote": "TXT_KEY_TECH_BRASS_WORKING_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 33,
+  "gridY": 11
+ }
+}

@@ -1,0 +1,40 @@
+{
+ "type": "PROMOTION_SELF_HEAL5",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SELF_HEAL4"
+   ]
+  }
+ },
+ "heal": {
+  "unit": {
+   "enemy": {
+    "flat": 3
+   },
+   "selfModifier": {
+    "percent": 1
+   },
+   "victory": {
+    "flat": 4
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SELF_HEAL": 5
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/SelfHeal5Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "maxHP": 5
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SELF_HEAL5"
+ }
+}

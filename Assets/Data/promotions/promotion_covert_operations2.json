@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTION_COVERT_OPERATIONS2",
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  }
+ },
+ "skills": [
+  "invisible"
+ ],
+ "promotionLine": {
+  "PROMOTIONLINE_COVERT_OPERATIONS": 2
+ },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/CovertOperations2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COVERT_OPERATIONS2"
+ }
+}

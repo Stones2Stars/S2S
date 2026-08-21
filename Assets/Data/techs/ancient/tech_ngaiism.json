@@ -1,0 +1,63 @@
+{
+ "type": "TECH_NGAIISM",
+ "enables": {
+  "religions": [
+   "RELIGION_NGAIISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STARGAZING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DUALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 242
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/Ngai.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NGAIISM",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NGAIISM",
+  "civilopedia": "TXT_KEY_TECH_NGAIISM_PEDIA",
+  "quote": "TXT_KEY_TECH_NGAIISM_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "gridX": 28,
+  "gridY": 13
+ }
+}

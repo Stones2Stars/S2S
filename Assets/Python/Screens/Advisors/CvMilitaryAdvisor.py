@@ -6,11 +6,18 @@ import HandleInputUtil
 import UnitGrouper
 
 # globals
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()   # entity data: the context serves settings, CyInfo serves entities
+GAME = GC.getGame()
+MAP = GC.getMap()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 AFM = CyArtFileMgr()
 GTM = CyGameTextMgr()
 TRNSLTR = CyTranslator()
-GAME = GC.getGame()
 
 class CvMilitaryAdvisor:
 
@@ -42,7 +49,7 @@ class CvMilitaryAdvisor:
 		self.HILITE_SQUARE	= AFM.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath()
 		self.iconMoves		= u'%c' % GAME.getSymbolID(FontSymbols.MOVES_CHAR)
 		self.iconStrength	= u'%c' % GAME.getSymbolID(FontSymbols.STRENGTH_CHAR)
-		self.fMoveDenominator = float(GC.getMOVE_DENOMINATOR())
+		self.fMoveDenominator = float(GC.getDefineINT("MOVE_DENOMINATOR"))
 		self.GO_SIZE_MATTERS = GAME.isOption(GameOptionTypes.GAMEOPTION_COMBAT_SIZE_MATTERS)
 		self.selectedCivs = [iPlayer]
 		self.selectedGroups = set()
@@ -181,7 +188,7 @@ class CvMilitaryAdvisor:
 			CyPlayerX = GC.getPlayer(iPlayerX)
 			if CyPlayerX.isAlive() and CyTeam.isHasMet(CyPlayerX.getTeam()):
 
-				BTN = GC.getCivilizationInfo(CyPlayerX.getCivilizationType()).getButton()
+				BTN = INFO.getButton("CIVILIZATION_", CyPlayerX.getCivilizationType())
 
 				ID = str(iPlayerX)
 				screen.setImageButtonAt("WID|LEADER|Base" + ID, ScPnl, BTN, x, 5, 64, 64, eWidGen, 1, 1)
@@ -229,7 +236,7 @@ class CvMilitaryAdvisor:
 				if not CyPlayerX.isAlive(): continue
 
 				for CyUnit in CyPlayerX.units():
-					if not CyUnit.isDead() and CyUnit.getVisualOwner() in self.selectedCivs:
+					if not STATE.isUnitDead(iPlayerX, CyUnit.getID()) and CyUnit.getVisualOwner() in self.selectedCivs:
 						if not CyUnit.isInvisible(iTeam, False) and CyUnit.plot().isVisible(iTeam, False):
 							self.stats.processUnit(CyPlayer, CyTeam, CyUnit)
 
@@ -354,7 +361,7 @@ class CvMilitaryAdvisor:
 
 					iPlayerX = CyUnit.getVisualOwner()
 					CyPlayerX = GC.getPlayer(iPlayerX)
-					iColor = GC.getPlayerColorInfo(CyPlayerX.getPlayerColor()).getColorTypePrimary()
+					iColor = STATE.getPlayerColorPrimary(iPlayerX)
 					iX = MAP.getViewportXFromMapX(CyUnit.getX())
 					iY = MAP.getViewportYFromMapY(CyUnit.getY())
 					screen.setMinimapColor(MinimapModeTypes.MINIMAPMODE_MILITARY, iX, iY, iColor, 0.6)
@@ -426,7 +433,7 @@ class CvMilitaryAdvisor:
 			if BASE == "WID":
 				if TYPE == "LEADER":
 					CyPlayer = GC.getPlayer(ID)
-					szLeader = GC.getLeaderHeadInfo(CyPlayer.getLeaderType()).getDescription()
+					szLeader = INFO.getDescription("LEADER_", CyPlayer.getLeaderType())
 
 					if CyPlayer.isHuman():
 						szTxt = CyPlayer.getName()

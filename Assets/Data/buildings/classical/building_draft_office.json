@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_DRAFT_OFFICE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MILITARY_TRAINING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_CONSCRIPTION"
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": 25,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "cost": {
+  "production": 216,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 9
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DRAFT_OFFICE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DRAFT_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_DRAFT_OFFICE_PEDIA",
+  "worth": 8,
+  "militaryWorth": 8,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_SHALE_PLANT",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_PETROLEUM_PRODUCTS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_BOTANICAL_ALCHEMY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ULTRAFUEL_REFINERY"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "BUILDING_POWER_LINES",
+    "TECH_ELECTRICITY",
+    "TECH_REFINING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_COAL",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_ULTRAFUEL_REFINERY"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 770,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SHALE_PLANT"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SHALE_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_SHALE_PLANT_PEDIA",
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

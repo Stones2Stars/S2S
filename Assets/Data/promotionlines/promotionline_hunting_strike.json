@@ -1,0 +1,18 @@
+{
+ "type": "PROMOTIONLINE_HUNTING_STRIKE",
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/HuntingStrike1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_HUNTING_STRIKE",
+  "unitCombats": [
+   "UNITCOMBAT_HUNTER"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ]
+ }
+}

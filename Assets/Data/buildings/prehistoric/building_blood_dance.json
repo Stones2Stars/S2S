@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_BLOOD_DANCE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLOODHUNTRESSS_HUT"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "any": [
+      "CIVIC_ANARCHISM",
+      "CIVIC_CHIEFDOM"
+     ]
+    },
+    "TECH_PREHISTORIC_DANCE",
+    {
+     "any": [
+      "BUILDING_DANCE_HUT",
+      "BUILDING_DANCE_HALL",
+      "BUILDING_NIGHT_CLUB",
+      "BUILDING_FIRE_PIT",
+      "BUILDING_BONFIRE",
+      "BUILDING_IMU",
+      "BUILDING_CHARCOAL_BURNER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "TECH_SACRIFICE_CULT"
+    }
+   ]
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -15
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BLOOD_DANCE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BLOOD_DANCE",
+  "civilopedia": "TXT_KEY_BUILDING_BLOOD_DANCE_PEDIA",
+  "notConstructible": true,
+  "worth": 1,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_UZBEK",
+ "enables": {
+  "units": [
+   "UNIT_JADID_GRENADIERS",
+   "UNIT_SHAYBANI"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_UZBEK"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_UZBEK",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

@@ -1,0 +1,43 @@
+{
+ "type": "BUILDING_VENUS_SOLAR_ARRAY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_VENUS",
+    "TECH_PLANETARY_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 702,
+  "hurryModifier": 10000
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VENUS_SOLAR_ARRAY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_SOLAR_ARRAY",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_SOLAR_ARRAY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

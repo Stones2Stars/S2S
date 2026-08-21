@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_TANNIN",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANCIENT_EMBALMER",
+   "BUILDING_FACTORY_LEATHER",
+   "BUILDING_TANNERY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TANNIN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TANNIN",
+  "civilopedia": "TXT_KEY_BONUS_TANNIN_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

@@ -1,0 +1,80 @@
+{
+ "type": "TECH_AMPLIFIED_WAVELENGTHS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_BIG_BANG_OBSERVATORY",
+   "BUILDING_ET_DISCOVERY",
+   "BUILDING_TERAHERTZ_SCANNERS"
+  ],
+  "techs": [
+   "TECH_ION_BEAMS",
+   "TECH_QUANTUM_COMPUTING",
+   "TECH_UNIVERSAL_TRANSLATOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NOVUS_CHEMISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WIRELESS_ELECTRICITY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADVANCED_COMPUTERS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOROBOTICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 44505
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/amplifiedwavelengths.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_AMPLIFIED_WAVELENGTHS",
+  "soundMP": "AS2D_TECH_AMPLIFIED_WAVELENGTHS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_AMPLIFIED_WAVELENGTHS",
+  "civilopedia": "TXT_KEY_TECH_AMPLIFIED_WAVELENGTHS_PEDIA",
+  "quote": "TXT_KEY_TECH_AMPLIFIED_WAVELENGTHS_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 106,
+  "gridY": 9
+ }
+}

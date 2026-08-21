@@ -1,0 +1,105 @@
+{
+ "type": "BUILDING_CRIME_CORRUPTION",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_CIVIL_SERVICE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 900,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": -30
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    -3,
+    {
+     "value": -25,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": 30
+   }
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 40
+   }
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": -16
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_CORRUPTION",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_CORRUPTION_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

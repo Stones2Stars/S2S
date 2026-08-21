@@ -1,0 +1,91 @@
+{
+ "type": "TECH_LABOR_UNIONS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_CHILD_LABOR",
+   "BUILDING_CRIME_GANGS",
+   "BUILDING_CRIME_RACKETEERING",
+   "BUILDING_CRIME_WELFARE_FRAUD",
+   "BUILDING_LABOR_UNION",
+   "BUILDING_LOCAL_COURTHOUSE",
+   "BUILDING_WELFARE_OFFICE",
+   "BUILDING_YASNAYA_POLYANA"
+  ],
+  "civics": [
+   "CIVIC_COLLECTIVIST",
+   "CIVIC_SOCIALIZED"
+  ],
+  "promotions": [
+   "PROMOTION_CLOUT1",
+   "PROMOTION_CLOUT2",
+   "PROMOTION_CLOUT3",
+   "PROMOTION_CONNIVING6",
+   "PROMOTION_CORRUPTION6",
+   "PROMOTION_RED_TAPE1",
+   "PROMOTION_RED_TAPE2",
+   "PROMOTION_RED_TAPE3"
+  ],
+  "techs": [
+   "TECH_WOMENS_SUFFRAGE"
+  ],
+  "units": [
+   "UNIT_BOSNEGERS",
+   "UNIT_THUG"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_SCOUNDREL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MARXISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 6673
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   },
+   {
+    "FLAVOR_ESPIONAGE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/LaborUnion.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,9"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_LABOR_UNIONS",
+  "soundMP": "AS2D_TECH_LABOR_UNIONS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_LABOR_UNIONS",
+  "civilopedia": "TXT_KEY_TECH_LABOR_UNIONS_PEDIA",
+  "quote": "TXT_KEY_TECH_LABOR_UNIONS_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 32,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 67,
+  "gridY": 15
+ }
+}

@@ -1,0 +1,4 @@
+{
+ "TERRAIN_PEAK": { "vision": { "plot": { "elevation": { "flat": 300 } } } },
+ "TERRAIN_HILL": { "vision": { "plot": { "elevation": { "flat": 100 } } } }
+}

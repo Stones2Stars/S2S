@@ -1,0 +1,171 @@
+{
+ "type": "SPECIALIST_SLAVES",
+ "food": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_CIVIC_FEUDAL",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  },
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": -1,
+      "enabled": {
+       "type": "BUILDING_CIVIC_EGALITARIAN",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_CIVIC_MARTIAL_LAW",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 3,
+      "enabled": {
+       "type": "BUILDING_CIVIC_MIND_CONTROL",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": -1,
+      "enabled": {
+       "type": "BUILDING_CIVIC_POST_SCARCITY",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  },
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_CIVIC_CASTE",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": -1,
+      "enabled": {
+       "type": "BUILDING_CIVIC_DEMOCRACY",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 2,
+      "enabled": {
+       "type": "BUILDING_CIVIC_FREE_MARKET",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": -1,
+      "enabled": {
+       "type": "BUILDING_CIVIC_REPUBLIC",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "CIVIC_MIND_CONTROL",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "CIVIC_SOCIETAL_MOLDING",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1.5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    -1.5,
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TECH_HUMANISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "type": "TECH_EMANCIPATION",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/slave.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/slave.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_SLAVES",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
+  "slave": true,
+  "visible": true,
+  "categories": [
+   "CATEGORY_ASSIGNABLE_SPECIALISTS",
+   "CATEGORY_SPECIALIST_GROUP_CAPTIVE"
+  ]
+ }
+}

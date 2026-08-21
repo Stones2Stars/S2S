@@ -1,0 +1,113 @@
+{
+ "type": "UNIT_CISLUNAR_INVADER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_DRYDOCK",
+    "TECH_WARMACHINES"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 6
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 10
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 120
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 2
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 3
+   },
+   "limit": {
+    "flat": 10
+   },
+   "maxUnits": {
+    "flat": 1
+   }
+  }
+ },
+ "skills": [
+  "canMoveAllTerrain",
+  "canMoveImpassable"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_EARLY_SPACESHIP",
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 4850,
+  "upkeep": 11,
+  "hurryCostModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ATTACKSHIP",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_ATTACKSHIP"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_CISLUNAR_INVADER",
+  "civilopedia": "TXT_KEY_UNIT_CISLUNAR_INVADER_PEDIA",
+  "worth": 1,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_ATTACK_CITY"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "combatLimit": 100
+  }
+ }
+}

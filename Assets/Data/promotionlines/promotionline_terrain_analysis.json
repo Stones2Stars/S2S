@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_TERRAIN_ANALYSIS",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Woodsman1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,1,6"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_TERRAIN_ANALYSIS",
+  "unitCombats": [
+   "UNITCOMBAT_ROBOT"
+  ]
+ }
+}

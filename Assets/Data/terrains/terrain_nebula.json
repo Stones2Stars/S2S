@@ -1,0 +1,37 @@
+{
+ "type": "TERRAIN_NEBULA",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/nebula.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_TERRAIN_NEBULA"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TERRAIN_NEBULA",
+  "civilopedia": "TXT_KEY_TERRAIN_NEBULA_PEDIA",
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

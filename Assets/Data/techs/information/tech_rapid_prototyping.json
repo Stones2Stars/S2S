@@ -1,0 +1,88 @@
+{
+ "type": "TECH_RAPID_PROTOTYPING",
+ "enables": {
+  "buildings": [
+   "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
+   "BUILDING_HOUSING_CHATEAU",
+   "BUILDING_HOUSING_DUGOUTS",
+   "BUILDING_HOUSING_HABITATION_PODS",
+   "BUILDING_HOUSING_HIGH_TECH_APARTMENTS",
+   "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
+   "BUILDING_HOUSING_HIGH_TECH_HIGHRISES",
+   "BUILDING_HOUSING_HOLO_SUITES",
+   "BUILDING_HOUSING_INNER_CITY",
+   "BUILDING_HOUSING_SMART_HOMES",
+   "BUILDING_INTERNET_OF_THINGS",
+   "BUILDING_MANUFACTURING_DISTRICT",
+   "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
+  ],
+  "promotions": [
+   "PROMOTION_SMALL_DIAMETER_BOMB"
+  ],
+  "techs": [
+   "TECH_INDUSTRIAL_ECOLOGY",
+   "TECH_LUNAR_BASES",
+   "TECH_METAMATERIALS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NEURAL_NETWORKS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WEARABLE_COMPUTERS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_3D_PRINTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 24485
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/3D_Printing.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_RAPID_PROTOTYPING",
+  "soundMP": "AS2D_TECH_RAPID_PROTOTYPING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_RAPID_PROTOTYPING",
+  "civilopedia": "TXT_KEY_TECH_RAPID_PROTOTYPING_PEDIA",
+  "quote": "TXT_KEY_TECH_RAPID_PROTOTYPING_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 93,
+  "gridY": 9
+ }
+}

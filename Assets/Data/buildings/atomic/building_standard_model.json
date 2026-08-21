@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_STANDARD_MODEL",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_PHYSICS_LAB",
+    "TECH_MODERN_PHYSICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": [
+    25,
+    {
+     "value": 8,
+     "enabled": "TECH_IMAGINARY_PHYSICS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_QUANTUM_TELEPORTATION"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_SUPERSTRING_THEORY"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_UNIFICATION_PHYSICS"
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_PHYSICS_LAB",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 6780,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_STANDARD_MODEL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_STANDARD_MODEL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_STANDARD_MODEL",
+  "civilopedia": "TXT_KEY_BUILDING_STANDARD_MODEL_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

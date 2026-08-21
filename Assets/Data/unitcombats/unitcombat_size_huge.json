@@ -1,0 +1,35 @@
+{
+ "type": "UNITCOMBAT_SIZE_HUGE",
+ "combat": {
+  "unit": {
+   "damageModifier": {
+    "percent": 20
+   }
+  }
+ },
+ "hideAndSeek": {
+  "concealment": {
+   "flat": -700
+  },
+  "detection": {
+   "value": -200,
+   "unit": "HAS_SIZE"
+  }
+ },
+ "skills": [
+  "size",
+  "camouflage"
+ ],
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "sizeMatters": {
+  "sizeBase": 7
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/size_huge.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SIZE_HUGE"
+ }
+}

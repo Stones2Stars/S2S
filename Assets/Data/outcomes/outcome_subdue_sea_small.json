@@ -1,0 +1,31 @@
+{
+ "type": "OUTCOME_SUBDUE_SEA_SMALL",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_SMALL_SEA",
+  "message": "TXT_KEY_OUTCOME_SUBDUE_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COMMERCIAL_WHALING"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral",
+  "hostile",
+  "barbarian"
+ ],
+ "coastalCity": true,
+ "capture": true,
+ "odds": {
+  "PROMOTION_SEA_HUNTER1": 10,
+  "PROMOTION_SEA_HUNTER2": 20,
+  "PROMOTION_SEA_HUNTER3": 15,
+  "PROMOTION_SEA_HUNTER_GREAT": 20
+ },
+ "replaces": [
+  "OUTCOME_TALES_SEA"
+ ]
+}

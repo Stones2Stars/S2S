@@ -1,0 +1,19 @@
+{
+ "type": "OUTCOME_UPGRADE_TO_SETTLER",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_UPGRADE_TO_SETTLER",
+  "message": "TXT_KEY_OUTCOME_UPGRADE_TO_SETTLER_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SEDENTARY_LIFESTYLE",
+    "BUILDING_PALACE"
+   ]
+  }
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city"
+}

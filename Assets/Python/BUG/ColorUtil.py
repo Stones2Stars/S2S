@@ -12,7 +12,13 @@
 from CvPythonExtensions import *
 import BugUtil
 
-gc = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
+gc = GC   # this module spells it lowercase
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
 # tuple of interesting color names to be selectable from dropdowns
 COLOR_KEYS = ( "COLOR_RED", "COLOR_YELLOW", "COLOR_CYAN", "COLOR_GREEN",
@@ -95,19 +101,20 @@ def keyToType(key):
 def createColors(argsList=None):
 	for key in COLOR_KEYS:
 		type = gc.getInfoTypeForString(key)
+		# The colour INFO object was only ever fetched to test that it existed -- but a type resolved by
+		# getInfoTypeForString exists by definition, so the fetch was redundant. Nothing here reads a colour
+		# channel; the id and the display name are the whole need.
 		if (type >= 0):
-			info = gc.getColorInfo(type)
-			if (info):
-				name = BugUtil.getPlainText("TXT_KEY_" + key, "")
-				if (not name):
-					name = key.replace("COLOR_", "").replace("_", " ").title()
-				COLOR_TYPES.append(type)
-				COLOR_DISPLAY_NAMES.append(name)
-				color = (len(COLORS), type, key, name)
-				COLORS.append(color)
-				COLORS_BY_TYPE[type] = color
-				COLORS_BY_KEY[key] = color
-				TYPES_BY_KEY[key] = type
+			name = BugUtil.getPlainText("TXT_KEY_" + key, "")
+			if (not name):
+				name = key.replace("COLOR_", "").replace("_", " ").title()
+			COLOR_TYPES.append(type)
+			COLOR_DISPLAY_NAMES.append(name)
+			color = (len(COLORS), type, key, name)
+			COLORS.append(color)
+			COLORS_BY_TYPE[type] = color
+			COLORS_BY_KEY[key] = color
+			TYPES_BY_KEY[key] = type
 
 def init(colors=None):
 	if colors is not None and (isinstance(colors, list) or isinstance(colors, tuple)):

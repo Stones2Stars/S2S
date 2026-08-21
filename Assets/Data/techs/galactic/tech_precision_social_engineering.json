@@ -1,0 +1,69 @@
+{
+ "type": "TECH_PRECISION_SOCIAL_ENGINEERING",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_COLONY_EUGENICS",
+   "BUILDING_INTERSTELLAR_CONTROLLED_BREEDING",
+   "BUILDING_INTERSTELLAR_DESIGNER_CASTE_LAW_ENFORCEMENT",
+   "BUILDING_INTERSTELLAR_DESIGNER_CASTE_MAINTENANCE",
+   "BUILDING_INTERSTELLAR_DESIGNER_CASTE_MISSION_CONTROL",
+   "BUILDING_INTERSTELLAR_PROGRAMMED_WORK_ETHIC"
+  ],
+  "civics": [
+   "CIVIC_SOCIETAL_MOLDING"
+  ],
+  "techs": [
+   "TECH_INTERSTELLAR_COMMUNICATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ATOMIC_SCALE_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CLOSED_ECONOMIES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 139278
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/precision_social_engineering.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PRECISION_SOCIAL_ENGINEERING",
+  "civilopedia": "TXT_KEY_TECH_PRECISION_SOCIAL_ENGINEERING_PEDIA",
+  "quote": "TXT_KEY_TECH_PRECISION_SOCIAL_ENGINEERING_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 127,
+  "gridY": 13
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "type": "FEATURE_VOLCANO_DORMANT",
+ "cultureDistance": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
+  "nukeImmune",
+  "countsAsPeak"
+ ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_AIR_POLLUTION": 5,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  }
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_VOLCANO_DORMANT"
+  }
+ },
+ "sound": {
+  "footsteps": [
+   {
+    "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_HUMAN_LOW": "AS3D_UN_FOOT_UNIT_LOW_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL": "AS3D_UN_ANIMAL_FOOT_LARGE_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL_LOW": "AS3D_UN_ANIMAL_FOOT_LARGE_LOW_MUD"
+   }
+  ],
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_VOLCANO_DORMANT",
+  "civilopedia": "TXT_KEY_FEATURE_VOLCANO_PEDIA",
+  "appearance": 300,
+  "requiresFlatlands": true,
+  "validTerrains": [
+   "TERRAIN_BARREN",
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED"
+  ]
+ }
+}

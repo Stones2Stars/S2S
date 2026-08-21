@@ -1,0 +1,113 @@
+{
+ "type": "HERITAGE_TAXON_TESTUDINES",
+ "enables": {
+  "heritages": [
+   "HERITAGE_TAXON_REPTILIA"
+  ]
+ },
+ "research": {
+  "empire": {
+   "flat": [
+    {
+     "value": 0.4,
+     "enabled": {
+      "type": "ERA",
+      "min": 2
+     }
+    },
+    {
+     "value": -0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 3
+     }
+    },
+    {
+     "value": -0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 4
+     }
+    },
+    {
+     "value": -0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 5
+     }
+    },
+    {
+     "value": -0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 6
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": [
+    {
+     "value": 0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 2
+     }
+    },
+    {
+     "value": 0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 3
+     }
+    },
+    {
+     "value": 0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 4
+     }
+    },
+    {
+     "value": 0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 5
+     }
+    },
+    {
+     "value": 0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 6
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "TECH_EDUCATION"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_BIOLOGY"
+    }
+   ]
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Buildings/totem_seaturtle.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_HERITAGE_TAXON_TESTUDINES",
+  "civilopedia": "TXT_KEY_HERITAGE_TAXON_TESTUDINES_PEDIA"
+ }
+}

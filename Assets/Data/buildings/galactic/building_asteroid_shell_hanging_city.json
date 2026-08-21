@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_ASTEROID_SHELL_HANGING_CITY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ASTEROID_SHELL_WORLD",
+    "TECH_PARATERRAFORMING",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_ASTEROID_SURFACE",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_KUIPER_BELT_OBJECT",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 4123,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ASTEROID_SHELL_HANGING_CITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ASTEROID_SHELL_HANGING_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_ASTEROID_SHELL_HANGING_CITY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

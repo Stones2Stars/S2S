@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_D_T_FUSION_POWER_PLANT",
+ "enables": {
+  "buildings": [
+   "BUILDING_HIGH_ENERGY_LAB",
+   "BUILDING_NUCLEAR_POWERCOMPLEX",
+   "BUILDING_SUPERCRITICAL_CO2_TURBINE"
+  ],
+  "units": [
+   "UNIT_FUSION_NOVA",
+   "UNIT_FUSION_NUKE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ARTIFICIAL_NUCLEOSYNTHESIS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_D_HE3_FUSION_PLANT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LABORATORY",
+    "BUILDING_POWER_LINES",
+    "TECH_FUSION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ],
+   "dormant": [
+    "BUILDING_D_HE3_FUSION_PLANT",
+    "BUILDING_HE3_FUSION_POWER_PLANT",
+    "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+    "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 200,
+   "percent": 35
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "cost": {
+  "production": 3245,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_D_T_FUSION_POWER_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_PLANTNUCLEAR"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_D_T_FUSION_POWER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_D_T_FUSION_POWER_PLANT_PEDIA",
+  "specialBuildingType": "SPECIALBUILDING_D_T_FUSION_POWER_PLANT",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

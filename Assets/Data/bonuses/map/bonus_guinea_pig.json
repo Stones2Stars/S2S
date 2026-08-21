@@ -1,0 +1,77 @@
+{
+ "type": "BONUS_GUINEA_PIG",
+ "enables": {
+  "buildings": [
+   "BUILDING_CARRION_GATHERER",
+   "BUILDING_GERBIL_BREEDER",
+   "BUILDING_GUINEA_PIG_BREEDER",
+   "BUILDING_HAMSTER_BREEDER",
+   "BUILDING_MOUSE_BREEDER",
+   "BUILDING_RAT_BREEDER",
+   "BUILDING_VIROTHERAPY_CLINIC"
+  ],
+  "units": [
+   "UNIT_NEANDERTHAL_SHEPHERD",
+   "UNIT_SHEPHERD"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_GUINEA_PIGS"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 6,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "maxLatitude": 45,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 64,
+  "uniqueRange": 3,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "noRiverSide": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_LUSH",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND"
+  ],
+  "validFeatures": [
+   "FEATURE_VERY_TALL_GRASS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_SCRUB"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_GUINEA_PIGS",
+  "civilopedia": "TXT_KEY_BONUS_GUINEA_PIGS_PEDIA",
+  "bonusClassType": "BONUSCLASS_LIVESTOCK",
+  "source": "natural"
+ }
+}

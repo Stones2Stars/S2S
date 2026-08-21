@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_SPONGE_FARM",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "TECH_AQUACULTURE",
+    {
+     "any": [
+      {
+       "type": "FEATURE_CORAL_REEF",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_CORAL_REEF_BEACON",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_CORAL_REEF_LIGHTHOUSE",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_GREAT_BARRIER",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_GREAT_BARRIER_REEF_BEACON",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_GREAT_BARRIER_REEF_LIGHTHOUSE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_SPONGES"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 1845,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SPONGE_FARM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SPONGE_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_SPONGE_FARM_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

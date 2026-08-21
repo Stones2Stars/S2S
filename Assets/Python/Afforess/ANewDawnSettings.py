@@ -3,7 +3,14 @@ from CvPythonExtensions import *
 import BugCore
 import CvUtil
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
+STATE = CyState()
+ACT = CyAct()   # the ACTION surface
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 ANewDawnOpt = BugCore.game.RoMSettings
 
 MODDEROPTION_EVENT_ID = CvUtil.getNewEventID()
@@ -99,7 +106,7 @@ class ANewDawnSettings:
 			GC.getMap().updateMinimapColor()
 		#disabled/enable worker actions
 		elif protocol == CANBUILD_EVENT_ID:
-			GC.getBuildInfo(data2).setDisabled(data3)
+			ACT.setBuildDisabled(data2, data3)
 
 #####################################################
 # Module level functions defined in RoMSettings.xml #
@@ -226,7 +233,7 @@ def updateAliveCivsOption():
 	for iPlayer in range(GC.getMAX_PC_PLAYERS()):
 		CyPlayer = GC.getPlayer(iPlayer)
 		if CyPlayer.isHuman() and CyPlayer.isAlive():
-			descs.append(GC.getCivilizationInfo(CyPlayer.getCivilizationType()).getShortDescription())
+			descs.append(INFO.getShortDescription("CIVILIZATION_", CyPlayer.getCivilizationType(), 0))
 	descs.sort()
 	aliveCivsOption.setValues(descs)
 

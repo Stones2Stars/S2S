@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_CULTURE_CLOCKPUNK",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CLOCKPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_CLOCKPUNK"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 2280,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_CLOCKPUNK",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_CLOCKPUNK",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_CLOCKPUNK_PEDIA",
+  "pediaCategory": "greatWonder",
+  "noInstanceLimit": true,
+  "worth": 5,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_CLOCK",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

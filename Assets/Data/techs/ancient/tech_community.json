@@ -1,0 +1,67 @@
+{
+ "type": "TECH_COMMUNITY",
+ "enables": {
+  "buildings": [
+   "BUILDING_TOWN_HALL"
+  ],
+  "civics": [
+   "CIVIC_CHARITY"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_CRIME_FIGHTING2",
+   "PROMOTION_EDUCATE2",
+   "PROMOTION_SOPHISTICATION4"
+  ],
+  "techs": [
+   "TECH_CASTE_SYSTEM",
+   "TECH_CONSCIOUSNESS",
+   "TECH_FOLK_DANCE",
+   "TECH_FOLK_MUSIC",
+   "TECH_TAXONOMY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 84
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/community.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_COMMUNITY",
+  "soundMP": "AS2D_TECH_COMMUNITY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_COMMUNITY",
+  "civilopedia": "TXT_KEY_TECH_COMMUNITY_PEDIA",
+  "quote": "TXT_KEY_TECH_COMMUNITY_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 20,
+  "gridY": 17
+ }
+}

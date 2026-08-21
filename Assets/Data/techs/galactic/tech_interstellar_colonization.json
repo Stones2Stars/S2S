@@ -1,0 +1,81 @@
+{
+ "type": "TECH_INTERSTELLAR_COLONIZATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_EXODUS",
+   "BUILDING_GLIESE_581D_COLONY",
+   "BUILDING_GLIESE_667CC_COLONY",
+   "BUILDING_INTERSTELLAR_FARM",
+   "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+   "BUILDING_INTERSTELLAR_SETTLEMENT",
+   "BUILDING_LAUNCH_ARCOLOGY",
+   "BUILDING_PROXIMA_CENTAURI_B_COLONY",
+   "BUILDING_TRANSTELLAR_SUBTERRANEAN_CITY",
+   "BUILDING_TRANSTELLAR_SUBTERRANEAN_FARM",
+   "BUILDING_WOLF_1061C_COLONY"
+  ],
+  "techs": [
+   "TECH_ADAPTIVE_RADIATION",
+   "TECH_INTERSTELLAR_TRADE",
+   "TECH_PLANET_CRACKING",
+   "TECH_PLANET_SCOUTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COLONY_GOVERNANCE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COSMIC_PERSPECTIVE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 149039
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/interstellarcolonization.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_INTERSTELLAR_COLONIZATION",
+  "soundMP": "AS2D_TECH_INTERSTELLAR_COLONIZATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_INTERSTELLAR_COLONIZATION",
+  "civilopedia": "TXT_KEY_TECH_INTERSTELLAR_COLONIZATION_PEDIA",
+  "quote": "TXT_KEY_TECH_INTERSTELLAR_COLONIZATION_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 129,
+  "gridY": 9
+ }
+}

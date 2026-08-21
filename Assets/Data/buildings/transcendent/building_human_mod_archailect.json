@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_HUMAN_MOD_ARCHAILECT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER",
+    "TECH_HYPERINTELLIGENCE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_HIGH_DIMENSIONAL",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_ARCHAILECT"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERGALACTIC_KOLMOGOROV_COMPRESSION": {
+     "flat": 10
+    }
+   }
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_INTERGALACTIC_KOLMOGOROV_COMPRESSION",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 48710
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_ARCHAILECT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_ARCHAILECT",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_ARCHAILECT_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

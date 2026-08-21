@@ -1,0 +1,20 @@
+meta {
+  name: computed/whyNot
+  type: http
+  seq: 14
+}
+
+get {
+  url: {{baseUrl}}/computed/whyNot?type=UNIT_WARRIOR&globalId=00-8192
+  body: none
+  auth: none
+}
+
+params:query {
+  type: UNIT_WARRIOR
+  globalId: 00-8192
+}
+
+docs {
+  canTrain decision inputs. City by globalId (or player=&city=).
+}

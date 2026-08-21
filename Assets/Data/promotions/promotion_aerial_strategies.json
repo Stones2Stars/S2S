@@ -1,0 +1,33 @@
+{
+ "type": "PROMOTION_AERIAL_STRATEGIES",
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionAerialStrategies.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_AERIAL_STRATEGIES",
+  "unitCombats": [
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_BALLOON",
+   "UNITCOMBAT_HELICOPTER"
+  ]
+ }
+}

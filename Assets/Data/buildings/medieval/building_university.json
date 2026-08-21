@@ -1,0 +1,262 @@
+{
+ "type": "BUILDING_UNIVERSITY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ACCELERATOR",
+   "BUILDING_ADAM_SMITHS_TRADING_COMPANY",
+   "BUILDING_AGRICULTURAL_EXTENSION",
+   "BUILDING_ANATOMY_LAB",
+   "BUILDING_APPLIED_SOCIOLOGY_LAB",
+   "BUILDING_ARCHAEOLOGY_LAB",
+   "BUILDING_ASTROBIOLOGY_LAB",
+   "BUILDING_ASTRONOMICAL_DATABASE",
+   "BUILDING_BAUHAUS_SCHOOL",
+   "BUILDING_BIOLOGY_LAB",
+   "BUILDING_BUSINESS_SCHOOL",
+   "BUILDING_CHEMISTRY_LAB",
+   "BUILDING_CULINARY_SCHOOL",
+   "BUILDING_DEPARTMENT_OF_EDUCATION",
+   "BUILDING_EINSTEINS_LABORATORY",
+   "BUILDING_ENGINEERING_SCHOOL",
+   "BUILDING_EU_HARVARD_UNIVERSITY",
+   "BUILDING_EU_HEIDELBERG_UNIVERSITY",
+   "BUILDING_EU_JAGIELLONIAN_UNIVERSITY",
+   "BUILDING_EU_MONTPELLIER_UNIVERSITY",
+   "BUILDING_EU_OXFORD_UNIVERSITY",
+   "BUILDING_EU_SORBONNE_UNIVERSITY",
+   "BUILDING_EU_UNIVERSITY_OF_BARCELONA",
+   "BUILDING_EU_UNIVERSITY_OF_BASEL",
+   "BUILDING_EU_UNIVERSITY_OF_BOLOGNA",
+   "BUILDING_EU_UNIVERSITY_OF_CAMBRIDGE",
+   "BUILDING_EU_UNIVERSITY_OF_COIMBRA",
+   "BUILDING_EU_UNIVERSITY_OF_EDINBURGH",
+   "BUILDING_EU_UNIVERSITY_OF_MURCIA",
+   "BUILDING_EU_UNIVERSITY_OF_PADUA",
+   "BUILDING_EU_UNIVERSITY_OF_SALAMANCA",
+   "BUILDING_GENEALOGY_CENTER",
+   "BUILDING_GEOLOGY_LAB",
+   "BUILDING_HOUSING_FRATERNITY_HOUSE",
+   "BUILDING_HOUSING_SORORITY_HOUSE",
+   "BUILDING_ISAAC_NEWTONS_COLLEGE",
+   "BUILDING_KERALA_SCHOOL_OF_MATHEMATICS",
+   "BUILDING_LABORATORY",
+   "BUILDING_LEARNING_CENTER",
+   "BUILDING_MANHATTAN_PROJECT",
+   "BUILDING_MARINE_BIOLOGY_LAB",
+   "BUILDING_MARINE_INSTITUTE",
+   "BUILDING_MATHEMATICS_DEPARTMENT",
+   "BUILDING_MEGATOWER_EDUCATION_LEVEL",
+   "BUILDING_METEOROLOGY_LAB",
+   "BUILDING_MICROBIOLOGY_LAB",
+   "BUILDING_MILITARY_ACADEMY",
+   "BUILDING_NANO_RESEARCH_DEPARTMENT",
+   "BUILDING_NATIONAL_ACADEMIC_DATABASE",
+   "BUILDING_NATIONAL_SCIENCE_FOUNDATION",
+   "BUILDING_NAVAL_ACADEMY",
+   "BUILDING_ONLINE_UNIVERSITY",
+   "BUILDING_PALEONTOLOGY_LAB",
+   "BUILDING_PATENT_OFFICE",
+   "BUILDING_PHILANTHROPIC_ORGANIZATION",
+   "BUILDING_PHYSICS_LAB",
+   "BUILDING_POLICE_ACADEMY",
+   "BUILDING_PSYCHOLOGY_LAB",
+   "BUILDING_QUANTUM_LAB",
+   "BUILDING_RADIO_TELESCOPE",
+   "BUILDING_ROBOTICS_LAB",
+   "BUILDING_SCIENCE_SYMPOSIUM",
+   "BUILDING_TELECOURSE_STUDIO",
+   "BUILDING_TRANSDISCIPLINARY_UNIVERSITY",
+   "BUILDING_UNIVERSAL_LIBRARY",
+   "BUILDING_VACCINE_LAB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LIBRARY",
+    "TECH_EDUCATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 5,
+     "enabled": "TECH_BIOLOGY"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    {
+     "value": 6,
+     "enabled": "TECH_CIVIL_ENGINEERING"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": {
+    "value": 5,
+    "enabled": "TECH_ECONOMICS"
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    25,
+    {
+     "value": 5,
+     "enabled": "TECH_PHYSICS"
+    },
+    {
+     "value": 6,
+     "enabled": "TECH_PSYCHOLOGY"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 5,
+     "enabled": "TECH_FREE_ARTISTRY"
+    },
+    {
+     "value": 5,
+     "enabled": "TECH_PRINTING_PRESS"
+    },
+    {
+     "value": 5,
+     "enabled": "TECH_DIVINE_RIGHT"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_BIOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PHYSICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PSYCHOLOGY",
+      "scope": "team"
+     }
+    }
+   ],
+   "SPECIALIST_ARTIST": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_FREE_ARTISTRY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PRINTING_PRESS",
+      "scope": "team"
+     }
+    }
+   ],
+   "SPECIALIST_MERCHANT": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ECONOMICS",
+      "scope": "team"
+     }
+    }
+   ],
+   "SPECIALIST_PRIEST": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_DIVINE_RIGHT",
+      "scope": "team"
+     }
+    }
+   ],
+   "SPECIALIST_ENGINEER": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CIVIL_ENGINEERING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 368,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_UNIVERSITY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_UNIVERSITY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_UNIVERSITY",
+  "civilopedia": "TXT_KEY_BUILDING_UNIVERSITY_PEDIA",
+  "worth": 4,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_TRANSTELLAR_LASER_HIGHWAY_RELAY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_PULSAR_NAVIGATION",
+    "TECH_INTERSTELLAR_TRADE",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 2536,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_LASER_HIGHWAY_RELAY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_LASER_HIGHWAY_RELAY",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_LASER_HIGHWAY_RELAY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

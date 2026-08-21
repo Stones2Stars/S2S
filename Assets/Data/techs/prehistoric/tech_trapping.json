@@ -1,0 +1,88 @@
+{
+ "type": "TECH_TRAPPING",
+ "enables": {
+  "bonuses": [
+   "BONUS_BEAVER",
+   "BONUS_PELTS"
+  ],
+  "buildings": [
+   "BUILDING_ANIMAL_SNARE_TRAPS",
+   "BUILDING_PIT_TRAPS",
+   "BUILDING_TRAP_BEAVER",
+   "BUILDING_TRAP_CHINCHILLA",
+   "BUILDING_TRAP_FOX",
+   "BUILDING_TRAP_MINK",
+   "BUILDING_TRAP_RABBIT",
+   "BUILDING_TRAP_RACCOON",
+   "BUILDING_TRAP_SEA_OTTER"
+  ],
+  "promotions": [
+   "PROMOTION_BACKSTAB1",
+   "PROMOTION_BUILD_UP_TRAP_HUNTING1",
+   "PROMOTION_ENTRAPMENT1",
+   "PROMOTION_HUNTER2"
+  ],
+  "techs": [
+   "TECH_SEWING",
+   "TECH_TRACKING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PERSISTENCE_HUNTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BINDING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 11
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/trapping.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TRAPPING",
+  "soundMP": "AS2D_TECH_TRAPPING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TRAPPING",
+  "civilopedia": "TXT_KEY_TECH_TRAPPING_PEDIA",
+  "quote": "TXT_KEY_TECH_TRAPPING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 6,
+  "gridY": 1
+ }
+}

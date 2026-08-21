@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_HYPERSPACE_OPEN_FRW_UNIVERSE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HYPERSPACE_INFLATON_FIELD",
+    "BUILDING_EFFECT_UNIVERSAL_ECONOMY",
+    "TECH_CONTROLLED_INFLATION",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    100,
+    {
+     "value": 20,
+     "enabled": "TECH_PARAMETER_TUNING"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "cost": {
+  "production": 1485,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYPERSPACE_OPEN_FRW_UNIVERSE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_OPEN_FRW_UNIVERSE",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_OPEN_FRW_UNIVERSE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

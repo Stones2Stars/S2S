@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_CIVIC_MILITIA",
+ "requires": {
+  "operate": {
+   "all": [
+    "CIVIC_MILITIA",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_CITY_GARRISON1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CIVIC_MILITIA",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CIVIC_MILITIA",
+  "civilopedia": "TXT_KEY_BUILDING_CIVIC_MILITIA_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

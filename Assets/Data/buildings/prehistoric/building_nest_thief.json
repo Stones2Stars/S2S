@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_NEST_THIEF",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_EGGS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ANTIBIOTICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SCAVENGING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "BONUS_POULTRY",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_CHICKEN_COOP",
+    "BUILDING_FARM_ANIMAL_DUCK",
+    "BUILDING_FARM_ANIMAL_GOOSE",
+    "BUILDING_SEA_TURTLE_EGG_GATHERER",
+    "BUILDING_FARM_ANIMAL_TURKEY",
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ]
+  }
+ },
+ "food": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": [
+    -1,
+    {
+     "value": 1,
+     "enabled": "TECH_COOKING"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 30,
+  "countModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NEST_THIEF",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NEST_THIEF",
+  "civilopedia": "TXT_KEY_BUILDING_NEST_THIEF_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

@@ -1,0 +1,60 @@
+{
+ "type": "TECH_CAVE_DWELLING",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAVE_SHELTER",
+   "BUILDING_CULTURE_NEANDERTHAL",
+   "BUILDING_HOUSING_ANIMAL_BURROW",
+   "BUILDING_HOUSING_CAVE_DWELLING",
+   "BUILDING_HOUSING_TREE_HOLLOW",
+   "BUILDING_NEANDERTHAL_CAVES",
+   "BUILDING_PC_BLOMBOS_CAVE",
+   "BUILDING_PC_BLUEFISH_CAVES",
+   "BUILDING_PC_CAVE_OF_ALTAMIRA",
+   "BUILDING_PC_CHARLIE_LAKE_CAVE",
+   "BUILDING_PC_KLASIES_RIVER_CAVES",
+   "BUILDING_PC_PEDRA_FURADA"
+  ],
+  "promotions": [
+   "PROMOTION_CITY_GARRISON1"
+  ],
+  "techs": [
+   "TECH_PETROGLYPHS",
+   "TECH_SHELTER_BUILDING"
+  ]
+ },
+ "cost": {
+  "research": 3
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/cavedwelling.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CAVE_DWELLING",
+  "soundMP": "AS2D_TECH_CAVE_DWELLING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CAVE_DWELLING",
+  "civilopedia": "TXT_KEY_TECH_CAVE_DWELLING_PEDIA",
+  "quote": "TXT_KEY_TECH_CAVE_DWELLING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 1,
+  "gridY": 1
+ }
+}

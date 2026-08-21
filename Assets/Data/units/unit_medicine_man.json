@@ -1,0 +1,138 @@
+{
+ "type": "UNIT_MEDICINE_MAN",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FOLK_MEDICINE",
+    {
+     "any": [
+      {
+       "type": "BONUS_ALCOHOL",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SOAP",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    },
+    {
+     "any": [
+      "BUILDING_HEALERS_HUT",
+      "BUILDING_DOCTORS_OFFICE",
+      "BUILDING_SURGEONS_OFFICE",
+      "BUILDING_MEDICAL_CLINIC",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_APOTHECARY"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 5
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_PEOPLE": {
+     "heal": 7
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -6
+  },
+  "plot": {
+   "flat": -3
+  }
+ },
+ "skills": [
+  "noCapture",
+  "onlyDefensive",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_HEALTH_CARE",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_STAFF",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 138,
+  "upkeep": 3,
+  "hurryCostModifier": 25
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MEDICINE_MAN",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_MEDICINE_MAN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_MEDICINE_MAN",
+  "civilopedia": "TXT_KEY_UNIT_MEDICINE_MAN_PEDIA",
+  "worth": 4,
+  "militaryWorth": 5,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_HEALER",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,107 @@
+{
+ "type": "BUILDING_TECHNOLOGICAL_CAPITAL",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TERRA_COMPUTER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "freeSpecialists": {
+  "empire": {
+   "any": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "percent": 20
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "grants": {
+  "goldenAge": true
+ },
+ "cost": {
+  "production": 38430,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 200
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 8
+   },
+   {
+    "FLAVOR_MILITARY": 8
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TECHNOLOGICAL_CAPITAL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TECHNOLOGICAL_CAPITAL",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_TECH_CAPITOL"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TECHNOLOGICAL_CAPITAL",
+  "civilopedia": "TXT_KEY_BUILDING_TECHNOLOGICAL_CAPITAL_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 6,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

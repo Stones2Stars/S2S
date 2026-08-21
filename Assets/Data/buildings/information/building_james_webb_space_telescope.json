@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_JAMES_WEBB_SPACE_TELESCOPE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_OBSERVATORY",
+    {
+     "type": "BUILDING_JET_PROPULSION_LABORATORY",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_EXOPLANET_DISCOVERY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_OBSERVATORY",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 11550
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_JAMESWEBB_TELESCOPE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_JAMES_WEBB_SPACE_TELESCOPE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_JAMES_WEBB_SPACE_TELESCOPE",
+  "civilopedia": "TXT_KEY_BUILDING_JAMES_WEBB_SPACE_TELESCOPE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_GAMBLING_DEN",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LEGALIZED_GAMBLING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GAMBLING_HALL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_BOARD_GAMES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_GAMBLING_HALL",
+    "BUILDING_CASINO",
+    "BUILDING_ORDINANCE_GAMBLING_BAN"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 146,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GAMBLING_DEN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GAMBLING_DEN",
+  "civilopedia": "TXT_KEY_BUILDING_GAMBLING_DEN_PEDIA",
+  "worth": 2,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

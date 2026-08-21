@@ -1,5 +1,13 @@
 from CvPythonExtensions import *
 
+#	This screen enumerates EVERY registered type, so it is the acceptance case for "the library can enumerate
+#	every type" ([python-read-map] 3.6) -- which is why it is addressed by INFOTYPE PREFIX rather than by an
+#	accessor per registry. INFO.getIndex(prefix) hands back the whole registry's identity in ONE crossing, and a
+#	boost::python call costs far more than the lookup inside it ([patterns.md] THE PEDIA IS THE ONE PLACE A FULL
+#	SCAN IS UNAVOIDABLE: what changes is the COST, never the scan).
+GC = CyGlobalContext()
+INFO = CyInfo()
+
 class Forgetful:
 	def __init__(self):
 		self.iForgetfulType = 0
@@ -11,64 +19,58 @@ class Forgetful:
 		self.yRes = ScreenResolution.y
 		GC = CyGlobalContext()
 
+		#	(label, INFOTYPE prefix). ⚠ Four prefixes do NOT spell their label: an era is C2C_ERA_, a world SIZE is
+		#	WORLDSIZE_, a leaderhead is LEADER_ and an espionage mission is ESPIONAGEMISSION_ ([naming.md]).
 		self.lForgetful = [
-			["Bonus", GC.getBonusInfo, GC.getNumBonusInfos()],
-			["Build", GC.getBuildInfo, GC.getNumBuildInfos()],
-			["Building", GC.getBuildingInfo, GC.getNumBuildingInfos()],
-#			["Calendar", GC.getCalendarInfo, GC.getNumCalendarInfos()],
-			["Civic", GC.getCivicInfo, GC.getNumCivicInfos()],
-			["CivicOption", GC.getCivicOptionInfo, GC.getNumCivicOptionInfos()],
-			["Civilization", GC.getCivilizationInfo, GC.getNumCivilizationInfos()],
-			["Climate", GC.getClimateInfo, GC.getNumClimateInfos()],
-			["Command", GC.getCommandInfo, GC.getNumCommandInfos()],
-			["Commerce", GC.getCommerceInfo, CommerceTypes.NUM_COMMERCE_TYPES],
-			["Concept", GC.getConceptInfo, GC.getNumConceptInfos()],
-			["Control", GC.getControlInfo, GC.getNumControlInfos()],
-			["Corporation", GC.getCorporationInfo, GC.getNumCorporationInfos()],
-			["CultureLevel", GC.getCultureLevelInfo, GC.getNumCultureLevelInfos()],
-#			["Denial", GC.getDenialInfo, GC.getNumDenialInfos()],
-			["Domain", GC.getDomainInfo, DomainTypes.NUM_DOMAIN_TYPES],
-#			["Effect", GC.getEffectInfo, GC.getNumEffectInfos()],
-#			["Emphasize", GC.getEmphasizeInfo, GC.getNumEmphasizeInfos()],
-			["Era", GC.getEraInfo, GC.getNumEraInfos()],
-			["Espionage", GC.getEspionageMissionInfo, GC.getNumEspionageMissionInfos()],
-			["Event", GC.getEventInfo, GC.getNumEventInfos()],
-			["EventTrigger", GC.getEventTriggerInfo, GC.getNumEventTriggerInfos()],
-			["Feature", GC.getFeatureInfo, GC.getNumFeatureInfos()],
-			["GameOption", GC.getGameOptionInfo, GC.getNumGameOptionInfos()],
-			["GameSpeed", GC.getGameSpeedInfo, GC.getNumGameSpeedInfos()],
-			["Goody", GC.getGoodyInfo, GC.getNumGoodyInfos()],
-#			["GraphicOptions", GC.getGraphicOptionsInfo, GraphicOptionTypes.NUM_GRAPHICOPTION_TYPES],
-			["Handicap", GC.getHandicapInfo, GC.getNumHandicapInfos()],
-			["Hurry", GC.getHurryInfo, GC.getNumHurryInfos()],
-			["Improvement", GC.getImprovementInfo, GC.getNumImprovementInfos()],
-			["LeaderHead", GC.getLeaderHeadInfo, GC.getNumLeaderHeadInfos()],
-			["Memory", GC.getMemoryInfo, MemoryTypes.NUM_MEMORY_TYPES],
-			["Mission", GC.getMissionInfo, GC.getNumMissionInfos()],
-#			["MPOption", GC.getMPOptionInfo, GC.getNumMPOptionInfos()],
-			["NewConcept", GC.getNewConceptInfo, GC.getNumNewConceptInfos()],
-			["Process", GC.getProcessInfo, GC.getNumProcessInfos()],
-			["Project", GC.getProjectInfo, GC.getNumProjectInfos()],
-			["Promotion", GC.getPromotionInfo, GC.getNumPromotionInfos()],
-			["Religion", GC.getReligionInfo, GC.getNumReligionInfos()],
-			["Route", GC.getRouteInfo, GC.getNumRouteInfos()],
-#			["SeaLevel", GC.getSeaLevelInfo, GC.getNumSeaLevelInfos()],
-#			["Season", GC.getSeasonInfo, GC.getNumSeasonInfos()],
-			["SpecialBuilding", GC.getSpecialBuildingInfo, GC.getNumSpecialBuildingInfos()],
-			["Specialist", GC.getSpecialistInfo, GC.getNumSpecialistInfos()],
-			["SpecialUnit", GC.getSpecialUnitInfo, GC.getNumSpecialUnitInfos()],
-			["Tech", GC.getTechInfo, GC.getNumTechInfos()],
-			["Terrain", GC.getTerrainInfo, GC.getNumTerrainInfos()],
-			["Trait", GC.getTraitInfo, GC.getNumTraitInfos()],
-			["Unit", GC.getUnitInfo, GC.getNumUnitInfos()],
-			["UnitAI", GC.getUnitAIInfo, UnitAITypes.NUM_UNITAI_TYPES],
-			["UnitCombat", GC.getUnitCombatInfo, GC.getNumUnitCombatInfos()],
-			["Upkeep", GC.getUpkeepInfo, GC.getNumUpkeepInfos()],
-			["Victory", GC.getVictoryInfo, GC.getNumVictoryInfos()],
-			["Vote", GC.getVoteInfo, GC.getNumVoteInfos()],
-			["VoteSource", GC.getVoteSourceInfo, GC.getNumVoteSourceInfos()],
-			["World", GC.getWorldInfo, GC.getNumWorldInfos()],
-			["Yield", GC.getYieldInfo, YieldTypes.NUM_YIELD_TYPES],
+			["Bonus", "BONUS_"],
+			["Build", "BUILD_"],
+			["Building", "BUILDING_"],
+			["Civic", "CIVIC_"],
+			["CivicOption", "CIVICOPTION_"],
+			["Civilization", "CIVILIZATION_"],
+			["Climate", "CLIMATE_"],
+			["Command", "COMMAND_"],
+			["Commerce", "COMMERCE_"],
+			["Concept", "CONCEPT_"],
+			["Control", "CONTROL_"],
+			["Corporation", "CORPORATION_"],
+			["CultureLevel", "CULTURELEVEL_"],
+			["Domain", "DOMAIN_"],
+			["Era", "C2C_ERA_"],
+			["Espionage", "ESPIONAGEMISSION_"],
+			["Event", "EVENT_"],
+			["EventTrigger", "EVENTTRIGGER_"],
+			["Feature", "FEATURE_"],
+			["GameOption", "GAMEOPTION_"],
+			["GameSpeed", "GAMESPEED_"],
+			["Goody", "GOODY_"],
+			["Handicap", "HANDICAP_"],
+			["Hurry", "HURRY_"],
+			["Improvement", "IMPROVEMENT_"],
+			["LeaderHead", "LEADER_"],
+			["Memory", "MEMORY_"],
+			["Mission", "MISSION_"],
+			["NewConcept", "NEWCONCEPT_"],
+			["Process", "PROCESS_"],
+			["Project", "PROJECT_"],
+			["Promotion", "PROMOTION_"],
+			["Religion", "RELIGION_"],
+			["Route", "ROUTE_"],
+			["SpecialBuilding", "SPECIALBUILDING_"],
+			["Specialist", "SPECIALIST_"],
+			["SpecialUnit", "SPECIALUNIT_"],
+			["Tech", "TECH_"],
+			["Terrain", "TERRAIN_"],
+			["Trait", "TRAIT_"],
+			["Unit", "UNIT_"],
+			["UnitAI", "UNITAI_"],
+			["UnitCombat", "UNITCOMBAT_"],
+			["Upkeep", "UPKEEP_"],
+			["Victory", "VICTORY_"],
+			["Vote", "VOTE_"],
+			["VoteSource", "VOTESOURCE_"],
+			["World", "WORLDSIZE_"],
+			["Yield", "YIELD_"],
 		]
 		self.iTypes = len(self.lForgetful)
 
@@ -104,13 +106,16 @@ class Forgetful:
 		screen.setTableColumnHeader(Table, 3, "TEXT", w0)
 		screen.enableSort(Table)
 		eWidGen = WidgetTypes.WIDGET_GENERAL
-		for item in xrange(self.lForgetful[self.iForgetfulType][2]):
-			ItemInfo = self.lForgetful[self.iForgetfulType][1](item)
+		#	ONE crossing for the whole registry. The row index is the TABLE's, never the entity's -- a JSON repo
+		#	may hold a hole, so the ids are not necessarily contiguous and the id travels in the entry itself.
+		iRow = 0
+		for kEntry in INFO.getIndex(self.lForgetful[self.iForgetfulType][1]):
 			screen.appendTableRow(Table)
-			screen.setTableInt(Table, 0, item, str(item), "", eWidGen, 1, 2, 1<<0)
-			screen.setTableText(Table, 1, item, ItemInfo.getDescription(), ItemInfo.getButton(), eWidGen, 1, 2, 1<<0)
-			screen.setTableText(Table, 2, item, "<font=1>" + ItemInfo.getType(), "", eWidGen, 1, 2, 1<<0)
-			screen.setTableText(Table, 3, item, "<font=1>" + ItemInfo.getTextKey(), "", eWidGen, 1, 2, 1<<0)
+			screen.setTableInt(Table, 0, iRow, str(kEntry["id"]), "", eWidGen, 1, 2, 1<<0)
+			screen.setTableText(Table, 1, iRow, kEntry["description"], kEntry["button"], eWidGen, 1, 2, 1<<0)
+			screen.setTableText(Table, 2, iRow, "<font=1>" + kEntry["type"], "", eWidGen, 1, 2, 1<<0)
+			screen.setTableText(Table, 3, iRow, "<font=1>" + kEntry["textKey"], "", eWidGen, 1, 2, 1<<0)
+			iRow += 1
 
 	def update(self, fDelta): return
 

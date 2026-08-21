@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_DIGITAL_RESURRECTION",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SYNTHETIC_SENTIENCE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_DIGITAL_IDENTITY",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 10,
+     "enabled": "TECH_BINARY_SUBCONSCIOUSNESS"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 3665,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DIGITAL_RESURRECTION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DIGITAL_RESURRECTION",
+  "civilopedia": "TXT_KEY_BUILDING_DIGITAL_RESURRECTION_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

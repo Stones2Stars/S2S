@@ -1,0 +1,18 @@
+{
+ "type": "VOTE_ENVIRONMENTALISM",
+ "voteSource": [
+  "DIPLOVOTE_UN"
+ ],
+ "threshold": {
+  "population": 51,
+  "minVoters": 3
+ },
+ "effect": {
+  "forceCivics": [
+   "CIVIC_GREEN"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_GREEN"
+ }
+}

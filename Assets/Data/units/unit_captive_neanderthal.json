@@ -1,0 +1,312 @@
+{
+ "type": "UNIT_CAPTIVE_NEANDERTHAL",
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_CAPTIVE_NEANDERTHAL"
+  }
+ },
+ "skills": [
+  "onlyDefensive",
+  "tradable"
+ ],
+ "tags": [
+  "landUnit",
+  "captive",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_CAPTIVE",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_NEANDERTHAL",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_WORKER",
+    "requires": {
+     "outcome": "OUTCOME_UPGRADE_TO_WORKER",
+     "plot": {
+      "noneOf": [
+       "IS_ANARCHY"
+      ]
+     }
+    },
+    "chance": 100,
+    "spawns": {
+     "unit": "UNIT_WORKER"
+    }
+   },
+   {
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_NEANDERTHAL_GATHERER",
+    "requires": {
+     "outcome": "OUTCOME_UPGRADE_TO_NEANDERTHAL_GATHERER",
+     "plot": {
+      "noneOf": [
+       "IS_ANARCHY"
+      ]
+     }
+    },
+    "chance": 100,
+    "spawns": {
+     "unit": "UNIT_NEANDERTHAL_GATHERER"
+    }
+   },
+   {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_FOOD",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE_FOOD",
+     "plot": {
+      "all": [
+       {
+        "python": "getNumNonSpecialistSlavesFood"
+       },
+       "IS_OWNED"
+      ]
+     }
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlaveFood"
+    }
+   },
+   {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_PRODUCTION",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE_PRODUCTION",
+     "plot": {
+      "all": [
+       {
+        "python": "getNumNonSpecialistSlavesProduction"
+       },
+       "IS_OWNED"
+      ]
+     }
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlaveProduction"
+    }
+   },
+   {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_ENTERTAINMENT",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE_ENTERTAINMENT",
+     "plot": {
+      "all": [
+       {
+        "python": "getNumNonSpecialistSlavesEntertainment"
+       },
+       "IS_OWNED"
+      ]
+     }
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlaveEntertainment"
+    }
+   },
+   {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_MILITARY",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE_MILITARY",
+     "plot": {
+      "all": [
+       {
+        "python": "getNumNonSpecialistSlavesMilitary"
+       },
+       "IS_OWNED"
+      ]
+     }
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlaveMilitary"
+    }
+   },
+   {
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_NEANDERTHAL_WARRIOR",
+    "requires": {
+     "outcome": "OUTCOME_UPGRADE_TO_NEANDERTHAL_WARRIOR",
+     "plot": {
+      "noneOf": [
+       "IS_ANARCHY"
+      ]
+     }
+    },
+    "chance": 100,
+    "spawns": {
+     "unit": "UNIT_NEANDERTHAL"
+    }
+   },
+   {
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_NEANDERTHAL_TRACKER",
+    "requires": {
+     "outcome": "OUTCOME_UPGRADE_TO_NEANDERTHAL_TRACKER",
+     "plot": {
+      "noneOf": [
+       "IS_ANARCHY"
+      ]
+     }
+    },
+    "chance": 100,
+    "spawns": {
+     "unit": "UNIT_NEANDERTHAL_CHASER"
+    }
+   },
+   {
+    "mission": "MISSION_SELL_CAPTIVE",
+    "requires": {
+     "outcome": "OUTCOME_SLAVE_SALE_NOT_SLAVERY",
+     "plot": "IS_OWNED"
+    },
+    "chance": 100,
+    "commerce": 2
+   },
+   {
+    "mission": "MISSION_BUTCHER_HUMAN",
+    "outcomes": [
+     {
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY"
+      },
+      "chance": 100,
+      "food": 8,
+      "production": 2
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST"
+      },
+      "chance": 100,
+      "food": 10,
+      "production": 4
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT1",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "food": 10,
+      "production": 4
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT2",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "food": 10,
+      "production": 4
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_WORLDVIEW_SLAVERY"
+   },
+   {
+    "building": "BUILDING_SLAVE_MARKET"
+   },
+   {
+    "building": "BUILDING_SLAVE_COMPOUND"
+   },
+   {
+    "building": "BUILDING_SLAVE_COMPOUND_MILITARY_SUPPORT"
+   },
+   {
+    "building": "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT"
+   },
+   {
+    "building": "BUILDING_SLAVE_COMPOUND_FOOD"
+   },
+   {
+    "building": "BUILDING_SLAVE_COMPOUND_INDUSTRY"
+   },
+   {
+    "building": "BUILDING_SLAVE_COMPOUND_COMMERCE"
+   },
+   {
+    "building": "BUILDING_SLAVE_COMPOUND_SANITATION"
+   },
+   {
+    "building": "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+   },
+   {
+    "building": "BUILDING_WORLDVIEW_CANNIBALISM"
+   },
+   {
+    "building": "BUILDING_WORLDVIEW_HUMAN_SACRIFICE"
+   }
+  ],
+  "greatPersonAction": {
+   "hurry": {
+    "base": 20,
+    "multiplier": 2
+   }
+  }
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NEANDERTHAL_CAPTIVE",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_NEANDERTHAL_CAPTIVE"
+      }
+     },
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_CAPTIVE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_CAPTIVE_NEANDERTHAL",
+  "civilopedia": "TXT_KEY_UNIT_CAPTIVE_MILITARY_PEDIA",
+  "help": "TXT_KEY_UNIT_CAPTIVE_MILITARY_HELP",
+  "spawnOnly": true,
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

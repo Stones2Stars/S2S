@@ -1,0 +1,31 @@
+{
+ "type": "PROJECT_THEORY_OF_EVERYTHING",
+ "allowed": {
+  "world": 1
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "cost": {
+  "create": 16040
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Techtree/TheoryofEverything.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,4,2"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_THEORY_OF_EVERYTHING",
+  "civilopedia": "TXT_KEY_BUILDING_THEORY_OF_EVERYTHING_PEDIA",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

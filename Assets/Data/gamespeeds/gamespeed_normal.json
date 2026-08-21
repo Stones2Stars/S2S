@@ -1,0 +1,17 @@
+{
+ "type": "GAMESPEED_NORMAL",
+ "speed": {
+  "world": {
+   "percent": 100
+  }
+ },
+ "missionYieldMultiplier": {
+  "world": {
+   "percent": 500
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_GAMESPEED_NORMAL",
+  "help": "TXT_KEY_GAMESPEED_NORMAL_HELP"
+ }
+}

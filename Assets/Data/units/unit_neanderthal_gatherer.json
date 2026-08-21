@@ -1,0 +1,121 @@
+{
+ "type": "UNIT_NEANDERTHAL_GATHERER",
+ "builds": [
+  "BUILD_ABATIS_THORN_HEDGE_KILL",
+  "BUILD_BURN_VEGETATION",
+  "BUILD_COTTAGE_KILL",
+  "BUILD_DESERT_CAMP_KILL",
+  "BUILD_FORTIFIED_CAVE_KILL",
+  "BUILD_FRUIT_GATHERING_CAMP_KILL",
+  "BUILD_GRAPE_GATHERING_CAMP_KILL",
+  "BUILD_JUNGLE_CAMP_KILL",
+  "BUILD_MUSHROOM_GATHERER_KILL",
+  "BUILD_NOMADIC_HERD_KILL",
+  "BUILD_PLANT_GATHERING_CAMP_KILL",
+  "BUILD_SALT_GATHERER_KILL",
+  "BUILD_SCAVENGING_CAMP_KILL",
+  "BUILD_SEED_CAMP_KILL",
+  "BUILD_STONE_TOOLS_WORKSHOP_KILL",
+  "BUILD_TAR_GATHERER_KILL",
+  "BUILD_TRAIL",
+  "BUILD_WETLANDS_CAMP_KILL",
+  "BUILD_WOODEN_PALISADE_KILL",
+  "BUILD_WOODEN_WATCHTOWER_KILL",
+  "BUILD_WOOD_GATHERER_KILL"
+ ],
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_NEANDERTHAL",
+    "BUILDING_C_L_NEANDERTHAL",
+    "TECH_GATHERING"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WORKER"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_NEANDERTHAL_GATHERER"
+  }
+ },
+ "skills": [
+  "food",
+  "tradable"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_NEANDERTHAL",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_POOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 18,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_NEANDERTHAL_GATHERER",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_NEANDERTHAL_GATHERER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_NEANDERTHAL_GATHERER",
+  "civilopedia": "TXT_KEY_UNIT_GATHERER_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "workRate": 125
+  }
+ }
+}

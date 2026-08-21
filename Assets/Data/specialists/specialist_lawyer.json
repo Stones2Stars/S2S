@@ -1,0 +1,51 @@
+{
+ "type": "SPECIALIST_LAWYER",
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ADMINISTRATOR": {
+     "flat": 1
+    },
+    "UNITCOMBAT_LAW_ENFORCEMENT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/lawyer.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/lawyer.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_LAWYER_SPECIALIST",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_STATESMAN_PEDIA",
+  "visible": true,
+  "categories": [
+   "CATEGORY_ASSIGNABLE_SPECIALISTS",
+   "CATEGORY_SPECIALIST_GROUP_POLITICAL"
+  ],
+  "greatPeopleUnit": "UNIT_GREAT_STATESMAN"
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_MOLLO",
+ "enables": {
+  "units": [
+   "UNIT_KALLAWAYA",
+   "UNIT_KALYAGA"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MOLLO"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MOLLO",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

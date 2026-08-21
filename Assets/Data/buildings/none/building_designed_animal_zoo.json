@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_DESIGNED_ANIMAL_ZOO",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ANIMAL_DESIGNER",
+    "BUILDING_ZOO",
+    "TECH_BIOPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BIOPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 13
+  }
+ },
+ "cost": {
+  "production": 3665,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DESIGNED_ANIMAL_ZOO",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DESIGNED_ANIMAL_ZOO",
+  "civilopedia": "TXT_KEY_BUILDING_DESIGNED_ANIMAL_ZOO_PEDIA",
+  "specialBuildingType": "SPECIALBUILDING_PUNK_BIO",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

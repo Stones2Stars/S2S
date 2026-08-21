@@ -1,0 +1,45 @@
+{
+ "type": "BONUS_ALCOHOL",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_DRUNK_DRIVING",
+   "BUILDING_CRIME_PUBLIC_INTOXICATION",
+   "BUILDING_DIVE_BAR",
+   "BUILDING_GALACTIC_CANTINA",
+   "BUILDING_HOUSING_FRATERNITY_HOUSE",
+   "BUILDING_HOUSING_SORORITY_HOUSE",
+   "BUILDING_LIQUOR_STORE",
+   "BUILDING_PUB",
+   "BUILDING_REHABILITATION_CENTER",
+   "BUILDING_SMUGGLERS_SHANTY",
+   "BUILDING_SNAKE_OIL_SALES",
+   "BUILDING_SPEAKEASY",
+   "BUILDING_TAVERN"
+  ],
+  "units": [
+   "UNIT_AKAVAI",
+   "UNIT_ARSONIST",
+   "UNIT_MANIQ_SPEAKER",
+   "UNIT_MEDICINE_MAN",
+   "UNIT_POST_APOCALYPTIC_GRENADIER"
+  ]
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ALCOHOL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ALCOHOL",
+  "civilopedia": "TXT_KEY_BONUS_ALCOHOL_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

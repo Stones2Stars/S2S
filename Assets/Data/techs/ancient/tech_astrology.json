@@ -1,0 +1,66 @@
+{
+ "type": "TECH_ASTROLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTROLOGY_SCHOOL",
+   "BUILDING_FORTUNE_TELLER"
+  ],
+  "techs": [
+   "TECH_CALENDAR",
+   "TECH_HELLENISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MAGIC",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 309
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/astrology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ASTROLOGY",
+  "soundMP": "AS2D_TECH_ASTROLOGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ASTROLOGY",
+  "civilopedia": "TXT_KEY_TECH_ASTROLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_ASTROLOGY_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 16,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 30,
+  "gridY": 19
+ }
+}

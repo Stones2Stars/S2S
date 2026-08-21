@@ -1,0 +1,97 @@
+{
+ "type": "BUILDING_BLACKNET",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CULTURAL_EVOLUTION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_NATIONAL_CYBERSECURITY_CENTER",
+    "BUILDING_ENCRYPTED_FIREWALL",
+    "TECH_DIGITIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": [
+    {
+     "value": 9,
+     "enabled": "TECH_UBIQUITOUS_COMPUTING"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_AUTOMATED_URBANIZATION"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_VIRTUAL_SOCIETY"
+    }
+   ]
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_DECEPTION1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 2205,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BLACKNET",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BLACKNET",
+  "civilopedia": "TXT_KEY_BUILDING_BLACKNET_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

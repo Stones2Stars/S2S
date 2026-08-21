@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_DISTANT_ARTIFICIAL_SUPERMASSIVE_BLACK_HOLE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_BIOPHILIC_SUBUNIVERSE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_BLAZAR_FACTORY",
+    "TECH_DIRECTED_COSMIC_EVOLUTION",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 3166,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_ARTIFICIAL_SUPERMASSIVE_BLACK_HOLE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_ARTIFICIAL_SUPERMASSIVE_BLACK_HOLE",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_ARTIFICIAL_SUPERMASSIVE_BLACK_HOLE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

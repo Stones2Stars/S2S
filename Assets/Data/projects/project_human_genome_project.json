@@ -1,0 +1,36 @@
+{
+ "type": "PROJECT_HUMAN_GENOME_PROJECT",
+ "allowed": {
+  "world": 1
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  },
+  "world": {
+   "empires": {
+    "flat": 1
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "cost": {
+  "create": 12840
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Buildings/Genemaping.dds,Art/Interface/Buttons/RoM_Building_Atlas.dds,1,4"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_GENOME_PROJECT",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_GENOME_PROJECT_PEDIA",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

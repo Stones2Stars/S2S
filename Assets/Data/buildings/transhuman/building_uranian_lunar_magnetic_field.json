@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_URANIAN_LUNAR_MAGNETIC_FIELD",
+ "enables": {
+  "buildings": [
+   "BUILDING_TERRAFORMED_OBERON",
+   "BUILDING_TERRAFORMED_TITANIA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_URANIAN_LUNAR_HEATING",
+    "TECH_PLANETARY_DEFENSES",
+    {
+     "type": "TERRAIN_UMBRIEL",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 2363,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_URANIAN_LUNAR_MAGNETIC_FIELD",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_URANIAN_LUNAR_MAGNETIC_FIELD",
+  "civilopedia": "TXT_KEY_BUILDING_URANIAN_LUNAR_MAGNETIC_FIELD_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

@@ -1,0 +1,186 @@
+{
+ "type": "BUILDING_COMPUTER_NETWORK",
+ "enables": {
+  "buildings": [
+   "BUILDING_ADVANCED_QUALITY_CONTROL",
+   "BUILDING_AI_SURVEILLANCE",
+   "BUILDING_ARTIFICIAL_INTELLIGENCE_LAB",
+   "BUILDING_ARXIV",
+   "BUILDING_CLOUD_SERVER",
+   "BUILDING_COMPUTER_CENTER",
+   "BUILDING_COMPUTER_SECURITY_OFFICE",
+   "BUILDING_DIGITAL_GLOBE",
+   "BUILDING_DIGITAL_OFFICES",
+   "BUILDING_ELECTRONIC_GAMING_LEAGUE",
+   "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
+   "BUILDING_ENCRYPTED_FIREWALL",
+   "BUILDING_E_BANK",
+   "BUILDING_FACTORY_ANDROIDS",
+   "BUILDING_GREAT_FIREWALL",
+   "BUILDING_HOLOGRAPHIC_THEATER",
+   "BUILDING_HOUSING_ARCOLOGY_SUBURBS",
+   "BUILDING_HOUSING_ARCOLOGY_UPPER_CLASS",
+   "BUILDING_HOUSING_CHATEAU",
+   "BUILDING_HOUSING_HIGH_TECH_APARTMENTS",
+   "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
+   "BUILDING_HOUSING_HIGH_TECH_HIGHRISES",
+   "BUILDING_HOUSING_HOLO_SUITES",
+   "BUILDING_HOUSING_MID_CLASS_SKYPAD_APARTMENTS",
+   "BUILDING_HOUSING_SMART_HOMES",
+   "BUILDING_INFO_NET",
+   "BUILDING_INTELLIGENT_PAVEMENT",
+   "BUILDING_INTERNET_ARCHIVE",
+   "BUILDING_INTERNET_RADIO_STATION",
+   "BUILDING_INTERNET_TELEVISION_STATION",
+   "BUILDING_ISP_OFFICES",
+   "BUILDING_MARKET_RESEARCH",
+   "BUILDING_MIND_STORAGE",
+   "BUILDING_NATIONAL_ACADEMIC_DATABASE",
+   "BUILDING_NATIONAL_CENSUS",
+   "BUILDING_NATIONAL_CYBERSECURITY_CENTER",
+   "BUILDING_NATIONAL_LEGAL_DATABASE",
+   "BUILDING_NATIONAL_MEDICAL_DATABASE",
+   "BUILDING_NETWORK_NODE",
+   "BUILDING_ONLINE_GENEALOGY_CENTER",
+   "BUILDING_ONLINE_SHIPPING_WAREHOUSE",
+   "BUILDING_ONLINE_UNIVERSITY",
+   "BUILDING_RECHARGING_NODE",
+   "BUILDING_SAFETY_GREAT_FIREWALL",
+   "BUILDING_SANITATION_CHAMBER",
+   "BUILDING_SYSTEMS_BIOLOGY_SIMULATOR",
+   "BUILDING_TIME_ZONES",
+   "BUILDING_TRAFFIC_CAMERAS",
+   "BUILDING_VIRTUAL_REALITY_THEATER",
+   "BUILDING_WIKIA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TELEPHONE_NETWORK",
+    "BUILDING_MODERN_OFFICES",
+    "TECH_COMPUTER_NETWORKS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_WIRES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_FIBER_OPTIC_CABLES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10,
+   "percent": 1
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_COPPER_WIRES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 60,
+     "enabled": {
+      "type": "BONUS_FIBER_OPTIC_CABLES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "cost": {
+  "production": 1475,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_COMPUTER_NETWORK",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COMPUTER_NETWORK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_COMPUTER_NETWORK",
+  "civilopedia": "TXT_KEY_BUILDING_COMPUTER_NETWORK_PEDIA",
+  "worth": 6,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

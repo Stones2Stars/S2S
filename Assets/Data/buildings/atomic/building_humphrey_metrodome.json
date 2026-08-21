@@ -1,0 +1,102 @@
+{
+ "type": "BUILDING_HUMPHREY_METRODOME",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOTROIDS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MAJOR_LEAGUE_STADIUM",
+    "TECH_MODERN_SPORTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_SOFTBALL_FIELD",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 7380,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_HUMPHREY_METRODOME"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HUMPHREY_METRODOME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMPHREY_METRODOME",
+  "civilopedia": "TXT_KEY_BUILDING_HUMPHREY_METRODOME_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 5,
+  "militaryWorth": 4,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

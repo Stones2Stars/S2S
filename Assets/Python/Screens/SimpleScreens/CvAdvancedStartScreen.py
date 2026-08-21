@@ -14,7 +14,12 @@ from CvPythonExtensions import *
  3 = Visibility
  4 = Tech
 '''
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
 class CvAdvancedStartScreen:
 

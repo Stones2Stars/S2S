@@ -1,0 +1,11 @@
+{
+ "type": "OUTCOME_JOIN_CITY_POPULATION",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_JOIN_CITY_POPULATION",
+  "message": "TXT_KEY_OUTCOME_JOIN_CITY_POPULATION_MESSAGE"
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city"
+}

@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_UNIVERSAL_LIBRARY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ENCYCLOPEDIA_GALACTICA",
+   "BUILDING_SPELLCASTERS_HUT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_UNIVERSITY",
+    "TECH_KNOWLEDGE_MERCANTILISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 13,
+     "enabled": "TECH_ENDLESS_EXPLORATION"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HUMAN_MOD_INDEFINITE_LIFESPAN",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    20,
+    {
+     "value": 12,
+     "enabled": "TECH_PURE_INFORMATION_SOCIETY"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_DATA_ARCHIVAL"
+    },
+    {
+     "value": 13,
+     "enabled": "TECH_ALTERNATE_HISTORY_EXPLORATION"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 12,
+     "enabled": "TECH_CULTURAL_LONGEVITY"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_CULTURAL_EVOLUTION"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 6155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_UNIVERSAL_LIBRARY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_UNIVERSAL_LIBRARY",
+  "civilopedia": "TXT_KEY_BUILDING_UNIVERSAL_LIBRARY_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

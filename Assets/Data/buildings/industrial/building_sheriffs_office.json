@@ -1,0 +1,141 @@
+{
+ "type": "BUILDING_SHERIFFS_OFFICE",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+  ],
+  "units": [
+   "UNIT_CITY_GUARD",
+   "UNIT_ENFORCERS",
+   "UNIT_GUARD",
+   "UNIT_HARAPPA_WATCHER",
+   "UNIT_HOPLOMACHUS",
+   "UNIT_HUACA_GUARDIANS",
+   "UNIT_NEANDERTHAL_ENFORCER",
+   "UNIT_NEANDERTHAL_WATCHER",
+   "UNIT_ORONAO_WATCHER",
+   "UNIT_PATROLS",
+   "UNIT_PETRA_GUARD",
+   "UNIT_SHERIFF",
+   "UNIT_TEXAS_RANGER",
+   "UNIT_TOWN_WATCHMEN",
+   "UNIT_TREASURE_GUARD",
+   "UNIT_WATCHER"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FORENSICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_POLICE_STATION"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_DEPUTIZATION",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT",
+      "BUILDING_MODERN_OFFICES"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_POLICE_STATION",
+    "BUILDING_POLICE_PRECINCT"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 15,
+   "percent": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 20
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -5,
+   "flat": 1
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -15
+  }
+ },
+ "underworld": {
+  "city": {
+   "investigation": {
+    "flat": 35
+   }
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -35
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_INVESTIGATOR": 4
+  }
+ },
+ "cost": {
+  "production": 630,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   },
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SHERIFFS_OFFICE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_POLICE_STATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SHERIFFS_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_SHERIFFS_OFFICE_PEDIA",
+  "worth": 1,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

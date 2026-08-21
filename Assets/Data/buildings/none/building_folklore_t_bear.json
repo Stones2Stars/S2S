@@ -1,0 +1,129 @@
+{
+ "type": "BUILDING_FOLKLORE_T_BEAR",
+ "enables": {
+  "buildings": [
+   "BUILDING_CARNIVAL_DANCING_BEAR",
+   "BUILDING_ENCLOSURE_BEAR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    "TECH_TAXONOMY",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_MOON_BEAR",
+      "BUILDING_FOLKLORE_BROWN_BEAR",
+      "BUILDING_FOLKLORE_BLACK_BEAR",
+      "BUILDING_FOLKLORE_CAVE_BEAR",
+      "BUILDING_FOLKLORE_GRIZZLY",
+      "BUILDING_FOLKLORE_GIANT_PANDA",
+      "BUILDING_FOLKLORE_POLAR_BEAR",
+      "BUILDING_FOLKLORE_SLOTH_BEAR",
+      "BUILDING_FOLKLORE_SPECTACLED_BEAR",
+      "BUILDING_FOLKLORE_SUN_BEAR"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": [
+    1,
+    {
+     "value": -0.6,
+     "enabled": "TECH_LANGUAGE"
+    },
+    {
+     "value": -0.1,
+     "enabled": "TECH_CLASSICAL_LIFESTYLE"
+    },
+    {
+     "value": -0.1,
+     "enabled": "TECH_MEDIEVAL_LIFESTYLE"
+    },
+    {
+     "value": -0.1,
+     "enabled": "TECH_RENAISSANCE_LIFESTYLE"
+    },
+    {
+     "value": -0.1,
+     "enabled": "TECH_INDUSTRIAL_LIFESTYLE"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": [
+    {
+     "value": 0.1,
+     "enabled": "TECH_LANGUAGE"
+    },
+    {
+     "value": 0.1,
+     "enabled": "TECH_CLASSICAL_LIFESTYLE"
+    },
+    {
+     "value": 0.1,
+     "enabled": "TECH_MEDIEVAL_LIFESTYLE"
+    },
+    {
+     "value": 0.1,
+     "enabled": "TECH_RENAISSANCE_LIFESTYLE"
+    },
+    {
+     "value": 0.1,
+     "enabled": "TECH_INDUSTRIAL_LIFESTYLE"
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "empire": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "TECH_EDUCATION"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_BIOLOGY"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 250,
+  "complexityModifier": 2
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FOLKLORE_T_BEAR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_T_BEAR",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+  "pediaCategory": "animalistic",
+  "specialBuildingType": "SPECIALBUILDING_FOLKLORE_TAXONOMY",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

@@ -1,0 +1,129 @@
+{
+ "type": "BUILDING_ORIENT_EXPRESS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MAGNETIC_LEVITATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_RAILROAD",
+    {
+     "any": [
+      "BUILDING_RAILROAD_STATION",
+      "BUILDING_TELEPORT_BOOTH"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    8,
+    {
+     "value": 8,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "buildings": {
+    "BUILDING_RAILROAD_STATION": {
+     "flat": 2
+    },
+    "BUILDING_TELEPORT_BOOTH": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_RAILROAD_STATION": {
+     "flat": 2
+    },
+    "BUILDING_TELEPORT_BOOTH": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": [
+     {
+      "value": 50,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "production": 3930,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ORIENT_EXPRESS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ORIENT_EXPRESS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ORIENT_EXPRESS",
+  "civilopedia": "TXT_KEY_BUILDING_ORIENT_EXPRESS_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_SPY",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

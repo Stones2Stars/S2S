@@ -1,0 +1,16 @@
+{
+  "entity": "SpecialUnitInfo",
+  "rootElement": "SpecialUnitInfo",
+  "glob": "**/CIV4SpecialUnitInfos.xml",
+  "channels": {
+    "iCombatPercent": {"scope": "city", "channel": "combat", "kind": "percent"},
+    "iWithdrawalChange": {"scope": "city", "channel": "withdrawal", "kind": "flat"}
+  },
+  "inversionsOut": {},
+  "enablerEdges": {},
+  "prereqs": [],
+  "cost": [],
+  "art": [],
+  "identity": ["Type", "Description", "bValid", "bCityLoad", "bSMLoadSame"],
+  "boostsIn": []
+}

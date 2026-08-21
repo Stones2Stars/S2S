@@ -1,0 +1,112 @@
+{
+ "type": "UNIT_FERAL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BIONIC_SUITS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_HOMO_SUPERIOR",
+    {
+     "type": "BONUS_NEUROIMPLANTS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 4
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 220
+  }
+ },
+ "skills": [
+  "ignoreBuildingDefense",
+  "camouflage"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "troop"
+ ],
+ "combatClass": "UNITCOMBAT_CLONES",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_LASER",
+  "UNITCOMBAT_WEAPON_H2H_FLAMETHROWER",
+  "UNITCOMBAT_WEAPON_DIST_ION",
+  "UNITCOMBAT_WEAPON_DIST_FLAME",
+  "UNITCOMBAT_ARMOR_MODERN",
+  "UNITCOMBAT_SHIELD_ENERGY",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "hideAndSeek": {
+  "method": "camouflage",
+  "concealment": {
+   "flat": 100
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 5250,
+  "upkeep": 11
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SUPER_SOLDIER",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SUPER_SOLDIER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_FERAL",
+  "civilopedia": "TXT_KEY_UNIT_FERAL_PEDIA",
+  "worth": 5,
+  "militaryWorth": 920,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_ESCORT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

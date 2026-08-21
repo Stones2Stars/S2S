@@ -1,0 +1,81 @@
+{
+ "type": "TECH_HUNTING",
+ "enables": {
+  "buildings": [
+   "BUILDING_BUFFALO_JUMP",
+   "BUILDING_CULTURE_FUEGIAN",
+   "BUILDING_CULTURE_JIVARO",
+   "BUILDING_MASTER_HUNTER_TRADITION",
+   "BUILDING_TRADITION_HUNTER"
+  ],
+  "promotions": [
+   "PROMOTION_BACKSTAB2",
+   "PROMOTION_HUNTER_GREAT"
+  ],
+  "techs": [
+   "TECH_CHIEFDOM",
+   "TECH_WARFARE"
+  ],
+  "units": [
+   "UNIT_HEADHUNTER",
+   "UNIT_HUNTER",
+   "UNIT_MASTER_HUNTER",
+   "UNIT_NEANDERTHAL_HUNTER",
+   "UNIT_NEANDERTHAL_MASTER_HUNTER",
+   "UNIT_SEAL_HUNTER"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_MASTER_TRACKER",
+   "UNIT_NEANDERTHAL_MASTER_TRACKER",
+   "UNIT_NEANDERTHAL_TRACKER",
+   "UNIT_TRACKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRACKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ATLATL_MAKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 30
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/huntingtactics.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_HUNTING",
+  "soundMP": "AS2D_TECH_HUNTING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_HUNTING",
+  "civilopedia": "TXT_KEY_TECH_HUNTING_PEDIA",
+  "quote": "TXT_KEY_TECH_HUNTING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 13,
+  "gridY": 11
+ }
+}

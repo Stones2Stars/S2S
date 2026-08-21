@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_WATERPROOF_CEMENT",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_WATERPROOF_CEMENT"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_WATERPROOF_CEMENT",
+  "civilopedia": "TXT_KEY_BONUS_WATERPROOF_CEMENT_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

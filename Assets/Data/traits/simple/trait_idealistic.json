@@ -1,0 +1,56 @@
+{
+ "type": "TRAIT_IDEALISTIC",
+ "culture": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 10
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 25
+   }
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_CULTURE": -1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitIdealistic.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_IDEALISTIC",
+  "civilopedia": "TXT_KEY_TRAIT_IDEALISTIC_PEDIA",
+  "shortDescription": "TXT_KEY_TRAIT_IDEALISTIC_SHORT",
+  "negativeTrait": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_IDEALISTIC1"
+  ]
+ }
+}

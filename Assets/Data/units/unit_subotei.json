@@ -1,0 +1,128 @@
+{
+ "type": "UNIT_SUBOTEI",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MONGOLIAN",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_CIVIL_SERVICE"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 20
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "skills": [
+  "pillage"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_HERO",
+ "combatClasses": [
+  "UNITCOMBAT_MOUNTED",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_LONG_POLEARM",
+  "UNITCOMBAT_ARMOR_HEAVY",
+  "UNITCOMBAT_SHIELD_SMALL",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+  "UNITCOMBAT_MOTILITY_RIDING",
+  "UNITCOMBAT_MOUNT_HORSE",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_RETINUE_LIEUTENANT",
+   "PROMOTION_LEADER"
+  ],
+  "greatPeople": [
+   "SPECIALIST_CITIZEN",
+   "SPECIALIST_GREAT_PROPHET",
+   "SPECIALIST_GREAT_ARTIST",
+   "SPECIALIST_GREAT_SCIENTIST",
+   "SPECIALIST_GREAT_MERCHANT",
+   "SPECIALIST_GREAT_ENGINEER",
+   "SPECIALIST_NOBLE",
+   "SPECIALIST_GREAT_MILITARY_INSTRUCTOR",
+   "SPECIALIST_GREAT_SPY",
+   "SPECIALIST_CELEBRITY"
+  ]
+ },
+ "cost": {
+  "production": 1200,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SUBOTEI",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SUBOTEI"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_SUBOTEI",
+  "civilopedia": "TXT_KEY_UNIT_SUBOTEI_PEDIA",
+  "worth": 6,
+  "militaryWorth": 8,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_COUNTER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

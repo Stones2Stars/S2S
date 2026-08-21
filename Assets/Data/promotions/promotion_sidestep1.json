@@ -1,0 +1,43 @@
+{
+ "type": "PROMOTION_SIDESTEP1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SIDESTEP2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT1",
+    "PROMOTION_DRILL1"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_THROWING": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SIDESTEP": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/SidestepPromotion1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SIDESTEP1",
+  "unitCombats": [
+   "UNITCOMBAT_ANIMAL",
+   "UNITCOMBAT_GUN"
+  ]
+ }
+}

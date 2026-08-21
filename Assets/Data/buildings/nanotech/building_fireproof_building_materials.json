@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_FIREPROOF_BUILDING_MATERIALS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MEGATOWER_FIRE_STATION_LEVEL",
+    "TECH_NOVUS_CHEMISTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NOVUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -40
+  }
+ },
+ "cost": {
+  "production": 3805,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FIREPROOF_BUILDING_MATERIALS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FIREPROOF_BUILDING_MATERIALS",
+  "civilopedia": "TXT_KEY_BUILDING_FIREPROOF_BUILDING_MATERIALS_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

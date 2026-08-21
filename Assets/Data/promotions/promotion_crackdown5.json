@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTION_CRACKDOWN5",
+ "combat": {
+  "unit": {
+   "stealth": {
+    "percent": 25
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CRACKDOWN": 5
+ },
+ "enabled": "GAMEOPTION_COMBAT_WITHOUT_WARNING",
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Crackdown5Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CRACKDOWN5"
+ }
+}

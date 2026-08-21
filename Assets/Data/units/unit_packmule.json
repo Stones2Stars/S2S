@@ -1,0 +1,117 @@
+{
+ "type": "UNIT_PACKMULE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_DONKEY",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_ANIMAL_TRAINER_DONKEY",
+    "TECH_PLOUGH"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ADVENTURER"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 4
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "skills": [
+  "barbCoExist",
+  "noBadGoodies",
+  "passage",
+  "upgradeAnywhere",
+  "tradable"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_RECON",
+ "combatClasses": [
+  "UNITCOMBAT_EXPLORER",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_STAFF",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+  "UNITCOMBAT_ANIMAL_COMBAT_NIP",
+  "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_ASSISTED_MULE",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_MOUNTAINEER"
+  ]
+ },
+ "cost": {
+  "production": 115,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_PACKMULE",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_PACKMULE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_PACKMULE",
+  "civilopedia": "TXT_KEY_UNIT_PACK_LLAMA_PEDIA",
+  "worth": 1,
+  "xpValueAttack": 4,
+  "xpValueDefense": 4,
+  "animalCombat": 25,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_EXPLORE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_EXPLORE",
+   "UNITAI_ESCORT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

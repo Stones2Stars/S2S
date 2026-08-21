@@ -1,0 +1,106 @@
+{
+ "type": "IMPROVEMENT_SOLAR_PANELS",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SOLAR_POWER",
+     "scope": "team"
+    },
+    "IS_FLATLANDS",
+    {
+     "terrain": [
+      "TERRAIN_DESERT",
+      "TERRAIN_BARREN",
+      "TERRAIN_SCRUB",
+      "TERRAIN_DUNES",
+      "TERRAIN_SALT_FLATS"
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WIRELESS_ELECTRICITY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ENVIRONMENTAL_ECONOMICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    4,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_NANOTECHNOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MICROMECHANICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_FUEL_CELLS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_RAPID_PROTOTYPING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ENVIRONMENTAL_ECONOMICS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_SOLAR_PANELS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_SOLAR_PANELS",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SOLAR_PANEL_PEDIA",
+  "advancedStart": {
+   "cost": 35
+  },
+  "pillageGold": 10
+ }
+}

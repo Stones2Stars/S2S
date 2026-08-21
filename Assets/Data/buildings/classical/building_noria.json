@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_NORIA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_RIVER_ADMINISTRATION"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "BUILDING_IRRIGATION_CANALS",
+    "TECH_WATERWHEELS",
+    {
+     "any": [
+      "BUILDING_AQUEDUCT",
+      "BUILDING_MODERN_WATERWORKS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_RIVER_ADMINISTRATION"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "HAS_RIVER"
+     }
+    ]
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 280,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NORIA",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NORIA",
+  "civilopedia": "TXT_KEY_BUILDING_NORIA_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

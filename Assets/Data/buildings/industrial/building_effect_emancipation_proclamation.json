@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_EMANCIPATION"
+   ]
+  }
+ },
+ "food": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "empire": {
+   "flat": 3,
+   "percent": 5
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": [
+    1,
+    {
+     "value": 5,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "empire": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "empire": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_EMANCIPATION_PROCLAMATION",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_EMANCIPATION_PROCLAMATION_PEDIA",
+  "notConstructible": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_DIG_SITE_AMMONITE_FOSSILS",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FOSSILS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_EARTHWORKS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PALEONTOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_CLAM",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_FOSSIL_BEDS",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_MODERN_EARTHWORKS"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 555,
+  "sizeModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DIG_SITE_AMMONITE_FOSSILS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DIG_SITE_AMMONITE_FOSSILS",
+  "civilopedia": "TXT_KEY_BUILDING_DIG_SITE_AMMONITE_FOSSILS_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

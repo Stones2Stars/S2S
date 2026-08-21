@@ -1,0 +1,41 @@
+{
+ "type": "TERRAIN_KUIPER_BELT_OBJECT",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/baseterrain/kuiper_belt_object.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_TERRAIN_KUIPER_BELT_OBJECT"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_TUNDRA_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_TERRAIN_KUIPER_BELT_OBJECT",
+  "civilopedia": "TXT_KEY_TERRAIN_KUIPER_BELT_OBJECT_PEDIA",
+  "found": true,
+  "buildTimeModifier": 50,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_JOVIAN"
+  ]
+ }
+}

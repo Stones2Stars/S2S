@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_COLOMBIAN",
+ "enables": {
+  "units": [
+   "UNIT_PETER_CLAVER",
+   "UNIT_SEARCH_BLOC"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_COLOMBIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_COLOMBIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

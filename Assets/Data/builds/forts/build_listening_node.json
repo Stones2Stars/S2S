@@ -1,0 +1,36 @@
+{
+ "type": "BUILD_LISTENING_NODE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_DEFENSES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_LISTENING_NODE"
+ },
+ "cost": {
+  "gold": 200,
+  "time": 1000
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Structures/Improvements/radar/radar_button.dds"
+  },
+  "hotkey": "KB_F",
+  "shiftDown": true,
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_LISTENING_NODE"
+ }
+}

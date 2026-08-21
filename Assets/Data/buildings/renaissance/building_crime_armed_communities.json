@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_CRIME_ARMED_COMMUNITIES",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_MATCHLOCK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 650,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_LAW_ENFORCEMENT": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -50
+   }
+  }
+ },
+ "underworld": {
+  "city": {
+   "investigation": {
+    "flat": 20
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_ARMED_COMMUNITIES",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_ARMED_COMMUNITIES_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

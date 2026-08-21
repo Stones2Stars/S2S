@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_ANIMA_GAMING_LEAGUE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ANIMA_STUDIO",
+    "TECH_ARTIFICIAL_LIFE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_VIDEO_GAMES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "commerce": {
+  "empire": {
+   "percent": 4
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 11810,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ANIMA_GAMING_LEAGUE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANIMA_GAMING_LEAGUE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMA_GAMING_LEAGUE",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMA_GAMING_LEAGUE_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

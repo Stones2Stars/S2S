@@ -1,0 +1,133 @@
+{
+ "type": "BUILDING_GOLDEN_GATE_BRIDGE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BUNGEE_JUMPING_SITE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TELEPORTATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "TECH_MOTORIZED_TRANSPORTATION",
+    "TECH_CIVIL_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+      "BUILDING_SMALL_SUSPENSION_BRIDGE",
+      "BUILDING_LARGE_SUSPENSION_BRIDGE",
+      "BUILDING_TELEPORT_BOOTH"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": -5
+   },
+   "riverDefensePenalty": {
+    "percent": 45
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1,
+   "modifier": {
+    "percent": 50
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 4980,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GOLDEN_GATE_BRIDGE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GOLDEN_GATE_BRIDGE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GOLDEN_GATE_BRIDGE",
+  "civilopedia": "TXT_KEY_BUILDING_GOLDEN_GATE_BRIDGE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

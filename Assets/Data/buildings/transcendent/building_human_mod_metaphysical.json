@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_HUMAN_MOD_METAPHYSICAL",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ARCHETYPAL_VECTOR_SPACES",
+    {
+     "type": "BONUS_HUMAN_MOD_ARCHAILECT",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_HUMAN_MOD_ATEMPORAL",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_HUMAN_MOD_NON_SPATIAL",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_METAPHYSICAL"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_HYPERSPACE_QUATERNIONIC_PROJECTIVE_SPACE_COLONY": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "buildings": {
+    "BUILDING_HYPERSPACE_TRANSFINITE_SUPERCOMPUTER": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 57510
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_METAPHYSICAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_METAPHYSICAL",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_METAPHYSICAL_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

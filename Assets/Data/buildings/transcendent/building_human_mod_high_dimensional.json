@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_HUMAN_MOD_HIGH_DIMENSIONAL",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
+    {
+     "type": "BONUS_HUMAN_MOD_IMMORTAL",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_HUMAN_MOD_ALIEN_HYBRID",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_HUMAN_MOD_PURE_ENERGY",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_HIGH_DIMENSIONAL"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_HYPERCITY": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "buildings": {
+    "BUILDING_HYPERFACTORY": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 43910
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_HIGH_DIMENSIONAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_HIGH_DIMENSIONAL",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_HIGH_DIMENSIONAL_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

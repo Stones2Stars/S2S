@@ -1,0 +1,70 @@
+{
+ "type": "TECH_ROBOTICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BATTLEBOT_ARENA",
+   "BUILDING_ROBOTICS_LAB",
+   "BUILDING_ROBOTIC_TRAPS"
+  ],
+  "techs": [
+   "TECH_INFORMATION_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_MECHANIZED_INFANTRY",
+   "UNIT_MODERN_ARMOR",
+   "UNIT_MODERN_FRIGATE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MICROPROCESSOR",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 16099
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/Robotics.dds,Art/Interface/Buttons/TechTree_Atlas.dds,4,7"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ROBOTICS",
+  "soundMP": "AS2D_TECH_MP_ROBOTICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ROBOTICS",
+  "civilopedia": "TXT_KEY_TECH_ROBOTICS_PEDIA",
+  "quote": "TXT_KEY_TECH_ROBOTICS_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 85,
+  "gridY": 17
+ }
+}

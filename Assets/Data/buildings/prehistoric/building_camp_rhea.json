@@ -1,0 +1,97 @@
+{
+ "type": "BUILDING_CAMP_RHEA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_CARCASS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PLANETARY_ECONOMICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BREEDING_PROGRAM_RHEA"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRACKING",
+    {
+     "any": [
+      "BUILDING_HUNTERS_CAMP",
+      "BUILDING_ANCIENT_CUSTOMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_POULTRY",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_LLAMA",
+       "scope": "city",
+       "vicinity": "owned"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_BREEDING_PROGRAM_RHEA",
+    "BUILDING_ANIMAL_PRESERVE"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": "TECH_ECOLOGY"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 45,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CAMP_RHEA",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_RHEA",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_RHEA_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

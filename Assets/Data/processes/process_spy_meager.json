@@ -1,0 +1,20 @@
+{
+ "type": "PROCESS_SPY_MEAGER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Process/spyprocessmeager.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROCESS_SPY_MEAGER"
+ },
+ "conversion": {
+  "espionage": 30
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ORATORY",
+   "TECH_DIPLOMACY"
+  ]
+ }
+}

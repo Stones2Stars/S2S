@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_INTERSTELLAR_ETERNAL_INTELLIGENCE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_GALACTIC_ECONOMY",
+    "BUILDING_INTERSTELLAR_BLACK_HOLE_COMPUTER",
+    "TECH_IMMORTALITY",
+    {
+     "any": [
+      {
+       "type": "FEATURE_BLACK_HOLE",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_SUPERMASSIVE_BLACK_HOLE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_TIME_CRYSTALS"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 13,
+     "enabled": "TECH_EXPERIMENTAL_COSMOLOGY"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 9710,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_ETERNAL_INTELLIGENCE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_ETERNAL_INTELLIGENCE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_ETERNAL_INTELLIGENCE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

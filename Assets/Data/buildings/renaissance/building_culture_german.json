@@ -1,0 +1,113 @@
+{
+ "type": "BUILDING_CULTURE_GERMAN",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_EUROPEAN",
+    "BUILDING_C_L_EUROPEAN",
+    "TECH_PRINTING_PRESS",
+    {
+     "any": [
+      {
+       "type": "FEATURE_FOREST_YOUNG",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_ANCIENT",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_BURNT",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PIG",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_GERMAN"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_J_S_BACHS_CATHEDRAL": {
+     "percent": 10
+    },
+    "BUILDING_BRANDENBURG_GATE": {
+     "percent": 10
+    },
+    "BUILDING_NEUSCHWANSTEIN": {
+     "percent": 10
+    },
+    "BUILDING_EINSTEINS_LABORATORY": {
+     "percent": 10
+    },
+    "BUILDING_BAUHAUS_SCHOOL": {
+     "percent": 10
+    },
+    "BUILDING_BAYREUTH_FESTSPIELHAUS": {
+     "percent": 10
+    },
+    "BUILDING_BERLIN_WALL": {
+     "percent": 10
+    },
+    "BUILDING_REICHSTAG": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 2460,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_GERMAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_GERMAN",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_GERMAN_PEDIA",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

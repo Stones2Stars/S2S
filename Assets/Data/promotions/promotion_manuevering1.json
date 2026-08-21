@@ -1,0 +1,45 @@
+{
+ "type": "PROMOTION_MANUEVERING1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_MANUEVERING2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_NAVIGATION1"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "moveDiscount": {
+    "flat": 1
+   }
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MANUEVERING": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Manuevering1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_MANUEVERING1"
+ }
+}

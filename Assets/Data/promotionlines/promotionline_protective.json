@@ -1,0 +1,11 @@
+{
+ "type": "PROMOTIONLINE_PROTECTIVE",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitProtective.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_PROTECTIVE"
+ }
+}

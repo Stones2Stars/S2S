@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_REMOTE_NAVAL_TRAINING_CENTER",
+ "enables": {
+  "units": [
+   "UNIT_UNMANNED_DESTROYER",
+   "UNIT_UNMANNED_PIRATE_SKIFF",
+   "UNIT_UNMANNED_SUBMARINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "TECH_UNMANNED_NAVAL_VEHICLES",
+    {
+     "any": [
+      "BUILDING_PORT",
+      "BUILDING_COMMERCIAL_PORT",
+      "BUILDING_INTERNATIONAL_PORT",
+      "BUILDING_OCEAN_ADMINISTRATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 2,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_NAVAL"
+   }
+  },
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_PROJECTION1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 2005,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_REMOTE_NAVAL_TRAINING_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_REMOTE_NAVAL_TRAINING_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_REMOTE_NAVAL_TRAINING_CENTER_PEDIA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

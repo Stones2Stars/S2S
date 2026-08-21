@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_EFFECT_HERITAGE_DEER",
+ "enables": {
+  "buildings": [
+   "BUILDING_MILITARY_STANDARD_DEER"
+  ],
+  "units": [
+   "UNIT_DEERRIDER",
+   "UNIT_DEER_ARCHER",
+   "UNIT_DEER_LIGHT"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_HERITAGE",
+    "TECH_MEGAFAUNA_DOMESTICATION"
+   ]
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HERITAGE_DEER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_DEER",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_DEER_PEDIA",
+  "help": "TXT_KEY_BUILDING_EFFECT_HERITAGE_DEER_HELP",
+  "notConstructible": true,
+  "worth": 2,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

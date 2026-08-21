@@ -1,0 +1,62 @@
+{
+ "type": "PROMOTION_GLOBAL_AWERENESS",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_QUANTUM_ALGORITHMS",
+    {
+     "any": [
+      "PROMOTION_COMBAT_AI3"
+     ]
+    }
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_HELICOPTER": {
+     "percent": 10
+    },
+    "UNITCOMBAT_HITECH": {
+     "percent": 10
+    },
+    "UNITCOMBAT_DREADNOUGHT": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 3
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   }
+  }
+ },
+ "skills": {
+  "immuneToFirstStrikes": true
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Drill3.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,3,5"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_GLOBAL_AWERENESS",
+  "unitCombats": [
+   "UNITCOMBAT_ASSAULT_MECH",
+   "UNITCOMBAT_ROBOT"
+  ]
+ }
+}

@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS",
+ "enables": {
+  "buildings": [
+   "BUILDING_MEGATOWER_SOLAR_POWER_CROWN_SECTION"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FEMTOTECHNOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_RENEWABLE_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "BUILDING_POWER_LINES",
+    "TECH_SOLAR_POWER",
+    "TECH_ECOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_GLASSWARE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_RENEWABLE_MEGACOMPLEX",
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "enabled": {
+     "type": "BONUS_QUANTUM_DOTS",
+     "scope": "city",
+     "min": 1
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS",
+  "civilopedia": "TXT_KEY_BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

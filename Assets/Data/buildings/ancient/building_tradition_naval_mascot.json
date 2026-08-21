@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_TRADITION_NAVAL_MASCOT",
+ "requires": {
+  "operate": {
+   "all": [
+    "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT",
+    "TECH_SAILING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT",
+    "scope": "empire"
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TRADITION_NAVAL_TOTEM"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRADITION_NAVAL_MASCOT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRADITION_NAVAL_MASCOT",
+  "civilopedia": "TXT_KEY_BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "notConstructible": true,
+  "worth": 1,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

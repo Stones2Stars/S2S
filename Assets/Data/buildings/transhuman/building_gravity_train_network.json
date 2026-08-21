@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_GRAVITY_TRAIN_NETWORK",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MINING_NANOBOT_CONTROL_CENTER",
+    "BUILDING_GRAVITY_TRAIN",
+    "TECH_SUBTERRANEAN_EXPLORATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 17
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_GRAVITY_TRAIN",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 13810,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MANTLE_VACTRAIN_NETWORK"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GRAVITY_TRAIN_NETWORK",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GRAVITY_TRAIN_NETWORK",
+  "civilopedia": "TXT_KEY_BUILDING_GRAVITY_TRAIN_NETWORK_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

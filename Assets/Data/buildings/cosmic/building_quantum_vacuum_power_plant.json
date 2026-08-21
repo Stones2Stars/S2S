@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASCENDED_CITY",
+   "BUILDING_ATLANTIS",
+   "BUILDING_HIGH_ENERGY_LAB",
+   "BUILDING_NUCLEAR_POWERCOMPLEX",
+   "BUILDING_SUPERCRITICAL_CO2_TURBINE",
+   "BUILDING_TIME_TOURIST_AGENCY",
+   "BUILDING_ZERO_POINT_MAKER"
+  ],
+  "units": [
+   "UNIT_FUSION_NOVA",
+   "UNIT_FUSION_NUKE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_OMEGA_ASSEMBLER",
+    "TECH_ZERO_POINT_ENERGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 400,
+   "percent": 60
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 2
+  }
+ },
+ "cost": {
+  "production": 17055,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_QUANTUM_VACUUM_POWER_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_QUANTUM_VACUUM_POWER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_QUANTUM_VACUUM_POWER_PLANT_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_CALLISTO_RESUPPLY_BASE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CALLISTO_NITROGEN_GENERATOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_ORBITAL_BASE",
+    "TECH_KUIPER_BELT_EXPLORATION",
+    {
+     "type": "TERRAIN_CALLISTO",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -5
+   }
+  }
+ },
+ "cost": {
+  "production": 959,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CALLISTO_RESUPPLY_BASE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CALLISTO_RESUPPLY_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_CALLISTO_RESUPPLY_BASE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

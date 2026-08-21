@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_ADVERTISING_AGENCY",
+ "enables": {
+  "buildings": [
+   "BUILDING_DIGITAL_ADVERTISING_FIRM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PROPAGANDA",
+    {
+     "any": [
+      "BUILDING_OFFICIUM",
+      "BUILDING_MODERN_OFFICES"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1,
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "cost": {
+  "production": 950,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ADVERTISING_AGENCY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ADVERTISING_AGENCY",
+  "civilopedia": "TXT_KEY_BUILDING_ADVERTISING_AGENCY_PEDIA",
+  "worth": 2,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

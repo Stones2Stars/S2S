@@ -1,0 +1,64 @@
+{
+ "type": "IMPROVEMENT_COTTAGE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CARPENTRY",
+     "scope": "team"
+    },
+    {
+     "natureYield": {
+      "food": 1
+     }
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_GRASSLAND",
+        "TERRAIN_PLAINS",
+        "TERRAIN_LUSH",
+        "TERRAIN_SCRUB",
+        "TERRAIN_MUDDY"
+       ]
+      },
+      "HAS_FRESHWATER"
+     ]
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_COTTAGE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_COTTAGE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_COTTAGE_PEDIA",
+  "advancedStart": {
+   "cost": 24
+  },
+  "upgradeTime": 10,
+  "pillageGold": 40,
+  "upgradesTo": "IMPROVEMENT_HAMLET"
+ }
+}

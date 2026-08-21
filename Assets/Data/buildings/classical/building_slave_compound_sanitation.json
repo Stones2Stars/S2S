@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_SLAVE_COMPOUND_SANITATION",
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+   ],
+   "all": [
+    "BUILDING_SLAVE_COMPOUND",
+    "TECH_SANITATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SLAVES": 1
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SLAVE_COMPOUND_SANITATION",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SLAVE_MARKET"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SLAVE_COMPOUND_SANITATION",
+  "civilopedia": "TXT_KEY_BUILDING_SLAVE_COMPOUND_PEDIA",
+  "help": "TXT_KEY_BUILDING_SLAVE_COMPOUND_HELP",
+  "notConstructible": true,
+  "worth": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

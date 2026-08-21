@@ -2,117 +2,211 @@
 //  FILE:    CvOutcomeInfo.cpp
 //------------------------------------------------------------------------------------------------
 #include "CvGameCoreDLL.h"
-#include "CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "CvPlayerAI.h"
-#include "CvPython.h"
-#include "CvXMLLoadUtility.h"
-#include "CvXMLLoadUtilityModTools.h"
-#include "CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
 #include "CvOutcomeInfo.h"
+#include "CvJsonParse.h"        // jsonChildObj / jsonResolveId -- the JSON intake
+#include "Tools/CheckSum.h"
 
 
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//
-//  class : CvOutcomeInfo
-//
-//  DESC:   Contains info about outcome types which can be the result of a kill or of actions
-//
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 CvOutcomeInfo::CvOutcomeInfo()
+	: m_bCapture(false)
+	, m_ePrereqTech(NO_TECH)
+	, m_eObsoleteTech(NO_TECH)
+	, m_ePrereqCivic(NO_CIVIC)
 {
-	CvInfoUtil(this).initDataMembers();
-}
-
-
-CvOutcomeInfo::~CvOutcomeInfo()
-{
-	GC.removeDelayedResolutionVector(m_aeReplaceOutcomes);
-}
-
-
-void CvOutcomeInfo::getDataMembers(CvInfoUtil& util)
-{
-	// Declared in the legacy getCheckSum order. Hand-written fields (see read()):
-	// - m_szMessageText: CvWString, no CvInfoUtil wrapper exists (StringWrapper is CvString-only).
-	// - m_aeiExtraChancePromotions: bespoke std::vector<std::pair> walk, no wrapper shape fits.
-	// - m_aeReplaceOutcomes: self-referential FK list (SetOptionalVectorWithDelayedResolution).
-	// getCheckSum stays explicit because those fields sit mid-order in the legacy checksum.
-	util
-		.addEnum(m_ePrereqTech, L"PrereqTech")
-		.addEnum(m_eObsoleteTech, L"ObsoleteTech")
-		.add(m_aePrereqBuildings, L"PrereqBuildings")
-		.add(m_bToCoastalCity, L"bToCoastalCity")
-		.add(m_bFriendlyTerritory, L"bFriendlyTerritory", true)
-		.add(m_bNeutralTerritory, L"bNeutralTerritory", true)
-		.add(m_bHostileTerritory, L"bHostileTerritory", true)
-		.add(m_bBarbarianTerritory, L"bBarbarianTerritory")
-		.add(m_bCity, L"bCity")
-		.add(m_bNotCity, L"bNotCity")
-		.add(m_bCapture, L"bCapture")
-		.addEnum(m_ePrereqCivic, L"PrereqCivic")
-	;
-}
-
-
-bool CvOutcomeInfo::read(CvXMLLoadUtility* pXML)
-{
-	PROFILE_EXTRA_FUNC();
-	if (!CvInfoBase::read(pXML))
+	for (int iTerritory = 0; iTerritory < NUM_OUTCOME_TERRITORIES; ++iTerritory)
 	{
-		return false;
+		m_abTerritory[iTerritory] = false;
 	}
-
-	CvInfoUtil(this).readXml(pXML);
-
-	pXML->GetOptionalChildXmlValByName(m_szMessageText, L"Message");
-
-	if(pXML->TryMoveToXmlFirstChild(L"ExtraChancePromotions"))
+	for (int iPlacement = 0; iPlacement < NUM_OUTCOME_PLACEMENTS; ++iPlacement)
 	{
-		if(pXML->TryMoveToXmlFirstChild())
+		m_abPlacement[iPlacement] = false;
+	}
+}
+
+
+// The ONE load hook. IDEMPOTENT BY CONTRACT (CvInfo::mapFrom) -- loadJson re-runs the full map once the registry
+// is complete, so every member is FULLY REDEFINED here: the accumulating containers clear first, the scalars and
+// flag arrays are assigned unconditionally.
+void CvOutcomeInfo::mapFrom(const picojson::value& entity)
+{
+	CvInfo::mapFrom(entity);   // the CvInfoBase bridge: type + text keys (identity.description)
+
+	if (!entity.is<picojson::object>())
+	{
+		return;
+	}
+	const picojson::object& kEntity = entity.get<picojson::object>();
+	picojson::object::const_iterator it;
+
+	// --- fully redefine every member this parse owns ---
+	for (int iTerritory = 0; iTerritory < NUM_OUTCOME_TERRITORIES; ++iTerritory)
+	{
+		m_abTerritory[iTerritory] = false;
+	}
+	for (int iPlacement = 0; iPlacement < NUM_OUTCOME_PLACEMENTS; ++iPlacement)
+	{
+		m_abPlacement[iPlacement] = false;
+	}
+	m_promotionOdds.clear();
+	m_aePrereqBuildings.clear();
+	m_aeReplaceOutcomes.clear();
+	m_szMessageKey.clear();
+	m_bCapture = false;
+	m_ePrereqTech = NO_TECH;
+	m_eObsoleteTech = NO_TECH;
+	m_ePrereqCivic = NO_CIVIC;
+
+	// identity.message -- the outcome-specific popup line (identity.description is the base's job)
+	if (const picojson::object* pkIdentity = jsonChildObj(kEntity, "identity"))
+	{
+		it = pkIdentity->find("message");
+		if (it != pkIdentity->end() && it->second.is<std::string>())
 		{
-			if (pXML->TryMoveToXmlFirstOfSiblings(L"ExtraChancePromotion"))
-			{
-				CvString szTextVal;
-				do
-				{
-					int iExtraChance;
-					pXML->GetChildXmlValByName(szTextVal, L"PromotionType");
-					PromotionTypes ePromotion = (PromotionTypes) pXML->GetInfoClass(szTextVal);
-					pXML->GetChildXmlValByName(&iExtraChance, L"iExtraChance");
-					m_aeiExtraChancePromotions.push_back(std::pair<PromotionTypes,int>(ePromotion, iExtraChance));
-				} while(pXML->TryMoveToXmlNextSibling());
-			}
-			pXML->MoveToXmlParent();
+			m_szMessageKey = CvWString(it->second.get<std::string>().c_str());
 		}
-		pXML->MoveToXmlParent();
 	}
 
-	pXML->SetOptionalVectorWithDelayedResolution(m_aeReplaceOutcomes, L"ReplaceOutcomes");
+	// requires.build.all -- a flat list of bare type ids, routed to its typed member by id prefix
+	// (docs/architecture/patterns.md §Materialize at mapFrom: resolved once here, never re-read on a gate call). The tree sits INSIDE the
+	// `build` timing clause (owner): an outcome is a leaf action checked once when it fires, so `build` is its
+	// timing, exactly as a unit carries build only.
+	const picojson::object* pkRequires = jsonChildObj(kEntity, "requires");
+	const picojson::object* pkRequiresBuild = (pkRequires != NULL) ? jsonChildObj(*pkRequires, "build") : NULL;
+	if (pkRequiresBuild != NULL)
+	{
+		it = pkRequiresBuild->find("all");
+		if (it != pkRequiresBuild->end() && it->second.is<picojson::array>())
+		{
+			const picojson::array& kAll = it->second.get<picojson::array>();
+			for (size_t iEntry = 0; iEntry < kAll.size(); ++iEntry)
+			{
+				if (!kAll[iEntry].is<std::string>())
+				{
+					continue;
+				}
+				const std::string& szId = kAll[iEntry].get<std::string>();
+				const int iResolved = jsonResolveId(szId);
+				if (iResolved < 0)
+				{
+					continue;
+				}
+				if (szId.compare(0, 5, "TECH_") == 0)
+				{
+					m_ePrereqTech = (TechTypes)iResolved;
+				}
+				else if (szId.compare(0, 6, "CIVIC_") == 0)
+				{
+					m_ePrereqCivic = (CivicTypes)iResolved;
+				}
+				else if (szId.compare(0, 9, "BUILDING_") == 0)
+				{
+					m_aePrereqBuildings.push_back((BuildingTypes)iResolved);
+				}
+			}
+		}
+	}
 
-	return true;
-}
+	it = kEntity.find("obsoletedBy");
+	if (it != kEntity.end() && it->second.is<std::string>())
+	{
+		const int iResolved = jsonResolveId(it->second.get<std::string>());
+		if (iResolved >= 0)
+		{
+			m_eObsoleteTech = (TechTypes)iResolved;
+		}
+	}
 
+	it = kEntity.find("territory");
+	if (it != kEntity.end() && it->second.is<picojson::array>())
+	{
+		const picojson::array& kTerritory = it->second.get<picojson::array>();
+		for (size_t iEntry = 0; iEntry < kTerritory.size(); ++iEntry)
+		{
+			if (!kTerritory[iEntry].is<std::string>())
+			{
+				continue;
+			}
+			const std::string& szTerritory = kTerritory[iEntry].get<std::string>();
+			if (szTerritory == "friendly")
+			{
+				m_abTerritory[OUTCOME_TERRITORY_FRIENDLY] = true;
+			}
+			else if (szTerritory == "neutral")
+			{
+				m_abTerritory[OUTCOME_TERRITORY_NEUTRAL] = true;
+			}
+			else if (szTerritory == "hostile")
+			{
+				m_abTerritory[OUTCOME_TERRITORY_HOSTILE] = true;
+			}
+			else if (szTerritory == "barbarian")
+			{
+				m_abTerritory[OUTCOME_TERRITORY_BARBARIAN] = true;
+			}
+		}
+	}
 
-void CvOutcomeInfo::copyNonDefaults(const CvOutcomeInfo* pClassInfo)
-{
-	CvInfoBase::copyNonDefaults(pClassInfo);
+	it = kEntity.find("in");
+	if (it != kEntity.end() && it->second.is<std::string>())
+	{
+		const std::string& szPlacement = it->second.get<std::string>();
+		if (szPlacement == "city")
+		{
+			m_abPlacement[OUTCOME_PLACEMENT_CITY] = true;
+		}
+		else if (szPlacement == "notCity")
+		{
+			m_abPlacement[OUTCOME_PLACEMENT_NOT_CITY] = true;
+		}
+	}
 
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
+	it = kEntity.find("coastalCity");
+	if (it != kEntity.end() && it->second.is<bool>())
+	{
+		m_abPlacement[OUTCOME_PLACEMENT_COASTAL_CITY] = it->second.get<bool>();
+	}
 
-	if (getMessageText().empty()) m_szMessageText = pClassInfo->getMessageText();
-	if (getNumExtraChancePromotions() == 0) m_aeiExtraChancePromotions = pClassInfo->m_aeiExtraChancePromotions;
+	it = kEntity.find("capture");
+	if (it != kEntity.end() && it->second.is<bool>())
+	{
+		m_bCapture = it->second.get<bool>();
+	}
 
-	GC.copyNonDefaultDelayedResolutionVector(m_aeReplaceOutcomes, pClassInfo->getReplaceOutcomes());
+	// odds -- PROMOTION_* id -> extra-chance percentage
+	if (const picojson::object* pkOdds = jsonChildObj(kEntity, "odds"))
+	{
+		for (picojson::object::const_iterator itOdds = pkOdds->begin(); itOdds != pkOdds->end(); ++itOdds)
+		{
+			if (!itOdds->second.is<double>())
+			{
+				continue;
+			}
+			const int iPromotion = jsonResolveId(itOdds->first);
+			if (iPromotion >= 0)
+			{
+				m_promotionOdds[iPromotion] = (int)itOdds->second.get<double>();
+			}
+		}
+	}
+
+	// replaces -- the outcomes this one supersedes when it survives the roll
+	it = kEntity.find("replaces");
+	if (it != kEntity.end() && it->second.is<picojson::array>())
+	{
+		const picojson::array& kReplaces = it->second.get<picojson::array>();
+		for (size_t iEntry = 0; iEntry < kReplaces.size(); ++iEntry)
+		{
+			if (!kReplaces[iEntry].is<std::string>())
+			{
+				continue;
+			}
+			const int iResolved = jsonResolveId(kReplaces[iEntry].get<std::string>());
+			if (iResolved >= 0)
+			{
+				m_aeReplaceOutcomes.push_back((OutcomeTypes)iResolved);
+			}
+		}
+	}
 }
 
 
@@ -120,103 +214,21 @@ void CvOutcomeInfo::getCheckSum(uint32_t& iSum) const
 {
 	CheckSum(iSum, m_ePrereqTech);
 	CheckSum(iSum, m_eObsoleteTech);
-	CheckSumC(iSum, m_aeiExtraChancePromotions);
+	for (std::map<int, int>::const_iterator itOdds = m_promotionOdds.begin(); itOdds != m_promotionOdds.end(); ++itOdds)
+	{
+		CheckSum(iSum, itOdds->first);
+		CheckSum(iSum, itOdds->second);
+	}
 	CheckSumC(iSum, m_aePrereqBuildings);
-	CheckSum(iSum, m_bToCoastalCity);
-	CheckSum(iSum, m_bFriendlyTerritory);
-	CheckSum(iSum, m_bNeutralTerritory);
-	CheckSum(iSum, m_bHostileTerritory);
-	CheckSum(iSum, m_bBarbarianTerritory);
-	CheckSum(iSum, m_bCity);
-	CheckSum(iSum, m_bNotCity);
+	for (int iTerritory = 0; iTerritory < NUM_OUTCOME_TERRITORIES; ++iTerritory)
+	{
+		CheckSum(iSum, m_abTerritory[iTerritory]);
+	}
+	for (int iPlacement = 0; iPlacement < NUM_OUTCOME_PLACEMENTS; ++iPlacement)
+	{
+		CheckSum(iSum, m_abPlacement[iPlacement]);
+	}
 	CheckSum(iSum, m_bCapture);
 	CheckSumC(iSum, m_aeReplaceOutcomes);
 	CheckSum(iSum, m_ePrereqCivic);
 }
-
-
-CvWString CvOutcomeInfo::getMessageText() const
-{
-	return m_szMessageText;
-}
-
-
-bool CvOutcomeInfo::getToCoastalCity() const
-{
-	return m_bToCoastalCity;
-}
-
-
-bool CvOutcomeInfo::getFriendlyTerritory() const
-{
-	return m_bFriendlyTerritory;
-}
-
-
-bool CvOutcomeInfo::getNeutralTerritory() const
-{
-	return m_bNeutralTerritory;
-}
-
-
-bool CvOutcomeInfo::getHostileTerritory() const
-{
-	return m_bHostileTerritory;
-}
-
-
-bool CvOutcomeInfo::getBarbarianTerritory() const
-{
-	return m_bBarbarianTerritory;
-}
-
-
-bool CvOutcomeInfo::getCity() const
-{
-	return m_bCity;
-}
-
-
-bool CvOutcomeInfo::getNotCity() const
-{
-	return m_bNotCity;
-}
-
-
-bool CvOutcomeInfo::isCapture() const
-{
-	return m_bCapture;
-}
-
-
-TechTypes CvOutcomeInfo::getObsoleteTech() const
-{
-	return m_eObsoleteTech;
-}
-
-
-CivicTypes CvOutcomeInfo::getPrereqCivic() const
-{
-	return m_ePrereqCivic;
-}
-
-
-int CvOutcomeInfo::getNumExtraChancePromotions() const
-{
-	return m_aeiExtraChancePromotions.size();
-}
-
-
-PromotionTypes CvOutcomeInfo::getExtraChancePromotion(int i) const
-{
-	FASSERT_BOUNDS(0, getNumExtraChancePromotions(), i);
-	return m_aeiExtraChancePromotions[i].first;
-}
-
-
-int CvOutcomeInfo::getExtraChancePromotionChance(int i) const
-{
-	FASSERT_BOUNDS(0, getNumExtraChancePromotions(), i);
-	return m_aeiExtraChancePromotions[i].second;
-}
-

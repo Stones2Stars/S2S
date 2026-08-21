@@ -1,0 +1,73 @@
+{
+ "type": "TECH_APPLIED_ECONOMICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CREDIT_UNION"
+  ],
+  "civics": [
+   "CIVIC_CREDIT",
+   "CIVIC_REGULATED"
+  ],
+  "techs": [
+   "TECH_FRANCHISES",
+   "TECH_HIGHWAY_SYSTEMS",
+   "TECH_LOGISTICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INDUSTRIALISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CONSUMERISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_MERCHANT"
+ },
+ "cost": {
+  "research": 10744
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/Economics2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MERCHANTADVENTURES",
+  "soundMP": "AS2D_TECH_MERCHANTADVENTURES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_APPLIED_ECONOMICS",
+  "civilopedia": "TXT_KEY_TECH_APPLIED_ECONOMICS_PEDIA",
+  "quote": "TXT_KEY_TECH_APPLIED_ECONOMICS_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 50,
+  "tradeable": true,
+  "gridX": 75,
+  "gridY": 7
+ }
+}

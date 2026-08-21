@@ -1,0 +1,137 @@
+{
+ "type": "UNIT_CRUSADER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FLINTLOCK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "RELIGION_CHRISTIANITY",
+    {
+     "STATE_RELIGION": "RELIGION_CHRISTIANITY"
+    },
+    "TECH_FUNDAMENTALISM"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MUSKETMAN"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 15
+  }
+ },
+ "skills": [
+  "pillage",
+  "rivalTerritory"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_MELEE",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+  "UNITCOMBAT_ARMOR_HEAVY",
+  "UNITCOMBAT_SHIELD_LARGE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_CRUSADER",
+   "PROMOTION_LEADER"
+  ]
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CRUSADER",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "rangedWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_CRUSADER"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_CRUSADER"
+      }
+     },
+     {
+      "define": {
+       "early": "ART_DEF_UNIT_CRUSADER"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_RELIC"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_CRUSADER",
+  "civilopedia": "TXT_KEY_UNIT_CRUSADER_PEDIA",
+  "help": "TXT_KEY_UNIT_CRUSADER_HELP",
+  "spawnOnly": true,
+  "worth": 3,
+  "militaryWorth": 34,
+  "xpValueAttack": 3,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "religion": "RELIGION_CHRISTIANITY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_EXPLORE",
+   "UNITAI_PILLAGE",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_ESCORT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": 200
+  }
+ }
+}

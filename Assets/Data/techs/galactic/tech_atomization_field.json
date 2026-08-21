@@ -1,0 +1,70 @@
+{
+ "type": "TECH_ATOMIZATION_FIELD",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_GARBAGE_ATOMIZER",
+   "BUILDING_MATTER_DECOMPILER"
+  ],
+  "civics": [
+   "CIVIC_ATOMIZED"
+  ],
+  "techs": [
+   "TECH_MOLECULAR_ASSEMBLY",
+   "TECH_TELEPORTATION",
+   "TECH_WEAPONIZED_DISINTEGRATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ATOMIC_SCALE_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 144040
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/atomization_field.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ATOMIZATION_FIELD",
+  "soundMP": "AS2D_TECH_ATOMIZATION_FIELD"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ATOMIZATION_FIELD",
+  "civilopedia": "TXT_KEY_TECH_ATOMIZATION_FIELD_PEDIA",
+  "quote": "TXT_KEY_TECH_ATOMIZATION_FIELD_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 128,
+  "gridY": 3
+ }
+}

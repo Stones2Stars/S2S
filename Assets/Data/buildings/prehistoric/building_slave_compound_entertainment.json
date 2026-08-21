@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT",
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+   ],
+   "all": [
+    "BUILDING_SLAVE_COMPOUND",
+    "TECH_SLAVERY",
+    {
+     "any": [
+      "BUILDING_STORYTELLER",
+      "BUILDING_SCHOOL_OF_SCRIBES",
+      "BUILDING_LIBRARY",
+      "BUILDING_DANCE_HUT",
+      "BUILDING_DANCE_HALL",
+      "BUILDING_MUSIC_HUT",
+      "BUILDING_MUSIC_SCHOOL",
+      "BUILDING_DRAMA_SCHOOL",
+      "BUILDING_ARENA",
+      "BUILDING_COLOSSEUM",
+      "BUILDING_MINOR_LEAGUE_STADIUM",
+      "BUILDING_NIGHT_CLUB",
+      "BUILDING_MAJOR_LEAGUE_STADIUM"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SLAVES": 1
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SLAVE_COMPOUND_ENTERTAINMENT",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SLAVE_MARKET"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SLAVE_COMPOUND_ENTERTAINMENT",
+  "civilopedia": "TXT_KEY_BUILDING_SLAVE_COMPOUND_PEDIA",
+  "help": "TXT_KEY_BUILDING_SLAVE_COMPOUND_HELP",
+  "notConstructible": true,
+  "worth": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

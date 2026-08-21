@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_DEEP_SPACE_SOLAR_ARRAY_TRANSNEPTUNIAN",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_ASSEMBLER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_DEEP_SPACE",
+    "TECH_SOLAR_ORDNANCE",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_TRANSNEPTUNIAN_SPACE",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_KUIPER_BELT_OBJECT",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_OUTER_SOLAR_SYSTEM",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_JUPITER",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_SATURN",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_URANUS",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_NEPTUNE",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_EUROPA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_INNER_SOLAR_SYSTEM",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_MERCURY",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_ASTEROID_SURFACE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 2959,
+  "hurryModifier": 10000
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_SOLAR_ARRAY_TRANSNEPTUNIAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_SOLAR_ARRAY_TRANSNEPTUNIAN",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_SOLAR_ARRAY_TRANSNEPTUNIAN_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

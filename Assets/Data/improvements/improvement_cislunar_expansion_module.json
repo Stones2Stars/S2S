@@ -1,0 +1,62 @@
+{
+ "type": "IMPROVEMENT_CISLUNAR_EXPANSION_MODULE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORBITAL_MEGASTRUCTURES",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_CISLUNAR_SPACE"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MOLECULAR_ASSEMBLY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MOLECULAR_ASSEMBLY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 6
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_CISLUNAR_EXPANSION_MODULE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_CISLUNAR_EXPANSION_MODULE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_CISLUNAR_EXPANSION_MODULE_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

@@ -1,0 +1,38 @@
+{
+ "type": "BONUS_QUANTONIUM_CRYSTALS",
+ "commerce": {
+  "plot": {
+   "flat": 5
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_QUANTONIUM_CRYSTALS"
+  }
+ },
+ "mapGeneration": {
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "hills": true,
+  "flatlands": true,
+  "noRiverSide": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_HYPERSPACE"
+  ],
+  "placementOrder": 9
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_QUANTONIUM_CRYSTALS",
+  "civilopedia": "TXT_KEY_BONUS_QUANTONIUM_CRYSTALS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MISC",
+  "source": "natural"
+ }
+}

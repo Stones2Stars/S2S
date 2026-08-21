@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_SEAWALLS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ABYSS_COLONIZATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ADVANCED_FLOODWALL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "BUILDING_HARBORMASTERS_OFFICE",
+    "TECH_STEAM_POWER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_ADVANCED_FLOODWALL",
+    "BUILDING_OCEAN_ADMINISTRATION"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "IS_WATER"
+     }
+    ]
+   }
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 5
+   }
+  }
+ },
+ "cost": {
+  "production": 630,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SEAWALLS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HARBOR"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SEAWALLS",
+  "civilopedia": "TXT_KEY_BUILDING_SEAWALLS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

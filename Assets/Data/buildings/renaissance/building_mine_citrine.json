@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_MINE_CITRINE",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_GEMSTONE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CORE_MINE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MINING_CAMP",
+    "TECH_GUNPOWDER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_AMBER",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_SULPHUR",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_CORE_MINE"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -1,
+    {
+     "value": -10,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 410,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MINE_CITRINE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MINE_CITRINE",
+  "civilopedia": "TXT_KEY_BUILDING_MINE_CITRINE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

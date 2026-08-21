@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_POLLUTION_MINOR_GROUNDWATER_POLLUTION",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_WATER_POLLUTION",
+     "scope": "city",
+     "min": 450,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "production": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYWATERPOLLUTION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_POLLUTION_MINOR_GROUNDWATER_POLLUTION",
+  "civilopedia": "TXT_KEY_BUILDING_WATER_POLLUTION_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

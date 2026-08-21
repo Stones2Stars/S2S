@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_C_AD_MIDDLE_EASTERN",
+ "requires": {
+  "operate": {
+   "all": [
+    "BUILDING_PALACE",
+    {
+     "type": "BUILDING_C_L_MIDDLE_EASTERN",
+     "scope": "empire",
+     "min": 3,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "noneOf": [
+      "BUILDING_C_N_MIDDLE_EASTERN"
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_C_AC_MIDDLE_EASTERN"
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_MIDDLE_EASTERN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_C_AD_MIDDLE_EASTERN",
+  "civilopedia": "TXT_KEY_BUILDING_C_AD_PEDIA",
+  "help": "TXT_KEY_BUILDING_C_AD_HELP",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "noInstanceLimit": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

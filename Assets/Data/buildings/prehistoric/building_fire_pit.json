@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_FIRE_PIT",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLOOD_DANCE",
+   "BUILDING_BRANDING_HUT",
+   "BUILDING_CAVE_PAINTINGS",
+   "BUILDING_FIRE_DANCE",
+   "BUILDING_RESOURCES_CHARCOAL",
+   "BUILDING_SMOKE_SIGNALS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_METAL_CASTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CONTROLLED_FIRE",
+    {
+     "any": [
+      "BUILDING_STICK_GATHERER",
+      "BUILDING_ANCIENT_CUSTOMS",
+      "BUILDING_LUMBER_CAMP",
+      "BUILDING_DRIFTWOOD_GATHERER",
+      "BUILDING_LUMBER_GATHERER",
+      "BUILDING_AGROFOREST"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_IMU",
+    "BUILDING_BONFIRE",
+    "BUILDING_CHARCOAL_BURNER"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 20,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FIRE_PIT",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_TOTEM"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FIRE_PIT",
+  "civilopedia": "TXT_KEY_BUILDING_FIRE_PIT_PEDIA",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_BATAVIAN",
+ "enables": {
+  "units": [
+   "UNIT_CORNUTI",
+   "UNIT_JULIUS_CIVILIS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_BATAVIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_BATAVIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

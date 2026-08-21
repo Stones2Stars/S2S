@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_PARAMEDIC",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/paramedic1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_PARAMEDIC",
+  "unitCombats": [
+   "UNITCOMBAT_CIVILIAN"
+  ]
+ }
+}

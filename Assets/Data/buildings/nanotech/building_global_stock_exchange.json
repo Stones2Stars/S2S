@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_GLOBAL_STOCK_EXCHANGE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_STOCK_MARKET",
+    "TECH_MEGACORPORATIONS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 21150,
+  "sizeModifier": 3,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GLOBAL_STOCK_EXCHANGE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ENGLISH_STOCK_EXCHANGE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GLOBAL_STOCK_EXCHANGE",
+  "civilopedia": "TXT_KEY_BUILDING_GLOBAL_STOCK_EXCHANGE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 7,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

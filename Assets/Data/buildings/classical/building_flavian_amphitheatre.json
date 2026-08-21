@@ -1,0 +1,172 @@
+{
+ "type": "BUILDING_FLAVIAN_AMPHITHEATRE",
+ "enables": {
+  "buildings": [
+   "BUILDING_STATUE_OF_CHAMPION"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MODERN_SPORTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CONSTRUCTION",
+    "TECH_COMBAT_SPORTS",
+    {
+     "any": [
+      "BUILDING_COLOSSEUM",
+      "BUILDING_MINOR_LEAGUE_STADIUM",
+      "BUILDING_MAJOR_LEAGUE_STADIUM"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 70,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 30,
+     "enabled": {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MELEE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "hurryAnger": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_COLOSSEUM",
+    "scope": "empire"
+   }
+  ]
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_COMBAT1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 1404,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 50
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_FLAVIAN_AMPHITHEATRE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FLAVIAN_AMPHITHEATRE_AMPHITHEATRE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COLOSSEUM"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FLAVIAN_AMPHITHEATRE",
+  "civilopedia": "TXT_KEY_BUILDING_FLAVIAN_AMPHITHEATRE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 2,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

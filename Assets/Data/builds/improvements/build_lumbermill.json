@@ -1,0 +1,35 @@
+{
+ "type": "BUILD_LUMBERMILL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MACHINERY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_LUMBERMILL"
+ },
+ "cost": {
+  "gold": 20,
+  "time": 600
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/BuildLumberMill.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,5,7"
+  },
+  "hotkey": "KB_U",
+  "hotKeyPriority": 1
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_LUMBERMILL"
+ }
+}

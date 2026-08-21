@@ -1,0 +1,111 @@
+{
+ "type": "BUILDING_DEEP_SPACE_BIOFORMING_STUDIO",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_ORBITAL_BASE",
+    "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+    "BUILDING_DEEP_SPACE_SOCIAL_ENGINEERING",
+    "TECH_HUMAN_TRANSMUTATION",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_MERCURY",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_ASTEROID_SURFACE",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_CALLISTO",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_EUROPA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_GANYMEDE",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_IO",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_ENCELADUS",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_UMBRIEL",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_TRITON",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_KUIPER_BELT_OBJECT",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 1867,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_BIOFORMING_STUDIO",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_BIOFORMING_STUDIO",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_BIOFORMING_STUDIO_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

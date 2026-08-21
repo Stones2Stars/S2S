@@ -1,0 +1,142 @@
+{
+ "type": "BUILDING_ANGKOR_WAT",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PERSONAL_COMPUTERS"
+  ]
+ },
+ "whenObsolete": {
+  "culture": {
+   "city": {
+    "flat": 16
+   }
+  },
+  "greatPeopleRate": {
+   "city": {
+    "flat": 2
+   }
+  },
+  "PROPERTY_TOURISM": {
+   "city": {
+    "flat": 10
+   }
+  }
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PHILOSOPHY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    8,
+    {
+     "value": 8,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 3
+  }
+ },
+ "cost": {
+  "production": 1512,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ANGKOR_WAT"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANGKOR_WAT"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANGKOR_WAT",
+  "civilopedia": "TXT_KEY_BUILDING_ANGKOR_WAT_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 12,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

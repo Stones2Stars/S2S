@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_SPEECH_RECOGNITION_SOFTWARE",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
+   "BUILDING_INTELLIGENT_PERSONAL_ASSISTANT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MACHINE_LEARNING",
+    "TECH_ONLINE_COMMUNITY",
+    {
+     "any": [
+      "BUILDING_DESIGN_STUDIO",
+      "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 9,
+     "enabled": "TECH_AUTOMATED_ROBOTICS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_AUTOMATED_URBANIZATION"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 8,
+     "enabled": "TECH_VIRTUAL_SOCIETY"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_UNIVERSAL_TRANSLATOR"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2305,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SPEECH_RECOGNITION_SOFTWARE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SPEECH_RECOGNITION_SOFTWARE",
+  "civilopedia": "TXT_KEY_BUILDING_SPEECH_RECOGNITION_SOFTWARE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

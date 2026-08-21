@@ -1,0 +1,101 @@
+{
+ "type": "BUILDING_NATIONAL_PARK",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_WILDLIFE_CONSERVATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 3,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "any": [
+    {
+     "value": 1,
+     "per": {
+      "type": "IMPROVEMENT_FOREST_PRESERVE",
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -100
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -100
+  }
+ },
+ "cost": {
+  "production": 1360,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NATIONAL_PARK"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NATIONAL_PARK"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_PARK",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_PARK_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 7,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

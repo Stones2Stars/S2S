@@ -1,0 +1,86 @@
+{
+ "type": "TECH_ATOMIC_SCALE_ENGINEERING",
+ "enables": {
+  "bonuses": [
+   "BONUS_ATOMICALLY_PRECISE_ALLOYS"
+  ],
+  "buildings": [
+   "BUILDING_ALPHA_ASSEMBLER",
+   "BUILDING_ATOMICALLY_PRECISE_ALLOY_FOUNDRY",
+   "BUILDING_EXOTIC_ARCHITECTURE",
+   "BUILDING_NANOTECH_COMPLEX",
+   "BUILDING_ORBITAL_RING",
+   "BUILDING_RENEWABLE_MEGACOMPLEX",
+   "BUILDING_SPACESCRAPER",
+   "BUILDING_SPACESCRAPER_COMMERCIAL_DISTRICT",
+   "BUILDING_SPACESCRAPER_FARM",
+   "BUILDING_SPACESCRAPER_INDUSTRIAL_DISTRICT"
+  ],
+  "techs": [
+   "TECH_ATOMIZATION_FIELD",
+   "TECH_NANOMORPHIC_TROIDS",
+   "TECH_PRECISION_SOCIAL_ENGINEERING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ANTIMATTER_PRODUCTION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLANETARY_TERRAFORMING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LAUNCH_ARCOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 134744
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/attometerengineering.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ATOMIC_SCALE_ENGINEERING",
+  "soundMP": "AS2D_TECH_ATOMIC_SCALE_ENGINEERING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ATOMIC_SCALE_ENGINEERING",
+  "civilopedia": "TXT_KEY_TECH_ATOMIC_SCALE_ENGINEERING_PEDIA",
+  "quote": "TXT_KEY_TECH_ATOMIC_SCALE_ENGINEERING_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 126,
+  "gridY": 3
+ }
+}

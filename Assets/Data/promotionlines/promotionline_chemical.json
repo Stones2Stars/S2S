@@ -1,0 +1,21 @@
+{
+ "type": "PROMOTIONLINE_CHEMICAL",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/chemical1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_CHEMICAL",
+  "unitCombats": [
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_BIOLOGICAL"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_ANIMAL",
+   "UNITCOMBAT_PACIFIST"
+  ]
+ }
+}

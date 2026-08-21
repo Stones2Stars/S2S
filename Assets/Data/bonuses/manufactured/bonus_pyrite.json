@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_PYRITE",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PYRITE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PYRITE",
+  "civilopedia": "TXT_KEY_BONUS_PYRITE_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

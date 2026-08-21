@@ -8,6 +8,7 @@ from CvPythonExtensions import *
 import TextUtil
 # --------- Revolution mod -------------
 import RevDefs
+import CvUtil
 import RevData
 import RevUtils
 import RevEvents
@@ -22,8 +23,16 @@ import RevInstances
 import BugCore
 
 # globals
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
+MAP = GC.getMap()
+STATE = CyState()
+ACT = CyAct()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 RevOpt = BugCore.game.Revolution
 
@@ -160,7 +169,6 @@ class Revolution:
 		customEM.addEventHandler("ModNetMessage", self.onModNetMessage)
 
 		# Popup launching and handling events
-		customEM.addEventHandler("kbdEvent", self.onKbdEvent)
 		self.customEM.setPopupHandler(RevDefs.revolutionPopup, ["revolutionPopup",self.revolutionPopupHandler,self.blankHandler])
 		self.customEM.setPopupHandler(RevDefs.joinHumanPopup, ["joinHumanPopup",self.joinHumanHandler,self.blankHandler])
 		self.customEM.setPopupHandler(RevDefs.controlLostPopup, ["controlLostPopup",self.blankHandler,self.blankHandler])
@@ -209,16 +217,7 @@ class Revolution:
 		self.showLocalEffect = int(self.showLocalEffect*RevUtils.getGameSpeedMod())
 
 
-##--- Keyboard handling and Rev Watch popup -------------------------------------------
-
-	def onKbdEvent(self, argsList):
-		eventType, key, mx, my, px, py = argsList
-
-		if eventType == 6:
-			# multiplayer warning, need to tell other computers about any city bribery
-			if key == InputTypes.KB_G and self.customEM.bShift and self.customEM.bCtrl:
-				CvScreensInterface.showRevolutionWatchAdvisor(self)
-
+##--- Rev Watch popup -------------------------------------------
 
 	def showRevWatchPopup(self, iPlayer):
 		if self.isLocalHumanPlayer(iPlayer):
@@ -466,9 +465,7 @@ class Revolution:
 			return
 
 		#RevolutionDCM - post bribe popup handling
-		if CvScreensInterface.isRevolutionWatchAdvisor():
-			CvScreensInterface.showRevolutionWatchAdvisor(self)
-		else: CvScreensInterface.cityScreenRedraw()
+		CvScreensInterface.cityScreenRedraw()
 
 
 ##--- Standard Event handling functions -------------------------------------------
@@ -777,13 +774,13 @@ class Revolution:
 
 			if ownerID == iPlayer:
 				mess = TRNSLTR.getText("TXT_KEY_REV_MESS_REINFORCEMENTS",()) + " %s!"%(pCity.getName())
-				CyInterface().addMessage(iPlayer, True, GC.getEVENT_MESSAGE_TIME(), mess, "AS2D_CITY_REVOLT", InterfaceMessageTypes.MESSAGE_TYPE_MINOR_EVENT, CyArtFileMgr().getInterfaceArtInfo("INTERFACE_RESISTANCE").getPath(), ColorTypes(7), ix, iy, True, True)
+				CyInterface().addMessage(iPlayer, True, GC.getDefineINT("EVENT_MESSAGE_TIME"), mess, "AS2D_CITY_REVOLT", InterfaceMessageTypes.MESSAGE_TYPE_MINOR_EVENT, CyArtFileMgr().getInterfaceArtInfo("INTERFACE_RESISTANCE").getPath(), ColorTypes(7), ix, iy, True, True)
 			elif pRevTeam.isAtWarWith(GC.getPlayer(iPlayer).getTeam()) and pRevPlayer.canContact(iPlayer):
 				mess = TRNSLTR.getText("TXT_KEY_REV_MESS_REINFORCEMENTS",()) + " %s!"%(pCity.getName())
-				CyInterface().addMessage(iPlayer, False, GC.getEVENT_MESSAGE_TIME(), mess, None, InterfaceMessageTypes.MESSAGE_TYPE_MINOR_EVENT, None, ColorTypes(7), -1, -1, False, False)
+				CyInterface().addMessage(iPlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), mess, None, InterfaceMessageTypes.MESSAGE_TYPE_MINOR_EVENT, None, ColorTypes(7), -1, -1, False, False)
 			elif iRevPlayer == iPlayer:
 				mess = TRNSLTR.getText("TXT_KEY_REV_MESS_YOUR_REINFORCEMENTS",()) + " %s!"%(pCity.getName())
-				CyInterface().addMessage(iPlayer, True, GC.getEVENT_MESSAGE_TIME(), mess, "AS2D_CITY_REVOLT", InterfaceMessageTypes.MESSAGE_TYPE_MINOR_EVENT, CyArtFileMgr().getInterfaceArtInfo("INTERFACE_RESISTANCE").getPath(), ColorTypes(8), ix, iy, True, True)
+				CyInterface().addMessage(iPlayer, True, GC.getDefineINT("EVENT_MESSAGE_TIME"), mess, "AS2D_CITY_REVOLT", InterfaceMessageTypes.MESSAGE_TYPE_MINOR_EVENT, CyArtFileMgr().getInterfaceArtInfo("INTERFACE_RESISTANCE").getPath(), ColorTypes(8), ix, iy, True, True)
 
 		if self.LOG_DEBUG: print "[REV] Revolt: Reinforcement strength %.2f, spawning %d reinforcements for city of size %d" % (revStrength, iNumUnits, pCity.getPopulation())
 
@@ -796,7 +793,7 @@ class Revolution:
 		newUnitList = []
 		for i in xrange(iNumUnits) :
 			newUnitID = spawnableUnits[GAME.getSorenRandNum( len(spawnableUnits), 'Revolution: pick unit' )]
-			newUnit = pRevPlayer.initUnit( newUnitID, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+			newUnit = pRevPlayer.createUnit( newUnitID, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 			newUnitList.append( newUnit )
 
 		for [iNum,newUnit] in enumerate(newUnitList) :
@@ -829,8 +826,8 @@ class Revolution:
 		# Occasionally spawn a spy as well
 		if 40 - 20*pRevPlayer.AI_getNumAIUnits(UnitAITypes.UNITAI_SPY) > GAME.getSorenRandNum(100,'Rev - Spy'):
 			iSpy = pRevPlayer.getBestUnitType(UnitAITypes.UNITAI_SPY)
-			if iSpy != -1 and revStrength > 1.5 and pRevPlayer.canTrain(iSpy,False,False):
-				pSpy = pRevPlayer.initUnit(iSpy, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+			if iSpy != -1 and revStrength > 1.5 and ENABLER.getUnitAvailabilityAnywhere(pRevPlayer.getID(), iSpy) == EnablerState.ENABLER_LISTED:
+				pSpy = pRevPlayer.createUnit(iSpy, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 				pSpy.setFortifyTurns(GC.getDefineINT("MAX_FORTIFY_TURNS"))
 
 		# Give a little boost to espionage
@@ -1153,9 +1150,7 @@ class Revolution:
 				cityDistCommBonus += iCityCulterModifier
 				cityDistCommBonus += iCityGoldModifier / 2
 
-			iCityMaintenanceModifier = pCity.getMaintenanceModifier()
-			cityDistCommBonus -= iCityMaintenanceModifier
-			bCityisPower = pCity.isPower()
+			bCityisPower = pCity.isPowered()
 			if bCityisPower :
 				cityDistCommBonus += 150
 			iCityAirlift = pCity.getMaxAirlift()
@@ -1258,7 +1253,7 @@ class Revolution:
 			localRevIdx += colonyIdx
 			revIdxHist['Colony'] = [colonyIdx] + revIdxHist['Colony'][0:RevDefs.revIdxHistLen-1]
 
-			if( self.LOG_DEBUG and iGameTurn%25 == 0 ) : print "[REV] Revolt: %s location effects: [%d,%d], maintenance: [%.2f,%.2f], modifier: %d, gcent: %d" % (pCity.getName(),locationRevIdx,colonyIdx,pCity.getMaintenanceTimes100()/100.0,pCity.calculateColonyMaintenanceTimes100()/100.0,pCity.getMaintenanceModifier(),pCity.isGovernmentCenter())
+			if( self.LOG_DEBUG and iGameTurn%25 == 0 ) : print "[REV] Revolt: %s location effects: [%d,%d], maintenance: %.2f, gcent: %d" % (pCity.getName(),locationRevIdx,colonyIdx,pCity.getMaintenanceTimes100()/100.0,pCity.isGovernmentCenter())
 
 			# Religion
 			relIdx = 0
@@ -1511,7 +1506,7 @@ class Revolution:
 			#Afforess Revolution Difficulty Scaling
 			iRevolutionHandicap = (GC.getHandicapInfo(pPlayer.getHandicapType()).getRevolutionIndexPercent() - 100) / 10
 			localRevIdx += iRevolutionHandicap
-			szText = GC.getHandicapInfo(pPlayer.getHandicapType()).getDescription() + TRNSLTR.getText("TXT_KEY_DIFFICULTY_LEVEL",())
+			szText = INFO.getDescription("HANDICAP_", pPlayer.getHandicapType()) + TRNSLTR.getText("TXT_KEY_DIFFICULTY_LEVEL",())
 			if iRevolutionHandicap > 0:
 				negList.append((iRevolutionHandicap, szText))
 			elif iRevolutionHandicap < 0:
@@ -1714,7 +1709,7 @@ class Revolution:
 		cultIdx = 0
 		if( cultPerc > 0 ) :
 			cultIdx += int(pow(cultPerc, 0.5))
-			if( pPlayer.hasTrait(GC.getInfoTypeForString("TRAIT_CREATIVE")) ):
+			if( pPlayer.hasTrait(CvUtil.getActiveTraitId("TRAIT_CREATIVE")) ):
 				cultIdx += cultIdx/3
 			if( bIsRevWatch ) : posList.append( (cultIdx, TRNSLTR.getText("TXT_KEY_REV_WATCH_CULTURE_SPENDING",())) )
 
@@ -1751,7 +1746,7 @@ class Revolution:
 			iThresholdPercent *= 2
 			iThresholdPercent /= 3
 
-		if( pPlayer.hasTrait(GC.getInfoTypeForString("TRAIT_ORGANIZED")) ):
+		if( pPlayer.hasTrait(CvUtil.getActiveTraitId("TRAIT_ORGANIZED")) ):
 			iThresholdPercent *= 10
 			iThresholdPercent /= 11
 
@@ -2637,7 +2632,7 @@ class Revolution:
 						if( instigator.isHolyCityByType(relType) and not stateRel == relType ) :
 							if( self.allowStateReligionToJoin or not instigator.isHasReligion(stateRel) ) :
 								revRel = relType
-								if self.LOG_DEBUG: print "[REV] Revolt: Instigator is rival religion (%s) holy city" % GC.getReligionInfo(revRel).getDescription()
+								if self.LOG_DEBUG: print "[REV] Revolt: Instigator is rival religion (%s) holy city" % INFO.getDescription("RELIGION_", revRel)
 								break
 
 			# Check for significant minority religion
@@ -2663,7 +2658,7 @@ class Revolution:
 						# Is the best good enough?
 						if maxCount >= 3:
 							revRel = maxCountRel
-							if self.LOG_DEBUG: print "[REV] Revolt: Instigator and enough others have " + GC.getReligionInfo(revRel).getDescription()
+							if self.LOG_DEBUG: print "[REV] Revolt: Instigator and enough others have " + INFO.getDescription("RELIGION_", revRel)
 
 			# Decide how to revolt
 			if( not revRel == None ) :
@@ -2673,7 +2668,7 @@ class Revolution:
 				for pCity in revCities :
 					if( pCity.isHasReligion(revRel) ) :
 						if( self.allowStateReligionToJoin or not pCity.isHasReligion(stateRel) ) :
-							if self.LOG_DEBUG: print "[REV] Revolt: %s has %s" % (pCity.getName(), GC.getReligionInfo(revRel).getDescription())
+							if self.LOG_DEBUG: print "[REV] Revolt: %s has %s" % (pCity.getName(), INFO.getDescription("RELIGION_", revRel))
 							relCities.append(pCity)
 
 				if( bPeaceful ) :
@@ -2685,17 +2680,17 @@ class Revolution:
 
 					if( not newRelCivic == None and newLevel > level ) :
 						if( level < -5 or (newLevel > 5 and level < 0) ) :
-							if self.LOG_DEBUG: print "[REV] Revolt: Asking for change from %s to %s"%(GC.getCivicInfo(pPlayer.getCivics(optionType)).getDescription(),GC.getCivicInfo(newRelCivic).getDescription())
+							if self.LOG_DEBUG: print "[REV] Revolt: Asking for change from %s to %s"%(INFO.getDescription("CIVIC_", pPlayer.getCivics(optionType)),INFO.getDescription("CIVIC_", newRelCivic))
 
 							bodStr = RevUtils.getCityTextList(relCities, bPreCity = True, bPostIs = True)
 
 							# Can't pay them enough so they don't feel oppressed
 
 							if( level < -5 ) :
-								bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_THEOCRACY1",()) + ' ' + GC.getCivicInfo(pPlayer.getCivics(optionType)).getDescription() + ".  " + TRNSLTR.getText("TXT_KEY_REV_REL_THEOCRACY2",()) + ' ' + GC.getCivicInfo(newRelCivic).getDescription() + '.'
+								bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_THEOCRACY1",()) + ' ' + INFO.getDescription("CIVIC_", pPlayer.getCivics(optionType)) + ".  " + TRNSLTR.getText("TXT_KEY_REV_REL_THEOCRACY2",()) + ' ' + INFO.getDescription("CIVIC_", newRelCivic) + '.'
 							else :
-								bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_FREE_REL1",()) + ' ' + GC.getCivicInfo(newRelCivic).getDescription() + '.  ' + TRNSLTR.getText("TXT_KEY_REV_REL_FREE_REL2",()) + ' ' + GC.getReligionInfo(stateRel).getDescription()
-								bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PRACTICE",()) + ' ' + GC.getReligionInfo(revRel).getDescription() + '.'
+								bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_FREE_REL1",()) + ' ' + INFO.getDescription("CIVIC_", newRelCivic) + '.  ' + TRNSLTR.getText("TXT_KEY_REV_REL_FREE_REL2",()) + ' ' + INFO.getDescription("RELIGION_", stateRel)
+								bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PRACTICE",()) + ' ' + INFO.getDescription("RELIGION_", revRel) + '.'
 							bodStr += '\n\n' + TRNSLTR.getText("TXT_KEY_REV_HONORING",())
 
 							if self.LOG_DEBUG: print "[REV] Revolt: %d cities in revolution" % len(relCities)
@@ -2731,7 +2726,7 @@ class Revolution:
 						#iBuyOffCost = (60 + 12*pPlayer.getCurrentEra())*len(relCities) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 						if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 						iBuyOffCost = max( [iBuyOffCost, pPlayer.getGold()/10 + GAME.getSorenRandNum(50,'Rev')] )
-						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_CHANGE",()) + ' ' + GC.getReligionInfo( revRel ).getDescription() + '.'
+						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_CHANGE",()) + ' ' + INFO.getDescription("RELIGION_", revRel) + '.'
 						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_CURRENTLY",()) + ' %d '%(revRelCount) + TRNSLTR.getText("TXT_KEY_REV_REL_NEW_REL",()) + ' %d '%(stateRelCount) + TRNSLTR.getText("TXT_KEY_REV_REL_STATE_REL",())
 						bodStr += '\n\n' + TRNSLTR.getText("TXT_KEY_REV_REL_HONORING",())
 
@@ -2796,11 +2791,11 @@ class Revolution:
 								if self.LOG_DEBUG: print "[REV] Revolt: Vassal style %s chosen" % vassalStyle
 
 					if( not vassalStyle == None ) :
-						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_VASSAL_1",()) + ' ' + GC.getReligionInfo( revRel ).getDescription() + '.'
+						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_VASSAL_1",()) + ' ' + INFO.getDescription("RELIGION_", revRel) + '.'
 						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_VASSAL_2",()) + ' ' + pRevPlayer.getCivilizationShortDescription(0) + ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_VASSAL_3",())
 					else :
-						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_IND_1",()) + ' ' + GC.getReligionInfo( revRel ).getDescription() + '.'
-						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_IND_2",()) + ' ' + GC.getReligionInfo(pPlayer.getStateReligion()).getDescription() + ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_IND_3",()) + ' ' + pRevPlayer.getCivilizationShortDescription(0) + '.'
+						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_IND_1",()) + ' ' + INFO.getDescription("RELIGION_", revRel) + '.'
+						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_IND_2",()) + ' ' + INFO.getDescription("RELIGION_", pPlayer.getStateReligion()) + ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE_IND_3",()) + ' ' + pRevPlayer.getCivilizationShortDescription(0) + '.'
 						bodStr += '\n\n' + TRNSLTR.getText("TXT_KEY_REV_REL_PEACE",())
 
 					if self.LOG_DEBUG: print "[REV] Revolt: %d cities in revolution, buyoff cost %d" % (len(indCities), iBuyOffCost)
@@ -2847,8 +2842,8 @@ class Revolution:
 
 					bodStr = RevUtils.getCityTextList(indCities, bPreCity = True, bPostIs = True)
 
-					bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_VIOLENT_IND_1",()) + ' %s.'%(GC.getReligionInfo( revRel ).getDescription())
-					bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_REL_VIOLENT_IND_2",()) + ' %s '%(GC.getReligionInfo( pPlayer.getStateReligion() ).getDescription()) + TRNSLTR.getText("TXT_KEY_REV_REL_VIOLENT_IND_3",())
+					bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_REL_VIOLENT_IND_1",()) + ' %s.'%(INFO.getDescription("RELIGION_", revRel))
+					bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_REL_VIOLENT_IND_2",()) + ' %s '%(INFO.getDescription("RELIGION_", pPlayer.getStateReligion())) + TRNSLTR.getText("TXT_KEY_REV_REL_VIOLENT_IND_3",())
 					bodStr += '\n\n' + TRNSLTR.getText("TXT_KEY_REV_REL_VIOLENT_IND",())
 
 					[pRevPlayer,bIsJoinWar] = self.chooseRevolutionCiv( indCities, bJoinCultureWar = False, bReincarnate = True, bJoinRebels = False, bSpreadRebels = False, giveRelType = revRel )
@@ -2892,7 +2887,7 @@ class Revolution:
 						and not pTeam.isAVassal()
 						):
 							if self.LOG_DEBUG:
-								print "[REV] Holy city for %s (%d) is %s, owner %s practices %d"%(GC.getReligionInfo(stateRel).getDescription(),stateRel,stateHolyCity.getName(),stateHolyCityOwner.getCivilizationDescription(0),stateHolyCityOwner.getStateReligion())
+								print "[REV] Holy city for %s (%d) is %s, owner %s practices %d"%(INFO.getDescription("RELIGION_", stateRel),stateRel,stateHolyCity.getName(),stateHolyCityOwner.getCivilizationDescription(0),stateHolyCityOwner.getStateReligion())
 
 							relCities = []
 							for city in revCities:
@@ -2931,7 +2926,7 @@ class Revolution:
 								if self.LOG_DEBUG: print "[REV] Revolt: Ask for crusade against fellow believer, %s!" % stateHolyCityOwner.getCivilizationDescription(0)
 
 								bodStr += " " + TRNSLTR.getText("TXT_KEY_REV_HL_HOLY_WAR",()) + " %s."%(stateHolyCityOwner.getCivilizationDescription(0))
-								bodStr += "   " + TRNSLTR.getText("TXT_KEY_REV_HL_HOLY_WHILE",()) + ' %s '%(stateHolyCityOwner.getCivilizationDescription(0)) + TRNSLTR.getText("TXT_KEY_REV_HL_HOLY_CLAIMS",()) + ' %s, '%(GC.getReligionInfo(stateRel).getDescription()) + TRNSLTR.getText("TXT_KEY_REV_HL_HOLY_WORTHY",()) + " %s!"%(stateHolyCity.getName())
+								bodStr += "   " + TRNSLTR.getText("TXT_KEY_REV_HL_HOLY_WHILE",()) + ' %s '%(stateHolyCityOwner.getCivilizationDescription(0)) + TRNSLTR.getText("TXT_KEY_REV_HL_HOLY_CLAIMS",()) + ' %s, '%(INFO.getDescription("RELIGION_", stateRel)) + TRNSLTR.getText("TXT_KEY_REV_HL_HOLY_WORTHY",()) + " %s!"%(stateHolyCity.getName())
 								bodStr += "   " + TRNSLTR.getText("TXT_KEY_REV_HL_HOLY_DEVOTION",()) + " %s "%(stateHolyCity.getName()) + TRNSLTR.getText("TXT_KEY_REV_HL_HOLY_UNWORTHY",())
 								bodStr += "\n\n" + TRNSLTR.getText("TXT_KEY_REV_HL_HOLY_REQUEST",())
 
@@ -2968,7 +2963,7 @@ class Revolution:
 						iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 						if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 						iBuyOffCost = max( [iBuyOffCost, pPlayer.getGold()/10 + GAME.getSorenRandNum(50,'Rev')] )
-						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_HL_EMAN_REJECT",()) + ' %s '%(GC.getCivicInfo(newCivic).getDescription()) + TRNSLTR.getText("TXT_KEY_REV_HL_EMAN_CIVIC",())
+						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_HL_EMAN_REJECT",()) + ' %s '%(INFO.getDescription("CIVIC_", newCivic)) + TRNSLTR.getText("TXT_KEY_REV_HL_EMAN_CIVIC",())
 						bodStr += '\n\n' + TRNSLTR.getText("TXT_KEY_REV_PEACEFUL_CONCLUSION",())
 						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_HL_EMAN_SLAVE",())
 						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_BRIBE",())
@@ -3020,8 +3015,8 @@ class Revolution:
 							bodStr += RevUtils.getCityTextList(slaveCities) + '!'
 
 							bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_HL_SLAVE_DEMAND",())
-							if self.LOG_DEBUG: print "[REV] Revolt: Asking change to " + GC.getCivicInfo(newCivic).getDescription()
-							bodStr += ' %s '%(GC.getCivicInfo(newCivic).getDescription())
+							if self.LOG_DEBUG: print "[REV] Revolt: Asking change to " + INFO.getDescription("CIVIC_", newCivic)
+							bodStr += ' %s '%(INFO.getDescription("CIVIC_", newCivic))
 
 							bodStr += TRNSLTR.getText("TXT_KEY_REV_HL_SLAVE_DENY",())
 
@@ -3047,7 +3042,7 @@ class Revolution:
 				[newEnviroLevel, newCivic] = RevUtils.getBestEnvironmentalProtection(pPlayer, optionType)
 				if( bPeaceful and newEnviroLevel > enviroLevel + 2 and not newCivic == None ) :
 					if( 30 > GAME.getSorenRandNum(100, 'Revolt - environmentalism request') ):
-						if self.LOG_DEBUG: print "[REV] Revolt: Asking change to %s, %d (environment)"%(GC.getCivicInfo(newCivic).getDescription(),newCivic)
+						if self.LOG_DEBUG: print "[REV] Revolt: Asking change to %s, %d (environment)"%(INFO.getDescription("CIVIC_", newCivic),newCivic)
 
 						bodStr = RevUtils.getCityTextList(revCities, bPreCity = True, bPostIs = True)
 
@@ -3058,7 +3053,7 @@ class Revolution:
 						iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 						if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 						iBuyOffCost = max( [iBuyOffCost, pPlayer.getGold()/10 + GAME.getSorenRandNum(50,'Rev')] )
-						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_HL_ENV_REQUEST",()) + ' %s.'%(GC.getCivicInfo(newCivic).getDescription())
+						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_HL_ENV_REQUEST",()) + ' %s.'%(INFO.getDescription("CIVIC_", newCivic))
 						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_HL_ENV_GREEN",())
 						bodStr += '\n\n' + TRNSLTR.getText("TXT_KEY_REV_PEACEFUL_CONCLUSION",())
 						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_HL_ENV_SMOG",())
@@ -3106,10 +3101,10 @@ class Revolution:
 						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_COL_GOVT_REQUEST",())
 						if( newDemoLevel > 9 ) :
 							if self.LOG_DEBUG: print "[REV] Revolt: Asking change to universal sufferage"
-							bodStr += "  " + TRNSLTR.getText("TXT_KEY_REV_COL_GOVT_PROTESTING",()) + " %s!"%(GC.getCivicInfo(newCivic).getDescription())
+							bodStr += "  " + TRNSLTR.getText("TXT_KEY_REV_COL_GOVT_PROTESTING",()) + " %s!"%(INFO.getDescription("CIVIC_", newCivic))
 						else :
 							if self.LOG_DEBUG: print "[REV] Revolt: Asking change to representation"
-							bodStr += "  " + TRNSLTR.getText("TXT_KEY_REV_COL_GOVT_CRIES",()) + " %s!' "%(GC.getCivicInfo(newCivic).getDescription()) +TRNSLTR.getText("TXT_KEY_REV_COL_GOVT_MARCH",())
+							bodStr += "  " + TRNSLTR.getText("TXT_KEY_REV_COL_GOVT_CRIES",()) + " %s!' "%(INFO.getDescription("CIVIC_", newCivic)) +TRNSLTR.getText("TXT_KEY_REV_COL_GOVT_MARCH",())
 
 						#iBuyOffCost = (75 + 12*pPlayer.getCurrentEra())*len(foreignCities) + GAME.getSorenRandNum(100+10*pPlayer.getCurrentEra(),'Rev')
 						totalRevIdx = 0
@@ -3158,7 +3153,7 @@ class Revolution:
 					[laborLevel,optionType] = RevUtils.getLaborFreedom(pPlayer)
 					[newLaborLevel,newCivic] = RevUtils.getBestLaborFreedom(pPlayer, optionType)
 					if( laborLevel < 0 and newLaborLevel > 5 and not newCivic == None ):
-						if self.LOG_DEBUG: print "[REV] Revolt: Asking change to %s, %d"%(GC.getCivicInfo(newCivic).getDescription(),newCivic)
+						if self.LOG_DEBUG: print "[REV] Revolt: Asking change to %s, %d"%(INFO.getDescription("CIVIC_", newCivic),newCivic)
 
 						#iBuyOffCost = (50 + 12*pPlayer.getCurrentEra())*len(revCities) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 						totalRevIdx = 0
@@ -3167,7 +3162,7 @@ class Revolution:
 						iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 						if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 						iBuyOffCost = max( [iBuyOffCost, pPlayer.getGold()/10 + GAME.getSorenRandNum(50,'Rev')] )
-						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_HL_EMAN_REJECT",()) + ' %s '%(GC.getCivicInfo(newCivic).getDescription()) + TRNSLTR.getText("TXT_KEY_REV_HL_EMAN_CIVIC",())
+						bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_HL_EMAN_REJECT",()) + ' %s '%(INFO.getDescription("CIVIC_", newCivic)) + TRNSLTR.getText("TXT_KEY_REV_HL_EMAN_CIVIC",())
 						bodStr += '\n\n' + TRNSLTR.getText("TXT_KEY_REV_PEACEFUL_CONCLUSION",())
 						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_HL_EMAN_SLAVE",())
 						bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_BRIBE",())
@@ -3192,10 +3187,10 @@ class Revolution:
 					[isCanDoCommunism,newCivic] = RevUtils.canDoCommunism(pPlayer)
 					if( isCanDoCommunism and not newCivic == None ) :
 						if( 35 > GAME.getSorenRandNum(100, 'Rev - Communist revolution') ) :
-							if self.LOG_DEBUG: print "[REV] Revolt: Communist revolution, ask change to %s, %d" % (GC.getCivicInfo(newCivic).getDescription(), newCivic)
+							if self.LOG_DEBUG: print "[REV] Revolt: Communist revolution, ask change to %s, %d" % (INFO.getDescription("CIVIC_", newCivic), newCivic)
 
-							bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_CAP_COM_REQUEST",()) + ' %s.  '%(GC.getCivicInfo(newCivic).getDescription()) + TRNSLTR.getText("TXT_KEY_REV_CAP_COM_BROTHER",())
-							bodStr += ' %s '%(GC.getCivicInfo(newCivic).getDescription()) + TRNSLTR.getText("TXT_KEY_REV_CAP_COM_ECON",())
+							bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_CAP_COM_REQUEST",()) + ' %s.  '%(INFO.getDescription("CIVIC_", newCivic)) + TRNSLTR.getText("TXT_KEY_REV_CAP_COM_BROTHER",())
+							bodStr += ' %s '%(INFO.getDescription("CIVIC_", newCivic)) + TRNSLTR.getText("TXT_KEY_REV_CAP_COM_ECON",())
 
 							if self.LOG_DEBUG: print "[REV] Revolt: %d cities in revolution" % len(revCities)
 							assert( len(revCities) > 0 )
@@ -3222,10 +3217,10 @@ class Revolution:
 							bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_CAP_VOTE_REQUEST",())
 							if newDemoLevel > 9:
 								if self.LOG_DEBUG: print "[REV] Revolt: Asking change to universal sufferage, " + str(newCivic)
-								bodStr += "  " + TRNSLTR.getText("TXT_KEY_REV_CAP_VOTE_US",()) + " %s!"%(GC.getCivicInfo(newCivic).getDescription())
+								bodStr += "  " + TRNSLTR.getText("TXT_KEY_REV_CAP_VOTE_US",()) + " %s!"%(INFO.getDescription("CIVIC_", newCivic))
 							else:
 								if self.LOG_DEBUG: print "[REV] Revolt: Asking change to representation, " + str(newCivic)
-								bodStr += "  " + TRNSLTR.getText("TXT_KEY_REV_CAP_VOTE_CRIES",()) + " %s!' "%(GC.getCivicInfo(newCivic).getDescription()) +TRNSLTR.getText("TXT_KEY_REV_CAP_VOTE_MARCH",())
+								bodStr += "  " + TRNSLTR.getText("TXT_KEY_REV_CAP_VOTE_CRIES",()) + " %s!' "%(INFO.getDescription("CIVIC_", newCivic)) +TRNSLTR.getText("TXT_KEY_REV_CAP_VOTE_MARCH",())
 
 							#iBuyOffCost = (50 + 15*pPlayer.getCurrentEra())*len(revCities) + GAME.getSorenRandNum(150+15*pPlayer.getCurrentEra(),'Rev')
 							totalRevIdx = 0
@@ -3269,7 +3264,7 @@ class Revolution:
 							iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + GAME.getSorenRandNum(50+12*pPlayer.getCurrentEra(),'Rev')
 							if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 							iBuyOffCost = max( [iBuyOffCost, pPlayer.getGold()/10 + GAME.getSorenRandNum(50,'Rev')] )
-							bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_CAP_SPEECH_REQUEST",()) + ' %s.'%(GC.getCivicInfo(newCivic).getDescription())
+							bodStr += ' ' + TRNSLTR.getText("TXT_KEY_REV_CAP_SPEECH_REQUEST",()) + ' %s.'%(INFO.getDescription("CIVIC_", newCivic))
 							bodStr += '  ' + TRNSLTR.getText("TXT_KEY_REV_CAP_SPEECH_DENY",())
 
 							if self.LOG_DEBUG: print "[REV] Revolt: %d cities in revolution, buyoff cost %d"%(len(revCities),iBuyOffCost)
@@ -3882,12 +3877,12 @@ class Revolution:
 
 		if availLeader:
 			newLeaderType = availLeader[GAME.getSorenRandNum(count,'Revolution: pick leader')]
-			newLeaderName = GC.getLeaderHeadInfo(newLeaderType).getDescription()
+			newLeaderName = INFO.getDescription("LEADER_", newLeaderType)
 
 		if newLeaderType == None:
 			# Use same leader type, but with new name
 			newLeaderType = ownerLeaderType
-			newLeaderName = TextUtil.convertToStr(GC.getLeaderHeadInfo( newLeaderType ).getDescription())
+			newLeaderName = TextUtil.convertToStr(INFO.getDescription("LEADER_", newLeaderType))
 
 			if newLeaderName == owner.getName():
 				# Hack Roman numeral naming
@@ -3918,8 +3913,8 @@ class Revolution:
 #-------------------------------------------------------------------------------------------------
 
 		pTeam = GC.getTeam( pPlayer.getTeam() )
-		iAggressive = GC.getInfoTypeForString(RevDefs.sXMLAggressive)
-		iSpiritual = GC.getInfoTypeForString(RevDefs.sXMLSpiritual)
+		iAggressive = CvUtil.getActiveTraitId(RevDefs.sXMLAggressive)
+		iSpiritual = CvUtil.getActiveTraitId(RevDefs.sXMLSpiritual)
 		numRevCities = len(revData.cityList)
 
 		pRevPlayer = None
@@ -4725,8 +4720,8 @@ class Revolution:
 
 		pTeam = GC.getTeam(pPlayer.getTeam())
 
-		iAggressive = GC.getInfoTypeForString(RevDefs.sXMLAggressive)
-		iSpiritual = GC.getInfoTypeForString(RevDefs.sXMLSpiritual)
+		iAggressive = CvUtil.getActiveTraitId(RevDefs.sXMLAggressive)
+		iSpiritual = CvUtil.getActiveTraitId(RevDefs.sXMLSpiritual)
 		numRevCities = len(cityList)
 		capital = pPlayer.getCapitalCity()
 		capitalArea = capital.area().getID()
@@ -4769,9 +4764,9 @@ class Revolution:
 			if termsAccepted:
 				if self.LOG_DEBUG: print "[REV] Revolt: Player opts to switch, lowering rev indices"
 				# Do switch
-				newCivicOption = GC.getCivicInfo( newCivic ).getCivicOptionType()
+				newCivicOption = INFO.civicOptions().getValue( newCivic )
 				pPlayer.setCivics( newCivicOption, newCivic )
-				iSpiritual = GC.getInfoTypeForString(RevDefs.sXMLSpiritual)
+				iSpiritual = CvUtil.getActiveTraitId(RevDefs.sXMLSpiritual)
 				pPlayer.changeRevolutionTimer(5)
 				if( not pPlayer.hasTrait(iSpiritual) ) :
 					if( pPlayer.getCurrentEra() > GC.getNumEraInfos()/2 ) :
@@ -5195,9 +5190,9 @@ class Revolution:
 							mess = TRNSLTR.getText("TXT_KEY_REV_MESS_CEDE",())%(pPlayerName,cityString,revPlayerName)
 
 							if( iPlayer == pPlayer.getID() ) :
-								CyInterface().addMessage(iPlayer, False, GC.getEVENT_MESSAGE_TIME(), mess, "AS2D_CITY_REVOLT", InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, CyArtFileMgr().getInterfaceArtInfo("INTERFACE_RESISTANCE").getPath(), ColorTypes(colorNum), cityList[0].getX(), cityList[0].getY(), True, True)
+								CyInterface().addMessage(iPlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), mess, "AS2D_CITY_REVOLT", InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, CyArtFileMgr().getInterfaceArtInfo("INTERFACE_RESISTANCE").getPath(), ColorTypes(colorNum), cityList[0].getX(), cityList[0].getY(), True, True)
 							else :
-								CyInterface().addMessage(iPlayer, False, GC.getEVENT_MESSAGE_TIME(), mess, None, InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, None, ColorTypes(colorNum), -1, -1, False, False)
+								CyInterface().addMessage(iPlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), mess, None, InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, None, ColorTypes(colorNum), -1, -1, False, False)
 
 					if( not bIsBarbRev and (pRevPlayer.getNumCities() + pRevPlayer.getCitiesLost() < 4) and len(cityList) > 1 ) :
 						# Launch golden age for rebel player (helps with stability and being competitive)
@@ -5245,7 +5240,7 @@ class Revolution:
 							#RevData.initCity(pCity)
 							# City has become invalid, will cause game to crash if left
 							print "Destroying city so game can continue"
-							pCity.kill()
+							ACT.disbandCity(pCity.getOwner(), pCity.getID())
 							continue
 
 
@@ -5260,8 +5255,8 @@ class Revolution:
 						for buildingType in buildingList:
 							if not pCity.hasBuilding(buildingType) and not GC.getBuildingInfo(buildingType).isGovernmentCenter():
 								if self.LOG_DEBUG:
-									print "[REV] Revolt: Building %s saved" % GC.getBuildingInfo(buildingType).getDescription()
-								pCity.changeHasBuilding(buildingType, True)
+									print "[REV] Revolt: Building %s saved" % INFO.getDescription("BUILDING_", buildingType)
+								ACT.setCityBuilding(pCity.getOwner(), pCity.getID(), buildingType, True)
 
 						#if self.LOG_DEBUG: print "[REV] Revolt: %s at %d, %d"%(pCity.getName(),pCity.getX(),pCity.getY())
 
@@ -5278,19 +5273,19 @@ class Revolution:
 						defaultUnits = RevUtils.getPlayerUnits( ix, iy, pRevPlayer.getID() )
 
 						# Give a few defenders
-						newUnit = pRevPlayer.initUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
-						pRevPlayer.initUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
-						pRevPlayer.initUnit( iCounter, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+						newUnit = pRevPlayer.createUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+						pRevPlayer.createUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+						pRevPlayer.createUnit( iCounter, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 						if(iWorker != -1):
-							pRevPlayer.initUnit( iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+							pRevPlayer.createUnit( iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 
 						if( pRevPlayer.getNumCities() <= 2 ) :
 							# Extra units for first two cities
-							#pRevPlayer.initUnit( iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
-							pRevPlayer.initUnit( iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+							#pRevPlayer.createUnit( iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+							pRevPlayer.createUnit( iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 						elif( GC.getTeam(pPlayer.getTeam()).isAtWarWith(pRevPlayer.getTeam()) ) :
-							pRevPlayer.initUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
-							#pRevPlayer.initUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+							pRevPlayer.createUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+							#pRevPlayer.createUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 
 						if not bIsBarbRev and not bGaveMap:
 							pRevPlayer.receiveGoody(GC.getMap().plot(ix,iy), iGoodyMap, newUnit)
@@ -5377,9 +5372,9 @@ class Revolution:
 								mess = TRNSLTR.getText("TXT_KEY_REV_MESS_CEDE",())%(pPlayerName,cityString,joinPlayerName)
 
 								if( iPlayer == pPlayer.getID() ) :
-									CyInterface().addMessage(iPlayer, False, GC.getEVENT_MESSAGE_TIME(), mess, "AS2D_CITY_REVOLT", InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, CyArtFileMgr().getInterfaceArtInfo("INTERFACE_RESISTANCE").getPath(), ColorTypes(colorNum), cityList[0].getX(), cityList[0].getY(), True, True)
+									CyInterface().addMessage(iPlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), mess, "AS2D_CITY_REVOLT", InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, CyArtFileMgr().getInterfaceArtInfo("INTERFACE_RESISTANCE").getPath(), ColorTypes(colorNum), cityList[0].getX(), cityList[0].getY(), True, True)
 								else :
-									CyInterface().addMessage(iPlayer, False, GC.getEVENT_MESSAGE_TIME(), mess, None, InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, None, ColorTypes(colorNum), -1, -1, False, False)
+									CyInterface().addMessage(iPlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), mess, None, InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, None, ColorTypes(colorNum), -1, -1, False, False)
 
 						if( not bIsBarbRev ) :
 							# Improve relations
@@ -5426,7 +5421,7 @@ class Revolution:
 								#RevData.initCity(pCity)
 								# City has become invalid, will cause game to crash if left
 								print "Destroying city so game can continue"
-								pCity.kill()
+								ACT.disbandCity(pCity.getOwner(), pCity.getID())
 								continue
 
 
@@ -5445,19 +5440,19 @@ class Revolution:
 							defaultUnits = RevUtils.getPlayerUnits( ix, iy, joinPlayer.getID() )
 
 							# Give a few defenders
-							newUnit = joinPlayer.initUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
-							#joinPlayer.initUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI )
-							joinPlayer.initUnit( iCounter, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+							newUnit = joinPlayer.createUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+							#joinPlayer.createUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI )
+							joinPlayer.createUnit( iCounter, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 							if( joinPlayer.getNumCities() <= 2 ) :
 								# Extra units for first two cities (unlikely in this case)
 								if(iWorker != -1):
-									joinPlayer.initUnit( iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
-								joinPlayer.initUnit( iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
-								joinPlayer.initUnit( iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+									joinPlayer.createUnit( iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+								joinPlayer.createUnit( iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+								joinPlayer.createUnit( iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 
 							elif( GC.getTeam(pPlayer.getTeam()).isAtWarWith(joinPlayer.getTeam()) ) :
-								joinPlayer.initUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
-								#joinPlayer.initUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI )
+								joinPlayer.createUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+								#joinPlayer.createUnit( iBestDefender, ix, iy, UnitAITypes.NO_UNITAI )
 
 							#joinPlayer.receiveGoody( GC.getMap().plot(ix,iy), iGoodyMap, newUnit )
 							#joinPlayer.receiveGoody( GC.getMap().plot(ix,iy), iGoodyMap, newUnit )
@@ -5607,7 +5602,7 @@ class Revolution:
 					try :
 						iTeam = GC.getPlayer(iPlayer).getTeam()
 						if( cityList[0].getEspionageVisibility(iTeam) ) :
-							CyInterface().addMessage(iPlayer, False, GC.getEVENT_MESSAGE_TIME(), mess, None, InterfaceMessageTypes.MESSAGE_TYPE_MINOR_EVENT, None, GC.getInfoTypeForString("COLOR_HIGHLIGHT_TEXT"), -1, -1, False, False)
+							CyInterface().addMessage(iPlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), mess, None, InterfaceMessageTypes.MESSAGE_TYPE_MINOR_EVENT, None, GC.getInfoTypeForString("COLOR_HIGHLIGHT_TEXT"), -1, -1, False, False)
 							if self.LOG_DEBUG: print "[REV] Revolt: Informing %s, who have espionage vis, of this revolt" % GC.getPlayer(iPlayer).getCivilizationDescription(0)
 					except :
 						print "Error!  C++ call failed, end of processRevolution, player %d"%(iPlayer)
@@ -5637,13 +5632,13 @@ class Revolution:
 			for iPlayer in xrange(GC.getMAX_PC_PLAYERS()):
 				if pPlayer.canContact(iPlayer):
 					mess = '%s '%(newLeaderName) + TRNSLTR.getText("TXT_KEY_REV_MESS_NEW_LEADER",()) + ' %s!'%(pPlayer.getCivilizationDescription(0))
-					CyInterface().addMessage(iPlayer, False, GC.getEVENT_MESSAGE_TIME(), mess, None, InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, None, ColorTypes(79), -1, -1, False, False)
+					CyInterface().addMessage(iPlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), mess, None, InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, None, ColorTypes(79), -1, -1, False, False)
 
 			# Change personality type
 			if GAME.isOption(GameOptionTypes.GAMEOPTION_AI_RANDOM_PERSONALITIES):
 				if self.LOG_DEBUG: print "[REV] Revolt: Giving new, random personality by game option"
 				RevUtils.changePersonality(pPlayer.getID())
-			elif newLeaderName == TextUtil.convertToStr(GC.getLeaderHeadInfo( newLeaderType ).getDescription()):
+			elif newLeaderName == TextUtil.convertToStr(INFO.getDescription("LEADER_", newLeaderType)):
 				if self.LOG_DEBUG: print "[REV] Revolt: Giving back original leader personality"
 				RevUtils.changePersonality( pPlayer.getID(), newLeaderType )
 			else:
@@ -5656,7 +5651,7 @@ class Revolution:
 			for iPlayerTest in xrange(GC.getMAX_PC_PLAYERS()) :
 				if pPlayer.canContact(iPlayerTest):
 					mess = '%s '%(pPlayer.getName()) + TRNSLTR.getText("TXT_KEY_REV_MESS_NEW_LEADER",()) + ' %s!'%(pPlayer.getCivilizationDescription(0))
-					CyInterface().addMessage(iPlayerTest, False, GC.getEVENT_MESSAGE_TIME(), mess, None, InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, None, ColorTypes(79), -1, -1, False, False)
+					CyInterface().addMessage(iPlayerTest, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), mess, None, InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, None, ColorTypes(79), -1, -1, False, False)
 
 		if pPlayer.getCurrentEra() > GC.getNumEraInfos()/2:
 			pPlayer.changeAnarchyTurns(3)
@@ -5740,7 +5735,7 @@ class Revolution:
 				except:
 					print "[ERROR] Failed to set owner of city, %s at plot %d, %d" % (pCity.getName(), cityPlot.getX(), cityPlot.getY())
 					print "\tDestroying city so game can continue"
-					pCity.kill()
+					ACT.disbandCity(pCity.getOwner(), pCity.getID())
 					continue
 
 				pCity = cityPlot.getPlotCity()
@@ -5756,18 +5751,18 @@ class Revolution:
 				iy = pCity.getY()
 
 				if iBestDefender > -1:
-					joinPlayer.initUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+					joinPlayer.createUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 				if iCounter > -1:
-					joinPlayer.initUnit(iCounter, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+					joinPlayer.createUnit(iCounter, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 				if joinPlayer.getNumCities() <= 2:
 					# Extra units for first two cities (unlikely in this case)
 					if iWorker > -1:
-						joinPlayer.initUnit(iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+						joinPlayer.createUnit(iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 					if iAttack > -1:
-						joinPlayer.initUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
-						joinPlayer.initUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+						joinPlayer.createUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+						joinPlayer.createUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 				elif iBestDefender > -1 and GC.getTeam(pPlayer.getTeam()).isAtWarWith(joinPlayer.getTeam()):
-					joinPlayer.initUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+					joinPlayer.createUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
 				RevData.updateCityVal(pCity, 'RevolutionCiv', joinPlayer.getCivilizationType())
 
@@ -5818,7 +5813,7 @@ class Revolution:
 			pCity.setRevolutionCounter( 2 )
 
 			mess = TRNSLTR.getText("TXT_KEY_REV_MESS_BREWING",())%(pCity.getName())
-			CyInterface().addMessage(pPlayer.getID(), True, GC.getEVENT_MESSAGE_TIME(), mess, "AS2D_CITY_REVOLT", InterfaceMessageTypes.MESSAGE_TYPE_MINOR_EVENT, CyArtFileMgr().getInterfaceArtInfo("INTERFACE_RESISTANCE").getPath(), ColorTypes(7), pCity.getX(), pCity.getY(), True, True)
+			CyInterface().addMessage(pPlayer.getID(), True, GC.getDefineINT("EVENT_MESSAGE_TIME"), mess, "AS2D_CITY_REVOLT", InterfaceMessageTypes.MESSAGE_TYPE_MINOR_EVENT, CyArtFileMgr().getInterfaceArtInfo("INTERFACE_RESISTANCE").getPath(), ColorTypes(7), pCity.getX(), pCity.getY(), True, True)
 
 			unitList = RevUtils.getPlayerUnits( pCity.getX(), pCity.getY(), pPlayer.getID() )
 			for unit in unitList :
@@ -6027,11 +6022,11 @@ class Revolution:
 							mess += "  " + TRNSLTR.getText("TXT_KEY_REV_BIG_THE",()) + ' ' + pRevPlayer.getCivilizationDescription(0) + ' ' + TRNSLTR.getText("TXT_KEY_REV_MESS_RISEN",())
 
 				if iPlayer == pPlayer.getID():
-					CyInterface().addMessage(iPlayer, True, GC.getEVENT_MESSAGE_TIME(), mess, "AS2D_CITY_REVOLT", InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, CyArtFileMgr().getInterfaceArtInfo("INTERFACE_RESISTANCE").getPath(), ColorTypes(colorNum), cityList[0].getX(), cityList[0].getY(), True, True)
+					CyInterface().addMessage(iPlayer, True, GC.getDefineINT("EVENT_MESSAGE_TIME"), mess, "AS2D_CITY_REVOLT", InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, CyArtFileMgr().getInterfaceArtInfo("INTERFACE_RESISTANCE").getPath(), ColorTypes(colorNum), cityList[0].getX(), cityList[0].getY(), True, True)
 				elif iPlayer == pRevPlayer.getID():
-					CyInterface().addMessage(iPlayer, True, GC.getEVENT_MESSAGE_TIME(), mess,  "AS2D_DECLAREWAR", InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, None, ColorTypes(colorNum), cityList[0].getX(), cityList[0].getY(), False, False)
+					CyInterface().addMessage(iPlayer, True, GC.getDefineINT("EVENT_MESSAGE_TIME"), mess,  "AS2D_DECLAREWAR", InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, None, ColorTypes(colorNum), cityList[0].getX(), cityList[0].getY(), False, False)
 				else:
-					CyInterface().addMessage(iPlayer, False, GC.getEVENT_MESSAGE_TIME(), mess,  "AS2D_DECLAREWAR", InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, None, ColorTypes(colorNum), -1, -1, False, False)
+					CyInterface().addMessage(iPlayer, False, GC.getDefineINT("EVENT_MESSAGE_TIME"), mess,  "AS2D_DECLAREWAR", InterfaceMessageTypes.MESSAGE_TYPE_MAJOR_EVENT, None, ColorTypes(colorNum), -1, -1, False, False)
 
 		if not bIsBarbRev:
 
@@ -6354,7 +6349,7 @@ class Revolution:
 					#RevData.initCity(pCity)
 					# City has become invalid, will cause game to crash if left
 					print "Destroying city so game can continue"
-					pCity.kill()
+					ACT.disbandCity(pCity.getOwner(), pCity.getID())
 					continue
 
 
@@ -6386,7 +6381,7 @@ class Revolution:
 
 				# Create stolen equipment
 				for unitType in toRebelList:
-					newUnit = pRevPlayer.initUnit(unitType, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+					newUnit = pRevPlayer.createUnit(unitType, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 					newUnitList.append(newUnit)
 
 				# Spawn revs in the city, plus an extra defender or two
@@ -6401,16 +6396,16 @@ class Revolution:
 
 				for i in xrange(iNumUnits):
 					newUnitID = spawnableUnits[GAME.getSorenRandNum( len(spawnableUnits), 'Revolution: pick unit' )]
-					newUnit = pRevPlayer.initUnit(newUnitID, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+					newUnit = pRevPlayer.createUnit(newUnitID, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 					newUnitList.append(newUnit)
 
 				# Give a few extra defenders and a worker
 				if cityIdx == 0:
-					newUnitList.append(pRevPlayer.initUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
+					newUnitList.append(pRevPlayer.createUnit(iBestDefender, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
 				if iWorker != -1:
-					pRevPlayer.initUnit(iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+					pRevPlayer.createUnit(iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 					if pCity.getPopulation() > 5:
-						pRevPlayer.initUnit(iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+						pRevPlayer.createUnit(iWorker, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
 				# Injure units to simulate the lack of training in rebel troops
 				for newUnit in newUnitList:
@@ -6424,7 +6419,7 @@ class Revolution:
 
 				if pCity.getPopulation() > 4 and len(newUnitList) >= 4:
 					deltaPop = int((len(newUnitList)-1)/3.0)
-					pCity.changePopulation(-deltaPop)
+					ACT.changeCityPopulation(pCity.getOwner(), pCity.getID(), -deltaPop)
 					if self.LOG_DEBUG:
 						print "[REV] Revolt: City population decreased by %d for %d rebel units spawned" % (deltaPop, len(newUnitList))
 
@@ -6433,23 +6428,23 @@ class Revolution:
 					if 10 + 3*len(cityList) + 5*pCity.getNumRevolts(pCity.getOwner()) < GAME.getSorenRandNum(100,'Rev'):
 						if self.LOG_DEBUG:
 							print "[REV] Revolt: Great General (%d) spawned in %s" % (iGeneral, pCity.getName())
-						pRevPlayer.initUnit(iGeneral, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+						pRevPlayer.createUnit(iGeneral, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
-				if (iSpy != -1 and pRevPlayer.canTrain(iSpy, False, False)
+				if (iSpy != -1 and ENABLER.getUnitAvailabilityAnywhere(pRevPlayer.getID(), iSpy) == EnablerState.ENABLER_LISTED
 				and pRevPlayer.AI_getNumAIUnits(UnitAITypes.UNITAI_SPY) < 3):
 					iNumRevolts = pCity.getNumRevolts(pCity.getOwner())
 					if (iNumRevolts > 1 and revIdx > self.alwaysViolentThreshold
 					or iNumRevolts > 2 and revIdx > self.revInstigatorThreshold):
 						if self.LOG_DEBUG:
 							print "[REV] Revolt: Spy spawned in " + pCity.getName()
-						pRevPlayer.initUnit(iSpy, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+						pRevPlayer.createUnit(iSpy, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
 				# Should buildings stay or some destroyed?
 				for buildingType in buildingList:
 					if not pCity.hasBuilding(buildingType) and not GC.getBuildingInfo(buildingType).isGovernmentCenter():
 						if self.LOG_DEBUG:
-							print "[REV] Revolt: Building %s saved" % GC.getBuildingInfo(buildingType).getDescription()
-						pCity.changeHasBuilding(buildingType, True)
+							print "[REV] Revolt: Building %s saved" % INFO.getDescription("BUILDING_", buildingType)
+						ACT.setCityBuilding(pCity.getOwner(), pCity.getID(), buildingType, True)
 
 				# Reveal surrounding countryside
 				if not bGaveMap:
@@ -6522,7 +6517,7 @@ class Revolution:
 				newUnitList = []
 				for i in xrange(iNumUnits):
 					newUnitID = spawnableUnits[GAME.getSorenRandNum( len(spawnableUnits), 'Revolution: pick unit' )]
-					newUnit = pRevPlayer.initUnit( newUnitID, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+					newUnit = pRevPlayer.createUnit( newUnitID, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 					newUnitList.append(newUnit)
 
 				for [iNum,newUnit] in enumerate(newUnitList):
@@ -6557,24 +6552,24 @@ class Revolution:
 					deltaPop = int((len(newUnitList)-1)/2.5)
 					if deltaPop >= pCity.getPopulation():
 						deltaPop = pCity.getPopulation() - 1
-					pCity.changePopulation(-deltaPop)
+					ACT.changeCityPopulation(pCity.getOwner(), pCity.getID(), -deltaPop)
 
 				# Extra stuff for instigator city
 				if cityIdx == 0 and len(cityList) > 1 and iNumUnits > 0 and not bIsBarbRev:
 					if 3*len(cityList) + 5*pCity.getNumRevolts(pCity.getOwner()) < GAME.getSorenRandNum(100,'Rev'):
-						pRevPlayer.initUnit(iGeneral, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+						pRevPlayer.createUnit(iGeneral, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
 					if iScout != -1:
-						if pRevPlayer.canTrain(iScout, False, False):
-							pRevPlayer.initUnit(iScout, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+						if ENABLER.getUnitAvailabilityAnywhere(pRevPlayer.getID(), iScout) == EnablerState.ENABLER_LISTED:
+							pRevPlayer.createUnit(iScout, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
 					if not bIsBarbRev and not bIsJoinWar and iSettler != -1 and pCity.area().getNumTiles() / pCity.area().getNumCities() > 25:
 						# Settler if there is sufficient empty land available?
-						pRevPlayer.initUnit(iSettler, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
+						pRevPlayer.createUnit(iSettler, revSpawnLoc[0], revSpawnLoc[1], UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
 
-				if iSpy != -1 and pRevPlayer.canTrain(iSpy,False,False) and pRevPlayer.AI_getNumAIUnits( UnitAITypes.UNITAI_SPY ) < 3:
+				if iSpy != -1 and ENABLER.getUnitAvailabilityAnywhere(pRevPlayer.getID(), iSpy) == EnablerState.ENABLER_LISTED and pRevPlayer.AI_getNumAIUnits( UnitAITypes.UNITAI_SPY ) < 3:
 					if pCity.getNumRevolts(pCity.getOwner()) > 1 and revIdx > self.alwaysViolentThreshold or pCity.getNumRevolts(pCity.getOwner()) > 2 and revIdx > self.revInstigatorThreshold:
-						pSpy = pRevPlayer.initUnit( iSpy, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
+						pSpy = pRevPlayer.createUnit( iSpy, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH )
 						pSpy.setFortifyTurns(GC.getDefineINT("MAX_FORTIFY_TURNS"))
 
 				# Reveal surrounding countryside

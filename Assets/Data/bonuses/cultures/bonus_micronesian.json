@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_MICRONESIAN",
+ "enables": {
+  "units": [
+   "UNIT_CHARLES_WILKES",
+   "UNIT_ISOKELEKEL"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MICRONESIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MICRONESIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

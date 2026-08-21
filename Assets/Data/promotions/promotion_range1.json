@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_RANGE1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_RANGE2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_VETERAN"
+   ]
+  }
+ },
+ "air": {
+  "unit": {
+   "range": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_RANGE": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,1,15"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_RANGE1"
+ }
+}

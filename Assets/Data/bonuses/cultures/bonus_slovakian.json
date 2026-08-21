@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_SLOVAKIAN",
+ "enables": {
+  "units": [
+   "UNIT_LUDOVIT_STUR",
+   "UNIT_ZBOJNIK"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SLOVAKIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SLOVAKIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

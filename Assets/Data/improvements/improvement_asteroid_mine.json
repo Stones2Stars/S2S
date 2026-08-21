@@ -1,0 +1,116 @@
+{
+ "type": "IMPROVEMENT_ASTEROID_MINE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTEROID_MINING",
+     "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "feature": [
+        "FEATURE_ASTEROIDS"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_METALLIC_ASTEROID",
+        "BONUS_ORGANIC_VOLATILES"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    3,
+    {
+     "value": 3,
+     "enabled": {
+      "type": "TECH_ASTEROID_EXTRACTION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_EXTRATERRESTRIAL_MICROBES"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_ORGANIC_VOLATILES"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ACOUSTOPHORESIS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_NANOMINING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_METALLIC_ASTEROID"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_ORGANIC_VOLATILES"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_ASTEROID_MINE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_ASTEROID_MINE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_ASTEROID_MINE_PEDIA",
+  "extraterrestrial": true,
+  "outsideBorders": true,
+  "pillageGold": 200,
+  "bonuses": {
+   "BONUS_EXTRATERRESTRIAL_MICROBES": {
+    "trade": true
+   },
+   "BONUS_METALLIC_ASTEROID": {
+    "trade": true
+   },
+   "BONUS_ORGANIC_VOLATILES": {
+    "trade": true
+   }
+  }
+ }
+}

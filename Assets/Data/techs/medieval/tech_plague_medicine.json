@@ -1,0 +1,72 @@
+{
+ "type": "TECH_PLAGUE_MEDICINE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DOCTORS_OFFICE"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_DISEASE_CONTROL4",
+   "PROMOTION_DISEASE_CONTROL4"
+  ],
+  "techs": [
+   "TECH_ANATOMY"
+  ],
+  "units": [
+   "UNIT_DR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_THEOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GUILDS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_RAT_CATCHING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1563
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/plaguemedicine.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PLAGUE_MEDICINE",
+  "soundMP": "AS2D_TECH_PLAGUE_MEDICINE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PLAGUE_MEDICINE",
+  "civilopedia": "TXT_KEY_TECH_PLAGUE_MEDICINE_PEDIA",
+  "quote": "TXT_KEY_TECH_PLAGUE_MEDICINE_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 46,
+  "gridY": 3
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_POLYNESIAN",
+ "enables": {
+  "units": [
+   "UNIT_CATAMARAN",
+   "UNIT_MAUI",
+   "UNIT_TUITATUI"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_POLYNESIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_POLYNESIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

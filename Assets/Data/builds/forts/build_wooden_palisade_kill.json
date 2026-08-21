@@ -1,0 +1,36 @@
+{
+ "type": "BUILD_WOODEN_PALISADE_KILL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CARPENTRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_WOODEN_PALISADE"
+ },
+ "cost": {
+  "gold": 40,
+  "time": 400
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Structures/Improvements/Palisade/palisadewall.dds"
+  },
+  "hotkey": "KB_F",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_WOODEN_PALISADE_KILL",
+  "consumesUnit": true
+ }
+}

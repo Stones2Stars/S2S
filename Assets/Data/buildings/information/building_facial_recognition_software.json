@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOMETRIC_SECURITY_SYSTEM",
+   "BUILDING_BIOMORPHICS_LAB",
+   "BUILDING_DELTA_ASSEMBLER",
+   "BUILDING_INTUITIVE_ALGORITHMS",
+   "BUILDING_PERSONALIZED_ADVERTISING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_GESTURE_RECOGNITION_SOFTWARE",
+    "BUILDING_SPEECH_RECOGNITION_SOFTWARE",
+    "TECH_AUGMENTED_REALITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 9,
+     "enabled": "TECH_INTERACTIVE_GLASS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_PERSONAL_ROBOTS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_AUTOMATED_ROBOTICS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_AUTOMATED_URBANIZATION"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "underworld": {
+  "city": {
+   "investigation": {
+    "flat": 50
+   }
+  }
+ },
+ "cost": {
+  "production": 2505,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACIAL_RECOGNITION_SOFTWARE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FACIAL_RECOGNITION_SOFTWARE",
+  "civilopedia": "TXT_KEY_BUILDING_FACIAL_RECOGNITION_SOFTWARE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,81 @@
+{
+ "type": "BONUS_COCONUT",
+ "enables": {
+  "buildings": [
+   "BUILDING_CATCHER_BIRDS_OF_PARADISE",
+   "BUILDING_CULTURE_HAWAIIAN",
+   "BUILDING_CULTURE_MALAYSIAN",
+   "BUILDING_FARM_CROP_CASSAVA",
+   "BUILDING_NATURE_ALTAR_COCONUT",
+   "BUILDING_NATURE_CIRCLE_COCONUT",
+   "BUILDING_ORCHARD_LONGAN",
+   "BUILDING_PLANTATION_COCONUT"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_COCONUT"
+  }
+ },
+ "mapGeneration": {
+  "maxLatitude": 30,
+  "minLatitude": -30,
+  "placementOrder": 5,
+  "constAppearance": 100,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 24,
+  "uniqueRange": 2,
+  "groupRange": 2,
+  "groupRand": 12,
+  "bonusCoastalOnly": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_LUSH"
+  ],
+  "validFeatures": [
+   "FEATURE_FLOOD_PLAINS",
+   "FEATURE_JUNGLE",
+   "FEATURE_SAVANNA",
+   "FEATURE_VERY_TALL_GRASS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_MUDDY",
+   "TERRAIN_PLAINS"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_COCONUT",
+  "civilopedia": "TXT_KEY_BONUS_COCONUT_PEDIA",
+  "bonusClassType": "BONUSCLASS_CROP",
+  "source": "natural"
+ }
+}

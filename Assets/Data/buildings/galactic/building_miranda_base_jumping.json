@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_MIRANDA_BASE_JUMPING",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FUSION_SPACECRAFT",
+    {
+     "type": "TERRAIN_UMBRIEL",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 5111,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MIRANDA_BASE_JUMPING",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MIRANDA_BASE_JUMPING",
+  "civilopedia": "TXT_KEY_BUILDING_MIRANDA_BASE_JUMPING_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

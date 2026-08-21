@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_PC_BLUEFISH_CAVES",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CAVE_DWELLING",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_PERMAFROST",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_TAIGA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_TUNDRA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_ICE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "FEATURE_CAVES",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 40,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_BLUEFISH_CAVES"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PC_BLUEFISH_CAVES",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PC_BLUEFISH_CAVES",
+  "civilopedia": "TXT_KEY_BUILDING_PC_BLUEFISH_CAVES_PEDIA",
+  "pediaCategory": "groupWonder",
+  "centerInCity": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_GROUP_PREHISTORIC_CAVES",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

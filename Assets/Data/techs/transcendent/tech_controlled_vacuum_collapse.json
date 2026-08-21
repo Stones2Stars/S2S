@@ -1,0 +1,69 @@
+{
+ "type": "TECH_CONTROLLED_VACUUM_COLLAPSE",
+ "enables": {
+  "buildings": [
+   "BUILDING_COSMIC_EXPANSION_POWER_PLANT",
+   "BUILDING_DISTANT_PORTAL_TO_DIMENSION_X",
+   "BUILDING_EFFECT_COSMIC_EXPANSION_POWER_PLANT",
+   "BUILDING_INTERSTELLAR_FALSE_VACUUM_TRAP"
+  ],
+  "builds": [
+   "BUILD_TRUE_VACUUM"
+  ],
+  "improvements": [
+   "IMPROVEMENT_TRUE_VACUUM"
+  ],
+  "techs": [
+   "TECH_ENTROPY_REVERSAL",
+   "TECH_EXPERIMENTAL_COSMOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HORIZON_BREAKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CONTROLLED_INFLATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 528012
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/controlled_vacuum_collapse.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CONTROLLED_VACUUM_COLLAPSE",
+  "civilopedia": "TXT_KEY_TECH_CONTROLLED_VACUUM_COLLAPSE_PEDIA",
+  "quote": "TXT_KEY_TECH_CONTROLLED_VACUUM_COLLAPSE_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 151,
+  "gridY": 7
+ }
+}

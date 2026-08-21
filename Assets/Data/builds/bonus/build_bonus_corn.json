@@ -1,0 +1,24 @@
+{
+ "type": "BUILD_BONUS_CORN",
+ "produces": {
+  "improvement": "IMPROVEMENT_BONUS_CORN"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/blank.dds,Art/Interface/Buttons/AtlasMapBonus.dds,6,1"
+  }
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_IRRIGATE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_CORN",
+  "consumesUnit": true
+ }
+}

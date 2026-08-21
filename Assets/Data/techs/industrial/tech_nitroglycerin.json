@@ -1,0 +1,76 @@
+{
+ "type": "TECH_NITROGLYCERIN",
+ "enables": {
+  "builds": [
+   "BUILD_RAILROAD"
+  ],
+  "techs": [
+   "TECH_MEDICINE",
+   "TECH_SEMI_AUTOMATIC_WEAPONS"
+  ],
+  "units": [
+   "UNIT_FORTY_NINER",
+   "UNIT_WORKER_INDUSTRIAL"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_RAPANUIWORKER",
+   "UNIT_WORKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GEOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASSEMBLY_LINE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 6351
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/nitroglycerin.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NITROGLYCERIN",
+  "soundMP": "AS2D_TECH_NITROGLYCERIN"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NITROGLYCERIN",
+  "civilopedia": "TXT_KEY_TECH_NITROGLYCERIN_PEDIA",
+  "quote": "TXT_KEY_TECH_NITROGLYCERIN_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 32,
+  "militaryWorth": 8,
+  "tradeable": true,
+  "gridX": 66,
+  "gridY": 7
+ }
+}

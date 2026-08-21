@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_NATURAL_GAS_POWER_PLANT",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ARTIFICIAL_NUCLEOSYNTHESIS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_METHANE_POWER_PLANT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "BUILDING_POWER_LINES",
+    "TECH_ELECTRICITY",
+    "TECH_COMBUSTION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NATURAL_GAS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_METHANE_POWER_PLANT",
+    "BUILDING_HE3_FUSION_POWER_PLANT",
+    "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+    "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 770,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NATURAL_GAS_POWER_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NATURAL_GAS_POWER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_NATURAL_GAS_POWER_PLANT_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

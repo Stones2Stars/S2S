@@ -1,0 +1,57 @@
+{
+ "type": "TECH_ABSTRACT_MATHEMATICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_FERMATS_LAST_THEOREM",
+   "BUILDING_GODELS_INCOMPLETENESS_THEOREMS",
+   "BUILDING_HILBERTS_PROBLEMS"
+  ],
+  "techs": [
+   "TECH_ENCRYPTION_MACHINES",
+   "TECH_THEORY_OF_RELATIVITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ATOMIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 9484
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Buttons/Techs/abstract_mathematics.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ABSTRACT_MATHEMATICS",
+  "civilopedia": "TXT_KEY_TECH_ABSTRACT_MATHEMATICS_PEDIA",
+  "quote": "TXT_KEY_TECH_ABSTRACT_MATHEMATICS_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 72,
+  "gridY": 3
+ }
+}

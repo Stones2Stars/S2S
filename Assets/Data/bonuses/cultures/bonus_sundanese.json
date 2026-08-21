@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_SUNDANESE",
+ "enables": {
+  "units": [
+   "UNIT_DEWI_SARTIKA",
+   "UNIT_JAIPONGAN_DANCER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SUNDANESE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SUNDANESE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

@@ -1,0 +1,79 @@
+{
+ "type": "TECH_ELECTROMAGNETIC_VOLTAGE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_EMP_POWER_SUPPLY",
+   "BUILDING_D_HE3_FUSION_PLANT",
+   "BUILDING_EMP_GRID",
+   "BUILDING_WIRELESS_EV_CHARGING",
+   "BUILDING_WIRELESS_SPACE_LAUNCH"
+  ],
+  "techs": [
+   "TECH_CYBERNETICS",
+   "TECH_DYSTOPIA_PATHOGENS",
+   "TECH_PERSONAL_ROBOTS",
+   "TECH_SUPERCHARGED_CRYSTALLOGRAPHY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ENVIRONMENTAL_ECONOMICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_QUANTUM_COMPUTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ION_BEAMS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 47795
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/electromagneticvoltage.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ELECTROMAGNETIC_VOLTAGE",
+  "soundMP": "AS2D_TECH_ELECTROMAGNETIC_VOLTAGE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ELECTROMAGNETIC_VOLTAGE",
+  "civilopedia": "TXT_KEY_TECH_ELECTROMAGNETIC_VOLTAGE_PEDIA",
+  "quote": "TXT_KEY_TECH_ELECTROMAGNETIC_VOLTAGE_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 108,
+  "gridY": 13
+ }
+}

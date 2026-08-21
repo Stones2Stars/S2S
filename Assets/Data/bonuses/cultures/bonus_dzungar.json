@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_DZUNGAR",
+ "enables": {
+  "units": [
+   "UNIT_KHARKHUL",
+   "UNIT_OILAT_KESHIK"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_DZUNGAR"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_DZUNGAR",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

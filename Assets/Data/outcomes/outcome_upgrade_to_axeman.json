@@ -1,0 +1,19 @@
+{
+ "type": "OUTCOME_UPGRADE_TO_AXEMAN",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_UPGRADE_TO_AXEMAN",
+  "message": "TXT_KEY_OUTCOME_UPGRADE_TO_AXEMAN_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_AXE_MAKING",
+    "BUILDING_BARRACKS"
+   ]
+  }
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city"
+}

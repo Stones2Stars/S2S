@@ -1,0 +1,34 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+ "combat": {
+  "unit": {
+   "stealth": {
+    "percent": 10
+   },
+   "stealthStrikes": {
+    "flat": 1
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 200
+  }
+ },
+ "skills": [
+  "camouflage"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_camoflaged.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED"
+ }
+}

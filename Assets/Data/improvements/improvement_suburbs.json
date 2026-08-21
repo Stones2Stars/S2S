@@ -1,0 +1,121 @@
+{
+ "type": "IMPROVEMENT_SUBURBS",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GAS_LIGHTING",
+     "scope": "team"
+    },
+    {
+     "natureYield": {
+      "food": 1
+     }
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_GRASSLAND",
+        "TERRAIN_PLAINS",
+        "TERRAIN_LUSH",
+        "TERRAIN_SCRUB",
+        "TERRAIN_MUDDY"
+       ]
+      },
+      "HAS_FRESHWATER"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ORGANIC_CITIES",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    4,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CIVIL_ENGINEERING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MEGASTRUCTURE_ENGINEERING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    14,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MASS_TRANSIT",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CONSUMERISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_3D_PRINTING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "plot": {
+   "flat": 40
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_TOWN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_SUBURBS",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SUBURBS_PEDIA",
+  "advancedStart": {
+   "cost": -1
+  },
+  "pillageGold": 120,
+  "cultureRange": 2,
+  "pillageTo": "IMPROVEMENT_TOWN"
+ }
+}

@@ -2,19 +2,19 @@
 //  FILE:    CvActionInfo.cpp
 //------------------------------------------------------------------------------------------------
 #include "CvGameCoreDLL.h"
-#include "CvArtFileMgr.h"
+#include "UI/CvArtFileMgr.h"
 #include "CvBuildingInfo.h"
 #include "CvHeritageInfo.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
+#include "AI/CvGameAI.h"
+#include "UI/CvGameTextMgr.h"
+#include "Defines/CvGlobals.h"
 #include "CvInfos.h"
 #include "CvInfoUtil.h"
-#include "CvPlayerAI.h"
-#include "CvPython.h"
-#include "CvXMLLoadUtility.h"
-#include "CvXMLLoadUtilityModTools.h"
-#include "CheckSum.h"
+#include "AI/CvPlayerAI.h"
+#include "Infrastructure/CvPython.h"
+#include "Infrastructure/CvXMLLoadUtility.h"
+#include "Infrastructure/CvXMLLoadUtilityModTools.h"
+#include "Tools/CheckSum.h"
 #include "CvImprovementInfo.h"
 #include "CvBonusInfo.h"
 #include "CvActionInfo.h"
@@ -126,7 +126,18 @@ int CvActionInfo::getMissionType() const
 			return GC.getSpecialistInfo((SpecialistTypes)m_iOriginalIndex).getMissionType();
 
 		case ACTIONSUBTYPE_BUILDING:
-			return GC.getBuildingInfo((BuildingTypes)m_iOriginalIndex).getMissionType();
+		{
+			// Every building action IS a construct order -- the legacy write-back onto each building info stored
+			// this one constant per entity, and cutting the write-back answered NO_MISSION here, which made every
+			// great-person "construct me" button (the prophet's shrines) unmatchable in canHandleAction. The
+			// mission id is XML-registered, so it resolves once (the CvHideAndSeekSection lazy-resolve shape).
+			static int iConstructMission = -2;
+			if (iConstructMission == -2)
+			{
+				iConstructMission = GC.getInfoTypeForString("MISSION_CONSTRUCT", /*bHideAssert*/true);
+			}
+			return iConstructMission >= 0 ? iConstructMission : NO_MISSION;
+		}
 
 		case ACTIONSUBTYPE_HERITAGE:
 			return GC.getHeritageInfo((HeritageTypes)m_iOriginalIndex).getMissionType();

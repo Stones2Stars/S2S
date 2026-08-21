@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_AEROGEL_FACTORY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ELECTROWEAK_MATTER"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_PICOTECH_COMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_METAMATERIALS",
+    "BUILDING_NANO_RESEARCH_DEPARTMENT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_PICOTECH_COMPLEX"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_AEROGEL"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2505,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_AEROGEL_FACTORY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_AEROGEL_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_AEROGEL_FACTORY_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

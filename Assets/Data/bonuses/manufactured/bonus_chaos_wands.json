@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_CHAOS_WANDS",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CHAOS_WANDS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CHAOS_WANDS",
+  "civilopedia": "TXT_KEY_BONUS_CHAOS_WANDS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

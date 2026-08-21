@@ -1,0 +1,23 @@
+{
+ "type": "PROMOTION_SWARM2",
+ "promotionLine": {
+  "PROMOTIONLINE_SWARM": 2
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Swarm2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "combatModifier": {
+   "perVolumeLess": 15
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SWARM2"
+ }
+}

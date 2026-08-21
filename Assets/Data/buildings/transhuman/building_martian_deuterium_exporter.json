@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_MARTIAN_DEUTERIUM_EXPORTER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_MARS_CYCLER",
+    "BUILDING_MARTIAN_CITY",
+    "TECH_PLANETARY_TRADE",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 1921,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_DEUTERIUM_EXPORTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_DEUTERIUM_EXPORTER",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_DEUTERIUM_EXPORTER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

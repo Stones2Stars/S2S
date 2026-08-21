@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_CONSPIRATORS_HIDEOUT_UNSANCTIONED",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FASCISM"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_POLITICAL_PHILOSOPHY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 1200,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": -35,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": 20
+   }
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 20
+   }
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "chance": {
+    "per": "PROPERTY_CRIME"
+   },
+   "action": {
+    "grant": {
+     "units": [
+      "UNIT_SCOUNDREL"
+     ]
+    }
+   }
+  }
+ ],
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CONSPIRATORS_HIDEOUT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CONSPIRATORS_HIDEOUT_UNSANCTIONED",
+  "civilopedia": "TXT_KEY_BUILDING_CONSPIRATORS_HIDEOUT_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

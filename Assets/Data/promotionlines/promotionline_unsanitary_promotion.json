@@ -1,0 +1,16 @@
+{
+ "type": "PROMOTIONLINE_UNSANITARY_PROMOTION",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PromotionUnsanitary.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_UNSANITARY_PROMOTION",
+  "unitCombats": [
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_RUFFIAN",
+   "UNITCOMBAT_ANIMAL"
+  ]
+ }
+}

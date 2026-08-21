@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_SIMULATED_POPULATION",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SIMULATED_WORLD",
+    "TECH_WHOLE_BRAIN_EMULATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 5655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SIMULATED_POPULATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SIMULATED_POPULATION",
+  "civilopedia": "TXT_KEY_BUILDING_SIMULATED_POPULATION_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

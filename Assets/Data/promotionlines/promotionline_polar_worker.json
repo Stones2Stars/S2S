@@ -1,0 +1,15 @@
+{
+ "type": "PROMOTIONLINE_POLAR_WORKER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/workerpolar1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_POLAR_WORKER",
+  "unitCombats": [
+   "UNITCOMBAT_WORKER",
+   "UNITCOMBAT_COMBAT_WORKER"
+  ]
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_AERIAL",
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionAerial.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_AERIAL",
+  "unitCombats": [
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_BALLOON",
+   "UNITCOMBAT_HELICOPTER",
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_ROCKET_LAUNCHER"
+  ]
+ }
+}

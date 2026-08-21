@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTIONLINE_TRENCH",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/trench1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_TRENCH",
+  "unitCombats": [
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_CLONES",
+   "UNITCOMBAT_HITECH"
+  ],
+  "notOnDomains": [
+   "DOMAIN_SEA",
+   "DOMAIN_AIR"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ]
+ }
+}

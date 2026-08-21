@@ -1,0 +1,82 @@
+{
+ "type": "BONUS_MANGO",
+ "enables": {
+  "buildings": [
+   "BUILDING_CATCHER_TOUCAN",
+   "BUILDING_CULTURE_PAPUAN",
+   "BUILDING_NATURE_ALTAR_MANGO",
+   "BUILDING_NATURE_CIRCLE_MANGO",
+   "BUILDING_ORCHARD_JUJUBE",
+   "BUILDING_ORCHARD_KUMQUAT",
+   "BUILDING_ORCHARD_LONGAN",
+   "BUILDING_ORCHARD_LOQUAT",
+   "BUILDING_ORCHARD_LYCHEE",
+   "BUILDING_ORCHARD_MANGO",
+   "BUILDING_ORCHARD_SAPOTE",
+   "BUILDING_PLANTATION_ALLSPICES",
+   "BUILDING_TARANTULA_GATHERER"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MANGO"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "maxLatitude": 30,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "minLandPercent": 50,
+  "uniqueRange": 5,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_LUSH"
+  ],
+  "validFeatures": [
+   "FEATURE_JUNGLE"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_MARSH",
+   "TERRAIN_MUDDY"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MANGO",
+  "civilopedia": "TXT_KEY_BONUS_MANGO_PEDIA",
+  "bonusClassType": "BONUSCLASS_CROP",
+  "source": "natural"
+ }
+}

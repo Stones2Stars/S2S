@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_SOMALI",
+ "enables": {
+  "units": [
+   "UNIT_SOMALI_PIRATE"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SOMALI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SOMALI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

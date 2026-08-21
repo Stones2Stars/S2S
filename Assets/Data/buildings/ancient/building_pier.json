@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_PIER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LAUNCH_ARCOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_OCEAN_ADMINISTRATION"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "BUILDING_HARBORMASTERS_OFFICE",
+    "TECH_SEAFARING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_OCEAN_ADMINISTRATION"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "IS_WATER"
+     }
+    ]
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "IS_WATER"
+     }
+    ]
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 192,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PIER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HARBOR"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PIER",
+  "civilopedia": "TXT_KEY_BUILDING_PIER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

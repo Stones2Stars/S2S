@@ -1,0 +1,37 @@
+{
+ "type": "BUILDING_CIVIC_CASTE",
+ "requires": {
+  "operate": {
+   "all": [
+    "CIVIC_CASTE_SYSTEM",
+    "BUILDING_PALACE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CIVIC_CASTE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CIVIC_CASTE",
+  "civilopedia": "TXT_KEY_BUILDING_CIVIC_CASTE_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,74 @@
+{
+ "type": "TECH_SLAVERY",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND",
+   "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT",
+   "BUILDING_SLAVE_COMPOUND_FOOD",
+   "BUILDING_SLAVE_COMPOUND_INDUSTRY",
+   "BUILDING_WORLDVIEW_SLAVERY",
+   "BUILDING_WORLDVIEW_SLAVERY_ACTIVE"
+  ],
+  "promotions": [
+   "PROMOTION_SLAVE_MASTER1",
+   "PROMOTION_TAKE_PRISONERS1"
+  ],
+  "techs": [
+   "TECH_MEGALITH_CONSTRUCTION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WARFARE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 52
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/slave.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,16"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SLAVERY",
+  "soundMP": "AS2D_TECH_SLAVERY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SLAVERY",
+  "civilopedia": "TXT_KEY_TECH_SLAVERY_PEDIA",
+  "quote": "TXT_KEY_TECH_SLAVERY_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 17,
+  "gridY": 7
+ }
+}

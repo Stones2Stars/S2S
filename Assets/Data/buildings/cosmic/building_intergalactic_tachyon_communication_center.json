@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_INTERGALACTIC_TACHYON_COMMUNICATION_CENTER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_TACHYON_DETECTOR",
+    "TECH_TACHYON_COMMUNICATIONS",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    50,
+    {
+     "value": 13,
+     "enabled": "TECH_METAVERSE"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 4742,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_TACHYON_COMMUNICATION_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_TACHYON_COMMUNICATION_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_TACHYON_COMMUNICATION_CENTER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

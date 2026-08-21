@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_PAPUAN",
+ "enables": {
+  "units": [
+   "UNIT_PAPUAN_CANNIBAL"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PAPUAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PAPUAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

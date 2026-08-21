@@ -1,0 +1,35 @@
+{
+ "type": "ROUTE_PLANETARY_MAGLEV",
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 50
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/buildplanetarymaglev.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_ROUTE_PLANETARY_MAGLEV",
+  "value": 2,
+  "advancedStart": {
+   "cost": 30
+  }
+ }
+}

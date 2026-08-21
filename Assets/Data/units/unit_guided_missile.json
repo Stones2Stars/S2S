@@ -1,0 +1,127 @@
+{
+ "type": "UNIT_GUIDED_MISSILE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_GUIDED_WEAPONS",
+    {
+     "type": "BONUS_ROCKET_FUEL",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_PRECISION_ATTACK_MISSILE"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "bombard": {
+  "unit": {
+   "airBombRate": {
+    "flat": 16
+   }
+  }
+ },
+ "range": {
+  "unit": {
+   "flat": 4
+  }
+ },
+ "air": {
+  "unit": {
+   "evasion": {
+    "percent": 100
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_GUIDED_MISSILE"
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "ignoreBuildingDefense",
+  "mechanized",
+  "suicide",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "airUnit",
+  "missile"
+ ],
+ "combatClass": "UNITCOMBAT_MISSILE",
+ "combatClasses": [
+  "UNITCOMBAT_BALLISTIC",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_WARHEAD",
+  "UNITCOMBAT_WEAPON_DETONATE_GUIDED",
+  "UNITCOMBAT_MOTILITY_UNMANNED",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_LARGE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 2006,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GUIDED_MISSILE",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 0.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_GUIDED_MISSILE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_GUIDED_MISSILE",
+  "civilopedia": "TXT_KEY_UNIT_GUIDED_MISSILE_PEDIA",
+  "worth": 3,
+  "militaryWorth": 162,
+  "xpValueDefense": 6,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_MISSILE_AIR",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_MISSILE_AIR"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "airCombat": 50,
+   "airCombatLimit": 100
+  }
+ }
+}

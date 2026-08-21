@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_INITIATIVE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/initiative1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_INITIATIVE",
+  "unitCombats": [
+   "UNITCOMBAT_COMMANDER"
+  ]
+ }
+}

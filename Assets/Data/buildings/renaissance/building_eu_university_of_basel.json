@@ -1,0 +1,167 @@
+{
+ "type": "BUILDING_EU_UNIVERSITY_OF_BASEL",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_UNIVERSITY",
+    "BUILDING_ARTIST_COLONY",
+    {
+     "type": "BUILDING_UNIVERSITY",
+     "scope": "empire",
+     "min": 4,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_ARTIST_COLONY",
+     "scope": "empire",
+     "min": 4,
+     "scaling": "amountBuildings"
+    },
+    "TECH_FREE_ARTISTRY",
+    "TECH_EDUCATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    14,
+    {
+     "value": 14,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ],
+   "percent": 5
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ENTERTAINER": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_ARTIST": 3
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_INSPIRE1",
+       "enabled": "IS_ENTERTAINER"
+      }
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 1700,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 50
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_UNIVERSITY_OF_BASEL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EU_UNIVERSITY_OF_BASEL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EU_UNIVERSITY_OF_BASEL",
+  "civilopedia": "TXT_KEY_BUILDING_EU_UNIVERSITY_OF_BASEL_PEDIA",
+  "pediaCategory": "groupWonder",
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "specialBuildingType": "SPECIALBUILDING_GROUP_ELITE_UNIVERSITIES",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

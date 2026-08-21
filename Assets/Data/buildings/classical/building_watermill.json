@@ -1,0 +1,119 @@
+{
+ "type": "BUILDING_WATERMILL",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FLOUR",
+   "BUILDING_WANG_ZHENS_WORKSHOP"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_AUGMENTED_CONSUMABLES"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_MILL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "TECH_WATERWHEELS",
+    {
+     "any": [
+      "BUILDING_GRANARY",
+      "BUILDING_MODERN_GRANARY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_GRAINS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_MODERN_MILL",
+    "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_WHEAT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_BARLEY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_CORN",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_RICE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ],
+   "improvements": {
+    "IMPROVEMENT_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 280,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WATERMILL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WATERMILL",
+  "civilopedia": "TXT_KEY_BUILDING_WATERMILL_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

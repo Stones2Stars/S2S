@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_LATVIAN",
+ "enables": {
+  "units": [
+   "UNIT_COURLAND_JAEGER",
+   "UNIT_JACOB_KETTLER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_LATVIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_LATVIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

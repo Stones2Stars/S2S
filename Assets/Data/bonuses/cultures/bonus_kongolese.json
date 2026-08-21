@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_KONGOLESE",
+ "enables": {
+  "units": [
+   "UNIT_NIMI",
+   "UNIT_PEDRO",
+   "UNIT_POMBOS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_KONGOLESE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_KONGOLESE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

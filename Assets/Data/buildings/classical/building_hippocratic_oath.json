@@ -1,0 +1,107 @@
+{
+ "type": "BUILDING_HIPPOCRATIC_OATH",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ANCIENT_MEDICINE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -100
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_HEALERS_HUT",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 1458,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_HIPOCRATIC_OATH"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HIPPOCRATIC_OATH"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_PYRAMID"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HIPPOCRATIC_OATH",
+  "civilopedia": "TXT_KEY_BUILDING_HIPPOCRATIC_OATH_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_DOCTOR",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

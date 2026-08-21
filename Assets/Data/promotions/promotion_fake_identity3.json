@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_FAKE_IDENTITY3",
+ "underworld": {
+  "unit": {
+   "insidiousness": {
+    "flat": 6
+   }
+  }
+ },
+ "skills": {
+  "blendIntoCity": true,
+  "disguised": true
+ },
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FAKE_IDENTITY": 3
+ },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/FakeIdentity3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FAKE_IDENTITY3"
+ }
+}

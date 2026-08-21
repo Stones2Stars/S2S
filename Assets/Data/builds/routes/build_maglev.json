@@ -1,0 +1,50 @@
+{
+ "type": "BUILD_MAGLEV",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MAGNETIC_LEVITATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "route": "ROUTE_MAGLEV",
+  "features": [
+   {
+    "feature": "FEATURE_VOLCANO_ACTIVE",
+    "tech": "TECH_NANO_ARCHITECTURE"
+   }
+  ],
+  "terraform": [
+   {
+    "terrain": "TERRAIN_DUNES",
+    "tech": "TECH_INDUSTRIAL_ECOLOGY"
+   },
+   {
+    "terrain": "TERRAIN_ICE",
+    "tech": "TECH_3D_PRINTING"
+   }
+  ]
+ },
+ "cost": {
+  "gold": 120,
+  "time": 600
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/BuildMaglev.dds"
+  },
+  "hotkey": "KB_R"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_SHOVEL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_MAGLEV"
+ }
+}

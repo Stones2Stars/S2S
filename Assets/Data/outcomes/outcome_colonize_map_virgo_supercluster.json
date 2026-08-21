@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_COLONIZE_MAP_VIRGO_SUPERCLUSTER",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_VIRGO_SUPERCLUSTER",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_VIRGO_SUPERCLUSTER"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_INTERGROUP_TRAVEL"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

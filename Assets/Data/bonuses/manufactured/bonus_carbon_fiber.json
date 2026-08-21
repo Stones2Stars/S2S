@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_CARBON_FIBER",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CARBON_FIBER"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CARBON_FIBER",
+  "civilopedia": "TXT_KEY_BONUS_CARBON_FIBER_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

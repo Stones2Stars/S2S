@@ -1,0 +1,132 @@
+{
+ "type": "UNIT_RA_FIST",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_TEMPLE_OF_CHONS",
+    "RELIGION_KEMETISM",
+    {
+     "STATE_RELIGION": "RELIGION_KEMETISM"
+    },
+    "TECH_CHIVALRY"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MUSKETMAN"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 30
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 13
+  }
+ },
+ "skills": [
+  "pillage",
+  "rivalTerritory",
+  "unlimitedException"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_MELEE",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_HAND_TO_HAND_ONLY",
+  "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+  "UNITCOMBAT_ARMOR_MEDIUM",
+  "UNITCOMBAT_SHIELD_TOWER",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_WARMTH1",
+   "PROMOTION_MARCH",
+   "PROMOTION_BLITZ",
+   "PROMOTION_COMBAT1"
+  ]
+ },
+ "cost": {
+  "production": 330
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RA_FIST",
+   "meshGroups": {
+    "groupSize": 4,
+    "meleeWaveSize": 3,
+    "rangedWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 5,
+      "define": {
+       "early": "ART_DEF_UNIT_RA_FIST"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_RA_FIST",
+  "civilopedia": "TXT_KEY_UNIT_RA_FIST_PEDIA",
+  "worth": 3,
+  "militaryWorth": 6,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "religion": "RELIGION_KEMETISM",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_EXPLORE",
+   "UNITAI_PILLAGE",
+   "UNITAI_ATTACK_CITY",
+   "UNITAI_RESERVE",
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_ESCORT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": 200
+  }
+ }
+}

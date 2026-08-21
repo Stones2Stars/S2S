@@ -1,0 +1,11 @@
+{
+ "type": "PROMOTIONLINE_PHILOSOPHICAL",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitPhilosophical.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_PHILOSOPHICAL"
+ }
+}

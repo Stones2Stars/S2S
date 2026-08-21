@@ -1,0 +1,66 @@
+{
+ "type": "TECH_SHINTO",
+ "enables": {
+  "religions": [
+   "RELIGION_SHINTO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DIVINATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LEISURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 242
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/Shintoism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SHINTO",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SHINTO",
+  "civilopedia": "TXT_KEY_TECH_SHINTO_PEDIA",
+  "quote": "TXT_KEY_TECH_SHINTO_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "gridX": 28,
+  "gridY": 3
+ }
+}

@@ -1,0 +1,153 @@
+{
+ "type": "BUILDING_MAUSOLEUM",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAPUCHIN_CRYPT"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRANSHUMANISM"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FUNERARY_SERVICES"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_GRAVEYARD",
+    "TECH_SCRIPTURES",
+    {
+     "any": [
+      "BUILDING_PALACE",
+      "BUILDING_HOUSING_VILLAS",
+      "BUILDING_HOUSING_PALACES",
+      "BUILDING_HOUSING_MANORS",
+      "BUILDING_HOUSING_ESTATES",
+      "BUILDING_HOUSING_MANSIONS",
+      "BUILDING_HOUSING_CONDOMINIUMS",
+      "BUILDING_HOUSING_CHATEAU",
+      "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
+      "BUILDING_HOUSING_COLONY_ARCOLOGY",
+      "BUILDING_LAUNCH_ARCOLOGY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_MARBLE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CEMENT",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_FUNERARY_SERVICES",
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 192,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MAUSOLEUM"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MAUSOLEUM",
+  "civilopedia": "TXT_KEY_BUILDING_MAUSOLEUM_PEDIA",
+  "conquestProbability": 95,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

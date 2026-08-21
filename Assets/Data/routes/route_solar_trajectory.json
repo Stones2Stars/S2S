@@ -1,0 +1,35 @@
+{
+ "type": "ROUTE_SOLAR_TRAJECTORY",
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 50
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/solar_trajectory.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_ROUTE_SOLAR_TRAJECTORY",
+  "value": 2,
+  "advancedStart": {
+   "cost": 30
+  }
+ }
+}

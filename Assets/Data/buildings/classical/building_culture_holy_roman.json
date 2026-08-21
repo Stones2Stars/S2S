@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_CULTURE_HOLY_ROMAN",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_EUROPEAN",
+    "BUILDING_C_L_EUROPEAN",
+    "TECH_SIEGE_WARFARE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_INCENSE",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HOLY_ROMAN"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_SISTINE_CHAPEL": {
+     "percent": 10
+    },
+    "BUILDING_HOLY_SEE_LIBRARY": {
+     "percent": 10
+    },
+    "BUILDING_APOSTOLIC_PALACE": {
+     "percent": 10
+    },
+    "BUILDING_AACHEN_CATHEDRAL": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 1512,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_HOLY_ROMAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_HOLY_ROMAN",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_HOLY_ROMAN_PEDIA",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

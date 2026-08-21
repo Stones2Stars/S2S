@@ -1,0 +1,152 @@
+{
+ "type": "BUILDING_TEMPLE_OF_SETH",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MILITARY_TRAINING",
+    {
+     "STATE_RELIGION": "RELIGION_KEMETISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_TEMPLE_OF_OSIRIS",
+    "BUILDING_TEMPLE_OF_ISIS"
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "RELIGION_KEMETISM",
+    {
+     "type": "BONUS_SCULPTURES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  },
+  "empire": {
+   "percent": 2
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": 25,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  },
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": "HAS_STATE_RELIGION"
+    }
+   ]
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_KEMETISM": {
+    "flat": 3
+   }
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 2
+  }
+ },
+ "cost": {
+  "production": 432,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_EGYPTIAN_MYTH_SET"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EGYPTIAN_MYTH_SET",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_UNIT_BUILD_RA_MISSIONARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TEMPLE_OF_SETH",
+  "civilopedia": "TXT_KEY_BUILDING_TEMPLE_OF_SETH_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 6,
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

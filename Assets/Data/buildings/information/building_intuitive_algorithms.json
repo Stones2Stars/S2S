@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_INTUITIVE_ALGORITHMS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BACTERIUM_BIOFORGE",
+   "BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER",
+   "BUILDING_FACTORY_NANOACTUATORS",
+   "BUILDING_NATURAL_LANGUAGE_ALGORITHMS",
+   "BUILDING_SOCIABLE_ROBOTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
+    "TECH_AFFECTIVE_ALGORITHMS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 9,
+     "enabled": "TECH_INTERACTIVE_GLASS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_PERSONAL_ROBOTS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_AUTOMATED_ROBOTICS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_AUTOMATED_URBANIZATION"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_ANDROIDS"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2625,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTUITIVE_ALGORITHMS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTUITIVE_ALGORITHMS",
+  "civilopedia": "TXT_KEY_BUILDING_INTUITIVE_ALGORITHMS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

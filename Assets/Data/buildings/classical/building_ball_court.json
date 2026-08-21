@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_BALL_COURT",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MODERN_SPORTS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MINOR_LEAGUE_STADIUM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COMBAT_SPORTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STONE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "RELIGION_NAGHUALISM",
+    {
+     "any": [
+      {
+       "type": "BONUS_MAYAN",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_AZTEC",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_OLMEC",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_ZAPOTEC",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_MINOR_LEAGUE_STADIUM",
+    "BUILDING_MAJOR_LEAGUE_STADIUM"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MELEE": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 243,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BALL_COURT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COLOSSEUM"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BALL_COURT",
+  "civilopedia": "TXT_KEY_BUILDING_BALL_COURT_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 5,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

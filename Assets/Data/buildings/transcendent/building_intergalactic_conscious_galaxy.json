@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_INTERGALACTIC_CONSCIOUS_GALAXY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_GALAXY_SCAN",
+    "BUILDING_INTERGALACTIC_SUPERCOMPUTER",
+    "BUILDING_INTERGALACTIC_WORMHOLE_COMMUNICATION_NETWORK",
+    "TECH_HYPERINTELLIGENCE",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 13,
+     "enabled": "TECH_ARCHETYPAL_VECTOR_SPACES"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 6327,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_CONSCIOUS_GALAXY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_CONSCIOUS_GALAXY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_CONSCIOUS_GALAXY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_RESOURCES_SMART_MEDICINE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_POSTHUMANISM"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MEDICAL_MEGACOMPLEX"
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "any": [
+      "BUILDING_NUTRACEUTICAL_LAB",
+      "BUILDING_RESEARCH_HOSPITAL"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "dormant": [
+    "BUILDING_MEDICAL_MEGACOMPLEX"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_SMART_MEDICINE"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESOURCES_SMART_MEDICINE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_SMART_MEDICINE",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

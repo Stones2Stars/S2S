@@ -1,0 +1,109 @@
+{
+ "type": "BUILDING_MATHEMATICS_ACADEMY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPUTER_NETWORKS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MATHEMATICS_DEPARTMENT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MATHEMATICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_TABLETS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SCROLLS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PAPER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BOOKS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_MATHEMATICS_DEPARTMENT"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 3,
+     "enabled": "TECH_GEOMETRY"
+    },
+    {
+     "value": 4,
+     "enabled": "TECH_ALGEBRA"
+    },
+    {
+     "value": 5,
+     "enabled": "TECH_CALCULUS"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 216,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MATHEMATICS_ACADEMY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MATHEMATICS_ACADEMY",
+  "civilopedia": "TXT_KEY_BUILDING_MATHEMATICS_ACADEMY_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

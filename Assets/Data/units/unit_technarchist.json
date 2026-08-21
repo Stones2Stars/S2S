@@ -1,0 +1,218 @@
+{
+ "type": "UNIT_TECHNARCHIST",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ORGANIC_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_COMPREHENSIVE_CYBERNETICS"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "culture": {
+  "unit": {
+   "garrison": {
+    "flat": -25
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "combat": {
+  "unit": {
+   "lunge": {
+    "percent": 30
+   },
+   "unnerve": {
+    "percent": 30
+   },
+   "stealthStrikes": {
+    "flat": 4
+   },
+   "stealth": {
+    "percent": 90
+   },
+   "unitCombat": {
+    "UNITCOMBAT_SPECIES_AI": {
+     "percent": 100
+    },
+    "UNITCOMBAT_HITECH": {
+     "percent": 100
+    },
+    "UNITCOMBAT_ASSAULT_MECH": {
+     "percent": 100
+    }
+   },
+   "targets": {
+    "UNITCOMBAT_SPECIES_AI": true,
+    "UNITCOMBAT_HITECH": true,
+    "UNITCOMBAT_ASSAULT_MECH": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 150
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 75
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 3
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": -40
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "insidiousness": {
+    "flat": 200
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 100
+  },
+  "plot": {
+   "flat": 50
+  }
+ },
+ "skills": [
+  "alwaysHostile",
+  "assassin",
+  "hiddenNationality",
+  "noCapture",
+  "noDefensiveBonus",
+  "blendIntoCity",
+  "counterSpy",
+  "destroy",
+  "ignoreZoneOfControl",
+  "sabotage",
+  "stealPlans",
+  "upgradeAnywhere",
+  "disguised",
+  "political",
+  "invisible"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_CRIMINAL",
+ "combatClasses": [
+  "UNITCOMBAT_HITECH",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_SPRAY",
+  "UNITCOMBAT_WEAPON_DIST_LASER",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_TECH"
+ ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 900
+  },
+  "detection": [
+   {
+    "value": 100,
+    "unit": "HAS_DISGUISED"
+   },
+   {
+    "value": 700,
+    "unit": "HAS_POLITICAL"
+   }
+  ]
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO",
+   "PROMOTION_INDUSTRYESPIONAGE"
+  ],
+  "greatPersonAction": {
+   "trade": {
+    "base": 300,
+    "multiplier": 1
+   }
+  }
+ },
+ "cost": {
+  "production": 5000,
+  "upkeep": 16
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TECHNARCHIST",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_TECHNARCHIST"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_TECHNARCHIST",
+  "civilopedia": "TXT_KEY_UNIT_TECHNARCHIST_PEDIA",
+  "worth": 17,
+  "militaryWorth": 70,
+  "xpValueAttack": 8,
+  "xpValueDefense": 4,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_INFILTRATOR",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "espionagePoints": 10000,
+  "unitAIs": [
+   "UNITAI_SPY",
+   "UNITAI_PILLAGE",
+   "UNITAI_INFILTRATOR"
+  ],
+  "notUnitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

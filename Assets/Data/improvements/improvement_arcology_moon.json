@@ -1,0 +1,47 @@
+{
+ "type": "IMPROVEMENT_ARCOLOGY_MOON",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANET_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_INNER_SOLAR_SYSTEM",
+      "TERRAIN_OUTER_SOLAR_SYSTEM",
+      "TERRAIN_TRANSNEPTUNIAN_SPACE"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 11
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 10
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_ARCOLOGY_MOON"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_ARCOLOGY_MOON",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_ARCOLOGY_MOON_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200,
+  "pillageTo": "IMPROVEMENT_SATELLITE_STATION"
+ }
+}

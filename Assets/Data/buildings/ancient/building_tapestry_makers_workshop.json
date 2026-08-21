@@ -1,0 +1,175 @@
+{
+ "type": "BUILDING_TAPESTRY_MAKERS_WORKSHOP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOROBOTICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TEXTILE_LOOM",
+    "TECH_TRADE",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOL",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_HEMP_FIBERS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_COTTON_FIBERS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SILK_FIBERS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_FLAX_FIBERS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_TAPESTRIES"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 2,
+     "enabled": "TECH_ORNAMENTATION"
+    },
+    {
+     "value": 2,
+     "enabled": "TECH_MONARCHY"
+    },
+    {
+     "value": 3,
+     "enabled": "TECH_ARISTOCRACY"
+    },
+    {
+     "value": 4,
+     "enabled": "TECH_HERALDRY"
+    },
+    {
+     "value": 4,
+     "enabled": "TECH_CHIVALRY"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HEMP_FIBERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WOOL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FLAX_FIBERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SILK_FIBERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COTTON_FIBERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SILVER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GOLD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 153,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TAPESTRY_MAKERS_WORKSHOP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TAPESTRY_MAKERS_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_TAPESTRY_MAKERS_WORKSHOP_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

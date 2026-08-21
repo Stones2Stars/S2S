@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_HYPERFACTORY",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERPLANET",
+   "BUILDING_HYPERSPACE_11_DIMENSIONAL_FACTORY",
+   "BUILDING_HYPERSPACE_5D_ARTIFICIAL_GRAVITY",
+   "BUILDING_HYPERSPACE_CONSTRUCTION_CENTER",
+   "BUILDING_HYPERSPACE_NONCAUSAL_ENGINEERING_FIRM",
+   "BUILDING_HYPERSPACE_TESSERACT_ASSEMBLER"
+  ],
+  "units": [
+   "UNIT_ENERGY_ENTITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    200,
+    {
+     "value": 20,
+     "enabled": "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "cost": {
+  "production": 1485,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYPERFACTORY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERFACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERFACTORY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

@@ -1,0 +1,39 @@
+{
+ "type": "BONUS_REPLICATORS",
+ "enables": {
+  "units": [
+   "UNIT_SERVICE_DROID"
+  ]
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10,
+   "objective": 10
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_REPLICATORS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_REPLICATORS",
+  "civilopedia": "TXT_KEY_BONUS_REPLICATORS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

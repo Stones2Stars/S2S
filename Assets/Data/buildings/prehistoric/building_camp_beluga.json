@@ -1,0 +1,102 @@
+{
+ "type": "BUILDING_CAMP_BELUGA",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_PELTS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PLANETARY_ECONOMICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BREEDING_PROGRAM_BELUGA"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "latitude": {
+      "min": 40
+     }
+    },
+    "TECH_HARPOON_MAKING",
+    {
+     "any": [
+      "BUILDING_HUNTERS_CAMP",
+      "BUILDING_ANCIENT_CUSTOMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_SEA_LION_AND_SEAL",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_WHALE",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_BREEDING_PROGRAM_BELUGA",
+    "BUILDING_ANIMAL_PRESERVE"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": "TECH_ECOLOGY"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 104,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CAMP_BELUGA",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_BELUGA",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_BELUGA_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

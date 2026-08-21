@@ -7,7 +7,14 @@ import WBReligionScreen
 import WBCorporationScreen
 import WBInfoScreen
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
+TEXT = CyGameTextMgr()
 iChange = 1
 
 class WBPlayerScreen:
@@ -67,7 +74,7 @@ class WBPlayerScreen:
 		iY += 30
 		screen.addDropDownBoxGFC("CurrentEra", 20, iY, screen.getXResolution()/5, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		for i in xrange(GC.getNumEraInfos()):
-			screen.addPullDownString("CurrentEra", GC.getEraInfo(i).getDescription(), i, i, i == pPlayer.getCurrentEra())
+			screen.addPullDownString("CurrentEra", INFO.getDescription("C2C_ERA_", i), i, i, i == pPlayer.getCurrentEra())
 
 		global lReligions
 
@@ -87,8 +94,8 @@ class WBPlayerScreen:
 		screen = CyGInterfaceScreen( "WBPlayerScreen", CvScreenEnums.WB_PLAYER)
 		iLeader = pPlayer.getLeaderType()
 		iCiv = pPlayer.getCivilizationType()
-		screen.addDDSGFC("LeaderPic", GC.getLeaderHeadInfo(iLeader).getButton(), screen.getXResolution() * 3/8 - self.iIconSize/2, 80, self.iIconSize, self.iIconSize, WidgetTypes.WIDGET_PYTHON, 7876, iLeader)
-		screen.addDDSGFC("CivPic", GC.getCivilizationInfo(iCiv).getButton(), screen.getXResolution() * 5/8 - self.iIconSize/2, 80, self.iIconSize, self.iIconSize, WidgetTypes.WIDGET_PYTHON, 7872, iCiv)
+		screen.addDDSGFC("LeaderPic", INFO.getButton("LEADER_", iLeader), screen.getXResolution() * 3/8 - self.iIconSize/2, 80, self.iIconSize, self.iIconSize, WidgetTypes.WIDGET_PYTHON, 7876, iLeader)
+		screen.addDDSGFC("CivPic", INFO.getButton("CIVILIZATION_", iCiv), screen.getXResolution() * 5/8 - self.iIconSize/2, 80, self.iIconSize, self.iIconSize, WidgetTypes.WIDGET_PYTHON, 7872, iCiv)
 		sText = pPlayer.getName()
 		lTraits = []
 		for iTrait in xrange(GC.getNumTraitInfos()):
@@ -97,7 +104,7 @@ class WBPlayerScreen:
 		if len(lTraits):
 			sText += " ["
 			for iTrait in xrange(len(lTraits)):
-				sText += CyTranslator().getText(GC.getTraitInfo(lTraits[iTrait]).getShortDescription(),())
+				sText += INFO.getShortDescription("TRAIT_", lTraits[iTrait], 0)
 				if iTrait != len(lTraits) -1:
 					sText += "/"
 			sText += "]"
@@ -109,7 +116,7 @@ class WBPlayerScreen:
 		iY = 110
 		screen.setButtonGFC("PlayerGoldPlus", "", "", 20, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("PlayerGoldMinus", "", "", 45, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = u"%s %s%c" %(CyTranslator().getText("TXT_KEY_WB_GOLD", ()), self.WB.addComma(pPlayer.getGold()), GC.getCommerceInfo(CommerceTypes.COMMERCE_GOLD).getChar())
+		sText = u"%s %s%c" %(CyTranslator().getText("TXT_KEY_WB_GOLD", ()), self.WB.addComma(pPlayer.getGold()), TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_GOLD))
 		screen.setLabel("PlayerGoldText", "Background", "<font=3>" + sText + "</font>", 1<<0, 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
@@ -137,12 +144,6 @@ class WBPlayerScreen:
 		screen.setLabel("AnarchyText", "Background", "<font=3>" + sText + "</font>", 1<<0, 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
-		screen.setButtonGFC("CoastalTradePlus", "", "", 20, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
-		screen.setButtonGFC("CoastalTradeMinus", "", "", 45, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = CyTranslator().getText("TXT_KEY_WB_COASTAL_TRADE", (pPlayer.getCoastalTradeRoutes(),))
-		screen.setLabel("CoastalTradeText", "Background", "<font=3>" + sText + "</font>", 1<<0, 75, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-
-		iY += 30
 		for i in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
 			iX = 20
 			screen.hide("CommerceFlexiblePlus" + str(i))
@@ -152,8 +153,8 @@ class WBPlayerScreen:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 				screen.setButtonGFC("CommerceFlexiblePlus" + str(i), "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, i, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 				screen.setButtonGFC("CommerceFlexibleMinus" + str(i), "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, i, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-			sText = sColor + u"<font=3>%c: %d%% %s</color></font>" %(GC.getCommerceInfo(i).getChar(), pPlayer.getCommercePercent(i), CyTranslator().getText("TXT_KEY_MISC_POS_GOLD_PER_TURN", (pPlayer.getCommerceRate(CommerceTypes(i)),)))
-			screen.setText("AdjustCommerceFlexible" + GC.getCommerceInfo(i).getType(), "Background", "<font=3>" + sText + "</font>", 1<<0, iX + 50, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_PYTHON, 7881, i)
+			sText = sColor + u"<font=3>%c: %d%% %s</color></font>" %(TEXT.getSymbolChar("COMMERCE_", i), pPlayer.getCommercePercent(i), CyTranslator().getText("TXT_KEY_MISC_POS_GOLD_PER_TURN", (pPlayer.getCommerceRate(CommerceTypes(i)),)))
+			screen.setText("AdjustCommerceFlexible" + INFO.getType("COMMERCE_", i), "Background", "<font=3>" + sText + "</font>", 1<<0, iX + 50, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_PYTHON, 7881, i)
 			iY += 30
 
 	def placeScript(self):
@@ -188,22 +189,20 @@ class WBPlayerScreen:
 		sCurrentTech = CyTranslator().getText("TXT_KEY_CULTURELEVEL_NONE", ())
 		screen.setTableText("WBPlayerResearch", 0, 0, "<font=3>" + sColor + sCurrentTech + "</font></color>", CyArtFileMgr().getInterfaceArtInfo("INTERFACE_BUTTONS_CANCEL").getPath(), WidgetTypes.WIDGET_PYTHON, 7871, -1, 1<<0 )
 
-		for i in xrange(pTeam.getNumAdjacentResearch()):
-			iTechX = pTeam.getAdjacentResearch(i)
-			if pPlayer.canResearch(iTechX, True, True):
-				iColumn = iCount % nColumns
-				iRow = iCount /nColumns
-				if iRow > iMaxRows:
-					screen.appendTableRow("WBPlayerResearch")
-					iMaxRows = iRow
-				iCount += 1
-				ItemInfo = GC.getTechInfo(iTechX)
-				sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-				sText = u"%s (%d/%d)%c" %(ItemInfo.getDescription(), pTeam.getResearchProgress(iTechX), pTeam.getResearchCost(iTechX), GC.getCommerceInfo(CommerceTypes.COMMERCE_RESEARCH).getChar())
-				if iCurrentTech == iTechX:
-					sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-					sCurrentTech = sText
-				screen.setTableText("WBPlayerResearch", iColumn, iRow, "<font=3>" + sColor + sText + "</color></font>", ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 7871, iTechX, 1<<0)
+		for iTechX in ENABLER.getAvailableTechs(pPlayer.getID()):
+			iColumn = iCount % nColumns
+			iRow = iCount /nColumns
+			if iRow > iMaxRows:
+				screen.appendTableRow("WBPlayerResearch")
+				iMaxRows = iRow
+			iCount += 1
+			ItemInfo = GC.getTechInfo(iTechX)
+			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
+			sText = u"%s (%d/%d)%c" %(ItemInfo.getDescription(), pTeam.getResearchProgress(iTechX), pTeam.getResearchCost(iTechX), TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH))
+			if iCurrentTech == iTechX:
+				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
+				sCurrentTech = sText
+			screen.setTableText("WBPlayerResearch", iColumn, iRow, "<font=3>" + sColor + sText + "</color></font>", ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 7871, iTechX, 1<<0)
 
 		if iCurrentTech > -1:
 			screen.setButtonGFC("CurrentResearchPlus", "", "", iX + iWidth - 50, iY - 30, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
@@ -232,10 +231,9 @@ class WBPlayerScreen:
 			elif pPlayer.getHasReligionCount(item[1]) > 0:
 				sColor = CyTranslator().getText("[COLOR_YELLOW]", ())
 			iRow = screen.appendTableRow("WBPlayerReligions")
-			ItemInfo = GC.getReligionInfo(item[1])
-			sChar = ItemInfo.getChar()
+			sChar = TEXT.getSymbolChar("RELIGION_", item[1])
 			if pPlayer.hasHolyCity(item[1]):
-				sChar = ItemInfo.getHolyCityChar()
+				sChar = TEXT.getHolyCitySymbolChar(item[1])
 			sText = u"<font=4>%c <font=3>%s</font>" %(sChar, item[0])
 			screen.setTableText("WBPlayerReligions", 0, iRow, sColor + sText + "</color>", "", WidgetTypes.WIDGET_HELP_RELIGION, item[1], -1, 1<<0)
 
@@ -268,17 +266,23 @@ class WBPlayerScreen:
 		iMaxRow = -1
 		iCurrentMaxRow = 0
 
+		#	ONE crossing each, hoisted OUT of the option loop: the whole civic registry, and the civic->option
+		#	column. The inner sweep below used to ask every civic its own option once per option -- the own-data
+		#	inversion ([DEC-one-reverse-view]), paid options x civics times.
+		kCivics = INFO.getIndex("CIVIC_")
+		kCivicOptions = INFO.civicOptions()
+
 		for iCivicOption in xrange(GC.getNumCivicOptionInfos()):
 			iColumn = iCivicOption % iColumns
 			iRow = iCurrentMaxRow
 			if iRow > iMaxRow:
 				screen.appendTableRow("WBPlayerCivics")
 				iMaxRow = iRow
-			sText = "<font=3>" + CyTranslator().getText("[COLOR_HIGHLIGHT_TEXT]", ()) + GC.getCivicOptionInfo(iCivicOption).getDescription() + "</font></color>"
+			sText = "<font=3>" + CyTranslator().getText("[COLOR_HIGHLIGHT_TEXT]", ()) + INFO.getDescription("CIVICOPTION_", iCivicOption) + "</font></color>"
 			screen.setTableText("WBPlayerCivics", iColumn, iRow, sText, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<2)
-			for item in xrange(GC.getNumCivicInfos()):
-				ItemInfo = GC.getCivicInfo(item)
-				if ItemInfo.getCivicOptionType() != iCivicOption: continue
+			for kCivic in kCivics:
+				item = kCivic["id"]
+				if kCivicOptions.getValue(item) != iCivicOption: continue
 				sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 				if pPlayer.isCivic(item):
 					sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
@@ -288,7 +292,7 @@ class WBPlayerScreen:
 				if iRow > iMaxRow:
 					screen.appendTableRow("WBPlayerCivics")
 					iMaxRow = iRow
-				screen.setTableText("WBPlayerCivics", iColumn, iRow,"<font=3>" + sColor + ItemInfo.getDescription() + "</font></color>", ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 8205, item, 1<<0)
+				screen.setTableText("WBPlayerCivics", iColumn, iRow,"<font=3>" + sColor + kCivic["description"] + "</font></color>", kCivic["button"], WidgetTypes.WIDGET_PYTHON, 8205, item, 1<<0)
 			if iCivicOption % iColumns == iColumns -1 and iCivicOption < GC.getNumCivicOptionInfos() -1:
 				screen.appendTableRow("WBPlayerCivics")
 				iCurrentMaxRow = iMaxRow + 2
@@ -359,13 +363,6 @@ class WBPlayerScreen:
 				pPlayer.changeAnarchyTurns(- min(iChange, pPlayer.getAnarchyTurns()))
 			self.placeStats()
 
-		elif inputClass.getFunctionName().find("CoastalTrade") > -1:
-			if inputClass.getData1() == 1030:
-				pPlayer.changeCoastalTradeRoutes(iChange)
-			elif inputClass.getData1() == 1031:
-				pPlayer.changeCoastalTradeRoutes(- min(iChange, pPlayer.getCoastalTradeRoutes()))
-			self.placeStats()
-
 		elif inputClass.getFunctionName().find("CommerceFlexible") > -1:
 			iCommerce = CommerceTypes(inputClass.getData2())
 			if inputClass.getData1() == 1030:
@@ -419,7 +416,7 @@ class WBPlayerScreen:
 		elif inputClass.getFunctionName() == "WBPlayerCivics":
 			iCivic = inputClass.getData2()
 			if pPlayer.canDoCivics(iCivic):
-				pPlayer.setCivics(GC.getCivicInfo(iCivic).getCivicOptionType(), iCivic)
+				pPlayer.setCivics(INFO.civicOptions().getValue(iCivic), iCivic)
 			self.interfaceScreen(iPlayer)
 
 		elif inputClass.getFunctionName() == "PlayerEditScriptData":

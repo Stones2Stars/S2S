@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_HUMAN_MOD_GENE_EDITING",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_STEM_CELL_LAB",
+    "TECH_GENE_ENHANCEMENT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_GENE_EDITING"
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_STEM_CELL_LAB",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 6770
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_GENE_EDITING",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_GENE_EDITING",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_GENE_EDITING_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

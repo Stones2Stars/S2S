@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_CRIME_PRISON_BREAKOUTS",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_CONSTITUTION",
+    {
+     "any": [
+      "BUILDING_JAIL",
+      "BUILDING_SAFETY_ORBITAL_PRISON",
+      "BUILDING_MAXIMUM_SECURITY_PRISON",
+      "BUILDING_ALCATRAZ"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 900,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    -3,
+    {
+     "value": -10,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": -10,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 15
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_PRISON_BREAKOUTS",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_PRISON_BREAKOUTS_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

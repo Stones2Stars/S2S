@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_ADVANCED_SHIELDING",
+ "enables": {
+  "buildings": [
+   "BUILDING_FRIEDLANDER_SKYSHADE",
+   "BUILDING_SUBTERRANEAN_CITY",
+   "BUILDING_SUPERSYMMETRIC_PARTICLE_REINFORCEMENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ADVANCED_SHIELDING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 400
+   },
+   "bombardDefense": {
+    "percent": 50
+   },
+   "nukeDefense": {
+    "percent": -50
+   },
+   "airDefense": {
+    "percent": -50
+   },
+   "min": {
+    "percent": 5
+   },
+   "noEntryLevel": {
+    "percent": 4
+   },
+   "adjacentDamage": {
+    "percent": 40
+   }
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 60
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 6405,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ADVANCED_SHIELDING"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ADVANCED_SHIELDING"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ADVANCED_SHIELDING",
+  "civilopedia": "TXT_KEY_BUILDING_ADVANCED_SHIELDING_PEDIA",
+  "worth": 2,
+  "militaryWorth": 5,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

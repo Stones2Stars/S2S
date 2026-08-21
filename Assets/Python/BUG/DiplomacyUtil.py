@@ -21,9 +21,15 @@
 from CvPythonExtensions import *
 import TradeUtil
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
-diplo = CyDiplomacy()
+INFO = CyInfo()
 GAME = GC.getGame()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
+diplo = CyDiplomacy()
 
 # comment-type -> ( event-type , trade-type )
 g_eventsByCommentType = {}
@@ -276,7 +282,7 @@ def onReligionDemanded(argsList):
 	of = CyPlayerX.getName()
 	to = GC.getPlayer(eTargetPlayer).getName()
 	iReligion = CyPlayerX.getStateReligion()
-	print "DiplomacyUtil - %s asks %s to convert to %s" %(of, to, GC.getReligionInfo(iReligion).getDescription())
+	print "DiplomacyUtil - %s asks %s to convert to %s" %(of, to, INFO.getDescription("RELIGION_", iReligion))
 
 def onReligionAccepted(argsList):
 	eTargetPlayer, eDemandPlayer = argsList
@@ -284,7 +290,7 @@ def onReligionAccepted(argsList):
 	to = GC.getPlayer(eTargetPlayer).getName()
 	of = CyPlayerX.getName()
 	iReligion = CyPlayerX.getStateReligion()
-	print "DiplomacyUtil - %s accepts demand from %s to convert to %s" %(to, of, GC.getReligionInfo(iReligion).getDescription())
+	print "DiplomacyUtil - %s accepts demand from %s to convert to %s" %(to, of, INFO.getDescription("RELIGION_", iReligion))
 
 def onReligionRejected(argsList):
 	eTargetPlayer, eDemandPlayer = argsList
@@ -292,7 +298,7 @@ def onReligionRejected(argsList):
 	to = GC.getPlayer(eTargetPlayer).getName()
 	of = CyPlayerX.getName()
 	iReligion = CyPlayerX.getStateReligion()
-	print "DiplomacyUtil - %s rejects demand from %s to convert to %s" %(to, of, GC.getReligionInfo(iReligion).getDescription())
+	print "DiplomacyUtil - %s rejects demand from %s to convert to %s" %(to, of, INFO.getDescription("RELIGION_", iReligion))
 
 def onCivicDemanded(argsList):
 	eDemandPlayer, eTargetPlayer = argsList
@@ -301,7 +307,7 @@ def onCivicDemanded(argsList):
 	to = GC.getPlayer(eTargetPlayer).getName()
 	iCivic = GC.getLeaderHeadInfo(CyPlayerX.getPersonalityType()).getFavoriteCivic()
 	if iCivic > -1:
-		print "DiplomacyUtil - %s asks %s to switch to %s" %(of, to, GC.getCivicInfo(iCivic).getDescription())
+		print "DiplomacyUtil - %s asks %s to switch to %s" %(of, to, INFO.getDescription("CIVIC_", iCivic))
 
 def onCivicAccepted(argsList):
 	eTargetPlayer, eDemandPlayer = argsList
@@ -310,7 +316,7 @@ def onCivicAccepted(argsList):
 	of = CyPlayerX.getName()
 	iCivic = GC.getLeaderHeadInfo(CyPlayerX.getPersonalityType()).getFavoriteCivic()
 	if iCivic > -1:
-		print "DiplomacyUtil - %s accepts demand from %s to switch to %s" %(to, of, GC.getCivicInfo(iCivic).getDescription())
+		print "DiplomacyUtil - %s accepts demand from %s to switch to %s" %(to, of, INFO.getDescription("CIVIC_", iCivic))
 
 def onCivicRejected(argsList):
 	eTargetPlayer, eDemandPlayer = argsList
@@ -319,7 +325,7 @@ def onCivicRejected(argsList):
 	of = CyPlayerX.getName()
 	iCivic = GC.getLeaderHeadInfo(CyPlayerX.getPersonalityType()).getFavoriteCivic()
 	if iCivic > -1:
-		print "DiplomacyUtil - %s rejects demand from %s to switch to %s" %(to, of, GC.getCivicInfo(iCivic).getDescription())
+		print "DiplomacyUtil - %s rejects demand from %s to switch to %s" %(to, of, INFO.getDescription("CIVIC_", iCivic))
 
 def onWarDemanded(argsList):
 	eDemandPlayer, eTargetPlayer, eVictim = argsList

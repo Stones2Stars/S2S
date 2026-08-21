@@ -1,0 +1,57 @@
+{
+ "type": "PROMOTION_CAMOUFLAGE",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT2"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "defense": {
+    "percent": 10
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 20
+   }
+  }
+ },
+ "skills": {
+  "immuneToFirstStrikes": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/camouflage.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CAMOUFLAGE",
+  "unitCombats": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_HUNTER",
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_CLONES",
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_ASSAULT_MECH"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS",
+   "UNITCOMBAT_SUBMARINE"
+  ]
+ }
+}

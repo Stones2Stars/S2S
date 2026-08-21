@@ -1,0 +1,114 @@
+{
+ "type": "BUILDING_MUSIC_HUT",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FREE_ARTISTRY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MUSIC_SCHOOL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PREHISTORIC_MUSIC",
+    "TECH_SHELTER_BUILDING",
+    {
+     "any": [
+      "BUILDING_STORAGE_PIT",
+      "BUILDING_GRANARY",
+      "BUILDING_MODERN_GRANARY",
+      "BUILDING_BARTER_POST",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_MUSIC_SCHOOL"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PERCUSSION_INSTRUMENTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WOODWIND_INSTRUMENTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BRASS_INSTRUMENTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_STRING_INSTRUMENTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 25,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MUSIC_HUT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MUSIC_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_MUSIC_HUT_PEDIA",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

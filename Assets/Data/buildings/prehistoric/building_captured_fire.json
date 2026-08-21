@@ -1,0 +1,92 @@
+{
+ "type": "BUILDING_CAPTURED_FIRE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_EARTH_OVEN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CONTROLLED_FIRE",
+    "BUILDING_STICK_GATHERER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_FIRE_PIT": {
+     "percent": 10
+    },
+    "BUILDING_IMU": {
+     "percent": 10
+    },
+    "BUILDING_BONFIRE": {
+     "percent": 10
+    },
+    "BUILDING_CHARCOAL_BURNER": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "grants": {
+  "goldenAge": true
+ },
+ "cost": {
+  "production": 40,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CAPTURED_FIRE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CAPTURED_FIRE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_TOTEM"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CAPTURED_FIRE",
+  "civilopedia": "TXT_KEY_BUILDING_CAPTURED_FIRE_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

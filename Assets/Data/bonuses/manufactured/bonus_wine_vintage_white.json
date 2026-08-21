@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_WINE_VINTAGE_WHITE",
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_WINE_VINTAGE_WHITE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_WINE_VINTAGE_WHITE",
+  "civilopedia": "TXT_KEY_BONUS_VINTAGE_WINE_PEDIA",
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
+ }
+}

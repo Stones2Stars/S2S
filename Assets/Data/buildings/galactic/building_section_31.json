@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_SECTION_31",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_STARPORT",
+    "TECH_GALACTIC_FEDERATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "research": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_PLANETARY_AWARENESS": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -20
+   }
+  }
+ },
+ "cost": {
+  "production": 25310
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SECTION_31"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SECTION_31",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SECTION_31",
+  "civilopedia": "TXT_KEY_BUILDING_SECTION_31_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

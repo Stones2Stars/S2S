@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_EXPLORE_SS1",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_SS1",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_SS1_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SPACE_STATIONS"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

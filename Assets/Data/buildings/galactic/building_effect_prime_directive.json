@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_EFFECT_PRIME_DIRECTIVE",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_ASTROIMPERIALISM"
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": 10
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": -20,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_PRIME_DIRECTIVE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_PRIME_DIRECTIVE",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_PRIME_DIRECTIVE_PEDIA",
+  "pediaCategory": "space",
+  "notConstructible": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ],
+  "empireLevel": true
+ }
+}

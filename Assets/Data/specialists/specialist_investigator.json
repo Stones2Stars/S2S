@@ -1,0 +1,50 @@
+{
+ "type": "SPECIALIST_INVESTIGATOR",
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_LAW_ENFORCEMENT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "underworld": {
+  "city": {
+   "investigation": {
+    "flat": 5
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/Investigator.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/Investigator.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_INVESTIGATOR",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
+  "visible": true,
+  "categories": [
+   "CATEGORY_ASSIGNABLE_SPECIALISTS",
+   "CATEGORY_SPECIALIST_GROUP_LEGAL"
+  ],
+  "greatPeopleUnit": "UNIT_GREAT_DETECTIVE"
+ }
+}

@@ -1,0 +1,123 @@
+{
+ "type": "TECH_FEUDALISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_CASTLE_KEEP",
+   "BUILDING_CHANGDEOKGUNG",
+   "BUILDING_CRIME_POACHING",
+   "BUILDING_CULTURE_ARAGONESE",
+   "BUILDING_CULTURE_BENIN",
+   "BUILDING_CULTURE_HUNGARIAN",
+   "BUILDING_CULTURE_KHWARAZMIAN",
+   "BUILDING_CULTURE_MANDAN",
+   "BUILDING_CULTURE_SIBERIAN",
+   "BUILDING_CULTURE_UKRAINIAN",
+   "BUILDING_FALCONRY_SCHOOL",
+   "BUILDING_GRAND_ESTATE",
+   "BUILDING_GRAND_MANOR",
+   "BUILDING_MATSUMOTO_CASTLE",
+   "BUILDING_SETI_PIR",
+   "BUILDING_SQUATTER_CAMPS",
+   "BUILDING_TOPKAPI_PALACE"
+  ],
+  "civics": [
+   "CIVIC_FEUDAL",
+   "CIVIC_SERFDOM",
+   "CIVIC_VASSAL_LEVIES"
+  ],
+  "promotions": [
+   "PROMOTION_BUSHIDO2",
+   "PROMOTION_BUSHIDO3"
+  ],
+  "techs": [
+   "TECH_CROP_ROTATION",
+   "TECH_GUILDS",
+   "TECH_MARTIAL_ARTS",
+   "TECH_YEOMANRY"
+  ],
+  "units": [
+   "UNIT_ABU_KARIBA",
+   "UNIT_AL_MAHDI_BILLAH",
+   "UNIT_ARPAD",
+   "UNIT_ARTHUR",
+   "UNIT_BENIN_EWUARE",
+   "UNIT_BISON_WARDENS",
+   "UNIT_BOLA_HUNTER",
+   "UNIT_CACAN",
+   "UNIT_CENTEOTL",
+   "UNIT_CHAGATAI_KHAN",
+   "UNIT_EARLY_IMP_GUARD",
+   "UNIT_GENSERIC",
+   "UNIT_INIGO",
+   "UNIT_JAMES_I",
+   "UNIT_MARANON",
+   "UNIT_MASTER_WARDEN",
+   "UNIT_MINGBURNU",
+   "UNIT_SABLE_TRAPPER",
+   "UNIT_SIBERIAN_TRACKER",
+   "UNIT_SIMEON",
+   "UNIT_SVIATOSLAV_I",
+   "UNIT_TAIYIN",
+   "UNIT_TEHUELCHE",
+   "UNIT_WARDEN"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_CREE_TRACKER",
+   "UNIT_MASTER_RANGER",
+   "UNIT_NGAYAU",
+   "UNIT_RANGER",
+   "UNIT_WALLABY_HUNTERS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_VASSALAGE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1230
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/Feudalism.dds,Art/Interface/Buttons/TechTree_Atlas.dds,1,10"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_FEUDALISM",
+  "soundMP": "AS2D_TECH_MP_FEUDALISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_FEUDALISM",
+  "civilopedia": "TXT_KEY_TECH_FEUDALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_FEUDALISM_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 43,
+  "gridY": 17
+ }
+}

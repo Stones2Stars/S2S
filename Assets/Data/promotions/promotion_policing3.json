@@ -1,0 +1,57 @@
+{
+ "type": "PROMOTION_POLICING3",
+ "combat": {
+  "unit": {
+   "stealth": {
+    "percent": 2
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "investigation": {
+    "flat": 3
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 3
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -6
+  },
+  "plot": {
+   "flat": -3
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_POLICING": 3
+ },
+ "ai": {
+  "unitCombatWeights": {
+   "UNITCOMBAT_LAW_ENFORCEMENT": 50
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/CrimeControl3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_POLICING3",
+  "minEra": "C2C_ERA_CLASSICAL"
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "type": "PROMOTION_NON_LETHAL_FORCE2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_NON_LETHAL_FORCE3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_NON_LETHAL_FORCE1"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": -10
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 15
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_NON_LETHAL_FORCE": 2
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/NonLethalForce2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_NON_LETHAL_FORCE2"
+ }
+}

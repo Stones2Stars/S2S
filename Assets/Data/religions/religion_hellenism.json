@@ -1,0 +1,89 @@
+{
+ "type": "RELIGION_HELLENISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_HELLENIC_GYMNASIA",
+   "BUILDING_HELLENIC_PANTHEON",
+   "BUILDING_HELLENIC_TEMPLE",
+   "BUILDING_ODEON",
+   "BUILDING_PHIDIAS_STATUE_WORKSHOP",
+   "BUILDING_THE_ERECHTHEUM",
+   "BUILDING_THE_NECROMANTEION",
+   "BUILDING_THE_PARTHENON"
+  ],
+  "units": [
+   "UNIT_HELLENIC_MISSIONARY"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_HELLENISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_HELLENISM"
+     }
+    }
+   ]
+  }
+ },
+ "grants": {
+  "freeUnit": "UNIT_HELLENIC_MISSIONARY",
+  "numFreeUnits": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 8,
+   "icon": "Art/Interface/Buttons/Religions/Hellenism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Hellenism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Hellenism.dds",
+   "movie": {
+    "file": "Art/Cutscene/Greek_found.nif",
+    "sound": "AS2D_BUILD_OLYMP_MOVIE"
+   }
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_OLYMP"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_HELLENISM",
+  "adjective": "TXT_KEY_TECH_HELLENISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_HELLENISM_PEDIA",
+  "spreadFactor": 40
+ }
+}

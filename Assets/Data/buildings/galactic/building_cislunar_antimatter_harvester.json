@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_CISLUNAR_ANTIMATTER_HARVESTER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+    "TECH_WEAPONIZED_ANTIMATTER",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ANTIMATTER"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": 1200
+  }
+ },
+ "cost": {
+  "production": 44556,
+  "hurryModifier": 10000
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CISLUNAR_ANTIMATTER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_ANTIMATTER_HARVESTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_ANTIMATTER_HARVESTER",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_ANTIMATTER_HARVESTER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

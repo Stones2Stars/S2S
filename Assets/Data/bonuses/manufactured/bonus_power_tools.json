@@ -1,0 +1,23 @@
+{
+ "type": "BONUS_POWER_TOOLS",
+ "enables": {
+  "buildings": [
+   "BUILDING_PLASTIC_RECLAMATION_PLANT"
+  ],
+  "units": [
+   "UNIT_AUTO_ELECTRICIAN",
+   "UNIT_REPLICATION_MECHANIC"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_POWER_TOOLS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_POWER_TOOLS",
+  "civilopedia": "TXT_KEY_BONUS_POWER_TOOLS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

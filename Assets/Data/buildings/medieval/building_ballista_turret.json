@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_BALLISTA_TURRET",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ROMANTICISM"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CANNON_TURRET"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SIEGE_WEAPONS_WORKSHOP",
+    "TECH_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_CASTLE",
+      "BUILDING_STAR_FORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_CANNON_TURRET",
+    "BUILDING_IMPERIAL_FORTRESS"
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "adjacentDamage": {
+    "percent": 20
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "cost": {
+  "production": 300,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BALLISTA_TURRET"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CASTLE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BALLISTA_TURRET",
+  "civilopedia": "TXT_KEY_BUILDING_BALLISTA_TURRET_PEDIA",
+  "worth": 6,
+  "militaryWorth": 12,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

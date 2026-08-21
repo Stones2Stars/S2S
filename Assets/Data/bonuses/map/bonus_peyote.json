@@ -1,0 +1,70 @@
+{
+ "type": "BONUS_PEYOTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_APACHE",
+   "BUILDING_CULTURE_CAPAYAN",
+   "BUILDING_CULTURE_PAIUTE",
+   "BUILDING_MEZCAL_WORM_GATHERER",
+   "BUILDING_PLANTATION_CARDON_CACTUS",
+   "BUILDING_PLANTATION_PEYOTE",
+   "BUILDING_PRAYING_MANTIS_GATHERER",
+   "BUILDING_TRANCE_HUT"
+  ]
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": -1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PEYOTE"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 1,
+  "constAppearance": 300,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 30,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_SCRUB"
+  ],
+  "validFeatures": [
+   "FEATURE_CACTUS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_DESERT"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PEYOTE",
+  "civilopedia": "TXT_KEY_BONUS_PEYOTE_PEDIA",
+  "bonusClassType": "BONUSCLASS_LUXURY",
+  "source": "natural"
+ }
+}

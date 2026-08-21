@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_LIVING_BUILDINGS",
+ "enables": {
+  "buildings": [
+   "BUILDING_SELF_AWARE_CITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MEGATOWER",
+    "TECH_EVOLVED_CONSTRUCTION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 11,
+     "enabled": "TECH_ADAPTIVE_ARCHITECTURE"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 30
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": -30,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "production": 5655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LIVING_BUILDINGS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LIVING_BUILDINGS",
+  "civilopedia": "TXT_KEY_BUILDING_LIVING_BUILDINGS_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

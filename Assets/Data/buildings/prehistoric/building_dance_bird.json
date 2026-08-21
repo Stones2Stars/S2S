@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_DANCE_BIRD",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PREHISTORIC_DANCE",
+    "TECH_SHELTER_BUILDING",
+    {
+     "any": [
+      "BUILDING_DANCE_HUT",
+      "BUILDING_DANCE_HALL",
+      "BUILDING_NIGHT_CLUB"
+     ]
+    },
+    {
+     "any": [
+      "BUILDING_FOLKLORE_FLAMINGO",
+      "BUILDING_FOLKLORE_PEACOCK",
+      "BUILDING_FOLKLORE_SECRETARY_BIRD",
+      "BUILDING_FOLKLORE_VULTURE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_DANCE_HALL": {
+     "percent": 10
+    },
+    "BUILDING_NIGHT_CLUB": {
+     "percent": 10
+    },
+    "BUILDING_BALLROOM": {
+     "percent": 10
+    },
+    "BUILDING_IMPERIAL_FORTRESS": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 60,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DANCE_BIRD",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DANCE_BIRD",
+  "civilopedia": "TXT_KEY_BUILDING_DANCE_BIRD_PEDIA",
+  "worth": 1,
+  "militaryWorth": 1,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

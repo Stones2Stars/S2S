@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_ETHIOPIAN",
+ "enables": {
+  "units": [
+   "UNIT_ETHIOPIAN_OROMO_WARRIOR",
+   "UNIT_EZANA",
+   "UNIT_MENELIK"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ETHIOPIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ETHIOPIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

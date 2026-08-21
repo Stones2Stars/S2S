@@ -1,0 +1,107 @@
+{
+ "type": "CORPORATION_4",
+ "enables": {
+  "buildings": [
+   "BUILDING_CREATIVE_CONSTRUCTIONS_CONTRACTORS"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": [
+    {
+     "value": 0.5,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_4"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_IRON_ORE",
+       "BONUS_COPPER_ORE",
+       "BONUS_MARBLE",
+       "BONUS_STONE",
+       "BONUS_BAUXITE_ORE"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HEADQUARTERS": "CORPORATION_4"
+     },
+     "per": "CORPORATION_LEVEL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_4"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_IRON_ORE",
+       "BONUS_COPPER_ORE",
+       "BONUS_MARBLE",
+       "BONUS_STONE",
+       "BONUS_BAUXITE_ORE"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_4"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_IRON_ORE",
+        "BONUS_COPPER_ORE",
+        "BONUS_MARBLE",
+        "BONUS_STONE",
+        "BONUS_BAUXITE_ORE"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 3,
+   "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,4,6"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_4",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_4_PEDIA",
+  "competingSpreadCostPercent": 200,
+  "spreadFactor": 60
+ }
+}

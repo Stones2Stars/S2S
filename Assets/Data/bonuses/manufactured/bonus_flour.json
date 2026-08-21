@@ -1,0 +1,24 @@
+{
+ "type": "BONUS_FLOUR",
+ "enables": {
+  "buildings": [
+   "BUILDING_BAKERY",
+   "BUILDING_FACTORY_PASTA",
+   "BUILDING_PANCAKE_HOUSE",
+   "BUILDING_PASTA_MAKERS_SHOP",
+   "BUILDING_PIZZA_PARLOR",
+   "BUILDING_TACO_HUT"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_FLOUR"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_FLOUR",
+  "civilopedia": "TXT_KEY_BONUS_FLOUR_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

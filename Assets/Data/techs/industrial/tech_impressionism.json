@@ -1,0 +1,63 @@
+{
+ "type": "TECH_IMPRESSIONISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_ART_SUPPLY_STORE",
+   "BUILDING_GIVERNY"
+  ],
+  "techs": [
+   "TECH_CUBISM",
+   "TECH_EXPRESSIONISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_REALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 7008
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/impressionism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_IMPRESSIONISM",
+  "soundMP": "AS2D_TECH_IMPRESSIONISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_IMPRESSIONISM",
+  "civilopedia": "TXT_KEY_TECH_IMPRESSIONISM_PEDIA",
+  "quote": "TXT_KEY_TECH_IMPRESSIONISM_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 32,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 68,
+  "gridY": 19
+ }
+}

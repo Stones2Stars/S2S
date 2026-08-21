@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_ASHANTI",
+ "enables": {
+  "units": [
+   "UNIT_OSEI",
+   "UNIT_PREMPEH",
+   "UNIT_TWAFO"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ASHANTI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ASHANTI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

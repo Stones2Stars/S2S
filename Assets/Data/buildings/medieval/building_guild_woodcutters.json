@@ -1,0 +1,104 @@
+{
+ "type": "BUILDING_GUILD_WOODCUTTERS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GLOBALIZATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SURVEYING",
+    "TECH_GUILDS",
+    {
+     "any": [
+      "BUILDING_LUMBER_CAMP",
+      "BUILDING_AGROFOREST"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_LUMBER_CAMP": {
+     "flat": 5
+    },
+    "BUILDING_AGROFOREST": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 664,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GUILD_LUMBER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GUILD_WOODCUTTERS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GUILD_WOODCUTTERS",
+  "civilopedia": "TXT_KEY_BUILDING_GUILDS_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "specialBuildingType": "SPECIALBUILDING_GUILD",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

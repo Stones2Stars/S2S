@@ -1,0 +1,14 @@
+{
+ "type": "UNITCOMBAT_CAPTIVE",
+ "skills": {
+  "cannotMergeSplit": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/captives.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CAPTIVE"
+ }
+}

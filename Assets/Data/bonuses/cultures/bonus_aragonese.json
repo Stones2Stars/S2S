@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_ARAGONESE",
+ "enables": {
+  "units": [
+   "UNIT_FERDINAND_II",
+   "UNIT_TERCIO_PIKEMAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ARAGONESE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ARAGONESE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

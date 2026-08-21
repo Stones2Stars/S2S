@@ -1,0 +1,132 @@
+{
+ "type": "BUILDING_TRIUMPH_COLUMN",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MILITARY_TRAINING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": 15,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  },
+  "self": {
+   "percent": [
+    {
+     "value": 25,
+     "enabled": {
+      "type": "BONUS_MARBLE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 25,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "cost": {
+  "production": 432,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_COLUMN"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRIUMPH_COLUMN"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_OBELISK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRIUMPH_COLUMN",
+  "civilopedia": "TXT_KEY_BUILDING_TRIUMPH_COLUMN_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 2,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

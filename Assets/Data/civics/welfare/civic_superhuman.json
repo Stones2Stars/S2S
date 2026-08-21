@@ -1,0 +1,69 @@
+{
+ "type": "CIVIC_SUPERHUMAN",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRYOGENIC_PRISON",
+   "BUILDING_ELYSIUM",
+   "BUILDING_INTERSTELLAR_TIME_ABYSS",
+   "BUILDING_MAD_SCIENTISTS_CASTLE"
+  ]
+ },
+ "production": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": -2,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CLONING_LABORATORY": {
+     "flat": 2
+    },
+    "BUILDING_CLONING_FACTORY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_CLONES": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/welfare_superhuman.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_SUPERHUMAN",
+  "civilopedia": "TXT_KEY_CIVIC_SUPERHUMAN_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_SUPERHUMAN_STRATEGY",
+  "civicOption": "CIVICOPTION_WELFARE",
+  "anarchyLength": 3,
+  "upkeepLevel": "UPKEEP_LOW"
+ }
+}

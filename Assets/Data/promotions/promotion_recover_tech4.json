@@ -1,0 +1,41 @@
+{
+ "type": "PROMOTION_RECOVER_TECH4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BUILD_UP_CONTROL_CENTER4"
+  ]
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 1
+   },
+   "victoryAdjacent": {
+    "flat": 2
+   },
+   "victoryStack": {
+    "flat": 4
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_TECH": {
+     "heal": 5,
+     "adjacentHeal": 2
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_RECOVER_TECH": 4
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/RecoverTech4Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_RECOVER_TECH4"
+ }
+}

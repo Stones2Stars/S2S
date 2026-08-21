@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_SOCIAL_JUSTICE_ORGANIZATION",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MODERN_OFFICES",
+    "TECH_GLOBALIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "any": [
+      "CIVIC_MARXIST",
+      "CIVIC_SOCIALIZED"
+     ]
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "cost": {
+  "production": 1180,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SOCIAL_JUSTICE_ORGANIZATION"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SOCIAL_JUSTICE_ORGANIZATION",
+  "civilopedia": "TXT_KEY_BUILDING_SOCIAL_JUSTICE_ORGANIZATION_PEDIA",
+  "worth": 3,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

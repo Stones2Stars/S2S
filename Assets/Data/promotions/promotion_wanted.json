@@ -1,0 +1,40 @@
+{
+ "type": "PROMOTION_WANTED",
+ "skills": {
+  "upgradeAnywhere": false,
+  "assassin": false
+ },
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 1000,
+    "unit": "HAS_CAMOUFLAGE"
+   },
+   {
+    "value": 1000,
+    "unit": "HAS_INVISIBLE"
+   }
+  ]
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_WANTED": 1
+ },
+ "disabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Wanted1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_WANTED",
+  "help": "TXT_KEY_PROMOTION_WANTED_HELP",
+  "negatesInvisibility": [
+   "INVISIBLE_CAMOUFLAGE",
+   "INVISIBLE_INVISIBLE"
+  ],
+  "setOnInvestigated": true
+ }
+}

@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_GRAMMATICUS",
+ "enables": {
+  "buildings": [
+   "BUILDING_LYCEUM"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HOLOGRAPHICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ELEMENTARY_SCHOOL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_HERITAGE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_TABLETS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SCROLLS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PAPER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BOOKS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_ELEMENTARY_SCHOOL",
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 2,
+     "enabled": "TECH_LINGUISTICS"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "cost": {
+  "production": 139,
+  "countModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GRAMMATICUS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GRAMMATICUS",
+  "civilopedia": "TXT_KEY_BUILDING_GRAMMATICUS_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

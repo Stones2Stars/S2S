@@ -1,0 +1,219 @@
+{
+ "type": "UNIT_CAPTIVE_CIVILIAN",
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_CAPTIVE_CIVILIAN"
+  }
+ },
+ "skills": [
+  "onlyDefensive",
+  "tradable"
+ ],
+ "tags": [
+  "landUnit",
+  "captive",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_CAPTIVE",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_PATHETIC",
+  "UNITCOMBAT_GROUP_BATTALION",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_JOIN_CITY_POPULATION",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_CITY_POPULATION",
+     "plot": {
+      "type": "POPULATION",
+      "scope": "city",
+      "min": 7
+     }
+    },
+    "chance": 100,
+    "consumes": true,
+    "population": 1
+   },
+   {
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_IMMIGRANT",
+    "requires": {
+     "outcome": "OUTCOME_UPGRADE_TO_IMMIGRANT",
+     "plot": {
+      "noneOf": [
+       "IS_ANARCHY"
+      ]
+     }
+    },
+    "chance": 100,
+    "spawns": {
+     "unit": "UNIT_CAPTIVE_IMMIGRANT"
+    }
+   },
+   {
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_SETTLER",
+    "requires": {
+     "outcome": "OUTCOME_UPGRADE_TO_SETTLER",
+     "plot": {
+      "noneOf": [
+       "IS_ANARCHY"
+      ]
+     }
+    },
+    "chance": 100,
+    "spawns": {
+     "unit": "UNIT_SETTLER"
+    }
+   },
+   {
+    "mission": "MISSION_BUTCHER_HUMAN",
+    "outcomes": [
+     {
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "food": 40,
+      "production": 10
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "food": 50,
+      "production": 15
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT1",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "food": 50,
+      "production": 15
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT2",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "food": 50,
+      "production": 15
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_WORLDVIEW_SLAVERY"
+   },
+   {
+    "building": "BUILDING_SLAVE_MARKET"
+   },
+   {
+    "building": "BUILDING_WORLDVIEW_CANNIBALISM"
+   },
+   {
+    "building": "BUILDING_WORLDVIEW_HUMAN_SACRIFICE"
+   }
+  ],
+  "greatPersonAction": {
+   "hurry": {
+    "base": 100,
+    "multiplier": 5
+   }
+  }
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CAPTIVE_MEDIEVAL",
+   "meshGroups": {
+    "groupSize": 7,
+    "meleeWaveSize": 7,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_CAPTIVE_MEDIEVAL",
+       "middle": "ART_DEF_UNIT_CAPTIVE_MEDIEVAL",
+       "late": "ART_DEF_UNIT_CAPTIVE_MEDIEVAL"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_DOG"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_CHILD"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_FEMALE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_FEMALE"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_CHILD"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_CAPTIVE_CIVILIAN",
+  "civilopedia": "TXT_KEY_UNIT_CAPTIVE_CIVILIAN_PEDIA",
+  "help": "TXT_KEY_UNIT_CAPTIVE_CIVILIAN_HELP",
+  "spawnOnly": true,
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "type": "PROMOTION_FIRST_AID_PEOPLE4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BUILD_UP_FIELD_HOSPITAL4"
+  ]
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 1
+   },
+   "victoryAdjacent": {
+    "flat": 2
+   },
+   "victoryStack": {
+    "flat": 4
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_PEOPLE": {
+     "heal": 5,
+     "adjacentHeal": 2
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FIRST_AID_PEOPLE": 4
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/HealPeople4Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FIRST_AID_PEOPLE4"
+ }
+}

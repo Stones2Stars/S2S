@@ -1,0 +1,36 @@
+{
+ "type": "IMPROVEMENT_GROW_FOREST",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECOLOGY",
+     "scope": "team"
+    },
+    {
+     "feature": [
+      "FEATURE_FOREST_YOUNG"
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_GROW_FOREST"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_GROW_FOREST",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_GROW_FOREST_PEDIA",
+  "advancedStart": {
+   "cost": -1
+  },
+  "placesFeature": true
+ }
+}

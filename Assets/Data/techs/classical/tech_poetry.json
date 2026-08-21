@@ -1,0 +1,64 @@
+{
+ "type": "TECH_POETRY",
+ "enables": {
+  "buildings": [
+   "BUILDING_BARDIC_CIRCLE",
+   "BUILDING_ODEON"
+  ],
+  "techs": [
+   "TECH_CHIVALRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DRAMA",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_ARTIST"
+ },
+ "cost": {
+  "research": 904
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_RELIGION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/poetry.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_POETRY",
+  "soundMP": "AS2D_TECH_POETRY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_POETRY",
+  "civilopedia": "TXT_KEY_TECH_POETRY_PEDIA",
+  "quote": "TXT_KEY_TECH_POETRY_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 40,
+  "gridY": 5
+ }
+}

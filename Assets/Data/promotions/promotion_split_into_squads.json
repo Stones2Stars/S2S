@@ -1,0 +1,28 @@
+{
+ "type": "PROMOTION_SPLIT_INTO_SQUADS",
+ "skills": {
+  "unitCombats": [
+   "UNITCOMBAT_GROUP_SQUAD"
+  ],
+  "removesUnitCombats": [
+   "UNITCOMBAT_GROUP_COMPANY"
+  ]
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/UnitCombatClasses/Group3UnitCombat.fw.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SPLIT_INTO_SQUADS",
+  "replacesUnitCombat": "UNITCOMBAT_GROUP_COMPANY",
+  "forOffset": true
+ },
+ "sizeMatters": {
+  "group": -1
+ }
+}

@@ -1,0 +1,1630 @@
+//
+//	reversePass -- see the header. ONE general pass over the COMPILED info surfaces (edges / requires trees /
+//	deposit entries / grants / provides / triggers), replacing the retired per-relationship inversions that read
+//	the legacy-mirror getters. Every write here is inside the write-once-at-load window (docs/cascade.md §1 (reverse lookups are populated once, at load)).
+//
+
+#include "CvGameCoreDLL.h"             // PCH umbrella
+#include "Data/CvReversePass.h"
+#include "Data/CvReadJson.h"           // rjInfoForType -- the ONE INFOTYPE-prefix -> InfoRepo dispatch
+#include "Defines/CvGlobals.h"         // GC.getNum<X>Infos -- the per-kind id spaces
+#include "Repos/InfoRepo.h"            // the per-info-type homes
+#include "Enabler/CvEnablerKernel.h"   // EnablerKernel::infoFor -- the gate-axis per-bucket dispatch (single-source)
+#include "CvInfo.h"                    // the base surface: edges/requires/deposits/grants/provides/triggers
+#include "CvCondition.h"               // the typed requires tree the walks recurse
+#include "CvInfoKinds.h"               // infoFamilyYield / infoFamilyKey / infoIsTargetToken
+// the per-type repo homes the pass walks / writes (direct imports -- never the CvInfos.h umbrella)
+#include "CvBuildingInfo.h"
+#include "CvUnitInfo.h"
+#include "CvBuildInfo.h"
+#include "CvTechInfo.h"                // + cascadeStartNode -- the synthetic TECH_GAME_START root
+#include "CvCivicInfo.h"
+#include "CvReligionInfo.h"
+#include "CvCorporationInfo.h"
+#include "CvProjectInfo.h"
+#include "CvProcessInfo.h"
+#include "CvPromotionInfo.h"
+#include "CvPromotionLineInfo.h"
+#include "CvHeritageInfo.h"
+#include "CvSpecialBuildingInfo.h"
+#include "CvImprovementInfo.h"
+#include "CvBonusInfo.h"
+#include "CvRouteInfo.h"
+#include "CvVoteInfo.h"
+#include "CvHurryInfo.h"
+#include "CvTraitInfo.h"
+#include "CvComplexTraitInfo.h"        // + CvComplexTraitTag -- the complex set's own repo (rp_traitInfoForId)
+#include "CvSpecialistInfo.h"
+#include "CvTerrainInfo.h"
+#include "CvFeatureInfo.h"
+#include "CvLeaderHeadInfo.h"          // the trait FK lists the leaderhead inverse reads (not an InfoRepo kind)
+#include "CvCivilizationInfo.h"        // the leader roster the civilization inverse reads
+#include "CvUnitCombatInfo.h"          // the membership index's receiver (likewise reached through the globals)
+#include <cstring>
+#include <set>
+#include <string>
+#include <vector>
+
+namespace
+{
+	ReversePassCounts s_counts;
+
+	// ==================== the per-kind tables ====================
+
+	// Every source KIND the general RELATED walk iterates: (repo tag, GC count getter, the EnEdgeBucket the kind
+	// lands under on a referenced info). Kinds with no EnEdgeBucket in the spec vocabulary (features / terrains /
+	// unitcombats / properties / the config kinds) cannot be landed as RELATED entries and are not walked as
+	// sources; they still RECEIVE nothing (they compose no CvEdges), so the receiver set is unchanged from the
+	// retired bespoke pass. Complex traits are walked beside the TRAIT_ row (same ids, same bucket, own repo).
+	// Cross-reference: RJ_REPO_TYPES (CvReadJson.cpp) is the reader's registration axis; this table is the
+	// reverse pass's kind->bucket axis -- a new bucket-carrying kind is added to both.
+	#define RP_RELATED_SOURCE_KINDS(X) \
+		X(CvBuildingInfo,        getNumBuildingInfos,        EDGEB_BUILDINGS) \
+		X(CvUnitInfo,            getNumUnitInfos,            EDGEB_UNITS) \
+		X(CvBuildInfo,           getNumBuildInfos,           EDGEB_BUILDS) \
+		X(CvTechInfo,            getNumTechInfos,            EDGEB_TECHS) \
+		X(CvCivicInfo,           getNumCivicInfos,           EDGEB_CIVICS) \
+		X(CvReligionInfo,        getNumReligionInfos,        EDGEB_RELIGIONS) \
+		X(CvCorporationInfo,     getNumCorporationInfos,     EDGEB_CORPORATIONS) \
+		X(CvProjectInfo,         getNumProjectInfos,         EDGEB_PROJECTS) \
+		X(CvProcessInfo,         getNumProcessInfos,         EDGEB_PROCESSES) \
+		X(CvPromotionInfo,       getNumPromotionInfos,       EDGEB_PROMOTIONS) \
+		X(CvPromotionLineInfo,   getNumPromotionLineInfos,   EDGEB_PROMOTION_LINES) \
+		X(CvHeritageInfo,        getNumHeritageInfos,        EDGEB_HERITAGES) \
+		X(CvSpecialBuildingInfo, getNumSpecialBuildingInfos, EDGEB_SPECIAL_BUILDINGS) \
+		X(CvImprovementInfo,     getNumImprovementInfos,     EDGEB_IMPROVEMENTS) \
+		X(CvBonusInfo,           getNumBonusInfos,           EDGEB_BONUSES) \
+		X(CvRouteInfo,           getNumRouteInfos,           EDGEB_ROUTES) \
+		X(CvVoteInfo,            getNumVoteInfos,            EDGEB_VOTES) \
+		X(CvHurryInfo,           getNumHurryInfos,           EDGEB_HURRIES) \
+		X(CvTraitInfo,           getNumTraitInfos,           EDGEB_TRAITS) \
+		X(CvSpecialistInfo,      getNumSpecialistInfos,      EDGEB_SPECIALISTS)
+
+	// A trait id lives in exactly ONE of the two trait repos, because the two sets are separated BY ID as well as
+	// by folder (modifier.md par.4: a complex trait keeps its own TRAIT_COMPLEX_ identity and is never re-keyed
+	// onto the base one). So there is no active-set choice to make here and NO game option to read -- asking both
+	// repos is total, and the order is arbitrary.
+	// The sets share NO id at all, so the single-pointer return can never be ambiguous: every simple trait is
+	// copied into complex/ under its OWN TRAIT_COMPLEX_ id, identical in content and distinct in identity.
+	CvInfo* rp_traitInfoForId(int iId)
+	{
+		const CvInfo* pTraitInfo = InfoRepo<CvTraitInfo>::get().get(iId);
+		if (pTraitInfo == NULL)
+		{
+			pTraitInfo = InfoRepo<CvComplexTraitTag>::get().get(iId);
+		}
+		return const_cast<CvInfo*>(pTraitInfo);
+	}
+
+	// The referenced info of an edge BUCKET (the display axis -- every bucket the spec vocabulary carries; the
+	// _AND/_OR/_WAIVED variants resolve to their kind's repo). Distinct from EnablerKernel::infoFor, which is
+	// the GATE axis and deliberately serves only the enabler's domain kinds. Reads never create: get() +
+	// const_cast (the load window's sanctioned mutation -- addReverseEdge is the load-only writer).
+	CvInfo* rp_infoForBucket(EnEdgeBucket eBucket, int iId)
+	{
+		if (iId < 0)
+		{
+			return NULL;
+		}
+		switch (eBucket)
+		{
+		case EDGEB_BUILDINGS:               return const_cast<CvInfo*>(InfoRepo<CvBuildingInfo>::get().get(iId));
+		case EDGEB_UNITS:                   return const_cast<CvInfo*>(InfoRepo<CvUnitInfo>::get().get(iId));
+		case EDGEB_BUILDS:                  return const_cast<CvInfo*>(InfoRepo<CvBuildInfo>::get().get(iId));
+		case EDGEB_TECHS:                   return const_cast<CvInfo*>(InfoRepo<CvTechInfo>::get().get(iId));
+		case EDGEB_CIVICS:                  return const_cast<CvInfo*>(InfoRepo<CvCivicInfo>::get().get(iId));
+		case EDGEB_RELIGIONS:               return const_cast<CvInfo*>(InfoRepo<CvReligionInfo>::get().get(iId));
+		case EDGEB_CORPORATIONS:            return const_cast<CvInfo*>(InfoRepo<CvCorporationInfo>::get().get(iId));
+		case EDGEB_PROJECTS:                return const_cast<CvInfo*>(InfoRepo<CvProjectInfo>::get().get(iId));
+		case EDGEB_PROCESSES:               return const_cast<CvInfo*>(InfoRepo<CvProcessInfo>::get().get(iId));
+		case EDGEB_PROMOTIONS:              return const_cast<CvInfo*>(InfoRepo<CvPromotionInfo>::get().get(iId));
+		case EDGEB_PROMOTION_LINES:         return const_cast<CvInfo*>(InfoRepo<CvPromotionLineInfo>::get().get(iId));
+		case EDGEB_HERITAGES:               return const_cast<CvInfo*>(InfoRepo<CvHeritageInfo>::get().get(iId));
+		case EDGEB_SPECIAL_BUILDINGS:       return const_cast<CvInfo*>(InfoRepo<CvSpecialBuildingInfo>::get().get(iId));
+		case EDGEB_SPECIAL_BUILDINGS_WAIVED:return const_cast<CvInfo*>(InfoRepo<CvSpecialBuildingInfo>::get().get(iId));
+		case EDGEB_IMPROVEMENTS:            return const_cast<CvInfo*>(InfoRepo<CvImprovementInfo>::get().get(iId));
+		case EDGEB_BONUSES:                 return const_cast<CvInfo*>(InfoRepo<CvBonusInfo>::get().get(iId));
+		case EDGEB_ROUTES:                  return const_cast<CvInfo*>(InfoRepo<CvRouteInfo>::get().get(iId));
+		case EDGEB_ROUTES_AND:              return const_cast<CvInfo*>(InfoRepo<CvRouteInfo>::get().get(iId));
+		case EDGEB_VOTES:                   return const_cast<CvInfo*>(InfoRepo<CvVoteInfo>::get().get(iId));
+		case EDGEB_HURRIES:                 return const_cast<CvInfo*>(InfoRepo<CvHurryInfo>::get().get(iId));
+		case EDGEB_TRAITS:                  return rp_traitInfoForId(iId);
+		case EDGEB_TRAITS_AND:              return rp_traitInfoForId(iId);
+		case EDGEB_TRAITS_OR:               return rp_traitInfoForId(iId);
+		case EDGEB_SPECIALISTS:             return const_cast<CvInfo*>(InfoRepo<CvSpecialistInfo>::get().get(iId));
+		// ⚠ Leaderheads are NOT in an InfoRepo, so this one resolves through the globals rather than the repo
+		// table every other bucket uses.
+		case EDGEB_LEADERS:                 return (iId < GC.getNumLeaderHeadInfos())
+		                                        ? &GC.getLeaderHeadInfo((LeaderHeadTypes)iId) : NULL;
+		case EDGEB_CIVILIZATIONS:           return const_cast<CvInfo*>(InfoRepo<CvCivilizationInfo>::get().get(iId));
+		default:                            return NULL;
+		}
+	}
+
+	// ==================== sub-pass (2): EDGEF_RELATED -- the general display inversion ====================
+
+	// Land one RELATED reference: the referencing info (eSourceBucket, iSourceId) onto the referenced info.
+	void rp_landRelated(CvInfo* pReferencedInfo, EnEdgeBucket eSourceBucket, int iSourceId)
+	{
+		if (pReferencedInfo == NULL)
+		{
+			return;
+		}
+		if (eSourceBucket == NO_EDGEB)
+		{
+			return;
+		}
+		pReferencedInfo->addReverseEdge(EDGEF_RELATED, eSourceBucket, iSourceId);
+		++s_counts.relatedAdds;
+	}
+
+	// Recurse one condition tree: every FK-resolved PRESENCE atom + parameterized PREDICATE lands the owning
+	// info on the referenced info's RELATED bucket (the broad rjInfoForType routing -- any repo-homed kind).
+	void rp_relatedConditionWalk(const CvCondition* pCondition, EnEdgeBucket eSourceBucket, int iSourceId)
+	{
+		if (pCondition == NULL)
+		{
+			return;
+		}
+		for (size_t iChild = 0; iChild < pCondition->all.size(); ++iChild)
+		{
+			rp_relatedConditionWalk(pCondition->all[iChild], eSourceBucket, iSourceId);
+		}
+		for (size_t iChild = 0; iChild < pCondition->anyOf.size(); ++iChild)
+		{
+			rp_relatedConditionWalk(pCondition->anyOf[iChild], eSourceBucket, iSourceId);
+		}
+		for (size_t iChild = 0; iChild < pCondition->noneOf.size(); ++iChild)
+		{
+			rp_relatedConditionWalk(pCondition->noneOf[iChild], eSourceBucket, iSourceId);
+		}
+		rp_relatedConditionWalk(pCondition->enabled, eSourceBucket, iSourceId);
+		rp_relatedConditionWalk(pCondition->disabled, eSourceBucket, iSourceId);
+		if (pCondition->id < 0)
+		{
+			return;
+		}
+		if (pCondition->kind == CASC_COND_PRESENCE)
+		{
+			rp_landRelated(rjInfoForType(pCondition->type, pCondition->id), eSourceBucket, iSourceId);
+		}
+		else if (pCondition->kind == CASC_COND_PREDICATE && !pCondition->param.empty())
+		{
+			rp_landRelated(rjInfoForType(pCondition->param, pCondition->id), eSourceBucket, iSourceId);
+		}
+	}
+
+	// One grants payload's FK lists + their per-entry conditions (also reached nested, as a trigger action's grant).
+	void rp_relatedFromGrants(const CvGrants* pGrants, EnEdgeBucket eSourceBucket, int iSourceId)
+	{
+		if (pGrants == NULL)
+		{
+			return;
+		}
+		const std::map<int, std::vector<int> >& grantLists = pGrants->lists();
+		for (std::map<int, std::vector<int> >::const_iterator it = grantLists.begin(); it != grantLists.end(); ++it)
+		{
+			// Load-window bucket classification: the grants key table is local to CvGrants, so the bucket is
+			// recovered by matching the minted key against each edge-bucket spelling (strings are sanctioned
+			// here -- this pass IS the load window; a non-bucket list key classifies NO_EDGEB and only its
+			// per-entry conditions walk).
+			EnEdgeBucket eGrantBucket = NO_EDGEB;
+			for (int iBucket = 0; iBucket < NUM_EDGEB; ++iBucket)
+			{
+				if (CvGrants::findKey(CvEdges::bucketName((EnEdgeBucket)iBucket)) == it->first)
+				{
+					eGrantBucket = (EnEdgeBucket)iBucket;
+					break;
+				}
+			}
+			for (size_t iEntry = 0; iEntry < it->second.size(); ++iEntry)
+			{
+				if (eGrantBucket != NO_EDGEB)
+				{
+					rp_landRelated(rp_infoForBucket(eGrantBucket, it->second[iEntry]), eSourceBucket, iSourceId);
+				}
+				rp_relatedConditionWalk(pGrants->listCond(it->first, iEntry), eSourceBucket, iSourceId);
+			}
+		}
+	}
+
+	// One compiled deposit list (the entity's §6 families, or its whenObsolete tree): the FK-resolved target key
+	// + the entry's condition trees + the per-scaler FKs.
+	void rp_relatedFromModifiers(const CvModifiers* pModifiers, EnEdgeBucket eSourceBucket, int iSourceId)
+	{
+		if (pModifiers == NULL)
+		{
+			return;
+		}
+		const std::vector<CvModEntry*>& compiledEntries = pModifiers->entries();
+		for (size_t iEntry = 0; iEntry < compiledEntries.size(); ++iEntry)
+		{
+			const CvModEntry* pEntry = compiledEntries[iEntry];
+			if (pEntry == NULL)
+			{
+				continue;
+			}
+			if (pEntry->targetFk >= 0)
+			{
+				// the FK key segment is the one underscored non-target-token segment of the authored address
+				// (member spellings are camelCase, never underscored -- the CvModifiers decode's own rule)
+				for (int iSeg = 0; iSeg < pEntry->nSeg && iSeg < CvModEntry::MOD_ENTRY_SEGS; ++iSeg)
+				{
+					const char* szSegment = modSegmentSpell(pEntry->seg[iSeg]);
+					if (strchr(szSegment, '_') == NULL)
+					{
+						continue;
+					}
+					if (infoIsTargetToken(szSegment))
+					{
+						continue;
+					}
+					rp_landRelated(rjInfoForType(szSegment, pEntry->targetFk), eSourceBucket, iSourceId);
+					break;
+				}
+			}
+			rp_relatedConditionWalk(pEntry->enabled, eSourceBucket, iSourceId);
+			rp_relatedConditionWalk(pEntry->disabled, eSourceBucket, iSourceId);
+			rp_relatedConditionWalk(pEntry->unitQual, eSourceBucket, iSourceId);
+			rp_relatedConditionWalk(pEntry->religionQual, eSourceBucket, iSourceId);
+			if (pEntry->perTypeId >= 0 && !pEntry->perType.empty())
+			{
+				rp_landRelated(rjInfoForType(pEntry->perType, pEntry->perTypeId), eSourceBucket, iSourceId);
+			}
+			for (size_t iPer = 0; iPer < pEntry->perAnyOf.size() && iPer < pEntry->perAnyOfTypes.size(); ++iPer)
+			{
+				if (pEntry->perAnyOf[iPer] >= 0)
+				{
+					rp_landRelated(rjInfoForType(pEntry->perAnyOfTypes[iPer], pEntry->perAnyOf[iPer]), eSourceBucket, iSourceId);
+				}
+			}
+		}
+	}
+
+	// ONE info's complete compiled surface -> RELATED. Edge references land BOTH directions (the referencing
+	// info under the referenced info's kind bucket, AND the referenced id under the edge's own bucket on the
+	// referencing info) -- the store-inversion means either side may carry the authored edge, and the symmetric
+	// landing is what keeps every legacy display read servable from the info it asks (the bonus<-tech reveal
+	// class). Requires/deposits/grants land ONE direction (owner -> referenced): their forward side already
+	// lives on the owning info's own sections.
+	void rp_relatedFromInfo(CvInfo* pSourceInfo, EnEdgeBucket eSourceBucket, int iSourceId)
+	{
+		if (pSourceInfo == NULL)
+		{
+			return;
+		}
+		const CvEdges* pEdges = pSourceInfo->getEdges();
+		if (pEdges != NULL)
+		{
+			// AUTHORED families only (ENABLES..OBSOLETED_BY) -- the derived RELATED/REQUIRED_BY families are
+			// this pass's own output, never its input.
+			for (int iFamily = 0; iFamily < (int)EDGEF_RELATED; ++iFamily)
+			{
+				for (int iBucket = 0; iBucket < NUM_EDGEB; ++iBucket)
+				{
+					const std::vector<int>* pReferencedIds = pEdges->find((EnEdgeFamily)iFamily, (EnEdgeBucket)iBucket);
+					if (pReferencedIds == NULL)
+					{
+						continue;
+					}
+					for (size_t iRef = 0; iRef < pReferencedIds->size(); ++iRef)
+					{
+						const int iReferencedId = (*pReferencedIds)[iRef];
+						CvInfo* pReferencedInfo = rp_infoForBucket((EnEdgeBucket)iBucket, iReferencedId);
+						rp_landRelated(pReferencedInfo, eSourceBucket, iSourceId);
+						// The UNLOCK axis gets its OWN reverse family beside the merged display one, because
+						// `enables` is the one relation with no target-side authoring: a target declares its
+						// own `obsoletedBy` / `replacedBy`, but nothing says "what unlocks me" -- only the
+						// SOURCE does. Landing it separately is what lets a consumer ask for the unlocking
+						// tech without having to tell it apart from an obsoleting one inside EDGEF_RELATED.
+						if ((EnEdgeFamily)iFamily == EDGEF_ENABLES && pReferencedInfo != NULL)
+						{
+							pReferencedInfo->addReverseEdge(EDGEF_ENABLED_BY, eSourceBucket, iSourceId);
+						}
+						pSourceInfo->addReverseEdge(EDGEF_RELATED, (EnEdgeBucket)iBucket, iReferencedId);
+						++s_counts.relatedAdds;
+					}
+				}
+			}
+		}
+		rp_relatedConditionWalk(pSourceInfo->requiresBuild(), eSourceBucket, iSourceId);
+		rp_relatedConditionWalk(pSourceInfo->requiresOperate(), eSourceBucket, iSourceId);
+		const std::vector<int>& dormantSuccessors = pSourceInfo->dormantTriggers();
+		for (size_t iDormant = 0; iDormant < dormantSuccessors.size(); ++iDormant)
+		{
+			// dormant triggers reference same-kind successors (building ReplacementBuildings; unit upgrades)
+			rp_landRelated(rp_infoForBucket(eSourceBucket, dormantSuccessors[iDormant]), eSourceBucket, iSourceId);
+		}
+		rp_relatedFromModifiers(pSourceInfo->getModifiers(), eSourceBucket, iSourceId);
+		rp_relatedFromModifiers(pSourceInfo->getWhenObsolete(), eSourceBucket, iSourceId);
+		rp_relatedFromGrants(pSourceInfo->consideredGrants(), eSourceBucket, iSourceId);
+		const CvProvides* pProvides = pSourceInfo->getProvides();
+		if (pProvides != NULL)
+		{
+			for (size_t iBonus = 0; iBonus < pProvides->bonuses.size(); ++iBonus)
+			{
+				rp_landRelated(rp_infoForBucket(EDGEB_BONUSES, pProvides->bonuses[iBonus]), eSourceBucket, iSourceId);
+			}
+		}
+		const CvTriggers* pTriggers = pSourceInfo->getTriggers();
+		if (pTriggers != NULL)
+		{
+			const std::vector<CvTriggerEntry*>& triggerEntries = pTriggers->entries();
+			for (size_t iTrigger = 0; iTrigger < triggerEntries.size(); ++iTrigger)
+			{
+				const CvTriggerEntry* pTrigger = triggerEntries[iTrigger];
+				if (pTrigger == NULL)
+				{
+					continue;
+				}
+				rp_relatedConditionWalk(pTrigger->condition, eSourceBucket, iSourceId);
+				for (size_t iPromotion = 0; iPromotion < pTrigger->promotePromotions.size(); ++iPromotion)
+				{
+					rp_landRelated(rp_infoForBucket(EDGEB_PROMOTIONS, pTrigger->promotePromotions[iPromotion]), eSourceBucket, iSourceId);
+				}
+				rp_relatedFromGrants(pTrigger->grant, eSourceBucket, iSourceId);
+				// healUnitCombatId / propertyId reference kinds outside the bucket vocabulary that also compose
+				// no CvEdges -- nothing to land, by construction.
+			}
+		}
+	}
+
+	// One source kind's whole repo. Reads never create: get() + const_cast (an OWNED repo -- heritage / build /
+	// complex traits -- must not sprout empty pocos for ids its phase has not mapped).
+	template <class RepoTag>
+	void rp_relatedWalkKind(int iNumInfos, EnEdgeBucket eSourceBucket)
+	{
+		for (int iInfo = 0; iInfo < iNumInfos; ++iInfo)
+		{
+			CvInfo* pSourceInfo = const_cast<CvInfo*>(InfoRepo<RepoTag>::get().get(iInfo));
+			rp_relatedFromInfo(pSourceInfo, eSourceBucket, iInfo);
+		}
+	}
+
+	// The BUILD kind's one typed-section contributor: the per-terrain / per-feature tech gates live in the
+	// build's `produces` section (typed subclass members, not the shared compiled surface), so the general walk
+	// cannot see them -- the one place a per-type read remains in the RELATED build.
+	void rp_relatedFromBuildProduces()
+	{
+		const int iNumBuilds = GC.getNumBuildInfos();
+		const int iNumFeatures = GC.getNumFeatureInfos();
+		for (int iBuild = 0; iBuild < iNumBuilds; ++iBuild)
+		{
+			const CvBuildInfo* pBuild = static_cast<const CvBuildInfo*>(InfoRepo<CvBuildInfo>::get().get(iBuild));
+			if (pBuild == NULL)
+			{
+				continue;
+			}
+			const std::vector<TerrainStructs>& terraformRows = pBuild->getProduces().terraformRows;
+			for (size_t iRow = 0; iRow < terraformRows.size(); ++iRow)
+			{
+				rp_landRelated(rp_infoForBucket(EDGEB_TECHS, (int)terraformRows[iRow].ePrereqTech), EDGEB_BUILDS, iBuild);
+			}
+			for (int iFeature = 0; iFeature < iNumFeatures; ++iFeature)
+			{
+				rp_landRelated(rp_infoForBucket(EDGEB_TECHS, (int)pBuild->getFeatureTech((FeatureTypes)iFeature)), EDGEB_BUILDS, iBuild);
+			}
+			//	WHAT LAYING THIS BUILD PRODUCES, landed back onto the produced thing -- so an improvement or a
+			//	route can answer "which builds make me" without a consumer sweeping the build registry asking
+			//	each one what it produces (docs/cascade.md §1 (reverse lookups are populated once, at load): the reverse view is derived ONCE, at load).
+			rp_landRelated(rp_infoForBucket(EDGEB_IMPROVEMENTS, (int)pBuild->getImprovement()), EDGEB_BUILDS, iBuild);
+			rp_landRelated(rp_infoForBucket(EDGEB_ROUTES,       (int)pBuild->getRoute()),       EDGEB_BUILDS, iBuild);
+		}
+	}
+
+	// Land one MEMBERSHIP reference: the member unit onto its combat class. Unitcombats are not an edge BUCKET
+	// (nothing stores a class id in an edge list), so the class is reached through the globals like the
+	// leaderhead is -- what the bucket names here is the kind of the ids being stored, which are units.
+	void rp_landMember(int iUnitCombat, int iUnit)
+	{
+		if (iUnitCombat < 0 || iUnitCombat >= GC.getNumUnitCombatInfos())
+		{
+			return;
+		}
+		GC.getUnitCombatInfo((UnitCombatTypes)iUnitCombat).addReverseEdge(EDGEF_MEMBERS, EDGEB_UNITS, iUnit);
+		++s_counts.relatedAdds;
+	}
+
+	// The LEADERHEAD's trait assignment, inverted. A leader holds its traits as plain FK lists and a trait never
+	// names a leader, so "which leaders hold this trait" cannot be read forward from either side -- it exists
+	// only as this load-built inverse.
+	// ⛔ The leaderhead is not walked by the general kind table above: it is not in an InfoRepo, and the lists are
+	// root FKs rather than part of any compiled surface that walk sees.
+	// ⚑ The two sets need no option check and no active-set choice. They share no id, so a leader's simple
+	// entries land on simple traits and its complex entries on complex ones, and each trait ends up with exactly
+	// the leaders that named IT.
+	//	The CIVILIZATION -> LEADER roster, inverted. A civ names the leaders that may play it; a leaderhead names
+	//	no civ, so "which civs may this leader lead" is only answerable as the load-built inverse -- and without
+	//	it a consumer has to sweep every civilization asking each one, which is the own-data inversion
+	//	docs/cascade.md §1 (reverse lookups are populated once, at load) bans.
+	void rp_relatedFromCivilizationLeaders()
+	{
+		const int iNumCivs = GC.getNumCivilizationInfos();
+		for (int iCiv = 0; iCiv < iNumCivs; ++iCiv)
+		{
+			const CvCivilizationInfo& kCiv = GC.getCivilizationInfo((CivilizationTypes)iCiv);
+			const std::vector<LeaderHeadTypes>& leaders = kCiv.getLeaders();
+			for (size_t i = 0; i < leaders.size(); ++i)
+			{
+				const int iLeader = (int)leaders[i];
+				if (iLeader < 0 || iLeader >= GC.getNumLeaderHeadInfos()) continue;
+				rp_landRelated(&GC.getLeaderHeadInfo((LeaderHeadTypes)iLeader), EDGEB_CIVILIZATIONS, iCiv);
+			}
+		}
+	}
+
+	void rp_relatedFromLeaderTraits()
+	{
+		const int iNumLeaders = GC.getNumLeaderHeadInfos();
+		for (int iLeader = 0; iLeader < iNumLeaders; ++iLeader)
+		{
+			const CvLeaderHeadInfo& kLeader = GC.getLeaderHeadInfo((LeaderHeadTypes)iLeader);
+
+			const std::vector<int>& simpleTraits = kLeader.getTraits();
+			for (size_t iTrait = 0; iTrait < simpleTraits.size(); ++iTrait)
+			{
+				rp_landRelated(rp_traitInfoForId(simpleTraits[iTrait]), EDGEB_LEADERS, iLeader);
+			}
+			const std::vector<int>& complexTraits = kLeader.getComplexTraits();
+			for (size_t iTrait = 0; iTrait < complexTraits.size(); ++iTrait)
+			{
+				rp_landRelated(rp_traitInfoForId(complexTraits[iTrait]), EDGEB_LEADERS, iLeader);
+			}
+		}
+	}
+
+	// The UNIT-COMBAT membership index (class -> its member units), inverted from each unit's own combat-class
+	// FKs. A unit names its classes and a class names no units, so this is the only place the answer exists.
+	// ⛔ It is EDGEF_MEMBERS and not EDGEF_RELATED: a unit ALSO names a combat class to deposit a vs-modifier
+	// onto it, so the RELATED list of a class holds every unit that merely fights it well. Reading membership
+	// off that would report those as members.
+	// ⚑ PRIMARY + SUBS is the authored set, which is what a static listing means. Promotion-granted classes are
+	// per-unit runtime state and are not membership of the type.
+	void rp_deriveUnitCombatMembers()
+	{
+		const int iNumUnits = GC.getNumUnitInfos();
+		for (int iUnit = 0; iUnit < iNumUnits; ++iUnit)
+		{
+			const CvInfo* pUnitData = InfoRepo<CvUnitInfo>::get().get(iUnit);
+			if (pUnitData == NULL)
+			{
+				continue;
+			}
+			const CvUnitInfo* pUnit = static_cast<const CvUnitInfo*>(pUnitData);
+
+			rp_landMember(pUnit->getCombatClass(), iUnit);
+			const std::vector<int>& subClasses = pUnit->getCombatClasses();
+			for (size_t iClass = 0; iClass < subClasses.size(); ++iClass)
+			{
+				rp_landMember(subClasses[iClass], iUnit);
+			}
+
+			//	WHICH UNITS CAN PERFORM A BUILD is the inverse of the unit's own `builds` repertoire, and only
+			//	the BUILD can answer it. Landing it here is what stops a consumer sweeping every unit asking
+			//	`hasBuild` -- the whole-registry cross-link docs/cascade.md §1 (reverse lookups are populated once, at load) bans ("a page walking a
+			//	DIFFERENT registry to find what needs me is a cross-link the reverse families already answer").
+			const std::vector<int>& aiBuilds = pUnit->getBuilds();
+			for (size_t iBuild = 0; iBuild < aiBuilds.size(); ++iBuild)
+			{
+				rp_landRelated(rp_infoForBucket(EDGEB_BUILDS, aiBuilds[iBuild]), EDGEB_UNITS, iUnit);
+			}
+		}
+	}
+
+	void rp_buildRelated()
+	{
+		#define X(REPO_TAG, COUNT_GETTER, SOURCE_BUCKET) rp_relatedWalkKind<REPO_TAG>(GC.COUNT_GETTER(), SOURCE_BUCKET);
+		RP_RELATED_SOURCE_KINDS(X)
+		#undef X
+		// the complex trait set rides beside the TRAIT_ row: same engine ids, same bucket, its own repo (the
+		// RELATED lists dedup, so a shared reference lands once)
+		rp_relatedWalkKind<CvComplexTraitTag>(GC.getNumTraitInfos(), EDGEB_TRAITS);
+		rp_relatedFromBuildProduces();
+		rp_relatedFromLeaderTraits();
+		rp_relatedFromCivilizationLeaders();
+		rp_deriveUnitCombatMembers();
+	}
+
+	// ==================== sub-pass (3): EDGEF_REQUIRED_BY -- the enabler's re-gate index ====================
+	// The exact tree-walk semantics of the retired rvRequiresWalk, over the same dependent-kind set
+	// (enabler.md §7.1 step 2): every HAVE-axis atom a dependent's requires references gains that dependent
+	// under the dependent's kind bucket ON THE REFERENCED INFO -- the gate stage re-gates exactly these
+	// dependents on the atom's HAVE-event, never a database sweep.
+
+	// The referenced HAVE-axis info by its INFOTYPE prefix (naming.md routes by prefix). NULL = not a HAVE-axis
+	// re-gate target: engine tokens (TURN/POPULATION/ERA), the plot substrate (terrain/feature/improvement --
+	// the dynamic plot axis with its own event routing), and PROPERTY_ bands (the property engine's axis).
+	CvInfo* rp_requiredByRefInfo(const std::string& szType, int iId)
+	{
+		// the synthetic root's cascade data lives OFF the InfoRepo (cascadeStartNode) -- route it there, never
+		// the GC poco (the split-brain the /state/info read exposed)
+		if (szType == "TECH_GAME_START")
+		{
+			return &cascadeStartNode();
+		}
+		if (!szType.compare(0, 5, "TECH_"))
+		{
+			return InfoRepo<CvTechInfo>::get().editPtr(iId);
+		}
+		if (!szType.compare(0, 9, "BUILDING_"))
+		{
+			return InfoRepo<CvBuildingInfo>::get().editPtr(iId);
+		}
+		if (!szType.compare(0, 6, "BONUS_"))
+		{
+			return InfoRepo<CvBonusInfo>::get().editPtr(iId);
+		}
+		if (!szType.compare(0, 6, "CIVIC_"))
+		{
+			return InfoRepo<CvCivicInfo>::get().editPtr(iId);
+		}
+		if (!szType.compare(0, 5, "UNIT_"))
+		{
+			return InfoRepo<CvUnitInfo>::get().editPtr(iId);
+		}
+		if (!szType.compare(0, 9, "RELIGION_"))
+		{
+			return InfoRepo<CvReligionInfo>::get().editPtr(iId);
+		}
+		if (!szType.compare(0, 12, "CORPORATION_"))
+		{
+			return InfoRepo<CvCorporationInfo>::get().editPtr(iId);
+		}
+		if (!szType.compare(0, 9, "HERITAGE_"))
+		{
+			return InfoRepo<CvHeritageInfo>::get().editPtr(iId);
+		}
+		if (!szType.compare(0, 8, "PROJECT_"))
+		{
+			return InfoRepo<CvProjectInfo>::get().editPtr(iId);
+		}
+		return NULL;
+	}
+
+	// Recurse one requires tree: every FK-resolved PRESENCE atom + parameterized PREDICATE lands the dependent
+	// on the referenced info's REQUIRED_BY bucket.
+	void rp_requiredByWalk(const CvCondition* pCondition, EnEdgeBucket eDependentKind, int iDependentId)
+	{
+		if (pCondition == NULL)
+		{
+			return;
+		}
+		for (size_t iChild = 0; iChild < pCondition->all.size(); ++iChild)
+		{
+			rp_requiredByWalk(pCondition->all[iChild], eDependentKind, iDependentId);
+		}
+		for (size_t iChild = 0; iChild < pCondition->anyOf.size(); ++iChild)
+		{
+			rp_requiredByWalk(pCondition->anyOf[iChild], eDependentKind, iDependentId);
+		}
+		for (size_t iChild = 0; iChild < pCondition->noneOf.size(); ++iChild)
+		{
+			rp_requiredByWalk(pCondition->noneOf[iChild], eDependentKind, iDependentId);
+		}
+		rp_requiredByWalk(pCondition->enabled, eDependentKind, iDependentId);
+		rp_requiredByWalk(pCondition->disabled, eDependentKind, iDependentId);
+		if (pCondition->id < 0)
+		{
+			return;
+		}
+		CvInfo* pReferencedInfo = NULL;
+		if (pCondition->kind == CASC_COND_PRESENCE)
+		{
+			pReferencedInfo = rp_requiredByRefInfo(pCondition->type, pCondition->id);
+		}
+		else if (pCondition->kind == CASC_COND_PREDICATE && !pCondition->param.empty())
+		{
+			pReferencedInfo = rp_requiredByRefInfo(pCondition->param, pCondition->id);
+		}
+		if (pReferencedInfo != NULL)
+		{
+			pReferencedInfo->addReverseEdge(EDGEF_REQUIRED_BY, eDependentKind, iDependentId);
+			++s_counts.requiredByAdds;
+		}
+	}
+
+	int rp_gateKindCount(EnEdgeBucket eBucket)
+	{
+		switch (eBucket)
+		{
+		case EDGEB_BUILDINGS:
+			return GC.getNumBuildingInfos();
+		case EDGEB_UNITS:
+			return GC.getNumUnitInfos();
+		case EDGEB_TECHS:
+			return GC.getNumTechInfos();
+		case EDGEB_CIVICS:
+			return GC.getNumCivicInfos();
+		case EDGEB_PROJECTS:
+			return GC.getNumProjectInfos();
+		case EDGEB_PROCESSES:
+			return GC.getNumProcessInfos();
+		case EDGEB_PROMOTIONS:
+			return GC.getNumPromotionInfos();
+		case EDGEB_BUILDS:
+			return GC.getNumBuildInfos();
+		default:
+			return 0;
+		}
+	}
+
+	void rp_buildRequiredBy()
+	{
+		// every dependent kind's requires.build + requires.operate trees + its dormant triggers, inverted onto
+		// the referenced infos
+		static const EnEdgeBucket DEPENDENT_KINDS[] =
+		{
+			EDGEB_BUILDINGS, EDGEB_UNITS, EDGEB_TECHS, EDGEB_CIVICS,
+			EDGEB_PROJECTS, EDGEB_PROCESSES, EDGEB_PROMOTIONS, EDGEB_BUILDS, NO_EDGEB
+		};
+		for (int iKind = 0; DEPENDENT_KINDS[iKind] != NO_EDGEB; ++iKind)
+		{
+			const EnEdgeBucket eKind = DEPENDENT_KINDS[iKind];
+			const int iNumInfos = rp_gateKindCount(eKind);
+			for (int iInfo = 0; iInfo < iNumInfos; ++iInfo)
+			{
+				const CvInfo* pDependent = EnablerKernel::infoFor(eKind, iInfo);
+				if (pDependent == NULL)
+				{
+					continue;
+				}
+				rp_requiredByWalk(pDependent->requiresBuild(), eKind, iInfo);
+				rp_requiredByWalk(pDependent->requiresOperate(), eKind, iInfo);
+				// dormant triggers reference same-kind successors (building ReplacementBuildings; unit upgrades)
+				const std::vector<int>& dormantSuccessors = pDependent->dormantTriggers();
+				for (size_t iDormant = 0; iDormant < dormantSuccessors.size(); ++iDormant)
+				{
+					CvInfo* pSuccessor = const_cast<CvInfo*>(EnablerKernel::infoFor(eKind, dormantSuccessors[iDormant]));
+					if (pSuccessor != NULL)
+					{
+						pSuccessor->addReverseEdge(EDGEF_REQUIRED_BY, eKind, iInfo);
+						++s_counts.requiredByAdds;
+					}
+				}
+			}
+		}
+		// improvements + heritages carry requires too (no infoFor bucket dispatch -- repo-direct)
+		for (int iImprovement = 0; iImprovement < GC.getNumImprovementInfos(); ++iImprovement)
+		{
+			const CvInfo* pDependent = InfoRepo<CvImprovementInfo>::get().get(iImprovement);
+			if (pDependent == NULL)
+			{
+				continue;
+			}
+			rp_requiredByWalk(pDependent->requiresBuild(), EDGEB_IMPROVEMENTS, iImprovement);
+			rp_requiredByWalk(pDependent->requiresOperate(), EDGEB_IMPROVEMENTS, iImprovement);
+		}
+		for (int iHeritage = 0; iHeritage < GC.getNumHeritageInfos(); ++iHeritage)
+		{
+			const CvInfo* pDependent = InfoRepo<CvHeritageInfo>::get().get(iHeritage);
+			if (pDependent == NULL)
+			{
+				continue;
+			}
+			rp_requiredByWalk(pDependent->requiresBuild(), EDGEB_HERITAGES, iHeritage);
+			rp_requiredByWalk(pDependent->requiresOperate(), EDGEB_HERITAGES, iHeritage);
+		}
+	}
+
+	// ==================== sub-pass (4): the own-output reverse LANDING (modifier.md §4) ====================
+	// The (family × targetKind) classification, derived from modifier.md §4 over the compiled data's keyed
+	// tuples (the full census -- every pair present in Assets/Data):
+	//   LANDED (own-output -- the target's own produced output, the source a presence condition):
+	//     - building/civic/tech × {food,production,commerce} × {improvements,terrains,features,routes} FLAT
+	//       (tile output -- lands PLOT-scope, presence at the source kind's HAVE scope);
+	//     - building/civic/tech × {gold,culture,research,espionage,commerce,food,production,happiness,health}
+	//       × buildings keyed (info-rebuild.md ruling 19: the wonder/civic/tech -> building-TYPE boosts are the
+	//       TARGET building's own output -- land CITY-scope per §2a/§2b, same family/value/unit, kind 0,
+	//       presence at the AUTHORED deposit's scope axis, an authored condition composed in, never dropped).
+	//   STAYS SOURCE-SIDE (governing-deliverer, or the §4 carve-outs):
+	//     - buildRate × every keyed target (the §4 named governing-deliverer exemplar -- incl. its buildings
+	//       keyed targets: a build-cost discount is delivered, not the target's output);
+	//     - EVERY TRAIT-sourced keyed deposit (the §4 per-set carve-out: simple/complex values differ per set
+	//       and the target is one shared file -- the cascade reads the ACTIVE set source-side);
+	//     - route × improvements yields (the §4 governing-deliverer exemplar -- read off the ROUTE's compiled
+	//       keyed entries; the improvement-side consumers rewire onto them at the stage-4 cut);
+	//     - source × units/domains/unitCombats/specialists/techs/builds keyed values, + non-output-channel
+	//       families keyed to buildings (delivered effects: XP, research-rate, work-rate, great-people,
+	//       diplomacy -- the deliverer brings them);
+	//     - civic × features happiness (modifier.md §2b reads the civic-side keyed member in the wellbeing
+	//       terms -- the legacy one-term feature+improvement bundling; left source-side, reported).
+	//   A plot-substrate landing-shaped entry that is conditioned / non-flat / member-kinded is left
+	//   source-side and COUNTED (ownOutputSkipped) -- never guessed at (the census carries zero today). A
+	//   buildings-keyed entry composes conditions instead; only a member-kinded one (it cannot land as the
+	//   kind-0 city output slot) is left source-side and COUNTED (census: zero today).
+
+	// The plot-substrate landing target of a keyed deposit: the entry's target-token segment names the kind.
+	CvInfo* rp_landingTarget(const CvModEntry* pEntry, int iImprovementsToken, int iTerrainsToken, int iFeaturesToken, int iRoutesToken)
+	{
+		if (pEntry->targetSeg < 0)
+		{
+			return NULL;
+		}
+		if (pEntry->targetSeg == iImprovementsToken)
+		{
+			return const_cast<CvInfo*>(InfoRepo<CvImprovementInfo>::get().get(pEntry->targetFk));
+		}
+		if (pEntry->targetSeg == iTerrainsToken)
+		{
+			return const_cast<CvInfo*>(InfoRepo<CvTerrainInfo>::get().get(pEntry->targetFk));
+		}
+		if (pEntry->targetSeg == iFeaturesToken)
+		{
+			return const_cast<CvInfo*>(InfoRepo<CvFeatureInfo>::get().get(pEntry->targetFk));
+		}
+		if (pEntry->targetSeg == iRoutesToken)
+		{
+			return const_cast<CvInfo*>(InfoRepo<CvRouteInfo>::get().get(pEntry->targetFk));
+		}
+		return NULL;
+	}
+
+	// The nine output-channel families of the buildings-keyed landing (info-rebuild.md ruling 19): the yield
+	// channels (food/production/commerce), the commerce channels (gold/research/culture/espionage), and the
+	// wellbeing channels (happiness/health). Everything else keyed to a building is a delivered effect and
+	// stays source-side by classification.
+	bool rp_isOutputChannelFamily(ModifierFamily eFamily)
+	{
+		if (infoFamilyYield(eFamily) >= 0)
+		{
+			return true;
+		}
+		if (infoFamilyCommerce(eFamily) >= 0)
+		{
+			return true;
+		}
+		return eFamily == MODFAM_HAPPINESS || eFamily == MODFAM_HEALTH;
+	}
+
+	// Deep clone of a compiled condition tree. Needed because a landed entry OWNS its trees while the authored
+	// source-side entry keeps its own (CvCondition is noncopyable by design -- ownership, not immutability).
+	CvCondition* rp_cloneCondition(const CvCondition* pCondition)
+	{
+		if (pCondition == NULL)
+		{
+			return NULL;
+		}
+		CvCondition* pClone = new CvCondition();
+		pClone->kind = pCondition->kind;
+		for (size_t iChild = 0; iChild < pCondition->all.size(); ++iChild)
+		{
+			pClone->all.push_back(rp_cloneCondition(pCondition->all[iChild]));
+		}
+		for (size_t iChild = 0; iChild < pCondition->anyOf.size(); ++iChild)
+		{
+			pClone->anyOf.push_back(rp_cloneCondition(pCondition->anyOf[iChild]));
+		}
+		for (size_t iChild = 0; iChild < pCondition->noneOf.size(); ++iChild)
+		{
+			pClone->noneOf.push_back(rp_cloneCondition(pCondition->noneOf[iChild]));
+		}
+		pClone->enabled = rp_cloneCondition(pCondition->enabled);
+		pClone->disabled = rp_cloneCondition(pCondition->disabled);
+		pClone->type = pCondition->type;
+		pClone->scope = pCondition->scope;
+		pClone->min = pCondition->min;
+		pClone->max = pCondition->max;
+		pClone->hasMin = pCondition->hasMin;
+		pClone->hasMax = pCondition->hasMax;
+		pClone->connection = pCondition->connection;
+		pClone->vicinity = pCondition->vicinity;
+		pClone->predKind = pCondition->predKind;
+		pClone->param = pCondition->param;
+		pClone->id = pCondition->id;
+		return pClone;
+	}
+
+	// Land ONE buildings-keyed output-channel deposit on its TARGET building (info-rebuild.md ruling 19).
+	// The landed entry is the target building's own CITY-scope output (§2a building output / §2b wellbeing):
+	// same family/value/unit, kind 0, gated on the SOURCE's presence at the AUTHORED deposit's scope --
+	// derived from the compiled entry's scope axis (an empire-authored keyed deposit gates on empire-scope
+	// presence; city-authored on city; team-authored on team), never hardcoded per source kind. An authored
+	// condition/per-scaler is PRESERVED by composing: the presence atom ANDs with a deep clone of the authored
+	// `enabled` (a GROUP-all node); `disabled` / the `unit:` qualifier clone across whole; a `per` copies its
+	// fields, an absent per-scope pinned to the AUTHORED deposit scope so the count does not silently re-scope
+	// to the landed city scope.
+	void rp_landOnTargetBuilding(const CvInfo* pSourceInfo, int iSourceId, const CvModEntry* pEntry)
+	{
+		CvInfo* pTargetInfo = const_cast<CvInfo*>(static_cast<const CvInfo*>(InfoRepo<CvBuildingInfo>::get().get(pEntry->targetFk)));
+		if (pTargetInfo == NULL)
+		{
+			return;   // unresolved target FK -- the reader's fail-loud coverage summary owns the report
+		}
+		CvModEntry* pLanded = new CvModEntry();
+		pLanded->family = pEntry->family;
+		pLanded->scope = CASC_SCOPE_CITY;
+		pLanded->kind = 0;
+		pLanded->unit = pEntry->unit;
+		pLanded->value = pEntry->value;
+		pLanded->aiOnly = pEntry->aiOnly;   // the §3.9 audience flag rides the landing whole
+		pLanded->seg[0] = modSegmentIntern(infoFamilyKey(pEntry->family));
+		pLanded->seg[1] = modSegmentIntern("city");
+		pLanded->nSeg = 2;
+		CvCondition* pPresence = new CvCondition();
+		pPresence->kind = CASC_COND_PRESENCE;
+		pPresence->type = pSourceInfo->getType();
+		pPresence->scope = pEntry->scope;   // the AUTHORED deposit's scope axis, never the source kind's
+		pPresence->min = 1; pPresence->hasMin = true;
+		pPresence->id = iSourceId;
+		if (pEntry->enabled != NULL)
+		{
+			CvCondition* pComposed = new CvCondition();
+			pComposed->kind = CASC_COND_GROUP;
+			pComposed->all.push_back(pPresence);
+			pComposed->all.push_back(rp_cloneCondition(pEntry->enabled));
+			pLanded->enabled = pComposed;
+		}
+		else
+		{
+			pLanded->enabled = pPresence;
+		}
+		pLanded->disabled = rp_cloneCondition(pEntry->disabled);
+		pLanded->unitQual = rp_cloneCondition(pEntry->unitQual);
+		pLanded->religionQual = rp_cloneCondition(pEntry->religionQual);
+		// the ranked-selection carry (ruling 25) rides the landing whole -- parse-carried, evaluation parked
+		pLanded->hasRankQual = pEntry->hasRankQual;
+		pLanded->rankMax = pEntry->rankMax;
+		pLanded->rankMaxToken = pEntry->rankMaxToken;
+		pLanded->orderedBySeg = pEntry->orderedBySeg;
+		pLanded->orderedDescending = pEntry->orderedDescending;
+		if (pEntry->hasPer)
+		{
+			pLanded->hasPer = true;
+			pLanded->perType = pEntry->perType;
+			pLanded->perAnyOfTypes = pEntry->perAnyOfTypes;
+			pLanded->perTypeId = pEntry->perTypeId;
+			pLanded->perEach = pEntry->perEach;
+			pLanded->perScope = (pEntry->perScope >= 0) ? pEntry->perScope : (int)pEntry->scope;
+			pLanded->perAnyOf = pEntry->perAnyOf;
+			// per.above (ruling 26): the source-resolved base + token travel with the per whole
+			pLanded->hasAbove = pEntry->hasAbove;
+			pLanded->perAbove = pEntry->perAbove;
+			pLanded->perAboveToken = pEntry->perAboveToken;
+		}
+		pTargetInfo->landOwnOutputEntry(pLanded);
+		++s_counts.ownOutputLanded;
+	}
+
+	// Land ONE source kind's own-output keyed deposits on their targets -- two landing classes:
+	//   (a) plot-substrate keyed (improvements/terrains/features/routes): the landed entry is the target's own
+	//       plot-scope flat ("+X while the source is present"): same family/value, scope PLOT (the plot package
+	//       is where every component-specific buff resolves -- modifier.md §2/§2a), the source's presence as
+	//       the prebuilt `enabled` condition at the source kind's HAVE scope (building -> city, civic ->
+	//       empire, tech -> team; the condition parser's own implied-scope rule);
+	//   (b) buildings keyed (info-rebuild.md ruling 19): the nine output channels land on the TARGET building
+	//       at CITY scope, presence at the AUTHORED deposit's scope axis (rp_landOnTargetBuilding).
+	template <class SourceRepoTag>
+	void rp_landOwnOutputKind(int iNumInfos, CvCascScope ePresenceScope)
+	{
+		const int iImprovementsToken = modSegmentLookup("improvements");
+		const int iTerrainsToken = modSegmentLookup("terrains");
+		const int iFeaturesToken = modSegmentLookup("features");
+		const int iRoutesToken = modSegmentLookup("routes");
+		const int iBuildingsToken = modSegmentLookup("buildings");
+		for (int iSource = 0; iSource < iNumInfos; ++iSource)
+		{
+			const CvInfo* pSourceInfo = InfoRepo<SourceRepoTag>::get().get(iSource);
+			if (pSourceInfo == NULL)
+			{
+				continue;
+			}
+			const CvModifiers* pModifiers = pSourceInfo->getModifiers();
+			if (pModifiers == NULL)
+			{
+				continue;
+			}
+			// index loop over the live vector: a self-keyed landing appends to this same entry list, which is
+			// safe (pointer elements; the appended landed entries fail the targetFk gate on their own turn)
+			const std::vector<CvModEntry*>& compiledEntries = pModifiers->entries();
+			for (size_t iEntry = 0; iEntry < compiledEntries.size(); ++iEntry)
+			{
+				const CvModEntry* pEntry = compiledEntries[iEntry];
+				if (pEntry == NULL)
+				{
+					continue;
+				}
+				if (pEntry->targetFk < 0)
+				{
+					continue;
+				}
+				// landing class (b): the buildings-keyed output-channel flip. Non-output families keyed to
+				// buildings (buildRate discounts, ...) stay source-side by classification -- silent, not a skip.
+				if (pEntry->targetSeg == iBuildingsToken)
+				{
+					if (!rp_isOutputChannelFamily(pEntry->family))
+					{
+						continue;
+					}
+					if (pEntry->kind != 0)
+					{
+						// a member-kinded buildings-keyed slot cannot land as the kind-0 city output entry --
+						// left source-side and surfaced, never guessed at (the census carries zero today)
+						++s_counts.ownOutputSkipped;
+						continue;
+					}
+					rp_landOnTargetBuilding(pSourceInfo, iSource, pEntry);
+					continue;
+				}
+				// landing class (a): the plot-substrate tile-output landing.
+				if (infoFamilyYield(pEntry->family) < 0)
+				{
+					continue;   // own tile output is a YIELD channel; every other keyed family is delivered
+				}
+				CvInfo* pTargetInfo = rp_landingTarget(pEntry, iImprovementsToken, iTerrainsToken, iFeaturesToken, iRoutesToken);
+				if (pTargetInfo == NULL)
+				{
+					continue;   // not a plot-substrate target kind -- stays source-side by classification
+				}
+				if (pEntry->unit != CASC_UNIT_FLAT || pEntry->isConditioned() || pEntry->kind != 0)
+				{
+					// a per-component percent / an already-conditioned keyed value / a member-kinded slot has no
+					// precedent in the data (census: zero) -- left source-side and surfaced, never guessed at
+					++s_counts.ownOutputSkipped;
+					continue;
+				}
+				CvModEntry* pLanded = new CvModEntry();
+				pLanded->family = pEntry->family;
+				pLanded->scope = CASC_SCOPE_PLOT;
+				pLanded->kind = 0;
+				pLanded->unit = CASC_UNIT_FLAT;
+				pLanded->value = pEntry->value;
+				pLanded->aiOnly = pEntry->aiOnly;   // the §3.9 audience flag rides the landing whole
+				pLanded->seg[0] = modSegmentIntern(infoFamilyKey(pEntry->family));
+				pLanded->seg[1] = modSegmentIntern("plot");
+				pLanded->nSeg = 2;
+				CvCondition* pPresence = new CvCondition();
+				pPresence->kind = CASC_COND_PRESENCE;
+				pPresence->type = pSourceInfo->getType();
+				pPresence->scope = ePresenceScope;
+				pPresence->min = 1; pPresence->hasMin = true;
+				pPresence->id = iSource;
+				pLanded->enabled = pPresence;
+				pTargetInfo->landOwnOutputEntry(pLanded);
+				++s_counts.ownOutputLanded;
+			}
+		}
+	}
+
+	void rp_landOwnOutput()
+	{
+		rp_landOwnOutputKind<CvBuildingInfo>(GC.getNumBuildingInfos(), CASC_SCOPE_CITY);
+		rp_landOwnOutputKind<CvCivicInfo>(GC.getNumCivicInfos(), CASC_SCOPE_EMPIRE);
+		rp_landOwnOutputKind<CvTechInfo>(GC.getNumTechInfos(), CASC_SCOPE_TEAM);
+		// traits: NEVER landed (the §4 per-set carve-out); routes: governing-deliverer (§4 exemplar) -- the
+		// route-keyed improvement yields stay on the ROUTE's compiled entries (source-side).
+	}
+
+	// ==================== sub-pass (1): the forward compat reconstructions ====================
+	// The store-inverted authored views un-inverted back onto the forward getters the consumers still read.
+	// All of these read COMPILED edges/deposits -- never a legacy-mirror getter.
+
+	// Route<-bonus prereq REVERSE INDEX. curate_route.py inverts a route's PrereqOrBonuses to the bonus's
+	// `enables.routes` (the enabler GENERATE edge), so no route JSON carries the relationship. The
+	// getRouteInfo(...) callers (CvPlot route validity, CvPlayerAI, CvDLLWidgetData) still ask the route "which
+	// bonuses do I need?", so reconstruct each route's OR-list here, once, after every entity is mapped.
+	void rp_reconstructRouteBonusPrereqs()
+	{
+		const int iNumBonuses = GC.getNumBonusInfos();
+		for (int iBonus = 0; iBonus < iNumBonuses; ++iBonus)
+		{
+			const CvInfo* pBonus = InfoRepo<CvBonusInfo>::get().get(iBonus);
+			if (pBonus == NULL || pBonus->getEdges() == NULL)
+			{
+				continue;
+			}
+			const std::vector<int>* pRoutes = pBonus->getEdges()->find(EDGEF_ENABLES, EDGEB_ROUTES);
+			if (pRoutes != NULL)
+			{
+				for (size_t iRoute = 0; iRoute < pRoutes->size(); ++iRoute)
+				{
+					static_cast<CvRouteInfo*>(InfoRepo<CvRouteInfo>::get().editPtr((*pRoutes)[iRoute]))->addPrereqOrBonus((BonusTypes)iBonus);
+				}
+			}
+			// the single AND-prereq bonus rides a DISTINCT bucket (store.py routesAnd) so it stays out of the
+			// OR-list -- getPrereqBonus (the CvPlot build gate), not getPrereqOrBonuses. A route has at most one
+			// single AND bonus.
+			const std::vector<int>* pRoutesAnd = pBonus->getEdges()->find(EDGEF_ENABLES, EDGEB_ROUTES_AND);
+			if (pRoutesAnd != NULL)
+			{
+				for (size_t iRoute = 0; iRoute < pRoutesAnd->size(); ++iRoute)
+				{
+					static_cast<CvRouteInfo*>(InfoRepo<CvRouteInfo>::get().editPtr((*pRoutesAnd)[iRoute]))->setPrereqBonus((BonusTypes)iBonus);
+				}
+			}
+		}
+	}
+
+	// (The former improvement<-route YIELD reconstruction is GONE with the wave-B improvement rebuild: it wrote
+	// the deleted improvement route-yield mirror (addRouteYieldChange). RouteYieldChanges are governing-deliverer
+	// SOURCE-SIDE data (modifier.md §4: "a route upgrading improvements -> on the route, keyed by improvement" --
+	// curate_route.py authors {food|production|commerce}.plot.improvements.{IMP}.flat); the improvement-side
+	// consumers (CvPlot::calculateImprovementYieldChange + the CvDLLWidgetData help) rewire onto the ROUTE's
+	// compiled keyed entries with the stage-4 consumer cut.)
+
+	// STORE-INVERTED TECH-FK REVERSE INDEX -- the Route<-bonus pattern, generalized. curate_*.py DROP each
+	// entity's tech prereq/obsolete FK and store-invert it onto the TECH's enables/obsoletes buckets (bonus
+	// reveal + cityTrade both -> enables.bonuses, deliberately merged/indistinguishable; corp/project/religion/
+	// process/promotion -> enables.<bucket>; bonus/build/corp/promotion obsolete -> obsoletes.<bucket>). The
+	// getXInfo(...) compat getters still ask "which tech do I need?" -- a REVERSE lookup -- so reconstruct each
+	// target's FK here. getProjectsNeeded is the project<-project variant (off the prereq project's
+	// enables.projects). The special-building tech-gate is the same class: the curator stores it as
+	// tech.enables.specialBuildings (store.py:181) and the legacy building-group gate reads
+	// getSpecialBuildingInfo(x).getTechPrereq() (CvPlayer.cpp:6533). (getTechPrereqAnyone is unused across all
+	// groups; no tech obsoletes a special building -- both correctly stay NO_TECH.)
+	void rp_reconstructTechForeignKeys()
+	{
+		const int iNumTechs = GC.getNumTechInfos();
+		for (int iTech = 0; iTech < iNumTechs; ++iTech)
+		{
+			const CvInfo* pTech = InfoRepo<CvTechInfo>::get().get(iTech);
+			if (pTech == NULL || pTech->getEdges() == NULL)
+			{
+				continue;
+			}
+			const CvEdges* pEdges = pTech->getEdges();
+			const TechTypes eTech = (TechTypes)iTech;
+			if (const std::vector<int>* pLinkedIds = pEdges->find(EDGEF_ENABLES, EDGEB_BONUSES))
+			{
+				for (size_t iLinked = 0; iLinked < pLinkedIds->size(); ++iLinked)
+				{
+					CvBonusInfo* pBonus = static_cast<CvBonusInfo*>(InfoRepo<CvBonusInfo>::get().editPtr((*pLinkedIds)[iLinked]));
+					if (pBonus->getTechReveal() == NO_TECH)
+					{
+						// first (lowest-id) tech wins -- merged/indistinguishable
+						pBonus->setTechReveal(eTech);
+						pBonus->setTechCityTrade(eTech);
+					}
+				}
+			}
+			if (const std::vector<int>* pLinkedIds = pEdges->find(EDGEF_OBSOLETES, EDGEB_BONUSES))
+			{
+				for (size_t iLinked = 0; iLinked < pLinkedIds->size(); ++iLinked)
+				{
+					CvBonusInfo* pBonus = static_cast<CvBonusInfo*>(InfoRepo<CvBonusInfo>::get().editPtr((*pLinkedIds)[iLinked]));
+					pBonus->setTechObsolete(eTech);
+					//	Land the INVERSE beside the FK, so the bonus answers "what obsoletes me?" the same way a
+					//	building already does (docs/cascade.md §1 (reverse lookups are populated once, at load)) instead of only through a hand-named member
+					//	that no reader can reach parameterically.
+					pBonus->addReverseEdge(EDGEF_OBSOLETED_BY, EDGEB_TECHS, (int)eTech);
+				}
+			}
+			if (const std::vector<int>* pLinkedIds = pEdges->find(EDGEF_ENABLES, EDGEB_PROJECTS))
+			{
+				for (size_t iLinked = 0; iLinked < pLinkedIds->size(); ++iLinked)
+				{
+					static_cast<CvProjectInfo*>(InfoRepo<CvProjectInfo>::get().editPtr((*pLinkedIds)[iLinked]))->setTechPrereq(eTech);
+				}
+			}
+			if (const std::vector<int>* pLinkedIds = pEdges->find(EDGEF_ENABLES, EDGEB_CORPORATIONS))
+			{
+				for (size_t iLinked = 0; iLinked < pLinkedIds->size(); ++iLinked)
+				{
+					static_cast<CvCorporationInfo*>(InfoRepo<CvCorporationInfo>::get().editPtr((*pLinkedIds)[iLinked]))->setTechPrereq(eTech);
+				}
+			}
+			if (const std::vector<int>* pLinkedIds = pEdges->find(EDGEF_OBSOLETES, EDGEB_CORPORATIONS))
+			{
+				for (size_t iLinked = 0; iLinked < pLinkedIds->size(); ++iLinked)
+				{
+					static_cast<CvCorporationInfo*>(InfoRepo<CvCorporationInfo>::get().editPtr((*pLinkedIds)[iLinked]))->setObsoleteTech(eTech);
+				}
+			}
+			if (const std::vector<int>* pLinkedIds = pEdges->find(EDGEF_ENABLES, EDGEB_RELIGIONS))
+			{
+				for (size_t iLinked = 0; iLinked < pLinkedIds->size(); ++iLinked)
+				{
+					static_cast<CvReligionInfo*>(InfoRepo<CvReligionInfo>::get().editPtr((*pLinkedIds)[iLinked]))->setTechPrereq(eTech);
+				}
+			}
+			if (const std::vector<int>* pLinkedIds = pEdges->find(EDGEF_ENABLES, EDGEB_PROCESSES))
+			{
+				for (size_t iLinked = 0; iLinked < pLinkedIds->size(); ++iLinked)
+				{
+					static_cast<CvProcessInfo*>(InfoRepo<CvProcessInfo>::get().editPtr((*pLinkedIds)[iLinked]))->setTechPrereq(eTech);
+				}
+			}
+			if (const std::vector<int>* pLinkedIds = pEdges->find(EDGEF_ENABLES, EDGEB_PROMOTIONS))
+			{
+				for (size_t iLinked = 0; iLinked < pLinkedIds->size(); ++iLinked)
+				{
+					static_cast<CvPromotionInfo*>(InfoRepo<CvPromotionInfo>::get().editPtr((*pLinkedIds)[iLinked]))->setTechPrereq(eTech);
+				}
+			}
+			if (const std::vector<int>* pLinkedIds = pEdges->find(EDGEF_OBSOLETES, EDGEB_PROMOTIONS))
+			{
+				for (size_t iLinked = 0; iLinked < pLinkedIds->size(); ++iLinked)
+				{
+					static_cast<CvPromotionInfo*>(InfoRepo<CvPromotionInfo>::get().editPtr((*pLinkedIds)[iLinked]))->setObsoleteTech(eTech);
+				}
+			}
+			if (const std::vector<int>* pLinkedIds = pEdges->find(EDGEF_ENABLES, EDGEB_PROMOTION_LINES))
+			{
+				for (size_t iLinked = 0; iLinked < pLinkedIds->size(); ++iLinked)
+				{
+					static_cast<CvPromotionLineInfo*>(InfoRepo<CvPromotionLineInfo>::get().editPtr((*pLinkedIds)[iLinked]))->setTechPrereq(eTech);
+				}
+			}
+			if (const std::vector<int>* pLinkedIds = pEdges->find(EDGEF_OBSOLETES, EDGEB_PROMOTION_LINES))
+			{
+				for (size_t iLinked = 0; iLinked < pLinkedIds->size(); ++iLinked)
+				{
+					static_cast<CvPromotionLineInfo*>(InfoRepo<CvPromotionLineInfo>::get().editPtr((*pLinkedIds)[iLinked]))->setObsoleteTech(eTech);
+				}
+			}
+			if (const std::vector<int>* pLinkedIds = pEdges->find(EDGEF_ENABLES, EDGEB_SPECIAL_BUILDINGS))
+			{
+				for (size_t iLinked = 0; iLinked < pLinkedIds->size(); ++iLinked)
+				{
+					static_cast<CvSpecialBuildingInfo*>(InfoRepo<CvSpecialBuildingInfo>::get().editPtr((*pLinkedIds)[iLinked]))->setTechPrereq(eTech);
+				}
+			}
+		}
+		// project <- project: PrereqProjects store-inverted onto the prerequisite project's enables.projects.
+		const int iNumProjects = GC.getNumProjectInfos();
+		for (int iProject = 0; iProject < iNumProjects; ++iProject)
+		{
+			const CvInfo* pProject = InfoRepo<CvProjectInfo>::get().get(iProject);
+			if (pProject == NULL || pProject->getEdges() == NULL)
+			{
+				continue;
+			}
+			if (const std::vector<int>* pLinkedIds = pProject->getEdges()->find(EDGEF_ENABLES, EDGEB_PROJECTS))
+			{
+				for (size_t iLinked = 0; iLinked < pLinkedIds->size(); ++iLinked)
+				{
+					static_cast<CvProjectInfo*>(InfoRepo<CvProjectInfo>::get().editPtr((*pLinkedIds)[iLinked]))->addProjectNeeded(iProject);
+				}
+			}
+		}
+	}
+
+	// SHRINE-BUILDING REGISTRY FEED. The building authors the relationship as its §9 `shrine` FK
+	// (CvBuildingInfo::getShrineReligion), and carries the shrine's per-commerce deposit itself (json.md §9);
+	// the consumers (CvCityAI:958 / CvCity:19016 foreach getShrineBuildings)
+	// ask the RELIGION for its shrine buildings. The legacy buildings-self-register path died in the cutover
+	// (addShrineBuilding had ZERO callers), so feed the registry here from the compiled FK. Idempotent by
+	// CLEARING FIRST, like every sibling sub-pass -- this pass runs in both load phases, and relying on the
+	// repos to hand back a fresh vector would make correctness hinge on whether a re-map reuses the poco.
+	// The corporation analog is rp_feedHeadquartersBuildings below, fed the same way from the building's own
+	// `headquarters` FK.
+	void rp_feedShrineBuildings()
+	{
+		const int iNumReligions = GC.getNumReligionInfos();
+		for (int iReligion = 0; iReligion < iNumReligions; ++iReligion)
+		{
+			CvReligionInfo* pReligion = static_cast<CvReligionInfo*>(InfoRepo<CvReligionInfo>::get().editPtr(iReligion));
+			if (pReligion != NULL)
+			{
+				pReligion->clearShrineBuildings();
+			}
+		}
+		const int iNumBuildings = GC.getNumBuildingInfos();
+		for (int iBuilding = 0; iBuilding < iNumBuildings; ++iBuilding)
+		{
+			const CvBuildingInfo* pBuilding = static_cast<const CvBuildingInfo*>(InfoRepo<CvBuildingInfo>::get().get(iBuilding));
+			if (pBuilding == NULL)
+			{
+				continue;
+			}
+			const int iReligion = pBuilding->getShrineReligion();
+			if (iReligion < 0)
+			{
+				continue;
+			}
+			CvReligionInfo* pReligion = static_cast<CvReligionInfo*>(InfoRepo<CvReligionInfo>::get().editPtr(iReligion));
+			if (pReligion != NULL)
+			{
+				pReligion->addShrineBuilding(iBuilding);
+			}
+		}
+	}
+
+	// HQ-BUILDING REGISTRY FEED -- the exact sibling of rp_feedShrineBuildings, and for the same reason. The
+	// building authors the relationship as its §9 `headquarters` FK (CvBuildingInfo::getHeadquartersCorporation
+	// -- json.md §9: `headquarters` is the corp analog of `shrine`, the building declares only the FK while the
+	// per-commerce values live on the CORPORATION), and every consumer asks the CORPORATION which building is
+	// its HQ. Feeding the registry here is what stops each of them scanning the whole building registry.
+	// Idempotent by contract: clear-first, so the pass may run in both load phases.
+	void rp_feedHeadquartersBuildings()
+	{
+		const int iNumCorporations = GC.getNumCorporationInfos();
+		for (int iCorporation = 0; iCorporation < iNumCorporations; ++iCorporation)
+		{
+			CvCorporationInfo* pCorporation =
+				static_cast<CvCorporationInfo*>(InfoRepo<CvCorporationInfo>::get().editPtr(iCorporation));
+			if (pCorporation != NULL)
+			{
+				pCorporation->clearHeadquartersBuildings();
+			}
+		}
+		const int iNumBuildings = GC.getNumBuildingInfos();
+		for (int iBuilding = 0; iBuilding < iNumBuildings; ++iBuilding)
+		{
+			const CvBuildingInfo* pBuilding =
+				static_cast<const CvBuildingInfo*>(InfoRepo<CvBuildingInfo>::get().get(iBuilding));
+			if (pBuilding == NULL)
+			{
+				continue;
+			}
+			const int iCorporation = pBuilding->getHeadquartersCorporation();
+			if (iCorporation < 0)
+			{
+				continue;
+			}
+			CvCorporationInfo* pCorporation =
+				static_cast<CvCorporationInfo*>(InfoRepo<CvCorporationInfo>::get().editPtr(iCorporation));
+			if (pCorporation != NULL)
+			{
+				pCorporation->addHeadquartersBuilding(iBuilding);
+			}
+		}
+	}
+
+	// The tech-side FORWARD obsoletion views (building/process obsoletion is authored TARGET-side,
+	// obsoletedBy.techs; nothing authors tech.obsoletes.buildings) -- reconstructed so the enabler's O(delta)
+	// tech application can find "which buildings/processes does this tech obsolete" without a candidate scan.
+	void rp_reconstructTechObsoletionViews()
+	{
+		for (int iBuilding = 0; iBuilding < GC.getNumBuildingInfos(); ++iBuilding)
+		{
+			const CvInfo* pBuilding = InfoRepo<CvBuildingInfo>::get().get(iBuilding);
+			const std::vector<int>* pObsoletingTechs = pBuilding ? pBuilding->edge(EDGEF_OBSOLETED_BY, EDGEB_TECHS) : NULL;
+			if (pObsoletingTechs == NULL)
+			{
+				continue;
+			}
+			for (size_t iEdge = 0; iEdge < pObsoletingTechs->size(); ++iEdge)
+			{
+				CvInfo* pTech = InfoRepo<CvTechInfo>::get().editPtr((*pObsoletingTechs)[iEdge]);
+				if (pTech != NULL)
+				{
+					pTech->addReverseEdge(EDGEF_OBSOLETES, EDGEB_BUILDINGS, iBuilding);
+				}
+			}
+		}
+		// PROCESSES: the lesser/meager process tiers ("processes is pure enabler gate, with replace": the
+		// obsoleting tech drops the tier from the TREE) -- reconstructed exactly like the buildings one above.
+		for (int iProcess = 0; iProcess < GC.getNumProcessInfos(); ++iProcess)
+		{
+			const CvInfo* pProcess = InfoRepo<CvProcessInfo>::get().get(iProcess);
+			const std::vector<int>* pObsoletingTechs = pProcess ? pProcess->edge(EDGEF_OBSOLETED_BY, EDGEB_TECHS) : NULL;
+			if (pObsoletingTechs == NULL)
+			{
+				continue;
+			}
+			for (size_t iEdge = 0; iEdge < pObsoletingTechs->size(); ++iEdge)
+			{
+				CvInfo* pTech = InfoRepo<CvTechInfo>::get().editPtr((*pObsoletingTechs)[iEdge]);
+				if (pTech != NULL)
+				{
+					pTech->addReverseEdge(EDGEF_OBSOLETES, EDGEB_PROCESSES, iProcess);
+				}
+			}
+		}
+	}
+
+	// ==================== the derived-list dedup ====================
+	// sortUnique touches ONLY the load-DERIVED families (RELATED/REQUIRED_BY) -- every walked kind may have
+	// received entries, so dedup them all (+ the complex trait set).
+	template <class RepoTag>
+	void rp_sortUniqueKind(int iNumInfos)
+	{
+		for (int iInfo = 0; iInfo < iNumInfos; ++iInfo)
+		{
+			CvInfo* pInfo = const_cast<CvInfo*>(InfoRepo<RepoTag>::get().get(iInfo));
+			if (pInfo != NULL)
+			{
+				pInfo->sortUniqueEdges();
+			}
+		}
+	}
+
+	void rp_sortUniqueAll()
+	{
+		#define X(REPO_TAG, COUNT_GETTER, SOURCE_BUCKET) rp_sortUniqueKind<REPO_TAG>(GC.COUNT_GETTER());
+		RP_RELATED_SOURCE_KINDS(X)
+		#undef X
+		rp_sortUniqueKind<CvComplexTraitTag>(GC.getNumTraitInfos());
+		cascadeStartNode().sortUniqueEdges();
+	}
+
+	// ==================== sub-pass (5): the unit-plane post-map derivation (json.md §9) ====================
+
+	// The unit's era = its FIRST prereq TECH atom's era (the top-level requires.build AND list, in authored
+	// order). The atom's kind is classified by its RESOLVED id through the ONE type dispatch: the routed info
+	// is a tech iff it IS the tech repo's object at that id (repos are disjoint object sets, so pointer
+	// identity is exact; TECH_GAME_START resolves id -1 and never qualifies). NO_ERA when tech-free.
+	int rp_firstPrereqTechEra(const CvInfo* pUnitData)
+	{
+		const CvCondition* pBuild = pUnitData->requiresBuild();
+		if (pBuild == NULL)
+		{
+			return NO_ERA;
+		}
+		for (size_t iChild = 0; iChild < pBuild->all.size(); ++iChild)
+		{
+			const CvCondition* pAtom = pBuild->all[iChild];
+			if (pAtom == NULL || pAtom->kind != CASC_COND_PRESENCE || pAtom->id < 0)
+			{
+				continue;
+			}
+			const CvInfo* pReferenced = rjInfoForType(pAtom->type, pAtom->id);
+			if (pReferenced != NULL && pReferenced == InfoRepo<CvTechInfo>::get().get(pAtom->id))
+			{
+				return static_cast<const CvTechInfo*>(pReferenced)->getEra();
+			}
+		}
+		return NO_ERA;
+	}
+
+	// Walk the unit repo and recompute-assign every CvUnitInfo's load-derived members (the SM base sums, the
+	// derived era, the can-acquire-experience verdict, the upgrade chain) -- runnable only HERE, after every
+	// mapFrom, because the sums span OTHER registries (unitcombats / techs / promotions / units). Idempotent
+	// like the sibling sub-passes. The promotion-applicability union is the one cross-registry precompute,
+	// built once and shared by every unit's verdict.
+	void rp_deriveUnitPlane()
+	{
+		std::set<int> combatClassesWithPromotions;
+		const int iNumPromotions = GC.getNumPromotionInfos();
+		for (int iPromotion = 0; iPromotion < iNumPromotions; ++iPromotion)
+		{
+			const CvInfo* pPromotionData = InfoRepo<CvPromotionInfo>::get().get(iPromotion);
+			if (pPromotionData == NULL)
+			{
+				continue;
+			}
+			const CvPromotionInfo* pPromotion = static_cast<const CvPromotionInfo*>(pPromotionData);
+			const std::vector<int>& applicableClasses = pPromotion->getUnitCombats();
+			for (size_t iEntry = 0; iEntry < applicableClasses.size(); ++iEntry)
+			{
+				combatClassesWithPromotions.insert(applicableClasses[iEntry]);
+			}
+		}
+		const int iNumUnits = GC.getNumUnitInfos();
+		for (int iUnit = 0; iUnit < iNumUnits; ++iUnit)
+		{
+			CvInfo* pUnitData = const_cast<CvInfo*>(InfoRepo<CvUnitInfo>::get().get(iUnit));
+			if (pUnitData == NULL)
+			{
+				continue;
+			}
+			CvUnitInfo* pUnit = static_cast<CvUnitInfo*>(pUnitData);
+			pUnit->deriveAtRegistryComplete(rp_firstPrereqTechEra(pUnitData), combatClassesWithPromotions);
+		}
+	}
+
+	// The heritage acquisition prereqs (the gating tech + the predecessor heritages) read back off each
+	// heritage's OWN EDGEF_RELATED lists, so they can only be derived once rp_buildRelated has landed them --
+	// hence a post-map sub-pass here rather than a mapFrom read. Materializing them makes both getters bare
+	// member reads; the alternative (resolve-on-first-read behind a memo) would put a cache AND a dirty flag on
+	// an info, which the INFO DATA-OUT contract forbids by construction (patterns.md).
+	// A promotion LINE is a ladder and holding a rung implies the rungs beneath it, so what a UNIT actually has
+	// from a promotion is the SUM down its line. That sum's membership is static data (a promotion's line and
+	// rank never move), so it materializes here, once -- the display used to rebuild it by scanning every
+	// promotion in the game on EVERY tooltip hover.
+	//
+	// The grouping is done ONCE here rather than by each promotion, which is the same shape rp_deriveUnitPlane
+	// uses: where a derivation needs a cross-registry fact, the PASS computes it and FEEDS it in, so no info
+	// re-derives what another can hand it.
+	void rp_derivePromotionLineAccrual()
+	{
+		const int iNumPromotions = GC.getNumPromotionInfos();
+
+		// line -> (priority, promotion id), so each promotion's lower rungs are a sorted lookup rather than a scan.
+		std::map<int, std::vector<std::pair<int, int> > > lineMembers;
+		for (int iPromotion = 0; iPromotion < iNumPromotions; ++iPromotion)
+		{
+			const CvInfo* pData = InfoRepo<CvPromotionInfo>::get().get(iPromotion);
+			if (pData == NULL)
+			{
+				continue;
+			}
+			const CvPromotionInfo& kPromotion = *static_cast<const CvPromotionInfo*>(pData);
+			// A STATUS promotion is a parallel state, never a ladder rung -- it must not gather siblings.
+			if (kPromotion.getPromotionLine() == NO_PROMOTIONLINE || kPromotion.isStatus())
+			{
+				continue;
+			}
+			lineMembers[(int)kPromotion.getPromotionLine()].push_back(
+				std::make_pair(kPromotion.getLinePriority(), iPromotion));
+		}
+		for (std::map<int, std::vector<std::pair<int, int> > >::iterator it = lineMembers.begin();
+			it != lineMembers.end(); ++it)
+		{
+			std::sort(it->second.begin(), it->second.end());   // ascending priority
+		}
+
+		std::vector<int> accrual;
+		for (int iPromotion = 0; iPromotion < iNumPromotions; ++iPromotion)
+		{
+			CvInfo* pData = const_cast<CvInfo*>(InfoRepo<CvPromotionInfo>::get().get(iPromotion));
+			if (pData == NULL)
+			{
+				continue;
+			}
+			CvPromotionInfo* pPromotion = static_cast<CvPromotionInfo*>(pData);
+
+			accrual.clear();
+			accrual.push_back(iPromotion);   // ALWAYS itself first -- so every accrual is non-empty and no reader branches
+
+			if (pPromotion->getPromotionLine() != NO_PROMOTIONLINE && !pPromotion->isStatus())
+			{
+				const std::vector<std::pair<int, int> >& members = lineMembers[(int)pPromotion->getPromotionLine()];
+				const int iOwnPriority = pPromotion->getLinePriority();
+				// descending, so the accrual reads top rung first
+				for (int iMember = (int)members.size() - 1; iMember >= 0; --iMember)
+				{
+					if (members[iMember].first < iOwnPriority && members[iMember].second != iPromotion)
+					{
+						accrual.push_back(members[iMember].second);
+					}
+				}
+			}
+			pPromotion->deriveAtRegistryComplete(accrual);
+		}
+	}
+
+	void rp_deriveHeritagePrereqs()
+	{
+		const int iNumHeritages = GC.getNumHeritageInfos();
+		for (int iHeritage = 0; iHeritage < iNumHeritages; ++iHeritage)
+		{
+			CvInfo* pHeritageData = const_cast<CvInfo*>(InfoRepo<CvHeritageInfo>::get().get(iHeritage));
+			if (pHeritageData == NULL)
+			{
+				continue;
+			}
+			static_cast<CvHeritageInfo*>(pHeritageData)->deriveAtRegistryComplete();
+		}
+	}
+
+	// ===== The cross-entity INDEXES =====
+	// Each is derived from ANOTHER info's data, so it can only be built once every entity is mapped -- which is
+	// exactly this pass, and is why a load-time derivation never sits anywhere earlier: ahead of the postmenu
+	// full-registry re-map it would read an incomplete registry AND be overwritten by that re-map. Every one is
+	// CLEAR-FIRST, because reversePassRun runs in BOTH load phases.
+
+	// The promotion-LINE member index (line -> its promotions), inverted from each promotion's promotionLine FK.
+	// The ladder walk (CvUnit::canAcquirePromotion) reads it; unpopulated, every rank of a line offers at once.
+	void rp_derivePromotionLineMembers()
+	{
+		for (int iLine = GC.getNumPromotionLineInfos() - 1; iLine > -1; --iLine)
+		{
+			GC.getPromotionLineInfo((PromotionLineTypes)iLine).clearPromotions();
+		}
+		for (int iPromotion = GC.getNumPromotionInfos() - 1; iPromotion > -1; --iPromotion)
+		{
+			const PromotionLineTypes eLine = GC.getPromotionInfo((PromotionTypes)iPromotion).getPromotionLine();
+			if (eLine != NO_PROMOTIONLINE)
+			{
+				GC.getPromotionLineInfo(eLine).addPromotion(iPromotion);
+			}
+		}
+	}
+
+	// The promotion applicability sets: qualified = its own unitCombats UNION its line's; disqualified = the
+	// notOn sets, removed from qualified. Both setters rebuild their vector whole (already clear-first), and
+	// both read the promotion LINE, so this runs after rp_derivePromotionLineMembers.
+	void rp_derivePromotionQualification()
+	{
+		for (int iPromotion = GC.getNumPromotionInfos() - 1; iPromotion > -1; --iPromotion)
+		{
+			CvPromotionInfo& kPromotion = GC.getPromotionInfo((PromotionTypes)iPromotion);
+			kPromotion.setQualifiedUnitCombatTypes();
+			kPromotion.setDisqualifiedUnitCombatTypes();
+		}
+	}
+
+	// Tech "leads to": invert every tech's retained AND/OR prereq lists, so getLeadsToTechs(P) yields every tech
+	// naming P as a prereq.
+	void rp_deriveTechLeadsTo()
+	{
+		const int iNumTechs = GC.getNumTechInfos();
+		for (int iTech = 0; iTech < iNumTechs; ++iTech)
+		{
+			GC.getTechInfo((TechTypes)iTech).clearLeadsTo();
+		}
+		for (int iTech = 0; iTech < iNumTechs; ++iTech)
+		{
+			const TechTypes eTech = (TechTypes)iTech;
+			const CvTechInfo& kTech = GC.getTechInfo(eTech);
+			const std::vector<TechTypes>& andPrereqs = kTech.getPrereqAndTechs();
+			for (size_t iEntry = 0; iEntry < andPrereqs.size(); ++iEntry)
+			{
+				if (andPrereqs[iEntry] != NO_TECH)
+				{
+					GC.getTechInfo(andPrereqs[iEntry]).addLeadsToTech(eTech);
+				}
+			}
+			const std::vector<TechTypes>& orPrereqs = kTech.getPrereqOrTechs();
+			for (size_t iEntry = 0; iEntry < orPrereqs.size(); ++iEntry)
+			{
+				if (orPrereqs[iEntry] != NO_TECH)
+				{
+					GC.getTechInfo(orPrereqs[iEntry]).addLeadsToTech(eTech);
+				}
+			}
+		}
+	}
+
+	// Improvement -> the builds that lay it (worker AI), plus the two bonus-side twins: which improvements trade
+	// a bonus, and each bonus's (improvement, build) trade pairs (AI_countNumImprovableBonuses).
+	void rp_deriveImprovementAndBonusIndexes()
+	{
+		const int iNumImprovements = GC.getNumImprovementInfos();
+		const int iNumBonuses = GC.getNumBonusInfos();
+		const int iNumBuilds = GC.getNumBuildInfos();
+
+		for (int iImprovement = 0; iImprovement < iNumImprovements; ++iImprovement)
+		{
+			GC.getImprovementInfo((ImprovementTypes)iImprovement).clearBuildTypes();
+		}
+		for (int iBonus = 0; iBonus < iNumBonuses; ++iBonus)
+		{
+			GC.getBonusInfo((BonusTypes)iBonus).clearRuntimeImprovementIndexes();
+		}
+
+		for (int iImprovement = 0; iImprovement < iNumImprovements; ++iImprovement)
+		{
+			const ImprovementTypes eImprovement = (ImprovementTypes)iImprovement;
+			const CvImprovementInfo& kImprovement = GC.getImprovementInfo(eImprovement);
+			for (int iBonus = 0; iBonus < iNumBonuses; ++iBonus)
+			{
+				if (kImprovement.isImprovementBonusTrade(iBonus))
+				{
+					GC.getBonusInfo((BonusTypes)iBonus).setProvidedByImprovementTypes(eImprovement);
+				}
+			}
+		}
+
+		for (int iBuild = 0; iBuild < iNumBuilds; ++iBuild)
+		{
+			const BuildTypes eBuild = (BuildTypes)iBuild;
+			const ImprovementTypes eImprovement = GC.getBuildInfo(eBuild).getImprovement();
+			if (eImprovement == NO_IMPROVEMENT)
+			{
+				continue;
+			}
+			GC.getImprovementInfo(eImprovement).addBuildType(eBuild);
+			const CvImprovementInfo& kImprovement = GC.getImprovementInfo(eImprovement);
+			for (int iBonus = 0; iBonus < iNumBonuses; ++iBonus)
+			{
+				if (kImprovement.isImprovementBonusTrade(iBonus))
+				{
+					GC.getBonusInfo((BonusTypes)iBonus).addTradeProvidingImprovement(eImprovement, eBuild);
+				}
+			}
+		}
+	}
+}
+
+void reversePassRun()
+{
+	const DWORD iStartTick = GetTickCount();
+	s_counts = ReversePassCounts();
+	rp_reconstructRouteBonusPrereqs();
+	rp_feedShrineBuildings();
+	rp_feedHeadquartersBuildings();
+	rp_reconstructTechForeignKeys();
+	rp_reconstructTechObsoletionViews();
+	// the own-output landing runs BEFORE the RELATED walk, so a landed entry's source-presence condition feeds
+	// the display inversion too (the improvement lands on the building's RELATED[improvements] -- the one
+	// direction that can carry it, since the plot-substrate infos compose no CvEdges)
+	rp_landOwnOutput();
+	rp_buildRelated();
+	rp_buildRequiredBy();
+	rp_sortUniqueAll();
+	rp_deriveUnitPlane();
+	rp_derivePromotionLineAccrual();
+	rp_deriveHeritagePrereqs();
+	rp_derivePromotionLineMembers();
+	rp_derivePromotionQualification();   // reads the line members above
+	rp_deriveTechLeadsTo();
+	rp_deriveImprovementAndBonusIndexes();
+	s_counts.milliseconds = (unsigned int)(GetTickCount() - iStartTick);
+}
+
+const ReversePassCounts& reversePassCounts()
+{
+	return s_counts;
+}

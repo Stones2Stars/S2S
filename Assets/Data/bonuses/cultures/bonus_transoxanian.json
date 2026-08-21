@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_TRANSOXANIAN",
+ "enables": {
+  "units": [
+   "UNIT_CHAGATAI_KHAN",
+   "UNIT_KHINGILA_WARRIORS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TRANSOXANIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TRANSOXANIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

@@ -1,0 +1,123 @@
+{
+ "type": "BUILDING_SUPREME_COURT",
+ "enables": {
+  "buildings": [
+   "BUILDING_NATIONAL_ALCOHOL_PROHIBITION",
+   "BUILDING_NATIONAL_DRUG_PROHIBITION",
+   "BUILDING_NATIONAL_GAMBLING_BAN",
+   "BUILDING_NATIONAL_PROSTITUTION_BAN",
+   "BUILDING_ORDINANCE_NATIONAL_SMOKING_PROHIBITION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTRICT_COURTHOUSE",
+    {
+     "type": "BUILDING_COURTHOUSE",
+     "scope": "empire",
+     "min": 5,
+     "scaling": "amountBuildings"
+    },
+    "TECH_JURISPRUDENCE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "espionage": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -10,
+   "flat": 10
+  }
+ },
+ "anarchy": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SPY": 1
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_LOCAL_COURTHOUSE",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 880,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_ESPIONAGE": 3
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SUPREME_COURT"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SUPREME_COURT",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COURTHOUSE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SUPREME_COURT",
+  "civilopedia": "TXT_KEY_BUILDING_SUPREME_COURT_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 4,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

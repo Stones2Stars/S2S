@@ -1,0 +1,110 @@
+{
+ "type": "UNIT_007",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SCOTLAND_YARD",
+    "TECH_ELECTRONICS",
+    "TECH_AVIATION"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "movement": {
+  "unit": {
+   "flat": 3,
+   "dropRange": {
+    "flat": 10
+   }
+  }
+ },
+ "skills": [
+  "counterSpy",
+  "ignoreTerrainCost",
+  "investigate",
+  "alwaysInvisible",
+  "rivalTerritory",
+  "stealPlans",
+  "unlimitedException"
+ ],
+ "tags": [
+  "spy",
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_SPY",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COMMANDO",
+   "PROMOTION_IMPROVISE1",
+   "PROMOTION_SECURITY1",
+   "PROMOTION_ESCAPE1",
+   "PROMOTION_DECEPTION1",
+   "PROMOTION_IMPROVISE2",
+   "PROMOTION_SECURITY2",
+   "PROMOTION_IMPROVISE3"
+  ]
+ },
+ "cost": {
+  "production": 1350,
+  "upkeep": 1500
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TOP_SECRET_AGENT",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_TOP_SECRET_AGENT"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_007",
+  "civilopedia": "TXT_KEY_CONCEPT_ESPIONAGE_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SPY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_SPY"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

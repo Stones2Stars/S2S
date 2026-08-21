@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_MAIL_ORDER_CATALOGUE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HYPERMARKET"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_POST_OFFICE",
+    "TECH_TELEGRAPH",
+    {
+     "any": [
+      "BUILDING_TELEPHONE_NETWORK",
+      "BUILDING_TELEGRAPH_STATION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_HYPERMARKET"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 7,
+     "enabled": "TECH_CONSUMERISM"
+    },
+    {
+     "value": 6,
+     "enabled": "TECH_TELEPHONE"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 710,
+  "countModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MAIL_ORDER_CATALOGUE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MAIL_ORDER_CATALOGUE",
+  "civilopedia": "TXT_KEY_BUILDING_MAIL_ORDER_CATALOGUE_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

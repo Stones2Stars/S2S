@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_YAMATO",
+ "enables": {
+  "units": [
+   "UNIT_YUMI_ARCHER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_YAMATO"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_YAMATO",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

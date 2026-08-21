@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_DISTANT_PARALLEL_UNIVERSE_PORTAL",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_FRACTAL_CITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_PORTAL_TO_DIMENSION_X",
+    "TECH_MULTIVERSE_TRAVERSAL",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 13,
+     "enabled": "TECH_SPATIAL_TRANSCENDENCE"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "cost": {
+  "production": 2422,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_PARALLEL_UNIVERSE_PORTAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_PARALLEL_UNIVERSE_PORTAL",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_PARALLEL_UNIVERSE_PORTAL_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

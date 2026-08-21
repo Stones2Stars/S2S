@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_INTERSTELLAR_BIOMARKER_CATALOGUE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PLANET_SCANNING",
+    {
+     "any": [
+      "BUILDING_INTERSTELLAR_DATA_COLLECTION",
+      "BUILDING_SPACE_COLONY_MILKY_WAY"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_INTERSTELLAR",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 125
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 3212,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_BIOMARKER_CATALOGUE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_BIOMARKER_CATALOGUE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BIOMARKER_CATALOGUE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

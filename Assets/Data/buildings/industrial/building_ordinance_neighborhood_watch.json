@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_POLICE_ACADEMY",
+    "BUILDING_COURTHOUSE",
+    "TECH_CRIMINOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_SAFETY_NEIGHBORHOOD_WATCH"
+   }
+  ]
+ },
+ "cost": {
+  "production": 800,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_POLICE_STATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH_PEDIA",
+  "worth": 1,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

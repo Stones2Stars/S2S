@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_YOLNGU",
+ "enables": {
+  "units": [
+   "UNIT_MANDAWUY_YUNUPINGU",
+   "UNIT_YOLNGU_MESSENGER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_YOLNGU"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_YOLNGU",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

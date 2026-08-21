@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_CARAVAN_SEA_MOVEMENT_III",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CARAVAN_SEA_MOVEMENT_II"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "moves": {
+    "flat": 2
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CARAVAN_SEA_MOVEMENT": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CaravanSeaMovement3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_CARAVAN_SEA_MOVEMENT_III"
+ }
+}

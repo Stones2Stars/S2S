@@ -1,0 +1,78 @@
+{
+ "type": "TECH_WEAVING",
+ "enables": {
+  "bonuses": [
+   "BONUS_BAMBOO",
+   "BONUS_CLOTH",
+   "BONUS_COTTON",
+   "BONUS_FLAX",
+   "BONUS_HEMP",
+   "BONUS_PAPYRUS"
+  ],
+  "buildings": [
+   "BUILDING_GROVE_BAMBOO",
+   "BUILDING_GROVE_PAPYRUS",
+   "BUILDING_WEAVER"
+  ],
+  "techs": [
+   "TECH_BASKETRY",
+   "TECH_SHELTER_BUILDING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GATHERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 5
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/Button_Weaving.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_WEAVING",
+  "soundMP": "AS2D_TECH_WEAVING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_WEAVING",
+  "civilopedia": "TXT_KEY_TECH_WEAVING_PEDIA",
+  "quote": "TXT_KEY_TECH_WEAVING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 3,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 3,
+  "gridY": 13
+ }
+}

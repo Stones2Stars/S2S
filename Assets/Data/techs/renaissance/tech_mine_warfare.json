@@ -1,0 +1,61 @@
+{
+ "type": "TECH_MINE_WARFARE",
+ "enables": {
+  "buildings": [
+   "BUILDING_LANDMINES"
+  ],
+  "techs": [
+   "TECH_TRENCH_WARFARE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EXPLOSIVES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 3484
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/minewarfare.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MINE_WARFARE",
+  "soundMP": "AS2D_TECH_MINE_WARFARE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MINE_WARFARE",
+  "civilopedia": "TXT_KEY_TECH_MINE_WARFARE_PEDIA",
+  "quote": "TXT_KEY_TECH_MINE_WARFARE_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 57,
+  "gridY": 1
+ }
+}

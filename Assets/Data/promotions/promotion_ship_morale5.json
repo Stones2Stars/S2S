@@ -1,0 +1,52 @@
+{
+ "type": "PROMOTION_SHIP_MORALE5",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SHIP_INITIATIVE3",
+   "PROMOTION_SHIP_INITIATIVE4"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SHIP_MORALE4"
+   ]
+  }
+ },
+ "experience": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 4
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MORALE_SHIPS": 5
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/shipMorale5.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SHIP_MORALE5"
+ }
+}

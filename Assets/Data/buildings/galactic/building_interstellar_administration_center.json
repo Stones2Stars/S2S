@@ -1,0 +1,108 @@
+{
+ "type": "BUILDING_INTERSTELLAR_ADMINISTRATION_CENTER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_WORMHOLE_COMMUNICATIONS",
+    {
+     "any": [
+      "BUILDING_INTERSTELLAR_CAPITOL",
+      "BUILDING_SPACE_COLONY_MILKY_WAY"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 12,
+     "enabled": "TECH_TACHYON_COMMUNICATIONS"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 12,
+     "enabled": "TECH_CULTURAL_LONGEVITY"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": [
+    {
+     "value": 12,
+     "enabled": "TECH_GALACTIC_WARFARE"
+    },
+    {
+     "value": 13,
+     "enabled": "TECH_COSMIC_WARFARE"
+    },
+    {
+     "value": 13,
+     "enabled": "TECH_COSMIC_GOVERNANCE"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_GALACTIC_FEDERATION"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -5
+   }
+  }
+ },
+ "cost": {
+  "production": 4056,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_ADMINISTRATION_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_ADMINISTRATION_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_ADMINISTRATION_CENTER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

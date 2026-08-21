@@ -1,0 +1,72 @@
+{
+ "type": "FEATURE_SAVANNA",
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_RIVER"
+    }
+   ]
+  }
+ },
+ "health": {
+  "plot": {
+   "percent": 25
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_AIR_POLLUTION": -4,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  },
+  {
+   "trigger": {
+    "type": "POPULATION",
+    "scope": "city",
+    "min": 8
+   },
+   "action": {
+    "destroy": "self"
+   }
+  }
+ ],
+ "cost": {
+  "advancedStartRemoveCost": 20
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_SAVANNA",
+   "effect": {
+    "type": "EFFECT_BIRDSCATTER",
+    "probability": 15
+   }
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_FOREST_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_SAVANNA",
+  "civilopedia": "TXT_KEY_FEATURE_SAVANNA_PEDIA",
+  "appearance": 1000,
+  "growth": 15,
+  "validTerrains": [
+   "TERRAIN_DESERT",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_ROCKY",
+   "TERRAIN_SCRUB"
+  ]
+ }
+}

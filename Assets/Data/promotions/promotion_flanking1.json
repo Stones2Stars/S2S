@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_FLANKING1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_FLANKING2",
+   "PROMOTION_SENTRY",
+   "PROMOTION_STINGING_INSULTS1"
+  ]
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FLANKING": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Flanking1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,6,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FLANKING1"
+ }
+}

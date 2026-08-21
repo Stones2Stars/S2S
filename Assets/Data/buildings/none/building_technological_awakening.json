@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_TECHNOLOGICAL_AWAKENING",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_NANOPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOPUNK",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 5,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 3525
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_TECHNOLOGICAL_AWAKENING",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TECHNOLOGICAL_AWAKENING",
+  "civilopedia": "TXT_KEY_BUILDING_TECHNOLOGICAL_AWAKENING_PEDIA",
+  "specialBuildingType": "SPECIALBUILDING_PUNK_NANO",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

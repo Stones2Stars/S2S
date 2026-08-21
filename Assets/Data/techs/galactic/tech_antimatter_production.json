@@ -1,0 +1,65 @@
+{
+ "type": "TECH_ANTIMATTER_PRODUCTION",
+ "enables": {
+  "bonuses": [
+   "BONUS_ANTIMATTER"
+  ],
+  "buildings": [
+   "BUILDING_ANTIMATTER_HARVESTER",
+   "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+   "BUILDING_DEEP_SPACE_ANTIMATTER_RESEARCH_CENTER",
+   "BUILDING_JOVIAN_ANTIMATTER_HARVESTER"
+  ],
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING",
+   "TECH_SPACEPUNK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NUCLEAR_PULSE_PROPULSION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GALACTIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 126324
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/antimatter_production.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ANTIMATTER_PRODUCTION",
+  "civilopedia": "TXT_KEY_TECH_ANTIMATTER_PRODUCTION_PEDIA",
+  "quote": "TXT_KEY_TECH_ANTIMATTER_PRODUCTION_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 124,
+  "gridY": 1
+ }
+}

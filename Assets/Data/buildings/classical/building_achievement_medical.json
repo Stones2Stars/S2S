@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_ACHIEVEMENT_MEDICAL",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_ANCIENT_MEDICINE",
+    "TECH_WRITING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_ACHIEVEMENT_MEDICAL"
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MEDICAL_A"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MEDICAL_A",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ACHIEVEMENT_MEDICAL",
+  "civilopedia": "TXT_KEY_BUILDING_ACHIEVEMENT_MEDICAL_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "notConstructible": true,
+  "worth": 10,
+  "specialBuildingType": "SPECIALBUILDING_ACHIEVEMENT",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

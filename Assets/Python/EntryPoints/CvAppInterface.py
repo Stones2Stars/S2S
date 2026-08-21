@@ -55,10 +55,6 @@ def preGameStart():
 	import CvScreensInterface
 	CvScreensInterface.showMainInterface()
 
-def recalculateModifiers():
-	import CvRandomEventInterface
-	CvRandomEventInterface.recalculateModifiers()
-
 def onPbemSend(argsList):
 	import smtplib, MimeWriter, base64, StringIO
 

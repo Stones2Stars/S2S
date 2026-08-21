@@ -1,0 +1,65 @@
+{
+ "type": "TECH_BALLOON_WARFARE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BALLOON_RIDES"
+  ],
+  "techs": [
+   "TECH_FLIGHT"
+  ],
+  "units": [
+   "UNIT_BLIMP",
+   "UNIT_CLOUD_DESTROYER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HOT_AIR_BALLOON",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_THERMODYNAMICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 5745
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/warballooning.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_BALLOON_WARFARE",
+  "soundMP": "AS2D_TECH_BALLOON_WARFARE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_BALLOON_WARFARE",
+  "civilopedia": "TXT_KEY_TECH_BALLOON_WARFARE_PEDIA",
+  "quote": "TXT_KEY_TECH_BALLOON_WARFARE_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 20,
+  "tradeable": true,
+  "gridX": 64,
+  "gridY": 15
+ }
+}

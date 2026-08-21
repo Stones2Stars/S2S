@@ -1,0 +1,98 @@
+{
+ "type": "TECH_COMBUSTION",
+ "enables": {
+  "buildings": [
+   "BUILDING_CREATIVE_CONSTRUCTIONS_CONTRACTORS",
+   "BUILDING_HQ_CREATIVE_CONSTRUCTIONS",
+   "BUILDING_NATURAL_GAS_POWER_PLANT",
+   "BUILDING_OIL_POWER_PLANT"
+  ],
+  "builds": [
+   "BUILD_BREAK_ICE_KILL",
+   "BUILD_EXTRACTION_FACILITY",
+   "BUILD_OFFSHORE_PLATFORM",
+   "BUILD_RAILROAD"
+  ],
+  "techs": [
+   "TECH_MOTORIZED_TRANSPORTATION",
+   "TECH_WATER_SPORTS"
+  ],
+  "units": [
+   "UNIT_MASTER_SAILOR_PRE_DREADNOUGHT",
+   "UNIT_PRE_DREADNOUGHT"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_MASTER_SAILOR_MANOWAR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SCREW_PROPELLER",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_THERMODYNAMICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MACHINE_TOOLS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_REFINING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 6351
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 9
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_GOLD": 7
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Combustion.dds,Art/Interface/Buttons/TechTree_Atlas.dds,3,2"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_COMBUSTION",
+  "soundMP": "AS2D_TECH_MP_COMBUSTION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_COMBUSTION",
+  "civilopedia": "TXT_KEY_TECH_COMBUSTION_PEDIA",
+  "quote": "TXT_KEY_TECH_COMBUSTION_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 66,
+  "gridY": 19
+ }
+}

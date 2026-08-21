@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_CYRUS_CYLINDER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MONARCHY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1200,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CYRUS_CYLINDER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CYRUS_CYLINDER"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CYRUS_CYLINDER",
+  "civilopedia": "TXT_KEY_BUILDING_CYRUS_CYLINDER_PEDIA",
+  "help": "TXT_KEY_BUILDING_CYRUS_CYLINDER_HELP",
+  "pediaCategory": "greatWonder",
+  "worth": 6,
+  "militaryWorth": 3,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_SPY",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

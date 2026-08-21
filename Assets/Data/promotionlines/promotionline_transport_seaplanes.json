@@ -1,0 +1,17 @@
+{
+ "type": "PROMOTIONLINE_TRANSPORT_SEAPLANES",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/TransportSeaplanes.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_TRANSPORT_SEAPLANES",
+  "unitCombats": [
+   "UNITCOMBAT_PROMOTED_TRANSPORT_SEAPLANES"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SUBMARINE"
+  ]
+ }
+}

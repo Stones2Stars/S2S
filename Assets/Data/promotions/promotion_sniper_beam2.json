@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTION_SNIPER_BEAM2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_MEGA_BEAM"
+  ]
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SNIPER_BEAM": 2
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/SniperBeam2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SNIPER_BEAM2"
+ }
+}

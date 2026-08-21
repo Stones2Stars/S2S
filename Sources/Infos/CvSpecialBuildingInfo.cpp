@@ -1,118 +1,45 @@
-//------------------------------------------------------------------------------------------------
-//  FILE:    CvSpecialBuildingInfo.cpp
-//------------------------------------------------------------------------------------------------
+//
+//	CvSpecialBuildingInfo -- the special-building poco's own typed reading on top of the base section dispatch
+//	(see the header). `allowed` is parsed by the BASE dispatch into the composed m_allowed unit
+//	(getMaxPlayerInstances reads it) -- never hand-parsed here: a private int once left getAllowed() NULL, and
+//	the enabler's group gate (bd_groupCapOk) reads getAllowed(), so the cap silently never applied. Idempotent
+//	by contract (unconditional assigns).
+//
+
 #include "CvGameCoreDLL.h"
-#include "CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "CvPlayerAI.h"
-#include "CvPython.h"
-#include "CvXMLLoadUtility.h"
-#include "CvXMLLoadUtilityModTools.h"
-#include "CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
+#include "CvInfos.h"       // umbrella: keeps the unity batch's info-type defs whole (leakage guard)
+#include "AI/CvGameAI.h"
 #include "CvSpecialBuildingInfo.h"
+#include "CvJsonParse.h"   // jsonChildObj
 
-
-//======================================================================================================
-//					CvSpecialBuildingInfo
-//======================================================================================================
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   CvSpecialBuildingInfo()
-//
-//  PURPOSE :   Default constructor
-//
-//------------------------------------------------------------------------------------------------------
 CvSpecialBuildingInfo::CvSpecialBuildingInfo()
+	: m_iTechPrereq(NO_TECH)      // set at load by the tech-side un-inversion (CvReversePass)
+	, m_bValid(true)              // legacy default TRUE (curator elides valid:true; only explicit valid:false overrides)
+	, m_iMaxPlayerInstances(-1)   // -1 = uncapped (materialized at mapFrom from the composed allowed)
 {
-	CvInfoUtil(this).initDataMembers();
 }
 
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   ~CvSpecialBuildingInfo()
-//
-//  PURPOSE :   Default destructor
-//
-//------------------------------------------------------------------------------------------------------
-CvSpecialBuildingInfo::~CvSpecialBuildingInfo()
+void CvSpecialBuildingInfo::mapFrom(const picojson::value& entity)
 {
-	CvInfoUtil(this).uninitDataMembers();
-}
+	CvInfo::mapFrom(entity);   // core reading (type / text keys / button) + the composed sections
 
+	// idempotency (CvInfo.h): unconditional redefinition (the reverse-pass-fed tech FK is written AFTER the
+	// last mapFrom of a load, so it is never clobbered here)
+	m_bValid = true;
+	// the GROUP cap, off the base-dispatch-parsed composed unit (docs/architecture/patterns.md §Materialize at mapFrom)
+	m_iMaxPlayerInstances = m_allowed.cap(ALLOWEDCAP_EMPIRE);
 
-void CvSpecialBuildingInfo::getDataMembers(CvInfoUtil& util)
-{
-	// Declared in the legacy getCheckSum order so the delegated checksum stays byte-identical.
-	// NOTE: the legacy hand-written copyNonDefaults compared the three tech FKs against 0 instead of
-	// the type-correct -1 (NO_TECH), so a modular merge could never inherit them; the wrappers use -1,
-	// fixing that latent modular-merge bug.
-	util
-		.addEnum(m_iObsoleteTech, L"ObsoleteTech")
-		.addEnum(m_iTechPrereq, L"TechPrereq")
-		.addEnumAsInt(m_iTechPrereqAnyone, L"TechPrereqAnyone")
-		.add(m_iMaxPlayerInstances, L"iMaxPlayerInstances", -1)
-		.add(m_bValid, L"bValid")
-	;
-}
-
-
-TechTypes CvSpecialBuildingInfo::getObsoleteTech() const
-{
-	return m_iObsoleteTech;
-}
-
-
-int CvSpecialBuildingInfo::getTechPrereqAnyone() const
-{
-	return m_iTechPrereqAnyone;
-}
-
-
-int CvSpecialBuildingInfo::getMaxPlayerInstances() const
-{
-	return m_iMaxPlayerInstances;
-}
-
-
-bool CvSpecialBuildingInfo::isValid() const
-{
-	return m_bValid;
-}
-
-
-bool CvSpecialBuildingInfo::read(CvXMLLoadUtility* pXML)
-{
-	if (!CvInfoBase::read(pXML))
+	if (!entity.is<picojson::object>())
 	{
-		return false;
+		return;
 	}
-
-	CvInfoUtil(this).readXml(pXML);
-
-	return true;
+	const picojson::object& entityObj = entity.get<picojson::object>();
+	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
+	{
+		picojson::object::const_iterator validIt = pIdentity->find("valid");
+		if (validIt != pIdentity->end() && validIt->second.is<bool>())
+		{
+			m_bValid = validIt->second.get<bool>();
+		}
+	}
 }
-
-
-void CvSpecialBuildingInfo::copyNonDefaults(const CvSpecialBuildingInfo* pClassInfo)
-{
-	CvInfoBase::copyNonDefaults(pClassInfo);
-
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-}
-
-
-void CvSpecialBuildingInfo::getCheckSum(uint32_t& iSum) const
-{
-	CvInfoUtil(this).checkSum(iSum);
-}
-

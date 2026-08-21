@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_CHAM",
+ "enables": {
+  "units": [
+   "UNIT_MAHOUT_LANCER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CHAM"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CHAM",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

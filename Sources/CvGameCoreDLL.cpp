@@ -1,5 +1,5 @@
 #include "CvGameCoreDLL.h"
-#include "CvGlobals.h"
+#include "Defines/CvGlobals.h"
 #include <psapi.h>
 
 #ifdef USE_INTERNAL_PROFILER
@@ -77,8 +77,10 @@ BOOL APIENTRY DllMain(HANDLE hModule,
 				return FALSE;
 			}
 
-			// Don't attempt rebuild if debugger is connected, its annoying
-			if(!IsDebuggerPresent())
+			// Don't attempt rebuild if a debugger is connected (annoying), or if an
+			// automated/agent launcher set S2S_SKIP_BOOTCHECK (load the deployed DLL as-is,
+			// no recompile - see agentstart.bat).
+			if(!IsDebuggerPresent() && GetEnvironmentVariableA("S2S_SKIP_BOOTCHECK", NULL, 0) == 0)
 			{
 				if (!runProcess("cmd.exe /C \"" + git_dir + "\\Tools\\_BootDLLCheck.bat\" " + TOSTRING(BUILD_TARGET), git_dir + "\\Tools"))
 				{
@@ -686,6 +688,13 @@ int intPow(const int x, const int p)
 	return static_cast<int>(iResult);
 }
 
+int smGroupMultiplier(const int iGroupRank)
+{
+	// A rank below 1 has no geometry of its own -- it is one body, multiplier 1. Clamping here (rather than at
+	// each call) is what keeps the count's writers and its reader on the SAME rule.
+	return intPow(3, std::max(1, iGroupRank) - 1);
+}
+
 int getModifiedIntValue(const int iValue, const int iMod)
 {
 	if (iMod > 0)
@@ -698,6 +707,7 @@ int getModifiedIntValue(const int iValue, const int iMod)
 	}
 	return iValue;
 }
+
 int64_t getModifiedIntValue64(const int64_t iValue, const int iMod)
 {
 	if (iMod > 0)

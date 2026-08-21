@@ -1,0 +1,43 @@
+{
+ "type": "PROMOTION_SHIP_OPERATIONS3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SHIP_OPERATIONS4"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SHIP_OPERATIONS2",
+    {
+     "any": [
+      "PROMOTION_SHIP_TACTICS4"
+     ]
+    }
+   ]
+  }
+ },
+ "heal": {
+  "unit": {
+   "neutral": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SHIP_OPERATIONS": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/shipOperations3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SHIP_OPERATIONS3",
+  "controlPoints": 5,
+  "commandRange": 1
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_TIN_INGOTS",
+ "enables": {
+  "buildings": [
+   "BUILDING_SMITH_BRONZE",
+   "BUILDING_SMITH_TIN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TIN_INGOTS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TIN_INGOTS",
+  "civilopedia": "TXT_KEY_BONUS_INGOTS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

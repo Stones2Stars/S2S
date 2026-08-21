@@ -1,0 +1,72 @@
+{
+ "type": "TECH_APPLIED_RELATIVITY",
+ "enables": {
+  "buildings": [
+   "BUILDING_GALACTIC_CORE_BASE",
+   "BUILDING_INTERSTELLAR_WHITE_HOLE",
+   "BUILDING_MILKY_WAY_CORE_COLONY"
+  ],
+  "builds": [
+   "BUILD_BLUE_SUPERGIANT_COLONY"
+  ],
+  "improvements": [
+   "IMPROVEMENT_BLUE_SUPERGIANT_COLONY"
+  ],
+  "techs": [
+   "TECH_GALACTIC_ENGINEERING",
+   "TECH_GRAVITRONICS",
+   "TECH_ULTIMA_ARCHITECTURE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PHASING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FOLDING_SPACE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COSMIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 262044
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/applied_relativity.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_APPLIED_RELATIVITY",
+  "civilopedia": "TXT_KEY_TECH_APPLIED_RELATIVITY_PEDIA",
+  "quote": "TXT_KEY_TECH_APPLIED_RELATIVITY_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 138,
+  "gridY": 7
+ }
+}

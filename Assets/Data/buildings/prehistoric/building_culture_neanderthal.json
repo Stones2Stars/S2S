@@ -1,0 +1,139 @@
+{
+ "type": "BUILDING_CULTURE_NEANDERTHAL",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SEDENTARY_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CAVE_DWELLING",
+    {
+     "any": [
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_CAVES"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_POLAR_ROCK_ARCH"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_POLAR_ROCK_ARCH2"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_POLAR_ROCK_FORM1"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_POLAR_ROCK_FORM2"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_POLAR_ROCK_FORM3"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_POLAR_ROCK_FORM4"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_DARK_ROCK_ARCH"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_DARK_ROCK_ARCH2"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_DARK_ROCK_FORM1"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_DARK_ROCK_FORM2"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_DARK_ROCK_FORM3"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_DARK_ROCK_FORM4"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_ROCK_ARCH"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_ROCK_ARCH2"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_ROCK_FORM1"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_ROCK_FORM2"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_ROCK_FORM3"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_ROCK_FORM4"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_C_AC_NEANDERTHAL"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "percent": -5
+  },
+  "empire": {
+   "percent": -5
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_C_AC_NEANDERTHAL"
+   }
+  ]
+ },
+ "cost": {
+  "production": 60,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NEANDERTHAL_EMBASSY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_NEANDERTHAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_NEANDERTHAL",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_NEANDERTHAL_PEDIA",
+  "help": "TXT_KEY_BUILDING_CULTURE_NEANDERTHAL_HELP",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

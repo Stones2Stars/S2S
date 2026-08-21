@@ -1,0 +1,24 @@
+{
+ "type": "BONUS_DUTCH",
+ "enables": {
+  "buildings": [
+   "BUILDING_DUTCH_DIKE"
+  ],
+  "units": [
+   "UNIT_MICHIEL_DE_RUYTER",
+   "UNIT_NETHERLANDS_OOSTINDIEVAARDER",
+   "UNIT_PIER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_DUTCH"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_DUTCH",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

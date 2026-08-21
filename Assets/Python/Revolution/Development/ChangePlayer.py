@@ -10,8 +10,14 @@ import RevUtils
 import BugCore
 
 # globals
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
 RevOpt = BugCore.game.Revolution
 
@@ -56,13 +62,13 @@ def changeCivPopup():
 
 	popup.createPythonPullDown(' ... to this civ', 2)
 	for i in range(GC.getNumCivilizationInfos()):
-		popup.addPullDownString("%s Empire" %(GC.getCivilizationInfo(i).getAdjective(0)), i, 2)
+		popup.addPullDownString("%s Empire" %(INFO.getAdjective("CIVILIZATION_", i, 0)), i, 2)
 
 	popup.setSelectedPulldownID(CyPlayer.getCivilizationType(), 2)
 
 	popup.createPythonPullDown(' ... with this leader', 3)
 	for i in xrange(GC.getNumLeaderHeadInfos()):
-		popup.addPullDownString(GC.getLeaderHeadInfo(i).getDescription(), i, 3)
+		popup.addPullDownString(INFO.getDescription("LEADER_", i), i, 3)
 
 	popup.setSelectedPulldownID(CyPlayer.getLeaderType(), 3)
 

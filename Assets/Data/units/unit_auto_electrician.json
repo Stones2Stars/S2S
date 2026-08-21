@@ -1,0 +1,157 @@
+{
+ "type": "UNIT_AUTO_ELECTRICIAN",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_POWER_TOOLS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_SEMICONDUCTORS",
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_TIRES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_PARTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      "BUILDING_AUTO_REPAIR_SHOP",
+      "BUILDING_HYPERMARKET"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_REPLICATION_MECHANIC"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 4
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 30
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 15
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 10
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_MECHANICAL": {
+     "heal": 29,
+     "adjacentHeal": 12
+    },
+    "UNITCOMBAT_HEALS_AS_AIRCRAFT": {
+     "heal": 15
+    },
+    "UNITCOMBAT_HEALS_AS_TECH": {
+     "heal": 10
+    }
+   }
+  }
+ },
+ "skills": [
+  "mechanized",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "troop"
+ ],
+ "combatClass": "UNITCOMBAT_WHEELED",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL",
+  "UNITCOMBAT_HEALS_MECHANICAL",
+  "UNITCOMBAT_HEALS_AIRCRAFT"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 961,
+  "upkeep": 8,
+  "hurryCostModifier": 25
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AUTO_ELECTRICIAN",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_AUTO_ELECTRICIAN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_AUTO_ELECTRICIAN",
+  "civilopedia": "TXT_KEY_UNIT_AUTO_ELECTRICIAN_PEDIA",
+  "worth": 10,
+  "militaryWorth": 30,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_HEALER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_HEALER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

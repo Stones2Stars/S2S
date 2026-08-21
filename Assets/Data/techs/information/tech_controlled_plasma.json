@@ -1,0 +1,72 @@
+{
+ "type": "TECH_CONTROLLED_PLASMA",
+ "enables": {
+  "buildings": [
+   "BUILDING_PLASMA_ARC_RECYCLING"
+  ],
+  "projects": [
+   "PROJECT_ITER"
+  ],
+  "techs": [
+   "TECH_FUSION",
+   "TECH_MICROWAVE_WEAPONRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RENEWABLE_ENERGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MAGNETIC_LEVITATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_IMAGINARY_PHYSICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 23650
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Plasma_Physics.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CONTROLLED_PLASMA",
+  "soundMP": "AS2D_TECH_CONTROLLED_PLASMA"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CONTROLLED_PLASMA",
+  "civilopedia": "TXT_KEY_TECH_CONTROLLED_PLASMA_PEDIA",
+  "quote": "TXT_KEY_TECH_CONTROLLED_PLASMA_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 92,
+  "gridY": 19
+ }
+}

@@ -12,7 +12,14 @@ import CvScreensInterface
 import re
 
 # globals
-gc = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
+INFO = CyInfo()
+gc = GC   # this module spells it lowercase
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 ArtFileMgr = CyArtFileMgr()
 localText = CyTranslator()
 
@@ -123,7 +130,7 @@ class CvHallOfFameScreen:
 			if civ.isPlayable():
 				for iLeader in range(gc.getNumLeaderHeadInfos()):
 					if civ.isLeaders(iLeader):
-						screen.addPullDownString(self.LEADER_DROPDOWN_ID, gc.getLeaderHeadInfo(iLeader).getDescription(), iCiv, iLeader, False)
+						screen.addPullDownString(self.LEADER_DROPDOWN_ID, INFO.getDescription("LEADER_", iLeader), iCiv, iLeader, False)
 		iNumDropDowns += 1
 
 		yDropDown = self.DROPDOWN_SPACING_Y * (iNumDropDowns % 2) + self.DROPDOWN_Y
@@ -133,7 +140,7 @@ class CvHallOfFameScreen:
 		screen.addDropDownBoxGFC(self.VICTORY_DROPDOWN_ID, xDropDown, yDropDown, self.DROPDOWN_WIDTH, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString(self.VICTORY_DROPDOWN_ID, localText.getText("TXT_KEY_ALL_VICTORIES", ()), -1, -1, True)
 		for i in range(gc.getNumVictoryInfos()):
-			screen.addPullDownString(self.VICTORY_DROPDOWN_ID, gc.getVictoryInfo(i).getDescription(), i, i, False)
+			screen.addPullDownString(self.VICTORY_DROPDOWN_ID, INFO.getDescription("VICTORY_", i), i, i, False)
 		iNumDropDowns += 1
 
 		yDropDown = self.DROPDOWN_SPACING_Y * (iNumDropDowns % 2) + self.DROPDOWN_Y
@@ -143,7 +150,7 @@ class CvHallOfFameScreen:
 		screen.addDropDownBoxGFC(self.DIFFICULTY_DROPDOWN_ID, xDropDown, yDropDown, self.DROPDOWN_WIDTH, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString(self.DIFFICULTY_DROPDOWN_ID, localText.getText("TXT_KEY_ALL_DIFFICULTIES", ()), -1, -1, True)
 		for iHandicap in range(gc.getNumHandicapInfos()):
-			screen.addPullDownString(self.DIFFICULTY_DROPDOWN_ID, gc.getHandicapInfo(iHandicap).getDescription(), iHandicap, iHandicap, False)
+			screen.addPullDownString(self.DIFFICULTY_DROPDOWN_ID, INFO.getDescription("HANDICAP_", iHandicap), iHandicap, iHandicap, False)
 		iNumDropDowns += 1
 
 		yDropDown = self.DROPDOWN_SPACING_Y * (iNumDropDowns % 2) + self.DROPDOWN_Y
@@ -153,7 +160,7 @@ class CvHallOfFameScreen:
 		screen.addDropDownBoxGFC(self.MAPSIZE_DROPDOWN_ID, xDropDown, yDropDown, self.DROPDOWN_WIDTH, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString(self.MAPSIZE_DROPDOWN_ID, localText.getText("TXT_KEY_ALL_WORLD_SIZES", ()), -1, -1, True)
 		for i in range(gc.getNumWorldInfos()):
-			screen.addPullDownString(self.MAPSIZE_DROPDOWN_ID, gc.getWorldInfo(i).getDescription(), i, i, False)
+			screen.addPullDownString(self.MAPSIZE_DROPDOWN_ID, INFO.getDescription("WORLDSIZE_", i), i, i, False)
 		iNumDropDowns += 1
 
 		yDropDown = self.DROPDOWN_SPACING_Y * (iNumDropDowns % 2) + self.DROPDOWN_Y
@@ -163,7 +170,7 @@ class CvHallOfFameScreen:
 		screen.addDropDownBoxGFC(self.ERA_DROPDOWN_ID, xDropDown, yDropDown, self.DROPDOWN_WIDTH, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString(self.ERA_DROPDOWN_ID, localText.getText("TXT_KEY_ALL_ERAS", ()), -1, -1, True)
 		for i in range(gc.getNumEraInfos()):
-			screen.addPullDownString(self.ERA_DROPDOWN_ID, gc.getEraInfo(i).getDescription(), i, i, False)
+			screen.addPullDownString(self.ERA_DROPDOWN_ID, INFO.getDescription("C2C_ERA_", i), i, i, False)
 		iNumDropDowns += 1
 
 		yDropDown = self.DROPDOWN_SPACING_Y * (iNumDropDowns % 2) + self.DROPDOWN_Y
@@ -173,7 +180,7 @@ class CvHallOfFameScreen:
 		screen.addDropDownBoxGFC(self.SPEED_DROPDOWN_ID, xDropDown, yDropDown, self.DROPDOWN_WIDTH, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString(self.SPEED_DROPDOWN_ID, localText.getText("TXT_KEY_ALL_GAME_SPEEDS", ()), -1, -1, True)
 		for i in range(gc.getNumGameSpeedInfos()):
-			screen.addPullDownString(self.SPEED_DROPDOWN_ID, gc.getGameSpeedInfo(i).getDescription(), i, i, False)
+			screen.addPullDownString(self.SPEED_DROPDOWN_ID, INFO.getDescription("GAMESPEED_", i), i, i, False)
 		iNumDropDowns += 1
 
 		yDropDown = self.DROPDOWN_SPACING_Y * (iNumDropDowns % 2) + self.DROPDOWN_Y
@@ -265,10 +272,10 @@ class CvHallOfFameScreen:
 						replayInfo.getFinalDate(),
 						replayInfo.getFinalScore(),
 						szVictory,
-						gc.getHandicapInfo(replayInfo.getDifficulty()).getDescription(),
-						gc.getWorldInfo(replayInfo.getWorldSize()).getDescription(),
+						INFO.getDescription("HANDICAP_", replayInfo.getDifficulty()),
+						INFO.getDescription("WORLD_", replayInfo.getWorldSize()),
 						gc.getEraInfo(replayInfo.getEra()).getDescription(),
-						gc.getGameSpeedInfo(replayInfo.getGameSpeed()).getDescription(),
+						INFO.getDescription("GAMESPEED_", replayInfo.getGameSpeed()),
 						i)
 				iItem += 1
 		self.infoList.sort()

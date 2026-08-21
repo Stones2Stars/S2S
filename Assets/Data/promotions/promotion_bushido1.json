@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_BUSHIDO1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BUSHIDO2",
+   "PROMOTION_HARAKIRI"
+  ]
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 10
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUSHIDO": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Bushido1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUSHIDO1",
+  "stateReligionPrereq": "RELIGION_SHINTO"
+ }
+}

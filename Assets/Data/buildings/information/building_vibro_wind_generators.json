@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_VIBRO_WIND_GENERATORS",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MICROGENERATORS",
+    {
+     "any": [
+      "BUILDING_SMART_GRID",
+      "BUILDING_WIRELESS_GRID",
+      "BUILDING_EMP_GRID",
+      "BUILDING_SUPERCONDUCTING_GRID"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MICROGENERATORS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 2625,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VIBRO_WIND_GENERATORS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VIBRO_WIND_GENERATORS",
+  "civilopedia": "TXT_KEY_BUILDING_VIBRO_WIND_GENERATORS_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

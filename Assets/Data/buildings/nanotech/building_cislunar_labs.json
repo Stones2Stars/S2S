@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_CISLUNAR_LABS",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+    {
+     "any": [
+      "BUILDING_EFFECT_LAUNCH_SITE",
+      "BUILDING_COMMERCIAL_SPACEPORT",
+      "BUILDING_MILITARY_SPACEPORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 3245
+ },
+ "attributes": {
+  "orbital": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_LABS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SPACEWAY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_LABS",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_LABS_PEDIA",
+  "worth": 6,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

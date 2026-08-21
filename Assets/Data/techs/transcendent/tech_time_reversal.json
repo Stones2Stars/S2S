@@ -1,0 +1,77 @@
+{
+ "type": "TECH_TIME_REVERSAL",
+ "enables": {
+  "buildings": [
+   "BUILDING_ATLANTIS",
+   "BUILDING_DISTANT_FUTURE_CITY",
+   "BUILDING_DISTANT_PAST_CITY",
+   "BUILDING_INTERSTELLAR_TIME_ABYSS",
+   "BUILDING_MILLIWAYS"
+  ],
+  "builds": [
+   "BUILD_DISTANT_FUTURE_CITY",
+   "BUILD_DISTANT_PAST_CITY",
+   "BUILD_TERRAFORM_FUTURE",
+   "BUILD_TERRAFORM_PAST"
+  ],
+  "improvements": [
+   "IMPROVEMENT_DISTANT_FUTURE_CITY",
+   "IMPROVEMENT_DISTANT_PAST_CITY",
+   "IMPROVEMENT_TERRAFORM_FUTURE",
+   "IMPROVEMENT_TERRAFORM_PAST"
+  ],
+  "techs": [
+   "TECH_COSMIC_WARFARE",
+   "TECH_ENTROPY_REVERSAL",
+   "TECH_MULTIVERSE_TRAVERSAL",
+   "TECH_OMNIBENEVOLENT_MANDATE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ENDLESS_EXPLORATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 545221
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/time_reversal.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TIME_REVERSAL",
+  "civilopedia": "TXT_KEY_TECH_TIME_REVERSAL_PEDIA",
+  "quote": "TXT_KEY_TECH_TIME_REVERSAL_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 152,
+  "gridY": 13
+ }
+}

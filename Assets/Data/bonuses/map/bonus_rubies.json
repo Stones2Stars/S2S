@@ -1,0 +1,67 @@
+{
+ "type": "BONUS_RUBIES",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_GHURID",
+   "BUILDING_CULTURE_LIBYAN",
+   "BUILDING_GRAND_EARTH_FESTIVAL",
+   "BUILDING_MINE_GARNET",
+   "BUILDING_MINE_RUBY"
+  ]
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_RUBIES"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "hills": true,
+  "peaks": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_RUBIES",
+  "civilopedia": "TXT_KEY_BONUS_RUBIES_PEDIA",
+  "bonusClassType": "BONUSCLASS_LUXURY",
+  "source": "natural"
+ }
+}

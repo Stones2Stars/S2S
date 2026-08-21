@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_ANTIMATTER_HARVESTER",
+   "BUILDING_CISLUNAR_CLAYTRONIC_STATION",
+   "BUILDING_CISLUNAR_DEATH_RAY",
+   "BUILDING_CISLUNAR_DILATON_GENERATOR",
+   "BUILDING_CISLUNAR_DYSON_HARROP_SATELLITE",
+   "BUILDING_CISLUNAR_GARBAGE_ATOMIZER",
+   "BUILDING_CISLUNAR_NUCLEAR_DAMPER",
+   "BUILDING_CISLUNAR_OMNISURVEILLANCE",
+   "BUILDING_CISLUNAR_QUANTUM_THRUSTERS",
+   "BUILDING_ELYSIUM",
+   "BUILDING_L5_COLONY",
+   "BUILDING_PLANET_CLOUD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_COOLING_SYSTEM",
+    "BUILDING_CISLUNAR_GOVERNANCE",
+    "BUILDING_CISLUNAR_BIOFACTORY",
+    "BUILDING_EFFECT_CISLUNAR_ECONOMY",
+    "TECH_ORBITAL_MEGASTRUCTURES",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 250
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 2793,
+  "hurryModifier": 10000
+ },
+ "amenities": {
+  "adds3rdRing": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_ONEILL_CYLINDER"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_ONEILL_CYLINDER",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_ONEILL_CYLINDER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "type": "TECH_POULTRY_DOMESTICATION",
+ "enables": {
+  "bonuses": [
+   "BONUS_OSTRICH_FEATHERS",
+   "BONUS_PARROT",
+   "BONUS_POULTRY"
+  ],
+  "buildings": [
+   "BUILDING_BIRD_CALLER",
+   "BUILDING_CATCHER_BIRDS_OF_PARADISE",
+   "BUILDING_CATCHER_CANARY",
+   "BUILDING_CATCHER_COCKATOO",
+   "BUILDING_CATCHER_HUMMINGBIRD",
+   "BUILDING_CATCHER_JUNGLEFOWL",
+   "BUILDING_CATCHER_LYREBIRD",
+   "BUILDING_CATCHER_MACAW",
+   "BUILDING_CATCHER_PARAKEET",
+   "BUILDING_CATCHER_PARROT",
+   "BUILDING_CATCHER_PEACOCK",
+   "BUILDING_CATCHER_QUETZAL",
+   "BUILDING_CATCHER_TOUCAN",
+   "BUILDING_CHICKEN_COOP",
+   "BUILDING_COCK_FIGHTING_RING",
+   "BUILDING_CORMORANT_TRAINER",
+   "BUILDING_DISEASE_BIRD_FLU",
+   "BUILDING_FARM_ANIMAL_DUCK",
+   "BUILDING_FARM_ANIMAL_GOOSE",
+   "BUILDING_FARM_ANIMAL_OSTRICH",
+   "BUILDING_FARM_ANIMAL_TURKEY",
+   "BUILDING_FLOCKS_OF_DUCK",
+   "BUILDING_FLOCKS_OF_PEACOCK",
+   "BUILDING_FLOCKS_OF_TURKEY",
+   "BUILDING_HERD_POULTRY",
+   "BUILDING_HERD_RATITE",
+   "BUILDING_PARROT_AVIARY"
+  ],
+  "techs": [
+   "TECH_FALCONRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AGRICULTURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 96
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Poultry_Domestication.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_POULTRY_DOMESTICATION",
+  "soundMP": "AS2D_TECH_POULTRY_DOMESTICATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_POULTRY_DOMESTICATION",
+  "civilopedia": "TXT_KEY_TECH_POULTRY_DOMESTICATION_PEDIA",
+  "quote": "TXT_KEY_TECH_POULTRY_DOMESTICATION_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "gridX": 21,
+  "gridY": 7
+ }
+}

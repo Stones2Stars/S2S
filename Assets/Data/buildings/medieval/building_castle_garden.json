@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_CASTLE_GARDEN",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ECOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CITY_PARK"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PERSPECTIVE",
+    {
+     "any": [
+      "BUILDING_CASTLE",
+      "BUILDING_STAR_FORT",
+      "BUILDING_IMPERIAL_FORTRESS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_CITY_PARK"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_NOBLE": 1
+  }
+ },
+ "cost": {
+  "production": 356,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CASTLE_GARDEN"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_PARK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CASTLE_GARDEN",
+  "civilopedia": "TXT_KEY_BUILDING_CASTLE_GARDEN_PEDIA",
+  "worth": 2,
+  "militaryWorth": 2,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

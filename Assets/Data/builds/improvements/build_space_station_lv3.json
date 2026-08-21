@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_SPACE_STATION_LV3",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTEROID_MINING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_SPACE_STATION_LV3"
+ },
+ "cost": {
+  "gold": 800,
+  "time": 12000
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/space_station_3.dds"
+  },
+  "hotkey": "KB_M"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_SPACE_STATION_LV3"
+ }
+}

@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_BELIEF_RESURRECTION",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_RESURRECTION"
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "warWeariness": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "empire": {
+   "flat": -10
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BELIEF_RESURRECTION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BELIEF_RESURRECTION",
+  "civilopedia": "TXT_KEY_BUILDING_BELIEF_RESURRECTION_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

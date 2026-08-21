@@ -1,0 +1,97 @@
+{
+ "type": "BUILDING_GRAND_CENTRAL_STATION",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MAGNETIC_LEVITATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_RAILROAD",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COAL",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_RAILROAD_STATION",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 1310,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GRANDCENTRAL_STATION"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GRAND_CENTRAL_STATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GRAND_CENTRAL_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_GRAND_CENTRAL_STATION_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

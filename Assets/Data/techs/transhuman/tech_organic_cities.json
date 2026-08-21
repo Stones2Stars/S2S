@@ -1,0 +1,88 @@
+{
+ "type": "TECH_ORGANIC_CITIES",
+ "enables": {
+  "buildings": [
+   "BUILDING_CYBER_CHLOROPLASTIDA_BLOOM",
+   "BUILDING_LEAN_LINEAR_CITY",
+   "BUILDING_NUDGING_SPACE_ARCOLOGY",
+   "BUILDING_PARK_ARCOLOGY",
+   "BUILDING_PURE_ORGANIC_CITY"
+  ],
+  "techs": [
+   "TECH_GAIA_ECOLOGY",
+   "TECH_MYTHOLOGICAL_BESTIARY",
+   "TECH_SPECULATIVE_PHYSIOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BOTANICAL_ALCHEMY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NUTRACEUTICAL_ANIMALS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_EVOLVED_CONSTRUCTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "research": 72474
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   },
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/organic_city.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ORGANIC_CITIES",
+  "soundMP": "AS2D_TECH_ORGANIC_CITIES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ORGANIC_CITIES",
+  "civilopedia": "TXT_KEY_TECH_ORGANIC_CITIES_PEDIA",
+  "quote": "TXT_KEY_TECH_ORGANIC_CITIES_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 115,
+  "gridY": 7
+ }
+}

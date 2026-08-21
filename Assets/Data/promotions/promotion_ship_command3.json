@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_SHIP_COMMAND3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SHIP_COMMAND4"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SHIP_COMMAND2"
+   ]
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SHIP_COMMAND": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/commodoreCommand3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SHIP_COMMAND3",
+  "controlPoints": 1
+ }
+}

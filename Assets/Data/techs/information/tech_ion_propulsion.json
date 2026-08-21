@@ -1,0 +1,71 @@
+{
+ "type": "TECH_ION_PROPULSION",
+ "enables": {
+  "buildings": [
+   "BUILDING_DAWN",
+   "BUILDING_NEW_HORIZONS"
+  ],
+  "techs": [
+   "TECH_SOLAR_PROPULSION"
+  ],
+  "units": [
+   "UNIT_ASTEROID_REWARD",
+   "UNIT_CISLUNAR_REWARD",
+   "UNIT_KBO_REWARD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FUEL_CELLS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLANETARY_EXPLORATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 20610
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/interstellartravel.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ION_PROPULSION",
+  "soundMP": "AS2D_TECH_ION_PROPULSION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ION_PROPULSION",
+  "civilopedia": "TXT_KEY_TECH_ION_PROPULSION_PEDIA",
+  "quote": "TXT_KEY_TECH_ION_PROPULSION_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 88,
+  "gridY": 7
+ }
+}

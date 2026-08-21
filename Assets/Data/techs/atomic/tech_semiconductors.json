@@ -1,0 +1,94 @@
+{
+ "type": "TECH_SEMICONDUCTORS",
+ "enables": {
+  "bonuses": [
+   "BONUS_MICROCHIPS"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_MICROCHIPS",
+   "BUILDING_HIGH_TECH_COAL_POWER_PLANT"
+  ],
+  "techs": [
+   "TECH_PERSONAL_COMPUTERS",
+   "TECH_SOLAR_POWER"
+  ],
+  "units": [
+   "UNIT_AUTO_ELECTRICIAN",
+   "UNIT_B52_BOMBER",
+   "UNIT_BATTLESHIP",
+   "UNIT_DESTROYER",
+   "UNIT_F4_PHANTOM",
+   "UNIT_MASTER_SAILOR_BATTLESHIP",
+   "UNIT_MASTER_SAILOR_DESTROYER",
+   "UNIT_MOBILE_ARTILLERY"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_MASTER_SAILOR_WW2_BATTLESHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MODERN_PHYSICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MANUFACTURING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COMPUTER_SCIENCE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 12657
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   },
+   {
+    "FLAVOR_GOLD": 9
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_MILITARY": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/transistors.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,1,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TRANSISTORS",
+  "soundMP": "AS2D_TECH_TRANSISTORS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SEMICONDUCTORS",
+  "civilopedia": "TXT_KEY_TECH_SEMICONDUCTORS_PEDIA",
+  "quote": "TXT_KEY_TECH_SEMICONDUCTORS_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 79,
+  "gridY": 19
+ }
+}

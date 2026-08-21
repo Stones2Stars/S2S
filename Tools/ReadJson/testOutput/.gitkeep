@@ -1,0 +1,6 @@
+# Target dir for readjson harness run outputs (gitignored contents; this file keeps the dir present).
+#
+# Examples (run from repo root):
+#   Tools/ReadJson/readjson.exe Assets/Data            > Tools/ReadJson/testOutput/conformance.txt
+#   Tools/ReadJson/readjson.exe Assets/Data --render BUILDING_FORGE > Tools/ReadJson/testOutput/forge.txt
+#   Tools/ReadJson/readjson.exe Assets/Data --complex  > Tools/ReadJson/testOutput/most_complex.txt

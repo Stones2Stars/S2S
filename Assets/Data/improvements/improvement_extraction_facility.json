@@ -1,0 +1,184 @@
+{
+ "type": "IMPROVEMENT_EXTRACTION_FACILITY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SUPERSTRONG_ALLOYS",
+     "scope": "team"
+    },
+    "IS_WATER",
+    {
+     "bonus": [
+      "BONUS_OIL",
+      "BONUS_NATURAL_GAS",
+      "BONUS_METHANE_ICE",
+      "BONUS_HYDROTHERMAL_VENT"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": -2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OIL"
+     }
+    },
+    {
+     "value": -2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_NATURAL_GAS"
+     }
+    },
+    {
+     "value": -2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_METHANE_ICE"
+     }
+    },
+    {
+     "value": -2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HYDROTHERMAL_VENT"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_NANOMINING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_TELEPORTATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OIL"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_NATURAL_GAS"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_METHANE_ICE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HYDROTHERMAL_VENT"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_NANOMINING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OIL"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_NATURAL_GAS"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_METHANE_ICE"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HYDROTHERMAL_VENT"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_WATER_POLLUTION": 1,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  }
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_EXTRACTION_FACILITY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_EXTRACTION_FACILITY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_EXTRACTION_FACILITY_PEDIA",
+  "pillageTo": "IMPROVEMENT_OFFSHORE_PLATFORM",
+  "advancedStart": {
+   "cost": 60
+  },
+  "pillageGold": 100,
+  "bonuses": {
+   "BONUS_OIL": {
+    "trade": true,
+    "depletionRand": 2000
+   },
+   "BONUS_NATURAL_GAS": {
+    "trade": true,
+    "depletionRand": 2000
+   },
+   "BONUS_METHANE_ICE": {
+    "trade": true,
+    "depletionRand": 2000
+   },
+   "BONUS_HYDROTHERMAL_VENT": {
+    "trade": true
+   }
+  }
+ }
+}

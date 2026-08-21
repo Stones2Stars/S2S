@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_TRANSTELLAR_DARK_MATTER_HEAT_SOURCE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TRANSTELLAR_ARTIFICIAL_RED_DWARF",
+    "TECH_DARK_MATTER_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    100,
+    {
+     "value": 25,
+     "enabled": "TECH_ENTROPY_REVERSAL"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 13,
+     "enabled": "TECH_MATERIALIZATION"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 6806,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_DARK_MATTER_HEAT_SOURCE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_DARK_MATTER_HEAT_SOURCE",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_DARK_MATTER_HEAT_SOURCE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

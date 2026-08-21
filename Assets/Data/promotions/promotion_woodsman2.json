@@ -1,0 +1,95 @@
+{
+ "type": "PROMOTION_WOODSMAN2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_WOODSMAN3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_WOODSMAN1"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "feature": {
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 15
+     }
+    },
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 15
+     }
+    },
+    "FEATURE_BAMBOO": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 15
+     }
+    },
+    "FEATURE_FOREST_ANCIENT": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 15
+     }
+    },
+    "FEATURE_FOREST_YOUNG": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 15
+     }
+    },
+    "FEATURE_FOREST_BURNT": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 15
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_WOODSMAN": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Woodsman2.dds,Art/Interface/Buttons/Promotions_Atlas.dds,7,6"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_WOODSMAN2"
+ }
+}

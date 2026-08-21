@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_TERAVERSE_PORTAL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_MEGAVERSE_PORTAL",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_MACROVERSE_TRAVERSAL",
+    {
+     "any": [
+      "BUILDING_MARTIAN_STARPORT",
+      "BUILDING_VENUS_MEGAFACTORY"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_MARTIAN",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_VENUSIAN",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 9
+  }
+ },
+ "cost": {
+  "production": 11410,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TERAVERSE_PORTAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TERAVERSE_PORTAL",
+  "civilopedia": "TXT_KEY_BUILDING_TERAVERSE_PORTAL_PEDIA",
+  "pediaCategory": "space",
+  "forceNoPrereqScaling": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN",
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

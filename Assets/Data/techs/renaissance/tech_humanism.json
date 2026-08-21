@@ -1,0 +1,79 @@
+{
+ "type": "TECH_HUMANISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_UZBEK",
+   "BUILDING_HOSTEL",
+   "BUILDING_NONSUCH_PALACE",
+   "BUILDING_PALACE_OF_BEAULIEU",
+   "BUILDING_PHILANTHROPIC_ORGANIZATION"
+  ],
+  "civics": [
+   "CIVIC_SECULARISM"
+  ],
+  "techs": [
+   "TECH_FREE_ARTISTRY",
+   "TECH_POLITICAL_PHILOSOPHY",
+   "TECH_SIKHISM",
+   "TECH_TEAM_SPORTS"
+  ],
+  "units": [
+   "UNIT_HENRI_IV",
+   "UNIT_LORENZO_DE_MEDICI",
+   "UNIT_PASTENE",
+   "UNIT_POCAHONTAS",
+   "UNIT_SHAYBANI",
+   "UNIT_STAMAN",
+   "UNIT_YUPANQUI"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RENAISSANCE_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 2364
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/Protestantism.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,6,14"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_HUMANISM",
+  "soundMP": "AS2D_TECH_HUMANISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_HUMANISM",
+  "civilopedia": "TXT_KEY_TECH_HUMANISM_PEDIA",
+  "quote": "TXT_KEY_TECH_HUMANISM_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 51,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "type": "BONUS_FIBERGLASS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ELECTRIC_LAMPS",
+   "BUILDING_GLASS_RECLAMATION_PLANT",
+   "BUILDING_HOUSE_OF_PARLIAMENT",
+   "BUILDING_INTELLIGENT_PAVEMENT",
+   "BUILDING_TRAFFIC_SIGNALS",
+   "BUILDING_ZOO"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_FIBERGLASS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_FIBERGLASS",
+  "civilopedia": "TXT_KEY_BONUS_FIBERGLASS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

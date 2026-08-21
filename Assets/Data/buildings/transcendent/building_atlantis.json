@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_ATLANTIS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
+    "TECH_TIME_REVERSAL",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "happiness": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "cost": {
+  "production": 141330,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ATLANTIS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ATLANTIS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ATLANTIS",
+  "civilopedia": "TXT_KEY_BUILDING_ATLANTIS_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

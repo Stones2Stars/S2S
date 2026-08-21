@@ -1,0 +1,134 @@
+{
+ "type": "TECH_MASONRY",
+ "enables": {
+  "bonuses": [
+   "BONUS_BRICKS",
+   "BONUS_MARBLE",
+   "BONUS_NATRON"
+  ],
+  "buildings": [
+   "BUILDING_ARENA",
+   "BUILDING_BRICK_MASON",
+   "BUILDING_CATACOMBS_OF_KOM_EL_SHOQAFA",
+   "BUILDING_CELLAR",
+   "BUILDING_CHEOMSEONGDAE",
+   "BUILDING_CHICHEN_ITZA",
+   "BUILDING_CRIME_BURGLARY",
+   "BUILDING_CULTURE_ANASAZI",
+   "BUILDING_CULTURE_JUTE",
+   "BUILDING_CULTURE_MASSAGETAE",
+   "BUILDING_CULTURE_MELANESIAN",
+   "BUILDING_CULTURE_MUTAPA",
+   "BUILDING_CULTURE_NABATEANS",
+   "BUILDING_CULTURE_NEPALESE",
+   "BUILDING_CULTURE_SICILIAN",
+   "BUILDING_FISH_PENS",
+   "BUILDING_FORTIFIED_OUTPOST",
+   "BUILDING_HOUSING_CLIFF_DWELLING",
+   "BUILDING_HOUSING_PUEBLOS",
+   "BUILDING_ICEHOUSE",
+   "BUILDING_KIVA",
+   "BUILDING_LABYRINTH_OF_KNOSSOS",
+   "BUILDING_LIGHTHOUSE",
+   "BUILDING_MARBLE_QUARRY",
+   "BUILDING_MESA_VERDE",
+   "BUILDING_MINE_ONYX",
+   "BUILDING_OBSIDIAN_QUARRY",
+   "BUILDING_PALACE_WALLS",
+   "BUILDING_STONE_BRIDGE",
+   "BUILDING_STONE_QUARRY",
+   "BUILDING_TOWN_WELL",
+   "BUILDING_WALLS",
+   "BUILDING_WAREHOUSE",
+   "BUILDING_ZIGGURAT"
+  ],
+  "builds": [
+   "BUILD_HAMLET",
+   "BUILD_QUARRY",
+   "BUILD_STONE_WATCHTOWER"
+  ],
+  "civics": [
+   "CIVIC_CITY_STATES"
+  ],
+  "improvements": [
+   "IMPROVEMENT_HAMLET",
+   "IMPROVEMENT_QUARRY",
+   "IMPROVEMENT_STONE_WATCHTOWER"
+  ],
+  "promotions": [
+   "PROMOTION_CITY_GARRISON4"
+  ],
+  "techs": [
+   "TECH_SCULPTURE"
+  ],
+  "units": [
+   "UNIT_ALOSKA",
+   "UNIT_ARETAS_III",
+   "UNIT_ITZKUMA",
+   "UNIT_KORA",
+   "UNIT_MAUES",
+   "UNIT_QUAHE",
+   "UNIT_VERCINGETORIX",
+   "UNIT_YU_THE_GREAT"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_EARLY_QUARRY",
+   "BUILD_WOODEN_WATCHTOWER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STANDARDIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 164
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/masonry2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MASONRY",
+  "soundMP": "AS2D_TECH_MP_MASONRY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MASONRY",
+  "civilopedia": "TXT_KEY_TECH_MASONRY_PEDIA",
+  "quote": "TXT_KEY_TECH_MASONRY_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 25,
+  "gridY": 13
+ }
+}

@@ -1,0 +1,69 @@
+{
+ "type": "TECH_CHARTERS",
+ "enables": {
+  "buildings": [
+   "BUILDING_SCARBOROUGH_FAIR",
+   "BUILDING_TROYES_TRADE_FAIR"
+  ],
+  "techs": [
+   "TECH_BANKING",
+   "TECH_PARLIAMENTS",
+   "TECH_WARRANTS_AND_DECREES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PAPER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1688
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/charters.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CHARTERS",
+  "soundMP": "AS2D_TECH_CHARTERS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CHARTERS",
+  "civilopedia": "TXT_KEY_TECH_CHARTERS_PEDIA",
+  "quote": "TXT_KEY_TECH_CHARTERS_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 47,
+  "gridY": 15
+ }
+}

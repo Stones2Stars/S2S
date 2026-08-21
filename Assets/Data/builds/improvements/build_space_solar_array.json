@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_SPACE_SOLAR_ARRAY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SOLAR_PROPULSION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_SPACE_SOLAR_ARRAY"
+ },
+ "cost": {
+  "gold": 250,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/space_solar_array.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_SPACE_SOLAR_ARRAY"
+ }
+}

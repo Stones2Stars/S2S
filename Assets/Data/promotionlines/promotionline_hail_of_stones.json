@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_HAIL_OF_STONES",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/HailOfStones1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_HAIL_OF_STONES",
+  "unitCombats": [
+   "UNITCOMBAT_WEAPON_DIST_LAUNCHED_STONE"
+  ]
+ }
+}

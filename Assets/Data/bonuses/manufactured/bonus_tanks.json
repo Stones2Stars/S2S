@@ -1,0 +1,32 @@
+{
+ "type": "BONUS_TANKS",
+ "enables": {
+  "units": [
+   "UNIT_ARMOR_M60",
+   "UNIT_DREADNOUGHT",
+   "UNIT_DROID_TANK",
+   "UNIT_EARLY_TANK",
+   "UNIT_FUTURE_ARMOR",
+   "UNIT_GERMAN_PANZER",
+   "UNIT_HEAVY_ARMOR",
+   "UNIT_HEAVY_TANK",
+   "UNIT_LIGHT_TANK",
+   "UNIT_MODERN_ARMOR",
+   "UNIT_PLASMA_ARMOR",
+   "UNIT_STEALTH_ARMOR",
+   "UNIT_TANK",
+   "UNIT_THERMOBARIC_TANK"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TANKS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TANKS",
+  "civilopedia": "TXT_KEY_BONUS_TANKS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

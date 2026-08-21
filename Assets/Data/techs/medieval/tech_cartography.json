@@ -1,0 +1,67 @@
+{
+ "type": "TECH_CARTOGRAPHY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CARTOGRAPHERS_SHOP"
+  ],
+  "techs": [
+   "TECH_NAVIGATION",
+   "TECH_WEATHER_FORECASTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PAPER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "canTrade": {
+  "maps": true
+ },
+ "cost": {
+  "research": 1688
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Mapmaking.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CARTOGRAPHY",
+  "soundMP": "AS2D_TECH_CARTOGRAPHY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CARTOGRAPHY",
+  "civilopedia": "TXT_KEY_TECH_CARTOGRAPHY_PEDIA",
+  "quote": "TXT_KEY_TECH_CARTOGRAPHY_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 47,
+  "gridY": 13
+ }
+}

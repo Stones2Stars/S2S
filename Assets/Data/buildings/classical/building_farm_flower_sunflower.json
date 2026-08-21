@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_FARM_FLOWER_SUNFLOWER",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FLOWERS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_INDUSTRIAL_ECOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GREENHOUSE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FLORISTRY",
+    {
+     "any": [
+      "BUILDING_APIARY",
+      "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_FLAX",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_CORN",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_GREENHOUSE"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 270,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FARM_FLOWER_SUNFLOWER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_FLOWER_SUNFLOWER",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_FLOWER_SUNFLOWER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

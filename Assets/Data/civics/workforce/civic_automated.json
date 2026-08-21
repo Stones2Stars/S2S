@@ -1,0 +1,84 @@
+{
+ "type": "CIVIC_AUTOMATED",
+ "enables": {
+  "buildings": [
+   "BUILDING_CIVIC_POST_SCARCITY"
+  ],
+  "specialists": [
+   "SPECIALIST_ENGINEER"
+  ]
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1,
+   "buildings": {
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "flat": -5
+    },
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "freeSpecialists": {
+  "empire": {
+   "SPECIALIST_ANDROID_WORKER": 3
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeCivilian": {
+    "flat": 5
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 1
+    },
+    "production": {
+     "percent": 2
+    },
+    "commerce": {
+     "percent": 1
+    }
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 25
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": -1
+   }
+  }
+ },
+ "policies": {
+  "upgradeAnywhere": true
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/labor_post_labor.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_AUTOMATED",
+  "civilopedia": "TXT_KEY_CIVIC_AUTOMATED_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_AUTOMATED_STRATEGY",
+  "civicOption": "CIVICOPTION_WORKFORCE",
+  "anarchyLength": 2,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

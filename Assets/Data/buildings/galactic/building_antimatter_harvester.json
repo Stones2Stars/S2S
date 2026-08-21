@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_ANTIMATTER_HARVESTER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_OMEGA_POINT"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MATERIALIZATION_COMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HYBRID_AIRSHIP_PORT",
+    "TECH_ANTIMATTER_PRODUCTION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_MATERIALIZATION_COMPLEX"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ANTIMATTER"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 8405,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANTIMATTER_HARVESTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANTIMATTER_HARVESTER",
+  "civilopedia": "TXT_KEY_BUILDING_ANTIMATTER_HARVESTER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

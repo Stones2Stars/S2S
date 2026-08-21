@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_POLICING",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/CrimeControl1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_POLICING",
+  "unitCombats": [
+   "UNITCOMBAT_LAW_ENFORCEMENT"
+  ]
+ }
+}

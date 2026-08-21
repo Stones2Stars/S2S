@@ -1771,7 +1771,7 @@
 			<Type>EVENT_BROTHERS_IN_NEED_5</Type>
 			<Description>TXT_KEY_EVENT_BROTHERS_IN_NEED_5</Description>
 			<OtherPlayerPopup>TXT_KEY_EVENT_BROTHERS_IN_NEED_OTHER_5</OtherPlayerPopup>
-			<BonusGift>BONUS_ELEPHANTS</BonusGift>
+			<BonusGift>BONUS_ELEPHANT</BonusGift>
 			<iOurAttitudeModifier>3</iOurAttitudeModifier>
 			<iAttitudeModifier>3</iAttitudeModifier>
 			<Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
@@ -2127,7 +2127,7 @@
 		<EventInfo>
 			<Type>EVENT_PARROTS_1</Type>
 			<Description>TXT_KEY_EVENT_PARROTS_1</Description>
-			<BonusType>BONUS_PARROTS</BonusType>
+			<BonusType>BONUS_PARROT</BonusType>
 			<iBonusChange>1</iBonusChange>
 			<PythonCallback>applyLandmarkFromEvent</PythonCallback>
 			<Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
@@ -3039,7 +3039,6 @@
 		<EventInfo>
 			<Type>EVENT_COMET_FRAGMENT_1</Type>
 			<Description>TXT_KEY_EVENT_COMET_FRAGMENT_1</Description>
-			<iSpaceProductionMod>5</iSpaceProductionMod>
 			<BuildingExtraCommerces>
 				<BuildingExtraCommerce>
 					<Building>BUILDING_LABORATORY</Building>
@@ -3942,13 +3941,6 @@
 			<Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
 			<iAIValue>1</iAIValue>
 		</EventInfo>
-
-<!--        <EventInfo>-->
-<!--            <Type>EVENT_TORNADO</Type>-->
-<!--            <Description>TXT_KEY_EVENT_TORNADO_1</Description>-->
-<!--            <PythonCallback>doTornado</PythonCallback>-->
-<!--            <Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>-->
-<!--        </EventInfo>-->
 
 		<EventInfo>
 			<Type>EVENT_THE_HUNS_1</Type>
@@ -6657,7 +6649,6 @@
 			</WorldNewsTexts>
 			<iGold>-2500</iGold>
 			<bGameSpeedScale>1</bGameSpeedScale>
-			<iSpaceProductionMod>5</iSpaceProductionMod>
 			<Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
 			<iAIValue>1</iAIValue>
 		</EventInfo>
@@ -7264,7 +7255,6 @@
 			</WorldNewsTexts>
 			<iGold>-7000</iGold>
 			<bGameSpeedScale>1</bGameSpeedScale>
-			<iSpaceProductionMod>1</iSpaceProductionMod>
 			<BuildingExtraCommerces>
 				<BuildingExtraCommerce>
 					<Building>BUILDING_OBSERVATORY</Building>
@@ -7313,7 +7303,6 @@
 			</WorldNewsTexts>
 			<iGold>2250</iGold>
 			<bGameSpeedScale>1</bGameSpeedScale>
-			<iSpaceProductionMod>-4</iSpaceProductionMod>
 			<iHappy>10</iHappy>
 			<Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
 			<iAIValue>1</iAIValue>
@@ -7693,67 +7682,6 @@
 			<Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
 			<iAIValue>1</iAIValue>
 		</EventInfo>
-
-		<EventInfo>
-			<Type>EVENT_EARTHQUAKE_1</Type>
-			<Description>TXT_KEY_EVENT_EARTHQUAKE_1</Description>
-			<bPickCity>1</bPickCity>
-			<PythonCallback>applyEarthquake1</PythonCallback>
-			<PythonCanDo>canApplyEarthquake1</PythonCanDo>
-			<PythonHelp>getHelpEarthquake1</PythonHelp>
-			<Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
-			<iAIValue>1</iAIValue>
-		</EventInfo>
-
-        <EventInfo>
-            <Type>EVENT_SMALL_EARTHQUAKE_1</Type>
-            <Description>TXT_KEY_EVENT_SMALL_EARTHQUAKE_1</Description>
-            <bPickCity>1</bPickCity>
-            <PythonCallback>doEarthquakeSmall</PythonCallback>
-            <PythonCanDo>canDoEarthquake</PythonCanDo>
-            <Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
-            <iAIValue>1</iAIValue>
-        </EventInfo>
-
-        <EventInfo>
-            <Type>EVENT_MEDIUM_EARTHQUAKE_1</Type>
-            <Description>TXT_KEY_EVENT_MEDIUM_EARTHQUAKE_1</Description>
-            <bPickCity>1</bPickCity>
-            <PythonCallback>doEarthquakeMedium</PythonCallback>
-            <PythonCanDo>canDoEarthquake</PythonCanDo>
-            <Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
-            <iAIValue>1</iAIValue>
-        </EventInfo>
-
-        <EventInfo>
-            <Type>EVENT_STRONG_EARTHQUAKE_1</Type>
-            <Description>TXT_KEY_EVENT_STRONG_EARTHQUAKE_1</Description>
-            <bPickCity>1</bPickCity>
-            <PythonCallback>doEarthquakeStrong</PythonCallback>
-            <PythonCanDo>canDoEarthquake</PythonCanDo>
-            <Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
-            <iAIValue>1</iAIValue>
-        </EventInfo>
-
-        <EventInfo>
-            <Type>EVENT_HUGE_EARTHQUAKE_1</Type>
-            <Description>TXT_KEY_EVENT_HUGE_EARTHQUAKE_1</Description>
-            <bPickCity>1</bPickCity>
-            <PythonCallback>doEarthquakeHuge</PythonCallback>
-            <PythonCanDo>canDoEarthquake</PythonCanDo>
-            <Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
-            <iAIValue>1</iAIValue>
-        </EventInfo>
-
-        <EventInfo>
-            <Type>EVENT_APOCALYPTIC_EARTHQUAKE_1</Type>
-            <Description>TXT_KEY_EVENT_APOCALYPTIC_EARTHQUAKE_1</Description>
-            <bPickCity>1</bPickCity>
-            <PythonCallback>doEarthquakeApocalyptic</PythonCallback>
-            <PythonCanDo>canDoEarthquake</PythonCanDo>
-            <Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
-            <iAIValue>1</iAIValue>
-        </EventInfo>
 
 		<EventInfo>
 			<Type>EVENT_TANNERY_GLUE_1</Type>
@@ -9204,7 +9132,7 @@
 		<EventInfo>
 			<Type>EVENT_GUINEA_PIGS_MIGRATION_1</Type>
 			<Description>TXT_KEY_EVENT_GAME_MIGRATION_1</Description>
-			<BonusType>BONUS_GUINEA_PIGS</BonusType>
+			<BonusType>BONUS_GUINEA_PIG</BonusType>
 			<iBonusChange>1</iBonusChange>
 			<Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
 			<iAIValue>1</iAIValue>
@@ -9213,7 +9141,7 @@
 		<EventInfo>
 			<Type>EVENT_BEAVER_MIGRATION_1</Type>
 			<Description>TXT_KEY_EVENT_GAME_MIGRATION_1</Description>
-			<BonusType>BONUS_BEAVERS</BonusType>
+			<BonusType>BONUS_BEAVER</BonusType>
 			<iBonusChange>1</iBonusChange>
 			<Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
 			<iAIValue>1</iAIValue>
@@ -9285,7 +9213,7 @@
 		<EventInfo>
 			<Type>EVENT_ELEPHANT_MIGRATION_1</Type>
 			<Description>TXT_KEY_EVENT_GAME_MIGRATION_1</Description>
-			<BonusType>BONUS_ELEPHANTS</BonusType>
+			<BonusType>BONUS_ELEPHANT</BonusType>
 			<iBonusChange>1</iBonusChange>
 			<Button>,Art/Interface/Buttons/Process/Blank.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,8,5</Button>
 			<iAIValue>1</iAIValue>

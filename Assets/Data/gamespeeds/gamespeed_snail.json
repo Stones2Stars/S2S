@@ -1,0 +1,17 @@
+{
+ "type": "GAMESPEED_SNAIL",
+ "speed": {
+  "world": {
+   "percent": 600
+  }
+ },
+ "missionYieldMultiplier": {
+  "world": {
+   "percent": 1225
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_GAMESPEED_SNAIL",
+  "help": "TXT_KEY_GAMESPEED_SNAIL_HELP"
+ }
+}

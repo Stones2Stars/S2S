@@ -1,0 +1,110 @@
+{
+ "type": "BUILDING_SMELTER_STEEL",
+ "enables": {
+  "buildings": [
+   "BUILDING_EIFFEL_TOWER",
+   "BUILDING_RESOURCES_STEEL_INGOTS",
+   "BUILDING_STATUE_OF_LIBERTY"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOMINING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ADVANCED_IRONWORKS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CRUCIBLE_STEEL",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_IRON_INGOTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_CHARCOAL",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_COAL",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_ADVANCED_IRONWORKS",
+    "BUILDING_METALS_MEGACOMPLEX"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 356,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SMELTER_STEEL",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_IRONWORKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SMELTER_STEEL",
+  "civilopedia": "TXT_KEY_BUILDING_SMELTER_STEEL_PEDIA",
+  "worth": 8,
+  "militaryWorth": 15,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

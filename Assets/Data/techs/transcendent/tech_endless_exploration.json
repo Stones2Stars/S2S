@@ -1,0 +1,72 @@
+{
+ "type": "TECH_ENDLESS_EXPLORATION",
+ "enables": {
+  "bonuses": [
+   "BONUS_EXOTIC_LIFEFORMS"
+  ],
+  "buildings": [
+   "BUILDING_DISTANT_EXPLORERS_BASE",
+   "BUILDING_DISTANT_PIRATE_BASE",
+   "BUILDING_DISTANT_SPACE_WHALING_GUILD"
+  ],
+  "builds": [
+   "BUILD_DISTANT_RESEARCH_BASE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_DISTANT_RESEARCH_BASE"
+  ],
+  "techs": [
+   "TECH_COSMIC_GOVERNANCE",
+   "TECH_EXPERIMENTAL_COSMOLOGY",
+   "TECH_HYPERLANES",
+   "TECH_TIME_REVERSAL"
+  ],
+  "units": [
+   "UNIT_HYPERSPACE_REWARD",
+   "UNIT_INTERDIMENSIONAL_PROBE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HORIZON_BREAKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 528012
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/endless_exploration.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ENDLESS_EXPLORATION",
+  "civilopedia": "TXT_KEY_TECH_ENDLESS_EXPLORATION_PEDIA",
+  "quote": "TXT_KEY_TECH_ENDLESS_EXPLORATION_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 151,
+  "gridY": 13
+ }
+}

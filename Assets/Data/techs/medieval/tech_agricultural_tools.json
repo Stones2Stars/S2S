@@ -1,0 +1,75 @@
+{
+ "type": "TECH_AGRICULTURAL_TOOLS",
+ "enables": {
+  "buildings": [
+   "BUILDING_GREAT_CHINAMPA",
+   "BUILDING_GUILD_BAKERS",
+   "BUILDING_GUILD_GROCERS",
+   "BUILDING_GUILD_VICTUALLERS",
+   "BUILDING_HAND_WATER_PUMP",
+   "BUILDING_RICE_TERRACE",
+   "BUILDING_TERRACE"
+  ],
+  "techs": [
+   "TECH_CRUCIBLE_STEEL",
+   "TECH_MARTIAL_ARTS"
+  ],
+  "units": [
+   "UNIT_GREAT_FARMER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FLORISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WINDMILLS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1445
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/agriculturaltools2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_AGRICULTURAL_TOOLS",
+  "soundMP": "AS2D_TECH_AGRICULTURAL_TOOLS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_AGRICULTURAL_TOOLS",
+  "civilopedia": "TXT_KEY_TECH_AGRICULTURAL_TOOLS_PEDIA",
+  "quote": "TXT_KEY_TECH_AGRICULTURAL_TOOLS_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "militaryWorth": 8,
+  "tradeable": true,
+  "gridX": 45,
+  "gridY": 15
+ }
+}

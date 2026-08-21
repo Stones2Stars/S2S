@@ -1,0 +1,35 @@
+{
+ "type": "BUILD_FORTIFIED_CAVE_WITH_CACHE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POTTERY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_FORTIFIED_CAVE_WITH_CACHE"
+ },
+ "cost": {
+  "gold": 80,
+  "time": 300
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/interface/buttons/builds/fortified_cave_cache.dds"
+  },
+  "hotkey": "KB_F",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_FORTIFIED_CAVE_WITH_CACHE"
+ }
+}

@@ -1,0 +1,93 @@
+{
+ "type": "BUILDING_BURIAL_TRADITION_MUMMY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TRANSHUMANISM"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FUNERARY_SERVICES"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MUMMIFICATION",
+    {
+     "any": [
+      "BUILDING_BURIAL_TRADITION_CAVE",
+      "BUILDING_BURIAL_TRADITION_EARTH",
+      "BUILDING_BURIAL_TRADITION_SKY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_FUNERARY_SERVICES",
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_NATRON",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_NATRON",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "cost": {
+  "production": 139,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BURIAL_TRADITION_MUMMY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BURIAL_TRADITION_MUMMY",
+  "civilopedia": "TXT_KEY_BUILDING_BURIAL_TRADITION_MUMMY_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

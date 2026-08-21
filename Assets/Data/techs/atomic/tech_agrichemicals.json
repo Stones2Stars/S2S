@@ -1,0 +1,65 @@
+{
+ "type": "TECH_AGRICHEMICALS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ORGANIC_FARM",
+   "BUILDING_PESTICIDE_MANUFACTURER"
+  ],
+  "techs": [
+   "TECH_PHYSICAL_CHEMISTRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AGRICULTURAL_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLASTICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 10744
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_GOLD": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/agrichemicals.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_AGRICHEMICALS",
+  "soundMP": "AS2D_TECH_AGRICHEMICALS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_AGRICHEMICALS",
+  "civilopedia": "TXT_KEY_TECH_AGRICHEMICALS_PEDIA",
+  "quote": "TXT_KEY_TECH_AGRICHEMICALS_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 75,
+  "gridY": 13
+ }
+}

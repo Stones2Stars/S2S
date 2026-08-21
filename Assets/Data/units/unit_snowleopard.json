@@ -1,0 +1,195 @@
+{
+ "type": "UNIT_SNOWLEOPARD",
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "combat": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_JAGGED": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_TAIGA": {
+     "attack": {
+      "percent": 15
+     },
+     "defense": {
+      "percent": 15
+     }
+    },
+    "TERRAIN_TUNDRA": {
+     "attack": {
+      "percent": 20
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_PERMAFROST": {
+     "attack": {
+      "percent": 15
+     },
+     "defense": {
+      "percent": 15
+     }
+    },
+    "TERRAIN_ICE": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    }
+   },
+   "targets": {
+    "UNITCOMBAT_MAMMAL_MONKEY": true,
+    "UNITCOMBAT_MAMMAL_RODENT": true,
+    "UNITCOMBAT_MAMMAL_SWINE": true
+   },
+   "unitTargets": {
+    "UNIT_IBEX": true,
+    "UNIT_MOUFLON": true,
+    "UNIT_REDPANDA": true,
+    "UNIT_STAG_DEER": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 4
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "skills": [
+  "assassin",
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_MAMMAL",
+  "UNITCOMBAT_RECKLESS_ANIMAL",
+  "UNITCOMBAT_FELINE",
+  "UNITCOMBAT_ANIMAL_COMBAT_CAMOFLAGED",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHASING",
+  "UNITCOMBAT_ANIMAL_COMBAT_FAST_REFLEXES",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_HIDING",
+  "UNITCOMBAT_ANIMAL_COMBAT_POUNCE",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_CLAWED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_TOOTHED",
+  "UNITCOMBAT_ANIMAL_COMBAT_TOUGH_HIDE",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_SMALL",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_SNOWLEOPARD",
+     "toCity": "TECH_SEDENTARY_LIFESTYLE"
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 95,
+    "food": {
+     "base": 10,
+     "random": 10
+    },
+    "production": {
+     "base": 1,
+     "random": 2
+    },
+    "commerce": {
+     "base": 24,
+     "random": 30
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SNOWLEOPARD",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 3,
+      "define": {
+       "early": "ART_DEF_UNIT_SNOWLEOPARD"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_SNOWLEOPARD",
+  "civilopedia": "TXT_KEY_UNIT_SNOWLEOPARD_PEDIA",
+  "spawnOnly": true,
+  "xpValueAttack": 8,
+  "xpValueDefense": 6,
+  "aggression": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "featureImpassable": [
+   "FEATURE_BAMBOO",
+   "FEATURE_JUNGLE",
+   "FEATURE_MANGROVE",
+   "FEATURE_SAVANNA",
+   "FEATURE_SWAMP"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES",
+   "TERRAIN_LUSH",
+   "TERRAIN_MARSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_SCRUB"
+  ]
+ }
+}

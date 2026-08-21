@@ -1,0 +1,89 @@
+{
+ "type": "PROMOTION_PATRIOTIC1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_PATRIOTIC2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT4"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 10,
+   "cityDefense": {
+    "percent": 10
+   },
+   "hillsDefense": {
+    "percent": 20
+   },
+   "terrain": {
+    "TERRAIN_DESERT": {
+     "defense": {
+      "percent": 20
+     }
+    }
+   },
+   "feature": {
+    "FEATURE_JUNGLE": {
+     "defense": {
+      "percent": 20
+     }
+    },
+    "FEATURE_FOREST": {
+     "defense": {
+      "percent": 20
+     }
+    },
+    "FEATURE_BAMBOO": {
+     "defense": {
+      "percent": 20
+     }
+    },
+    "FEATURE_FOREST_YOUNG": {
+     "defense": {
+      "percent": 20
+     }
+    },
+    "FEATURE_FOREST_BURNT": {
+     "defense": {
+      "percent": 20
+     }
+    },
+    "FEATURE_FOREST_ANCIENT": {
+     "defense": {
+      "percent": 20
+     }
+    }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_PATRIOTIC": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/patriotic1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_PATRIOTIC1"
+ }
+}

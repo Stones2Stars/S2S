@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_GAUCHO",
+ "enables": {
+  "units": [
+   "UNIT_GAUCHO_CAVALRY",
+   "UNIT_JUAN_MANUEL_DE_ROSAS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_GAUCHO"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_GAUCHO",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

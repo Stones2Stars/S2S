@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_RESOURCES_LARD",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PLANETARY_ECONOMICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ],
+   "all": [
+    {
+     "any": [
+      "BUILDING_BUTCHERY",
+      "BUILDING_MEAT_PACKING_PLANT",
+      "BUILDING_RENDERING_PLANT",
+      "BUILDING_INDUSTRIAL_FARMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_LARD"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESOURCES_LARD",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_LARD",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

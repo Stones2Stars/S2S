@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_MATERIALS_CONGLOMERATE",
+ "enables": {
+  "units": [
+   "UNIT_HEZBOLLAH",
+   "UNIT_STREET_GANG"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MANUFACTURING_DISTRICT",
+    "TECH_MEGACORPORATIONS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_CARBON_FIBER",
+   "BONUS_CERMET",
+   "BONUS_ECSTASY",
+   "BONUS_FERTILIZERS",
+   "BONUS_FIBERGLASS",
+   "BONUS_KEVLAR",
+   "BONUS_LSD",
+   "BONUS_METHAMPHETAMINE",
+   "BONUS_NYLON",
+   "BONUS_PLASTIC",
+   "BONUS_SALT",
+   "BONUS_SYNTHETIC_RUBBER",
+   "BONUS_VULCANIZED_RUBBER"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5,
+   "terrains": {
+    "TERRAIN_SALT_FLATS": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    100,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_POTASH",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 3525,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MATERIALS_CONGLOMERATE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MATERIALS_CONGLOMERATE",
+  "civilopedia": "TXT_KEY_BUILDING_MATERIALS_CONGLOMERATE_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

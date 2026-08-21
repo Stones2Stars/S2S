@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_SPACE_COLONY_MILKY_WAY",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_ADMINISTRATION_CENTER",
+   "BUILDING_INTERSTELLAR_AERIAL_CITY",
+   "BUILDING_INTERSTELLAR_AEROPONICS_ARCOLOGY",
+   "BUILDING_INTERSTELLAR_ARTIFICIAL_MOON",
+   "BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET",
+   "BUILDING_INTERSTELLAR_BIOMARKER_CATALOGUE",
+   "BUILDING_INTERSTELLAR_DYSON_SPHERE",
+   "BUILDING_INTERSTELLAR_DYSON_SWARM",
+   "BUILDING_INTERSTELLAR_ECUMENOPOLIS",
+   "BUILDING_INTERSTELLAR_PLANETARY_AWARENESS",
+   "BUILDING_INTERSTELLAR_PRISON_PLANET",
+   "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
+   "BUILDING_INTERSTELLAR_STADIUM",
+   "BUILDING_INTERSTELLAR_STARPORT",
+   "BUILDING_INTERSTELLAR_TERRAFORMED_PLANET",
+   "BUILDING_INTERSTELLAR_XENOARCHEOLOGIST",
+   "BUILDING_INTERSTELLAR_ZOO",
+   "BUILDING_MANDATE"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_ADVANCED_SEEDSHIPS",
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1000
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 250
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 250
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -30
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SPACE_COLONY_MILKY_WAY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_COLONY_MILKY_WAY",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_MILKY_WAY_PEDIA",
+  "pediaCategory": "space",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

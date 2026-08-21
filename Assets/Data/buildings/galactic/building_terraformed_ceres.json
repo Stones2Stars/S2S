@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_TERRAFORMED_CERES",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ASTEROID_CERES_TRADING_POST",
+    "TECH_LUNAR_TERRAFORMING",
+    {
+     "type": "TERRAIN_ASTEROID_SURFACE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 22747,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TERRAFORMED_CERES"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TERRAFORMED_CERES",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TERRAFORMED_CERES",
+  "civilopedia": "TXT_KEY_BUILDING_TERRAFORMED_CERES_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

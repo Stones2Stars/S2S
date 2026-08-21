@@ -1,0 +1,156 @@
+{
+ "type": "BUILDING_PLASTIC_RECLAMATION_PLANT",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_PLASTIC"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MATERIALS_CONGLOMERATE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_RECYCLING_CENTER",
+    "TECH_RECYCLING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_BLENDER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CELLPHONES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_COMPUTERS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_ENERGY_DRINK",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_MICROWAVE_OVENS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PHONOGRAPHS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_POWER_TOOLS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_RADIOS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SERVICE_BOTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SHOES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SODA_POP",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TELEVISIONS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TYPEWRITERS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_VACUUM_CLEANERS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_WASHER_DRYER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_WATER_BOTTLES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_MATERIALS_CONGLOMERATE"
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "cost": {
+  "production": 1475,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PLASTIC_RECLAMATION_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PLASTIC_RECLAMATION_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_PLASTIC_RECLAMATION_PLANT_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

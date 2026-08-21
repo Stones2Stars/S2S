@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_GLOBAL_POSITIONING_SYSTEM",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ATOMIC_CLOCK",
+    "TECH_COMMUNICATION_NETWORKS",
+    {
+     "any": [
+      "BUILDING_MILITARY_SATELLITES",
+      "BUILDING_MILITARY_SPACEPORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_GPS"
+   }
+  ]
+ },
+ "cost": {
+  "production": 3850,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GPS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GLOBAL_POSITIONING_SYSTEM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GLOBAL_POSITIONING_SYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_GLOBAL_POSITIONING_SYSTEM_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

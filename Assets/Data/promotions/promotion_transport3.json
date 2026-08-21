@@ -1,0 +1,44 @@
+{
+ "type": "PROMOTION_TRANSPORT3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_TRANSPORT2"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "moves": {
+    "flat": -1
+   }
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": -20
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_TRANSPORT": 3
+ },
+ "disabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Battleship_transport.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,1,13"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_TRANSPORT3"
+ }
+}

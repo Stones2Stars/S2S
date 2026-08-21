@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DEEP_SPACE_CLAYTRONIC_STATION",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_BISHOP_RING",
+    "TECH_NANOMORPHIC_TROIDS",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_NANOMORPHIC_HABITATS"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "cost": {
+  "production": 6326,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_CLAYTRONIC_STATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_CLAYTRONIC_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_CLAYTRONIC_STATION_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

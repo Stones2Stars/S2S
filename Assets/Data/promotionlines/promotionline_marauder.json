@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_MARAUDER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Retinue/merchant.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_MARAUDER",
+  "unitCombats": [
+   "UNITCOMBAT_HERO"
+  ]
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE",
+ "enables": {
+  "buildings": [
+   "BUILDING_COSMIC_AC",
+   "BUILDING_HYPERSPACE_COMPLEX_PROJECTIVE_SPACE_COLONY",
+   "BUILDING_HYPERSPACE_NEW_BIG_BANG"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+    "TECH_PARAMETER_TUNING",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 2666,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_EKPYROTIC_UNIVERSE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

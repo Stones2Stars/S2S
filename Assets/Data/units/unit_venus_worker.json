@@ -1,0 +1,99 @@
+{
+ "type": "UNIT_VENUS_WORKER",
+ "builds": [
+  "BUILD_PLANETARY_MAGLEV",
+  "BUILD_VENUS_SURFACE_MINE",
+  "BUILD_COLONY_SOLAR_ARRAY",
+  "BUILD_VENUS_AERIAL_FARM"
+ ],
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_VENUS_CARBONWORKS",
+    "TECH_SUPERSONIC_RAILS"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_VENUS_WORKER"
+  }
+ },
+ "skills": [
+  "ignoreTerrainCost"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SPACE_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 1500,
+  "upkeep": 1,
+  "hurryCostModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_VENUS_WORKER",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_VENUS_WORKER",
+       "late": "ART_DEF_UNIT_VENUS_WORKER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_VENUS_WORKER",
+  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "workRate": 250
+  }
+ }
+}

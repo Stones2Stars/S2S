@@ -1,0 +1,19 @@
+{
+ "type": "PROMOTIONLINE_EDUCATE",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Educate1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_EDUCATE",
+  "unitCombats": [
+   "UNITCOMBAT_HEALS_TECH",
+   "UNITCOMBAT_ENTERTAINER"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
+ }
+}

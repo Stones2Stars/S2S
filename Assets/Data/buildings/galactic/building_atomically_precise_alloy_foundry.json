@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_ATOMICALLY_PRECISE_ALLOY_FOUNDRY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ELECTROWEAK_MATTER"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_PICOTECH_COMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_BETA_ASSEMBLER",
+    "TECH_ATOMIC_SCALE_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_PICOTECH_COMPLEX"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ATOMICALLY_PRECISE_ALLOYS"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 9105,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ATOMICALLY_PRECISE_ALLOY_FOUNDRY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ATOMICALLY_PRECISE_ALLOY_FOUNDRY",
+  "civilopedia": "TXT_KEY_BUILDING_ATOMICALLY_PRECISE_ALLOY_FOUNDRY_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

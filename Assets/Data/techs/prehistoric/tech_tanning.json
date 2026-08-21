@@ -1,0 +1,77 @@
+{
+ "type": "TECH_TANNING",
+ "enables": {
+  "bonuses": [
+   "BONUS_LEATHER",
+   "BONUS_SHOES",
+   "BONUS_TANNIN"
+  ],
+  "buildings": [
+   "BUILDING_BAMBOO_ARMOURER",
+   "BUILDING_COBBLER",
+   "BUILDING_TANNERY",
+   "BUILDING_TANNIN_MAKER"
+  ],
+  "techs": [
+   "TECH_SLASH_AND_BURN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SKINNING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DRYING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FIRE_MAKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 26
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/tanning2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TANNING",
+  "soundMP": "AS2D_TECH_TANNING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TANNING",
+  "civilopedia": "TXT_KEY_TECH_TANNING_PEDIA",
+  "quote": "TXT_KEY_TECH_TANNING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 12,
+  "gridY": 5
+ }
+}

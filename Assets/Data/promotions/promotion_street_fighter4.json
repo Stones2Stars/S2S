@@ -1,0 +1,49 @@
+{
+ "type": "PROMOTION_STREET_FIGHTER4",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_STREET_FIGHTER3",
+    {
+     "any": [
+      "PROMOTION_COMBAT2"
+     ]
+    }
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 25
+   },
+   "cityDefense": {
+    "percent": 25
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_STREET_FIGHTER": 4
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/StreetFighterPromotion4.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_STREET_FIGHTER4"
+ }
+}

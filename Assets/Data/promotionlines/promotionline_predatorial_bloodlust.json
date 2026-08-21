@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_PREDATORIAL_BLOODLUST",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/flaming1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_PREDATORIAL_BLOODLUST",
+  "unitCombats": [
+   "UNITCOMBAT_FELINE"
+  ]
+ }
+}

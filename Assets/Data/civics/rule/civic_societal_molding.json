@@ -1,0 +1,65 @@
+{
+ "type": "CIVIC_SOCIETAL_MOLDING",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_TIME_ABYSS"
+  ]
+ },
+ "production": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -4,
+   "cities": {
+    "flat": [
+     {
+      "value": -10,
+      "per": {
+       "type": "POPULATION",
+       "each": 100,
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "resistance": {
+    "percent": 100
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/rule_engineered_population.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_SOCIETAL_MOLDING",
+  "civilopedia": "TXT_KEY_CIVIC_SOCIETAL_MOLDING_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_SOCIETAL_MOLDING_STRATEGY",
+  "civicOption": "CIVICOPTION_RULE",
+  "anarchyLength": 4,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

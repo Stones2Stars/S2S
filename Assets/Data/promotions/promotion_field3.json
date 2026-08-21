@@ -1,0 +1,58 @@
+{
+ "type": "PROMOTION_FIELD3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_FIELD2"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_PLAINS": {
+     "percent": -50
+    },
+    "TERRAIN_GRASSLAND": {
+     "percent": -50
+    }
+   }
+  }
+ },
+ "combat": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_GRASSLAND": {
+     "attack": {
+      "percent": 20
+     },
+     "defense": {
+      "percent": 20
+     }
+    },
+    "TERRAIN_PLAINS": {
+     "attack": {
+      "percent": 20
+     },
+     "defense": {
+      "percent": 20
+     }
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FIELD": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/repair3.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,4,5"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FIELD3"
+ }
+}

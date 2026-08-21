@@ -1,0 +1,113 @@
+{
+ "type": "UNIT_INT_BATTLECRUISER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_DEFENSIVE_PERIMETER",
+    "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 10
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 360
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 2
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 3
+   },
+   "limit": {
+    "flat": 10
+   },
+   "maxUnits": {
+    "flat": 1
+   }
+  }
+ },
+ "skills": [
+  "canMoveAllTerrain",
+  "canMoveImpassable"
+ ],
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_ANTIMATTER_SPACESHIP",
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 4850,
+  "upkeep": 11,
+  "hurryCostModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_INTERSTELLAR_BATTLECRUISER",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_INTERSTELLAR_BATTLECRUISER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_INT_BATTLECRUISER",
+  "civilopedia": "TXT_KEY_UNIT_INT_BATTLECRUISER_PEDIA",
+  "worth": 1,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK_CITY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_ATTACK_CITY"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "combatLimit": 100
+  }
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_ECSTASY",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ECSTASY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ECSTASY",
+  "civilopedia": "TXT_KEY_BONUS_ECSTASY_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

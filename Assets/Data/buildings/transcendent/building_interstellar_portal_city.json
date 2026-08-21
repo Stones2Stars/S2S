@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_INTERSTELLAR_PORTAL_CITY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_ECUMENOPOLIS",
+    "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 8782,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_PORTAL_CITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_PORTAL_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PORTAL_CITY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

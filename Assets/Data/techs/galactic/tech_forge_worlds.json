@@ -1,0 +1,75 @@
+{
+ "type": "TECH_FORGE_WORLDS",
+ "enables": {
+  "bonuses": [
+   "BONUS_ADVANCED_REPLICATORS"
+  ],
+  "buildings": [
+   "BUILDING_DEEP_SPACE_MEGAFACTORY",
+   "BUILDING_INDUSTRIAL_THINGAMAJIG",
+   "BUILDING_INTERSTELLAR_BUSINESS_DISTRICT",
+   "BUILDING_INTERSTELLAR_GRAVITON_DETECTOR",
+   "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
+   "BUILDING_INTERSTELLAR_TERMINATOR_WIND_TURBINES",
+   "BUILDING_TRANSTELLAR_FUSION_MEGACOMPLEX",
+   "BUILDING_VENUS_MEGAFACTORY"
+  ],
+  "techs": [
+   "TECH_ANTIMATTER_ROCKETS",
+   "TECH_PLANET_ENGINEERING",
+   "TECH_PLANET_SCANNING",
+   "TECH_STAR_LIFTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MOLECULAR_ASSEMBLY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLANET_CRACKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INTERSTELLAR_TRADE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 159944
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/astroindustrialism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_FORGE_WORLDS",
+  "civilopedia": "TXT_KEY_TECH_FORGE_WORLDS_PEDIA",
+  "quote": "TXT_KEY_TECH_FORGE_WORLDS_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 131,
+  "gridY": 7
+ }
+}

@@ -1,0 +1,101 @@
+{
+ "type": "BUILDING_MA_ACCADEMIA_AERONAUTICA",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MILITARY_ACADEMY",
+    "TECH_AVIATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 15
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "domains": {
+    "DOMAIN_AIR": {
+     "flat": 6
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 4120,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ACCADEMIA_AERONAUTICA"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MA_ACCADEMIA_AERONAUTICA"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MA_ACCADEMIA_AERONAUTICA",
+  "civilopedia": "TXT_KEY_BUILDING_MA_ACCADEMIA_AERONAUTICA_PEDIA",
+  "pediaCategory": "groupWonder",
+  "worth": 8,
+  "militaryWorth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_GENERAL",
+  "specialBuildingType": "SPECIALBUILDING_GROUP_ELITE_MILITARY_ACADEMIES",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

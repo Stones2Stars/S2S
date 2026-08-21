@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_COLONIZE_MAP_TRANSNEPTUNIAN",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_TRANSNEPTUNIAN",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_TRANSNEPTUNIAN"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SOLAR_ORDNANCE"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

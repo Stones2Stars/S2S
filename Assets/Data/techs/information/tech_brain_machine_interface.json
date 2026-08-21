@@ -1,0 +1,74 @@
+{
+ "type": "TECH_BRAIN_MACHINE_INTERFACE",
+ "enables": {
+  "bonuses": [
+   "BONUS_NEUROIMPLANTS"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_NEUROIMPLANTS"
+  ],
+  "promotions": [
+   "PROMOTION_EDUCATE7"
+  ],
+  "techs": [
+   "TECH_NANOTECH_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PERSONALIZED_HEALTH",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MICROMECHANICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AUGMENTED_REALITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 29220
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_ESPIONAGE": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/human_machine.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,8"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_BRAIN_MACHINE_INTERFACE",
+  "soundMP": "AS2D_TECH_BRAIN_MACHINE_INTERFACE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_BRAIN_MACHINE_INTERFACE",
+  "civilopedia": "TXT_KEY_TECH_BRAIN_MACHINE_INTERFACE_PEDIA",
+  "quote": "TXT_KEY_TECH_BRAIN_MACHINE_INTERFACE_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 98,
+  "gridY": 17
+ }
+}

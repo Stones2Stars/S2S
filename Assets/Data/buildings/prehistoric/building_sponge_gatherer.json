@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_SPONGE_GATHERER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ABYSS_COLONIZATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SPONGE_FARM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "TECH_FISHING",
+    {
+     "any": [
+      {
+       "type": "FEATURE_CORAL_REEF",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_CORAL_REEF_BEACON",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_CORAL_REEF_LIGHTHOUSE",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_GREAT_BARRIER",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_GREAT_BARRIER_REEF_BEACON",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_GREAT_BARRIER_REEF_LIGHTHOUSE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_SPONGE_FARM"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_SPONGES"
+  ]
+ },
+ "commerce": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": "TECH_ECOLOGY"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 160,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SPONGE_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SPONGE_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_SPONGE_GATHERER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

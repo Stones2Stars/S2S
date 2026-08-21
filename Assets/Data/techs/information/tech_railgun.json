@@ -1,0 +1,72 @@
+{
+ "type": "TECH_RAILGUN",
+ "enables": {
+  "buildings": [
+   "BUILDING_RAILGUN_BATTERY"
+  ],
+  "projects": [
+   "PROJECT_ANTI_MISSILE_RAILGUN"
+  ],
+  "promotions": [
+   "PROMOTION_ELECTROMAGNETIC_ARMOR1",
+   "PROMOTION_WEAPON_UPGRADE1"
+  ],
+  "techs": [
+   "TECH_COILGUN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_METAMATERIALS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MICROWAVE_WEAPONRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 26259
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/railgun.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_RAILGUN",
+  "soundMP": "AS2D_TECH_RAILGUN"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_RAILGUN",
+  "civilopedia": "TXT_KEY_TECH_RAILGUN_PEDIA",
+  "quote": "TXT_KEY_TECH_RAILGUN_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 52,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 95,
+  "gridY": 19
+ }
+}

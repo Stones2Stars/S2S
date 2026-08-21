@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_MINOAN",
+ "enables": {
+  "units": [
+   "UNIT_DAEDALUS",
+   "UNIT_THESEUS",
+   "UNIT_XIFOS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MINOAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MINOAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

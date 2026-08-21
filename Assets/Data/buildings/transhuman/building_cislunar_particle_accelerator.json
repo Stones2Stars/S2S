@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_CISLUNAR_PARTICLE_ACCELERATOR",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_SPACEPORT",
+    "TECH_UNIFICATION_PHYSICS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1600
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "cost": {
+  "production": 1921,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_PARTICLE_ACCELERATOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_PARTICLE_ACCELERATOR",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_PARTICLE_ACCELERATOR_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

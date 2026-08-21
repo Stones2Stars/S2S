@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_TLATILCO",
+ "enables": {
+  "units": [
+   "UNIT_TLATILCO_WAR_PRIEST"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TLATILCO"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TLATILCO",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

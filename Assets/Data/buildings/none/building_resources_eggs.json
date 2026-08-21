@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_RESOURCES_EGGS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INDUSTRIAL_FARMS"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ],
+   "all": [
+    {
+     "any": [
+      "BUILDING_CHICKEN_COOP",
+      "BUILDING_FARM_ANIMAL_DUCK",
+      "BUILDING_FARM_ANIMAL_GOOSE",
+      "BUILDING_NEST_THIEF",
+      "BUILDING_HERD_POULTRY",
+      "BUILDING_HERD_RATITE",
+      "BUILDING_SEA_TURTLE_EGG_GATHERER",
+      "BUILDING_FARM_ANIMAL_TURKEY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_EGGS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESOURCES_EGGS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_EGGS",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

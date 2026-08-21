@@ -1,0 +1,134 @@
+{
+ "type": "BUILDING_BELL_LABS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_EXOCORTEX_NETWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TELEPHONE_NETWORK",
+    "TECH_ENCRYPTION_MACHINES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_PUNCH_CARDS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_DISKETTES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_FLASH_MEMORY_DEVICES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": [
+    18,
+    {
+     "value": 7,
+     "enabled": "TECH_EARLY_COMPUTING"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_TELEVISION"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_LASER"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_COMPUTER_SCIENCE"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_MICROPROCESSOR"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_RADIO_ASTRONOMY"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_COMPUTER_NETWORKS"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_ELECTRONICS"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_SOLAR_POWER"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_COMMUNICATION_NETWORKS"
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 5940,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_BELL_LABS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BELL_LABS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BELL_LABS",
+  "civilopedia": "TXT_KEY_BUILDING_BELL_LABS_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

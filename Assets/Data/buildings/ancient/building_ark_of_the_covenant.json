@@ -1,0 +1,109 @@
+{
+ "type": "BUILDING_ARK_OF_THE_COVENANT",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PRIESTHOOD",
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_JUDAISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_GOLD_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "RELIGION_JUDAISM",
+    {
+     "type": "BONUS_PRIME_TIMBER",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  },
+  "city": {
+   "flat": [
+    {
+     "value": 20,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 1200,
+  "sizeModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ARK"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ARK_OF_THE_COVENANT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_OBELISK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ARK_OF_THE_COVENANT",
+  "civilopedia": "TXT_KEY_BUILDING_ARK_OF_THE_COVENANT_PEDIA",
+  "pediaCategory": "religious",
+  "stateReligionCommerce": {
+   "gold": 1
+  },
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_JUDAISM",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

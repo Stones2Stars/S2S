@@ -1,0 +1,43 @@
+{
+ "type": "IMPROVEMENT_LUNAR_OUTPOST",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_MANUFACTURING",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_LUNAR_DOME",
+      "TERRAIN_LUNAR_MARE",
+      "TERRAIN_LUNAR_HIGHLAND",
+      "TERRAIN_LUNAR_REGOLITH",
+      "TERRAIN_LUNAR_RILLE",
+      "TERRAIN_GREEN_MOON"
+     ]
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_GREENHOUSE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_LUNAR_OUTPOST",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_LUNAR_OUTPOST_PEDIA",
+  "extraterrestrial": true,
+  "upgradeTime": 50,
+  "pillageGold": 500,
+  "outsideBorders": true,
+  "pillageTo": "IMPROVEMENT_LUNAR_BASE",
+  "upgradesTo": "IMPROVEMENT_LUNAR_HABITATION_COMPLEX"
+ }
+}

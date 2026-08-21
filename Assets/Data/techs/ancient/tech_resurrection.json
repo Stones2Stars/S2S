@@ -1,0 +1,68 @@
+{
+ "type": "TECH_RESURRECTION",
+ "enables": {
+  "buildings": [
+   "BUILDING_BELIEF_RESURRECTION",
+   "BUILDING_NATIONAL_BELIEF_RESURRECTION"
+  ],
+  "techs": [
+   "TECH_JUDAISM",
+   "TECH_MAGIC"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DIVINATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 242
+ },
+ "ai": {
+  "behaviour": {
+   "weight": 25
+  },
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/resurrection.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_RESURRECTION",
+  "soundMP": "AS2D_TECH_RESURRECTION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_RESURRECTION",
+  "civilopedia": "TXT_KEY_TECH_RESURRECTION_PEDIA",
+  "quote": "TXT_KEY_TECH_RESURRECTION_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 16,
+  "tradeable": true,
+  "gridX": 28,
+  "gridY": 17
+ }
+}

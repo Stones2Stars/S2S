@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_HOUSING_YURTS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SURVEYING"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_WOOD",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_HORSE",
+     "scope": "city",
+     "vicinity": "owned"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_CLOTH",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_LEATHER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    },
+    "TECH_PORTABLE_SHELTERS",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_GRASSLAND",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_PLAINS",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "dormant": [
+    "BUILDING_HOUSING_PALACES",
+    "BUILDING_HOUSING_ESTATES",
+    "BUILDING_HOUSING_CONDOMINIUMS",
+    "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HOUSING_YURTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_YURTS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_YURTS_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,158 @@
+{
+ "type": "UNIT_MICHIEL_DE_RUYTER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_DUTCH",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_MILITARY_SCIENCE"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 19
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "skills": [
+  "pillage"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_HERO",
+ "combatClasses": [
+  "UNITCOMBAT_GUN",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_RIFLE",
+  "UNITCOMBAT_ARMOR_LIGHT",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_EPIC",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_MARAUDER"
+  ],
+  "greatPeople": [
+   "SPECIALIST_CITIZEN",
+   "SPECIALIST_GREAT_PROPHET",
+   "SPECIALIST_GREAT_ARTIST",
+   "SPECIALIST_GREAT_SCIENTIST",
+   "SPECIALIST_GREAT_MERCHANT",
+   "SPECIALIST_GREAT_ENGINEER",
+   "SPECIALIST_NOBLE",
+   "SPECIALIST_GREAT_ADMIRAL"
+  ],
+  "buildings": [
+   {
+    "building": "BUILDING_ACHIEVEMENT_AGRICULTURAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_COMMERCIAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_CULTURAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_ENVIRONMENTAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_INDUSTRIAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_MEDICAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_MILITARY"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_POLITICAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_SAFETY"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_SCIENTIFIC"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_SEAFARING"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_TOURISTIC"
+   }
+  ]
+ },
+ "cost": {
+  "production": 2520,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MICHIEL_DE_RUYTER",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MICHIEL_DE_RUYTER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_MICHIEL_DE_RUYTER",
+  "civilopedia": "TXT_KEY_UNIT_MICHIEL_DE_RUYTER_PEDIA",
+  "worth": 6,
+  "militaryWorth": 8,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "leaderPromotion": "PROMOTION_LEADER",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_COUNTER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

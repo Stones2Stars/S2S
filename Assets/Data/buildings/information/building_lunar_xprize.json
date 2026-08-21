@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_LUNAR_XPRIZE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COMMERCIAL_SPACEFLIGHT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_SPACE_COLONY_LUNAR_BASE": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "buildings": {
+    "BUILDING_LUNAR_OUTPOST": {
+     "flat": 20
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 14430
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_LUNAR_XPRIZE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUNAR_XPRIZE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_XPRIZE",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_XPRIZE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "type": "ROUTE_COMPACT_WORMHOLE",
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 15
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/microwormhole.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_ROUTE_COMPACT_WORMHOLE",
+  "value": 4,
+  "advancedStart": {
+   "cost": 30
+  }
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "type": "TECH_GROUND_STONE",
+ "enables": {
+  "bonuses": [
+   "BONUS_FLOUR",
+   "BONUS_GRAINS"
+  ],
+  "buildings": [
+   "BUILDING_BARLEY_GATHERER",
+   "BUILDING_CORN_GATHERER",
+   "BUILDING_QUERN",
+   "BUILDING_RICE_GATHERER",
+   "BUILDING_WHEAT_GATHERER"
+  ],
+  "techs": [
+   "TECH_NATURAL_PIGMENTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HARD_HAMMER_PERCUSSION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HERBALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 9
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/groundstones.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GROUND_STONE",
+  "soundMP": "AS2D_TECH_GROUND_STONE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_GROUND_STONE",
+  "civilopedia": "TXT_KEY_TECH_GROUND_STONE_PEDIA",
+  "quote": "TXT_KEY_TECH_GROUND_STONE_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 5,
+  "gridY": 9
+ }
+}

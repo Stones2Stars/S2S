@@ -1,0 +1,14 @@
+{
+ "type": "VOTE_CONGRESS_CHAIR",
+ "voteSource": [
+  "DIPLOVOTE_CVIENNA"
+ ],
+ "threshold": {
+  "population": 40,
+  "minVoters": 3
+ },
+ "role": "secretaryGeneral",
+ "identity": {
+  "description": "TXT_KEY_VOTE_CONGVIENNA_CHAIR"
+ }
+}

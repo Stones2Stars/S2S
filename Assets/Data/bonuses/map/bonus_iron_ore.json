@@ -1,0 +1,83 @@
+{
+ "type": "BONUS_IRON_ORE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ADVANCED_IRONWORKS",
+   "BUILDING_CULTURE_BYZANTINE",
+   "BUILDING_CULTURE_GOKTURK",
+   "BUILDING_CULTURE_KILLKE",
+   "BUILDING_CULTURE_MEXICAN",
+   "BUILDING_CULTURE_NORMAN",
+   "BUILDING_CULTURE_SAXON",
+   "BUILDING_CULTURE_SONGHAI",
+   "BUILDING_LUNAR_IRON_PROCESSING_FACILITY",
+   "BUILDING_MINE_AMETHYST",
+   "BUILDING_MINE_CHROMITE",
+   "BUILDING_MINE_IRON",
+   "BUILDING_MINE_MAGNESIUM",
+   "BUILDING_MINE_MAGNETITE",
+   "BUILDING_MINE_MANGANESE",
+   "BUILDING_MINE_PYRITE",
+   "BUILDING_MINE_TUNGSTEN",
+   "BUILDING_NATIONAL_SMELTER_IRON",
+   "BUILDING_PRESENCE_OF_METAL",
+   "BUILDING_SMELTER_IRON"
+  ],
+  "units": [
+   "UNIT_PO_NGBE"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_IRON_ORE"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 1,
+  "constAppearance": 400,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 400,
+  "uniqueRange": 8,
+  "hills": true,
+  "peaks": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_IRON_ORE",
+  "civilopedia": "TXT_KEY_BONUS_IRON_ORE_PEDIA",
+  "bonusClassType": "BONUSCLASS_STRATEGIC",
+  "source": "natural"
+ }
+}

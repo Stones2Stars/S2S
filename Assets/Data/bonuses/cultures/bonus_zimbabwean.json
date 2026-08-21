@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_ZIMBABWEAN",
+ "enables": {
+  "units": [
+   "UNIT_MATOPE",
+   "UNIT_SHEBA_ELITES"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ZIMBABWEAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ZIMBABWEAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

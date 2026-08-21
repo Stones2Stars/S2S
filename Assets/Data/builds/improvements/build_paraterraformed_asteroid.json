@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_PARATERRAFORMED_ASTEROID",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PARATERRAFORMING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_PARATERRAFORMED_ASTEROID"
+ },
+ "cost": {
+  "gold": 500,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/paraterraformed_asteroid.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_PARATERRAFORMED_ASTEROID"
+ }
+}

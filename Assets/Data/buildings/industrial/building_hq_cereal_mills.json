@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_HQ_CEREAL_MILLS",
+ "enables": {
+  "corporations": [
+   "CORPORATION_1"
+  ],
+  "units": [
+   "UNIT_EXECUTIVE_1"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    "TECH_REFRIGERATION",
+    "TECH_CORPORATION",
+    {
+     "any": [
+      "BUILDING_MODERN_OFFICES",
+      "BUILDING_OFFICIUM",
+      "BUILDING_SKYSCRAPER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "headquarters": "CORPORATION_1",
+ "disabled": "GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS",
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CORPORATION_1"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_CEREAL_MILLS",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_1_PEDIA",
+  "pediaCategory": "greatWonder",
+  "notConstructible": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "specialBuildingType": "SPECIALBUILDING_CORPORATION_HQ",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_HYPERSPACE_GENESIS_COLONY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_LIFE_HYPERSPACE",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 1485,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYPERSPACE_GENESIS_COLONY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_GENESIS_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_GENESIS_COLONY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

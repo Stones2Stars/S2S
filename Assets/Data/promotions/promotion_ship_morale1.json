@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_SHIP_MORALE1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SHIP_MORALE2",
+   "PROMOTION_SHIP_TACTICS1"
+  ]
+ },
+ "combat": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MORALE_SHIPS": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/shipMorale1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SHIP_MORALE1"
+ }
+}

@@ -1,96 +1,48 @@
-//------------------------------------------------------------------------------------------------
-//  FILE:    CvProcessInfo.cpp
-//------------------------------------------------------------------------------------------------
+//
+//	CvProcessInfo -- the process poco (see the header). The §9 `conversion` block (item 18: hammers->commerce
+//	conversion, hurry's bespoke-block home) materializes ONCE at mapFrom into the typed per-channel plane
+//	(docs/architecture/patterns.md §Materialize at mapFrom); the getter is a bare member read.
+//
+
 #include "CvGameCoreDLL.h"
-#include "CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "CvPlayerAI.h"
-#include "CvPython.h"
-#include "CvXMLLoadUtility.h"
-#include "CvXMLLoadUtilityModTools.h"
-#include "CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
 #include "CvProcessInfo.h"
+#include "CvJsonParse.h"   // jsonChildObj + jsonX100 -- the shared parse primitives (never re-hand-rolled)
 
-
-//======================================================================================================
-//					CvProcessInfo
-//======================================================================================================
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   CvProcessInfo()
-//
-//  PURPOSE :   Default constructor
-//
-//------------------------------------------------------------------------------------------------------
 CvProcessInfo::CvProcessInfo()
+	: m_eTechPrereq(NO_TECH)
 {
-	CvInfoUtil(this).initDataMembers();
-}
-
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   ~CvProcessInfo()
-//
-//  PURPOSE :   Default destructor
-//
-//------------------------------------------------------------------------------------------------------
-CvProcessInfo::~CvProcessInfo()
-{
-	// The commerce-modifier array is owned by the declarative layer (addCommerce); it frees it.
-	CvInfoUtil(this).uninitDataMembers();
-}
-
-
-int CvProcessInfo::getProductionToCommerceModifier(int i) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, i);
-	return m_paiProductionToCommerceModifier ? m_paiProductionToCommerceModifier[i] : 0;
-}
-
-
-void CvProcessInfo::getDataMembers(CvInfoUtil& util)
-{
-	util
-		.addEnum(m_iTechPrereq, L"TechPrereq")
-		.addCommerce(m_paiProductionToCommerceModifier, L"ProductionToCommerceModifiers")
-	;
-}
-
-
-bool CvProcessInfo::read(CvXMLLoadUtility* pXML)
-{
-	if (!CvInfoBase::read(pXML))
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
 	{
-		return false;
+		m_aiProductionToCommerce[iCommerce] = 0;
 	}
-
-	CvInfoUtil(this).readXml(pXML);
-
-	return true;
 }
 
-
-void CvProcessInfo::copyNonDefaults(const CvProcessInfo* pClassInfo)
+void CvProcessInfo::mapFrom(const picojson::value& entity)
 {
-	PROFILE_EXTRA_FUNC();
-	CvInfoBase::copyNonDefaults(pClassInfo);
+	CvInfo::mapFrom(entity);   // core reading + the section dispatch (fills edges: obsoletedBy.techs)
 
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
+	// the §9 `conversion` block -- {gold|research|culture|espionage: humanPercent}, CommerceTypes order below.
+	// Idempotent: the plane is fully redefined on every (re-)map (zero-fill first).
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+	{
+		m_aiProductionToCommerce[iCommerce] = 0;
+	}
+	if (!entity.is<picojson::object>())
+	{
+		return;
+	}
+	const picojson::object* pConversion = jsonChildObj(entity.get<picojson::object>(), "conversion");
+	if (pConversion == NULL)
+	{
+		return;
+	}
+	const char* aszChannels[NUM_COMMERCE_TYPES] = { "gold", "research", "culture", "espionage" };
+	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+	{
+		picojson::object::const_iterator channelIt = pConversion->find(aszChannels[iCommerce]);
+		if (channelIt != pConversion->end() && channelIt->second.is<double>())
+		{
+			m_aiProductionToCommerce[iCommerce] = jsonX100(channelIt->second.get<double>());
+		}
+	}
 }
-
-
-void CvProcessInfo::getCheckSum(uint32_t& iSum) const
-{
-	CvInfoUtil(this).checkSum(iSum);
-}
-

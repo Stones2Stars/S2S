@@ -1,0 +1,185 @@
+{
+ "type": "TRAIT_COMPLEX_ISOLATIONIST2",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_COMPLEX_ISOLATIONIST3"
+  ],
+  "traits": [
+   "TRAIT_COMPLEX_ISOLATIONIST3"
+  ]
+ },
+ "excludes": [
+  "TRAIT_COMPLEX_NEGOTIATOR1"
+ ],
+ "food": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_MERCHANT": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_MERCHANT": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "nationalWonder": {
+    "percent": 15
+   },
+   "unitCombats": {
+    "UNITCOMBAT_TRADE": {
+     "percent": -10
+    }
+   },
+   "units": {
+    "percent": [
+     {
+      "value": -15,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": 10
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_TRADE": {
+     "flat": -1
+    }
+   },
+   "inBorder": {
+    "percent": 15
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   },
+   "numCities": {
+    "percent": 10
+   },
+   "corporation": {
+    "percent": 10
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": -20
+    },
+    "production": {
+     "percent": -20
+    },
+    "commerce": {
+     "percent": -20
+    },
+    "percent": [
+     {
+      "value": 20,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
+   },
+   "flat": -1,
+   "max": {
+    "flat": -2
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 5
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": -1
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": 15
+   }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": 15
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -4
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 9
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitIsolationist2.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST2",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST2_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_ISOLATIONIST_STRATEGY",
+  "negativeTrait": true
+ }
+}

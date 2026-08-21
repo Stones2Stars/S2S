@@ -1,0 +1,34 @@
+{
+ "type": "FEATURE_PLATY_NGORONGORO_CRATER",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
+  "nukeImmune",
+  "ignoreTerrainCulture"
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_NGORONGORO_CRATER"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_NGORONGORO_CRATER",
+  "civilopedia": "TXT_KEY_FEATURE_NGORONGORO_CRATER_PEDIA",
+  "addsFreshWater": true,
+  "requiresFlatlands": true,
+  "validTerrains": [
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_SCRUB"
+  ]
+ }
+}

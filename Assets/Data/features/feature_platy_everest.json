@@ -1,0 +1,41 @@
+{
+ "type": "FEATURE_PLATY_EVEREST",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
+  "nukeImmune",
+  "countsAsPeak",
+  "ignoreTerrainCulture"
+ ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_EVEREST"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_EVEREST",
+  "civilopedia": "TXT_KEY_FEATURE_EVEREST_PEDIA",
+  "validTerrains": [
+   "TERRAIN_ICE",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_JAGGED",
+   "TERRAIN_TUNDRA"
+  ]
+ }
+}

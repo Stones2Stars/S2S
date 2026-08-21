@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_LOGISTICS",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Logistics1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_LOGISTICS",
+  "unitCombats": [
+   "UNITCOMBAT_SPY"
+  ]
+ }
+}

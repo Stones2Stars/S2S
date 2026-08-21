@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_UNMANNED_MARKET",
+ "enables": {
+  "buildings": [
+   "BUILDING_MOBILE_BODEGA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_AUTONOMOUS_VEHICLES",
+    {
+     "any": [
+      "BUILDING_SUPERMARKET",
+      "BUILDING_HYPERMARKET",
+      "BUILDING_MALL"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 2505,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_UNMANNED_MARKET",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_UNMANNED_MARKET",
+  "civilopedia": "TXT_KEY_BUILDING_UNMANNED_MARKET_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,95 @@
+{
+ "type": "BUILDING_HIDE_AND_SEEK",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ATHLETIC_MEGACOMPLEX",
+    "TECH_CLOAKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 13,
+     "enabled": "TECH_TRANSFINITE_STRUCTURES"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_NANOMORPHICS"
+    },
+    {
+     "value": 13,
+     "enabled": "TECH_HYPERLANES"
+    },
+    {
+     "value": 12,
+     "enabled": "TECH_QUANTUM_RAMJET"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_PHASING"
+    },
+    {
+     "value": 13,
+     "enabled": "TECH_SPATIAL_TRANSCENDENCE"
+    },
+    {
+     "value": 12,
+     "enabled": "TECH_TIME_TRAVEL"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HUMAN_MOD_NOVEL_SENSES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 4655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HIDE_AND_SEEK",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HIDE_AND_SEEK",
+  "civilopedia": "TXT_KEY_BUILDING_HIDE_AND_SEEK_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

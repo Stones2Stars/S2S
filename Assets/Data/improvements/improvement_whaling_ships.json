@@ -1,0 +1,139 @@
+{
+ "type": "IMPROVEMENT_WHALING_SHIPS",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMMERCIAL_WHALING",
+     "scope": "team"
+    },
+    "IS_WATER",
+    {
+     "bonus": [
+      "BONUS_WHALE"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WEATHER_FORECASTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SCREW_PROPELLER",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MARINE_BIOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_NAVAL_CANNON",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SCREW_PROPELLER",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_WHALE"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WEATHER_FORECASTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_NAVAL_CANNON",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CORPORATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SCREW_PROPELLER",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_WHALE"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_WHALING_BOATS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_WHALING_SHIPS",
+  "civilopedia": "TXT_KEY_WHALING_BOATS_PEDIA",
+  "pillageTo": "IMPROVEMENT_WHALING_BOATS",
+  "advancedStart": {
+   "cost": 30
+  },
+  "pillageGold": 25,
+  "bonuses": {
+   "BONUS_WHALE": {
+    "trade": true
+   }
+  }
+ }
+}

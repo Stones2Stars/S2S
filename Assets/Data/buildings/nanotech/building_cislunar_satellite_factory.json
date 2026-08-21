@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_CISLUNAR_SATELLITE_FACTORY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_BIG_BANG_OBSERVATORY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MESH_NETWORKS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 612,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_SATELLITE_FACTORY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_SATELLITE_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SATELLITE_FACTORY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

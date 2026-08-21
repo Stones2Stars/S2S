@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_CERMET",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CERMET"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CERMET",
+  "civilopedia": "TXT_KEY_BONUS_CERMET_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTIONLINE_DRILL",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Drill1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,2,3"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_DRILL",
+  "unitCombats": [
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_HELICOPTER",
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS",
+   "UNITCOMBAT_SUBMARINE",
+   "UNITCOMBAT_DREADNOUGHT",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_ASSAULT_MECH",
+   "UNITCOMBAT_STRIKE_TEAM"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ]
+ }
+}

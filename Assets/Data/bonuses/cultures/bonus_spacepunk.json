@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_SPACEPUNK",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTER_FOR_THE_STUDY_OF_CIVILIZATION"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SPACEPUNK"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SPACEPUNK",
+  "civilopedia": "TXT_KEY_BONUS_SPACEPUNK_PEDIA",
+  "bonusClassType": "BONUSCLASS_GENMODS",
+  "source": "culture"
+ }
+}

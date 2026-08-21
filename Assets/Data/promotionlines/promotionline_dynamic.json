@@ -1,0 +1,11 @@
+{
+ "type": "PROMOTIONLINE_DYNAMIC",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitDynamic.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_DYNAMIC"
+ }
+}

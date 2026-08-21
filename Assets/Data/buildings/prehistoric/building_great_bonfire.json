@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_GREAT_BONFIRE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FIREFIGHTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FIRE_MAKING",
+    {
+     "any": [
+      "BUILDING_BONFIRE",
+      "BUILDING_CHARCOAL_BURNER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_BONFIRE",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 120,
+  "sizeModifier": 1,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GREAT_BONFIRE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GREAT_BONFIRE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GREAT_BONFIRE",
+  "civilopedia": "TXT_KEY_BUILDING_GREAT_BONFIRE_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "centerInCity": true,
+  "worth": 10,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

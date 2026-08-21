@@ -11,8 +11,15 @@ from CvPythonExtensions import *
 import BugUtil
 import CvUtil
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
+STATE = CyState()
+ACT = CyAct()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
 giDomainLand = -1
@@ -21,22 +28,23 @@ def init():
 	global giDomainLand
 	giDomainLand = GC.getInfoTypeForString('DOMAIN_LAND')
 
-def getSurroundBonus(defender):
+def getSurroundBonus(iDefX, iDefY, iDefTeam):
     """
     Counts the number of surrounding enemy tiles and returns a bonus
     (e.g., 10 per enemy tile).
+    Takes the defender's POSITION and TEAM rather than the unit: a unit reaches Python as its (owner, id)
+    identity, and both values are already resolved at the one call site.
     """
     # used for checking if its called
     # CvUtil.sendMessage("getSurroundBonus called!", GAME.getActivePlayer(), 0, '', ColorTypes(7), 0, 0, True, True)
     iSurroundCount = -1
-    pPlot = defender.plot()
 
     for dx in [-1, 0, 1]:
         for dy in [-1, 0, 1]:
             if dx == 0 and dy == 0:
                 continue  # skip defender's own tile
-            x = pPlot.getX() + dx
-            y = pPlot.getY() + dy
+            x = iDefX + dx
+            y = iDefY + dy
 
             if 0 <= x < GC.getMap().getGridWidth() and 0 <= y < GC.getMap().getGridHeight():
                 plotX = GC.getMap().plot(x, y)
@@ -44,7 +52,8 @@ def getSurroundBonus(defender):
                 for i in range(plotX.getNumUnits()):
                     unitX = plotX.getUnit(i)
                     # enemy check — is at war with defender
-                    if unitX.getTeam() != defender.getTeam() and GC.getTeam(unitX.getTeam()).isAtWar(defender.getTeam()):
+                    iTeamX = GC.getPlayer(unitX.getOwner()).getTeam()
+                    if iTeamX != iDefTeam and GC.getTeam(iTeamX).isAtWar(iDefTeam):
                         iSurroundCount += 1
                         break  # only count one per tile
 
@@ -56,14 +65,25 @@ def getSurroundBonus(defender):
 
 def onCombatResult(argsList):
 	CyUnitW, CyUnitL = argsList
+	iOwnerW, iUnitW = CyUnitW
+	iOwnerL, iUnitL = CyUnitL
+
+	aW = STATE.getUnitRead(iOwnerW, iUnitW)
+	aL = STATE.getUnitRead(iOwnerL, iUnitL)
+	aFlagsW = STATE.getUnitFlags(iOwnerW, iUnitW)
 
 	# Captives
 	# Check that the losing unit is not an animal and the unit does not have a capture type defined in the XML
-	if (CyUnitW.isMadeAttack() and not CyUnitL.isAnimal() and CyUnitL.getDomainType() == giDomainLand
-	and CyUnitW.getDomainType() == giDomainLand and CyUnitL.getCaptureUnitType() == -1
+	if (aFlagsW[UnitFlagKind.UNIT_FLAG_MADE_ATTACK]
+	and not INFO.isAnimal(aL[UnitReadKind.UNIT_READ_TYPE])
+	and aL[UnitReadKind.UNIT_READ_DOMAIN] == giDomainLand
+	and aW[UnitReadKind.UNIT_READ_DOMAIN] == giDomainLand
+	and aL[UnitReadKind.UNIT_READ_CAPTURE_UNIT_TYPE] == -1
 	):
-		iCaptureProbability = CyUnitW.captureProbabilityTotal() + getSurroundBonus(CyUnitL)
-		iCaptureResistance = CyUnitL.captureResistanceTotal()
+		aPosL = STATE.getUnitPosition(iOwnerL, iUnitL)
+		iCaptureProbability = (aW[UnitReadKind.UNIT_READ_CAPTURE_PROBABILITY]
+		                       + getSurroundBonus(aPosL[0], aPosL[1], GC.getPlayer(iOwnerL).getTeam()))
+		iCaptureResistance = aL[UnitReadKind.UNIT_READ_CAPTURE_RESISTANCE]
 
 		iChance = iCaptureProbability - iCaptureResistance
 
@@ -71,19 +91,18 @@ def onCombatResult(argsList):
 
 		if iChance > GAME.getSorenRandNum(100, "Slave"):  # 0-99
 
-			if CyUnitL.isHasUnitCombat(GC.getInfoTypeForString('UNITCOMBAT_SPECIES_NEANDERTHAL')):
+			if STATE.hasUnitCombat(iOwnerL, iUnitL, GC.getInfoTypeForString('UNITCOMBAT_SPECIES_NEANDERTHAL')):
 				iUnit = GC.getInfoTypeForString('UNIT_CAPTIVE_NEANDERTHAL')
 				sMessage = TRNSLTR.getText("TXT_KEY_MSG_NEANDERTHAL_CAPTIVE",())
 			else:
 				iUnit = GC.getInfoTypeForString('UNIT_CAPTIVE_MILITARY')
 				sMessage = TRNSLTR.getText("TXT_KEY_MSG_MILITARY_CAPTIVE",())
 
-			iPlayerW = CyUnitW.getOwner()
-			X = CyUnitW.getX()
-			Y = CyUnitW.getY()
-			CyUnit = GC.getPlayer(iPlayerW).initUnit(iUnit, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-			if CyUnitW.isHiddenNationality():
-				CyUnit.doHNCapture()
+			iPlayerW = iOwnerW
+			aPosW = STATE.getUnitPosition(iOwnerW, iUnitW)
+			X = aPosW[0]
+			Y = aPosW[1]
+			CyUnit = GC.getPlayer(iPlayerW).createUnit(iUnit, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 			if iPlayerW == GAME.getActivePlayer():
 				CvUtil.sendMessage(sMessage, iPlayerW, 8, 'Art/Interface/Buttons/Civics/Serfdom.dds', ColorTypes(44), X, Y, True, True)
 
@@ -95,7 +114,8 @@ def onCityRazed(argsList):
 	CyPlayer = GC.getPlayer(iPlayer)
 	bHuman = CyPlayer.isHuman()
 
-	sCityName = CyCity.getName()
+	iCityID = CyCity.getID()
+	sCityName = GC.getPlayer(iPlayer).getCity(iCityID).getName()
 	X = CyCity.getX()
 	Y = CyCity.getY()
 
@@ -176,14 +196,14 @@ def onCityRazed(argsList):
 	iUnitMerCaravan = GC.getInfoTypeForString("UNIT_EARLY_MERCHANT_C2C")
 	iUnitHealth = GC.getInfoTypeForString("UNIT_HEALER")
 
-	iCountSettled = CyCity.getFreeSpecialistCount(iSlaveSettled)
-	iCountFood = CyCity.getFreeSpecialistCount(iSlaveFood)
-	iCountProd = CyCity.getFreeSpecialistCount(iSlaveProd)
-	iCountCom = CyCity.getFreeSpecialistCount(iSlaveCom)
-	iCountHealth = CyCity.getFreeSpecialistCount(iSlaveHealth)
-	iCountEntertain = CyCity.getFreeSpecialistCount(iSlaveEntertain)
-	iCountTutor = CyCity.getFreeSpecialistCount(iSlaveTutor)
-	iCountMilitary = CyCity.getFreeSpecialistCount(iSlaveMilitary)
+	iCountSettled = GC.getPlayer(iPlayer).getCity(iCityID).getAddedFreeSpecialists(iSlaveSettled)
+	iCountFood = GC.getPlayer(iPlayer).getCity(iCityID).getAddedFreeSpecialists(iSlaveFood)
+	iCountProd = GC.getPlayer(iPlayer).getCity(iCityID).getAddedFreeSpecialists(iSlaveProd)
+	iCountCom = GC.getPlayer(iPlayer).getCity(iCityID).getAddedFreeSpecialists(iSlaveCom)
+	iCountHealth = GC.getPlayer(iPlayer).getCity(iCityID).getAddedFreeSpecialists(iSlaveHealth)
+	iCountEntertain = GC.getPlayer(iPlayer).getCity(iCityID).getAddedFreeSpecialists(iSlaveEntertain)
+	iCountTutor = GC.getPlayer(iPlayer).getCity(iCityID).getAddedFreeSpecialists(iSlaveTutor)
+	iCountMilitary = GC.getPlayer(iPlayer).getCity(iCityID).getAddedFreeSpecialists(iSlaveMilitary)
 
 	## Process those that can become population or immagrants
 	##	where 3 slaves = 1 pop or immigrant
@@ -194,69 +214,69 @@ def onCityRazed(argsList):
 
 	if iCount > 0:
 		for _ in xrange(iCount):
-			CyPlayer.initUnit(iUnitCaptiveSlave, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+			CyPlayer.createUnit(iUnitCaptiveSlave, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 		if bHuman:
-			sMessage = BugUtil.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, GC.getUnitInfo(iUnitCaptiveSlave).getDescription(), iCount))
+			sMessage = BugUtil.getText("TXT_KEY_MSG_FREED_SLAVES_AS", (sCityName, INFO.getDescription("UNIT_", iUnitCaptiveSlave), iCount))
 			CyInterface().addMessage(iPlayer, False, 15, sMessage, '', 0, 'Art/Interface/Buttons/Civics/Serfdom.dds', ColorTypes(44), X, Y, True, True)
 
 	if iCountNewPop > 0:
 		iCountImmigrants = iCountNewPop
 		if iCountImmigrants > 0:
 			for _ in range (iCountImmigrants):
-				CyPlayer.initUnit(iUnitImmigrant, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+				CyPlayer.createUnit(iUnitImmigrant, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 			if bHuman:
 				sMessage = BugUtil.getText("TXT_KEY_MSG_FREED_SLAVES_AS_IMMIGRANTS", (iCountImmigrants*3, sCityName, iCountImmigrants))
 				CyInterface().addMessage(iPlayer, False, 15, sMessage, '', 0, 'Art/Interface/Buttons/Civics/Serfdom.dds', ColorTypes(44), X, Y, True, True)
 
 	## Now remove those slaves
 	if iCountSettled > 0:
-		CyCity.changeFreeSpecialistCount(iSlaveSettled,-iCountSettled)
+		ACT.addCityFreeSpecialist(iPlayer, iCityID, iSlaveSettled, -iCountSettled)
 	if iCountFood > 0:
-		CyCity.changeFreeSpecialistCount(iSlaveFood,-iCountFood)
+		ACT.addCityFreeSpecialist(iPlayer, iCityID, iSlaveFood, -iCountFood)
 	if iCountCom > 0:
-		CyCity.changeFreeSpecialistCount(iSlaveCom,-iCountCom)
+		ACT.addCityFreeSpecialist(iPlayer, iCityID, iSlaveCom, -iCountCom)
 	if iCountTutor > 0:
-		CyCity.changeFreeSpecialistCount(iSlaveTutor,-iCountTutor)
+		ACT.addCityFreeSpecialist(iPlayer, iCityID, iSlaveTutor, -iCountTutor)
 	if iCountMilitary > 0:
-		CyCity.changeFreeSpecialistCount(iSlaveMilitary,-iCountMilitary)
+		ACT.addCityFreeSpecialist(iPlayer, iCityID, iSlaveMilitary, -iCountMilitary)
 
 	## Now convert the other slaves
 	if iCountProd > 0:
 		for _ in range (iCountProd):
-			CyPlayer.initUnit(iUnitMerCaravan, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-			CyCity.changeFreeSpecialistCount(iSlaveProd,-1)
+			CyPlayer.createUnit(iUnitMerCaravan, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+			ACT.addCityFreeSpecialist(iPlayer, iCityID, iSlaveProd, -1)
 		if bHuman:
-			sMessage = BugUtil.getText("TXT_KEY_MSG_FREED_SLAVES_AS",(sCityName, GC.getUnitInfo(iUnitMerCaravan).getDescription(), iCountProd))
+			sMessage = BugUtil.getText("TXT_KEY_MSG_FREED_SLAVES_AS",(sCityName, INFO.getDescription("UNIT_", iUnitMerCaravan), iCountProd))
 			CyInterface().addMessage(iPlayer,False,15, sMessage,'',0,'Art/Interface/Buttons/Civics/Serfdom.dds',ColorTypes(44), X, Y, True,True)
 
 	if iCountHealth > 0:
 		for _ in range (iCountHealth):
-			CyPlayer.initUnit(iUnitHealth, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-			CyCity.changeFreeSpecialistCount(iSlaveHealth,-1)
+			CyPlayer.createUnit(iUnitHealth, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+			ACT.addCityFreeSpecialist(iPlayer, iCityID, iSlaveHealth, -1)
 		if bHuman:
-			sMessage = BugUtil.getText("TXT_KEY_MSG_FREED_SLAVES_AS",(sCityName, GC.getUnitInfo(iUnitHealth).getDescription(), iCountHealth))
+			sMessage = BugUtil.getText("TXT_KEY_MSG_FREED_SLAVES_AS",(sCityName, INFO.getDescription("UNIT_", iUnitHealth), iCountHealth))
 			CyInterface().addMessage(iPlayer,False,15, sMessage,'',0,'Art/Interface/Buttons/Civics/Serfdom.dds',ColorTypes(44), X, Y, True,True)
 
 	if iCountEntertain > 0:
 		for _ in range (iCountEntertain):
-			CyPlayer.initUnit(iUnitEntertain, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-			CyCity.changeFreeSpecialistCount(iSlaveEntertain,-1)
+			CyPlayer.createUnit(iUnitEntertain, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+			ACT.addCityFreeSpecialist(iPlayer, iCityID, iSlaveEntertain, -1)
 		if bHuman:
-			sMessage = BugUtil.getText("TXT_KEY_MSG_FREED_SLAVES_AS",(sCityName, GC.getUnitInfo(iUnitEntertain).getDescription(), iCountEntertain))
+			sMessage = BugUtil.getText("TXT_KEY_MSG_FREED_SLAVES_AS",(sCityName, INFO.getDescription("UNIT_", iUnitEntertain), iCountEntertain))
 			CyInterface().addMessage(iPlayer,False,15, sMessage,'',0,'Art/Interface/Buttons/Civics/Serfdom.dds',ColorTypes(44), X, Y, True,True)
 
 	## Convert population to captives
 	iUnit = GC.getInfoTypeForString('UNIT_CAPTIVE_CIVILIAN')
 	iCount = 0
-	iPop = CyCity.getPopulation()
+	iPop = GC.getPlayer(iPlayer).getCity(iCityID).getPopulation()
 	if iPop == 1:
 		if GAME.getSorenRandNum(100, "Slave") < 66:
-			CyPlayer.initUnit(iUnit, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+			CyPlayer.createUnit(iUnit, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 			iCount = 1
 	else:
 		iCivilianCitizenUnits = (iPop + 1) // 2
 		for _ in xrange(iCivilianCitizenUnits):
-			CyPlayer.initUnit(iUnit, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+			CyPlayer.createUnit(iUnit, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 			iCount += 1
 
 	if bHuman and iCount:

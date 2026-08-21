@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_QUETZALCOATL",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_QUETZALCOATL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_QUETZALCOATL",
+  "civilopedia": "TXT_KEY_BONUS_QUETZALCOATL_PEDIA",
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
+ }
+}

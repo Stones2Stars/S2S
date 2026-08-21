@@ -1,0 +1,26 @@
+{
+ "type": "UNITCOMBAT_QUALITY_INFERIOR",
+ "experience": {
+  "unit": {
+   "percent": 45
+  }
+ },
+ "hideAndSeek": {
+  "detection": {
+   "value": 500,
+   "unit": "HAS_SIZE"
+  }
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "sizeMatters": {
+  "qualityBase": 2
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/combat_quality_inferior.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_QUALITY_INFERIOR"
+ }
+}

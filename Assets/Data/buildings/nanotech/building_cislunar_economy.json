@@ -1,0 +1,97 @@
+{
+ "type": "BUILDING_CISLUNAR_ECONOMY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_COMMERCIAL_SPACEPORT",
+     "scope": "empire",
+     "min": 5,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_MAGLEV_LAUNCHER",
+     "scope": "empire",
+     "min": 2,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_SOLAR_POWER_SATELLITE",
+     "scope": "empire",
+     "min": 3,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_ASTEROID_MINE",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_LUNAR_TRADE",
+    {
+     "type": "BONUS_ORGANIC_PHOTONIC_CELLS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_METAMATERIALS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_EXOSKELETONS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_CISLUNAR_ECONOMY"
+   }
+  ]
+ },
+ "cost": {
+  "production": 9310
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CISLUNAR_ECONOMY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_ECONOMY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_ECONOMY",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_ECONOMY_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

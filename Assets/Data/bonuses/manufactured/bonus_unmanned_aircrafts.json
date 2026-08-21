@@ -1,0 +1,26 @@
+{
+ "type": "BONUS_UNMANNED_AIRCRAFTS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALUMINUM_RECLAMATION_PLANT",
+   "BUILDING_PRECISION_FARM",
+   "BUILDING_RUBBER_RECLAMATION_PLANT",
+   "BUILDING_TITANIUM_RECLAMATION_PLANT"
+  ],
+  "units": [
+   "UNIT_DRONE",
+   "UNIT_UAV"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_UNMANNED_AIRCRAFTS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_UNMANNED_AIRCRAFTS",
+  "civilopedia": "TXT_KEY_BONUS_UNMANNED_AIRCRAFTS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

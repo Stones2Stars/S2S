@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_APPLIED_PSYCHOLOGY_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_NEURON_REGENERATOR_LAB"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PICOTECHNOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HEALTHCARE_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_PSYCHOLOGY_LAB",
+    "BUILDING_NEUROSCIENCE_CENTER",
+    "TECH_MEDIA_PSYCHOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 8,
+     "enabled": "TECH_VIRTUAL_SOCIETY"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": "TECH_PERSONALIZED_HEALTH"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 2305,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_APPLIED_PSYCHOLOGY_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_APPLIED_PSYCHOLOGY_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_APPLIED_PSYCHOLOGY_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

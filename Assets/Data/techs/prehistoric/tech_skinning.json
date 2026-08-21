@@ -1,0 +1,79 @@
+{
+ "type": "TECH_SKINNING",
+ "enables": {
+  "bonuses": [
+   "BONUS_FUR",
+   "BONUS_HIDE"
+  ],
+  "buildings": [
+   "BUILDING_FURRIER",
+   "BUILDING_HOUSING_ANIMAL_HIDE_TENTS",
+   "BUILDING_LL_KILGII_GWAAY",
+   "BUILDING_LL_MCCALLUM",
+   "BUILDING_SKINNER"
+  ],
+  "techs": [
+   "TECH_BONE_WORKING",
+   "TECH_PORTABLE_SHELTERS",
+   "TECH_TANNING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRAILS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SCRAPING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 13
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/skinning.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SKINNING",
+  "soundMP": "AS2D_TECH_SKINNING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SKINNING",
+  "civilopedia": "TXT_KEY_TECH_SKINNING_PEDIA",
+  "quote": "TXT_KEY_TECH_SKINNING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 7,
+  "gridY": 5
+ }
+}

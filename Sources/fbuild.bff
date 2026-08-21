@@ -26,10 +26,9 @@ Settings
                     + ' /DXERCES_STATIC_LIBRARY'
 
 // ### C2C defines ###
-.C2CDefines         = ' /D_MOD_SENTRY' 
-                    + ' /D_MOD_FRACTRADE' 
-                    + ' /D_MOD_GOVWORKERS' 
-                    + ' /DLOG_AI' 
+.C2CDefines         = ' /D_MOD_SENTRY'
+                    + ' /D_MOD_GOVWORKERS'
+                    + ' /DLOG_AI'
 
 #if exists(C2C_VERSION)
     #import C2C_VERSION
@@ -50,6 +49,7 @@ Settings
                     + ' /I"$SOURCE_DIR$/include"'
                     + ' /I"$SOURCE_DIR$"'
                     + ' /I"$SOURCE_DIR$/Infos"'
+                    + ' /I"$SOURCE_DIR$/Cascade"'
 
 .INCS               = '$PROJECT_INCS$ $GLOBAL_INCS$'
 
@@ -91,6 +91,7 @@ Settings
 
     .LDOptions      = ' /OUT:"%2"'                  // Output
                     + ' "%1"'                       // Input
+                    + ' /MAP'                       // linker map beside the DLL -- minidump offset->symbol resolution (2026-07-05)
                     + ' /LTCG'                      // Link time code generation enabled, only operative on FinalRelease
                     + ' /DLL'
                     + ' /NOLOGO'
@@ -141,10 +142,16 @@ Settings
     .LDOptions      + ' msvcprt.lib'
 ]
 
-.ConfigRelease = 
+.ConfigRelease =
 [
     Using(.ConfigNonDebugCommon)
     .ConfigName     = 'Release'
+
+    // ⛔ NEVER compile the internal profiler into Release, doing so made the 3
+    // ungated PROFILE_BEGIN sites (CvGame::update per-FRAME, doTurn, CvPlotGroup) run IFPBeginSample +
+    // a critical-section per call -> a memory-allocation-failure crash on end-turn. The census /
+    // [MODIFIER/perf] gated logging IS the perf surface; the PROFILE_* system is kraken bait, ticketed for
+    // removal in #449. Release stays profiler-free.
 ]
 
 .ConfigAssert =
@@ -199,13 +206,16 @@ Settings
 
 Unity( 'Sources-Unity' )
 {
-    .UnityInputPath = { '$SOURCE_DIR$', '$SOURCE_DIR$/Infos', '$SOURCE_DIR$/Repos', '$SOURCE_DIR$/Utils' }
+    // Recurse the WHOLE source tree so files can live in any subfolder (structural cleanup 2026-06-19);
+    // exclude non-source dirs (prebuilt headers/libs + IDE/build artifacts).
+    .UnityInputPath = { '$SOURCE_DIR$' }
+    .UnityInputPathRecurse  = true
+    .UnityInputExcludePath  = { '$SOURCE_DIR$/include', '$SOURCE_DIR$/lib', '$SOURCE_DIR$/.vs', '$SOURCE_DIR$/.vscode', '$SOURCE_DIR$/nbproject' }
     .UnityInputExcludePattern = '*/Cy*'
     // Keep our pch file out of the unity files
     .UnityInputExcludedFiles = { "CvGameCoreDLL.cpp" }
-    .UnityInputIsolatedFiles = { "CvGameTextMgr.cpp" }
+    .UnityInputIsolatedFiles = { "CvGameTextMgr.cpp", "CvPythonGlobalContextLoader.cpp" }   // section-heavy: isolate so it never batches over the VC7.1 COFF 65279-section limit (C1128)
     .UnityOutputPath        = '$BUILD_DIR$\unity'
-    .UnityInputPathRecurse  = false
     .UnityNumFiles          = 40
     .UnityPCH               = 'CvGameCoreDLL.h'
 }
@@ -222,7 +232,8 @@ ForEach( .Config in .Configs )
     ObjectList( '$ConfigName$-Objs' )
     {
         .CompilerInputPath = '$SOURCE_DIR$'
-        .CompilerInputPathRecurse = false
+        .CompilerInputPathRecurse = true
+        .CompilerInputExcludePath = { '$SOURCE_DIR$/include', '$SOURCE_DIR$/lib', '$SOURCE_DIR$/.vs', '$SOURCE_DIR$/.vscode', '$SOURCE_DIR$/nbproject' }
         .CompilerInputPattern = 'Cy*.cpp'
         
         .CompilerInputUnity = 'Sources-Unity'

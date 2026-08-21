@@ -1,0 +1,108 @@
+{
+ "type": "BUILDING_ITSUKUSHIMA_SHRINE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "HAS_COAST": {
+      "minArea": 10
+     }
+    },
+    "TECH_AESTHETICS",
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_SHINTO"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_SHINTO"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "IS_WATER"
+     }
+    ]
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1566,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ITSUKUSHIMA_SHRINE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ITSUKUSHIMA_SHRINE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ITSUKUSHIMA_SHRINE",
+  "civilopedia": "TXT_KEY_BUILDING_ITSUKUSHIMA_SHRINE_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 14,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "religion": "RELIGION_SHINTO",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

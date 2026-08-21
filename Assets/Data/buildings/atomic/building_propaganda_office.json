@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_PROPAGANDA_OFFICE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_PRESS_AGENCY",
+    "TECH_PROPAGANDA",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_PROPAGANDA"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 950,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPAGANDA_OFFICE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PROPAGANDA_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_PROPAGANDA_OFFICE_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

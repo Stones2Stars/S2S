@@ -1,0 +1,86 @@
+{
+ "type": "PROPERTY_DISEASE",
+ "PROPERTY_DISEASE": {
+  "city": {
+   "percent": 5,
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
+   }
+  },
+  "plot": {
+   "percent": 5
+  }
+ },
+ "properties": {
+  "diffuse": [
+   {
+    "from": "city",
+    "to": "plots",
+    "relation": "near",
+    "distance": 1,
+    "percent": 5
+   },
+   {
+    "from": "plot",
+    "to": "city",
+    "relation": "samePlot",
+    "percent": 12
+   },
+   {
+    "from": "plot",
+    "to": "plots",
+    "relation": "near",
+    "distance": 1,
+    "percent": 4,
+    "enabled": "IS_OWNED"
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_DISEASE_ANTHRAX",
+   "BUILDING_DISEASE_BIRD_FLU",
+   "BUILDING_DISEASE_CHOLERA",
+   "BUILDING_DISEASE_COMMON_COLD",
+   "BUILDING_DISEASE_DIPHTHERIA",
+   "BUILDING_DISEASE_DYSENTERY",
+   "BUILDING_DISEASE_SYPHILIS",
+   "BUILDING_DISEASE_LEPROSY",
+   "BUILDING_DISEASE_MALARIA",
+   "BUILDING_DISEASE_MEASLES",
+   "BUILDING_DISEASE_BUBONIC_PLAGUE",
+   "BUILDING_DISEASE_SCARLET_FEVER",
+   "BUILDING_DISEASE_SCURVY",
+   "BUILDING_DISEASE_SMALLPOX",
+   "BUILDING_DISEASE_SWINE_FLU",
+   "BUILDING_DISEASE_TYPHOID_FEVER"
+  ]
+ },
+ "targetLevel": 0,
+ "ai": {
+  "weight": -150,
+  "scale": "city",
+  "operationalRange": {
+   "min": -1000,
+   "max": 1000
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROPERTY_DISEASE",
+  "sourceDrain": true,
+  "oaType": true,
+  "fontButtonIndex": 4,
+  "text": {
+   "value": "TXT_KEY_PROPERTY_DISEASE_DISPLAY",
+   "change": "TXT_KEY_PROPERTY_DISEASE_CHANGE",
+   "changeAllCities": "TXT_KEY_PROPERTY_DISEASE_CHANGE_ALL_CITIES",
+   "prereqMin": "TXT_KEY_PROPERTY_DISEASE_PREREQ_MIN",
+   "prereqMax": "TXT_KEY_PROPERTY_DISEASE_PREREQ_MAX"
+  }
+ }
+}

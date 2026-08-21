@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_EFFECT_NATIONAL_ACADEMIC_DATABASE",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_CLOUD_COMPUTING"
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "empire": {
+   "flat": 25
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_NATIONAL_ACADEMIC_DATABASE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_NATIONAL_ACADEMIC_DATABASE",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_NATIONAL_ACADEMIC_DATABASE_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

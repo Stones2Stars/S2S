@@ -1,0 +1,116 @@
+{
+ "type": "BUILDING_TABLET_MAKER",
+ "enables": {
+  "buildings": [
+   "BUILDING_LIBRARY_OF_NINEVEH"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_INDUSTRIALISM"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ANTIQUE_SHOP"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_IDEOGRAMS",
+    {
+     "any": [
+      "BUILDING_STORAGE_PIT",
+      "BUILDING_GRANARY",
+      "BUILDING_MODERN_GRANARY",
+      "BUILDING_BARTER_POST",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_FINE_CLAY",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CLAY",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_ANTIQUE_SHOP"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_TABLETS"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": -1,
+     "enabled": "TECH_PAPER"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": "TECH_PAPER"
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 118,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TABLET_MAKER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TABLET_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_TABLET_MAKER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

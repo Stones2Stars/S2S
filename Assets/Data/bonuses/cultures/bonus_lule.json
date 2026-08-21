@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_LULE",
+ "enables": {
+  "units": [
+   "UNIT_CACAN",
+   "UNIT_LULE_NOMADS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_LULE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_LULE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

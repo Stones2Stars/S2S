@@ -1,0 +1,76 @@
+{
+ "type": "PROMOTION_BUSHMAN",
+ "combat": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_BARREN": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_ROCKY": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_BADLAND": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_JAGGED": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_SCRUB": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_SALT_FLATS": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_MARSH": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Markofthescorpion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUSHMAN"
+ }
+}

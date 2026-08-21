@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTIONLINE_STANDOUT",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/StandOutStatus.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_STANDOUT",
+  "unitCombats": [
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_SPECIES_NEANDERTHAL",
+   "UNITCOMBAT_SPECIES_ALIEN",
+   "UNITCOMBAT_SPECIES_AI",
+   "UNITCOMBAT_ANIMAL",
+   "UNITCOMBAT_SEA_ANIMAL"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SPY"
+  ]
+ }
+}

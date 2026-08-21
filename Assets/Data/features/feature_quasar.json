@@ -1,0 +1,40 @@
+{
+ "type": "FEATURE_QUASAR",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "characteristics": [
+  "unfoundable"
+ ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_QUASAR"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_ASTEROIDS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_QUASAR",
+  "civilopedia": "TXT_KEY_FEATURE_QUASAR_PEDIA",
+  "validTerrains": [
+   "TERRAIN_OBSERVABLE_UNIVERSE"
+  ]
+ }
+}

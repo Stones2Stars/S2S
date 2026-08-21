@@ -1,0 +1,84 @@
+{
+ "type": "UNIT_CAODAI_MISSIONARY",
+ "spread": {
+  "religion": {
+   "RELIGION_CAO_DAI": 40
+  }
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CAO_DAI_MONASTERY",
+    "RELIGION_CAO_DAI"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "tags": [
+  "missionary",
+  "civilian",
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_MISSIONARY",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_POOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 110
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Units/Missionary_Taoist.dds,Art/Interface/Buttons/Unit_Resource_Atlas.dds,7,3"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MISSIONARY_CAODAI",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MISSIONARY_CAODAI"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_CAODAI_MISSIONARY",
+  "civilopedia": "TXT_KEY_CONCEPT_RELIGION_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MISSIONARY",
+  "advisor": "ADVISOR_RELIGION",
+  "unitAIs": [
+   "UNITAI_MISSIONARY"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

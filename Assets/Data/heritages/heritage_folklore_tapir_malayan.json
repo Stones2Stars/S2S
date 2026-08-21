@@ -1,0 +1,102 @@
+{
+ "type": "HERITAGE_FOLKLORE_TAPIR_MALAYAN",
+ "enables": {
+  "heritages": [
+   "HERITAGE_TAXON_ELEPHANTIDAE",
+   "HERITAGE_TAXON_SUIDAE",
+   "HERITAGE_TAXON_TAPIRIDAE"
+  ]
+ },
+ "research": {
+  "empire": {
+   "flat": [
+    {
+     "value": 0.4,
+     "enabled": {
+      "type": "ERA",
+      "min": 1
+     }
+    },
+    {
+     "value": -0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 2
+     }
+    },
+    {
+     "value": -0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 3
+     }
+    },
+    {
+     "value": -0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 4
+     }
+    },
+    {
+     "value": -0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 5
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": [
+    {
+     "value": 0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 1
+     }
+    },
+    {
+     "value": 0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 2
+     }
+    },
+    {
+     "value": 0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 3
+     }
+    },
+    {
+     "value": 0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 4
+     }
+    },
+    {
+     "value": 0.1,
+     "enabled": {
+      "type": "ERA",
+      "min": 5
+     }
+    }
+   ]
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Units/mtapir.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_HERITAGE_FOLKLORE_TAPIR_MALAYAN",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+  "needsLanguage": true
+ }
+}

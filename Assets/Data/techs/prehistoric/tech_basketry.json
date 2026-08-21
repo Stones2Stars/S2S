@@ -1,0 +1,73 @@
+{
+ "type": "TECH_BASKETRY",
+ "enables": {
+  "bonuses": [
+   "BONUS_BASKETS"
+  ],
+  "buildings": [
+   "BUILDING_BASKETMAKER",
+   "BUILDING_GROVE_RATTAN"
+  ],
+  "techs": [
+   "TECH_BINDING",
+   "TECH_DRYING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WEAVING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 7
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/basketry.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_BASKETRY",
+  "soundMP": "AS2D_TECH_BASKETRY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_BASKETRY",
+  "civilopedia": "TXT_KEY_TECH_BASKETRY_PEDIA",
+  "quote": "TXT_KEY_TECH_BASKETRY_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 6,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 4,
+  "gridY": 13
+ }
+}

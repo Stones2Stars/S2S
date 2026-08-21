@@ -1,0 +1,35 @@
+{
+  "entity": "PropertyInfo",
+  "rootElement": "PropertyInfo",
+  "glob": "**/CIV4PropertyInfos.xml",
+  "channels": {},
+  "inversionsOut": {},
+  "enablerEdges": {},
+  "prereqs": [],
+  "cost": [],
+  "art": [
+    "FontButtonIndex"
+  ],
+  "identity": [
+    "Type",
+    "Description",
+    "ValueDisplayText",
+    "ChangeDisplayText",
+    "ChangeAllCitiesDisplayText",
+    "PrereqMinDisplayText",
+    "PrereqMaxDisplayText",
+    "iAIWeight",
+    "AIScaleType",
+    "iOperationalRangeMin",
+    "iOperationalRangeMax",
+    "bSourceDrain",
+    "bOAType",
+    "iTargetLevel",
+    "iTrainReluctance",
+    "TargetLevelbyEraTypes",
+    "PropertyManipulators",
+    "PropertyBuildings",
+    "ChangePropagators"
+  ],
+  "boostsIn": []
+}

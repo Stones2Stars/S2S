@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_BARBARIC1",
+ "combat": {
+  "unit": {
+   "attack": {
+    "percent": 10
+   },
+   "defense": {
+    "percent": -5
+   }
+  }
+ },
+ "skills": {
+  "pillageOnVictory": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BARBARIC_PROMOTION": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionBarbaric.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BARBARIC1",
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_NAVAL_COMBATANT"
+  ]
+ }
+}

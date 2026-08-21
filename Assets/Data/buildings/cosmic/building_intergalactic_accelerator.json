@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_INTERGALACTIC_ACCELERATOR",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_SUPERCOMPUTER",
+    "TECH_ELECTROWEAK_MATTER",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_MAGNETIC_MONOPOLES"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 4246,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_ACCELERATOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_ACCELERATOR",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_ACCELERATOR_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

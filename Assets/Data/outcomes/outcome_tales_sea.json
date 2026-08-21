@@ -1,0 +1,21 @@
+{
+ "type": "OUTCOME_TALES_SEA",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_TALES_SEA",
+  "message": "TXT_KEY_OUTCOME_TALES_MESSAGE"
+ },
+ "territory": [
+  "friendly",
+  "neutral",
+  "hostile",
+  "barbarian"
+ ],
+ "coastalCity": true,
+ "capture": true,
+ "odds": {
+  "PROMOTION_SEA_HUNTER1": 5,
+  "PROMOTION_SEA_HUNTER2": 20,
+  "PROMOTION_SEA_HUNTER3": 20,
+  "PROMOTION_SEA_HUNTER_GREAT": 20
+ }
+}

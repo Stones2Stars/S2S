@@ -1,0 +1,103 @@
+{
+ "type": "BUILDING_EPSILON_ASSEMBLER",
+ "enables": {
+  "buildings": [
+   "BUILDING_BULK_DIAMOND_PLANT",
+   "BUILDING_CISLUNAR_MICROSATELLITE_CONSTELLATION",
+   "BUILDING_DELTA_ASSEMBLER",
+   "BUILDING_FACTORY_SERVICE_BOTS",
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+   "BUILDING_FULLERENE_PLANT",
+   "BUILDING_LIGHTS_OUT_MANUFACTURING",
+   "BUILDING_MECH_ASSEMBLY_PLANT",
+   "BUILDING_METAL_FOAM_FOUNDRY",
+   "BUILDING_NANOTRUSS_FOUNDRY",
+   "BUILDING_TRANSPARENT_ALUMINUM_FOUNDRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MANUFACTURING_PLANT",
+    "BUILDING_MECHATRONICS_LAB",
+    "BUILDING_GESTURE_RECOGNITION_SOFTWARE",
+    "TECH_BIOMECHANICAL_HARVESTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_FLASH_MEMORY_DEVICES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 30,
+   "percent": 30
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 2
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 2,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL"
+   }
+  }
+ ],
+ "cost": {
+  "production": 2505,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EPSILON_ASSEMBLER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EPSILON_ASSEMBLER",
+  "civilopedia": "TXT_KEY_BUILDING_EPSILON_ASSEMBLER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

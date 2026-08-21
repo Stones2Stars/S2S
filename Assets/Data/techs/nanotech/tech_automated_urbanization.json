@@ -1,0 +1,73 @@
+{
+ "type": "TECH_AUTOMATED_URBANIZATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_DELIVERY_DRONE_CONTROL_CENTER",
+   "BUILDING_INTELLIGENT_PAVEMENT",
+   "BUILDING_NEOM",
+   "BUILDING_SELF_CONSTRUCTION_FIRM",
+   "BUILDING_SHOPPING_DRONE_CONTROL_CENTER"
+  ],
+  "techs": [
+   "TECH_ADVANCED_COMPUTERS",
+   "TECH_VERTICAL_FARMING",
+   "TECH_WIRELESS_ELECTRICITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEDIA_HIVEMIND",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ONTOLOGICAL_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 41539
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Aicity.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_AUTOMATED_URBANIZATION",
+  "soundMP": "AS2D_TECH_AUTOMATED_URBANIZATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_AUTOMATED_URBANIZATION",
+  "civilopedia": "TXT_KEY_TECH_AUTOMATED_URBANIZATION_PEDIA",
+  "quote": "TXT_KEY_TECH_AUTOMATED_URBANIZATION_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 104,
+  "gridY": 13
+ }
+}

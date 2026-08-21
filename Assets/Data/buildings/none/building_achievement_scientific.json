@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_ACHIEVEMENT_SCIENTIFIC",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_WRITING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "research": {
+  "empire": {
+   "percent": 8
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SCIENTIFIC_ACHIEVEMENT"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ACHIEVEMENT_SCIENTIFIC",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ACHIEVEMENT_SCIENTIFIC",
+  "civilopedia": "TXT_KEY_BUILDING_ACHIEVEMENT_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "notConstructible": true,
+  "worth": 10,
+  "specialBuildingType": "SPECIALBUILDING_ACHIEVEMENT",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

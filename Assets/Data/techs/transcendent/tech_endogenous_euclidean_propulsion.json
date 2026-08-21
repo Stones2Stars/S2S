@@ -1,0 +1,76 @@
+{
+ "type": "TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION",
+ "enables": {
+  "bonuses": [
+   "BONUS_PERSONAL_HYPERCRAFT"
+  ],
+  "buildings": [
+   "BUILDING_HYPERSPACE_HYPERCRAFT_FACTORY",
+   "BUILDING_HYPERSPACE_TOURISM_AGENCY"
+  ],
+  "techs": [
+   "TECH_HYPERLANES",
+   "TECH_TIME_REVERSAL"
+  ],
+  "units": [
+   "UNIT_HYPERSPACE_DEFENDER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CONTROLLED_INFLATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 528012
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/endogenous_euclidean_propulsion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION",
+  "soundMP": "AS2D_TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION",
+  "civilopedia": "TXT_KEY_TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION_PEDIA",
+  "quote": "TXT_KEY_TECH_ENDOGENOUS_EUCLIDEAN_PROPULSION_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 151,
+  "gridY": 3
+ }
+}

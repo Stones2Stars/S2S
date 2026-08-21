@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_FILIPINO",
+ "enables": {
+  "units": [
+   "UNIT_KRISS_WARRIOR",
+   "UNIT_LAPU_LAPU"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_FILIPINO"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_FILIPINO",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

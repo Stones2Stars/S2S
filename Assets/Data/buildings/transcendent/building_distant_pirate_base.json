@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DISTANT_PIRATE_BASE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_HORIZON_PORT",
+    "TECH_ENDLESS_EXPLORATION",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 1713,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_PIRATE_BASE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_PIRATE_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_PIRATE_BASE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

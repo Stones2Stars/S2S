@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_DEEP_SPACE_CLOAKING",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+    "TECH_NANOMORPHICS",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 10,
+     "enabled": "TECH_NANOSHIELDING"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_NANOMORPHIC_TROIDS"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_NANO_DISASSEMBLY"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_NANOTROIDS"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 10
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 2104,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_CLOAKING",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_CLOAKING",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_CLOAKING_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

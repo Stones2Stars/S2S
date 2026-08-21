@@ -1,0 +1,66 @@
+{
+ "type": "TECH_ORATORY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_FALSE_ACCUSATIONS",
+   "BUILDING_SCHOOL_OF_RHETORIC"
+  ],
+  "processes": [
+   "PROCESS_SPY_LESSER"
+  ],
+  "promotions": [
+   "PROMOTION_FOMENT2",
+   "PROMOTION_INSPIRE2",
+   "PROMOTION_SILVER_TONGUE2"
+  ],
+  "techs": [
+   "TECH_CODE_OF_LAWS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PRIESTHOOD",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 213
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/oratory2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ORATORY",
+  "soundMP": "AS2D_TECH_ORATORY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ORATORY",
+  "civilopedia": "TXT_KEY_TECH_ORATORY_PEDIA",
+  "quote": "TXT_KEY_TECH_ORATORY_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 27,
+  "gridY": 15
+ }
+}

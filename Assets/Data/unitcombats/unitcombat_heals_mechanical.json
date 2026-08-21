@@ -1,0 +1,11 @@
+{
+ "type": "UNITCOMBAT_HEALS_MECHANICAL",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/disassembly.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_HEALS_MECHANICAL"
+ }
+}

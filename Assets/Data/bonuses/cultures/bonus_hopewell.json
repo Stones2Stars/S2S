@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_HOPEWELL",
+ "enables": {
+  "units": [
+   "UNIT_BROKEN_ARROW",
+   "UNIT_COPENA_MERCHANT"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HOPEWELL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HOPEWELL",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

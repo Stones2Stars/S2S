@@ -1,0 +1,22 @@
+{
+ "type": "UNITCOMBAT_SIEGE_FIELD",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -20
+   }
+  }
+ },
+ "tags": [
+  "siege"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/siege_field.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SIEGE_FIELD",
+  "forMilitary": true
+ }
+}

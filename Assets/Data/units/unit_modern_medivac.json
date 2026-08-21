@@ -1,0 +1,170 @@
+{
+ "type": "UNIT_MODERN_MEDIVAC",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_HELICOPTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_MODERN_WARFARE",
+    "TECH_VERTICAL_FLIGHT",
+    "TECH_MODERN_HEALTH_CARE",
+    {
+     "type": "BONUS_PETROLEUM_PRODUCTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_PHARMACEUTICALS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      "BUILDING_MEDICAL_CLINIC",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_MEDEVAC_DROPSHIP"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 4,
+   "dropRange": {
+    "flat": 10
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 60
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 13
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_PEOPLE": {
+     "heal": 33,
+     "adjacentHeal": 16
+    },
+    "UNITCOMBAT_HEALS_AS_ANIMALS": {
+     "heal": 29,
+     "adjacentHeal": 12
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -37
+  },
+  "plot": {
+   "flat": -22
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "unit": {
+     "all": [
+      "IS_LAND",
+      "!IS_VTOL"
+     ]
+    },
+    "flat": 2
+   }
+  }
+ },
+ "skills": [
+  "noCapture",
+  "mechanized",
+  "onlyDefensive",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "vtol"
+ ],
+ "combatClass": "UNITCOMBAT_HEALTH_CARE",
+ "combatClasses": [
+  "UNITCOMBAT_HELICOPTER",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_ARMOR_AIRCRAFT",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL",
+  "UNITCOMBAT_HEALS_PEOPLE",
+  "UNITCOMBAT_HEALS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 1330,
+  "upkeep": 12,
+  "hurryCostModifier": 25
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MODERN_MEDIVAC",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_MODERN_MEDIVAC"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_MODERN_MEDIVAC",
+  "civilopedia": "TXT_KEY_UNIT_MEDIC_PEDIA",
+  "worth": 15,
+  "militaryWorth": 60,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_HEALER",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

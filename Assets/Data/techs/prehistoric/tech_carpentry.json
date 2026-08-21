@@ -1,0 +1,85 @@
+{
+ "type": "TECH_CARPENTRY",
+ "enables": {
+  "bonuses": [
+   "BONUS_FURNITURE"
+  ],
+  "buildings": [
+   "BUILDING_BAMBOO_ARMOURER",
+   "BUILDING_CARPENTER",
+   "BUILDING_FRONTIER_OUTPOST",
+   "BUILDING_FURNITURE_MAKER",
+   "BUILDING_HOUSING_LONGHOUSE",
+   "BUILDING_OUTHOUSE",
+   "BUILDING_PALISADE",
+   "BUILDING_TREE_PLATFORMS",
+   "BUILDING_WATER_TROUGH"
+  ],
+  "builds": [
+   "BUILD_COTTAGE_KILL",
+   "BUILD_RESOURCE_OUTPOST_KILL",
+   "BUILD_WOODEN_PALISADE_KILL",
+   "BUILD_WOODEN_WATCHTOWER_KILL"
+  ],
+  "improvements": [
+   "IMPROVEMENT_COTTAGE",
+   "IMPROVEMENT_RESOURCE_OUTPOST",
+   "IMPROVEMENT_WOODEN_PALISADE",
+   "IMPROVEMENT_WOODEN_WATCHTOWER"
+  ],
+  "techs": [
+   "TECH_BOAT_BUILDING",
+   "TECH_TRIBALISM"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_ABATIS_THORN_HEDGE_KILL",
+   "BUILD_GATHERING_CAMP_KILL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WOODWORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 26
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/carpentry.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CARPENTRY",
+  "soundMP": "AS2D_TECH_CARPENTRY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CARPENTRY",
+  "civilopedia": "TXT_KEY_TECH_CARPENTRY_PEDIA",
+  "quote": "TXT_KEY_TECH_CARPENTRY_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 12,
+  "gridY": 9
+ }
+}

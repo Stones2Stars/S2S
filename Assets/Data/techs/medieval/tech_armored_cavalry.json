@@ -1,0 +1,112 @@
+{
+ "type": "TECH_ARMORED_CAVALRY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_ARABIAN",
+   "BUILDING_CULTURE_ARMENIAN",
+   "BUILDING_CULTURE_BRETON",
+   "BUILDING_CULTURE_CANTONESE",
+   "BUILDING_CULTURE_QING",
+   "BUILDING_CULTURE_TATAR",
+   "BUILDING_CULTURE_TURKMEN",
+   "BUILDING_CULTURE_URUGUAYAN",
+   "BUILDING_GUILD_HOSTLERS"
+  ],
+  "techs": [
+   "TECH_CHIVALRY"
+  ],
+  "units": [
+   "UNIT_ARABIA_CAMELARCHER",
+   "UNIT_BEARKNIGHT",
+   "UNIT_BYZANTINE_CATAPHRACT",
+   "UNIT_CAMEL_KNIGHT",
+   "UNIT_DAI_CHUI",
+   "UNIT_ELMETI",
+   "UNIT_FERDINAND_II",
+   "UNIT_FLAIL_ELEPHANT",
+   "UNIT_GRIVPANVAR",
+   "UNIT_HAYK",
+   "UNIT_HOWDAH",
+   "UNIT_KNIGHT",
+   "UNIT_LEO_I",
+   "UNIT_MAHOUT_LANCER",
+   "UNIT_MALGAQ",
+   "UNIT_NAKHARAR",
+   "UNIT_PALADIN",
+   "UNIT_SAKA_CATAPHRACT",
+   "UNIT_SAVARAN",
+   "UNIT_SIAM_ELEPHANT",
+   "UNIT_TURKOMAN",
+   "UNIT_UIGHUR_KNIGHT",
+   "UNIT_WAR_ELEPHANT",
+   "UNIT_WAR_MAMMOTH",
+   "UNIT_WINGED_CAVALRY",
+   "UNIT_ZEBRA_KNIGHT"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_BEARRIDER",
+   "UNIT_RHINO_SWORDSMAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ELEPHANT_DOMESTICATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_STIRRUP",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARMOR_CRAFTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INVENTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1688
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/armoredcavalry.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ARMORED_CAVALRY",
+  "soundMP": "AS2D_TECH_ARMORED_CAVALRY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ARMORED_CAVALRY",
+  "civilopedia": "TXT_KEY_TECH_ARMORED_CAVALRY_PEDIA",
+  "quote": "TXT_KEY_TECH_ARMORED_CAVALRY_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 20,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 47,
+  "gridY": 3
+ }
+}

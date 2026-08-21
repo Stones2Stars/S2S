@@ -1,0 +1,67 @@
+{
+ "type": "TECH_TESSERACT_CONSTRUCTION",
+ "enables": {
+  "bonuses": [
+   "BONUS_TESSERACT"
+  ],
+  "buildings": [
+   "BUILDING_HYPERSPACE_TESSERACT_ASSEMBLER",
+   "BUILDING_HYPERSPACE_TESSERACT_HOMES",
+   "BUILDING_TESSERACT_PATHWAYS"
+  ],
+  "techs": [
+   "TECH_3D_PROJECTIONS",
+   "TECH_BRANE_CONSTRUCTION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HYPERSTRUCTURE_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 528012
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/tesseract_construction.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TESSERACT_CONSTRUCTION",
+  "civilopedia": "TXT_KEY_TECH_TESSERACT_CONSTRUCTION_PEDIA",
+  "quote": "TXT_KEY_TECH_TESSERACT_CONSTRUCTION_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 151,
+  "gridY": 15
+ }
+}

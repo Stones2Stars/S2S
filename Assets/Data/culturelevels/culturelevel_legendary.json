@@ -1,0 +1,20 @@
+{
+ "type": "CULTURELEVEL_LEGENDARY",
+ "allowed": {
+  "worldWonders": 8,
+  "teamWonders": 7,
+  "nationalWonders": 20
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 35
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CULTURELEVEL_LEGENDARY",
+  "cityRadius": 3,
+  "cultureThreshold": 33280
+ }
+}

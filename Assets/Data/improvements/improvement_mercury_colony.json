@@ -1,0 +1,43 @@
+{
+ "type": "IMPROVEMENT_MERCURY_COLONY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_THERMAL_NEGATION",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_MERCURY"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 7
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_MERCURY_COLONY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_MERCURY_COLONY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_MERCURY_COLONY_PEDIA",
+  "extraterrestrial": true,
+  "advancedStart": {
+   "cost": -1
+  },
+  "pillageGold": 50,
+  "outsideBorders": true
+ }
+}

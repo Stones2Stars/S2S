@@ -1,0 +1,86 @@
+{
+ "type": "TECH_EXTRATERRESTRIAL_AGRICULTURE",
+ "enables": {
+  "bonuses": [
+   "BONUS_MARTIAN_CROPS"
+  ],
+  "buildings": [
+   "BUILDING_DEEP_SPACE_FARM",
+   "BUILDING_MARTIAN_FARM",
+   "BUILDING_VENUS_AGRODOME"
+  ],
+  "builds": [
+   "BUILD_MARTIAN_FARM"
+  ],
+  "improvements": [
+   "IMPROVEMENT_MARTIAN_FARM"
+  ],
+  "projects": [
+   "PROJECT_SS_LIFE_SUPPORT"
+  ],
+  "techs": [
+   "TECH_GALACTIC_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_APOCALYPTIC_PATHOGENS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WEATHER_CONTROL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MOLECULAR_SCANNING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 93709
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/extraterrestrialagriculture.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_EXTRATERRESTRIAL_AGRICULTURE",
+  "soundMP": "AS2D_TECH_EXTRATERRESTRIAL_AGRICULTURE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_EXTRATERRESTRIAL_AGRICULTURE",
+  "civilopedia": "TXT_KEY_TECH_EXTRATERRESTRIAL_AGRICULTURE_PEDIA",
+  "quote": "TXT_KEY_TECH_EXTRATERRESTRIAL_AGRICULTURE_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 122,
+  "gridY": 13
+ }
+}

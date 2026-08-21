@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_NATIONAL_BELIEF_KARMA",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_KARMA",
+    {
+     "any": [
+      "BUILDING_HINDU_TEMPLE",
+      "BUILDING_BUDDHIST_TEMPLE",
+      "BUILDING_TAOIST_TEMPLE",
+      "BUILDING_SHINTO_TEMPLE",
+      "BUILDING_SIKH_GURDWARA",
+      "BUILDING_JAIN_TEMPLE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_BELIEF_KARMA"
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NATIONAL_BELIEF_KARMA",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_BELIEF_KARMA",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_BELIEF_KARMA_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "notConstructible": true,
+  "worth": 10,
+  "advisor": "ADVISOR_RELIGION",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

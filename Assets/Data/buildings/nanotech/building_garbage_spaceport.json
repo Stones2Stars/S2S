@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_GARBAGE_SPACEPORT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_LAUNCH_SITE",
+    "TECH_ORBITAL_FLIGHT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    "CIVIC_OFF_PLANET_DUMPING"
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 4485,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GARBAGE_SPACEPORT",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GARBAGE_DUMP"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GARBAGE_SPACEPORT",
+  "civilopedia": "TXT_KEY_BUILDING_GARBAGE_SPACEPORT_PEDIA",
+  "worth": 2,
+  "militaryWorth": 2,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

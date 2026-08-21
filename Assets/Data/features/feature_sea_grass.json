@@ -1,0 +1,107 @@
+{
+ "type": "FEATURE_SEA_GRASS",
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": -2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_AIR_POLLUTION": -2,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  }
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_SEA_GRASS"
+  }
+ },
+ "sound": {
+  "footsteps": [
+   {
+    "LOOPSTEP_OCEAN1": "AS3D_UN_OCEAN_LOOP1"
+   },
+   {
+    "ENDSTEP_OCEAN1": "AS3D_UN_OCEAN_END1"
+   },
+   {
+    "LOOPSTEP_OCEAN2": "AS3D_UN_OCEAN_LOOP1"
+   },
+   {
+    "ENDSTEP_OCEAN2": "AS3D_UN_OCEAN_END2"
+   },
+   {
+    "LOOPSTEP_DESTOYER": "AS3D_UN_DESTROYER_RUN_LOOP"
+   },
+   {
+    "ENDSTEP_DESTROYER": "AS3D_UN_DESTROYER_RUN_END"
+   },
+   {
+    "LOOPSTEP_IRONCLAD": "AS3D_UN_IRONCLAD_RUN_LOOP"
+   },
+   {
+    "ENDSTEP_IRONCLAD": "AS3D_UN_IRONCLAD_RUN_END"
+   },
+   {
+    "LOOPSTEP_TRANSPORT": "AS3D_UN_TRANSPORT_RUN_LOOP"
+   },
+   {
+    "ENDSTEP_TRANSPORT": "AS3D_UN_TRANSPORT_RUN_END"
+   },
+   {
+    "LOOPSTEP_SUBMARINE": "AS3D_UN_SUBMARINE_RUN_LOOP"
+   },
+   {
+    "ENDSTEP_SUBMARINE": "AS3D_UN_SUBMARINE_RUN_END"
+   },
+   {
+    "LOOPSTEP_GUNSHIP": "AS3D_UN_GUNSHIP_RUN_LOOP"
+   },
+   {
+    "ENDSTEP_GUNSHIP": "AS3D_UN_GUNSHIP_RUN_END"
+   },
+   {
+    "LOOPSTEP_ARTILLERY": "AS3D_UN_ARTILLERY_RUN_LOOP"
+   },
+   {
+    "ENDSTEP_ARTILLERY": "AS3D_UN_ARTILLERY_RUN_END"
+   },
+   {
+    "LOOPSTEP_WHEELS_3": "AS3D_UN_TREBUCHET_RUN"
+   },
+   {
+    "ENDSTEP_WHEELS_3": "AS3D_UN_TREBUCHET_STOP"
+   }
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_SEA_GRASS",
+  "civilopedia": "TXT_KEY_FEATURE_SEA_GRASS_PEDIA",
+  "appearance": 400,
+  "growth": 15,
+  "validTerrains": [
+   "TERRAIN_COAST",
+   "TERRAIN_COAST_TROPICAL"
+  ]
+ }
+}

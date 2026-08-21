@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_TRADITION_AESTHETIC_APPRECIATION",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CIVIL_ENGINEERING"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_AESTHETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "culture": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_TRADITION_AESTHETIC_APPRECIATION"
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TRADITION_ASTHETIC_APPRECIATION"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRADITION_AESTHETIC_APPRECIATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRADITION_AESTHETIC_APPRECIATION",
+  "civilopedia": "TXT_KEY_BUILDING_TRADITION_AESTHETIC_APPRECIATION_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "notConstructible": true,
+  "worth": 6,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

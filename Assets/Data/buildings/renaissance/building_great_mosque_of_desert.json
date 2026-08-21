@@ -1,0 +1,137 @@
+{
+ "type": "BUILDING_GREAT_MOSQUE_OF_DESERT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ISLAMIC_MOSQUE",
+    "TECH_DIVINE_RIGHT",
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_ISLAM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_ISLAM"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 4,
+   "percent": 12
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_ISLAM"
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2,
+   "percent": 10
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_ISLAM": {
+    "flat": 6
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 2640,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 50
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GREAT_MOSQUE_OF_DESERT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ISLAMIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GREAT_MOSQUE_OF_DESERT",
+  "civilopedia": "TXT_KEY_BUILDING_GREAT_MOSQUE_OF_DESERT_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 2,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "religion": "RELIGION_ISLAM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "100.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

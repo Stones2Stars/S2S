@@ -1,0 +1,124 @@
+{
+ "type": "BUILDING_TOWN_HALL",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRAB_NETS",
+   "BUILDING_POLIS_COUNCIL",
+   "BUILDING_TEMPLE_OF_MUT",
+   "BUILDING_ZOROASTRIAN_PANTHEON"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SOCIAL_CONTRACT"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CITY_COUNCIL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COMMUNITY",
+    "CULTURELEVEL_DEVELOPING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 10
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CEMENT",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_CITY_COUNCIL",
+    "BUILDING_METROPOLITAN_ADMINISTRATION"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "any": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -10
+   }
+  }
+ },
+ "cost": {
+  "production": 118,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TOWN_HALL",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COURTHOUSE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TOWN_HALL",
+  "civilopedia": "TXT_KEY_BUILDING_TOWN_HALL_PEDIA",
+  "centerInCity": true,
+  "worth": 4,
+  "militaryWorth": 5,
+  "conquestProbability": 85,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

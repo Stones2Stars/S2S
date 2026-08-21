@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_MUTAPA",
+ "enables": {
+  "units": [
+   "UNIT_ROZVI"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MUTAPA"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MUTAPA",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

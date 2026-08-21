@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTION_INNOCENT_MERCHANTS2",
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  }
+ },
+ "skills": [
+  "navalDisguise"
+ ],
+ "promotionLine": {
+  "PROMOTIONLINE_INNOCENT_MERCHANTS": 2
+ },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/InnocentMerchants2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_INNOCENT_MERCHANTS2"
+ }
+}

@@ -1,0 +1,89 @@
+{
+ "type": "TRAIT_EXCESSIVE1",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_COMPLEX_EXCESSIVE2"
+  ]
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -20
+  }
+ },
+ "experience": {
+  "empire": {
+   "levelModifier": {
+    "percent": 20
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_CITY_RAIDER1",
+       "enabled": "IS_MELEE"
+      },
+      {
+       "promotion": "PROMOTION_IMPROVISE1",
+       "enabled": "IS_SPY"
+      },
+      {
+       "promotion": "PROMOTION_IMPROVISE2",
+       "enabled": "IS_SPY"
+      }
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 2
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitExcessive.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_EXCESSIVE0",
+  "civilopedia": "TXT_KEY_TRAIT_EXCESSIVE_PEDIA",
+  "shortDescription": "TXT_KEY_TRAIT_EXCESSIVE_SHORT",
+  "negativeTrait": true,
+  "impurePromotions": true
+ }
+}

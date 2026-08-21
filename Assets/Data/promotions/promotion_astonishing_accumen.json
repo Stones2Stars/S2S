@@ -1,0 +1,33 @@
+{
+ "type": "PROMOTION_ASTONISHING_ACCUMEN",
+ "skills": {
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL"
+  ],
+  "removesUnitCombats": [
+   "UNITCOMBAT_QUALITY_SUPERIOR"
+  ]
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/UnitCombatClasses/Quality7UnitCombat.fw.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_ASTONISHING_ACCUMEN",
+  "replacesUnitCombat": "UNITCOMBAT_QUALITY_SUPERIOR",
+  "levelPrereq": 8,
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_ANIMAL"
+  ],
+  "zeroesXP": true
+ },
+ "sizeMatters": {
+  "quality": 1
+ }
+}

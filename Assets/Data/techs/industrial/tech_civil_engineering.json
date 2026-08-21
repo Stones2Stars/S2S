@@ -1,0 +1,92 @@
+{
+ "type": "TECH_CIVIL_ENGINEERING",
+ "enables": {
+  "buildings": [
+   "BUILDING_BULLSEYE_STORE",
+   "BUILDING_CITY_PARK",
+   "BUILDING_CONSTRUCTION_FIRM",
+   "BUILDING_DISNEYLAND",
+   "BUILDING_EAST_WEST_TRADERS_STORE",
+   "BUILDING_EIFFEL_TOWER",
+   "BUILDING_GATEWAY_ARCH",
+   "BUILDING_GOLDEN_GATE_BRIDGE",
+   "BUILDING_HOUSING_HIGHRISES",
+   "BUILDING_HOUSING_PENTHOUSE_SUITES",
+   "BUILDING_HOUSING_PROJECTS",
+   "BUILDING_HQ_BULLSEYE",
+   "BUILDING_HQ_EAST_WEST_TRADERS",
+   "BUILDING_HQ_MALLWART",
+   "BUILDING_INDUSTRIAL_PARK",
+   "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+   "BUILDING_MALLWART_STORE",
+   "BUILDING_MODERN_OFFICES",
+   "BUILDING_NATIONAL_WEATHER_SERVICE",
+   "BUILDING_ORDINANCE_FIRE_CODE",
+   "BUILDING_PESTS_PIGEONS",
+   "BUILDING_PESTS_RACCOONS",
+   "BUILDING_SKYSCRAPER"
+  ],
+  "builds": [
+   "BUILD_TUNNEL"
+  ],
+  "techs": [
+   "TECH_MANAGEMENT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MODERN_SANITATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ELECTRICITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 7008
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/concrete.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,7,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CIVILENGINEERING",
+  "soundMP": "AS2D_TECH_CIVILENGINEERING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CIVIL_ENGINEERING",
+  "civilopedia": "TXT_KEY_TECH_CIVIL_ENGINEERING_PEDIA",
+  "quote": "TXT_KEY_TECH_CIVIL_ENGINEERING_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 68,
+  "gridY": 11
+ }
+}

@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_OORT_CLOUD_DEUTERIUM_MINE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_OORT_CLOUD_BASE",
+    "TECH_INTERSTELLAR_TRAVEL",
+    {
+     "type": "FEATURE_OORT_CLOUD",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_INTERSTELLAR",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_SOLAR_SYSTEM",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 1192,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_OORT_CLOUD_DEUTERIUM_MINE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_OORT_CLOUD_DEUTERIUM_MINE",
+  "civilopedia": "TXT_KEY_BUILDING_OORT_CLOUD_DEUTERIUM_MINE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR",
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

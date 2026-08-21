@@ -1,0 +1,50 @@
+{
+ "type": "PROMOTION_SHIP_TACTICS4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SHIP_INITIATIVE4",
+   "PROMOTION_SHIP_OPERATIONS3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SHIP_TACTICS3",
+    {
+     "any": [
+      "PROMOTION_SHIP_MORALE4"
+     ]
+    }
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 2
+   },
+   "resistance": {
+    "flat": -5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SHIP_TACTICS": 4
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/shipTactics4.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SHIP_TACTICS4"
+ }
+}

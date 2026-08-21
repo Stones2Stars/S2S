@@ -1,0 +1,78 @@
+{
+ "type": "TECH_FREE_ARTISTRY",
+ "enables": {
+  "bonuses": [
+   "BONUS_MING_VASE"
+  ],
+  "buildings": [
+   "BUILDING_ARTIST_COLONY",
+   "BUILDING_ART_GALLERY",
+   "BUILDING_ART_PATRONAGE",
+   "BUILDING_EU_JAGIELLONIAN_UNIVERSITY",
+   "BUILDING_EU_SORBONNE_UNIVERSITY",
+   "BUILDING_EU_UNIVERSITY_OF_BASEL",
+   "BUILDING_FUR_FARM",
+   "BUILDING_GLOBE_THEATRE",
+   "BUILDING_GUILD_ARTISTS",
+   "BUILDING_MING_VASE_WORKSHOP"
+  ],
+  "techs": [
+   "TECH_LEAD_GLASS",
+   "TECH_ROMANTICISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ACOUSTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HUMANISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_OIL_PAINTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 2528
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/FreeArtistry.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,6"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_FREE_ARTISTRY",
+  "soundMP": "AS2D_TECH_FREE_ARTISTRY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_FREE_ARTISTRY",
+  "civilopedia": "TXT_KEY_TECH_FREE_ARTISTRY_PEDIA",
+  "quote": "TXT_KEY_TECH_FREE_ARTISTRY_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 52,
+  "gridY": 17
+ }
+}

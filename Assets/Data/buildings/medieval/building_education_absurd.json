@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_EDUCATION_ABSURD",
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EDUCATION_MORONIC",
+    "BUILDING_EDUCATION_FARCICAL",
+    "BUILDING_EDUCATION_DIMWITTED",
+    "BUILDING_EDUCATION_RIDICULOUS",
+    "BUILDING_EDUCATION_PREPOSTEROUS",
+    "BUILDING_EDUCATION_IDIOCRACY",
+    "BUILDING_EDUCATION_IGNORANCE",
+    "BUILDING_EDUCATION_BEWILDERED",
+    "BUILDING_EDUCATION_MINDLESS"
+   ],
+   "all": [
+    "TECH_MEDIEVAL_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_EDUCATION",
+     "scope": "city",
+     "min": -2000000,
+     "max": -1000
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -20
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -20
+  }
+ },
+ "research": {
+  "city": {
+   "flat": -6,
+   "percent": -20
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "any": -2
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "percent": -16
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -6
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": -10
+   }
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -40
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYEDUCATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EDUCATION_ABSURD",
+  "civilopedia": "TXT_KEY_BUILDING_EQ_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

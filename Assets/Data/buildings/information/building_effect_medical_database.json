@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_EFFECT_MEDICAL_DATABASE",
+ "enables": {
+  "buildings": [
+   "BUILDING_3D_BODY_ATLAS"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_KNOWLEDGE_MANAGEMENT"
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 5
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "empire": {
+   "flat": -20
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_MEDICAL_DATABASE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_MEDICAL_DATABASE",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_MEDICAL_DATABASE_PEDIA",
+  "notConstructible": true,
+  "greatPeopleUnitType": "UNIT_DOCTOR",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

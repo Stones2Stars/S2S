@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_SLAVE_MASTER4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SLAVE_MASTER5"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SLAVE_MASTER3"
+   ]
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 4
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SLAVE_MASTER": 4
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/SlaveMaster4Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SLAVE_MASTER4"
+ }
+}

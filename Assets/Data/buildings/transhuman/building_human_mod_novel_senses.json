@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_HUMAN_MOD_NOVEL_SENSES",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SYNTHETIC_SYNESTHESIA",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_COGNITIVE_ENHANCEMENT",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_NEUROIMPLANTS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_NOVEL_SENSES"
+  ]
+ },
+ "cost": {
+  "production": 10110
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_NOVEL_SENSES",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_NOVEL_SENSES",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_NOVEL_SENSES_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

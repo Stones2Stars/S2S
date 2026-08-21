@@ -1,0 +1,54 @@
+{
+ "type": "RELIGION_JAINISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_JAIN_CATHEDRAL",
+   "BUILDING_JAIN_MONASTERY",
+   "BUILDING_JAIN_TEMPLE"
+  ],
+  "units": [
+   "UNIT_JAINISM_MISSIONARY"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_JAINISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_JAINISM"
+     }
+    }
+   ]
+  }
+ },
+ "grants": {
+  "freeUnit": "UNIT_JAINISM_MISSIONARY",
+  "numFreeUnits": 1
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 16,
+   "icon": "Art/Interface/Buttons/Religions/Jainism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Jainism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Jainism.dds",
+   "movie": {
+    "file": "Art/Cutscene/Jainism_Generic_Found.nif"
+   }
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_HINDU"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_JAINISM",
+  "civilopedia": "TXT_KEY_TECH_JAINISM_PEDIA",
+  "spreadFactor": 100
+ }
+}

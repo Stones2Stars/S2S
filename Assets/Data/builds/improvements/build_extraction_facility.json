@@ -1,0 +1,44 @@
+{
+ "type": "BUILD_EXTRACTION_FACILITY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SUPERSTRONG_ALLOYS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_EXTRACTION_FACILITY",
+  "features": [
+   {
+    "feature": "FEATURE_ICE",
+    "tech": "TECH_COMBUSTION",
+    "time": 300,
+    "remove": true
+   }
+  ]
+ },
+ "cost": {
+  "gold": 120,
+  "time": 300
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/extraction_facility.dds"
+  },
+  "hotkey": "KB_M",
+  "hotKeyPriority": 1
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_EXTRACTION_FACILITY",
+  "consumesUnit": true
+ }
+}

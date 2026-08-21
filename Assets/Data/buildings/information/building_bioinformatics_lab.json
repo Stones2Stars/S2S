@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_BIOINFORMATICS_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_OLED",
+   "BUILDING_LIQUID_METALS_FOUNDRY",
+   "BUILDING_PHENOTYPE_STUDIO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_PROTEIN_LAB",
+    "BUILDING_NUCLEIC_ACID_LAB",
+    "TECH_BIOINFORMATICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 10,
+     "enabled": "TECH_GENOMIC_ENCYCLOPEDIA"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_BIOMATHEMATICS"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 2205,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BIOINFORMATICS_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BIOINFORMATICS_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_BIOINFORMATICS_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

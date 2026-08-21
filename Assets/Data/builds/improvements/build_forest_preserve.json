@@ -1,0 +1,35 @@
+{
+ "type": "BUILD_FOREST_PRESERVE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WILDLIFE_CONSERVATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_FOREST_PRESERVE"
+ },
+ "cost": {
+  "gold": 120,
+  "time": 800
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/TerrainFeatures/Forest.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,4,14"
+  },
+  "hotkey": "KB_O",
+  "hotKeyPriority": 1
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_FOREST_PRESERVE"
+ }
+}

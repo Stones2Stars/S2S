@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_POLLUTION_MODERATE_GLOBAL_WARMING",
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_CLIMATE_GEOENGINEERING"
+   ],
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_AIR_POLLUTION",
+     "scope": "city",
+     "min": 1200,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYPOLLUTION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_POLLUTION_MODERATE_GLOBAL_WARMING",
+  "civilopedia": "TXT_KEY_BUILDING_AIR_POLLUTION_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

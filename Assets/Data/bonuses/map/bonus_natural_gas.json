@@ -1,0 +1,79 @@
+{
+ "type": "BONUS_NATURAL_GAS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_JORDANIAN",
+   "BUILDING_CULTURE_SOVIET",
+   "BUILDING_GAS_LAMPS",
+   "BUILDING_HYDRAULIC_FRACTURING",
+   "BUILDING_NATURAL_GAS_POWER_PLANT"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_NATURAL_GAS"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 8,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 92,
+  "minLandPercent": 62,
+  "uniqueRange": 6,
+  "flatlands": true,
+  "noRiverSide": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_MARSH",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_SEA_TROPICAL",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_DEEP_TROPICAL",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_LAKE_SHORE",
+   "TERRAIN_LAKE"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_NATURAL_GAS",
+  "civilopedia": "TXT_KEY_BONUS_NATURAL_GAS_PEDIA",
+  "bonusClassType": "BONUSCLASS_STRATEGIC",
+  "source": "natural"
+ }
+}

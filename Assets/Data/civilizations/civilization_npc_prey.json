@@ -1,0 +1,50 @@
+{
+ "type": "CIVILIZATION_NPC_PREY",
+ "grants": {
+  "civics": [
+   "CIVIC_ANARCHISM",
+   "CIVIC_OBEDIENCE",
+   "CIVIC_STRONGMAN",
+   "CIVIC_MILITIA",
+   "CIVIC_IRRELIGION",
+   "CIVIC_PRIMITIVE",
+   "CIVIC_COMMUNALISM",
+   "CIVIC_SURVIVAL",
+   "CIVIC_CURRENCY_LESS",
+   "CIVIC_UNORGANIZED",
+   "CIVIC_IGNORANCE",
+   "CIVIC_NONVERBAL",
+   "CIVIC_BORDERLESS",
+   "CIVIC_HUNTER_GATHERING",
+   "CIVIC_GARBAGE_ANYWHERE"
+  ],
+  "techs": [
+   "TECH_GAME_START"
+  ]
+ },
+ "spawnRate": {
+  "empire": {
+   "npcPeace": {
+    "percent": 60
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "playerColor": "PLAYERCOLOR_ANIMAL",
+   "define": "ART_DEF_CIVILIZATION_NPC_PREY",
+   "style": "ARTSTYLE_BARBARIAN",
+   "unitStyle": "UNIT_ARTSTYLE_BARBARIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVILIZATION_NPC_PREY",
+  "shortDescription": "TXT_KEY_CIVILIZATION_NPC_PREY_SHORT",
+  "adjective": "TXT_KEY_CIVILIZATION_NPC_PREY_ADJECTIVE",
+  "civilopedia": "TXT_KEY_CIVILIZATION_NPC_PREY_PEDIA",
+  "isNpc": true,
+  "leaders": [
+   "LEADER_GREEN_MAN"
+  ]
+ }
+}

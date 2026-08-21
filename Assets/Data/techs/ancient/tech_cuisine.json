@@ -1,0 +1,64 @@
+{
+ "type": "TECH_CUISINE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CHEESE",
+   "BONUS_SAUSAGE"
+  ],
+  "buildings": [
+   "BUILDING_CHEESE_SHOP",
+   "BUILDING_SAUSAGE_SHOP"
+  ],
+  "techs": [
+   "TECH_CLASSICAL_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GARDENING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SPECIALIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 274
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/cuisine2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CUISINE",
+  "soundMP": "AS2D_TECH_CUISINE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CUISINE",
+  "civilopedia": "TXT_KEY_TECH_CUISINE_PEDIA",
+  "quote": "TXT_KEY_TECH_CUISINE_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 29,
+  "gridY": 9
+ }
+}

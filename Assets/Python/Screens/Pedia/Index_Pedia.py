@@ -2,6 +2,8 @@
 
 from CvPythonExtensions import *
 from operator import itemgetter
+GC = CyGlobalContext()
+INFO = CyInfo()
 
 polish_hex_mapping = {
     'xc6': 'C',
@@ -69,32 +71,34 @@ class Index:
 			iWidJuToCorporation	= WidgetTypes.WIDGET_PEDIA_JUMP_TO_CORPORATION
 			iWidJuToRoute		= WidgetTypes.WIDGET_PEDIA_JUMP_TO_ROUTE
 
+			#	One INDEX walk per registry: the description and the button arrive together, so nothing
+			#	crosses the boundary per entity ([pedia-read-map.md] shape 2).
 			aWorkList = [
-				(GC.getNumTechInfos, GC.getTechInfo, iWidJuToTech),
-				(GC.getNumUnitInfos, GC.getUnitInfo, iWidJuToUnit),
-				(GC.getNumUnitCombatInfos, GC.getUnitCombatInfo, "UnitCombats"),
-				(GC.getNumPromotionInfos, GC.getPromotionInfo, iWidJuToPromotion),
-				(GC.getNumBuildingInfos, GC.getBuildingInfo, iWidJuToBuilding),
-				(GC.getNumProjectInfos, GC.getProjectInfo, iWidJuToProject),
-				(GC.getNumSpecialistInfos, GC.getSpecialistInfo, iWidJuToSpecialist),
-				(GC.getNumTerrainInfos, GC.getTerrainInfo, iWidJuToTerrain),
-				(GC.getNumFeatureInfos, GC.getFeatureInfo, iWidJuToFeature),
-				(GC.getNumBonusInfos, GC.getBonusInfo, iWidJuToBonus),
-				(GC.getNumImprovementInfos, GC.getImprovementInfo, iWidJuToImprovement),
-				(GC.getNumCivilizationInfos, GC.getCivilizationInfo, iWidJuToCiv),
-				(GC.getNumLeaderHeadInfos, GC.getLeaderHeadInfo, iWidJuToLeader),
-				(GC.getNumTraitInfos, GC.getTraitInfo, iWidJuToTrait),
-				(GC.getNumCivicInfos, GC.getCivicInfo, iWidJuToCivic),
-				(GC.getNumReligionInfos, GC.getReligionInfo, iWidJuToReligion),
-				(GC.getNumCorporationInfos, GC.getCorporationInfo, iWidJuToCorporation),
-				(GC.getNumRouteInfos, GC.getRouteInfo, iWidJuToRoute),
-				(GC.getNumBuildInfos, GC.getBuildInfo, "Builds")
+				("TECH_", iWidJuToTech),
+				("UNIT_", iWidJuToUnit),
+				("UNITCOMBAT_", "UnitCombats"),
+				("PROMOTION_", iWidJuToPromotion),
+				("BUILDING_", iWidJuToBuilding),
+				("PROJECT_", iWidJuToProject),
+				("SPECIALIST_", iWidJuToSpecialist),
+				("TERRAIN_", iWidJuToTerrain),
+				("FEATURE_", iWidJuToFeature),
+				("BONUS_", iWidJuToBonus),
+				("IMPROVEMENT_", iWidJuToImprovement),
+				("CIVILIZATION_", iWidJuToCiv),
+				("LEADER_", iWidJuToLeader),
+				("TRAIT_", iWidJuToTrait),
+				("CIVIC_", iWidJuToCivic),
+				("RELIGION_", iWidJuToReligion),
+				("CORPORATION_", iWidJuToCorporation),
+				("ROUTE_", iWidJuToRoute),
+				("BUILD_", "Builds")
 				]
 			aList = []
-			for nInfos, getInfo, misc in aWorkList:
-				for iType in range(nInfos()):
-					info = getInfo(iType)
-					szName = info.getDescription()
+			for szPrefix, misc in aWorkList:
+				for kEntry in INFO.getIndex(szPrefix):
+					iType = kEntry["id"]
+					szName = kEntry["description"]
 					if szName.find("<") == 0:
 						i = szName.find(">") + 1
 						szName = szName[i:]
@@ -117,7 +121,7 @@ class Index:
 							newFirstLetter = '?'
 							szName = '?' + szName[1:]
 
-					aList.append((szName, misc, iType, info.getButton(), oldFirstLetter, newFirstLetter))
+					aList.append((szName, misc, iType, kEntry["button"], oldFirstLetter, newFirstLetter))
 			aList.sort(key=itemgetter(0))
 			self.aListLength = len(aList)
 

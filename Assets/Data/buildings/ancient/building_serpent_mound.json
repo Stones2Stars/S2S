@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_SERPENT_MOUND",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_THEOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_STARGAZING",
+    {
+     "any": [
+      "BUILDING_TUMULUS",
+      "BUILDING_ANCIENT_CUSTOMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "empire": {
+   "buildings": {
+    "BUILDING_TUMULUS": {
+     "flat": 2
+    },
+    "BUILDING_ANCIENT_CUSTOMS": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_FINE_CLAY",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 876,
+  "sizeModifier": 2,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SERPENT_MOUND"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SERPENT_MOUND"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SERPENT_MOUND",
+  "civilopedia": "TXT_KEY_BUILDING_SERPENT_MOUND_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_DEEP_SPACE_INDUSTRIALIZED_ASTEROID",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_DOCKING_BAY",
+    "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+    "BUILDING_DEEP_SPACE_ASSEMBLER",
+    "TECH_PARATERRAFORMING",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 4123,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_INDUSTRIALIZED_ASTEROID",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_INDUSTRIALIZED_ASTEROID",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_INDUSTRIALIZED_ASTEROID_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "type": "PROMOTIONLINE_PROMOTION_PACIFIST",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PromotionPacifist.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_PROMOTION_PACIFIST",
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_NAVAL_COMBATANT"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_MISSIONARY"
+  ]
+ }
+}

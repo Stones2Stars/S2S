@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_GREEN_BELTS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_RANGER_STATION",
+    "TECH_ECOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "TECH_ECOLOGICAL_ENGINEERING"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GREEN_BELTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GREEN_BELTS",
+  "civilopedia": "TXT_KEY_BUILDING_GREEN_BELTS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

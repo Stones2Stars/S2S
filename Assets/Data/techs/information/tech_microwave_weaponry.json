@@ -1,0 +1,59 @@
+{
+ "type": "TECH_MICROWAVE_WEAPONRY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ACTIVE_DENIAL_SYSTEM",
+   "BUILDING_MICROWAVE_POWER_PLANT",
+   "BUILDING_SOLAR_POWER_SATELLITE"
+  ],
+  "techs": [
+   "TECH_RAILGUN",
+   "TECH_WEAPONIZED_LASERS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WAR_SIMULATIONS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CONTROLLED_PLASMA",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 24485
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Buttons/Techs/TechMicrowaveWeaponry.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MICROWAVE_WEAPONRY",
+  "soundMP": "AS2D_TECH_MICROWAVE_WEAPONRY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MICROWAVE_WEAPONRY",
+  "civilopedia": "TXT_KEY_TECH_MICROWAVE_WEAPONRY_PEDIA",
+  "quote": "TXT_KEY_TECH_MICROWAVE_WEAPONRY_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 93,
+  "gridY": 19
+ }
+}

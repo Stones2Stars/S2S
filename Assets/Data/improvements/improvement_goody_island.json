@@ -1,0 +1,43 @@
+{
+ "type": "IMPROVEMENT_GOODY_ISLAND",
+ "requires": {
+  "build": {
+   "all": [
+    "IS_WATER",
+    {
+     "terrain": [
+      "TERRAIN_COAST",
+      "TERRAIN_LAKE_SHORE"
+     ]
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": -1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_GOODY_ISLAND"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_FOREST_SELECT_AMB"
+ },
+ "mapGeneration": {
+  "goody": true,
+  "tilesPerGoody": 35,
+  "goodyRange": 3
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_GOODY_ISLAND",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_GOODY_ISLAND_PEDIA",
+  "advancedStart": {
+   "cost": -1
+  }
+ }
+}

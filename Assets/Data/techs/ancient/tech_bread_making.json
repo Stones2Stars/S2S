@@ -1,0 +1,58 @@
+{
+ "type": "TECH_BREAD_MAKING",
+ "enables": {
+  "bonuses": [
+   "BONUS_BREAD"
+  ],
+  "buildings": [
+   "BUILDING_BAKERY"
+  ],
+  "techs": [
+   "TECH_FERMENTATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AGRICULTURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 96
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/breadmaking2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_BREAD_MAKING",
+  "soundMP": "AS2D_TECH_BREAD_MAKING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_BREAD_MAKING",
+  "civilopedia": "TXT_KEY_TECH_BREAD_MAKING_PEDIA",
+  "quote": "TXT_KEY_TECH_BREAD_MAKING_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 21,
+  "gridY": 11
+ }
+}

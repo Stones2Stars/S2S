@@ -1,0 +1,92 @@
+{
+ "type": "BONUS_TEA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAFE",
+   "BUILDING_CULTURE_ALACALUFE",
+   "BUILDING_CULTURE_CEYLONESE",
+   "BUILDING_CULTURE_HONGKONGER",
+   "BUILDING_CULTURE_LUNDA",
+   "BUILDING_CULTURE_SELJUK",
+   "BUILDING_FARM_CROP_BEARBERRY",
+   "BUILDING_FARM_CROP_CABBAGE",
+   "BUILDING_FARM_CROP_MILLET",
+   "BUILDING_FARM_CROP_WASABI",
+   "BUILDING_FARM_FLOWER_ORCHID",
+   "BUILDING_GRAND_SKY_FESTIVAL",
+   "BUILDING_GROVE_CHESTNUT",
+   "BUILDING_GROVE_GINKGO",
+   "BUILDING_ORCHARD_PEAR",
+   "BUILDING_PLANTATION_MADDER",
+   "BUILDING_PLANTATION_MYRRH",
+   "BUILDING_PLANTATION_TEA",
+   "BUILDING_PRAYING_MANTIS_GATHERER",
+   "BUILDING_TEA_CEREMONY",
+   "BUILDING_TEA_HOUSE"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 2
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TEA"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 400,
+  "minAreaSize": 3,
+  "minLatitude": 20,
+  "maxLatitude": 60,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "uniqueRange": 6,
+  "groupRange": 2,
+  "groupRand": 8,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validFeatures": [
+   "FEATURE_BAMBOO",
+   "FEATURE_FOREST",
+   "FEATURE_FOREST_ANCIENT"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS",
+   "TERRAIN_LUSH"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TEA",
+  "civilopedia": "TXT_KEY_BONUS_TEA_PEDIA",
+  "bonusClassType": "BONUSCLASS_LUXURY",
+  "source": "natural"
+ }
+}

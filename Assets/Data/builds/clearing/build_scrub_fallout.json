@@ -1,0 +1,40 @@
+{
+ "type": "BUILD_SCRUB_FALLOUT",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "features": [
+   {
+    "feature": "FEATURE_FALLOUT",
+    "remove": true
+   }
+  ]
+ },
+ "cost": {
+  "gold": 200,
+  "time": 1000
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/BuildScrubFallout.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,2,8"
+  },
+  "hotkey": "KB_S",
+  "hotKeyPriority": 1
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_IRRIGATE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_SCRUB_FALLOUT"
+ }
+}

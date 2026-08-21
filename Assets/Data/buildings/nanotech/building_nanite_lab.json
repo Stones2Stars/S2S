@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_NANITE_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_NANOFACTORY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LABORATORY",
+    "TECH_NANOELECTRONICS",
+    {
+     "any": [
+      "BUILDING_NANO_RESEARCH_DEPARTMENT",
+      "BUILDING_PICOTECH_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 3805,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NANITE_LAB",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_NANOFACTORY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NANITE_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_NANITE_LAB_PEDIA",
+  "worth": 20,
+  "militaryWorth": 25,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

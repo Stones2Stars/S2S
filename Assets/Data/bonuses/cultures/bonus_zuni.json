@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_ZUNI",
+ "enables": {
+  "units": [
+   "UNIT_CIBOLA_PEASANT",
+   "UNIT_LUTAKAWI"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ZUNI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ZUNI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

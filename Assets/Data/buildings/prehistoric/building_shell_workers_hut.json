@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_SHELL_WORKERS_HUT",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PLASTICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_BONE_WORKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      "HERITAGE_FOLKLORE_TORTOISE_DESERT",
+      "HERITAGE_FOLKLORE_TORTOISE_GALAPAGOS",
+      "HERITAGE_FOLKLORE_TURTLE_SEA"
+     ]
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 90,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SHELL_WORKERS_HUT",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SHELL_WORKERS_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_SHELL_WORKERS_HUT_PEDIA",
+  "worth": 1,
+  "advisor": "ADVISOR_ECONOMY",
+  "freeStartEra": "C2C_ERA_CLASSICAL",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

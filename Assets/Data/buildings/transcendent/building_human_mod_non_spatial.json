@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_HUMAN_MOD_NON_SPATIAL",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SPATIAL_TRANSCENDENCE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_HIGH_DIMENSIONAL",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_NON_SPATIAL"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_COSMIC_NODE": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 52110
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_NON_SPATIAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_NON_SPATIAL",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_NON_SPATIAL_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

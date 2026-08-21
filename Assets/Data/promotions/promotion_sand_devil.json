@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_SAND_DEVIL",
+ "combat": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_DESERT": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    },
+    "TERRAIN_DUNES": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 10
+     }
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Markofthescorpion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SAND_DEVIL"
+ }
+}

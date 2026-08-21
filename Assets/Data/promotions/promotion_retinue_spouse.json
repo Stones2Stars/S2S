@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_RETINUE_SPOUSE",
+ "experience": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "heal": {
+  "unit": {
+   "selfModifier": {
+    "percent": 4
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 25
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Retinue/spouce.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_GET_RETINUE"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_RETINUE_SPOUSE",
+  "unitCombats": [
+   "UNITCOMBAT_HERO"
+  ]
+ }
+}

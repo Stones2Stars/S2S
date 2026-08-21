@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_HUMAN_MOD_INFORMATION_BASED",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_POSTHUMANISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_NANOMORPHISM",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_INFORMATION_BASED"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_BROADCAST_NODE": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 21910
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_INFORMATION_BASED",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_INFORMATION_BASED",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_INFORMATION_BASED_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

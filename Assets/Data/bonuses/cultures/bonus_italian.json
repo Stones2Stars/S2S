@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_ITALIAN",
+ "enables": {
+  "units": [
+   "UNIT_ELMETI"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ITALIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ITALIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

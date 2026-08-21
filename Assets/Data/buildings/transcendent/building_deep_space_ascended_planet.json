@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_DEEP_SPACE_ASCENDED_PLANET",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
+    "TECH_OMEGA_POINT",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_SOLAR_SYSTEM",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_VENUSIAN",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MARTIAN",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_TITANIC",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -20
+   }
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 11510,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_ASCENDED_PLANET",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_ASCENDED_PLANET",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_ASCENDED_PLANET_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_VENUSIAN",
+   "MAPCATEGORY_MARTIAN",
+   "MAPCATEGORY_TITANIC"
+  ]
+ }
+}

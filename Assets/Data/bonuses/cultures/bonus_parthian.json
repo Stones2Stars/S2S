@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_PARTHIAN",
+ "enables": {
+  "units": [
+   "UNIT_GRIVPANVAR"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PARTHIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PARTHIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

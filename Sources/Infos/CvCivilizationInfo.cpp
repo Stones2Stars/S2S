@@ -1,90 +1,30 @@
-//------------------------------------------------------------------------------------------------
-//  FILE:    CvCivilizationInfo.cpp
-//------------------------------------------------------------------------------------------------
-#include "CvGameCoreDLL.h"
-#include "CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "CvPlayerAI.h"
-#include "CvPython.h"
-#include "CvXMLLoadUtility.h"
-#include "CvXMLLoadUtilityModTools.h"
-#include "CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
+//
+//	CvCivilizationInfo -- the civilization poco's own typed reading on top of the base section dispatch (see the
+//	header). mapFrom materializes the census identity/world/sound set + the typed game-start grant views -- read
+//	off the COMPOSED grants/edges units the base dispatch already parsed and FK-resolved (ONE representation,
+//	never a second raw-JSON walk) (docs/architecture/patterns.md §Materialize at mapFrom). Idempotent by contract (unconditional assigns,
+//	clear-first containers).
+//
+
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson, CvString/CvWString, gDLL
 #include "CvCivilizationInfo.h"
+#include "CvCivicInfo.h"          // getCivicOption -- keys grants.civics into CivicOption slots
+#include "CvArtInfoCivilization.h"
+#include "CvJsonParse.h"          // jsonResolveId + the shared walkers (jsonChildObj/jsonIdBool/jsonIdStr/jsonWorldArt/jsonReadIdList)
+#include "UI/CvArtFileMgr.h"      // ARTFILEMGR -- getFlagTexture / getArtInfo / getButton
+#include "Defines/CvGlobals.h"    // GC (getNumCivicOptionInfos / getCivicInfo)
 
-
-//======================================================================================================
-//					CvCivilizationInfo
-//======================================================================================================
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   CvCivilizationInfo()
-//
-//  PURPOSE :   Default constructor
-//
-//------------------------------------------------------------------------------------------------------
-CvCivilizationInfo::CvCivilizationInfo():
-m_iNumCityNames(0),
-m_iNumLeaders(0),
-m_iSelectionSoundScriptId(0),
-m_iActionSoundScriptId(0),
-m_piCivilizationInitialCivics(NULL),
-m_paszCityNames(NULL)
+CvCivilizationInfo::CvCivilizationInfo()
+	: m_bPlayable(false)
+	, m_bAIPlayable(false)
+	, m_eDerivativeCiv(NO_CIVILIZATION)
+	, m_iDefaultPlayerColor(-1)     // NO_PLAYERCOLOR (enum-as-int default)
+	, m_iArtStyleType(-1)
+	, m_iUnitArtStyleType(-1)
+	, m_iSelectionSoundScriptId(-1)
+	, m_iActionSoundScriptId(-1)
 {
-	CvInfoUtil(this).initDataMembers();
 }
-
-
-//------------------------------------------------------------------------------------------------------
-//
-//  FUNCTION:   ~CvCivilizationInfo()
-//
-//  PURPOSE :   Default destructor
-//
-//------------------------------------------------------------------------------------------------------
-CvCivilizationInfo::~CvCivilizationInfo()
-{
-	SAFE_DELETE_ARRAY(m_piCivilizationInitialCivics);
-	SAFE_DELETE_ARRAY(m_paszCityNames);
-	// m_iDerivativeCiv's pending delayed-resolution entry is removed by its wrapper's uninitVar.
-	CvInfoUtil(this).uninitDataMembers();
-}
-
-
-// Fields declared here are read/copied by CvInfoUtil (#196). Still hand-written:
-// - m_szShortDescriptionKey / m_szAdjectiveKey: CvWString members (wrappers only support CvString);
-// - m_szArtDefineTag: its modular merge must run BEFORE CvInfoBase::copyNonDefaults (see there);
-// - m_iSelectionSoundScriptId / m_iActionSoundScriptId: resolved via the runtime audio-tag table;
-// - Cities string list (m_paszCityNames + m_iNumCityNames);
-// - InitialCivics: bespoke read keyed into a fixed CivicOption-length array;
-// - getCheckSum: explicit, because the legacy checksum omits several read fields (see there).
-void CvCivilizationInfo::getDataMembers(CvInfoUtil& util)
-{
-	util
-		.addEnumAsInt(m_iDefaultPlayerColor, L"DefaultPlayerColor")
-		.addEnumAsInt(m_iArtStyleType, L"ArtStyleType")
-		.addEnumAsInt(m_iUnitArtStyleType, L"UnitArtStyleType")
-		.add(m_bPlayable, L"bPlayable")
-		.add(m_bAIPlayable, L"bAIPlayable")
-		.add(m_aiCivilizationBuildings, L"FreeBuildings")
-		.add(m_aeCivilizationFreeTechs, L"FreeTechs")
-		.add(m_aeCivilizationDisableTechs, L"DisableTechs")
-		.add(m_aeLeaders, L"Leaders")
-		.add(m_iSpawnRateModifier, L"iSpawnRateModifier")
-		.add(m_iSpawnRateNPCPeaceModifier, L"iSpawnRateNPCPeaceModifier")
-		.add(m_bStronglyRestricted, L"bStronglyRestricted")
-		.addEnum(m_iDerivativeCiv, L"DerivativeCiv")
-	;
-}
-
 
 void CvCivilizationInfo::reset()
 {
@@ -93,174 +33,259 @@ void CvCivilizationInfo::reset()
 	m_aszShortDescription.clear();
 }
 
-
-
-int CvCivilizationInfo::getDefaultPlayerColor() const
+// #430: the civilization's typed consumer surface from Assets/Data/civilizations/*.json. Base reads type +
+// identity text keys + the section DISPATCH (the composed grants/edges/modifiers units parse there). This class
+// then materializes: the world.art colors/styles + ART_DEF tag, the sound.* audio-tag indices, the typed
+// game-start grant views (buildings/techs off grants; civics keyed into CivicOption slots; the disables.techs
+// research ban off the edges), and the identity set (selectability / text keys / leaders / cityNames /
+// derivativeCiv). IDEMPOTENT (CvInfo.h): mapFrom re-runs once the FK registry is complete, so every container
+// is cleared-then-refilled and every scalar unconditionally redefined each call.
+void CvCivilizationInfo::mapFrom(const picojson::value& entity)
 {
-	return m_iDefaultPlayerColor;
+	CvInfo::mapFrom(entity);   // core reading (type / description / civilopedia) + the base section dispatch
+
+	// remap-idempotency (CvInfo.h contract): fully define every materialized member
+	m_freeBuildings.clear();
+	m_freeTechs.clear();
+	m_initialCivics.clear();
+	m_disabledTechs.clear();
+	m_leaders.clear();
+	m_cityNames.clear();
+	m_aszShortDescription.clear();
+	m_aszAdjective.clear();
+	m_bPlayable = false;
+	m_bAIPlayable = false;
+	m_eDerivativeCiv = NO_CIVILIZATION;
+	m_iDefaultPlayerColor = -1;
+	m_iArtStyleType = -1;
+	m_iUnitArtStyleType = -1;
+	m_szArtDefineTag = "";
+	m_szShortDescriptionKey.clear();
+	m_szAdjectiveKey.clear();
+	m_iSelectionSoundScriptId = -1;
+	m_iActionSoundScriptId = -1;
+
+	if (!entity.is<picojson::object>())
+	{
+		return;
+	}
+	const picojson::object& entityObj = entity.get<picojson::object>();
+	std::string parsedString;
+
+	// --- world.art: playerColor/style/unitStyle are FK strings; define is the ART_DEF_* tag kept as a string ---
+	if (const picojson::object* pArt = jsonWorldArt(entityObj))
+	{
+		if (jsonIdStr(*pArt, "playerColor", parsedString))
+		{
+			m_iDefaultPlayerColor = jsonResolveId(parsedString);
+		}
+		if (jsonIdStr(*pArt, "style", parsedString))
+		{
+			m_iArtStyleType = jsonResolveId(parsedString);
+		}
+		if (jsonIdStr(*pArt, "unitStyle", parsedString))
+		{
+			m_iUnitArtStyleType = jsonResolveId(parsedString);
+		}
+		if (jsonIdStr(*pArt, "define", parsedString))
+		{
+			m_szArtDefineTag = parsedString.c_str();
+		}
+	}
+
+	// --- sound.selection / sound.action -> RUNTIME audio-tag indices (NOT info-type ids), reproducing the archived
+	//     read()'s gDLL->getAudioTagIndex(tag, AUDIOTAG_3DSCRIPT); absent/empty -> -1 (AUDIOTAG_NONE) ---
+	if (const picojson::object* pSound = jsonChildObj(entityObj, "sound"))
+	{
+		if (jsonIdStr(*pSound, "selection", parsedString) && !parsedString.empty())
+		{
+			m_iSelectionSoundScriptId = gDLL->getAudioTagIndex(parsedString.c_str(), AUDIOTAG_3DSCRIPT);
+		}
+		if (jsonIdStr(*pSound, "action", parsedString) && !parsedString.empty())
+		{
+			m_iActionSoundScriptId = gDLL->getAudioTagIndex(parsedString.c_str(), AUDIOTAG_3DSCRIPT);
+		}
+	}
+
+	// (spawnRate.empire.npcPeace.percent compiles into the composed m_modifiers via the base dispatch and is
+	//  read through the base getScalar(SCALAR_SPAWN_RATE_NPC_PEACE, ...) -- no raw walk, no mirror.)
+
+	// --- the typed game-start grant views: read off the COMPOSED units (already parsed + FK-resolved by the
+	//     base dispatch), never a second walk of the raw JSON ---
+	{
+		const CvGrants* pGrants = m_triggers.consideredGrant();
+		const std::vector<int>* pBuildingList = (pGrants != NULL) ? pGrants->list("buildings") : NULL;
+		if (pBuildingList != NULL)
+		{
+			for (size_t iEntry = 0; iEntry < pBuildingList->size(); ++iEntry)
+			{
+				m_freeBuildings.push_back((BuildingTypes)(*pBuildingList)[iEntry]);
+			}
+		}
+		const std::vector<int>* pTechList = (pGrants != NULL) ? pGrants->list("techs") : NULL;
+		if (pTechList != NULL)
+		{
+			for (size_t iEntry = 0; iEntry < pTechList->size(); ++iEntry)
+			{
+				m_freeTechs.push_back((TechTypes)(*pTechList)[iEntry]);
+			}
+		}
+		// grants.civics fill the CivicOption-slot vector (each civic dropped in its own option's slot)
+		const std::vector<int>* pCivicList = (pGrants != NULL) ? pGrants->list("civics") : NULL;
+		if (pCivicList != NULL && !pCivicList->empty())
+		{
+			const int iNumOptions = GC.getNumCivicOptionInfos();
+			m_initialCivics.assign(iNumOptions, NO_CIVIC);
+			for (size_t iEntry = 0; iEntry < pCivicList->size(); ++iEntry)
+			{
+				const int iCivic = (*pCivicList)[iEntry];   // already FK-resolved by the section parse
+				const int iOption = GC.getCivicInfo((CivicTypes)iCivic).getCivicOption();
+				if (iOption >= 0 && iOption < iNumOptions)   // NO_CIVICOPTION / out-of-range -- skip
+				{
+					m_initialCivics[iOption] = (CivicTypes)iCivic;
+				}
+			}
+		}
+	}
+
+	// --- disables.techs -> the per-civ research ban. Read off the COMPOSED edges unit, so this view and the
+	//     enabler's generic edge surface are the same data, never two parses that can drift. ---
+	{
+		const std::vector<int>* pDisabledList = m_edges.find(EDGEF_DISABLES, EDGEB_TECHS);
+		if (pDisabledList != NULL)
+		{
+			for (size_t iEntry = 0; iEntry < pDisabledList->size(); ++iEntry)
+			{
+				m_disabledTechs.push_back((TechTypes)(*pDisabledList)[iEntry]);
+			}
+		}
+	}
+
+	// --- identity: selectability, text keys, the leaders + cityNames pools, the derivative-civ FK ---
+	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
+	{
+		// selectability (curator emits each only when true; absent -> false)
+		m_bPlayable = jsonIdBool(*pIdentity, "playable");
+		m_bAIPlayable = jsonIdBool(*pIdentity, "aiPlayable");
+		// NOTE: identity.isNpc is authored by the curator but has NO CvCivilizationInfo member (no engine consumer
+		// on this class) -- deliberately unmapped.
+
+		if (jsonIdStr(*pIdentity, "shortDescription", parsedString))
+		{
+			m_szShortDescriptionKey = CvWString(parsedString.c_str());
+		}
+		if (jsonIdStr(*pIdentity, "adjective", parsedString))
+		{
+			m_szAdjectiveKey = CvWString(parsedString.c_str());
+		}
+		if (jsonIdStr(*pIdentity, "derivativeCiv", parsedString))
+		{
+			m_eDerivativeCiv = (CivilizationTypes)jsonResolveId(parsedString);
+		}
+
+		// leaders (FK list; the count read serves off the vector's size). The shared reader appends plain
+		// ids; the member keeps its typed LeaderHeadTypes element (the getLeaders surface), so cast-copy once.
+		{
+			std::vector<int> leaderIds;
+			jsonReadIdList(*pIdentity, "leaders", leaderIds);
+			for (size_t iLeader = 0; iLeader < leaderIds.size(); ++iLeader)
+			{
+				m_leaders.push_back((LeaderHeadTypes)leaderIds[iLeader]);
+			}
+		}
+
+		// cityNames -- a TEXT-KEY pool (stored as strings, NOT resolved to ids)
+		jsonReadStrList(*pIdentity, "cityNames", m_cityNames);
+	}
 }
 
-
-int CvCivilizationInfo::getArtStyleType() const
+bool CvCivilizationInfo::isFreeTech(TechTypes eTech) const
 {
-	return m_iArtStyleType;
+	for (size_t iEntry = 0; iEntry < m_freeTechs.size(); ++iEntry)
+	{
+		if (m_freeTechs[iEntry] == eTech)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
-
-int CvCivilizationInfo::getUnitArtStyleType() const
+CivicTypes CvCivilizationInfo::getInitialCivic(CivicOptionTypes eCivicOption) const
 {
-	return m_iUnitArtStyleType;
+	if (eCivicOption < 0 || eCivicOption >= (int)m_initialCivics.size())
+	{
+		return NO_CIVIC;
+	}
+	return m_initialCivics[eCivicOption];
 }
 
-
-int CvCivilizationInfo::getNumCityNames() const
+// Load-window writer -- cvInternalGlobals::checkInitialCivics defaults an option slot no authored civic filled
+// (part of the write-once-at-load window; never called post-load).
+void CvCivilizationInfo::setInitialCivic(CivicOptionTypes eCivicOption, CivicTypes eCivic)
 {
-	return m_iNumCityNames;
+	if ((int)m_initialCivics.size() < GC.getNumCivicOptionInfos())
+	{
+		m_initialCivics.resize(GC.getNumCivicOptionInfos(), NO_CIVIC);
+	}
+	FASSERT_BOUNDS(0, (int)m_initialCivics.size(), eCivicOption);
+	m_initialCivics[eCivicOption] = eCivic;
 }
 
-
-int CvCivilizationInfo::getNumLeaders() const// the number of leaders the Civ has, this is needed so that random leaders can be generated easily
+bool CvCivilizationInfo::isTechDisabled(TechTypes eTech) const
 {
-	return m_iNumLeaders;
+	for (size_t iEntry = 0; iEntry < m_disabledTechs.size(); ++iEntry)
+	{
+		if (m_disabledTechs[iEntry] == eTech)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
-
-int CvCivilizationInfo::getSelectionSoundScriptId() const
+bool CvCivilizationInfo::isLeaders(int i) const
 {
-	return m_iSelectionSoundScriptId;
+	for (size_t iEntry = 0; iEntry < m_leaders.size(); ++iEntry)
+	{
+		if (m_leaders[iEntry] == (LeaderHeadTypes)i)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
-
-int CvCivilizationInfo::getActionSoundScriptId() const
+std::string CvCivilizationInfo::getCityName(int iName) const
 {
-	return m_iActionSoundScriptId;
+	FASSERT_BOUNDS(0, (int)m_cityNames.size(), iName);
+	return m_cityNames[iName];
 }
-
-
-bool CvCivilizationInfo::isAIPlayable() const
-{
-	return m_bAIPlayable;
-}
-
-
-bool CvCivilizationInfo::isPlayable() const
-{
-	return m_bPlayable;
-}
-
 
 const wchar_t* CvCivilizationInfo::getShortDescription(uint uiForm)
 {
 	PROFILE_EXTRA_FUNC();
-	while(m_aszShortDescription.size() <= uiForm)
+	while (m_aszShortDescription.size() <= uiForm)
 	{
 		m_aszShortDescription.push_back(gDLL->getObjectText(m_szShortDescriptionKey, m_aszShortDescription.size()));
 	}
-
 	return m_aszShortDescription[uiForm];
 }
-
-
-const wchar_t* CvCivilizationInfo::getShortDescriptionKey() const
-{
-	return m_szShortDescriptionKey;
-}
-
 
 const wchar_t* CvCivilizationInfo::getAdjective(uint uiForm)
 {
 	PROFILE_EXTRA_FUNC();
-	while(m_aszAdjective.size() <= uiForm)
+	while (m_aszAdjective.size() <= uiForm)
 	{
 		m_aszAdjective.push_back(gDLL->getObjectText(m_szAdjectiveKey, m_aszAdjective.size()));
 	}
-
 	return m_aszAdjective[uiForm];
 }
-
-
-const wchar_t* CvCivilizationInfo::getAdjectiveKey() const
-{
-	return m_szAdjectiveKey;
-}
-
-
-const char* CvCivilizationInfo::getFlagTexture() const
-{
-	return ARTFILEMGR.getCivilizationArtInfo( getArtDefineTag() )->getPath();
-}
-
-
-const char* CvCivilizationInfo::getArtDefineTag() const
-{
-	return m_szArtDefineTag;
-}
-
-
-
-int CvCivilizationInfo::getCivilizationInitialCivics(int i) const
-{
-	FASSERT_BOUNDS(0, GC.getNumCivicOptionInfos(), i);
-	return (m_piCivilizationInitialCivics ? m_piCivilizationInitialCivics[i] : -1);
-}
-
-
-void CvCivilizationInfo::setCivilizationInitialCivics(int iCivicOption, int iCivic)
-{
-	FASSERT_BOUNDS(0, GC.getNumCivicOptionInfos(), iCivicOption);
-	FASSERT_BOUNDS(0, GC.getNumCivicInfos(), iCivic);
-
-	if ( NULL == m_piCivilizationInitialCivics )
-	{
-		CvXMLLoadUtility::InitList(&m_piCivilizationInitialCivics,GC.getNumCivicOptionInfos(),-1);
-	}
-
-	m_piCivilizationInitialCivics[iCivicOption] = iCivic;
-}
-
-
-bool CvCivilizationInfo::isLeaders(int i) const
-{
-	FASSERT_BOUNDS(0, GC.getNumLeaderHeadInfos(), i);
-	return algo::any_of_equal(m_aeLeaders, static_cast<LeaderHeadTypes>(i));
-}
-
-
-int CvCivilizationInfo::getNumCivilizationBuildings() const
-{
-	return (int)m_aiCivilizationBuildings.size();
-}
-
-int CvCivilizationInfo::getCivilizationBuilding(int i) const
-{
-	return m_aiCivilizationBuildings[i];
-}
-
-bool CvCivilizationInfo::isCivilizationBuilding(int i) const
-{
-	return algo::any_of_equal(m_aiCivilizationBuildings, i);
-}
-
-
-bool CvCivilizationInfo::isCivilizationFreeTechs(int i) const
-{
-	FASSERT_BOUNDS(0, GC.getNumTechInfos(), i);
-	return algo::any_of_equal(m_aeCivilizationFreeTechs, static_cast<TechTypes>(i));
-}
-
-
-bool CvCivilizationInfo::isCivilizationDisableTechs(int i) const
-{
-	FASSERT_BOUNDS(0, GC.getNumTechInfos(), i);
-	return algo::any_of_equal(m_aeCivilizationDisableTechs, static_cast<TechTypes>(i));
-}
-
 
 const CvArtInfoCivilization* CvCivilizationInfo::getArtInfo() const
 {
 	return ARTFILEMGR.getCivilizationArtInfo(getArtDefineTag());
 }
-
 
 const char* CvCivilizationInfo::getButton() const
 {
@@ -268,187 +293,7 @@ const char* CvCivilizationInfo::getButton() const
 	return pArtInfoCivilization ? pArtInfoCivilization->getButton() : NULL;
 }
 
-
-std::string CvCivilizationInfo::getCityNames(int i) const
+const char* CvCivilizationInfo::getFlagTexture() const
 {
-	FASSERT_BOUNDS(0, getNumCityNames(), i);
-	return m_paszCityNames[i];
+	return ARTFILEMGR.getCivilizationArtInfo(getArtDefineTag())->getPath();
 }
-
-
-//TB Tags
-
-int CvCivilizationInfo::getSpawnRateModifier() const
-{
-	return m_iSpawnRateModifier;
-}
-
-
-int CvCivilizationInfo::getSpawnRateNPCPeaceModifier() const
-{
-	return m_iSpawnRateNPCPeaceModifier;
-}
-
-
-bool CvCivilizationInfo::isStronglyRestricted() const
-{
-	return m_bStronglyRestricted;
-}
-
-
-// Explicit, NOT delegated to CvInfoUtil (#196): the legacy checksum omits several read fields
-// (m_iDefaultPlayerColor, m_iArtStyleType, m_iUnitArtStyleType), and the hand-written
-// InitialCivics array sits mid-order; delegating would change the savegame asset checksum.
-void CvCivilizationInfo::getCheckSum(uint32_t& iSum) const
-{
-	CheckSum(iSum, m_iDerivativeCiv);
-	CheckSum(iSum, m_bAIPlayable);
-	CheckSum(iSum, m_bPlayable);
-	CheckSum(iSum, m_iSpawnRateModifier);
-	CheckSum(iSum, m_iSpawnRateNPCPeaceModifier);
-	CheckSum(iSum, m_bStronglyRestricted);
-	CheckSumI(iSum, GC.getNumCivicOptionInfos(), m_piCivilizationInitialCivics);
-	CheckSumC(iSum, m_aeLeaders);
-	CheckSumC(iSum, m_aeCivilizationFreeTechs);
-	CheckSumC(iSum, m_aeCivilizationDisableTechs);
-	CheckSumC(iSum, m_aiCivilizationBuildings);
-}
-
-
-bool CvCivilizationInfo::read(CvXMLLoadUtility* pXML)
-{
-	PROFILE_EXTRA_FUNC();
-	CvString szTextVal;
-	if (!CvInfoBase::read(pXML))
-	{
-		return false;
-	}
-
-	CvInfoUtil(this).readXml(pXML);
-
-	// CvWString members are not wrapper-expressible (only CvString is)
-	pXML->GetOptionalChildXmlValByName(m_szShortDescriptionKey, L"ShortDescription");
-	pXML->GetOptionalChildXmlValByName(m_szAdjectiveKey, L"Adjective");
-	// Hand-written because its modular merge must run before the base copy (see copyNonDefaults)
-	pXML->GetOptionalChildXmlValByName(m_szArtDefineTag, L"ArtDefineTag");
-
-	// Audio script ids resolve through the runtime audio-tag table, not the info-type registry
-	pXML->GetOptionalChildXmlValByName(szTextVal, L"CivilizationSelectionSound");
-	m_iSelectionSoundScriptId = (szTextVal.GetLength() > 0) ? gDLL->getAudioTagIndex( szTextVal.GetCString(), AUDIOTAG_3DSCRIPT ) : -1;
-	pXML->GetOptionalChildXmlValByName(szTextVal, L"CivilizationActionSound");
-	m_iActionSoundScriptId = (szTextVal.GetLength() > 0) ? gDLL->getAudioTagIndex( szTextVal.GetCString(), AUDIOTAG_3DSCRIPT ) : -1;
-
-	if (pXML->TryMoveToXmlFirstChild(L"Cities"))
-	{
-		pXML->SetStringList(&m_paszCityNames, &m_iNumCityNames);
-		pXML->MoveToXmlParent();
-	}
-
-	if (pXML->TryMoveToXmlFirstChild(L"InitialCivics"))
-	{
-		if (const int iNumSibs = pXML->GetXmlChildrenNumber())
-		{
-			CvXMLLoadUtility::InitList(&m_piCivilizationInitialCivics, GC.getNumCivicOptionInfos());
-			if (pXML->GetChildXmlVal(szTextVal))
-			{
-				for (int j = 0; j < iNumSibs; j++)
-				{
-					const CivicTypes eCivic = (CivicTypes)pXML->GetInfoClass(szTextVal);//, true);
-					if ( eCivic != NO_CIVIC )
-					{
-						const CivicOptionTypes eCivicOption = (CivicOptionTypes)GC.getCivicInfo(eCivic).getCivicOptionType();
-
-						if ( eCivicOption != NO_CIVICOPTION )
-						{
-							FAssertMsg((eCivicOption < GC.getNumCivicOptionInfos()),"Bad default civic");
-							m_piCivilizationInitialCivics[eCivicOption] = eCivic;
-						}
-					}
-
-					if (!pXML->GetNextXmlVal(szTextVal))
-					{
-						break;
-					}
-				}
-
-				pXML->MoveToXmlParent();
-			}
-		}
-		else
-		{
-			SAFE_DELETE_ARRAY(m_piCivilizationInitialCivics);
-		}
-
-		pXML->MoveToXmlParent();
-	}
-	else
-	{
-		SAFE_DELETE_ARRAY(m_piCivilizationInitialCivics);
-	}
-
-	return true;
-}
-
-
-void CvCivilizationInfo::copyNonDefaults(const CvCivilizationInfo* pClassInfo)
-{
-	PROFILE_EXTRA_FUNC();
-	const CvString cDefault = CvString::format("").GetCString();
-	const CvWString wDefault = CvWString::format(L"").GetCString();
-
-	// must be before we set the InfoBaseClass else it can't find the button to to corresponding arttag
-	if ( getArtDefineTag() == cDefault ) // "ArtDefineTag"
-	{
-		m_szArtDefineTag = pClassInfo->getArtDefineTag();
-	}
-
-	CvInfoBase::copyNonDefaults(pClassInfo);
-
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-
-	if ( getShortDescriptionKey() == wDefault )
-	{
-		m_szShortDescriptionKey = pClassInfo->getShortDescriptionKey();
-	}
-
-	if ( getAdjectiveKey() == wDefault ) // "Adjective"
-	{
-		m_szAdjectiveKey = pClassInfo->getAdjectiveKey();
-	}
-
-	if ( getSelectionSoundScriptId() == AUDIOTAG_NONE ) // "CivilizationSelectionSound"
-	{
-		m_iSelectionSoundScriptId = (pClassInfo->getSelectionSoundScriptId());
-	}
-	if ( getActionSoundScriptId() == AUDIOTAG_NONE ) // "CivilizationActionSound"
-	{
-		m_iActionSoundScriptId = (pClassInfo->getActionSoundScriptId());
-	}
-
-	for ( int i = 0; i < GC.getNumCivicOptionInfos(); i++)
-	{
-		if ( getCivilizationInitialCivics(i) == -1 && pClassInfo->getCivilizationInitialCivics(i) != -1 )
-		{
-			if ( NULL == m_piCivilizationInitialCivics )
-			{
-				CvXMLLoadUtility::InitList(&m_piCivilizationInitialCivics,GC.getNumCivicOptionInfos(),-1);
-			}
-			m_piCivilizationInitialCivics[i] = pClassInfo->getCivilizationInitialCivics(i);
-		}
-	}
-
-	// First we check if there are different Unique Names in the Modules(we want to keep all of them)
-	// So we have to set the Arraysize properly, knowing the amount of Unique Names
-	if ( pClassInfo->getNumCityNames() != 0 )
-	{
-		CvString* m_paszOldNames = new CvString[pClassInfo->getNumCityNames()];
-		for ( int i = 0; i < pClassInfo->getNumCityNames(); i++)
-		{
-			m_paszOldNames[i] = pClassInfo->getCityNames(i);
-		}
-
-		CvXMLLoadUtilityModTools::StringArrayExtend(&m_paszCityNames, &m_iNumCityNames, &m_paszOldNames, pClassInfo->getNumCityNames());
-		SAFE_DELETE_ARRAY(m_paszOldNames)
-	}
-}
-

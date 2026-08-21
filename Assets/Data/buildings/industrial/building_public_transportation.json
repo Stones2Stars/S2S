@@ -1,0 +1,111 @@
+{
+ "type": "BUILDING_PUBLIC_TRANSPORTATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_PERSONAL_RAPID_TRAIN"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TELEPORT_BOOTH"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MASS_TRANSIT",
+    {
+     "any": [
+      "BUILDING_BUS_STATION",
+      "BUILDING_RAILROAD_STATION",
+      "BUILDING_SUBWAY_STATION",
+      "BUILDING_STREET_CARS",
+      "BUILDING_MAGLEV_STATION",
+      "BUILDING_SKYROAD_STATION",
+      "BUILDING_CABLE_CARS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_TELEPORT_BOOTH"
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": 10,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    },
+    {
+     "value": 2,
+     "enabled": "TECH_NEW_URBANISM"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OIL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "cost": {
+  "production": 870,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PUBLIC_TRANSPORTATION"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_PUBLIC_TRANSPORTATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PUBLIC_TRANSPORTATION",
+  "civilopedia": "TXT_KEY_BUILDING_PUBLIC_TRANSPORTATION_PEDIA",
+  "worth": 5,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

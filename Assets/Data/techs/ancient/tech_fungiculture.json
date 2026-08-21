@@ -1,0 +1,85 @@
+{
+ "type": "TECH_FUNGICULTURE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLACK_TRUFFLE_GATHERER",
+   "BUILDING_BOLETE_GATHERER",
+   "BUILDING_CHANTERELLE_GATHERER",
+   "BUILDING_CORAL_TOOTH_MUSHROOM_GATHERER",
+   "BUILDING_DEATH_CAP_MUSHROOM",
+   "BUILDING_FARM_CROP_CAULIFLOWER_MUSHROOM",
+   "BUILDING_FARM_CROP_CORN_SMUT",
+   "BUILDING_FARM_CROP_ENOKITAKE_MUSHROOM",
+   "BUILDING_FARM_CROP_OYSTER_MUSHROOM",
+   "BUILDING_FARM_CROP_PORTOBELLO_MUSHROOM",
+   "BUILDING_FARM_CROP_SHIITAKE_MUSHROOM",
+   "BUILDING_FARM_CROP_SHIMEJI_MUSHROOM",
+   "BUILDING_FARM_CROP_SNOW_FUNGUS",
+   "BUILDING_FARM_CROP_STRAW_MUSHROOM",
+   "BUILDING_FARM_CROP_WHITE_MUSHROOM",
+   "BUILDING_FLY_AGARIC_GATHERER",
+   "BUILDING_HEDGEHOG_MUSHROOM_GATHERER",
+   "BUILDING_MOREL_MUSHROOM_GATHERER",
+   "BUILDING_PINE_MUSHROOM_GATHERER",
+   "BUILDING_SHAGGY_PARASOL_MUSHROOM_GATHERER",
+   "BUILDING_WHITE_TRUFFLE_GATHERER"
+  ],
+  "techs": [
+   "TECH_FERMENTATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POTTERY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TAXONOMY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 110
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/fungiculture.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_FUNGICULTURE",
+  "soundMP": "AS2D_TECH_FUNGICULTURE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_FUNGICULTURE",
+  "civilopedia": "TXT_KEY_TECH_FUNGICULTURE_PEDIA",
+  "quote": "TXT_KEY_TECH_FUNGICULTURE_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 22,
+  "gridY": 3
+ }
+}

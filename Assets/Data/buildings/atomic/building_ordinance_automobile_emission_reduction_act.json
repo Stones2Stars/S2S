@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_ORDINANCE_AUTOMOBILE_EMISSION_REDUCTION_ACT",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TELEPORT_BOOTH"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEPARTMENT_OF_MOTOR_VEHICLES",
+    "BUILDING_COURTHOUSE",
+    "TECH_ECOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ],
+   "dormant": [
+    "BUILDING_TELEPORT_BOOTH"
+   ]
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ORDINANCE_EFFECT_AUTOMOBILE_EMISSION_REDUCTION_ACT"
+   }
+  ]
+ },
+ "cost": {
+  "production": 1345,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ORDINANCE_AUTOMOBILE_EMISSION_REDUCTION_ACT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_AUTOMOBILE_EMISSION_REDUCTION_ACT",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_AUTOMOBILE_EMISSION_REDUCTION_ACT_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

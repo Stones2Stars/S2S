@@ -1,0 +1,82 @@
+{
+ "type": "TECH_AUGMENTED_CONSUMABLES",
+ "enables": {
+  "bonuses": [
+   "BONUS_ORGANIC_COMPUTERS",
+   "BONUS_ULTRAFUEL"
+  ],
+  "buildings": [
+   "BUILDING_CISLUNAR_AGRICULTURAL_LAB",
+   "BUILDING_FACTORY_ORGANIC_COMPUTERS",
+   "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+   "BUILDING_MARTIAN_HYDROPONICS_COMPLEX",
+   "BUILDING_ORGANIC_COMPUTER_LAB",
+   "BUILDING_ULTRAFUEL_REFINERY",
+   "BUILDING_UNIVERSAL_RESTAURANT"
+  ],
+  "civics": [
+   "CIVIC_LAB_GROWN_FOOD"
+  ],
+  "techs": [
+   "TECH_BIOPUNK",
+   "TECH_VERTICAL_FARMING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GENE_ENHANCEMENT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOGENERATORS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 38858
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/augmentconsumables.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_AUGMENTED_CONSUMABLES",
+  "soundMP": "AS2D_TECH_AUGMENTED_CONSUMABLES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_AUGMENTED_CONSUMABLES",
+  "civilopedia": "TXT_KEY_TECH_AUGMENTED_CONSUMABLES_PEDIA",
+  "quote": "TXT_KEY_TECH_AUGMENTED_CONSUMABLES_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 102,
+  "gridY": 9
+ }
+}

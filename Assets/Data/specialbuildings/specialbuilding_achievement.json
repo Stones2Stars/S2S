@@ -1,0 +1,11 @@
+{
+ "type": "SPECIALBUILDING_ACHIEVEMENT",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/National_Wonders/achievment_cultural.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALBUILDING_ACHIEVEMENT"
+ }
+}

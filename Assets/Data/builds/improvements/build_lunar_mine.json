@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_LUNAR_MINE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LUNAR_MANUFACTURING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_LUNAR_MINE"
+ },
+ "cost": {
+  "gold": 700,
+  "time": 2000
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Structures/Improvements/habitats/button.dds"
+  },
+  "hotkey": "KB_L"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_LUNAR_MINE"
+ }
+}

@@ -1,0 +1,143 @@
+{
+ "type": "BUILDING_MILITARY_BASE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BRANDENBURG_GATE",
+   "BUILDING_CHECKPOINT",
+   "BUILDING_COMBAT_SIMULATOR",
+   "BUILDING_CONTROL_CENTER",
+   "BUILDING_DARPA",
+   "BUILDING_FLIGHT_SIMULATOR",
+   "BUILDING_GUARD_DOG_TRAINER",
+   "BUILDING_HELICOPTER_TRAINING_CENTER",
+   "BUILDING_HOLOGRAPHIC_COMBAT_SIMULATOR",
+   "BUILDING_HOLOGRAPHIC_FLIGHT_SIMULATOR",
+   "BUILDING_MILITARY_SCHOOL",
+   "BUILDING_PARADE_GROUNDS",
+   "BUILDING_SLAVE_COMPOUND_MILITARY_SUPPORT",
+   "BUILDING_WAR_DOG_TRAINER"
+  ],
+  "units": [
+   "UNIT_GUARDCAT",
+   "UNIT_WARCAT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_LOGISTICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "domains": {
+    "DOMAIN_LAND": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MELEE": {
+     "flat": 3
+    },
+    "UNITCOMBAT_ANIMAL": {
+     "flat": 2
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "flat": 2
+    },
+    "UNITCOMBAT_GUN": {
+     "flat": 3
+    },
+    "UNITCOMBAT_WHEELED": {
+     "flat": 3
+    },
+    "UNITCOMBAT_TRACKED": {
+     "flat": 3
+    },
+    "UNITCOMBAT_SIEGE": {
+     "flat": 3
+    },
+    "UNITCOMBAT_RECON": {
+     "flat": 3
+    },
+    "UNITCOMBAT_HITECH": {
+     "flat": 2
+    },
+    "UNITCOMBAT_DREADNOUGHT": {
+     "flat": 2
+    },
+    "UNITCOMBAT_HEALTH_CARE": {
+     "flat": 2
+    },
+    "UNITCOMBAT_HELICOPTER": {
+     "flat": 2
+    },
+    "UNITCOMBAT_THROWING": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 1130,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MILITARY_BASE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MILITARY_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_MILITARY_BASE_PEDIA",
+  "worth": 5,
+  "militaryWorth": 6,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

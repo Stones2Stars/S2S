@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_POLICE_DOG_TRAINER",
+ "enables": {
+  "units": [
+   "UNIT_POLICE_DOG"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CRIMINOLOGY",
+    {
+     "any": [
+      "BUILDING_POLICE_STATION",
+      "BUILDING_POLICE_PRECINCT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DOG",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 800,
+  "sizeModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_POLICE_DOG_TRAINER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_POLICE_DOG_TRAINER",
+  "civilopedia": "TXT_KEY_BUILDING_POLICE_DOG_TRAINER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

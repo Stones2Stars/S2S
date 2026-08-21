@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_EXECUTIONER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PSYCHOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_JAIL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CONDUCT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_JAIL"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 62,
+  "sizeModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EXECUTIONER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EXECUTIONER",
+  "civilopedia": "TXT_KEY_BUILDING_EXECUTIONER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

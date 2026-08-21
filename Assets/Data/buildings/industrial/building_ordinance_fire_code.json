@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_ORDINANCE_FIRE_CODE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_NATIONAL_FIRE_SERVICE",
+    "BUILDING_COURTHOUSE",
+    "TECH_CIVIL_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "cost": {
+  "production": 800,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ORDINANCE_FIRE_CODE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FIRE_BRIGADES"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_FIRE_CODE",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_FIRE_CODE_PEDIA",
+  "worth": 10,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

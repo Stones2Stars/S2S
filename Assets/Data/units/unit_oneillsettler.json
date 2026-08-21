@@ -1,0 +1,132 @@
+{
+ "type": "UNIT_ONEILLSETTLER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_DEEP_SPACE_COLONIES",
+    {
+     "any": [
+      "BUILDING_CISLUNAR_SPACEPORT",
+      "BUILDING_DEEP_SPACE_DOCKING_BAY"
+     ]
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 24
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_CAPTIVE_CIVILIAN"
+  }
+ },
+ "skills": [
+  "canMoveAllTerrain",
+  "canMoveImpassable",
+  "food"
+ ],
+ "tags": [
+  "settler",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SETTLER",
+ "combatClasses": [
+  "UNITCOMBAT_SOLAR_SAIL_SPACESHIP",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_SPACECRAFT"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_PLANET_LAND",
+    "requires": {
+     "outcome": "OUTCOME_UPGRADE_TO_PLANET_SETTLER"
+    },
+    "chance": 100,
+    "python": {
+     "module": "BuildCitySolarSystem",
+     "code": "from CvPythonExtensions import CyGlobalContext\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\treturn gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY())\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tgc.getPlayer(unit.getOwner()).found(plot.getX(),plot.getY())\ndef getDisplay(unit,plot):\n\treturn u\"Build a city on this plot.\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   }
+  ]
+ },
+ "cost": {
+  "production": 4850,
+  "upkeep": 11,
+  "hurryCostModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SPACECRAFT_SETTLER",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SPACECRAFT_SETTLER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_ONEILLSETTLER",
+  "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
+  "help": "TXT_KEY_UNIT_ONEILLSETTLER_HELP",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SETTLE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_SETTLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR",
+   "MAPCATEGORY_EARTH",
+   "MAPCATEGORY_LUNAR",
+   "MAPCATEGORY_MARTIAN",
+   "MAPCATEGORY_VENUSIAN",
+   "MAPCATEGORY_JOVIAN",
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_TITANIC"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_SUN",
+   "TERRAIN_TITAN",
+   "TERRAIN_TRANSNEPTUNIAN_SPACE"
+  ],
+  "terrainPassableTechs": [
+   {
+    "TERRAIN_TITAN": "TECH_ABYSS_COLONIZATION"
+   },
+   {
+    "TERRAIN_TRANSNEPTUNIAN_SPACE": "TECH_SOLAR_ORDNANCE"
+   }
+  ],
+  "advancedStart": {
+   "cost": 100
+  }
+ }
+}

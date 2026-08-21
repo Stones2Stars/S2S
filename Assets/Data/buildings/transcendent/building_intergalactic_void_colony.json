@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_INTERGALACTIC_VOID_COLONY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_VOID_BASE",
+    "TECH_ENTROPY_REVERSAL",
+    {
+     "type": "TERRAIN_INTERGALACTIC_VOID",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 6327,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_VOID_COLONY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_VOID_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_VOID_COLONY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_INTERGALACTIC_STAR_CANNON",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_COMMAND_CENTER",
+    "TECH_NEUTRONIUM",
+    {
+     "type": "TERRAIN_OBSERVABLE_UNIVERSE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 50
+   },
+   "bombardDefense": {
+    "percent": 10
+   },
+   "dynamicDefense": {
+    "percent": 10
+   },
+   "adjacentDamage": {
+    "percent": 10
+   }
+  }
+ },
+ "vision": {
+  "city": {
+   "elevation": {
+    "flat": 100
+   }
+  }
+ },
+ "cost": {
+  "production": 4492,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_STAR_CANNON",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_STAR_CANNON",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_STAR_CANNON_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

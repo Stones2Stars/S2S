@@ -1,0 +1,11 @@
+{
+ "type": "UNITCOMBAT_WEAPON_A2G_LONG_RANGE_MISSILE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/wields_a2g.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_WEAPON_A2G_LONG_RANGE_MISSILE"
+ }
+}

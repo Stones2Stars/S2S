@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_SECURITY3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_SECURITY2"
+   ]
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 10
+   }
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SECURITY": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Security3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_PING"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SECURITY3"
+ }
+}

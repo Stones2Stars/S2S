@@ -1,0 +1,93 @@
+{
+ "type": "BUILDING_CORE_MINE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DYE_MAKER",
+   "BUILDING_FACTORY_DYE",
+   "BUILDING_METALS_MEGACOMPLEX",
+   "BUILDING_NUCLEAR_MINE",
+   "BUILDING_SMELTER_GOLD",
+   "BUILDING_SMELTER_LEAD",
+   "BUILDING_SMELTER_PLATINUM",
+   "BUILDING_SMELTER_SILVER",
+   "BUILDING_SMELTER_TIN",
+   "BUILDING_SMELTER_TITANIUM",
+   "BUILDING_SUBTERRANEAN_CITY_EXPANSION",
+   "BUILDING_VIBRANIUM_MINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MODERN_EARTHWORKS",
+    "TECH_NANOMINING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_BERLINITE",
+   "BONUS_CAESIUM_ORE",
+   "BONUS_CHROMITE_ORE",
+   "BONUS_COBALT_ORE",
+   "BONUS_GEMSTONE",
+   "BONUS_GRAPHITE",
+   "BONUS_LAZULITE_ORE",
+   "BONUS_LITHIUM",
+   "BONUS_MAGNESIUM_ORE",
+   "BONUS_MANGANESE",
+   "BONUS_MASCAGNITE",
+   "BONUS_NICKEL_ORE",
+   "BONUS_RARE_EARTH_MINERALS",
+   "BONUS_TUNGSTEN",
+   "BONUS_ZINC_ORE"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 60
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 110
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 5905,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CORE_MINE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CORE_MINE",
+  "civilopedia": "TXT_KEY_BUILDING_CORE_MINE_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

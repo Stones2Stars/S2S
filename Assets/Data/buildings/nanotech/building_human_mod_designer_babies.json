@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_HUMAN_MOD_DESIGNER_BABIES",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GENE_JURISPRUDENCE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_GENE_EDITING",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_DESIGNER_BABIES"
+  ]
+ },
+ "cost": {
+  "production": 7050
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_DESIGNER_BABIES",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_DESIGNER_BABIES",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_DESIGNER_BABIES_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

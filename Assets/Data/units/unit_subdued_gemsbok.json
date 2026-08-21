@@ -1,0 +1,196 @@
+{
+ "type": "UNIT_SUBDUED_GEMSBOK",
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_SUBDUED_GEMSBOK"
+  }
+ },
+ "skills": [
+  "onlyDefensive",
+  "tradable"
+ ],
+ "tags": [
+  "landUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SUBDUED",
+ "combatClasses": [
+  "UNITCOMBAT_SUBDUED_LARGE",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_ANIMALS",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_SLAY_ANIMAL",
+    "requires": {
+     "outcome": "OUTCOME_SLAY_ANIMAL"
+    },
+    "chance": 100,
+    "food": {
+     "base": 40,
+     "random": 60
+    },
+    "production": {
+     "base": 6,
+     "random": 8
+    },
+    "commerce": {
+     "base": 6,
+     "random": 6
+    }
+   },
+   {
+    "mission": "MISSION_ANIMAL_COMBAT",
+    "outcomes": [
+     {
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_COMBAT1"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 5
+      },
+      "gold": 1,
+      "culture": 5
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_COMBAT2"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 5
+      },
+      "gold": 2,
+      "culture": 5
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_COMBAT3"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 5
+      },
+      "gold": 3,
+      "culture": 5
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_COMBAT4"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 5
+      },
+      "gold": 4,
+      "culture": 5
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_ANIMAL_COMBAT5"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 5
+      },
+      "gold": 5,
+      "culture": 5
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_GOVERNORS_PETS"
+   },
+   {
+    "building": "BUILDING_GOVERNORS_MENAGERIE"
+   },
+   {
+    "building": "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT"
+   },
+   {
+    "building": "BUILDING_ENCLOSURE_EXOTIC_HERBIVORE"
+   },
+   {
+    "building": "BUILDING_FOLKLORE_T_ANTELOPE"
+   },
+   {
+    "building": "BUILDING_CAMP_ANTELOPE"
+   },
+   {
+    "building": "BUILDING_MASTER_HUNTER"
+   },
+   {
+    "building": "BUILDING_ZOO"
+   },
+   {
+    "building": "BUILDING_TAXIDERMIST"
+   },
+   {
+    "building": "BUILDING_FOLKLORE_GEMSBOK"
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_GEMSBOK",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_GEMSBOK"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SETTLER_MALE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_SUBDUED_GEMSBOK",
+  "civilopedia": "TXT_KEY_CONCEPT_SUBDUED_ANIMALS_PEDIA",
+  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
+  "spawnOnly": true,
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,93 @@
+{
+ "type": "BUILDING_WALL_STREET",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_STOCK_MARKET",
+    {
+     "type": "BUILDING_STOCK_MARKET",
+     "scope": "empire",
+     "min": 4,
+     "scaling": "amountBuildings"
+    },
+    "TECH_STOCK_BROKERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "percent": [
+    25,
+    {
+     "value": 5,
+     "enabled": "TECH_DERIVATIVES"
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 3
+  }
+ },
+ "cost": {
+  "production": 2850,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_WALL_STREET"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WALL_STREET"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WALL_STREET",
+  "civilopedia": "TXT_KEY_BUILDING_WALL_STREET_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

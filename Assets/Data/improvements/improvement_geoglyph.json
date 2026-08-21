@@ -1,0 +1,102 @@
+{
+ "type": "IMPROVEMENT_GEOGLYPH",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STARGAZING",
+     "scope": "team"
+    },
+    "IS_FLATLANDS",
+    {
+     "terrain": [
+      "TERRAIN_BARREN",
+      "TERRAIN_DESERT",
+      "TERRAIN_SALT_FLATS",
+      "TERRAIN_SCRUB",
+      "TERRAIN_ROCKY",
+      "TERRAIN_BADLAND",
+      "TERRAIN_JAGGED"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": -1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MATHEMATICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SCULPTURE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_AESTHETICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_GEOMETRY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_ARCHEOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_TOURISM",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_GEOGLYPH"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_GEOGLYPH",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SACRED_SITE_PEDIA",
+  "advancedStart": {
+   "cost": 30
+  },
+  "pillageGold": 25
+ }
+}

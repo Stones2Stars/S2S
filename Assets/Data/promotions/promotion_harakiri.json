@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_HARAKIRI",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_BUSHIDO1"
+   ]
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 50
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/HarakiriPromotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_HARAKIRI",
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT"
+  ]
+ }
+}

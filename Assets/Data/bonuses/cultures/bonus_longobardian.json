@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_LONGOBARDIAN",
+ "enables": {
+  "units": [
+   "UNIT_DUGUNDIZ",
+   "UNIT_LIUTPRAND"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_LONGOBARDIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_LONGOBARDIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

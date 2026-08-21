@@ -1,0 +1,72 @@
+{
+ "type": "IMPROVEMENT_INTERGALACTIC_COLONY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INTERGALACTIC_COLONIZATION",
+     "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_VIRGO_SUPERCLUSTER"
+       ]
+      },
+      {
+       "feature": [
+        "FEATURE_DWARF_GALAXY",
+        "FEATURE_GALAXY"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_DARK_ENERGY_HARVESTING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_DARK_ENERGY_HARVESTING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 20
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_INTERGALACTIC_COLONY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_INTERGALACTIC_COLONY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_INTERGALACTIC_COLONY_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

@@ -1,0 +1,74 @@
+{
+ "type": "TECH_ANTIBIOTICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_INDUSTRIAL_FARMS",
+   "BUILDING_PENICILLIN",
+   "BUILDING_VACCINE_LAB"
+  ],
+  "techs": [
+   "TECH_ATOMIC_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORGANIC_CHEMISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEDICINE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "research": 7008
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/antibiotics.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ANTIBIOTICS",
+  "soundMP": "AS2D_TECH_ANTIBIOTICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ANTIBIOTICS",
+  "civilopedia": "TXT_KEY_TECH_ANTIBIOTICS_PEDIA",
+  "quote": "TXT_KEY_TECH_ANTIBIOTICS_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 68,
+  "gridY": 3
+ }
+}

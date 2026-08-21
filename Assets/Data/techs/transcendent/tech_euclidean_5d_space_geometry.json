@@ -1,0 +1,72 @@
+{
+ "type": "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERPLANET",
+   "BUILDING_HYPERSPACE_5D_ARTIFICIAL_GRAVITY",
+   "BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY",
+   "BUILDING_HYPERSPACE_TESSERACT_HOMES",
+   "BUILDING_INTERSTELLAR_PORTAL_CITY"
+  ],
+  "techs": [
+   "TECH_3D_PROJECTIONS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HORIZON_BREAKING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 528012
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/euclidean5spacegeometry.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_EUCLIDEAN_5D_SPACE_GEOMETRY",
+  "soundMP": "AS2D_TECH_EUCLIDEAN_5D_SPACE_GEOMETRY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_EUCLIDEAN_5D_SPACE_GEOMETRY",
+  "civilopedia": "TXT_KEY_TECH_EUCLIDEAN_5D_SPACE_GEOMETRY_PEDIA",
+  "quote": "TXT_KEY_TECH_EUCLIDEAN_5D_SPACE_GEOMETRY_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 151,
+  "gridY": 5
+ }
+}

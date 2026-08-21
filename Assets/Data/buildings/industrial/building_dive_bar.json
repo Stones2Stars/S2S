@@ -1,0 +1,104 @@
+{
+ "type": "BUILDING_DIVE_BAR",
+ "enables": {
+  "buildings": [
+   "BUILDING_COMEDY_CLUB",
+   "BUILDING_GENTLEMANS_CLUB",
+   "BUILDING_GUILD_VICTUALLERS",
+   "BUILDING_JAZZ_CLUB",
+   "BUILDING_KARAOKE_CLUB",
+   "BUILDING_VIP_CLUB"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PURE_INFORMATION_SOCIETY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GALACTIC_CANTINA"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_REFRIGERATION",
+    {
+     "any": [
+      "BUILDING_SHOPPING_DISTRICT",
+      "BUILDING_TRADING_POST"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ALCOHOL",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_GALACTIC_CANTINA",
+    "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 800,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DIVE_BAR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DIVE_BAR",
+  "civilopedia": "TXT_KEY_BUILDING_DIVE_BAR_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

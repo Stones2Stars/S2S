@@ -3,6 +3,8 @@ OPTIONS SCREEN CALLBACK INTERFACE - Any time something is changed in the Options
 """
 from CvPythonExtensions import *
 import CvScreensInterface
+GC = CyGlobalContext()
+INFO = CyInfo()
 
 UsrPrfl = CyUserProfile()
 g_iResChange = 0
@@ -406,7 +408,7 @@ def handleAutomatedBuildCheckboxClicked(argsList):
 		if szName.rfind(TextUtil.convertToAscii(CyCity.getName())) > -1:
 			iCityID = CyCity.getID()
 			for k in range(iNumBuildInfos):
-				if szName.rfind(GC.getBuildInfo(k).getDescription()) > -1:
+				if szName.rfind(INFO.getDescription("BUILD_", k)) > -1:
 					import AutomatedSettings
 					CyMessageControl().sendModNetMessage(AutomatedSettings.getCanAutoBuildEventID(), iPlayer, iCityID, k, int(bValue))
 					return 1
@@ -420,7 +422,7 @@ def handleNationalAutomatedBuildCheckboxClicked(argsList):
 	GC = CyGlobalContext()
 
 	for i in range(GC.getNumBuildInfos()):
-		if szName.rfind(GC.getBuildInfo(i).getDescription()) > -1:
+		if szName.rfind(INFO.getDescription("BUILD_", i)) > -1:
 			import AutomatedSettings
 			CyMessageControl().sendModNetMessage(AutomatedSettings.getCanPlayerAutoBuildEventID(), iPlayer, -1, i, int(bValue))
 			return 1

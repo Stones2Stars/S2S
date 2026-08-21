@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_CISLUNAR_QUANTUM_THRUSTERS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+    "TECH_QUANTUM_RAMJET",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "cost": {
+  "production": 25157,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_QUANTUM_THRUSTERS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_QUANTUM_THRUSTERS",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_QUANTUM_THRUSTERS_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

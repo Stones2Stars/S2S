@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_TRANSPORT_PEOPLE3",
+ "combat": {
+  "unit": {
+   "percent": -5
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_TRANSPORT_PEOPLE": 3
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/TransportPeople3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "cargo": {
+   "smSpace": 3
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_TRANSPORT_PEOPLE3"
+ }
+}

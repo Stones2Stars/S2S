@@ -1,0 +1,44 @@
+{
+ "type": "BUILDING_EFFECT_HERITAGE_BEARS",
+ "enables": {
+  "buildings": [
+   "BUILDING_MILITARY_STANDARD_BEARS"
+  ],
+  "units": [
+   "UNIT_BEARKNIGHT",
+   "UNIT_BEARRIDER"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_HERITAGE",
+    "TECH_MEGAFAUNA_DOMESTICATION"
+   ]
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_HERITAGE_BEARS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_BEARS",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_BEAR_PEDIA",
+  "notConstructible": true,
+  "worth": 2,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

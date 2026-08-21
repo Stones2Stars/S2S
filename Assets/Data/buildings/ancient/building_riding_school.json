@@ -1,0 +1,163 @@
+{
+ "type": "BUILDING_RIDING_SCHOOL",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HOLOGRAPHIC_SCHOOL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ANIMAL_RIDING",
+    {
+     "any": [
+      "BUILDING_STABLE",
+      "BUILDING_KNIGHTS_STABLE",
+      "BUILDING_MODERN_STABLE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_HORSE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CAMEL",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_LLAMA",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_ELEPHANT",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BISON",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_DEER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_CHARIOT": {
+     "percent": 10
+    },
+    "UNIT_HORSEMAN": {
+     "percent": 10
+    },
+    "UNIT_HORSE_ARCHER": {
+     "percent": 10
+    },
+    "UNIT_LIGHT_CAVALRY": {
+     "percent": 10
+    },
+    "UNIT_HEAVY_CAVALRY": {
+     "percent": 10
+    },
+    "UNIT_MOUNTED_INFANTRY": {
+     "percent": 10
+    },
+    "UNIT_KNIGHT": {
+     "percent": 10
+    },
+    "UNIT_CHIVALRY": {
+     "percent": 10
+    },
+    "UNIT_CUIRASSIER": {
+     "percent": 10
+    },
+    "UNIT_CAVALRY": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MOUNTED": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_SPEED",
+       "enabled": "IS_MOUNTED"
+      }
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 146,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RIDING_SCHOOL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RIDING_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_RIDING_SCHOOL_PEDIA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

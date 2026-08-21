@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_OBSERVATORY",
+    "TECH_EXOPLANET_DISCOVERY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 35
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_OBSERVATORY": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 11550,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_EURO_ELT"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE",
+  "civilopedia": "TXT_KEY_BUILDING_EUROPEAN_EXTREMELY_LARGE_TELESCOPE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

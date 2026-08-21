@@ -1,0 +1,144 @@
+{
+ "type": "UNIT_RAY_EAGLE",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "blendIntoCity",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "seaUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SEA_ANIMAL",
+ "combatClasses": [
+  "UNITCOMBAT_WILD",
+  "UNITCOMBAT_ANIMAL_FISH",
+  "UNITCOMBAT_FISH_RAY",
+  "UNITCOMBAT_ANIMAL_COMBAT_SUBMERGE",
+  "UNITCOMBAT_ANIMAL_COMBAT_VENEMOUS",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "kill": [
+   {
+    "requires": {
+     "outcome": "OUTCOME_TALES_SEA"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_TALESOF_RAY_EAGLE",
+     "toCity": true
+    },
+    "food": {
+     "base": 10,
+     "random": 15
+    },
+    "production": {
+     "base": 2,
+     "random": 2
+    },
+    "commerce": {
+     "base": 4,
+     "random": 1
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_SUBDUE_SEA_SMALL"
+    },
+    "chance": 5,
+    "spawns": {
+     "unit": "UNIT_SUBDUED_RAY_EAGLE"
+    }
+   },
+   {
+    "requires": {
+     "outcome": "OUTCOME_HUNTING_KILL"
+    },
+    "chance": 90,
+    "food": {
+     "base": 10,
+     "random": 15
+    },
+    "production": {
+     "base": 2,
+     "random": 2
+    },
+    "commerce": {
+     "base": 4,
+     "random": 1
+    }
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RAY_EAGLE",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 2.25,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_RAY_EAGLE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_RAY_EAGLE",
+  "civilopedia": "TXT_KEY_UNIT_RAY_EAGLE_PEDIA",
+  "spawnOnly": true,
+  "xpValueAttack": 1,
+  "xpValueDefense": 1,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_ANIMAL",
+  "formationType": "FORMATION_TYPE_ANIMAL",
+  "unitAIs": [
+   "UNITAI_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_COAST_POLAR",
+   "TERRAIN_COAST_DEEP_POLAR",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_TRENCH_POLAR"
+  ]
+ }
+}

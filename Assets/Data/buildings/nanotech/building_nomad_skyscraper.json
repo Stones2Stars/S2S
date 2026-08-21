@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_NOMAD_SKYSCRAPER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_PEER_TO_PEER_RENTALS",
+    "TECH_MESH_NETWORKS",
+    {
+     "any": [
+      "BUILDING_AUTOMATED_TAXI_SERVICE",
+      "BUILDING_TELEPORT_BOOTH"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 3385,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NOMAD_SKYSCRAPER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NOMAD_SKYSCRAPER",
+  "civilopedia": "TXT_KEY_BUILDING_NOMAD_SKYSCRAPER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

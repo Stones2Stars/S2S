@@ -1,0 +1,78 @@
+{
+ "type": "TECH_MEDIA_HIVEMIND",
+ "enables": {
+  "buildings": [
+   "BUILDING_MEME_GENERATOR",
+   "BUILDING_PERSONAL_WEB_CHANNEL",
+   "BUILDING_PLYMOUTH_ARCOLOGY",
+   "BUILDING_VIRTUAL_WORLD_GUILD"
+  ],
+  "promotions": [
+   "PROMOTION_EDUCATE8"
+  ],
+  "techs": [
+   "TECH_AUTOMATED_URBANIZATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MASS_SURVEILLANCE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEGACORPORATIONS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HOLOGRAPHICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 40165
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/mediahivemind.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MEDIA_HIVEMIND",
+  "soundMP": "AS2D_TECH_MEDIA_HIVEMIND"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MEDIA_HIVEMIND",
+  "civilopedia": "TXT_KEY_TECH_MEDIA_HIVEMIND_PEDIA",
+  "quote": "TXT_KEY_TECH_MEDIA_HIVEMIND_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 103,
+  "gridY": 5
+ }
+}

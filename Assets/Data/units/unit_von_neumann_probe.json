@@ -1,0 +1,124 @@
+{
+ "type": "UNIT_VON_NEUMANN_PROBE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_STARPORT",
+    "TECH_FOLDING_SPACE"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 3
+ },
+ "movement": {
+  "unit": {
+   "flat": 12
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_VON_NEUMANN_PROBE"
+  }
+ },
+ "skills": [
+  "canMoveAllTerrain",
+  "canMoveImpassable",
+  "ignoreTerrainCost"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SPACE_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_EARLY_SPACESHIP",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_EXPLORE_VON_NEUMANN",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_VON_NEUMANN"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreVonNeumann",
+     "code": "from CvPythonExtensions import *\nimport random\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tvalid_feature_strings = ['DWARF_GALAXY','GALAXY']\n\tvalid_features = [gc.getInfoTypeForString('FEATURE_'+t) for t in valid_feature_strings]\n\treturn plot.getFeatureType() in valid_features\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_INTERGALACTIC_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore a distant galaxy\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_ANCIENT_CIVILIZATION",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_ANCIENT_CIVILIZATION"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreAncientCivilization",
+     "code": "from CvPythonExtensions import *\nimport random\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tvalid_bonus_strings = ['ABANDONED_CIVILIZATION']\n\tvalid_bonuses = [gc.getInfoTypeForString('BONUS_'+t) for t in valid_bonus_strings]\n\treturn plot.getBonusType(-1) in valid_bonuses\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_ANCIENT_CIVILIZATION_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Excavate an ancient civilization\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   }
+  ]
+ },
+ "cost": {
+  "production": 5000,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_VON_NEUMANN_PROBE",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_VON_NEUMANN_PROBE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_VON_NEUMANN_PROBE",
+  "civilopedia": "TXT_KEY_UNIT_VON_NEUMANN_PROBE_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC",
+   "MAPCATEGORY_UNIVERSAL"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "workRate": 250
+  }
+ }
+}

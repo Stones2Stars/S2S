@@ -1,0 +1,636 @@
+{
+ "type": "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLOODHUNTRESSS_HUT",
+   "BUILDING_CAPUCHIN_CRYPT",
+   "BUILDING_CHIEFS_FUNERAL_PYRE",
+   "BUILDING_CHILD_LABOR_CREW"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRANSHUMANISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_NATRON",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    300,
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_NATRON",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HUMAN_MOD_NOVEL_SENSES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BIONIC_SUITS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 7,
+     "enabled": {
+      "type": "BONUS_HATS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MICROGENERATORS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_NEUROIMPLANTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ORGANIC_PHOTONIC_CELLS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "type": "BONUS_SHOES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_METAMATERIALS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BOOKS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CLOTHING",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FIRECRACKERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GLASSWARE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_JEWELRY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MASKS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SCULPTURES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TOYS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ],
+   "percent": 3
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    100,
+    {
+     "value": 10,
+     "enabled": "TECH_PHOTONIC_SATELLITES"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_TERRA_COMPUTER"
+    }
+   ],
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    300,
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HATS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHOES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BOOKS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CLOTHING",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COMPUTERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_JEWELRY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PHONOGRAPHS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PLASTIC",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SCROLLS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SYNTHETIC_RUBBER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TABLETS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ],
+   "percent": 2
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    76,
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BONUS_TOBACCO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BRASS_INSTRUMENTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COMPUTERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PERCUSSION_INSTRUMENTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_STRING_INSTRUMENTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WOODWIND_INSTRUMENTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BONUS_HIT_MOVIES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 9,
+     "enabled": {
+      "type": "BONUS_HIT_SINGLES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ANCIENT_RELICS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COW",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PIG",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_POULTRY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BREAD",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CHEESE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FRUIT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_VEGETABLES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": "HAS_STATE_RELIGION"
+    },
+    {
+     "value": 20,
+     "per": {
+      "type": "CULTURE_RATE",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    30,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PHARMACEUTICALS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SMART_MEDICINE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_CELEBRITY": 8,
+   "SPECIALIST_SPY": 1,
+   "any": [
+    {
+     "value": 1,
+     "per": {
+      "type": "IMPROVEMENT_ARCHEOLOGICAL_SITE",
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "flat": 5,
+   "unitCombats": {
+    "UNITCOMBAT_WHEELED": {
+     "flat": 1
+    }
+   },
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -10
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1,
+   "percent": 50
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -30
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -80
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 110
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1,
+   "SPECIALIST_SPY": 1,
+   "SPECIALIST_ARTIST": 7,
+   "SPECIALIST_ENGINEER": 2,
+   "SPECIALIST_SCIENTIST": 3
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_TATTOO",
+      "PROMOTION_DECEPTION1",
+      "PROMOTION_RANGE1",
+      "PROMOTION_RANGE2"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 6155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
+  "civilopedia": "TXT_KEY_BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT_PEDIA",
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

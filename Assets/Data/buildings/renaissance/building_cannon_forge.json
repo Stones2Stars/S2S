@@ -1,0 +1,115 @@
+{
+ "type": "BUILDING_CANNON_FORGE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BOMBARD_TOWER",
+   "BUILDING_CANNON_TURRET"
+  ],
+  "units": [
+   "UNIT_BOMBARD",
+   "UNIT_BOMBARD_ELEPHANT",
+   "UNIT_BOMBARD_MAMMOTH",
+   "UNIT_CANNON",
+   "UNIT_CULVERIN",
+   "UNIT_DAVINCI_TANK",
+   "UNIT_FALCONET",
+   "UNIT_FLAMING_ARROW",
+   "UNIT_GATLING_GUN",
+   "UNIT_GREAT_BOMBARD",
+   "UNIT_MOTAR",
+   "UNIT_ORGAN_GUN",
+   "UNIT_RIBAULDEQUIN",
+   "UNIT_SIEGE_ELEPHANT",
+   "UNIT_SIEGE_WAGON",
+   "UNIT_UJEN_CHOOHA",
+   "UNIT_VOZOVA_HRADBA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GUNPOWDER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_BOMBARD": {
+     "percent": 10
+    },
+    "UNIT_CANNON": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 410,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CANNON_FORGE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FORGE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CANNON_FORGE",
+  "civilopedia": "TXT_KEY_BUILDING_CANNON_FORGE_PEDIA",
+  "worth": 4,
+  "militaryWorth": 3,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

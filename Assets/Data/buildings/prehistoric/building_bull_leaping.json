@@ -1,0 +1,125 @@
+{
+ "type": "BUILDING_BULL_LEAPING",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMBAT_SPORTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PREHISTORIC_DANCE",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_T_BULL",
+      "BUILDING_HERD_BISON",
+      "BUILDING_CAMP_BISON",
+      "BUILDING_HERD_COW",
+      "BUILDING_FARM_ANIMAL_COW",
+      "BUILDING_CAMP_GIANT_BISON",
+      "BUILDING_CAMP_AUROCHS",
+      "BUILDING_BREEDING_PROGRAM_BISON",
+      "BUILDING_ANIMAL_PRESERVE",
+      "BUILDING_INDUSTRIAL_FARMS",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_BISON",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_COW",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "city": {
+   "domains": {
+    "DOMAIN_LAND": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 60,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_BULL_LEAPING"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BULL_LEAPING",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BULL_LEAPING",
+  "civilopedia": "TXT_KEY_BUILDING_BULL_LEAPING_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 1,
+  "militaryWorth": 2,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

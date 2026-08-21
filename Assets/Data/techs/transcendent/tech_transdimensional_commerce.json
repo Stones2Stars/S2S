@@ -1,0 +1,67 @@
+{
+ "type": "TECH_TRANSDIMENSIONAL_COMMERCE",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERSPACE_COMMERCIAL_CENTER",
+   "BUILDING_HYPERSPACE_EXPORTER",
+   "BUILDING_HYPERSPACE_IMPORTER"
+  ],
+  "civics": [
+   "CIVIC_PANDIMENSIONAL"
+  ],
+  "techs": [
+   "TECH_MATERIALIZATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FANTASY_MATERIALS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TACHYON_COMMUNICATIONS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_MERCHANT"
+ },
+ "cost": {
+  "research": 511504
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/transdimensional_commerce.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TRANSDIMENSIONAL_COMMERCE",
+  "civilopedia": "TXT_KEY_TECH_TRANSDIMENSIONAL_COMMERCE_PEDIA",
+  "quote": "TXT_KEY_TECH_TRANSDIMENSIONAL_COMMERCE_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 150,
+  "gridY": 9
+ }
+}

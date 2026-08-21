@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_TALL_TOWER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COLONY_ARCOLOGY",
+    {
+     "any": [
+      "BUILDING_HOUSING_COLONY_ARCOLOGY",
+      "BUILDING_LAUNCH_ARCOLOGY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_STRATOSPHERIC_TOWER": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 50430,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TALL_TOWER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TALL_TOWER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TALL_TOWER",
+  "civilopedia": "TXT_KEY_BUILDING_TALL_TOWER_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

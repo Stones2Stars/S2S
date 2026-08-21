@@ -17,7 +17,17 @@ TRAIT_ICONS = {}
 GENERIC_BUTTON = "Art/Interface/Buttons/TechTree/"
 TRAIT_BUTTONS = {}
 
-gc = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
+gc = GC   # this module spells it lowercase
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
+# The FONT GLYPH of a yield/commerce is not info data -- it is a symbol slot the text manager's symbol pass
+# assigns at load, and the translator already publishes each one as an [ICON_*] token. So the icons below come
+# from the text layer that owns them, exactly as the FontSymbols ones come from the game's symbol table.
+TRNSLTR = CyTranslator()
 
 def init():
 	"Performs one-time initialization after the game starts up."
@@ -27,20 +37,20 @@ def init():
 
 	addTrait("AGGRESSIVE", game.getSymbolID(FontSymbols.STRENGTH_CHAR), "Art/Interface/Buttons/Promotions/Combat1.dds")
 	addTrait("CHARISMATIC", game.getSymbolID(FontSymbols.HAPPY_CHAR), "Art/Interface/Buttons/TechTree/MassMedia.dds")
-	addTrait("CREATIVE", gc.getCommerceInfo(CommerceTypes.COMMERCE_CULTURE).getChar(), "Art/Interface/Buttons/TechTree/Music.dds")
+	addTrait("CREATIVE", TRNSLTR.getText("[ICON_CULTURE]", ()), "Art/Interface/Buttons/TechTree/Music.dds")
 	addTrait("EXPANSIVE", game.getSymbolID(FontSymbols.HEALTHY_CHAR), "Art/Interface/Buttons/Actions/Heal.dds")
-	addTrait("FINANCIAL", gc.getCommerceInfo(CommerceTypes.COMMERCE_GOLD).getChar(), "Art/Interface/Buttons/TechTree/Banking.dds")
+	addTrait("FINANCIAL", TRNSLTR.getText("[ICON_GOLD]", ()), "Art/Interface/Buttons/TechTree/Banking.dds")
 	addTrait("IMPERIALIST", game.getSymbolID(FontSymbols.OCCUPATION_CHAR), "Art/Interface/Buttons/Actions/FoundCity.dds")
-	addTrait("INDUSTRIOUS", gc.getYieldInfo(YieldTypes.YIELD_PRODUCTION).getChar(), "Art/Interface/Buttons/TechTree/Industrialism.dds")
+	addTrait("INDUSTRIOUS", TRNSLTR.getText("[ICON_PRODUCTION]", ()), "Art/Interface/Buttons/TechTree/Industrialism.dds")
 	addTrait("ORGANIZED", game.getSymbolID(FontSymbols.TRADE_CHAR), "Art/Interface/Buttons/Buildings/Courthouse.dds")
 	addTrait("PHILOSOPHICAL", game.getSymbolID(FontSymbols.GREAT_PEOPLE_CHAR), "Art/Interface/Buttons/TechTree/Philosophy.dds")
 	addTrait("PROTECTIVE", game.getSymbolID(FontSymbols.DEFENSE_CHAR), "Art/Interface/Buttons/Promotions/CityGarrison1.dds")
 	addTrait("SPIRITUAL", game.getSymbolID(FontSymbols.RELIGION_CHAR), "Art/Interface/Buttons/TechTree/Meditation.dds")
 	addTrait("NOMAD", game.getSymbolID(FontSymbols.MOVES_CHAR), "Art/Interface/Buttons/Units/HorseArcher.dds")
-	addTrait("AGRICULTURAL", gc.getYieldInfo(YieldTypes.YIELD_FOOD).getChar(), "Art/Interface/Buttons/TechTree/Agriculture.dds")
+	addTrait("AGRICULTURAL", TRNSLTR.getText("[ICON_FOOD]", ()), "Art/Interface/Buttons/TechTree/Agriculture.dds")
 	addTrait("SEAFARING", game.getSymbolID(FontSymbols.MAP_CHAR), "Art/Interface/Buttons/TechTree/seafaring.dds")
-	addTrait("DECEIVER", gc.getCommerceInfo(CommerceTypes.COMMERCE_ESPIONAGE).getChar(), "Art/Interface/Buttons/Units/Spy.dds")
-	addTrait("SCIENTIFIC", gc.getCommerceInfo(CommerceTypes.COMMERCE_RESEARCH).getChar(), "Art/Interface/Buttons/Process/ProcessResearch.dds")
+	addTrait("DECEIVER", TRNSLTR.getText("[ICON_ESPIONAGE]", ()), "Art/Interface/Buttons/Units/Spy.dds")
+	addTrait("SCIENTIFIC", TRNSLTR.getText("[ICON_RESEARCH]", ()), "Art/Interface/Buttons/Process/ProcessResearch.dds")
 	addTrait("HUMANITARIAN", game.getSymbolID(FontSymbols.HEALTHY_CHAR), "Art/Interface/Buttons/Actions/Heal.dds")
 	addTrait("PROGRESSIST", game.getSymbolID(FontSymbols.GREAT_PEOPLE_CHAR), "Art/Interface/Buttons/TechTree/enlighten1.dds")
 	addTrait("POLITICIAN", game.getSymbolID(FontSymbols.HAPPY_CHAR), "Art/Interface/Buttons/actions/steal_tech.dds")
@@ -56,7 +66,7 @@ def init():
 	addTrait("EXCESSIVE", game.getSymbolID(FontSymbols.UNHAPPY_CHAR), ",Art/Interface/Buttons/Buildings/Versailles.dds,Art/Interface/Buttons/Buildings_Atlas.dds,7,7")
 	addTrait("FOREIGN", game.getSymbolID(FontSymbols.UNHAPPY_CHAR), ",Art/Interface/Buttons/TechTree/Constitution.dds,Art/Interface/Buttons/TechTree_Atlas.dds,8,2")
 	addTrait("TEMPERAMENTAL", game.getSymbolID(FontSymbols.UNHAPPY_CHAR), "Art/Interface/Buttons/TechTree/explosives.dds")
-	addTrait("HUNTER_GATHERER", gc.getYieldInfo(YieldTypes.YIELD_FOOD).getChar(), ",Art/Interface/Buttons/TechTree/Archery.dds,Art/Interface/Buttons/TechTree_Atlas.dds,4,1")
+	addTrait("HUNTER_GATHERER", TRNSLTR.getText("[ICON_FOOD]", ()), ",Art/Interface/Buttons/TechTree/Archery.dds,Art/Interface/Buttons/TechTree_Atlas.dds,4,1")
 	addTrait("BARBARIAN", game.getSymbolID(FontSymbols.OCCUPATION_CHAR), ",Art/Interface/Buttons/Civilizations/Barbarian.dds,Art/Interface/Buttons/Civics_Civilizations_Religions_Atlas.dds,4,5")
 
 # Rise of Mankind 2.6 - new traits
@@ -65,7 +75,12 @@ def addTrait(trait, icon, button):
 	eTrait = gc.getInfoTypeForString("TRAIT_" + trait)
 	if eTrait != -1:
 		if icon is not None:
-			TRAIT_ICONS[eTrait] = u"%c" % icon
+			# A FontSymbols id arrives as an int and still needs formatting; an [ICON_*] token has already been
+			# resolved to its glyph by the translator, so it is stored as-is.
+			if isinstance(icon, basestring):
+				TRAIT_ICONS[eTrait] = icon
+			else:
+				TRAIT_ICONS[eTrait] = u"%c" % icon
 		if button is not None:
 			TRAIT_BUTTONS[eTrait] = button
 

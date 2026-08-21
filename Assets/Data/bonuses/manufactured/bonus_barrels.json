@@ -1,0 +1,27 @@
+{
+ "type": "BONUS_BARRELS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BREWERY",
+   "BUILDING_CIDER_HOUSE",
+   "BUILDING_DISTILLERY",
+   "BUILDING_FACTORY_GHEE_OIL",
+   "BUILDING_FISH_OIL_MAKER",
+   "BUILDING_GALACTIC_CANTINA",
+   "BUILDING_GHEE_MAKER",
+   "BUILDING_WHALE_OIL_MAKER",
+   "BUILDING_WINERY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_BARRELS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_BARRELS",
+  "civilopedia": "TXT_KEY_BONUS_BARRELS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

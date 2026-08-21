@@ -1,0 +1,59 @@
+{
+ "type": "TECH_SHAMANISM",
+ "enables": {
+  "religions": [
+   "RELIGION_SHAMANISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MYSTICISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 60
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/shamanism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SHAMANISM",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SHAMANISM",
+  "civilopedia": "TXT_KEY_TECH_SHAMANISM_PEDIA",
+  "quote": "TXT_KEY_TECH_SHAMANISM_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "gridX": 18,
+  "gridY": 13
+ }
+}

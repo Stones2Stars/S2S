@@ -1,0 +1,65 @@
+{
+ "type": "TECH_ENLIGHTENMENT",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_IRISH"
+  ],
+  "techs": [
+   "TECH_BIOLOGY",
+   "TECH_LIBERALISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SCIENTIFIC_METHOD",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SOCIAL_CONTRACT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 3274
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/enlightenment.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ENLIGHTENMENT",
+  "soundMP": "AS2D_TECH_ENLIGHTENMENT"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ENLIGHTENMENT",
+  "civilopedia": "TXT_KEY_TECH_ENLIGHTENMENT_PEDIA",
+  "quote": "TXT_KEY_TECH_ENLIGHTENMENT_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 56,
+  "gridY": 9
+ }
+}

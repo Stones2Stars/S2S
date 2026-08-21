@@ -1,0 +1,98 @@
+{
+ "type": "RELIGION_HINDUISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_AKSHARDHAM",
+   "BUILDING_BRAHMIN_LIBRARY",
+   "BUILDING_COW_SHRINE",
+   "BUILDING_ELEPHANT_SHRINE",
+   "BUILDING_HINDU_MANDIR",
+   "BUILDING_HINDU_MONASTERY",
+   "BUILDING_HINDU_TEMPLE",
+   "BUILDING_MEENAKSHI_TEMPLE",
+   "BUILDING_THE_BRIHADEESWARAR_TEMPLE"
+  ],
+  "units": [
+   "UNIT_HINDU_MISSIONARY"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_HINDUISM"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 6,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_HINDUISM"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_HINDUISM"
+     }
+    }
+   ]
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 3,
+   "icon": "Art/Interface/Buttons/Religions/Hinduism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Hinduism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Hinduism.dds",
+   "movie": {
+    "file": "Art/Movies/Religion/Hinduism/Hin_Found.nif",
+    "sound": "AS2D_BUILD_HINDU_MOVIE"
+   }
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_HINDU"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_HINDUISM",
+  "adjective": "TXT_KEY_TECH_HINDUISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_HINDUISM_PEDIA",
+  "spreadFactor": 20
+ }
+}

@@ -1,0 +1,101 @@
+{
+ "type": "C2C_ERA_TRANSHUMAN",
+ "costs": {
+  "world": {
+   "train": {
+    "percent": 100
+   },
+   "construct": {
+    "percent": 100
+   },
+   "create": {
+    "percent": 100
+   },
+   "research": {
+    "percent": 550
+   },
+   "researchCutBelowEra": {
+    "percent": 90
+   },
+   "build": {
+    "percent": 100
+   },
+   "improvementUpgrade": {
+    "percent": 100
+   }
+  }
+ },
+ "growth": {
+  "world": {
+   "percent": 100
+  }
+ },
+ "greatPeopleRate": {
+  "world": {
+   "percent": 140
+  }
+ },
+ "durations": {
+  "world": {
+   "civicAnarchy": {
+    "percent": 80
+   },
+   "religiousAnarchy": {
+    "percent": 80
+   }
+  }
+ },
+ "eventChance": {
+  "world": {
+   "flat": 10
+  }
+ },
+ "grants": {
+  "startingUnitMultiplier": 3,
+  "startingDefenseUnits": 3,
+  "startingWorkerUnits": 3,
+  "startingExploreUnits": 2,
+  "startingGold": 50000,
+  "freePopulation": 4
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/mainscreen/Era/Transhuman.dds"
+  }
+ },
+ "sound": {
+  "soundtrackSpace": 40,
+  "introSoundtrack": true,
+  "soundtracks": [
+   "AS2D_MEGALOPOLIS",
+   "AS2D_ASSEMBLY",
+   "AS2D_DAISUKE",
+   "AS2D_GHOSTDIVE",
+   "AS2D_HYDRO",
+   "AS2D_PAPERHOUSE",
+   "AS2D_STARS"
+  ],
+  "citySoundscapes": [
+   {
+    "CITYSIZE_SMALL": "ASSS_CITY_TRANSHUMAN_SMALL_SELECT_AMB"
+   },
+   {
+    "CITYSIZE_MEDIUM": "ASSS_CITY_TRANSHUMAN_LARGE_SELECT_AMB"
+   },
+   {
+    "CITYSIZE_LARGE": "ASSS_CITY_TRANSHUMAN_LARGE_SELECT_AMB"
+   }
+  ],
+  "unitVictory": "AS2D_VICTORY_LATE",
+  "unitDefeat": "AS2D_LOSS_LATE"
+ },
+ "identity": {
+  "description": "TXT_KEY_ERA_TRANSHUMAN",
+  "strategy": "TXT_KEY_ERA_TRANSHUMAN_STRATEGY",
+  "order": 10,
+  "advancedStart": 256000,
+  "historicalStartYear": 2150,
+  "historicalEndYear": 2300,
+  "normalSpeedTurns": 180
+ }
+}

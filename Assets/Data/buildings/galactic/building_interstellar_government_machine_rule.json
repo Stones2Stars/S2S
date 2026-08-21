@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_INTERSTELLAR_GOVERNMENT_MACHINE_RULE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COLONY_GOVERNANCE",
+    {
+     "type": "MAPCATEGORY_GALACTIC",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_INTERSTELLAR_GOVERNMENT_NOOCRACY",
+    "BUILDING_INTERSTELLAR_GOVERNMENT_HOLACRACY"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -10
+   }
+  }
+ },
+ "cost": {
+  "production": 1757,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_GOVERNMENT_MACHINE_RULE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_GOVERNMENT_MACHINE_RULE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_GOVERNMENT_MACHINE_RULE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC"
+  ]
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_CZECH",
+ "enables": {
+  "units": [
+   "UNIT_TOMAS_MASARYK",
+   "UNIT_VOZOVA_HRADBA"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CZECH"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CZECH",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "type": "PROMOTION_FIELD2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_FIELD3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_FIELD1"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_GRASSLAND": {
+     "attack": {
+      "percent": 15
+     }
+    },
+    "TERRAIN_PLAINS": {
+     "attack": {
+      "percent": 15
+     }
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FIELD": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Field2.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,3,5"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FIELD2",
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
+ }
+}

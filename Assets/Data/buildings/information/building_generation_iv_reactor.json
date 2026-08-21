@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_GENERATION_IV_REACTOR",
+ "enables": {
+  "buildings": [
+   "BUILDING_HIGH_ENERGY_LAB",
+   "BUILDING_NUCLEAR_POWERCOMPLEX",
+   "BUILDING_SUPERCRITICAL_CO2_TURBINE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ELECTROMAGNETIC_VOLTAGE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_D_T_FUSION_POWER_PLANT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MANUFACTURING_PLANT",
+    "BUILDING_POWER_LINES",
+    "TECH_INDUSTRIAL_ECOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_URANIUM",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_D_T_FUSION_POWER_PLANT",
+    "BUILDING_D_HE3_FUSION_PLANT",
+    "BUILDING_HE3_FUSION_POWER_PLANT",
+    "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+    "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 80,
+   "percent": 30
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "cost": {
+  "production": 2505,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GENERATION_IV_REACTOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GENERATION_IV_REACTOR",
+  "civilopedia": "TXT_KEY_BUILDING_GENERATION_IV_REACTOR_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

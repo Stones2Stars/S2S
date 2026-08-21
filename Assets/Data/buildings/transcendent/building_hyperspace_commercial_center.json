@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_HYPERSPACE_COMMERCIAL_CENTER",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERSPACE_WAREHOUSE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HYPERSPACE_IMPORTER",
+    "BUILDING_HYPERSPACE_EXPORTER",
+    "TECH_TRANSDIMENSIONAL_COMMERCE",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 80
+  }
+ },
+ "cost": {
+  "production": 1485,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYPERSPACE_COMMERCIAL_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_COMMERCIAL_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_COMMERCIAL_CENTER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

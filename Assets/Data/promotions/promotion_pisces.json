@@ -1,0 +1,19 @@
+{
+ "type": "PROMOTION_PISCES",
+ "skills": {
+  "oneUp": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/StarSigns/pices.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_PISCES",
+  "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
+  "starsign": true
+ }
+}

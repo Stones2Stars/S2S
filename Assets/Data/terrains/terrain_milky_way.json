@@ -1,0 +1,37 @@
+{
+ "type": "TERRAIN_MILKY_WAY",
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/milky_way.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_TERRAIN_MILKY_WAY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TERRAIN_MILKY_WAY",
+  "civilopedia": "TXT_KEY_TERRAIN_MILKY_WAY_PEDIA",
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

@@ -1,0 +1,28 @@
+{
+ "type": "BONUS_COPPER_WIRES",
+ "enables": {
+  "buildings": [
+   "BUILDING_BROADCAST_TOWER",
+   "BUILDING_COMMUNICATION_TOWER",
+   "BUILDING_COMPUTER_NETWORK",
+   "BUILDING_COPPER_RECLAMATION_PLANT",
+   "BUILDING_FACTORY_RADIOS",
+   "BUILDING_POWER_LINES",
+   "BUILDING_RADAR_STATION",
+   "BUILDING_RADIO_TELESCOPE",
+   "BUILDING_TELEPHONE_NETWORK",
+   "BUILDING_TELESCREEN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_COPPER_WIRES"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_COPPER_WIRES",
+  "civilopedia": "TXT_KEY_BONUS_COPPER_WIRES_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

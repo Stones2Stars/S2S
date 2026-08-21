@@ -1,0 +1,44 @@
+{
+ "type": "IMPROVEMENT_GROUNDWATER_WELL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MODERN_SEISMOLOGY",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_BARREN",
+      "TERRAIN_DESERT",
+      "TERRAIN_DUNES",
+      "TERRAIN_ROCKY",
+      "TERRAIN_BADLAND",
+      "TERRAIN_JAGGED"
+     ]
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 10
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_GROUNDWATER_WELL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_GROUNDWATER_WELL",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_GROUNDWATER_WELL_PEDIA",
+  "carriesIrrigation": true,
+  "advancedStart": {
+   "cost": 60
+  },
+  "pillageGold": 10
+ }
+}

@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_INTERSTELLAR_STAR_COLONY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN",
+    "TECH_PURE_INFORMATION_SOCIETY",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 7351,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_STAR_COLONY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_STAR_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_STAR_COLONY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

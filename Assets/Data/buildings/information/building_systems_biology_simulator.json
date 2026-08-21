@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_SYSTEMS_BIOLOGY_SIMULATOR",
+ "enables": {
+  "buildings": [
+   "BUILDING_3D_BODY_ATLAS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_STEM_CELL_LAB",
+    "BUILDING_COMPUTER_NETWORK",
+    "BUILDING_EVOLUTION_SIMULATOR",
+    "TECH_BIOMATHEMATICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 8,
+     "enabled": "TECH_GENESIS_BIOLOGY"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_AFFECTIVE_ALGORITHMS"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": "TECH_PERSONALIZED_HEALTH"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 2305,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SYSTEMS_BIOLOGY_SIMULATOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SYSTEMS_BIOLOGY_SIMULATOR",
+  "civilopedia": "TXT_KEY_BUILDING_SYSTEMS_BIOLOGY_SIMULATOR_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_BRICK_MASON",
+ "enables": {
+  "buildings": [
+   "BUILDING_GUILD_MASONS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MODERN_SEISMOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_BRICKS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MASONRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_FINE_CLAY",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CLAY",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_MODERN_EARTHWORKS",
+    "BUILDING_FACTORY_BRICKS"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_BRICKS"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 153,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BRICK_MASON",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BRICK_MASON",
+  "civilopedia": "TXT_KEY_BUILDING_BRICK_MASON_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,28 @@
+{
+ "type": "PROMOTION_STING1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_STING2"
+  ]
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_STING": 1
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Sting1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "combatModifier": {
+   "perSizeMore": 10
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_STING1"
+ }
+}

@@ -1,0 +1,134 @@
+{
+ "type": "UNIT_WORLDSHIP3",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_WARP_DRIVES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_SPACE_CREASING",
+    {
+     "any": [
+      "BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST",
+      "BUILDING_INTERGALACTIC_MORRIS_THORNE_WORMHOLE"
+     ]
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 24
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_CAPTIVE_CIVILIAN"
+  }
+ },
+ "skills": [
+  "canMoveAllTerrain",
+  "canMoveImpassable",
+  "food"
+ ],
+ "tags": [
+  "settler",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SETTLER",
+ "combatClasses": [
+  "UNITCOMBAT_WORMHOLE_SPACESHIP",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_SPACECRAFT"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_PLANET_LAND",
+    "requires": {
+     "outcome": "OUTCOME_UPGRADE_TO_PLANET_SETTLER"
+    },
+    "chance": 100,
+    "python": {
+     "module": "BuildCityInterstellar3",
+     "code": "from CvPythonExtensions import CyGlobalContext\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\treturn False\n\tvalid_terrain_strings = ['MILKY_WAY','NEUTRON_STAR','NEBULA','STAR_CLUSTER','ORION_ARM','GALACTIC_CORE','LOCAL_GROUP','VIRGO_SUPERCLUSTER','INTERGALACTIC_VOID','OBSERVABLE_UNIVERSE']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tgc.getPlayer(unit.getOwner()).found(plot.getX(),plot.getY())\ndef getDisplay(unit,plot):\n\treturn u\"Build a city on this plot.\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   }
+  ]
+ },
+ "cost": {
+  "production": 4850,
+  "upkeep": 11,
+  "hurryCostModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SEEDSHIP",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SEEDSHIP"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_WORLDSHIP3",
+  "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
+  "help": "TXT_KEY_UNIT_WORLDSHIP3_HELP",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SETTLE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_SETTLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC",
+   "MAPCATEGORY_UNIVERSAL"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_VIRGO_SUPERCLUSTER",
+   "TERRAIN_INTERGALACTIC_VOID",
+   "TERRAIN_OBSERVABLE_UNIVERSE"
+  ],
+  "terrainPassableTechs": [
+   {
+    "TERRAIN_VIRGO_SUPERCLUSTER": "TECH_INTERGROUP_TRAVEL"
+   },
+   {
+    "TERRAIN_INTERGALACTIC_VOID": "TECH_INTERCLUSTER_TRAVEL"
+   },
+   {
+    "TERRAIN_OBSERVABLE_UNIVERSE": "TECH_INTERCLUSTER_TRAVEL"
+   }
+  ],
+  "advancedStart": {
+   "cost": 100
+  }
+ }
+}

@@ -1,0 +1,43 @@
+{
+ "type": "BUILDING_EFFECT_HERITAGE_RHINOS",
+ "enables": {
+  "buildings": [
+   "BUILDING_MILITARY_STANDARD_RHINOCEROS"
+  ],
+  "units": [
+   "UNIT_RHINO_SWORDSMAN",
+   "UNIT_WAR_RHINO"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_HERITAGE",
+    "TECH_MEGAFAUNA_DOMESTICATION"
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HERITAGE_RHINOCEROS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_RHINOS",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_RHINOCEROS_PEDIA",
+  "help": "TXT_KEY_BUILDING_EFFECT_HERITAGE_RHINOS_HELP",
+  "notConstructible": true,
+  "worth": 2,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

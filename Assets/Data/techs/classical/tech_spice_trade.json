@@ -1,0 +1,115 @@
+{
+ "type": "TECH_SPICE_TRADE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CHOCOLATE",
+   "BONUS_COFFEE",
+   "BONUS_PERFUME",
+   "BONUS_ROASTED_COFFEE",
+   "BONUS_SEASONING",
+   "BONUS_SPICES",
+   "BONUS_SUGAR",
+   "BONUS_TEA"
+  ],
+  "buildings": [
+   "BUILDING_COFFEE_SHOP",
+   "BUILDING_CULTURE_AKSUMITE",
+   "BUILDING_CULTURE_CHAM",
+   "BUILDING_CULTURE_NIGERIAN",
+   "BUILDING_FARM_CROP_BLACK_PEPPER",
+   "BUILDING_FARM_CROP_CHILI",
+   "BUILDING_FARM_CROP_CHIVES",
+   "BUILDING_FARM_CROP_CLOVES",
+   "BUILDING_FARM_CROP_GINGER_ROOT",
+   "BUILDING_FARM_CROP_LICORICE",
+   "BUILDING_FARM_CROP_PEPPERMINT",
+   "BUILDING_FARM_CROP_RHUBARB",
+   "BUILDING_FARM_CROP_SESAME",
+   "BUILDING_FARM_CROP_TURNIP",
+   "BUILDING_FARM_CROP_WASABI",
+   "BUILDING_GROVE_ACACIA",
+   "BUILDING_GROVE_CINNAMOMUM",
+   "BUILDING_GROVE_MAPLE",
+   "BUILDING_GROVE_SASSAFRAS",
+   "BUILDING_PERFUME_MAKER",
+   "BUILDING_PLANTATION_ALLSPICES",
+   "BUILDING_PLANTATION_CINNAMON",
+   "BUILDING_PLANTATION_COCOA",
+   "BUILDING_PLANTATION_COFFEE",
+   "BUILDING_PLANTATION_FRANKINCENSE",
+   "BUILDING_PLANTATION_NUTMEG",
+   "BUILDING_PLANTATION_SAFFRON",
+   "BUILDING_PLANTATION_SUGARCANE",
+   "BUILDING_PLANTATION_TEA",
+   "BUILDING_PLANTATION_VANILLA",
+   "BUILDING_ROASTING_HOUSE",
+   "BUILDING_TEA_HOUSE"
+  ],
+  "techs": [
+   "TECH_DRUG_TRADE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SALT_PROCESSING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DIPLOMACY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CURRENCY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CALENDAR",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "research": 614
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/spice_trade.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SPICE_TRADE",
+  "soundMP": "AS2D_TECH_SPICE_TRADE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SPICE_TRADE",
+  "civilopedia": "TXT_KEY_TECH_SPICE_TRADE_PEDIA",
+  "quote": "TXT_KEY_TECH_SPICE_TRADE_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 8,
+  "tradeable": true,
+  "gridX": 36,
+  "gridY": 5
+ }
+}

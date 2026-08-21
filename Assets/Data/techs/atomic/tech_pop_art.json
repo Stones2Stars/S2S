@@ -1,0 +1,72 @@
+{
+ "type": "TECH_POP_ART",
+ "enables": {
+  "buildings": [
+   "BUILDING_BEAUTY_SALON",
+   "BUILDING_COMICBOOK_STORE",
+   "BUILDING_MODELING_AGENCY",
+   "BUILDING_WARHOLS_FACTORY"
+  ],
+  "techs": [
+   "TECH_ATOMPUNK",
+   "TECH_POSTMODERNISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ANIMATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MODERN_ART",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MASS_MEDIA",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 12152
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_GOLD": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/popart.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_POP_ART",
+  "soundMP": "AS2D_TECH_POP_ART"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_POP_ART",
+  "civilopedia": "TXT_KEY_TECH_POP_ART_PEDIA",
+  "quote": "TXT_KEY_TECH_POP_ART_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 78,
+  "gridY": 13
+ }
+}

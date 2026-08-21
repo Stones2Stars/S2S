@@ -1,0 +1,111 @@
+{
+ "type": "BUILDING_CULTURE_JAPANESE",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "BUILDING_C_AC_ASIAN",
+    "BUILDING_C_L_ASIAN",
+    "TECH_SMITHING",
+    {
+     "any": [
+      {
+       "type": "FEATURE_FOREST_YOUNG",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_ANCIENT",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_FOREST_BURNT",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FISH",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_JAPANESE"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_HIMEJI_SAMURAI_CASTLE": {
+     "percent": 10
+    },
+    "BUILDING_NARAS_GIANT_BUDDHA": {
+     "percent": 10
+    },
+    "BUILDING_KOTOKU_IN": {
+     "percent": 10
+    },
+    "BUILDING_TSUKIJI_FISH_MARKET": {
+     "percent": 10
+    },
+    "BUILDING_TOKYO_SKY_TREE": {
+     "percent": 10
+    },
+    "BUILDING_TOKYO_TOWER": {
+     "percent": 10
+    },
+    "BUILDING_CHUO_SHINKANSEN": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 1800,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_JAPANESE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_JAPANESE",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_JAPANESE_PEDIA",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,371 @@
+{
+ "type": "BUILDING_MANUFACTURING_DISTRICT",
+ "enables": {
+  "buildings": [
+   "BUILDING_ELECTRONICS_MANUFACTURING_DISTRICT",
+   "BUILDING_GUILD_GLASSBLOWERS",
+   "BUILDING_GUILD_GOLDSMITHS",
+   "BUILDING_GUILD_POTTERS",
+   "BUILDING_HARAPPAN_FAKE_GEMS",
+   "BUILDING_JADE_DEATH_MASK_CARVER",
+   "BUILDING_MATERIALS_CONGLOMERATE",
+   "BUILDING_MILITARY_INDUSTRIAL_COMPLEX",
+   "BUILDING_MING_VASE_WORKSHOP",
+   "BUILDING_NANOTECH_COMPLEX",
+   "BUILDING_PHIDIAS_STATUE_WORKSHOP",
+   "BUILDING_PICOTECH_COMPLEX",
+   "BUILDING_RED_AND_BLACK_WARE_PAINTER",
+   "BUILDING_TERRA_SIGILLATA_WORKSHOP",
+   "BUILDING_TEXTILE_MANUFACTURING_DISTRICT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MANUFACTURING_PLANT",
+    "TECH_RAPID_PROTOTYPING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_BARRELS",
+   "BONUS_BASKETS",
+   "BONUS_BEADS",
+   "BONUS_BICYCLES",
+   "BONUS_BOOKS",
+   "BONUS_CANDLES",
+   "BONUS_FIRECRACKERS",
+   "BONUS_FURNITURE",
+   "BONUS_GLASSWARE",
+   "BONUS_JEWELRY",
+   "BONUS_LACQUERWARE",
+   "BONUS_MASKS",
+   "BONUS_NEWSPAPERS",
+   "BONUS_PENCILS",
+   "BONUS_PHONOGRAPHS",
+   "BONUS_PORCELAIN",
+   "BONUS_POTTERY",
+   "BONUS_ROPE",
+   "BONUS_SADDLES",
+   "BONUS_SAILS",
+   "BONUS_SCULPTURES",
+   "BONUS_SKIS",
+   "BONUS_TERRACOTTA",
+   "BONUS_TIRES",
+   "BONUS_TOYS",
+   "BONUS_TYPEWRITERS",
+   "BONUS_WATER_BOTTLES"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    175,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BREAD",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_AMBER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BAMBOO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BEADS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BRASS_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CHEMICALS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CLAM",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COPPER_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COPPER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ELECTRUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FEATHERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_GEMSTONE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GOLD_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_IVORY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_JADE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_LEAD_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_PEARLS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_PLASTIC",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PLATINUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_POTASH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_PRIME_TIMBER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_RUBBER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SILVER_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TIN_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TIN_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WOOD",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    90,
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1,
+   "SPECIALIST_ENGINEER": 2
+  }
+ },
+ "cost": {
+  "production": 2405,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MANUFACTURING_DISTRICT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MANUFACTURING_DISTRICT",
+  "civilopedia": "TXT_KEY_BUILDING_MANUFACTURING_DISTRICT_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

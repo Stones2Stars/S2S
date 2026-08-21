@@ -1,0 +1,134 @@
+{
+ "type": "UNIT_BRACEWELL_PROBE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
+    "TECH_ACNP_PROPULSION"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 3
+ },
+ "movement": {
+  "unit": {
+   "flat": 12
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_BRACEWELL_PROBE"
+  }
+ },
+ "skills": [
+  "canMoveAllTerrain",
+  "canMoveImpassable",
+  "ignoreTerrainCost"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SPACE_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_EARLY_SPACESHIP",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_EXPLORE_BRACEWELL",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_BRACEWELL"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreBracewell",
+     "code": "from CvPythonExtensions import *\nimport random\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tvalid_terrain_strings = ['STAR_CLUSTER','MILKY_WAY','ORION_ARM']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_GALACTIC_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore the galaxy\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_ANCIENT_CIVILIZATION",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_ANCIENT_CIVILIZATION"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreAncientCivilization",
+     "code": "from CvPythonExtensions import *\nimport random\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tvalid_bonus_strings = ['ABANDONED_CIVILIZATION']\n\tvalid_bonuses = [gc.getInfoTypeForString('BONUS_'+t) for t in valid_bonus_strings]\n\treturn plot.getBonusType(-1) in valid_bonuses\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_ANCIENT_CIVILIZATION_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Excavate an ancient civilization\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   },
+   {
+    "mission": "MISSION_EXPLORE_GALACTIC_CORE",
+    "requires": {
+     "outcome": "OUTCOME_EXPLORE_GALACTIC_CORE"
+    },
+    "chance": 100,
+    "python": {
+     "module": "ExploreGalacticCore",
+     "code": "from CvPythonExtensions import *\nimport random\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tvalid_terrain_strings = ['GALACTIC_CORE']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_GALACTIC_CORE_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore the galactic core.\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    }
+   }
+  ]
+ },
+ "cost": {
+  "production": 5000,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BRACEWELL_PROBE",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_BRACEWELL_PROBE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_BRACEWELL_PROBE",
+  "civilopedia": "TXT_KEY_UNIT_BRACEWELL_PROBE_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "workRate": 250
+  }
+ }
+}

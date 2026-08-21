@@ -1,0 +1,69 @@
+{
+ "type": "SPECIALIST_CELEBRITY",
+ "commerce": {
+  "city": {
+   "flat": 2
+  },
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_GLOBE_THEATRE",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_ROCK_N_ROLL",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 2,
+      "enabled": {
+       "type": "BUILDING_WALK_OF_FAME",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ENTERTAINER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/celebrity.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/celebrity.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_CELEBRITY",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
+  "visible": true,
+  "categories": [
+   "CATEGORY_ASSIGNABLE_SPECIALISTS",
+   "CATEGORY_SPECIALIST_GROUP_CULTURAL"
+  ]
+ }
+}

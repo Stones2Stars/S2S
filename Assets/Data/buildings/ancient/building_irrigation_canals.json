@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_IRRIGATION_CANALS",
+ "enables": {
+  "buildings": [
+   "BUILDING_NORIA"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_RIVER_ADMINISTRATION"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "TECH_IRRIGATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_RIVER_ADMINISTRATION"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "HAS_RIVER"
+     }
+    ]
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 160,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_IRRIGATION_CANALS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_AQUEDUCT"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_IRRIGATION_CANALS",
+  "civilopedia": "TXT_KEY_BUILDING_IRRIGATION_CANALS_PEDIA",
+  "worth": 3,
+  "conquestProbability": 90,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

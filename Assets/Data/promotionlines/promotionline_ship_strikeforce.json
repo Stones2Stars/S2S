@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_SHIP_STRIKEFORCE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/shipStrikeForce1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_STRIKEFORCE",
+  "unitCombats": [
+   "UNITCOMBAT_COMMODORE"
+  ]
+ }
+}

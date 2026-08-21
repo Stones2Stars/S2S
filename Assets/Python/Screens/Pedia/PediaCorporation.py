@@ -1,6 +1,10 @@
 # Pedia overhaul by Toffer for Caveman2Cosmos.
 
 from CvPythonExtensions import *
+GC = CyGlobalContext()
+INFO = CyInfo()
+TEXT = CyGameTextMgr()
+TRNSLTR = CyTranslator()
 
 class PediaCorporation:
 
@@ -30,9 +34,7 @@ class PediaCorporation:
 		self.H_MAIN_CONT = H_TOP_ROW - H_TOP_ROW / 8
 
 	def interfaceScreen(self, iTheCorporation):
-		GC = CyGlobalContext()
 		TRNSLTR = CyTranslator()
-		CvTheCorporationInfo = GC.getCorporationInfo(iTheCorporation)
 		screen = self.main.screen()
 
 		iWidGeneral		= WidgetTypes.WIDGET_GENERAL
@@ -60,32 +62,32 @@ class PediaCorporation:
 		W_HALF_PP = self.W_HALF_PP
 
 		# Main Panel
-		szCorpName = u'%c ' % CvTheCorporationInfo.getHeadquarterChar() + CvTheCorporationInfo.getDescription() + u' %c' % CvTheCorporationInfo.getChar()
+		szCorpName = u'%c ' % TEXT.getHeadquarterSymbolChar(iTheCorporation) + INFO.getDescription("CORPORATION_", iTheCorporation) + u' %c' % TEXT.getSymbolChar("CORPORATION_", iTheCorporation)
 		screen.setText(self.main.getNextWidgetName(), "", uFontEdge + szCorpName, 1<<0, X_COL_1, 0, 0, FontTypes.TITLE_FONT, iWidGeneral, 0, 0)
 		screen.addPanel(self.main.getNextWidgetName(), "", "", False, False, X_COL_1, Y_TOP_ROW_1 + 3, W_PEDIA_PAGE, H_TOP_ROW, PanelStyles.PANEL_STYLE_MAIN)
-		screen.addDDSGFC(self.main.getNextWidgetName(), CvTheCorporationInfo.getButton(), X_COL_1 - 2, Y_TOP_ROW_1 + 8, S_ICON, S_ICON, iWidGeneral, -1, -1)
+		screen.addDDSGFC(self.main.getNextWidgetName(), INFO.getButton("CORPORATION_", iTheCorporation), X_COL_1 - 2, Y_TOP_ROW_1 + 8, S_ICON, S_ICON, iWidGeneral, -1, -1)
 		# Loop through buildings and units
 		aReqBuildList = []
 		aConsumesList = []
 		aList1 = []
 		aList2 = []
-		for iBuilding in range(GC.getNumBuildingInfos()):
-			CvBuildingInfo = GC.getBuildingInfo(iBuilding)
-			if CvBuildingInfo.getPrereqCorporation() == iTheCorporation:
-				aList1.append((CvBuildingInfo.getButton(), iBuilding))
-			elif CvBuildingInfo.getFoundsCorporation() == iTheCorporation:
-				aReqBuildList.append((CvBuildingInfo.getButton(), iBuilding))
-		for iUnit in range(GC.getNumUnitInfos()):
-			CvUnitInfo = GC.getUnitInfo(iUnit)
-			if CvUnitInfo.getPrereqCorporation() == iTheCorporation:
-				aList2.append((CvUnitInfo.getButton(), iUnit))
+		#  The corporation already carries both relations, so neither panel sweeps a registry: REQUIRED_BY is the
+		#  exact axis for "what needs me", and the HQ buildings are the corp's own slot. RELATED would merge the
+		#  two and could not tell them apart, which is precisely what these lists are for.
+		for iBuilding in INFO.getEdgeIds("CORPORATION_", iTheCorporation, EdgeFamily.EDGEF_REQUIRED_BY, EdgeBucket.EDGEB_BUILDINGS):
+			aList1.append((INFO.getButton("BUILDING_", iBuilding), iBuilding))
+		for iBuilding in INFO.getIdList("CORPORATION_", iTheCorporation, IdListSlot.PYLIST_HEADQUARTERS_BUILDINGS):
+			aReqBuildList.append((INFO.getButton("BUILDING_", iBuilding), iBuilding))
+		for iUnit in INFO.getEdgeIds("CORPORATION_", iTheCorporation, EdgeFamily.EDGEF_REQUIRED_BY, EdgeBucket.EDGEB_UNITS):
+			aList2.append((INFO.getButton("UNIT_", iUnit), iUnit))
 		# Requires
-		iTech = CvTheCorporationInfo.getTechPrereq()
+		#  A corporation may be gated by more than one tech, so this reads the list rather than one id.
+		aTechs = INFO.getEdgeIds("CORPORATION_", iTheCorporation, EdgeFamily.EDGEF_ENABLED_BY, EdgeBucket.EDGEB_TECHS)
 		aReqBonusListLength = 0
-		for iBonus in CvTheCorporationInfo.getPrereqBonuses():
-			aConsumesList.append((GC.getBonusInfo(iBonus).getButton(), iBonus))
+		for iBonus in INFO.getIdList("CORPORATION_", iTheCorporation, IdListSlot.PYLIST_CONSUMED_BONUSES):
+			aConsumesList.append((INFO.getButton("BONUS_", iBonus), iBonus))
 			aReqBonusListLength += 1
-		if aReqBuildList or aConsumesList or iTech != -1:
+		if aReqBuildList or aConsumesList or aTechs:
 			enumBS = GenericButtonSizes.BUTTON_SIZE_CUSTOM
 			X_MAIN_CONT = self.X_MAIN_CONT
 			Y_MAIN_CONT = self.Y_MAIN_CONT
@@ -93,14 +95,15 @@ class PediaCorporation:
 			H_MAIN_CONT = self.H_MAIN_CONT
 			mainCont = self.main.getNextWidgetName()
 			screen.addPanel(mainCont, "", "", False, True, X_MAIN_CONT, Y_MAIN_CONT, W_MAIN_CONT, H_MAIN_CONT, iPanelEmpty)
-			if aReqBuildList or iTech != -1:
+			if aReqBuildList or aTechs:
 				childMainCont = self.main.getNextWidgetName()
 				childMainContList = self.main.getNextWidgetName()
 				screen.attachPanel(mainCont, childMainCont, "", "", True, True, iPanelEmpty)
 				screen.attachLabel(childMainCont, "", uFont4b + "Requires")
 				screen.attachPanel(childMainCont, childMainContList, "", "", False, True, iPanelEmpty)
-				if iTech != -1:
-					screen.attachImageButton(childMainContList, "", GC.getTechInfo(iTech).getButton(), enumBS, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iTech, 2, False)
+				if aTechs:
+					for iTech in aTechs:
+						screen.attachImageButton(childMainContList, "", INFO.getButton("TECH_", iTech), enumBS, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, iTech, 2, False)
 					if aReqBuildList:
 						screen.attachLabel(childMainContList, "", "<font=3> &#38 ")
 				for i, entry in enumerate(aReqBuildList):
@@ -162,7 +165,7 @@ class PediaCorporation:
 		else:
 			H_HIST += H_BOT_ROW
 		# History
-		szHistoryText = CvTheCorporationInfo.getCivilopedia()
+		szHistoryText = INFO.getCivilopedia("CORPORATION_", iTheCorporation)
 		if szHistoryText:
 			szHistory = TRNSLTR.getText("TXT_KEY_PEDIA_HISTORY", ())
 			screen.addPanel(self.main.getNextWidgetName(), szHistory, "", False, True, X_COL_1, Y_HIST, W_PEDIA_PAGE, H_HIST, iPanelBlue50)

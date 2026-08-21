@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_HUN",
+ "enables": {
+  "units": [
+   "UNIT_TARKAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HUN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HUN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

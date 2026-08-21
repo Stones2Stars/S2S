@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_INTERSTELLAR_GOVERNMENT_NOOCRACY",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COLONY_GOVERNANCE",
+    {
+     "type": "MAPCATEGORY_GALACTIC",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_INTERSTELLAR_GOVERNMENT_HOLACRACY",
+    "BUILDING_INTERSTELLAR_GOVERNMENT_MACHINE_RULE"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -5
+   }
+  }
+ },
+ "cost": {
+  "production": 1757,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_GOVERNMENT_NOOCRACY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_GOVERNMENT_NOOCRACY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_GOVERNMENT_NOOCRACY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC"
+  ]
+ }
+}

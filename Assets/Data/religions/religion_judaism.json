@@ -1,0 +1,101 @@
+{
+ "type": "RELIGION_JUDAISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARK_OF_THE_COVENANT",
+   "BUILDING_JEWISH_MONASTERY",
+   "BUILDING_JEWISH_SYNAGOGUE",
+   "BUILDING_JEWISH_TEMPLE",
+   "BUILDING_MASADA",
+   "BUILDING_SOLOMONS_TEMPLE"
+  ],
+  "units": [
+   "UNIT_JEWISH_MISSIONARY"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_JUDAISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_JUDAISM"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_JUDAISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_JUDAISM"
+     }
+    }
+   ]
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 0,
+   "icon": "Art/Interface/Buttons/Religions/Judaism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Judaism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Judaism.dds",
+   "movie": {
+    "file": "Art/Movies/Religion/Judaism/Jud_Found.nif",
+    "sound": "AS2D_BUILD_JEWISH_MOVIE"
+   }
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_JEWISH"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_JUDAISM",
+  "adjective": "TXT_KEY_TECH_JUDAISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_JUDAISM_PEDIA",
+  "spreadFactor": 30
+ }
+}

@@ -13,7 +13,12 @@
 from CvPythonExtensions import *
 import string
 
-gc = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+INFO = CyInfo()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 ArtFileMgr = CyArtFileMgr()
 localText = CyTranslator()
 
@@ -52,7 +57,7 @@ class SevoPediaSpecialist:
 
 		screen.addPanel(self.top.getNextWidgetName(), "", "", False, False, self.X_MAIN_PANEL, self.Y_MAIN_PANEL, self.W_MAIN_PANEL, self.H_MAIN_PANEL, PanelStyles.PANEL_STYLE_BLUE50)
 		screen.addPanel(self.top.getNextWidgetName(), "", "", False, False, self.X_ICON, self.Y_ICON, self.W_ICON, self.H_ICON, PanelStyles.PANEL_STYLE_MAIN)
-		screen.addDDSGFC(self.top.getNextWidgetName(), gc.getSpecialistInfo(self.iSpecialist).getButton(), self.X_ICON + self.W_ICON/2 - self.ICON_SIZE/2, self.Y_ICON + self.H_ICON/2 - self.ICON_SIZE/2, self.ICON_SIZE, self.ICON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		screen.addDDSGFC(self.top.getNextWidgetName(), INFO.getButton("SPECIALIST_", self.iSpecialist), self.X_ICON + self.W_ICON/2 - self.ICON_SIZE/2, self.Y_ICON + self.H_ICON/2 - self.ICON_SIZE/2, self.ICON_SIZE, self.ICON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		self.placeSpecial()
 		self.placeText()
@@ -78,7 +83,7 @@ class SevoPediaSpecialist:
 		screen = self.top.getScreen()
 		panelName = self.top.getNextWidgetName()
 		screen.addPanel(panelName, "", "", True, True, self.X_TEXT, self.Y_TEXT, self.W_TEXT, self.H_TEXT, PanelStyles.PANEL_STYLE_BLUE50)
-		szText = gc.getSpecialistInfo(self.iSpecialist).getCivilopedia()
+		szText = INFO.getCivilopedia("SPECIALIST_", self.iSpecialist)
 		screen.attachMultilineText(panelName, "Text", szText, WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 
 

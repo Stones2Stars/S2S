@@ -1,0 +1,79 @@
+{
+ "type": "TECH_SYNTHETIC_SENTIENCE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AI_INVESTMENT",
+   "BUILDING_CISLUNAR_CONTROL_SYSTEM",
+   "BUILDING_DIGITAL_RESURRECTION"
+  ],
+  "techs": [
+   "TECH_EXOCORTEX_NETWORKS",
+   "TECH_SMART_DRUGS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MASS_SURVEILLANCE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HOLOGRAPHICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AUTOMATED_ROBOTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GENE_JURISPRUDENCE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 40165
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/syntheticsentience.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SYNTHETIC_SENTIENCE",
+  "soundMP": "AS2D_TECH_SYNTHETIC_SENTIENCE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SYNTHETIC_SENTIENCE",
+  "civilopedia": "TXT_KEY_TECH_SYNTHETIC_SENTIENCE_PEDIA",
+  "quote": "TXT_KEY_TECH_SYNTHETIC_SENTIENCE_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 103,
+  "gridY": 17
+ }
+}

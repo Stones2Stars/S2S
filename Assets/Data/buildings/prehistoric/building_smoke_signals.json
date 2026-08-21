@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_SMOKE_SIGNALS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PLASTIC_ELECTRONICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_SEAL_MAKER"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FIRE_MAKING",
+    {
+     "any": [
+      "BUILDING_IMU",
+      "BUILDING_FIRE_PIT",
+      "BUILDING_BONFIRE",
+      "BUILDING_CHARCOAL_BURNER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_SEAL_MAKER",
+    "BUILDING_HYPERMARKET"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 62,
+  "countModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SMOKE_SIGNALS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SMOKE_SIGNALS",
+  "civilopedia": "TXT_KEY_BUILDING_SMOKE_SIGNALS_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

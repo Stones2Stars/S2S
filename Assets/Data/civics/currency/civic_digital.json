@@ -1,0 +1,71 @@
+{
+ "type": "CIVIC_DIGITAL",
+ "enables": {
+  "hurries": [
+   "HURRY_GOLD"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": -1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 5
+   },
+   "numCities": {
+    "percent": 3
+   },
+   "corporation": {
+    "percent": 10
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "percent": [
+     {
+      "value": 20,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": -1
+  }
+ },
+ "inflation": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/currency_digital.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_DIGITAL",
+  "civilopedia": "TXT_KEY_CIVIC_DIGITAL_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_DIGITAL_STRATEGY",
+  "civicOption": "CIVICOPTION_CURRENCY",
+  "anarchyLength": 2,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

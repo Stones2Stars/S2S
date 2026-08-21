@@ -1,0 +1,16 @@
+{
+ "type": "VOTE_UN_ASSIGN_CITY",
+ "voteSource": [
+  "DIPLOVOTE_UN"
+ ],
+ "threshold": {
+  "population": 62,
+  "minVoters": 3
+ },
+ "effect": {
+  "assignCity": true
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_UN_ASSIGN_CITY"
+ }
+}

@@ -1,0 +1,118 @@
+{
+ "type": "IMPROVEMENT_MANUFACTURING_COMPLEX",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MANUFACTURING",
+     "scope": "team"
+    },
+    "IS_FLATLANDS",
+    {
+     "terrain": [
+      "TERRAIN_BARREN",
+      "TERRAIN_DESERT",
+      "TERRAIN_GRASSLAND",
+      "TERRAIN_ICE",
+      "TERRAIN_LUSH",
+      "TERRAIN_PLAINS",
+      "TERRAIN_MUDDY",
+      "TERRAIN_PERMAFROST",
+      "TERRAIN_ROCKY",
+      "TERRAIN_BADLAND",
+      "TERRAIN_JAGGED",
+      "TERRAIN_SCRUB",
+      "TERRAIN_TAIGA",
+      "TERRAIN_TUNDRA"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": -3
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    12,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ROBOTICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_RAPID_PROTOTYPING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PLANETARY_MANUFACTURING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    4,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_3D_PRINTING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_RAPID_PROTOTYPING",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_AIR_POLLUTION": 10,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  }
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_MANUFACTURING_COMPLEX"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_INDUSTRIAL_COMPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_PEDIA",
+  "advancedStart": {
+   "cost": -1
+  },
+  "pillageGold": 150,
+  "pillageTo": "IMPROVEMENT_FACTORY"
+ }
+}

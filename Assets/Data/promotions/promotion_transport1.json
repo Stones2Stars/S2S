@@ -1,0 +1,39 @@
+{
+ "type": "PROMOTION_TRANSPORT1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_TRANSPORT2"
+  ]
+ },
+ "combat": {
+  "unit": {
+   "percent": -20
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_TRANSPORT": 1
+ },
+ "disabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/transport.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,3,13"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_TRANSPORT1",
+  "unitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS"
+  ],
+  "cargoPrereq": true
+ }
+}

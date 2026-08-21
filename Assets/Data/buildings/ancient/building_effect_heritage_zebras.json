@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_EFFECT_HERITAGE_ZEBRAS",
+ "enables": {
+  "buildings": [
+   "BUILDING_MILITARY_STANDARD_ZEBRA"
+  ],
+  "units": [
+   "UNIT_ZEBRA_ARCHER",
+   "UNIT_ZEBRA_CAVALRY",
+   "UNIT_ZEBRA_CHARIOT",
+   "UNIT_ZEBRA_CUIRASSIER",
+   "UNIT_ZEBRA_KNIGHT"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_HERITAGE",
+    "TECH_MEGAFAUNA_DOMESTICATION"
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_HERITAGE_ZEBRAS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_HERITAGE_ZEBRAS",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_ZEBRA_PEDIA",
+  "help": "TXT_KEY_BUILDING_ANIMAL_TRAINER_ZEBRA_HELP",
+  "notConstructible": true,
+  "worth": 2,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

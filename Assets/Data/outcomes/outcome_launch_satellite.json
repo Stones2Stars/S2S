@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_LAUNCH_SATELLITE",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_LAUNCH_SATELLITE",
+  "message": "TXT_KEY_OUTCOME_LAUNCH_SATELLITE_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SATELLITES"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

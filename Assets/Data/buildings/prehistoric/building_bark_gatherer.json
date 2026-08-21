@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_BARK_GATHERER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LUMBER_MILL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_BARK_WORKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_LUMBER_MILL",
+    "BUILDING_AGROFOREST"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_BARK"
+  ]
+ },
+ "production": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 80,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BARK_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BARK_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_BARK_GATHERER_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

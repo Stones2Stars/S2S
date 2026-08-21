@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_BEE_BOMBS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_EXPLOSIVES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_APICULTURE",
+    {
+     "any": [
+      "BUILDING_APIARY",
+      "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_POTTERY",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "adjacentDamage": {
+    "percent": 10
+   }
+  }
+ },
+ "cost": {
+  "production": 132,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BEE_BOMBS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BEE_BOMBS",
+  "civilopedia": "TXT_KEY_BUILDING_BEE_BOMBS_PEDIA",
+  "centerInCity": true,
+  "worth": 1,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

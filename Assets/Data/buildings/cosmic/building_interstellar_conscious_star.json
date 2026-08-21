@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_INTERSTELLAR_CONSCIOUS_STAR",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN",
+    "TECH_NOOGENESIS",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 125
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 7077,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CONSCIOUS_STAR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_CONSCIOUS_STAR",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CONSCIOUS_STAR_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

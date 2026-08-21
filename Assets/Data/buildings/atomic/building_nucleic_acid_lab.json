@@ -1,0 +1,151 @@
+{
+ "type": "BUILDING_NUCLEIC_ACID_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_AQUAPONICS_TANKS",
+   "BUILDING_BACTERIOPHAGE_THERAPY_CLINIC",
+   "BUILDING_BIOINFORMATICS_LAB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MICROBIOLOGY_LAB",
+    "TECH_MOLECULAR_BIOLOGY",
+    {
+     "any": [
+      "BUILDING_MOLECULAR_BIOLOGY_LAB",
+      "BUILDING_CHEMICALS_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 7,
+     "enabled": "TECH_GENETICS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_GENE_MANIPULATION"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_BIOMATERIALS"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_BIOINFORMATICS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_GENESIS_BIOLOGY"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_CLONING"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_ASTROBIOLOGY"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_BIOMATHEMATICS"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BIOPOLYMERS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ENZYMES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": [
+    {
+     "value": 8,
+     "enabled": "TECH_FORENSICS"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": "TECH_MOLECULAR_MEDICINE"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "underworld": {
+  "city": {
+   "investigation": {
+    "flat": 50
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 1410,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NUCLEIC_ACID_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NUCLEIC_ACID_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_NUCLEIC_ACID_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_YGGDRASIL_SEEDS",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_BIOTIC_SPHERE_WORLD",
+   "BUILDING_TRANSTELLAR_ALDERSON_DISK_FANTASY_ZONE"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_YGGDRASIL_SEEDS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_YGGDRASIL_SEEDS",
+  "civilopedia": "TXT_KEY_BONUS_YGGDRASIL_SEEDS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

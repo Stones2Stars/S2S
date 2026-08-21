@@ -1,0 +1,89 @@
+{
+ "type": "TECH_MEDICINE",
+ "enables": {
+  "bonuses": [
+   "BONUS_PHARMACEUTICALS"
+  ],
+  "buildings": [
+   "BUILDING_DENTIST",
+   "BUILDING_FACTORY_PHARMACEUTICALS",
+   "BUILDING_HOSPITAL",
+   "BUILDING_HQ_SIDS_SUSHI_CO",
+   "BUILDING_PERE_LACHAISE_CEMETERY",
+   "BUILDING_RED_CROSS",
+   "BUILDING_SIDS_SUSHI_RESTAURANT",
+   "BUILDING_VETERINARIAN"
+  ],
+  "promotions": [
+   "PROMOTION_DISEASE_CONTROL6",
+   "PROMOTION_FIRST_AID_ANIMALS4",
+   "PROMOTION_FIRST_AID_PEOPLE4"
+  ],
+  "techs": [
+   "TECH_ANTIBIOTICS",
+   "TECH_CRIMINOLOGY",
+   "TECH_REFRIGERATION"
+  ],
+  "units": [
+   "UNIT_FLORENCE_NIGHTINGALE",
+   "UNIT_MEDIC",
+   "UNIT_MEDICAL_VET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NITROGLYCERIN",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MODERN_SANITATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 6673
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Medicine.dds,Art/Interface/Buttons/TechTree_Atlas.dds,4,5"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MEDICINE",
+  "soundMP": "AS2D_TECH_MP_MEDICINE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MEDICINE",
+  "civilopedia": "TXT_KEY_TECH_MEDICINE_PEDIA",
+  "quote": "TXT_KEY_TECH_MEDICINE_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 67,
+  "gridY": 1
+ }
+}

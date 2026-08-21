@@ -1,0 +1,36 @@
+{
+ "type": "BUILDING_EFFECT_ACHIEVEMENT_MEDICAL",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_ANCIENT_MEDICINE"
+   ]
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "empire": {
+   "flat": -10
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_ACHIEVEMENT_MEDICAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_MEDICAL",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_MEDICAL_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

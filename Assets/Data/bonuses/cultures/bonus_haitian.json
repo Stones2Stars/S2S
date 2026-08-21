@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_HAITIAN",
+ "enables": {
+  "units": [
+   "UNIT_HAITIAN_REBEL"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HAITIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HAITIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

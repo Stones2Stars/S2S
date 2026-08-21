@@ -1,0 +1,22 @@
+{
+ "type": "BONUS_CRYSTALPUNK",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANTARCTIC_SKYSCRAPER",
+   "BUILDING_CRYSTAL_JEWELLER",
+   "BUILDING_ENERGIZED_CRYSTALS",
+   "BUILDING_PHILOSOPHERS_CASTLE"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CRYSTALPUNK"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CRYSTALPUNK",
+  "civilopedia": "TXT_KEY_BONUS_CRYSTALPUNK_PEDIA",
+  "bonusClassType": "BONUSCLASS_GENMODS",
+  "source": "culture"
+ }
+}

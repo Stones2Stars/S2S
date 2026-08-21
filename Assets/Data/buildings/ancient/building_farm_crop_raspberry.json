@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_FARM_CROP_RASPBERRY",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_BERRIES"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FARMSCRAPER_II"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_IRRIGATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_GRAPES",
+     "scope": "city",
+     "connection": "onSite"
+    },
+    {
+     "type": "BONUS_SUGAR",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ],
+   "dormant": [
+    "BUILDING_FARMSCRAPER_II"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 160,
+  "sizeModifier": 3,
+  "countModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FARM_CROP_RASPBERRY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_CROP_RASPBERRY",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_CROP_RASPBERRY_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

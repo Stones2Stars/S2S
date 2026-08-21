@@ -1,0 +1,95 @@
+{
+ "type": "TECH_RAILROAD",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_CALIFORNIAN",
+   "BUILDING_CULTURE_IRAQI",
+   "BUILDING_CULTURE_PALESTINIAN",
+   "BUILDING_GOLDEN_SPIKE",
+   "BUILDING_GRAND_CENTRAL_STATION",
+   "BUILDING_HQ_MINING_INC",
+   "BUILDING_MINING_INC_SURVEY",
+   "BUILDING_NATIONAL_RAILROAD_MUSEUM",
+   "BUILDING_ORIENT_EXPRESS",
+   "BUILDING_RAILROAD_STATION",
+   "BUILDING_RAIL_SHIPPING_WAREHOUSE",
+   "BUILDING_STREET_CARS"
+  ],
+  "builds": [
+   "BUILD_PAVED_ROAD",
+   "BUILD_RAILROAD"
+  ],
+  "techs": [
+   "TECH_IMPERIALISM",
+   "TECH_REFINING"
+  ],
+  "units": [
+   "UNIT_ALTAMIRANO",
+   "UNIT_BADI_VII",
+   "UNIT_DARDO_ROCHA",
+   "UNIT_EDUARDO_ANGELIM",
+   "UNIT_MENELIK",
+   "UNIT_POMARE_IV"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_PATH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STEAM_POWER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 5460
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/Railroad.dds,Art/Interface/Buttons/TechTree_Atlas.dds,8,11"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_RAILROAD",
+  "soundMP": "AS2D_TECH_MP_RAILROAD"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_RAILROAD",
+  "civilopedia": "TXT_KEY_TECH_RAILROAD_PEDIA",
+  "quote": "TXT_KEY_TECH_RAILROAD_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 63,
+  "gridY": 19
+ }
+}

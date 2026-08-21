@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_X_SEED_4000",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MEGASTRUCTURE_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_ARCOLOGY",
+      "BUILDING_HOUSING_COLONY_ARCOLOGY",
+      "BUILDING_LAUNCH_ARCOLOGY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_REWILDERNESS": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 32730,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_XSEED_4000"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_X_SEED_4000",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_X_SEED_4000",
+  "civilopedia": "TXT_KEY_BUILDING_X_SEED_4000_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

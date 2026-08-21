@@ -1,0 +1,44 @@
+{
+ "type": "IMPROVEMENT_SUPERCLUSTER_COLONY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COSMIC_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_OBSERVABLE_UNIVERSE"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 25
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_SUPERCLUSTER_COLONY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_SUPERCLUSTER_COLONY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SUPERCLUSTER_COLONY_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

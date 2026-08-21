@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_KNOWLEDGE_INHERITANCE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ELDER_COUNCIL"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPULSORY_EDUCATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LYCEUM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ORAL_TRADITION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_LYCEUM",
+    "BUILDING_ELEMENTARY_SCHOOL",
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 40,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INHERITANCE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_KNOWLEDGE_INHERITANCE",
+  "civilopedia": "TXT_KEY_BUILDING_KNOWLEDGE_INHERITANCE_PEDIA",
+  "worth": 1,
+  "conquestProbability": 15,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

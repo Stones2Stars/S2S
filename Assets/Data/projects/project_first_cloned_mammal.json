@@ -1,0 +1,40 @@
+{
+ "type": "PROJECT_FIRST_CLONED_MAMMAL",
+ "enables": {
+  "specialBuildings": [
+   "SPECIALBUILDING_CLONING_LABORATORY"
+  ]
+ },
+ "allowed": {
+  "world": 1
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "create": 15400
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Buildings/Cloned_mammal.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROJECT_FIRST_CLONED_MAMMAL",
+  "civilopedia": "TXT_KEY_PROJECT_FIRST_CLONED_MAMMAL_PEDIA",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

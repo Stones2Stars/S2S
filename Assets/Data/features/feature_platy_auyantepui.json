@@ -1,0 +1,28 @@
+{
+ "type": "FEATURE_PLATY_AUYANTEPUI",
+ "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
+  "nukeImmune",
+  "countsAsPeak",
+  "ignoreTerrainCulture"
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_AUYANTEPUI"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_JUNGLE_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_AUYANTEPUI",
+  "civilopedia": "TXT_KEY_FEATURE_AUYANTEPUI_PEDIA",
+  "noCoast": true,
+  "requiresFlatlands": true,
+  "validTerrains": [
+   "TERRAIN_GRASSLAND"
+  ]
+ }
+}

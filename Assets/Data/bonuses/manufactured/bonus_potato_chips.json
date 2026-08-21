@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_POTATO_CHIPS",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_POTATO_CHIPS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_POTATO_CHIPS",
+  "civilopedia": "TXT_KEY_BONUS_POTATO_CHIPS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

@@ -1,0 +1,119 @@
+{
+ "type": "RELIGION_ISLAM",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALHAMBRA",
+   "BUILDING_BLUE_MOSQUE",
+   "BUILDING_GREAT_MOSQUE_OF_DESERT",
+   "BUILDING_ISLAMIC_MONASTERY",
+   "BUILDING_ISLAMIC_MOSQUE",
+   "BUILDING_ISLAMIC_TEMPLE",
+   "BUILDING_MADRASSA",
+   "BUILDING_SULTAN_QABOOS_GRAND_MOSQUE"
+  ],
+  "units": [
+   "UNIT_ISLAMIC_MISSIONARY"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_ISLAM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_ISLAM"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_ISLAM"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 6,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_ISLAM"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_ISLAM"
+     }
+    }
+   ]
+  }
+ },
+ "grants": {
+  "freeUnit": "UNIT_ISLAMIC_MISSIONARY",
+  "numFreeUnits": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 2,
+   "icon": "Art/Interface/Buttons/Religions/Islam.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Islam.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Islam.dds",
+   "movie": {
+    "file": "Art/Movies/Religion/Islam/Isl_Found.nif",
+    "sound": "AS2D_BUILD_ISLAMIC_MOVIE"
+   }
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_ISLAMIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ISLAM",
+  "adjective": "TXT_KEY_TECH_ISLAM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_ISLAM_PEDIA",
+  "spreadFactor": 60
+ }
+}

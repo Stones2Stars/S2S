@@ -1,422 +1,197 @@
-//------------------------------------------------------------------------------------------------
-//  FILE:    CvEraInfo.cpp
-//------------------------------------------------------------------------------------------------
-#include "CvGameCoreDLL.h"
-#include "CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "CvPlayerAI.h"
-#include "CvPython.h"
-#include "CvXMLLoadUtility.h"
-#include "CvXMLLoadUtilityModTools.h"
-#include "CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
+//
+//	CvEraInfo -- the era poco's exemplar reads on top of the base section dispatch (see the header). The
+//	legacy modifier-family scalar MIRRORS are DEAD (wave D): the base dispatch compiles the world-scope
+//	families into m_modifiers and the point getters read the compiled sums (docs/architecture/patterns.md §Materialize at mapFrom --
+//	no raw-JSON family walker survives). mapFrom materializes ONCE, idempotently: the §5 grants views, the
+//	identity pacing config, and the era audio (the two runtime-resolved audio-tag arrays).
+//
+
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson, gDLL, AUDIOTAG_*, SAFE_DELETE_ARRAY
+#include "CvInfos.h"              // umbrella: keeps the unity batch's info-type defs whole (leakage guard)
+#include "AI/CvGameAI.h"
+#include "Defines/CvGlobals.h"    // GC (getNumCitySizeTypes)
 #include "CvEraInfo.h"
+#include "CvJsonParse.h"          // jsonChildObj / jsonIdInt / jsonIdBool / jsonIdStr / jsonResolveId
 
 
-//------------------------------------------------------------------------------------------------------
-//
-//  CvEraInfo
-//
-
-CvEraInfo::CvEraInfo() :
-m_iNumSoundtracks(0),
-m_paiCitySoundscapeSciptIds(NULL),
-m_paiSoundtracks(NULL)
+CvEraInfo::CvEraInfo()
+	: m_iStartingUnitMultiplier(0)
+	, m_iStartingDefenseUnits(0)
+	, m_iStartingWorkerUnits(0)
+	, m_iStartingExploreUnits(0)
+	, m_iStartingGold(0)
+	, m_iFreePopulation(0)
+	, m_iOrder(0)
+	, m_iAdvancedStartPoints(0)
+	, m_iHistoricalStartYear(0)
+	, m_iHistoricalEndYear(0)
+	, m_iNormalSpeedTurns(0)
+	, m_iSoundtrackSpace(0)
+	, m_iNumSoundtracks(0)
+	, m_bFirstSoundtrackFirst(false)
+	, m_paiSoundtracks(NULL)
+	, m_paiCitySoundscapeScriptIds(NULL)
 {
-	CvInfoUtil(this).initDataMembers();
-}
-
-
-// Every scalar XML field is declared here (#196); read/copy derive from it.
-// Still hand-written: the soundtrack/city-soundscape arrays (resolved through the runtime
-// audio-tag table, gDLL->getAudioTagIndex / SetVariableListTagPairForAudioScripts), and
-// getCheckSum (explicit — the legacy checksum omits several read fields; see below).
-void CvEraInfo::getDataMembers(CvInfoUtil& util)
-{
-	util
-		.add(m_iHistoricalStartYear, L"iHistoricalStartYear")
-		.add(m_iHistoricalEndYear, L"iHistoricalEndYear")
-		.add(m_iNormalSpeedTurns, L"iNormalSpeedTurns")
-		.add(m_bNoGoodies, L"bNoGoodies")
-		.add(m_bNoAnimals, L"bNoAnimals")
-		.add(m_bNoBarbUnits, L"bNoBarbUnits")
-		.add(m_bNoBarbCities, L"bNoBarbCities")
-		.add(m_iStartingUnitMultiplier, L"iStartingUnitMultiplier")
-		.add(m_iStartingDefenseUnits, L"iStartingDefenseUnits")
-		.add(m_iStartingWorkerUnits, L"iStartingWorkerUnits")
-		.add(m_iStartingExploreUnits, L"iStartingExploreUnits")
-		.add(m_iAdvancedStartPoints, L"iAdvancedStartPoints")
-		.add(m_iStartingGold, L"iStartingGold")
-		.add(m_iFreePopulation, L"iFreePopulation")
-		.add(m_iGrowthPercent, L"iGrowthPercent")
-		.add(m_iTrainPercent, L"iTrainPercent")
-		.add(m_iConstructPercent, L"iConstructPercent")
-		.add(m_iCreatePercent, L"iCreatePercent")
-		.add(m_iResearchPercent, L"iResearchPercent")
-		.add(m_iBuildPercent, L"iBuildPercent")
-		.add(m_iImprovementPercent, L"iImprovementPercent")
-		.add(m_iGreatPeoplePercent, L"iGreatPeoplePercent")
-		.add(m_iAnarchyPercent, L"iAnarchyPercent")
-		.add(m_iEventChancePerTurn, L"iEventChancePerTurn")
-		.add(m_iSoundtrackSpace, L"iSoundtrackSpace")
-		.add(m_bFirstSoundtrackFirst, L"bFirstSoundtrackFirst")
-		.add(m_iInitialCityMaintenancePercent, L"iInitialCityMaintenancePercent")
-		.add(m_iCuttingEdgeCutsTechCostModifier, L"iCuttingEdgeCutsTechCostModifier")
-		.add(m_szAudioUnitVictoryScript, L"AudioUnitVictoryScript")
-		.add(m_szAudioUnitDefeatScript, L"AudioUnitDefeatScript")
-	;
 }
 
 
 CvEraInfo::~CvEraInfo()
 {
-	SAFE_DELETE_ARRAY(m_paiCitySoundscapeSciptIds);
+	SAFE_DELETE_ARRAY(m_paiCitySoundscapeScriptIds);
 	SAFE_DELETE_ARRAY(m_paiSoundtracks);
 }
 
 
-int CvEraInfo::getStartingUnitMultiplier() const
+int CvEraInfo::getSoundtracks(int iIndex) const
 {
-	return m_iStartingUnitMultiplier;
-}
-
-
-int CvEraInfo::getStartingDefenseUnits() const
-{
-	return m_iStartingDefenseUnits;
-}
-
-
-int CvEraInfo::getStartingWorkerUnits() const
-{
-	return m_iStartingWorkerUnits;
-}
-
-
-int CvEraInfo::getStartingExploreUnits() const
-{
-	return m_iStartingExploreUnits;
-}
-
-
-int CvEraInfo::getAdvancedStartPoints() const
-{
-	return m_iAdvancedStartPoints;
-}
-
-
-int CvEraInfo::getStartingGold() const
-{
-	return m_iStartingGold;
-}
-
-
-int CvEraInfo::getFreePopulation() const
-{
-	return m_iFreePopulation;
-}
-
-
-int CvEraInfo::getHistoricalStartYear() const
-{
-	return m_iHistoricalStartYear;
-}
-
-
-int CvEraInfo::getHistoricalEndYear() const
-{
-	return m_iHistoricalEndYear;
-}
-
-
-int CvEraInfo::getNormalSpeedTurns() const
-{
-	return m_iNormalSpeedTurns;
-}
-
-
-int CvEraInfo::getGrowthPercent() const
-{
-	return m_iGrowthPercent;
-}
-
-
-int CvEraInfo::getTrainPercent() const
-{
-	return m_iTrainPercent;
-}
-
-
-int CvEraInfo::getConstructPercent() const
-{
-	return m_iConstructPercent;
-}
-
-
-int CvEraInfo::getCreatePercent() const
-{
-	return m_iCreatePercent;
-}
-
-
-int CvEraInfo::getResearchPercent() const
-{
-	return m_iResearchPercent;
-}
-
-
-int CvEraInfo::getBuildPercent() const
-{
-	return m_iBuildPercent;
-}
-
-
-int CvEraInfo::getImprovementPercent() const
-{
-	return m_iImprovementPercent;
-}
-
-
-int CvEraInfo::getGreatPeoplePercent() const
-{
-	return m_iGreatPeoplePercent;
-}
-
-
-int CvEraInfo::getAnarchyPercent() const
-{
-	return m_iAnarchyPercent;
-}
-
-
-int CvEraInfo::getEventChancePerTurn() const
-{
-	return m_iEventChancePerTurn;
-}
-
-
-int CvEraInfo::getSoundtrackSpace() const
-{
-	return m_iSoundtrackSpace;
-}
-
-
-bool CvEraInfo::isFirstSoundtrackFirst() const
-{
-	return m_bFirstSoundtrackFirst;
-}
-
-
-int CvEraInfo::getNumSoundtracks() const
-{
-	return m_iNumSoundtracks;
-}
-
-
-int CvEraInfo::getCuttingEdgeCutsTechCostModifier() const
-{
-	return m_iCuttingEdgeCutsTechCostModifier;
-}
-
-
-const char* CvEraInfo::getAudioUnitVictoryScript() const
-{
-	return m_szAudioUnitVictoryScript;
-}
-
-
-const char* CvEraInfo::getAudioUnitDefeatScript() const
-{
-	return m_szAudioUnitDefeatScript;
-}
-
-
-bool CvEraInfo::isNoGoodies() const
-{
-	return m_bNoGoodies;
-}
-
-
-bool CvEraInfo::isNoAnimals() const
-{
-	return m_bNoAnimals;
-}
-
-
-bool CvEraInfo::isNoBarbUnits() const
-{
-	return m_bNoBarbUnits;
-}
-
-
-bool CvEraInfo::isNoBarbCities() const
-{
-	return m_bNoBarbCities;
-}
-
-
-int CvEraInfo::getInitialCityMaintenancePercent() const
-{
-	return m_iInitialCityMaintenancePercent;
-}
-
-
-
-// Arrays
-
-int CvEraInfo::getSoundtracks(int i) const
-{
-	FASSERT_BOUNDS(0, getNumSoundtracks(), i);
-	return m_paiSoundtracks ? m_paiSoundtracks[i] : -1;
-}
-
-
-int CvEraInfo::getCitySoundscapeSciptId(int i) const
-{
-//	FAssertMsg(i < ?, "Index out of bounds");
-	FAssertMsg(i > -1, "Index out of bounds");
-	return m_paiCitySoundscapeSciptIds ? m_paiCitySoundscapeSciptIds[i] : -1;
-}
-
-
-bool CvEraInfo::read(CvXMLLoadUtility* pXML)
-{
-	PROFILE_EXTRA_FUNC();
-	if (!CvInfoBase::read(pXML))
+	FASSERT_BOUNDS(0, getNumSoundtracks(), iIndex);
+	if (m_paiSoundtracks == NULL)
 	{
-		return false;
+		return -1;
+	}
+	return m_paiSoundtracks[iIndex];
+}
+
+
+int CvEraInfo::getCitySoundscapeScriptId(int iCitySize) const
+{
+	FAssertMsg(iCitySize > -1, "Index out of bounds");
+	if (m_paiCitySoundscapeScriptIds == NULL)
+	{
+		return -1;
+	}
+	return m_paiCitySoundscapeScriptIds[iCitySize];
+}
+
+
+// ======================= mapFrom -- the ONE load hook (idempotent by contract) ============================
+// The §6 families (costs.world.* incl. researchCutBelowEra / growth / greatPeopleRate / durations.anger /
+// eventChance) compile into m_modifiers via the base dispatch -- no per-family read here. grants.* are the
+// one-shot starting pulses; identity.* the pacing/advanced-start/order config; sound.* the era audio:
+// unitVictory/unitDefeat scripts, soundtrackSpace, introSoundtrack, and the two runtime-resolved audio-tag
+// arrays -- soundtracks (AUDIOTAG_2DSCRIPT, gated on !getAudioDisabled, exactly as the archived read()) and
+// citySoundscapes (CITYSIZE_* -> city-size index -> getAudioTagIndex, default -1).
+void CvEraInfo::mapFrom(const picojson::value& entity)
+{
+	CvInfo::mapFrom(entity);   // core reading (type / text keys / button) + the section dispatch (compiles m_modifiers)
+
+	// idempotent re-run (loadJson re-runs mapFrom once the registry is complete): fully redefine everything.
+	SAFE_DELETE_ARRAY(m_paiSoundtracks);
+	SAFE_DELETE_ARRAY(m_paiCitySoundscapeScriptIds);
+	m_iNumSoundtracks = 0;
+	m_iSoundtrackSpace = 0;
+	m_bFirstSoundtrackFirst = false;
+	m_szAudioUnitVictoryScript.clear();
+	m_szAudioUnitDefeatScript.clear();
+	m_iOrder = 0;
+	m_iAdvancedStartPoints = 0;
+	m_iHistoricalStartYear = 0;
+	m_iHistoricalEndYear = 0;
+	m_iNormalSpeedTurns = 0;
+
+	if (!entity.is<picojson::object>())
+	{
+		return;
+	}
+	const picojson::object& entityObj = entity.get<picojson::object>();
+
+	// --- grants views: the one-shot starting grants, read off the COMPOSED unit (§5 numeric pulses, stored
+	//     ×100 by the section parse; /100 back to the human count). ONE representation: these views and the
+	//     grants machine read the same parsed pulses, so they cannot drift. ---
+	const CvGrants* pGrants = m_triggers.consideredGrant();
+	m_iStartingGold           = (pGrants != NULL) ? pGrants->pulse("startingGold") / 100 : 0;
+	m_iStartingUnitMultiplier = (pGrants != NULL) ? pGrants->pulse("startingUnitMultiplier") / 100 : 0;
+	m_iStartingDefenseUnits   = (pGrants != NULL) ? pGrants->pulse("startingDefenseUnits") / 100 : 0;
+	m_iStartingWorkerUnits    = (pGrants != NULL) ? pGrants->pulse("startingWorkerUnits") / 100 : 0;
+	m_iStartingExploreUnits   = (pGrants != NULL) ? pGrants->pulse("startingExploreUnits") / 100 : 0;
+	m_iFreePopulation         = (pGrants != NULL) ? pGrants->pulse("freePopulation") / 100 : 0;
+
+	// --- identity: the sequence position + pacing inputs + the advanced-start budget (plain ints) ---
+	if (const picojson::object* pIdentity = jsonChildObj(entityObj, "identity"))
+	{
+		m_iOrder               = jsonIdInt(*pIdentity, "order");
+		m_iHistoricalStartYear = jsonIdInt(*pIdentity, "historicalStartYear");
+		m_iHistoricalEndYear   = jsonIdInt(*pIdentity, "historicalEndYear");
+		m_iNormalSpeedTurns    = jsonIdInt(*pIdentity, "normalSpeedTurns");
+		m_iAdvancedStartPoints = jsonIdInt(*pIdentity, "advancedStart");
 	}
 
-	CvInfoUtil(this).readXml(pXML);
-
-	if (m_iInitialCityMaintenancePercent < 0)
+	// --- sound: the era audio (scalars, flags, and the two runtime-resolved audio-tag arrays) ---
+	if (const picojson::object* pSound = jsonChildObj(entityObj, "sound"))
 	{
-		m_iInitialCityMaintenancePercent = 0;
-	}
-
-	if (pXML->TryMoveToXmlFirstChild(L"EraInfoSoundtracks"))
-	{
-		CvString* pszSoundTrackNames = NULL;
-		pXML->SetStringList(&pszSoundTrackNames, &m_iNumSoundtracks);
-
-		if (m_iNumSoundtracks > 0)
+		m_iSoundtrackSpace      = jsonIdInt(*pSound, "soundtrackSpace");
+		m_bFirstSoundtrackFirst = jsonIdBool(*pSound, "introSoundtrack");
+		std::string szScript;
+		if (jsonIdStr(*pSound, "unitVictory", szScript))
 		{
-			m_paiSoundtracks = new int[m_iNumSoundtracks];
+			m_szAudioUnitVictoryScript = szScript.c_str();
+		}
+		if (jsonIdStr(*pSound, "unitDefeat", szScript))
+		{
+			m_szAudioUnitDefeatScript = szScript.c_str();
+		}
 
-			int j;
-			for (j=0;j<m_iNumSoundtracks;j++)
+		// soundtracks: the era's 2D script tags, resolved to audio-manager indices at load (AUDIOTAG_2DSCRIPT),
+		// -1 when audio is disabled -- exactly the archived read() mechanism.
+		picojson::object::const_iterator soundtracksIt = pSound->find("soundtracks");
+		if (soundtracksIt != pSound->end() && soundtracksIt->second.is<picojson::array>())
+		{
+			const picojson::array& trackList = soundtracksIt->second.get<picojson::array>();
+			m_iNumSoundtracks = (int)trackList.size();
+			if (m_iNumSoundtracks > 0)
 			{
-				m_paiSoundtracks[j] = ((!gDLL->getAudioDisabled()) ? gDLL->getAudioTagIndex(pszSoundTrackNames[j], AUDIOTAG_2DSCRIPT) : -1);
+				m_paiSoundtracks = new int[m_iNumSoundtracks];
+				for (int iTrack = 0; iTrack < m_iNumSoundtracks; iTrack++)
+				{
+					m_paiSoundtracks[iTrack] = -1;
+					if (trackList[iTrack].is<std::string>())
+					{
+						const std::string& szTag = trackList[iTrack].get<std::string>();
+						if (!gDLL->getAudioDisabled())
+						{
+							m_paiSoundtracks[iTrack] = gDLL->getAudioTagIndex(szTag.c_str(), AUDIOTAG_2DSCRIPT);
+						}
+					}
+				}
 			}
 		}
-		else
+
+		// citySoundscapes: a CITYSIZE_* -> script map, one entry per {CITYSIZE_X: "ASSS_..."} object -- the
+		// SetVariableListTagPairForAudioScripts port. Array sized by GC.getNumCitySizeTypes(), default -1.
+		picojson::object::const_iterator soundscapesIt = pSound->find("citySoundscapes");
+		if (soundscapesIt != pSound->end() && soundscapesIt->second.is<picojson::array>())
 		{
-			m_paiSoundtracks = NULL;
-		}
-
-		pXML->MoveToXmlParent();
-
-		SAFE_DELETE_ARRAY(pszSoundTrackNames);
-	}
-
-	pXML->SetVariableListTagPairForAudioScripts(&m_paiCitySoundscapeSciptIds, L"CitySoundscapes", GC.getNumCitySizeTypes());
-
-	return true;
-}
-
-
-void CvEraInfo::copyNonDefaults(const CvEraInfo* pClassInfo)
-{
-	PROFILE_EXTRA_FUNC();
-	const int iAudioDefault = -1;  //all audio is default -1
-
-	CvInfoBase::copyNonDefaults(pClassInfo);
-
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-
-	if (m_iInitialCityMaintenancePercent < 0)
-	{
-		m_iInitialCityMaintenancePercent = 0;
-	}
-
-	if ( pClassInfo->getNumSoundtracks() != 0 )
-	{
-		int iNumSoundTracks = getNumSoundtracks() + pClassInfo->getNumSoundtracks();
-		int* m_paiSoundtracksTemp = new int[iNumSoundTracks];
-		for ( int i = 0; i < iNumSoundTracks; i++)
-		{
-			if ( i < getNumSoundtracks() )
+			const int iNumSizes = GC.getNumCitySizeTypes();
+			if (iNumSizes > 0)
 			{
-				m_paiSoundtracksTemp[i] = getSoundtracks(i);
+				m_paiCitySoundscapeScriptIds = new int[iNumSizes];
+				for (int iSize = 0; iSize < iNumSizes; iSize++)
+				{
+					m_paiCitySoundscapeScriptIds[iSize] = -1;   // legacy InitList default
+				}
+				const picojson::array& soundscapeList = soundscapesIt->second.get<picojson::array>();
+				for (size_t iRow = 0; iRow < soundscapeList.size(); ++iRow)
+				{
+					if (!soundscapeList[iRow].is<picojson::object>())
+					{
+						continue;
+					}
+					const picojson::object& rowObj = soundscapeList[iRow].get<picojson::object>();
+					for (picojson::object::const_iterator rowIt = rowObj.begin(); rowIt != rowObj.end(); ++rowIt)
+					{
+						const int iSizeIndex = jsonResolveId(rowIt->first);   // CITYSIZE_* -> size index (legacy GetInfoClass)
+						if (iSizeIndex < 0 || iSizeIndex >= iNumSizes)
+						{
+							continue;
+						}
+						if (rowIt->second.is<std::string>() && rowIt->second.get<std::string>().length() > 0)
+						{
+							m_paiCitySoundscapeScriptIds[iSizeIndex] = gDLL->getAudioTagIndex(rowIt->second.get<std::string>().c_str());
+						}
+						// empty tag -> slot stays -1 (legacy szTemp.GetLength() > 0 ? ... : -1)
+					}
+				}
 			}
-			else
-			{
-				m_paiSoundtracksTemp[i] = pClassInfo->getSoundtracks(i - getNumSoundtracks());
-			}
-		}
-		SAFE_DELETE_ARRAY(m_paiSoundtracks);
-		m_paiSoundtracks = new int[iNumSoundTracks];
-		for ( int i = 0; i < iNumSoundTracks; i++)
-		{
-			m_paiSoundtracks[i] = m_paiSoundtracksTemp[i];
-		}
-		SAFE_DELETE_ARRAY(m_paiSoundtracksTemp);
-	}
-
-	for ( int i = 0; i < GC.getNumCitySizeTypes(); i++)
-	{
-		if ( getCitySoundscapeSciptId(i) == iAudioDefault && pClassInfo->getCitySoundscapeSciptId(i) != iAudioDefault)
-		{
-			if ( NULL == m_paiCitySoundscapeSciptIds )
-			{
-				CvXMLLoadUtility::InitList(&m_paiCitySoundscapeSciptIds,GC.getNumCitySizeTypes(),iAudioDefault);
-			}
-			m_paiCitySoundscapeSciptIds[i] = pClassInfo->getCitySoundscapeSciptId(i);
 		}
 	}
 }
-
-
-// Explicit, NOT delegated to CvInfoUtil (#196): the legacy checksum omits several read fields
-// (m_iSoundtrackSpace, m_bFirstSoundtrackFirst, m_iInitialCityMaintenancePercent); delegating
-// would fold them in and change the savegame asset checksum. The order below reproduces the
-// legacy composition exactly: hand-written ints, bools, then the three calendar-pacing fields
-// that the old delegated CvInfoUtil tail appended.
-void CvEraInfo::getCheckSum(uint32_t& iSum) const
-{
-	CheckSum(iSum, m_iStartingUnitMultiplier);
-	CheckSum(iSum, m_iStartingDefenseUnits);
-	CheckSum(iSum, m_iStartingWorkerUnits);
-	CheckSum(iSum, m_iStartingExploreUnits);
-	CheckSum(iSum, m_iAdvancedStartPoints);
-	CheckSum(iSum, m_iStartingGold);
-	CheckSum(iSum, m_iFreePopulation);
-	CheckSum(iSum, m_iGrowthPercent);
-	CheckSum(iSum, m_iTrainPercent);
-	CheckSum(iSum, m_iConstructPercent);
-	CheckSum(iSum, m_iCreatePercent);
-	CheckSum(iSum, m_iResearchPercent);
-	CheckSum(iSum, m_iBuildPercent);
-	CheckSum(iSum, m_iImprovementPercent);
-	CheckSum(iSum, m_iGreatPeoplePercent);
-	CheckSum(iSum, m_iAnarchyPercent);
-	CheckSum(iSum, m_iEventChancePerTurn);
-	CheckSum(iSum, m_iCuttingEdgeCutsTechCostModifier);
-
-	CheckSum(iSum, m_bNoGoodies);
-	CheckSum(iSum, m_bNoAnimals);
-	CheckSum(iSum, m_bNoBarbUnits);
-	CheckSum(iSum, m_bNoBarbCities);
-
-	CheckSum(iSum, m_iHistoricalStartYear);
-	CheckSum(iSum, m_iHistoricalEndYear);
-	CheckSum(iSum, m_iNormalSpeedTurns);
-}
-

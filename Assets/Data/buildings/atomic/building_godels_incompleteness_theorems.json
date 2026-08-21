@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_GODELS_INCOMPLETENESS_THEOREMS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MATHEMATICS_DEPARTMENT",
+    "TECH_ABSTRACT_MATHEMATICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 5700,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GODEL_INCOMPLETENESS_THEOREM"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GODELS_INCOMPLETENESS_THEOREMS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GODELS_INCOMPLETENESS_THEOREMS",
+  "civilopedia": "TXT_KEY_BUILDING_GODELS_INCOMPLETENESS_THEOREMS_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_MILITARY_STANDARD_CANINES",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_AVIATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+    "TECH_CANINE_DOMESTICATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      "HERITAGE_FOLKLORE_DINGO",
+      "HERITAGE_FOLKLORE_FOX_ARCTIC",
+      "HERITAGE_FOLKLORE_FOX_FENNEC",
+      "HERITAGE_FOLKLORE_FOX_RED",
+      "HERITAGE_FOLKLORE_USSURI_DHOLE",
+      "HERITAGE_FOLKLORE_WOLF",
+      "HERITAGE_FOLKLORE_WOLF_DIRE",
+      "HERITAGE_FOLKLORE_WOLF_ETHIOPIAN",
+      "HERITAGE_FOLKLORE_WOLF_MANED"
+     ]
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DOG",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_TRAINEDDOG": {
+     "percent": 10
+    },
+    "UNIT_WARDOG": {
+     "percent": 10
+    },
+    "UNIT_GUARDDOG": {
+     "percent": 10
+    },
+    "UNIT_POLICE_DOG": {
+     "percent": 10
+    },
+    "UNIT_CANIS_SUPERIOR": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 92,
+  "countModifier": 2
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MILITARY_STANDARD_CANINES",
+  "civilopedia": "TXT_KEY_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT_PEDIA",
+  "help": "TXT_KEY_BUILDING_MILITARY_STANDARD_CANINES_HELP",
+  "worth": 1,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_MILITARY",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

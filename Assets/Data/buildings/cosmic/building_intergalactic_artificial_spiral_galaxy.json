@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_INTERGALACTIC_ARTIFICIAL_SPIRAL_GALAXY",
+ "enables": {
+  "buildings": [
+   "BUILDING_LIFE_CHIRAL_FLEXIBLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_CORE_DYSON_SPHERE",
+    "TECH_GALACTIFORMING",
+    {
+     "type": "TERRAIN_OBSERVABLE_UNIVERSE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "cost": {
+  "production": 3531,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_ARTIFICIAL_SPIRAL_GALAXY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_ARTIFICIAL_SPIRAL_GALAXY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_ARTIFICIAL_SPIRAL_GALAXY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

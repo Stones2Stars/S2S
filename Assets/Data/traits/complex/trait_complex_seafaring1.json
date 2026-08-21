@@ -1,0 +1,522 @@
+{
+ "type": "TRAIT_COMPLEX_SEAFARING1",
+ "food": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_SEED_CAMP": {
+     "flat": -1
+    },
+    "IMPROVEMENT_FARM": {
+     "flat": -1
+    },
+    "IMPROVEMENT_THATCH_CUTTER": {
+     "flat": -1
+    },
+    "IMPROVEMENT_JUNGLE_CAMP": {
+     "flat": -1
+    },
+    "IMPROVEMENT_WETLANDS_CAMP": {
+     "flat": -1
+    },
+    "IMPROVEMENT_DESERT_CAMP": {
+     "flat": -1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": -1
+    }
+   },
+   "specialists": {
+    "SPECIALIST_GREAT_ADMIRAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_STONE_TOOLS_WORKSHOP": {
+     "flat": -1
+    },
+    "IMPROVEMENT_WORKSHOP": {
+     "flat": -1
+    },
+    "IMPROVEMENT_MINE": {
+     "flat": -1
+    },
+    "IMPROVEMENT_EARLY_QUARRY": {
+     "flat": -1
+    },
+    "IMPROVEMENT_FACTORY": {
+     "flat": -1
+    },
+    "IMPROVEMENT_SHAFT_MINE": {
+     "flat": -1
+    },
+    "IMPROVEMENT_QUARRY": {
+     "flat": -1
+    },
+    "IMPROVEMENT_MANUFACTURING_COMPLEX": {
+     "flat": -1
+    },
+    "IMPROVEMENT_MODERN_MINE": {
+     "flat": -1
+    },
+    "IMPROVEMENT_CORE_MINE": {
+     "flat": -1
+    }
+   },
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "IS_WATER"
+     }
+    ]
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_NAVAL_ACADEMY": {
+     "percent": 20
+    },
+    "BUILDING_DRYDOCK": {
+     "percent": 20
+    },
+    "BUILDING_NAVAL_YARD": {
+     "percent": 20
+    },
+    "BUILDING_BOATYARD": {
+     "percent": 20
+    },
+    "BUILDING_MARINA": {
+     "percent": 20
+    },
+    "BUILDING_SAIL_WEAVER": {
+     "percent": 20
+    },
+    "BUILDING_SHIPWRIGHT": {
+     "percent": 20
+    },
+    "BUILDING_FISHERMANS_HUT": {
+     "percent": 20
+    },
+    "BUILDING_FISH_TRAPS": {
+     "percent": 20
+    },
+    "BUILDING_SHIPYARD": {
+     "percent": 20
+    },
+    "BUILDING_RIVER_PORT": {
+     "percent": 20
+    },
+    "BUILDING_RIVER_AUTHORITY": {
+     "percent": 20
+    },
+    "BUILDING_STEAMBOAT_PORT": {
+     "percent": 20
+    },
+    "BUILDING_LIGHTHOUSE": {
+     "percent": 20
+    },
+    "BUILDING_FACTORY_SAILS": {
+     "percent": 20
+    },
+    "BUILDING_MANUFACTURING_DISTRICT": {
+     "percent": 20
+    },
+    "BUILDING_AQUAFARM": {
+     "percent": 20
+    },
+    "BUILDING_FERRY_TERMINAL": {
+     "percent": 20
+    },
+    "BUILDING_RIVER_ADMINISTRATION": {
+     "percent": 20
+    },
+    "BUILDING_OCEAN_ADMINISTRATION": {
+     "percent": 20
+    }
+   },
+   "units": {
+    "UNIT_WORKBOAT": {
+     "percent": 25
+    },
+    "UNIT_NEANDERTHAL_WORKBOAT": {
+     "percent": 25
+    },
+    "UNIT_WORKBOAT_CLASSIC": {
+     "percent": 25
+    },
+    "UNIT_WORKBOAT_MIDDLE": {
+     "percent": 25
+    },
+    "UNIT_WORKBOAT_MODERN": {
+     "percent": 25
+    }
+   },
+   "domains": {
+    "DOMAIN_SEA": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "researchRate": {
+  "empire": {
+   "techs": {
+    "TECH_RAFT_BUILDING": {
+     "percent": 20
+    },
+    "TECH_BOAT_BUILDING": {
+     "percent": 20
+    },
+    "TECH_FISHING": {
+     "percent": 20
+    },
+    "TECH_HARPOON_MAKING": {
+     "percent": 20
+    },
+    "TECH_SAILING": {
+     "percent": 20
+    },
+    "TECH_NAVAL_WARFARE": {
+     "percent": 20
+    },
+    "TECH_PIRACY": {
+     "percent": 20
+    },
+    "TECH_SEAFARING": {
+     "percent": 20
+    },
+    "TECH_SHIP_BUILDING": {
+     "percent": 20
+    },
+    "TECH_RUDDER": {
+     "percent": 20
+    },
+    "TECH_OPTICS": {
+     "percent": 20
+    },
+    "TECH_COMMERCIAL_WHALING": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_COTTAGE": {
+     "flat": -1
+    },
+    "IMPROVEMENT_HAMLET": {
+     "flat": -1
+    },
+    "IMPROVEMENT_VILLAGE": {
+     "flat": -1
+    },
+    "IMPROVEMENT_TOWN": {
+     "flat": -1
+    },
+    "IMPROVEMENT_SUBURBS": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_GREAT_ADMIRAL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": -1,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   },
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SEA_LION_AND_SEAL",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WALRUS",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CLAM",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CRAB",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FISH",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LOBSTER",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_MUREX",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PEARLS",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHRIMP",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WHALE",
+      "scope": "empire",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HYDROTHERMAL_VENT",
+      "scope": "empire",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "units": {
+    "UNIT_GREAT_ADMIRAL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": -20
+   },
+   "numCities": {
+    "percent": 10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 5
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_COAST"
+    }
+   ]
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_BREAK_ICE_KILL": {
+     "percent": 25
+    },
+    "BUILD_BREAK_ICE": {
+     "percent": 25
+    },
+    "BUILD_TUNNEL": {
+     "percent": 25
+    },
+    "BUILD_BEACON_CORAL": {
+     "percent": 25
+    },
+    "BUILD_BEACON_REEF": {
+     "percent": 25
+    },
+    "BUILD_HARVEST_KELP": {
+     "percent": 25
+    },
+    "BUILD_HARVEST_KELP_KILL": {
+     "percent": 25
+    },
+    "BUILD_LIGHTHOUSE_CORAL": {
+     "percent": 25
+    },
+    "BUILD_LIGHTHOUSE_REEF": {
+     "percent": 25
+    }
+   },
+   "percent": -25
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_BEACON_CORAL": {
+     "percent": 50
+    },
+    "IMPROVEMENT_BEACON_REEF": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": -20
+   }
+  }
+ },
+ "cargo": {
+  "empire": {
+   "navalCargo": {
+    "flat": 1
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_AMPHIBIOUS",
+       "enabled": {
+        "any": [
+         "IS_MELEE",
+         "IS_MOUNTED",
+         "IS_RECON",
+         "IS_THROWING"
+        ]
+       }
+      },
+      {
+       "promotion": "PROMOTION_SEAFARING1",
+       "enabled": "IS_NAVAL"
+      }
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 11
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": -3
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ],
+  "behaviour": {
+   "coastalAIInfluence": true
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitSeafaring.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_SEAFARING1",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_SEAFARING1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_SEAFARING_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_SEAFARING_SHORT"
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_COMPLEX_SEAFARING2"
+  ]
+ }
+}

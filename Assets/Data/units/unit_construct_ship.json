@@ -1,0 +1,114 @@
+{
+ "type": "UNIT_CONSTRUCT_SHIP",
+ "builds": [
+  "BUILD_FISHING_BOATS",
+  "BUILD_HARVEST_KELP",
+  "BUILD_LIGHTHOUSE_CORAL",
+  "BUILD_LIGHTHOUSE_REEF",
+  "BUILD_LIGHTHOUSE_GREAT_BARRIER_REEF",
+  "BUILD_WHALING_SHIPS",
+  "BUILD_BREAK_ICE",
+  "BUILD_TUNNEL",
+  "BUILD_MARINE_PRESERVE",
+  "BUILD_SEA_MILL",
+  "BUILD_TIDAL_HARNESS",
+  "BUILD_SANITIZE_WATER",
+  "BUILD_AQUATIC_ANTI_AIR_DEFENSE",
+  "BUILD_AQUATIC_FORCEFIELD"
+ ],
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "TECH_MACHINE_LEARNING"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 6
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_CONSTRUCT_SHIP"
+  }
+ },
+ "skills": [
+  "canMoveImpassable",
+  "ignoreTerrainCost",
+  "mechanized",
+  "renderBelowWater"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "seaUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SEA_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 1729,
+  "upkeep": 5
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CONSTRUCT_SHIP",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 2.25,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_CONSTRUCT_SHIP",
+       "late": "ART_DEF_UNIT_CONSTRUCT_SHIP"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_CONSTRUCT_SHIP",
+  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_WORKER_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER_SEA"
+  ],
+  "notUnitAIs": [
+   "UNITAI_ESCORT_SEA",
+   "UNITAI_RESERVE_SEA",
+   "UNITAI_ATTACK_SEA",
+   "UNITAI_ASSAULT_SEA"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "workRate": 250
+  }
+ }
+}

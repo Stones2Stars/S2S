@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_INTERROGATION_CHAIR",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PSYCHOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_JAIL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TORTURE_CHAMBER",
+    "TECH_TORTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_JAIL"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -6
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_INVESTIGATOR": 1
+  }
+ },
+ "cost": {
+  "production": 356,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERROGATION_CHAIR",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_JAIL"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERROGATION_CHAIR",
+  "civilopedia": "TXT_KEY_BUILDING_INTERROGATION_CHAIR_PEDIA",
+  "worth": 4,
+  "militaryWorth": 4,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

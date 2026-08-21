@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUNAR_BUG_FARM",
+   "BUILDING_LUNAR_CONCRETE_MILL",
+   "BUILDING_LUNAR_FISH_FARM",
+   "BUILDING_LUNAR_HYDROPONICS_FARM",
+   "BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY",
+   "BUILDING_LUNAR_ROCKET_FUEL_REFINERY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_LUNAR_BASE",
+    "TECH_LUNAR_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 100,
+  "hurryModifier": 10000
+ },
+ "amenities": {
+  "providesFreshWater": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_WATER_EXTRACTION_FACILITY_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

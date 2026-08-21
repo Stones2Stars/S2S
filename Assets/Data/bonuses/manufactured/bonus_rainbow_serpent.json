@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_RAINBOW_SERPENT",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_RAINBOW_SERPENT"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_RAINBOW_SERPENT",
+  "civilopedia": "TXT_KEY_BONUS_RAINBOW_SERPENT_PEDIA",
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTION_CULTURE_NEANDERTHAL",
+ "ui": {
+  "art": {
+   "icon": "art/Embassy/art/neanderthalembassy.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CULTURE_NEANDERTHAL",
+  "unitCombats": [
+   "UNITCOMBAT_SETTLER"
+  ]
+ }
+}

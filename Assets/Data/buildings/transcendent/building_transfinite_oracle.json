@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_TRANSFINITE_ORACLE",
+ "enables": {
+  "buildings": [
+   "BUILDING_GLITCH_IN_THE_MATRIX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HYPERINTELLIGENT_ORACLE",
+    "TECH_TRANSFINITE_COMPUTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 28755,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRANSFINITE_ORACLE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSFINITE_ORACLE",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSFINITE_ORACLE_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

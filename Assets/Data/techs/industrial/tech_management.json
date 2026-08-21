@@ -1,0 +1,68 @@
+{
+ "type": "TECH_MANAGEMENT",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASSEMBLY_PLANT",
+   "BUILDING_BUSINESS_SCHOOL",
+   "BUILDING_IQ_TESTING_CENTER",
+   "BUILDING_RACIAL_PROFILING",
+   "BUILDING_TIME_ZONES"
+  ],
+  "civics": [
+   "CIVIC_CENTRALIZED"
+  ],
+  "techs": [
+   "TECH_COMPULSORY_EDUCATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TELEPHONE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CIVIL_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 7356
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Buttons/Techs/management.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MANAGEMENT",
+  "civilopedia": "TXT_KEY_TECH_MANAGEMENT_PEDIA",
+  "quote": "TXT_KEY_TECH_MANAGEMENT_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 69,
+  "gridY": 11
+ }
+}

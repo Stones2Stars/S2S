@@ -1,0 +1,179 @@
+{
+ "type": "TRAIT_COMPLEX_BIGOT3",
+ "excludes": [
+  "TRAIT_COMPLEX_PROGRESSIVE1"
+ ],
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": 2
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": 2
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1,
+   "cities": {
+    "flat": [
+     -1,
+     {
+      "value": -1,
+      "religion": "!IS_STATE_RELIGION"
+     }
+    ],
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   }
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 4
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "percent": [
+     {
+      "value": -20,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
+   }
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": -2
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "happiness": {
+    "flat": 2
+   },
+   "buildingProduction": {
+    "percent": 25
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": -1
+   },
+   {
+    "FLAVOR_PRODUCTION": -1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": -1
+   },
+   {
+    "FLAVOR_GROWTH": 16
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitBigot3.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_BIGOT3",
+  "civilopedia": "TXT_KEY_TRAIT_BIGOT3_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_BIGOT_STRATEGY",
+  "negativeTrait": true
+ }
+}

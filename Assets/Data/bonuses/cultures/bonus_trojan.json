@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_TROJAN",
+ "enables": {
+  "units": [
+   "UNIT_APOLLONIAN_GUARD"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TROJAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TROJAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

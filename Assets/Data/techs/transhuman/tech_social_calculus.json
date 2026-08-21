@@ -1,0 +1,76 @@
+{
+ "type": "TECH_SOCIAL_CALCULUS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_SOCIAL_ENGINEERING",
+   "BUILDING_DEEP_SPACE_SOCIAL_ENGINEERING",
+   "BUILDING_VIRTUAL_WORLD_DESIGN_CENTER"
+  ],
+  "techs": [
+   "TECH_ASTROGATION_CONSTELLATION",
+   "TECH_MIND_UPLOADING",
+   "TECH_WHOLE_BRAIN_EMULATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SIMULATED_REALITY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_UTOPIA_DESTINY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BINARY_SUBCONSCIOUSNESS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 67710
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/socialcalculus.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SOCIAL_CALCULUS",
+  "soundMP": "AS2D_TECH_SOCIAL_CALCULUS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SOCIAL_CALCULUS",
+  "civilopedia": "TXT_KEY_TECH_SOCIAL_CALCULUS_PEDIA",
+  "quote": "TXT_KEY_TECH_SOCIAL_CALCULUS_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 113,
+  "gridY": 11
+ }
+}

@@ -1,0 +1,117 @@
+{
+ "type": "BUILDING_FORBIDDEN_PALACE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BALLROOM",
+   "BUILDING_PALACE_GARDEN",
+   "BUILDING_PALACE_WALLS",
+   "BUILDING_SERVANTS_QUARTERS",
+   "BUILDING_THRONE_ROOM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "CITY",
+     "scope": "empire",
+     "min": 8
+    },
+    "BUILDING_COURTHOUSE",
+    {
+     "type": "BUILDING_COURTHOUSE",
+     "scope": "empire",
+     "min": 4,
+     "scaling": "amountBuildings"
+    },
+    "TECH_CITY_PLANNING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "disabled": "IS_GOVERNMENT_CENTER"
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "occupationTime": {
+  "city": {
+   "percent": 150
+  }
+ },
+ "cost": {
+  "production": 486,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "governmentCenter": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_FORBIDDEN_PALACE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FORBIDDEN_PALACE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FORBIDDEN_PALACE",
+  "civilopedia": "TXT_KEY_BUILDING_FORBIDDEN_PALACE_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 8,
+  "greatPeopleUnitType": "UNIT_GREAT_SPY",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

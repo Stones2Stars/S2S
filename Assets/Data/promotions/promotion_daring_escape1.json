@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_DARING_ESCAPE1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_DARING_ESCAPE2"
+  ]
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 20
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_DARING_ESCAPE": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/DaringEscape1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_DARING_ESCAPE1"
+ }
+}

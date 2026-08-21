@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_ASTEROID_EPITAXY_FACTORY",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
+    {
+     "type": "TERRAIN_ASTEROID_SURFACE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 11,
+     "enabled": "TECH_PARATERRAFORMING"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    200,
+    {
+     "value": 10,
+     "enabled": "TECH_HYPERMAGNETICS"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_PLANET_CRACKING"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 581,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ASTEROID_EPITAXY_FACTORY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ASTEROID_EPITAXY_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_ASTEROID_EPITAXY_FACTORY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

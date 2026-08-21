@@ -1,0 +1,107 @@
+{
+ "type": "BUILDING_ASCENSION_GATE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_PARADISE_GARDEN",
+    {
+     "type": "BUILDING_PARADISE_GARDEN",
+     "scope": "empire",
+     "min": 4,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "VICTORY_SCIENTIFIC",
+     "scope": "world"
+    },
+    "TECH_ASCENSION",
+    "TECH_ALPHA_POINT",
+    "TECH_SIMULATION_AWARENESS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    },
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "grants": {
+  "population": {
+   "empire": -30
+  },
+  "goldenAge": true
+ },
+ "cost": {
+  "production": 167130,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ASCENSION_GATE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ASCENSION_GATE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ACCELERATOR"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ASCENSION_GATE",
+  "civilopedia": "TXT_KEY_BUILDING_ASCENSION_GATE_PEDIA",
+  "help": "TXT_KEY_BUILDING_ASCENSION_GATE_HELP",
+  "pediaCategory": "greatWonder",
+  "centerInCity": true,
+  "forceNoPrereqScaling": true,
+  "worth": 100,
+  "militaryWorth": 100,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 10000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "victoryThresholds": [
+   {
+    "VICTORY_SCIENTIFIC": 1
+   }
+  ]
+ }
+}

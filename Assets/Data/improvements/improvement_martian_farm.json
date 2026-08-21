@@ -1,0 +1,48 @@
+{
+ "type": "IMPROVEMENT_MARTIAN_FARM",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EXTRATERRESTRIAL_AGRICULTURE",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_MARTIAN_ICE",
+      "TERRAIN_MARTIAN_PERMAFROST",
+      "TERRAIN_MARTIAN_BARREN",
+      "TERRAIN_MARTIAN_PLAINS",
+      "TERRAIN_GREEN_MARS"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 15
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_MARTIAN_FARM"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_MARTIAN_FARM",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_MARTIAN_FARM_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

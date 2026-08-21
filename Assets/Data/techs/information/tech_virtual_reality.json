@@ -1,0 +1,65 @@
+{
+ "type": "TECH_VIRTUAL_REALITY",
+ "enables": {
+  "buildings": [
+   "BUILDING_DIGITAL_GLOBE",
+   "BUILDING_EVOLUTION_SIMULATOR",
+   "BUILDING_E_BANK"
+  ],
+  "techs": [
+   "TECH_3D_PRINTING",
+   "TECH_GENOMIC_ENCYCLOPEDIA",
+   "TECH_NEURAL_NETWORKS",
+   "TECH_WEARABLE_COMPUTERS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CLOUD_COMPUTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 22074
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/CyberWarfare.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,5"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_VIRTUAL_REALITY",
+  "soundMP": "AS2D_TECH_VIRTUAL_REALITY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_VIRTUAL_REALITY",
+  "civilopedia": "TXT_KEY_TECH_VIRTUAL_REALITY_PEDIA",
+  "quote": "TXT_KEY_TECH_VIRTUAL_REALITY_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 90,
+  "gridY": 11
+ }
+}

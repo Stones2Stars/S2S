@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_PLANTATION_MADDER",
+ "enables": {
+  "buildings": [
+   "BUILDING_DYE_MAKER",
+   "BUILDING_FACTORY_DYE",
+   "BUILDING_RESOURCES_FLOWERS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_INDUSTRIAL_ECOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GREENHOUSE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FLORISTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_INDIGO",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_TEA",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_GREENHOUSE"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 270,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PLANTATION_MADDER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PLANTATION_MADDER",
+  "civilopedia": "TXT_KEY_BUILDING_PLANTATION_MADDER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_CARAVAN_MOVEMENT_III",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CARAVAN_MOVEMENT_II"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "moves": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CARAVAN_MOVEMENT": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CaravanMovement3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_CARAVAN_MOVEMENT_III"
+ }
+}

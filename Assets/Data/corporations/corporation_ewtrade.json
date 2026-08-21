@@ -1,0 +1,116 @@
+{
+ "type": "CORPORATION_EWTRADE",
+ "enables": {
+  "buildings": [
+   "BUILDING_EAST_WEST_TRADERS_STORE"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "IS_HEADQUARTERS": "CORPORATION_EWTRADE"
+     },
+     "per": "CORPORATION_LEVEL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "IS_HEADQUARTERS": "CORPORATION_EWTRADE"
+     },
+     "per": "CORPORATION_LEVEL"
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_EWTRADE"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_SILK",
+       "BONUS_SPICES",
+       "BONUS_SUGAR",
+       "BONUS_COFFEE",
+       "BONUS_COTTON"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_EWTRADE"
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_EWTRADE"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_EWTRADE"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_SILK",
+        "BONUS_SPICES",
+        "BONUS_SUGAR",
+        "BONUS_COFFEE",
+        "BONUS_COTTON"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 11,
+   "icon": "Art/Interface/Buttons/corporations/eastwest_trade.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_EWTRADE",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_EWTRADE_PEDIA",
+  "competingSpreadCostPercent": 200,
+  "spreadFactor": 50
+ }
+}

@@ -1,0 +1,78 @@
+{
+ "type": "BONUS_SALT",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANCIENT_EMBALMER",
+   "BUILDING_CULTURE_BANGLADESHI",
+   "BUILDING_CULTURE_ISRAELI",
+   "BUILDING_CULTURE_MALINESE",
+   "BUILDING_CULTURE_TRANSOXANIAN",
+   "BUILDING_MINE_BORAX",
+   "BUILDING_MINE_GARNET",
+   "BUILDING_MINE_LITHIUM",
+   "BUILDING_MINE_MAGNESIUM",
+   "BUILDING_MINE_POTASH",
+   "BUILDING_SALT_QUARRY"
+  ]
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 5
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SALT"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 4,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 80,
+  "uniqueRange": 3,
+  "flatlands": true,
+  "noRiverSide": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_PLAINS"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SALT",
+  "civilopedia": "TXT_KEY_BONUS_SALT_PEDIA",
+  "bonusClassType": "BONUSCLASS_PRODUCTION",
+  "source": "natural"
+ }
+}

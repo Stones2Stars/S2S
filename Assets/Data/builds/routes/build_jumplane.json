@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_JUMPLANE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TELEPORTATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "route": "ROUTE_JUMPLANE"
+ },
+ "cost": {
+  "gold": 600,
+  "time": 1200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/BuildJumplane.dds"
+  },
+  "hotkey": "KB_R"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_RAILROAD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_JUMPLANE"
+ }
+}

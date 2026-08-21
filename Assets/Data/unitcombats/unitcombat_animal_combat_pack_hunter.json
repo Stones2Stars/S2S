@@ -1,0 +1,17 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_PACK_HUNTER",
+ "sizeMatters": {
+  "combatModifier": {
+   "perSizeMore": 10,
+   "perVolumeLess": 10
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_pack_hunter.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_PACK_HUNTER"
+ }
+}

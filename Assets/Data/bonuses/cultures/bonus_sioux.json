@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_SIOUX",
+ "enables": {
+  "units": [
+   "UNIT_NATIVE_AMERICA_DOG_SOLDIER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SIOUX"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SIOUX",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

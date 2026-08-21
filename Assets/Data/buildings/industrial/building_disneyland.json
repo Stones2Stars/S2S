@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_DISNEYLAND",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ANIMATION",
+    "TECH_CIVIL_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    15,
+    {
+     "value": 15,
+     "enabled": {
+      "existedFor": {
+       "min": 100
+      }
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 2
+  },
+  "city": {
+   "flat": [
+    {
+     "value": 20,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_DISNEYLAND"
+   }
+  ]
+ },
+ "cost": {
+  "production": 5220,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_DISNEYLAND"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISNEYLAND",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISNEYLAND",
+  "civilopedia": "TXT_KEY_BUILDING_DISNEYLAND_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

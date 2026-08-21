@@ -1,0 +1,120 @@
+{
+ "type": "BUILDING_CANOE_BUILDER",
+ "enables": {
+  "buildings": [
+   "BUILDING_BOATYARD"
+  ],
+  "units": [
+   "UNIT_CANOE",
+   "UNIT_CATAMARAN",
+   "UNIT_HAIDA_WAR_CANOE",
+   "UNIT_KAYAK",
+   "UNIT_NEANDERTHAL_CANOE",
+   "UNIT_NEANDERTHAL_KAYAK",
+   "UNIT_NEANDERTHAL_WAR_CANOE",
+   "UNIT_OUTRIGGER",
+   "UNIT_TOMOL",
+   "UNIT_WAR_CANOE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_BOAT_BUILDING",
+    {
+     "any": [
+      "HAS_COAST",
+      "HAS_RIVER"
+     ]
+    },
+    {
+     "any": [
+      "BUILDING_STORAGE_PIT",
+      "BUILDING_GRANARY",
+      "BUILDING_MODERN_GRANARY",
+      "BUILDING_BARTER_POST",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_LEATHER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_RESIN",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_TAR",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 86,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CANOE_BUILDER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CANOE_BUILDER",
+  "civilopedia": "TXT_KEY_BUILDING_CANOE_BUILDER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

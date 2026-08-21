@@ -1,0 +1,59 @@
+{
+ "type": "TECH_MESOPOTAMISM",
+ "enables": {
+  "religions": [
+   "RELIGION_MESOPOTAMISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POLYTHEISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 126
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/Mesopotamian.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MESOPOTAMISM",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MESOPOTAMISM",
+  "civilopedia": "TXT_KEY_TECH_MESOPOTAMISM_PEDIA",
+  "quote": "TXT_KEY_TECH_MESOPOTAMISM_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "gridX": 23,
+  "gridY": 15
+ }
+}

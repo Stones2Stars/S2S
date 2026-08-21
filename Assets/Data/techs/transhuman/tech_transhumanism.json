@@ -1,0 +1,82 @@
+{
+ "type": "TECH_TRANSHUMANISM",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_INDEFINITE_LIFESPAN",
+   "BONUS_HUMAN_MOD_ZERO_G_ADAPTATION"
+  ],
+  "buildings": [
+   "BUILDING_DEATH_COMBAT_ARENA",
+   "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT",
+   "BUILDING_HUMAN_MOD_INDEFINITE_LIFESPAN",
+   "BUILDING_HUMAN_MOD_ZERO_G_ADAPTATION"
+  ],
+  "techs": [
+   "TECH_BINARY_PSYCHOKINESIS"
+  ],
+  "units": [
+   "UNIT_TRANSHUMAN_WORK_CREW"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ARTIFICIAL_LIFE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COMPREHENSIVE_CYBERNETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TECHNOLOGICAL_SINGULARITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 75052
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/transhumanism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TRANSHUMANISM",
+  "soundMP": "AS2D_TECH_TRANSHUMANISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TRANSHUMANISM",
+  "civilopedia": "TXT_KEY_TECH_TRANSHUMANISM_PEDIA",
+  "quote": "TXT_KEY_TECH_TRANSHUMANISM_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 116,
+  "gridY": 5
+ }
+}

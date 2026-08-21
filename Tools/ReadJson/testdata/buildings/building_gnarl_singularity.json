@@ -1,0 +1,124 @@
+{
+  "type": "BUILDING_GNARL_SINGULARITY",
+
+  "identity": { "description": "TXT_KEY_BUILDING_GNARL_SINGULARITY", "capital": false, "shrine": "RELIGION_GNARLODOXY" },
+  "cost": { "production": 9999, "sizeModifier": 9, "complexityModifier": 9 },
+
+  "enables": {
+    "buildings": ["BUILDING_X"], "units": ["UNIT_X"], "builds": ["BUILD_X"], "techs": ["TECH_X"],
+    "civics": ["CIVIC_X"], "religions": ["RELIGION_X"], "corporations": ["CORPORATION_X"], "projects": ["PROJECT_X"],
+    "processes": ["PROCESS_X"], "promotions": ["PROMOTION_X"], "promotionLines": ["PROMOTIONLINE_X"],
+    "heritages": ["HERITAGE_X"], "specialBuildings": ["SPECIALBUILDING_X"], "specialBuildingsWaived": ["SPECIALBUILDING_Y"],
+    "improvements": ["IMPROVEMENT_X"], "bonuses": ["BONUS_X"], "routes": ["ROUTE_X"], "votes": ["FORCE_TEAM_ELIGIBLE"],
+    "hurries": ["HURRY_X"], "traits": ["TRAIT_X"], "specialists": ["SPECIALIST_X"], "outcomes": ["OUTCOME_X"]
+  },
+  "obsoletes": { "buildings": ["BUILDING_OLD"], "units": ["UNIT_OLD"] },
+  "replaces": { "buildings": ["BUILDING_PRED"] },
+  "disables": { "buildings": ["BUILDING_BANNED"] },
+
+  "requires": {
+    "build": {
+      "all": [
+        { "type": "TECH_GNARLOLOGY", "scope": "team" },
+        { "any": [
+            [ { "type": "BONUS_GNARLITE", "scope": "city", "connection": "trade|vicinity", "min": 1 },
+              { "noneOf": [
+                  { "type": "SELF", "scope": "world", "min": 1 },
+                  { "all": [ "IS_HILLS", { "HAS_TERRAIN": "TERRAIN_TUNDRA" },
+                             { "any": [ [ "HAS_RIVER", { "HAS_FEATURE": "FEATURE_FOREST" } ] ] } ] }
+              ] } ]
+        ] },
+        { "type": "POPULATION", "scope": "city", "min": 3, "max": 30 },
+        { "type": "BUILDING_TORTURE_PREREQ", "scope": "empire", "min": 12 },
+        { "latitude": { "min": 0, "max": 90 } },
+        { "natureYield": { "food": 2 } },
+        { "workedBy": "SELF" },
+        "IS_COASTAL", "HAS_FEATURE", "IS_FRESHWATER"
+      ],
+      "any": [
+        [ { "HAS_RELIGION": "RELIGION_GNARLODOXY" }, { "STATE_RELIGION": "RELIGION_GNARLODOXY" },
+          { "HOLY_CITY": "RELIGION_GNARLODOXY" } ],
+        [ { "HAS_CORPORATION": "CORPORATION_GNARL" }, { "HAS_BONUS": "BONUS_GNARLITE" } ],
+        [ { "terrain": ["TERRAIN_GRASSLAND", "TERRAIN_PLAINS", "TERRAIN_TUNDRA"] },
+          { "feature": ["FEATURE_FOREST", "FEATURE_JUNGLE"] },
+          { "bonus": ["BONUS_GNARLITE"] } ]
+      ],
+      "noneOf": [ { "type": "BUILDING_OLD_SHRINE", "scope": "city", "min": 1 } ],
+      "disabled": "IS_CAPITAL"
+    },
+    "operate": {
+      "all": [ { "type": "CIVIC_GNARCHY", "scope": "empire", "min": 1 }, "HAS_POWER" ],
+      "any": [ [ { "type": "BONUS_COAL", "scope": "city", "min": 1 }, { "type": "BONUS_OIL", "scope": "city", "min": 1 } ] ],
+      "noneOf": [ { "HAS_FEATURE": "FEATURE_JUNGLE" } ],
+      "enabled": "HAS_STATE_RELIGION"
+    }
+  },
+
+  "grants": {
+    "buildings": ["BUILDING_FREE"], "units": ["UNIT_FREE"], "techs": ["TECH_FREE"], "civics": ["CIVIC_FREE"],
+    "specialists": ["SPECIALIST_FREE"], "promotions": ["PROMOTION_FREE"], "traits": ["TRAIT_FREE"], "bonuses": ["BONUS_FREE"],
+    "freePromotions": { "PROMOTION_X": ["UNITCOMBAT_MELEE", "UNITCOMBAT_ARCHER"] },
+    "population": 2, "goldenAge": true, "revolution": -50,
+    "foundBuildings": [ { "building": "BUILDING_PALACE", "enabled": { "type": "CITY", "scope": "empire", "max": 0 } } ],
+    "repeatable": [
+      { "unit": "UNIT_SPAWN", "interval": "perTurn",
+        "chance": { "per": { "type": "PROPERTY_CRIME", "scope": "city", "each": 1 } },
+        "enabled": { "all": [ "HAS_POWER", { "type": "TECH_X", "scope": "team" } ] } },
+      { "heal": 3, "interval": { "perTurn": 2 } }
+    ]
+  },
+
+  "production": {
+    "city": {
+      "flat": 2,
+      "percent": [ 25, { "value": 25, "enabled": { "type": "BONUS_COAL", "scope": "city", "min": 1 } } ],
+      "multiplier": [ 200, { "value": 150, "enabled": "HAS_POWER" } ],
+      "postMultiplier": 10,
+      "rawPercent": 5,
+      "ai": { "percent": 30 }
+    }
+  },
+  "buildRate": {
+    "self": { "percent": [ { "value": 100, "enabled": { "type": "BONUS_GNARLITE", "scope": "city", "min": 1 } } ] },
+    "city": {
+      "buildings": { "BUILDING_X": { "percent": 50 } },
+      "units": { "UNIT_X": { "percent": 25 } },
+      "domains": { "DOMAIN_LAND": { "percent": 10 } },
+      "military": { "percent": 25 },
+      "space": { "percent": 25 }
+    },
+    "empire": { "buildings": { "BUILDING_X": { "percent": 10 } }, "space": { "percent": 10 } }
+  },
+  "costs": { "empire": { "perInstance": { "percent": 5, "per": { "type": "SELF", "scope": "empire", "each": 1 } } } },
+
+  "food": {
+    "city": { "improvements": { "IMPROVEMENT_FARM": { "flat": 1 } } },
+    "plot": { "flat": 1 },
+    "improvement": { "flat": 1 },
+    "feature": { "flat": 1 },
+    "terrain": { "flat": 1 },
+    "route": { "flat": 1 }
+  },
+  "commerce": { "plot": { "flat": 1 } },
+  "gold": {
+    "city": { "flat": { "value": 1, "per": { "anyOf": ["RELIGION_GNARLODOXY", "RELIGION_X"], "scope": "world", "each": 1 }, "ai": { "flat": 2 } } }
+  },
+  "research": { "city": { "religions": { "RELIGION_GNARLODOXY": { "flat": 2 } } } },
+  "culture": {
+    "city": { "flat": { "value": 5, "enabled": { "existedFor": { "min": 10 } }, "disabled": { "HAS_FEATURE": "FEATURE_JUNGLE" } } }
+  },
+  "espionage": { "empire": { "flat": 1 } },
+  "happiness": { "city": { "flat": 2 }, "area": { "flat": 1 }, "world": { "flat": 1 }, "building": { "flat": 1 } },
+  "health": { "team": { "flat": 1 } },
+  "maintenance": { "empire": { "distance": { "percent": -10 }, "numCities": { "percent": -5 } } },
+  "upkeep": { "empire": { "unit": { "percent": 100, "ai": { "percent": 120 } } } },
+  "defense": { "city": { "amount": { "percent": 25 }, "min": { "flat": 25 }, "bombardDefense": { "percent": 10 } } },
+  "experience": { "city": { "unitCombats": { "UNITCOMBAT_MELEE": { "flat": 2 } } } },
+  "freeSpecialists": { "empire": { "specialists": { "SPECIALIST_SCIENTIST": { "flat": 1 } } } },
+  "strength": { "unit": { "percent": 5, "terrain": { "TERRAIN_FOREST": { "attack": { "percent": 25 } } } } },
+  "PROPERTY_CRIME": { "city": { "flat": -10 } },
+  "PROPERTY_EDUCATION": { "specialist": { "specialists": { "SPECIALIST_SCIENTIST": { "flat": 1 } } } },
+
+  "ui": { "art": { "icon": "ART_DEF_BUILDING_GNARL_SINGULARITY" } },
+  "world": { "art": { "icon": "ART_DEF_BUILDING_GNARL_SINGULARITY" } }
+}

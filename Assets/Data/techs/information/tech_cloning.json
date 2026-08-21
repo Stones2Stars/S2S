@@ -1,0 +1,62 @@
+{
+ "type": "TECH_CLONING",
+ "enables": {
+  "buildings": [
+   "BUILDING_CLONING_LABORATORY",
+   "BUILDING_STEM_CELL_LAB"
+  ],
+  "projects": [
+   "PROJECT_FIRST_CLONED_MAMMAL"
+  ],
+  "techs": [
+   "TECH_GENETIC_BIOCHEMISTRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GENE_MANIPULATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 20610
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/Robotics.dds,Art/Interface/Buttons/NextWar_Atlas.dds,5,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CLONING",
+  "soundMP": "AS2D_TECH_CLONING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CLONING",
+  "civilopedia": "TXT_KEY_TECH_CLONING_PEDIA",
+  "quote": "TXT_KEY_TECH_CLONING_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 88,
+  "gridY": 5
+ }
+}

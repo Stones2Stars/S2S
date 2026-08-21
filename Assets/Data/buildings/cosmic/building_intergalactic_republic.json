@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_INTERGALACTIC_REPUBLIC",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_GOVERNMENT",
+    "TECH_INTERGALACTIC_EMPIRE",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_INTERGALACTIC_EMPIRE"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    100,
+    {
+     "value": 13,
+     "enabled": "TECH_METAVERSE"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "cost": {
+  "production": 3531,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_REPUBLIC",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_REPUBLIC",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_REPUBLIC_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

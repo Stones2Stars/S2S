@@ -1,0 +1,20 @@
+{
+ "type": "CULTURELEVEL_PHENOMENAL",
+ "allowed": {
+  "worldWonders": 12,
+  "teamWonders": 14,
+  "nationalWonders": 25
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 45
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CULTURELEVEL_PHENOMENAL",
+  "cityRadius": 3,
+  "cultureThreshold": 532480
+ }
+}

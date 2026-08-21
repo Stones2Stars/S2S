@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY",
+ "enables": {
+  "units": [
+   "UNIT_MAPINGUARI",
+   "UNIT_MAPINGUARI_OBSIDIAN",
+   "UNIT_MAPINGUARI_PIKE",
+   "UNIT_MAPINGUARI_STONE",
+   "UNIT_MAPINGUARI_WOODEN"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_GUNPOWDER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -1
+   }
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY",
+  "civilopedia": "TXT_KEY_BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "worth": 2,
+  "militaryWorth": 2,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

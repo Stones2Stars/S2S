@@ -1,0 +1,35 @@
+{
+ "type": "SPECIALIST_GREAT_HUNTER",
+ "food": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_EXPLORER": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/great_hunter.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/great_hunter.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_GREAT_HUNTER",
+  "civilopedia": "TXT_KEY_SPECIALIST_GREAT_HUNTER_PEDIA",
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_MILITARY"
+  ]
+ }
+}

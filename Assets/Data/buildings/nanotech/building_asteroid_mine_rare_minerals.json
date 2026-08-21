@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_ASTEROID_MINE_RARE_MINERALS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ASTEROID_MINE",
+    "TECH_ACOUSTOPHORESIS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_GOLD_ORE",
+   "BONUS_PLATINUM_ORE",
+   "BONUS_SILVER_ORE"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 3665
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ASTEROID_MINE_RARE_MINERALS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ASTEROID_MINE_RARE_MINERALS",
+  "civilopedia": "TXT_KEY_BUILDING_ASTEROID_MINE_RARE_MINERALS_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

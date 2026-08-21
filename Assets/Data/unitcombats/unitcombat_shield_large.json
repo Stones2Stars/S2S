@@ -1,0 +1,20 @@
+{
+ "type": "UNITCOMBAT_SHIELD_LARGE",
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/shield_large.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SHIELD_LARGE"
+ }
+}

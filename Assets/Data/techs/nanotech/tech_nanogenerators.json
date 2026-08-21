@@ -1,0 +1,71 @@
+{
+ "type": "TECH_NANOGENERATORS",
+ "enables": {
+  "bonuses": [
+   "BONUS_NANOGENERATORS"
+  ],
+  "buildings": [
+   "BUILDING_AUGMENTED_ORGAN_LAB",
+   "BUILDING_DATTOO_PARLOR",
+   "BUILDING_FACTORY_NANOGENERATORS"
+  ],
+  "techs": [
+   "TECH_AUGMENTED_CONSUMABLES",
+   "TECH_AUTOMATED_ROBOTICS",
+   "TECH_HOLOGRAPHICS",
+   "TECH_NANOPUNK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LIQUID_METALS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 37614
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Nanogenerators2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NANOGENERATORS",
+  "soundMP": "AS2D_TECH_NANOGENERATORS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NANOGENERATORS",
+  "civilopedia": "TXT_KEY_TECH_NANOGENERATORS_PEDIA",
+  "quote": "TXT_KEY_TECH_NANOGENERATORS_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 101,
+  "gridY": 9
+ }
+}

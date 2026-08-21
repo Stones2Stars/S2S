@@ -1,0 +1,80 @@
+{
+ "type": "TECH_WATERWHEELS",
+ "enables": {
+  "buildings": [
+   "BUILDING_HIERAPOLIS_SAWMILL",
+   "BUILDING_NORIA",
+   "BUILDING_SU_SONGS_WORKSHOP",
+   "BUILDING_WANG_ZHENS_WORKSHOP",
+   "BUILDING_WATERCLOCK",
+   "BUILDING_WATERMILL"
+  ],
+  "builds": [
+   "BUILD_WATERMILL"
+  ],
+  "improvements": [
+   "IMPROVEMENT_WATERMILL"
+  ],
+  "techs": [
+   "TECH_ENGINEERING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CANAL_SYSTEMS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MACHINERY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 904
+ },
+ "ai": {
+  "behaviour": {
+   "weight": 100,
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/waterwheels.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_WATERWHEELS",
+  "soundMP": "AS2D_TECH_WATERWHEELS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_WATERWHEELS",
+  "civilopedia": "TXT_KEY_TECH_WATERWHEELS_PEDIA",
+  "quote": "TXT_KEY_TECH_WATERWHEELS_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 24,
+  "militaryWorth": 8,
+  "tradeable": true,
+  "gridX": 40,
+  "gridY": 13
+ }
+}

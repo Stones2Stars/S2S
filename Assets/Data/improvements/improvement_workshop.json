@@ -1,0 +1,112 @@
+{
+ "type": "IMPROVEMENT_WORKSHOP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MACHINERY",
+     "scope": "team"
+    },
+    "IS_FLATLANDS",
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_GRASSLAND",
+        "TERRAIN_PLAINS",
+        "TERRAIN_LUSH",
+        "TERRAIN_SCRUB",
+        "TERRAIN_MUDDY",
+        "TERRAIN_BARREN",
+        "TERRAIN_ROCKY",
+        "TERRAIN_BADLAND",
+        "TERRAIN_JAGGED",
+        "TERRAIN_TAIGA"
+       ]
+      },
+      "HAS_FRESHWATER"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": -1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GUILDS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CHEMISTRY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_REPLACEABLE_PARTS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GUILDS",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_AIR_POLLUTION": 1,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  }
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_WORKSHOP"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_WORKSHOP",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_WORKSHOP_PEDIA",
+  "advancedStart": {
+   "cost": 36
+  },
+  "upgradeTime": 20,
+  "pillageGold": 30,
+  "upgradesTo": "IMPROVEMENT_FACTORY"
+ }
+}

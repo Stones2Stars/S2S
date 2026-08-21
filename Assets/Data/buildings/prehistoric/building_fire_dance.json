@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_FIRE_DANCE",
+ "enables": {
+  "buildings": [
+   "BUILDING_GRAND_FIRE_FESTIVAL"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FOLK_DANCE"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_PREHISTORIC_DANCE",
+    "TECH_CONTROLLED_FIRE",
+    {
+     "any": [
+      "BUILDING_IMU",
+      "BUILDING_FIRE_PIT",
+      "BUILDING_BONFIRE",
+      "BUILDING_CHARCOAL_BURNER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FIRE_DANCE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FIRE_DANCE",
+  "civilopedia": "TXT_KEY_BUILDING_FIRE_DANCE_PEDIA",
+  "notConstructible": true,
+  "worth": 1,
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

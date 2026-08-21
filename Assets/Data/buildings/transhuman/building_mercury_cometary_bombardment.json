@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_MERCURY_COMETARY_BOMBARDMENT",
+ "enables": {
+  "buildings": [
+   "BUILDING_MERCURY_SUNSHADE",
+   "BUILDING_TERRAFORMED_MERCURY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MERCURY_COLONY",
+    "TECH_ASTEROID_EXTRACTION",
+    {
+     "type": "TERRAIN_MERCURY",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 2363,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MERCURY_COMETARY_BOMBARDMENT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MERCURY_COMETARY_BOMBARDMENT",
+  "civilopedia": "TXT_KEY_BUILDING_MERCURY_COMETARY_BOMBARDMENT_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

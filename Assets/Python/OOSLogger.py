@@ -1,5 +1,9 @@
 # OOS logger: writes the info contained in the sync checksum to a log file
-from CvPythonExtensions import CyGlobalContext, YieldTypes, CommerceTypes, UnitAITypes
+from CvPythonExtensions import YieldTypes, CommerceTypes, UnitAITypes, CyGlobalContext
+GC = CyGlobalContext()
+INFO = CyInfo()
+GAME = GC.getGame()
+MAP = GC.getMap()
 
 def writeLog():
 	import SystemPaths as SP
@@ -59,12 +63,12 @@ def writeLog():
 			pFile.write("\n\nYields:\n-------\n")
 
 			for iYield in xrange(YieldTypes.NUM_YIELD_TYPES):
-				pFile.write("Player %d %s Total Yield: %d\n" % (iPlayer, TextUtil.convertToStr(GC.getYieldInfo(iYield).getDescription()), pPlayer.calculateTotalYield(iYield)))
+				pFile.write("Player %d %s Total Yield: %d\n" % (iPlayer, TextUtil.convertToStr(INFO.getDescription("YIELD_", iYield)), pPlayer.calculateTotalYield(iYield)))
 
 			pFile.write("\n\nCommerce:\n---------\n")
 
 			for iCommerce in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
-				pFile.write("Player %d %s Total Commerce: %d\n" % (iPlayer, TextUtil.convertToStr(GC.getCommerceInfo(iCommerce).getDescription()), pPlayer.getCommerceRate(CommerceTypes(iCommerce))))
+				pFile.write("Player %d %s Total Commerce: %d\n" % (iPlayer, TextUtil.convertToStr(INFO.getDescription("COMMERCE_", iCommerce)), pPlayer.getCommerceRate(CommerceTypes(iCommerce))))
 
 			pFile.write("\n\nCity event history:\n-----------\n")
 
@@ -77,7 +81,7 @@ def writeLog():
 							if bFirst:
 								pFile.write("City: %s\n" % TextUtil.convertToStr(pCity.getName()))
 								bFirst = False
-							pFile.write("\t" + TextUtil.convertToStr(GC.getEventInfo(iEvent).getDescription()) + "\n")
+							pFile.write("\t" + TextUtil.convertToStr(INFO.getDescription("EVENT_", iEvent)) + "\n")
 					pCity, i = pPlayer.nextCity(i, False)
 
 			pFile.write("\n\nCity Info:\n----------\n")
@@ -105,7 +109,7 @@ def writeLog():
 			pFile.write("\n\nBonus Info:\n-----------\n")
 
 			for iBonus in xrange(GC.getNumBonusInfos()):
-				szTemp = TextUtil.convertToStr(GC.getBonusInfo(iBonus).getDescription())
+				szTemp = TextUtil.convertToStr(INFO.getDescription("BONUS_", iBonus))
 				pFile.write("Player %d, %s, Number Available: %d\n" % (iPlayer, szTemp, pPlayer.getNumAvailableBonuses(iBonus)))
 				pFile.write("Player %d, %s, Import: %d\n" % (iPlayer, szTemp, pPlayer.getBonusImport(iBonus)))
 				pFile.write("Player %d, %s, Export: %d\n\n" % (iPlayer, szTemp, pPlayer.getBonusExport(iBonus)))
@@ -113,22 +117,22 @@ def writeLog():
 			pFile.write("\n\nImprovement Info:\n-----------------\n")
 
 			for iImprovement in xrange(GC.getNumImprovementInfos()):
-				pFile.write("Player %d, %s, Improvement count: %d\n" % (iPlayer, TextUtil.convertToStr(GC.getImprovementInfo(iImprovement).getDescription()), pPlayer.getImprovementCount(iImprovement)))
+				pFile.write("Player %d, %s, Improvement count: %d\n" % (iPlayer, TextUtil.convertToStr(INFO.getDescription("IMPROVEMENT_", iImprovement)), pPlayer.getImprovementCount(iImprovement)))
 
 			pFile.write("\n\nBuilding Info:\n--------------------\n")
 
 			for iBuilding in xrange(GC.getNumBuildingInfos()):
-				pFile.write("Player %d, %s, Building class count plus making: %d\n" % (iPlayer, TextUtil.convertToStr(GC.getBuildingInfo(iBuilding).getDescription()), pPlayer.getBuildingCountPlusMaking(iBuilding)))
+				pFile.write("Player %d, %s, Building class count plus making: %d\n" % (iPlayer, TextUtil.convertToStr(INFO.getDescription("BUILDING_", iBuilding)), pPlayer.getBuildingCountPlusMaking(iBuilding)))
 
 			pFile.write("\n\nUnit Class Info:\n--------------------\n")
 
 			for iUnit in xrange(GC.getNumUnitInfos()):
-				pFile.write("Player %d, %s, Unit class count plus training: %d\n" % (iPlayer, TextUtil.convertToStr(GC.getUnitInfo(iUnit).getDescription()), pPlayer.getUnitCountPlusMaking(iUnit)))
+				pFile.write("Player %d, %s, Unit class count plus training: %d\n" % (iPlayer, TextUtil.convertToStr(INFO.getDescription("UNIT_", iUnit)), pPlayer.getUnitCountPlusMaking(iUnit)))
 
 			pFile.write("\n\nUnitAI Types Info:\n------------------\n")
 
 			for iUnitAIType in xrange(int(UnitAITypes.NUM_UNITAI_TYPES)):
-				pFile.write("Player %d, %s, Unit AI Type count: %d\n" % (iPlayer, GC.getUnitAIInfo(iUnitAIType).getType(), pPlayer.AI_totalUnitAIs(UnitAITypes(iUnitAIType))))
+				pFile.write("Player %d, %s, Unit AI Type count: %d\n" % (iPlayer, INFO.getType("UNITAI_", iUnitAIType), pPlayer.AI_totalUnitAIs(UnitAITypes(iUnitAIType))))
 
 			pFile.write("\n\nCity Religions:\n-----------\n")
 
@@ -141,7 +145,7 @@ def writeLog():
 							if bFirst:
 								pFile.write("City: %s\n" % TextUtil.convertToStr(pCity.getName()))
 								bFirst = False
-							pFile.write("\t" + TextUtil.convertToStr(GC.getReligionInfo(iReligion).getDescription()) + "\n")
+							pFile.write("\t" + TextUtil.convertToStr(INFO.getDescription("RELIGION_", iReligion)) + "\n")
 					pCity, i = pPlayer.nextCity(i, False)
 
 			pFile.write("\n\nCity Corporations:\n-----------\n")
@@ -155,7 +159,7 @@ def writeLog():
 							if bFirst:
 								pFile.write("City: %s\n" % TextUtil.convertToStr(pCity.getName()))
 								bFirst = False
-							pFile.write("\t" + TextUtil.convertToStr(GC.getCorporationInfo(iCorporation).getDescription()) + "\n")
+							pFile.write("\t" + TextUtil.convertToStr(INFO.getDescription("CORPORATION_", iCorporation)) + "\n")
 					pCity, i = pPlayer.nextCity(i, False)
 
 			pFile.write("\n\nUnit Info:\n----------\n")
@@ -171,14 +175,14 @@ def writeLog():
 							if bFirst:
 								pFile.write("Promotions:\n")
 								bFirst = False
-							pFile.write("\t" + TextUtil.convertToStr(GC.getPromotionInfo(j).getDescription()) + "\n")
+							pFile.write("\t" + TextUtil.convertToStr(INFO.getDescription("PROMOTION_", j)) + "\n")
 					bFirst = True
 					for j in xrange(GC.getNumUnitCombatInfos()):
 						if pUnit.isHasUnitCombat(j):
 							if bFirst:
 								pFile.write("UnitCombats:\n")
 								bFirst = False
-							pFile.write("\t" + TextUtil.convertToStr(GC.getUnitCombatInfo(j).getDescription()) + "\n")
+							pFile.write("\t" + TextUtil.convertToStr(INFO.getDescription("UNITCOMBAT_", j)) + "\n")
 			else:
 				pFile.write("No Units")
 			# Space at end of player's info

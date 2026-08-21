@@ -1,0 +1,16 @@
+{
+ "type": "PROMOTIONLINE_CORRUPTION",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Corruption1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_CORRUPTION",
+  "unitCombats": [
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_RUFFIAN",
+   "UNITCOMBAT_PIRATE"
+  ]
+ }
+}

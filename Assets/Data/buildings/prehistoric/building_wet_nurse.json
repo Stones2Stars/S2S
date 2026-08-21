@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_WET_NURSE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COOPERATION",
+    "TECH_SHELTER_BUILDING",
+    {
+     "any": [
+      "BUILDING_CHILDBIRTH_HUT",
+      "BUILDING_ANCIENT_CUSTOMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      "CIVIC_COMMUNALISM",
+      "CIVIC_BARTER",
+      "CIVIC_SUBSISTENCE"
+     ]
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "cost": {
+  "production": 25,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WET_NURSE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WET_NURSE",
+  "civilopedia": "TXT_KEY_BUILDING_WET_NURSE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

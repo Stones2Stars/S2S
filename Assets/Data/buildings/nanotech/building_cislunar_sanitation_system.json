@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_CISLUNAR_SANITATION_SYSTEM",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_ENHANCED_ALGAE_FARM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_SOLAR_MONITOR",
+    "TECH_PROTOTYPED_PATHOGENS",
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 9,
+     "enabled": "TECH_DYSTOPIA_PATHOGENS"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 528,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_SANITATION_SYSTEM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_SANITATION_SYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SANITATION_SYSTEM_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

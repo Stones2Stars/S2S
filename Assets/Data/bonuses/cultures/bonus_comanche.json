@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_COMANCHE",
+ "enables": {
+  "units": [
+   "UNIT_BUFFALO_HUMP",
+   "UNIT_COMANCHE_HORSE_ARCHER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_COMANCHE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_COMANCHE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

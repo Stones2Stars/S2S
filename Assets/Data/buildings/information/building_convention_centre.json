@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_CONVENTION_CENTRE",
+ "enables": {
+  "buildings": [
+   "BUILDING_SCIENCE_SYMPOSIUM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COMMUNICATION_NETWORKS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "cost": {
+  "production": 1925,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CONVENTION_CENTRE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CONVENTION_CENTER"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CONVENTION_CENTRE",
+  "civilopedia": "TXT_KEY_BUILDING_CONVENTION_CENTRE_PEDIA",
+  "worth": 8,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

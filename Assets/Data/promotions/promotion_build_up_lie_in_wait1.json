@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_BUILD_UP_LIE_IN_WAIT1",
+ "combat": {
+  "unit": {
+   "stealth": {
+    "percent": 5
+   },
+   "stealthStrikes": {
+    "flat": 1
+   }
+  }
+ },
+ "skills": {
+  "stealthDefense": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_LIE_IN_WAIT": 1
+ },
+ "enabled": "GAMEOPTION_COMBAT_WITHOUT_WARNING",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/LieInWait1Buildup.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_LIE_IN_WAIT1",
+  "prereqNormInvisible": true
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "type": "PROMOTION_HEAL1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BUILD_UP_HEALTH_CARE1"
+  ]
+ },
+ "heal": {
+  "unit": {
+   "sameTile": {
+    "flat": 2
+   },
+   "adjacentTile": {
+    "flat": 1
+   },
+   "support": {
+    "flat": 1
+   },
+   "victoryAdjacent": {
+    "flat": 2
+   },
+   "victoryStack": {
+    "flat": 4
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_HEAL": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Heal1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_HEAL1"
+ }
+}

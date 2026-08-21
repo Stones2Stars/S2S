@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_ACCURACY2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ACCURACY3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_ACCURACY"
+   ]
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 3
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_ACCURACY": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Accuracy2.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,1,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_ACCURACY2"
+ }
+}

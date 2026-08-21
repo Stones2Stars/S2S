@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_JOIN_AS_SLAVE",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_JOIN_AS_SLAVE",
+  "message": "TXT_KEY_OUTCOME_JOIN_AS_SLAVE_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE"
+   ]
+  }
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city"
+}

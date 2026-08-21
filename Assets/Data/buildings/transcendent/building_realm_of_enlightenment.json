@@ -1,0 +1,48 @@
+{
+ "type": "BUILDING_REALM_OF_ENLIGHTENMENT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SKY_GOD",
+    "TECH_SPIRITUAL_REALMS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 27855,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_REALM_OF_ENLIGHTENMENT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_REALM_OF_ENLIGHTENMENT",
+  "civilopedia": "TXT_KEY_BUILDING_REALM_OF_ENLIGHTENMENT_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

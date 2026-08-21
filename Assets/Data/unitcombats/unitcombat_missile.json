@@ -1,0 +1,18 @@
+{
+ "type": "UNITCOMBAT_MISSILE",
+ "skills": {
+  "cannotMergeSplit": true
+ },
+ "tags": [
+  "missile"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/missiles.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_MISSILE",
+  "forMilitary": true
+ }
+}

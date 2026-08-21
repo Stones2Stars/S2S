@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_ALGERIAN",
+ "enables": {
+  "units": [
+   "UNIT_HAYREDDIN",
+   "UNIT_RAZZIA_PIRATES"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ALGERIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ALGERIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

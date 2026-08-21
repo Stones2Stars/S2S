@@ -1,0 +1,50 @@
+{
+ "type": "PROMOTION_HILLSMAN",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_GUERILLA3"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_PEAK": {
+     "percent": -50
+    }
+   }
+  }
+ },
+ "skills": {
+  "hillsDoubleMove": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Hillsman.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_HILLSMAN",
+  "unitCombats": [
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_HUNTER",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_CLONES"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ]
+ }
+}

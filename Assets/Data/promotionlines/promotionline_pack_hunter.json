@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_PACK_HUNTER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/packhunting1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_PACK_HUNTER",
+  "unitCombats": [
+   "UNITCOMBAT_CANINE"
+  ]
+ }
+}

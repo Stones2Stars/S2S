@@ -1,0 +1,17 @@
+{
+ "type": "PROMOTIONLINE_SEA_HUNTER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/seahunter1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SEA_HUNTER",
+  "unitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS"
+  ]
+ }
+}

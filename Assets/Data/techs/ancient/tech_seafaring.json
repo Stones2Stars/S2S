@@ -1,0 +1,107 @@
+{
+ "type": "TECH_SEAFARING",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_ALGERIAN",
+   "BUILDING_CULTURE_HAWAIIAN",
+   "BUILDING_CULTURE_OPHIR",
+   "BUILDING_CULTURE_SOMALI",
+   "BUILDING_GARBAGE_DOCK",
+   "BUILDING_HARBOR",
+   "BUILDING_HARBORMASTERS_OFFICE",
+   "BUILDING_PIER",
+   "BUILDING_THE_GREAT_LIGHTHOUSE"
+  ],
+  "civics": [
+   "CIVIC_WASTE_TO_SEA"
+  ],
+  "promotions": [
+   "PROMOTION_NAVIGATION1",
+   "PROMOTION_SEA_HUNTER_GREAT"
+  ],
+  "techs": [
+   "TECH_CLOUD_PATTERNS",
+   "TECH_LINGUISTICS"
+  ],
+  "units": [
+   "UNIT_MASTER_SAILOR_TRIREME",
+   "UNIT_POLYNESIAN_KOA",
+   "UNIT_TRIREME"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_MASTER_SAILOR_WAR_GALLEY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BRONZE_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "canTradeOn": {
+  "terrains": [
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_DEEP_TROPICAL",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_SEA_TROPICAL"
+  ]
+ },
+ "cost": {
+  "research": 309
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Seafaring.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SEAFARING",
+  "soundMP": "AS2D_TECH_SEAFARING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SEAFARING",
+  "civilopedia": "TXT_KEY_TECH_SEAFARING_PEDIA",
+  "quote": "TXT_KEY_TECH_SEAFARING_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 24,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 30,
+  "gridY": 3
+ }
+}

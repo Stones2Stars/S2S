@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_YANOMAMI",
+ "enables": {
+  "units": [
+   "UNIT_KARAWETARI",
+   "UNIT_TUXAWA"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_YANOMAMI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_YANOMAMI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

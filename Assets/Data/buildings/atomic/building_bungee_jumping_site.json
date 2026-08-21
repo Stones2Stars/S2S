@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_BUNGEE_JUMPING_SITE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WEATHER_CONTROL"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ATHLETIC_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_EXTREME_SPORTS",
+    {
+     "any": [
+      "BUILDING_MODERN_CRANE",
+      "BUILDING_HIGH_TECH_CRANE",
+      "BUILDING_SMALL_STEEL_ARCH_BRIDGE",
+      "BUILDING_LARGE_STEEL_ARCH_BRIDGE",
+      "BUILDING_SMALL_SUSPENSION_BRIDGE",
+      "BUILDING_LARGE_SUSPENSION_BRIDGE",
+      "BUILDING_GOLDEN_GATE_BRIDGE",
+      "BUILDING_TELEPORT_BOOTH"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_ATHLETIC_MEGACOMPLEX"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HELICOPTERS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 1605,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BUNGEE_JUMPING_SITE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BUNGEE_JUMPING_SITE",
+  "civilopedia": "TXT_KEY_BUILDING_BUNGEE_JUMPING_SITE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

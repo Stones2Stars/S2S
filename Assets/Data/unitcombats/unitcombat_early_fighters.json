@@ -1,0 +1,15 @@
+{
+ "type": "UNITCOMBAT_EARLY_FIGHTERS",
+ "tags": [
+  "air"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/early_fighters.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_EARLY_FIGHTERS",
+  "forMilitary": true
+ }
+}

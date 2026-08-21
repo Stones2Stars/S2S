@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_COLONIZE_MAP_ORION_ARM",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_ORION_ARM",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_ORION_ARM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ADVANCED_SEEDSHIPS"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

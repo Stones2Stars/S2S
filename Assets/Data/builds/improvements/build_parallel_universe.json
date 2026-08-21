@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_PARALLEL_UNIVERSE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EXPERIMENTAL_COSMOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_PARALLEL_UNIVERSE"
+ },
+ "cost": {
+  "gold": 700,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/parallel_universe.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_PARALLEL_UNIVERSE"
+ }
+}

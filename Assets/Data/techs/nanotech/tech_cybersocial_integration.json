@@ -1,0 +1,74 @@
+{
+ "type": "TECH_CYBERSOCIAL_INTEGRATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANDROID_PARENTS",
+   "BUILDING_FUTARCHY_MARKET",
+   "BUILDING_SOCIABLE_ROBOTS",
+   "BUILDING_VIRTUAL_ECONOMY"
+  ],
+  "civics": [
+   "CIVIC_VIRTUAL_CITIZENSHIP"
+  ],
+  "techs": [
+   "TECH_TRANSHUMAN_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_QUANTUM_COMPUTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_UNIVERSAL_TRANSLATOR",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 49574
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/cybersociology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CYBERSOCIAL_INTEGRATION",
+  "soundMP": "AS2D_TECH_CYBERSOCIAL_INTEGRATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CYBERSOCIAL_INTEGRATION",
+  "civilopedia": "TXT_KEY_TECH_CYBERSOCIAL_INTEGRATION_PEDIA",
+  "quote": "TXT_KEY_TECH_CYBERSOCIAL_INTEGRATION_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 109,
+  "gridY": 5
+ }
+}

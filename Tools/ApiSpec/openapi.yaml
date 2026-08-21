@@ -1,0 +1,264 @@
+openapi: 3.0.3
+info:
+  title: S2S Observability API
+  version: "1.0.0"
+  description: >
+    The local, GET-only observability surface published by CvGameCoreDLL
+    (Sources/Tools/CvHttpServer.cpp), bound to 127.0.0.1:7227 and gated by the
+    in-game BUG option `Autolog__HttpServer` (off by default).
+
+    Two data buckets, split on the verification axis:
+      * `/state/*`    — RAW, uncalculated inputs (no yields, no verdicts). The calculator's INPUT side.
+      * `/computed/*` — the engine's OWN computed answers (yields, gate verdicts, counts). The verification GROUND-TRUTH.
+
+    An external calculator fetches `/state`, computes a result itself from the pre-built Assets/Data JSONs,
+    and checks it against `/computed` — proving the C2C->S2S port lost no mechanic (per-mechanic parity).
+
+    City ids are NOT unique across empires: every city object carries {owner,id,name,x,y}; key single-city
+    reads by player+city. Authoritative prose: docs/specs/http-endpoints.md.
+
+    Concurrency: `/state/*` and `/computed/*` are serviced on the game thread via a single-slot mailbox; a
+    second concurrent data request returns 503 — retry once after ~1s.
+servers:
+  - url: http://127.0.0.1:7227
+    description: Local dev server (loopback only)
+
+components:
+  parameters:
+    player:
+      name: player
+      in: query
+      required: false
+      description: Player id. On /state, filters (omit = all alive players). On /computed, the subject (omit = active player).
+      schema: { type: integer, minimum: 0 }
+    city:
+      name: city
+      in: query
+      required: false
+      description: City id WITHIN the given player (ids are not unique across empires; pass with player=). Omit on /computed = the player's capital.
+      schema: { type: integer, minimum: 0 }
+    globalId:
+      name: globalId
+      in: query
+      required: false
+      description: >
+        The globally-unique city snowflake "<PP>-<id>" (e.g. 05-8192), decoded server-side to (player, city).
+        A single-param alternative to player=&city= on any city-relative endpoint.
+      schema: { type: string, pattern: '^[0-9]{1,2}-[0-9]+$' }
+    type:
+      name: type
+      in: query
+      required: true
+      description: Entity XML key, e.g. BUILDING_FORGE / UNIT_WARRIOR / TECH_BRONZE_WORKING / CIVIC_SLAVERY / PROJECT_APOLLO_PROGRAM / PROCESS_WEALTH.
+      schema: { type: string }
+  responses:
+    Json:
+      description: JSON document (shape per docs/specs/http-endpoints.md). Carries the X-S2S-Turn header.
+      headers:
+        X-S2S-Turn: { description: The game turn the read was taken on, schema: { type: integer } }
+      content:
+        application/json:
+          schema: { type: object }
+    Busy:
+      description: Mailbox busy or game thread not ticking — retry once after ~1s.
+      content:
+        application/json:
+          schema: { type: object, properties: { error: { type: string } } }
+
+paths:
+  /:
+    get:
+      operationId: getLiveness
+      summary: Liveness smoke test
+      tags: [meta]
+      responses:
+        "200":
+          description: The literal "hello world".
+          content:
+            text/plain:
+              schema: { type: string, example: "hello world\n" }
+  /events:
+    get:
+      operationId: getEvents
+      summary: Server-Sent Events stream (gated [TAG] log lines + turn-phase events)
+      description: text/event-stream that never ends. Connect BEFORE ending a turn to capture the per-turn burst.
+      tags: [meta]
+      responses:
+        "200":
+          description: An open SSE stream.
+          content:
+            text/event-stream:
+              schema: { type: string }
+        "503": { $ref: "#/components/responses/Busy" }
+
+  /state:
+    get:
+      operationId: getStateIndex
+      summary: Index of /state routes
+      tags: [state]
+      responses: { "200": { $ref: "#/components/responses/Json" } }
+  /state/all:
+    get:
+      operationId: getStateAll
+      summary: The entire raw state in one document (world/players/cities/plots)
+      tags: [state]
+      parameters: [ { $ref: "#/components/parameters/player" } ]
+      responses: { "200": { $ref: "#/components/responses/Json" }, "503": { $ref: "#/components/responses/Busy" } }
+  /state/techs:
+    get:
+      operationId: getStateTechs
+      summary: Every player's completed techs
+      tags: [state]
+      parameters: [ { $ref: "#/components/parameters/player" } ]
+      responses: { "200": { $ref: "#/components/responses/Json" }, "503": { $ref: "#/components/responses/Busy" } }
+  /state/players:
+    get:
+      operationId: getStatePlayers
+      summary: Raw player facts (era/civics/traits/counts; no computed rates)
+      tags: [state]
+      parameters: [ { $ref: "#/components/parameters/player" } ]
+      responses: { "200": { $ref: "#/components/responses/Json" }, "503": { $ref: "#/components/responses/Busy" } }
+  /state/cities:
+    get:
+      operationId: getStateCities
+      summary: Raw city substrate (plots/buildings/specialists/bonuses; no yields)
+      tags: [state]
+      parameters:
+        - { $ref: "#/components/parameters/player" }
+        - { $ref: "#/components/parameters/city" }
+        - { $ref: "#/components/parameters/globalId" }
+      responses: { "200": { $ref: "#/components/responses/Json" }, "503": { $ref: "#/components/responses/Busy" } }
+  /state/units:
+    get:
+      operationId: getStateUnits
+      summary: Raw unit facts (type/ai/pos/group/damage/level/promotions)
+      tags: [state]
+      parameters: [ { $ref: "#/components/parameters/player" } ]
+      responses: { "200": { $ref: "#/components/responses/Json" }, "503": { $ref: "#/components/responses/Busy" } }
+
+  /computed:
+    get:
+      operationId: getComputedIndex
+      summary: Index of /computed routes
+      tags: [computed]
+      responses: { "200": { $ref: "#/components/responses/Json" } }
+  /computed/cities/yields:
+    get:
+      operationId: getComputedCityYields
+      summary: getYieldRate100 per channel + full per-source decomposition (per-mechanic parity surface)
+      tags: [computed]
+      parameters:
+        - { $ref: "#/components/parameters/player" }
+        - { $ref: "#/components/parameters/city" }
+        - { $ref: "#/components/parameters/globalId" }
+      responses: { "200": { $ref: "#/components/responses/Json" }, "503": { $ref: "#/components/responses/Busy" } }
+  /computed/players:
+    get:
+      operationId: getComputedPlayers
+      summary: Empire economy (gold/science/upkeep/inflation/demographics)
+      tags: [computed]
+      parameters: [ { $ref: "#/components/parameters/player" } ]
+      responses: { "200": { $ref: "#/components/responses/Json" }, "503": { $ref: "#/components/responses/Busy" } }
+  /computed/canConstruct:
+    get:
+      operationId: getCanConstruct
+      summary: Engine buildability verdict (+ first failing legacy gate)
+      tags: [computed]
+      parameters:
+        - { $ref: "#/components/parameters/type" }
+        - { $ref: "#/components/parameters/player" }
+        - { $ref: "#/components/parameters/city" }
+      responses: { "200": { $ref: "#/components/responses/Json" }, "400": { $ref: "#/components/responses/Json" }, "503": { $ref: "#/components/responses/Busy" } }
+  /computed/canTrain:
+    get:
+      operationId: getCanTrain
+      summary: Engine trainability verdict
+      tags: [computed]
+      parameters:
+        - { $ref: "#/components/parameters/type" }
+        - { $ref: "#/components/parameters/player" }
+        - { $ref: "#/components/parameters/city" }
+      responses: { "200": { $ref: "#/components/responses/Json" }, "503": { $ref: "#/components/responses/Busy" } }
+  /computed/canResearch:
+    get:
+      operationId: getCanResearch
+      summary: Engine canResearch verdict (type=TECH_X)
+      tags: [computed]
+      parameters:
+        - { $ref: "#/components/parameters/type" }
+        - { $ref: "#/components/parameters/player" }
+      responses: { "200": { $ref: "#/components/responses/Json" }, "503": { $ref: "#/components/responses/Busy" } }
+  /computed/canDoCivics:
+    get:
+      operationId: getCanDoCivics
+      summary: Engine canDoCivics verdict (type=CIVIC_X)
+      tags: [computed]
+      parameters:
+        - { $ref: "#/components/parameters/type" }
+        - { $ref: "#/components/parameters/player" }
+      responses: { "200": { $ref: "#/components/responses/Json" }, "503": { $ref: "#/components/responses/Busy" } }
+  /computed/canCreate:
+    get:
+      operationId: getCanCreate
+      summary: Engine canCreate verdict (type=PROJECT_X)
+      tags: [computed]
+      parameters:
+        - { $ref: "#/components/parameters/type" }
+        - { $ref: "#/components/parameters/player" }
+      responses: { "200": { $ref: "#/components/responses/Json" }, "503": { $ref: "#/components/responses/Busy" } }
+  /computed/canMaintain:
+    get:
+      operationId: getCanMaintain
+      summary: Engine canMaintain verdict (type=PROCESS_X)
+      tags: [computed]
+      parameters:
+        - { $ref: "#/components/parameters/type" }
+        - { $ref: "#/components/parameters/player" }
+      responses: { "200": { $ref: "#/components/responses/Json" }, "503": { $ref: "#/components/responses/Busy" } }
+  /computed/availableTechs:
+    get:
+      operationId: getAvailableTechs
+      summary: Engine canResearch set for the player
+      tags: [computed]
+      parameters: [ { $ref: "#/components/parameters/player" } ]
+      responses: { "200": { $ref: "#/components/responses/Json" }, "503": { $ref: "#/components/responses/Busy" } }
+  /computed/availableCivics:
+    get:
+      operationId: getAvailableCivics
+      summary: Engine canDoCivics set for the player
+      tags: [computed]
+      parameters: [ { $ref: "#/components/parameters/player" } ]
+      responses: { "200": { $ref: "#/components/responses/Json" }, "503": { $ref: "#/components/responses/Busy" } }
+  /computed/availableBuilds:
+    get:
+      operationId: getAvailableBuilds
+      summary: Engine build-unlock set for the player
+      tags: [computed]
+      parameters: [ { $ref: "#/components/parameters/player" } ]
+      responses: { "200": { $ref: "#/components/responses/Json" }, "503": { $ref: "#/components/responses/Busy" } }
+  /computed/tally:
+    get:
+      operationId: getTally
+      summary: Engine counts (empire live + world created + maxed-out flags)
+      tags: [computed]
+      parameters:
+        - { $ref: "#/components/parameters/type" }
+        - { $ref: "#/components/parameters/player" }
+      responses: { "200": { $ref: "#/components/responses/Json" }, "503": { $ref: "#/components/responses/Busy" } }
+  /computed/whyNot:
+    get:
+      operationId: getWhyNot
+      summary: canTrain decision inputs (type=UNIT_X)
+      tags: [computed]
+      parameters:
+        - { $ref: "#/components/parameters/type" }
+        - { $ref: "#/components/parameters/player" }
+        - { $ref: "#/components/parameters/city" }
+      responses: { "200": { $ref: "#/components/responses/Json" }, "503": { $ref: "#/components/responses/Busy" } }
+  /computed/game:
+    get:
+      operationId: getGame
+      summary: Turn / game-over / winner / victory countdowns
+      tags: [computed]
+      parameters: [ { $ref: "#/components/parameters/player" } ]
+      responses: { "200": { $ref: "#/components/responses/Json" }, "503": { $ref: "#/components/responses/Busy" } }

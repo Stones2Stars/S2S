@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_RESOURCES_VEGETABLES",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GAIA_ECOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FARMSCRAPER_I"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_FARMSCRAPER_I"
+   ],
+   "all": [
+    {
+     "any": [
+      "BUILDING_FARM_CROP_ARTICHOKE",
+      "BUILDING_FARM_CROP_BELL_PEPPER",
+      "BUILDING_FARM_CROP_BROCCOLI",
+      "BUILDING_FARM_CROP_CABBAGE",
+      "BUILDING_FARM_CROP_CARROT",
+      "BUILDING_FARM_CROP_CASSAVA",
+      "BUILDING_FARM_CROP_CAULIFLOWER",
+      "BUILDING_FARM_CROP_CELERY",
+      "BUILDING_FARM_CROP_CUCUMBER",
+      "BUILDING_FARM_CROP_EGGPLANT",
+      "BUILDING_FARM_CROP_GARLIC",
+      "BUILDING_FARM_CROP_CALABASH",
+      "BUILDING_HYDROPONIC_VEGETABLE_GARDEN",
+      "BUILDING_FARM_CROP_KALE",
+      "BUILDING_FARM_CROP_LEEK",
+      "BUILDING_FARM_CROP_LETTUCE",
+      "BUILDING_FARM_CROP_ONION",
+      "BUILDING_FARM_CROP_POTATO",
+      "BUILDING_FARM_CROP_PUMPKIN",
+      "BUILDING_FARM_CROP_RADISH",
+      "BUILDING_FARM_CROP_TURNIP",
+      "BUILDING_FARM_CROP_SPINACH",
+      "BUILDING_FARM_CROP_SQUASH",
+      "BUILDING_FARM_CROP_SWEET_POTATO",
+      "BUILDING_PLANTATION_TARO",
+      "BUILDING_FARM_CROP_ZUCCHINI"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_VEGETABLES"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESOURCES_VEGETABLES",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_VEGETABLES",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

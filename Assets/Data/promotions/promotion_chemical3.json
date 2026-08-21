@@ -1,0 +1,65 @@
+{
+ "type": "PROMOTION_CHEMICAL3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CHEMICAL2"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 30
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 30
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 30
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 30
+    },
+    "UNITCOMBAT_CLONES": {
+     "percent": 30
+    },
+    "UNITCOMBAT_WHEELED": {
+     "percent": 30
+    },
+    "UNITCOMBAT_RECON": {
+     "percent": 30
+    }
+   }
+  }
+ },
+ "collateral": {
+  "unit": {
+   "damage": {
+    "percent": 10
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -15
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CHEMICAL": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/chemical3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CHEMICAL3"
+ }
+}

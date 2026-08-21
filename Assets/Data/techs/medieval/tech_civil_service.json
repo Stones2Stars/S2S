@@ -1,0 +1,111 @@
+{
+ "type": "TECH_CIVIL_SERVICE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALMSHOUSE",
+   "BUILDING_CIVIL_SERVANTS_SCHOOL",
+   "BUILDING_CRIME_CORRUPTION",
+   "BUILDING_CULTURE_PAKISTANI",
+   "BUILDING_CULTURE_SICAN",
+   "BUILDING_CULTURE_TAMIL",
+   "BUILDING_CULTURE_TANG",
+   "BUILDING_GUILD_SERVANTS",
+   "BUILDING_ORPHANAGE",
+   "BUILDING_SERVANTS_QUARTERS"
+  ],
+  "civics": [
+   "CIVIC_BUREAUCRACY"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_CRIME_FIGHTING4"
+  ],
+  "techs": [
+   "TECH_EXECUTIONS",
+   "TECH_INVENTION",
+   "TECH_PAPER",
+   "TECH_USURY"
+  ],
+  "units": [
+   "UNIT_AROK",
+   "UNIT_BASIL_II",
+   "UNIT_BILGE_KHAN",
+   "UNIT_BOUDICA",
+   "UNIT_CANUTE",
+   "UNIT_GAOZONG",
+   "UNIT_KAHINA",
+   "UNIT_KUJULA_KADPHISES",
+   "UNIT_LOKI",
+   "UNIT_MACEMAN",
+   "UNIT_NIMI",
+   "UNIT_OGODAI",
+   "UNIT_ROSTAM",
+   "UNIT_ROZVI",
+   "UNIT_SUBOTEI",
+   "UNIT_TAUTALUS",
+   "UNIT_TIGERCLAW",
+   "UNIT_TUCUME"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SANITATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEDIEVAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1132
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Civil_Service.dds,Art/Interface/Buttons/TechTree_Atlas.dds,1,2"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CIVIL_SERVICE",
+  "soundMP": "AS2D_TECH_MP_CIVIL_SERVICE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CIVIL_SERVICE",
+  "civilopedia": "TXT_KEY_TECH_CIVIL_SERVICE_PEDIA",
+  "quote": "TXT_KEY_TECH_CIVIL_SERVICE_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 42,
+  "gridY": 9
+ }
+}

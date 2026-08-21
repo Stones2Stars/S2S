@@ -1,0 +1,20 @@
+{
+  "entity": "HeritageInfo",
+  "rootElement": "HeritageInfo",
+  "glob": "**/HeritageInfos.xml",
+  "channels": {
+    "EraCommerceChanges": {
+      "scope": "player",
+      "channel": "commerce",
+      "kind": "flat",
+      "valueKeys": ["gold", "research", "culture", "espionage"]
+    }
+  },
+  "inversionsOut": {},
+  "enablerEdges": {},
+  "prereqs": ["PrereqOrHeritage", "PrereqTech", "bNeedLanguage"],
+  "cost": [],
+  "art": ["Button"],
+  "identity": ["Type", "Description", "Civilopedia", "PropertyManipulators"],
+  "boostsIn": []
+}

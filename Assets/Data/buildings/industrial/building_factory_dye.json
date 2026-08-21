@@ -1,0 +1,117 @@
+{
+ "type": "BUILDING_FACTORY_DYE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ANIMAMATERIALS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CHEMICALS_DISTRICT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "TECH_ASSEMBLY_LINE",
+    {
+     "any": [
+      "BUILDING_AGROFOREST",
+      "BUILDING_AQUAFARM",
+      "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+      "BUILDING_CORE_MINE",
+      "BUILDING_GREENHOUSE",
+      "BUILDING_FARMSCRAPER_I",
+      "BUILDING_FARM_FLOWER_INDIGO",
+      "BUILDING_MUREX_DIVER",
+      "BUILDING_PLANTATION_HENNA",
+      "BUILDING_PLANTATION_MADDER",
+      "BUILDING_FARM_CROP_COCHINEAL",
+      "BUILDING_GROVE_FUSTIC",
+      "BUILDING_PLANTATION_SAFFRON",
+      "BUILDING_MINE_SULPHUR",
+      "BUILDING_GROVE_BRAZILWOOD",
+      "BUILDING_CHEMICAL_PLANT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_CHEMICALS_DISTRICT"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_DYE"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_POTASH",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 710,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACTORY_DYE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_DYE",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_DYE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

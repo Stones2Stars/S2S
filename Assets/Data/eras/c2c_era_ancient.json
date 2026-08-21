@@ -1,0 +1,116 @@
+{
+ "type": "C2C_ERA_ANCIENT",
+ "costs": {
+  "world": {
+   "train": {
+    "percent": 100
+   },
+   "construct": {
+    "percent": 100
+   },
+   "create": {
+    "percent": 100
+   },
+   "research": {
+    "percent": 150
+   },
+   "researchCutBelowEra": {
+    "percent": 10
+   },
+   "build": {
+    "percent": 130
+   },
+   "improvementUpgrade": {
+    "percent": 100
+   }
+  }
+ },
+ "growth": {
+  "world": {
+   "percent": 140
+  }
+ },
+ "greatPeopleRate": {
+  "world": {
+   "percent": 220
+  }
+ },
+ "durations": {
+  "world": {
+   "civicAnarchy": {
+    "percent": 80
+   },
+   "religiousAnarchy": {
+    "percent": 80
+   }
+  }
+ },
+ "eventChance": {
+  "world": {
+   "flat": 7
+  }
+ },
+ "grants": {
+  "startingUnitMultiplier": 1,
+  "startingExploreUnits": 1,
+  "startingGold": 40
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/mainscreen/Era/Ancient.dds"
+  }
+ },
+ "sound": {
+  "introSoundtrack": true,
+  "soundtracks": [
+   "AS2D_AMBIENTWINDS",
+   "AS2D_SONG_CIV_III_ANC_MID_EAST",
+   "AS2D_SONG_DIP_AS_EARLY_PEACE",
+   "AS2D_SONG_DIP_AS_EARLY_WAR",
+   "AS2D_SONG_DIP_AS_LATE_PEACE",
+   "AS2D_SONG_DIP_AS_LATE_WAR",
+   "AS2D_SONG_DIP_ME_EARLY_PEACE",
+   "AS2D_SONG_DIP_ME_EARLY_WAR",
+   "AS2D_SONG_DIP_ME_LATE_PEACE",
+   "AS2D_SONG_DIP_ME_LATE_WAR",
+   "AS2D_SONG_DIP_NA_EARLY_PEACE",
+   "AS2D_SONG_DIP_NA_EARLY_WAR",
+   "AS2D_SONG_DIP_NA_LATE_PEACE",
+   "AS2D_SONG_DIP_NA_LATE_WAR",
+   "AS2D_HAMMURABISCODE",
+   "AS2D_HARVESTOFTHENILE",
+   "AS2D_HYMNFORTHESUNRISE",
+   "AS2D_MESOAMERICAN1",
+   "AS2D_MESOAMERICAN2",
+   "AS2D_TENOCHTITLANREVEALED",
+   "AS2D_SONG_CIV_III_ANC_MID_ORIENTAL",
+   "AS2D_SONG_CIV_III_ANC_AMERICA",
+   "AS2D_SONG_CIV_III_ANC_ROME",
+   "AS2D_SONG_CIV_III_MOD_ASIAN",
+   "AS2D_SONG_CIV_III_MOD_CELTIC",
+   "AS2D_SONG_CIV_III_MOD_MID_EAST"
+  ],
+  "citySoundscapes": [
+   {
+    "CITYSIZE_SMALL": "ASSS_CITY_ANCIENT_SMALL_SELECT_AMB"
+   },
+   {
+    "CITYSIZE_MEDIUM": "ASSS_CITY_ANCIENT_SMALL_SELECT_AMB"
+   },
+   {
+    "CITYSIZE_LARGE": "ASSS_CITY_ANCIENT_LARGE_SELECT_AMB"
+   }
+  ],
+  "unitVictory": "AS2D_VICTORY_EARLY",
+  "unitDefeat": "AS2D_LOSS_EARLY"
+ },
+ "identity": {
+  "description": "TXT_KEY_ERA_ANCIENT",
+  "strategy": "TXT_KEY_ERA_ANCIENT_STRATEGY",
+  "order": 2,
+  "advancedStart": 1000,
+  "historicalStartYear": -12000,
+  "historicalEndYear": -1200,
+  "normalSpeedTurns": 180
+ }
+}

@@ -1,0 +1,67 @@
+{
+ "type": "TECH_TACHYON_COMMUNICATIONS",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_TACHYON_COMMUNICATION_CENTER",
+   "BUILDING_INTERGALACTIC_TACHYON_DETECTOR",
+   "BUILDING_TACHYONIC_ANTITELEPHONE"
+  ],
+  "techs": [
+   "TECH_HORIZON_BREAKING",
+   "TECH_METAVERSE",
+   "TECH_TRANSCENDENT_LIFESTYLE",
+   "TECH_TRANSDIMENSIONAL_COMMERCE",
+   "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_OMEGA_MINUS_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SPACETIME_ECONOMICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 366008
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/tachyon_communications.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TACHYON_COMMUNICATIONS",
+  "civilopedia": "TXT_KEY_TECH_TACHYON_COMMUNICATIONS_PEDIA",
+  "quote": "TXT_KEY_TECH_TACHYON_COMMUNICATIONS_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 147,
+  "gridY": 19
+ }
+}

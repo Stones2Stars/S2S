@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_FRIEDLANDER_SKYSHADE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ADVANCED_SHIELDING",
+    "TECH_PLANETARY_DEFENSES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": -5
+   }
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -100
+  }
+ },
+ "cost": {
+  "production": 41430,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_FRIEDLANDER_SKYSHADE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FRIEDLANDER_SKYSHADE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FRIEDLANDER_SKYSHADE",
+  "civilopedia": "TXT_KEY_BUILDING_FRIEDLANDER_SKYSHADE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

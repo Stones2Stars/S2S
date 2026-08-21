@@ -1,0 +1,41 @@
+{
+ "type": "BUILDING_EFFECT_ACHIEVEMENT_ENVIRONMENTAL",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_WILDLIFE_CONSERVATION"
+   ]
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "empire": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "empire": {
+   "flat": -10
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ACHIEVEMENT_ENVIRONMENTAL_EFFECT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_ENVIRONMENTAL",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_ACHIEVEMENT_ENVIRONMENTAL_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

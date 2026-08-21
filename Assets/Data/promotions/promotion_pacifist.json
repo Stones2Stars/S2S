@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTION_PACIFIST",
+ "combat": {
+  "unit": {
+   "percent": -10
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_PROMOTION_PACIFIST": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PromotionPacifist.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_PACIFIST",
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_NAVAL_COMBATANT"
+  ]
+ }
+}

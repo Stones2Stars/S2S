@@ -1,0 +1,137 @@
+{
+ "type": "UNIT_TALESOF_MINKIE_WHALE",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_TALESOF_MINKIE_WHALE"
+  }
+ },
+ "skills": [
+  "tradable"
+ ],
+ "tags": [
+  "seaUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SEA_ANIMAL_TALE",
+ "combatClasses": [
+  "UNITCOMBAT_IDEA"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_FOLKLORE_T_TALES_OF_FISH"
+   },
+   {
+    "building": "BUILDING_FOLKLORE_E_SEA"
+   },
+   {
+    "building": "BUILDING_FOLKLORE_MINKIE_WHALE"
+   },
+   {
+    "building": "BUILDING_FOLKLORE_T_LEVIATHAN"
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TALESOF_MINKIE_WHALE",
+   "meshGroups": {
+    "groupSize": 1,
+    "maxSpeed": 1,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_TALESOF_MINKIE_WHALE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_TALESOF_MINKIE_WHALE",
+  "civilopedia": "TXT_KEY_CONCEPT_TALESOF_SEA_ANIMALS_PEDIA",
+  "help": "TXT_KEY_UNIT_SUBDUED_ANIMALS_HELP",
+  "spawnOnly": true,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_SEA_TROPICAL",
+   "TERRAIN_SEA_POLAR",
+   "TERRAIN_SEA",
+   "TERRAIN_SEA_DEEP",
+   "TERRAIN_SEA_DEEP_POLAR",
+   "TERRAIN_SEA_DEEP_TROPICAL",
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_TROPICAL",
+   "TERRAIN_TRENCH_POLAR"
+  ],
+  "terrainPassableTechs": [
+   {
+    "TERRAIN_SEA_TROPICAL": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA_POLAR": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA_DEEP": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA_DEEP_POLAR": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_SEA_DEEP_TROPICAL": "TECH_SEAFARING"
+   },
+   {
+    "TERRAIN_OCEAN": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_OCEAN_POLAR": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_OCEAN_TROPICAL": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH_TROPICAL": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH_POLAR": "TECH_ASTRONOMY"
+   }
+  ]
+ }
+}

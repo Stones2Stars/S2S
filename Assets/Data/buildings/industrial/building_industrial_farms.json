@@ -1,0 +1,252 @@
+{
+ "type": "BUILDING_INDUSTRIAL_FARMS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_BISON",
+   "BUILDING_ANIMAL_TRAINER_BUFFALO",
+   "BUILDING_ANIMAL_TRAINER_CAMEL",
+   "BUILDING_ANIMAL_TRAINER_DEER",
+   "BUILDING_ANIMAL_TRAINER_DONKEY",
+   "BUILDING_ANIMAL_TRAINER_ELEPHANT",
+   "BUILDING_ANIMAL_TRAINER_HORSE",
+   "BUILDING_ANIMAL_TRAINER_LLAMA",
+   "BUILDING_ANIMAL_TRAINER_MAMMOTH",
+   "BUILDING_ANIMAL_TRAINER_ZEBRA",
+   "BUILDING_BUFFALO_JUMP",
+   "BUILDING_BULL_LEAPING",
+   "BUILDING_BUTCHERY",
+   "BUILDING_CARAVAN_POST",
+   "BUILDING_COCK_FIGHTING_RING",
+   "BUILDING_DONKEY_BREEDER",
+   "BUILDING_DONKEY_MILL",
+   "BUILDING_FLOCKS_OF_DUCK",
+   "BUILDING_FLOCKS_OF_PEACOCK",
+   "BUILDING_FLOCKS_OF_TURKEY",
+   "BUILDING_HERDING_DOG_TRAINER",
+   "BUILDING_HUNTING_DOG_TRAINER",
+   "BUILDING_LABYRINTH_OF_KNOSSOS",
+   "BUILDING_MEAT_PACKING_PLANT",
+   "BUILDING_OXEN_MILL",
+   "BUILDING_RESOURCES_LARD"
+  ],
+  "units": [
+   "UNIT_TAMED_BOAR",
+   "UNIT_TAMED_CATTLE",
+   "UNIT_TAMED_MUSKOX"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PLANETARY_ECONOMICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "TECH_ANTIBIOTICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_BISON",
+   "BONUS_BONE",
+   "BONUS_CAMEL",
+   "BONUS_CARCASS",
+   "BONUS_COW",
+   "BONUS_DEER",
+   "BONUS_DONKEY",
+   "BONUS_EGGS",
+   "BONUS_ELEPHANT",
+   "BONUS_FEATHERS",
+   "BONUS_FISH_OIL",
+   "BONUS_FUR",
+   "BONUS_HIDE",
+   "BONUS_HORSE",
+   "BONUS_IVORY",
+   "BONUS_KANGAROO",
+   "BONUS_LLAMA",
+   "BONUS_MAMMOTH",
+   "BONUS_MILK",
+   "BONUS_OSTRICH_FEATHERS",
+   "BONUS_PELTS",
+   "BONUS_PIG",
+   "BONUS_POULTRY",
+   "BONUS_SHEEP",
+   "BONUS_WHALE_OIL",
+   "BONUS_WOOL"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 55,
+   "percent": [
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_FISH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 15,
+     "enabled": {
+      "type": "BONUS_GRAINS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_GRASS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_STRAW",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    85,
+    {
+     "value": 56,
+     "enabled": "TECH_TOURISM"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COW",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HORSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PIG",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHEEP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WHALE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 1,
+     "enabled": "HAS_STATE_RELIGION"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GLASSWARE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 800,
+  "sizeModifier": 3,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INDUSTRIAL_FARMS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INDUSTRIAL_FARMS",
+  "civilopedia": "TXT_KEY_BUILDING_INDUSTRIAL_FARMS_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

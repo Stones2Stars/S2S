@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_AUTOMATED_SWITCHBOARD",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TELEPHONE_NETWORK",
+    "TECH_ENCRYPTION_MACHINES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "cost": {
+  "production": 990,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_AUTOMATED_SWITCHBOARD",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_AUTOMATED_SWITCHBOARD",
+  "civilopedia": "TXT_KEY_BUILDING_AUTOMATED_SWITCHBOARD_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

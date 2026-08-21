@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_NATURALIST3",
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -1
+  },
+  "plot": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  },
+  "plot": {
+   "flat": -1
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_NATURALIST_PROMOTION": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionNaturalist3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_NATURALIST3",
+  "unitCombats": [
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_SPECIES_NEANDERTHAL"
+  ]
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "type": "RELIGION_SHAMANISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_INVOCATION_HUT",
+   "BUILDING_INVOCATION_HUT_BISON",
+   "BUILDING_INVOCATION_HUT_COW",
+   "BUILDING_INVOCATION_HUT_DEER",
+   "BUILDING_INVOCATION_HUT_PIG",
+   "BUILDING_INVOCATION_HUT_RABBIT",
+   "BUILDING_INVOCATION_HUT_SEAL",
+   "BUILDING_INVOCATION_HUT_SHEEP",
+   "BUILDING_INVOCATION_HUT_WALRUS",
+   "BUILDING_SHAMANISTIC_TEMPLE",
+   "BUILDING_SHAMANISTIC_TEMPLE_BISON",
+   "BUILDING_SHAMANISTIC_TEMPLE_COW",
+   "BUILDING_SHAMANISTIC_TEMPLE_DEER",
+   "BUILDING_SHAMANISTIC_TEMPLE_PIG",
+   "BUILDING_SHAMANISTIC_TEMPLE_RABBIT",
+   "BUILDING_SHAMANISTIC_TEMPLE_SEAL",
+   "BUILDING_SHAMANISTIC_TEMPLE_SHEEP",
+   "BUILDING_SHAMANISTIC_TEMPLE_WALRUS",
+   "BUILDING_SPIRITS_ALLIANCE",
+   "BUILDING_SPIRITS_LEGACY",
+   "BUILDING_TOTEM_POLE"
+  ],
+  "units": [
+   "UNIT_SHAMAN_MISSIONARY"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_SHAMANISM"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_SHAMANISM"
+     }
+    }
+   ]
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 22,
+   "icon": "Art/Interface/Buttons/Religions/Shamanism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/found_shamanism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Shamanism.dds",
+   "movie": {
+    "file": "Art/Cutscene/Shaman_Generic_Found.nif",
+    "sound": "AS2D_BUILD_SHAMAN_MOVIE"
+   }
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_SHAMAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SHAMANISM",
+  "adjective": "TXT_KEY_TECH_SHAMANISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_SHAMANISM_PEDIA",
+  "spreadFactor": 10
+ }
+}

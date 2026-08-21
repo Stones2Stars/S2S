@@ -1,0 +1,80 @@
+{
+ "type": "TECH_INDUSTRIAL_ECOLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_AQUAPONICS_TANKS",
+   "BUILDING_AUTOMATED_WASTE_COLLECTION_SYSTEM",
+   "BUILDING_CO2_RESERVOIR",
+   "BUILDING_ENHANCED_GEOTHERMAL_SYSTEM",
+   "BUILDING_GENERATION_IV_REACTOR",
+   "BUILDING_HEATING_AND_COOLING_DISTRICT",
+   "BUILDING_HYDRAULIC_FRACTURING",
+   "BUILDING_SUPERCRITICAL_CO2_TURBINE"
+  ],
+  "builds": [
+   "BUILD_MAGLEV",
+   "BUILD_RECLAIM_LAND"
+  ],
+  "techs": [
+   "TECH_MEGACITIES"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_BURN_VEGETATION",
+   "BUILD_DRAIN_SWAMP",
+   "BUILD_REMOVE_ROCK_FORMATION",
+   "BUILD_REMOVE_VEGETATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECOLOGICAL_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_RAPID_PROTOTYPING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 25354
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Buttons/Techs/industrial_ecology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_INDUSTRIAL_ECOLOGY",
+  "civilopedia": "TXT_KEY_TECH_INDUSTRIAL_ECOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_INDUSTRIAL_ECOLOGY_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 94,
+  "gridY": 7
+ }
+}

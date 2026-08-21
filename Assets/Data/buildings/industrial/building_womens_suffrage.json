@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_WOMENS_SUFFRAGE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_WOMENS_SUFFRAGE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      "CIVIC_DEMOCRACY",
+      "CIVIC_REPUBLIC"
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "warWeariness": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "cost": {
+  "production": 4800,
+  "complexityModifier": 2,
+  "hurryModifier": 200
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_WOMAN"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WOMENS_SUFFRAGE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WOMENS_SUFFRAGE",
+  "civilopedia": "TXT_KEY_BUILDING_WOMENS_SUFFRAGE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 15,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

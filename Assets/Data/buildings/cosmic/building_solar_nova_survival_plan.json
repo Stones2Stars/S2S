@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_SOLAR_NOVA_SURVIVAL_PLAN",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_STARPORT",
+    {
+     "type": "BUILDING_SPACE_COLONY_INTERSTELLAR_MOTHERSHIP",
+     "scope": "empire",
+     "min": 3,
+     "scaling": "amountBuildings"
+    },
+    "TECH_CULTURAL_LONGEVITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_SPACE_COLONY_INTERSTELLAR_MOTHERSHIP": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 29310
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SOLAR_NOVA_SURVIVAL_PLAN"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SOLAR_NOVA_SURVIVAL_PLAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SOLAR_NOVA_SURVIVAL_PLAN",
+  "civilopedia": "TXT_KEY_BUILDING_SOLAR_NOVA_SURVIVAL_PLAN_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

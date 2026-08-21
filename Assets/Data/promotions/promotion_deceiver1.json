@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_DECEIVER1",
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "air": {
+  "unit": {
+   "evasion": {
+    "percent": 10
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_DECEIVER_PROMOTION": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionDeceiver.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_PING"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_DECEIVER1",
+  "unitCombats": [
+   "UNITCOMBAT_SPY"
+  ]
+ }
+}

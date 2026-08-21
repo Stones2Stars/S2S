@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_WORLD_ELECTRIC_GRID",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PLANETARY_ECONOMICS",
+    {
+     "any": [
+      "BUILDING_WIRELESS_GRID",
+      "BUILDING_EMP_GRID",
+      "BUILDING_SUPERCONDUCTING_GRID"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "production": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_SUPERCONDUCTING_GRID": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 26910,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_WORLD_ELECTRIC_GRID"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WORLD_ELECTRIC_GRID",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WORLD_ELECTRIC_GRID",
+  "civilopedia": "TXT_KEY_BUILDING_WORLD_ELECTRIC_GRID_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

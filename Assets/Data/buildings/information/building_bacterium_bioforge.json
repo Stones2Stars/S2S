@@ -1,0 +1,104 @@
+{
+ "type": "BUILDING_BACTERIUM_BIOFORGE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARTIFICIAL_REEF",
+   "BUILDING_BACILLUS_CONCRETE",
+   "BUILDING_BACTERIUM_LANDFILL",
+   "BUILDING_BIOHACKER_STUDIO",
+   "BUILDING_DESIGNER_PROBIOTICS_CLINIC",
+   "BUILDING_FACTORY_CELLULASE_CAPSULES",
+   "BUILDING_HYDROCARBON_REFINERY",
+   "BUILDING_LIFE_CRISPR_CAS9_BACTERIA",
+   "BUILDING_NATURAL_INSECTICIDE_SPRAYERS",
+   "BUILDING_URBAN_DEPOLLENIZER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_VIROTHERAPY_CLINIC",
+    "BUILDING_PHENOTYPE_STUDIO",
+    "BUILDING_INTUITIVE_ALGORITHMS",
+    "TECH_BACTERIUM_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ENZYMES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_BIOPOLYMERS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 9,
+     "enabled": "TECH_PROTOTYPED_PATHOGENS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_MAINSTREAM_CLONING"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_AUGMENTED_CONSUMABLES"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 2865,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BACTERIUM_BIOFORGE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BACTERIUM_BIOFORGE",
+  "civilopedia": "TXT_KEY_BUILDING_BACTERIUM_BIOFORGE_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

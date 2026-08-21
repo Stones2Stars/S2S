@@ -1,0 +1,136 @@
+{
+ "type": "CIVIC_FIAT_MONEY",
+ "enables": {
+  "hurries": [
+   "HURRY_GOLD"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": [
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    5,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": [
+    5,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    1,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    {
+     "value": -3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": -1
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   },
+   "numCities": {
+    "percent": 10
+   },
+   "corporation": {
+    "percent": 10
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 2
+    },
+    "production": {
+     "percent": 2
+    },
+    "percent": [
+     {
+      "value": -2,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
+   }
+  }
+ },
+ "inflation": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/currency_fiat.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_FIAT_MONEY",
+  "civilopedia": "TXT_KEY_CIVIC_FIAT_MONEY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_FIAT_MONEY_STRATEGY",
+  "civicOption": "CIVICOPTION_CURRENCY",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

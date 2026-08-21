@@ -1,0 +1,204 @@
+{
+ "type": "BUILDING_CHEMICALS_DISTRICT",
+ "enables": {
+  "buildings": [
+   "BUILDING_GENETICA_APPAREL_SHOP",
+   "BUILDING_GENETICA_SALON",
+   "BUILDING_NUCLEIC_ACID_LAB",
+   "BUILDING_PERIODIC_TABLE_OF_ELEMENTS",
+   "BUILDING_PROTEIN_LAB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DELTA_ASSEMBLER",
+    "TECH_NOVUS_CHEMISTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NOVUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_BIOPOLYMERS",
+   "BONUS_CHEMICALS",
+   "BONUS_DYE",
+   "BONUS_ELECTROACTIVE_POLYMERS",
+   "BONUS_ELECTROLYTIC_CELLS",
+   "BONUS_ENZYMES",
+   "BONUS_HYDROGEN",
+   "BONUS_KEROSENE",
+   "BONUS_LYE",
+   "BONUS_OMEGA_FATTY_ACID",
+   "BONUS_ORGANIC_PHOTONIC_CELLS",
+   "BONUS_PERFUME",
+   "BONUS_PHARMACEUTICALS",
+   "BONUS_POISON",
+   "BONUS_ROCKET_FUEL",
+   "BONUS_SOAP",
+   "BONUS_TANNIN"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BONUS_LITHIUM",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_METALLIC_HYDROGEN",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ],
+   "percent": [
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_SALT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_WAX",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    75,
+    {
+     "value": 10,
+     "enabled": "TECH_ARTIFICIAL_PHOTOSYNTHESIS"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_ORGANIC_CITIES"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_VERTICAL_FARMING"
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_POTASH",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 80
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PERFUME",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
+ "cost": {
+  "production": 3805,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CHEMICALS_DISTRICT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CHEMICALS_DISTRICT",
+  "civilopedia": "TXT_KEY_BUILDING_CHEMICALS_DISTRICT_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

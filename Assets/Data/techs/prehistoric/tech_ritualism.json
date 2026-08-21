@@ -1,0 +1,82 @@
+{
+ "type": "TECH_RITUALISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_BATHING_RITUAL",
+   "BUILDING_CULTURE_ABORIGINE",
+   "BUILDING_MONUMENT",
+   "BUILDING_VENUS_OF_WILLENDORF",
+   "BUILDING_VISION_QUEST",
+   "BUILDING_WALKABOUT"
+  ],
+  "civics": [
+   "CIVIC_FOLKLORE"
+  ],
+  "techs": [
+   "TECH_CULTURAL_IDENTITY"
+  ],
+  "units": [
+   "UNIT_MUNGO_MAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HERBALISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PREHISTORIC_MUSIC",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 9
+ },
+ "ai": {
+  "behaviour": {
+   "weight": 25
+  },
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": ",Art/Interface/Buttons/TechTree/ritualism.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,3,15"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_RITUALISM",
+  "soundMP": "AS2D_TECH_RITUALISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_RITUALISM",
+  "civilopedia": "TXT_KEY_TECH_RITUALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_RITUALISM_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 16,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 5,
+  "gridY": 15
+ }
+}

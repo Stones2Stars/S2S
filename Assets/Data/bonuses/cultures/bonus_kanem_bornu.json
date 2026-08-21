@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_KANEM_BORNU",
+ "enables": {
+  "units": [
+   "UNIT_IDRIS",
+   "UNIT_MALI_SKIRMISHER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_KANEM_BORNU"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_KANEM_BORNU",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

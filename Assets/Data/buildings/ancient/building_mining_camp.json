@@ -1,0 +1,226 @@
+{
+ "type": "BUILDING_MINING_CAMP",
+ "enables": {
+  "buildings": [
+   "BUILDING_ACOUSTIC_DRILLING",
+   "BUILDING_LASER_DRILLING",
+   "BUILDING_MARBLE_QUARRY",
+   "BUILDING_MINE_AMBER",
+   "BUILDING_MINE_AMETHYST",
+   "BUILDING_MINE_BAUXITE",
+   "BUILDING_MINE_BERLINITE",
+   "BUILDING_MINE_BORAX",
+   "BUILDING_MINE_CAESIUM",
+   "BUILDING_MINE_CHROMITE",
+   "BUILDING_MINE_CINNABAR",
+   "BUILDING_MINE_CITRINE",
+   "BUILDING_MINE_COAL",
+   "BUILDING_MINE_COBALT",
+   "BUILDING_MINE_COPPER",
+   "BUILDING_MINE_DIAMOND",
+   "BUILDING_MINE_EMERALD",
+   "BUILDING_MINE_FLUORITE",
+   "BUILDING_MINE_GARNET",
+   "BUILDING_MINE_GEODE",
+   "BUILDING_MINE_GOLD",
+   "BUILDING_MINE_GRAPHITE",
+   "BUILDING_MINE_IRON",
+   "BUILDING_MINE_JADE",
+   "BUILDING_MINE_JET",
+   "BUILDING_MINE_LAZULITE",
+   "BUILDING_MINE_LEAD",
+   "BUILDING_MINE_LITHIUM",
+   "BUILDING_MINE_MAGNESIUM",
+   "BUILDING_MINE_MAGNETITE",
+   "BUILDING_MINE_MANGANESE",
+   "BUILDING_MINE_MASCAGNITE",
+   "BUILDING_MINE_NICKEL",
+   "BUILDING_MINE_ONYX",
+   "BUILDING_MINE_PLATINUM",
+   "BUILDING_MINE_POTASH",
+   "BUILDING_MINE_PYRITE",
+   "BUILDING_MINE_QUARTZ",
+   "BUILDING_MINE_RUBY",
+   "BUILDING_MINE_SAPPHIRE",
+   "BUILDING_MINE_SILVER",
+   "BUILDING_MINE_SULPHUR",
+   "BUILDING_MINE_TIN",
+   "BUILDING_MINE_TITANIUM",
+   "BUILDING_MINE_TOPAZ",
+   "BUILDING_MINE_TUNGSTEN",
+   "BUILDING_MINE_TURQUOISE",
+   "BUILDING_MINE_URANIUM",
+   "BUILDING_MINE_ZINC",
+   "BUILDING_MODERN_EARTHWORKS",
+   "BUILDING_SALT_FLAT_QUARRY",
+   "BUILDING_SALT_QUARRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MINING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 2,
+     "enabled": "TECH_HYDRAULIC_MINING"
+    },
+    {
+     "value": 2,
+     "enabled": "TECH_MASONRY"
+    },
+    {
+     "value": 5,
+     "enabled": "TECH_GEOLOGY"
+    },
+    {
+     "value": 5,
+     "enabled": "TECH_EXPLOSIVES"
+    },
+    {
+     "value": 6,
+     "enabled": "TECH_NITROGLYCERIN"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_MODERN_SEISMOLOGY"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_ASTROGEOLOGY"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_VOLCANOLOGY"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_NANOMINING"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_ASTEROID_MINING"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_ASTEROID_EXTRACTION"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_SUBTERRANEAN_EXPLORATION"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_PLANETARY_EXTRACTION"
+    },
+    {
+     "value": 2,
+     "enabled": "TECH_PULLEY"
+    },
+    {
+     "value": 2,
+     "enabled": "TECH_GEARS"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 2,
+     "enabled": "TECH_HYDRAULIC_MINING"
+    },
+    {
+     "value": 2,
+     "enabled": "TECH_MASONRY"
+    },
+    {
+     "value": 5,
+     "enabled": "TECH_GEOLOGY"
+    },
+    {
+     "value": 5,
+     "enabled": "TECH_EXPLOSIVES"
+    },
+    {
+     "value": 6,
+     "enabled": "TECH_NITROGLYCERIN"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_MODERN_SEISMOLOGY"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_ASTROGEOLOGY"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_VOLCANOLOGY"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_NANOMINING"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_ASTEROID_MINING"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_ASTEROID_EXTRACTION"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_SUBTERRANEAN_EXPLORATION"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_PLANETARY_EXTRACTION"
+    },
+    {
+     "value": 2,
+     "enabled": "TECH_PULLEY"
+    },
+    {
+     "value": 2,
+     "enabled": "TECH_GEARS"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 132,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MINING_CAMP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MINING_CAMP",
+  "civilopedia": "TXT_KEY_BUILDING_MINING_CAMP_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

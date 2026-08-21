@@ -1,0 +1,70 @@
+{
+ "type": "TECH_CYBERNETICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CYBERNETICA_APPAREL_SHOP",
+   "BUILDING_CYBERNETICA_SALON",
+   "BUILDING_CYBERNETIC_ORGAN_LAB",
+   "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB",
+   "BUILDING_UTERINE_REPLICATOR"
+  ],
+  "techs": [
+   "TECH_TRANSHUMAN_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_CYBORG",
+   "UNIT_WALKER_MECH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ELECTROMAGNETIC_VOLTAGE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CYBERIMMUNOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 49574
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/cybernetics2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CYBERNETICS",
+  "soundMP": "AS2D_TECH_CYBERNETICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CYBERNETICS",
+  "civilopedia": "TXT_KEY_TECH_CYBERNETICS_PEDIA",
+  "quote": "TXT_KEY_TECH_CYBERNETICS_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 50,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 109,
+  "gridY": 19
+ }
+}

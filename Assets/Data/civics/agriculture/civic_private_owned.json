@@ -1,0 +1,77 @@
+{
+ "type": "CIVIC_PRIVATE_OWNED",
+ "enables": {
+  "buildings": [
+   "BUILDING_FAMILY_FARM",
+   "BUILDING_FARMERS_MARKET"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 4
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 5
+    },
+    "production": {
+     "percent": 5
+    },
+    "commerce": {
+     "percent": 5
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/agriculture_privatized_agriculture.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_PRIVATE_OWNED",
+  "civilopedia": "TXT_KEY_CIVIC_PRIVATE_OWNED_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_PRIVATE_OWNED_STRATEGY",
+  "civicOption": "CIVICOPTION_AGRICULTURE",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_LOW"
+ }
+}

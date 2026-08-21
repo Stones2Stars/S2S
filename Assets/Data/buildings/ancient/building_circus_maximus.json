@@ -1,0 +1,162 @@
+{
+ "type": "BUILDING_CIRCUS_MAXIMUS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TOURNAMENTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CHARIOTRY",
+    {
+     "any": [
+      "BUILDING_HIPPODROME",
+      "BUILDING_ROYAL_TOURNAMENT",
+      "BUILDING_SPEEDWAY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  },
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HORSE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CAMEL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 4,
+     "per": {
+      "type": "CULTURE_RATE",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MOUNTED": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 834,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CIRCUS_MAXIMUS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CIRCUS_MAXIMUS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CIRCUS_MAXIMUS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CIRCUS_MAXIMUS",
+  "civilopedia": "TXT_KEY_BUILDING_CIRCUS_MAXIMUS_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 4,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

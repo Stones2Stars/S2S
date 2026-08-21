@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_TUNGUS",
+ "enables": {
+  "units": [
+   "UNIT_KUCHUM_KHAN",
+   "UNIT_SABLE_TRAPPER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TUNGUS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TUNGUS",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

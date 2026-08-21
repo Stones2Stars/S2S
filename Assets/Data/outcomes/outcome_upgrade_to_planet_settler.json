@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_UPGRADE_TO_PLANET_SETTLER",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_UPGRADE_TO_PLANET_SETTLER",
+  "message": "TXT_KEY_OUTCOME_UPGRADE_TO_PLANET_SETTLER_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

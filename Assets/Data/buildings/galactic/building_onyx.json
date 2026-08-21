@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_ONYX",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET",
+    "TECH_ARTIFICIAL_PLANETS",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": 20,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_INTERSTELLAR_DEFENSIVE_PERIMETER",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 14444,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ONYX"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ONYX",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ONYX",
+  "civilopedia": "TXT_KEY_BUILDING_ONYX_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_HYPERSPACE_TRANSFINITE_STRUCTURES",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERCOMPUTRONIUM_STRUCTURES",
+   "BUILDING_HYPERSPACE_FORMAL_CONSTRUCTION_CENTER",
+   "BUILDING_HYPERSPACE_QUANTUM_GRAPH_MANIFESTATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+    "TECH_TRANSFINITE_STRUCTURES",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 3166,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYPERSPACE_TRANSFINITE_STRUCTURES",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_TRANSFINITE_STRUCTURES",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_TRANSFINITE_STRUCTURES_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

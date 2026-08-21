@@ -1,0 +1,59 @@
+{
+ "type": "TECH_CANAANISM",
+ "enables": {
+  "religions": [
+   "RELIGION_CANAANISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MAGIC",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 309
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/Canaanism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CANAANISM",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CANAANISM",
+  "civilopedia": "TXT_KEY_TECH_CANAANISM_PEDIA",
+  "quote": "TXT_KEY_TECH_CANAANISM_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "gridX": 30,
+  "gridY": 17
+ }
+}

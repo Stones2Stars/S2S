@@ -1,0 +1,18 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_WARNING",
+ "combat": {
+  "unit": {
+   "taunt": {
+    "flat": -10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_warning.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_WARNING"
+ }
+}

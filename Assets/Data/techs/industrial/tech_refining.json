@@ -1,0 +1,90 @@
+{
+ "type": "TECH_REFINING",
+ "enables": {
+  "bonuses": [
+   "BONUS_NATURAL_GAS",
+   "BONUS_OIL",
+   "BONUS_PETROLEUM_PRODUCTS",
+   "BONUS_VULCANIZED_RUBBER"
+  ],
+  "buildings": [
+   "BUILDING_CULTURE_KUWAITI",
+   "BUILDING_CULTURE_NORWEGIAN",
+   "BUILDING_DRY_CLEANER",
+   "BUILDING_FACTORY_RUBBER",
+   "BUILDING_MINE_JET",
+   "BUILDING_OIL_DERRICK",
+   "BUILDING_OIL_REFINERY",
+   "BUILDING_SHALE_PLANT"
+  ],
+  "builds": [
+   "BUILD_HYDROCARBON_WELL"
+  ],
+  "improvements": [
+   "IMPROVEMENT_HYDROCARBON_WELL"
+  ],
+  "techs": [
+   "TECH_COMBUSTION",
+   "TECH_POLYMERIZATION"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_TAR_GATHERER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GAS_LIGHTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_RAILROAD",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 6042
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Refining.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,15"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_REFINING",
+  "soundMP": "AS2D_TECH_REFINING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_REFINING",
+  "civilopedia": "TXT_KEY_TECH_REFINING_PEDIA",
+  "quote": "TXT_KEY_TECH_REFINING_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 32,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 65,
+  "gridY": 19
+ }
+}

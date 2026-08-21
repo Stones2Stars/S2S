@@ -1,0 +1,108 @@
+{
+ "type": "TECH_NATIONALISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALAMO",
+   "BUILDING_CULTURE_ANGOLAN",
+   "BUILDING_CULTURE_JORDANIAN",
+   "BUILDING_CULTURE_PIMA",
+   "BUILDING_GOLD_VAULT",
+   "BUILDING_HERMITAGE",
+   "BUILDING_MILITARY_ACADEMY",
+   "BUILDING_TAJ_MAHAL",
+   "BUILDING_WESTMINSTER_ABBEY"
+  ],
+  "civics": [
+   "CIVIC_GOLD_STANDARD",
+   "CIVIC_NATIONALIST"
+  ],
+  "techs": [
+   "TECH_GRAND_WAR",
+   "TECH_MILITARY_TRADITION",
+   "TECH_REPRESENTATIVE_DEMOCRACY"
+  ],
+  "units": [
+   "UNIT_ABDULLAH_II",
+   "UNIT_ANTONIO",
+   "UNIT_BURHANUDDIN_RABBANI",
+   "UNIT_CANNON",
+   "UNIT_CHULALONGKORN",
+   "UNIT_CONSTANTINE_XI",
+   "UNIT_FREDERICK_BARBAROSSA",
+   "UNIT_HENRY_PARKES",
+   "UNIT_IPARHAN",
+   "UNIT_QABOOS",
+   "UNIT_SEKAQUAPTEWA",
+   "UNIT_SHA_CO_PAY",
+   "UNIT_STEPHEN_I",
+   "UNIT_TECUN_UMAN",
+   "UNIT_URHO_KEKKONEN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECONOMICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_RIFLING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CONSTITUTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 3934
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Nationalism.dds,Art/Interface/Buttons/TechTree_Atlas.dds,1,6"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NATIONALISM",
+  "soundMP": "AS2D_TECH_MP_NATIONALISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NATIONALISM",
+  "civilopedia": "TXT_KEY_TECH_NATIONALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_NATIONALISM_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 59,
+  "gridY": 9
+ }
+}

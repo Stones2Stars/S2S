@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_NATIONAL_BELIEF_RESURRECTION",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_RESURRECTION",
+    {
+     "any": [
+      "BUILDING_LOA_HWE",
+      "BUILDING_BUDDHIST_TEMPLE",
+      "BUILDING_HINDU_TEMPLE",
+      "BUILDING_CHRISTIAN_TEMPLE",
+      "BUILDING_ISLAMIC_TEMPLE",
+      "BUILDING_JEWISH_TEMPLE",
+      "BUILDING_HELLENIC_TEMPLE",
+      "BUILDING_TEMPLE_OF_RA",
+      "BUILDING_NATURE_ALTAR",
+      "BUILDING_CANAANITE_TEMPLE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_BELIEF_RESURRECTION"
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NATIONAL_BELIEF_RESURRECTION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_BELIEF_RESURRECTION",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_BELIEF_RESURRECTION_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "notConstructible": true,
+  "worth": 10,
+  "advisor": "ADVISOR_RELIGION",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

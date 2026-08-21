@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_TRANSTELLAR_ARTIFICIAL_GAS_GIANT",
+ "enables": {
+  "buildings": [
+   "BUILDING_TRANSTELLAR_ARTIFICIAL_BROWN_DWARF",
+   "BUILDING_TRANSTELLAR_HELIOFORMED_GAS_GIANT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TRANSTELLAR_ARTIFICIAL_ROCKY_PLANET",
+    "TECH_ARTIFICIAL_PLANETS",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 3611,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_ARTIFICIAL_GAS_GIANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_ARTIFICIAL_GAS_GIANT",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_ARTIFICIAL_GAS_GIANT_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

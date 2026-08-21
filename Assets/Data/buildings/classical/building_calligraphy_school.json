@@ -1,0 +1,153 @@
+{
+ "type": "BUILDING_CALLIGRAPHY_SCHOOL",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HOLOGRAPHICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ELEMENTARY_SCHOOL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CALLIGRAPHY",
+    {
+     "any": [
+      "BUILDING_SCHOOL_OF_SCRIBES",
+      "BUILDING_LIBRARY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DYE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_SCROLLS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PAPER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_ELEMENTARY_SCHOOL",
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": "TECH_AESTHETICS"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_DRAMA"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_POETRY"
+    },
+    {
+     "value": 4,
+     "enabled": "TECH_CHARTERS"
+    },
+    {
+     "value": 4,
+     "enabled": "TECH_PAPER"
+    },
+    {
+     "value": 4,
+     "enabled": "TECH_CARTOGRAPHY"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 3,
+     "enabled": "TECH_AESTHETICS"
+    },
+    {
+     "value": 3,
+     "enabled": "TECH_DRAMA"
+    },
+    {
+     "value": 3,
+     "enabled": "TECH_POETRY"
+    },
+    {
+     "value": 4,
+     "enabled": "TECH_CHARTERS"
+    },
+    {
+     "value": 4,
+     "enabled": "TECH_PAPER"
+    },
+    {
+     "value": 4,
+     "enabled": "TECH_CARTOGRAPHY"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
+ "cost": {
+  "production": 243,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CALLIGRAPHY_SCHOOL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CALLIGRAPHY_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_CALLIGRAPHY_SCHOOL_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

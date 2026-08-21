@@ -1,0 +1,69 @@
+{
+ "type": "TECH_SCRIPTURES",
+ "enables": {
+  "buildings": [
+   "BUILDING_GRAVEYARD",
+   "BUILDING_MAUSOLEUM",
+   "BUILDING_SCRIPTORIUM"
+  ],
+  "techs": [
+   "TECH_HINDUISM",
+   "TECH_JUDAISM",
+   "TECH_LITERATURE",
+   "TECH_MEDITATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DUALISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MONOTHEISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 309
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/scriptures.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SCRIPTURES",
+  "soundMP": "AS2D_TECH_SCRIPTURES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SCRIPTURES",
+  "civilopedia": "TXT_KEY_TECH_SCRIPTURES_PEDIA",
+  "quote": "TXT_KEY_TECH_SCRIPTURES_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "gridX": 30,
+  "gridY": 9
+ }
+}

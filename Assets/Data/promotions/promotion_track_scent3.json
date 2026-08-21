@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_TRACK_SCENT3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_TRACK_SCENT2"
+   ]
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_TRACK_SCENT": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/trackscent3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_TRACK_SCENT3"
+ }
+}

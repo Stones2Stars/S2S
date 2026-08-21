@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_TITAN_AMMONIA_ERUPTION",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_TITAN_BASE",
+    "TECH_NANOMINING",
+    "TECH_ABYSS_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_TITANIC",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 1452,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TITAN_AMMONIA_ERUPTION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TITAN_AMMONIA_ERUPTION",
+  "civilopedia": "TXT_KEY_BUILDING_TITAN_AMMONIA_ERUPTION_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_TITANIC"
+  ]
+ }
+}

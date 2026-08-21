@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_FREELANCE_MARKETPLACE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DIGITAL_OFFICES",
+    "TECH_ONLINE_COMMUNITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 9,
+     "enabled": "TECH_MESH_NETWORKS"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 2105,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FREELANCE_MARKETPLACE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FREELANCE_MARKETPLACE",
+  "civilopedia": "TXT_KEY_BUILDING_FREELANCE_MARKETPLACE_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

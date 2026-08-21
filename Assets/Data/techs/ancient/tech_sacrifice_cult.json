@@ -1,0 +1,95 @@
+{
+ "type": "TECH_SACRIFICE_CULT",
+ "enables": {
+  "bonuses": [
+   "BONUS_SHANG_JADE_RITUAL_ITEMS"
+  ],
+  "buildings": [
+   "BUILDING_ALTAR_FOR_HUMAN_SACRIFICE",
+   "BUILDING_CHICHEN_ITZA",
+   "BUILDING_CULTURE_AVERNIAN",
+   "BUILDING_CULTURE_MOCHE",
+   "BUILDING_CULTURE_PUELCHE",
+   "BUILDING_CULTURE_SHANG",
+   "BUILDING_SACRIFICIAL_ALTAR",
+   "BUILDING_SHANG_JADE_CARVER",
+   "BUILDING_WORLDVIEW_HUMAN_SACRIFICE",
+   "BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE"
+  ],
+  "promotions": [
+   "PROMOTION_BACKSTAB3",
+   "PROMOTION_STALL5"
+  ],
+  "techs": [
+   "TECH_DIVINATION",
+   "TECH_DUALISM",
+   "TECH_MONOTHEISM",
+   "TECH_MUMMIFICATION"
+  ],
+  "units": [
+   "UNIT_STALKERS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_POTTERY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CONSCIOUSNESS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CASTE_SYSTEM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 110
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/BloodCult.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,6,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SACRIFICE_CULT",
+  "soundMP": "AS2D_TECH_SACRIFICE_CULT"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SACRIFICE_CULT",
+  "civilopedia": "TXT_KEY_TECH_SACRIFICE_CULT_PEDIA",
+  "quote": "TXT_KEY_TECH_SACRIFICE_CULT_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 22,
+  "gridY": 19
+ }
+}

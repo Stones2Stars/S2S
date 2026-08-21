@@ -1,0 +1,126 @@
+{
+ "type": "BUILDING_CRIME_SHOPLIFTING",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_TRADE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 150,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": "TECH_CURRENCY"
+    },
+    {
+     "value": -2,
+     "enabled": "TECH_USURY"
+    },
+    {
+     "value": -2,
+     "enabled": "TECH_BANKING"
+    },
+    {
+     "value": -2,
+     "enabled": "TECH_MERCANTILISM"
+    },
+    {
+     "value": -3,
+     "enabled": "TECH_ECONOMICS"
+    },
+    {
+     "value": -3,
+     "enabled": "TECH_CONSUMERISM"
+    },
+    {
+     "value": -4,
+     "enabled": "TECH_APPLIED_ECONOMICS"
+    },
+    {
+     "value": -5,
+     "enabled": "TECH_GLOBALIZATION"
+    },
+    {
+     "value": -5,
+     "enabled": "TECH_CONGLOMERATES"
+    },
+    {
+     "value": -5,
+     "enabled": "TECH_MEGACORPORATIONS"
+    },
+    {
+     "value": -3,
+     "enabled": "TECH_ENVIRONMENTAL_ECONOMICS"
+    },
+    {
+     "value": -3,
+     "enabled": "TECH_PLANETARY_ECONOMICS"
+    },
+    {
+     "value": -2,
+     "enabled": "TECH_LUNAR_TRADE"
+    },
+    {
+     "value": -2,
+     "enabled": "TECH_INTERSTELLAR_TRADE"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 6
+   }
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_SHOPLIFTING",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_SHOPLIFTING_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

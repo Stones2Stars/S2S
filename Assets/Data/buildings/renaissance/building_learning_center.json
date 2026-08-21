@@ -1,0 +1,93 @@
+{
+ "type": "BUILDING_LEARNING_CENTER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CORPORATION",
+    {
+     "any": [
+      "BUILDING_HOLOGRAPHIC_SCHOOL",
+      "BUILDING_ELEMENTARY_SCHOOL",
+      "BUILDING_UNIVERSITY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BOOKS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "CIVIC_CORPORATE"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 5,
+     "per": {
+      "type": "RESEARCH_RATE",
+      "each": 100
+     }
+    },
+    {
+     "value": 5,
+     "per": {
+      "type": "CULTURE_RATE",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 12
+  }
+ },
+ "cost": {
+  "production": 455,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LEARNING_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LEARNING_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_LEARNING_CENTER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

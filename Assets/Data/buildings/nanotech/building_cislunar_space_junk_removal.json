@@ -1,0 +1,40 @@
+{
+ "type": "BUILDING_CISLUNAR_SPACE_JUNK_REMOVAL",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_CISLUNAR",
+    "TECH_ION_BEAMS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 800
+  }
+ },
+ "cost": {
+  "production": 1279,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_SPACE_JUNK_REMOVAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_SPACE_JUNK_REMOVAL",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SPACE_JUNK_REMOVAL_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

@@ -11,7 +11,14 @@ from CvPythonExtensions import *
 import BugCore
 TechWindowOpt = BugCore.game.TechWindow
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
+BUILD = CyBuildInfo()   # a build's produced improvement
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
 class CvTechSplashScreen:
@@ -123,9 +130,7 @@ class CvTechSplashScreen:
 
 		screen = self.getScreen()
 
-		techInfo = GC.getTechInfo(self.iTech)
-
-		screen.setSound(techInfo.getSound())
+		screen.setSound(INFO.getSound("TECH_", self.iTech))
 		screen.showScreen(PopupStates.POPUPSTATE_IMMEDIATE, False)
 		screen.enableWorldSounds( False )
 
@@ -205,18 +210,18 @@ class CvTechSplashScreen:
 		# Add Contents
 
 		# Title
-		szTech = techInfo.getDescription()
+		szTech = INFO.getDescription("TECH_", self.iTech)
 		screen.setLabel(self.getNextWidgetName(), "Background", u"<font=4>" + szTech.upper() + u"</font>", 1<<2,
 			self.X_TITLE, self.Y_TITLE, self.Z_CONTROLS, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 
 		# Tech Icon
-		screen.addDDSGFC(self.getNextWidgetName(), techInfo.getButton(), self.X_ICON, self.Y_ICON, self.W_ICON, self.H_ICON, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, self.iTech, 2)
+		screen.addDDSGFC(self.getNextWidgetName(), INFO.getButton("TECH_", self.iTech), self.X_ICON, self.Y_ICON, self.W_ICON, self.H_ICON, WidgetTypes.WIDGET_PEDIA_JUMP_TO_TECH, self.iTech, 2)
 
 		# Tech Quote
-		szTechQuote = techInfo.getQuote()
+		szTechQuote = INFO.getQuote("TECH_", self.iTech)
 		iTextOffset = 0
 		if TechWindowOpt.isShowCivilopediaText():
-			szTechQuote += "\n\n" + techInfo.getCivilopedia()
+			szTechQuote += "\n\n" + INFO.getCivilopedia("TECH_", self.iTech)
 		else:
 			iTextOffset = 20
 		screen.addMultilineText( "Text", szTechQuote,
@@ -240,13 +245,8 @@ class CvTechSplashScreen:
 		screen.setText(szAllowsTitleWidgetSIR, "", szAllowsTitleDescSIR, 1<<0,
 			       self.X_ALLOWS_PANELSIR+self.iMarginSpace, self.Y_ALLOWS_PANELSIR - 20, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
-		for j in range(GC.getNumTechInfos()):
-			for iPrereq in GC.getTechInfo(j).getPrereqOrTechs():
-				if iPrereq == self.iTech:
-					screen.attachImageButton(panelNameSIR, "", GC.getTechInfo(j).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_DERIVED_TECH, j, self.iTech, False)
-			for iPrereq in GC.getTechInfo(j).getPrereqAndTechs():
-				if iPrereq == self.iTech:
-					screen.attachImageButton(panelNameSIR, "", GC.getTechInfo(j).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_DERIVED_TECH, j, self.iTech, False)
+		for j in INFO.getEdgeIds("TECH_", self.iTech, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_TECHS):
+			screen.attachImageButton(panelNameSIR, "", INFO.getButton("TECH_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_DERIVED_TECH, j, self.iTech, False)
 
 #---Eingefgt ENDE ------------------------------------------------
 
@@ -256,9 +256,8 @@ class CvTechSplashScreen:
 		screen.setText(szUnitsTitleWidget, "", szUnitsTitleDesc, 1<<0,
 			       self.X_ALLOWS_PANEL + self.iMarginSpace, self.Y_ALLOWS_PANEL - 20, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
-		for iUnit in range(GC.getNumUnitInfos()):
-			if isTechRequiredForUnit(self.iTech, iUnit):
-				screen.attachImageButton( panelName, "", GC.getUnitInfo(iUnit).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, iUnit, 1, False )
+		for iUnit in INFO.getEdgeIds("TECH_", self.iTech, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_UNITS):
+			screen.attachImageButton( panelName, "", INFO.getButton("UNIT_", iUnit), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, iUnit, 1, False )
 
 		# Buildings Enabled
 		szBuildingsTitleDesc = u"<font=3b>" + TRNSLTR.getText("TXT_KEY_PEDIA_BUILDINGS_ENABLED", ()) + ":" + u"</font>"
@@ -266,9 +265,8 @@ class CvTechSplashScreen:
 		screen.setText(szBuildingsTitleWidget, "", szBuildingsTitleDesc, 1<<0,
 			       self.X_ALLOWS_PANEL + self.iMarginSpace, self.Y_ALLOWS_PANEL2 - 20, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
-		for eLoopBuilding in range(GC.getNumBuildingInfos()):
-			if (isTechRequiredForBuilding(self.iTech, eLoopBuilding)):
-				screen.attachImageButton( panelName2, "", GC.getBuildingInfo(eLoopBuilding).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
+		for eLoopBuilding in INFO.getEdgeIds("TECH_", self.iTech, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_BUILDINGS):
+				screen.attachImageButton( panelName2, "", INFO.getButton("BUILDING_", eLoopBuilding), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
 						WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, eLoopBuilding, 1, False )
 
 		# Improvements
@@ -277,46 +275,32 @@ class CvTechSplashScreen:
 		screen.setText(szImprovesTitleWidget, "", szImprovesTitleDesc, 1<<0,
 			       self.X_ALLOWS_PANEL + self.iMarginSpace, self.Y_ALLOWS_PANEL3 - 20, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
-		for j in range(GC.getNumProjectInfos()):
-			if (isTechRequiredForProject(self.iTech, j)):
-				screen.attachImageButton( panelName3, "", GC.getProjectInfo(j).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
+		for j in INFO.getEdgeIds("TECH_", self.iTech, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_PROJECTS):
+				screen.attachImageButton( panelName3, "", INFO.getButton("PROJECT_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
 							  WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROJECT, j, 1, False )
 
-		for j in range(GC.getNumPromotionInfos()):
-			if (GC.getPromotionInfo(j).getTechPrereq() == self.iTech):
-				screen.attachImageButton( panelName3, "", GC.getPromotionInfo(j).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
+		for j in INFO.getEdgeIds("TECH_", self.iTech, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_PROMOTIONS):
+				screen.attachImageButton( panelName3, "", INFO.getButton("PROMOTION_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
 							  WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, j, 1, False )
 
 #---Eingefgt START - kann komplett gelscht werden --------------
 
 		# Improvements
-		for j in range(GC.getNumBuildInfos()):
-				bTechFound = 0
-				if (GC.getBuildInfo(j).getTechPrereq() == -1):
-					bTechFound = 0
-					for k in range(GC.getNumFeatureInfos()):
-						if (GC.getBuildInfo(j).getFeatureTech(k) == self.iTech):
-							bTechFound = 1
+		for j in INFO.getEdgeIds("TECH_", self.iTech, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_BUILDS):
+				iImprovement = BUILD.getImprovement(j)
+				if (iImprovement == -1):
+					screen.attachImageButton( panelName3, "", INFO.getButton("BUILD_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_HELP_IMPROVEMENT, j, 1, False )
 				else:
-					if (GC.getBuildInfo(j).getTechPrereq() == self.iTech):
-						bTechFound = 1
-
-				if (bTechFound == 1):
-					if (GC.getBuildInfo(j).getImprovement() == -1):
-						screen.attachImageButton( panelName3, "", GC.getBuildInfo(j).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_HELP_IMPROVEMENT, j, 1, False )
-					else:
-						screen.attachImageButton( panelName3, "", GC.getBuildInfo(j).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_IMPROVEMENT, GC.getBuildInfo(j).getImprovement(), 1, False )
+					screen.attachImageButton( panelName3, "", INFO.getButton("BUILD_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM, WidgetTypes.WIDGET_PEDIA_JUMP_TO_IMPROVEMENT, iImprovement, 1, False )
 
 		# Bonuses
-		for j in range(GC.getNumBonusInfos()):
-			if (GC.getBonusInfo(j).getTechReveal() == self.iTech):
-				screen.attachImageButton( panelName3, "", GC.getBonusInfo(j).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
+		for j in INFO.getEdgeIds("TECH_", self.iTech, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_BONUSES):
+				screen.attachImageButton( panelName3, "", INFO.getButton("BONUS_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
 							  WidgetTypes.WIDGET_PEDIA_JUMP_TO_BONUS, j, 1, False )
 
 		# Civic
-		for j in range(GC.getNumCivicInfos()):
-			if (GC.getCivicInfo(j).getTechPrereq() == self.iTech):
-				screen.attachImageButton( panelName3, "", GC.getCivicInfo(j).getButton(), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
+		for j in INFO.getEdgeIds("TECH_", self.iTech, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_CIVICS):
+				screen.attachImageButton( panelName3, "", INFO.getButton("CIVIC_", j), GenericButtonSizes.BUTTON_SIZE_CUSTOM,
 							  WidgetTypes.WIDGET_PEDIA_JUMP_TO_CIVIC, j, 1, False )
 
 #---Eingefgt ENDE ------------------------------------------------

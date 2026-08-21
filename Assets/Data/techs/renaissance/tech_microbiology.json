@@ -1,0 +1,64 @@
+{
+ "type": "TECH_MICROBIOLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_MICROBIOLOGY_LAB"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_DISEASE_CONTROL5"
+  ],
+  "techs": [
+   "TECH_BIOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BATTLEFIELD_MEDICINE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SCIENTIFIC_METHOD",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 3274
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/microbiology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MICROBIOLOGY",
+  "soundMP": "AS2D_TECH_MICROBIOLOGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MICROBIOLOGY",
+  "civilopedia": "TXT_KEY_TECH_MICROBIOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_MICROBIOLOGY_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 56,
+  "gridY": 15
+ }
+}

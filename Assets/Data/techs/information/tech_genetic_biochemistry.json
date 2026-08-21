@@ -1,0 +1,70 @@
+{
+ "type": "TECH_GENETIC_BIOCHEMISTRY",
+ "enables": {
+  "buildings": [
+   "BUILDING_FERTILITY_CLINIC",
+   "BUILDING_NEUROSCIENCE_CENTER"
+  ],
+  "techs": [
+   "TECH_BIOINFORMATICS",
+   "TECH_BIOMECHANICAL_HARVESTING",
+   "TECH_MOLECULAR_MEDICINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CLONING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BIOMATERIALS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 22074
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/geneticb.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENETIC_BIOCHEMISTRY",
+  "soundMP": "AS2D_TECH_GENETIC_BIOCHEMISTRY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_GENETIC_BIOCHEMISTRY",
+  "civilopedia": "TXT_KEY_TECH_GENETIC_BIOCHEMISTRY_PEDIA",
+  "quote": "TXT_KEY_TECH_GENETIC_BIOCHEMISTRY_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 90,
+  "gridY": 3
+ }
+}

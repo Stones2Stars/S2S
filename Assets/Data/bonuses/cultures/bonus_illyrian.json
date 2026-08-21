@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_ILLYRIAN",
+ "enables": {
+  "units": [
+   "UNIT_LIBURNA",
+   "UNIT_TEUTA"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ILLYRIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ILLYRIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

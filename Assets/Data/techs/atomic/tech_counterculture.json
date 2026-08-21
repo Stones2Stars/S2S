@@ -1,0 +1,73 @@
+{
+ "type": "TECH_COUNTERCULTURE",
+ "enables": {
+  "bonuses": [
+   "BONUS_LSD"
+  ],
+  "buildings": [
+   "BUILDING_ALTERNATIVE_MEDICINE",
+   "BUILDING_BURNING_MAN",
+   "BUILDING_LSD_LAB",
+   "BUILDING_NATIONAL_DRUG_PROHIBITION",
+   "BUILDING_ORDINANCE_DRUG_PROHIBITION",
+   "BUILDING_PIERCING_SHOP",
+   "BUILDING_PSYCHIC_ADVISOR",
+   "BUILDING_WOODSTOCK"
+  ],
+  "techs": [
+   "TECH_EXTREME_SPORTS",
+   "TECH_MINORITY_RIGHTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GUERRILLA_WARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_POSTMODERNISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LEGALIZED_GAMBLING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 13724
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GOLD": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/counterculture.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_COUNTERCULTURE2",
+  "soundMP": "AS2D_TECH_COUNTERCULTURE2"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_COUNTERCULTURE",
+  "civilopedia": "TXT_KEY_TECH_COUNTERCULTURE_PEDIA",
+  "quote": "TXT_KEY_TECH_COUNTERCULTURE_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 81,
+  "gridY": 3
+ }
+}

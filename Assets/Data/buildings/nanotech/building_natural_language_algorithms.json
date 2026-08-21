@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_NATURAL_LANGUAGE_ALGORITHMS",
+ "enables": {
+  "buildings": [
+   "BUILDING_EVOLUTIONARY_ALGORITHMS",
+   "BUILDING_KNOWLEDGE_NAVIGATOR",
+   "BUILDING_SEMANTIC_WEB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTUITIVE_ALGORITHMS",
+    "TECH_UBIQUITOUS_COMPUTING",
+    "TECH_THOUGHT_SCANNING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 9,
+     "enabled": "TECH_INTERACTIVE_GLASS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_AUTOMATED_ROBOTICS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_AUTOMATED_URBANIZATION"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 9,
+     "enabled": "TECH_UNIVERSAL_TRANSLATOR"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 3245,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NATURAL_LANGUAGE_ALGORITHMS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NATURAL_LANGUAGE_ALGORITHMS",
+  "civilopedia": "TXT_KEY_BUILDING_NATURAL_LANGUAGE_ALGORITHMS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

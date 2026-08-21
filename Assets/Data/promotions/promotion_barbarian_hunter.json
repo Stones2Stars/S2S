@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_BARBARIAN_HUNTER",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_HUNTER1"
+   ]
+  }
+ },
+ "disabled": "GAMEOPTION_UNIT_INFINITE_XP",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/powerattack.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BARBARIAN_HUNTER",
+  "help": "TXT_KEY_PROMOTION_BARBARIAN_HUNTER_HELP",
+  "unitCombats": [
+   "UNITCOMBAT_HUNTER",
+   "UNITCOMBAT_COMBATANT"
+  ]
+ }
+}

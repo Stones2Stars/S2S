@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_SUN_SCOOP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_FACTORY",
+    "BUILDING_DEEP_SPACE_TELESCOPE",
+    "TECH_SOLAR_ORDNANCE",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    100,
+    {
+     "value": 11,
+     "enabled": "TECH_STAR_LIFTING"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2959,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

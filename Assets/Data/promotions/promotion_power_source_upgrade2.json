@@ -1,0 +1,64 @@
+{
+ "type": "PROMOTION_POWER_SOURCE_UPGRADE2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_POWER_SOURCE_UPGRADE3",
+   "PROMOTION_SHIELDING3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_POWER_SOURCE_UPGRADE1"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_DESERT": {
+     "percent": -50
+    },
+    "TERRAIN_MARSH": {
+     "percent": -50
+    },
+    "TERRAIN_ICE": {
+     "percent": -50
+    },
+    "TERRAIN_TUNDRA": {
+     "percent": -50
+    }
+   }
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_ROBOT": {
+     "percent": 15
+    },
+    "UNITCOMBAT_ASSAULT_MECH": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_POWER_SOURCE_UPGRADE": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat3.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,6,7"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_POWER_SOURCE_UPGRADE2",
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
+ }
+}

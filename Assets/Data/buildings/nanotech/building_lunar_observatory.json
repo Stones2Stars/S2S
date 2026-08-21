@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_LUNAR_OBSERVATORY",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUNAR_RESEARCH_BASE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_LUNAR_BASE",
+    "TECH_LUNAR_MANUFACTURING",
+    {
+     "any": [
+      {
+       "type": "FEATURE_CRATER_MEDIUM",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_CRATER_LARGE",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_CRATER_SMALL",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_GLASSWARE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 1300,
+  "hurryModifier": 10000
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUNAR_OBSERVATORY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_OBSERVATORY",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_OBSERVATORY_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

@@ -1,0 +1,91 @@
+{
+ "type": "TECH_NEURON_ENGINEERING",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_COGNITIVE_ENHANCEMENT"
+  ],
+  "buildings": [
+   "BUILDING_DREAMTIME_MACHINE",
+   "BUILDING_HUMAN_MOD_COGNITIVE_ENHANCEMENT",
+   "BUILDING_MARTIAN_ENTERTAINMENT_COMPLEX",
+   "BUILDING_MEMORY_TRANSFER_STATION",
+   "BUILDING_VENUS_ENTERTAINMENT_COMPLEX"
+  ],
+  "techs": [
+   "TECH_BINARY_SUBCONSCIOUSNESS",
+   "TECH_HOMO_SUPERIOR",
+   "TECH_HYPERMAGNETICS",
+   "TECH_NOVO_PALEONTOLOGY",
+   "TECH_SIMULATED_REALITY",
+   "TECH_UTOPIA_DESTINY"
+  ],
+  "units": [
+   "UNIT_CYBERNETIC_WORK_CREW"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SUPERCHARGED_CRYSTALLOGRAPHY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DESIGNER_MICROBIOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HYPOTHETICAL_BIOCHEMISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSHUMAN_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 63426
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/neuronengineering.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NEURON_ENGINEERING",
+  "soundMP": "AS2D_TECH_NEURON_ENGINEERING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NEURON_ENGINEERING",
+  "civilopedia": "TXT_KEY_TECH_NEURON_ENGINEERING_PEDIA",
+  "quote": "TXT_KEY_TECH_NEURON_ENGINEERING_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 111,
+  "gridY": 13
+ }
+}

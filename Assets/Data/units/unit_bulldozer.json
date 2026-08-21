@@ -1,0 +1,139 @@
+{
+ "type": "UNIT_BULLDOZER",
+ "builds": [
+  "BUILD_BURN_VEGETATION",
+  "BUILD_PATH",
+  "BUILD_REMOVE_VEGETATION",
+  "BUILD_DRAIN_SWAMP",
+  "BUILD_ROAD",
+  "BUILD_REMOVE_ROCK_FORMATION",
+  "BUILD_SCRUB_FALLOUT",
+  "BUILD_CLEAR_FALLOUT_FAST",
+  "BUILD_RECLAIM_LAND",
+  "BUILD_SANITIZE"
+ ],
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MAINSTREAM_CLONING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_AUTOMOBILES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_MOTORIZED_TRANSPORTATION",
+    {
+     "any": [
+      {
+       "type": "BONUS_BIOFUEL",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PETROLEUM_PRODUCTS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CLONES"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 20
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_BULLDOZER"
+  }
+ },
+ "skills": [
+  "food",
+  "onlyDefensive",
+  "tradable"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_TRACKED",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_DIST_SHELLFIRE",
+  "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+  "UNITCOMBAT_WEAPON_H2H_HYDRAULIC_APPENDAGE",
+  "UNITCOMBAT_ARMOR_VEHICULAR",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 800,
+  "upkeep": 5
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BULLDOZER",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_BULLDOZER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_BULLDOZER",
+  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "workRate": 200
+  }
+ }
+}

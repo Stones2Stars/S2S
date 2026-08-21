@@ -1,0 +1,133 @@
+{
+ "type": "UNIT_KETABDAR",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_GHURID",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_HERALDRY"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CELEBRITY"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_ENTERTAINER"
+  }
+ },
+ "skills": [
+  "rivalTerritory"
+ ],
+ "tags": [
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_ENTERTAINER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_ENTERTAIN_CITY",
+    "outcomes": [
+     {
+      "requires": {
+       "outcome": "OUTCOME_ENTERTAIN_CITY"
+      },
+      "chance": 80,
+      "consumes": true,
+      "revolution": 4,
+      "culture": 6
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_ENTERTAIN_CITY_EXALTED"
+      },
+      "chance": 20,
+      "promotes": "PROMOTION_EXPERIENCED_ARTIST",
+      "revolution": 5,
+      "culture": 12
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "greatPersonAction": {
+   "greatWork": {
+    "base": 15
+   }
+  }
+ },
+ "cost": {
+  "production": 250,
+  "upkeep": 4
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_KETABDAR",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_KETABDAR",
+       "late": "ART_DEF_UNIT_KETABDAR"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_KETABDAR",
+  "civilopedia": "TXT_KEY_UNIT_KETABDAR_PEDIA",
+  "worth": 5,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_CULTURE",
+  "unitAIs": [
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

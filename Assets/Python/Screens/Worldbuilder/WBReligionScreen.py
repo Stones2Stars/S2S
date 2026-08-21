@@ -6,8 +6,15 @@ import WBTeamScreen
 import WBCityEditScreen
 import WBInfoScreen
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
+TEXT = CyGameTextMgr()
 bHoly = False
 iOwnerType = 0
 lCities = []
@@ -97,7 +104,7 @@ class WBReligionScreen:
 		screen.setTableText("WBAllReligions", 0, 1, "<font=3b>" + sText + " (-)</font>", "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<2)
 
 		for i in xrange(GC.getNumReligionInfos()):
-			sText = u"%c" %(GC.getReligionInfo(i).getChar())
+			sText = u"%c" %(TEXT.getSymbolChar("RELIGION_", i))
 			screen.setTableColumnHeader("WBAllReligions", i + 1, "", (iWidth - 150) / GC.getNumReligionInfos())
 			screen.setTableText("WBAllReligions", i + 1, 0, "<font=4>" + sText + "</font>", "", WidgetTypes.WIDGET_HELP_RELIGION, i, 1, 1<<2)
 			screen.setTableText("WBAllReligions", i + 1, 1, "<font=4>" + sText + "</font>", "", WidgetTypes.WIDGET_HELP_RELIGION, i, 2, 1<<2)
@@ -115,15 +122,15 @@ class WBReligionScreen:
 			iCiv = pPlayerX.getCivilizationType()
 			sColor = u"<color=%d,%d,%d,%d>" %(pPlayerX.getPlayerTextColorR(), pPlayerX.getPlayerTextColorG(), pPlayerX.getPlayerTextColorB(), pPlayerX.getPlayerTextColorA())
 			iRow = screen.appendTableRow("WBCityReligions")
-			screen.setTableText("WBCityReligions", 0, iRow, "", GC.getCivilizationInfo(iCiv).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<2)
-			screen.setTableText("WBCityReligions", 1, iRow, "", GC.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<2)
+			screen.setTableText("WBCityReligions", 0, iRow, "", INFO.getButton("CIVILIZATION_", iCiv), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<2)
+			screen.setTableText("WBCityReligions", 1, iRow, "", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<2)
 			screen.setTableText("WBCityReligions", 2, iRow, "<font=3>" + sColor + loopCity.getName() + "</color></font>", "", WidgetTypes.WIDGET_PYTHON, 7200 + iPlayerX, loopCity.getID(), 1<<0)
 			for i in xrange(GC.getNumReligionInfos()):
 				sText = " "
 				if loopCity.isHasReligion(i):
-					sText = u"%c" %(GC.getReligionInfo(i).getChar())
+					sText = u"%c" %(TEXT.getSymbolChar("RELIGION_", i))
 				if loopCity.isHolyCityByType(i):
-					sText = u"%c" %(GC.getReligionInfo(i).getHolyCityChar())
+					sText = u"%c" %(TEXT.getHolyCitySymbolChar(i))
 				screen.setTableText("WBCityReligions", i + 3, iRow, "<font=4>" + sText + "</font>", "", WidgetTypes.WIDGET_HELP_RELIGION, i, loopCity.getID() * 100 + iPlayerX, 1<<2)
 
 	def placeHolyCities(self):
@@ -140,15 +147,15 @@ class WBReligionScreen:
 
 		for i in xrange(GC.getNumReligionInfos()):
 			iRow = screen.appendTableRow("WBHolyCity")
-			screen.setTableText("WBHolyCity", 0, iRow, "", GC.getReligionInfo(i).getButton(), WidgetTypes.WIDGET_HELP_RELIGION, i, 1, 1<<0)
+			screen.setTableText("WBHolyCity", 0, iRow, "", INFO.getButton("RELIGION_", i), WidgetTypes.WIDGET_HELP_RELIGION, i, 1, 1<<0)
 			pHolyCity = CyGame().getHolyCity(i)
 			if pHolyCity:
 				iPlayerX = pHolyCity.getOwner()
 				pPlayerX = GC.getPlayer(iPlayerX)
 				sColor = u"<color=%d,%d,%d,%d>" %(pPlayerX.getPlayerTextColorR(), pPlayerX.getPlayerTextColorG(), pPlayerX.getPlayerTextColorB(), pPlayerX.getPlayerTextColorA())
 				iLeader = pPlayerX.getLeaderType()
-				screen.setTableText("WBHolyCity", 1, iRow, "", GC.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iPlayerX * 10000 + iLeader, 1<<0)
-				screen.setTableText("WBHolyCity", 2, iRow, "<font=3>" + sColor + pHolyCity.getName() + "</color></font>", GC.getCivilizationInfo(pHolyCity.getCivilizationType()).getButton(), WidgetTypes.WIDGET_PYTHON, 7200 + iPlayerX, pHolyCity.getID(), 1<<0)
+				screen.setTableText("WBHolyCity", 1, iRow, "", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iPlayerX * 10000 + iLeader, 1<<0)
+				screen.setTableText("WBHolyCity", 2, iRow, "<font=3>" + sColor + pHolyCity.getName() + "</color></font>", INFO.getButton("CIVILIZATION_", pHolyCity.getCivilizationType()), WidgetTypes.WIDGET_PYTHON, 7200 + iPlayerX, pHolyCity.getID(), 1<<0)
 
 	def placeStateReligion(self):
 		screen = CyGInterfaceScreen("WBReligionScreen", CvScreenEnums.WB_RELIGION)
@@ -172,10 +179,10 @@ class WBReligionScreen:
 			iStateReligion = pPlayerX.getStateReligion()
 			sButton = CyArtFileMgr().getInterfaceArtInfo("INTERFACE_BUTTONS_CANCEL").getPath()
 			if iStateReligion > -1:
-				sButton = GC.getReligionInfo(iStateReligion).getButton()
+				sButton = INFO.getButton("RELIGION_", iStateReligion)
 			screen.setTableText("WBStateReligion", 0, iRow, "", sButton, WidgetTypes.WIDGET_HELP_RELIGION, iStateReligion, 1, 1<<0)
-			screen.setTableText("WBStateReligion", 1, iRow, "", GC.getCivilizationInfo(iCivilization).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, iPlayerX * 10000 + iCivilization, 1<<0)
-			screen.setTableText("WBStateReligion", 2, iRow, "<font=3>" + sColor + pPlayerX.getName() + "</color></font>", GC.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iPlayerX * 10000 + iLeader, 1<<0)
+			screen.setTableText("WBStateReligion", 1, iRow, "", INFO.getButton("CIVILIZATION_", iCivilization), WidgetTypes.WIDGET_PYTHON, 7872, iPlayerX * 10000 + iCivilization, 1<<0)
+			screen.setTableText("WBStateReligion", 2, iRow, "<font=3>" + sColor + pPlayerX.getName() + "</color></font>", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iPlayerX * 10000 + iLeader, 1<<0)
 
 	def handleInput (self, inputClass):
 		screen = CyGInterfaceScreen("WBReligionScreen", CvScreenEnums.WB_RELIGION)

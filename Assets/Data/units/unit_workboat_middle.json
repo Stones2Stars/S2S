@@ -1,0 +1,150 @@
+{
+ "type": "UNIT_WORKBOAT_MIDDLE",
+ "builds": [
+  "BUILD_WHALING_BOATS",
+  "BUILD_FISHING_BOATS",
+  "BUILD_BEACON_CORAL",
+  "BUILD_BEACON_REEF",
+  "BUILD_BEACON_GREAT_BARRIER_REEF",
+  "BUILD_HARVEST_KELP",
+  "BUILD_LIGHTHOUSE_CORAL",
+  "BUILD_LIGHTHOUSE_REEF",
+  "BUILD_LIGHTHOUSE_GREAT_BARRIER_REEF",
+  "BUILD_WHALING_SHIPS"
+ ],
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SHIPWRIGHT",
+    "HAS_COAST",
+    "TECH_RUDDER"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_WORKBOAT_MODERN"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_WORKBOAT_MIDDLE"
+  }
+ },
+ "skills": [
+  "mechanized",
+  "renderBelowWater"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "seaUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SEA_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_NAVAL",
+  "UNITCOMBAT_QUALITY_POOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_NAVAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 233,
+  "upkeep": 3
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WORKBOAT_MIDDLE",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 2.25,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WORKBOAT_MIDDLE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_WORKBOAT_MIDDLE",
+  "civilopedia": "TXT_KEY_UNIT_WORKBOAT_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_SEA",
+  "defaultUnitAI": "UNITAI_WORKER_SEA",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER_SEA"
+  ],
+  "notUnitAIs": [
+   "UNITAI_ESCORT_SEA",
+   "UNITAI_RESERVE_SEA",
+   "UNITAI_ATTACK_SEA",
+   "UNITAI_ASSAULT_SEA"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "featureImpassable": [
+   "FEATURE_ICE"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_OCEAN",
+   "TERRAIN_OCEAN_POLAR",
+   "TERRAIN_OCEAN_TROPICAL",
+   "TERRAIN_TRENCH",
+   "TERRAIN_TRENCH_TROPICAL",
+   "TERRAIN_TRENCH_POLAR"
+  ],
+  "featurePassableTechs": [
+   {
+    "FEATURE_ICE": "TECH_ASTRONOMY"
+   }
+  ],
+  "terrainPassableTechs": [
+   {
+    "TERRAIN_OCEAN": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_OCEAN_POLAR": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_OCEAN_TROPICAL": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH_TROPICAL": "TECH_ASTRONOMY"
+   },
+   {
+    "TERRAIN_TRENCH_POLAR": "TECH_ASTRONOMY"
+   }
+  ],
+  "base": {
+   "workRate": 100
+  }
+ }
+}

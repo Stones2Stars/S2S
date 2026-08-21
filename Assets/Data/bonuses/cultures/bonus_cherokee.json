@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_CHEROKEE",
+ "enables": {
+  "units": [
+   "UNIT_CHEROKEE_RIFLEMAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CHEROKEE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CHEROKEE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

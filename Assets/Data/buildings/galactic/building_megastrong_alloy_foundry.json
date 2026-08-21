@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_MEGASTRONG_ALLOY_FOUNDRY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_OMEGA_POINT"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MATERIALIZATION_COMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ALPHA_ASSEMBLER",
+    "TECH_MEGASTRONG_ALLOYS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_MATERIALIZATION_COMPLEX"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_MEGASTRONG_ALLOYS"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 12155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MEGASTRONG_ALLOY_FOUNDRY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MEGASTRONG_ALLOY_FOUNDRY",
+  "civilopedia": "TXT_KEY_BUILDING_MEGASTRONG_ALLOY_FOUNDRY_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,73 @@
+{
+ "type": "TECH_LAWN_SPORTS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CROQUET_FIELD",
+   "BUILDING_CURLING_SHEET",
+   "BUILDING_GOLF_COURSE",
+   "BUILDING_HOCKEY_RINK",
+   "BUILDING_ICE_RINK",
+   "BUILDING_KENTUCKY_DERBY",
+   "BUILDING_LACROSSE_FIELD",
+   "BUILDING_SOFTBALL_FIELD",
+   "BUILDING_TENNIS_COURT",
+   "BUILDING_VOLLEYBALL_COURT"
+  ],
+  "techs": [
+   "TECH_MODERN_SPORTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TEAM_SPORTS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AGRICULTURAL_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 6673
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Lawn_Sports.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_LAWN_SPORTS",
+  "soundMP": "AS2D_TECH_LAWN_SPORTS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_LAWN_SPORTS",
+  "civilopedia": "TXT_KEY_TECH_LAWN_SPORTS_PEDIA",
+  "quote": "TXT_KEY_TECH_LAWN_SPORTS_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 67,
+  "gridY": 7
+ }
+}

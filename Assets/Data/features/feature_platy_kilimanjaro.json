@@ -1,0 +1,38 @@
+{
+ "type": "FEATURE_PLATY_KILIMANJARO",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
+  "nukeImmune",
+  "countsAsPeak",
+  "ignoreTerrainCulture"
+ ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_KILIMANJARO"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_KILIMANJARO",
+  "civilopedia": "TXT_KEY_FEATURE_KILIMANJARO_PEDIA",
+  "validTerrains": [
+   "TERRAIN_SCRUB"
+  ]
+ }
+}

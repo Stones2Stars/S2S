@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_ALUMINUM_RECLAMATION_PLANT",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_ALUMINUM_INGOTS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_METALS_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_RECYCLING_CENTER",
+    "TECH_RECYCLING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "any": [
+      {
+       "type": "BONUS_CANNED_FOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SODA_POP",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BICYCLES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_AUTOMOBILES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_COMPUTERS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_METAMATERIALS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_AIRCRAFT",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SERVICE_BOTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_UNMANNED_AIRCRAFTS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_METALS_MEGACOMPLEX"
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "cost": {
+  "production": 1475,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ALUMINUM_RECLAMATION_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ALUMINUM_RECLAMATION_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_ALUMINUM_RECLAMATION_PLANT_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,133 @@
+{
+ "type": "BUILDING_DANCE_HAKA",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MILITARY_SCIENCE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_WAR_DANCE",
+    "BUILDING_C_L_OCEANIAN",
+    "TECH_PREHISTORIC_DANCE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_ABORIGINE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_FIJIAN",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_HAWAIIAN",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_MAORI",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_NEW_ZEALANDER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_POLYNESIAN",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_RAPA_NUI",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SAMOAN",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TAHITIAN",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TONGAN",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": 5,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "warWeariness": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_HAKA"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 60,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DANCE_HAKA",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DANCE_HAKA",
+  "civilopedia": "TXT_KEY_BUILDING_DANCE_HAKA_PEDIA",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

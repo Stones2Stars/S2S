@@ -1,0 +1,127 @@
+{
+ "type": "BUILDING_KINGS_CRUSADE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HUMANISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FUNDAMENTALISM",
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_CHRISTIANITY"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    "RELIGION_CHRISTIANITY"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "production": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 1860,
+  "sizeModifier": 3,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CRUSADE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_KINGS_CRUSADE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_KINGS_CRUSADE",
+  "civilopedia": "TXT_KEY_BUILDING_KINGS_CRUSADE_PEDIA",
+  "help": "TXT_KEY_BUILDING_KINGS_CRUSADE_HELP",
+  "pediaCategory": "religious",
+  "stateReligionCommerce": {
+   "gold": 1
+  },
+  "worth": 10,
+  "militaryWorth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_CHRISTIANITY",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

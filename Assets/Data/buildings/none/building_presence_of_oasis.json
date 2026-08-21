@@ -1,0 +1,37 @@
+{
+ "type": "BUILDING_PRESENCE_OF_OASIS",
+ "requires": {
+  "operate": {
+   "all": [
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    {
+     "type": "FEATURE_OASIS",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CREATION_MYTH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PRESENCE_OF_OASIS",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_PRESENCE_OF_ORIGIN_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

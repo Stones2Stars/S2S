@@ -1,0 +1,67 @@
+{
+ "type": "CIVIC_CORPORATE",
+ "enables": {
+  "buildings": [
+   "BUILDING_LEARNING_CENTER"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 4
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "corporation": {
+    "percent": -20
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/education_corporate.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_CORPORATE",
+  "civilopedia": "TXT_KEY_CIVIC_CORPORATE_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_CORPORATE_STRATEGY",
+  "civicOption": "CIVICOPTION_EDUCATION",
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

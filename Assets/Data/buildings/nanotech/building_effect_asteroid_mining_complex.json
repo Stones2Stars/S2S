@@ -1,0 +1,38 @@
+{
+ "type": "BUILDING_EFFECT_ASTEROID_MINING_COMPLEX",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_CISLUNAR_ECONOMY",
+    "TECH_LUNAR_TRADE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 4655
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_ASTEROID_MINING_COMPLEX",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_ASTEROID_MINING_COMPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_ASTEROID_MINING_COMPLEX_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

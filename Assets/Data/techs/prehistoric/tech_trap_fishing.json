@@ -1,0 +1,88 @@
+{
+ "type": "TECH_TRAP_FISHING",
+ "enables": {
+  "bonuses": [
+   "BONUS_CLAM",
+   "BONUS_CRAB",
+   "BONUS_DRIED_FISH",
+   "BONUS_FISH",
+   "BONUS_FISHING_NETS",
+   "BONUS_LOBSTER",
+   "BONUS_MUREX",
+   "BONUS_PEARLS",
+   "BONUS_RAW_FISH",
+   "BONUS_SHELLFISH",
+   "BONUS_SHRIMP",
+   "BONUS_WHALE"
+  ],
+  "buildings": [
+   "BUILDING_CULTURE_HURON",
+   "BUILDING_DRIED_FISH_MAKER",
+   "BUILDING_FISHERMANS_HUT",
+   "BUILDING_FISH_TRAPS",
+   "BUILDING_MUREX_DIVER",
+   "BUILDING_NET_CRAB",
+   "BUILDING_NET_EEL",
+   "BUILDING_NET_LOBSTER",
+   "BUILDING_NET_PRAWN",
+   "BUILDING_NET_SALMON",
+   "BUILDING_NET_SHRIMP",
+   "BUILDING_PEARL_DIVER",
+   "BUILDING_PESTS_MOSQUITOES"
+  ],
+  "techs": [
+   "TECH_SPEAR_MAKING"
+  ],
+  "units": [
+   "UNIT_HURON_MANLET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEWING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "canWorkOn": {
+  "water": true,
+  "ocean": true
+ },
+ "cost": {
+  "research": 17
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Button_EarlyFishing.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TRAP_FISHING",
+  "soundMP": "AS2D_TECH_TRAP_FISHING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TRAP_FISHING",
+  "civilopedia": "TXT_KEY_TECH_TRAP_FISHING_PEDIA",
+  "quote": "TXT_KEY_TECH_TRAP_FISHING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 9,
+  "gridY": 1
+ }
+}

@@ -1,0 +1,48 @@
+{
+ "type": "PROMOTION_SELF_REPAIR4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SELF_REPAIR5"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SELF_REPAIR3"
+   ]
+  }
+ },
+ "heal": {
+  "unit": {
+   "enemy": {
+    "flat": 1
+   },
+   "selfModifier": {
+    "percent": 2
+   },
+   "victory": {
+    "flat": 3
+   }
+  }
+ },
+ "skills": {
+  "alwaysHeal": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SELF_REPAIR": 4
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/SelfRepair4Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "maxHP": 4
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SELF_REPAIR4"
+ }
+}

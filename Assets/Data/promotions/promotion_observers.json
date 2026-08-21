@@ -1,0 +1,45 @@
+{
+ "type": "PROMOTION_OBSERVERS",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT2"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_EXPLORER": {
+     "percent": 15
+    },
+    "UNITCOMBAT_STRIKE_TEAM": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/observer.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_OBSERVERS",
+  "unitCombats": [
+   "UNITCOMBAT_EXPLORER"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
+ }
+}

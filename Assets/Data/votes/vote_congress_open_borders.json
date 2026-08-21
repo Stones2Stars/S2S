@@ -1,0 +1,16 @@
+{
+ "type": "VOTE_CONGRESS_OPEN_BORDERS",
+ "voteSource": [
+  "DIPLOVOTE_CVIENNA"
+ ],
+ "threshold": {
+  "population": 62,
+  "minVoters": 3
+ },
+ "effect": {
+  "openBorders": true
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_CONGVIENNA_OPEN_BORDERS"
+ }
+}

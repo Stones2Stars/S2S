@@ -1,0 +1,97 @@
+{
+ "type": "TECH_ABYSS_COLONIZATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLITZBALL_ARENA",
+   "BUILDING_EUROPA_COLONY",
+   "BUILDING_LIFE_AMMONIA_BASED",
+   "BUILDING_LIFE_METHANE_BASED",
+   "BUILDING_OCEAN_ADMINISTRATION",
+   "BUILDING_OCEAN_FLOOR_CITY",
+   "BUILDING_SPACE_COLONY_TITAN_BASE",
+   "BUILDING_TITAN_AIRPORT",
+   "BUILDING_TITAN_AMMONIA_ERUPTION",
+   "BUILDING_TITAN_BIOFACTORY",
+   "BUILDING_TITAN_FERTILIZER_PLANT",
+   "BUILDING_TITAN_HYDROCARBON_REFINERY",
+   "BUILDING_VENUS_SURFACE_CITY",
+   "BUILDING_VENUS_SURFACE_FACTORY"
+  ],
+  "builds": [
+   "BUILD_SUBMERGED_TOWN",
+   "BUILD_VENUS_SURFACE_MINE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_VENUS_SURFACE_MINE"
+  ],
+  "promotions": [
+   "PROMOTION_REPAIR_NAVAL7"
+  ],
+  "techs": [
+   "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+   "TECH_GAIA_ECOLOGY",
+   "TECH_MYTHOLOGICAL_BESTIARY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_OPTRONICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BOTANICAL_ALCHEMY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_EVOLVED_CONSTRUCTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 72474
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/abysscolonization.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ABYSS_COLONIZATION",
+  "soundMP": "AS2D_TECH_ABYSS_COLONIZATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ABYSS_COLONIZATION",
+  "civilopedia": "TXT_KEY_TECH_ABYSS_COLONIZATION_PEDIA",
+  "quote": "TXT_KEY_TECH_ABYSS_COLONIZATION_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 115,
+  "gridY": 9
+ }
+}

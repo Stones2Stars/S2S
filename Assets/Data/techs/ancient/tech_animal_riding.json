@@ -1,0 +1,113 @@
+{
+ "type": "TECH_ANIMAL_RIDING",
+ "enables": {
+  "bonuses": [
+   "BONUS_SADDLES"
+  ],
+  "buildings": [
+   "BUILDING_CULTURE_BACTRIC",
+   "BUILDING_CULTURE_CHEYENNE",
+   "BUILDING_CULTURE_HUN",
+   "BUILDING_CULTURE_HYKSOSI",
+   "BUILDING_CULTURE_MONGOLIAN",
+   "BUILDING_CULTURE_PASHTUN",
+   "BUILDING_CULTURE_PERSIAN",
+   "BUILDING_CULTURE_ROXOLANI",
+   "BUILDING_CULTURE_TRANSOXANIAN",
+   "BUILDING_CULTURE_XIANBEI",
+   "BUILDING_CULTURE_XIONGNU",
+   "BUILDING_GER",
+   "BUILDING_MERCENARY_STABLES",
+   "BUILDING_RIDING_SCHOOL",
+   "BUILDING_SADDLER",
+   "BUILDING_STABLE"
+  ],
+  "promotions": [
+   "PROMOTION_CARAVAN_MOVEMENT_II",
+   "PROMOTION_CARAVAN_MOVEMENT_III",
+   "PROMOTION_CAUTIOUS4",
+   "PROMOTION_MARAUDER"
+  ],
+  "techs": [
+   "TECH_HORSE_BREEDING",
+   "TECH_MEGAFAUNA_DOMESTICATION"
+  ],
+  "units": [
+   "UNIT_BACTRIAN_CATAPHRACT",
+   "UNIT_BANDIT_RIDER",
+   "UNIT_BATRADZ",
+   "UNIT_CAMEL_RIDER",
+   "UNIT_CHROCUS",
+   "UNIT_DAREN",
+   "UNIT_GARAMANTES",
+   "UNIT_GESAR",
+   "UNIT_HORSEMAN",
+   "UNIT_KANISHKA",
+   "UNIT_KHYAN",
+   "UNIT_NEANDERTHAL_ELEPHANT_RIDER",
+   "UNIT_PERSIA_IMMORTAL",
+   "UNIT_REINDEER_RIDER",
+   "UNIT_STEPPE_RIDER",
+   "UNIT_TASIUS",
+   "UNIT_TUAREG_CAMEL",
+   "UNIT_TUOBA_LIWEI"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CHARIOTRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 144
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Horseback_Riding.dds,Art/Interface/Buttons/TechTree_Atlas.dds,6,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ANIMAL_RIDING",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ANIMAL_RIDING",
+  "civilopedia": "TXT_KEY_TECH_ANIMAL_RIDING_PEDIA",
+  "quote": "TXT_KEY_TECH_ANIMAL_RIDING_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 24,
+  "gridY": 11
+ }
+}

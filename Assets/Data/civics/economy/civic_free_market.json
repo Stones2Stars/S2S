@@ -1,0 +1,151 @@
+{
+ "type": "CIVIC_FREE_MARKET",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHAMBER_OF_COMMERCE",
+   "BUILDING_CIVIC_FREE_MARKET",
+   "BUILDING_FREE_PORT",
+   "BUILDING_NATIONAL_MINT"
+  ],
+  "hurries": [
+   "HURRY_GOLD"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 3,
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "all": [
+        "GAMEOPTION_MAP_PERSONALIZED",
+        "HAS_LANDMARK"
+       ]
+      }
+     }
+    ]
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 4,
+   "improvements": {
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_EMPORIUM": {
+     "flat": 1
+    },
+    "BUILDING_HYPERMARKET": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 5
+   },
+   "numCities": {
+    "percent": 5
+   },
+   "percent": [
+    {
+     "value": 4,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 6,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ]
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 1,
+   "modifier": {
+    "food": {
+     "percent": 3
+    },
+    "production": {
+     "percent": 3
+    },
+    "commerce": {
+     "percent": 3
+    }
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": -1
+   },
+   "environmentalProtection": {
+    "flat": -1
+   }
+  }
+ },
+ "inflation": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "grants": {
+  "revolution": -10
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/economy_free_market.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_FREE_MARKET",
+  "civilopedia": "TXT_KEY_CIVIC_FREE_MARKET_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_FREE_MARKET_STRATEGY",
+  "civicOption": "CIVICOPTION_ECONOMY",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

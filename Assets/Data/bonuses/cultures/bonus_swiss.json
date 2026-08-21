@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_SWISS",
+ "enables": {
+  "units": [
+   "UNIT_SWISS_PIKEMAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SWISS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SWISS",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_MATHEMATICAL_ORACLE",
+ "enables": {
+  "buildings": [
+   "BUILDING_FORMAL_REASONING_CENTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SELF_AWARE_CITY",
+    "BUILDING_OMEGA_ASSEMBLER",
+    "TECH_UNIFICATION_MATHEMATICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTRONIUM",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "cost": {
+  "production": 16455,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MATHEMATICAL_ORACLE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MATHEMATICAL_ORACLE",
+  "civilopedia": "TXT_KEY_BUILDING_MATHEMATICAL_ORACLE_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

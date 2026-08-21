@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_STARDATE_CALENDAR",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_DATA_COLLECTION",
+    "TECH_INTERSTELLAR_COMMUNICATION",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_TRANSTELLAR_BUSSARD_RAMJET_PORT": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 7963,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_STARDATE_CALENDAR"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_STARDATE_CALENDAR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_STARDATE_CALENDAR",
+  "civilopedia": "TXT_KEY_BUILDING_STARDATE_CALENDAR_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

@@ -1,0 +1,28 @@
+{
+ "type": "PROMOTION_MERGED_INTO_PARTY",
+ "skills": {
+  "unitCombats": [
+   "UNITCOMBAT_GROUP_PARTY"
+  ],
+  "removesUnitCombats": [
+   "UNITCOMBAT_GROUP_SOLO"
+  ]
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/UnitCombatClasses/Group2UnitCombat.fw.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_MERGED_INTO_PARTY",
+  "replacesUnitCombat": "UNITCOMBAT_GROUP_SOLO",
+  "forOffset": true
+ },
+ "sizeMatters": {
+  "group": 1
+ }
+}

@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_ANTIKYTHERA_MECHANISM",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ASTRONOMY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GEARS",
+    "TECH_SUNDIAL",
+    {
+     "any": [
+      "BUILDING_STARGAZERS_HUT",
+      "BUILDING_OBSERVATORY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BRONZE_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ],
+   "dormant": [
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "grants": {
+  "freeTechs": 1
+ },
+ "cost": {
+  "production": 1104,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ANTIKYTHERA_MECHANISM"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANTIKYTHERA_MECHANISM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANTIKYTHERA_MECHANISM",
+  "civilopedia": "TXT_KEY_BUILDING_ANTIKYTHERA_MECHANISM_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

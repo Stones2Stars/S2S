@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_CISLUNAR_ENHANCED_ALGAE_FARM",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_ORGANIC_COLONY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_SANITATION_SYSTEM",
+    "BUILDING_CISLUNAR_AGRICULTURAL_LAB",
+    "TECH_DESIGNER_MICROBIOLOGY",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ULTRAFUEL"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1577,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_ENHANCED_ALGAE_FARM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_ENHANCED_ALGAE_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_ENHANCED_ALGAE_FARM_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

@@ -1,0 +1,112 @@
+{
+ "type": "TECH_WEATHER_CONTROL",
+ "enables": {
+  "buildings": [
+   "BUILDING_INDUCED_RAIN",
+   "BUILDING_OZONE_GENERATOR",
+   "BUILDING_PARADISE_GARDEN"
+  ],
+  "builds": [
+   "BUILD_TERRAFORM_DESERT",
+   "BUILD_TERRAFORM_DUNES",
+   "BUILD_TERRAFORM_GRASS",
+   "BUILD_TERRAFORM_LUSH",
+   "BUILD_TERRAFORM_MUDDY",
+   "BUILD_TERRAFORM_PERMAFROST",
+   "BUILD_TERRAFORM_PLAINS",
+   "BUILD_TERRAFORM_ROCKY",
+   "BUILD_TERRAFORM_SCRUB",
+   "BUILD_TERRAFORM_TAIGA",
+   "BUILD_TERRAFORM_TUNDRA"
+  ],
+  "improvements": [
+   "IMPROVEMENT_TERRAFORM_DESERT",
+   "IMPROVEMENT_TERRAFORM_DUNES",
+   "IMPROVEMENT_TERRAFORM_GRASS",
+   "IMPROVEMENT_TERRAFORM_LUSH",
+   "IMPROVEMENT_TERRAFORM_MUDDY",
+   "IMPROVEMENT_TERRAFORM_PERMAFROST",
+   "IMPROVEMENT_TERRAFORM_PLAINS",
+   "IMPROVEMENT_TERRAFORM_ROCKY",
+   "IMPROVEMENT_TERRAFORM_SCRUB",
+   "IMPROVEMENT_TERRAFORM_TAIGA",
+   "IMPROVEMENT_TERRAFORM_TUNDRA"
+  ],
+  "projects": [
+   "PROJECT_EDEN_PROJECT"
+  ],
+  "techs": [
+   "TECH_EXTRATERRESTRIAL_AGRICULTURE",
+   "TECH_NANOTROIDS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TERRA_COMPUTER",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_THERMAL_NEGATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 83654
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_ESPIONAGE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/weather_control.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,5,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_WEATHER_CONTROL",
+  "soundMP": "AS2D_TECH_WEATHER_CONTROL"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_WEATHER_CONTROL",
+  "civilopedia": "TXT_KEY_TECH_WEATHER_CONTROL_PEDIA",
+  "quote": "TXT_KEY_TECH_WEATHER_CONTROL_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 119,
+  "gridY": 13
+ }
+}

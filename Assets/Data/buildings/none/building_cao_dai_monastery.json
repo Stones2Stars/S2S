@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_CAO_DAI_MONASTERY",
+ "enables": {
+  "units": [
+   "UNIT_CAODAI_MISSIONARY"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MODERN_PHYSICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MEDITATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_CAO_DAI"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_CAO_DAI": {
+    "flat": 1
+   }
+  }
+ },
+ "cost": {
+  "production": 950,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CAO_DAI_MONASTERY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CAO_DAI_MONASTERY",
+  "civilopedia": "TXT_KEY_BUILDING_CAO_DAI_MONASTERY_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 3,
+  "specialBuildingType": "SPECIALBUILDING_MONASTERY",
+  "religion": "RELIGION_CAO_DAI",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

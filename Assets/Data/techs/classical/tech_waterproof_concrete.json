@@ -1,0 +1,80 @@
+{
+ "type": "TECH_WATERPROOF_CONCRETE",
+ "enables": {
+  "bonuses": [
+   "BONUS_WATERPROOF_CEMENT"
+  ],
+  "buildings": [
+   "BUILDING_WATERPROOF_CEMENT_MAKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CONCRETE",
+     "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "type": "BUILDING_LAVA_ROCK_GATHERER",
+       "scope": "empire",
+       "min": 1
+      },
+      {
+       "type": "BUILDING_MODERN_EARTHWORKS",
+       "scope": "empire",
+       "min": 1
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 679
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Concrete.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_WATERPROOF_CONCRETE",
+  "soundMP": "AS2D_TECH_WATERPROOF_CONCRETE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_WATERPROOF_CONCRETE",
+  "civilopedia": "TXT_KEY_TECH_WATERPROOF_CONCRETE_PEDIA",
+  "quote": "TXT_KEY_TECH_WATERPROOF_CONCRETE_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "militaryWorth": 4,
+  "gridX": 37,
+  "gridY": 15
+ }
+}

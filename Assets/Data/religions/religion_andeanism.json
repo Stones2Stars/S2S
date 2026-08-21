@@ -1,0 +1,104 @@
+{
+ "type": "RELIGION_ANDEANISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANDEAN_CATHEDRAL",
+   "BUILDING_ANDEAN_MONASTERY",
+   "BUILDING_ANDEAN_TEMPLE",
+   "BUILDING_EL_DORADO",
+   "BUILDING_MACHU_PICCHU"
+  ],
+  "units": [
+   "UNIT_ANDEAN_MISSIONARY"
+  ]
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_ANDEANISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_ANDEANISM"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_ANDEANISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_ANDEANISM"
+     }
+    }
+   ]
+  }
+ },
+ "grants": {
+  "freeUnit": "UNIT_ANDEAN_MISSIONARY",
+  "numFreeUnits": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 11,
+   "icon": "Art/Interface/Buttons/Religions/Andeanism.dds",
+   "techButton": "Art/Interface/Buttons/techtree/Found_Andeanism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Andeanism.dds",
+   "movie": {
+    "file": "Art/Cutscene/Andean_Generic_Found.nif",
+    "sound": "AS2D_BUILD_ANDEAN_MOVIE"
+   }
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_ANDEAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ANDEANISM",
+  "adjective": "TXT_KEY_TECH_ANDEANISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_ANDEANISM_PEDIA",
+  "spreadFactor": 20
+ }
+}

@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_URBAN_PSYCHIC_INTEGRATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALPHA_ASSEMBLER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+    "TECH_COMPREHENSIVE_CYBERNETICS",
+    {
+     "any": [
+      "BUILDING_EMP_GRID",
+      "BUILDING_SUPERCONDUCTING_GRID"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 10,
+     "enabled": "TECH_NANOMORPHICS"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 5905,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_URBAN_PSYCHIC_INTEGRATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_URBAN_PSYCHIC_INTEGRATION",
+  "civilopedia": "TXT_KEY_BUILDING_URBAN_PSYCHIC_INTEGRATION_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

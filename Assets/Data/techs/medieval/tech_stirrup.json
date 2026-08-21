@@ -1,0 +1,77 @@
+{
+ "type": "TECH_STIRRUP",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_BAVARIAN",
+   "BUILDING_CULTURE_BULGARIAN",
+   "BUILDING_CULTURE_WARAY",
+   "BUILDING_KNIGHTS_STABLE"
+  ],
+  "techs": [
+   "TECH_ARMORED_CAVALRY"
+  ],
+  "units": [
+   "UNIT_AMAZON_RIDER",
+   "UNIT_BOYARS",
+   "UNIT_FULANI_CAVALRY",
+   "UNIT_KHAGAN_CAVALRY",
+   "UNIT_LIGHT_CAVALRY",
+   "UNIT_MANDEKALU",
+   "UNIT_MARHATHEGNOZ",
+   "UNIT_SAVANNA_CAVALRY",
+   "UNIT_WARAY_RIDERS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HORSE_BREEDING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SMITHING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1230
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Stirrup.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,3,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_STIRRUP",
+  "soundMP": "AS2D_TECH_STIRRUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_STIRRUP",
+  "civilopedia": "TXT_KEY_TECH_STIRRUP_PEDIA",
+  "quote": "TXT_KEY_TECH_STIRRUP_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 20,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 43,
+  "gridY": 15
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_IMPROVISE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Improvise1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_IMPROVISE",
+  "unitCombats": [
+   "UNITCOMBAT_SPY"
+  ]
+ }
+}

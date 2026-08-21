@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_HOUSING_CAVE_DWELLING",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SANITATION"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_HOUSING_BARK_HUTS",
+    "BUILDING_HOUSING_HOVELS",
+    "BUILDING_HOUSING_SHACKS",
+    "BUILDING_HOUSING_BOONDOCKS",
+    "BUILDING_HOUSING_DUGOUTS",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
+   ],
+   "all": [
+    "TECH_CAVE_DWELLING",
+    {
+     "type": "FEATURE_CAVES",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CAVE_DWELLING"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HOUSING_CAVE_DWELLING",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_CAVE_DWELLING",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_CAVE_DWELLING_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "worth": 1,
+  "militaryWorth": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -3
+  }
+ }
+}

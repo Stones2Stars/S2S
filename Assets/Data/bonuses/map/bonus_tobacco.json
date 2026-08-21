@@ -1,0 +1,87 @@
+{
+ "type": "BONUS_TOBACCO",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_CHILEAN",
+   "BUILDING_CULTURE_CUBAN",
+   "BUILDING_CULTURE_LULE",
+   "BUILDING_CULTURE_ODAWA",
+   "BUILDING_CULTURE_RHODESIAN",
+   "BUILDING_CULTURE_WARAY",
+   "BUILDING_FARM_CROP_BLACKBERRY",
+   "BUILDING_FARM_CROP_CHIVES",
+   "BUILDING_FARM_CROP_KALE",
+   "BUILDING_FARM_FLOWER_BLUEBELL",
+   "BUILDING_GRAND_SKY_FESTIVAL",
+   "BUILDING_GROVE_PECAN",
+   "BUILDING_ORCHARD_PITAYA",
+   "BUILDING_PLANTATION_TOBACCO",
+   "BUILDING_TRANCE_HUT"
+  ]
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": -1
+   }
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 4
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TOBACCO"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "minLatitude": 15,
+  "maxLatitude": 60,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 64,
+  "groupRange": 2,
+  "groupRand": 8,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_LUSH"
+  ],
+  "validFeatures": [
+   "FEATURE_FLOOD_PLAINS",
+   "FEATURE_JUNGLE",
+   "FEATURE_VERY_TALL_GRASS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_GRASSLAND"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TOBACCO",
+  "civilopedia": "TXT_KEY_BONUS_TOBACCO_PEDIA",
+  "bonusClassType": "BONUSCLASS_LUXURY",
+  "source": "natural"
+ }
+}

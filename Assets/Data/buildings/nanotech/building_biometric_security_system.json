@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_BIOMETRIC_SECURITY_SYSTEM",
+ "enables": {
+  "units": [
+   "UNIT_BEGGAR",
+   "UNIT_BURGLAR",
+   "UNIT_CUTTHROAT",
+   "UNIT_KARAI_PYHARE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MEGATOWER_POLICE_STATION_LEVEL",
+    "BUILDING_FACIAL_RECOGNITION_SOFTWARE",
+    "TECH_BIOMETRIC_WARFARE",
+    "TECH_NANO_ARCHITECTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": [
+    15,
+    {
+     "value": 9,
+     "enabled": "TECH_MASS_SURVEILLANCE"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_SYNTHETIC_SENTIENCE"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 7
+   }
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "cost": {
+  "production": 3245,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BIOMETRIC_SECURITY_SYSTEM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BIOMETRIC_SECURITY_SYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_BIOMETRIC_SECURITY_SYSTEM_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

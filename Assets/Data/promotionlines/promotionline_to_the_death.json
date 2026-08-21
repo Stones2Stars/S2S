@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_TO_THE_DEATH",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/flaming1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_TO_THE_DEATH",
+  "unitCombats": [
+   "UNITCOMBAT_COMMANDER"
+  ]
+ }
+}

@@ -1,0 +1,79 @@
+{
+ "type": "TECH_MACHINE_TOOLS",
+ "enables": {
+  "bonuses": [
+   "BONUS_PARTS",
+   "BONUS_TYPEWRITERS"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_TYPEWRITERS",
+   "BUILDING_PARTS_MAKER"
+  ],
+  "promotions": [
+   "PROMOTION_REPAIR_MECHANICAL4"
+  ],
+  "techs": [
+   "TECH_ASSEMBLY_LINE",
+   "TECH_COMBUSTION"
+  ],
+  "units": [
+   "UNIT_MACHINIST"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STEAM_POWER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 5745
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/MachineTools.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,10"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MACHINETOOLS",
+  "soundMP": "AS2D_TECH_MACHINETOOLS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MACHINE_TOOLS",
+  "civilopedia": "TXT_KEY_TECH_MACHINE_TOOLS_PEDIA",
+  "quote": "TXT_KEY_TECH_MACHINE_TOOLS_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 64,
+  "gridY": 9
+ }
+}

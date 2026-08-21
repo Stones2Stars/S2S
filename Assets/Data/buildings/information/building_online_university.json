@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_ONLINE_UNIVERSITY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_UNIVERSITY",
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_VIRTUAL_SOCIETY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    "CIVIC_ONLINE"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "research": {
+  "city": {
+   "flat": 25
+  },
+  "empire": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  },
+  "empire": {
+   "percent": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 22
+  }
+ },
+ "cost": {
+  "production": 4810,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ONLINE_UNIVERSITY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ONLINE_UNIVERSITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ONLINE_UNIVERSITY",
+  "civilopedia": "TXT_KEY_BUILDING_ONLINE_UNIVERSITY_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

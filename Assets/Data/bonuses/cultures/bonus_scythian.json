@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_SCYTHIAN",
+ "enables": {
+  "units": [
+   "UNIT_SCYTHIAN_HORSE_ARCHER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SCYTHIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SCYTHIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

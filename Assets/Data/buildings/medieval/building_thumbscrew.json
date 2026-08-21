@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_THUMBSCREW",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PSYCHOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_JAIL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TORTURE_CHAMBER",
+    "TECH_TORTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_JAIL"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -7
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 356,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_THUMBSCREW",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_JAIL"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_THUMBSCREW",
+  "civilopedia": "TXT_KEY_BUILDING_THUMBSCREW_PEDIA",
+  "worth": 4,
+  "militaryWorth": 4,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

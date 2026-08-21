@@ -1,0 +1,57 @@
+{
+ "type": "TECH_FROST_BEAMS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ADVANCED_FIRE_SUPPRESSION",
+   "BUILDING_CISLUNAR_COOLING_SYSTEM",
+   "BUILDING_MARTIAN_FROST_CANNON"
+  ],
+  "techs": [
+   "TECH_CRYONICS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_UNIFICATION_PHYSICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 65511
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Buttons/Techs/TechFrostBeams.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_FROST_BEAMS",
+  "soundMP": "AS2D_TECH_FROST_BEAMS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_FROST_BEAMS",
+  "civilopedia": "TXT_KEY_TECH_FROST_BEAMS_PEDIA",
+  "quote": "TXT_KEY_TECH_FROST_BEAMS_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 112,
+  "gridY": 7
+ }
+}

@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_COMPUTRONIUM_TITAN",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TITAN_SUPERCOMPUTER",
+    "BUILDING_TITAN_ARCOLOGY",
+    "TECH_COMPUTRONIUM_UNIVERSE",
+    {
+     "type": "MAPCATEGORY_TITANIC",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_COMPUTRONIUM_TOWER",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 69062,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_COMPUTRONIUM_TITAN"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_COMPUTRONIUM_TITAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_COMPUTRONIUM_TITAN",
+  "civilopedia": "TXT_KEY_BUILDING_COMPUTRONIUM_TITAN_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_TITANIC"
+  ]
+ }
+}

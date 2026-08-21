@@ -1,0 +1,35 @@
+{
+ "type": "BUILD_AQUATIC_FORCEFIELD",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SHIELDING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_AQUATIC_FORCEFIELD"
+ },
+ "cost": {
+  "gold": 2000,
+  "time": 2000
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/Sea_fort.dds"
+  },
+  "hotkey": "KB_F",
+  "hotKeyPriority": 1
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_AQUATIC_FORCEFIELD"
+ }
+}

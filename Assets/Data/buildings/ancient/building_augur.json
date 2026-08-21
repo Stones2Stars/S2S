@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_AUGUR",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_DIVINATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      "CIVIC_PROPHETS",
+      "CIVIC_STATE_CHURCH",
+      "CIVIC_FREE_CHURCH",
+      "CIVIC_RELIGIOUS"
+     ]
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -20
+  }
+ },
+ "hurryAnger": {
+  "city": {
+   "percent": -20
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1
+  }
+ },
+ "cost": {
+  "production": 168,
+  "countModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_AUGUR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_AUGUR",
+  "civilopedia": "TXT_KEY_BUILDING_AUGUR_PEDIA",
+  "worth": 10,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

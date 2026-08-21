@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_LYDIAN",
+ "enables": {
+  "units": [
+   "UNIT_CROESUS",
+   "UNIT_GYGES",
+   "UNIT_MEIONE_CARAVAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_LYDIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_LYDIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

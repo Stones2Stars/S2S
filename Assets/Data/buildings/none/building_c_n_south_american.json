@@ -1,0 +1,41 @@
+{
+ "type": "BUILDING_C_N_SOUTH_AMERICAN",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_C_AC_SOUTH_AMERICAN"
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_SOUTH_AMERICAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_C_N_SOUTH_AMERICAN",
+  "civilopedia": "TXT_KEY_BUILDING_C_N_PEDIA",
+  "help": "TXT_KEY_BUILDING_C_N_HELP",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

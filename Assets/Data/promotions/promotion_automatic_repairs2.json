@@ -1,0 +1,46 @@
+{
+ "type": "PROMOTION_AUTOMATIC_REPAIRS2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_AUTOMATIC_REPAIRS3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_AUTOMATIC_REPAIRS1"
+   ]
+  }
+ },
+ "heal": {
+  "unit": {
+   "neutral": {
+    "flat": 10
+   },
+   "friendly": {
+    "flat": 10
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_REPAIRS": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CityRaider3.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,2,9"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_AUTOMATIC_REPAIRS2"
+ }
+}

@@ -1,0 +1,111 @@
+{
+ "type": "BUILDING_CAMP_MUSKOX",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_BISON",
+   "BUILDING_RESOURCES_CARCASS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PLANETARY_ECONOMICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BREEDING_PROGRAM_MUSKOX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "latitude": {
+      "min": 40
+     }
+    },
+    "TECH_TRACKING",
+    {
+     "any": [
+      "BUILDING_HUNTERS_CAMP",
+      "BUILDING_ANCIENT_CUSTOMS"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "TERRAIN_TAIGA",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_ICE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BISON",
+     "scope": "city",
+     "connection": "onSite"
+    },
+    {
+     "type": "BONUS_SHEEP",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ],
+   "dormant": [
+    "BUILDING_BREEDING_PROGRAM_MUSKOX",
+    "BUILDING_ANIMAL_PRESERVE"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": "TECH_ECOLOGY"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 45,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CAMP_MUSKOX",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CAMP_MUSKOX",
+  "civilopedia": "TXT_KEY_BUILDING_CAMP_MUSKOX_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

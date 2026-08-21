@@ -1,0 +1,209 @@
+{
+ "type": "CIVIC_REPUBLIC",
+ "enables": {
+  "buildings": [
+   "BUILDING_AGORA",
+   "BUILDING_CIVIC_REPUBLIC",
+   "BUILDING_FORUM",
+   "BUILDING_WOMENS_SUFFRAGE"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 4
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": [
+    3,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    4,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    3,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    3,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": [
+    3,
+    {
+     "value": -3,
+     "per": {
+      "type": "CITY",
+      "above": "CITY_LIMIT"
+     },
+     "enabled": "GAMEOPTION_EXP_OVEREXPANSION_PENALTIES"
+    }
+   ],
+   "buildings": {
+    "BUILDING_INDEPENDENCE_HALL": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 15
+   },
+   "numCities": {
+    "percent": 20
+   },
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 5,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
+   "corporation": {
+    "percent": 5
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 5
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": -1
+   },
+   "democracyLevel": {
+    "flat": 7
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": 10,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "policies": {
+  "canDoElection": true
+ },
+ "grants": {
+  "revolution": 25
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/government_republic.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_REPUBLIC",
+  "civilopedia": "TXT_KEY_CIVIC_REPUBLIC_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_REPUBLIC_STRATEGY",
+  "civicOption": "CIVICOPTION_GOVERNMENT",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM",
+  "cityLimit": 15,
+  "weLoveTheKing": "TXT_KEY_CIVIC_WE_LOVE_PRIME_MINISTER"
+ }
+}

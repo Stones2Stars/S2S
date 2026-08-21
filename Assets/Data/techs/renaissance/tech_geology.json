@@ -1,0 +1,76 @@
+{
+ "type": "TECH_GEOLOGY",
+ "enables": {
+  "bonuses": [
+   "BONUS_FOSSIL_BEDS",
+   "BONUS_GEODE",
+   "BONUS_LITHIUM",
+   "BONUS_MAGNESIUM_ORE",
+   "BONUS_MANGANESE",
+   "BONUS_TUNGSTEN"
+  ],
+  "buildings": [
+   "BUILDING_GEOLOGY_LAB",
+   "BUILDING_MINE_GEODE",
+   "BUILDING_MINE_LITHIUM",
+   "BUILDING_MINE_MAGNESIUM",
+   "BUILDING_MINE_MANGANESE",
+   "BUILDING_MINE_TUNGSTEN"
+  ],
+  "builds": [
+   "BUILD_PAVED_ROAD"
+  ],
+  "techs": [
+   "TECH_ARCHEOLOGY",
+   "TECH_NITROGLYCERIN",
+   "TECH_PALEONTOLOGY",
+   "TECH_WILDLIFE_CONSERVATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CHEMISTRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 3484
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/geology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GEOLOGY",
+  "soundMP": "AS2D_TECH_GEOLOGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_GEOLOGY",
+  "civilopedia": "TXT_KEY_TECH_GEOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_GEOLOGY_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 20,
+  "tradeable": true,
+  "gridX": 57,
+  "gridY": 11
+ }
+}

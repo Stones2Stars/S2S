@@ -1,0 +1,134 @@
+{
+ "type": "TECH_ENGINEERING",
+ "enables": {
+  "buildings": [
+   "BUILDING_BALLISTA_TURRET",
+   "BUILDING_CASTLE",
+   "BUILDING_CASTLE_DRAWBRIDGE",
+   "BUILDING_CASTLE_GATEHOUSE",
+   "BUILDING_CATACOMBS",
+   "BUILDING_CITADEL",
+   "BUILDING_COVERED_BRIDGE",
+   "BUILDING_CULTURE_CROATIAN",
+   "BUILDING_CULTURE_ODAWA",
+   "BUILDING_EDINBURGH_CASTLE",
+   "BUILDING_ENGINEERING_SCHOOL",
+   "BUILDING_HIMEJI_SAMURAI_CASTLE",
+   "BUILDING_KEEP_TOWER",
+   "BUILDING_KRAK_DES_CHEVALIERS",
+   "BUILDING_MOAT",
+   "BUILDING_MUIDERSLOT_CASTLE",
+   "BUILDING_SIX_HARMONIES_PAGODA"
+  ],
+  "builds": [
+   "BUILD_LIGHTHOUSE_CORAL",
+   "BUILD_LIGHTHOUSE_GREAT_BARRIER_REEF",
+   "BUILD_LIGHTHOUSE_REEF"
+  ],
+  "improvements": [
+   "IMPROVEMENT_LIGHTHOUSE_CORAL",
+   "IMPROVEMENT_LIGHTHOUSE_GREAT_BARRIER_REEF",
+   "IMPROVEMENT_LIGHTHOUSE_REEF"
+  ],
+  "promotions": [
+   "PROMOTION_DESERT_WORKER3",
+   "PROMOTION_FOREST_WORKER3"
+  ],
+  "techs": [
+   "TECH_ALCHEMY",
+   "TECH_SURVEYING",
+   "TECH_YEOMANRY"
+  ],
+  "units": [
+   "UNIT_AKSUM_MERCHANTS",
+   "UNIT_BALLESTER",
+   "UNIT_BROKEN_ARROW",
+   "UNIT_CHINA_CHOKONU",
+   "UNIT_CROSSBOWMAN",
+   "UNIT_ENDUBIS",
+   "UNIT_FOOD_SUPPLY_TRAIN",
+   "UNIT_HEAVY_BALLISTA",
+   "UNIT_JAYAVARMAN_VII",
+   "UNIT_MOBILE_TREBUCHET",
+   "UNIT_ODAWA_TRADERS",
+   "UNIT_SAMOSTRELAC",
+   "UNIT_SUPPLY_TRAIN",
+   "UNIT_TREBUCHET",
+   "UNIT_YAO_CHANG",
+   "UNIT_ZENU_GOLDSMITHS"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_BEACON_CORAL",
+   "BUILD_BEACON_REEF"
+  ],
+  "units": [
+   "UNIT_ARJOS",
+   "UNIT_BEAD_HUCKSTER",
+   "UNIT_COPENA_MERCHANT",
+   "UNIT_EARLY_MERCHANT_C2C",
+   "UNIT_FIGURINE_POTTER",
+   "UNIT_MEIONE_CARAVAN",
+   "UNIT_MYRH_CARAVAN",
+   "UNIT_NOK_MERCHANTS",
+   "UNIT_RESIN_CARAVAN",
+   "UNIT_TRADE_CARAVAN",
+   "UNIT_TUCANO_MERCHANT",
+   "UNIT_YOLNGU_MESSENGER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WATERWHEELS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEDIEVAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1132
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Engineering.dds,Art/Interface/Buttons/TechTree_Atlas.dds,7,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ENGINEERING",
+  "soundMP": "AS2D_TECH_MP_ENGINEERING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ENGINEERING",
+  "civilopedia": "TXT_KEY_TECH_ENGINEERING_PEDIA",
+  "quote": "TXT_KEY_TECH_ENGINEERING_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "tradeable": true,
+  "gridX": 42,
+  "gridY": 7
+ }
+}

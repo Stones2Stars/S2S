@@ -1,0 +1,24 @@
+{
+ "type": "BONUS_DISKETTES",
+ "enables": {
+  "buildings": [
+   "BUILDING_BELL_LABS"
+  ],
+  "units": [
+   "UNIT_ASTRONAUTIC_TECHNICIAN",
+   "UNIT_HACKER",
+   "UNIT_SOFTWARE_DEVELOPER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_DISKETTES"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_DISKETTES",
+  "civilopedia": "TXT_KEY_BONUS_DISKETTES_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "type": "PROMOTION_STAY_THE_HAND_STATUS",
+ "skills": {
+  "defenseOnly": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_STAY_THE_HAND": 2
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/StayTheHandStatus.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_STAY_THE_HAND",
+  "status": true,
+  "quick": true,
+  "prereqNormInvisible": true
+ }
+}

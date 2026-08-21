@@ -1,39 +1,25 @@
 #pragma once
+#ifndef CV_JSON_CIVIC_OPTION_INFO_H
+#define CV_JSON_CIVIC_OPTION_INFO_H
 
-#ifndef CV_CIVIC_OPTION_INFO_H
-#define CV_CIVIC_OPTION_INFO_H
+//
+//	CvCivicOptionInfo -- the JSON poco for CIVIC OPTIONS (the civic category/slot axis: Government, Economy, …).
+//	A civic option is a PURE STRUCTURAL AXIS: it carries no modifier families, no enables, no prereqs -- only its type
+//	+ description (served by the CvInfo base). The civic->option categorization lives on the CIVIC
+//	(getCivicOptionType), not here. The subclass exists for UNIFORMITY -- every cascade info type has its own
+//	CvJson<X>Info home, and this is where any future option-level typed member would land. No cascade here.
+//
+//	Live callers (verified 2026-07-07): base text only (getTextKeyWide/getDescription) -- e.g. CvGameTextMgr,
+//	CvPlayer, CvDLLWidgetData. No typed value getters (the legacy isPolicy / traitNoUpkeep are dead).
+//
 
-#include "CvInfoBase.h"
+#include "CvInfo.h"
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//
-//  class : CvCivicOptionInfo
-//
-//  DESC:
-//
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class CvCivicOptionInfo
-	: public CvInfoBase
-	, private bst::noncopyable
+class CvCivicOptionInfo : public CvInfo
 {
-//---------------------------PUBLIC INTERFACE---------------------------------
 public:
-
-	CvCivicOptionInfo();
-	virtual ~CvCivicOptionInfo();
-
-//	bool getTraitNoUpkeep(int i) const;
-	bool isPolicy() const;
-
-	void getDataMembers(CvInfoUtil& util);
-	bool read(CvXMLLoadUtility* pXML);
-	void copyNonDefaults(const CvCivicOptionInfo* pClassInfo);
-
-	//----------------------PROTECTED MEMBER VARIABLES----------------------------
-protected:
-
-	bool* m_pabTraitNoUpkeep;
-	bool m_bPolicy;
+	CvCivicOptionInfo() {}
+	virtual void mapFrom(const picojson::value& entity);   // base core reading + availability only (no own typed members yet)
 };
 
-#endif // CV_CIVIC_OPTION_INFO_H
+#endif // CV_JSON_CIVIC_OPTION_INFO_H

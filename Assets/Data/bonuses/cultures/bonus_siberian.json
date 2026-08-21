@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_SIBERIAN",
+ "enables": {
+  "units": [
+   "UNIT_SIBERIAN_TRACKER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SIBERIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SIBERIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

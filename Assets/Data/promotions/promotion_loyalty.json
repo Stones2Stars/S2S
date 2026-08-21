@@ -1,0 +1,20 @@
+{
+ "type": "PROMOTION_LOYALTY",
+ "skills": {
+  "alwaysHeal": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Loyalty.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_PING"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_LOYALTY",
+  "unitCombats": [
+   "UNITCOMBAT_SPY"
+  ]
+ }
+}

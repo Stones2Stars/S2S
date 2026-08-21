@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_LOW_PROFILE2",
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 100
+  }
+ },
+ "skills": [
+  "size"
+ ],
+ "promotionLine": {
+  "PROMOTIONLINE_LOW_PROFILE": 2
+ },
+ "enabled": {
+  "all": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK",
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/LowProfile2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_LOW_PROFILE2",
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_QUALITY_EPIC",
+   "UNITCOMBAT_QUALITY_DIVINE"
+  ]
+ }
+}

@@ -1,0 +1,104 @@
+{
+ "type": "TECH_ANIMAL_HUSBANDRY",
+ "enables": {
+  "bonuses": [
+   "BONUS_COW",
+   "BONUS_MILK",
+   "BONUS_WOOL"
+  ],
+  "buildings": [
+   "BUILDING_DAIRY_BARN",
+   "BUILDING_DISEASE_ANTHRAX",
+   "BUILDING_DISEASE_SMALLPOX",
+   "BUILDING_FARM_ANIMAL_COW",
+   "BUILDING_FARM_ANIMAL_GOAT",
+   "BUILDING_FARM_ANIMAL_PIG",
+   "BUILDING_FARM_ANIMAL_SHEEP",
+   "BUILDING_FARM_ANIMAL_YAK",
+   "BUILDING_GUINEA_PIG_BREEDER",
+   "BUILDING_HERD_CAMEL",
+   "BUILDING_HERD_COW",
+   "BUILDING_HERD_DONKEY",
+   "BUILDING_HERD_HORSE",
+   "BUILDING_HERD_MUSKOX",
+   "BUILDING_HERD_PIG",
+   "BUILDING_RABBIT_BREEDER",
+   "BUILDING_SHEARING_BARN"
+  ],
+  "promotions": [
+   "PROMOTION_FIRST_AID_ANIMALS1",
+   "PROMOTION_HUNTING_DOG2",
+   "PROMOTION_PACK_HUNTER2",
+   "PROMOTION_RACING_DOG2",
+   "PROMOTION_TRACK_SCENT2"
+  ],
+  "techs": [
+   "TECH_FELINE_DOMESTICATION",
+   "TECH_MEGALITH_CONSTRUCTION"
+  ],
+  "units": [
+   "UNIT_NEANDERTHAL_SHEPHERD",
+   "UNIT_SHEPHERD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SLASH_AND_BURN",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CANINE_DOMESTICATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 52
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Animal_Husbandry.dds,Art/Interface/Buttons/TechTree_Atlas.dds,3,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ANIMALHUSB",
+  "soundMP": "AS2D_TECH_MP_ANIMALHUSB"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ANIMAL_HUSBANDRY",
+  "civilopedia": "TXT_KEY_TECH_ANIMAL_HUSBANDRY_PEDIA",
+  "quote": "TXT_KEY_TECH_ANIMAL_HUSBANDRY_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 10,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 17,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,84 @@
+{
+ "type": "TECH_PERSONAL_ADORNMENTS",
+ "enables": {
+  "bonuses": [
+   "BONUS_HATS",
+   "BONUS_JADE_DEATH_MASKS",
+   "BONUS_JEWELRY",
+   "BONUS_MASKS"
+  ],
+  "buildings": [
+   "BUILDING_HATTER",
+   "BUILDING_JADE_DEATH_MASK_CARVER",
+   "BUILDING_JEWELER",
+   "BUILDING_MASK_CARVER",
+   "BUILDING_PIERCER"
+  ],
+  "techs": [
+   "TECH_BEAD_MAKING",
+   "TECH_TATTOOS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CULTURAL_IDENTITY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SEWING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BONE_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 17
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/personaladornment.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PERSONAL_ADORNMENT",
+  "soundMP": "AS2D_TECH_PERSONAL_ADORNMENT"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PERSONAL_ADORNMENTS",
+  "civilopedia": "TXT_KEY_TECH_PERSONAL_ADORNMENTS_PEDIA",
+  "quote": "TXT_KEY_TECH_PERSONAL_ADORNMENTS_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 10,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 9,
+  "gridY": 3
+ }
+}

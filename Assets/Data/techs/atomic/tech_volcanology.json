@@ -1,0 +1,75 @@
+{
+ "type": "TECH_VOLCANOLOGY",
+ "enables": {
+  "bonuses": [
+   "BONUS_HYDROTHERMAL_VENT"
+  ],
+  "buildings": [
+   "BUILDING_GEOTHERMAL_POWER_PLANT",
+   "BUILDING_VOLCANOLOGY_LAB"
+  ],
+  "builds": [
+   "BUILD_GEOTHERMAL_FACTORY"
+  ],
+  "improvements": [
+   "IMPROVEMENT_GEOTHERMAL_FACTORY"
+  ],
+  "techs": [
+   "TECH_ASTROGEOLOGY",
+   "TECH_COMPOSITES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MODERN_SEISMOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 14287
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/volcanology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_VOLCANOLOGY",
+  "soundMP": "AS2D_TECH_VOLCANOLOGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_VOLCANOLOGY",
+  "civilopedia": "TXT_KEY_TECH_VOLCANOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_VOLCANOLOGY_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 82,
+  "gridY": 15
+ }
+}

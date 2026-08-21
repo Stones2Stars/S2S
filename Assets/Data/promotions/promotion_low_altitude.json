@@ -1,0 +1,71 @@
+{
+ "type": "PROMOTION_LOW_ALTITUDE",
+ "enables": {
+  "promotions": [
+   "PROMOTION_KAMIKAZE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_VETERAN"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": -15,
+   "unitCombat": {
+    "UNITCOMBAT_ARCHER": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MELEE": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 25
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 25
+    },
+    "UNITCOMBAT_THROWING": {
+     "percent": 25
+    },
+    "UNITCOMBAT_SIEGE": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "chance": {
+    "flat": 1
+   }
+  }
+ },
+ "air": {
+  "unit": {
+   "evasion": {
+    "percent": 5
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Low_altitude.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,3,8"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_LOW_ALTITUDE",
+  "unitCombats": [
+   "UNITCOMBAT_EARLY_FIGHTERS",
+   "UNITCOMBAT_JET_FIGHTERS",
+   "UNITCOMBAT_SUPERSONIC_PLANES",
+   "UNITCOMBAT_STEALTH"
+  ]
+ }
+}

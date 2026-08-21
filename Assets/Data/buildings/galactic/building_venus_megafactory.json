@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_VENUS_MEGAFACTORY",
+ "enables": {
+  "buildings": [
+   "BUILDING_TERAVERSE_PORTAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_VENUS_FUSION_PLANT",
+    "TECH_FORGE_WORLDS",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 250
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "cost": {
+  "production": 12267,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VENUS_MEGAFACTORY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_MEGAFACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_MEGAFACTORY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

@@ -1,0 +1,106 @@
+{
+ "type": "UNIT_MARTIAN_WORKER",
+ "builds": [
+  "BUILD_PLANETARY_MAGLEV",
+  "BUILD_MARTIAN_MINE",
+  "BUILD_COLONY_SOLAR_ARRAY",
+  "BUILD_COLONY_HABITAT_SMALL",
+  "BUILD_COLONY_HABITAT_MEDIUM",
+  "BUILD_COLONY_HABITAT_LARGE",
+  "BUILD_COLONY_HABITAT_HUGE",
+  "BUILD_COLONY_HYDROPONICS",
+  "BUILD_COLONY_MANUFACTORY",
+  "BUILD_MARTIAN_FARM",
+  "BUILD_TERRAFORM_MARS"
+ ],
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MARTIAN_FACTORY",
+    "TECH_SUPERSONIC_RAILS"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_MARTIAN_WORKER"
+  }
+ },
+ "skills": [
+  "ignoreTerrainCost"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SPACE_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 1500,
+  "upkeep": 1,
+  "hurryCostModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_MARS_WORKER",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_MARS_WORKER",
+       "late": "ART_DEF_UNIT_MARS_WORKER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_MARTIAN_WORKER",
+  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "workRate": 250
+  }
+ }
+}

@@ -1,0 +1,113 @@
+{
+ "type": "BUILDING_MODERN_ART_THEATRE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_THEATRE",
+     "scope": "empire",
+     "min": 4,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_OPERA_HOUSE",
+     "scope": "empire",
+     "min": 2,
+     "scaling": "amountBuildings"
+    },
+    "TECH_REALISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 10,
+     "enabled": {
+      "existedFor": {
+       "min": 100
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 3
+  }
+ },
+ "cost": {
+  "production": 1540,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MODERN_ART_THEATRE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MODERN_ART_THEATRE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_THEATRE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MODERN_ART_THEATRE",
+  "civilopedia": "TXT_KEY_BUILDING_MODERN_ART_THEATRE_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 8,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

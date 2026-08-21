@@ -1,0 +1,48 @@
+{
+ "type": "BUILDING_CISLUNAR_EMP_POWER_SUPPLY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_CISLUNAR",
+    "TECH_ELECTROMAGNETIC_VOLTAGE",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1421,
+  "hurryModifier": 10000
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_EMP_POWER_SUPPLY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_EMP_POWER_SUPPLY",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_EMP_POWER_SUPPLY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

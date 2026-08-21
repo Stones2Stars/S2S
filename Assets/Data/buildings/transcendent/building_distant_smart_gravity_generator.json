@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_DISTANT_SMART_GRAVITY_GENERATOR",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_BLAZAR_FACTORY",
+    "TECH_SENTIENT_ENERGY_FIELDS",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 2182,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_SMART_GRAVITY_GENERATOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_SMART_GRAVITY_GENERATOR",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_SMART_GRAVITY_GENERATOR_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

@@ -1,0 +1,77 @@
+{
+ "type": "TECH_DNA_COMPUTING",
+ "enables": {
+  "promotions": [
+   "PROMOTION_RECOVER_TECH5"
+  ],
+  "techs": [
+   "TECH_DESIGNER_MICROBIOLOGY",
+   "TECH_DYSTOPIA_PATHOGENS",
+   "TECH_HYPOTHETICAL_BIOCHEMISTRY"
+  ],
+  "units": [
+   "UNIT_POISON_NOVA"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BIOMIMETICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ADVANCED_COMPUTERS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_REGENERATIVE_MEDICINE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 47795
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/DNA_computing.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_DNA_COMPUTING",
+  "soundMP": "AS2D_TECH_DNA_COMPUTING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_DNA_COMPUTING",
+  "civilopedia": "TXT_KEY_TECH_DNA_COMPUTING_PEDIA",
+  "quote": "TXT_KEY_TECH_DNA_COMPUTING_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 108,
+  "gridY": 15
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_BRAZILIAN",
+ "enables": {
+  "units": [
+   "UNIT_BRAZILIAN_BANDEIRANTE",
+   "UNIT_LUIS",
+   "UNIT_TIRADENTES"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_BRAZILIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_BRAZILIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

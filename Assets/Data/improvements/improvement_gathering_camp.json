@@ -1,0 +1,67 @@
+{
+ "type": "IMPROVEMENT_GATHERING_CAMP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SHELTER_BUILDING",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_BARREN",
+      "TERRAIN_DESERT",
+      "TERRAIN_DUNES",
+      "TERRAIN_GRASSLAND",
+      "TERRAIN_ICE",
+      "TERRAIN_LUSH",
+      "TERRAIN_MARSH",
+      "TERRAIN_MUDDY",
+      "TERRAIN_PERMAFROST",
+      "TERRAIN_PLAINS",
+      "TERRAIN_ROCKY",
+      "TERRAIN_BADLAND",
+      "TERRAIN_JAGGED",
+      "TERRAIN_SALT_FLATS",
+      "TERRAIN_SCRUB",
+      "TERRAIN_TAIGA",
+      "TERRAIN_TUNDRA"
+     ]
+    }
+   ]
+  }
+ },
+ "culture": {
+  "plot": {
+   "flat": 10
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": -30
+   }
+  }
+ },
+ "characteristics": [
+  "actsAsCity",
+  "bombardable"
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_SEED_CAMP"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_GATHERING_CAMP",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_RESOURCE_OUTPOSTS_PEDIA",
+  "advancedStart": {
+   "cost": 10
+  },
+  "upgradeTime": 5,
+  "outsideBorders": true,
+  "upgradesTo": "IMPROVEMENT_RESOURCE_OUTPOST",
+  "upgradeRequiresFortify": true,
+  "universalBonusTrade": true
+ }
+}

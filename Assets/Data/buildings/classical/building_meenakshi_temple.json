@@ -1,0 +1,152 @@
+{
+ "type": "BUILDING_MEENAKSHI_TEMPLE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_AESTHETICS",
+    "TECH_CONSTRUCTION",
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_HINDUISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "RELIGION_HINDUISM"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ],
+   "percent": 5
+  },
+  "empire": {
+   "percent": 2
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_HINDUISM"
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2,
+   "percent": 50
+  }
+ },
+ "hurryAnger": {
+  "city": {
+   "percent": -50
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_HINDUISM": {
+    "flat": 6
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 1566,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 50
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   },
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MEENAKSHI"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MEENAKSHI_TEMPLE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_HINDU"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MEENAKSHI_TEMPLE",
+  "civilopedia": "TXT_KEY_BUILDING_MEENAKSHI_TEMPLE_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 2,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "religion": "RELIGION_HINDUISM",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": "100.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

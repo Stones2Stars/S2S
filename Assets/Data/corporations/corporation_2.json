@@ -1,0 +1,107 @@
+{
+ "type": "CORPORATION_2",
+ "enables": {
+  "buildings": [
+   "BUILDING_SIDS_SUSHI_RESTAURANT"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 0.5,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_2"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_CRAB",
+       "BONUS_CLAM",
+       "BONUS_FISH",
+       "BONUS_SHRIMP",
+       "BONUS_RICE"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HEADQUARTERS": "CORPORATION_2"
+     },
+     "per": "CORPORATION_LEVEL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_2"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_CRAB",
+       "BONUS_CLAM",
+       "BONUS_FISH",
+       "BONUS_SHRIMP",
+       "BONUS_RICE"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_2"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_CRAB",
+        "BONUS_CLAM",
+        "BONUS_FISH",
+        "BONUS_SHRIMP",
+        "BONUS_RICE"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 1,
+   "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,2,6"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_2",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_2_PEDIA",
+  "competingSpreadCostPercent": 200,
+  "spreadFactor": 60
+ }
+}

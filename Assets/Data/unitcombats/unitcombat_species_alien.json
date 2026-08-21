@@ -1,0 +1,11 @@
+{
+ "type": "UNITCOMBAT_SPECIES_ALIEN",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/species_alien.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SPECIES_ALIEN"
+ }
+}

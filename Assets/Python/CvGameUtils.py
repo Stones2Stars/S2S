@@ -6,9 +6,17 @@
 from CvPythonExtensions import *
 import CvUtil
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
+BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 GAME = GC.getGame()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
+TEXT = CyGameTextMgr()
 class CvGameUtils:
 
 	def __init__(self):
@@ -33,7 +41,7 @@ class CvGameUtils:
 		# Bonus placing builds
 		CyPlot = GC.getMap().plot(iX, iY)
 		if CyPlot and CyPlot.getBonusType(-1) < 0 and not CyPlot.isWater():
-			szType = GC.getBuildInfo(iBuild).getType()
+			szType = INFO.getType("BUILD_", iBuild)
 			if szType[:12] == "BUILD_BONUS_":
 				iBonus = GC.getInfoTypeForString(szType[6:])
 
@@ -50,11 +58,13 @@ class CvGameUtils:
 		return -1 # Returning 0 means "No", 1 or greater means "Yes", and negative numbers means "continue this evaluation on the dll side".
 
 	def cannotMaintain(self, argsList):
-		CyCity, iProcess, = argsList
-		if not CyCity:
-			print "CyCity == None"
-			print "CyCity, iProcess", argsList
+		# The DLL PUSHES the city, so it arrives as its (owner, id) IDENTITY rather than as a handle.
+		aCity, iProcess, = argsList
+		if not aCity:
+			print "cannotMaintain: no city identity"
+			print "aCity, iProcess", argsList
 			return False
+		iOwner = aCity[0]
 
 		aMap = {
 			#"IDLE"		: ["PROCESS_WEALTH_MEAGER", "PROCESS_RESEARCH_MEAGER", "PROCESS_CULTURE_MEAGER"],
@@ -63,22 +73,23 @@ class CvGameUtils:
 			"CULTURE"	: ["PROCESS_CULTURE_MEAGER", "PROCESS_CULTURE_LESSER", "PROCESS_CULTURE"],
 			"SPY"		: ["PROCESS_SPY_MEAGER", "PROCESS_SPY_LESSER", "PROCESS_SPY"]
 		}
-		CyTeam = GC.getTeam(CyCity.getTeam())
-
-		TYPE = GC.getProcessInfo(iProcess).getType()
+		TYPE = INFO.getType("PROCESS_", iProcess)
 
 		if not TYPE.count("_"): return False
 
 		KEY = TYPE.split("_")[1]
 		if not KEY in aMap: return False
 
+		#	A lesser process is not worth maintaining once a BETTER rung of its ladder is available. Ask the
+		#	ENABLER for that verdict rather than testing the rung's prereq tech by hand: availability is the
+		#	enabler's own maintained tri-state ([DEC-enabler-not-cascade]), and the hand-rolled test saw only
+		#	the tech -- it missed every other reason a rung is or is not offered.
 		bFound = False
 		for PROCESS in aMap[KEY]:
 			if bFound:
-				iProcess = GC.getInfoTypeForString(PROCESS)
-				if iProcess > -1:
-					iTech = GC.getProcessInfo(iProcess).getTechPrereq()
-					if iTech == -1 or CyTeam.isHasTech(iTech):
+				iBetter = GC.getInfoTypeForString(PROCESS)
+				if iBetter > -1:
+					if ENABLER.getProcessAvailability(iOwner, iBetter) == EnablerState.ENABLER_LISTED:
 						return True
 			elif PROCESS == TYPE:
 				bFound = True
@@ -163,43 +174,51 @@ class CvGameUtils:
 		return int(score)
 
 	def doPillageGold(self, argsList):
-		CyPlot, CyUnit, = argsList
+		# ⚠ The PLOT crosses as a handle (only CvCity/CvUnit carry an identity), the UNIT as its (owner, id) pair.
+		CyPlot, aUnit, = argsList
+		iUnitOwner, iUnitId = aUnit
 
 		iPlayer = CyPlot.getOwner()
 		if iPlayer > -1 and GC.getPlayer(iPlayer).hasBuilding(self.iHimejiCastle):
 			return 0
 
-		iTemp = GC.getImprovementInfo(CyPlot.getImprovementType()).getPillageGold()
+		iTemp = INFO.getIntrinsic("IMPROVEMENT_", CyPlot.getImprovementType(), IntrinsicSlot.PYINT_PILLAGE_GOLD)
 		gold = GAME.getSorenRandNum(iTemp, "Pillage Gold 1")
 		gold += GAME.getSorenRandNum(iTemp, "Pillage Gold 2")
 
-		gold += CyUnit.getPillageChange() * gold / 100.0
+		aUnitRead = STATE.getUnitRead(iUnitOwner, iUnitId)
+		gold += aUnitRead[UnitReadKind.UNIT_READ_PILLAGE_CHANGE] * gold / 100.0
 
-		if GC.getPlayer(CyUnit.getOwner()).hasBuilding(self.iHimejiCastle):
+		if GC.getPlayer(iUnitOwner).hasBuilding(self.iHimejiCastle):
 			gold *= 2
 
 		return int(gold)
 
 
 	def doCityCaptureGold(self, argsList):
-		CyCity, iOwnerNew, = argsList
+		# The city is PUSHED, so it arrives as its (owner, id) IDENTITY -- the owner here is still the OLD one,
+		# which is what the Himeji test wants (iOwnerNew is the captor).
+		aCity, iOwnerNew, = argsList
+		iOwner, iCity = aCity
 
-		if GC.getPlayer(CyCity.getOwner()).hasBuilding(self.iHimejiCastle):
+		if GC.getPlayer(iOwner).hasBuilding(self.iHimejiCastle):
 			return 0
 
 		gold = self.BASE_CAPTURE_GOLD
 
-		gold += CyCity.getPopulation() * self.CAPTURE_GOLD_PER_POP
+		gold += GC.getPlayer(iOwner).getCity(iCity).getPopulation() * self.CAPTURE_GOLD_PER_POP
 		gold += GAME.getSorenRandNum(self.CAPTURE_GOLD_RAND1, "One")
 		gold += GAME.getSorenRandNum(self.CAPTURE_GOLD_RAND2, "Two")
 
 		iMaxTurns = self.CAPTURE_GOLD_MAX_TURNS
 		if iMaxTurns > 0:
-			iTurns = GAME.getGameTurn() - CyCity.getGameTurnAcquired()
+			aCounts = GC.getPlayer(iOwner).getCity(iCity).getCounts()
+			iTurns = GAME.getGameTurn() - aCounts[CityCountRead.CITY_COUNT_GAME_TURN_ACQUIRED]
 			if iTurns > 0 and iTurns < iMaxTurns:
 				gold *= 1.0 * iTurns / iMaxTurns
 
-		if CyCity.isActiveBuilding(self.iNationalMint):
+		aMint = GC.getPlayer(iOwner).getCity(iCity).getBuildingReads(self.iNationalMint)
+		if aMint[CityBuildingRead.CITY_BUILDING_ACTIVE]:
 			gold *= 10
 
 		return int(gold)
@@ -318,13 +337,13 @@ class CvGameUtils:
 				elif iData2 == 2:
 					return CyTranslator().getText("TXT_KEY_WB_WAIT",())
 			elif iData1 == 6785:
-				return CyGameTextMgr().getProjectHelp(iData2, False, None)
+				return CyGameTextMgr().getProjectHelp(iData2, False, -1, -1)
 			elif iData1 == 6787:
-				return GC.getProcessInfo(iData2).getDescription()
+				return INFO.getDescription("PROCESS_", iData2)
 			elif iData1 == 6788:
 				if iData2 == -1:
 					return CyTranslator().getText("TXT_KEY_CULTURELEVEL_NONE", ())
-				return GC.getRouteInfo(iData2).getDescription()
+				return INFO.getDescription("ROUTE_", iData2)
 ## City Hover Text ##
 			elif iData1 > 7199 and iData1 < 7300:
 				iPlayer = iData1 - 7200
@@ -342,15 +361,15 @@ class CvGameUtils:
 						sTemp += CyTranslator().getText("[ICON_TRADE]", ())
 					for i in xrange(GC.getNumReligionInfos()):
 						if pCity.isHolyCityByType(i):
-							sTemp += u"%c" %(GC.getReligionInfo(i).getHolyCityChar())
+							sTemp += u"%c" %(TEXT.getHolyCitySymbolChar(i))
 						elif pCity.isHasReligion(i):
-							sTemp += u"%c" %(GC.getReligionInfo(i).getChar())
+							sTemp += u"%c" %(TEXT.getSymbolChar("RELIGION_", i))
 
 					for i in xrange(GC.getNumCorporationInfos()):
 						if pCity.isHeadquartersByType(i):
-							sTemp += u"%c" %(GC.getCorporationInfo(i).getHeadquarterChar())
+							sTemp += u"%c" %(TEXT.getHeadquarterSymbolChar(i))
 						elif pCity.isHasCorporation(i):
-							sTemp += u"%c" %(GC.getCorporationInfo(i).getChar())
+							sTemp += u"%c" %(TEXT.getSymbolChar("CORPORATION_", i))
 					if sTemp:
 						sText += "\n" + sTemp
 
@@ -382,15 +401,15 @@ class CvGameUtils:
 						sText += u"\n%s: %d/%d %+d" %(CyTranslator().getText("[ICON_GREATPEOPLE]", ()), iProgress, pPlayer.greatPeopleThresholdNonMilitary(), iGPRate)
 
 					if pCity.getCultureThreshold() > 0:
-						sText += u"\n%s: %d/%d (%s)" %(CyTranslator().getText("[ICON_CULTURE]", ()), pCity.getCulture(iPlayer), pCity.getCultureThreshold(), GC.getCultureLevelInfo(pCity.getCultureLevel()).getDescription())
-					else: sText += u"\n%s: %d (%s)" %(CyTranslator().getText("[ICON_CULTURE]", ()), pCity.getCulture(iPlayer), GC.getCultureLevelInfo(pCity.getCultureLevel()).getDescription())
+						sText += u"\n%s: %d/%d (%s)" %(CyTranslator().getText("[ICON_CULTURE]", ()), pCity.getCulture(iPlayer), pCity.getCultureThreshold(), INFO.getDescription("CULTURELEVEL_", pCity.getCultureLevel()))
+					else: sText += u"\n%s: %d (%s)" %(CyTranslator().getText("[ICON_CULTURE]", ()), pCity.getCulture(iPlayer), INFO.getDescription("CULTURELEVEL_", pCity.getCultureLevel()))
 
 
 					lTemp = []
 					for i in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
 						iAmount = pCity.getCommerceRateTimes100(i)
 						if iAmount <= 0: continue
-						sTemp = u"%d.%02d%c" %(pCity.getCommerceRate(i), pCity.getCommerceRateTimes100(i)%100, GC.getCommerceInfo(i).getChar())
+						sTemp = u"%d.%02d%c" %(pCity.getCommerceRate(i), pCity.getCommerceRateTimes100(i)%100, TEXT.getSymbolChar("COMMERCE_", i))
 						lTemp.append(sTemp)
 					if lTemp:
 						sText += "\n"
@@ -402,16 +421,16 @@ class CvGameUtils:
 					iMaintenance = pCity.getMaintenanceTimes100()
 					if iMaintenance != 0:
 						sText += "\n" + CyTranslator().getText("[COLOR_WARNING_TEXT]", ()) + CyTranslator().getText("INTERFACE_CITY_MAINTENANCE", ()) + " </color>"
-						sText += u"-%d.%02d%c" %(iMaintenance/100, iMaintenance%100, GC.getCommerceInfo(CommerceTypes.COMMERCE_GOLD).getChar())
+						sText += u"-%d.%02d%c" %(iMaintenance/100, iMaintenance%100, TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_GOLD))
 
 					lBuildings = []
 					lWonders = []
 					for i in xrange(GC.getNumBuildingInfos()):
 						if pCity.hasBuilding(i):
-							if isLimitedWonder(i):
-								lWonders.append(GC.getBuildingInfo(i).getDescription())
+							if BUILDING.isLimitedWonder(i):
+								lWonders.append(INFO.getDescription("BUILDING_", i))
 							else:
-								lBuildings.append(GC.getBuildingInfo(i).getDescription())
+								lBuildings.append(INFO.getDescription("BUILDING_", i))
 					if lBuildings:
 						lBuildings.sort()
 						sText += "\n" + CyTranslator().getText("[COLOR_BUILDING_TEXT]", ()) + CyTranslator().getText("TXT_KEY_WB_BUILDINGS", ()) + ": </color>"
@@ -435,7 +454,7 @@ class CvGameUtils:
 				return CyGameTextMgr().parseReligionInfo(iData2, False)
 ## Building Widget Text##
 			elif iData1 == 7870:
-				return CyGameTextMgr().getBuildingHelp(iData2, False, None, False, False, False)
+				return CyGameTextMgr().getBuildingHelp(iData2, False, -1, -1, False, False, False)
 ## Tech Widget Text##
 			elif iData1 == 7871:
 				if iData2 == -1:
@@ -476,13 +495,13 @@ class CvGameUtils:
 				return CyGameTextMgr().getSpecialistHelp(iData2, False)
 ## Yield Text##
 			elif iData1 == 7880:
-				return GC.getYieldInfo(iData2).getDescription()
+				return INFO.getDescription("YIELD_", iData2)
 ## Commerce Text##
 			elif iData1 == 7881:
-				return GC.getCommerceInfo(iData2).getDescription()
+				return INFO.getDescription("COMMERCE_", iData2)
 ## Build Text##
 			elif iData1 == 7882:
-				return GC.getBuildInfo(iData2).getDescription()
+				return INFO.getDescription("BUILD_", iData2)
 ## Corporation Screen ##
 			elif iData1 == 8201:
 				return CyGameTextMgr().parseCorporationInfo(iData2, False)
@@ -490,7 +509,7 @@ class CvGameUtils:
 			elif iData1 == 8202:
 				if iData2 == -1:
 					return CyTranslator().getText("TXT_KEY_PEDIA_ALL_UNITS", ())
-				return CyGameTextMgr().getUnitHelp(iData2, False, False, False, None)
+				return CyGameTextMgr().getUnitHelp(iData2, False, False, False, -1, -1)
 			elif iData1 > 8299 and iData1 < 8400:
 				iPlayer = iData1 - 8300
 				pUnit = GC.getPlayer(iPlayer).getUnit(iData2)
@@ -505,7 +524,7 @@ class CvGameUtils:
 			elif iData1 == 8205 or iData1 == 8206:
 				sText = CyGameTextMgr().parseCivicInfo(iData2, False, True, False)
 				if GC.getCivicInfo(iData2).getUpkeep() > -1:
-					sText += "\n" + GC.getUpkeepInfo(GC.getCivicInfo(iData2).getUpkeep()).getDescription()
+					sText += "\n" + INFO.getDescription("UPKEEP_", GC.getCivicInfo(iData2).getUpkeep())
 				else:
 					sText += "\n" + CyTranslator().getText("TXT_KEY_CIVICS_SCREEN_NO_UPKEEP", ())
 				return sText

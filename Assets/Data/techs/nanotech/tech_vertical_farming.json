@@ -1,0 +1,82 @@
+{
+ "type": "TECH_VERTICAL_FARMING",
+ "enables": {
+  "buildings": [
+   "BUILDING_FARMSCRAPER_I",
+   "BUILDING_FARMSCRAPER_II",
+   "BUILDING_FARMSCRAPER_III"
+  ],
+  "builds": [
+   "BUILD_VERTICAL_FARM"
+  ],
+  "improvements": [
+   "IMPROVEMENT_VERTICAL_FARM"
+  ],
+  "techs": [
+   "TECH_ACCELERATED_GERMINATION"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_MUSHROOM_GATHERER",
+   "BUILD_ORCHARD",
+   "BUILD_PASTURE",
+   "BUILD_PLANTATION",
+   "BUILD_SILK_FARM",
+   "BUILD_WINERY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AUGMENTED_CONSUMABLES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AUTOMATED_URBANIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 42984
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Vertical_Farming.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_VERTICAL_FARMING",
+  "soundMP": "AS2D_TECH_VERTICAL_FARMING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_VERTICAL_FARMING",
+  "civilopedia": "TXT_KEY_TECH_VERTICAL_FARMING_PEDIA",
+  "quote": "TXT_KEY_TECH_VERTICAL_FARMING_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 105,
+  "gridY": 13
+ }
+}

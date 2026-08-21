@@ -1,0 +1,15 @@
+{
+ "type": "PROMOTIONLINE_ARMOR_UPGRADE",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CityGarrison1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,5,1"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_ARMOR_UPGRADE",
+  "unitCombats": [
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_ASSAULT_MECH"
+  ]
+ }
+}

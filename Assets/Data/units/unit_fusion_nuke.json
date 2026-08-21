@@ -1,0 +1,107 @@
+{
+ "type": "UNIT_FUSION_NUKE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FUSION",
+    {
+     "any": [
+      "BUILDING_D_T_FUSION_POWER_PLANT",
+      "BUILDING_D_HE3_FUSION_PLANT",
+      "BUILDING_HE3_FUSION_POWER_PLANT",
+      "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+      "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
+     ]
+    }
+   ],
+   "disabled": "NO_NUKES"
+  }
+ },
+ "enabled": "GAMEOPTION_ADVANCED_NUKES",
+ "allowed": {
+  "empire": 15
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "air": {
+  "unit": {
+   "evasion": {
+    "percent": 50
+   }
+  }
+ },
+ "skills": [
+  "ignoreBuildingDefense",
+  "mechanized",
+  "nukeImmune",
+  "suicide",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "airUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_DOOM",
+ "combatClasses": [
+  "UNITCOMBAT_BALLISTIC",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_WARHEAD",
+  "UNITCOMBAT_WEAPON_DETONATE_RADIOACTIVE",
+  "UNITCOMBAT_MOTILITY_UNMANNED",
+  "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_HUGE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 4056,
+  "upkeep": 21
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_TACTICAL_FUSI",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_TACTICAL_FUSI"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_FUSION_NUKE",
+  "civilopedia": "TXT_KEY_UNIT_FUSION_NUKE_PEDIA",
+  "worth": 5,
+  "militaryWorth": 50,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_ICBM",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ICBM"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": 500
+  }
+ }
+}

@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_GLIESE_667CC_COLONY",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_INTERSTELLAR_COLONIZATION",
+    {
+     "type": "TERRAIN_RED_DWARF",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_PLASMA",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_GLIESE_581D_COLONY",
+    "BUILDING_PROXIMA_CENTAURI_B_COLONY",
+    "BUILDING_WOLF_1061C_COLONY",
+    "BUILDING_GLIESE_163C_COLONY"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_BASE_TIDALLY_LOCKED_PLANET": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 8998,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GLIESE_667CC"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GLIESE_667CC_COLONY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GLIESE_667CC_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_GLIESE_667CC_COLONY_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

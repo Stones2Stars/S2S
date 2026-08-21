@@ -1,0 +1,67 @@
+{
+ "type": "TECH_SUPERSONIC_FLIGHT",
+ "enables": {
+  "buildings": [
+   "BUILDING_SPACE_NEEDLE"
+  ],
+  "promotions": [
+   "PROMOTION_AIR_REFUEL"
+  ],
+  "techs": [
+   "TECH_MODERN_WARFARE"
+  ],
+  "units": [
+   "UNIT_SR71"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_JET_PROPULSION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "canRebaseAnywhere": true
+ },
+ "cost": {
+  "research": 13181
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/SupersonicFlight.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,8,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SUPERSONIC_FLIGHT",
+  "soundMP": "AS2D_TECH_SUPERSONIC_FLIGHT"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SUPERSONIC_FLIGHT",
+  "civilopedia": "TXT_KEY_TECH_SUPERSONIC_FLIGHT_PEDIA",
+  "quote": "TXT_KEY_TECH_SUPERSONIC_FLIGHT_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 80,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,42 @@
+{
+ "type": "IMPROVEMENT_SUN_SCOOP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STAR_LIFTING",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_SUN"
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 25
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_SUN_SCOOP"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_SUN_SCOOP",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SUN_SCOOP_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

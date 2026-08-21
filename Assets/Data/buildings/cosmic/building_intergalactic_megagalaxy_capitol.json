@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_INTERGALACTIC_MEGAGALAXY_CAPITOL",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_MERGED_MEGAGALAXY",
+    "BUILDING_INTERGALACTIC_ASTROPOLIS",
+    "TECH_COSMIC_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -20
+   }
+  }
+ },
+ "cost": {
+  "production": 4742,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_MEGAGALAXY_CAPITOL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_MEGAGALAXY_CAPITOL",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_MEGAGALAXY_CAPITOL_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

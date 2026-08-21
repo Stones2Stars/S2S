@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_LEBANESE",
+ "enables": {
+  "units": [
+   "UNIT_FAKHR_EL_DIN_II",
+   "UNIT_HEZBOLLAH"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_LEBANESE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_LEBANESE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

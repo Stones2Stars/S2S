@@ -1,0 +1,213 @@
+{
+ "type": "BUILDING_STONE_TOOL_MAKER",
+ "enables": {
+  "buildings": [
+   "BUILDING_FLINT_KNAPPER"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_INDUSTRIALISM"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ANTIQUE_SHOP"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TOOL_MAKING",
+    {
+     "any": [
+      "BUILDING_ROCK_GATHERER",
+      "BUILDING_ANCIENT_CUSTOMS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_ANTIQUE_SHOP"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_STONE_TOOLS"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": "TECH_COMPOSITE_TOOLS"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_MICROLITH"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_SHARPENING"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_FLINT_KNAPPING"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_CHOPPING"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_PIERCING"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_SCRAPING"
+    },
+    {
+     "value": -1,
+     "enabled": "TECH_COPPER_WORKING"
+    },
+    {
+     "value": -1,
+     "enabled": "TECH_METAL_CASTING"
+    },
+    {
+     "value": -1,
+     "enabled": "TECH_BRONZE_WORKING"
+    },
+    {
+     "value": -1,
+     "enabled": "TECH_LEAD_WORKING"
+    },
+    {
+     "value": -3,
+     "enabled": "TECH_SEDENTARY_LIFESTYLE"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": "TECH_ATLATL_MAKING"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_SPEAR_MAKING"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_AXE_MAKING"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_OBSIDIAN_WEAPONS"
+    },
+    {
+     "value": -1,
+     "enabled": "TECH_COPPER_WORKING"
+    },
+    {
+     "value": -1,
+     "enabled": "TECH_METAL_CASTING"
+    },
+    {
+     "value": -1,
+     "enabled": "TECH_BRONZE_WORKING"
+    },
+    {
+     "value": -1,
+     "enabled": "TECH_LEAD_WORKING"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "TECH_SOFT_HAMMER_PERCUSSION"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_SCRAPING"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_CHOPPING"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_PIERCING"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_CARVING"
+    },
+    {
+     "value": -1,
+     "enabled": "TECH_COPPER_WORKING"
+    },
+    {
+     "value": -1,
+     "enabled": "TECH_METAL_CASTING"
+    },
+    {
+     "value": -1,
+     "enabled": "TECH_BRONZE_WORKING"
+    },
+    {
+     "value": -1,
+     "enabled": "TECH_LEAD_WORKING"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": "TECH_IRON_WORKING"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 20,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_STONE_TOOL_MAKER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_STONE_TOOL_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_STONE_TOOL_MAKER_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

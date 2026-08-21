@@ -1,0 +1,87 @@
+{
+ "type": "BONUS_INDIGO",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_AKSUMITE",
+   "BUILDING_CULTURE_GUYANESE",
+   "BUILDING_CULTURE_HAUSA",
+   "BUILDING_CULTURE_ILOCANO",
+   "BUILDING_CULTURE_MAYAN",
+   "BUILDING_CULTURE_VENETIAN",
+   "BUILDING_DEATH_CAP_MUSHROOM",
+   "BUILDING_FARM_CROP_COCHINEAL",
+   "BUILDING_FARM_FLOWER_INDIGO",
+   "BUILDING_GRAND_SKY_FESTIVAL",
+   "BUILDING_GROVE_BRAZILWOOD",
+   "BUILDING_GROVE_FUSTIC",
+   "BUILDING_INDIGO_GATHERER",
+   "BUILDING_JUNEBUG_GATHERER",
+   "BUILDING_PLANTATION_MADDER"
+  ]
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 3
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_INDIGO"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 160,
+  "minAreaSize": 3,
+  "maxLatitude": 60,
+  "rands": {
+   "iRandApp1": 30,
+   "iRandApp2": 30,
+   "iRandApp3": 30,
+   "iRandApp4": 30
+  },
+  "tilesPer": 200,
+  "groupRange": 1,
+  "groupRand": 16,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validFeatures": [
+   "FEATURE_FLOOD_PLAINS",
+   "FEATURE_FOREST",
+   "FEATURE_FOREST_ANCIENT",
+   "FEATURE_JUNGLE",
+   "FEATURE_SWAMP",
+   "FEATURE_SAVANNA",
+   "FEATURE_BAMBOO",
+   "FEATURE_VERY_TALL_GRASS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_MARSH",
+   "TERRAIN_PLAINS",
+   "TERRAIN_DESERT",
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_SCRUB"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_INDIGO",
+  "civilopedia": "TXT_KEY_BONUS_INDIGO_PEDIA",
+  "bonusClassType": "BONUSCLASS_LUXURY",
+  "source": "natural"
+ }
+}

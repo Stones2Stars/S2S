@@ -1,0 +1,195 @@
+{
+ "type": "TRAIT_COMPLEX_CHARISMATIC1",
+ "excludes": [
+  "TRAIT_TEMPERAMENTAL1"
+ ],
+ "production": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_RECRUITMENT_CENTER": {
+     "percent": 20
+    }
+   },
+   "units": {
+    "percent": [
+     {
+      "value": -15,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": 1,
+   "percent": 5
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": -1,
+   "percent": -5,
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_ARTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_INVESTIGATOR": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SLEUTH": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_BROADCAST_TOWER": {
+     "flat": 1
+    },
+    "BUILDING_COMMUNICATION_TOWER": {
+     "flat": 1
+    },
+    "BUILDING_STATUE_OF_CHAMPION": {
+     "flat": 1
+    },
+    "BUILDING_MONUMENT_OF_THE_DICTATOR": {
+     "flat": 1
+    },
+    "BUILDING_ROYAL_MONUMENT": {
+     "flat": 1
+    },
+    "BUILDING_PRESIDENTIAL_MONUMENT": {
+     "flat": 1
+    },
+    "BUILDING_RADIOPLEX": {
+     "flat": 1
+    },
+    "BUILDING_NETWORK_NODE": {
+     "flat": 1
+    },
+    "BUILDING_TOTEM_POLE": {
+     "flat": 1
+    },
+    "BUILDING_MONUMENT": {
+     "flat": 1
+    },
+    "BUILDING_OBELISK": {
+     "flat": 1
+    },
+    "BUILDING_STELE": {
+     "flat": 1
+    },
+    "BUILDING_FUNERARY_SERVICES": {
+     "flat": 1
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "flat": 1
+    }
+   },
+   "flat": 1,
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "unit": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "levelModifier": {
+    "percent": -10
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -10
+   },
+   "attitude": {
+    "flat": 1
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": -5
+   }
+  }
+ },
+ "espionageDefense": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   },
+   {
+    "FLAVOR_ESPIONAGE": -4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCharismatic.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC1",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_CHARISMATIC_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_CHARISMATIC_SHORT"
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_COMPLEX_CHARISMATIC2"
+  ]
+ }
+}

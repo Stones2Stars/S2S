@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_FARM_FLOWER_TULIP",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FLOWERS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_INDUSTRIAL_ECOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GREENHOUSE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FLORISTRY",
+    {
+     "any": [
+      "BUILDING_APIARY",
+      "BUILDING_FOOD_MANUFACTURING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_FLAX",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_WHEAT",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_GREENHOUSE"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 270,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FARM_FLOWER_TULIP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FARM_FLOWER_TULIP",
+  "civilopedia": "TXT_KEY_BUILDING_FARM_FLOWER_TULIP_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

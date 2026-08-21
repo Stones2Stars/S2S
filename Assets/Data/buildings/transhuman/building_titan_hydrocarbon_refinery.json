@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_TITAN_HYDROCARBON_REFINERY",
+ "enables": {
+  "buildings": [
+   "BUILDING_TITAN_NITROGEN_EXPORTER",
+   "BUILDING_TITAN_SF6_GENERATOR",
+   "BUILDING_TITAN_SUPERCOMPUTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_TITAN_BASE",
+    "TECH_ABYSS_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_TITANIC",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ULTRAFUEL"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 1452,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TITAN_HYDROCARBON_REFINERY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TITAN_HYDROCARBON_REFINERY",
+  "civilopedia": "TXT_KEY_BUILDING_TITAN_HYDROCARBON_REFINERY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_TITANIC"
+  ]
+ }
+}

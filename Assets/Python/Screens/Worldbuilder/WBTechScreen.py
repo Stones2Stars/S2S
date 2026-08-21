@@ -1,8 +1,15 @@
 from CvPythonExtensions import *
 from CvScreensInterface import pediaJumpToTech
 import HandleInputUtil
+TRNSLTR = CyTranslator()
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
 class WBTechScreen:
 
@@ -105,7 +112,7 @@ class WBTechScreen:
 		screen.addDropDownBoxGFC(DDB, 8, yRes - 33, wDDB, eWidGen, 1, 2, FontTypes.GAME_FONT)
 		screen.addPullDownString(DDB, TRNSLTR.getText("TXT_KEY_WB_CITY_ALL", ()), -1, -1, -1 == self.iSelectedEra)
 		for i in xrange(iNumEras):
-			screen.addPullDownString(DDB, GC.getEraInfo(i).getDescription(), i, i, i == self.iSelectedEra)
+			screen.addPullDownString(DDB, INFO.getDescription("C2C_ERA_", i), i, i, i == self.iSelectedEra)
 
 		if self.techs is None:
 			self.techs = techs = [[] for i in xrange(iNumEras)]

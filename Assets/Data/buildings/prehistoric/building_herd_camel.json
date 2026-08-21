@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_HERD_CAMEL",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_CAMEL",
+   "BUILDING_RESOURCES_CARCASS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INDUSTRIAL_FARMS"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ],
+   "all": [
+    "TECH_ANIMAL_HUSBANDRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_CAMEL"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HERD_CAMEL",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "SND_AMB_CAMEL_COBBLESTONES"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HERD_CAMEL",
+  "civilopedia": "TXT_KEY_BUILDING_HERD_CAMEL_PEDIA",
+  "notConstructible": true,
+  "worth": 3,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

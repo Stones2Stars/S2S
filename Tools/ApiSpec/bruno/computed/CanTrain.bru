@@ -1,0 +1,20 @@
+meta {
+  name: computed/canTrain
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/computed/canTrain?type=UNIT_WARRIOR&globalId=00-8192
+  body: none
+  auth: none
+}
+
+params:query {
+  type: UNIT_WARRIOR
+  globalId: 00-8192
+}
+
+docs {
+  Engine trainability verdict. City by globalId (or player=&city=).
+}

@@ -1,0 +1,83 @@
+{
+ "type": "TECH_CYBERWARFARE",
+ "enables": {
+  "buildings": [
+   "BUILDING_COMPUTER_SECURITY_OFFICE",
+   "BUILDING_CRIME_CYBERWARFARE",
+   "BUILDING_ENCRYPTED_FIREWALL",
+   "BUILDING_GREAT_FIREWALL",
+   "BUILDING_NATIONAL_CYBERSECURITY_CENTER",
+   "BUILDING_PROPAGANDA_SATELLITES",
+   "BUILDING_SAFETY_GREAT_FIREWALL",
+   "BUILDING_SIGNALS_INTELLIGENCE_RECEIVERS"
+  ],
+  "promotions": [
+   "PROMOTION_CONNIVING8",
+   "PROMOTION_CORRUPTION9",
+   "PROMOTION_FOMENT8",
+   "PROMOTION_INSPIRE8"
+  ],
+  "techs": [
+   "TECH_MEDIA_PSYCHOLOGY"
+  ],
+  "units": [
+   "UNIT_HACKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FORENSICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COMMUNICATION_NETWORKS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 21329
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/cyberwarfare.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CYBERWARFARE",
+  "soundMP": "AS2D_TECH_CYBERWARFARE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CYBERWARFARE",
+  "civilopedia": "TXT_KEY_TECH_CYBERWARFARE_PEDIA",
+  "quote": "TXT_KEY_TECH_CYBERWARFARE_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 89,
+  "gridY": 13
+ }
+}

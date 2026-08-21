@@ -1,0 +1,90 @@
+{
+ "type": "BONUS_SUGAR",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOFUEL_REFINERY",
+   "BUILDING_CANDY_SHOP",
+   "BUILDING_CONFECTIONERS_WORKSHOP",
+   "BUILDING_CULTURE_BRAZILIAN",
+   "BUILDING_CULTURE_CHAM",
+   "BUILDING_CULTURE_HAITIAN",
+   "BUILDING_CULTURE_JAVANESE",
+   "BUILDING_FACTORY_ENERGY_DRINK",
+   "BUILDING_FACTORY_MARZIPAN",
+   "BUILDING_FACTORY_SODA_POP",
+   "BUILDING_FARM_CROP_CELERY",
+   "BUILDING_FARM_CROP_HONEYDEW",
+   "BUILDING_FARM_CROP_RASPBERRY",
+   "BUILDING_FARM_CROP_RHUBARB",
+   "BUILDING_FARM_CROP_SORGHUM",
+   "BUILDING_FARM_CROP_SWEET_POTATO",
+   "BUILDING_FARM_FLOWER_BEGONIA",
+   "BUILDING_GROVE_MAPLE",
+   "BUILDING_ICE_CREAM_PARLOR",
+   "BUILDING_LADYBUG_GATHERER",
+   "BUILDING_ORCHARD_PLUM",
+   "BUILDING_PLANTATION_AGAVE",
+   "BUILDING_PLANTATION_MARSH_MALLOW",
+   "BUILDING_PLANTATION_PINEAPPLE",
+   "BUILDING_PLANTATION_SUGARCANE",
+   "BUILDING_ULTRAFUEL_REFINERY"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 2
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SUGAR"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "maxLatitude": 36,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 64,
+  "uniqueRange": 3,
+  "groupRange": 2,
+  "groupRand": 8,
+  "area": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_MARSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_LUSH"
+  ],
+  "validFeatures": [
+   "FEATURE_FLOOD_PLAINS",
+   "FEATURE_JUNGLE",
+   "FEATURE_VERY_TALL_GRASS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_GRASSLAND"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SUGAR",
+  "civilopedia": "TXT_KEY_BONUS_SUGAR_PEDIA",
+  "bonusClassType": "BONUSCLASS_LUXURY",
+  "source": "natural"
+ }
+}

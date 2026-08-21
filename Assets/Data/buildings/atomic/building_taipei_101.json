@@ -1,0 +1,92 @@
+{
+ "type": "BUILDING_TAIPEI_101",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TEAM",
+     "scope": "world",
+     "min": 4
+    },
+    "BUILDING_SKYSCRAPER",
+    "TECH_POSTMODERNISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  },
+  "empire": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 2
+  }
+ },
+ "cost": {
+  "production": 7680,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TAIPEI_101"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TAIPEI_101"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TAIPEI_101",
+  "civilopedia": "TXT_KEY_BUILDING_TAIPEI_101_PEDIA",
+  "help": "TXT_KEY_BUILDING_TAIPEI_101_HELP",
+  "pediaCategory": "greatWonder",
+  "worth": 15,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_MERCHANT",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

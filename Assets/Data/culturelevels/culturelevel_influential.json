@@ -1,0 +1,25 @@
+{
+ "type": "CULTURELEVEL_INFLUENTIAL",
+ "enables": {
+  "buildings": [
+   "BUILDING_METROPOLITAN_ADMINISTRATION"
+  ]
+ },
+ "allowed": {
+  "worldWonders": 6,
+  "teamWonders": 5,
+  "nationalWonders": 16
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 25
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CULTURELEVEL_INFLUENTIAL",
+  "cityRadius": 3,
+  "cultureThreshold": 8320
+ }
+}

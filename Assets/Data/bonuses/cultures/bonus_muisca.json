@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_MUISCA",
+ "enables": {
+  "units": [
+   "UNIT_CZIBCZA_WARRIOR",
+   "UNIT_PEDRO_DE_AGUADO"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MUISCA"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MUISCA",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

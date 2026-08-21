@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_HUNGARIAN",
+ "enables": {
+  "units": [
+   "UNIT_ARPAD",
+   "UNIT_HUSSAR",
+   "UNIT_STEPHEN_I"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HUNGARIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HUNGARIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

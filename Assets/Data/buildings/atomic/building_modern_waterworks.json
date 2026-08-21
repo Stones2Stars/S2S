@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_MODERN_WATERWORKS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BARAY",
+   "BUILDING_BATH_HOUSE",
+   "BUILDING_GONDOLA_CANALS",
+   "BUILDING_HAMMAM",
+   "BUILDING_NORIA",
+   "BUILDING_PUBLIC_POOL",
+   "BUILDING_WATERCLOCK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_NEW_URBANISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_RICE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -50
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 1540,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "providesFreshWater": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MODERN_WATERWORKS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MODERN_WATERWORKS",
+  "civilopedia": "TXT_KEY_BUILDING_MODERN_WATERWORKS_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

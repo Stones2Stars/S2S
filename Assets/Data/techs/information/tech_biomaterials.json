@@ -1,0 +1,84 @@
+{
+ "type": "TECH_BIOMATERIALS",
+ "enables": {
+  "bonuses": [
+   "BONUS_BIOFUEL",
+   "BONUS_BIOPOLYMERS"
+  ],
+  "buildings": [
+   "BUILDING_BIOFUEL_POWER_PLANT",
+   "BUILDING_BIOFUEL_REFINERY",
+   "BUILDING_ETHANOL_STATION",
+   "BUILDING_FACTORY_BIOPOLYMERS"
+  ],
+  "techs": [
+   "TECH_ECOLOGICAL_ENGINEERING",
+   "TECH_GENETIC_BIOCHEMISTRY",
+   "TECH_ORGANIC_PHOTONICS"
+  ],
+  "units": [
+   "UNIT_HEAVY_ARMOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AQUACULTURE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOTECHNOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_GREAT_ENGINEER"
+ },
+ "cost": {
+  "research": 21329
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Biofuels.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_BIOMATERIALS",
+  "soundMP": "AS2D_TECH_BIOMATERIALS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_BIOMATERIALS",
+  "civilopedia": "TXT_KEY_TECH_BIOMATERIALS_PEDIA",
+  "quote": "TXT_KEY_TECH_BIOMATERIALS_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 89,
+  "gridY": 3
+ }
+}

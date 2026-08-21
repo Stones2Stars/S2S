@@ -1,0 +1,22 @@
+{
+ "type": "BONUS_QUANTUM_DOTS",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUMINESCENT_SOLAR_CONCENTRATORS",
+   "BUILDING_MEGATOWER_SOLAR_POWER_CROWN_SECTION",
+   "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER",
+   "BUILDING_QUANTUM_SUPERCOMPUTER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_QUANTUM_DOTS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_QUANTUM_DOTS",
+  "civilopedia": "TXT_KEY_BONUS_QUANTUM_DOTS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

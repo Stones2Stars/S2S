@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_WATER_BOTTLES",
+ "enables": {
+  "buildings": [
+   "BUILDING_GALACTIC_CANTINA",
+   "BUILDING_GLASS_RECLAMATION_PLANT",
+   "BUILDING_PLASTIC_RECLAMATION_PLANT"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_WATER_BOTTLES"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_WATER_BOTTLES",
+  "civilopedia": "TXT_KEY_BONUS_WATER_BOTTLES_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

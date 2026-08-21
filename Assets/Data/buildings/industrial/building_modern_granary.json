@@ -1,0 +1,199 @@
+{
+ "type": "BUILDING_MODERN_GRANARY",
+ "enables": {
+  "buildings": [
+   "BUILDING_APOTHECARY_SHOP",
+   "BUILDING_BASKETMAKER",
+   "BUILDING_BEADWORKER",
+   "BUILDING_BONEWORKER",
+   "BUILDING_BRASS_INSTRUMENT_MAKER",
+   "BUILDING_CANDY_SHOP",
+   "BUILDING_CANOE_BUILDER",
+   "BUILDING_CISLUNAR_FACTORY",
+   "BUILDING_COBBLER",
+   "BUILDING_CRAFTS_HUT",
+   "BUILDING_DANCE_HUT",
+   "BUILDING_DINING_HALL",
+   "BUILDING_FISHERMANS_HUT",
+   "BUILDING_FISHMONGER",
+   "BUILDING_FLETCHERS_HUT",
+   "BUILDING_FOOD_PROCESSING_PLANT",
+   "BUILDING_FURNITURE_MAKER",
+   "BUILDING_HATTER",
+   "BUILDING_HEALERS_HUT",
+   "BUILDING_IKHANDA",
+   "BUILDING_LACQUERWARE_MAKER",
+   "BUILDING_MASK_CARVER",
+   "BUILDING_MICROLITH_WORKSHOP",
+   "BUILDING_MODERN_MILL",
+   "BUILDING_MUSIC_HUT",
+   "BUILDING_MYSTICS_HUT",
+   "BUILDING_PERCUSSION_INSTRUMENT_MAKER",
+   "BUILDING_PIERCER",
+   "BUILDING_POISON_CRAFTER",
+   "BUILDING_POTTERS_HUT",
+   "BUILDING_ROPER",
+   "BUILDING_SADDLER",
+   "BUILDING_SAGE",
+   "BUILDING_SAIL_WEAVER",
+   "BUILDING_SEAMSTRESS",
+   "BUILDING_SLAUGHTERHOUSE",
+   "BUILDING_SMOKEHOUSE",
+   "BUILDING_SPEARFISHER",
+   "BUILDING_STARGAZERS_HUT",
+   "BUILDING_STONEWORKER",
+   "BUILDING_STORYTELLER",
+   "BUILDING_STRATEGIC_GRAIN_RESERVE",
+   "BUILDING_STRING_INSTRUMENT_MAKER",
+   "BUILDING_TABLET_MAKER",
+   "BUILDING_TATTOOER",
+   "BUILDING_TRAVOIS_MAKER",
+   "BUILDING_WATERMILL",
+   "BUILDING_WINDMILL",
+   "BUILDING_WOODCARVER",
+   "BUILDING_WOODWIND_INSTRUMENT_MAKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_AGRICULTURAL_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "improvements": {
+    "IMPROVEMENT_FARM": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ALCOHOL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CHEESE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CORN",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_RICE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WHEAT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_POTATOES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BARLEY",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "foodKept": {
+  "city": {
+   "percent": 20
+  }
+ },
+ "cost": {
+  "production": 740,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MODERN_GRANARY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MODERN_GRANARY",
+  "civilopedia": "TXT_KEY_BUILDING_GRANARY_PEDIA",
+  "worth": 3,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

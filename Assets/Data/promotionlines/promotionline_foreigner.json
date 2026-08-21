@@ -1,0 +1,11 @@
+{
+ "type": "PROMOTIONLINE_FOREIGNER",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitForeigner.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_FOREIGNER"
+ }
+}

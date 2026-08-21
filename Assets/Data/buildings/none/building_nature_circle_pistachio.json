@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_NATURE_CIRCLE_PISTACHIO",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_NATURE_CIRCLE_OF_POWER",
+    {
+     "STATE_RELIGION": "RELIGION_DRUIDIC_TRADITIONS"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PISTACHIO",
+     "scope": "city",
+     "connection": "onSite"
+    },
+    "RELIGION_DRUIDIC_TRADITIONS"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 80,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NATURE_CIRCLE_PISTACHIO",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_DRUID"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NATURE_CIRCLE_PISTACHIO",
+  "civilopedia": "TXT_KEY_BUILDING_NATURE_CIRCLE_OF_POWER_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 3,
+  "religion": "RELIGION_DRUIDIC_TRADITIONS",
+  "advisor": "ADVISOR_RELIGION",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

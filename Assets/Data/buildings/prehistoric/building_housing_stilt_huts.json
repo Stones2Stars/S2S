@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_HOUSING_STILT_HUTS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SANITATION"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_BAMBOO",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    },
+    "HAS_COAST",
+    "TECH_FISHING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "dormant": [
+    "BUILDING_HOUSING_HOGANS",
+    "BUILDING_HOUSING_INSULAE",
+    "BUILDING_HOUSING_COMMONS",
+    "BUILDING_HOUSING_APARTMENTS",
+    "BUILDING_HOUSING_HIGH_TECH_APARTMENTS",
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HOUSING_STILT_HUTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_STILT_HUTS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_STILT_HUTS_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

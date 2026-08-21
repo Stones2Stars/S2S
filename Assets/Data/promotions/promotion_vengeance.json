@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_VENGEANCE",
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 10
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Vengeance.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_VENGEANCE",
+  "stateReligionPrereq": "RELIGION_NGAIISM",
+  "unitCombats": [
+   "UNITCOMBAT_ANIMAL",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_WOODEN_SHIPS"
+  ]
+ }
+}

@@ -1,0 +1,42 @@
+{
+ "type": "IMPROVEMENT_MARINE_PRESERVE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TOURISM",
+     "scope": "team"
+    },
+    "IS_WATER",
+    "HAS_FEATURE",
+    {
+     "feature": [
+      "FEATURE_CORAL_REEF_LIGHTHOUSE",
+      "FEATURE_REEF_LIGHTHOUSE",
+      "FEATURE_PLATY_GREAT_BARRIER",
+      "FEATURE_PLATY_NUKUORO",
+      "FEATURE_PLATY_SHARK_BAY",
+      "FEATURE_PLATY_SUGARLOAF"
+     ]
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_FOREST_PRESERVE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_MARINE_PRESERVE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_MARINE_PRESERVE_PEDIA",
+  "advancedStart": {
+   "cost": 48
+  }
+ }
+}

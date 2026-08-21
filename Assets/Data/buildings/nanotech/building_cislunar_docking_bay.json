@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_CISLUNAR_DOCKING_BAY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_AEROGEL_SHIELDING",
+   "BUILDING_CISLUNAR_HOTEL",
+   "BUILDING_CISLUNAR_REFUELING_STATION"
+  ],
+  "units": [
+   "UNIT_CISLUNAR_WORKER",
+   "UNIT_MAGSAIL_WORKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 9,
+     "enabled": "TECH_MASS_DRIVER"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 10,
+     "enabled": "TECH_KUIPER_BELT_EXPLORATION"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 528,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_DOCKING_BAY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_DOCKING_BAY",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_DOCKING_BAY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

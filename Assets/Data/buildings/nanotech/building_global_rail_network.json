@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_GLOBAL_RAIL_NETWORK",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PLANETARY_ECONOMICS",
+    {
+     "any": [
+      "BUILDING_MAGLEV_RAILS",
+      "BUILDING_VACTRAIN_TERMINAL",
+      "BUILDING_GRAVITY_TRAIN"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MAGLEV_RAILS": {
+     "flat": 2
+    },
+    "BUILDING_GRAVITY_TRAIN": {
+     "flat": 6
+    },
+    "BUILDING_VACTRAIN_TERMINAL": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 26910,
+  "sizeModifier": 3,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_INTERCONTINENTAL_RAIL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GLOBAL_RAIL_NETWORK",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GLOBAL_RAIL_NETWORK",
+  "civilopedia": "TXT_KEY_BUILDING_GLOBAL_RAIL_NETWORK_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

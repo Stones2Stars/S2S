@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_MERCURY_COLONY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_THERMAL_NEGATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_MERCURY_COLONY"
+ },
+ "cost": {
+  "gold": 700,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/mercury_colony.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_MERCURY_COLONY"
+ }
+}

@@ -1,0 +1,110 @@
+{
+ "type": "BUILDING_RIVER_PORT",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_STEAM_POWER"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_RIVER_AUTHORITY"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "TECH_BOAT_BUILDING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_RIVER_AUTHORITY",
+    "BUILDING_STEAMBOAT_PORT",
+    "BUILDING_FERRY_TERMINAL",
+    "BUILDING_RIVER_ADMINISTRATION"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "HAS_RIVER"
+     }
+    ]
+   }
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 5
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 86,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RIVER_PORT",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_RIVER_PORT"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RIVER_PORT",
+  "civilopedia": "TXT_KEY_BUILDING_RIVER_PORT_PEDIA",
+  "worth": 4,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

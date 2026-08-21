@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_RAIN_DANCE",
+ "enables": {
+  "buildings": [
+   "BUILDING_GRAND_MARINE_FESTIVAL"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WEATHER_FORECASTING"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_PREHISTORIC_DANCE",
+    {
+     "any": [
+      "BUILDING_DANCE_HUT",
+      "BUILDING_DANCE_HALL",
+      "BUILDING_NIGHT_CLUB"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RAIN_DANCE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RAIN_DANCE",
+  "civilopedia": "TXT_KEY_BUILDING_RAIN_DANCE_PEDIA",
+  "notConstructible": true,
+  "worth": 1,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

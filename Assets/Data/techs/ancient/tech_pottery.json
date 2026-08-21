@@ -1,0 +1,99 @@
+{
+ "type": "TECH_POTTERY",
+ "enables": {
+  "bonuses": [
+   "BONUS_POTTERY"
+  ],
+  "buildings": [
+   "BUILDING_CULTURE_BATEK",
+   "BUILDING_CULTURE_ETRUSCAN",
+   "BUILDING_CULTURE_GEORGIAN",
+   "BUILDING_CULTURE_HOPI",
+   "BUILDING_CULTURE_KOGI",
+   "BUILDING_CULTURE_MING",
+   "BUILDING_CULTURE_PHILISTINE",
+   "BUILDING_CULTURE_SINTASHTA",
+   "BUILDING_CULTURE_VANDAL",
+   "BUILDING_GRANARY",
+   "BUILDING_GREAT_BATH_OF_MOHENJO_DARO",
+   "BUILDING_HOUSING_HOGANS",
+   "BUILDING_HOUSING_MUD_HUTS",
+   "BUILDING_POTTERS_HUT",
+   "BUILDING_STRATEGIC_GRAIN_RESERVE"
+  ],
+  "builds": [
+   "BUILD_FORTIFIED_CAVE_WITH_CACHE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_FORTIFIED_CAVE_WITH_CACHE"
+  ],
+  "techs": [
+   "TECH_ANCESTOR_WORSHIP",
+   "TECH_APICULTURE",
+   "TECH_FUNGICULTURE",
+   "TECH_MINING",
+   "TECH_SACRIFICE_CULT",
+   "TECH_SAILING",
+   "TECH_THE_WHEEL"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_FORTIFIED_CAVE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_IDEOGRAMS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AGRICULTURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 96
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/Pottery.dds,Art/Interface/Buttons/TechTree_Atlas.dds,8,6"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_POTTERY",
+  "soundMP": "AS2D_TECH_MP_POTTERY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_POTTERY",
+  "civilopedia": "TXT_KEY_TECH_POTTERY_PEDIA",
+  "quote": "TXT_KEY_TECH_POTTERY_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 21,
+  "gridY": 9
+ }
+}

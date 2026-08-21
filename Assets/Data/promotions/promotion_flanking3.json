@@ -1,0 +1,38 @@
+{
+ "type": "PROMOTION_FLANKING3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SPEED",
+   "PROMOTION_STINGING_INSULTS3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_FLANKING2"
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 15
+  }
+ },
+ "skills": {
+  "immuneToFirstStrikes": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FLANKING": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Flanking3.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,5,5"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FLANKING3"
+ }
+}

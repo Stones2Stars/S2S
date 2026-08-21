@@ -1,0 +1,80 @@
+{
+ "type": "BUILDING_JOVIAN_ANTIMATTER_HARVESTER",
+ "enables": {
+  "buildings": [
+   "BUILDING_TERRAFORMED_JUPITER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_FACTORY",
+    "TECH_ANTIMATTER_PRODUCTION",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_JUPITER",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_SATURN",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_URANUS",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_NEPTUNE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 4123,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_JOVIAN_ANTIMATTER_HARVESTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_JOVIAN_ANTIMATTER_HARVESTER",
+  "civilopedia": "TXT_KEY_BUILDING_JOVIAN_ANTIMATTER_HARVESTER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

@@ -1,0 +1,63 @@
+{
+ "type": "TECH_DATA_ARCHIVAL",
+ "enables": {
+  "buildings": [
+   "BUILDING_EARTH_HISTORY_BACKUP",
+   "BUILDING_INTERSTELLAR_CARBON_12_13_CRYSTAL"
+  ],
+  "civics": [
+   "CIVIC_PROTOCOL"
+  ],
+  "techs": [
+   "TECH_ADAPTIVE_RADIATION",
+   "TECH_INTERSTELLAR_TRADE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COSMIC_PERSPECTIVE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INTERSTELLAR_COMMUNICATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 149039
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/data_archival.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_DATA_ARCHIVAL",
+  "civilopedia": "TXT_KEY_TECH_DATA_ARCHIVAL_PEDIA",
+  "quote": "TXT_KEY_TECH_DATA_ARCHIVAL_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 129,
+  "gridY": 13
+ }
+}

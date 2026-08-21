@@ -1,0 +1,249 @@
+{
+ "type": "UNIT_AUGUSTINE_I",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MEXICAN",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_ANIMAL_TRAINER_HORSE",
+    "TECH_HOT_AIR_BALLOON"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "combat": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_GRASSLAND": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_PLAINS": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_DESERT": {
+     "attack": {
+      "percent": 25
+     }
+    }
+   },
+   "feature": {
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": -25
+     }
+    },
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": -25
+     }
+    },
+    "FEATURE_SWAMP": {
+     "attack": {
+      "percent": -25
+     }
+    }
+   },
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 50
+    }
+   },
+   "vsUnit": {
+    "UNIT_CANNON": {
+     "attack": {
+      "percent": 50
+     }
+    },
+    "UNIT_SPEARMAN": {
+     "attack": {
+      "percent": 50
+     },
+     "defense": {
+      "percent": 50
+     }
+    },
+    "UNIT_PIKEMAN": {
+     "attack": {
+      "percent": 50
+     },
+     "defense": {
+      "percent": 50
+     }
+    },
+    "UNIT_HEAVY_PIKEMAN": {
+     "attack": {
+      "percent": 50
+     },
+     "defense": {
+      "percent": 50
+     }
+    }
+   },
+   "flanking": {
+    "UNITCOMBAT_SIEGE": {
+     "percent": 100
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 27
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "collateral": {
+  "unit": {
+   "limit": {
+    "flat": 100
+   },
+   "maxUnits": {
+    "flat": 6
+   }
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage",
+  "firstStrikeImmune"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_HERO",
+ "combatClasses": [
+  "UNITCOMBAT_MOUNTED",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_RIFLE",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_RIDING",
+  "UNITCOMBAT_MOUNT_HORSE",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_RETINUE_SPOUSE"
+  ],
+  "greatPeople": [
+   "SPECIALIST_GREAT_PROPHET",
+   "SPECIALIST_GREAT_MILITARY_INSTRUCTOR",
+   "SPECIALIST_CELEBRITY"
+  ],
+  "buildings": [
+   {
+    "building": "BUILDING_ACHIEVEMENT_AGRICULTURAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_COMMERCIAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_CULTURAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_ENVIRONMENTAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_INDUSTRIAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_MEDICAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_MILITARY"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_POLITICAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_SAFETY"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_SCIENTIFIC"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_SEAFARING"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_TOURISTIC"
+   }
+  ]
+ },
+ "cost": {
+  "production": 2220,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_AUGUSTINE_I",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_AUGUSTINE_I"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_AUGUSTINE_I",
+  "civilopedia": "TXT_KEY_UNIT_AUGUSTINE_I_PEDIA",
+  "worth": 4,
+  "militaryWorth": 72,
+  "xpValueAttack": 6,
+  "xpValueDefense": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "leaderPromotion": "PROMOTION_LEADER",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_PILLAGE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

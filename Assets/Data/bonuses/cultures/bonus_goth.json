@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_GOTH",
+ "enables": {
+  "units": [
+   "UNIT_GOTH_ALARIC",
+   "UNIT_HUSKARL"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_GOTH"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_GOTH",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

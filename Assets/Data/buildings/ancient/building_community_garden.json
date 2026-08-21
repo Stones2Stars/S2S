@@ -1,0 +1,117 @@
+{
+ "type": "BUILDING_COMMUNITY_GARDEN",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASSASSIN_BUG_SANCTUARY",
+   "BUILDING_BUTTERFLY_SANCTUARY",
+   "BUILDING_CICADA_SANCTUARY",
+   "BUILDING_CRICKET_SANCTUARY",
+   "BUILDING_DRAGONFLY_SANCTUARY",
+   "BUILDING_FIREFLY_SANCTUARY",
+   "BUILDING_GOLIATH_BEETLE_SANCTUARY",
+   "BUILDING_HERCULES_BEETLE_SANCTUARY",
+   "BUILDING_JUNEBUG_SANCTUARY",
+   "BUILDING_LADYBUG_SANCTUARY",
+   "BUILDING_PRAYING_MANTIS_SANCTUARY",
+   "BUILDING_RAIN_GARDEN",
+   "BUILDING_SCARAB_BEETLE_SANCTUARY",
+   "BUILDING_SCORPION_SANCTUARY",
+   "BUILDING_WEAVING_SPIDER_SANCTUARY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GARDENING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 3,
+     "enabled": "TECH_WEATHER_LORE"
+    },
+    {
+     "value": 3,
+     "enabled": "TECH_CALENDAR"
+    },
+    {
+     "value": 6,
+     "enabled": "TECH_METEOROLOGY"
+    },
+    {
+     "value": 4,
+     "enabled": "TECH_CROP_ROTATION"
+    },
+    {
+     "value": 5,
+     "enabled": "TECH_BIOLOGY"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_LONG_RANGE_FORECASTING"
+    },
+    {
+     "value": 6,
+     "enabled": "TECH_ORGANIC_CHEMISTRY"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_GENETICS"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 168,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_COMMUNITY_GARDEN",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COMMUNITY_GARDEN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_COMMUNITY_GARDEN",
+  "civilopedia": "TXT_KEY_BUILDING_COMMUNITY_GARDEN_PEDIA",
+  "worth": 3,
+  "militaryWorth": 1,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

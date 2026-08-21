@@ -1,0 +1,59 @@
+{
+ "type": "TECH_COMPUTER_SCIENCE",
+ "enables": {
+  "buildings": [
+   "BUILDING_COMPUTER_SCIENCE_DEPARTMENT",
+   "BUILDING_FOUR_COLOR_THEOREM",
+   "BUILDING_PROGRAMMING_LANGUAGE",
+   "BUILDING_SOFTWARE_FIRM",
+   "BUILDING_SUPERCOMPUTER",
+   "BUILDING_USER_EXPERIENCE_RESEARCH_LAB"
+  ],
+  "techs": [
+   "TECH_SEMICONDUCTORS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EARLY_COMPUTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 11665
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Buttons/Techs/computer_science.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_COMPUTER_SCIENCE",
+  "civilopedia": "TXT_KEY_TECH_COMPUTER_SCIENCE_PEDIA",
+  "quote": "TXT_KEY_TECH_COMPUTER_SCIENCE_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 77,
+  "gridY": 19
+ }
+}

@@ -1,0 +1,150 @@
+{
+ "type": "UNIT_BASHKIR_SHAMAN",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_BASHKIR",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_LINGUISTICS"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_ENTERTAINER"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_BARD"
+  }
+ },
+ "skills": [
+  "rivalTerritory"
+ ],
+ "tags": [
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_ENTERTAINER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_ENTERTAIN_CITY",
+    "outcomes": [
+     {
+      "requires": {
+       "outcome": "OUTCOME_ENTERTAIN_CITY"
+      },
+      "chance": 80,
+      "consumes": true,
+      "revolution": 3,
+      "culture": 5
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_ENTERTAIN_CITY_EXALTED"
+      },
+      "chance": 20,
+      "promotes": "PROMOTION_EXPERIENCED_ARTIST",
+      "revolution": 4,
+      "culture": 10
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_RAIN_DANCE"
+   },
+   {
+    "building": "BUILDING_WAR_DANCE"
+   },
+   {
+    "building": "BUILDING_FIRE_DANCE"
+   },
+   {
+    "building": "BUILDING_NATURE_DANCE"
+   },
+   {
+    "building": "BUILDING_MOON_DANCE"
+   },
+   {
+    "building": "BUILDING_FERTILITY_DANCE"
+   },
+   {
+    "building": "BUILDING_BLOOD_DANCE"
+   }
+  ]
+ },
+ "cost": {
+  "production": 151,
+  "upkeep": 3
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_BASHKIR_SHAMAN",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_BASHKIR_SHAMAN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_BASHKIR_SHAMAN",
+  "civilopedia": "TXT_KEY_UNIT_BASHKIR_SHAMAN_PEDIA",
+  "worth": 3,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_PROPERTY_CONTROL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_CULTURE",
+  "unitAIs": [
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

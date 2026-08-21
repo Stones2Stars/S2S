@@ -1,0 +1,144 @@
+{
+ "type": "BUILDING_HIGH_WALLS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLARNEY_CASTLE",
+   "BUILDING_CASTLE",
+   "BUILDING_CITY_GATEHOUSE",
+   "BUILDING_GROVE",
+   "BUILDING_KRAK_DES_CHEVALIERS",
+   "BUILDING_THE_ISHTAR_GATE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RIFLING"
+  ]
+ },
+ "whenObsolete": {
+  "culture": {
+   "city": {
+    "flat": 2
+   }
+  },
+  "PROPERTY_TOURISM": {
+   "city": {
+    "flat": 2
+   }
+  }
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SIEGE_WARFARE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 80
+   },
+   "bombardDefense": {
+    "percent": 40
+   },
+   "min": {
+    "percent": 25
+   },
+   "noEntryLevel": {
+    "percent": 50
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 12
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 504,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HIGH_WALLS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HIGH_WALLS",
+  "civilopedia": "TXT_KEY_BUILDING_HIGH_WALLS_PEDIA",
+  "centerInCity": true,
+  "worth": 1,
+  "militaryWorth": 5,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

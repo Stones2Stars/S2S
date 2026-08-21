@@ -1,0 +1,79 @@
+{
+ "type": "TECH_SUNDIAL",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANTIKYTHERA_MECHANISM",
+   "BUILDING_GATE_OF_THE_SUN",
+   "BUILDING_SUNDIAL"
+  ],
+  "techs": [
+   "TECH_GEOMETRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STARGAZING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRADE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LEISURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "cost": {
+  "research": 242
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/sundialtech.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SUNDIAL",
+  "soundMP": "AS2D_TECH_SUNDIAL"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SUNDIAL",
+  "civilopedia": "TXT_KEY_TECH_SUNDIAL_PEDIA",
+  "quote": "TXT_KEY_TECH_SUNDIAL_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 16,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 28,
+  "gridY": 7
+ }
+}

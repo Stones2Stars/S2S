@@ -1,0 +1,67 @@
+{
+ "type": "TECH_TOURNAMENTS",
+ "enables": {
+  "buildings": [
+   "BUILDING_FIELD_OF_THE_CLOTH_OF_GOLD",
+   "BUILDING_KINGS_TOURNAMENT",
+   "BUILDING_ROYAL_TOURNAMENT"
+  ],
+  "techs": [
+   "TECH_RENAISSANCE_LIFESTYLE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WARRANTS_AND_DECREES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CHIVALRY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1960
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/Tournaments.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TOURNAMENTS",
+  "soundMP": "AS2D_TECH_TOURNAMENTS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TOURNAMENTS",
+  "civilopedia": "TXT_KEY_TECH_TOURNAMENTS_PEDIA",
+  "quote": "TXT_KEY_TECH_TOURNAMENTS_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 49,
+  "gridY": 3
+ }
+}

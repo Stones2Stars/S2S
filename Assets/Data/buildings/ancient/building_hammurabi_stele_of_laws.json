@@ -1,0 +1,132 @@
+{
+ "type": "BUILDING_HAMMURABI_STELE_OF_LAWS",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_DUALISM",
+    {
+     "STATE_RELIGION": "RELIGION_MESOPOTAMISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STONE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "RELIGION_MESOPOTAMISM"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_MESOPOTAMISM"
+     }
+    }
+   ]
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_MESOPOTAMISM": {
+    "flat": 2
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_COURTHOUSE",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 1008,
+  "complexityModifier": 2,
+  "hurryModifier": 50
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_HAMMURABI"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HAMMURABI_STELE_OF_LAWS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BUDDHIST"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HAMMURABI_STELE_OF_LAWS",
+  "civilopedia": "TXT_KEY_BUILDING_HAMMURABI_STELE_OF_LAWS_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 2,
+  "conquestProbability": 100,
+  "religion": "RELIGION_MESOPOTAMISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "100.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

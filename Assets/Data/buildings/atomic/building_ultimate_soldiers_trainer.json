@@ -1,0 +1,113 @@
+{
+ "type": "BUILDING_ULTIMATE_SOLDIERS_TRAINER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_LOGISTICS",
+    "TECH_CORPORATION",
+    {
+     "any": [
+      "BUILDING_MODERN_OFFICES",
+      "BUILDING_OFFICIUM",
+      "BUILDING_SKYSCRAPER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CORPORATION_ULTSOLDIER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_AMMUNITION",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_STEEL_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SULPHUR",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "domains": {
+    "DOMAIN_LAND": {
+     "flat": 6
+    },
+    "DOMAIN_SEA": {
+     "flat": 3
+    },
+    "DOMAIN_AIR": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 1130,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 8
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ULTIMATE_SOLDIERS_TRAINER"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ULTIMATE_SOLDIERS_TRAINER",
+  "civilopedia": "TXT_KEY_BUILDING_ULTIMATE_SOLDIERS_TRAINER_PEDIA",
+  "worth": 8,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_CORPORATION",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

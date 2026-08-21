@@ -12474,7 +12474,7 @@
 			<TechTypes>
 				<PrereqTech>TECH_ELEPHANT_DOMESTICATION</PrereqTech>
 			</TechTypes>
-			<BonusType>BONUS_ELEPHANTS</BonusType>
+			<BonusType>BONUS_ELEPHANT</BonusType>
 			<iCost>240</iCost>
 			<iBaseUpkeep>1</iBaseUpkeep>
 			<iMoves>1</iMoves>
@@ -12576,7 +12576,7 @@
 				<BuildingType>BUILDING_ANIMAL_TRAINER_ELEPHANT</BuildingType>
 			</PrereqAndBuildings>
 			<PrereqTech>TECH_ARMORED_CAVALRY</PrereqTech>
-			<BonusType>BONUS_ELEPHANTS</BonusType>
+			<BonusType>BONUS_ELEPHANT</BonusType>
 			<PrereqBonuses>
 				<BonusType>BONUS_IRON_WARES</BonusType>
 			</PrereqBonuses>
@@ -12688,7 +12688,7 @@
 				<PrereqTech>TECH_ELEPHANT_DOMESTICATION</PrereqTech>
 				<PrereqTech>TECH_MOUNTED_ARCHERY</PrereqTech>
 			</TechTypes>
-			<BonusType>BONUS_ELEPHANTS</BonusType>
+			<BonusType>BONUS_ELEPHANT</BonusType>
 			<iCost>300</iCost>
 			<iBaseUpkeep>1</iBaseUpkeep>
 			<iMoves>1</iMoves>
@@ -12798,7 +12798,7 @@
 				<BuildingType>BUILDING_CANNON_FORGE</BuildingType>
 			</PrereqAndBuildings>
 			<PrereqTech>TECH_CAVALRY_TACTICS</PrereqTech>
-			<BonusType>BONUS_ELEPHANTS</BonusType>
+			<BonusType>BONUS_ELEPHANT</BonusType>
 			<PrereqBonuses>
 				<BonusType>BONUS_IRON_WARES</BonusType>
 			</PrereqBonuses>
@@ -12910,7 +12910,7 @@
 				<BuildingType>BUILDING_ANIMAL_TRAINER_ELEPHANT</BuildingType>
 			</PrereqAndBuildings>
 			<PrereqTech>TECH_STEAM_POWER</PrereqTech>
-			<BonusType>BONUS_ELEPHANTS</BonusType>
+			<BonusType>BONUS_ELEPHANT</BonusType>
 			<TrainCondition>
 				<And>
 					<Has>
@@ -33169,12 +33169,12 @@
 			<PrereqBonuses>
 				<BonusType>BONUS_BISON</BonusType>
 				<BonusType>BONUS_DEER</BonusType>
-				<BonusType>BONUS_GUINEA_PIGS</BonusType>
+				<BonusType>BONUS_GUINEA_PIG</BonusType>
 				<BonusType>BONUS_KANGAROO</BonusType>
-				<BonusType>BONUS_ELEPHANTS</BonusType>
+				<BonusType>BONUS_ELEPHANT</BonusType>
 				<BonusType>BONUS_MAMMOTH</BonusType>
 				<BonusType>BONUS_RABBIT</BonusType>
-				<BonusType>BONUS_BEAVERS</BonusType>
+				<BonusType>BONUS_BEAVER</BonusType>
 				<BonusType>BONUS_PIG</BonusType>
 				<BonusType>BONUS_SHEEP</BonusType>
 				<BonusType>BONUS_DOG</BonusType>
@@ -38368,7 +38368,7 @@
                     <iProductonModifier>1</iProductonModifier>
                 </BonusProductionModifier>
                 <BonusProductionModifier>
-                    <BonusType>BONUS_GUINEA_PIGS</BonusType>
+                    <BonusType>BONUS_GUINEA_PIG</BonusType>
                     <iProductonModifier>1</iProductonModifier>
                 </BonusProductionModifier>
                 <BonusProductionModifier>
@@ -38384,7 +38384,7 @@
                     <iProductonModifier>1</iProductonModifier>
                 </BonusProductionModifier>
                 <BonusProductionModifier>
-                    <BonusType>BONUS_BEAVERS</BonusType>
+                    <BonusType>BONUS_BEAVER</BonusType>
                     <iProductonModifier>1</iProductonModifier>
                 </BonusProductionModifier>
                 <BonusProductionModifier>
@@ -38715,7 +38715,7 @@
                     <iProductonModifier>1</iProductonModifier>
                 </BonusProductionModifier>
                 <BonusProductionModifier>
-                    <BonusType>BONUS_PARROTS</BonusType>
+                    <BonusType>BONUS_PARROT</BonusType>
                     <iProductonModifier>1</iProductonModifier>
                 </BonusProductionModifier>
                 <BonusProductionModifier>
@@ -38923,7 +38923,7 @@
                     <iProductonModifier>1</iProductonModifier>
                 </BonusProductionModifier>
                 <BonusProductionModifier>
-                    <BonusType>BONUS_PARROTS</BonusType>
+                    <BonusType>BONUS_PARROT</BonusType>
                     <iProductonModifier>1</iProductonModifier>
                 </BonusProductionModifier>
                 <BonusProductionModifier>

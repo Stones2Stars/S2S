@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_DISTANT_BIG_BANG_PROBE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_BIG_BANG_POWER_PLANT",
+   "BUILDING_DISTANT_LOCALIZED_BIG_RIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_HORIZON_PORT",
+    "TECH_EXPERIMENTAL_COSMOLOGY",
+    {
+     "type": "TERRAIN_DISTANT_PAST",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 1945,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_BIG_BANG_PROBE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_BIG_BANG_PROBE",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_BIG_BANG_PROBE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_EXPLORE_OORT_CLOUD",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_OORT_CLOUD",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_OORT_CLOUD_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ASTROGATION_CONSTELLATION"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

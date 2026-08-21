@@ -1,0 +1,38 @@
+{
+ "type": "BUILD_MACHU_PICCHU",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MOUNTAINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "BONUS_MACHU_PICCHU_PLANS",
+     "scope": "plot",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_MACHU_PICCHU"
+ },
+ "cost": {
+  "gold": 1,
+  "time": 400
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Improvements/Machu.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_MACHU_PICCHU"
+ }
+}

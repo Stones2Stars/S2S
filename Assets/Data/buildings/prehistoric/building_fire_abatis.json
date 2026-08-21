@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_FIRE_ABATIS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ELECTRONICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BARBWIRE_FENCE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SLASH_AND_BURN",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BAMBOO",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_BARBWIRE_FENCE",
+    "BUILDING_ELECTRIC_FENCE",
+    "BUILDING_WIRELESS_ELECTRIC_FENCE",
+    "BUILDING_ARCOLOGY_SHIELDING",
+    "BUILDING_ADVANCED_SHIELDING"
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 20
+   },
+   "adjacentDamage": {
+    "percent": 10
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "cost": {
+  "production": 74,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FIRE_ABATIS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FIRE_ABATIS",
+  "civilopedia": "TXT_KEY_BUILDING_FIRE_ABATIS_PEDIA",
+  "militaryWorth": 2,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

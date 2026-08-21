@@ -1,0 +1,113 @@
+{
+ "type": "BUILDING_SCROLL_MAKER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_INDUSTRIALISM"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ANTIQUE_SHOP"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_WRITING",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_LEATHER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PAPYRUS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_ANTIQUE_SHOP"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_SCROLLS"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": -1,
+     "enabled": "TECH_PRINTING_PRESS"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 5,
+     "enabled": "TECH_PRINTING_PRESS"
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": -2,
+     "enabled": "TECH_PRINTING_PRESS"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 176,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SCROLL_MAKER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SCROLL_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_SCROLL_MAKER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "type": "UNITCOMBAT_MOUNT_MAMMOTH",
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 20
+   }
+  }
+ },
+ "tags": [
+  "mounted"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/mount_mammoth.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_MOUNT_MAMMOTH"
+ }
+}

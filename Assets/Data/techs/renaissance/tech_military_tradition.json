@@ -1,0 +1,99 @@
+{
+ "type": "TECH_MILITARY_TRADITION",
+ "enables": {
+  "buildings": [
+   "BUILDING_BRANDENBURG_GATE",
+   "BUILDING_CRIME_INSUBORDINATION",
+   "BUILDING_CULTURE_GAUCHO",
+   "BUILDING_CULTURE_PRUSSIAN",
+   "BUILDING_CULTURE_VENEZUELAN",
+   "BUILDING_FIRING_RANGE",
+   "BUILDING_FORT_KNOX",
+   "BUILDING_MA_EVELPIDON_MILITARY_ACADEMY",
+   "BUILDING_MA_WEST_POINT",
+   "BUILDING_RECRUITMENT_CENTER",
+   "BUILDING_TATTOO_PARLOR"
+  ],
+  "promotions": [
+   "PROMOTION_DRILL4",
+   "PROMOTION_OFFICER_COMMISSION"
+  ],
+  "techs": [
+   "TECH_INDUSTRIAL_LIFESTYLE"
+  ],
+  "units": [
+   "UNIT_APACHE_CAVALRY",
+   "UNIT_CAMEL_CAVALRY",
+   "UNIT_CAMEL_GUNNER",
+   "UNIT_CANADIAN_MOUNTIE",
+   "UNIT_CAVALRY",
+   "UNIT_FRANCISCO",
+   "UNIT_GAUCHO_CAVALRY",
+   "UNIT_GIRAFFE_CAVALRY",
+   "UNIT_KANGXI",
+   "UNIT_KHARKHUL",
+   "UNIT_KUCHUM_KHAN",
+   "UNIT_MAMELUK",
+   "UNIT_MEHARISTS",
+   "UNIT_MEXICO_RURALES",
+   "UNIT_RUSSIA_COSSACK",
+   "UNIT_TUGAY_BEY",
+   "UNIT_UHLAN",
+   "UNIT_WANANO",
+   "UNIT_WAYUU_CAVALRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CAVALRY_TACTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NATIONALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 4174
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,1,16"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MILITARY_TRADITION",
+  "soundMP": "AS2D_TECH_MP_MILITARY_TRADITION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MILITARY_TRADITION",
+  "civilopedia": "TXT_KEY_TECH_MILITARY_TRADITION_PEDIA",
+  "quote": "TXT_KEY_TECH_MILITARY_TRADITION_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 60,
+  "gridY": 11
+ }
+}

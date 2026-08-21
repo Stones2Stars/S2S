@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_ACHIEVEMENT_INDUSTRIAL",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_WRITING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "production": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "defense": {
+  "empire": {
+   "amount": {
+    "percent": 15
+   }
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_INDUSTRIAL_ACHIEVEMENT"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ACHIEVEMENT_INDUSTRIAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ACHIEVEMENT_INDUSTRIAL",
+  "civilopedia": "TXT_KEY_BUILDING_ACHIEVEMENT_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "notConstructible": true,
+  "worth": 10,
+  "specialBuildingType": "SPECIALBUILDING_ACHIEVEMENT",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

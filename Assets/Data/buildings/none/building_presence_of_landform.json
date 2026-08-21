@@ -1,0 +1,113 @@
+{
+ "type": "BUILDING_PRESENCE_OF_LANDFORM",
+ "requires": {
+  "operate": {
+   "all": [
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    {
+     "any": [
+      {
+       "type": "FEATURE_POLAR_ROCK_ARCH",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_POLAR_ROCK_ARCH2",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_POLAR_ROCK_FORM1",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_POLAR_ROCK_FORM2",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_POLAR_ROCK_FORM3",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_POLAR_ROCK_FORM4",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_DARK_ROCK_ARCH",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_DARK_ROCK_ARCH2",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_DARK_ROCK_FORM1",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_DARK_ROCK_FORM2",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_DARK_ROCK_FORM3",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_DARK_ROCK_FORM4",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_ROCK_ARCH",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_ROCK_ARCH2",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_ROCK_FORM1",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_ROCK_FORM2",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_ROCK_FORM3",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_ROCK_FORM4",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_DEVILS_TABLE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CREATION_MYTH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PRESENCE_OF_LANDFORM",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_PRESENCE_OF_ORIGIN_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

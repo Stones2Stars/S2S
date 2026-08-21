@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_ARCTIC_DATA_CENTER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CLOUD_SERVER",
+    "TECH_UBIQUITOUS_COMPUTING",
+    {
+     "type": "FEATURE_ICE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 3245,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ARCTIC_DATA_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ARCTIC_DATA_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_ARCTIC_DATA_CENTER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

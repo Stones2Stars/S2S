@@ -1,0 +1,101 @@
+{
+ "type": "BUILDING_MA_EVELPIDON_MILITARY_ACADEMY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MILITARY_ACADEMY",
+    "TECH_MILITARY_TRADITION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 15
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "domains": {
+    "DOMAIN_LAND": {
+     "flat": 4
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 2320,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_EVELPIDON_MILITARY_ACADEMY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MA_EVELPIDON_MILITARY_ACADEMY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MA_EVELPIDON_MILITARY_ACADEMY",
+  "civilopedia": "TXT_KEY_BUILDING_MA_EVELPIDON_MILITARY_ACADEMY_PEDIA",
+  "pediaCategory": "groupWonder",
+  "worth": 8,
+  "militaryWorth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_GREAT_GENERAL",
+  "specialBuildingType": "SPECIALBUILDING_GROUP_ELITE_MILITARY_ACADEMIES",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

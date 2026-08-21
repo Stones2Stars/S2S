@@ -1,0 +1,94 @@
+{
+ "type": "IMPROVEMENT_MODERN_WINDMILL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ECOLOGY",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_BARREN",
+      "TERRAIN_DESERT",
+      "TERRAIN_DUNES",
+      "TERRAIN_GRASSLAND",
+      "TERRAIN_ICE",
+      "TERRAIN_PERMAFROST",
+      "TERRAIN_PLAINS",
+      "TERRAIN_ROCKY",
+      "TERRAIN_BADLAND",
+      "TERRAIN_JAGGED",
+      "TERRAIN_SALT_FLATS",
+      "TERRAIN_SCRUB",
+      "TERRAIN_TAIGA",
+      "TERRAIN_TUNDRA"
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    7,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WIRELESS_ELECTRICITY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WEATHER_CONTROL",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    7,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_WIRELESS_ELECTRICITY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_WEATHER_CONTROL",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_MODERN_WINDMILL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_MODERNWINDMILL",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_WINDMILL_PEDIA",
+  "pillageTo": "IMPROVEMENT_WINDMILL",
+  "advancedStart": {
+   "cost": 80
+  },
+  "pillageGold": 30
+ }
+}

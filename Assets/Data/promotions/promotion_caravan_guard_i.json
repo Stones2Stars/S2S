@@ -1,0 +1,140 @@
+{
+ "type": "PROMOTION_CARAVAN_GUARD_I",
+ "enables": {
+  "promotions": [
+   "PROMOTION_CARAVAN_CIRCLE_THE_WAGONS",
+   "PROMOTION_CARAVAN_GUARD_II",
+   "PROMOTION_CARAVAN_MOVEMENT_I"
+  ]
+ },
+ "combat": {
+  "unit": {
+   "percent": 5,
+   "terrain": {
+    "TERRAIN_GRASSLAND": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_LUSH": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_PLAINS": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_BARREN": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_PERMAFROST": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_ROCKY": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_BADLAND": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_JAGGED": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_DESERT": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_SCRUB": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_DUNES": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_SALT_FLATS": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_TAIGA": {
+     "defense": {
+      "percent": 5
+     }
+    },
+    "TERRAIN_TUNDRA": {
+     "defense": {
+      "percent": 5
+     }
+    }
+   },
+   "feature": {
+    "FEATURE_JUNGLE": {
+     "defense": {
+      "percent": -15
+     }
+    },
+    "FEATURE_FOREST": {
+     "defense": {
+      "percent": -10
+     }
+    },
+    "FEATURE_BAMBOO": {
+     "defense": {
+      "percent": -10
+     }
+    },
+    "FEATURE_FOREST_YOUNG": {
+     "defense": {
+      "percent": -5
+     }
+    },
+    "FEATURE_FOREST_BURNT": {
+     "defense": {
+      "percent": -5
+     }
+    },
+    "FEATURE_FOREST_ANCIENT": {
+     "defense": {
+      "percent": -15
+     }
+    }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CARAVAN_GUARD": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/CaravanGuard1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_CARAVAN_GUARD_I"
+ }
+}

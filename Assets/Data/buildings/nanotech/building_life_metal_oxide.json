@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_LIFE_METAL_OXIDE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_HYPOTHETICAL_BIOCHEMISTRY",
+    {
+     "type": "TERRAIN_MERCURY",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "production": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_TERRAFORMED_MERCURY": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 1744,
+  "hurryModifier": 10000
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LIFE_METAL_OXIDE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_METAL_OXIDE",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_METAL_OXIDE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

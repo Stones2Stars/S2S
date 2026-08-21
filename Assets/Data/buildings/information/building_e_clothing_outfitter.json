@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_E_CLOTHING_OUTFITTER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_NANOTECH_CLOTHING_OUTFITTER"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MICROGENERATORS",
+    {
+     "any": [
+      "BUILDING_MALL",
+      "BUILDING_HYPERMARKET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_NANOTECH_CLOTHING_OUTFITTER"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "cost": {
+  "production": 2625,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_E_CLOTHING_OUTFITTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_E_CLOTHING_OUTFITTER",
+  "civilopedia": "TXT_KEY_BUILDING_E_CLOTHING_OUTFITTER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,78 @@
+{
+ "type": "TECH_BIOMECHANICAL_HARVESTING",
+ "enables": {
+  "bonuses": [
+   "BONUS_ELECTROACTIVE_POLYMERS"
+  ],
+  "buildings": [
+   "BUILDING_AUTOMATED_VEHICLE_DEALERSHIP",
+   "BUILDING_EPSILON_ASSEMBLER",
+   "BUILDING_FACTORY_ELECTROACTIVE_POLYMERS",
+   "BUILDING_MECHATRONICS_LAB",
+   "BUILDING_RECHARGING_NODE"
+  ],
+  "techs": [
+   "TECH_MICROGENERATORS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RENEWABLE_ENERGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GENETIC_BIOCHEMISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ORGANIC_PHOTONICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 25354
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Biomechanicalharvesting.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_BIOMECHANICAL_HARVESTING",
+  "soundMP": "AS2D_TECH_BIOMECHANICAL_HARVESTING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_BIOMECHANICAL_HARVESTING",
+  "civilopedia": "TXT_KEY_TECH_BIOMECHANICAL_HARVESTING_PEDIA",
+  "quote": "TXT_KEY_TECH_BIOMECHANICAL_HARVESTING_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 94,
+  "gridY": 15
+ }
+}

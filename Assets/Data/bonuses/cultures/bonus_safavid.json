@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_SAFAVID",
+ "enables": {
+  "units": [
+   "UNIT_ISMAIL_I",
+   "UNIT_TOFANGCHI"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SAFAVID"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SAFAVID",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

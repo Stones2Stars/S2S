@@ -1,0 +1,84 @@
+{
+ "type": "TECH_TRENCH_WARFARE",
+ "enables": {
+  "buildings": [
+   "BUILDING_MAGINOT_LINE"
+  ],
+  "techs": [
+   "TECH_AUTOMATIC_WEAPONS",
+   "TECH_FASCISM"
+  ],
+  "units": [
+   "UNIT_57TH_INFANTRY_REGIMENT",
+   "UNIT_BRIGADE_PIRON",
+   "UNIT_CAMEL_TRENCH_CAVALRY",
+   "UNIT_DIGGER",
+   "UNIT_GIRAFFE_TRENCH_CAVALRY",
+   "UNIT_IWIA_BATTALION",
+   "UNIT_KATIPUNAN_CAVALRY",
+   "UNIT_MATAAFA_BRIGADE",
+   "UNIT_PAIUTE_CAVALRY",
+   "UNIT_RHODESIA_NATIVE_REGIMENT",
+   "UNIT_SAUD_CAVALRY",
+   "UNIT_TRENCH_CAVALRY",
+   "UNIT_TRENCH_INFANTRY",
+   "UNIT_TRENCH_MACHINE_GUN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MINE_WARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BARBED_WIRE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTILLERY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ATOMIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 9484
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/TrenchWarfare_Button.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TRENCH_WARFARE",
+  "soundMP": "AS2D_TECH_TRENCH_WARFARE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TRENCH_WARFARE",
+  "civilopedia": "TXT_KEY_TECH_TRENCH_WARFARE_PEDIA",
+  "quote": "TXT_KEY_TECH_TRENCH_WARFARE_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "militaryWorth": 8,
+  "tradeable": true,
+  "gridX": 72,
+  "gridY": 15
+ }
+}

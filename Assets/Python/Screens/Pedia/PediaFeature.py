@@ -1,7 +1,11 @@
 # Pedia overhaul by Toffer for Caveman2Cosmos.
 
 from CvPythonExtensions import *
+GC = CyGlobalContext()
+INFO = CyInfo()
+TRNSLTR = CyTranslator()
 
+TEXT = CyGameTextMgr()
 class PediaFeature:
 
 	def __init__(self, parent, H_BOT_ROW):
@@ -32,7 +36,6 @@ class PediaFeature:
 	def interfaceScreen(self, iTheFeature):
 		GC = CyGlobalContext()
 		TRNSLTR = CyTranslator()
-		CvTheFeature = GC.getFeatureInfo(iTheFeature)
 		aName = self.main.getNextWidgetName
 		CyPlayer = self.main.CyPlayer
 
@@ -55,13 +58,13 @@ class PediaFeature:
 
 		screen = self.main.screen()
 		# Main Panel
-		szTxt = szfontEdge + CvTheFeature.getDescription()
+		szTxt = szfontEdge + INFO.getDescription("FEATURE_", iTheFeature)
 		screen.setText(aName(), "", szTxt, 1<<0, X_COL_1, 0, 0, eFontTitle, eWidGen, 1, 1)
 		Pnl = aName()
 		screen.addPanel(Pnl, "", "", False, False, X_COL_1 - 3, Y_ROW_1 + 2, H_ROW_1 + 2, H_ROW_1 + 2, PanelStyles.PANEL_STYLE_MAIN)
 		Img = "ToolTip|FEATURE%d" % iTheFeature
-		screen.setImageButtonAt(Img, Pnl, CvTheFeature.getButton(), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
-		szTxt = CvTheFeature.getCivilopedia()
+		screen.setImageButtonAt(Img, Pnl, INFO.getButton("FEATURE_", iTheFeature), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
+		szTxt = INFO.getCivilopedia("FEATURE_", iTheFeature)
 		if szTxt:
 			x = X_COL_1 + H_ROW_1 + 4
 			w = W_PEDIA_PAGE - H_ROW_1 - 4
@@ -69,11 +72,11 @@ class PediaFeature:
 			screen.addMultilineText(aName(), szfont2 + szTxt, x + 4, Y_ROW_1 + 8, w - 8, H_ROW_1 - 16, eWidGen, 1, 1, 1<<0)
 
 		# Required for building
+		#  The feature's own RELATED list names the buildings that reference it, so the panel reads that rather
+		#  than asking every building in turn.
 		aList = []
-		for iType in xrange(GC.getNumBuildingInfos()):
-			CvBuilding = GC.getBuildingInfo(iType)
-			if CvBuilding.isPrereqOrFeature(iTheFeature):
-				aList.append([iType, CvBuilding.getButton()])
+		for iBuilding in INFO.getEdgeIds("FEATURE_", iTheFeature, EdgeFamily.EDGEF_RELATED, EdgeBucket.EDGEB_BUILDINGS):
+			aList.append([iBuilding, INFO.getButton("BUILDING_", iBuilding)])
 		if aList:
 			H_ROW_2 -= H_ROW_3
 			PF = "ToolTip|JumpTo|BUILDING%d"
@@ -91,11 +94,11 @@ class PediaFeature:
 
 		# Stats
 		szTxt = ""
-		iTemp1 = CvTheFeature.getGrowthProbability()
+		iTemp1 = INFO.getFeatureGrowthProbability(iTheFeature)
 		if iTemp1 > 0:
-			fValue = iTemp1 * (GC.getFEATURE_GROWTH_MODIFIER() + 100) / 100.0
+			fValue = iTemp1 * (GC.getDefineINT("FEATURE_GROWTH_MODIFIER") + 100) / 100.0
 			if CyPlayer:
-				fValue /= GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent()
+				fValue /= GC.getGame().getSpeedPercent()
 			else:
 				fValue /= 100
 
@@ -105,7 +108,7 @@ class PediaFeature:
 				szTemp = szTemp[:-1]
 			szTxt += "\nGrowth: %s%% chance per turn." % szTemp
 
-			fRouteFactor = (100 + GC.getROUTE_FEATURE_GROWTH_MODIFIER()) / 100.0
+			fRouteFactor = (100 + GC.getDefineINT("ROUTE_FEATURE_GROWTH_MODIFIER")) / 100.0
 			if fRouteFactor < 0:
 				fRouteFactor = 0
 			fValue *= fRouteFactor
@@ -117,14 +120,14 @@ class PediaFeature:
 			szTxt += " (%s%% with a route)" % szTemp
 
 		iTemp1 = 0
-		iTemp = CvTheFeature.getDisappearanceProbability()
+		iTemp = INFO.getFeatureDisappearanceProbability(iTheFeature)
 		if iTemp > 0:
 			if iTemp1:
 				szTxt += "  |  "
 			else:
 				szTxt += "\n"
 			if CyPlayer:
-				fValue = iTemp / (1.0 * GC.getGameSpeedInfo(GC.getGame().getGameSpeedType()).getSpeedPercent())
+				fValue = iTemp / (1.0 * GC.getGame().getSpeedPercent())
 			else:
 				fValue = iTemp / 100.0
 
@@ -135,27 +138,20 @@ class PediaFeature:
 
 			szTxt += "Vanish: %s%% chance per turn." % szTemp
 
+		#  A feature's yield is its OWN plot-scope output, read as the group at that scope. The substrate authors
+		#  no fractional yields, so the reduce to whole faces loses nothing.
 		szTemp = ""
+		aFlatYields = INFO.getFlatYields("FEATURE_", iTheFeature, CascScope.CASC_SCOPE_PLOT)
 		for k in range(YieldTypes.NUM_YIELD_TYPES):
-			iTemp = CvTheFeature.getYieldChange(k)
+			iTemp = aFlatYields[k] / 100
 			if iTemp:
 				if iTemp < 0:
 					szTemp += " <color=255,0,0,255>"
 				else:
 					szTemp += " <color=0,230,0,255>+"
-				szTemp += str(iTemp) + (u'%c' % (GC.getYieldInfo(k).getChar())) + "</color>"
-			iTemp = CvTheFeature.getRiverYieldChange(k)
-			if iTemp:
-				if iTemp < 0:
-					szTemp += " (<color=255,0,0,255>"
-				else:
-					szTemp += " (<color=0,230,0,255>+"
-				szTemp += str(iTemp) + (u'%c' % (GC.getYieldInfo(k).getChar())) + "</color>River)"
+				szTemp += str(iTemp) + (u'%c' % (TEXT.getSymbolChar("YIELD_", k))) + "</color>"
 		if szTemp:
 			szTxt += "\n" + szTemp
-		iTemp = CvTheFeature.getWarmingDefense()
-		if iTemp:
-			szTxt += "\nGlobal Warming Defense Factor: %d" % iTemp
 		if szTxt:
 			szTxt = szfont3b + szTxt + "\n"
 		szTxt += szfont3 + CyGameTextMgr().getFeatureHelp(iTheFeature, True)

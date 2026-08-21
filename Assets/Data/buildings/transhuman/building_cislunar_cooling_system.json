@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_CISLUNAR_COOLING_SYSTEM",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_CRYONIC_BODY_STORAGE",
+   "BUILDING_CISLUNAR_ONEILL_CYLINDER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_SPACEPORT",
+    "BUILDING_CISLUNAR_MATERIALS_LAB",
+    "TECH_FROST_BEAMS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 2110,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_COOLING_SYSTEM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_COOLING_SYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_COOLING_SYSTEM_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

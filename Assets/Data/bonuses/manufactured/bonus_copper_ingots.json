@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_COPPER_INGOTS",
+ "enables": {
+  "buildings": [
+   "BUILDING_SMELTER_BRASS",
+   "BUILDING_SMITH_BRONZE",
+   "BUILDING_SMITH_COPPER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_COPPER_INGOTS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_COPPER_INGOTS",
+  "civilopedia": "TXT_KEY_BONUS_INGOTS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

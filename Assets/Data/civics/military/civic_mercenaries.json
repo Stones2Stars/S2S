@@ -1,0 +1,92 @@
+{
+ "type": "CIVIC_MERCENARIES",
+ "enables": {
+  "buildings": [
+   "BUILDING_CIVIC_MERCENARIES"
+  ]
+ },
+ "commerce": {
+  "empire": {
+   "percent": [
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   },
+   "percent": [
+    {
+     "value": 2,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 3,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ]
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": [
+     {
+      "value": 15,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
+   },
+   "unitMilitary": {
+    "percent": 10
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -10
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MERCENARY_CAMP": {
+     "percent": 20
+    },
+    "BUILDING_MERCENARY_STABLES": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "grants": {
+  "revolution": 100
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/military_mercenaries.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_MERCENARIES",
+  "civilopedia": "TXT_KEY_CIVIC_MERCENARIES_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_MERCENARIES_STRATEGY",
+  "civicOption": "CIVICOPTION_MILITARY",
+  "upkeepLevel": "UPKEEP_LOW"
+ }
+}

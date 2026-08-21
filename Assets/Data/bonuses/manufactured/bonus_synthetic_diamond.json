@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_SYNTHETIC_DIAMOND",
+ "enables": {
+  "buildings": [
+   "BUILDING_DIAMOND_NANOTHREAD_FOUNDRY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SYNTHETIC_DIAMOND"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SYNTHETIC_DIAMOND",
+  "civilopedia": "TXT_KEY_BONUS_SYNTHETIC_DIAMOND_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

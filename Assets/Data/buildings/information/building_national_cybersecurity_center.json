@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_NATIONAL_CYBERSECURITY_CENTER",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLACKNET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_CYBERWARFARE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "espionage": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_COMPUTER_SECURITY_OFFICE",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 4010,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CYBERSECURITY_CENTER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NATIONAL_CYBERSECURITY_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_CYBERSECURITY_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_CYBERSECURITY_CENTER_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "greatPeopleUnitType": "UNIT_GREAT_SPY",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_IRISH",
+ "enables": {
+  "units": [
+   "UNIT_INNISKILLING"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_IRISH"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_IRISH",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

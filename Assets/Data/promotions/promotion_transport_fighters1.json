@@ -1,0 +1,42 @@
+{
+ "type": "PROMOTION_TRANSPORT_FIGHTERS1",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_TRANSPORT_FIGHTERS"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": -15
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_TRANSPORT_FIGHTERS": 1
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/TransportFighters1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "cargo": {
+   "smSpace": 30
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_TRANSPORT_FIGHTERS1"
+ }
+}

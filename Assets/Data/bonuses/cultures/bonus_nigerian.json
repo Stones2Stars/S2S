@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_NIGERIAN",
+ "enables": {
+  "units": [
+   "UNIT_GOBIR_LANCER",
+   "UNIT_OBAFEMI_AWOLOWO"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_NIGERIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_NIGERIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

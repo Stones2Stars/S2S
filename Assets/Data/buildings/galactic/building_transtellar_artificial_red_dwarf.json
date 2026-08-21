@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_TRANSTELLAR_ARTIFICIAL_RED_DWARF",
+ "enables": {
+  "buildings": [
+   "BUILDING_TRANSTELLAR_ALDERSON_DISK",
+   "BUILDING_TRANSTELLAR_DARK_MATTER_HEAT_SOURCE",
+   "BUILDING_TRANSTELLAR_DYSON_SPHERE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TRANSTELLAR_ARTIFICIAL_BROWN_DWARF",
+    "TECH_ARTIFICIAL_STARS",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 4056,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_ARTIFICIAL_RED_DWARF",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_ARTIFICIAL_RED_DWARF",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_ARTIFICIAL_RED_DWARF_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

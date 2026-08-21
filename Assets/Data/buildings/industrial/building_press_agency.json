@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_PRESS_AGENCY",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_NEWSPAPERS",
+   "BUILDING_NEWS_STAND",
+   "BUILDING_PROPAGANDA_OFFICE",
+   "BUILDING_THINK_TANK",
+   "BUILDING_WORLD_NEWS_NETWORK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_JOURNALISM",
+    {
+     "any": [
+      "BUILDING_OFFICIUM",
+      "BUILDING_MODERN_OFFICES"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 655,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PRESS_AGENCY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_PRESS_AGENCY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PRESS_AGENCY",
+  "civilopedia": "TXT_KEY_BUILDING_PRESS_AGENCY_PEDIA",
+  "worth": 7,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

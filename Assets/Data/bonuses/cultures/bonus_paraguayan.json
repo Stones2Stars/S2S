@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_PARAGUAYAN",
+ "enables": {
+  "units": [
+   "UNIT_JOSE_DE_FRANCIA",
+   "UNIT_LOS_MARINOS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PARAGUAYAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PARAGUAYAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

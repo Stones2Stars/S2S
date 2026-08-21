@@ -1,0 +1,137 @@
+{
+ "type": "BUILDING_NATIONAL_AEROSPACE_AGENCY",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ADVANCED_ROCKETRY",
+    {
+     "any": [
+      "BUILDING_MILITARY_AIRBASE",
+      "BUILDING_AEROSPACE_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ROCKET_FUEL",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_WARES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  },
+  "city": {
+   "domains": {
+    "DOMAIN_AIR": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "domains": {
+    "DOMAIN_AIR": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_LAUNCH_SITE"
+   }
+  ]
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 4,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_SPACECRAFT"
+   }
+  }
+ ],
+ "cost": {
+  "production": 2690,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NASA"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NATIONAL_AEROSPACE_AGENCY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_AEROSPACE_AGENCY",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_AEROSPACE_AGENCY_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 8,
+  "militaryWorth": 8,
+  "airlift": 1,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

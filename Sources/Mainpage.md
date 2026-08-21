@@ -12,7 +12,7 @@ The DLL is written in **C++ (pre-C++11 / VS2003-compatible)** and relies on:
 - **Python C-API** for the `Cy*` binding layer that exposes game objects to Python scripts.
 - **Doxygen + Graphviz** for auto-generated API documentation.
 
-The project solution is `C2C (VS2019).sln` (builds with the VS2019 toolset while keeping
+The project solution is `S2S.sln` (builds with the VS2019 toolset while keeping
 language-standard compatibility with the original BtS build chain).
 
 ---
@@ -341,8 +341,8 @@ profiler for performance measurement of hot paths.
 
 | File | Purpose |
 |---|---|
-| `C2C (VS2019).sln` | Visual Studio solution |
-| `C2C (VS2019).vcxproj` | Main project — compiles all `Cv*`, `Cy*`, and utility files |
+| `S2S.sln` | Visual Studio solution |
+| `S2S.vcxproj` | Main project — compiles all `Cv*`, `Cy*`, and utility files |
 | `fbuild.bff` | FASTBuild script for faster incremental builds |
 | `_precompile.cpp` | Pre-compiled header translation unit |
 | `CvGameCoreDLL.h` | Master PCH — Boost, STL, engine interface includes |
@@ -352,7 +352,7 @@ profiler for performance measurement of hot paths.
 
 ## Navigation
 
-Individual class reference pages (in [Sources/docs/reference/](docs/reference/)):
+Individual class reference pages (in [docs/dev/reference/](docs/reference/)):
 
 ### AI Classes
 

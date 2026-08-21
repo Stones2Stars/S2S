@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_ZUSE_COMPUTER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMMUNICATION_NETWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_EARLY_COMPUTING",
+    "TECH_DIESELPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DIESELPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1,
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 1130,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ZUSE_COMPUTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ZUSE_COMPUTER",
+  "civilopedia": "TXT_KEY_BUILDING_ZUSE_COMPUTER_PEDIA",
+  "specialBuildingType": "SPECIALBUILDING_PUNK_DIESEL",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

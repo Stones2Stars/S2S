@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_LASER_STARWAY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_SOLAR_ECONOMY",
+    "BUILDING_DEEP_SPACE_ONEILL_CYLINDER",
+    "TECH_INTERSTELLAR_TRADE",
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_BROADCAST_NODE": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_TRANSTELLAR_LASER_HIGHWAY_RELAY",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 23432,
+  "hurryModifier": 10000
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_LASER_STARWAY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LASER_STARWAY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LASER_STARWAY",
+  "civilopedia": "TXT_KEY_BUILDING_LASER_STARWAY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

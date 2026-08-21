@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_LUNAR_FERTILIZER_STORAGE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_LUNAR_BASE",
+    {
+     "type": "BUILDING_COMMERCIAL_SPACEPORT",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_LUNAR_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_FERTILIZERS"
+  ]
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 200
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUNAR_FERTILIZER_STORAGE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_FERTILIZER_STORAGE",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_FERTILIZER_STORAGE_PEDIA",
+  "pediaCategory": "space",
+  "forceNoPrereqScaling": true,
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

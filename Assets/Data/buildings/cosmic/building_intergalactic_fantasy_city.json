@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_INTERGALACTIC_FANTASY_CITY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_ASTROPOLIS",
+    "TECH_OMEGA_MINUS_ENGINEERING",
+    "TECH_SUPERSYMMETRIC_PARTICLE_CONSTRUCTION",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CHRONOTON",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 4492,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_FANTASY_CITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_FANTASY_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_FANTASY_CITY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

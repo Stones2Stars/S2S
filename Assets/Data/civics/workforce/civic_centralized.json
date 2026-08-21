@@ -1,0 +1,86 @@
+{
+ "type": "CIVIC_CENTRALIZED",
+ "food": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 4
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    1,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "flat": -3
+    },
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 2
+    },
+    "production": {
+     "percent": 2
+    },
+    "commerce": {
+     "percent": 5
+    }
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "revolution": {
+  "empire": {
+   "laborFreedom": {
+    "flat": 2
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/labor_centralized.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_CENTRALIZED",
+  "civilopedia": "TXT_KEY_CIVIC_CENTRALIZED_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_CENTRALIZED_STRATEGY",
+  "civicOption": "CIVICOPTION_WORKFORCE",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

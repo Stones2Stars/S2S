@@ -1,0 +1,39 @@
+{
+ "type": "PROMOTION_GRAPE_SHOT",
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 15
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 15
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 15
+    },
+    "UNITCOMBAT_SIEGE": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -20
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/SiegeAid2.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,7,11"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_GRAPE_SHOT"
+ }
+}

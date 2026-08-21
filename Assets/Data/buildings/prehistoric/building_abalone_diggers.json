@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_ABALONE_DIGGERS",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_SHELLFISH"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_AUTOMATED_URBANIZATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AQUAFARM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FISHING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PEARLS",
+     "scope": "city",
+     "vicinity": "owned"
+    },
+    {
+     "type": "BONUS_MUREX",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ],
+   "dormant": [
+    "BUILDING_AQUAFARM"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 92,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ABALONE_DIGGERS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ABALONE_DIGGERS",
+  "civilopedia": "TXT_KEY_BUILDING_ABALONE_DIGGERS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

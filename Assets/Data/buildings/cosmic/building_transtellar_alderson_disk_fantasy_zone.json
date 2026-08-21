@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_TRANSTELLAR_ALDERSON_DISK_FANTASY_ZONE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TRANSTELLAR_ALDERSON_DISK",
+    "TECH_MENSIOKINESIS",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_YGGDRASIL_SEEDS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    {
+     "value": 13,
+     "enabled": "TECH_3D_PROJECTIONS"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 125
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 7629,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_ALDERSON_DISK_FANTASY_ZONE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_ALDERSON_DISK_FANTASY_ZONE",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_ALDERSON_DISK_FANTASY_ZONE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

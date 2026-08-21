@@ -1,0 +1,20 @@
+{
+ "type": "ROUTE_PATH",
+ "movement": {
+  "plot": {
+   "flat": 80
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/dirt.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_ROUTE_PATH",
+  "value": 2,
+  "advancedStart": {
+   "cost": 6
+  }
+ }
+}

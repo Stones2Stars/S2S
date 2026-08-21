@@ -1,0 +1,40 @@
+{
+ "type": "IMPROVEMENT_JOVIAN_SCOOP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COLONY_ARCOLOGY",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_JUPITER",
+      "TERRAIN_SATURN",
+      "TERRAIN_URANUS",
+      "TERRAIN_NEPTUNE"
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 15
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_JOVIAN_SCOOP"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_JOVIAN_SCOOP",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_JOVIAN_SCOOP_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

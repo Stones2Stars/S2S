@@ -1,0 +1,446 @@
+
+#include "Tools/FProfiler.h"
+
+#include "CvGameCoreDLL.h"
+#include "Engine/CvArea.h"
+#include "Infrastructure/CvInitCore.h"
+#include "Defines/CvGlobals.h"
+#include "Engine/CvMap.h"
+#include "Infrastructure/CvMapGenerator.h"
+#include "Infrastructure/CvPathGenerator.h"
+#include "Engine/CvSelectionGroup.h"
+#include "CyArea.h"
+#include "CyMap.h"
+#include "CyPlot.h"
+#include "CyUnit.h"
+
+//
+// Python wrapper class for CvMap
+//
+
+CyMap::CyMap()
+	: m_pMap(&GC.getMap())
+{ }
+
+CyMap::CyMap(MapTypes eMap)
+	: m_pMap(&GC.getMapByIndex(eMap))
+{ }
+
+int CyMap::getType()
+{
+	return m_pMap ? m_pMap->getType() : NO_MAP;
+}
+
+CyMap& CyMap::operator=(CvMap& kMap)
+{
+	m_pMap = &kMap;
+	return *this;
+}
+
+int	CyMap::getViewportWidth()
+{
+	return GC.getCurrentViewport()->getGridWidth();
+}
+
+int	CyMap::getViewportHeight()
+{
+	return GC.getCurrentViewport()->getGridHeight();
+}
+
+int	CyMap::getViewportXFromMapX(int iX)
+{
+	return GC.getCurrentViewport()->getViewportXFromMapX(iX);
+}
+
+int	CyMap::getViewportYFromMapY(int iY)
+{
+	return GC.getCurrentViewport()->getViewportYFromMapY(iY);
+}
+
+bool CyMap::isInViewport(int iX, int iY)
+{
+	return GC.getCurrentViewport()->isInViewport(iX, iY);
+}
+
+void CyMap::closeAdvisor(int advisorWidth, int iMinimapLeft, int iMinimapRight, int iMinimapTop, int iMinimapBottom)
+{
+	GC.getCurrentViewport()->closeAdvisor(advisorWidth, iMinimapLeft, iMinimapRight, iMinimapTop, iMinimapBottom);
+}
+
+void CyMap::bringIntoView(int iX, int iY, bool bLookAt, bool bForceCenter, bool bDisplayCityScreen, bool bSelectCity, bool bAddSelectedCity)
+{
+	GC.getCurrentViewport()->bringIntoView(iX, iY, NULL, bForceCenter, bDisplayCityScreen, bSelectCity, bAddSelectedCity);
+}
+
+void CyMap::resetRevealedPlots(int /*TeamTypes*/ eTeam)
+{
+	if (m_pMap)
+		m_pMap->resetRevealedPlots((TeamTypes)eTeam);
+}
+
+void CyMap::setAllPlotTypes(int /*PlotTypes*/ ePlotType)
+{
+	if (m_pMap)
+		m_pMap->setAllPlotTypes((PlotTypes) ePlotType);
+}
+
+
+void CyMap::verifyUnitValidPlot()
+{
+	if (m_pMap)
+		m_pMap->verifyUnitValidPlot();
+}
+
+CyArea* CyMap::findBiggestArea(bool bWater)
+{
+	CvArea* area = m_pMap->findBiggestArea(bWater);
+	return area ? new CyArea(area) : NULL;
+}
+
+int CyMap::getMapFractalFlags()
+{
+	return m_pMap ? m_pMap->getMapFractalFlags() : -1;
+}
+
+int CyMap::numPlots()
+{
+	return m_pMap ? m_pMap->numPlots() : -1;
+}
+
+int CyMap::plotNum(int iX, int iY)
+{
+	return m_pMap ? m_pMap->plotNum(iX, iY) : -1;
+}
+
+int CyMap::plotX(int iIndex)
+{
+	return m_pMap ? m_pMap->plotX(iIndex) : -1;
+}
+
+int CyMap::plotY(int iIndex)
+{
+	return m_pMap ? m_pMap->plotY(iIndex) : -1;
+}
+
+int CyMap::getGridWidth()
+{
+	return m_pMap->getGridWidth();
+}
+
+int CyMap::getGridHeight()
+{
+	return m_pMap->getGridHeight();
+}
+
+int CyMap::getLandPlots()
+{
+	return m_pMap ? m_pMap->getLandPlots() : -1;
+}
+
+int CyMap::getOwnedPlots()
+{
+	return m_pMap ? m_pMap->getOwnedPlots() : -1;
+}
+
+int CyMap::getTopLatitude()
+{
+	return m_pMap ? m_pMap->getTopLatitude() : -1;
+}
+
+int CyMap::getBottomLatitude()
+{
+	return m_pMap ? m_pMap->getBottomLatitude() : -1;
+}
+
+int CyMap::getNextRiverID()
+{
+	return m_pMap ? m_pMap->getNextRiverID() : -1;
+}
+
+void CyMap::incrementNextRiverID()
+{
+	if (m_pMap)
+		m_pMap->incrementNextRiverID();
+}
+
+bool CyMap::isWrapX()
+{
+	return m_pMap ? m_pMap->isWrapX() : false;
+}
+
+bool CyMap::isWrapY()
+{
+	return m_pMap ? m_pMap->isWrapY() : false;
+}
+
+std::wstring CyMap::getMapScriptName()
+{
+	return GC.getInitCore().getMapScriptName().GetCString();
+}
+
+WorldSizeTypes CyMap::getWorldSize()
+{
+	return m_pMap ? m_pMap->getWorldSize() : NO_WORLDSIZE;
+}
+
+ClimateTypes CyMap::getClimate()
+{
+	return m_pMap ? m_pMap->getClimate() : NO_CLIMATE;
+}
+
+SeaLevelTypes CyMap::getSeaLevel()
+{
+	return m_pMap ? m_pMap->getSeaLevel() : NO_SEALEVEL;
+}
+
+int CyMap::getNumCustomMapOptions()
+{
+	return m_pMap ? m_pMap->getNumCustomMapOptions() : 0;
+}
+
+CustomMapOptionTypes CyMap::getCustomMapOption(int iOption)
+{
+	return m_pMap ? m_pMap->getCustomMapOption(iOption) : NO_CUSTOM_MAPOPTION;
+}
+
+int CyMap::getNumBonuses(int /* BonusTypes */ eIndex)
+{
+	return m_pMap ? m_pMap->getNumBonuses((BonusTypes)eIndex) : -1;
+}
+
+int CyMap::getNumBonusesOnLand(int /* BonusTypes */ eIndex)
+{
+	return m_pMap ? m_pMap->getNumBonusesOnLand((BonusTypes)eIndex) : -1;
+}
+
+python::list CyMap::plots() const
+{
+	PROFILE_EXTRA_FUNC();
+	python::list list = python::list();
+
+	for (int i = 0, numPlots = m_pMap->numPlots(); i < numPlots; i++)
+	{
+		list.append(CyPlot(m_pMap->plotByIndex(i)));
+	}
+	return list;
+}
+
+CyPlot* CyMap::plotByIndex(int iIndex)
+{
+	return m_pMap ? new CyPlot(m_pMap->plotByIndex(iIndex)) : NULL;
+}
+
+//
+// static version
+//
+
+CyPlot* CyMap::plot(int iX, int iY)
+{
+	if (m_pMap->plot(iX, iY))
+	{
+		return new CyPlot(m_pMap->plot(iX, iY));
+	}
+	return NULL;
+}
+
+//
+// static version
+//
+CyPlot* CyMap::sPlot(int iX, int iY)
+{
+	static CyPlot p;
+	p.setPlot(m_pMap->plot(iX, iY));
+	return &p;
+}
+
+int CyMap::getNumAreas()
+{
+	return m_pMap ? m_pMap->getNumAreas() : -1;
+}
+
+int CyMap::getNumLandAreas()
+{
+	return m_pMap ? m_pMap->getNumLandAreas() : -1;
+}
+
+CyArea* CyMap::getArea(int iID)
+{
+	return m_pMap ? new CyArea(m_pMap->getArea(iID)) : NULL;
+}
+
+python::list CyMap::areas() const
+{
+	PROFILE_EXTRA_FUNC();
+	python::list list = python::list();
+
+	foreach_(CvArea* area, m_pMap->areas())
+	{
+		list.append(CyArea(area));
+	}
+	return list;
+}
+
+void CyMap::recalculateAreas()
+{
+	if (m_pMap)
+		m_pMap->recalculateAreas();
+}
+
+void CyMap::resetPathDistance()
+{
+	if (m_pMap)
+		m_pMap->resetPathDistance();
+}
+
+int CyMap::calculatePathDistance(const CyPlot* pSource, const CyPlot* pDest) const
+{
+	return m_pMap ? m_pMap->calculatePathDistance(pSource->getPlot(), pDest->getPlot()) : -1;
+}
+
+void CyMap::rebuild(int iGridW, int iGridH, int iTopLatitude, int iBottomLatitude, bool bWrapX, bool bWrapY, WorldSizeTypes eWorldSize, ClimateTypes eClimate, SeaLevelTypes eSeaLevel, int iNumCustomMapOptions, CustomMapOptionTypes * aeCustomMapOptions)
+{
+	if (m_pMap)
+		m_pMap->rebuild(iGridW, iGridH, iTopLatitude, iBottomLatitude, bWrapX, bWrapY, eWorldSize, eClimate, eSeaLevel, iNumCustomMapOptions, aeCustomMapOptions);
+}
+
+void CyMap::updateMinimapColor()
+{
+	if (m_pMap)
+	{
+		m_pMap->updateMinimapColor();
+	}
+}
+
+
+bool CyMap::generatePathForHypotheticalUnit(const CyPlot* pFrom, const CyPlot* pTo, int ePlayer, int eUnit, int iFlags, int iMaxTurns) const
+{
+	return CvSelectionGroup::getPathGenerator()->generatePathForHypotheticalUnit(pFrom->getPlot(), pTo->getPlot(), (PlayerTypes)ePlayer, (UnitTypes)eUnit, iFlags, iMaxTurns);
+}
+
+int CyMap::getLastPathStepNum() const
+{
+	PROFILE_EXTRA_FUNC();
+	// length of the path is not the number of steps so we have to count
+	CvPath::const_iterator it = CvSelectionGroup::getPathGenerator()->getLastPath().begin();
+	int i = 0;
+	while (it.plot())
+	{
+		i++;
+		++it;
+	}
+	return i;
+}
+
+CyPlot* CyMap::getLastPathPlotByIndex(int index) const
+{
+	PROFILE_EXTRA_FUNC();
+	// we can only start from the beginning if we don't want to expose the iterator to Python
+	CvPath::const_iterator it = CvSelectionGroup::getPathGenerator()->getLastPath().begin();
+	for (int i = 0; i < index; i++)
+		++it;
+	if (it.plot())
+	{
+		return new CyPlot(it.plot());
+	}
+	return NULL;
+}
+
+void CyMap::moveUnitToMap(const CyUnit* unit, int numTravelTurns)
+{
+	m_pMap->moveUnitToMap(*unit->getUnit(), numTravelTurns);
+}
+
+void CyMap::setClimateZone(const int y, const ClimateZoneTypes eClimate)
+{
+	m_pMap->setClimateZone(y, eClimate);
+}
+
+//
+//	THE MAP-SCRIPT BOUNDARY, republished. Map scripts are their OWN boundary (patterns.md THE PYTHON READ
+//	BOUNDARY: they read map-gen types nothing else reads, run before most game state exists, are WRITE-
+//	dominated, and their contract is the named Python CALLBACKS) -- so third-party scripts were never meant
+//	to be affected by the Cy* cut. These are HANDLES, not infos: the ruling that GC hands out no infos is
+//	untouched by them.
+//
+void CyMap::pythonPublish()
+{
+	python::class_<CyMap>("CyMap")
+		.def("getType", &CyMap::getType)
+
+
+		.def("getViewportWidth", &CyMap::getViewportWidth)
+		.def("getViewportHeight", &CyMap::getViewportHeight)
+		.def("getViewportXFromMapX", &CyMap::getViewportXFromMapX)
+		.def("getViewportYFromMapY", &CyMap::getViewportYFromMapY)
+		.def("isInViewport", &CyMap::isInViewport)
+
+		.def("closeAdvisor", &CyMap::closeAdvisor)
+		.def("bringIntoView", &CyMap::bringIntoView)
+
+		.def("resetRevealedPlots", &CyMap::resetRevealedPlots)
+		.def("setAllPlotTypes", &CyMap::setAllPlotTypes)
+
+		.def("verifyUnitValidPlot", &CyMap::verifyUnitValidPlot)
+
+
+		.def("findBiggestArea", &CyMap::findBiggestArea, python::return_value_policy<python::manage_new_object>())
+
+		.def("getMapFractalFlags", &CyMap::getMapFractalFlags)
+		.def("numPlots", &CyMap::numPlots)
+		.def("plotNum", &CyMap::plotNum)
+		.def("plotX", &CyMap::plotX)
+		.def("plotY", &CyMap::plotY)
+		.def("getGridWidth", &CyMap::getGridWidth)
+		.def("getGridHeight", &CyMap::getGridHeight)
+
+		.def("getLandPlots", &CyMap::getLandPlots)
+		.def("getOwnedPlots", &CyMap::getOwnedPlots)
+
+		.def("getTopLatitude", &CyMap::getTopLatitude)
+		.def("getBottomLatitude", &CyMap::getBottomLatitude)
+
+		.def("getNextRiverID", &CyMap::getNextRiverID)
+		.def("incrementNextRiverID", &CyMap::incrementNextRiverID)
+
+		.def("isWrapX", &CyMap::isWrapX)
+		.def("isWrapY", &CyMap::isWrapY)
+		.def("getMapScriptName", &CyMap::getMapScriptName)
+		.def("getWorldSize", &CyMap::getWorldSize)
+		.def("getClimate", &CyMap::getClimate)
+		.def("getSeaLevel", &CyMap::getSeaLevel)
+
+		.def("getNumCustomMapOptions", &CyMap::getNumCustomMapOptions)
+		.def("getCustomMapOption", &CyMap::getCustomMapOption)
+
+		.def("getNumBonuses", &CyMap::getNumBonuses)
+		.def("getNumBonusesOnLand", &CyMap::getNumBonusesOnLand)
+
+		.def("plots", &CyMap::plots)
+		.def("plotByIndex", &CyMap::plotByIndex, python::return_value_policy<python::manage_new_object>())
+		.def("plot", &CyMap::plot, python::return_value_policy<python::manage_new_object>())
+		.def("sPlot", &CyMap::sPlot, python::return_value_policy<python::reference_existing_object>())
+
+		.def("getNumAreas", &CyMap::getNumAreas)
+		.def("getNumLandAreas", &CyMap::getNumLandAreas)
+		.def("getArea", &CyMap::getArea, python::return_value_policy<python::manage_new_object>())
+		.def("areas", &CyMap::areas)
+		.def("recalculateAreas", &CyMap::recalculateAreas)
+		.def("resetPathDistance", &CyMap::resetPathDistance)
+
+		.def("calculatePathDistance", &CyMap::calculatePathDistance)
+		.def("rebuild", &CyMap::rebuild)
+		.def("updateMinimapColor", &CyMap::updateMinimapColor)
+
+		// AIAndy: Expose path generation functionality to Python
+		.def("generatePathForHypotheticalUnit", &CyMap::generatePathForHypotheticalUnit)
+		.def("getLastPathStepNum", &CyMap::getLastPathStepNum)
+		.def("getLastPathPlotByIndex", &CyMap::getLastPathPlotByIndex, python::return_value_policy<python::manage_new_object>())
+
+		.def("moveUnitToMap", &CyMap::moveUnitToMap)
+		.def("setClimateZone", &CyMap::setClimateZone)
+	;
+
+	python::enum_<ViewportDeferredActionState>("ViewportDeferredActionState")
+		.value("VIEWPORT_ACTION_STATE_AFTER_SWITCH", VIEWPORT_ACTION_STATE_AFTER_SWITCH)
+	;
+}

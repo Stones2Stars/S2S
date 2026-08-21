@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_DEEP_SPACE_SUN_SCOOP_POWER_PLANT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_SUN_SCOOP",
+    "TECH_STAR_LIFTING",
+    {
+     "type": "TERRAIN_SUN",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 9636,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_SPACE_SUN_SCOOP_POWER_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_SPACE_SUN_SCOOP_POWER_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_SPACE_SUN_SCOOP_POWER_PLANT_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

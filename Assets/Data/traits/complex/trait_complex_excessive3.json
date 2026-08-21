@@ -1,0 +1,149 @@
+{
+ "type": "TRAIT_COMPLEX_EXCESSIVE3",
+ "excludes": [
+  "TRAIT_COMPLEX_EFFICIENT1"
+ ],
+ "buildRate": {
+  "empire": {
+   "worldWonder": {
+    "percent": 20
+   },
+   "teamWonder": {
+    "percent": 30
+   },
+   "nationalWonder": {
+    "percent": 30
+   },
+   "units": {
+    "percent": [
+     {
+      "value": 15,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_SUBMERGED_TOWN": {
+     "flat": -1
+    }
+   },
+   "flat": -6,
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": -1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": -1
+    },
+    "SPECIALIST_LAWYER": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_STATESMAN": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": -1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": -1
+    }
+   },
+   "percent": -5
+  }
+ },
+ "lessYieldThreshold": {
+  "empire": {
+   "commerce": {
+    "flat": 5
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 3
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": -20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": -10
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "commerce": {
+     "percent": -10
+    }
+   },
+   "max": {
+    "flat": -1
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_SUBMERGED_TOWN": {
+     "percent": -25
+    }
+   }
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -2
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": -3
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitExcessive3.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_EXCESSIVE3",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_EXCESSIVE3_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_EXCESSIVE_STRATEGY",
+  "negativeTrait": true
+ }
+}

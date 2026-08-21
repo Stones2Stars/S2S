@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_MANUFACTURING_PLANT",
+ "enables": {
+  "buildings": [
+   "BUILDING_CARBON_FIBER_PLANT",
+   "BUILDING_CERMET_PLANT",
+   "BUILDING_EPSILON_ASSEMBLER",
+   "BUILDING_FACTORY_MICROCHIPS",
+   "BUILDING_FRAUNHOFER_SOCIETY",
+   "BUILDING_GENERATION_IV_REACTOR",
+   "BUILDING_MANUFACTURING_DISTRICT",
+   "BUILDING_METALLIC_HYDROGEN_PLANT",
+   "BUILDING_PLASMA_ARC_RECYCLING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "TECH_MANUFACTURING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_ALUMINUM_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TITANIUM_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": [
+    25,
+    {
+     "value": 40,
+     "enabled": "HAS_POWER"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 2
+  }
+ },
+ "cost": {
+  "production": 1180,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MANUFACTURING_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MANUFACTURING_PLANT"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MANUFACTURING_PLANT",
+  "civilopedia": "TXT_KEY_BUILDING_MANUFACTURING_PLANT_PEDIA",
+  "worth": 6,
+  "militaryWorth": 20,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

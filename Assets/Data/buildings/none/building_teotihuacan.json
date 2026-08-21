@@ -1,0 +1,122 @@
+{
+ "type": "BUILDING_TEOTIHUACAN",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "IS_HOLY_CITY": "RELIGION_NAGHUALISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "per": {
+      "type": "RELIGION_NAGHUALISM",
+      "scope": "world"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 5,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    },
+    {
+     "value": 2,
+     "per": {
+      "type": "RELIGION_NAGHUALISM",
+      "scope": "world"
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "any": [
+    {
+     "value": 1,
+     "per": {
+      "type": "IMPROVEMENT_QUARRY",
+      "scope": "city"
+     }
+    },
+    {
+     "value": 1,
+     "per": {
+      "type": "IMPROVEMENT_CORE_MINE",
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_NAGHUALISM": {
+    "flat": 4
+   }
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 3
+  }
+ },
+ "shrine": "RELIGION_NAGHUALISM",
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MESOAMERICAN_SHRINE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TEOTIHUACAN",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_ISLAMIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TEOTIHUACAN",
+  "civilopedia": "TXT_KEY_BUILDING_TEOTIHUACAN_PEDIA",
+  "pediaCategory": "religious",
+  "notConstructible": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_NAGHUALISM",
+  "advisor": "ADVISOR_RELIGION",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

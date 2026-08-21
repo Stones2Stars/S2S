@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_AKKADIAN",
+ "enables": {
+  "units": [
+   "UNIT_MATNU",
+   "UNIT_NARAMSIN",
+   "UNIT_SARGON"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_AKKADIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_AKKADIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

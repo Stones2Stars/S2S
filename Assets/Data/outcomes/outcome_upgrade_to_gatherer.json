@@ -1,0 +1,11 @@
+{
+ "type": "OUTCOME_UPGRADE_TO_GATHERER",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_UPGRADE_TO_GATHERER",
+  "message": "TXT_KEY_OUTCOME_UPGRADE_TO_GATHERER_MESSAGE"
+ },
+ "obsoletedBy": "TECH_SEDENTARY_LIFESTYLE",
+ "territory": [
+  "friendly"
+ ]
+}

@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_EXPLORE_ASTEROID",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_ASTEROID",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_ASTEROID_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ION_PROPULSION"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

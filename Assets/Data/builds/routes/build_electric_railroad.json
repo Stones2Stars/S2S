@@ -1,0 +1,40 @@
+{
+ "type": "BUILD_ELECTRIC_RAILROAD",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ELECTRONICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "route": "ROUTE_ELECTRIC_RAILROAD",
+  "features": [
+   {
+    "feature": "FEATURE_VOLCANO_ACTIVE",
+    "tech": "TECH_DUMMY"
+   }
+  ]
+ },
+ "cost": {
+  "gold": 40,
+  "time": 500
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/BuildElectricRailroad.dds"
+  },
+  "hotkey": "KB_R"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_RAILROAD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_ELECTRIC_RAILROAD"
+ }
+}

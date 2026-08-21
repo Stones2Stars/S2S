@@ -1,0 +1,58 @@
+{
+ "type": "PROMOTION_TRANSPORT_SEAPLANES",
+ "enables": {
+  "promotions": [
+   "PROMOTION_TRANSPORT_SEAPLANES1"
+  ]
+ },
+ "combat": {
+  "unit": {
+   "percent": -10
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 1
+   }
+  }
+ },
+ "skills": {
+  "unitCombats": [
+   "UNITCOMBAT_PROMOTED_TRANSPORT_SEAPLANES"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/TransportSeaplanes.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_TRANSPORT_SEAPLANES",
+  "domainCargoChange": "DOMAIN_AIR",
+  "specialCargoChange": "SPECIALUNIT_SEAPLANE",
+  "smNotSpecialCargoChange": "SPECIALUNIT_MISSILE",
+  "unitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SUBMARINE",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_TROOPS",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_PEOPLE",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_MISSILES",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_FIGHTERS",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_CAPTIVES"
+  ]
+ },
+ "sizeMatters": {
+  "cargo": {
+   "smSpace": 30
+  }
+ }
+}

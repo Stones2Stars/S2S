@@ -1,0 +1,146 @@
+{
+ "type": "IMPROVEMENT_OFFSHORE_PLATFORM",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLASTICS",
+     "scope": "team"
+    },
+    "IS_WATER",
+    {
+     "bonus": [
+      "BONUS_OIL",
+      "BONUS_NATURAL_GAS"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": -2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OIL"
+     }
+    },
+    {
+     "value": -2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_NATURAL_GAS"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_DEEP_SEA_EXPLORATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MODERN_SEISMOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OIL"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_NATURAL_GAS"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GLOBALIZATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MODERN_SEISMOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OIL"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_NATURAL_GAS"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 10
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_WATER_POLLUTION": 5,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  }
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_OFFSHORE_PLATFORM"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_OFFSHORE_PLATFORM",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_OFFSHORE_PLATFORM_PEDIA",
+  "advancedStart": {
+   "cost": 30
+  },
+  "upgradeTime": 15,
+  "pillageGold": 50,
+  "upgradesTo": "IMPROVEMENT_EXTRACTION_FACILITY",
+  "bonuses": {
+   "BONUS_OIL": {
+    "trade": true,
+    "depletionRand": 2000
+   },
+   "BONUS_NATURAL_GAS": {
+    "trade": true,
+    "depletionRand": 2000
+   }
+  }
+ }
+}

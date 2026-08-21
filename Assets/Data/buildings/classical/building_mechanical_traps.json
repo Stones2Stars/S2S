@@ -1,0 +1,104 @@
+{
+ "type": "BUILDING_MECHANICAL_TRAPS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GUERRILLA_WARFARE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LANDMINES"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MACHINERY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_BRONZE_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STEEL_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_LANDMINES",
+    "BUILDING_BOOBY_TRAPS",
+    "BUILDING_ROBOTIC_TRAPS",
+    "BUILDING_GERM_TRAPS",
+    "BUILDING_EMP_TRAPS",
+    "BUILDING_NANOBOT_TRAPS",
+    "BUILDING_GRAVITY_TRAPS"
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 15
+   }
+  }
+ },
+ "cost": {
+  "production": 270,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MECHANICAL_TRAPS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FORGE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MECHANICAL_TRAPS",
+  "civilopedia": "TXT_KEY_BUILDING_MECHANICAL_TRAPS_PEDIA",
+  "militaryWorth": 3,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

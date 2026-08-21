@@ -1,0 +1,107 @@
+{
+ "type": "BUILDING_TRANCE_HUT",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOTROIDS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ALTERNATIVE_MEDICINE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CONSCIOUSNESS",
+    "BUILDING_SAGE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_DRUGS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_COCA",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_KAVA",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_OPIUM",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PEYOTE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_HEMP",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TOBACCO",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_ALTERNATIVE_MEDICINE",
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 125,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRANCE_HUT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRANCE_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_TRANCE_HUT_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

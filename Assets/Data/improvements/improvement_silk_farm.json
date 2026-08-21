@@ -1,0 +1,100 @@
+{
+ "type": "IMPROVEMENT_SILK_FARM",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SERICULTURE",
+     "scope": "team"
+    },
+    {
+     "bonus": [
+      "BONUS_SILK"
+     ]
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CURRENCY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MERCANTILISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ZOOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GLOBALIZATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GENE_MANIPULATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PLASTIC_ELECTRONICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SILK"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_PLANTATION"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_SILK_FARM",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SILK_FARM_PEDIA",
+  "advancedStart": {
+   "cost": 30
+  },
+  "pillageGold": 10,
+  "upgradeTime": 10,
+  "upgradesTo": "IMPROVEMENT_VERTICAL_FARM",
+  "bonuses": {
+   "BONUS_SILK": {
+    "trade": true
+   }
+  }
+ }
+}

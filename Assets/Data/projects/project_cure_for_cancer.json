@@ -1,0 +1,39 @@
+{
+ "type": "PROJECT_CURE_FOR_CANCER",
+ "allowed": {
+  "world": 1
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 2
+  },
+  "world": {
+   "empires": {
+    "flat": 2
+   }
+  }
+ },
+ "cost": {
+  "create": 21000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CANCER"
+   },
+   "icon": ",Art/Interface/Buttons/Buildings/Cancer.dds,Art/Interface/Buttons/RoM_Building_Atlas.dds,5,2"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CANCER",
+  "civilopedia": "TXT_KEY_BUILDING_CANCER_PEDIA",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

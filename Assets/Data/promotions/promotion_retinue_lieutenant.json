@@ -1,0 +1,47 @@
+{
+ "type": "PROMOTION_RETINUE_LIEUTENANT",
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 33
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 33
+    }
+   }
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": 15
+   }
+  }
+ },
+ "skills": {
+  "blitz": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Retinue/lieutenant.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_GET_RETINUE"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_RETINUE_LIEUTENANT",
+  "unitCombats": [
+   "UNITCOMBAT_HERO"
+  ]
+ }
+}

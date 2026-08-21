@@ -1,0 +1,190 @@
+{
+ "type": "CIVIC_MERITOCRACY",
+ "food": {
+  "empire": {
+   "percent": [
+    3,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    3,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": [
+    3,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_LYCEUM": {
+     "flat": 2
+    },
+    "BUILDING_ELEMENTARY_SCHOOL": {
+     "flat": 2
+    },
+    "BUILDING_HOLOGRAPHIC_SCHOOL": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 5,
+   "domestic": {
+    "percent": 5
+   }
+  }
+ },
+ "freeSpecialists": {
+  "empire": {
+   "any": 1
+  }
+ },
+ "capture": {
+  "empire": {
+   "resistance": {
+    "percent": 10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": 4
+   },
+   "percent": [
+    {
+     "value": 3,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 3,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ]
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "greatPeopleRate": {
+    "percent": 5
+   }
+  }
+ },
+ "grants": {
+  "revolution": 20
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/rule_meritocracy.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_MERITOCRACY",
+  "civilopedia": "TXT_KEY_CIVIC_MERITOCRACY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_MERITOCRACY_STRATEGY",
+  "civicOption": "CIVICOPTION_RULE",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

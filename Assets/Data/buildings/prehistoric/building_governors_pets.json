@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_GOVERNORS_PETS",
+ "enables": {
+  "buildings": [
+   "BUILDING_GOVERNORS_MENAGERIE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CHIEFDOM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -2
+   }
+  }
+ },
+ "cost": {
+  "production": 126,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GOVERNORS_PETS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GOVERNORS_PETS",
+  "civilopedia": "TXT_KEY_BUILDING_GOVERNORS_PETS_PEDIA",
+  "worth": 1,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_CULTURE",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

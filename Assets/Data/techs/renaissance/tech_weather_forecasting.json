@@ -1,0 +1,63 @@
+{
+ "type": "TECH_WEATHER_FORECASTING",
+ "enables": {
+  "builds": [
+   "BUILD_PAVED_ROAD"
+  ],
+  "techs": [
+   "TECH_HOT_AIR_BALLOON",
+   "TECH_SEXTANT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CARTOGRAPHY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASTRONOMY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 2701
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/techtree/Weather_Forecasting.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_WEATHER_FORECASTING",
+  "soundMP": "AS2D_TECH_WEATHER_FORECASTING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_WEATHER_FORECASTING",
+  "civilopedia": "TXT_KEY_TECH_WEATHER_FORECASTING_PEDIA",
+  "quote": "TXT_KEY_TECH_WEATHER_FORECASTING_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 40,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "gridX": 53,
+  "gridY": 17
+ }
+}

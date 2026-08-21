@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_TARASCAN",
+ "enables": {
+  "units": [
+   "UNIT_TARIACURI",
+   "UNIT_UACUSECHA"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TARASCAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TARASCAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

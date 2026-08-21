@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_GALATIAN",
+ "enables": {
+  "units": [
+   "UNIT_BRENNUS",
+   "UNIT_SOTAROAS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_GALATIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_GALATIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

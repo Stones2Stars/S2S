@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_IMPERIAL_GUARD",
+ "collateral": {
+  "unit": {
+   "protection": {
+    "percent": 100
+   }
+  }
+ },
+ "costs": {
+  "unit": {
+   "upgrade": {
+    "percent": -40
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 15
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/PromoImpGuard.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_IMPERIAL_GUARD"
+ }
+}

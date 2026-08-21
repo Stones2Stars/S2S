@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_VENUS_SKY_ARCOLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARTIFICIAL_VENUS_ROTATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_VENUS_ARCOLOGY",
+    "TECH_GRAVITY_CONTROL",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "cost": {
+  "production": 12267,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VENUS_SKY_ARCOLOGY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_SKY_ARCOLOGY",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_SKY_ARCOLOGY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

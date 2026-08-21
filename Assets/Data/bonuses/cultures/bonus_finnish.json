@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_FINNISH",
+ "enables": {
+  "units": [
+   "UNIT_TARKKA_AMPUJA",
+   "UNIT_URHO_KEKKONEN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_FINNISH"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_FINNISH",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

@@ -1,0 +1,122 @@
+{
+ "type": "BUILDING_LACQUERWARE_MAKER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ASSEMBLY_LINE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LACQUERWARE_WORKSHOP"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SIMPLE_WOOD_WORKING",
+    "TECH_ADHESIVES",
+    {
+     "any": [
+      "BUILDING_STORAGE_PIT",
+      "BUILDING_GRANARY",
+      "BUILDING_MODERN_GRANARY",
+      "BUILDING_BARTER_POST",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_RESIN",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_MANUFACTURING_DISTRICT",
+    "BUILDING_LACQUERWARE_WORKSHOP",
+    "BUILDING_FACTORY_LACQUERWARE"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_LACQUERWARE"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": "TECH_ORNAMENTATION"
+    },
+    {
+     "value": 3,
+     "enabled": "TECH_AESTHETICS"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 50,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LACQUERWARE_MAKER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LACQUERWARE_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_LACQUERWARE_MAKER_PEDIA",
+  "conquestProbability": 80,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

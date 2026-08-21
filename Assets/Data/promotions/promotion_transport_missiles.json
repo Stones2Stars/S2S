@@ -1,0 +1,56 @@
+{
+ "type": "PROMOTION_TRANSPORT_MISSILES",
+ "enables": {
+  "promotions": [
+   "PROMOTION_TRANSPORT_MISSILES1"
+  ]
+ },
+ "combat": {
+  "unit": {
+   "percent": -5
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 1
+   }
+  }
+ },
+ "skills": {
+  "unitCombats": [
+   "UNITCOMBAT_PROMOTED_TRANSPORT_MISSILES"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/TransportMissiles.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_TRANSPORT_MISSILES",
+  "domainCargoChange": "DOMAIN_AIR",
+  "specialCargoChange": "SPECIALUNIT_MISSILE",
+  "unitCombats": [
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_TRANSPORT",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_TROOPS",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_PEOPLE",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_SEAPLANES",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_FIGHTERS",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_CAPTIVES"
+  ]
+ },
+ "sizeMatters": {
+  "cargo": {
+   "smSpace": 3
+  }
+ }
+}

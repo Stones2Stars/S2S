@@ -1,0 +1,175 @@
+{
+ "type": "BUILDING_ELEMENTARY_SCHOOL",
+ "enables": {
+  "buildings": [
+   "BUILDING_HIGH_SCHOOL",
+   "BUILDING_INTEGRATED_SCHOOLS",
+   "BUILDING_LEARNING_CENTER",
+   "BUILDING_PRIVATE_SCHOOL",
+   "BUILDING_SCHOOL_BUS_STATION"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MIND_UPLOADING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HOLOGRAPHIC_SCHOOL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COMPULSORY_EDUCATION",
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BOOKS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CEMENT",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    40,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CALCULATORS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PENCILS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_COMPUTERS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ],
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_DIPLOMAT": {
+     "flat": 2
+    },
+    "UNITCOMBAT_SPY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1,
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 870,
+  "sizeModifier": 2,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ELEMENTARY_SCHOOL",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SCHOOL"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ELEMENTARY_SCHOOL",
+  "civilopedia": "TXT_KEY_BUILDING_ELEMENTARY_SCHOOL_PEDIA",
+  "worth": 3,
+  "conquestProbability": 33,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

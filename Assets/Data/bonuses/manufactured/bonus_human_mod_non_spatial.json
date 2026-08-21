@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_HUMAN_MOD_NON_SPATIAL",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HUMAN_MOD_NON_SPATIAL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_NON_SPATIAL",
+  "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
+  "bonusClassType": "BONUSCLASS_GENMODS",
+  "source": "manufactured"
+ }
+}

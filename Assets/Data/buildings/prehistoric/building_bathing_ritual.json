@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_BATHING_RITUAL",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MEDICINE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_BATH_HOUSE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_RIVER",
+    "TECH_RITUALISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_BATH_HOUSE"
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SOAP",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "empire": {
+   "flat": -2
+  }
+ },
+ "cost": {
+  "production": 60,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BATHING_RITUAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BATHING_RITUAL",
+  "civilopedia": "TXT_KEY_BUILDING_BATHING_RITUAL_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

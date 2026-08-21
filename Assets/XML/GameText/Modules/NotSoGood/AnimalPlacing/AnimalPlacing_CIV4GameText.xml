@@ -30,10 +30,10 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILD_BONUS_BEAVERS</Tag>
-		<English>Place [LINK=BONUS_BEAVERS]Beavers Bonus[\LINK]</English>
-		<Polish>Umiesc Rodzine [LINK=BONUS_BEAVERS]Bobr&#243;w[\LINK]</Polish>
+		<English>Place [LINK=BONUS_BEAVER]Beavers Bonus[\LINK]</English>
+		<Polish>Umiesc Rodzine [LINK=BONUS_BEAVER]Bobr&#243;w[\LINK]</Polish>
 		<Russian>Разводить бобров</Russian>
-		<Italian>[LINK=BONUS_BEAVERS]Castoro[\LINK] (risorsa collocata)</Italian>
+		<Italian>[LINK=BONUS_BEAVER]Castoro[\LINK] (risorsa collocata)</Italian>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILD_BONUS_BISON</Tag>
@@ -121,10 +121,10 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILD_BONUS_ELEPHANTS</Tag>
-		<English>Place [LINK=BONUS_ELEPHANTS]Elephants Bonus[\LINK]</English>
-		<Polish>Umiesc Stado [LINK=BONUS_ELEPHANTS]Sloni[\LINK]</Polish>
+		<English>Place [LINK=BONUS_ELEPHANT]Elephants Bonus[\LINK]</English>
+		<Polish>Umiesc Stado [LINK=BONUS_ELEPHANT]Sloni[\LINK]</Polish>
 		<Russian>Разводить слонов</Russian>
-		<Italian>[LINK=BONUS_ELEPHANTS]Elefante[\LINK] (risorsa collocata)</Italian>
+		<Italian>[LINK=BONUS_ELEPHANT]Elefante[\LINK] (risorsa collocata)</Italian>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILD_BONUS_FIG</Tag>
@@ -156,10 +156,10 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILD_BONUS_GUINEA_PIGS</Tag>
-		<English>Place [LINK=BONUS_GUINEA_PIGS]Guinea Pigs Bonus[\LINK]</English>
-		<Polish>Umieść rodzinę [LINK=BONUS_GUINEA_PIGS]Świnek morskich[\LINK]</Polish>
+		<English>Place [LINK=BONUS_GUINEA_PIG]Guinea Pigs Bonus[\LINK]</English>
+		<Polish>Umieść rodzinę [LINK=BONUS_GUINEA_PIG]Świnek morskich[\LINK]</Polish>
 		<Russian>Разводить морских свинок</Russian>
-		<Italian>[LINK=BONUS_GUINEA_PIGS]Porcellino d'india[\LINK] (risorsa collocata)</Italian>
+		<Italian>[LINK=BONUS_GUINEA_PIG]Porcellino d'india[\LINK] (risorsa collocata)</Italian>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILD_BONUS_HEMP</Tag>
@@ -282,10 +282,10 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILD_BONUS_PARROTS</Tag>
-		<English>Place [LINK=BONUS_PARROTS]Parrots Bonus[\LINK]</English>
-		<Polish>Umieść [LINK=BONUS_PARROTS]Papugi[\LINK]</Polish>
+		<English>Place [LINK=BONUS_PARROT]Parrots Bonus[\LINK]</English>
+		<Polish>Umieść [LINK=BONUS_PARROT]Papugi[\LINK]</Polish>
 		<Russian>Разводить попугаев</Russian>
-		<Italian>[LINK=BONUS_PARROTS]Parrocchetti[\LINK] (risorsa collocata)</Italian>
+		<Italian>[LINK=BONUS_PARROT]Parrocchetti[\LINK] (risorsa collocata)</Italian>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILD_BONUS_PEYOTE</Tag>

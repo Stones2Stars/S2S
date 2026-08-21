@@ -1,0 +1,87 @@
+{
+ "type": "TECH_HUMAN_TRANSMUTATION",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_GILLS",
+   "BONUS_HUMAN_MOD_WINGS"
+  ],
+  "buildings": [
+   "BUILDING_DEEP_SPACE_BIOFORMING_STUDIO",
+   "BUILDING_HUMAN_MOD_GILLS",
+   "BUILDING_HUMAN_MOD_WINGS"
+  ],
+  "civics": [
+   "CIVIC_BIOLOGICAL_CASTES"
+  ],
+  "promotions": [
+   "PROMOTION_DISEASE_CONTROL10"
+  ],
+  "techs": [
+   "TECH_SENTIENT_EARTH"
+  ],
+  "units": [
+   "UNIT_NANITE_REPAIR_CLOUD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SPECULATIVE_PHYSIOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MYTHOLOGICAL_BESTIARY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SAPIENTROIDS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 77770
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/humantransmutation.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_HUMAN_TRANSMUTATION",
+  "soundMP": "AS2D_TECH_HUMAN_TRANSMUTATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_HUMAN_TRANSMUTATION",
+  "civilopedia": "TXT_KEY_TECH_HUMAN_TRANSMUTATION_PEDIA",
+  "quote": "TXT_KEY_TECH_HUMAN_TRANSMUTATION_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 117,
+  "gridY": 19
+ }
+}

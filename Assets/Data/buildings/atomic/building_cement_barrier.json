@@ -1,0 +1,120 @@
+{
+ "type": "BUILDING_CEMENT_BARRIER",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLARNEY_CASTLE",
+   "BUILDING_CASTLE",
+   "BUILDING_CITY_GATEHOUSE",
+   "BUILDING_GROVE",
+   "BUILDING_KRAK_DES_CHEVALIERS",
+   "BUILDING_THE_ISHTAR_GATE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SUPERSTRONG_ALLOYS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_METAMATERIAL_WALLS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MANUFACTURING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_METAMATERIAL_WALLS",
+    "BUILDING_SUPERSTRONG_ALLOY_WALLS",
+    "BUILDING_MEGASTRONG_ALLOY_WALLS"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 30
+   },
+   "min": {
+    "percent": 5
+   },
+   "noEntryLevel": {
+    "percent": 80
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 1180,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CEMENT_BARRIER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CEMENT_BARRIER",
+  "civilopedia": "TXT_KEY_BUILDING_CEMENT_BARRIER_PEDIA",
+  "centerInCity": true,
+  "worth": 1,
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

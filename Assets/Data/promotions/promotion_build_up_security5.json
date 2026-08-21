@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_BUILD_UP_SECURITY5",
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 5
+   }
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_SECURITY": 5
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Security5BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_SECURITY5",
+  "minEra": "C2C_ERA_NANOTECH"
+ }
+}

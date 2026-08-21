@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_LOFSTROM_LOOP",
+ "enables": {
+  "buildings": [
+   "BUILDING_ORBITAL_RING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MAGLEV_LAUNCHER",
+    {
+     "type": "BUILDING_MAGLEV_LAUNCHER",
+     "scope": "empire",
+     "min": 2,
+     "scaling": "amountBuildings"
+    },
+    "TECH_HYPERMAGNETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 5255,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LOFSTROM_LOOP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LOFSTROM_LOOP",
+  "civilopedia": "TXT_KEY_BUILDING_LOFSTROM_LOOP_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

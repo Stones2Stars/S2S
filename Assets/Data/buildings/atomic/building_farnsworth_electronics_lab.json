@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_FARNSWORTH_ELECTRONICS_LAB",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_CLOUD_COMPUTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ELECTRONICS",
+    "TECH_DIESELPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DIESELPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1080,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FARNSWORTH_ELECTRONICS_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FARNSWORTH_ELECTRONICS_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_FARNSWORTH_ELECTRONICS_LAB_PEDIA",
+  "specialBuildingType": "SPECIALBUILDING_PUNK_DIESEL",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

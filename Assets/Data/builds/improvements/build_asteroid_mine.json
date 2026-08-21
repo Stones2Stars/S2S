@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_ASTEROID_MINE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTEROID_MINING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_ASTEROID_MINE"
+ },
+ "cost": {
+  "gold": 250,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/asteroid_mine.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_ASTEROID_MINE"
+ }
+}

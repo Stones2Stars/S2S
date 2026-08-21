@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_DIGITIZED_MEMBRANES",
+ "enables": {
+  "buildings": [
+   "BUILDING_MEDICAL_DIAGNOSTAT"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_DIGITIZED_MEMBRANES"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_DIGITIZED_MEMBRANES",
+  "civilopedia": "TXT_KEY_BONUS_DIGITIZED_MEMBRANES_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

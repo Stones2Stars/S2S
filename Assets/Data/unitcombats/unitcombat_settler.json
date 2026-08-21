@@ -1,0 +1,17 @@
+{
+ "type": "UNITCOMBAT_SETTLER",
+ "skills": {
+  "cannotMergeSplit": true
+ },
+ "tags": [
+  "settler"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/settlers.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SETTLER"
+ }
+}

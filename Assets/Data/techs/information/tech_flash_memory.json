@@ -1,0 +1,67 @@
+{
+ "type": "TECH_FLASH_MEMORY",
+ "enables": {
+  "bonuses": [
+   "BONUS_FLASH_MEMORY_DEVICES"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_FLASH_MEMORY_DEVICES",
+   "BUILDING_INTERNET_ARCHIVE"
+  ],
+  "techs": [
+   "TECH_WEARABLE_COMPUTERS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MAGNETIC_LEVITATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 22074
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Flashmemory.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_FLASH_MEMORY",
+  "soundMP": "AS2D_TECH_FLASH_MEMORY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_FLASH_MEMORY",
+  "civilopedia": "TXT_KEY_TECH_FLASH_MEMORY_PEDIA",
+  "quote": "TXT_KEY_TECH_FLASH_MEMORY_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 90,
+  "gridY": 15
+ }
+}

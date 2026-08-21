@@ -1,0 +1,80 @@
+{
+ "type": "CIVIC_POLYSTATE",
+ "enables": {
+  "buildings": [
+   "BUILDING_SEASTEAD"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
+    "percent": 5
+   },
+   "resistance": {
+    "percent": 10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": -50
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 75
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -2
+   },
+   "national": {
+    "flat": 3
+   },
+   "distanceMod": {
+    "flat": 30
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": -30,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   },
+   "buildings": {
+    "BUILDING_NOMAD_SKYSCRAPER": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/rule_polystate.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_POLYSTATE",
+  "civilopedia": "TXT_KEY_CIVIC_POLYSTATE_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_POLYSTATE_STRATEGY",
+  "civicOption": "CIVICOPTION_RULE",
+  "anarchyLength": 2,
+  "upkeepLevel": "UPKEEP_LOW"
+ }
+}

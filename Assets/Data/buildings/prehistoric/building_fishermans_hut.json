@@ -1,0 +1,214 @@
+{
+ "type": "BUILDING_FISHERMANS_HUT",
+ "enables": {
+  "buildings": [
+   "BUILDING_GRAND_MARINE_FESTIVAL"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_AUTOMATED_URBANIZATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AQUAFARM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "TECH_TRAP_FISHING",
+    {
+     "any": [
+      "BUILDING_STORAGE_PIT",
+      "BUILDING_GRANARY",
+      "BUILDING_MODERN_GRANARY",
+      "BUILDING_BARTER_POST",
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ROPE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_FISH",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_CRAB",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_LOBSTER",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_CLAM",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_SHRIMP",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_PEARLS",
+       "scope": "city",
+       "vicinity": "owned"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_AQUAFARM"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_FISHING_NETS"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": "TECH_SPEARFISHING"
+    },
+    {
+     "value": 1,
+     "enabled": "TECH_HARPOON_MAKING"
+    }
+   ],
+   "plots": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": "IS_WATER"
+     }
+    ]
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "TECH_LEISURE"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CLAM",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CRAB",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FISH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHRIMP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LOBSTER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 50,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FISHING_HUT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FISHING_HUT"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FISHERMANS_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_FISHERMANS_HUT_PEDIA",
+  "worth": 5,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

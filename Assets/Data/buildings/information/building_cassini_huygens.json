@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_CASSINI_HUYGENS",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_JET_PROPULSION_LABORATORY",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_PLANETARY_EXPLORATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 12
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_ENCELADUS_RESUPPLY_BASE": {
+     "flat": 10
+    }
+   }
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 11070
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CASSINI_HUYGENS"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CASSINI_HUYGENS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CASSINI_HUYGENS",
+  "civilopedia": "TXT_KEY_BUILDING_CASSINI_HUYGENS_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_CARNIVAL_TRAINED_SEAL",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ADVANCED_AVIATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CARNIVAL",
+    "TECH_TRADE",
+    {
+     "any": [
+      "BUILDING_FOLKLORE_SEA_LION",
+      "BUILDING_FOLKLORE_WALRUS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 306,
+  "sizeModifier": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CARNIVAL_TRAINED_SEAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CARNIVAL_TRAINED_SEAL",
+  "civilopedia": "TXT_KEY_BUILDING_CARNIVAL_TRAINED_SEAL_PEDIA",
+  "worth": 2,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

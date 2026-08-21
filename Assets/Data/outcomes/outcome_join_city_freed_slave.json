@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_JOIN_CITY_FREED_SLAVE",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_JOIN_CITY_FREED_SLAVE",
+  "message": "TXT_KEY_OUTCOME_JOIN_CITY_FREED_SLAVE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SPEAR_MAKING"
+   ]
+  }
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city"
+}

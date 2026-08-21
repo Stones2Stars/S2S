@@ -1,0 +1,137 @@
+{
+ "type": "BUILDING_COMMUNICATION_TOWER",
+ "enables": {
+  "buildings": [
+   "BUILDING_LOCAL_RADIO_STATION",
+   "BUILDING_NATIONAL_TV_STATION",
+   "BUILDING_NATIONAL_WEATHER_SERVICE",
+   "BUILDING_RECORDING_STUDIO",
+   "BUILDING_SIGNALS_INTELLIGENCE_RECEIVERS",
+   "BUILDING_TV_STUDIO",
+   "BUILDING_WEATHER_STATION",
+   "BUILDING_WIRELESS_NETWORKS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_DATA_ARCHIVAL"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_NETWORK_NODE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COMMUNICATION_NETWORKS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_WIRES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_FIBER_OPTIC_CABLES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_NETWORK_NODE"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5,
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_HIT_MUSICALS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_HIT_SINGLES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_HIT_MOVIES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 3
+  }
+ },
+ "cost": {
+  "production": 1925,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_COMMUNICATION_TOWER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BROADCASTTOWER"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_COMMUNICATION_TOWER",
+  "civilopedia": "TXT_KEY_BUILDING_COMMUNICATION_TOWER_PEDIA",
+  "worth": 10,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

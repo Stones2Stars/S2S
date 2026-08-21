@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_ATLAST_SPACE_TELESCOPE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ASTRONOMICAL_DATABASE",
+    "TECH_JOVIAN_EXPLORATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_PLANETARIUM",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 17910
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ATLAST_SPACE_TELESCOPE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ATLAST_SPACE_TELESCOPE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ATLAST_SPACE_TELESCOPE",
+  "civilopedia": "TXT_KEY_BUILDING_ATLAST_SPACE_TELESCOPE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

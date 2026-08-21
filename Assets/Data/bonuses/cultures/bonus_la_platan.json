@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_LA_PLATAN",
+ "enables": {
+  "units": [
+   "UNIT_DARDO_ROCHA",
+   "UNIT_LA_PLATA_MOSQUETERO"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_LA_PLATAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_LA_PLATAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

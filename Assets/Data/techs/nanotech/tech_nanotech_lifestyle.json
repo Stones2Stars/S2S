@@ -1,0 +1,105 @@
+{
+ "type": "TECH_NANOTECH_LIFESTYLE",
+ "enables": {
+  "buildings": [
+   "BUILDING_EDUCATION_PREPOSTEROUS",
+   "BUILDING_EDUCATION_WUNDERKIND",
+   "BUILDING_TOURISM_LEVEL_8"
+  ],
+  "promotions": [
+   "PROMOTION_MIGHT9"
+  ],
+  "techs": [
+   "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+   "TECH_AUTOMATED_TRAFFIC",
+   "TECH_BIOMETRIC_WARFARE",
+   "TECH_FUSION",
+   "TECH_INVISIBILITY",
+   "TECH_LIQUID_METALS",
+   "TECH_NANO_ARCHITECTURE",
+   "TECH_PROTOTYPED_PATHOGENS",
+   "TECH_THOUGHT_SCANNING",
+   "TECH_UBIQUITOUS_COMPUTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_REPLACEMENT_ORGANS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MARINE_ARCHITECTURE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BRAIN_MACHINE_INTERFACE",
+     "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "type": "TECH_GENESIS_BIOLOGY",
+       "scope": "team"
+      },
+      {
+       "type": "TECH_GRAPHENE_ALLOYS",
+       "scope": "team"
+      },
+      {
+       "type": "TECH_DISASTER_ROBOTS",
+       "scope": "team"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 35299
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Buttons/Techs/NanotechTech.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NANOTECH_LIFESTYLE",
+  "soundMP": "AS2D_TECH_NANOTECH_LIFESTYLE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NANOTECH_LIFESTYLE",
+  "civilopedia": "TXT_KEY_TECH_NANOTECH_LIFESTYLE_PEDIA",
+  "quote": "TXT_KEY_TECH_NANOTECH_LIFESTYLE_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 50,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 99,
+  "gridY": 9
+ }
+}

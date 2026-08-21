@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_COMMUNICATIONS_SATELLITE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_MICROSATELLITE_CONSTELLATION",
+   "BUILDING_DIGITAL_GLOBE",
+   "BUILDING_WIRELESS_NETWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COMMUNICATION_NETWORKS",
+    {
+     "any": [
+      "BUILDING_EFFECT_LAUNCH_SITE",
+      "BUILDING_COMMERCIAL_SPACEPORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1925,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "attributes": {
+  "orbital": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_COMMUNICATIONS_SATELLITE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SPACEWAY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_COMMUNICATIONS_SATELLITE",
+  "civilopedia": "TXT_KEY_BUILDING_COMMUNICATIONS_SATELLITE_PEDIA",
+  "worth": 6,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

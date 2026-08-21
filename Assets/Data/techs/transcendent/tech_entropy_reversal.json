@@ -1,0 +1,63 @@
+{
+ "type": "TECH_ENTROPY_REVERSAL",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_TEMPERATURE_REGULATOR",
+   "BUILDING_DISTANT_DARK_ERA_SURVIVAL_PLAN",
+   "BUILDING_FIRE_REVERSAL",
+   "BUILDING_INTERGALACTIC_VOID_COLONY",
+   "BUILDING_INTERSTELLAR_DYSON_SPHERE_HEAT_RECOVERY"
+  ],
+  "techs": [
+   "TECH_PARAMETER_TUNING",
+   "TECH_SPATIAL_TRANSCENDENCE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TIME_REVERSAL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CONTROLLED_VACUUM_COLLAPSE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 563149
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/entropy_reversal.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ENTROPY_REVERSAL",
+  "civilopedia": "TXT_KEY_TECH_ENTROPY_REVERSAL_PEDIA",
+  "quote": "TXT_KEY_TECH_ENTROPY_REVERSAL_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 153,
+  "gridY": 9
+ }
+}

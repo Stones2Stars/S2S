@@ -1,0 +1,90 @@
+{
+ "type": "TECH_LUNAR_TRADE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTEROID_MINING_COMPLEX",
+   "BUILDING_CISLUNAR_ECONOMY",
+   "BUILDING_CISLUNAR_SPACEPORT",
+   "BUILDING_EFFECT_ASTEROID_MINING_COMPLEX",
+   "BUILDING_EFFECT_CISLUNAR_ECONOMY",
+   "BUILDING_LUNAR_HE3_EXTRACTION_FACILITY",
+   "BUILDING_LUNAR_KREEP_MINE",
+   "BUILDING_LUNAR_PARCOLOGY"
+  ],
+  "builds": [
+   "BUILD_COLONY_HABITAT_HUGE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_COLONY_HABITAT_HUGE"
+  ],
+  "techs": [
+   "TECH_DEEP_SPACE_COLONIES",
+   "TECH_PLANETARY_TRADE",
+   "TECH_TRANSHUMAN_LIFESTYLE"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_COLONY_HABITAT_LARGE",
+   "BUILD_COLONY_HABITAT_MEDIUM",
+   "BUILD_COLONY_HABITAT_SMALL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORBITAL_FLIGHT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PLANETARY_ECONOMICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 49574
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/lunartrade.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_LUNAR_TRADE",
+  "soundMP": "AS2D_TECH_LUNAR_TRADE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_LUNAR_TRADE",
+  "civilopedia": "TXT_KEY_TECH_LUNAR_TRADE_PEDIA",
+  "quote": "TXT_KEY_TECH_LUNAR_TRADE_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 109,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_METHAMPHETAMINE",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_METHAMPHETAMINE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_METHAMPHETAMINE",
+  "civilopedia": "TXT_KEY_BONUS_METHAMPHETAMINE_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

@@ -1,0 +1,92 @@
+{
+ "type": "TECH_CRIMINOLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_221B_BAKER_STREET",
+   "BUILDING_ALCATRAZ",
+   "BUILDING_CITY_MORGUE",
+   "BUILDING_DETECTIVE_AGENCY",
+   "BUILDING_ELECTRIC_CHAIR",
+   "BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH",
+   "BUILDING_POLICE_ACADEMY",
+   "BUILDING_POLICE_BOX",
+   "BUILDING_POLICE_CAT_TRAINER",
+   "BUILDING_POLICE_DOG_TRAINER",
+   "BUILDING_POLICE_STATION",
+   "BUILDING_SAFETY_ALCATRAZ",
+   "BUILDING_SAFETY_NEIGHBORHOOD_WATCH",
+   "BUILDING_SAFETY_POLICE_ACADEMY",
+   "BUILDING_SCOTLAND_YARD"
+  ],
+  "promotions": [
+   "PROMOTION_CRACKDOWN4",
+   "PROMOTION_POLICING6",
+   "PROMOTION_SLEUTH6"
+  ],
+  "techs": [
+   "TECH_PSYCHOLOGY"
+  ],
+  "units": [
+   "UNIT_POLICE_CAT",
+   "UNIT_POLICE_DOG",
+   "UNIT_RIOTPOLICE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_JOURNALISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MEDICINE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 7008
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/criminology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CRIMINOLOGY",
+  "soundMP": "AS2D_TECH_CRIMINOLOGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CRIMINOLOGY",
+  "civilopedia": "TXT_KEY_TECH_CRIMINOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_CRIMINOLOGY_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 32,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 68,
+  "gridY": 1
+ }
+}

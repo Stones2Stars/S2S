@@ -1,0 +1,122 @@
+{
+ "type": "UNIT_V1",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_ROCKET_FUEL",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_ROCKETRY"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_GUIDED_MISSILE"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "bombard": {
+  "unit": {
+   "airBombRate": {
+    "flat": 10
+   }
+  }
+ },
+ "range": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "air": {
+  "unit": {
+   "evasion": {
+    "percent": 100
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_V1"
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "ignoreBuildingDefense",
+  "mechanized",
+  "suicide",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "airUnit",
+  "missile"
+ ],
+ "combatClass": "UNITCOMBAT_MISSILE",
+ "combatClasses": [
+  "UNITCOMBAT_BALLISTIC",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_WARHEAD",
+  "UNITCOMBAT_WEAPON_DETONATE_GUIDED",
+  "UNITCOMBAT_MOTILITY_UNMANNED",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_LARGE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 811,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_V1",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 0.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_V1"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_V1",
+  "civilopedia": "TXT_KEY_UNIT_V1_PEDIA",
+  "worth": 3,
+  "militaryWorth": 49,
+  "xpValueDefense": 6,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_MISSILE_AIR",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_MISSILE_AIR"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "airCombat": 20,
+   "airCombatLimit": 100
+  }
+ }
+}

@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_CRYSTAL_ISLAND",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MEGATOWER",
+    "TECH_NANO_ARCHITECTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MEGATOWER_MALL_LEVEL": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 19470,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CRYSTAL_ISLAND"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CRYSTAL_ISLAND",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRYSTAL_ISLAND",
+  "civilopedia": "TXT_KEY_BUILDING_CRYSTAL_ISLAND_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_EFFECT_GPS",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUTOMATED_TAXI_SERVICE",
+   "BUILDING_PRECISION_FARM",
+   "BUILDING_SMARTPHONE_MANUFACTURER"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_COMMUNICATION_NETWORKS"
+   ]
+  }
+ },
+ "food": {
+  "empire": {
+   "flat": [
+    {
+     "value": 8,
+     "enabled": "TECH_ONLINE_COMMUNITY"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_AUTOMATED_TRAFFIC"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_WEARABLE_COMPUTERS"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": [
+    {
+     "value": 8,
+     "enabled": "TECH_DIGITIZATION"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_CYBERWARFARE"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_WAR_SIMULATIONS"
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_GPS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_GPS",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_GPS_PEDIA",
+  "notConstructible": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

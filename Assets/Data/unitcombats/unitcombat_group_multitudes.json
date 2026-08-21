@@ -1,0 +1,40 @@
+{
+ "type": "UNITCOMBAT_GROUP_MULTITUDES",
+ "experience": {
+  "unit": {
+   "percent": -80
+  }
+ },
+ "heal": {
+  "unit": {
+   "selfModifier": {
+    "percent": -18
+   }
+  }
+ },
+ "hideAndSeek": {
+  "concealment": {
+   "flat": -1000
+  },
+  "detection": {
+   "value": 200,
+   "unit": "HAS_SIZE"
+  }
+ },
+ "skills": [
+  "size",
+  "camouflage"
+ ],
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "sizeMatters": {
+  "groupBase": 9
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/group_multitude.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_GROUP_MULTITUDES"
+ }
+}

@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_EXPLORE_OUTER_SOLAR_SYSTEM",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_EXPLORE_OUTER_SOLAR_SYSTEM",
+  "message": "TXT_KEY_OUTCOME_EXPLORE_OUTER_SOLAR_SYSTEM_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_JOVIAN_EXPLORATION"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

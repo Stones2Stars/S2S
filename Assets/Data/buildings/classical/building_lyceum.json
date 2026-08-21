@@ -1,0 +1,116 @@
+{
+ "type": "BUILDING_LYCEUM",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HOLOGRAPHICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ELEMENTARY_SCHOOL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_GRAMMATICUS",
+    "TECH_PHILOSOPHY",
+    {
+     "any": [
+      "BUILDING_PALACE",
+      "BUILDING_HOUSING_VILLAS",
+      "BUILDING_HOUSING_PALACES",
+      "BUILDING_HOUSING_MANORS",
+      "BUILDING_HOUSING_ESTATES",
+      "BUILDING_HOUSING_MANSIONS",
+      "BUILDING_HOUSING_CONDOMINIUMS",
+      "BUILDING_HOUSING_CHATEAU",
+      "BUILDING_HOUSING_HIGH_TECH_CONDOMINIUMS",
+      "BUILDING_HOUSING_COLONY_ARCOLOGY",
+      "BUILDING_LAUNCH_ARCOLOGY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_ELEMENTARY_SCHOOL",
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 7,
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_DIPLOMAT": {
+     "flat": 2
+    },
+    "UNITCOMBAT_SPY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 252,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LYCEUM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LYCEUM",
+  "civilopedia": "TXT_KEY_BUILDING_LYCEUM_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

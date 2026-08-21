@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_REMOVE_WV_HUMAN_SACRIFICE",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_REMOVE_WV_HUMAN_SACRIFICE",
+  "message": "TXT_KEY_OUTCOME_REMOVE_WV_HUMAN_SACRIFICE_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE"
+   ]
+  }
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city"
+}

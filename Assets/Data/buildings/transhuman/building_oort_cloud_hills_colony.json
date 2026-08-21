@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_OORT_CLOUD_HILLS_COLONY",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_NUCLEAR_PULSE_PROPULSION",
+    {
+     "type": "TERRAIN_TRANSNEPTUNIAN_SPACE",
+     "scope": "plot"
+    },
+    {
+     "type": "FEATURE_OORT_CLOUD",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 11,
+     "enabled": "TECH_PARATERRAFORMING"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 3308,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_OORT_CLOUD_HILLS_COLONY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_OORT_CLOUD_HILLS_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_OORT_CLOUD_HILLS_COLONY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

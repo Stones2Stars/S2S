@@ -1,0 +1,30 @@
+{
+ "type": "PROMOTION_COMMAND7",
+ "enables": {
+  "promotions": [
+   "PROMOTION_COMMAND8"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMMAND6"
+   ]
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COMMAND": 7
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/CommanderCommand7.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COMMAND7",
+  "controlPoints": 1
+ }
+}

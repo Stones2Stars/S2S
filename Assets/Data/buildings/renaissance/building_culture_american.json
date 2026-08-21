@@ -1,0 +1,215 @@
+{
+ "type": "BUILDING_CULTURE_AMERICAN",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_NORTH_AMERICAN",
+    "BUILDING_C_L_NORTH_AMERICAN",
+    "BUILDING_C_AC_EUROPEAN",
+    "TECH_REPRESENTATIVE_DEMOCRACY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COW",
+     "scope": "city",
+     "vicinity": "owned"
+    },
+    "CIVIC_DEMOCRACY"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_AMERICAN"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_STATUE_OF_LIBERTY": {
+     "percent": 10
+    },
+    "BUILDING_MT_RUSHMORE": {
+     "percent": 10
+    },
+    "BUILDING_EINSTEINS_LABORATORY": {
+     "percent": 10
+    },
+    "BUILDING_BROADWAY": {
+     "percent": 10
+    },
+    "BUILDING_HOLLYWOOD": {
+     "percent": 10
+    },
+    "BUILDING_CARHENGE": {
+     "percent": 10
+    },
+    "BUILDING_EDISONS_WORKSHOP": {
+     "percent": 10
+    },
+    "BUILDING_THE_PENTAGON": {
+     "percent": 10
+    },
+    "BUILDING_ROCK_N_ROLL": {
+     "percent": 10
+    },
+    "BUILDING_SETI_PROGRAM": {
+     "percent": 10
+    },
+    "BUILDING_SILICON_VALLEY": {
+     "percent": 10
+    },
+    "BUILDING_UNITED_NATIONS": {
+     "percent": 10
+    },
+    "BUILDING_WALL_STREET": {
+     "percent": 10
+    },
+    "BUILDING_MA_WEST_POINT": {
+     "percent": 10
+    },
+    "BUILDING_WORLD_TRADE_CENTER": {
+     "percent": 10
+    },
+    "BUILDING_FORT_KNOX": {
+     "percent": 10
+    },
+    "BUILDING_GATEWAY_ARCH": {
+     "percent": 10
+    },
+    "BUILDING_EMPIRE_STATE_BUILDING": {
+     "percent": 10
+    },
+    "BUILDING_PEARL_HARBOR": {
+     "percent": 10
+    },
+    "BUILDING_COIT_TOWER": {
+     "percent": 10
+    },
+    "BUILDING_LAS_VEGAS_STRIP": {
+     "percent": 10
+    },
+    "BUILDING_ALCATRAZ": {
+     "percent": 10
+    },
+    "BUILDING_DISNEYLAND": {
+     "percent": 10
+    },
+    "BUILDING_RIVER_ROUGE_COMPLEX": {
+     "percent": 10
+    },
+    "BUILDING_WILLOW_RUN": {
+     "percent": 10
+    },
+    "BUILDING_ALAMO": {
+     "percent": 10
+    },
+    "BUILDING_BURNING_MAN": {
+     "percent": 10
+    },
+    "BUILDING_GOLDEN_SPIKE": {
+     "percent": 10
+    },
+    "BUILDING_WOODSTOCK": {
+     "percent": 20
+    },
+    "BUILDING_WARHOLS_FACTORY": {
+     "percent": 10
+    },
+    "BUILDING_WALK_OF_FAME": {
+     "percent": 10
+    },
+    "BUILDING_ROUTE_66": {
+     "percent": 10
+    },
+    "BUILDING_MADISON_AVENUE": {
+     "percent": 10
+    },
+    "BUILDING_KENTUCKY_DERBY": {
+     "percent": 10
+    },
+    "BUILDING_ELLIS_ISLAND": {
+     "percent": 10
+    },
+    "BUILDING_WILLIS_TOWER": {
+     "percent": 10
+    },
+    "BUILDING_AON_CENTER": {
+     "percent": 10
+    },
+    "BUILDING_WORLD_TOWER": {
+     "percent": 10
+    },
+    "BUILDING_TRANSAMERICA_TOWER": {
+     "percent": 10
+    },
+    "BUILDING_BONNEVILLE_SPEEDWAY": {
+     "percent": 10
+    },
+    "BUILDING_CAPITOL_RECORDS_TOWER": {
+     "percent": 10
+    },
+    "BUILDING_CIRCUS_CIRCUS_CASINO": {
+     "percent": 10
+    },
+    "BUILDING_CORAL_CASTLE": {
+     "percent": 10
+    },
+    "BUILDING_GETTY_CENTER": {
+     "percent": 10
+    },
+    "BUILDING_GRAUMANS_CHINESE_THEATRE": {
+     "percent": 10
+    },
+    "BUILDING_LA_BREA_TAR_PITS": {
+     "percent": 10
+    },
+    "BUILDING_LUXOR_CASINO": {
+     "percent": 10
+    },
+    "BUILDING_STRATOSPHERE_CASINO": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 3480,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_AMERICAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_AMERICAN",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_AMERICAN_PEDIA",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

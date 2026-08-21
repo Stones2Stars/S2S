@@ -1,0 +1,289 @@
+{
+ "type": "CIVIC_NATIONALIST",
+ "enables": {
+  "buildings": [
+   "BUILDING_HIGHWAYMANS_HIDEOUT",
+   "BUILDING_PIRATES_COVE",
+   "BUILDING_SMUGGLERS_SHANTY"
+  ],
+  "units": [
+   "UNIT_ASSAULT_SHIP",
+   "UNIT_BARBARY_CORSAIR",
+   "UNIT_DRAGON_SHIP_PIRATE",
+   "UNIT_LIBURNA",
+   "UNIT_MALACCAN_PIRATE",
+   "UNIT_MASTER_SAILOR_UBOAT",
+   "UNIT_PRIVATEER",
+   "UNIT_RAZZIA_PIRATES",
+   "UNIT_SAMBUK",
+   "UNIT_TAHITIAN_RIDERS",
+   "UNIT_TORPEDO_BOAT",
+   "UNIT_UBOAT",
+   "UNIT_UNMANNED_PIRATE_SKIFF"
+  ]
+ },
+ "commerce": {
+  "empire": {
+   "plots": {
+    "flat": [
+     {
+      "value": 2,
+      "enabled": {
+       "all": [
+        "GAMEOPTION_MAP_PERSONALIZED",
+        "HAS_LANDMARK"
+       ]
+      }
+     }
+    ]
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    4,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    4,
+    {
+     "value": 4,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    4,
+    {
+     "value": 4,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    4,
+    {
+     "value": 4,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": [
+    -2,
+    {
+     "value": 1,
+     "enabled": "GAMEOPTION_MAP_PERSONALIZED"
+    },
+    -10,
+    {
+     "value": 10,
+     "per": {
+      "type": "CULTURE_PERCENTAGE",
+      "each": 100
+     }
+    }
+   ],
+   "cities": {
+    "flat": [
+     {
+      "value": 20,
+      "per": {
+       "type": "POPULATION",
+       "each": 100,
+       "scope": "city"
+      }
+     }
+    ]
+   },
+   "buildings": {
+    "BUILDING_BUNKER": {
+     "flat": 1
+    },
+    "BUILDING_BOMB_SHELTERS": {
+     "flat": 1
+    },
+    "BUILDING_NATIONAL_EPIC": {
+     "flat": 2
+    },
+    "BUILDING_NATIONAL_COURIER_SYSTEM": {
+     "flat": 2
+    },
+    "BUILDING_THE_PENTAGON": {
+     "flat": 2
+    },
+    "BUILDING_GREAT_WALL_OF_CHINA": {
+     "flat": 2
+    },
+    "BUILDING_APOSTOLIC_PALACE": {
+     "flat": -2
+    },
+    "BUILDING_UNITED_NATIONS": {
+     "flat": -2
+    },
+    "BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE": {
+     "flat": -5
+    },
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION": {
+     "flat": 1
+    },
+    "BUILDING_BAYREUTH_FESTSPIELHAUS": {
+     "flat": 3
+    },
+    "BUILDING_CRYSTAL_PALACE": {
+     "flat": 2
+    },
+    "BUILDING_MAGINOT_LINE": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "inBorder": {
+    "percent": 20
+   }
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 10,
+   "domestic": {
+    "percent": 10
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
+    "percent": 10
+   },
+   "resistance": {
+    "percent": 20
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   },
+   "numCities": {
+    "percent": 10
+   },
+   "percent": [
+    {
+     "value": 3,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 4,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
+   "corporation": {
+    "percent": 4
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": 5
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -10
+   }
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "buildingProduction": {
+    "percent": 5
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": -1
+   },
+   "nationalityMod": {
+    "percent": 30
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": 10,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "policies": {
+  "noForeignCorporations": true
+ },
+ "grants": {
+  "revolution": -50
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/society_nationalism.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_NATIONALIST",
+  "civilopedia": "TXT_KEY_CIVIC_NATIONALIST_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_NATIONALIST_STRATEGY",
+  "civicOption": "CIVICOPTION_SOCIETY",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

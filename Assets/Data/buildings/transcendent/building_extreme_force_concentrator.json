@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_EXTREME_FORCE_CONCENTRATOR",
+ "enables": {
+  "buildings": [
+   "BUILDING_POCKET_UNIVERSE_MAKER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACETIME_FACTORY",
+    "TECH_DECOMPACTIFIED_SPACE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 60
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 24355,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EXTREME_FORCE_CONCENTRATOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EXTREME_FORCE_CONCENTRATOR",
+  "civilopedia": "TXT_KEY_BUILDING_EXTREME_FORCE_CONCENTRATOR_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

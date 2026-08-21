@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_GEORGIAN",
+ "enables": {
+  "units": [
+   "UNIT_MONASPA_GUARD",
+   "UNIT_VAKHTANG_VI"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_GEORGIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_GEORGIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

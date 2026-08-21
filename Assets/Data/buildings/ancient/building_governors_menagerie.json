@@ -1,0 +1,74 @@
+{
+ "type": "BUILDING_GOVERNORS_MENAGERIE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ENCLOSURE_BEAR",
+   "BUILDING_ENCLOSURE_BIG_CAT",
+   "BUILDING_ENCLOSURE_WOLF"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_GOVERNORS_PETS",
+    "TECH_MONARCHY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BRICKS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_ZOO"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -5
+   }
+  }
+ },
+ "cost": {
+  "production": 300,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GOVERNORS_MENAGERIE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GOVERNORS_MENAGERIE",
+  "civilopedia": "TXT_KEY_BUILDING_GOVERNORS_MENAGERIE_PEDIA",
+  "worth": 1,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_CULTURE",
+  "freeStartEra": "C2C_ERA_CLASSICAL",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

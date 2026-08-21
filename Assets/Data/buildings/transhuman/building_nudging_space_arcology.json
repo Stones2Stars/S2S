@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_NUDGING_SPACE_ARCOLOGY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_GEODESIC_DOME",
+    "TECH_ORGANIC_CITIES",
+    {
+     "any": [
+      "BUILDING_ARCOLOGY",
+      "BUILDING_HOUSING_COLONY_ARCOLOGY",
+      "BUILDING_LAUNCH_ARCOLOGY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 30
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_FARMSCRAPER_I": {
+     "percent": 10
+    },
+    "BUILDING_FARMSCRAPER_II": {
+     "percent": 10
+    },
+    "BUILDING_FARMSCRAPER_III": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 35430,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NUDING_SPACE_ARCOLOGY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NUDGING_SPACE_ARCOLOGY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NUDGING_SPACE_ARCOLOGY",
+  "civilopedia": "TXT_KEY_BUILDING_NUDGING_SPACE_ARCOLOGY_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

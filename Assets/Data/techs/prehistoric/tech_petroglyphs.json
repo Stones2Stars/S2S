@@ -1,0 +1,69 @@
+{
+ "type": "TECH_PETROGLYPHS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAVE_PAINTINGS",
+   "BUILDING_EFFECT_LASCAUX_CAVES",
+   "BUILDING_LASCAUX_PAINTS",
+   "BUILDING_SAND_PAINTINGS"
+  ],
+  "techs": [
+   "TECH_CONDUCT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CAVE_DWELLING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NATURAL_PIGMENTS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CULTURAL_IDENTITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 17
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/Button_CavePainting.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PETROGLYPHS",
+  "soundMP": "AS2D_TECH_PETROGLYPHS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PETROGLYPHS",
+  "civilopedia": "TXT_KEY_TECH_PETROGLYPHS_PEDIA",
+  "quote": "TXT_KEY_TECH_PETROGLYPHS_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 9,
+  "gridY": 17
+ }
+}

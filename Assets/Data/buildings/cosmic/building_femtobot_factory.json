@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_FEMTOBOT_FACTORY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_OMEGA_POINT"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MATERIALIZATION_COMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_OMEGA_ASSEMBLER",
+    "TECH_PARTICLE_GENETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_MATERIALIZATION_COMPLEX"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_FEMTOBOTS"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 14655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FEMTOBOT_FACTORY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FEMTOBOT_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_FEMTOBOT_FACTORY_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

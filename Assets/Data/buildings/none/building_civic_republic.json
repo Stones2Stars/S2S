@@ -1,0 +1,37 @@
+{
+ "type": "BUILDING_CIVIC_REPUBLIC",
+ "requires": {
+  "operate": {
+   "all": [
+    "CIVIC_REPUBLIC",
+    "BUILDING_PALACE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CIVIC_REPUBLIC",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CIVIC_REPUBLIC",
+  "civilopedia": "TXT_KEY_BUILDING_CIVIC_REPUBLIC_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

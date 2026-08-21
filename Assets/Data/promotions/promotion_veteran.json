@@ -1,0 +1,47 @@
+{
+ "type": "PROMOTION_VETERAN",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ACE",
+   "PROMOTION_AIR_REFUEL",
+   "PROMOTION_LOW_ALTITUDE",
+   "PROMOTION_RANGE1"
+  ]
+ },
+ "experience": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "air": {
+  "unit": {
+   "evasion": {
+    "percent": 5
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,5,15"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_VETERAN",
+  "unitCombats": [
+   "UNITCOMBAT_EARLY_FIGHTERS",
+   "UNITCOMBAT_EARLY_BOMBERS",
+   "UNITCOMBAT_JET_FIGHTERS",
+   "UNITCOMBAT_BOMBERS",
+   "UNITCOMBAT_SUPERSONIC_PLANES",
+   "UNITCOMBAT_STEALTH"
+  ]
+ }
+}

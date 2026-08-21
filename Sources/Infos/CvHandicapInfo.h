@@ -3,153 +3,131 @@
 #ifndef CV_HANDICAP_INFO_H
 #define CV_HANDICAP_INFO_H
 
-#include "CvInfoBase.h"
+//
+//	CvHandicapInfo -- the HANDICAP poco rebuilt to the exemplar surface (patterns.md § THE GETTER SETUP;
+//	wave D, the config-heavy cut). A difficulty level is a CONFIG entity (state-repositories.md § WORLD is
+//	CONFIG): it enables nothing and is read from its source, never cached behind a dirty protocol. JSON-fed
+//	(Assets/Data/handicaps/*.json via mapFrom); no XML read (AGENTS.md §Build And Test (no XML-into-game for replaced infos)).
+//
+//	The pervasive HUMAN/AI DUAL-LEAF duality (curate_handicap.py; engine.md § Handicaps): a leaf's bare unit
+//	is the BASE every player reads; the sibling `ai` object is the AI-AUDIENCE leaf the engine applies as its
+//	own (usually multiplicative) stage for AI players. The point getters therefore carry an explicit
+//	bAiAudience parameter: false = the base leaf, true = the AI-ONLY sibling leaf -- never a silently summed
+//	union (which record a player reads is the engine's job, not encoded here).
+//
+//	THE GAME-START BASE READ (ruling 24 / the Sources-pass hc_leafBase semantics, PRESERVED): a batch-3a
+//	leaf is an entry LIST -- bare base terms + a `{value, per:"ERA"}` deposit + its flat companion. The
+//	scalar-mirror semantics every consumer formula was re-pointed against is the leaf's value AT GAME START
+//	(ERA counter = 1, json §3.1): bare terms + the per-ERA terms once. The consumers' own
+//	`getUnitUpkeepEraModifier() × getCurrentEra()` formulas carry the era ramp, so the per-ERA deposits stay
+//	the cascade-side twin, never double-applied. Every point getter reads
+//	compiled-sum + the per-ERA-at-one tail (materialized ONCE at mapFrom from the compiled entry list -- the
+//	one sanctioned load-time scan source; no raw-JSON walker survives).
+//
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//
-//  class : CvHandicapInfo
-//
-//  DESC:
-//
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class CvHandicapInfo
-	: public CvInfoBase
-	, private bst::noncopyable
+#include "CvInfo.h"                       // JSON-info base (mapFrom); on /I -> bare include
+#include "Engine/CvPropertyManipulators.h"
+#include <map>
+#include <vector>
+
+namespace picojson { class value; }
+
+class CvHandicapInfo : public CvInfo
 {
-	//---------------------------PUBLIC INTERFACE---------------------------------
 public:
 
 	CvHandicapInfo();
-	virtual ~CvHandicapInfo();
 
-	int getFreeWinsVsBarbs() const;
-	int getAnimalAttackProb() const;
-	int getAdvancedStartPointsMod() const;
-	int getStartingGold() const;
-	int getUnitUpkeepPercent() const;
-	int getDistanceMaintenancePercent() const;
-	int getNumCitiesMaintenancePercent() const;
-	int getColonyMaintenancePercent() const;
-	int getMaxColonyMaintenance() const;
-	int getCorporationMaintenancePercent() const;
-	int getCivicUpkeepPercent() const;
-	int getInflationPercent() const;
-	/*** REVOLUTION 09/25/09 by DPII ***/
-	int getRevolutionIndexPercent() const;
-	/***********************************/
-	int getHealthBonus() const;
-	int getHappyBonus() const;
-	int getAttitudeChange() const;
-	int getNoTechTradeModifier() const;
-	int getTechTradeKnownModifier() const;
-	int getUnownedWaterTilesPerBarbarianUnit() const;
-	int getUnownedTilesPerBarbarianCity() const;
-	int getBarbarianCityCreationTurnsElapsed() const;
-	int getBarbarianCityCreationProb() const;
-	int getAnimalCombatModifier() const;
-	int getBarbarianCombatModifier() const;
-	int getAIAnimalCombatModifier() const;
-	inline int getSubdueAnimalBonusAI() const { return m_iSubdueAnimalBonusAI; }
-	int getAIBarbarianCombatModifier() const;
+	virtual void mapFrom(const picojson::value& entity);
 
-	int getStartingDefenseUnits() const;
-	int getStartingWorkerUnits() const;
-	int getStartingExploreUnits() const;
-	int getAIStartingDefenseUnits() const;
-	int getAIStartingWorkerUnits() const;
-	int getAIStartingExploreUnits() const;
-	int getBarbarianInitialDefenders() const;
-	int getAIDeclareWarProb() const;
-	int getAIWorkRateModifier() const;
-	int getAIGrowthPercent() const;
-	int getAITrainPercent() const;
-	int getAIWorldTrainPercent() const;
-	int getAIConstructPercent() const;
-	int getAIWorldConstructPercent() const;
-	int getAICreatePercent() const;
-	int getAIResearchPercent() const;
-	int getAIWorldCreatePercent() const;
-	int getAICivicUpkeepPercent() const;
-	int getAIUnitUpkeepPercent() const;
-	int getAIUnitSupplyPercent() const;
-	int getAIUnitUpgradePercent() const;
-	int getAIInflationPercent() const;
-	int getAIWarWearinessPercent() const;
-	int getAIPerEraModifier() const;
-	int getAIAdvancedStartPercent() const;
-	int getNumGoodies() const;
+	// ======================= 1. SECTIONS -- whole typed objects =======================
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
+	// `grants` (§5 numeric pulses + the `ai` scoped overrides) is COMPOSED: the section parse and the view
+	// scalars below read ONE representation, so the grants machine and the engine views cannot drift.
 
+	// ======================= 3. MODIFIER GROUPS -- game-start-base point reads ========================
+	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. Kind and
+	// scope are separate arguments -- docs/architecture/patterns.md §The coherent surface (scope is a separate axis); every magnitude is ×100 -- docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model);
+	// bAiAudience selects the dual-leaf audience where the census authors an ai plane.)
+	int getMaintenanceModifier(MaintenanceKind eKind, CvCascScope eScope) const;
+	int getUpkeepModifier(UpkeepKind eKind, CvCascScope eScope, bool bAiAudience) const;
+	int getCostsModifier(CostsKind eKind, CvCascScope eScope, bool bAiAudience) const;
+	int getCombat(CombatKind eKind, CvCascScope eScope, bool bAiAudience) const;
+	int getDiplomacy(DiplomacyKind eKind, CvCascScope eScope, bool bAiAudience) const;
+	int getBarbarians(BarbariansKind eKind, CvCascScope eScope) const;
+	// revolution.empire.percent -- the Revolution-index % (the AMOUNT kind's PERCENT slot; the flat-vs-percent
+	// split lives in the getter NAME because REVOLUTION_AMOUNT carries flat index deltas elsewhere).
+	int getRevolutionIndexModifier(CvCascScope eScope) const;
+	// The authored wellbeing families' signed sums (happiness/health empire flat); ANGER/UNHEALTH hold no
+	// slot and read 0 here (modifier.md §2b: the four-channel sign ROUTING is a fill/valuation rule).
+	int getFlatWellbeing(WellbeingChannel eChannel, CvCascScope eScope) const;
+	// The straggler scalars carrying the handicap's ai plane (growth / workRate -- both percent): the same
+	// game-start-base read through the InfoScalar slot table.
+	int getScalarModifier(InfoScalar eScalar, CvCascScope eScope, bool bAiAudience) const;
+
+	// ======================= 4. INTRINSIC -- bare typed reads (config; human values) ==================
+	// Ruling 24: the AI unit-upkeep era stage is a PLAIN CONFIG VALUE on the §7 ai metadata plane
+	// (ai.unitUpkeepEraModifier -- the legacy iAIPerEraModifier), feeding the clamped multiplicative stage at
+	// CvPlayer.cpp:10354 and the other mapped `× getCurrentEra()` consumer formulas.
+	int getUnitUpkeepEraModifier() const { return m_iUnitUpkeepEraModifier; }
+	// identity.advancedStart.* -- the parked advanced-start points budget config.
+	int getAdvancedStartPointsMod() const { return m_iAdvancedStartPointsMod; }
+	int getAdvancedStartAiPercent() const { return m_iAdvancedStartAiPercent; }
+	// grants views -- one-shot GAME-START provisioning, materialized from the COMPOSED §5 unit (base pulses +
+	// the `ai` scoped overrides; humans and AIs split entirely, own vs game handicap).
+	int getStartingGold() const { return m_iStartingGold; }
+	int getStartingDefenseUnits() const { return m_iStartingDefenseUnits; }
+	int getStartingWorkerUnits() const { return m_iStartingWorkerUnits; }
+	int getStartingExploreUnits() const { return m_iStartingExploreUnits; }
+	int getAIStartingDefenseUnits() const { return m_iAIStartingDefenseUnits; }
+	int getAIStartingWorkerUnits() const { return m_iAIStartingWorkerUnits; }
+	int getAIStartingExploreUnits() const { return m_iAIStartingExploreUnits; }
+	// identity.goodies -- the goody-hut roster (GOODY_* FKs, resolved at load).
+	int getNumGoodies() const { return (int)m_aiGoodies.size(); }
+	int getGoodies(int iIndex) const
+	{
+		if (iIndex >= 0 && iIndex < (int)m_aiGoodies.size())
+		{
+			return m_aiGoodies[iIndex];
+		}
+		return -1;
+	}
+
+	// PROPERTY_* per-turn sources (per-handicap crime/education), fed from the compiled PROPERTY_* families
+	// via the ONE shared bridge (CascadePropertyBridge::bridgeFamilies).
 	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
 
-	// Arrays
+	virtual const CvTriggers*  getTriggers()  const { return &m_triggers; }   // §5 -- triggers + the folded grants
 
-	int getGoodies(int i) const;
-
-	void getDataMembers(CvInfoUtil& util);
-	bool read(CvXMLLoadUtility* pXML);
-	void copyNonDefaults(const CvHandicapInfo* pClassInfo);
-	void getCheckSum(uint32_t& iSum) const;
+protected:
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvTriggers*  mutTriggers()  { return &m_triggers; }
 
 private:
-	CvPropertyManipulators m_PropertyManipulators;
+	// The ONE game-start-base read every point getter delegates to: the compiled (family, kind, scope, unit)
+	// slot sum for the requested audience leaf, plus the materialized per-ERA-at-one tail.
+	int gameStartBase(ModifierFamily eFamily, int iKind, CvCascScope eScope, CvCascUnit eUnit, bool bAiAudience) const;
 
-	int m_iFreeWinsVsBarbs;
-	int m_iAnimalAttackProb;
+	// --- the composed section units ---
+	CvModifiers m_modifiers;                        // §6 families (the base dispatch fills this; feeds the PROPERTY_* bridge)
+	CvTriggers  m_triggers;    // §5 game-start pulses (startingGold/units + the `ai` overrides)
+	CvPropertyManipulators m_PropertyManipulators;  // fed from the PROPERTY_* families (CascadePropertyBridge::bridgeFamilies)
+
+	// --- the materialized load-derived reads (mapFrom-only; the compiled entry list is the one scan source) ---
+	std::map<int, int> m_perEraStart;   // packed (audience, family, kind, scope, unit) -> Σ per-ERA value at ERA 1
+
+	// --- the intrinsic identity/config members ---
+	int m_iUnitUpkeepEraModifier;
 	int m_iAdvancedStartPointsMod;
+	int m_iAdvancedStartAiPercent;
 	int m_iStartingGold;
-	int m_iUnitUpkeepPercent;
-	int m_iDistanceMaintenancePercent;
-	int m_iNumCitiesMaintenancePercent;
-	int m_iColonyMaintenancePercent;
-	int m_iMaxColonyMaintenance;
-	int m_iCorporationMaintenancePercent;
-	int m_iCivicUpkeepPercent;
-	int m_iInflationPercent;
-	int m_iRevolutionIndexPercent;
-	int m_iHealthBonus;
-	int m_iHappyBonus;
-	int m_iAttitudeChange;
-	int m_iNoTechTradeModifier;
-	int m_iTechTradeKnownModifier;
-	int m_iUnownedWaterTilesPerBarbarianUnit;
-	int m_iUnownedTilesPerBarbarianCity;
-	int m_iBarbarianCityCreationTurnsElapsed;
-	int m_iBarbarianCityCreationProb;
-	int m_iAnimalCombatModifier;
-	int m_iBarbarianCombatModifier;
-	int m_iAIAnimalCombatModifier;
-	int m_iSubdueAnimalBonusAI;
-	int m_iAIBarbarianCombatModifier;
-
 	int m_iStartingDefenseUnits;
 	int m_iStartingWorkerUnits;
 	int m_iStartingExploreUnits;
 	int m_iAIStartingDefenseUnits;
 	int m_iAIStartingWorkerUnits;
 	int m_iAIStartingExploreUnits;
-	int m_iBarbarianInitialDefenders;
-	int m_iAIDeclareWarProb;
-	int m_iAIWorkRateModifier;
-	int m_iAIGrowthPercent;
-	int m_iAITrainPercent;
-	int m_iAIWorldTrainPercent;
-	int m_iAIConstructPercent;
-	int m_iAIWorldConstructPercent;
-	int m_iAICreatePercent;
-	int m_iAIResearchPercent;
-	int m_iAIWorldCreatePercent;
-	int m_iAICivicUpkeepPercent;
-	int m_iAIUnitUpkeepPercent;
-	int m_iAIUnitSupplyPercent;
-	int m_iAIUnitUpgradePercent;
-	int m_iAIInflationPercent;
-	int m_iAIWarWearinessPercent;
-	int m_iAIPerEraModifier;
-	int m_iAIAdvancedStartPercent;
-
-	CvString m_szHandicapName;
-
-	std::vector<int> m_piGoodies;
+	std::vector<int> m_aiGoodies;   // identity.goodies -> resolved GOODY_* ids
 };
 
 #endif // CV_HANDICAP_INFO_H

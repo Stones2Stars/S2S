@@ -1,0 +1,114 @@
+{
+ "type": "IMPROVEMENT_WINERY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FERMENTATION",
+     "scope": "team"
+    },
+    {
+     "bonus": [
+      "BONUS_GRAPES"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_AGRICULTURAL_ENGINEERING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GRAPES"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_TRADE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CURRENCY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_AGRICULTURAL_ENGINEERING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GLOBALIZATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GENE_MANIPULATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GRAPES"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_WINERY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_WINERY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_WINERY_PEDIA",
+  "advancedStart": {
+   "cost": 30
+  },
+  "upgradeTime": 15,
+  "pillageGold": 40,
+  "pillageTo": "IMPROVEMENT_GRAPE_PICKING_CAMP",
+  "upgradesTo": "IMPROVEMENT_VERTICAL_FARM",
+  "bonuses": {
+   "BONUS_GRAPES": {
+    "trade": true
+   }
+  }
+ }
+}

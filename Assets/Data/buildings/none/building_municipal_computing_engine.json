@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_MUNICIPAL_COMPUTING_ENGINE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPUTER_NETWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_STEAMPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEAMPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BONUS_COPPER_WARES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1,
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 655,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_COMPUTING_ENGINE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MUNICIPAL_COMPUTING_ENGINE",
+  "civilopedia": "TXT_KEY_BUILDING_MUNICIPAL_COMPUTING_ENGINE_PEDIA",
+  "worth": 5,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_STEAM",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

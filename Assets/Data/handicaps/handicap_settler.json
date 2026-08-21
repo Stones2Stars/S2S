@@ -1,0 +1,356 @@
+{
+ "type": "HANDICAP_SETTLER",
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 40
+   },
+   "numCities": {
+    "percent": 40
+   },
+   "colony": {
+    "percent": 40
+   },
+   "corporation": {
+    "percent": 40
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "unit": {
+    "percent": 40,
+    "ai": {
+     "percent": 130
+    }
+   },
+   "civic": {
+    "percent": 40,
+    "ai": {
+     "percent": 130
+    }
+   },
+   "inflation": {
+    "percent": 70,
+    "ai": {
+     "percent": 130
+    }
+   },
+   "supply": {
+    "ai": {
+     "percent": 130
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 8
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 8
+  }
+ },
+ "growth": {
+  "empire": {
+   "ai": {
+    "percent": 115
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "train": {
+    "ai": {
+     "percent": 124
+    }
+   },
+   "construct": {
+    "ai": {
+     "percent": 118
+    }
+   },
+   "create": {
+    "ai": {
+     "percent": 115
+    }
+   },
+   "research": {
+    "ai": {
+     "percent": 109
+    }
+   },
+   "upgrade": {
+    "ai": {
+     "percent": 130
+    }
+   }
+  },
+  "world": {
+   "train": {
+    "ai": {
+     "percent": 115
+    }
+   },
+   "construct": {
+    "ai": {
+     "percent": 115
+    }
+   },
+   "create": {
+    "ai": {
+     "percent": 115
+    }
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "ai": {
+    "percent": -30
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "percent": 70
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitude": {
+    "flat": 2
+   },
+   "declareWar": {
+    "ai": {
+     "percent": 50
+    }
+   },
+   "warWeariness": {
+    "ai": {
+     "percent": 130
+    }
+   }
+  },
+  "team": {
+   "noTechTrade": {
+    "percent": 150
+   },
+   "techTradeKnown": {
+    "percent": -99
+   }
+  }
+ },
+ "combat": {
+  "empire": {
+   "freeWinsVsBarbs": {
+    "flat": 8
+   }
+  },
+  "world": {
+   "animal": {
+    "percent": -60
+   },
+   "barbarian": {
+    "percent": -60
+   }
+  }
+ },
+ "barbarians": {
+  "world": {
+   "animalAttackProb": {
+    "percent": 40
+   },
+   "waterTilesPerUnit": {
+    "flat": 180
+   },
+   "tilesPerCity": {
+    "flat": 60
+   },
+   "cityCreationTurns": {
+    "flat": 40
+   },
+   "cityCreationProb": {
+    "percent": 4
+   },
+   "defenders": {
+    "flat": 1
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 3,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "grants": {
+  "startingGold": 32,
+  "startingDefenseUnits": 6,
+  "startingExploreUnits": 2,
+  "startingWorkerUnits": 1
+ },
+ "identity": {
+  "description": "TXT_KEY_HANDICAP_SETTLER",
+  "help": "TXT_KEY_HANDICAP_SETTLER_HELP",
+  "advancedStart": {
+   "pointsMod": 160,
+   "aiPercent": 100
+  },
+  "goodies": [
+   "GOODY_MAP",
+   "GOODY_HEALING",
+   "GOODY_WISE_WOMAN",
+   "GOODY_MEDICINE_MAN",
+   "GOODY_EXPERIENCE",
+   "GOODY_LOW_ANCIENT_EXPERIENCE",
+   "GOODY_LOW_CLASSICAL_EXPERIENCE",
+   "GOODY_LOW_MEDIEVAL_EXPERIENCE",
+   "GOODY_LOW_RENAISSANCE_EXPERIENCE",
+   "GOODY_HIGH_PREHISTORIC_EXPERIENCE",
+   "GOODY_HIGH_ANCIENT_EXPERIENCE",
+   "GOODY_HIGH_CLASSICAL_EXPERIENCE",
+   "GOODY_HIGH_MEDIEVAL_EXPERIENCE",
+   "GOODY_HIGH_RENAISSANCE_EXPERIENCE",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_GOLD",
+   "GOODY_LOW_ANCIENT_GOLD",
+   "GOODY_LOW_ANCIENT_GOLD",
+   "GOODY_LOW_CLASSICAL_GOLD",
+   "GOODY_LOW_CLASSICAL_GOLD",
+   "GOODY_LOW_MEDIEVAL_GOLD",
+   "GOODY_LOW_MEDIEVAL_GOLD",
+   "GOODY_LOW_RENAISSANCE_GOLD",
+   "GOODY_LOW_RENAISSANCE_GOLD",
+   "GOODY_LOW_INDUSTRIAL_GOLD",
+   "GOODY_LOW_INDUSTRIAL_GOLD",
+   "GOODY_LOW_ATOMIC_GOLD",
+   "GOODY_LOW_ATOMIC_GOLD",
+   "GOODY_LOW_INFORMATION_GOLD",
+   "GOODY_LOW_INFORMATION_GOLD",
+   "GOODY_LOW_NANOTECH_GOLD",
+   "GOODY_LOW_NANOTECH_GOLD",
+   "GOODY_SCOUT",
+   "GOODY_SCOUT",
+   "GOODY_SCOUT_ANCIENT",
+   "GOODY_SCOUT_ANCIENT",
+   "GOODY_HIGH_GOLD",
+   "GOODY_HIGH_GOLD",
+   "GOODY_HIGH_GOLD",
+   "GOODY_HIGH_ANCIENT_GOLD",
+   "GOODY_HIGH_ANCIENT_GOLD",
+   "GOODY_HIGH_ANCIENT_GOLD",
+   "GOODY_HIGH_CLASSICAL_GOLD",
+   "GOODY_HIGH_CLASSICAL_GOLD",
+   "GOODY_HIGH_CLASSICAL_GOLD",
+   "GOODY_HIGH_MEDIEVAL_GOLD",
+   "GOODY_HIGH_MEDIEVAL_GOLD",
+   "GOODY_HIGH_MEDIEVAL_GOLD",
+   "GOODY_HIGH_RENAISSANCE_GOLD",
+   "GOODY_HIGH_RENAISSANCE_GOLD",
+   "GOODY_HIGH_RENAISSANCE_GOLD",
+   "GOODY_HIGH_INDUSTRIAL_GOLD",
+   "GOODY_HIGH_INDUSTRIAL_GOLD",
+   "GOODY_HIGH_INDUSTRIAL_GOLD",
+   "GOODY_HIGH_ATOMIC_GOLD",
+   "GOODY_HIGH_ATOMIC_GOLD",
+   "GOODY_HIGH_ATOMIC_GOLD",
+   "GOODY_HIGH_INFORMATION_GOLD",
+   "GOODY_HIGH_INFORMATION_GOLD",
+   "GOODY_HIGH_INFORMATION_GOLD",
+   "GOODY_HIGH_NANOTECH_GOLD",
+   "GOODY_HIGH_NANOTECH_GOLD",
+   "GOODY_HIGH_NANOTECH_GOLD",
+   "GOODY_HUNTER",
+   "GOODY_HUNTER",
+   "GOODY_HUNTER_ANCIENT",
+   "GOODY_HUNTER_ANCIENT",
+   "GOODY_LOW_RESEARCH",
+   "GOODY_LOW_RESEARCH",
+   "GOODY_LOW_ANCIENT_RESEARCH",
+   "GOODY_LOW_ANCIENT_RESEARCH",
+   "GOODY_LOW_CLASSICAL_RESEARCH",
+   "GOODY_LOW_CLASSICAL_RESEARCH",
+   "GOODY_LOW_MEDIEVAl_RESEARCH",
+   "GOODY_LOW_MEDIEVAl_RESEARCH",
+   "GOODY_LOW_RENAISSANCE_RESEARCH",
+   "GOODY_LOW_RENAISSANCE_RESEARCH",
+   "GOODY_LOW_INDUSTRIAL_RESEARCH",
+   "GOODY_LOW_INDUSTRIAL_RESEARCH",
+   "GOODY_LOW_ATOMIC_RESEARCH",
+   "GOODY_LOW_ATOMIC_RESEARCH",
+   "GOODY_LOW_INFORMATION_RESEARCH",
+   "GOODY_LOW_INFORMATION_RESEARCH",
+   "GOODY_LOW_NANOTECH_RESEARCH",
+   "GOODY_LOW_NANOTECH_RESEARCH",
+   "GOODY_GATHERER",
+   "GOODY_GATHERER",
+   "GOODY_WORKER",
+   "GOODY_WORKER",
+   "GOODY_HIGH_RESEARCH",
+   "GOODY_HIGH_RESEARCH",
+   "GOODY_HIGH_RESEARCH",
+   "GOODY_HIGH_RESEARCH",
+   "GOODY_HIGH_ANCIENT_RESEARCH",
+   "GOODY_HIGH_ANCIENT_RESEARCH",
+   "GOODY_HIGH_ANCIENT_RESEARCH",
+   "GOODY_HIGH_ANCIENT_RESEARCH",
+   "GOODY_HIGH_CLASSICAL_RESEARCH",
+   "GOODY_HIGH_CLASSICAL_RESEARCH",
+   "GOODY_HIGH_CLASSICAL_RESEARCH",
+   "GOODY_HIGH_CLASSICAL_RESEARCH",
+   "GOODY_HIGH_MEDIEVAl_RESEARCH",
+   "GOODY_HIGH_MEDIEVAl_RESEARCH",
+   "GOODY_HIGH_MEDIEVAl_RESEARCH",
+   "GOODY_HIGH_MEDIEVAl_RESEARCH",
+   "GOODY_HIGH_RENAISSANCE_RESEARCH",
+   "GOODY_HIGH_RENAISSANCE_RESEARCH",
+   "GOODY_HIGH_RENAISSANCE_RESEARCH",
+   "GOODY_HIGH_RENAISSANCE_RESEARCH",
+   "GOODY_HIGH_INDUSTRIAL_RESEARCH",
+   "GOODY_HIGH_INDUSTRIAL_RESEARCH",
+   "GOODY_HIGH_INDUSTRIAL_RESEARCH",
+   "GOODY_HIGH_INDUSTRIAL_RESEARCH",
+   "GOODY_HIGH_ATOMIC_RESEARCH",
+   "GOODY_HIGH_ATOMIC_RESEARCH",
+   "GOODY_HIGH_ATOMIC_RESEARCH",
+   "GOODY_HIGH_ATOMIC_RESEARCH",
+   "GOODY_HIGH_INFORMATION_RESEARCH",
+   "GOODY_HIGH_INFORMATION_RESEARCH",
+   "GOODY_HIGH_INFORMATION_RESEARCH",
+   "GOODY_HIGH_INFORMATION_RESEARCH",
+   "GOODY_HIGH_NANOTECH_RESEARCH",
+   "GOODY_HIGH_NANOTECH_RESEARCH",
+   "GOODY_HIGH_NANOTECH_RESEARCH",
+   "GOODY_HIGH_NANOTECH_RESEARCH",
+   "GOODY_TECH",
+   "GOODY_TECH",
+   "GOODY_TECH",
+   "GOODY_TECH",
+   "GOODY_ANCIENT_TECH",
+   "GOODY_ANCIENT_TECH",
+   "GOODY_ANCIENT_TECH",
+   "GOODY_ANCIENT_TECH"
+  ]
+ }
+}

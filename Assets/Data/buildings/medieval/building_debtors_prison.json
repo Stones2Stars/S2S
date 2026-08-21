@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_DEBTORS_PRISON",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PSYCHOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_JAIL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_USURY",
+    {
+     "any": [
+      "BUILDING_STOCKS",
+      "BUILDING_GALLOWS",
+      "BUILDING_GUILLOTINE",
+      "BUILDING_ELECTRIC_CHAIR",
+      "BUILDING_LETHAL_INJECTION"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_JAIL"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 332,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEBTORS_PRISON",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEBTORS_PRISON",
+  "civilopedia": "TXT_KEY_BUILDING_DEBTORS_PRISON_PEDIA",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_SEA_CREATURE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/seacreature1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SEA_CREATURE",
+  "unitCombats": [
+   "UNITCOMBAT_SEA_ANIMAL"
+  ]
+ }
+}

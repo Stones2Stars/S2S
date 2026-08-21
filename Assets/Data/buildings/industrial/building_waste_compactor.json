@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_WASTE_COMPACTOR",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LANDFILL",
+    "TECH_MODERN_SANITATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      "CIVIC_LANDFILLS",
+      "CIVIC_WASTE_IMPORTATION",
+      "CIVIC_WASTE_TO_ENERGY"
+     ]
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 740,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WASTE_COMPACTOR",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GARBAGE_DUMP"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WASTE_COMPACTOR",
+  "civilopedia": "TXT_KEY_BUILDING_WASTE_COMPACTOR_PEDIA",
+  "worth": 2,
+  "militaryWorth": 2,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

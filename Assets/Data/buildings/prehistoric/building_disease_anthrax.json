@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_DISEASE_ANTHRAX",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SMART_DRUGS"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_SHEEP",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_COW",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    },
+    "TECH_ANIMAL_HUSBANDRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_DISEASE",
+     "scope": "city",
+     "min": 450,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "production": {
+  "city": {
+   "percent": -7
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -6
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    -5,
+    {
+     "value": -75,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYDISEASE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISEASE_ANTHRAX",
+  "civilopedia": "TXT_KEY_BUILDING_DISEASE_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

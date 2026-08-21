@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_ALPHA_MALE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_STRONGMAN"
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -2
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "empire": {
+   "flat": -3
+  }
+ },
+ "cost": {
+  "production": 10,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ALPHA_MALE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ALPHA_MALE",
+  "civilopedia": "TXT_KEY_BUILDING_ALPHAGENDER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

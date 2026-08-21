@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_DEEP_THOUGHT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_GALACTIC_ECONOMY",
+    {
+     "type": "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_STABLE_TIME_LOOPS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "gold": {
+  "city": {
+   "flat": 42
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 42
+  }
+ },
+ "cost": {
+  "production": 118530
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_DEEP_THOUGHT"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEEP_THOUGHT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEEP_THOUGHT",
+  "civilopedia": "TXT_KEY_BUILDING_DEEP_THOUGHT_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

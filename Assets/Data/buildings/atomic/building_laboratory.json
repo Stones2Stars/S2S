@@ -1,0 +1,133 @@
+{
+ "type": "BUILDING_LABORATORY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TESTING_LAB",
+   "BUILDING_BIOLOGICAL_WARFARE_LAB",
+   "BUILDING_CENTERS_FOR_DISEASE_CONTROL",
+   "BUILDING_CLONING_LABORATORY",
+   "BUILDING_CLOSED_TIMELIKE_CURVE_COMPUTER",
+   "BUILDING_COSMONAUT_TRAINING_CENTRE",
+   "BUILDING_DARPA",
+   "BUILDING_DEEP_SPACE_RESEARCH_INSTITUTE",
+   "BUILDING_D_T_FUSION_POWER_PLANT",
+   "BUILDING_ECSTASY_LAB",
+   "BUILDING_FORENSICS_LAB",
+   "BUILDING_FRAUNHOFER_SOCIETY",
+   "BUILDING_GASTRONOMY_LAB",
+   "BUILDING_GENE_FARMING_LAB",
+   "BUILDING_GRAVITY_WAVE_DETECTOR",
+   "BUILDING_HYDROPONICS_LAB",
+   "BUILDING_JET_PROPULSION_LABORATORY",
+   "BUILDING_LSD_LAB",
+   "BUILDING_MEGATOWER_RESEARCH_LEVEL",
+   "BUILDING_METH_LAB",
+   "BUILDING_MISSILE_LAB",
+   "BUILDING_MRI_LAB",
+   "BUILDING_NANITE_LAB",
+   "BUILDING_RESEARCH_HOSPITAL",
+   "BUILDING_RESEARCH_INSTITUTE",
+   "BUILDING_ROBOTICS_LAB",
+   "BUILDING_SUPERCOLLIDER",
+   "BUILDING_SUPERCOMPUTER",
+   "BUILDING_VENTURE_INDUSTRIES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_UNIVERSITY",
+    "TECH_MODERN_PHYSICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": 20,
+      "enabled": "IS_SPACE"
+     }
+    ]
+   }
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 1130,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LABORATORY"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_LABORATORY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LABORATORY",
+  "civilopedia": "TXT_KEY_BUILDING_LABORATORY_PEDIA",
+  "worth": 6,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

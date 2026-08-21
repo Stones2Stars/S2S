@@ -1,0 +1,17 @@
+{
+ "type": "VOTE_FORCE_NO_TRADE",
+ "voteSource": [
+  "DIPLOVOTE_POPE"
+ ],
+ "threshold": {
+  "population": 62,
+  "minVoters": 3,
+  "stateReligionPercent": 100
+ },
+ "effect": {
+  "forceNoTrade": true
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_FORCE_NO_TRADE"
+ }
+}

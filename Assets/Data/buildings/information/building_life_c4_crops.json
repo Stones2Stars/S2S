@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_LIFE_C4_CROPS",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_LIFE_CRISPR_CAS9_BACTERIA",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_BACTERIUM_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "research": {
+  "empire": {
+   "buildings": {
+    "BUILDING_GENE_FARMING_LAB": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 5730,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LIFE_C4_CROPS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_C4_CROPS",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_C4_CROPS_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,69 @@
+{
+ "type": "BONUS_POMEGRANATE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_SAFAVID",
+   "BUILDING_NATURE_ALTAR_POMEGRANATE",
+   "BUILDING_NATURE_CIRCLE_POMEGRANATE",
+   "BUILDING_ORCHARD_POMEGRANATE"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_POMEGRANATE"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "maxLatitude": 50,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "uniqueRange": 2,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_PLAINS",
+   "TERRAIN_SCRUB"
+  ],
+  "validFeatures": [
+   "FEATURE_OASIS",
+   "FEATURE_SAVANNA",
+   "FEATURE_VERY_TALL_GRASS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_POMEGRANATE",
+  "civilopedia": "TXT_KEY_BONUS_POMEGRANATE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CROP",
+  "source": "natural"
+ }
+}

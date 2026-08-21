@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_INTERGALACTIC_MATTER_PRESERVER",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_PARTICLE_TRANSMUTATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
+    "TECH_OMEGA_MINUS_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CHRONOTON",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 4492,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_MATTER_PRESERVER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_MATTER_PRESERVER",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_MATTER_PRESERVER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

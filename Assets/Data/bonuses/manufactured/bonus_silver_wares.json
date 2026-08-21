@@ -1,0 +1,23 @@
+{
+ "type": "BONUS_SILVER_WARES",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_ANTI_GRAVITY_FIELD_GENERATORS",
+   "BUILDING_JEWELER",
+   "BUILDING_PALACE_OF_BEAULIEU",
+   "BUILDING_SOLAR_MIRROR_ARRAY_POWER_PLANT",
+   "BUILDING_TUMEN_AMUGULANG_PALACE"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SILVER_WARES"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SILVER_WARES",
+  "civilopedia": "TXT_KEY_BONUS_WARES_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

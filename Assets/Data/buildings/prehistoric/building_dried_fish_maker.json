@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_DRIED_FISH_MAKER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_AUTOMATED_URBANIZATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AQUAFARM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRAP_FISHING",
+    "TECH_DRYING",
+    {
+     "any": [
+      "BUILDING_DRYING_FRAME",
+      "BUILDING_ANCIENT_CUSTOMS",
+      "BUILDING_SMOKEHOUSE",
+      "BUILDING_HYPERMARKET"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_RAW_FISH",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SHELLFISH",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_AQUAFARM"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_DRIED_FISH"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SALT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 50,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DRIED_FISH_MAKER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DRIED_FISH_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_DRIED_FISH_MAKER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

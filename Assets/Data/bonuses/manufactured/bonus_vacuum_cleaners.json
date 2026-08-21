@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_VACUUM_CLEANERS",
+ "enables": {
+  "buildings": [
+   "BUILDING_APPLIANCE_STORE",
+   "BUILDING_PLASTIC_RECLAMATION_PLANT"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_VACUUM_CLEANERS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_VACUUM_CLEANERS",
+  "civilopedia": "TXT_KEY_BONUS_VACUUM_CLEANERS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

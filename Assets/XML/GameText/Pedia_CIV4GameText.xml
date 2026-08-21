@@ -187,6 +187,19 @@
 		<German>Güter</German>
 		<Russian>Бонусы производства</Russian>
 	</TEXT>
+	<!-- The CITY SCREEN's bonus tabs. Deliberately NOT the two PEDIA category tags below: the pedia sorts
+	     bonuses by what they ARE (drawn on the map vs manufactured by a building), while the city screen
+	     answers a different question entirely: HOW THIS CITY HAS IT, traded in over the network or present
+	     on site. Reusing the pedia tags made the city screen say "Map"/"Manufactured" for a traded/onsite
+	     split, which names the wrong axis. -->
+	<TEXT>
+		<Tag>TXT_KEY_CITYSCREEN_BONUS_TRADED</Tag>
+		<English>Traded Bonuses</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_CITYSCREEN_BONUS_ONSITE</Tag>
+		<English>Onsite Bonuses</English>
+	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_PEDIA_CATEGORY_BONUS_MAP</Tag>
 		<English>Map Bonuses</English>

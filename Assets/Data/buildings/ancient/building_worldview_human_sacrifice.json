@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_WORLDVIEW_HUMAN_SACRIFICE",
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION"
+   ],
+   "all": [
+    "BUILDING_PALACE",
+    "TECH_SACRIFICE_CULT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE"
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WORLDVIEW_HUMAN_SACRIFICE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CEREMONIAL_ALTAR"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WORLDVIEW_HUMAN_SACRIFICE",
+  "civilopedia": "TXT_KEY_BUILDING_WORLDVIEW_HUMAN_SACRIFICE_PEDIA",
+  "help": "TXT_KEY_BUILDING_WORLDVIEW_HUMAN_SACRIFICE_HELP",
+  "notConstructible": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

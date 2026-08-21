@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_CISLUNAR_METAMORPHIC_STATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_GIGAVERSE_PORTAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_CLAYTRONIC_STATION",
+    "TECH_SHAPESHIFTING",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 25857,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_METAMORPHIC_STATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_METAMORPHIC_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_METAMORPHIC_STATION_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_HUMAN_MOD_ZERO_G_ADAPTATION",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRANSHUMANISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_NOVEL_SENSES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_ZERO_G_ADAPTATION"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CISLUNAR_FACTORY": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 12310
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_ZERO_G_ADAPTATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_ZERO_G_ADAPTATION",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_ZERO_G_ADAPTATION_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

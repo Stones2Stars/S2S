@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUNAR_ROCKET_FUEL_REFINERY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LUNAR_WATER_EXTRACTION_FACILITY",
+    "TECH_LUNAR_MANUFACTURING",
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_ALGAE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_PLASTIC",
+   "BONUS_SYNTHETIC_RUBBER",
+   "BONUS_WATER_BOTTLES"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": {
+    "value": 100,
+    "enabled": "TECH_LUNAR_TRADE"
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 250
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 800,
+  "hurryModifier": 10000
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_ORGANIC_POLYMERE_FACTORY_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

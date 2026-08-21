@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_CHANCELLORS_OFFICE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_KINGS_COUNCIL",
+    "TECH_PARLIAMENTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      "CIVIC_MONARCHY",
+      "CIVIC_FEUDAL"
+     ]
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -10
+   }
+  }
+ },
+ "cost": {
+  "production": 368,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CHANCELLORS_OFFICE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CHANCELLORS_OFFICE",
+  "civilopedia": "TXT_KEY_BUILDING_CHANCELLORS_OFFICE_PEDIA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

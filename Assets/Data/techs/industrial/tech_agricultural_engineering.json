@@ -1,0 +1,73 @@
+{
+ "type": "TECH_AGRICULTURAL_ENGINEERING",
+ "enables": {
+  "buildings": [
+   "BUILDING_AGRICULTURAL_EXTENSION",
+   "BUILDING_GREENHOUSE",
+   "BUILDING_MEGAFARM",
+   "BUILDING_MODERN_GRANARY"
+  ],
+  "civics": [
+   "CIVIC_CORPORATE_OWNED"
+  ],
+  "techs": [
+   "TECH_AGRICHEMICALS",
+   "TECH_BARBED_WIRE",
+   "TECH_LAWN_SPORTS",
+   "TECH_MORMON"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FOOD_PRESERVATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASSEMBLY_LINE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 6351
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Agronomy.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,5,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_AGRICULTURAL_ENGINEERING",
+  "soundMP": "AS2D_TECH_AGRICULTURAL_ENGINEERING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_AGRICULTURAL_ENGINEERING",
+  "civilopedia": "TXT_KEY_TECH_AGRICULTURAL_ENGINEERING_PEDIA",
+  "quote": "TXT_KEY_TECH_AGRICULTURAL_ENGINEERING_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 66,
+  "gridY": 5
+ }
+}

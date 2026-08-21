@@ -1,0 +1,48 @@
+{
+ "type": "BUILDING_VENUS_VERTICAL_WIND_FARM",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_VENUS",
+    "TECH_PLANETARY_EXTRACTION",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 800,
+  "hurryModifier": 10000
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VENUS_VERTICAL_WIND_FARM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_VERTICAL_WIND_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_VERTICAL_WIND_FARM_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

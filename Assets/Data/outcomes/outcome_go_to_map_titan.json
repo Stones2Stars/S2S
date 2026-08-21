@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_GO_TO_MAP_TITAN",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_TITAN",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_TITAN"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PLANETARY_EXPLORATION"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

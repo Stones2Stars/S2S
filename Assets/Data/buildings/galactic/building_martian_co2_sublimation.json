@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_MARTIAN_CO2_SUBLIMATION",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MARTIAN_MEGACITY",
+    "TECH_ASTROECOLOGY",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 6372,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_CO2_SUBLIMATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_CO2_SUBLIMATION",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_CO2_SUBLIMATION_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_CRYSTAL_GLASSWARE",
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CRYSTAL_GLASSWARE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CRYSTAL_GLASSWARE",
+  "civilopedia": "TXT_KEY_BONUS_CRYSTAL_GLASSWARE_PEDIA",
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
+ }
+}

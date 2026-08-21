@@ -1,0 +1,111 @@
+{
+ "type": "TECH_GUILDS",
+ "enables": {
+  "buildings": [
+   "BUILDING_APPRENTICE_WORKSHOP",
+   "BUILDING_BASKET_MAKERS_WORKSHOP",
+   "BUILDING_BEADMAKERS_WORKSHOP",
+   "BUILDING_CULTURE_RUSSIAN",
+   "BUILDING_FARMERS_MARKET",
+   "BUILDING_GUILD_HALL",
+   "BUILDING_LACQUERWARE_WORKSHOP",
+   "BUILDING_MATTRESS_STORE",
+   "BUILDING_PIAZZA_SAN_MARCO",
+   "BUILDING_POTTERS_WORKSHOP",
+   "BUILDING_PUB",
+   "BUILDING_TOY_MAKER",
+   "BUILDING_TREE_NURSERY"
+  ],
+  "builds": [
+   "BUILD_TOWN",
+   "BUILD_YOUNG_FOREST"
+  ],
+  "civics": [
+   "CIVIC_AGRICULTURAL_GUILDS",
+   "CIVIC_APPRENTICESHIP",
+   "CIVIC_GUILDS"
+  ],
+  "improvements": [
+   "IMPROVEMENT_TOWN",
+   "IMPROVEMENT_YOUNG_FOREST"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_GUILD"
+  ],
+  "techs": [
+   "TECH_CRUCIBLE_STEEL",
+   "TECH_INVENTION",
+   "TECH_PAPER",
+   "TECH_PLAGUE_MEDICINE"
+  ],
+  "units": [
+   "UNIT_GALLEASS",
+   "UNIT_IVAN_IV",
+   "UNIT_MASTER_SAILOR_GALLEASS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INSURANCE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FEUDALISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARCHITECTURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1445
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Guilds.dds,Art/Interface/Buttons/TechTree_Atlas.dds,4,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GUILDS",
+  "soundMP": "AS2D_TECH_MP_GUILDS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_GUILDS",
+  "civilopedia": "TXT_KEY_TECH_GUILDS_PEDIA",
+  "quote": "TXT_KEY_TECH_GUILDS_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "militaryWorth": 8,
+  "tradeable": true,
+  "gridX": 45,
+  "gridY": 13
+ }
+}

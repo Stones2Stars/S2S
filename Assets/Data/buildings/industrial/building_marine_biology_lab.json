@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_MARINE_BIOLOGY_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SEA_LAB",
+   "BUILDING_MUSSEL_RAFTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "BUILDING_UNIVERSITY",
+    "TECH_MARINE_BIOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 7,
+     "enabled": "TECH_DEEP_SEA_EXPLORATION"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_AQUACULTURE"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 630,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARINE_BIOLOGY_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARINE_BIOLOGY_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_MARINE_BIOLOGY_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

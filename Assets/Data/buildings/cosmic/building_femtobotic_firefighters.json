@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_FEMTOBOTIC_FIREFIGHTERS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ATOMIC_FIREPROOFING",
+    "TECH_PARTICLE_GENETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FEMTOBOTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -100
+  }
+ },
+ "cost": {
+  "production": 14655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FEMTOBOTIC_FIREFIGHTERS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FEMTOBOTIC_FIREFIGHTERS",
+  "civilopedia": "TXT_KEY_BUILDING_FEMTOBOTIC_FIREFIGHTERS_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_LUMINESCENT_SOLAR_CONCENTRATORS",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ORGANIC_PHOTONICS",
+    {
+     "any": [
+      "BUILDING_SMART_GRID",
+      "BUILDING_WIRELESS_GRID",
+      "BUILDING_EMP_GRID",
+      "BUILDING_SUPERCONDUCTING_GRID"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_QUANTUM_DOTS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FULLERENE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 2405,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUMINESCENT_SOLAR_CONCENTRATORS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUMINESCENT_SOLAR_CONCENTRATORS",
+  "civilopedia": "TXT_KEY_BUILDING_LUMINESCENT_SOLAR_CONCENTRATORS_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

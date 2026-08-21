@@ -1,0 +1,22 @@
+{
+ "type": "PROMOTIONLINE_BOTTLENECK",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Bottleneck1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BOTTLENECK",
+  "unitCombats": [
+   "UNITCOMBAT_GROUP_BATTALION",
+   "UNITCOMBAT_GROUP_COMPANY",
+   "UNITCOMBAT_GROUP_SQUAD",
+   "UNITCOMBAT_GROUP_PARTY",
+   "UNITCOMBAT_GROUP_SOLO"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_CAPTAIN",
+   "UNITCOMBAT_CIVILIAN"
+  ]
+ }
+}

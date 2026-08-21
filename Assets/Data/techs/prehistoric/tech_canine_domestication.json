@@ -1,0 +1,93 @@
+{
+ "type": "TECH_CANINE_DOMESTICATION",
+ "enables": {
+  "bonuses": [
+   "BONUS_DOG",
+   "BONUS_PIG",
+   "BONUS_SHEEP"
+  ],
+  "buildings": [
+   "BUILDING_CULTURE_DENE",
+   "BUILDING_CULTURE_JOMON",
+   "BUILDING_DISEASE_SWINE_FLU",
+   "BUILDING_DOG_BREEDER",
+   "BUILDING_DOG_KENNELS",
+   "BUILDING_HERDING_DOG_TRAINER",
+   "BUILDING_HUNTING_DOG_TRAINER",
+   "BUILDING_MILITARY_STANDARD_CANINES",
+   "BUILDING_PESTS_FLEAS",
+   "BUILDING_PESTS_LICE",
+   "BUILDING_PESTS_TICKS",
+   "BUILDING_SLED_DOG_TRAINER"
+  ],
+  "builds": [
+   "BUILD_NOMADIC_HERD_KILL"
+  ],
+  "improvements": [
+   "IMPROVEMENT_NOMADIC_HERD"
+  ],
+  "promotions": [
+   "PROMOTION_BARK",
+   "PROMOTION_BLOODHOUND1",
+   "PROMOTION_BLOODHOUND2",
+   "PROMOTION_BLOODHOUND3",
+   "PROMOTION_HOWL",
+   "PROMOTION_HUNTING_DOG1",
+   "PROMOTION_PACK_HUNTER1",
+   "PROMOTION_RACING_DOG1",
+   "PROMOTION_STALK_PREY",
+   "PROMOTION_TRACK_SCENT1"
+  ],
+  "techs": [
+   "TECH_ANIMAL_HUSBANDRY"
+  ],
+  "units": [
+   "UNIT_DENE_SLED_DOGS",
+   "UNIT_JOMON_HUNTING_DOGS",
+   "UNIT_NEANDERTHAL_TRAINED_DOG",
+   "UNIT_TRAINEDDOG"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CHIEFDOM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 45
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/Button_DogBreeding.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CANINE_DOMESTICATION",
+  "soundMP": "AS2D_TECH_CANINE_DOMESTICATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CANINE_DOMESTICATION",
+  "civilopedia": "TXT_KEY_TECH_CANINE_DOMESTICATION_PEDIA",
+  "quote": "TXT_KEY_TECH_CANINE_DOMESTICATION_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 16,
+  "gridY": 9
+ }
+}

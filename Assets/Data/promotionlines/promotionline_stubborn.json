@@ -1,0 +1,11 @@
+{
+ "type": "PROMOTIONLINE_STUBBORN",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitStubborn.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_STUBBORN"
+ }
+}

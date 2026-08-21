@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_CRIME_BRIBERY",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_CODE_OF_LAWS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 475,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": -20
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    -2,
+    {
+     "value": -30,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CRIMINAL": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": 40
+   }
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 40
+   }
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": -8
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_BRIBERY",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_BRIBERY_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

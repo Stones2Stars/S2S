@@ -1,0 +1,20 @@
+{
+ "type": "PROMOTION_LEAD_STORM4",
+ "promotionLine": {
+  "PROMOTIONLINE_LEAD_STORM": 4
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/LeadStorm4Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_LEAD_STORM4",
+  "notOnUnitCombats": [
+   "UNITCOMBAT_WEAPON_DIST_RIFLE"
+  ]
+ }
+}

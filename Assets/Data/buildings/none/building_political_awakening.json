@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_POLITICAL_AWAKENING",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_NANOPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOPUNK",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 5,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 3525
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_POLITICAL_AWAKENING",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_POLITICAL_AWAKENING",
+  "civilopedia": "TXT_KEY_BUILDING_POLITICAL_AWAKENING_PEDIA",
+  "specialBuildingType": "SPECIALBUILDING_PUNK_NANO",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

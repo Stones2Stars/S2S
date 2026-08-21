@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_EFFECT_LASCAUX_CAVES",
+ "enables": {
+  "buildings": [
+   "BUILDING_FRESCO_MURAL"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MASS_MEDIA"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_PETROGLYPHS"
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": [
+    1,
+    {
+     "value": -1,
+     "enabled": "TECH_LITERATURE"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": [
+    2,
+    {
+     "value": -2,
+     "enabled": "TECH_LITERATURE"
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "empire": {
+   "flat": [
+    2,
+    {
+     "value": -2,
+     "enabled": "TECH_LITERATURE"
+    }
+   ]
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LASCAUX_PAINTS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_LASCAUX_CAVES",
+  "civilopedia": "TXT_KEY_BUILDING_LASCAUX_PAINTS_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

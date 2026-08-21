@@ -1,0 +1,108 @@
+{
+ "type": "TECH_STEAM_POWER",
+ "enables": {
+  "bonuses": [
+   "BONUS_GRAPHITE",
+   "BONUS_MASCAGNITE"
+  ],
+  "buildings": [
+   "BUILDING_CULTURE_CUBAN",
+   "BUILDING_CULTURE_PAIUTE",
+   "BUILDING_CULTURE_SOUTH_AFRICAN",
+   "BUILDING_DUTCH_DIKE",
+   "BUILDING_ELLIS_ISLAND",
+   "BUILDING_LEVEE",
+   "BUILDING_MINE_GRAPHITE",
+   "BUILDING_MINE_MASCAGNITE",
+   "BUILDING_RESERVOIR",
+   "BUILDING_SEAWALLS",
+   "BUILDING_STEAMBOAT_PORT",
+   "BUILDING_STEAM_CRANE",
+   "BUILDING_TRUSS_BRIDGE"
+  ],
+  "techs": [
+   "TECH_FOOD_PRESERVATION",
+   "TECH_GAS_LIGHTING",
+   "TECH_MACHINE_TOOLS",
+   "TECH_RAILROAD",
+   "TECH_SCREW_PROPELLER",
+   "TECH_STEAMPUNK",
+   "TECH_THERMODYNAMICS"
+  ],
+  "units": [
+   "UNIT_AUGUSTO_LEGUIA",
+   "UNIT_BOER_CAVALRY",
+   "UNIT_CHARLES_WILKES",
+   "UNIT_DIPONEGORO",
+   "UNIT_ELEPHANT_GUNNER",
+   "UNIT_HUSSAR",
+   "UNIT_LEOPOLD_II",
+   "UNIT_LLANERO",
+   "UNIT_MAMBISE",
+   "UNIT_NDLELA",
+   "UNIT_OHIGGINS",
+   "UNIT_PADDLE_STEAMER",
+   "UNIT_PIONEER",
+   "UNIT_SERU_EPENISA_CAKOBAU",
+   "UNIT_WINNEMUCCA",
+   "UNIT_ZEBRA_CAVALRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INDUSTRIAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 50
+  }
+ },
+ "cost": {
+  "research": 5187
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_PRODUCTION": 8
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/Steam_Power.dds,Art/Interface/Buttons/TechTree_Atlas.dds,1,12"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_STEAMPOWER",
+  "soundMP": "AS2D_TECH_MP_STEAMPOWER"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_STEAM_POWER",
+  "civilopedia": "TXT_KEY_TECH_STEAM_POWER_PEDIA",
+  "quote": "TXT_KEY_TECH_STEAM_POWER_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 62,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "type": "GAMESPEED_BLITZ",
+ "speed": {
+  "world": {
+   "percent": 50
+  }
+ },
+ "missionYieldMultiplier": {
+  "world": {
+   "percent": 350
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_GAMESPEED_BLITZ",
+  "help": "TXT_KEY_GAMESPEED_BLITZ_HELP"
+ }
+}

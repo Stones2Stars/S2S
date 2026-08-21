@@ -1,0 +1,44 @@
+{
+ "type": "PROMOTION_URBAN_TACTICS3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_URBAN_TACTICS2"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 30
+   },
+   "cityDefense": {
+    "percent": 20
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_URBAN_TACTICS": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/roadwar3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_URBAN_TACTICS3"
+ }
+}

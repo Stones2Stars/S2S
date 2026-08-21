@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_LOCKSMITH",
+ "enables": {
+  "units": [
+   "UNIT_BEGGAR",
+   "UNIT_BURGLAR",
+   "UNIT_CUTTHROAT",
+   "UNIT_KARAI_PYHARE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_BIOMETRIC_WARFARE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ELECTRONIC_SECURITY_SYSTEM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_LOCKS",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_COPPER_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STEEL_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TITANIUM_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_ALUMINUM_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_ELECTRONIC_SECURITY_SYSTEM",
+    "BUILDING_BIOMETRIC_SECURITY_SYSTEM"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 184,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LOCKSMITH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LOCKSMITH",
+  "civilopedia": "TXT_KEY_BUILDING_LOCKSMITH_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

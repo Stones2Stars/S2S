@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_CENTRAL_BREEDER_CAMEL",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_CAMEL"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_VERTICAL_FLIGHT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CAMELID_DOMESTICATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CAMEL",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 320,
+  "sizeModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CAMEL_NATIONAL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CENTRAL_BREEDER_CAMEL",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CENTRAL_BREEDER_CAMEL",
+  "civilopedia": "TXT_KEY_BUILDING_CENTRAL_BREEDER_CAMEL_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 4,
+  "militaryWorth": 1,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

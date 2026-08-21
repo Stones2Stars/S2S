@@ -1,0 +1,72 @@
+{
+ "type": "TECH_FORENSICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_FORENSICS_LAB",
+   "BUILDING_POLICE_PRECINCT"
+  ],
+  "promotions": [
+   "PROMOTION_POLICING8",
+   "PROMOTION_SLEUTH7"
+  ],
+  "techs": [
+   "TECH_CYBERWARFARE"
+  ],
+  "units": [
+   "UNIT_PUBLIC_FORCES",
+   "UNIT_SWAT_TEAM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INFORMATION_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 19916
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Forensics.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_FORENSICS",
+  "soundMP": "AS2D_TECH_FORENSICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_FORENSICS",
+  "civilopedia": "TXT_KEY_TECH_FORENSICS_PEDIA",
+  "quote": "TXT_KEY_TECH_FORENSICS_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 87,
+  "gridY": 3
+ }
+}

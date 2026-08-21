@@ -1,0 +1,18 @@
+{
+ "type": "VOTE_UNIVERSAL_SUFFRAGE",
+ "voteSource": [
+  "DIPLOVOTE_UN"
+ ],
+ "threshold": {
+  "population": 51,
+  "minVoters": 3
+ },
+ "effect": {
+  "forceCivics": [
+   "CIVIC_DEMOCRACY"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_DEMOCRACY"
+ }
+}

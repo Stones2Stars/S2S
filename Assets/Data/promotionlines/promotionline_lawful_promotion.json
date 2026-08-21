@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_LAWFUL_PROMOTION",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PromotionLawful.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_LAWFUL_PROMOTION",
+  "unitCombats": [
+   "UNITCOMBAT_LAW_ENFORCEMENT"
+  ]
+ }
+}

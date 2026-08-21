@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_MARTIAN_GOVERNING_COUNCIL",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MARTIAN_CITY",
+    "TECH_BINARY_LEGISLATION",
+    "CULTURELEVEL_ELEGANT",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "any": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 1921,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_GOVERNING_COUNCIL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_GOVERNING_COUNCIL",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_GOVERNING_COUNCIL_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_MAGLEV_RAILS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHUO_SHINKANSEN",
+   "BUILDING_GLOBAL_RAIL_NETWORK",
+   "BUILDING_TRANSATLANTIC_TUNNEL"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FRICTIONLESS_FLIGHT"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_VACTRAIN_TERMINAL"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MAGNETIC_LEVITATION",
+    "BUILDING_METROPOLITAN_ADMINISTRATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_VACTRAIN_TERMINAL",
+    "BUILDING_GRAVITY_TRAIN"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1925,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MAGLEV_RAILS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MAGLEV_RAILS",
+  "civilopedia": "TXT_KEY_BUILDING_MAGLEV_RAILS_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,108 @@
+{
+ "type": "BUILDING_FACTORY_LEVITATION_GENERATORS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_ANTI_GRAVITY_FIELD_GENERATORS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+    "TECH_LEVITATION",
+    {
+     "type": "BONUS_SUPERSTRONG_ALLOYS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_NOVUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SHOCKWAVE_ENGINES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_NANOTECH_COMPLEX",
+    "BUILDING_FACTORY_ANTI_GRAVITY_FIELD_GENERATORS"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_LEVITATION_GENERATORS"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 9,
+     "enabled": "TECH_LUNAR_TRADE"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_MEGASTRUCTURE_ENGINEERING"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_SHIELDING"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 4485,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FACTORY_LEVITATION_GENERATORS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FACTORY_LEVITATION_GENERATORS",
+  "civilopedia": "TXT_KEY_BUILDING_FACTORY_LEVITATION_GENERATORS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

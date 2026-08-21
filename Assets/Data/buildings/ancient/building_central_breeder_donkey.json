@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_CENTRAL_BREEDER_DONKEY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_DONKEY"
+  ],
+  "units": [
+   "UNIT_TAMED_DONKEY_PAIR"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_VERTICAL_FLIGHT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_EQUINE_DOMESTICATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DONKEY",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 244,
+  "sizeModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CENTRAL_BREEDER_DONKEY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CENTRAL_BREEDER_DONKEY",
+  "civilopedia": "TXT_KEY_BUILDING_CENTRAL_BREEDER_DONKEY_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 4,
+  "militaryWorth": 6,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,42 @@
+{
+ "type": "PROMOTION_LASER_GUIDANCE",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_HEAT_SEEKING"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 15
+   },
+   "domain": {
+    "DOMAIN_AIR": {
+     "percent": 10
+    },
+    "DOMAIN_LAND": {
+     "percent": 10
+    },
+    "DOMAIN_SEA": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/laser_guidance.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_LASER_GUIDANCE",
+  "unitCombats": [
+   "UNITCOMBAT_MISSILE"
+  ]
+ }
+}

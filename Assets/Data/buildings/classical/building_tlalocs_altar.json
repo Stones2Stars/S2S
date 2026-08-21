@@ -1,0 +1,97 @@
+{
+ "type": "BUILDING_TLALOCS_ALTAR",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TEMPLE_OF_TLALOC",
+    "TECH_MATHEMATICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    "CIVIC_DIVINE_CULT",
+    "RELIGION_NAGHUALISM"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 2
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_SACRIFICIAL_ALTAR",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 1458,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_AZTEC_SACRIFICIAL_ALTAR"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TLALOCS_ALTAR"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CEREMONIAL_ALTAR"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TLALOCS_ALTAR",
+  "civilopedia": "TXT_KEY_BUILDING_TLALOCS_ALTAR_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 5,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

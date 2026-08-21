@@ -1,0 +1,82 @@
+{
+ "type": "TECH_NUCLEAR_PULSE_PROPULSION",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_FUSION_CORE",
+   "BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY",
+   "BUILDING_KUIPER_BELT_FUSION_PLANT",
+   "BUILDING_OORT_CLOUD_HILLS_COLONY",
+   "BUILDING_PLANET_NINE_COLONY",
+   "BUILDING_SEDNA_COLONY",
+   "BUILDING_URANUS_HELIUM_3_MINE"
+  ],
+  "projects": [
+   "PROJECT_SS_ENGINE"
+  ],
+  "techs": [
+   "TECH_ANTIMATTER_PRODUCTION",
+   "TECH_GALACTIC_LIFESTYLE",
+   "TECH_INTERSTELLAR_TRAVEL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTEROID_EXTRACTION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SOLAR_ORDNANCE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 93709
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/nuclearpulsepropulsion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NUCLEARPHYSICS",
+  "soundMP": "AS2D_TECH_NUCLEARPHYSICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NUCLEAR_PULSE_PROPULSION",
+  "civilopedia": "TXT_KEY_TECH_NUCLEAR_PULSE_PROPULSION_PEDIA",
+  "quote": "TXT_KEY_TECH_NUCLEAR_PULSE_PROPULSION_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 122,
+  "gridY": 3
+ }
+}

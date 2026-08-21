@@ -1,8 +1,18 @@
 from CvPythonExtensions import *
 import os
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution. ACT is the WRITE side -- the scenario APPLY asks the
+# engine to do things, which is not a read, so it addresses each subject by its (owner, id) pair like every other
+# surface here ([roadmap] scope decision 6).
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
+MAP = GC.getMap()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
+ACT = CyAct()
 VERSION = "C2C_2"
 fEncode = "utf-8"
 
@@ -102,28 +112,28 @@ class MetaDesc:
 class CvGameDesc:
 
 	def write(self, f):
-		f.write("BeginGame\n\tEra=%s\n\tSpeed=%s\n\tCalendar=%s\n" %(GC.getEraInfo(GAME.getStartEra()).getType(), GC.getGameSpeedInfo(GAME.getGameSpeedType()).getType(), GC.getCalendarInfo(GAME.getCalendar()).getType()))
+		f.write("BeginGame\n\tEra=%s\n\tSpeed=%s\n\tCalendar=%s\n" %(INFO.getType("C2C_ERA_", GAME.getStartEra()), INFO.getType("GAMESPEED_", GAME.getGameSpeedType()), INFO.getType("CALENDAR_", GAME.getCalendar())))
 
 		# write options
 		for i in xrange(GC.getNumGameOptionInfos()):
 			if GAME.isOption(i):
-				f.write("\tOption=%s\n" %(GC.getGameOptionInfo(i).getType()))
+				f.write("\tOption=%s\n" %(INFO.getType("GAMEOPTION_", i)))
 
 		# write mp options
 		for i in xrange(GC.getNumMPOptionInfos()):
 			if GAME.isMPOption(i):
-				f.write("\tMPOption=%s\n" %(GC.getMPOptionInfo(i).getType()))
+				f.write("\tMPOption=%s\n" %(INFO.getType("MPOPTION_", i)))
 
 		# write force controls
 		for i in xrange(GC.getNumForceControlInfos()):
 			if GAME.isForcedControl(i):
-				f.write("\tForceControl=%s\n" %(GC.getForceControlInfo(i).getType()))
+				f.write("\tForceControl=%s\n" %(INFO.getType("FORCECONTROL_", i)))
 
 		# write victories
 		for i in xrange(GC.getNumVictoryInfos()):
 			if GAME.isVictoryValid(i):
-				if not GC.getVictoryInfo(i).isPermanent():
-					f.write("\tVictory=%s\n" %(GC.getVictoryInfo(i).getType()))
+				if INFO.getIntrinsic("VICTORY_", i, IntrinsicSlot.PYINT_IS_PERMANENT) != 1:
+					f.write("\tVictory=%s\n" %(INFO.getType("VICTORY_", i)))
 
 		f.write("\tGameTurn=%d\n" % GAME.getGameTurn())
 		f.write("\tMaxTurns=%d\n" % GAME.getMaxTurns())
@@ -347,12 +357,12 @@ class CvTeamDesc:
 				f.write("\tMinorNationCiv=1\n")
 			# write techs
 			for i in xrange(GC.getNumTechInfos()):
-				tech = GC.getTechInfo(i)
+				szTechType = INFO.getType("TECH_", i)
 				if team.isHasTech(i):
-					f.write("\tTech=%s\n" % tech.getType())
-				if tech.isRepeat():
+					f.write("\tTech=%s\n" % szTechType)
+				if INFO.getIntrinsic("TECH_", i, IntrinsicSlot.PYINT_IS_REPEAT) == 1:
 					for j in xrange(team.getTechCount(i)):
-						f.write("\tTech=%s\n" % tech.getType())
+						f.write("\tTech=%s\n" % szTechType)
 
 			if not team.isNPC():
 				# write met other teams
@@ -399,7 +409,7 @@ class CvTeamDesc:
 
 			for i in xrange(GC.getNumProjectInfos()):
 				for j in xrange(team.getProjectCount(i)):
-					f.write("\tProjectType=%s\n" %(GC.getProjectInfo(i).getType()))
+					f.write("\tProjectType=%s\n" %(INFO.getType("PROJECT_", i)))
 
 			if team.getVassalPower() != 0:
 				f.write("\tVassalPower=%d\n" % team.getVassalPower())
@@ -539,18 +549,18 @@ class CvPlayerDesc:
 			f.write("BeginPlayer\n\tPlayerSlot=%d\n\tTeam=%d\n" %(idx, player.getTeam()))
 
 			if player.getHandicapType() > -1:
-				f.write("\tHandicap=%s\n" % GC.getHandicapInfo(player.getHandicapType()).getType())
+				f.write("\tHandicap=%s\n" % INFO.getType("HANDICAP_", player.getHandicapType()))
 
 			# write leader and Civ Description info
-			f.write("\tLeaderType=%s\n" % GC.getLeaderHeadInfo(player.getLeaderType()).getType())
+			f.write("\tLeaderType=%s\n" % INFO.getType("LEADER_", player.getLeaderType()))
 			f.write("\tLeaderName=%s\n" % player.getNameKey().encode(fEncode))
 			f.write("\tCivDesc=%s\n" % player.getCivilizationDescriptionKey().encode(fEncode))
 			f.write("\tCivShortDesc=%s\n" % player.getCivilizationShortDescriptionKey().encode(fEncode))
 			f.write("\tCivAdjective=%s\n" % player.getCivilizationAdjectiveKey().encode(fEncode))
 			f.write("\tFlagDecal=%s\n" % player.getFlagDecal().encode(fEncode))
 			f.write("\tWhiteFlag=%d\n" % player.isWhiteFlag())
-			f.write("\tCivType=%s\n" % GC.getCivilizationInfo(player.getCivilizationType()).getType())
-			f.write("\tColor=%s\n" % GC.getPlayerColorInfo(player.getPlayerColor()).getType())
+			f.write("\tCivType=%s\n" % INFO.getType("CIVILIZATION_", player.getCivilizationType()))
+			f.write("\tColor=%s\n" % INFO.getType("PLAYERCOLOR_", player.getPlayerColor()))
 			f.write("\tArtStyle=%s\n" % GC.getArtStyleTypes(player.getArtStyleType()))
 			f.write("\tPlayableCiv=%d\n" % int(player.isPlayable()))
 
@@ -563,11 +573,11 @@ class CvPlayerDesc:
 				f.write("\tStartingGold=%d\n" % player.getGold())
 
 				for i in xrange(GC.getNumCivicOptionInfos()):
-					f.write("\tCivicOption=%s, Civic=%s\n" %(GC.getCivicOptionInfo(i).getType(), GC.getCivicInfo(player.getCivics(i)).getType()))
+					f.write("\tCivicOption=%s, Civic=%s\n" %(INFO.getType("CIVICOPTION_", i), INFO.getType("CIVIC_", player.getCivics(i))))
 
-				pPlayerReligionInfo = GC.getReligionInfo(player.getStateReligion())
-				if pPlayerReligionInfo:
-					f.write("\tStateReligion=%s\n" %(pPlayerReligionInfo.getType()))
+				iStateReligion = player.getStateReligion()
+				if iStateReligion >= 0:
+					f.write("\tStateReligion=%s\n" %(INFO.getType("RELIGION_", iStateReligion)))
 
 				for i in xrange(GC.getMAX_PC_PLAYERS()):
 					playerX = GC.getPlayer(i)
@@ -582,14 +592,12 @@ class CvPlayerDesc:
 					f.write("\tCombatXP_ThresholdMod=%d\n" % player.getGreatGeneralsThresholdModifier())
 				if player.getCombatExperience() > 0:
 					f.write("\tCombatXP=%d\n" % player.getCombatExperience())
-				if player.getCoastalTradeRoutes() != 0:
-					f.write("\tCoastalTradeRoute=%d\n" % player.getCoastalTradeRoutes())
 				if player.getStateReligionUnitProductionModifier() != 0:
 					f.write("\tStateReligionUnit=%d\n" % player.getStateReligionUnitProductionModifier())
 				if player.getStateReligionBuildingProductionModifier() != 0:
 					f.write("\tStateReligionBuilding=%d\n" % player.getStateReligionBuildingProductionModifier())
 
-			f.write("\tStartingEra=%s\n" %(GC.getEraInfo(player.getCurrentEra()).getType()))
+			f.write("\tStartingEra=%s\n" %(INFO.getType("C2C_ERA_", player.getCurrentEra())))
 
 			# write City List
 			for i in xrange(player.getNumCityNames()):
@@ -631,7 +639,6 @@ class CvPlayerDesc:
 		self.iAnarchy = 0
 		self.iCombatXP_ThresholdMod = 0
 		self.iCombatXP = 0
-		self.iCoastalTradeRoute = 0
 		self.iStateReligionUnit = 0
 		self.iStateReligionBuilding = 0
 		self.aaiCivics = []
@@ -790,11 +797,6 @@ class CvPlayerDesc:
 					self.iCombatXP = int(v)
 					continue
 
-				v = parser.findTokenValue(toks, "CoastalTradeRoute")
-				if v != -1:
-					self.iCoastalTradeRoute = int(v)
-					continue
-
 				v = parser.findTokenValue(toks, "StateReligionUnit")
 				if v != -1:
 					self.iStateReligionUnit = int(v)
@@ -825,31 +827,35 @@ class CvPlayerDesc:
 class CvUnitDesc:
 
 	# save unit desc to a file
-	def write(self, f, unit, plot):
-		info = GC.getUnitInfo(unit.getUnitType())
+	def write(self, f, unitId, plot):
+		# A unit is an (owner, id) PAIR here like everywhere else; the whole unit crosses in two reads.
+		iOwner, iUnitID = unitId
+		aUnit  = STATE.getUnitRead(iOwner, iUnitID)
+		aFlags = STATE.getUnitFlags(iOwner, iUnitID)
 		f.write("\tBeginUnit\n\t\tUnitType=%s, UnitOwner=%d, (%s)\n"
-			%(info.getType(), unit.getOwner(), GC.getPlayer(unit.getOwner()).getName().encode(fEncode))
+			%(INFO.getType("UNIT_", aUnit[UnitReadKind.UNIT_READ_TYPE]), iOwner, STATE.getPlayerName(iOwner).encode(fEncode))
 		)
-		if unit.isCommander():
+		if aFlags[UnitFlagKind.UNIT_FLAG_COMMANDER]:
 			f.write("\t\tCommander=1\n")
-		if unit.isCommodore():
+		if aFlags[UnitFlagKind.UNIT_FLAG_COMMODORE]:
 			f.write("\t\tCommodore=1\n")
-		if unit.getNameNoDesc():
-			f.write("\t\tUnitName=%s\n" % unit.getNameNoDesc().encode(fEncode))
-		if unit.getLeaderUnitType() != -1:
-			f.write("\t\tLeaderUnitType=%s\n" % GC.getUnitInfo(unit.getLeaderUnitType()).getType())
-		if unit.getDamage() > 0:
-			f.write("\t\tDamage=%d\n" % unit.getDamage())
+		szNameNoDesc = STATE.getUnitNameNoDesc(iOwner, iUnitID)
+		if szNameNoDesc:
+			f.write("\t\tUnitName=%s\n" % szNameNoDesc.encode(fEncode))
+		if aUnit[UnitReadKind.UNIT_READ_LEADER_UNIT_TYPE] != -1:
+			f.write("\t\tLeaderUnitType=%s\n" % INFO.getType("UNIT_", aUnit[UnitReadKind.UNIT_READ_LEADER_UNIT_TYPE]))
+		if aUnit[UnitReadKind.UNIT_READ_DAMAGE] > 0:
+			f.write("\t\tDamage=%d\n" % aUnit[UnitReadKind.UNIT_READ_DAMAGE])
 
-		f.write("\t\tLevel=%d, Experience=%d\n" %(unit.getLevel(), unit.getExperience()))
+		f.write("\t\tLevel=%d, Experience=%d\n" %(aUnit[UnitReadKind.UNIT_READ_LEVEL], aUnit[UnitReadKind.UNIT_READ_EXPERIENCE] / 100))
 
 		for i in xrange(GC.getNumPromotionInfos()):
-			if unit.isHasPromotion(i):
-				f.write("\t\tPromotionType=%s\n" % GC.getPromotionInfo(i).getType())
+			if STATE.hasUnitPromotion(iOwner, iUnitID, i):
+				f.write("\t\tPromotionType=%s\n" % INFO.getType("PROMOTION_", i))
 
-		f.write("\t\tFacingDirection=%d\n" % unit.getFacingDirection())
+		f.write("\t\tFacingDirection=%d\n" % aUnit[UnitReadKind.UNIT_READ_FACING_DIRECTION])
 
-		temp = unit.getGroup().getActivityType()
+		temp = aUnit[UnitReadKind.UNIT_READ_ACTIVITY]
 		if temp == ActivityTypes.ACTIVITY_SLEEP:
 			f.write("\t\tSleep\n")
 		elif temp == ActivityTypes.ACTIVITY_INTERCEPT:
@@ -859,14 +865,13 @@ class CvUnitDesc:
 		elif temp == ActivityTypes.ACTIVITY_PLUNDER:
 			f.write("\t\tPlunder\n")
 
-		f.write("\t\tUnitAIType=%s\n" % GC.getUnitAIInfo(unit.getUnitAIType()).getType())
+		f.write("\t\tUnitAIType=%s\n" % INFO.getType("UNITAI_", aUnit[UnitReadKind.UNIT_READ_UNIT_AI]))
 
-		if unit.getScriptData():
-			f.write("\t\tScriptData=%s\n\t\t!ScriptData\n" % unit.getScriptData())
-		if unit.getImmobileTimer() > 0:
-			f.write("\t\tImmobile=%d\n" % unit.getImmobileTimer())
-		if unit.baseCombatStr() != info.getCombat():
-			f.write("\t\tCombatStr=%d\n" % unit.baseCombatStr())
+		szScriptData = STATE.getUnitScriptData(iOwner, iUnitID)
+		if szScriptData:
+			f.write("\t\tScriptData=%s\n\t\t!ScriptData\n" % szScriptData)
+		# ImmobileTimer is gone from the engine, and the CombatStr line compared against an `info` this
+		# scope never defined -- it could only ever have raised. Both drop rather than being invented back.
 
 		f.write("\tEndUnit\n")
 
@@ -1012,7 +1017,7 @@ class CvUnitDesc:
 			eUnitAI = GC.getInfoTypeForString(self.szUnitAIType)
 		else: eUnitAI = -1
 
-		unit = CyPlayer.initUnit(unitTypeNum, self.plotX, self.plotY, UnitAITypes(eUnitAI), self.facingDirection)
+		unit = CyPlayer.createUnit(unitTypeNum, self.plotX, self.plotY, UnitAITypes(eUnitAI), self.facingDirection)
 		if not unit: return
 
 		if self.bCommander:
@@ -1061,49 +1066,65 @@ class CvCityDesc:
 		city = plot.getPlotCity()
 		if city is None:
 			print "CvCityDesc.write - null city?"
+			return
+
+		#	The handle carries the ADDRESS and nothing else ([patterns.md] THE IDENTITY SET), so every read
+		#	below asks CyState by (owner, id). Resolved once here rather than at each call.
+		iOwner = city.getOwner()
+		iCity = city.getID()
 
 		f.write("\tBeginCity\n\t\tCityOwner=%d, (%s)\n\t\tCityName=%s\n\t\tCityPopulation=%d\n\t\tStoredFood=%d\n"
-			%(city.getOwner(), GC.getPlayer(city.getOwner()).getName().encode(fEncode), city.getName().encode(fEncode), city.getPopulation(), city.getFood())
+			%(iOwner, STATE.getPlayerName(iOwner).encode(fEncode), GC.getPlayer(iOwner).getCity(iCity).getName().encode(fEncode),
+			  GC.getPlayer(iOwner).getCity(iCity).getPopulation(),
+			  GC.getPlayer(iOwner).getCity(iCity).getGrowth()[CityGrowthRead.GROWTH_READ_FOOD_STORED])
 		)
-		if city.isProductionUnit():
-			f.write("\t\tProductionUnit=%s\n" %(GC.getUnitInfo(city.getProductionUnit()).getType(),))
-		elif city.isProductionBuilding():
-			f.write("\t\tProductionBuilding=%s\n" %(GC.getBuildingInfo(city.getProductionBuilding()).getType(),))
-		elif city.isProductionProject():
-			f.write("\t\tProductionProject=%s\n" %(GC.getProjectInfo(city.getProductionProject()).getType(),))
-		elif city.isProductionProcess():
-			f.write("\t\tProductionProcess=%s\n" %(GC.getProcessInfo(city.getProductionProcess()).getType(),))
+		#	The current ORDER is ONE read carrying its kind and its id, so four isProductionX tests and their
+		#	four getters collapse into it.
+		kOrder = GC.getPlayer(iOwner).getCity(iCity).getOrder()
+		iOrderType = kOrder[CityOrderRead.ORDER_READ_TYPE]
+		iOrderId = kOrder[CityOrderRead.ORDER_READ_ID]
+		if iOrderType == OrderTypes.ORDER_TRAIN:
+			f.write("\t\tProductionUnit=%s\n" %(INFO.getType("UNIT_", iOrderId),))
+		elif iOrderType == OrderTypes.ORDER_CONSTRUCT:
+			f.write("\t\tProductionBuilding=%s\n" %(INFO.getType("BUILDING_", iOrderId),))
+		elif iOrderType == OrderTypes.ORDER_CREATE:
+			f.write("\t\tProductionProject=%s\n" %(INFO.getType("PROJECT_", iOrderId),))
+		elif iOrderType == OrderTypes.ORDER_MAINTAIN:
+			f.write("\t\tProductionProcess=%s\n" %(INFO.getType("PROCESS_", iOrderId),))
 
 		for iI in xrange(GC.getNumBuildingInfos()):
-			if city.hasBuilding(iI):
-				f.write("\t\tBuildingType=%s, BuildDate=%d\n" %(GC.getBuildingInfo(iI).getType(), city.getBuildingOriginalTime(iI)))
+			if GC.getPlayer(iOwner).getCity(iCity).getBuildingReads(iI)[CityBuildingRead.CITY_BUILDING_HAS]:
+				f.write("\t\tBuildingType=%s, BuildDate=%d\n" %(INFO.getType("BUILDING_", iI), GC.getPlayer(iOwner).getCity(iCity).getBuildingBuiltTime(iI)))
 
-		for iI in xrange(GC.getNumReligionInfos()):
-			if city.isHasReligion(iI):
-				f.write("\t\tReligionType=%s\n" %(GC.getReligionInfo(iI).getType()))
-			if city.isHolyCityByType(iI):
-				f.write("\t\tHolyCityReligionType=%s\n" %(GC.getReligionInfo(iI).getType()))
+		#	ONE crossing each: the rows are [id, bIsHolyCity] / [id, bIsHeadquarters] over exactly what the
+		#	city HAS, so neither registry is swept to rediscover it.
+		for kReligion in GC.getPlayer(iOwner).getCity(iCity).getReligions():
+			f.write("\t\tReligionType=%s\n" %(INFO.getType("RELIGION_", kReligion[0])))
+			if kReligion[1]:
+				f.write("\t\tHolyCityReligionType=%s\n" %(INFO.getType("RELIGION_", kReligion[0])))
 
-		for iI in xrange(GC.getNumCorporationInfos()):
-			if city.isHasCorporation(iI):
-				f.write("\t\tCorporationType=%s\n" %(GC.getCorporationInfo(iI).getType()))
-			if city.isHeadquartersByType(iI):
-				f.write("\t\tHeadquarterCorporationType=%s\n" %(GC.getCorporationInfo(iI).getType()))
+		for kCorporation in GC.getPlayer(iOwner).getCity(iCity).getCorporations():
+			f.write("\t\tCorporationType=%s\n" %(INFO.getType("CORPORATION_", kCorporation[0])))
+			if kCorporation[1]:
+				f.write("\t\tHeadquarterCorporationType=%s\n" %(INFO.getType("CORPORATION_", kCorporation[0])))
 
+		#	The ADDED free specialists only. Writing the engine-DERIVED total instead would hand its derived
+		#	half over a second time when the scenario is read back.
 		for iI in xrange(GC.getNumSpecialistInfos()):
-			for iJ in xrange(city.getAddedFreeSpecialistCount(iI)):
-				f.write("\t\tFreeSpecialistType=%s\n" %(GC.getSpecialistInfo(iI).getType()))
+			for iJ in xrange(GC.getPlayer(iOwner).getCity(iCity).getAddedFreeSpecialists(iI)):
+				f.write("\t\tFreeSpecialistType=%s\n" %(INFO.getType("SPECIALIST_", iI)))
 
-		if city.getScriptData():
-			f.write("\t\tScriptData=%s\n\t\t!ScriptData\n" % city.getScriptData())
+		szScriptData = GC.getPlayer(iOwner).getCity(iCity).getScriptData()
+		if szScriptData:
+			f.write("\t\tScriptData=%s\n\t\t!ScriptData\n" % szScriptData)
 
 		# Player culture
 		bFound = False
 		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
-			if GC.getPlayer(iPlayerX).isAlive():
-				name = GC.getPlayer(iPlayerX).getName().encode(fEncode)
+			if STATE.isPlayerAlive(iPlayerX):
+				name = STATE.getPlayerName(iPlayerX).encode(fEncode)
 			else: name = "Error"
-			iPlayerCulture = city.getCultureTimes100(iPlayerX)
+			iPlayerCulture = GC.getPlayer(iOwner).getCity(iCity).getCultureForPlayer(iPlayerX)
 			if iPlayerCulture > 0:
 				if not bFound:
 					f.write("\t\tCityCultures\n")
@@ -1112,28 +1133,36 @@ class CvCityDesc:
 
 		if bFound: f.write("\t\t!CityCultures\n")
 
-		if city.getDefenseDamage() > 0:
-			f.write("\t\tDamage=%d\n" %(city.getDefenseDamage(),))
-		if city.getOccupationTimer() > 0:
-			f.write("\t\tOccupation=%d\n" %(city.getOccupationTimer(),))
-		if city.getExtraHappiness() != 0:
-			f.write("\t\tExtraHappiness=%d\n" %(city.getExtraHappiness(),))
-		if city.getExtraHealth() != 0:
-			f.write("\t\tExtraHealth=%d\n" %(city.getExtraHealth(),))
-		if city.getExtraTradeRoutes() != 0:
-			f.write("\t\tExtraTrade=%d\n" %(city.getExtraTradeRoutes(),))
+		iDefenseDamage = GC.getPlayer(iOwner).getCity(iCity).getCounts()[CityCountRead.CITY_COUNT_DEFENSE_DAMAGE]
+		if iDefenseDamage > 0:
+			f.write("\t\tDamage=%d\n" %(iDefenseDamage,))
+		iOccupation = GC.getPlayer(iOwner).getCity(iCity).getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION]
+		if iOccupation > 0:
+			f.write("\t\tOccupation=%d\n" %(iOccupation,))
+
+		#	The one-shot EVENT/VOTE grants. They are non-derivable state in their own persisted store
+		#	([state-repositories.md]), so a scenario that could not carry them would drop them silently on
+		#	every round trip -- which is exactly why these reads exist rather than being left to the total.
+		kExtras = GC.getPlayer(iOwner).getCity(iCity).getGrantedExtras()
+		if kExtras[CityGrantedExtra.GRANTED_EXTRA_HAPPINESS] != 0:
+			f.write("\t\tExtraHappiness=%d\n" %(kExtras[CityGrantedExtra.GRANTED_EXTRA_HAPPINESS],))
+		if kExtras[CityGrantedExtra.GRANTED_EXTRA_HEALTH] != 0:
+			f.write("\t\tExtraHealth=%d\n" %(kExtras[CityGrantedExtra.GRANTED_EXTRA_HEALTH],))
 		for i in xrange(GC.getNumBuildingInfos()):
-			szType = GC.getBuildingInfo(i).getType()
+			szType = INFO.getType("BUILDING_", i)
+			kYields = GC.getPlayer(iOwner).getCity(iCity).getBuildingGrantedYields(i)
 			for k in xrange(YieldTypes.NUM_YIELD_TYPES):
-				if city.getBuildingYieldChange(i, k) != 0:
-					f.write("\t\tModifiedBuilding=%s, Yield=%s, Amount=%s\n" %(szType, GC.getYieldInfo(k).getType(), city.getBuildingYieldChange(i, k)))
+				if kYields[k] != 0:
+					f.write("\t\tModifiedBuilding=%s, Yield=%s, Amount=%s\n" %(szType, INFO.getType("YIELD_", k), kYields[k]))
+			kCommerces = GC.getPlayer(iOwner).getCity(iCity).getBuildingGrantedCommerces(i)
 			for k in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
-				if city.getBuildingCommerceChange(i, k) != 0:
-					f.write("\t\tModifiedBuilding=%s, Commerce=%s, Amount=%s\n" %(szType, GC.getCommerceInfo(k).getType(), city.getBuildingCommerceChange(i, k)))
-			if city.getBuildingHappyChange(i) != 0:
-				f.write("\t\tModifiedBuilding=%s, Happy=%s\n" %(szType, city.getBuildingHappyChange(i)))
-			if city.getBuildingHealthChange(i) != 0:
-				f.write("\t\tModifiedBuilding=%s, Health=%s\n" %(szType, city.getBuildingHealthChange(i)))
+				if kCommerces[k] != 0:
+					f.write("\t\tModifiedBuilding=%s, Commerce=%s, Amount=%s\n" %(szType, INFO.getType("COMMERCE_", k), kCommerces[k]))
+			kWellbeing = GC.getPlayer(iOwner).getCity(iCity).getBuildingGrantedWellbeing(i)
+			if kWellbeing[BuildingGrantedKind.BUILDING_GRANTED_HAPPINESS] != 0:
+				f.write("\t\tModifiedBuilding=%s, Happy=%s\n" %(szType, kWellbeing[BuildingGrantedKind.BUILDING_GRANTED_HAPPINESS]))
+			if kWellbeing[BuildingGrantedKind.BUILDING_GRANTED_HEALTH] != 0:
+				f.write("\t\tModifiedBuilding=%s, Health=%s\n" %(szType, kWellbeing[BuildingGrantedKind.BUILDING_GRANTED_HEALTH]))
 
 		f.write("\tEndCity\n")
 
@@ -1161,7 +1190,6 @@ class CvCityDesc:
 		self.iOccupation = 0
 		self.iExtraHappiness = 0
 		self.iExtraHealth = 0
-		self.iExtraTrade = 0
 		self.lBuildingYield = []
 		self.lBuildingCommerce = []
 		self.lBuildingHappy = []
@@ -1333,107 +1361,98 @@ class CvCityDesc:
 				self.iExtraHealth = int(v)
 				continue
 
-			v = parser.findTokenValue(toks, "ExtraTrade")
-			if v != -1:
-				self.iExtraTrade = int(v)
-				continue
-
 			if parser.findTokenValue(toks, "EndCity") != -1:
 				break
 
 	# after reading, this will actually apply the data
 	def apply(self):
 		print "CvCityDesc.apply"
+		#	initCity is the one call that still takes the handle, because it is what MAKES the city; everything
+		#	after it addresses that city by its (owner, id) pair. A handle publishes owner + id + position and
+		#	nothing else ([patterns.md] THE IDENTITY SET), so the apply asks ACT rather than the object.
 		self.city = city = GC.getPlayer(self.owner).initCity(self.plotX, self.plotY)
+		iOwner = self.owner
+		iCity = city.getID()
 
 		if self.name != None:
-			city.setName(self.name, False)
+			ACT.setCityName(iOwner, iCity, self.name)
 
 		if self.iPopulation:
-			city.setPopulation(self.iPopulation)
+			ACT.setCityPopulation(iOwner, iCity, self.iPopulation)
 		if self.iFood:
-			city.setFood(self.iFood)
+			ACT.setCityStoredFood(iOwner, iCity, self.iFood)
 
 		for item in self.lCulture:
-			city.setCultureTimes100(item[0], item[1], False)
+			ACT.setCityCulture(iOwner, iCity, item[0], item[1])
 
 		for key, date in self.bldgType:
 			iBuilding = GC.getInfoTypeForString(key)
 			if iBuilding > -1:
-				city.changeHasBuilding(iBuilding, True)
+				ACT.setCityBuilding(iOwner, iCity, iBuilding, True)
 
+		#	The holy-city / headquarters designation rides the SAME verb as the presence, so the two lists fold
+		#	into one pass instead of a second one re-resolving the same ids.
 		for key in self.religions:
 			iReligion = GC.getInfoTypeForString(key)
 			if iReligion > -1:
-				city.setHasReligion(iReligion, True, False, True)
-
-		for key in self.holyCityReligions:
-			iReligion = GC.getInfoTypeForString(key)
-			if iReligion > -1:
-				GAME.setHolyCity(iReligion, city, False)
+				ACT.setCityReligion(iOwner, iCity, iReligion, key in self.holyCityReligions)
 
 		for key in self.corporations:
 			iCorporation = GC.getInfoTypeForString(key)
 			if iCorporation > -1:
-				city.setHasCorporation(iCorporation, True, False, True)
-
-		for key in self.headquarterCorporations:
-			iCorporation = GC.getInfoTypeForString(key)
-			if iCorporation > -1:
-				GAME.setHeadquarters(iCorporation, city, False)
+				ACT.setCityCorporation(iOwner, iCity, iCorporation, key in self.headquarterCorporations)
 
 		for key in self.freeSpecialists:
 			iSpecialist = GC.getInfoTypeForString(key)
 			if iSpecialist > -1:
-				city.changeFreeSpecialistCount(iSpecialist, 1)
+				ACT.addCityFreeSpecialist(iOwner, iCity, iSpecialist, 1)
 
 		iProd = -1
 		if self.productionUnit != "NONE":
 			iProd = GC.getInfoTypeForString(self.productionUnit)
 			if iProd > -1:
-				city.pushOrder(OrderTypes.ORDER_TRAIN, iProd, -1, False, False, False, True)
+				ACT.pushCityOrder(iOwner, iCity, OrderTypes.ORDER_TRAIN, iProd)
 
 		if iProd == -1 and self.productionBuilding != "NONE":
 			iProd = GC.getInfoTypeForString(self.productionBuilding)
 			if iProd > -1:
-				city.pushOrder(OrderTypes.ORDER_CONSTRUCT, iProd, -1, False, False, False, True)
+				ACT.pushCityOrder(iOwner, iCity, OrderTypes.ORDER_CONSTRUCT, iProd)
 
 		if iProd == -1 and self.productionProject != "NONE":
 			iProd = GC.getInfoTypeForString(self.productionProject)
 			if iProd > -1:
-				city.pushOrder(OrderTypes.ORDER_CREATE, iProd, -1, False, False, False, True)
+				ACT.pushCityOrder(iOwner, iCity, OrderTypes.ORDER_CREATE, iProd)
 
 		if iProd == -1 and self.productionProcess != "NONE":
 			iProd = GC.getInfoTypeForString(self.productionProcess)
 			if iProd > -1:
-				city.pushOrder(OrderTypes.ORDER_MAINTAIN, iProd, -1, False, False, False, True)
+				ACT.pushCityOrder(iOwner, iCity, OrderTypes.ORDER_MAINTAIN, iProd)
 
 		if self.sScriptData:
-			city.setScriptData(self.sScriptData)
+			ACT.setCityScriptData(iOwner, iCity, self.sScriptData)
 
 		if self.iDamage > 0:
-			city.changeDefenseDamage(self.iDamage)
+			ACT.setCityDefenseDamage(iOwner, iCity, self.iDamage)
 		if self.iOccupation > 0:
-			city.setOccupationTimer(self.iOccupation)
+			ACT.setCityOccupation(iOwner, iCity, self.iOccupation)
 
 	def postApply(self):
 		print "CvCityDesc.postApply"
-		city = self.city
-		city.changeExtraHappiness(self.iExtraHappiness - city.getExtraHappiness())
-		city.changeExtraHealth(self.iExtraHealth - city.getExtraHealth())
-		city.changeExtraTradeRoutes(self.iExtraTrade - city.getExtraTradeRoutes())
+		iOwner = self.city.getOwner()
+		iCity = self.city.getID()
+		#	Each verb SETS the stored grant, so the legacy zero-it-then-add-it dance is gone: it existed only
+		#	because the old bindings could do nothing but CHANGE by a delta, which forced a read of the current
+		#	value purely to cancel it out first.
+		ACT.setCityGrantedExtra(iOwner, iCity, CityGrantedExtra.GRANTED_EXTRA_HAPPINESS, self.iExtraHappiness)
+		ACT.setCityGrantedExtra(iOwner, iCity, CityGrantedExtra.GRANTED_EXTRA_HEALTH, self.iExtraHealth)
 		for item in self.lBuildingYield:
-			city.setBuildingYieldChange(item[0], item[1], -city.getBuildingYieldChange(item[0], item[1]))
-			city.setBuildingYieldChange(item[0], item[1], item[2])
+			ACT.setBuildingGrantedYield(iOwner, iCity, item[0], item[1], item[2])
 		for item in self.lBuildingCommerce:
-			city.setBuildingCommerceChange(item[0], item[1], -city.getBuildingCommerceChange(item[0], item[1]))
-			city.setBuildingCommerceChange(item[0], item[1], item[2])
+			ACT.setBuildingGrantedCommerce(iOwner, iCity, item[0], item[1], item[2])
 		for item in self.lBuildingHappy:
-			city.setBuildingHappyChange(item[0], -city.getBuildingHappyChange(item[0]))
-			city.setBuildingHappyChange(item[0], item[1])
+			ACT.setBuildingGrantedWellbeing(iOwner, iCity, item[0], BuildingGrantedKind.BUILDING_GRANTED_HAPPINESS, item[1])
 		for item in self.lBuildingHealth:
-			city.setBuildingHealthChange(item[0], -city.getBuildingHealthChange(item[0]))
-			city.setBuildingHealthChange(item[0], item[1])
+			ACT.setBuildingGrantedWellbeing(iOwner, iCity, item[0], BuildingGrantedKind.BUILDING_GRANTED_HEALTH, item[1])
 
 
 ##########
@@ -1461,22 +1480,21 @@ class CvPlotDesc:
 		if plot.isStartingPlot():
 			f.write("\tStartingPlot\n")
 		if plot.getBonusType(-1) != -1:
-			f.write("\tBonusType=%s\n" % GC.getBonusInfo(plot.getBonusType(-1)).getType())
+			f.write("\tBonusType=%s\n" % INFO.getType("BONUS_", plot.getBonusType(-1)))
 		if plot.getImprovementType() != -1:
-			f.write("\tImprovementType=%s\n" % GC.getImprovementInfo(plot.getImprovementType()).getType())
+			f.write("\tImprovementType=%s\n" % INFO.getType("IMPROVEMENT_", plot.getImprovementType()))
 		if plot.getFeatureType() != -1:
-			f.write("\tFeatureType=%s, FeatureVariety=%d\n" %(GC.getFeatureInfo(plot.getFeatureType()).getType(), plot.getFeatureVariety()))
+			f.write("\tFeatureType=%s, FeatureVariety=%d\n" %(INFO.getType("FEATURE_", plot.getFeatureType()), plot.getFeatureVariety()))
 		if plot.getRouteType() != -1:
-			f.write("\tRouteType=%s\n" % GC.getRouteInfo(plot.getRouteType()).getType())
+			f.write("\tRouteType=%s\n" % INFO.getType("ROUTE_", plot.getRouteType()))
 		if plot.getTerrainType() != -1:
-			f.write("\tTerrainType=%s\n" % GC.getTerrainInfo(plot.getTerrainType()).getType())
+			f.write("\tTerrainType=%s\n" % INFO.getType("TERRAIN_", plot.getTerrainType()))
 		if plot.getPlotType() != PlotTypes.NO_PLOT:
 			f.write("\tPlotType=%d\n" % int(plot.getPlotType()))
 
 		# units
-		for unit in plot.units():
-			if unit.getUnitType() > -1:
-				CvUnitDesc().write(f, unit, plot)
+		for aUnitId in STATE.getPlotUnitIds(plot.getX(), plot.getY()):
+			CvUnitDesc().write(f, aUnitId, plot)
 		# city
 		if plot.isCity():
 			CvCityDesc().write(f, plot)
@@ -1800,9 +1818,9 @@ Randomize Resources=0\nEndMap\n"
 				iGridW, iGridH,
 				MAP.getTopLatitude(), MAP.getBottomLatitude(),
 				MAP.isWrapX(), MAP.isWrapY(),
-				GC.getWorldInfo(MAP.getWorldSize()).getType(),
-				GC.getClimateInfo(MAP.getClimate()).getType(),
-				GC.getSeaLevelInfo(MAP.getSeaLevel()).getType()
+				INFO.getType("WORLDSIZE_", MAP.getWorldSize()),
+				INFO.getType("CLIMATE_", MAP.getClimate()),
+				INFO.getType("SEALEVEL_", MAP.getSeaLevel())
 			)
 		)
 		# write team and player info
@@ -2063,7 +2081,6 @@ Randomize Resources=0\nEndMap\n"
 			player.setCombatExperience(pWBPlayer.iCombatXP)
 			player.changeGoldenAgeTurns(pWBPlayer.iGoldenAge - player.getGoldenAgeTurns())
 			player.changeAnarchyTurns(pWBPlayer.iAnarchy - player.getAnarchyTurns())
-			player.changeCoastalTradeRoutes(pWBPlayer.iCoastalTradeRoute - player.getCoastalTradeRoutes())
 			player.changeStateReligionUnitProductionModifier(pWBPlayer.iStateReligionUnit - player.getStateReligionUnitProductionModifier())
 			player.changeStateReligionBuildingProductionModifier(pWBPlayer.iStateReligionBuilding - player.getStateReligionBuildingProductionModifier())
 

@@ -1,0 +1,45 @@
+{
+ "type": "PROMOTION_COASTAL_GUARD3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COASTAL_GUARD2"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_COAST": {
+     "defense": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_COAST_TROPICAL": {
+     "defense": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_COAST_POLAR": {
+     "defense": {
+      "percent": 25
+     }
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COASTAL_GUARD": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/coastal_guard3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COASTAL_GUARD3"
+ }
+}

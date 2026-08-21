@@ -1,0 +1,100 @@
+{
+ "type": "CIVIC_INTERDIMENSIONAL",
+ "production": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": 20
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 200
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": -5
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "unitMilitary": {
+    "percent": 20
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -2
+   },
+   "national": {
+    "flat": -2
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": 50,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   },
+   "unitCombats": {
+    "UNITCOMBAT_HERO": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "grants": {
+  "revolution": -12
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/military_interdimensional.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_INTERDIMENSIONAL",
+  "civilopedia": "TXT_KEY_CIVIC_INTERDIMENSIONAL_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_INTERDIMENSIONAL_STRATEGY",
+  "civicOption": "CIVICOPTION_MILITARY",
+  "anarchyLength": 5,
+  "upkeepLevel": "UPKEEP_EXTREME"
+ }
+}

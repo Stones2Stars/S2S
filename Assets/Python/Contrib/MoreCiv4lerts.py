@@ -6,8 +6,14 @@ from CvPythonExtensions import *
 import CvUtil
 import TradeUtil
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 GAME = GC.getGame()
+STATE = CyState()
+ENABLER = CyEnabler()
+INFO = CyInfo()   # entity data: the context serves settings, CyInfo serves entities
+ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
 EVENT_MESSAGE_TIME_LONG = GC.getDefineINT("EVENT_MESSAGE_TIME_LONG")
@@ -80,37 +86,40 @@ class MoreCiv4lertsEvent(AbstractMoreCiv4lertsEvent):
 			self.CheckForAlerts(argsList[1], False)
 
 	def OnCityBuilt(self, argsList):
-		CyCity = argsList[0]
-		iOwner = CyCity.getOwner()
-		iPlayer = GAME.getActivePlayer()
+		cityId = argsList[0]
+		iOwner = cityId[0]
+		iPlayer = STATE.getActivePlayer()
 		if self.getCheckForDomVictory():
 			if iOwner == iPlayer:
 				self.CheckForAlerts(iOwner, False)
 		if self.options.isShowCityFoundedAlert():
 			if iOwner != iPlayer:
-				bRevealed = CyCity.isRevealed(GC.getActivePlayer().getTeam(), False)
+				bRevealed = GC.getPlayer(iOwner).getCity(cityId[1]).isRevealedTo(STATE.getPlayerTeam(iPlayer))
 				CyPlayer = GC.getPlayer(iOwner)
 				if bRevealed or canSeeCityList(CyPlayer):
-					iColor = GC.getInfoTypeForString("COLOR_MAGENTA")
+					iColor = ENUMS.getInfoType("COLOR_MAGENTA")
+					szCity = GC.getPlayer(iOwner).getCity(cityId[1]).getName()
+					szOwner = STATE.getPlayerName(iOwner)
 					if bRevealed:
-						msg = TRNSLTR.getText("TXT_KEY_MORECIV4LERTS_CITY_FOUNDED", (CyPlayer.getName(), CyCity.getName()))
+						msg = TRNSLTR.getText("TXT_KEY_MORECIV4LERTS_CITY_FOUNDED", (szOwner, szCity))
 						icon = "Art/Interface/Buttons/Actions/foundcity.dds"
-						CvUtil.sendMessage(msg, iPlayer, EVENT_MESSAGE_TIME_LONG, icon, ColorTypes(iColor), CyCity.getX(), CyCity.getY(), True, True)
+						aPos = GC.getPlayer(iOwner).getCity(cityId[1]).getPosition()
+						CvUtil.sendMessage(msg, iPlayer, EVENT_MESSAGE_TIME_LONG, icon, ColorTypes(iColor), aPos[0], aPos[1], True, True)
 					else:
-						msg = TRNSLTR.getText("TXT_KEY_MORECIV4LERTS_CITY_FOUNDED_UNSEEN", (CyPlayer.getName(), CyCity.getName()))
+						msg = TRNSLTR.getText("TXT_KEY_MORECIV4LERTS_CITY_FOUNDED_UNSEEN", (szOwner, szCity))
 						self._addMessageNoIcon(iPlayer, msg, iColor)
 
 	def OnCityRazed(self, argsList):
-		city, iPlayer = argsList
+		cityId, iPlayer = argsList
 		if not self.getCheckForDomVictory(): return
-		if iPlayer == GAME.getActivePlayer():
+		if iPlayer == STATE.getActivePlayer():
 			self.CheckForAlerts(iPlayer, False)
 
 	def OnCityLost(self, argsList):
-		city = argsList[0]
-		if not self.getCheckForDomVictory() or city.getOwner() != GAME.getActivePlayer():
+		cityId = argsList[0]
+		if not self.getCheckForDomVictory() or cityId[0] != STATE.getActivePlayer():
 			return
-		self.CheckForAlerts(city.getOwner(), False)
+		self.CheckForAlerts(cityId[0], False)
 
 	def CheckForAlerts(self, iPlayer, bBeginTurn):
 		CyPlayer = GC.getPlayer(iPlayer)
@@ -124,20 +133,31 @@ class MoreCiv4lertsEvent(AbstractMoreCiv4lertsEvent):
 			# Check for cultural expansion and population growth
 			icon = "Art/Interface/Buttons/General/Warning_popup.dds"
 			iActiveTeam = GAME.getActiveTeam()
-			for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
-				CyPlayerX = GC.getPlayer(iPlayerX)
-				if not CyPlayerX.isAlive() or CyPlayerX.getTeam() != iActiveTeam:
+			iAvoidGrowth = ENUMS.getInfoType("EMPHASIZE_AVOID_GROWTH")
+			for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
+				if not STATE.isPlayerAlive(iPlayerX) or STATE.getPlayerTeam(iPlayerX) != iActiveTeam:
 					continue
-				for cityX in CyPlayerX.cities():
-					if cityX.getFoodTurnsLeft() == 1 and not cityX.isFoodProduction() and not cityX.AI_isEmphasize(5):
+				for iCityX in GC.getPlayer(iPlayerX).getCityIds():
+					aGrowth = GC.getPlayer(iPlayerX).getCity(iCityX).getGrowth()
+					if (aGrowth[CityGrowthRead.GROWTH_READ_TURNS_LEFT] == 1
+							and not aGrowth[CityGrowthRead.GROWTH_READ_IS_FOOD_PRODUCTION]
+							and not GC.getPlayer(iPlayerX).getCity(iCityX).isEmphasizing(iAvoidGrowth)):
 						iGrowthCount += 1
-					if bCheck2 and cityX.getCultureThreshold() > 0:
-						if cityX.getCulture(cityX.getOwner()) + cityX.getCommerceRate(CommerceTypes.COMMERCE_CULTURE) >= cityX.getCultureThreshold():
-							if GAME.isOption(GameOptionTypes.GAMEOPTION_CULTURE_REALISTIC_SPREAD):
-								msg = TRNSLTR.getText("TXT_KEY_MORECIV4LERTS_CITY_TO_EXPAND_RCS",(cityX.getName(),))
-							else:
-								msg = TRNSLTR.getText("TXT_KEY_MORECIV4LERTS_CITY_TO_EXPAND",(cityX.getName(),))
-							CvUtil.sendMessage(msg, iPlayer, EVENT_MESSAGE_TIME_LONG, icon, -1, cityX.getX(), cityX.getY(), True, True)
+					if bCheck2:
+						aCulture = GC.getPlayer(iPlayerX).getCity(iCityX).getCultureReads()
+						iThreshold = aCulture[CityCultureRead.CULTURE_READ_THRESHOLD]
+						if iThreshold > 0:
+							# getCommerces is x100 native; the culture amount and threshold are whole culture, so the
+							# rate reduces at the point of use or this alert fires every single turn.
+							iCultureRate = GC.getPlayer(iPlayerX).getCity(iCityX).getCommerces()[CommerceTypes.COMMERCE_CULTURE] / 100
+							if aCulture[CityCultureRead.CULTURE_READ_OWNER_AMOUNT] + iCultureRate >= iThreshold:
+								szCityX = GC.getPlayer(iPlayerX).getCity(iCityX).getName()
+								if GAME.isOption(GameOptionTypes.GAMEOPTION_CULTURE_REALISTIC_SPREAD):
+									msg = TRNSLTR.getText("TXT_KEY_MORECIV4LERTS_CITY_TO_EXPAND_RCS",(szCityX,))
+								else:
+									msg = TRNSLTR.getText("TXT_KEY_MORECIV4LERTS_CITY_TO_EXPAND",(szCityX,))
+								aPos = GC.getPlayer(iPlayerX).getCity(iCityX).getPosition()
+								CvUtil.sendMessage(msg, iPlayer, EVENT_MESSAGE_TIME_LONG, icon, -1, aPos[0], aPos[1], True, True)
 
 		# Check Domination Limit
 		if self.getCheckForDomVictory() and GAME.isVictoryValid(3):
@@ -230,9 +250,8 @@ class MoreCiv4lertsEvent(AbstractMoreCiv4lertsEvent):
 			bCheck1 = True
 			for CyPlayerX in TradeUtil.getTechTradePartners(CyPlayer):
 				techsToTrade = set()
-				for i in xrange(CyTeam.getNumAdjacentResearch()):
-					iTechX = CyTeam.getAdjacentResearch(i)
-					if bCheck1 and CyPlayer.canResearch(iTechX, True, True):
+				for iTechX in ENABLER.getAvailableTechs(iPlayer):
+					if bCheck1:
 						researchTechs.add(iTechX)
 					tradeData.iData = iTechX
 					if CyPlayerX.canTradeItem(iPlayer, tradeData, False):
@@ -334,16 +353,23 @@ class MoreCiv4lertsEvent(AbstractMoreCiv4lertsEvent):
 		return aSet
 
 	def buildTechString(self, techs):
-		return self.buildItemString(techs, GC.getTechInfo, CvTechInfo.getDescription)
+		return self.buildInfoString(techs, "TECH_")
 
 	def buildBonusString(self, bonuses):
-		return self.buildItemString(bonuses, GC.getBonusInfo, CvBonusInfo.getDescription)
+		return self.buildInfoString(bonuses, "BONUS_")
 
+	# A PLAYER is not an entity -- its name is live state, so it stays on its own read rather than being
+	# forced through the entity shape below.
 	def buildPlayerString(self, players):
-		return self.buildItemString(players, GC.getPlayer, CyPlayer.getName)
+		names = [GC.getPlayer(ePlayer).getName() for ePlayer in players]
+		names.sort()
+		return u", ".join(names)
 
-	def buildItemString(self, items, getItemFunc, getNameFunc):
-		names = [getNameFunc(getItemFunc(eItem)) for eItem in items]
+	# THE UNIVERSAL ENTITY-NAME SHAPE: a type PREFIX and an id, served by CyInfo. Never an accessor function
+	# and never a per-type method -- the global context hands out no info objects ([DEC-cy-not-fixed]), and
+	# addressing by (prefix, id) is what lets ONE helper serve every registry.
+	def buildInfoString(self, items, szTypePrefix):
+		names = [INFO.getDescription(szTypePrefix, iItem) for iItem in items]
 		names.sort()
 		return u", ".join(names)
 

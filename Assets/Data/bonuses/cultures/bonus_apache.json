@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_APACHE",
+ "enables": {
+  "units": [
+   "UNIT_APACHE_CAVALRY",
+   "UNIT_COCHISE",
+   "UNIT_GERONIMO"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_APACHE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_APACHE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

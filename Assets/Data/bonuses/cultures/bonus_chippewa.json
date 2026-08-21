@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_CHIPPEWA",
+ "enables": {
+  "units": [
+   "UNIT_MIDEWIWIN",
+   "UNIT_SHA_CO_PAY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CHIPPEWA"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CHIPPEWA",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

@@ -1,0 +1,92 @@
+{
+ "type": "TECH_METAMATERIALS",
+ "enables": {
+  "bonuses": [
+   "BONUS_AEROGEL",
+   "BONUS_METALLIC_HYDROGEN",
+   "BONUS_METAMATERIALS"
+  ],
+  "buildings": [
+   "BUILDING_AEROGEL_FACTORY",
+   "BUILDING_METALLIC_HYDROGEN_PLANT",
+   "BUILDING_METAMATERIAL_FOUNDRY",
+   "BUILDING_METAMATERIAL_WALLS"
+  ],
+  "builds": [
+   "BUILD_COMMAND_CENTER",
+   "BUILD_RESOURCE_COMPLEX"
+  ],
+  "improvements": [
+   "IMPROVEMENT_COMMAND_CENTER",
+   "IMPROVEMENT_RESOURCE_COMPLEX"
+  ],
+  "promotions": [
+   "PROMOTION_ARMOR_UPGRADE1"
+  ],
+  "techs": [
+   "TECH_MICROGENERATORS",
+   "TECH_PERSONALIZED_HEALTH",
+   "TECH_RAILGUN"
+  ],
+  "units": [
+   "UNIT_THERMOBARIC_TANK"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_COMMAND_BUNKER",
+   "BUILD_RESOURCE_TOWN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_IMAGINARY_PHYSICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_RAPID_PROTOTYPING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 25354
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/Techtree/Metamaterials.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_METAMATERIALS",
+  "soundMP": "AS2D_TECH_METAMATERIALS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_METAMATERIALS",
+  "civilopedia": "TXT_KEY_TECH_METAMATERIALS_PEDIA",
+  "quote": "TXT_KEY_TECH_METAMATERIALS_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 94,
+  "gridY": 9
+ }
+}

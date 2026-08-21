@@ -1,0 +1,80 @@
+{
+ "type": "BONUS_PAPAYA",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_GUARANI",
+   "BUILDING_CULTURE_TAGALOG",
+   "BUILDING_CULTURE_TAIWANESE",
+   "BUILDING_GROVE_FUSTIC",
+   "BUILDING_HERCULES_BEETLE_GATHERER",
+   "BUILDING_NATURE_ALTAR_PAPAYAS",
+   "BUILDING_NATURE_CIRCLE_PAPAYAS",
+   "BUILDING_ORCHARD_ATEMOYA",
+   "BUILDING_ORCHARD_CHERIMOYA",
+   "BUILDING_ORCHARD_PAPAYA",
+   "BUILDING_ORCHARD_SAPOTE",
+   "BUILDING_PLANTATION_NUTMEG",
+   "BUILDING_PLANTATION_PAPAYAS"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PAPAYA"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "maxLatitude": 25,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "minLandPercent": 50,
+  "uniqueRange": 5,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_LUSH"
+  ],
+  "validFeatures": [
+   "FEATURE_JUNGLE"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_MARSH",
+   "TERRAIN_MUDDY"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PAPAYA",
+  "civilopedia": "TXT_KEY_BONUS_PAPAYA_PEDIA",
+  "bonusClassType": "BONUSCLASS_CROP",
+  "source": "natural"
+ }
+}

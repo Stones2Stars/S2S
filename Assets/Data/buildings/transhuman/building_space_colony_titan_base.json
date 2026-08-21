@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_SPACE_COLONY_TITAN_BASE",
+ "enables": {
+  "buildings": [
+   "BUILDING_TITAN_AIRPORT",
+   "BUILDING_TITAN_AMMONIA_ERUPTION",
+   "BUILDING_TITAN_BIOFACTORY",
+   "BUILDING_TITAN_FERTILIZER_PLANT",
+   "BUILDING_TITAN_HYDROCARBON_REFINERY"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_ABYSS_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_TITANIC",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 250
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 120
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -5
+   }
+  }
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SPACE_COLONY_TITAN_BASE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_COLONY_TITAN_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_TITAN_BASE_PEDIA",
+  "pediaCategory": "space",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_TITANIC"
+  ]
+ }
+}

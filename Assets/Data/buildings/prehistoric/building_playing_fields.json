@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_PLAYING_FIELDS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAPTURE_THE_FLAG"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TEAM_SPORTS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ATHLETIC_FIELDS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GAMES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_ATHLETIC_FIELDS"
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 45,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PLAYING_FIELDS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PLAYING_FIELDS",
+  "civilopedia": "TXT_KEY_BUILDING_PLAYING_FIELDS_PEDIA",
+  "worth": 1,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_TUPI",
+ "enables": {
+  "units": [
+   "UNIT_BLACKWOOD_ARCHER",
+   "UNIT_TUPI_CUNHAMBEBE"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TUPI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TUPI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

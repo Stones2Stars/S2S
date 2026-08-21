@@ -1,0 +1,24 @@
+{
+ "type": "BONUS_VULCANIZED_RUBBER",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_TIRES"
+  ]
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_VULCANIZED_RUBBER"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_VULCANIZED_RUBBER",
+  "civilopedia": "TXT_KEY_BONUS_VULCANIZED_RUBBER_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

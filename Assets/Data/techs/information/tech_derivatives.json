@@ -1,0 +1,59 @@
+{
+ "type": "TECH_DERIVATIVES",
+ "enables": {
+  "buildings": [
+   "BUILDING_HEDGE_FUND",
+   "BUILDING_PREDICTION_MARKET"
+  ],
+  "techs": [
+   "TECH_COMMERCIAL_SPACEFLIGHT",
+   "TECH_DIRECT_MERCHANDISING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_KNOWLEDGE_MANAGEMENT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "empire": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "cost": {
+  "research": 22074
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/derivatives.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_DERIVATIVES",
+  "soundMP": "AS2D_TECH_DERIVATIVES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_DERIVATIVES",
+  "civilopedia": "TXT_KEY_TECH_DERIVATIVES_PEDIA",
+  "quote": "TXT_KEY_TECH_DERIVATIVES_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 120,
+  "militaryWorth": 24,
+  "tradeable": true,
+  "gridX": 90,
+  "gridY": 9
+ }
+}

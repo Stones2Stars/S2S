@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_SOVIET",
+ "enables": {
+  "units": [
+   "UNIT_MIG_29",
+   "UNIT_TROTSKY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SOVIET"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SOVIET",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

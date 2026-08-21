@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_FISH_PENS",
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    {
+     "latitude": {
+      "max": 60
+     }
+    },
+    "TECH_MASONRY",
+    "BUILDING_FOLKLORE_T_FISH",
+    {
+     "any": [
+      "BUILDING_TOWN_HALL",
+      "BUILDING_CITY_COUNCIL",
+      "BUILDING_METROPOLITAN_ADMINISTRATION"
+     ]
+    },
+    {
+     "any": [
+      "BUILDING_FOLKLORE_COD",
+      "BUILDING_FOLKLORE_MACKEREL",
+      "BUILDING_FOLKLORE_TUNA"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 292,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FISH_PENS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FISH_PENS",
+  "civilopedia": "TXT_KEY_BUILDING_FISH_PENS_PEDIA",
+  "worth": 2,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

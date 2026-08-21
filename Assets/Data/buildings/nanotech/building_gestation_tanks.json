@@ -1,0 +1,92 @@
+{
+ "type": "BUILDING_GESTATION_TANKS",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESURRECTION_HUB"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ASTROANTHROPOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_NANOMORPHIC_REPLICATOR"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_GENOTYPE_STUDIO",
+    "BUILDING_CLONING_FACTORY",
+    "TECH_RAPID_RECUPERATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_NANOMORPHIC_REPLICATOR"
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_CLONES": {
+     "percent": 10
+    },
+    "UNIT_AUTOMATONS": {
+     "percent": 10
+    },
+    "UNIT_FERAL": {
+     "percent": 10
+    },
+    "UNIT_BLEEDER": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "populationGrowthRate": {
+  "city": {
+   "percent": -15
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 3805,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GESTATION_TANKS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GESTATION_TANKS",
+  "civilopedia": "TXT_KEY_BUILDING_GESTATION_TANKS_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

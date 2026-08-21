@@ -1,0 +1,164 @@
+{
+ "type": "UNIT_HENRI_IV",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_FRENCH",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "TECH_HUMANISM"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 18
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "skills": [
+  "pillage"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_HERO",
+ "combatClasses": [
+  "UNITCOMBAT_MOUNTED",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_LONG_BLADE",
+  "UNITCOMBAT_WEAPON_DIST_RIFLE",
+  "UNITCOMBAT_ARMOR_HEAVY",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+  "UNITCOMBAT_ANIMAL_COMBAT_FLEEING",
+  "UNITCOMBAT_ANIMAL_COMBAT_POWER_KICK",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_RIDING",
+  "UNITCOMBAT_MOUNT_HORSE",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_INDUSTRYESPIONAGE"
+  ],
+  "greatPeople": [
+   "SPECIALIST_GREAT_ARTIST",
+   "SPECIALIST_GREAT_SCIENTIST",
+   "SPECIALIST_GREAT_MERCHANT",
+   "SPECIALIST_GREAT_ENGINEER",
+   "SPECIALIST_NOBLE",
+   "SPECIALIST_GREAT_MILITARY_INSTRUCTOR",
+   "SPECIALIST_GREAT_SPY"
+  ],
+  "buildings": [
+   {
+    "building": "BUILDING_ACHIEVEMENT_AGRICULTURAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_COMMERCIAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_CULTURAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_ENVIRONMENTAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_INDUSTRIAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_MEDICAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_MILITARY"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_POLITICAL"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_SAFETY"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_SCIENTIFIC"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_SEAFARING"
+   },
+   {
+    "building": "BUILDING_ACHIEVEMENT_TOURISTIC"
+   }
+  ]
+ },
+ "cost": {
+  "production": 1640,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_HENRI_IV",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_HENRI_IV"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_HENRI_IV",
+  "civilopedia": "TXT_KEY_UNIT_HENRI_IV_PEDIA",
+  "worth": 6,
+  "militaryWorth": 8,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "leaderPromotion": "PROMOTION_LEADER",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_RESERVE",
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_COUNTER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -8,6 +8,8 @@
 
 from CvPythonExtensions import *
 import BugOptionsTab
+GC = CyGlobalContext()
+GAME = GC.getGame()
 
 class ANDDiplomacyTab(BugOptionsTab.BugOptionsTab):
 

@@ -1,0 +1,15 @@
+{
+ "type": "UNITCOMBAT_WORMHOLE_SPACESHIP",
+ "tags": [
+  "space"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/wormhole_spaceship.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_WORMHOLE_SPACESHIP",
+  "forMilitary": true
+ }
+}

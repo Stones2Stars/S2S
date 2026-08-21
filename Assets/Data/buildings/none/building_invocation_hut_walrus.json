@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_INVOCATION_HUT_WALRUS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INVOCATION_HUT",
+    {
+     "STATE_RELIGION": "RELIGION_SHAMANISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_SHAMANISM",
+    {
+     "type": "BONUS_WALRUS",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "percent": [
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_WALRUS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 80,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INVOCATION_HUT_WALRUS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SHAMAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INVOCATION_HUT_WALRUS",
+  "civilopedia": "TXT_KEY_BUILDING_INVOCATION_HUT_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 3,
+  "religion": "RELIGION_SHAMANISM",
+  "advisor": "ADVISOR_RELIGION",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

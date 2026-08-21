@@ -1,0 +1,19 @@
+{
+ "type": "VICTORY_TOTAL",
+ "condition": {
+  "conquest": true,
+  "totalVictory": true,
+  "landPercent": 100
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "file": "ART_DEF_MOVIE_MASTERY_VICTORY"
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_VICTORY_TOTAL",
+  "civilopedia": "TXT_KEY_VICTORY_TOTAL_PEDIA"
+ }
+}

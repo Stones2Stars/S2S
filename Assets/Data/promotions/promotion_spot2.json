@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_SPOT2",
+ "hideAndSeek": {
+  "detection": {
+   "value": 100,
+   "unit": "HAS_SIZE"
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SPOT": 2
+ },
+ "enabled": {
+  "all": [
+   "GAMEOPTION_COMBAT_HIDE_SEEK",
+   "GAMEOPTION_COMBAT_SIZE_MATTERS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Spot2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SPOT2",
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_QUALITY_EPIC",
+   "UNITCOMBAT_QUALITY_DIVINE"
+  ]
+ }
+}

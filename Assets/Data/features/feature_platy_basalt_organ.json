@@ -1,0 +1,47 @@
+{
+ "type": "FEATURE_PLATY_BASALT_ORGAN",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 5
+   }
+  }
+ },
+ "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
+  "nukeImmune",
+  "ignoreTerrainCulture"
+ ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_BASALT_ORGAN"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_BASALT_ORGAN",
+  "civilopedia": "TXT_KEY_FEATURE_BASALT_ORGAN_PEDIA",
+  "requiresFlatlands": true,
+  "validTerrains": [
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_BARREN",
+   "TERRAIN_ROCKY"
+  ]
+ }
+}

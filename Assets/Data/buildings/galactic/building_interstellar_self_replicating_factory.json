@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_CAPTURED_ROGUE_PLANET",
+   "BUILDING_INTERSTELLAR_GAS_GIANT_SURFACE_SHELL",
+   "BUILDING_INTERSTELLAR_GRAVITON_DETECTOR",
+   "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
+   "BUILDING_INTERSTELLAR_MINING_PLANET",
+   "BUILDING_INTERSTELLAR_PAIR_PRODUCTION_PLANT"
+  ],
+  "units": [
+   "UNIT_BRACEWELL_PROBE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FORGE_WORLDS",
+    "TECH_ADAPTIVE_ARCHITECTURE",
+    {
+     "any": [
+      "BUILDING_INTERSTELLAR_METROPOLIS",
+      "BUILDING_SPACE_COLONY_MILKY_WAY"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ADVANCED_REPLICATORS"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": [
+    50,
+    {
+     "value": 11,
+     "enabled": "TECH_PLANET_ENGINEERING"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    50,
+    {
+     "value": 12,
+     "enabled": "TECH_GRAVITRONICS"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 2856,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

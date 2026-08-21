@@ -1,0 +1,68 @@
+{
+ "type": "TECH_COOKING",
+ "enables": {
+  "bonuses": [
+   "BONUS_LARD",
+   "BONUS_RAW_MEAT"
+  ],
+  "buildings": [
+   "BUILDING_BUTCHERY",
+   "BUILDING_DINING_HALL",
+   "BUILDING_LICHEN_BURNER",
+   "BUILDING_PESTS_ANTS",
+   "BUILDING_PESTS_FLIES",
+   "BUILDING_PESTS_TERMITES",
+   "BUILDING_SLAUGHTERHOUSE"
+  ],
+  "techs": [
+   "TECH_DRYING",
+   "TECH_FIRE_MAKING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CONTROLLED_FIRE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "research": 9
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Button_CookedFood.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_COOKING",
+  "soundMP": "AS2D_TECH_COOKING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_COOKING",
+  "civilopedia": "TXT_KEY_TECH_COOKING_PEDIA",
+  "quote": "TXT_KEY_TECH_COOKING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 4,
+  "gridY": 11
+ }
+}

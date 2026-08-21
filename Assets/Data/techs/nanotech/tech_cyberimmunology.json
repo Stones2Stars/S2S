@@ -1,0 +1,76 @@
+{
+ "type": "TECH_CYBERIMMUNOLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CYBERIMMUNIOLOGY_THERAPY_CLINIC",
+   "BUILDING_MEDICAL_DIAGNOSTAT",
+   "BUILDING_NEUROTRANSMITTER_MANIPULATOR_LAB"
+  ],
+  "techs": [
+   "TECH_CYBERNETICS",
+   "TECH_DESIGNER_MICROBIOLOGY",
+   "TECH_DYSTOPIA_PATHOGENS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EXOCORTEX_NETWORKS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_REGENERATIVE_MEDICINE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "research": 47795
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Cyberimmunology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CYBERIMMUNOLOGY",
+  "soundMP": "AS2D_TECH_CYBERIMMUNOLOGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CYBERIMMUNOLOGY",
+  "civilopedia": "TXT_KEY_TECH_CYBERIMMUNOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_CYBERIMMUNOLOGY_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 108,
+  "gridY": 17
+ }
+}

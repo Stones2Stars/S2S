@@ -1,0 +1,112 @@
+{
+ "type": "BUILDING_DEPARTMENT_OF_FOREIGN_POLICY",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FOREIGN_POLICY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_SPY": {
+     "flat": 1
+    },
+    "UNITCOMBAT_DIPLOMAT": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_DEPARTMENT_OF_FOREIGN_POLICY"
+   }
+  ]
+ },
+ "cost": {
+  "production": 1660,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_DEPARTMENT_FOREIGN_WONDER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEPARTMENT_OF_FOREIGN_POLICY_WONDER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEPARTMENT_OF_FOREIGN_POLICY",
+  "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_FOREIGN_POLICY_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

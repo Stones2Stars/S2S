@@ -1,0 +1,72 @@
+{
+ "type": "IMPROVEMENT_FOREST_PRESERVE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WILDLIFE_CONSERVATION",
+     "scope": "team"
+    },
+    "HAS_FEATURE",
+    {
+     "feature": [
+      "FEATURE_FOREST",
+      "FEATURE_FOREST_ANCIENT",
+      "FEATURE_BAMBOO",
+      "FEATURE_SAVANNA",
+      "FEATURE_JUNGLE"
+     ]
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": "HAS_RIVER"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ECOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 20
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_AIR_POLLUTION": -5,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  }
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_FOREST_PRESERVE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_FOREST_PRESERVE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_FOREST_PRESERVE_PEDIA",
+  "advancedStart": {
+   "cost": 48
+  },
+  "featureGrowth": 64
+ }
+}

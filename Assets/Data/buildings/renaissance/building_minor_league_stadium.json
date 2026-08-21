@@ -1,0 +1,122 @@
+{
+ "type": "BUILDING_MINOR_LEAGUE_STADIUM",
+ "enables": {
+  "buildings": [
+   "BUILDING_FLAVIAN_AMPHITHEATRE",
+   "BUILDING_GLADIATORIAL_SCHOOL",
+   "BUILDING_OLYMPIC_GAMES",
+   "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT",
+   "BUILDING_STATUE_OF_CHAMPION"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_BATTLEFIELD_SPORTS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MAJOR_LEAGUE_STADIUM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TEAM_SPORTS",
+    {
+     "type": "BONUS_FURNITURE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_MAJOR_LEAGUE_STADIUM"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 9
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 9
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MELEE": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 455,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 6
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MINOR_LEAGUE_STADIUM"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MINOR_LEAGUE_STADIUM",
+  "civilopedia": "TXT_KEY_BUILDING_MINOR_LEAGUE_STADIUM_PEDIA",
+  "worth": 5,
+  "militaryWorth": 4,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

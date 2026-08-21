@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_CHAVIN",
+ "enables": {
+  "units": [
+   "UNIT_HUANTAR",
+   "UNIT_QHATUQ"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CHAVIN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CHAVIN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

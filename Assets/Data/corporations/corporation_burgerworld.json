@@ -1,0 +1,97 @@
+{
+ "type": "CORPORATION_BURGERWORLD",
+ "enables": {
+  "buildings": [
+   "BUILDING_BURGERWORLD_RESTAURANT"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_BURGERWORLD"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_PIG",
+       "BONUS_COW",
+       "BONUS_COFFEE",
+       "BONUS_POTATOES",
+       "BONUS_WHEAT"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HEADQUARTERS": "CORPORATION_BURGERWORLD"
+     },
+     "per": "CORPORATION_LEVEL"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_BURGERWORLD"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_BURGERWORLD"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_PIG",
+        "BONUS_COW",
+        "BONUS_COFFEE",
+        "BONUS_POTATOES",
+        "BONUS_WHEAT"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 15,
+   "icon": "Art/Interface/Buttons/corporations/BurgerWorld.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_BURGERWORLD",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_BURGERWORLD_PEDIA",
+  "competingSpreadCostPercent": 200,
+  "spreadFactor": 100
+ }
+}

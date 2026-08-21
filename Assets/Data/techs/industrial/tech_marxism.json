@@ -1,0 +1,72 @@
+{
+ "type": "TECH_MARXISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_SOCIAL_SERVICES"
+  ],
+  "civics": [
+   "CIVIC_MARXIST"
+  ],
+  "techs": [
+   "TECH_LABOR_UNIONS",
+   "TECH_REALISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_JOURNALISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASSEMBLY_LINE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 6351
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Marxism.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,6,10"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MARXISM",
+  "soundMP": "AS2D_TECH_MARXISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MARXISM",
+  "civilopedia": "TXT_KEY_TECH_MARXISM_PEDIA",
+  "quote": "TXT_KEY_TECH_MARXISM_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 32,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 66,
+  "gridY": 15
+ }
+}

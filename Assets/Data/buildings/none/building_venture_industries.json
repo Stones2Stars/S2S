@@ -1,0 +1,120 @@
+{
+ "type": "BUILDING_VENTURE_INDUSTRIES",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LABORATORY",
+    "BUILDING_INDUSTRIAL_PARK",
+    "TECH_ATOMPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ATOMPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 8,
+     "enabled": "TECH_CLONING"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_LUNAR_EXPLORATION"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_SPACE_STATIONS"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 7,
+     "enabled": "TECH_ROBOTICS"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 7,
+     "enabled": "TECH_LUNAR_EXPLORATION"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_SPACE_STATIONS"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_ROBOTICS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_CLONING"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 2690,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_VENTURE_INDUSTRIES"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VENTURE_INDUSTRIES",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VENTURE_INDUSTRIES",
+  "civilopedia": "TXT_KEY_BUILDING_VENTURE_INDUSTRIES_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

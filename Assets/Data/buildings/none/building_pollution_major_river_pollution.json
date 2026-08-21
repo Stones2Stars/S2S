@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_POLLUTION_MAJOR_RIVER_POLLUTION",
+ "requires": {
+  "operate": {
+   "all": [
+    "HAS_RIVER",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_WATER_POLLUTION",
+     "scope": "city",
+     "min": 1500,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": -3,
+      "enabled": "HAS_RIVER"
+     }
+    ]
+   }
+  }
+ },
+ "production": {
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": -1,
+      "enabled": "HAS_RIVER"
+     }
+    ]
+   }
+  }
+ },
+ "commerce": {
+  "city": {
+   "plots": {
+    "flat": [
+     {
+      "value": -3,
+      "enabled": "HAS_RIVER"
+     }
+    ]
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYWATERPOLLUTION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_POLLUTION_MAJOR_RIVER_POLLUTION",
+  "civilopedia": "TXT_KEY_BUILDING_WATER_POLLUTION_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

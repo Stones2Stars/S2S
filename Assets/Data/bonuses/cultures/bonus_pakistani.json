@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_PAKISTANI",
+ "enables": {
+  "units": [
+   "UNIT_BENAZIR_BHUTTO",
+   "UNIT_RAJPUT",
+   "UNIT_SSG"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PAKISTANI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PAKISTANI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

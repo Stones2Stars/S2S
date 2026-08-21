@@ -1,0 +1,93 @@
+{
+ "type": "UNIT_CAPTIVE_IMMIGRANT",
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_CAPTIVE_CIVILIAN"
+  }
+ },
+ "tags": [
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SETTLER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_BATTALION",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_JOIN_CITY_POPULATION",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_CITY_POPULATION",
+     "plot": {
+      "all": [
+       {
+        "type": "POPULATION",
+        "scope": "city",
+        "min": 7
+       },
+       "IS_OWNED"
+      ]
+     }
+    },
+    "chance": 100,
+    "consumes": true,
+    "population": 1
+   }
+  ]
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CAPTIVE_IMMIGRANT",
+   "meshGroups": {
+    "groupSize": 4,
+    "meleeWaveSize": 4,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_CAPTIVE_IMMIGRANT"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_CAPTIVE_IMMIGRANT",
+  "civilopedia": "TXT_KEY_UNIT_IMMIGRANT_PEDIA",
+  "help": "TXT_KEY_UNIT_IMMIGRANT_HELP",
+  "spawnOnly": true,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_CITY_SPECIAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_CITY_SPECIAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

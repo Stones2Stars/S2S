@@ -1,0 +1,45 @@
+{
+ "type": "BUILDING_DISTANT_DARK_FLOW_GENERATOR",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_INTERGALACTIC_BRANEWORKS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_BLAZAR_FACTORY",
+    "TECH_HYPERSTRUCTURE_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 1485,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_DARK_FLOW_GENERATOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_DARK_FLOW_GENERATOR",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_DARK_FLOW_GENERATOR_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

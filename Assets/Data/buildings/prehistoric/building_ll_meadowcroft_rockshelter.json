@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_LL_MEADOWCROFT_ROCKSHELTER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MINING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_STONE_BUILDING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 248,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MEADOWCRAFT"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LL_MEADOWCROFT_ROCKSHELTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LL_MEADOWCROFT_ROCKSHELTER",
+  "civilopedia": "TXT_KEY_BUILDING_LL_MEADOWCROFT_ROCKSHELTER_PEDIA",
+  "pediaCategory": "groupWonder",
+  "centerInCity": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_GROUP_LEGENDARY_LANDSCAPES",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

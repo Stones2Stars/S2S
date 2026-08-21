@@ -1,0 +1,35 @@
+{
+ "type": "UNITCOMBAT_SIZE_GARGANTUAN",
+ "combat": {
+  "unit": {
+   "damageModifier": {
+    "percent": 30
+   }
+  }
+ },
+ "hideAndSeek": {
+  "concealment": {
+   "flat": -1300
+  },
+  "detection": {
+   "value": -300,
+   "unit": "HAS_SIZE"
+  }
+ },
+ "skills": [
+  "size",
+  "camouflage"
+ ],
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "sizeMatters": {
+  "sizeBase": 8
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/size_gargantuan.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SIZE_GARGANTUAN"
+ }
+}

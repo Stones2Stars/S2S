@@ -1,0 +1,86 @@
+{
+ "type": "TECH_DUALISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_APADANA_PALACE",
+   "BUILDING_BRAZEN_BULL",
+   "BUILDING_CULTURE_DAYAK",
+   "BUILDING_CULTURE_INDUS",
+   "BUILDING_CULTURE_KHITAN",
+   "BUILDING_CULTURE_WARI",
+   "BUILDING_CULTURE_ZENU",
+   "BUILDING_HAMMURABI_STELE_OF_LAWS",
+   "BUILDING_NIMRUD_PALACE",
+   "BUILDING_THE_HANGING_GARDENS",
+   "BUILDING_TOWN_WATCH"
+  ],
+  "promotions": [
+   "PROMOTION_BACKSTAB4",
+   "PROMOTION_POLICING2",
+   "PROMOTION_SLEUTH2"
+  ],
+  "techs": [
+   "TECH_ANDEANISM",
+   "TECH_KARMA",
+   "TECH_NGAIISM",
+   "TECH_SCRIPTURES",
+   "TECH_ZOROASTRIANISM"
+  ],
+  "units": [
+   "UNIT_HARAPPA_WATCHER",
+   "UNIT_ORONAO_WATCHER",
+   "UNIT_PRIEST_KING",
+   "UNIT_TOWN_WATCHMEN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SACRIFICE_CULT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PRIESTHOOD",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 213
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": ",Art/Interface/Buttons/TechTree/Dualism.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,5"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_DUALISM",
+  "soundMP": "AS2D_TECH_DUALISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_DUALISM",
+  "civilopedia": "TXT_KEY_TECH_DUALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_DUALISM_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "gridX": 27,
+  "gridY": 13
+ }
+}

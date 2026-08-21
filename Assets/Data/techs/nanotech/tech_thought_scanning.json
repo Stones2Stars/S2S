@@ -1,0 +1,69 @@
+{
+ "type": "TECH_THOUGHT_SCANNING",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOMORPHICS_LAB",
+   "BUILDING_NATURAL_LANGUAGE_ALGORITHMS",
+   "BUILDING_PERSONALIZED_ADVERTISING"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_SECURITY5"
+  ],
+  "techs": [
+   "TECH_MASS_SURVEILLANCE",
+   "TECH_ONTOLOGICAL_ENGINEERING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NANOTECH_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 36429
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_ESPIONAGE": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/brain_scan.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_THOUGHT_SCANNING",
+  "soundMP": "AS2D_TECH_THOUGHT_SCANNING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_THOUGHT_SCANNING",
+  "civilopedia": "TXT_KEY_TECH_THOUGHT_SCANNING_PEDIA",
+  "quote": "TXT_KEY_TECH_THOUGHT_SCANNING_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 100,
+  "gridY": 7
+ }
+}

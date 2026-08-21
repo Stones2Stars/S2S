@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_INTERSTELLAR_DATA_COLLECTION",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_BIOMARKER_CATALOGUE",
+   "BUILDING_STARDATE_CALENDAR",
+   "BUILDING_TRANSTELLAR_CONTACT_PROTOCOLS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_INTERSTELLAR_COMMUNICATION",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    100,
+    {
+     "value": 11,
+     "enabled": "TECH_PLANET_SCOUTING"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 11,
+     "enabled": "TECH_PLANET_SCANNING"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 1990,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_DATA_COLLECTION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_DATA_COLLECTION",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_DATA_COLLECTION_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

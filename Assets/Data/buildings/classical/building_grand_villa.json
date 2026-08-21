@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_GRAND_VILLA",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MATHEMATICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      "CIVIC_MAGISTRATES",
+      "CIVIC_BOURGEOIS"
+     ]
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": [
+     {
+      "value": 7,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "production": 216,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GRAND_VILLA"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BROTHEL"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GRAND_VILLA",
+  "civilopedia": "TXT_KEY_BUILDING_GRAND_VILLA_PEDIA",
+  "worth": 3,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

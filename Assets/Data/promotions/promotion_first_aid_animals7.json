@@ -1,0 +1,36 @@
+{
+ "type": "PROMOTION_FIRST_AID_ANIMALS7",
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 1
+   },
+   "victoryAdjacent": {
+    "flat": 5
+   },
+   "victoryStack": {
+    "flat": 7
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_ANIMALS": {
+     "heal": 8,
+     "adjacentHeal": 5
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FIRST_AID_ANIMALS": 7
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/HealAnimals7Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FIRST_AID_ANIMALS7"
+ }
+}

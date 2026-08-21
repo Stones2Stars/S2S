@@ -6,13 +6,21 @@
 from CvPythonExtensions import *
 import CivicData
 import RevData
+import CvUtil
 import BugCore
 import DynamicCivNames
 
 # globals
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 GAME = GC.getGame()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
+INFO = CyInfo()
 TRNSLTR = CyTranslator()
+WORLD = CyWorldInfo()
 RevOpt = BugCore.game.Revolution
 RevDCMOpt = BugCore.game.RevDCM
 
@@ -38,8 +46,7 @@ def getGameSpeedMod():
 	# Ratio of game turns to those of Epic, limited adjustment for extremely short/long differences
 	global gameSpeedMod
 	if gameSpeedMod == None:
-		CvGameSpeedInfo = GC.getGameSpeedInfo(GAME.getGameSpeedType())
-		gameSpeedMod = CvGameSpeedInfo.getSpeedPercent() + CvGameSpeedInfo.getHammerCostPercent()
+		gameSpeedMod = GAME.getSpeedPercent() + GAME.getHammerCostPercent()
 		gameSpeedMod = 200.0 / gameSpeedMod
 	return gameSpeedMod
 
@@ -326,7 +333,7 @@ def getHandoverUnitTypes(CyCity):
 		if CvUnitInfo.getMaxGlobalInstances() > 0 or CvUnitInfo.getMaxPlayerInstances() > 0:
 			continue
 
-		if not CyCity.canTrain(iUnit, False, False, False, False): continue
+		if not ENABLER.getUnitAvailability(CyCity.getOwner(), CyCity.getID(), iUnit) == EnablerState.ENABLER_LISTED: continue
 
 		# Defender (Archer,Longbow)
 		if CvUnitInfo.getDefaultUnitAIType() == UnitAITypes.UNITAI_CITY_DEFENSE:
@@ -351,7 +358,7 @@ def getHandoverUnitTypes(CyCity):
 	if iCounter == UnitTypes.NO_UNIT: iCounter = iBestDefender
 	if iAttack == UnitTypes.NO_UNIT: iAttack = iCounter
 
-	return [GC.getUNIT_WORKER(), iBestDefender, iCounter, iAttack]
+	return [GC.getInfoTypeForString("UNIT_WORKER"), iBestDefender, iCounter, iAttack]
 
 def getUprisingUnitTypes(CyCity):
 	# Returns list of units that can be given to violent rebel uprisings, odds of giving are set by the relative number of times a unit type appears in list
@@ -371,7 +378,7 @@ def getUprisingUnitTypes(CyCity):
 		if not CvUnitInfo.hasUnitCombat(UnitCombatTypes(GC.getInfoTypeForString("UNITCOMBAT_COMBATANT"))):
 			continue
 
-		if CyCity.canTrain(iUnit, False, False, False, False):
+		if ENABLER.getUnitAvailability(CyCity.getOwner(), CyCity.getID(), iUnit) == EnablerState.ENABLER_LISTED:
 			for i in xrange(iCombat/4 + 1):
 				aList.append(iUnit)
 	return aList
@@ -463,7 +470,7 @@ def computeWarOdds(CyPlayerA, CyPlayerB, CyArea, allowAttackerVassal=True, allow
 		if iAreaCitiesA > CyArea.getCitiesPerPlayer(iPlayerB):
 			warOdds += 10
 
-		if CyPlayerA.hasTrait(GC.getInfoTypeForString("TRAIT_AGGRESSIVE")):
+		if CyPlayerA.hasTrait(CvUtil.getActiveTraitId("TRAIT_AGGRESSIVE")):
 			warOdds += 10
 
 		if CyPlayerA.isRebel():
@@ -577,7 +584,7 @@ def computeBribeCosts(CyCity):
 	fBaseCost = (iRevIdx + 16*localRevIdx + 3*CyCity.getNumRevolts(iPlayer)) * (iPop**1.1)/8.0
 
 	fMod = (1 + CyPlayer.getCurrentEra() - 9 / (8.1 + iPop**1.3)) / 3
-	fMod *= GC.getGameSpeedInfo(GAME.getGameSpeedType()).getSpeedPercent() / 100.0
+	fMod *= GAME.getSpeedPercent() / 100.0
 
 	if not CyPlayer.isHuman():
 		fMod /= 2
@@ -662,7 +669,7 @@ def doRevRequestDeniedPenalty(CyCity, iHomeArea, iRevIdxInc=100, bExtraHomeland=
 
 def computeCivSizeRaw(iOwnedPlots):
 	# Ratio of amount of land player owns to what would be equal for this map for national effects, effective radius of civ's empire for comparing with city distance
-	fPlotsRatio = 1.0*CyMap().getLandPlots() / GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
+	fPlotsRatio = 1.0*CyMap().getLandPlots() / WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
 
 	fSizeValueRaw = iOwnedPlots / fPlotsRatio
 	fCivEffRadRaw = ((.5*iOwnedPlots + .5*fPlotsRatio) / 3.4)**.5
@@ -671,7 +678,7 @@ def computeCivSizeRaw(iOwnedPlots):
 
 def computeCivSize(player):
 	# Ratio of amount of land player owns to what would be equal for this map for national effects, effective radius of civ's empire for comparing with city distance
-	fPlotsRatio = 1.0*CyMap().getLandPlots() / GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
+	fPlotsRatio = 1.0*CyMap().getLandPlots() / WORLD.getDefaultPlayers(GC.getMap().getWorldSize())
 	iOwnedPlots = player.getTotalLand()
 
 	civSizeEraMod = 0.85 - 0.20 * player.getCurrentEra()
@@ -741,27 +748,27 @@ def getCivicsRevIdxLocal(pPlayer):
 	negList = []
 
 	for i in xrange(GC.getNumCivicOptionInfos()):
-		myCivic = GC.getCivicInfo(pPlayer.getCivics(i))
-		civicEffect = myCivic.getRevIdxLocal()
+		iMyCivic = pPlayer.getCivics(i)
+		civicEffect = INFO.getRevolution("CIVIC_", iMyCivic, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_LOCAL]
 		if not civicEffect: continue
 
 		if civicEffect < 0:
-			posList.append((civicEffect, myCivic.getDescription()))
+			posList.append((civicEffect, INFO.getDescription("CIVIC_", iMyCivic)))
 
 		else: # Effect doubles for some when a much better alternative exists
 
-			if myCivic.getRevLaborFreedom() < -1:
-				for civicX, iCivicX in civicLists[myCivic.getCivicOptionType()]:
-					if civicX.getRevLaborFreedom() > 1 and pPlayer.canDoCivics(iCivicX):
+			if INFO.getRevolution("CIVIC_", iMyCivic, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_LABOR_FREEDOM] < -1:
+				for iCivicX in civicLists[INFO.civicOptions().getValue(iMyCivic)]:
+					if INFO.getRevolution("CIVIC_", iCivicX, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_LABOR_FREEDOM] > 1 and pPlayer.canDoCivics(iCivicX):
 						civicEffect *= 2
 						break
 
-			if myCivic.getRevDemocracyLevel() < -1:
-				for civicX, iCivicX in civicLists[myCivic.getCivicOptionType()]:
-					if civicX.getRevDemocracyLevel() > 1 and pPlayer.canDoCivics(iCivicX):
+			if INFO.getRevolution("CIVIC_", iMyCivic, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_DEMOCRACY_LEVEL] < -1:
+				for iCivicX in civicLists[INFO.civicOptions().getValue(iMyCivic)]:
+					if INFO.getRevolution("CIVIC_", iCivicX, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_DEMOCRACY_LEVEL] > 1 and pPlayer.canDoCivics(iCivicX):
 						civicEffect *= 2
 						break
-			negList.append((civicEffect, myCivic.getDescription()))
+			negList.append((civicEffect, INFO.getDescription("CIVIC_", iMyCivic)))
 
 		localRevIdx += civicEffect
 
@@ -780,27 +787,27 @@ def getCivicsCivStabilityIndex(pPlayer):
 	civicLists = CivicData.civicLists
 
 	for i in xrange(GC.getNumCivicOptionInfos()):
-		myCivic = GC.getCivicInfo(pPlayer.getCivics(i))
-		civicEffect = -myCivic.getRevIdxNational()
+		iMyCivic = pPlayer.getCivics(i)
+		civicEffect = -INFO.getRevolution("CIVIC_", iMyCivic, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_NATIONAL]
 		if not civicEffect: continue
 
 		if civicEffect > 0:
-			posList.append( (civicEffect, myCivic.getDescription()) )
+			posList.append( (civicEffect, INFO.getDescription("CIVIC_", iMyCivic)) )
 		else:
 			# Effect doubles for some when a much better alternative exists
-			if myCivic.getRevLaborFreedom() < -1:
-				for civicX, iCivicX in civicLists[myCivic.getCivicOptionType()] :
-					if civicX.getRevLaborFreedom() > 1 and pPlayer.canDoCivics(iCivicX):
+			if INFO.getRevolution("CIVIC_", iMyCivic, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_LABOR_FREEDOM] < -1:
+				for iCivicX in civicLists[INFO.civicOptions().getValue(iMyCivic)] :
+					if INFO.getRevolution("CIVIC_", iCivicX, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_LABOR_FREEDOM] > 1 and pPlayer.canDoCivics(iCivicX):
 						civicEffect *= 2
 						break
 
-			if myCivic.getRevDemocracyLevel() < -1:
-				for civicX, iCivicX in civicLists[myCivic.getCivicOptionType()] :
-					if civicX.getRevDemocracyLevel() > 1 and pPlayer.canDoCivics(iCivicX):
+			if INFO.getRevolution("CIVIC_", iMyCivic, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_DEMOCRACY_LEVEL] < -1:
+				for iCivicX in civicLists[INFO.civicOptions().getValue(iMyCivic)] :
+					if INFO.getRevolution("CIVIC_", iCivicX, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_DEMOCRACY_LEVEL] > 1 and pPlayer.canDoCivics(iCivicX):
 						civicEffect *= 2
 						break
 
-			negList.append((civicEffect, myCivic.getDescription()))
+			negList.append((civicEffect, INFO.getDescription("CIVIC_", iMyCivic)))
 
 		civStabilityIdx += civicEffect
 
@@ -816,11 +823,18 @@ def getCivicsHolyCityEffects(pPlayer):
 	badEffect = 0
 
 	for i in xrange(GC.getNumCivicOptionInfos()):
-		kCivic = GC.getCivicInfo(pPlayer.getCivics(i))
-		goodEffect += kCivic.getRevIdxHolyCityGood()
-		badEffect += kCivic.getRevIdxHolyCityBad()
+		iKCivic = pPlayer.getCivics(i)
+		goodEffect += INFO.getRevolution("CIVIC_", iKCivic, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_HOLY_CITY_GOOD]
+		badEffect += INFO.getRevolution("CIVIC_", iKCivic, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_HOLY_CITY_BAD]
 
 	return [goodEffect, badEffect]
+
+def _revModRatio(v):
+	# The revolution mods are authored as whole percent points, while the index formulas below scale by
+	# the ratio they represent (`1.0 + mod`, and violentMod as a fraction of the violence threshold).
+	# ONE conversion point for every reader of them.
+	return v / 100.0
+
 
 def getCivicsReligionMods(pPlayer):
 
@@ -831,11 +845,11 @@ def getCivicsReligionMods(pPlayer):
 	badMod = 0
 
 	for i in xrange(GC.getNumCivicOptionInfos()):
-		kCivic = GC.getCivicInfo(pPlayer.getCivics(i))
-		goodMod += kCivic.getRevIdxGoodReligionMod()
-		badMod += kCivic.getRevIdxBadReligionMod()
+		iKCivic = pPlayer.getCivics(i)
+		goodMod += INFO.getRevolution("CIVIC_", iKCivic, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_GOOD_RELIGION]
+		badMod += INFO.getRevolution("CIVIC_", iKCivic, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_BAD_RELIGION]
 
-	return [goodMod,badMod]
+	return [_revModRatio(goodMod), _revModRatio(badMod)]
 
 
 def getCivicsNationalityMod(pPlayer):
@@ -846,9 +860,9 @@ def getCivicsNationalityMod(pPlayer):
 	natMod = 0
 	for i in xrange(GC.getNumCivicOptionInfos()):
 
-		natMod += GC.getCivicInfo(pPlayer.getCivics(i)).getRevIdxNationalityMod()
+		natMod += INFO.getRevolution("CIVIC_", pPlayer.getCivics(i), CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_NATIONALITY]
 
-	return natMod
+	return _revModRatio(natMod)
 
 def getCivicsViolentRevMod(pPlayer):
 
@@ -858,9 +872,9 @@ def getCivicsViolentRevMod(pPlayer):
 	vioMod = 0
 	for i in xrange(GC.getNumCivicOptionInfos()):
 
-		vioMod += GC.getCivicInfo(pPlayer.getCivics(i)).getRevViolentMod()
+		vioMod += INFO.getRevolution("CIVIC_", pPlayer.getCivics(i), CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_VIOLENT]
 
-	return vioMod
+	return _revModRatio(vioMod)
 
 def canDoCommunism(pPlayer):
 
@@ -868,7 +882,7 @@ def canDoCommunism(pPlayer):
 		return [False, None]
 
 	for i in xrange(GC.getNumCivicInfos()):
-		if GC.getCivicInfo(i).isCommunism() and pPlayer.canDoCivics(i) and not pPlayer.isCivic(i):
+		if INFO.providesPolicy("CIVIC_", i, PolicyId.CLS_POLICY_COMMUNISM) and pPlayer.canDoCivics(i) and not pPlayer.isCivic(i):
 			return [True, i]
 
 	return [False, None]
@@ -881,7 +895,7 @@ def canDoFreeSpeech(pPlayer):
 
 	for iCivic in xrange(GC.getNumCivicInfos()):
 
-		if GC.getCivicInfo(iCivic).isFreeSpeech() and pPlayer.canDoCivics(iCivic) and not pPlayer.isCivic(iCivic):
+		if INFO.providesPolicy("CIVIC_", iCivic, PolicyId.CLS_POLICY_FREE_SPEECH) and pPlayer.canDoCivics(iCivic) and not pPlayer.isCivic(iCivic):
 			return [True, iCivic]
 
 	return [False, None]
@@ -893,7 +907,7 @@ def isFreeSpeech(pPlayer):
 
 	for i in xrange(GC.getNumCivicInfos()):
 
-		if GC.getCivicInfo(i).isFreeSpeech() and pPlayer.isCivic(i):
+		if INFO.providesPolicy("CIVIC_", i, PolicyId.CLS_POLICY_FREE_SPEECH) and pPlayer.isCivic(i):
 			return True
 
 	return False
@@ -905,7 +919,7 @@ def isCanDoElections(pPlayer):
 
 	for i in xrange(GC.getNumCivicOptionInfos()):
 
-		if GC.getCivicInfo(pPlayer.getCivics(i)).isCanDoElection():
+		if INFO.providesPolicy("CIVIC_", pPlayer.getCivics(i), PolicyId.CLS_POLICY_CAN_DO_ELECTION):
 			return True
 
 	return False
@@ -917,7 +931,7 @@ def getReligiousFreedom(pPlayer):
 		return [0, None]
 
 	for i in xrange(GC.getNumCivicOptionInfos()):
-		iReligiousFreedom = GC.getCivicInfo(pPlayer.getCivics(i)).getRevReligiousFreedom()
+		iReligiousFreedom = INFO.getRevolution("CIVIC_", pPlayer.getCivics(i), CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_RELIGIOUS_FREEDOM]
 		if iReligiousFreedom:
 			return [iReligiousFreedom, i]
 
@@ -933,8 +947,8 @@ def getBestReligiousFreedom(pPlayer, relOptionType):
 	bestFreedom = -11
 	bestCivic = None
 
-	for civicX, iCivicX in CivicData.civicLists[relOptionType]:
-		civicFreedom = civicX.getRevReligiousFreedom()
+	for iCivicX in CivicData.civicLists[relOptionType]:
+		civicFreedom = INFO.getRevolution("CIVIC_", iCivicX, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_RELIGIOUS_FREEDOM]
 		if civicFreedom > bestFreedom and pPlayer.canDoCivics(iCivicX):
 			bestFreedom = civicFreedom
 			bestCivic = iCivicX
@@ -948,7 +962,7 @@ def getDemocracyLevel(pPlayer):
 		return [0, None]
 
 	for i in range(GC.getNumCivicOptionInfos()):
-		iDemLvl = GC.getCivicInfo(pPlayer.getCivics(i)).getRevDemocracyLevel()
+		iDemLvl = INFO.getRevolution("CIVIC_", pPlayer.getCivics(i), CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_DEMOCRACY_LEVEL]
 		if iDemLvl:
 			return [iDemLvl, i]
 
@@ -964,8 +978,8 @@ def getBestDemocracyLevel(pPlayer, optionType):
 	bestLevel = -11
 	bestCivic = None
 
-	for civicX, iCivicX in CivicData.civicLists[optionType]:
-		civicLevel = civicX.getRevDemocracyLevel()
+	for iCivicX in CivicData.civicLists[optionType]:
+		civicLevel = INFO.getRevolution("CIVIC_", iCivicX, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_DEMOCRACY_LEVEL]
 		if civicLevel > bestLevel and pPlayer.canDoCivics(iCivicX):
 			bestLevel = civicLevel
 			bestCivic = iCivicX
@@ -979,7 +993,7 @@ def getLaborFreedom(pPlayer):
 		return [0, None]
 
 	for i in xrange(GC.getNumCivicOptionInfos()):
-		iLaborFreedom = GC.getCivicInfo(pPlayer.getCivics(i)).getRevLaborFreedom()
+		iLaborFreedom = INFO.getRevolution("CIVIC_", pPlayer.getCivics(i), CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_LABOR_FREEDOM]
 		if iLaborFreedom:
 			return [iLaborFreedom, i]
 
@@ -995,8 +1009,8 @@ def getBestLaborFreedom(pPlayer, optionType):
 	bestLevel = -11
 	bestCivic = None
 
-	for civicX, iCivicX in CivicData.civicLists[optionType]:
-		civicLevel = civicX.getRevLaborFreedom()
+	for iCivicX in CivicData.civicLists[optionType]:
+		civicLevel = INFO.getRevolution("CIVIC_", iCivicX, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_LABOR_FREEDOM]
 		if civicLevel > bestLevel and pPlayer.canDoCivics(iCivicX):
 			bestLevel = civicLevel
 			bestCivic = iCivicX
@@ -1011,7 +1025,7 @@ def getEnvironmentalProtection(pPlayer):
 		return [0, None]
 
 	for i in xrange(GC.getNumCivicOptionInfos()):
-		iEnvirenmentalProtection = GC.getCivicInfo(pPlayer.getCivics(i)).getRevEnvironmentalProtection()
+		iEnvirenmentalProtection = INFO.getRevolution("CIVIC_", pPlayer.getCivics(i), CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_ENVIRONMENTAL_PROTECTION]
 		if iEnvirenmentalProtection:
 			return [iEnvirenmentalProtection, i]
 
@@ -1026,8 +1040,8 @@ def getBestEnvironmentalProtection(pPlayer, optionType):
 	bestLevel = -11
 	bestCivic = None
 
-	for civicX, iCivicX in CivicData.civicLists[optionType]:
-		civicLevel = civicX.getRevEnvironmentalProtection()
+	for iCivicX in CivicData.civicLists[optionType]:
+		civicLevel = INFO.getRevolution("CIVIC_", iCivicX, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_ENVIRONMENTAL_PROTECTION]
 		if civicLevel > bestLevel and pPlayer.canDoCivics(iCivicX):
 			bestLevel = civicLevel
 			bestCivic = iCivicX
@@ -1047,12 +1061,12 @@ def getTraitsRevIdxLocal(pPlayer):
 
 	for i in range(GC.getNumTraitInfos()):
 		if pPlayer.hasTrait(i):
-			kTrait = GC.getTraitInfo(i)
-			traitEffect = kTrait.getRevIdxLocal()
+			iKTrait = i
+			traitEffect = INFO.getRevolution("TRAIT_", iKTrait, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_LOCAL]
 			if traitEffect > 0:
-				negList.append((traitEffect, kTrait.getDescription()))
+				negList.append((traitEffect, INFO.getDescription("TRAIT_", iKTrait)))
 			elif traitEffect < 0:
-				posList.append((traitEffect, kTrait.getDescription()))
+				posList.append((traitEffect, INFO.getDescription("TRAIT_", iKTrait)))
 
 			localRevIdx += traitEffect
 
@@ -1069,14 +1083,14 @@ def getTraitsCivStabilityIndex(pPlayer):
 	negList = []
 
 	for iTrait in range(GC.getNumTraitInfos()):
-		kTrait = GC.getTraitInfo(iTrait)
-		traitEffect = -kTrait.getRevIdxNational()
+		iKTrait = iTrait
+		traitEffect = -INFO.getRevolution("TRAIT_", iKTrait, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_NATIONAL]
 
 		if pPlayer.hasTrait(iTrait):
 			if traitEffect > 0:
-				posList.append((traitEffect, kTrait.getDescription()))
+				posList.append((traitEffect, INFO.getDescription("TRAIT_", iKTrait)))
 			elif traitEffect < 0:
-				negList.append((traitEffect, kTrait.getDescription()))
+				negList.append((traitEffect, INFO.getDescription("TRAIT_", iKTrait)))
 
 			civStabilityIdx += traitEffect
 
@@ -1093,9 +1107,9 @@ def getTraitsHolyCityEffects(pPlayer):
 
 	for i in range(GC.getNumTraitInfos()):
 		if pPlayer.hasTrait(i):
-			kTrait = GC.getTraitInfo(i)
-			goodEffect += kTrait.getRevIdxHolyCityGood()
-			badEffect += kTrait.getRevIdxHolyCityBad()
+			iKTrait = i
+			goodEffect += INFO.getRevolution("TRAIT_", iKTrait, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_HOLY_CITY_GOOD]
+			badEffect += INFO.getRevolution("TRAIT_", iKTrait, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_HOLY_CITY_BAD]
 
 	return [goodEffect, badEffect]
 
@@ -1110,11 +1124,11 @@ def getTraitsReligionMods(pPlayer):
 
 	for i in range(GC.getNumTraitInfos()):
 		if pPlayer.hasTrait(i):
-			kTrait = GC.getTraitInfo(i)
-			goodMod += kTrait.getRevIdxGoodReligionMod()
-			badMod += kTrait.getRevIdxBadReligionMod()
+			iKTrait = i
+			goodMod += INFO.getRevolution("TRAIT_", iKTrait, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_GOOD_RELIGION]
+			badMod += INFO.getRevolution("TRAIT_", iKTrait, CascScope.CASC_SCOPE_EMPIRE)[RevolutionKind.REVOLUTION_BAD_RELIGION]
 
-	return [goodMod, badMod]
+	return [_revModRatio(goodMod), _revModRatio(badMod)]
 
 
 ########################## Traits effect helper functions #####################
@@ -1126,12 +1140,12 @@ def getBuildingsRevIdxLocal(CyCity):
 
 	for iBuilding in range(GC.getNumBuildingInfos()):
 		if CyCity.isActiveBuilding(iBuilding):
-			CvBuildingInfo = GC.getBuildingInfo(iBuilding)
-			buildingEffect = CvBuildingInfo.getRevIdxLocal()
+			iRevBuilding = iBuilding
+			buildingEffect = INFO.getRevolution("BUILDING_", iRevBuilding, CascScope.CASC_SCOPE_CITY)[RevolutionKind.REVOLUTION_LOCAL]
 			if buildingEffect > 0:
-				negList.append((buildingEffect, CvBuildingInfo.getDescription()))
+				negList.append((buildingEffect, INFO.getDescription("BUILDING_", iRevBuilding)))
 			elif buildingEffect < 0:
-				posList.append((buildingEffect, CvBuildingInfo.getDescription()))
+				posList.append((buildingEffect, INFO.getDescription("BUILDING_", iRevBuilding)))
 
 			localRevIdx += buildingEffect
 
@@ -1147,17 +1161,17 @@ def getBuildingsCivStabilityIndex(player):
 	posList = []
 	negList = []
 	for iBuilding in xrange(GC.getNumBuildingInfos()):
-		CvBuildingInfo = GC.getBuildingInfo(iBuilding)
-		buildingEffect = -CvBuildingInfo.getRevIdxNational()
+		iRevBuilding = iBuilding
+		buildingEffect = -INFO.getRevolution("BUILDING_", iRevBuilding, CascScope.CASC_SCOPE_CITY)[RevolutionKind.REVOLUTION_NATIONAL]
 
 		if buildingEffect:
 			numBuildings = player.countNumBuildings(iBuilding)
 			if numBuildings:
 				buildingEffect *= numBuildings
 				if buildingEffect > 0:
-					posList.append((buildingEffect, CvBuildingInfo.getDescription()))
+					posList.append((buildingEffect, INFO.getDescription("BUILDING_", iRevBuilding)))
 				elif buildingEffect < 0:
-					negList.append((buildingEffect, CvBuildingInfo.getDescription()))
+					negList.append((buildingEffect, INFO.getDescription("BUILDING_", iRevBuilding)))
 				civStabilityIdx += buildingEffect
 
 	return [civStabilityIdx, posList, negList]

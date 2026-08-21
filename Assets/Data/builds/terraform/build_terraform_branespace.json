@@ -1,0 +1,36 @@
+{
+ "type": "BUILD_TERRAFORM_BRANESPACE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STRING_MANIPULATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_TERRAFORM_BRANESPACE",
+  "terrainChange": "TERRAIN_BRANESPACE"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/worldbuilder/branespace.dds"
+  },
+  "hotkey": "KB_T",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_TERRAFORM_BRANESPACE"
+ }
+}

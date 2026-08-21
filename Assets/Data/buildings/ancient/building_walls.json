@@ -1,0 +1,139 @@
+{
+ "type": "BUILDING_WALLS",
+ "enables": {
+  "buildings": [
+   "BUILDING_GROVE",
+   "BUILDING_THE_ISHTAR_GATE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GUNPOWDER"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HIGH_WALLS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MASONRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_HIGH_WALLS"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 60
+   },
+   "bombardDefense": {
+    "percent": 20
+   },
+   "min": {
+    "percent": 20
+   },
+   "noEntryLevel": {
+    "percent": 60
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "cost": {
+  "production": 306,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WALLS"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WALLS",
+  "civilopedia": "TXT_KEY_BUILDING_WALLS_PEDIA",
+  "centerInCity": true,
+  "worth": 1,
+  "militaryWorth": 4,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -5
+  }
+ }
+}

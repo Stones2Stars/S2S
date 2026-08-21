@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_NATURAL_TALENT",
+ "skills": {
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_STANDARD"
+  ],
+  "removesUnitCombats": [
+   "UNITCOMBAT_QUALITY_MEDIOCRE"
+  ]
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/UnitCombatClasses/Quality5UnitCombat.fw.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_NATURAL_TALENT",
+  "replacesUnitCombat": "UNITCOMBAT_QUALITY_MEDIOCRE",
+  "levelPrereq": 4,
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ],
+  "zeroesXP": true
+ },
+ "sizeMatters": {
+  "quality": 1
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_AMIS",
+ "enables": {
+  "units": [
+   "UNIT_PANGCAH_IMPANTERYA",
+   "UNIT_TERUO_NAKAMURA"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_AMIS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_AMIS",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

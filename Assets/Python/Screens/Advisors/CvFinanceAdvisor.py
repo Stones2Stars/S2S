@@ -1,8 +1,16 @@
 from CvPythonExtensions import *
 
 # globals
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
+GAME = GC.getGame()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
+TEXT = CyGameTextMgr()
 MAX_COMMERCE_RATE_MODIFIER_VALUE = 10000000
 
 class CvFinanceAdvisor:
@@ -57,7 +65,7 @@ class CvFinanceAdvisor:
 		# Commerce icons
 		aList = []
 		for i in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
-			aList.append(u'%c' % GC.getCommerceInfo(i).getChar())
+			aList.append(u'%c' % TEXT.getSymbolChar("COMMERCE_", i))
 		self.iconCommerceList = list(aList)
 		# Enumerators
 		eWidGen = WidgetTypes.WIDGET_GENERAL
@@ -131,27 +139,29 @@ class CvFinanceAdvisor:
 		iTeam = CyPlayer.getTeam()
 		for CyCity in CyPlayer.cities():
 			if not CyCity.isDisorder():
-				# Work plots
-				for j in range(GC.getNUM_CITY_PLOTS()):
-					CyPlot = CyCity.getCityIndexPlot(j)
-					if CyPlot and CyPlot.hasYield() and CyCity.isWorkingPlot(CyPlot):
-						iTiles += 1
-						iYield0 += CyPlot.getYield(YieldTypes.YIELD_COMMERCE)
-				# Trade
-				for j in range(CyCity.getTradeRoutes()):
-					CyCityX = CyCity.getTradeCity(j)
-					if not CyCityX: continue
+				#  The city's own yield CENSUS answers the worked-plot total and the tile count together, so this
+				#  panel reads the SAME document the tooltip does instead of re-deriving it a plot at a time
+				#  ([CyCity.h]: a panel that recomputes its own breakdown is a second answer that drifts).
+				#  x100 like every amount; the reduce happens once, at the display below.
+				aTerms = CyCity.getYieldTerms(YieldTypes.YIELD_COMMERCE)
+				iYield0 += int(aTerms[CityYieldTerm.YIELD_TERM_PLOT_BASE])
+				iTiles += int(aTerms[CityYieldTerm.YIELD_TERM_WORKED_PLOTS])
+				# Trade -- the per-route yields sum on the x100 plane; iYield1/iYield2 reduce once at display below
+				for iPartnerOwner, iPartnerCity, iProfitTimes100 in CyCity.getTradeRoutes():
+					if iPartnerOwner < 0: continue
 
-					trade = CyCity.calculateTradeYield(YieldTypes.YIELD_COMMERCE, CyCity.calculateTradeProfitTimes100(CyCityX))
-					if CyCityX.getTeam() == iTeam:
+					trade = CyCity.getTradeYield(YieldTypes.YIELD_COMMERCE, iProfitTimes100)
+					if STATE.getPlayerTeam(iPartnerOwner) == iTeam:
 						iYield1 += trade
 					else: # Foreign Trade
 						iYield2 += trade
-				# corporations
-				iYield3 += CyCity.getCorporationYield(YieldTypes.YIELD_COMMERCE)
-				# specialists
-				for iType in range(GC.getNumSpecialistInfos()):
-					iYield4 += CyPlayer.specialistYield(iType, YieldTypes.YIELD_COMMERCE) * (CyCity.getSpecialistCount(iType) + CyCity.getFreeSpecialistCount(iType))
+				#  corporations -- the census carries no corporation TERM, so there is nothing to itemize here.
+				#  ⚠ The amount is not lost from the rate: it rides inside the flat terms. What is missing is the
+				#  SPLIT, so the row stays unrendered rather than showing a number this panel cannot source.
+				iYield3 += 0
+				#  specialists -- the census sums the whole specialist contribution, so this reads the one document
+				#  instead of multiplying a per-type rate by a per-type count and hoping the two agree.
+				iYield4 += int(aTerms[CityYieldTerm.YIELD_TERM_SPECIALISTS])
 
 		Pnl = "FinAdv_Scroll_1"
 		screen.addScrollPanel(Pnl, "", x0, y0 + 32, dx, dy - 64, ePanelHudHelp)
@@ -161,6 +171,7 @@ class CvFinanceAdvisor:
 		y = 0
 		# Work plots
 		if iYield0:
+			iYield0 /= 100
 			szText = TRNSLTR.getText("TXT_KEY_CONCEPT_WORKED_TILES", (iTiles,))
 			screen.setLabelAt("", Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
 			screen.setLabelAt("", Pnl, uFont2 + str(iYield0), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
@@ -194,6 +205,7 @@ class CvFinanceAdvisor:
 
 		# specialists
 		if iYield4 > 0:
+			iYield4 /= 100
 			szText = TRNSLTR.getText("TXT_KEY_CONCEPT_SPECIALISTS", ())
 			screen.setLabelAt("", Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
 			screen.setLabelAt("", Pnl, uFont2 + str(iYield4), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
@@ -214,7 +226,7 @@ class CvFinanceAdvisor:
 		y += 8
 		szText = TRNSLTR.getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_COMMERCE", ())
 		screen.setLabelAt("", Pnl, uFont2b + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
-		szText = str(iCommerce) + u'%c' % GC.getYieldInfo(YieldTypes.YIELD_COMMERCE).getChar()
+		szText = str(iCommerce) + u'%c' % TEXT.getSymbolChar("YIELD_", YieldTypes.YIELD_COMMERCE)
 		screen.setLabelAt("", Pnl, uFont2b + szText, 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
 		y += 32
 
@@ -314,7 +326,7 @@ class CvFinanceAdvisor:
 		uFontEdge, uFont4b, uFont4, uFont3b, uFont3, uFont2b, uFont2, uFont1b, uFont1 = self.aFontList
 		iconCommerceList = self.iconCommerceList
 		CyPlayer = self.CyPlayer
-		iIncome = CyPlayer.getCommerceRate(eComGold)
+		iIncome = GC.getPlayer(CyPlayer.getID()).getCommerces()[eComGold] / 100
 
 		# Treasury footer
 		szTxt = self.szTreasury
@@ -378,7 +390,7 @@ class CvFinanceAdvisor:
 					# Research is subject to modifiers.
 					iRate = CyPlayer.calculateResearchRate(CyPlayer.getCurrentResearch())
 				else:
-					iRate = CyPlayer.getCommerceRate(CommerceTypes(iType))
+					iRate = CyPlayer.getCommerces()[iType]
 				szRate = uFont2b + str(iRate) + iconCommerceList[iType]
 				screen.setLabelAt(aName(), Pnl, szRate, 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
 				y += Btnsize
@@ -387,7 +399,7 @@ class CvFinanceAdvisor:
 				szText = uFont2b + iconCommerceList[iType]
 				screen.setLabelAt(aName(), Pnl, szText, 1<<0, 8, y + 2, 0, eGameFont, eWidGen, 1, 1)
 
-				szText = uFont2b + GC.getCommerceInfo(iType).getDescription()
+				szText = uFont2b + INFO.getDescription("COMMERCE_", iType)
 				screen.setLabelAt(aName(), Pnl, szText, 1<<0, 26, y+yBtnOffset, 0, eGameFont, eWidGen, 1, 1)
 
 				szText = uFont2b + str(CyPlayer.getCommercePercent(iType)) + "%"
@@ -430,7 +442,7 @@ class CvFinanceAdvisor:
 		eWealth = GC.getInfoTypeForString("PROCESS_WEALTH")
 		for CyCity in CyPlayer.cities():
 			if not CyCity.isDisorder():
-				fCityTaxes = CyCity.getYieldRate(YieldTypes.YIELD_COMMERCE) * iTaxRate / 100.0
+				fCityTaxes = CyCity.getYields()[YieldTypes.YIELD_COMMERCE] * iTaxRate / 100.0
 				fTaxes += fCityTaxes
 
 				fCityBuildings = 0.0
@@ -463,7 +475,7 @@ class CvFinanceAdvisor:
 
 				fCityWealth = 0.0
 				if CyCity.isProductionProcess() and CyCity.getProductionProcess() == eWealth:
-					fCityWealth = CyCity.getProductionToCommerceModifier(eComGold) * CyCity.getYieldRate(YieldTypes.YIELD_PRODUCTION) / 100.0
+					fCityWealth = CyCity.getProductionToCommerceModifier(eComGold) * CyCity.getYields()[YieldTypes.YIELD_PRODUCTION] / 100.0
 					fWealth += fCityWealth
 					iWealthCount += 1
 
@@ -476,7 +488,7 @@ class CvFinanceAdvisor:
 				else:
 					fPlayerGoldModifierEffect += fCityTotal * playerGoldModifier / 100.0
 
-				fBonusGoldModifierEffect += fCityTotal * CyCity.getBonusCommerceRateModifier(eComGold) / 100.0
+				# #430 STOPGAP: CyCity.getBonusCommerceRateModifier was removed (m_aiBonus* cut); the bonus commerce-rate modifier is folded into the cascade's total commerce rate. This breakdown row is dropped until a cascade commerce-BREAKDOWN output exists (roadmap F8) -- DISPLAY-only, actual gold unaffected. (fBonusGoldModifierEffect stays 0.0.)
 
 				for entry in multipliers:
 					if CyCity.isActiveBuilding(entry[0]):
@@ -564,7 +576,7 @@ class CvFinanceAdvisor:
 		for iType, iMultiplier, iGlobalMultiplier, iCount, fGold in multipliers:
 			if iCount and fGold > 0:
 				y += 20
-				szText = GC.getBuildingInfo(iType).getDescription() + " "
+				szText = INFO.getDescription("BUILDING_", iType) + " "
 				szText += TRNSLTR.getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_BUILDING_COUNT_AVERAGE", (iCount, "%.2f" %(fGold / iCount), "%.2f" %fGold))
 				screen.setLabelAt(aName(), Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
 				screen.setLabelAt(aName(), Pnl, uFont2 + str(int(fGold)), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
@@ -575,7 +587,7 @@ class CvFinanceAdvisor:
 		for iType, iMultiplier, iGlobalMultiplier, iCount, fGold in multipliers:
 			if iCount and fGold < 0:
 				y += 20
-				szText = GC.getBuildingInfo(iType).getDescription() + " "
+				szText = INFO.getDescription("BUILDING_", iType) + " "
 				szText += TRNSLTR.getText("TXT_KEY_BUG_FINANCIAL_ADVISOR_BUILDING_COUNT_AVERAGE", (iCount, "%.2f" %(fGold / iCount), "%.2f" %fGold))
 				screen.setLabelAt(aName(), Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
 				screen.setLabelAt(aName(), Pnl, uFont2 + str(int(fGold)), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)

@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_E_BANK",
+ "enables": {
+  "buildings": [
+   "BUILDING_E_STOCK_MARKET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_VIRTUAL_REALITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 2105,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_E_BANK"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_EBANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_E_BANK",
+  "civilopedia": "TXT_KEY_BUILDING_E_BANK_PEDIA",
+  "worth": 5,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,137 @@
+{
+ "type": "UNIT_DRONE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_UNMANNED_AIRCRAFTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_SECRET_ARMY_BASE",
+    "TECH_UNMANNED_AIR_VEHICLES",
+    {
+     "type": "BONUS_ALUMINUM_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_PETROLEUM_PRODUCTS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BIOFUEL",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "range": {
+  "unit": {
+   "flat": 50
+  }
+ },
+ "air": {
+  "unit": {
+   "evasion": {
+    "percent": 60
+   }
+  }
+ },
+ "skills": [
+  "hiddenNationality",
+  "firstStrikeImmune",
+  "mechanized",
+  "onlyDefensive",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "airUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_AIR_RECON",
+ "combatClasses": [
+  "UNITCOMBAT_EXPLORER",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_SEMI_AUTOMATIC",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_UNMANNED",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_SMALL",
+  "UNITCOMBAT_HEALS_AS_AIRCRAFT",
+  "UNITCOMBAT_HEALS_AS_TECH"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_SENTRY",
+   "PROMOTION_SENTRY2",
+   "PROMOTION_SENTRY3"
+  ]
+ },
+ "cost": {
+  "production": 1635,
+  "upkeep": 11
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_RECON_DRONE",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 0.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_RECON_DRONE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_DRONE",
+  "civilopedia": "TXT_KEY_UNIT_DRONE_PEDIA",
+  "worth": 4,
+  "militaryWorth": 10,
+  "xpValueAttack": 6,
+  "xpValueDefense": 6,
+  "domain": "DOMAIN_AIR",
+  "defaultUnitAI": "UNITAI_DEFENSE_AIR",
+  "formationType": "FORMATION_TYPE_MACHINE",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_DEFENSE_AIR"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "airCombat": 1,
+   "airCombatLimit": 1,
+   "airUnitCap": 1
+  }
+ }
+}

@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_LEECH_CATCHER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOTROIDS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ALTERNATIVE_MEDICINE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_NATUROPATHY",
+    {
+     "any": [
+      "BUILDING_HEALERS_HUT",
+      "BUILDING_DOCTORS_OFFICE",
+      "BUILDING_SURGEONS_OFFICE",
+      "BUILDING_MEDICAL_CLINIC"
+     ]
+    },
+    {
+     "type": "TERRAIN_MARSH",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_ALTERNATIVE_MEDICINE",
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "cost": {
+  "production": 50,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LEECH_CATCHER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LEECH_CATCHER",
+  "civilopedia": "TXT_KEY_BUILDING_LEECH_CATCHER_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

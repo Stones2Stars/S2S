@@ -1,0 +1,81 @@
+{
+ "type": "TECH_ASTROIMPERIALISM",
+ "enables": {
+  "bonuses": [
+   "BONUS_ABANDONED_CIVILIZATION"
+  ],
+  "buildings": [
+   "BUILDING_EFFECT_PRIME_DIRECTIVE",
+   "BUILDING_INTERSTELLAR_DEFENSIVE_PERIMETER",
+   "BUILDING_INTERSTELLAR_ECUMENOPOLIS",
+   "BUILDING_INTERSTELLAR_FARM_PLANET",
+   "BUILDING_INTERSTELLAR_SPHEREWORLD",
+   "BUILDING_PRIME_DIRECTIVE",
+   "BUILDING_TRANTOR"
+  ],
+  "civics": [
+   "CIVIC_STARFARING"
+  ],
+  "techs": [
+   "TECH_GALACTIC_FEDERATION"
+  ],
+  "units": [
+   "UNIT_ANCIENT_CIVILIZATION_REWARD",
+   "UNIT_POSTHUMAN_WORK_CREW"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ADVANCED_SEEDSHIPS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASTROANTHROPOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ECOSYNTHESIS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 172549
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/astroimperialism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ASTROIMPERIALISM",
+  "civilopedia": "TXT_KEY_TECH_ASTROIMPERIALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_ASTROIMPERIALISM_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 133,
+  "gridY": 3
+ }
+}

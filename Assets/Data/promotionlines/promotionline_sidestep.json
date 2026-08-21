@@ -1,0 +1,23 @@
+{
+ "type": "PROMOTIONLINE_SIDESTEP",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/SidestepPromotion1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SIDESTEP",
+  "unitCombats": [
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_THROWING",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_STRIKE_TEAM"
+  ],
+  "notOnDomains": [
+   "DOMAIN_SEA",
+   "DOMAIN_AIR"
+  ]
+ }
+}

@@ -1,0 +1,43 @@
+{
+ "type": "IMPROVEMENT_TERRAFORM_HYPERSPACE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_OBSERVABLE_UNIVERSE",
+      "TERRAIN_INTERGALACTIC_VOID",
+      "TERRAIN_DISTANT_COSMOS"
+     ]
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": -1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_TERRAFORM_HYPERSPACE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_TERRAFORM_HYPERSPACE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_LAND_WORKED_PEDIA",
+  "extraterrestrial": true,
+  "advancedStart": {
+   "cost": -1
+  },
+  "outsideBorders": true,
+  "placesTerrain": true,
+  "graphicalOnly": true
+ }
+}

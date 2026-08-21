@@ -1,0 +1,32 @@
+{
+ "type": "SPECIALIST_CITIZEN",
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CIVILIAN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/Citizen.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/Citizen.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_CITIZEN",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
+  "visible": true,
+  "categories": [
+   "CATEGORY_ASSIGNABLE_SPECIALISTS",
+   "CATEGORY_SPECIALIST_GROUP_CIVILIAN"
+  ]
+ }
+}

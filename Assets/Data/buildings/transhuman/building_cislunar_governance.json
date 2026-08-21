@@ -1,0 +1,108 @@
+{
+ "type": "BUILDING_CISLUNAR_GOVERNANCE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+   "BUILDING_CISLUNAR_SIMULATED_WORLD",
+   "BUILDING_CISLUNAR_SOCIAL_ENGINEERING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_CONTROL_SYSTEM",
+    "TECH_BINARY_LEGISLATION",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 11,
+     "enabled": "TECH_SOCIAL_CALCULUS"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 11,
+     "enabled": "TECH_CULTURAL_EVOLUTION"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": [
+    {
+     "value": 11,
+     "enabled": "TECH_GERONTOCRACY"
+    },
+    {
+     "value": 50,
+     "enabled": "TECH_PRECISION_SOCIAL_ENGINEERING"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_COLONY_GOVERNANCE"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2,
+   "flat": 3
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -20
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 1921,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_GOVERNANCE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_GOVERNANCE",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_GOVERNANCE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

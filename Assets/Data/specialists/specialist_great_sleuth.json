@@ -1,0 +1,42 @@
+{
+ "type": "SPECIALIST_GREAT_SLEUTH",
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_LAW_ENFORCEMENT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "underworld": {
+  "city": {
+   "investigation": {
+    "flat": 15
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -4
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/Detective.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/Detective.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_GREAT_SLEUTH",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_DETECTIVE_PEDIA",
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_LEGAL"
+  ]
+ }
+}

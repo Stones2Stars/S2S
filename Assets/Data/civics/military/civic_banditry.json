@@ -1,0 +1,184 @@
+{
+ "type": "CIVIC_BANDITRY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CIVIC_BANDITRY",
+   "BUILDING_SMUGGLERS_SHANTY"
+  ]
+ },
+ "commerce": {
+  "empire": {
+   "percent": [
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    -1,
+    {
+     "value": -1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    -1,
+    {
+     "value": -2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "domestic": {
+    "percent": 5
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "resistance": {
+    "percent": -20
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 10
+   },
+   "numCities": {
+    "percent": 10
+   },
+   "percent": [
+    {
+     "value": 1,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 1,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ]
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": [
+     5,
+     {
+      "value": 15,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "attitudeShare": {
+    "flat": 1
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": 5,
+      "enabled": "IS_MILITARY"
+     }
+    ],
+    "UNIT_THIEF": {
+     "percent": 10
+    },
+    "UNIT_ROGUE": {
+     "percent": 10
+    },
+    "UNIT_AMBUSHER": {
+     "percent": 10
+    },
+    "UNIT_ASSASSIN": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_ESPIONAGE": 5
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/military_banditry.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_BANDITRY",
+  "civilopedia": "TXT_KEY_CIVIC_BANDITRY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_BANDITRY_STRATEGY",
+  "civicOption": "CIVICOPTION_MILITARY",
+  "upkeepLevel": "UPKEEP_LOW"
+ }
+}

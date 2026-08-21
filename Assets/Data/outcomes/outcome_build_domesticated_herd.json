@@ -1,0 +1,17 @@
+{
+ "type": "OUTCOME_BUILD_DOMESTICATED_HERD",
+ "identity": {
+  "description": "TXT_KEY_MISSION_BUILD_DOMESTICATED_HERD",
+  "message": "TXT_KEY_MISSION_BUILD_DOMESTICATED_HERD_HELP"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRADE"
+   ]
+  }
+ },
+ "territory": [
+  "friendly"
+ ]
+}

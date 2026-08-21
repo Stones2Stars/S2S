@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_NET_PRAWN",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_SHELLFISH"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_AUTOMATED_URBANIZATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AQUAFARM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FISH_TRAPS",
+    "TECH_TRAP_FISHING",
+    {
+     "any": [
+      "HAS_COAST",
+      "HAS_RIVER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_LOBSTER",
+       "scope": "city",
+       "vicinity": "owned"
+      },
+      {
+       "type": "BONUS_SHRIMP",
+       "scope": "city",
+       "vicinity": "owned"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_AQUAFARM"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 50,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NET_PRAWN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NET_PRAWN",
+  "civilopedia": "TXT_KEY_BUILDING_NET_PRAWN_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

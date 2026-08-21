@@ -1,0 +1,37 @@
+{
+ "type": "PROMOTION_BUILD_UP_HEALTH_CARE5",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_HEAL5"
+   ]
+  }
+ },
+ "heal": {
+  "unit": {
+   "sameTile": {
+    "flat": 3
+   },
+   "adjacentTile": {
+    "flat": 1
+   },
+   "support": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_HEALTH_CARE": 5
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/HealthCare5BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_HEALTH_CARE5"
+ }
+}

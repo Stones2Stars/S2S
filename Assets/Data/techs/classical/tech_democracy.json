@@ -1,0 +1,83 @@
+{
+ "type": "TECH_DEMOCRACY",
+ "enables": {
+  "buildings": [
+   "BUILDING_AGORA",
+   "BUILDING_CULTURE_BATAVIAN",
+   "BUILDING_FESTIVAL",
+   "BUILDING_FORUM",
+   "BUILDING_POLIS_COUNCIL"
+  ],
+  "civics": [
+   "CIVIC_LEGISLATURE",
+   "CIVIC_PROLETARIAT",
+   "CIVIC_REPUBLIC"
+  ],
+  "promotions": [
+   "PROMOTION_FOMENT3",
+   "PROMOTION_INSPIRE3"
+  ],
+  "techs": [
+   "TECH_MERITOCRACY"
+  ],
+  "units": [
+   "UNIT_JULIUS_CIVILIS",
+   "UNIT_PERICLES",
+   "UNIT_THEMISTOCLES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MATHEMATICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CURRENCY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CODE_OF_LAWS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 554
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/old_Democracy.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,14"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_DEMOCRACY",
+  "soundMP": "AS2D_TECH_MP_DEMOCRACY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_DEMOCRACY",
+  "civilopedia": "TXT_KEY_TECH_DEMOCRACY_PEDIA",
+  "quote": "TXT_KEY_TECH_DEMOCRACY_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 35,
+  "gridY": 19
+ }
+}

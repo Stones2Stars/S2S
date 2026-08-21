@@ -1,0 +1,45 @@
+{
+ "type": "PROMOTION_COASTAL_ASSAULT3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COASTAL_ASSAULT2"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "terrain": {
+    "TERRAIN_COAST": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_COAST_TROPICAL": {
+     "attack": {
+      "percent": 25
+     }
+    },
+    "TERRAIN_COAST_POLAR": {
+     "attack": {
+      "percent": 25
+     }
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COASTAL_ASSAULT": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/attack3.dds,Art/RoM_Promotions_Atlas.dds,3,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COASTAL_ASSAULT3"
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_BOTTLENECK2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BOTTLENECK3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_BOTTLENECK1"
+   ]
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BOTTLENECK": 2
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Bottleneck2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "combatModifier": {
+   "perVolumeMore": 15
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BOTTLENECK2"
+ }
+}

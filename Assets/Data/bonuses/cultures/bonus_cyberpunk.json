@@ -1,0 +1,23 @@
+{
+ "type": "BONUS_CYBERPUNK",
+ "enables": {
+  "buildings": [
+   "BUILDING_CYBER_INSECT_LAB",
+   "BUILDING_DREAM_ARTIST",
+   "BUILDING_DREAM_PROPAGANDA",
+   "BUILDING_DREAM_SIMULATION_CENTER",
+   "BUILDING_INSECT_MANIPULATION_LAB"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CYBERPUNK"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CYBERPUNK",
+  "civilopedia": "TXT_KEY_BONUS_CYBERPUNK_PEDIA",
+  "bonusClassType": "BONUSCLASS_GENMODS",
+  "source": "culture"
+ }
+}

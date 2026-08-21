@@ -1,0 +1,40 @@
+{
+ "type": "FEATURE_PLATY_DEAD_SEA",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
+  "nukeImmune",
+  "ignoreTerrainCulture"
+ ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_DEAD_SEA"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_DEAD_SEA",
+  "civilopedia": "TXT_KEY_FEATURE_DEAD_SEA_PEDIA",
+  "noRiver": true,
+  "requiresFlatlands": true,
+  "validTerrains": [
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_DESERT"
+  ]
+ }
+}

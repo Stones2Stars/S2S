@@ -1,0 +1,41 @@
+{
+ "type": "PROMOTION_UNQUESTIONING_OBEDIENCE2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_UNQUESTIONING_OBEDIENCE3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_UNQUESTIONING_OBEDIENCE1"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 1
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 8
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_UNQUESTIONING_OBEDIENCE": 2
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/UnquestionedObedience2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_UNQUESTIONING_OBEDIENCE2"
+ }
+}

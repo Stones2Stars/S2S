@@ -1,0 +1,47 @@
+{
+ "type": "BUILD_STONE_TOOLS_WORKSHOP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_STONE_TOOLS_WORKSHOP",
+  "features": [
+   {
+    "feature": "FEATURE_SWAMP",
+    "tech": "TECH_CANAL_SYSTEMS",
+    "time": 800
+   },
+   {
+    "feature": "FEATURE_PEAT_BOG",
+    "tech": "TECH_IRON_WORKING",
+    "time": 800
+   }
+  ]
+ },
+ "cost": {
+  "gold": 20,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/Button_StoneToolsWorkshop.dds"
+  },
+  "hotkey": "KB_S",
+  "shiftDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_STONE_TOOLS_WORKSHOP"
+ }
+}

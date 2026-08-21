@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_INTERSTELLAR_GOVERNMENT_GERONTOCRACY",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GERONTOCRACY",
+    {
+     "type": "MAPCATEGORY_GALACTIC",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -20
+   }
+  }
+ },
+ "cost": {
+  "production": 2856,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_GOVERNMENT_GERONTOCRACY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_GOVERNMENT_GERONTOCRACY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_GOVERNMENT_GERONTOCRACY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC"
+  ]
+ }
+}

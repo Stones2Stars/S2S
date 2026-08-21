@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_POLLUTION_MODERATE_OZONE_DEPLETION",
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_OZONE_GENERATOR"
+   ],
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_AIR_POLLUTION",
+     "scope": "city",
+     "min": 1100,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYPOLLUTION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_POLLUTION_MODERATE_OZONE_DEPLETION",
+  "civilopedia": "TXT_KEY_BUILDING_AIR_POLLUTION_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

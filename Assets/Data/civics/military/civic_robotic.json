@@ -1,0 +1,114 @@
+{
+ "type": "CIVIC_ROBOTIC",
+ "enables": {
+  "buildings": [
+   "BUILDING_AUTOMATED_DEFENSES"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
+    "percent": -50
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "percent": [
+    {
+     "value": 3,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 4,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ]
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -20
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -2
+   },
+   "national": {
+    "flat": -2
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_ROBOT": {
+     "percent": 20
+    }
+   },
+   "units": {
+    "UNIT_WALKER_MECH": {
+     "percent": 20
+    },
+    "UNIT_UAV": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "grants": {
+  "revolution": -12
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/military_unmanned_warfare.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_ROBOTIC",
+  "civilopedia": "TXT_KEY_CIVIC_ROBOTIC_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_ROBOTIC_STRATEGY",
+  "civicOption": "CIVICOPTION_MILITARY",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

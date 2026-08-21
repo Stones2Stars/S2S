@@ -1,0 +1,65 @@
+{
+ "type": "TECH_WEAPONIZED_LASERS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BREAKTHROUGH_STARSHOT",
+   "BUILDING_LASER_DRILLING",
+   "BUILDING_ORBITAL_TARGETS"
+  ],
+  "techs": [
+   "TECH_ELECTRIC_ARC_WEAPONRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MICROWAVE_WEAPONRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASTEROID_MINING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MICROGENERATORS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 28189
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_MILITARY": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Buttons/Techs/TechWeaponizedLasers.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_WEAPONIZED_LASERS",
+  "soundMP": "AS2D_TECH_WEAPONIZED_LASERS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_WEAPONIZED_LASERS",
+  "civilopedia": "TXT_KEY_TECH_WEAPONIZED_LASERS_PEDIA",
+  "quote": "TXT_KEY_TECH_WEAPONIZED_LASERS_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 48,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 97,
+  "gridY": 13
+ }
+}

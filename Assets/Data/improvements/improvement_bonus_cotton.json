@@ -1,0 +1,17 @@
+{
+ "type": "IMPROVEMENT_BONUS_COTTON",
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_LAND_WORKED"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_BONUS_COTTON",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_LAND_WORKED_PEDIA",
+  "placesBonus": true,
+  "advancedStart": {
+   "cost": -1
+  },
+  "graphicalOnly": true
+ }
+}

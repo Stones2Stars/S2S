@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_CARNIVAL_DANCING_BEAR",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_BEAR"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ADVANCED_AVIATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CARNIVAL",
+    "BUILDING_FOLKLORE_T_BEAR",
+    "TECH_TRADE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 306,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CARNIVAL_DANCING_BEAR"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CARNIVAL_DANCING_BEAR",
+  "civilopedia": "TXT_KEY_BUILDING_CARNIVAL_DANCING_BEAR_PEDIA",
+  "worth": 1,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

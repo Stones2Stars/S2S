@@ -1,0 +1,204 @@
+{
+ "type": "IMPROVEMENT_STONE_TOOLS_WORKSHOP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TOOL_MAKING",
+     "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_ROCKY",
+        "TERRAIN_BADLAND",
+        "TERRAIN_JAGGED"
+       ]
+      },
+      "HAS_HILLS",
+      {
+       "bonus": [
+        "BONUS_GOLD_ORE",
+        "BONUS_TIN_ORE",
+        "BONUS_SILVER_ORE",
+        "BONUS_COPPER_ORE",
+        "BONUS_AMBER",
+        "BONUS_STONE",
+        "BONUS_OBSIDIAN",
+        "BONUS_MARBLE",
+        "BONUS_FINE_CLAY",
+        "BONUS_TURQUOISE",
+        "BONUS_JADE"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MICROLITH",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_TRIBALISM",
+      "scope": "team"
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GOLD_ORE"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_TIN_ORE"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COPPER_ORE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_STONE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OBSIDIAN"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MARBLE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_FINE_CLAY"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GOLD_ORE"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_TIN_ORE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SILVER_ORE"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COPPER_ORE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_AMBER"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_TURQUOISE"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_JADE"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_STONE_TOOLS_WORKSHOP"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_STONE_TOOLS_WORKSHOP",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_STONE_TOOLS_WORKSHOP_PEDIA",
+  "advancedStart": {
+   "cost": 24
+  },
+  "upgradeTime": 10,
+  "pillageGold": 20,
+  "upgradesTo": "IMPROVEMENT_MINE",
+  "alternativeUpgrades": [
+   "IMPROVEMENT_EARLY_QUARRY"
+  ],
+  "bonuses": {
+   "BONUS_GOLD_ORE": {
+    "trade": true
+   },
+   "BONUS_TIN_ORE": {
+    "trade": true
+   },
+   "BONUS_SILVER_ORE": {
+    "trade": true
+   },
+   "BONUS_COPPER_ORE": {
+    "trade": true
+   },
+   "BONUS_AMBER": {
+    "trade": true
+   },
+   "BONUS_STONE": {
+    "trade": true
+   },
+   "BONUS_OBSIDIAN": {
+    "trade": true
+   },
+   "BONUS_MARBLE": {
+    "trade": true
+   },
+   "BONUS_FINE_CLAY": {
+    "trade": true
+   },
+   "BONUS_TURQUOISE": {
+    "trade": true
+   },
+   "BONUS_JADE": {
+    "trade": true
+   }
+  }
+ }
+}

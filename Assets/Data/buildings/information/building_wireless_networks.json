@@ -1,0 +1,131 @@
+{
+ "type": "BUILDING_WIRELESS_NETWORKS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLACK_HAT_HIDEOUT",
+   "BUILDING_BLACK_HAT_HIDEOUT_UNSANCTIONED"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COMMUNICATIONS_SATELLITE",
+    "TECH_COMMUNICATION_NETWORKS",
+    {
+     "any": [
+      "BUILDING_COMMUNICATION_TOWER",
+      "BUILDING_NETWORK_NODE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CELLPHONES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    {
+     "value": 9,
+     "enabled": "TECH_AUTOMATED_TRAFFIC"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 9,
+     "enabled": "TECH_CLOUD_COMPUTING"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_MICROGENERATORS"
+    },
+    {
+     "value": 10,
+     "enabled": "TECH_NANOGENERATORS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_WIRELESS_ELECTRICITY"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_UNIVERSAL_TRANSLATOR"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 8,
+     "enabled": "TECH_MEDIA_PSYCHOLOGY"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_UNIVERSAL_TRANSLATOR"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": [
+    {
+     "value": 8,
+     "enabled": "TECH_CYBERWARFARE"
+    }
+   ]
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1925,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WIRELESS_NETWORKS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WIRELESS_NETWORKS",
+  "civilopedia": "TXT_KEY_BUILDING_WIRELESS_NETWORKS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_CLAY_PIT",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAVE_PAINTINGS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_EARTHWORKS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_NATURAL_PIGMENTS",
+    {
+     "any": [
+      {
+       "HAS_TERRAIN": "TERRAIN_MUDDY"
+      },
+      {
+       "HAS_FEATURE": "FEATURE_FLOOD_PLAINS"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_FRESHWATER"
+   ],
+   "dormant": [
+    "BUILDING_MODERN_EARTHWORKS"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_CLAY"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 35,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CLAY_PIT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CLAY_PIT",
+  "civilopedia": "TXT_KEY_BUILDING_CLAY_PIT_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

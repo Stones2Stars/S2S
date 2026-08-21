@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_HAKA",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_TACTICS1"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Haka.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_HAKA",
+  "unitCombats": [
+   "UNITCOMBAT_COMMANDER"
+  ]
+ }
+}

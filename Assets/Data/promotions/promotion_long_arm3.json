@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_LONG_ARM3",
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_CRIMINAL": {
+     "percent": 35
+    },
+    "UNITCOMBAT_RUFFIAN": {
+     "percent": 35
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_LONG_ARM": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/LongArm3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_LONG_ARM3"
+ }
+}

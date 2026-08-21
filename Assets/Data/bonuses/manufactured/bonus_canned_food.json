@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_CANNED_FOOD",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALUMINUM_RECLAMATION_PLANT",
+   "BUILDING_STEEL_RECLAMATION_PLANT",
+   "BUILDING_TIN_RECLAMATION_PLANT"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CANNED_FOOD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CANNED_FOOD",
+  "civilopedia": "TXT_KEY_BONUS_CANNED_FOOD_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

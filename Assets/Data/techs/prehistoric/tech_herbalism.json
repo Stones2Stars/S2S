@@ -1,0 +1,71 @@
+{
+ "type": "TECH_HERBALISM",
+ "enables": {
+  "bonuses": [
+   "BONUS_MUSHROOMS"
+  ],
+  "buildings": [
+   "BUILDING_WILD_HERBS_GATHERER"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_DISEASE_CONTROL1",
+   "PROMOTION_FIRST_AID_PEOPLE1",
+   "PROMOTION_SELF_HEAL1"
+  ],
+  "techs": [
+   "TECH_GROUND_STONE",
+   "TECH_RITUALISM"
+  ],
+  "units": [
+   "UNIT_NEANDERTHAL_WISE_WOMAN",
+   "UNIT_WISE_WOMAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GATHERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 5
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 6
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Button_Herbalism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_HERBALISM",
+  "soundMP": "AS2D_TECH_HERBALISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_HERBALISM",
+  "civilopedia": "TXT_KEY_TECH_HERBALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_HERBALISM_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 3,
+  "gridY": 9
+ }
+}

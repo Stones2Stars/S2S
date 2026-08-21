@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_TRANSPORT_MISSILES2",
+ "combat": {
+  "unit": {
+   "percent": -5
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_TRANSPORT_MISSILES": 2
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/TransportMissiles2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "cargo": {
+   "smSpace": 3
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_TRANSPORT_MISSILES2"
+ }
+}

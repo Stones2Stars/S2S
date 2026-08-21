@@ -1,0 +1,17 @@
+{
+ "type": "PROMOTIONLINE_TRANSPORT_MISSILES",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/TransportMissiles.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_TRANSPORT_MISSILES",
+  "unitCombats": [
+   "UNITCOMBAT_PROMOTED_TRANSPORT_MISSILES"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_TRANSPORT"
+  ]
+ }
+}

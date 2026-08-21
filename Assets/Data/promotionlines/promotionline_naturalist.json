@@ -1,0 +1,11 @@
+{
+ "type": "PROMOTIONLINE_NATURALIST",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitNaturalist.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_NATURALIST"
+ }
+}

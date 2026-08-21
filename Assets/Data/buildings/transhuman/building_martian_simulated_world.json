@@ -1,0 +1,60 @@
+{
+ "type": "BUILDING_MARTIAN_SIMULATED_WORLD",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MARTIAN_CITY",
+    "TECH_SIMULATED_REALITY",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -15
+  }
+ },
+ "cost": {
+  "production": 2110,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_SIMULATED_WORLD",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_SIMULATED_WORLD",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_SIMULATED_WORLD_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

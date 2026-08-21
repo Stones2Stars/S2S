@@ -1,0 +1,53 @@
+{
+ "type": "SPECIALIST_SETTLED_SLAVE_ENTERTAINMENT",
+ "food": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -0.4
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1.5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/slave_entertainment.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/slave_entertainment.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_SETTLED_SLAVE_ENTERTAINMENT",
+  "civilopedia": "TXT_KEY_SPECIALIST_SETTLED_SLAVE_PEDIA",
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_CAPTIVE",
+   "CATEGORY_SPECIALIST_GROUP_CULTURAL"
+  ],
+  "slave": true
+ }
+}

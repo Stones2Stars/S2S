@@ -1,0 +1,117 @@
+{
+ "type": "BUILDING_MODERN_WAREHOUSE",
+ "enables": {
+  "buildings": [
+   "BUILDING_AIR_SHIPPING_WAREHOUSE",
+   "BUILDING_DELIVERY_DRONE_CONTROL_CENTER",
+   "BUILDING_IKHANDA",
+   "BUILDING_NAVAL_SHIPPING_WAREHOUSE",
+   "BUILDING_ONLINE_SHIPPING_WAREHOUSE",
+   "BUILDING_RAIL_SHIPPING_WAREHOUSE",
+   "BUILDING_SPACE_SHIPPING_WAREHOUSE",
+   "BUILDING_TELEPORT_SHIPPING_WAREHOUSE",
+   "BUILDING_TRUCK_SHIPPING_WAREHOUSE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CHEMISTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CEMENT",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 7,
+     "enabled": "TECH_GLOBALIZATION"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_KNOWLEDGE_MANAGEMENT"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 6,
+     "enabled": "TECH_REFRIGERATION"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "foodKept": {
+  "city": {
+   "percent": 9
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "cost": {
+  "production": 495,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MODERN_WAREHOUSE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WAREHOUSE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MODERN_WAREHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_MODERN_WAREHOUSE_PEDIA",
+  "worth": 8,
+  "militaryWorth": 4,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

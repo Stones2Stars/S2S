@@ -1,0 +1,88 @@
+{
+ "type": "UNIT_ANDEAN_MISSIONARY",
+ "spread": {
+  "religion": {
+   "RELIGION_ANDEANISM": 80
+  }
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ANDEAN_MONASTERY",
+    "RELIGION_ANDEANISM"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_ANDEAN_MISSIONARY"
+  }
+ },
+ "tags": [
+  "missionary",
+  "civilian",
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_MISSIONARY",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_POOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 110
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_ANDEAN_MISSIONARY",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_ANDEAN_MISSIONARY"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_ANDEAN_MISSIONARY",
+  "civilopedia": "TXT_KEY_UNIT_ANDEAN_MISSIONARY_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MISSIONARY",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_RELIGION",
+  "unitAIs": [
+   "UNITAI_MISSIONARY"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": -1
+  }
+ }
+}

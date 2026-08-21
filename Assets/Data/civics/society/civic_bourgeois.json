@@ -1,0 +1,288 @@
+{
+ "type": "CIVIC_BOURGEOIS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ART_PATRONAGE",
+   "BUILDING_GRAND_VILLA",
+   "BUILDING_SALON"
+  ]
+ },
+ "food": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_PLANTATION": {
+     "flat": 1
+    },
+    "IMPROVEMENT_ORCHARD": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WINERY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 6,
+   "improvements": {
+    "IMPROVEMENT_PLANTATION": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 4,
+   "improvements": {
+    "IMPROVEMENT_PLANTATION": {
+     "flat": 1
+    },
+    "IMPROVEMENT_ORCHARD": {
+     "flat": 1
+    },
+    "IMPROVEMENT_WINERY": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VERTICAL_FARM": {
+     "flat": 1
+    },
+    "IMPROVEMENT_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SHAFT_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_MODERN_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_CORE_MINE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_QUARRY": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    3,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    3,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1,
+   "buildings": {
+    "BUILDING_SLAVE_MARKET": {
+     "flat": -2
+    },
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION": {
+     "flat": 1
+    },
+    "BUILDING_BROTHEL": {
+     "flat": 1
+    },
+    "BUILDING_GENTLEMANS_CLUB": {
+     "flat": 1
+    },
+    "BUILDING_ANDROID_BROTHEL": {
+     "flat": 1
+    },
+    "BUILDING_CASINO": {
+     "flat": 1
+    },
+    "BUILDING_CENTRAL_BANK": {
+     "flat": 2
+    },
+    "BUILDING_AGORA": {
+     "flat": -1
+    },
+    "BUILDING_LABOR_UNION": {
+     "flat": -2
+    },
+    "BUILDING_BARRACKS": {
+     "flat": -1
+    },
+    "BUILDING_GARRISON": {
+     "flat": -1
+    },
+    "BUILDING_MILITARY_BASE": {
+     "flat": -1
+    },
+    "BUILDING_PORTRAIT_PAINTER": {
+     "flat": 1
+    },
+    "BUILDING_PHOTOGRAPHY_STUDIO": {
+     "flat": 1
+    },
+    "BUILDING_COIT_TOWER": {
+     "flat": -1
+    },
+    "BUILDING_LAS_VEGAS_STRIP": {
+     "flat": 2
+    },
+    "BUILDING_MONTE_CARLO": {
+     "flat": 3
+    },
+    "BUILDING_ORDINANCE_GAMBLING_BAN": {
+     "flat": -1
+    },
+    "BUILDING_ORDINANCE_PROSTITUTION_BAN": {
+     "flat": -1
+    },
+    "BUILDING_HYPERMARKET": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -2,
+   "buildings": {
+    "BUILDING_FOUNDRY": {
+     "flat": -2
+    },
+    "BUILDING_METALS_MEGACOMPLEX": {
+     "flat": -2
+    },
+    "BUILDING_FACTORY": {
+     "flat": -2
+    },
+    "BUILDING_INDUSTRIAL_PARK": {
+     "flat": -1
+    },
+    "BUILDING_MANUFACTURING_PLANT": {
+     "flat": -1
+    },
+    "BUILDING_WILLOW_RUN": {
+     "flat": -2
+    }
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "probability": {
+    "percent": -5
+   },
+   "resistance": {
+    "percent": -20
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 15
+   },
+   "numCities": {
+    "percent": 15
+   },
+   "percent": [
+    {
+     "value": 2,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 2,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
+   "corporation": {
+    "percent": -10
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 5
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_BUTCHERY": {
+     "percent": 20
+    },
+    "BUILDING_MEAT_PACKING_PLANT": {
+     "percent": 20
+    },
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE": {
+     "percent": 20
+    },
+    "BUILDING_FISHERMANS_HUT": {
+     "percent": 20
+    },
+    "BUILDING_AQUAFARM": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/society_burgeois.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_BOURGEOIS",
+  "civilopedia": "TXT_KEY_CIVIC_BOURGEOIS_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_BOURGEOIS_STRATEGY",
+  "civicOption": "CIVICOPTION_SOCIETY",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

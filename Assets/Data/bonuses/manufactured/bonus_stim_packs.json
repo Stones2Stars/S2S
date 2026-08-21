@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_STIM_PACKS",
+ "enables": {
+  "buildings": [
+   "BUILDING_DESIGNER_PROBIOTICS_CLINIC",
+   "BUILDING_NEUROTRANSMITTER_MANIPULATOR_LAB"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_STIM_PACKS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_STIM_PACKS",
+  "civilopedia": "TXT_KEY_BONUS_STIM_PACKS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_NUBIAN",
+ "enables": {
+  "units": [
+   "UNIT_KUSH_ARCHER",
+   "UNIT_TAHARQA"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_NUBIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_NUBIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

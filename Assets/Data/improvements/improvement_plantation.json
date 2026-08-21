@@ -1,0 +1,356 @@
+{
+ "type": "IMPROVEMENT_PLANTATION",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CALENDAR",
+     "scope": "team"
+    },
+    {
+     "bonus": [
+      "BONUS_INCENSE",
+      "BONUS_SUGAR",
+      "BONUS_HEMP",
+      "BONUS_COCA",
+      "BONUS_COCOA",
+      "BONUS_COFFEE",
+      "BONUS_COTTON",
+      "BONUS_TOBACCO",
+      "BONUS_RUBBER",
+      "BONUS_TEA",
+      "BONUS_FLAX",
+      "BONUS_OPIUM",
+      "BONUS_PAPYRUS",
+      "BONUS_RESIN",
+      "BONUS_PEYOTE",
+      "BONUS_HENNA",
+      "BONUS_INDIGO",
+      "BONUS_VANILLA",
+      "BONUS_KAVA"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SUGAR"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COCOA"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_TEA"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HEMP"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RUBBER"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_FLAX"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OPIUM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PAPYRUS"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RESIN"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    4,
+    {
+     "value": 1,
+     "enabled": "HAS_IRRIGATION"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SPICE_TRADE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_DRUG_TRADE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_AGRICULTURAL_ENGINEERING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GENE_MANIPULATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_DERIVATIVES",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_INCENSE"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SUGAR"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HEMP"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COCA"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COCOA"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COFFEE"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_COTTON"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_TOBACCO"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RUBBER"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_TEA"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_FLAX"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OPIUM"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PAPYRUS"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_RESIN"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_PEYOTE"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_HENNA"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_INDIGO"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_VANILLA"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_KAVA"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_WATER_POLLUTION": 1,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  }
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_PLANTATION"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_PLANTATION",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_PLANTATION_PEDIA",
+  "carriesIrrigation": true,
+  "advancedStart": {
+   "cost": 30
+  },
+  "upgradeTime": 15,
+  "pillageGold": 50,
+  "pillageTo": "IMPROVEMENT_PLANT_PICKING_CAMP",
+  "upgradesTo": "IMPROVEMENT_VERTICAL_FARM",
+  "bonuses": {
+   "BONUS_INCENSE": {
+    "trade": true
+   },
+   "BONUS_SUGAR": {
+    "trade": true
+   },
+   "BONUS_HEMP": {
+    "trade": true
+   },
+   "BONUS_COCA": {
+    "trade": true
+   },
+   "BONUS_COCOA": {
+    "trade": true
+   },
+   "BONUS_COFFEE": {
+    "trade": true
+   },
+   "BONUS_COTTON": {
+    "trade": true
+   },
+   "BONUS_TOBACCO": {
+    "trade": true
+   },
+   "BONUS_RUBBER": {
+    "trade": true
+   },
+   "BONUS_TEA": {
+    "trade": true
+   },
+   "BONUS_FLAX": {
+    "trade": true
+   },
+   "BONUS_OPIUM": {
+    "trade": true
+   },
+   "BONUS_PAPYRUS": {
+    "trade": true
+   },
+   "BONUS_RESIN": {
+    "trade": true
+   },
+   "BONUS_PEYOTE": {
+    "trade": true
+   },
+   "BONUS_HENNA": {
+    "trade": true
+   },
+   "BONUS_INDIGO": {
+    "trade": true
+   },
+   "BONUS_VANILLA": {
+    "trade": true
+   },
+   "BONUS_KAVA": {
+    "trade": true
+   }
+  }
+ }
+}

@@ -11,8 +11,16 @@ import WBReligionScreen
 import WBCorporationScreen
 import WBInfoScreen
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
+BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
+TEXT = CyGameTextMgr()
 iChange = 1
 iOwnerType = 0
 iPlotType = 2
@@ -82,7 +90,7 @@ class WBCityDataScreen:
 		screen.addPullDownString("BonusClass", CyTranslator().getText("TXT_KEY_GLOBELAYER_RESOURCES_GENERAL",()), 0, 0, 0 == iSelectedClass)
 		iBonusClass = 1
 		while not GC.getBonusClassInfo(iBonusClass) is None:
-			sText = GC.getBonusClassInfo(iBonusClass).getType()
+			sText = INFO.getType("BONUSCLASS_", iBonusClass)
 			sText = sText[sText.find("_") +1:]
 			sText = sText.lower()
 			sText = sText.capitalize()
@@ -145,17 +153,17 @@ class WBCityDataScreen:
 		for (loopCity, iPlayerX, sColor) in self.lCities:
 			iRow = screen.appendTableRow("CurrentCity")
 			iCiv = loopCity.getCivilizationType()
-			screen.setTableText("CurrentCity", 0, iRow, "", GC.getCivilizationInfo(iCiv).getButton(), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<0)
+			screen.setTableText("CurrentCity", 0, iRow, "", INFO.getButton("CIVILIZATION_", iCiv), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<0)
 			iLeader = GC.getPlayer(iPlayerX).getLeaderType()
-			screen.setTableText("CurrentCity", 1, iRow, "", GC.getLeaderHeadInfo(iLeader).getButton(), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<0)
+			screen.setTableText("CurrentCity", 1, iRow, "", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<0)
 			screen.setTableText("CurrentCity", 2, iRow, "<font=3>" + sColor + loopCity.getName() + "</font></color>", '', WidgetTypes.WIDGET_PYTHON, 7200 + iPlayerX, loopCity.getID(), 1<<0)
 
 	def sortBuildings(self):
 		global lBuilding
 		lBuilding = []
 		for i in xrange(GC.getNumBuildingInfos()):
-			if bWonder and not isLimitedWonder(i): continue
-			if not bWonder and isLimitedWonder(i): continue
+			if bWonder and not BUILDING.isLimitedWonder(i): continue
+			if not bWonder and BUILDING.isLimitedWonder(i): continue
 			info = GC.getBuildingInfo(i)
 			if info.isGraphicalOnly(): continue
 			lBuilding.append([info.getDescription(), i])
@@ -178,9 +186,9 @@ class WBCityDataScreen:
 
 		screen.addDropDownBoxGFC("YieldType", iX + iTableWidth - 150, iY, 150, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		for i in xrange(YieldTypes.NUM_YIELD_TYPES):
-			screen.addPullDownString("YieldType", GC.getYieldInfo(i).getDescription(), i, i, iSelectedYield == i)
+			screen.addPullDownString("YieldType", INFO.getDescription("YIELD_", i), i, i, iSelectedYield == i)
 		for i in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
-			screen.addPullDownString("YieldType", GC.getCommerceInfo(i).getDescription(), i + YieldTypes.NUM_YIELD_TYPES, i + YieldTypes.NUM_YIELD_TYPES, iSelectedYield == i + YieldTypes.NUM_YIELD_TYPES)
+			screen.addPullDownString("YieldType", INFO.getDescription("COMMERCE_", i), i + YieldTypes.NUM_YIELD_TYPES, i + YieldTypes.NUM_YIELD_TYPES, iSelectedYield == i + YieldTypes.NUM_YIELD_TYPES)
 		iHappyIndex = YieldTypes.NUM_YIELD_TYPES + CommerceTypes.NUM_COMMERCE_TYPES
 		screen.addPullDownString("YieldType", CyTranslator().getText("TXT_KEY_CONCEPT_HAPPINESS", ()), iHappyIndex, iHappyIndex, iSelectedYield == iHappyIndex)
 		screen.addPullDownString("YieldType", CyTranslator().getText("TXT_KEY_CONCEPT_HEALTH", ()), iHappyIndex + 1, iHappyIndex + 1, iSelectedYield == iHappyIndex + 1)
@@ -208,11 +216,11 @@ class WBCityDataScreen:
 			for j in xrange(YieldTypes.NUM_YIELD_TYPES):
 				iVal = pCity.getBuildingYieldChange(item[1], j)
 				if iVal != 0:
-					sText += u"%d%c" %(iVal, GC.getYieldInfo(j).getChar())
+					sText += u"%d%c" %(iVal, TEXT.getSymbolChar("YIELD_", j))
 			for j in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
 				iVal = pCity.getBuildingCommerceChange(item[1], j)
 				if iVal != 0:
-					sText += u"%d%c" %(iVal, GC.getCommerceInfo(j).getChar())
+					sText += u"%d%c" %(iVal, TEXT.getSymbolChar("COMMERCE_", j))
 			screen.setTableInt("WBModifyBuilding", 1, iRow, "<font=3>" + sText + "</font>", "", WidgetTypes.WIDGET_HELP_BUILDING, item[1], -1, 1<<0)
 
 	def placeSpecialist(self):
@@ -305,7 +313,7 @@ class WBCityDataScreen:
 			if iNum > 0:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 				sItem += " (" + str(iNum) + ")"
-			screen.setTableText("WBBonus", 0, iRow, "<font=3>" + sColor + sItem + "</font></color>", GC.getBonusInfo(item[1]).getButton(), WidgetTypes.WIDGET_PYTHON, 7878, item[1], 1<<0 )
+			screen.setTableText("WBBonus", 0, iRow, "<font=3>" + sColor + sItem + "</font></color>", INFO.getButton("BONUS_", item[1]), WidgetTypes.WIDGET_PYTHON, 7878, item[1], 1<<0 )
 
 	def handleInput(self, inputClass):
 		screen = CyGInterfaceScreen( "WBCityDataScreen", CvScreenEnums.WB_CITYDATA)
@@ -453,9 +461,8 @@ class WBCityDataScreen:
 		pCity.changeGreatPeopleProgress(iCount)
 
 	def editGreatPeopleRate(self, iCount):
-		if iCount < 0:
-			iCount = max(iCount, - pCity.getBaseGreatPeopleRate())
-		pCity.changeBaseGreatPeopleRate(iCount)
+		# base great-people rate is cascade-derived (buildings/specialists); no settable accumulator.
+		pass
 
 	def editGreatPeopleProgress(self, item) :
 		iCount = iChange

@@ -1,0 +1,50 @@
+{
+ "type": "TRAIT_COMPLEX_BARBARIAN",
+ "culture": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "empire": {
+   "levelModifier": {
+    "percent": 25
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 75
+  }
+ },
+ "policies": {
+  "upgradeAnywhere": true
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_AGGRESSIVE",
+       "enabled": "IS_MELEE"
+      }
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitBarbarian.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_BARBARIAN",
+  "civilopedia": "TXT_KEY_TRAIT_BARBARIAN_PEDIA",
+  "shortDescription": "TXT_KEY_TRAIT_BARBARIAN_SHORT",
+  "barbarianSelectionOnly": true
+ }
+}

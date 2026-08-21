@@ -1,0 +1,11 @@
+{
+ "type": "PROMOTIONLINE_IMPERIALIST",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitImperialist.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_IMPERIALIST"
+ }
+}

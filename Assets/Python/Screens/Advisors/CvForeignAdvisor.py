@@ -7,12 +7,18 @@ import HandleInputUtil
 import math
 
 # globals
+# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
+GAME = GC.getGame()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 AFM = CyArtFileMgr()
 GTM = CyGameTextMgr()
 TRNSLTR = CyTranslator()
-GAME = GC.getGame()
 
+TEXT = CyGameTextMgr()
 # this class is shared by both the resource and technology foreign advisors
 class CvForeignAdvisor:
 	"Exotic Foreign Advisor Screen"
@@ -37,20 +43,19 @@ class CvForeignAdvisor:
 		aBonusList1 = []
 		aBonusList2 = []
 		for iBonus in xrange(GC.getNumBonusInfos()):
-			CvBonusInfo = GC.getBonusInfo(iBonus)
-			if CvBonusInfo.isMapBonus(): # Map resource
+			if INFO.getIntrinsic("BONUS_", iBonus, IntrinsicSlot.PYINT_IS_MAP_BONUS): # Map resource
 				aBonusList0.append(iBonus)
-			elif CvBonusInfo.getBonusClassType() != BONUSCLASS_CULTURE:
+			elif INFO.getIntrinsic("BONUS_", iBonus, IntrinsicSlot.PYINT_BONUS_CLASS) != BONUSCLASS_CULTURE:
 				aBonusList1.append(iBonus)
 			else:
 				aBonusList2.append(iBonus)
 		self.aBonusTuple = [aBonusList0, aBonusList1, aBonusList2]
 		self.aColMap = aColMap = {
-			"WHITE"			: GC.getCOLOR_WHITE(),
-			"YELLOW"		: GC.getCOLOR_YELLOW(),
-			"RED"			: GC.getCOLOR_RED(),
-			"GREEN"			: GC.getCOLOR_GREEN(),
-			"BLUE"			: GC.getCOLOR_BLUE(),
+			"WHITE"			: GC.getInfoTypeForString("COLOR_WHITE"),
+			"YELLOW"		: GC.getInfoTypeForString("COLOR_YELLOW"),
+			"RED"			: GC.getInfoTypeForString("COLOR_RED"),
+			"GREEN"			: GC.getInfoTypeForString("COLOR_GREEN"),
+			"BLUE"			: GC.getInfoTypeForString("COLOR_BLUE"),
 			"CYAN"			: GC.getInfoTypeForString("COLOR_CYAN"),
 			"CITY_GREEN"	: GC.getInfoTypeForString("COLOR_CITY_GREEN")
 		}
@@ -209,12 +214,10 @@ class CvForeignAdvisor:
 		# City trade list
 		self.tuCity = tuCity = []
 		for CyCity in CyPlayer.cities():
-			liCity = []
-			for iCity in xrange(CyCity.getTradeRoutes()):
-				cityTrade = CyCity.getTradeCity(iCity)
-				if cityTrade:
-					liCity.append(cityTrade)
-				else: print "[WARNING] Mismatch! 'CyCity.getTradeCity(iCity) = None' in 'for iCity in range(CyCity.getTradeRoutes()):'"
+			#	ONE crossing per city. Each row is [partnerOwner, partnerCityId, profitTimes100] and empty
+			#	slots are already dropped engine-side -- which is why the old None-slot warning is gone
+			#	rather than silenced: a missing partner can no longer reach this list.
+			liCity = CyCity.getTradeRoutes()
 			if liCity:
 				tuCity.append([CyCity, liCity])
 
@@ -222,12 +225,12 @@ class CvForeignAdvisor:
 		self.techsToTake = techsToTake = []
 		if not self.bNoTechTrade:
 			for iTech in range(GC.getNumTechInfos()):
-				if GC.getTechInfo(iTech).isGlobal():
+				if INFO.isGlobalTech(iTech):
 					continue
 				if CyTeam.isHasTech(iTech):
 					if not CyTeam.isNoTradeTech(iTech):
 						techsToGive.append(iTech)
-				elif CyPlayer.canResearch(iTech, True, True):
+				elif ENABLER.getTechAvailability(iPlayer, iTech) == EnablerState.ENABLER_LISTED:
 					techsToTake.append(iTech)
 
 
@@ -360,7 +363,7 @@ class CvForeignAdvisor:
 
 				# Our leader head
 				chBox = self.getNextWidget()
-				BTN = GC.getLeaderHeadInfo(CyPlayer.getLeaderType()).getButton()
+				BTN = INFO.getButton("LEADER_", CyPlayer.getLeaderType())
 				screen.addCheckBoxGFC(chBox, BTN, hiLi, fX, fY, iSize, iSize, eWidLeader, iPlayer, -1, eBtnLbl)
 				screen.setState(chBox, iPlayer in selectedLeaders)
 				screen.setLabel(self.getNextWidget(), "", uFont3 + CyPlayer.getName(), 1<<2, fX0, fY + iSize + 4, 0, eFontGame, eWidGen, 1, 1)
@@ -382,14 +385,14 @@ class CvForeignAdvisor:
 				fY = int(fY0) - iSizeHalf
 
 				chBox = self.getNextWidget()
-				BTN = GC.getLeaderHeadInfo(CyPlayerX.getLeaderType()).getButton()
+				BTN = INFO.getButton("LEADER_", CyPlayerX.getLeaderType())
 				screen.addCheckBoxGFC(chBox, BTN, hiLi, fX, fY, iSize, iSize, eWidLeader, iPlayerX, iLeaderBase, eBtnLbl)
 				screen.setState(chBox, iPlayerX in selectedLeaders)
 				screen.setLabel(self.getNextWidget(), "", uFont3 + CyPlayerX.getName(), 1<<2, int(fX0), fY + iSize + 4, 0, eFontGame, eWidGen, 1, 1)
 
 				# Leader attitude towards base leader
 				if iLeaderBase != iPlayerX and CyTeamX.isHasMet(iTeamBase):
-					szTxt = GC.getAttitudeInfo(CyPlayerX.AI_getAttitude(iLeaderBase)).getDescription()
+					szTxt = INFO.getDescription("ATTITUDE_", CyPlayerX.AI_getAttitude(iLeaderBase))
 					if CyTeamX.isVassal(iTeamBase):
 						szTxt += ", " + szVassal
 					elif CyTeamBase.isVassal(iTeamX):
@@ -479,7 +482,7 @@ class CvForeignAdvisor:
 			else:
 				CyPlayerX = GC.getPlayer(iPlayerX)
 				CyTeamX = GC.getTeam(CyPlayerX.getTeam())
-			BTN = GC.getLeaderHeadInfo(CyPlayerX.getLeaderType()).getButton()
+			BTN = INFO.getButton("LEADER_", CyPlayerX.getLeaderType())
 			screen.setImageButtonAt("WID|LEADER" + str(iPlayerX) + "|" + str(n), Pnl, BTN, 0, 8, 64, 64, eWidGen, 1, 1)
 			n += 1
 
@@ -494,7 +497,7 @@ class CvForeignAdvisor:
 				CyPlayerY = GC.getPlayer(iPlayerY)
 				iTeamY = CyPlayerY.getTeam()
 
-				BTN = GC.getLeaderHeadInfo(CyPlayerY.getLeaderType()).getButton()
+				BTN = INFO.getButton("LEADER_", CyPlayerY.getLeaderType())
 				screen.setImageButtonAt("WID|LEADER" + str(iPlayerY) + "|" + str(n), Pnl, BTN, x, 2, 44, 44, eWidGen, 1, 1)
 				n += 1
 
@@ -561,7 +564,7 @@ class CvForeignAdvisor:
 				h = 72
 			yImg = y0 + h / 2 - 32
 			screen.attachPanelAt(ScPnl, self.getNextWidget(), "", "", False, True, ePnlHelpHUD, 0, y0, w, h, eWidGen, 1, 1)
-			BTN = GC.getLeaderHeadInfo(GC.getPlayer(iPlayerX).getLeaderType()).getButton()
+			BTN = INFO.getButton("LEADER_", GC.getPlayer(iPlayerX).getLeaderType())
 			screen.setImageButtonAt("WID|LEADER" + str(iPlayerX), ScPnl, BTN, 8, yImg, 64, 64, eWidGen, 1, 1)
 			y1 = y0 + 4
 			for CyDeal in deals:
@@ -621,7 +624,7 @@ class CvForeignAdvisor:
 		w = w0 - 8
 		Pnl = self.getNextWidget()
 		screen.addPanel(Pnl, "", "", True, True, 10, yTop + 6, w, 72, ePnlSTD)
-		BTN = GC.getLeaderHeadInfo(CyPlayer.getLeaderType()).getButton()
+		BTN = INFO.getButton("LEADER_", CyPlayer.getLeaderType())
 		screen.setImageButtonAt("WID|LEADER" + str(iPlayer), Pnl, BTN, 2, 4, 64, 64, eWidGen, 1, 1)
 
 		ourBonuses = []
@@ -631,9 +634,8 @@ class CvForeignAdvisor:
 				if iNum - CyPlayer.getBonusImport(iBonus):
 					ourBonuses.append(iBonus)
 				continue
-			CvBonus = GC.getBonusInfo(iBonus)
-			if CyTeam.isHasTech(CvBonus.getTechCityTrade()):
-				aList0.append([iBonus, CvBonus])
+			if CyTeam.isHasTech(INFO.getIntrinsic("BONUS_", iBonus, IntrinsicSlot.PYINT_TECH_CITY_TRADE)):
+				aList0.append([iBonus, None])
 		iBon = 0
 		w1 = w0 - 72
 		if aList0:
@@ -642,14 +644,14 @@ class CvForeignAdvisor:
 			screen.setStyle(ScPnl, "ScrollPanel_Alt_Style")
 			iPerRow = (w1 - 16) / 40
 			for i, entry in enumerate(aList0):
-				iBonus, CvBonus = entry
+				iBonus = entry[0]
 				if not i % iPerRow:
 					x = 0
 					if i:
 						y += 40
 					else:
 						y = 0
-				BTN = CvBonus.getButton()
+				BTN = INFO.getButton("BONUS_", iBonus)
 				screen.setImageButtonAt("WID|BONUS|%d|%d" %(iBonus, iBon), ScPnl, BTN, x, y, 40, 40, eWidGen, 1, 1)
 				iBon += 1
 				x += 40
@@ -721,9 +723,8 @@ class CvForeignAdvisor:
 								aList0.append([iBonus, None])
 							continue
 						if iBonus in ourBonuses:
-							CvBonus = GC.getBonusInfo(iBonus)
-							if CyTeamX.isHasTech(CvBonus.getTechCityTrade()):
-								aList1.append([iBonus, CvBonus])
+							if CyTeamX.isHasTech(INFO.getIntrinsic("BONUS_", iBonus, IntrinsicSlot.PYINT_TECH_CITY_TRADE)):
+								aList1.append([iBonus, None])
 				else:
 					for iBonus in aBonusList:
 						TradeData1.iData = iBonus
@@ -787,7 +788,7 @@ class CvForeignAdvisor:
 			screen.attachPanelAt(ScPnl, self.getNextWidget(), "", "", True, True, ePnlSTD, 8, y, w, h, eWidGen, 1, 1)
 			h -= 6
 
-			BTN = GC.getLeaderHeadInfo(CyPlayerX.getLeaderType()).getButton()
+			BTN = INFO.getButton("LEADER_", CyPlayerX.getLeaderType())
 			screen.setImageButtonAt("WID|LEADER" + str(iPlayerX), ScPnl, BTN, 12, yImg, 64, 64, eWidGen, 1, 1)
 
 			if iPosGPT:
@@ -807,16 +808,14 @@ class CvForeignAdvisor:
 				screen.attachPanelAt(ScPnl, Pnl, "", "", True, True, ePnlBlue50, 80, y+1, w1, h, eWidGen, 1, 1)
 				screen.setPanelColor(Pnl, 230, 200, 140)
 				for i, entry in enumerate(aList0):
-					iBonus, CvBonus = entry
-					if CvBonus is None:
-						CvBonus = GC.getBonusInfo(iBonus)
+					iBonus = entry[0]
 					if not i % iPerRow:
 						x1 = x0
 						if i:
 							y1 += 40
 						else:
 							y1 = 3
-					BTN = CvBonus.getButton()
+					BTN = INFO.getButton("BONUS_", iBonus)
 					screen.setImageButtonAt("WID|BONUS|%d|%d" %(iBonus, iBon), Pnl, BTN, x1, y1, 40, 40, eWidGen, 1, 1)
 					iBon += 1
 					x1 += 40
@@ -824,16 +823,14 @@ class CvForeignAdvisor:
 				screen.attachPanelAt(ScPnl, Pnl, "", "", True, True, ePnlBlue50, 106+w1, y+1, w1, h, eWidGen, 1, 1)
 				screen.setPanelColor(Pnl, 230, 200, 140)
 				for i, entry in enumerate(aList1):
-					iBonus, CvBonus = entry
-					if CvBonus is None:
-						CvBonus = GC.getBonusInfo(iBonus)
+					iBonus = entry[0]
 					if not i % iPerRow:
 						x1 = x0
 						if i:
 							y1 += 40
 						else:
 							y1 = 3
-					BTN = CvBonus.getButton()
+					BTN = INFO.getButton("BONUS_", iBonus)
 					screen.setImageButtonAt("WID|BONUS|%d|%d" %(iBonus, iBon), Pnl, BTN, x1, y1, 40, 40, eWidGen, 1, 1)
 					iBon += 1
 					x1 += 40
@@ -849,7 +846,7 @@ class CvForeignAdvisor:
 						else:
 							y1 = 3
 					aDealMap[iDeal] = [iBonus, CyDeal]
-					BTN = GC.getBonusInfo(iBonus).getButton()
+					BTN = INFO.getButton("BONUS_", iBonus)
 					screen.setImageButtonAt("WID|BONUS|DEAL|%d" %iDeal, Pnl, BTN, x1, y1, 40, 40, eWidGen, 1, 1)
 					iDeal += 1
 					x1 += 40
@@ -865,7 +862,7 @@ class CvForeignAdvisor:
 						else:
 							y1 = 3
 					aDealMap[iDeal] = [iBonus, CyDeal]
-					BTN = GC.getBonusInfo(iBonus).getButton()
+					BTN = INFO.getButton("BONUS_", iBonus)
 					screen.setImageButtonAt("WID|BONUS|DEAL|%d" %iDeal, Pnl, BTN, x1, y1, 40, 40, eWidGen, 1, 1)
 					iDeal += 1
 					x1 += 40
@@ -966,12 +963,12 @@ class CvForeignAdvisor:
 				bHuman = CyPlayerX.isHuman()
 
 			# Build row
-			CvLeaderHead = GC.getLeaderHeadInfo(CyPlayerX.getLeaderType())
+			iLeaderX = CyPlayerX.getLeaderType()
 
 			screen.attachPanelAt(ScPnl, self.getNextWidget(), "", "", True, True, ePnlOut, 0, y, w, dy, eWidGen, 1, 1)
 
 			x = 4
-			BTN = CvLeaderHead.getButton()
+			BTN = INFO.getButton("LEADER_", iLeaderX)
 			screen.setImageButtonAt("WID|LEADER" + str(iPlayerX), ScPnl, BTN, x, y + 5, iSize0, iSize0, eWidGen, 1, 1)
 			x += dx
 
@@ -987,9 +984,9 @@ class CvForeignAdvisor:
 
 				szTxt = uFont3b + u"%c"
 				if CyPlayerX.hasHolyCity(iReligion):
-					szTxt = szTxt % GC.getReligionInfo(iReligion).getHolyCityChar()
+					szTxt = szTxt % TEXT.getHolyCitySymbolChar(iReligion)
 				else:
-					szTxt = szTxt % GC.getReligionInfo(iReligion).getChar()
+					szTxt = szTxt % TEXT.getSymbolChar("RELIGION_", iReligion)
 
 				screen.setTextAt("WID|RELIGION%d|%d" %(iReligion, iPlayerX), ScPnl, szTxt, 1<<0, x, y + dy/2 + 3, 0, eFontGame, eWidGen, 1, 1)
 			x += 28
@@ -999,9 +996,11 @@ class CvForeignAdvisor:
 				iTradeCommerce = iTradeRoutes = 0
 
 				for CyCityX, liCity in tuCity:
-					for CyCityY in liCity:
-						if iPlayerX == CyCityY.getOwner():
-							fProfit = CyCityX.calculateTradeYield(YieldTypes.YIELD_COMMERCE, CyCityX.calculateTradeProfitTimes100(CyCityY))
+					#	The row already carries the partner's owner and the route's profit, so the profit is
+					#	NOT re-derived per partner -- the yield read is paired with it by design.
+					for kRoute in liCity:
+						if iPlayerX == kRoute[0]:
+							fProfit = CyCityX.getTradeYield(YieldTypes.YIELD_COMMERCE, kRoute[2])
 							iTradeCommerce += fProfit
 							iTradeRoutes += 1
 
@@ -1020,7 +1019,7 @@ class CvForeignAdvisor:
 			for iCat in range (iCivicOptions):
 				iCivic = CyPlayerX.getCivics(iCat)
 				Img = "WID|CIVIC%d|%d" %(iCivic, iter2)
-				BTN = GC.getCivicInfo(iCivic).getButton()
+				BTN = INFO.getButton("CIVIC_", iCivic)
 				screen.setImageButtonAt(Img, ScPnl, BTN, x + iOff, y + 9, iSize1, iSize1, eWidGen, 1, 1)
 				iter2 += 1
 				x += dx
@@ -1028,13 +1027,13 @@ class CvForeignAdvisor:
 			# Favorite Civic
 			if not bActivePlayer:
 				if bRandomPers:
-					iCivic = GC.getLeaderHeadInfo(CyPlayerX.getPersonalityType()).getFavoriteCivic()
+					iCivic = INFO.getIntrinsic("LEADER_", CyPlayerX.getPersonalityType(), IntrinsicSlot.PYINT_FAVORITE_CIVIC)
 				else:
-					iCivic = CvLeaderHead.getFavoriteCivic()
+					iCivic = INFO.getIntrinsic("LEADER_", iLeaderX, IntrinsicSlot.PYINT_FAVORITE_CIVIC)
 
 				if iCivic > -1:
 					Img = "WID|CIVIC%d|%d" %(iCivic, iter2)
-					BTN = GC.getCivicInfo(iCivic).getButton()
+					BTN = INFO.getButton("CIVIC_", iCivic)
 					screen.setImageButtonAt(Img, ScPnl, BTN, x + iOff, y + 9, iSize1, iSize1, eWidGen, 1, 1)
 					iter2 += 1
 			y += dy
@@ -1119,7 +1118,7 @@ class CvForeignAdvisor:
 			if not szNoTechTrade:
 
 				for iTech in techsToGive:
-					if not CyPlayerX.canResearch(iTech, True, True):
+					if ENABLER.getTechAvailability(iPlayerX, iTech) != EnablerState.ENABLER_LISTED:
 						continue
 					if bHuman:
 						aList0.append(iTech)
@@ -1159,7 +1158,7 @@ class CvForeignAdvisor:
 			# Fill row
 			screen.attachPanelAt(ScPnl, self.getNextWidget(), "", "", True, True, ePnlSTD, 8, y, w, h, eWidGen, 1, 1)
 			h -= 6
-			BTN = GC.getLeaderHeadInfo(CyPlayerX.getLeaderType()).getButton()
+			BTN = INFO.getButton("LEADER_", CyPlayerX.getLeaderType())
 			screen.setImageButtonAt("WID|LEADER" + str(iPlayerX), ScPnl, BTN, 12, yImg, 64, 64, eWidGen, 1, 1)
 
 			if iGold:
@@ -1187,7 +1186,7 @@ class CvForeignAdvisor:
 								y1 += 56
 							else:
 								y1 = 3
-						BTN = GC.getTechInfo(iTech).getButton()
+						BTN = INFO.getButton("TECH_", iTech)
 						screen.setImageButtonAt("WID|TECH|%d|%d" %(iTech, iter0), Pnl, BTN, x1, y1, 56, 56, eWidGen, 1, 1)
 						iter0 += 1
 						x1 += 56
@@ -1203,7 +1202,7 @@ class CvForeignAdvisor:
 								y1 += 56
 							else:
 								y1 = 3
-						BTN = GC.getTechInfo(iTech).getButton()
+						BTN = INFO.getButton("TECH_", iTech)
 						screen.setImageButtonAt("WID|TECH|%d|%d" %(iTech, iter0), Pnl, BTN, x1, y1, 56, 56, eWidGen, 1, 1)
 						iter0 += 1
 						x1 += 56
@@ -1286,7 +1285,7 @@ class CvForeignAdvisor:
 
 				elif TYPE == "LEADER":
 					CyPlayer = GC.getPlayer(ID)
-					szLeader = GC.getLeaderHeadInfo(CyPlayer.getLeaderType()).getDescription()
+					szLeader = INFO.getDescription("LEADER_", CyPlayer.getLeaderType())
 
 					if CyPlayer.isHuman():
 						szTxt = CyPlayer.getName()

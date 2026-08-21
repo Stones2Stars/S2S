@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_LIZARD_HUNTERS_CAMP",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_LIZARDS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ARTIFICIAL_LIFE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_REPET"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRACKING",
+    "BUILDING_HUNTERS_CAMP",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STONE",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ],
+   "dormant": [
+    "BUILDING_REPET"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": -1,
+     "enabled": "TECH_ECOLOGY"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 45,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LIZARD_HUNTERS_CAMP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LIZARD_HUNTERS_CAMP",
+  "civilopedia": "TXT_KEY_BUILDING_LIZARD_HUNTERS_CAMP_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

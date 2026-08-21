@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_CULTURE_ARABIAN",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_MIDDLE_EASTERN",
+    "BUILDING_C_L_MIDDLE_EASTERN",
+    "TECH_ARMORED_CAVALRY",
+    {
+     "type": "TERRAIN_DESERT",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CAMEL",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ARABIAN"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "buildRate": {
+  "city": {
+   "buildings": {
+    "BUILDING_BURJ_AL_ARAB": {
+     "percent": 10
+    },
+    "BUILDING_SULTAN_QABOOS_GRAND_MOSQUE": {
+     "percent": 10
+    },
+    "BUILDING_PETRA": {
+     "percent": 10
+    },
+    "BUILDING_KINGDOM_CENTRE": {
+     "percent": 10
+    },
+    "BUILDING_BURJ_KHALIFA": {
+     "percent": 10
+    },
+    "BUILDING_DUBAI_WORLD_CENTRAL": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 2136,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_ARABIAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_ARABIAN",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_ARABIAN_PEDIA",
+  "pediaCategory": "culture",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_C2C_CULTURE",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

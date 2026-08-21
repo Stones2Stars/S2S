@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_DISTANT_DREAM_WORLD",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_LAYERED_REALITY",
+    "TECH_SPIRITUAL_REALMS",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    100,
+    {
+     "value": 13,
+     "enabled": "TECH_REALITY_REPROGRAMMING"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 3166,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_DREAM_WORLD",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_DREAM_WORLD",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_DREAM_WORLD_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

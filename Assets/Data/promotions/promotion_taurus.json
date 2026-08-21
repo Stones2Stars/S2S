@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_TAURUS",
+ "heal": {
+  "unit": {
+   "victoryAdjacent": {
+    "flat": 15
+   },
+   "victoryStack": {
+    "flat": 15
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/StarSigns/taurus.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_TAURUS",
+  "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST"
+  ],
+  "starsign": true
+ }
+}

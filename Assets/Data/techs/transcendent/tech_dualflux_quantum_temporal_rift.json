@@ -1,0 +1,82 @@
+{
+ "type": "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERSPACE_MEDIA_CENTER",
+   "BUILDING_HYPERSPACE_POWER_PLANT",
+   "BUILDING_HYPERSPACE_RESEARCH_PROBE",
+   "BUILDING_HYPERSPACE_RESIDENTIAL_PORTAL",
+   "BUILDING_HYPERSPACE_RESOURCE_HARVESTING_RIFT",
+   "BUILDING_INTERGALACTIC_TEMPORAL_RIFT",
+   "BUILDING_SPACE_COLONY_HYPERSPACE_PORTAL"
+  ],
+  "builds": [
+   "BUILD_TERRAFORM_HYPERSPACE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_TERRAFORM_HYPERSPACE"
+  ],
+  "techs": [
+   "TECH_TRANSDIMENSIONAL_COMMERCE",
+   "TECH_TRANSVERSE_EUCLIDEAN_GEOMETRY"
+  ],
+  "units": [
+   "UNIT_HYPERSHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_STABLE_TIME_LOOPS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COSMIC_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSCENDENT_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 495679
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_MILITARY": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/dualflux.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+  "soundMP": "AS2D_TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT",
+  "civilopedia": "TXT_KEY_TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT_PEDIA",
+  "quote": "TXT_KEY_TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 149,
+  "gridY": 7
+ }
+}

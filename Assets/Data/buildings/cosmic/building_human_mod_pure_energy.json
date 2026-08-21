@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_HUMAN_MOD_PURE_ENERGY",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_LUMINAL_BEINGS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_INFORMATION_BASED",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_PURE_ENERGY"
+  ]
+ },
+ "research": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_NEUTRON_STAR_COMPUTATIONAL_SUBSTRATE": {
+     "flat": 5
+    },
+    "BUILDING_INTERSTELLAR_BLACK_HOLE_COLONY": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 39510
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_PURE_ENERGY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_PURE_ENERGY",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_PURE_ENERGY_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

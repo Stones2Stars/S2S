@@ -1,0 +1,63 @@
+{
+ "type": "PROJECT_THE_INTERNET",
+ "allowed": {
+  "world": 1
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_COPPER_WIRES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_FIBER_OPTIC_CABLES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "tradeRoutes": {
+  "world": {
+   "empires": {
+    "flat": 1
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "cost": {
+  "create": 14760
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_INTERNET"
+   },
+   "icon": ",Art/Interface/Buttons/Buildings/Internet.dds,Art/Interface/Buttons/Buildings_Atlas.dds,1,4"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROJECT_THE_INTERNET",
+  "civilopedia": "TXT_KEY_PROJECT_THE_INTERNET_PEDIA",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

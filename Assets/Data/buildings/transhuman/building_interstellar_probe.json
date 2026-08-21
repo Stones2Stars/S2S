@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_INTERSTELLAR_PROBE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_STARPORT",
+    "TECH_ASTROGATION_CONSTELLATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_DATA_COLLECTION": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 33930
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_INTERSTELLAR_PROBE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_PROBE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_PROBE",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PROBE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

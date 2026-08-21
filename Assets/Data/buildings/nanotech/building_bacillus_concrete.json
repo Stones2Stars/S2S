@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_BACILLUS_CONCRETE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_BACTERIUM_BIOFORGE",
+    {
+     "type": "BUILDING_LIFE_STRUCTURAL_BACTERIA",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_PROTOTYPED_PATHOGENS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "cost": {
+  "production": 3245,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BACILLUS_CONCRETE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BACILLUS_CONCRETE",
+  "civilopedia": "TXT_KEY_BUILDING_BACILLUS_CONCRETE_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

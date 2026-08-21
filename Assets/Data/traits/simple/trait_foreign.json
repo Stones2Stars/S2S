@@ -1,0 +1,102 @@
+{
+ "type": "TRAIT_FOREIGN",
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_FREE_PORT": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": -1,
+   "percent": -10
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": 1,
+   "percent": 10
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "commerce": {
+     "percent": 10
+    },
+    "percent": [
+     {
+      "value": 30,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_LOYALTY",
+       "enabled": "IS_SPY"
+      }
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": -1
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": -1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitForeign.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_FOREIGN",
+  "civilopedia": "TXT_KEY_TRAIT_FOREIGN_PEDIA",
+  "shortDescription": "TXT_KEY_TRAIT_FOREIGN_SHORT",
+  "negativeTrait": true,
+  "impurePromotions": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_FOREIGN1"
+  ]
+ }
+}

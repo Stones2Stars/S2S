@@ -1,0 +1,16 @@
+{
+ "type": "VOTE_FREE_TRADE",
+ "voteSource": [
+  "DIPLOVOTE_UN"
+ ],
+ "threshold": {
+  "population": 51,
+  "minVoters": 3
+ },
+ "effect": {
+  "freeTrade": true
+ },
+ "identity": {
+  "description": "TXT_KEY_VOTE_FREE_TRADE"
+ }
+}

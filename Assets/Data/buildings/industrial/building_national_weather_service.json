@@ -1,0 +1,108 @@
+{
+ "type": "BUILDING_NATIONAL_WEATHER_SERVICE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WEATHER_CONTROL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MODERN_OFFICES",
+    "TECH_RADIO",
+    "TECH_METEOROLOGY",
+    "TECH_CIVIL_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_BROADCAST_TOWER",
+      "BUILDING_COMMUNICATION_TOWER",
+      "BUILDING_NETWORK_NODE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "research": {
+  "city": {
+   "percent": 7
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 2
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 4
+  }
+ },
+ "cost": {
+  "production": 1740,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NATIONAL_WEATHER_SERVICE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NATIONAL_WEATHER_SERVICE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_INTELLIGENCE_AGENCY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_WEATHER_SERVICE",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_WEATHER_SERVICE_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 8,
+  "militaryWorth": 10,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 5,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

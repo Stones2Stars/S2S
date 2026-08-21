@@ -1,0 +1,140 @@
+{
+ "type": "BUILDING_ROBOTICS_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_MAKERSPACE",
+   "BUILDING_MECHATRONICS_LAB"
+  ],
+  "units": [
+   "UNIT_ANDROID_INFANTRY",
+   "UNIT_ANTHROID_INFANTRY",
+   "UNIT_AUTOM_INFANTRY",
+   "UNIT_DROID_INFANTRY",
+   "UNIT_SENTROID_INFANTRY",
+   "UNIT_WALKER",
+   "UNIT_WARBOT_INFANTRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ROBOTICS",
+    {
+     "any": [
+      "BUILDING_LABORATORY",
+      "BUILDING_UNIVERSITY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 8,
+     "enabled": "TECH_MACHINE_LEARNING"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_ANDROIDS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_CYBERNETICS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_BIONICS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_POWERED_EXOSKELETON"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_PERSONAL_ROBOTS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_NANOROBOTICS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_DROIDS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_MILITARY_ROBOTICS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_BIOMETRIC_WARFARE"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_UNMANNED_NAVAL_VEHICLES"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_UNMANNED_AIR_VEHICLES"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_DISASTER_ROBOTS"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 1685,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ROBOTICS_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ROBOTICS_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_ROBOTICS_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

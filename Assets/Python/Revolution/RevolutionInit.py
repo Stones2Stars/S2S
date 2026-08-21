@@ -12,6 +12,11 @@
 # where configFileName is nominally "Revolution.ini".
 
 from CvPythonExtensions import *
+
+# GAME is used throughout this module (isFinalInitialized, isOption, getMaxTurns) but was never ASSIGNED, so the
+# first read raised NameError and took RevolutionInit's construction down with it. Same shape as the MAP global
+# in MapScriptToolsOld: declared-by-use, never bound.
+GAME = CyGame()
 import RevEvents
 import BarbarianCiv
 import AIAutoPlay
@@ -20,8 +25,13 @@ import Revolution
 import RevInstances
 import BugCore
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
-GAME = GC.getGame()
+INFO = CyInfo()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 RevDCMOpt = BugCore.game.RevDCM
 ANewDawnOpt = BugCore.game.RoMSettings
@@ -108,7 +118,7 @@ class RevolutionInit:
 	def showActivePopup(self):
 		revMaxCivs = RevOpt.getRevMaxCivs()
 		barbMaxCivs = RevOpt.getBarbCivMaxCivs()
-		revDefaultNumPlayers = GC.getWorldInfo(GC.getMap().getWorldSize()).getDefaultPlayers()
+		revDefaultNumPlayers = INFO.getIntrinsic("WORLD_", GC.getMap().getWorldSize(), IntrinsicSlot.PYINT_DEFAULT_PLAYERS)
 
 		bodStr = self.getRevComponentsText()
 		MAX_PC_PLAYERS = GC.getMAX_PC_PLAYERS()
@@ -143,7 +153,7 @@ class RevolutionInit:
 		temp = ""
 		for iI in range(GC.getNumGameOptionInfos()):
 			if GAME.isOption(iI):
-				temp += szNewLineTab + GC.getGameOptionInfo(iI).getDescription()
+				temp += szNewLineTab + INFO.getDescription("GAMEOPTION_", iI)
 		if temp:
 			revComponentsText += optionFormat + temp
 			temp = ""
@@ -197,15 +207,6 @@ class RevolutionInit:
 
 		# DCM
 		revComponentsText += sectionFormat + TRNSLTR.getText("TXT_KEY_OPTIONS_DCM",())
-
-		if RevDCMOpt.isDCM_RANGE_BOMBARD():
-			temp += szNewLineTab + TRNSLTR.getText("TXT_KEY_BUG_OPT_REVDCM__DCM_RANGE_BOMBARD_TEXT",())
-
-		if RevDCMOpt.isDCM_OPP_FIRE():
-			temp += szNewLineTab + TRNSLTR.getText("TXT_KEY_BUG_OPT_REVDCM__DCM_OPP_FIRE_TEXT",())
-
-		if RevDCMOpt.isDCM_AIR_BOMBING():
-			temp += szNewLineTab + TRNSLTR.getText("TXT_KEY_BUG_OPT_REVDCM__DCM_AIR_BOMBING_TEXT",())
 
 		if RevDCMOpt.isDCM_ACTIVE_DEFENSE():
 			temp += szNewLineTab + TRNSLTR.getText("TXT_KEY_BUG_OPT_REVDCM__DCM_ACTIVE_DEFENSE_TEXT",())

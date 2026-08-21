@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_MARTIAN_FARM",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MARTIAN_ECOSYSTEM",
+    "BUILDING_MARTIAN_MEGACITY",
+    "TECH_EXTRATERRESTRIAL_AGRICULTURE",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_MARTIAN_CROPS"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 5294,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_FARM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_FARM_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

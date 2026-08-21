@@ -1,0 +1,41 @@
+{
+ "type": "FEATURE_PLATY_PAMUKKALE",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
+  "nukeImmune",
+  "ignoreTerrainCulture"
+ ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_PAMUKKALE"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_PAMUKKALE",
+  "civilopedia": "TXT_KEY_FEATURE_PAMUKKALE_PEDIA",
+  "requiresFlatlands": true,
+  "addsFreshWater": true,
+  "validTerrains": [
+   "TERRAIN_TAIGA",
+   "TERRAIN_ICE",
+   "TERRAIN_TUNDRA"
+  ]
+ }
+}

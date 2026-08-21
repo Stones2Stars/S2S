@@ -1,0 +1,41 @@
+{
+ "type": "FEATURE_BLUE_SUPERGIANT",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "characteristics": [
+  "unfoundable"
+ ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_BLUE_SUPERGIANT"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_ASTEROIDS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_BLUE_SUPERGIANT",
+  "civilopedia": "TXT_KEY_FEATURE_BLUE_SUPERGIANT_PEDIA",
+  "validTerrains": [
+   "TERRAIN_ORION_ARM",
+   "TERRAIN_MILKY_WAY"
+  ]
+ }
+}

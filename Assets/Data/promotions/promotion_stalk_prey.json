@@ -1,0 +1,27 @@
+{
+ "type": "PROMOTION_STALK_PREY",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT3"
+   ]
+  }
+ },
+ "skills": {
+  "immuneToFirstStrikes": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/stalkprey.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_STALK_PREY",
+  "unitCombats": [
+   "UNITCOMBAT_CANINE"
+  ]
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "type": "UNITCOMBAT_MISSIONARY",
+ "skills": {
+  "cannotMergeSplit": true
+ },
+ "tags": [
+  "missionary"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/missionaries.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_MISSIONARY"
+ }
+}

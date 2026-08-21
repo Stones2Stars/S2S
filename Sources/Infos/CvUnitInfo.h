@@ -1,857 +1,451 @@
 #pragma once
+#ifndef CV_JSON_UNIT_INFO_H
+#define CV_JSON_UNIT_INFO_H
 
-#ifndef CV_UNIT_INFO_H
-#define CV_UNIT_INFO_H
+//
+//	CvUnitInfo -- the UNIT poco rebuilt to the full exemplar surface (patterns.md par. THE GETTER SETUP: the
+//	four read categories, nothing else). The unit plane is deliberately its own RESOLVED-VALUES shape
+//	(state-repositories.md par. UNIT): the type's par.6 self-accumulator deposits compile into the composed
+//	CvModifiers and are read as point sums here; the unit INSTANCE later sums type + unitcombats + promotions
+//	into its resolved stats on the promotion/combat-class-change trigger. Styled for the JSON anatomy (json.md
+//	par.2): identity/cost are bare typed intrinsics; skills/tags are the par.8 held-classification bitsets
+//	(hold-vs-provide: a unit HAS its skills/tags); builds / spread / groupSpawn / vision / sizeMatters /
+//	outcomes are par.8-par.9 bespoke typed sections; every magnitude read is a load-compiled fetch
+//	(docs/architecture/patterns.md §Materialize at mapFrom); kind and scope are separate parameters (docs/architecture/patterns.md §The coherent surface (scope is a separate axis)); every
+//	magnitude getter IS x100 (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); the type-keyed vs-entries (terrain/feature/unitCombat/
+//	domain/flanking/vsUnit targets) stay compiled ENTRY-LIST reads by design; no legacy getter name returns
+//	(docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
+//
 
-#include "CvInfoBase.h"
-#include "ConstructRequirement.h"
+#include "CvInfo.h"
+#include "CvJsonParse.h"            // vectorHas / mapValueOrDefault -- the shared runtime point reads the getters delegate to
+#include "CvHideAndSeekSection.h"   // par.9 `hideAndSeek` typed section (the shared concealment/detection contest)
+#include "CvSizeMattersSection.h"   // par.9 `sizeMatters` typed section
+#include "CvOutcomesSection.h"      // par.8 `outcomes` typed section (shared unit-plane CvOutcome intake)
+#include "Defines/CvEnums.h"        // EraTypes/UnitArtStyleTypes/MissionTypes/DomainTypes/UnitAITypes/...
+#include "Defines/CvStructs.h"      // GroupSpawnUnitCombat
+#include <map>
+#include <set>
+#include <string>
+#include <vector>
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//
-//  class : CvUnitInfo
-//
-//  DESC:
-//
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 class CvArtInfoUnit;
 
-class CvUnitInfo
-	: public CvHotkeyInfo
-	, private bst::noncopyable
+//	The ERA BANDS a unit's mesh-group art is authored over (world.art.meshGroups.groups[].define, json.md par.7).
+//	A band is not an era: it is the era from which that art applies, and the resolution walks DOWN from the
+//	highest band the observer has reached to the first one the unit actually authors.
+enum UnitArtEraBand
 {
-//---------------------------PUBLIC INTERFACE---------------------------------
-public:
-	CvUnitInfo();
-	virtual ~CvUnitInfo();
-
-	int getMaxGlobalInstances() const;
-	int getMaxPlayerInstances() const;
-	bool isUnlimitedException() const;
-	bool isCivilizationUnit(const PlayerTypes ePlayer=NO_PLAYER) const;
-
-	int getInstanceCostModifier() const;
-	int getAIWeight() const;
-	int getProductionCost() const;
-	int getHurryCostModifier() const;
-	int getAdvancedStartCost() const;
-	int getMinAreaSize() const;
-	int getMoves() const;
-	int getAirRange() const;
-	int getAirUnitCap() const;
-	int getDropRange() const;
-	int getNukeRange() const;
-	int getWorkRate() const;
-	int getBaseDiscover() const;
-	int getDiscoverMultiplier() const;
-	int getBaseHurry() const;
-	int getHurryMultiplier() const;
-	int getBaseTrade() const;
-	int getTradeMultiplier() const;
-	int getGreatWorkCulture() const;
-	int getEspionagePoints() const;
-	int getCombat() const;
-
-	int getCombatLimit() const;
-	//TB Tweaked for Size Matters
-	int getAirCombat() const;
-
-	int getAirCombatLimit() const;
-	int getXPValueAttack() const;
-	int getXPValueDefense() const;
-	int getFirstStrikes() const;
-	int getChanceFirstStrikes() const;
-	int getInterceptionProbability() const;
-	//ls612: Advanced Nuke Interception
-	//int getNukeInterceptionProbability() const;
-	//int getNukeInterceptionRange() const;
-	int getEvasionProbability() const;
-	int getWithdrawalProbability() const;
-	int getCollateralDamage() const;
-	int getCollateralDamageLimit() const;
-	int getCollateralDamageMaxUnits() const;
-	int getCityAttackModifier() const;
-	int getCityDefenseModifier() const;
-	int getAnimalCombatModifier() const;
-	int getHillsAttackModifier() const;
-	int getHillsDefenseModifier() const;
-	int getBombRate() const;
-	int getBombardRate() const;
-	int getSpecialCargo() const;
-	int getSMNotSpecialCargo() const;
-	int getDomainCargo() const;
-	int getCargoSpace() const;
-	int getSMCargoSpace() const;
-	int getSMCargoVolume() const;
-	int getConscriptionValue() const;
-	int getCultureGarrisonValue() const;
-	int getBaseUpkeep() const;
-	int getAssetValue() const;
-	int getPowerValue() const;
-	int getSpecialUnitType() const;
-	UnitTypes getUnitCaptureType() const { return m_eUnitCaptureType; }
-	int getUnitCombatType() const;
-	DomainTypes getDomainType() const;
-	UnitAITypes getDefaultUnitAIType() const;
-	int getInvisibleType() const;
-	int getSeeInvisibleType(int i) const;
-	int getNumSeeInvisibleTypes() const;
-	int getAdvisorType() const;
-	int getMaxStartEra() const;
-	int getObsoleteTech() const;
-	bool isStateReligion() const;
-	int getPrereqGameOption() const;
-	int getNotGameOption() const;
-	int getHolyCity() const;
-	int getReligionType() const;
-	int getStateReligion() const;
-	int getPrereqReligion() const;
-	int getPrereqCorporation() const;
-	int getPrereqOrBuildingsNum() const;
-	BuildingTypes getPrereqOrBuilding(int i) const;
-	int getPrereqAndTech() const;
-	int getPrereqAndBonus() const;
-	// the initial number of individuals in the unit group
-	int getGroupSize() const;
-	// the number of UnitMeshGroups for this unit
-	int getGroupDefinitions() const;
-	int getMeleeWaveSize() const;
-	int getRangedWaveSize() const;
-	int getNumUnitNames() const;
-	int getCommandType() const;
-	void setCommandType(int iNewType);
-	//	This really belongs on CvInfoBase but you can't change the size of that
-	//	object without crashing the core engine :-(
-	inline int	getZobristValue() const { return m_zobristValue; }
-
-	bool isFoodProduction() const;
-	bool isNoBadGoodies() const;
-	bool isOnlyDefensive() const;
-	bool isNoCapture() const;
-	bool isRivalTerritory() const;
-	bool isMilitaryHappiness() const;
-	bool isMilitarySupport() const;
-	bool isMilitaryProduction() const;
-	bool isPillage() const;
-	bool isSpy() const;
-	bool isSabotage() const;
-	bool isDestroy() const;
-	bool isStealPlans() const;
-	bool isInvestigate() const;
-	bool isCounterSpy() const;
-	bool isFound() const;
-	bool isGoldenAge() const;
-	bool isInvisible() const;
-	void setInvisible(bool bEnable) ;
-	bool isFirstStrikeImmune() const;
-	bool isNoDefensiveBonus() const;
-	bool isIgnoreBuildingDefense() const;
-	bool isCanMoveImpassable() const;
-	bool isCanMoveAllTerrain() const;
-	bool isFlatMovementCost() const;
-	bool isIgnoreTerrainCost() const;
-	bool isNukeImmune() const;
-	bool isMechUnit() const;
-	bool isRenderBelowWater() const;
-	bool isRenderAlways() const;
-	bool isSuicide() const;
-	bool isLineOfSight() const;
-	bool isHiddenNationality() const;
-	bool isAlwaysHostile() const;
-	bool isFreeDrop() const;
-	bool isNoRevealMap() const;
-	bool isInquisitor() const;
-	//ls612: Can't enter non-Owned cities
-	bool isNoNonOwnedEntry() const;
-
-	void setPowerValue(int iNewValue);
-	int getPrereqVicinityBonus() const;
-	bool isRequiresStateReligionInCity() const;
-	bool isWorkerTrade() const;
-	bool isMilitaryTrade() const;
-	bool isForceUpgrade() const;
-	bool isGreatGeneral() const;
-	bool isSlave() const;
-	bool getPassableRouteNeeded(int i) const;
-	int getBaseFoodChange() const;
-	int getControlPoints() const;
-	int getCommandRange() const;
-	const char* getClassicalArtDefineTag(int i, UnitArtStyleTypes eStyle) const;
-	void setClassicalArtDefineTag(int i, const char* szVal);
-	const char* getRennArtDefineTag(int i, UnitArtStyleTypes eStyle) const;
-	void setRennArtDefineTag(int i, const char* szVal);
-	const char* getIndustrialArtDefineTag(int i, UnitArtStyleTypes eStyle) const;
-	void setIndustrialArtDefineTag(int i, const char* szVal);
-	const char* getFutureArtDefineTag(int i, UnitArtStyleTypes eStyle) const;
-	void setFutureArtDefineTag(int i, const char* szVal);
-
-	CvWString getCivilizationName(int i) const;
-	int getCivilizationNamesVectorSize() const;
-	CvWString getCivilizationNamesNamesVectorElement(int i) const;
-	CvWString getCivilizationNamesValuesVectorElement(int i) const;
-
-	//TB Combat Mod Begin  TB SubCombat Mod begin
-	//Functions
-	int getEraInfo() const;
-
-	int getAttackCombatModifier() const;
-	int getDefenseCombatModifier() const;
-	int getVSBarbs() const;
-	int getUnnerve() const;
-	int getEnclose() const;
-	int getLunge() const;
-	int getDynamicDefense() const;
-	int getEndurance() const;
-	int getPoisonProbabilityModifier() const;
-	int getCaptureProbabilityModifier() const;
-	int getCaptureResistanceModifier() const;
-	int getHillsWorkModifier() const;
-	int getPeaksWorkModifier() const;
-	int getBreakdownChance() const;
-	int getBreakdownDamage() const;
-	int getTaunt() const;
-	int getMaxHP(bool bForLoad = false) const;
-	int getDamageModifier() const;
-	int getRBombardDamage() const;
-	int getRBombardDamageLimit() const;
-	int getRBombardDamageMaxUnits() const;
-	int getCombatModifierPerSizeMore() const;
-	int getCombatModifierPerSizeLess() const;
-	int getCombatModifierPerVolumeMore() const;
-	int getCombatModifierPerVolumeLess() const;
-	int getSelfHealModifier() const;
-	int getNumHealSupport() const;
-	int getInsidiousness() const;
-	int getInvestigation() const;
-	int getStealthStrikes() const;
-	int getStealthCombatModifier() const;
-	int getTrapDamageMax() const;
-	int getTrapDamageMin() const;
-	int getTrapComplexity() const;
-	int getNumTriggers() const;
-	int getAggression() const;
-	int getAnimalIgnoresBorders() const;
-	int getReligiousCombatModifier() const;
-
-	bool isStampede() const;
-	bool isOnslaught() const;
-	bool isAttackOnlyCities() const;
-	bool isIgnoreNoEntryLevel() const;
-	bool isIgnoreZoneofControl() const;
-	bool isFliesToMove() const;
-	bool isRBombardForceAbility() const;
-	bool isNoSelfHeal() const;
-	bool isExcile() const;
-	bool isPassage() const;
-	bool isNoNonOwnedCityEntry() const;
-	bool isBarbCoExist() const;
-	bool isBlendIntoCity() const;
-	bool isUpgradeAnywhere() const;
-	bool isAssassin() const;
-	bool isStealthDefense() const;
-	bool isNoInvisibility() const;
-	bool isTriggerBeforeAttack() const;
-	bool isAnimal() const;
-	bool isWildAnimal() const;
-	bool canAnimalIgnoresBorders() const;
-	bool canAnimalIgnoresImprovements() const;
-	bool canAnimalIgnoresCities() const;
-	bool isNoNonTypeProdMods() const;
-	bool isGatherHerd() const;
-	bool canMergeSplit() const { return m_bCanMergeSplit; }
-
-	UnitCombatTypes getSubCombatType(int i) const;
-	int getNumSubCombatTypes() const;
-	bool isSubCombatType(UnitCombatTypes e) const;
-	const std::vector<UnitCombatTypes>& getSubCombatTypes() const;
-
-	int getHealAsType(int i) const;
-	int getNumHealAsTypes() const;
-	bool isHealAsType(int i) const;
-
-	bool isTerrainImpassableType(TerrainTypes e) const;
-	const std::vector<TerrainTypes>& getImpassableTerrains() const { return m_vTerrainImpassableTypes; }
-
-	bool isFeatureImpassableType(FeatureTypes e) const;
-	const std::vector<FeatureTypes>& getImpassableFeatures() const { return m_vFeatureImpassableTypes; }
-
-	const std::vector<MapCategoryTypes>& getMapCategories() const { return m_aeMapCategoryTypes; }
-
-	int getTrapSetWithPromotionType(int i) const;
-	int getNumTrapSetWithPromotionTypes() const;
-	bool isTrapSetWithPromotionType(int i) const;
-
-	int getTrapImmunityUnitCombatType(int i) const;
-	int getNumTrapImmunityUnitCombatTypes() const;
-	bool isTrapImmunityUnitCombatType(int i) const;
-
-	int getCategory(int i) const;
-	int getNumCategories() const;
-	bool isCategory(int i) const;
-
-
-	int getNumHealUnitCombatTypes() const;
-	const HealUnitCombat& getHealUnitCombatType(int iUnitCombat) const;
-
-	int getNumGroupSpawnUnitCombatTypes() const;
-	const GroupSpawnUnitCombat& getGroupSpawnUnitCombatType(int iIndex) const;
-
-	int getNumInvisibleTerrainChanges() const;
-	const InvisibleTerrainChanges& getInvisibleTerrainChange(int iIndex) const;
-
-	int getNumInvisibleFeatureChanges() const;
-	const InvisibleFeatureChanges& getInvisibleFeatureChange(int iIndex) const;
-
-	int getNumInvisibleImprovementChanges() const;
-	const InvisibleImprovementChanges& getInvisibleImprovementChange(int iIndex) const;
-
-	int getNumVisibleTerrainChanges() const;
-	const InvisibleTerrainChanges& getVisibleTerrainChange(int iIndex) const;
-
-	int getNumVisibleFeatureChanges() const;
-	const InvisibleFeatureChanges& getVisibleFeatureChange(int iIndex) const;
-
-	int getNumVisibleImprovementChanges() const;
-	const InvisibleImprovementChanges& getVisibleImprovementChange(int iIndex) const;
-
-	int getNumVisibleTerrainRangeChanges() const;
-	const InvisibleTerrainChanges& getVisibleTerrainRangeChange(int iIndex) const;
-
-	int getNumVisibleFeatureRangeChanges() const;
-	const InvisibleFeatureChanges& getVisibleFeatureRangeChange(int iIndex) const;
-
-	const InvisibleImprovementChanges& getVisibleImprovementRangeChange(int iIndex) const;
-
-	int getNumVisibleImprovementRangeChanges() const;
-
-	int getNumEnabledCivilizationTypes() const;
-	const EnabledCivilizations& getEnabledCivilizationType(int iIndex) const;
-
-	int getNumFlankingStrikesbyUnitCombatTypes() const;
-	int getFlankingStrengthbyUnitCombatType(int iUnitCombat) const;
-	bool isFlankingStrikebyUnitCombatType(int iUnitCombat) const;
-
-	int getNumTrapDisableUnitCombatTypes() const;
-	int getTrapDisableUnitCombatType(int iUnitCombat) const;
-	bool isTrapDisableUnitCombatType(int iUnitCombat) const;
-	const UnitCombatModifierArray& getTrapDisableUnitCombatTypes() const;
-
-	int getNumTrapAvoidanceUnitCombatTypes() const;
-	int getTrapAvoidanceUnitCombatType(int iUnitCombat) const;
-	bool isTrapAvoidanceUnitCombatType(int iUnitCombat) const;
-	const UnitCombatModifierArray& getTrapAvoidanceUnitCombatTypes() const;
-
-	int getNumTrapTriggerUnitCombatTypes() const;
-	int getTrapTriggerUnitCombatType(int iUnitCombat) const;
-	bool isTrapTriggerUnitCombatType(int iUnitCombat) const;
-	const UnitCombatModifierArray& getTrapTriggerUnitCombatTypes() const;
-
-	int getNumVisibilityIntensityTypes() const;
-	int getVisibilityIntensityType(int iInvisibility) const;
-	bool isVisibilityIntensityType(int iInvisibility) const;
-	const InvisibilityArray& getVisibilityIntensityTypes() const;
-
-	int getNumInvisibilityIntensityTypes() const;
-	int getInvisibilityIntensityType(int iInvisibility) const;
-	bool isInvisibilityIntensityType(int iInvisibility) const;
-	const InvisibilityArray& getInvisibilityIntensityTypes() const;
-
-	int getNumVisibilityIntensityRangeTypes() const;
-	int getVisibilityIntensityRangeType(int iInvisibility) const;
-	bool isVisibilityIntensityRangeType(int iInvisibility) const;
-	const InvisibilityArray& getVisibilityIntensityRangeTypes() const;
-
-	int getNumTerrainWorkRateModifierTypes() const;
-	int getTerrainWorkRateModifierType(int iTerrain) const;
-	bool isTerrainWorkRateModifierType(int iTerrain) const;
-
-	int getNumFeatureWorkRateModifierTypes() const;
-	int getFeatureWorkRateModifierType(int iFeature) const;
-	bool isFeatureWorkRateModifierType(int iFeature) const;
-
-	int getNumBuildWorkRateModifierTypes() const;
-	int getBuildWorkRateModifierType(int iBuild) const;
-	bool isBuildWorkRateModifierType(int iBuild) const;
-
-	bool hasUnitCombat(UnitCombatTypes eUnitCombat) const;
-	int getTotalModifiedCombatStrength100(const bool bSizeMatters) const;
-	int getBaseGroupRank() const;
-	int getBaseCargoVolume() const;
-
-	bool isQualifiedPromotionType(int i) const;
-	bool setQualifiedPromotionType(const int iPromo, std::vector<int>& checklist);
-	void setQualifiedPromotionTypes();
-	void setCanAnimalIgnores();
-
-	const std::vector<BonusTypes>& getPrereqOrBonuses() const;
-	const std::vector<BonusTypes>& getPrereqOrVicinityBonuses() const;
-	const std::vector<TechTypes>& getPrereqAndTechs() const;
-	const std::vector<HeritageTypes>& getPrereqAndHeritage() const { return m_prereqAndHeritage; }
-	const std::vector<HeritageTypes>& getPrereqOrHeritage() const { return m_prereqOrHeritage; }
-
-	virtual const wchar_t* getExtraHoverText() const;
-
-	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
-
-	const BoolExpr* getTrainCondition() const;
-
-	// #195 Phase 2: this unit's GOM-expressible training prerequisites in one introspectable
-	// list, derived from the typed Prereq* fields at load. Read-only description for the
-	// Civilopedia / help text / enabler index; canTrain still does the evaluation.
-	const std::vector<ConstructRequirement>& getTrainRequirements() const { return m_trainRequirements; }
-
-protected:
-	int m_iMaxGlobalInstances;
-	int m_iMaxPlayerInstances;
-	bool m_bUnlimitedException;
-	int m_iInstanceCostModifier;
-	std::vector<RouteTypes> m_aePassableRouteNeeded;
-	std::vector<BonusTypes> m_piPrereqOrVicinityBonuses;
-	bool m_bWorkerTrade;
-	bool m_bMilitaryTrade;
-	bool m_bForceUpgrade;
-	bool m_bGreatGeneral;
-	bool m_bSlave;
-	bool m_bRequiresStateReligionInCity;
-	mutable bool* m_abHasCombatType;
-	int m_iPrereqVicinityBonus;
-	int m_iBaseFoodChange;
-	int m_iControlPoints;
-	int m_iCommandRange;
-	int m_zobristValue;
-	CvString* m_paszClassicalArtDefineTags;
-	CvString* m_paszRennArtDefineTags;
-	CvString* m_paszIndustrialArtDefineTags;
-	CvString* m_paszFutureArtDefineTags;
-	CvWString* m_paszCivilizationNames;
-	std::vector<CvString> m_aszCivilizationNamesforPass3;
-	std::vector<CvWString> m_aszCivilizationNamesValueforPass3;
-
-	const BoolExpr* m_pExprTrainCondition;
-
-public:
-	int getDCMBombRange() const;
-	int getDCMBombAccuracy() const;
-	bool getDCMAirBomb1() const;
-	bool getDCMAirBomb2() const;
-	bool getDCMAirBomb3() const;
-	bool getDCMAirBomb4() const;
-	bool getDCMAirBomb5() const;
-	bool getDCMFighterEngage() const;
-
-	float getUnitMaxSpeed() const;
-	float getUnitPadTime() const;
-
-	bool canAcquireExperience() const;
-
-	// Arrays
-	int getFlavorValue(int i) const;
-	int getTerrainAttackModifier(int i) const;
-	int getTerrainDefenseModifier(int i) const;
-	int getFeatureAttackModifier(int i) const;
-	int getFeatureDefenseModifier(int i) const;
-	const IDValueMap<UnitTypes, int>& getUnitAttackModifiers() const { return m_piUnitAttackModifier; }
-	const IDValueMap<UnitTypes, int>& getUnitDefenseModifiers() const { return m_piUnitDefenseModifier; }
-	int getUnitCombatModifier(int i) const;
-	int getUnitCombatCollateralImmune(int i) const;
-	int getDomainModifier(int i) const;
-	int getBonusProductionModifier(int i) const;
-	int getUnitGroupRequired(int i) const;
-	int getReligionSpreads(int i) const;
-	int getCorporationSpreads(int i) const;
-	int getTerrainPassableTech(int i) const;
-	int getFeaturePassableTech(int i) const;
-	const IDValueMap<UnitTypes, int, -1>& getFlankingStrikeUnits() const { return m_piFlankingStrikeUnit; }
-
-	bool isPrereqOrCivics(int i) const;
-
-	const std::vector<BuildTypes>& getBuilds() const { return m_workerBuilds; }
-	BuildTypes getBuild(int i) const;
-	short getNumBuilds() const;
-	bool hasBuild(BuildTypes e) const;
-
-	int getPrereqAndBuilding(int i) const;
-	int getNumPrereqAndBuildings() const;
-	bool isPrereqAndBuilding(int i) const;
-	bool isPrereqOrBuilding(int i) const;
-
-	int getTargetUnit(int i) const;
-	int getNumTargetUnits() const;
-	bool isTargetUnit(int i) const;
-
-	int getDefendAgainstUnit(int i) const;
-	int getNumDefendAgainstUnits() const;
-	bool isDefendAgainstUnit(int i) const;
-
-	int getSupersedingUnit(int i) const;
-	short getNumSupersedingUnits() const;
-	bool isSupersedingUnit(int i) const;
-
-	int getUnitUpgrade(int i) const;
-	int getNumUnitUpgrades() const;
-	bool isUnitUpgrade(int i) const;
-
-	std::vector<int> getUnitUpgradeChain() const;
-	void addUnitToUpgradeChain(int i);
-
-	bool getTargetUnitCombat(int i) const;
-	bool getDefenderUnitCombat(int i) const;
-	bool getUnitAIType(int i) const;
-	bool getNotUnitAIType(int i) const;
-	bool getGreatPeoples(int i) const;
-
-	int getBuildings(int i) const;
-	bool getHasBuilding(int i) const;
-	int getNumBuildings() const;
-
-	int getHeritage(int i) const;
-	bool getHasHeritage(int i) const;
-	int getNumHeritage() const;
-
-	bool getTerrainNative(int i) const;
-	bool getFeatureNative(int i) const;
-	bool getFreePromotions(int i) const;
-	int getLeaderPromotion() const;
-	int getLeaderExperience() const;
-
-	const CvOutcomeList* getKillOutcomeList() const;
-	int getNumActionOutcomes() const;
-	const CvOutcomeList* getActionOutcomeList(int index) const;
-	MissionTypes getActionOutcomeMission(int index) const;
-	const CvOutcomeList* getActionOutcomeListByMission(MissionTypes eMission) const;
-	const CvOutcomeMission* getOutcomeMission(int index) const;
-	const CvOutcomeMission* getOutcomeMissionByMission(MissionTypes eMission) const;
-
-	const char* getEarlyArtDefineTag(int i, UnitArtStyleTypes eStyle) const;
-	void setEarlyArtDefineTag(int i, const char* szVal);
-	const char* getLateArtDefineTag(int i, UnitArtStyleTypes eStyle) const;
-	void setLateArtDefineTag(int i, const char* szVal);
-	const char* getMiddleArtDefineTag(int i, UnitArtStyleTypes eStyle) const;
-	void setMiddleArtDefineTag(int i, const char* szVal);
-	const char* getUnitNames(int i) const;
-	const char* getFormationType() const;
-
-	const char* getButton() const;
-	void updateArtDefineButton();
-
-	const CvArtInfoUnit* getArtInfo(int i, EraTypes eEra, UnitArtStyleTypes eStyle) const;
-
-	void getDataMembers(CvInfoUtil& util);
-	bool read(CvXMLLoadUtility* pXML);
-	bool readPass3();
-	void copyNonDefaults(CvUnitInfo* pClassInfo);
-	void getCheckSum(uint32_t& iSum) const;
-	void doPostLoadCaching(uint32_t iThis);
-
-private:
-	void buildTrainRequirements();
-
-	CvPropertyManipulators m_PropertyManipulators;
-
-	// #195 Phase 2: unified prerequisite description, derived at load from the typed fields.
-	std::vector<ConstructRequirement> m_trainRequirements;
-
-	int m_iDCMBombRange;
-	int m_iDCMBombAccuracy;
-	bool m_bDCMFighterEngage;
-	bool m_bDCMAirBomb1;
-	bool m_bDCMAirBomb2;
-	bool m_bDCMAirBomb3;
-	bool m_bDCMAirBomb4;
-	bool m_bDCMAirBomb5;
-
-	int m_iAIWeight;
-	int m_iProductionCost;
-	int m_iHurryCostModifier;
-	int m_iAdvancedStartCost;
-	int m_iMinAreaSize;
-	int m_iMoves;
-	int m_iAirRange;
-	int m_iAirUnitCap;
-	int m_iDropRange;
-	int m_iNukeRange;
-	int m_iWorkRate;
-	int m_iBaseDiscover;
-	int m_iDiscoverMultiplier;
-	int m_iBaseHurry;
-	int m_iHurryMultiplier;
-	int m_iBaseTrade;
-	int m_iTradeMultiplier;
-	int m_iGreatWorkCulture;
-	int m_iEspionagePoints;
-	int m_iCombat;
-	int m_iCombatLimit;
-	int m_iAirCombat;
-	int m_iAirCombatLimit;
-	int m_iXPValueAttack;
-	int m_iXPValueDefense;
-	int m_iFirstStrikes;
-	int m_iChanceFirstStrikes;
-	int m_iInterceptionProbability;
-	//ls612: Advanced Nuke Interception
-	//int m_iNukeInterceptionProbability;
-	//int m_iNukeInterceptionRange;
-	int m_iEvasionProbability;
-	int m_iWithdrawalProbability;
-	int m_iCollateralDamage;
-	int m_iCollateralDamageLimit;
-	int m_iCollateralDamageMaxUnits;
-	int m_iCityAttackModifier;
-	int m_iCityDefenseModifier;
-	int m_iAnimalCombatModifier;
-	int m_iHillsAttackModifier;
-	int m_iHillsDefenseModifier;
-	int m_iBombRate;
-	int m_iBombardRate;
-	int m_iSpecialCargo;
-	int m_iSMNotSpecialCargo;
-	int m_iDomainCargo;
-	int m_iCargoSpace;
-	int m_iSMCargoSpace;
-	int m_iSMCargoVolume;
-	int m_iConscriptionValue;
-	int m_iCultureGarrisonValue;
-	int m_iBaseUpkeep;
-	int m_iAssetValue;
-	int m_iPowerValue;
-	int m_iSpecialUnitType;
-	UnitTypes m_eUnitCaptureType;
-	int m_iUnitCombatType;
-	DomainTypes m_iDomainType;
-	UnitAITypes m_iDefaultUnitAIType;
-	int m_iInvisibleType;
-	int m_iAdvisorType;
-	int m_iMaxStartEra;
-	int m_iObsoleteTech;
-	bool m_bStateReligion;
-	int m_iPrereqGameOption;
-	int m_iNotGameOption;
-	int m_iHolyCity;
-	int m_iReligionType;
-	int m_iStateReligion;
-	int m_iPrereqReligion;
-	int m_iPrereqCorporation;
-	int m_iPrereqAndTech;
-	int m_iPrereqAndBonus;
-
-	std::vector<BuildTypes> m_workerBuilds;
-	std::vector<HeritageTypes> m_prereqAndHeritage;
-	std::vector<HeritageTypes> m_prereqOrHeritage;
-	std::vector<int> m_aiPrereqAndBuildings;
-	std::vector<int> m_aiPrereqOrBuildings;
-	std::vector<int> m_aiTargetUnit;
-	std::vector<int> m_aiDefendAgainstUnit;
-	std::vector<int> m_aiSupersedingUnits;
-	std::vector<int> m_aiUnitUpgrades;
-	std::vector<int> m_aiUnitUpgradeChain;
-
-	int m_iGroupSize;
-	int m_iGroupDefinitions;
-	int m_iUnitMeleeWaveSize;
-	int m_iUnitRangedWaveSize;
-	int m_iNumUnitNames;
-	int m_iCommandType;
-	int m_iLeaderExperience;
-
-	bool m_bFoodProduction;
-	bool m_bNoBadGoodies;
-	bool m_bOnlyDefensive;
-	bool m_bNoCapture;
-	bool m_bRivalTerritory;
-	bool m_bMilitaryHappiness;
-	bool m_bMilitarySupport;
-	bool m_bMilitaryProduction;
-	bool m_bPillage;
-	bool m_bSpy;
-	bool m_bSabotage;
-	bool m_bDestroy;
-	bool m_bStealPlans;
-	bool m_bInvestigate;
-	bool m_bCounterSpy;
-	bool m_bFound;
-	bool m_bGoldenAge;
-	bool m_bInvisible;
-	bool m_bFirstStrikeImmune;
-	bool m_bNoDefensiveBonus;
-	bool m_bIgnoreBuildingDefense;
-	bool m_bCanMoveImpassable;
-	bool m_bCanMoveAllTerrain;
-	bool m_bFlatMovementCost;
-	bool m_bIgnoreTerrainCost;
-	bool m_bNukeImmune;
-	bool m_bMechanized;
-	bool m_bRenderBelowWater;
-	bool m_bRenderAlways;
-	bool m_bSuicide;
-	bool m_bLineOfSight;
-	bool m_bHiddenNationality;
-	bool m_bAlwaysHostile;
-	bool m_bFreeDrop;
-	bool m_bNoRevealMap;
-	bool m_bInquisitor;
-
-	//ls612: Can't enter non-Owned cities
-	bool m_bNoNonOwnedEntry;
-
-	int m_iLeaderPromotion;
-
-	float m_fUnitMaxSpeed;
-	float m_fUnitPadTime;
-
-	// Arrays
-
-	std::vector<TechTypes> m_piPrereqAndTechs;
-	std::vector<BonusTypes> m_piPrereqOrBonuses;
-	int* m_piFlavorValue;
-	int* m_piTerrainAttackModifier;
-	int* m_piTerrainDefenseModifier;
-	int* m_piFeatureAttackModifier;
-	int* m_piFeatureDefenseModifier;
-	IDValueMap<UnitTypes, int> m_piUnitAttackModifier;
-	IDValueMap<UnitTypes, int> m_piUnitDefenseModifier;
-	int* m_piUnitCombatModifier;
-	int* m_piUnitCombatCollateralImmune;
-	int* m_piDomainModifier;
-	int* m_piBonusProductionModifier;
-	int* m_piUnitGroupRequired;
-	int* m_piReligionSpreads;
-	int* m_piCorporationSpreads;
-	int* m_piTerrainPassableTech;
-	int* m_piFeaturePassableTech;
-	IDValueMap<UnitTypes, int, -1> m_piFlankingStrikeUnit;
-
-	std::vector<CivicTypes> m_aePrereqOrCivics;
-
-	std::vector<UnitCombatTypes> m_aeTargetUnitCombat;
-	std::vector<UnitCombatTypes> m_aeDefenderUnitCombat;
-	std::vector<UnitAITypes> m_aiUnitAIs;
-	std::vector<UnitAITypes> m_aiNotUnitAIs;
-	std::vector<SpecialistTypes> m_aeGreatPeoples;
-	std::vector<int> m_pbBuildings;
-	std::vector<int> m_addHeritage;
-	std::vector<TerrainTypes> m_aeTerrainNative;
-	std::vector<FeatureTypes> m_aeFeatureNative;
-	std::vector<PromotionTypes> m_aeFreePromotions;
-
-	CvString* m_paszEarlyArtDefineTags;
-	CvString* m_paszLateArtDefineTags;
-	CvString* m_paszMiddleArtDefineTags;
-	CvString* m_paszUnitNames;
-	CvString m_szFormationType;
-	CvString m_szArtDefineButton;
-	CvWString m_szExtraHoverTextKey;
-
-	std::vector<int> m_aiSeeInvisibleTypes;
-
-	CvOutcomeList m_KillOutcomeList;
-	std::vector<const CvOutcomeMission*> m_aOutcomeMissions;
-
-	//TB Combat Mods Start  TB SubCombat Mod begin
-	//integers
-	int m_iAttackCombatModifier;
-	int m_iDefenseCombatModifier;
-	int m_iVSBarbs;
-	int m_iUnnerve;
-	int m_iEnclose;
-	int m_iLunge;
-	int m_iDynamicDefense;
-	int m_iEndurance;
-	int m_iPoisonProbabilityModifier;
-	int m_iCaptureProbabilityModifier;
-	int m_iCaptureResistanceModifier;
-	//WorkRateMod
-	int m_iHillsWorkModifier;
-	int m_iPeaksWorkModifier;
-
-	int m_iBreakdownChance;
-	int m_iBreakdownDamage;
-	int m_iTaunt;
-	int m_iMaxHP;
-	int m_iDamageModifier;
-	int m_iTotalCombatStrengthModifierBase;
-	int m_iTotalCombatStrengthChangeBase;
-	int m_iBaseCargoVolume;
-	int m_iRBombardDamage;
-	int m_iRBombardDamageLimit;
-	int m_iRBombardDamageMaxUnits;
-	int m_iBaseGroupRank;
-	int m_iCombatModifierPerSizeMore;
-	int m_iCombatModifierPerSizeLess;
-	int m_iCombatModifierPerVolumeMore;
-	int m_iCombatModifierPerVolumeLess;
-	int m_iSelfHealModifier;
-	int m_iNumHealSupport;
-	int m_iInsidiousness;
-	int m_iInvestigation;
-	int m_iStealthStrikes;
-	int m_iStealthCombatModifier;
-	int m_iTrapDamageMax;
-	int m_iTrapDamageMin;
-	int m_iTrapComplexity;
-	int m_iNumTriggers;
-	int m_iAggression;
-	int m_iAnimalIgnoresBorders;
-	int m_iReligiousCombatModifier;
-
-	//booleans
-	bool m_bStampede;
-	bool m_bOnslaught;
-	bool m_bAttackOnlyCities;
-	bool m_bIgnoreNoEntryLevel;
-	bool m_bIgnoreZoneofControl;
-	bool m_bFliesToMove;
-	bool m_bRBombardForceAbility;
-	bool m_bNoSelfHeal;
-	bool m_bExcile;
-	bool m_bPassage;
-	bool m_bNoNonOwnedCityEntry;
-	bool m_bBarbCoExist;
-	bool m_bBlendIntoCity;
-	bool m_bUpgradeAnywhere;
-	bool m_bAssassin;
-	bool m_bStealthDefense;
-	bool m_bNoInvisibility;
-	bool m_bTriggerBeforeAttack;
-	bool m_bCanAnimalIgnoresBorders;
-	bool m_bCanAnimalIgnoresImprovements;
-	bool m_bCanAnimalIgnoresCities;
-	bool m_bNoNonTypeProdMods;
-	bool m_bGatherHerd;
-	bool m_bCanMergeSplit;
-
-	std::vector<UnitCombatTypes> m_aiSubCombatTypes;
-	std::vector<int> m_aiHealAsTypes;
-	std::vector<TerrainTypes> m_vTerrainImpassableTypes;
-	std::vector<FeatureTypes> m_vFeatureImpassableTypes;
-	std::vector<MapCategoryTypes> m_aeMapCategoryTypes;
-	std::vector<int> m_aiTrapSetWithPromotionTypes;
-	std::vector<int> m_aiTrapImmunityUnitCombatTypes;
-	std::vector<int> m_aiCategories;
-
-	std::vector<HealUnitCombat> m_aHealUnitCombatTypes;
-	std::vector<GroupSpawnUnitCombat> m_aGroupSpawnUnitCombatTypes;
-	std::vector<InvisibleTerrainChanges> m_aInvisibleTerrainChanges;
-	std::vector<InvisibleFeatureChanges> m_aInvisibleFeatureChanges;
-	std::vector<InvisibleImprovementChanges> m_aInvisibleImprovementChanges;
-	std::vector<InvisibleTerrainChanges> m_aVisibleTerrainChanges;
-	std::vector<InvisibleFeatureChanges> m_aVisibleFeatureChanges;
-	std::vector<InvisibleImprovementChanges> m_aVisibleImprovementChanges;
-	std::vector<InvisibleTerrainChanges> m_aVisibleTerrainRangeChanges;
-	std::vector<InvisibleFeatureChanges> m_aVisibleFeatureRangeChanges;
-	std::vector<InvisibleImprovementChanges> m_aVisibleImprovementRangeChanges;
-	std::vector<EnabledCivilizations> m_aEnabledCivilizationTypes;
-	UnitCombatModifierArray m_aFlankingStrengthbyUnitCombatType;
-	UnitCombatModifierArray m_aTrapDisableUnitCombatTypes;
-	UnitCombatModifierArray m_aTrapAvoidanceUnitCombatTypes;
-	UnitCombatModifierArray m_aTrapTriggerUnitCombatTypes;
-	InvisibilityArray m_aVisibilityIntensityTypes;
-	InvisibilityArray m_aInvisibilityIntensityTypes;
-	InvisibilityArray m_aVisibilityIntensityRangeTypes;
-	TerrainModifierArray m_aTerrainWorkRateModifierTypes;
-	FeatureModifierArray m_aFeatureWorkRateModifierTypes;
-	BuildModifierArray m_aBuildWorkRateModifierTypes;
-
-	//Pediahelp
-	std::vector<int> m_aiQualifiedPromotionTypes;
+	UNIT_ART_ERA_EARLY = 0,
+	UNIT_ART_ERA_CLASSICAL,
+	UNIT_ART_ERA_MIDDLE,
+	UNIT_ART_ERA_RENAISSANCE,
+	UNIT_ART_ERA_INDUSTRIAL,
+	UNIT_ART_ERA_LATE,
+	UNIT_ART_ERA_FUTURE,
+
+	NUM_UNIT_ART_ERA_BANDS
 };
 
-#endif // CV_UNIT_INFO_H
+//	One <UnitMeshGroup>: how many members the formation requires of it, and the art it wears per era band.
+//	An unauthored band is an empty tag -- the resolution falls through it to the next band down.
+struct CvUnitMeshGroup
+{
+	CvUnitMeshGroup() : iRequired(0) {}
+
+	int iRequired;
+	std::string aszEraDefine[NUM_UNIT_ART_ERA_BANDS];
+};
+
+class CvUnitInfo : public CvInfo
+{
+public:
+	CvUnitInfo();
+	virtual void mapFrom(const picojson::value& entity);
+
+	// ======================= 1. SECTIONS -- whole typed objects =======================
+	virtual const CvRequires* getRequires() const { return &m_requires; }
+	virtual const CvEdges* getEdges() const { return &m_edges; }
+	virtual const CvAllowed* getAllowed() const { return &m_allowed; }
+	virtual const CvTriggers* getTriggers() const { return &m_triggers; }
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvClassificationBlock* getSkills() const { return &m_skills; }
+	virtual const CvClassificationBlock* getTags() const { return &m_tags; }
+	virtual const CvGate* getGate() const { return &m_gate; }
+	const CvHideAndSeekSection& getHideAndSeek() const { return m_hideAndSeek; }
+	const CvSizeMattersSection& getSizeMatters() const { return m_sizeMatters; }
+
+	// ======================= 2. CLASSIFICATION -- O(1) bitset tests, hold-vs-provide in the NAME (json par.8) ==
+	// What the unit HAS: its mutable abilities (skills) and its immutable type membership (tags). The ids are
+	// the ClassificationRegistry's runtime-minted SKILL_*/TAG_* infos.
+	bool hasSkills() const { return !m_skills.isEmpty(); }
+	bool hasTags() const { return !m_tags.isEmpty(); }
+
+	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums =======================
+	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. The census
+	// stragglers -- strength [ruling 5: the BASE value only, strength.unit.flat] / withdrawal / firstStrike
+	// strikes + chances / range -- read through the base getScalar. The batch-pending unkinded member
+	// culture.unit.garrison mints NO getter until its vocabulary/curator call lands (reported). The mixed-unit groups keep the flat-vs-modifier split in the NAME, the
+	// getFlatYield/getYieldModifier convention.)
+	int getFlatCombat(CombatKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_COMBAT, eKind, eScope, CASC_UNIT_FLAT); }
+	int getCombatModifier(CombatKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_COMBAT, eKind, eScope, CASC_UNIT_PERCENT); }
+	int getMovement(MovementKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_MOVEMENT, eKind, eScope, infoKindUnit(MODFAM_MOVEMENT, eKind, eScope)); }
+	int getFlatCollateral(CollateralKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_COLLATERAL, eKind, eScope, CASC_UNIT_FLAT); }
+	int getCollateralModifier(CollateralKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_COLLATERAL, eKind, eScope, CASC_UNIT_PERCENT); }
+	int getFlatBombard(BombardKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_BOMBARD, eKind, eScope, CASC_UNIT_FLAT); }
+	int getBombardModifier(BombardKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_BOMBARD, eKind, eScope, CASC_UNIT_PERCENT); }
+	int getAir(AirKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_AIR, eKind, eScope, infoKindUnit(MODFAM_AIR, eKind, eScope)); }
+	// cargo.space entries may carry the par.3.7 `unit:` predicate qualifier (a carrier restricted to a cargo
+	// class); the qualifier rides the compiled entries (CvModEntry::unitQual), evaluated at the CONSUMER
+	// against each cargo candidate -- the point sum here is the unqualified capacity plane.
+	int getCargo(CargoKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_CARGO, eKind, eScope, CASC_UNIT_FLAT); }
+	int getCapture(CaptureKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_CAPTURE, eKind, eScope, CASC_UNIT_FLAT); }
+	int getFlatHeal(HealKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_HEAL, eKind, eScope, CASC_UNIT_FLAT); }
+	int getHealModifier(HealKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_HEAL, eKind, eScope, CASC_UNIT_PERCENT); }
+	int getEspionage(EspionageKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_ESPIONAGE, eKind, eScope, CASC_UNIT_FLAT); }
+	// `underworld` is authored at UNIT scope as well as city ([json.md] §6: the in-city criminal contest --
+	// the city is the arena, the unit carries the stat). Both kinds are flats.
+	int getUnderworld(UnderworldKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_UNDERWORLD, eKind, eScope, CASC_UNIT_FLAT); }
+	// buildRate.self entries are bonus-conditioned (the legacy BonusProductionModifiers) -- the conditioned
+	// list carries them; this point read serves any unconditioned residue.
+	int getBuildRateModifier(BuildRateKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_BUILD_RATE, eKind, eScope, CASC_UNIT_PERCENT); }
+
+	// ======================= 4. INTRINSIC -- bare typed reads (the census identity set) =======================
+	// --- the root combat-class FKs (json par.8: combatClass/combatClasses are ROOT keys, not identity) ---
+	int getCombatClass() const { return m_iCombatClass; }                          // root `combatClass` (primary UNITCOMBAT_* FK)
+	const std::vector<int>& getCombatClasses() const { return m_aiCombatClasses; } // root `combatClasses` (sub classes)
+	bool hasCombatClass(int iUnitCombat) const
+	{ return m_iCombatClass == iUnitCombat || vectorHas(m_aiCombatClasses, iUnitCombat); }
+
+	// --- identity scalars/flags ---
+	bool isSpawnOnly() const { return m_bSpawnOnly; }             // identity.spawnOnly (never-buildable flag, json par.4.3)
+	/// <summary>The info's OWN offerability verdict: may this unit ever appear on a canTrain offer (owner
+	/// ruling)? The enabler's static exclusion folds THIS getter -- never per-flag logic assembled at the
+	/// consumer. Asker-dependent bars (the strongly-restricted NPC lockdown) are gate concerns and can never
+	/// live here: an info does not know who is asking.</summary>
+	bool isOfferable() const { return !m_bSpawnOnly; }
+	int getWorth() const { return m_iWorth; }                     // identity.worth (AI asset valuation config)
+	int getMilitaryWorth() const { return m_iMilitaryWorth; }     // identity.militaryWorth (power valuation config)
+	int getXpValueAttack() const { return m_iXpValueAttack; }     // identity.xpValueAttack
+	int getXpValueDefense() const { return m_iXpValueDefense; }   // identity.xpValueDefense
+	int getConscription() const { return m_iConscription; }       // identity.conscription
+	int getAggression() const { return m_iAggression; }           // identity.aggression (legacy load default 5)
+	int getAnimalCombat() const { return m_iAnimalCombat; }       // identity.animalCombat
+	int getCommandRange() const { return m_iCommandRange; }       // identity.commandRange (commander plane)
+	int getControlPoints() const { return m_iControlPoints; }     // identity.controlPoints (commander plane)
+	int getLeaderExperience() const { return m_iLeaderExperience; }   // identity.leaderExperience
+	int getMinAreaSize() const { return m_iMinAreaSize; }         // identity.minAreaSize
+	int getEspionagePoints() const { return m_iEspionagePoints; } // identity.espionagePoints
+	DomainTypes getDomain() const { return (DomainTypes)m_iDomain; }              // identity.domain
+	UnitAITypes getDefaultUnitAI() const { return (UnitAITypes)m_iDefaultUnitAI; }   // identity.defaultUnitAI
+	int getSpecialUnitType() const { return m_iSpecialUnitType; } // identity.special (SPECIALUNIT_* FK)
+	int getAdvisor() const { return m_iAdvisor; }                 // identity.advisor (ADVISOR_* FK)
+	int getLeaderPromotion() const { return m_iLeaderPromotion; } // identity.leaderPromotion (PROMOTION_* FK)
+	int getReligion() const { return m_iReligion; }               // identity.religion (RELIGION_* FK)
+	int getCaptures() const { return m_iCaptures; }               // identity.captures (UNIT_* FK -- what capturing yields)
+	const char* getFormationType() const { return m_szFormationType.c_str(); }    // identity.formationType
+
+	// --- identity.base (the create-unit foundation; strength/moves are FAMILIES, ruling 5 / json par.8) ---
+	int getWorkRate() const { return m_iWorkRate; }               // identity.base.workRate
+	int getAirCombat() const { return m_iAirCombat; }             // identity.base.airCombat
+	int getCombatLimit() const { return m_iCombatLimit; }         // identity.base.combatLimit (legacy default 100)
+	int getAirCombatLimit() const { return m_iAirCombatLimit; }   // identity.base.airCombatLimit
+	int getAirUnitCap() const { return m_iAirUnitCap; }           // identity.base.airUnitCap
+
+	// --- cost (json par.7) ---
+	int getProductionCost() const { return m_iProductionCost; }   // cost.production
+	int getUpkeepCost() const { return m_iUpkeepCost; }           // cost.upkeep
+	int getHurryCostModifier() const { return m_iHurryCostModifier; }   // cost.hurryCostModifier (own-cost data, ruling 18)
+	int getAdvancedStartCost() const { return m_iAdvancedStartCost; }   // identity.advancedStart.cost (legacy default 100)
+
+	// --- identity.cargo (the special-unit cargo RESTRICTIONS -- identity, not the cargo family) ---
+	int getSpecialCargo() const { return m_iSpecialCargo; }             // identity.cargo.special (SPECIALUNIT_* FK)
+	int getSMNotSpecialCargo() const { return m_iSMNotSpecialCargo; }   // identity.cargo.smNotSpecial (SPECIALUNIT_* FK)
+
+	// --- identity lists (whole typed containers) ---
+	const std::vector<int>& getUnitAIs() const { return m_aiUnitAIs; }         // identity.unitAIs
+	bool hasUnitAI(int iUnitAI) const { return vectorHas(m_aiUnitAIs, iUnitAI); }
+	const std::vector<int>& getNotUnitAIs() const { return m_aiNotUnitAIs; }   // identity.notUnitAIs
+	bool hasNotUnitAI(int iUnitAI) const { return vectorHas(m_aiNotUnitAIs, iUnitAI); }
+	const std::vector<MapCategoryTypes>& getMapCategories() const { return m_aeMapCategories; }   // identity.mapCategories
+	const std::vector<int>& getTerrainImpassable() const { return m_aiTerrainImpassable; }   // identity.terrainImpassable
+	bool isTerrainImpassable(int iTerrain) const { return vectorHas(m_aiTerrainImpassable, iTerrain); }
+	const std::vector<int>& getFeatureImpassable() const { return m_aiFeatureImpassable; }   // identity.featureImpassable
+	bool isFeatureImpassable(int iFeature) const { return vectorHas(m_aiFeatureImpassable, iFeature); }
+	const std::vector<int>& getDefendAgainstUnits() const { return m_aiDefendAgainstUnits; } // identity.defendAgainstUnit
+	bool isDefendAgainstUnit(int iUnit) const { return vectorHas(m_aiDefendAgainstUnits, iUnit); }
+	const std::vector<int>& getHeritage() const { return m_aiHeritage; }       // identity.heritage
+	const std::vector<std::string>& getUniqueNames() const { return m_aszUniqueNames; }   // identity.uniqueNames (raw name/TXT strings)
+	// identity.{feature|terrain}PassableTechs -- substrate id -> the tech that opens passage (-1 = none).
+	const std::map<int, int>& getFeaturePassableTechs() const { return m_featurePassableTechs; }
+	const std::map<int, int>& getTerrainPassableTechs() const { return m_terrainPassableTechs; }
+	// The POINT reads over those two maps -- the keyed-group `value(id)` shape ([contexts.md] COUNTS, not
+	// objects), the same form getReligionSpreadStrength takes. A mover asks about the ONE substrate it is
+	// standing on; it never walks the terrain/feature database asking which entries this unit has a tech for.
+	// ABSENT answers NO_TECH (-1), which is what the passability gate tests for -- never 0, a real tech id.
+	int getFeaturePassableTech(int iFeature) const { return mapValueOrDefault(m_featurePassableTechs, iFeature, -1); }
+	int getTerrainPassableTech(int iTerrain) const { return mapValueOrDefault(m_terrainPassableTechs, iTerrain, -1); }
+
+	// --- the par.8 combat targeting/immunity keyed sets (json par.8: value-carrying keyed targeting is the
+	// combat family's, not a skill). The family-scoped target tokens compile the maps as targeted COUNT
+	// entries; these typed keyed members are MATERIALIZED at mapFrom from the compiled entry list. ---
+	const std::set<int>& getTargetUnitCombats() const { return m_targetUnitCombats; }      // combat.unit.targets.{UC}
+	bool hasTargetUnitCombat(int iUnitCombat) const { return m_targetUnitCombats.count(iUnitCombat) != 0; }
+	const std::set<int>& getDefenderUnitCombats() const { return m_defenderUnitCombats; }  // combat.unit.defenders.{UC}
+	bool hasDefenderUnitCombat(int iUnitCombat) const { return m_defenderUnitCombats.count(iUnitCombat) != 0; }
+	const std::vector<int>& getTargetUnits() const { return m_aiTargetUnits; }             // combat.unit.unitTargets
+	bool hasTargetUnit(int iUnit) const { return vectorHas(m_aiTargetUnits, iUnit); }
+
+	// --- par.8 `builds` -- the unit type's worker-build repertoire (BUILD_* FKs) ---
+	const std::vector<int>& getBuilds() const { return m_aiBuilds; }
+	bool hasBuild(int iBuild) const { return vectorHas(m_aiBuilds, iBuild); }
+
+	// --- par.9 bespoke sections ---
+	const std::map<int, int>& getReligionSpread() const { return m_religionSpread; }         // spread.religion.{RELIGION}: strength
+	const std::map<int, int>& getCorporationSpread() const { return m_corporationSpread; }   // spread.corporation.{CORP}: strength
+	// The POINT reads over those two maps -- the keyed-group `count(id)` shape ([contexts.md] COUNTS, not
+	// objects). A consumer asking about ONE religion/corporation indexes the group here; it never sweeps the
+	// religion/corporation database asking each id whether this unit spreads it.
+	int getReligionSpreadStrength(int iReligion) const
+	{ const std::map<int, int>::const_iterator it = m_religionSpread.find(iReligion); return it != m_religionSpread.end() ? it->second : 0; }
+	int getCorporationSpreadStrength(int iCorporation) const
+	{ const std::map<int, int>::const_iterator it = m_corporationSpread.find(iCorporation); return it != m_corporationSpread.end() ? it->second : 0; }
+	const std::vector<GroupSpawnUnitCombat>& getGroupSpawn() const { return m_groupSpawn; }  // groupSpawn rows {unitCombat, chance, title}
+	// A unit's DIRECT upgrades are its par.4.3 `requires.build.dormant.all` ids -- the upgrades MINUS any that
+	// also supersede it, which is precisely the set the dormancy gate recurses (enabler.md par.3). CvRequires
+	// already materializes them, so this is a bare read of that one store, never a second copy of the list.
+	// The superseders are the sibling `replacedBy.units` below; a consumer wanting both unions the two.
+	const std::vector<int>& getUpgradesTo() const { return dormantTriggers(); }
+	bool isUpgradeTo(int iUnit) const { return vectorHas(dormantTriggers(), iUnit); }
+	const std::vector<int>& getReplacedByUnits() const { return m_aiReplacedByUnits; }   // replacedBy.units (the par.4.2 superseders)
+	// the upgrade CHAIN -- every unit transitively reachable over the direct upgrades above (the whole upgrade
+	// TREE: chains, obsolete intermediates, cycles); derived by deriveAtRegistryComplete, not JSON-mapped.
+	const std::vector<int>& getUpgradeChain() const { return m_aiUpgradeChain; }
+
+	// --- grants (par.5 payload) -- the lists materialized at mapFrom (bucket-string reads are load-time only) ---
+	const std::vector<int>& getGrantedPromotions() const { return m_aiGrantedPromotions; }   // grants.promotions
+	bool grantsPromotion(int iPromotion) const { return vectorHas(m_aiGrantedPromotions, iPromotion); }
+	const std::vector<int>& getGrantedGreatPeople() const { return m_aiGrantedGreatPeople; } // grants.greatPeople
+	bool grantsGreatPerson(int iSpecialist) const { return vectorHas(m_aiGrantedGreatPeople, iSpecialist); }
+	const std::vector<int>& getGrantedBuildings() const { return m_aiGrantedBuildings; }     // grants.buildings
+	bool grantsBuilding(int iBuilding) const { return vectorHas(m_aiGrantedBuildings, iBuilding); }
+	// grants.greatPersonAction.<act>.{base,multiplier} -- the GP mission-payload magnitudes (the par.8
+	// `missions` carve-out's data, parked under grants today).
+	int getDiscoverBase() const { return m_iDiscoverBase; }
+	int getDiscoverMultiplier() const { return m_iDiscoverMultiplier; }
+	int getHurryBase() const { return m_iHurryBase; }
+	int getHurryMultiplier() const { return m_iHurryMultiplier; }
+	int getTradeBase() const { return m_iTradeBase; }
+	int getTradeMultiplier() const { return m_iTradeMultiplier; }
+	int getGreatWorkBase() const { return m_iGreatWorkBase; }
+	int getFoodBase() const { return m_iFoodBase; }
+
+	// --- ai metadata ---
+	int getAIWeight() const { return m_iAIWeight; }               // ai.behaviour.weight
+	int getFlavour(int iFlavour) const { return mapValueOrDefault(m_flavours, iFlavour); }   // ai.flavours
+
+	// --- ui/world art (the ART_DEF_* tag resolved through ArtFileMgr -- the CvBonusInfo shim leaf) ---
+	// The MESH GROUPS the EXE lays the unit out and animates it through: the formation's own numbers, and the
+	// per-group art keyed by era band. Answering these with absent values does not degrade to "no art" -- a max
+	// animation speed of 0 plays the walk cycle without translating, and 0 group definitions leaves the models
+	// with no per-member offsets (json.md par.7).
+	const CvArtInfoUnit* getArtInfo(int iIndex, EraTypes eEra, UnitArtStyleTypes eStyle) const;
+	const char* getButton() const;   // art-define button (units carry no ui.art.icon)
+	int getGroupSize() const { return m_iMeshGroupSize; }
+	int getGroupDefinitions() const { return (int)m_meshGroups.size(); }
+	int getUnitGroupRequired(int iGroup) const;
+	int getMeleeWaveSize() const { return m_iMeleeWaveSize; }
+	int getRangedWaveSize() const { return m_iRangedWaveSize; }
+	// Art, in the EXE's own animation units -- no fixed-point scale, and never a cascade input.
+	float getAnimationMaxSpeed() const { return m_fAnimationMaxSpeed; }
+	float getAnimationPadTime() const { return m_fAnimationPadTime; }
+
+	// --- runtime members (documented write-once seams) ---
+	// Non-XML runtime map-hash, drawn from the synced RNG in the ctor (archive mirror; seeds CvUnit's
+	// movement-characteristics hash).
+	int getZobristValue() const { return m_iZobristValue; }
+	// RUNTIME command-type: SetGlobalActionInfo assigns COMMAND_UPGRADE at load and reads it back -- must be
+	// stored (a -1 stub crashes SetGlobalActionInfo).
+	int getCommandType() const { return m_iCommandType; }
+	void setCommandType(int iNewType) { m_iCommandType = iNewType; }
+
+	// --- load-derived reads (json par.9 sizeMatters: the ranks are DERIVED at load, never stored on the data) ---
+	// The members are materialized by deriveAtRegistryComplete (the reversePassRun post-map derivation step,
+	// runnable only once the FULL registry is mapped); the getters are bare member reads.
+	// Sigma over the unit's combat classes (primary + subs) of each class's sizeMatters *Base where > -10 (the
+	// "unset" sentinel). The group rank feeds getUnitCountSM (count / 3^(rank-1)) -- a stubbed 0 integer-divides
+	// by zero there.
+	int getBaseQualityRank() const { return m_iBaseQualityRank; }
+	int getBaseGroupRank() const { return m_iBaseGroupRank; }
+	int getBaseSizeRank() const { return m_iBaseSizeRank; }
+	int getBaseCargoVolume() const { return m_iBaseCargoVolume; }   // the derived SM cargo volume (>= 1)
+	// 100 x (strength base [air: identity.base.airCombat] + the combat-class flat-combat sum), SM-scaled by
+	// the derived modifier base when bSizeMatters.
+	int getTotalModifiedCombatStrength(bool bSizeMatters) const;
+	// Derived: the unit's era = its first prereq tech's era (NO_ERA when tech-free).
+	int getEra() const { return m_iEra; }
+	// Derived: a unit can gain XP iff SOME promotion applies to its primary combat class.
+	bool canAcquireExperience() const { return m_bCanAcquireExperience; }
+
+	// The post-map LOAD-WINDOW derivation seam (write-once-at-load, the mapFrom sibling): reversePassRun calls
+	// this for every unit AFTER the full registry is mapped. Recompute-assigns EVERY derived member each run
+	// (clear-first, idempotent). The two inputs the unit cannot resolve itself are computed by the pass: the
+	// first prereq TECH atom's era (atom-kind routing lives in the load pipeline) and the union of combat
+	// classes some promotion applies to (one cross-registry precompute, shared by all units).
+	void deriveAtRegistryComplete(int iFirstPrereqTechEra, const std::set<int>& combatClassesWithPromotions);
+
+	// ======================= the CvOutcome kill/action-mission system (par.8 outcomes) =======================
+	// Fed from the unit's `outcomes` JSON (the composed section parses it). Forwards keep the outward surface
+	// unchanged (CvOutcomeListMerged consumers).
+	const CvOutcomeList* getKillOutcomeList() const { return m_outcomes.getKillOutcomeList(); }
+	int getNumActionOutcomes() const { return m_outcomes.getNumActionOutcomes(); }
+	const CvOutcomeList* getActionOutcomeList(int iIndex) const { return m_outcomes.getActionOutcomeList(iIndex); }
+	MissionTypes getActionOutcomeMission(int iIndex) const { return m_outcomes.getActionOutcomeMission(iIndex); }
+	const CvOutcomeList* getActionOutcomeListByMission(MissionTypes eMission) const { return m_outcomes.getActionOutcomeListByMission(eMission); }
+	const CvOutcomeMission* getOutcomeMission(int iIndex) const { return m_outcomes.getOutcomeMission(iIndex); }
+	const CvOutcomeMission* getOutcomeMissionByMission(MissionTypes eMission) const { return m_outcomes.getOutcomeMissionByMission(eMission); }
+
+	// --- the property engine (fed from the unit's PROPERTY_* families in mapFrom) ---
+	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
+
+protected:
+	virtual CvRequires* mutRequires() { return &m_requires; }
+	virtual CvEdges* mutEdges() { return &m_edges; }
+	virtual CvAllowed* mutAllowed() { return &m_allowed; }
+	virtual CvTriggers* mutTriggers() { return &m_triggers; }
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvClassificationBlock* mutSkills() { return &m_skills; }
+	virtual CvClassificationBlock* mutTags() { return &m_tags; }
+	virtual CvGate* mutGate() { return &m_gate; }
+
+private:
+	// --- the composed section units ---
+	CvRequires m_requires;
+	CvEdges m_edges;
+	CvAllowed m_allowed;
+	CvTriggers m_triggers;
+	CvModifiers m_modifiers;
+	CvClassificationBlock m_skills;
+	CvClassificationBlock m_tags;
+	CvGate m_gate;
+	CvHideAndSeekSection m_hideAndSeek;
+	CvSizeMattersSection m_sizeMatters;
+	CvOutcomesSection m_outcomes;
+
+	// --- the intrinsic identity members (materialized once at mapFrom) ---
+	int m_iCombatClass;
+	std::vector<int> m_aiCombatClasses;
+	bool m_bSpawnOnly;
+	int m_iWorth;
+	int m_iMilitaryWorth;
+	int m_iXpValueAttack;
+	int m_iXpValueDefense;
+	int m_iConscription;
+	int m_iAggression;
+	int m_iAnimalCombat;
+	int m_iCommandRange;
+	int m_iControlPoints;
+	int m_iLeaderExperience;
+	int m_iMinAreaSize;
+	int m_iEspionagePoints;
+	int m_iDomain;
+	int m_iDefaultUnitAI;
+	int m_iSpecialUnitType;
+	int m_iAdvisor;
+	int m_iLeaderPromotion;
+	int m_iReligion;
+	int m_iCaptures;
+	std::string m_szFormationType;
+	int m_iWorkRate;
+	int m_iAirCombat;
+	int m_iCombatLimit;
+	int m_iAirCombatLimit;
+	int m_iAirUnitCap;
+	int m_iProductionCost;
+	int m_iUpkeepCost;
+	int m_iHurryCostModifier;
+	int m_iAdvancedStartCost;
+	int m_iSpecialCargo;
+	int m_iSMNotSpecialCargo;
+	std::vector<int> m_aiUnitAIs;
+	std::vector<int> m_aiNotUnitAIs;
+	std::vector<MapCategoryTypes> m_aeMapCategories;
+	std::vector<int> m_aiTerrainImpassable;
+	std::vector<int> m_aiFeatureImpassable;
+	std::vector<int> m_aiDefendAgainstUnits;
+	std::vector<int> m_aiHeritage;
+	std::vector<std::string> m_aszUniqueNames;
+	std::map<int, int> m_featurePassableTechs;
+	std::map<int, int> m_terrainPassableTechs;
+
+	// --- the par.8 keyed targeting/immunity containers (materialized from the compiled targeted entries) ---
+	std::set<int> m_targetUnitCombats;
+	std::set<int> m_defenderUnitCombats;
+	std::vector<int> m_aiTargetUnits;
+
+	// --- par.8/par.9 bespoke section data ---
+	std::vector<int> m_aiBuilds;
+	std::map<int, int> m_religionSpread;
+	std::map<int, int> m_corporationSpread;
+	std::vector<GroupSpawnUnitCombat> m_groupSpawn;
+	std::vector<int> m_aiReplacedByUnits;
+	std::vector<int> m_aiUpgradeChain;   // derived: the direct-upgrade transitive closure (deriveAtRegistryComplete)
+
+	// --- grants materialization + GP-action magnitudes ---
+	std::vector<int> m_aiGrantedPromotions;
+	std::vector<int> m_aiGrantedGreatPeople;
+	std::vector<int> m_aiGrantedBuildings;
+	int m_iDiscoverBase;
+	int m_iDiscoverMultiplier;
+	int m_iHurryBase;
+	int m_iHurryMultiplier;
+	int m_iTradeBase;
+	int m_iTradeMultiplier;
+	int m_iGreatWorkBase;
+	int m_iFoodBase;
+
+	// --- ai metadata ---
+	int m_iAIWeight;
+	std::map<int, int> m_flavours;
+
+	// --- art / runtime ---
+	std::string m_szArtDefineTag;      // world.art.define
+	std::vector<CvUnitMeshGroup> m_meshGroups;   // world.art.meshGroups.groups
+	int m_iMeshGroupSize;              // world.art.meshGroups.groupSize
+	int m_iMeleeWaveSize;              // world.art.meshGroups.meleeWaveSize
+	int m_iRangedWaveSize;             // world.art.meshGroups.rangedWaveSize
+	float m_fAnimationMaxSpeed;        // world.art.meshGroups.maxSpeed
+	float m_fAnimationPadTime;         // world.art.meshGroups.padTime
+	int m_iZobristValue;               // runtime map-hash (ctor draw; a re-map must not redraw the synced RNG)
+	int m_iCommandType;                // runtime command-type (SetGlobalActionInfo)
+
+	// --- load-derived members (written ONLY by deriveAtRegistryComplete inside the load window; an info holds
+	// no cache or dirty flag -- patterns.md INFO DATA-OUT) ---
+	int m_iBaseQualityRank;    // Sigma combat classes' sizeMatters qualityBase where > -10
+	int m_iBaseGroupRank;      // Sigma combat classes' sizeMatters groupBase where > -10
+	int m_iBaseSizeRank;       // Sigma combat classes' sizeMatters sizeBase where > -10
+	int m_iSMChangeBase;    // Sigma combat classes' flat-combat sum (x100)
+	int m_iSMModifierBase;     // Sigma (quality/size/group base - 5) where > -10 (human ranks)
+	int m_iBaseCargoVolume;    // derived SM cargo volume (>= 1)
+	int m_iEra;                // first prereq TECH atom's era (NO_ERA when tech-free)
+	bool m_bCanAcquireExperience;   // SOME promotion applies to the primary combat class
+
+	CvPropertyManipulators m_PropertyManipulators;   // fed from the PROPERTY_* families (CascadePropertyBridge)
+};
+
+#endif // CV_JSON_UNIT_INFO_H

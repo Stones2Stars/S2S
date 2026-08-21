@@ -1,0 +1,44 @@
+{
+ "type": "PROMOTION_HUNTER_GREAT",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_HUNTER3"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": -5,
+   "unitCombat": {
+    "UNITCOMBAT_ANIMAL": {
+     "percent": 30
+    }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "skills": {
+  "blitz": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_HUNTER": 4
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/hunter4.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_HUNTER_GREAT"
+ }
+}

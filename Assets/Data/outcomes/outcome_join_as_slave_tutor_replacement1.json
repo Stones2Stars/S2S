@@ -1,0 +1,21 @@
+{
+ "type": "OUTCOME_JOIN_AS_SLAVE_TUTOR_REPLACEMENT1",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_JOIN_AS_SLAVE_TUTOR",
+  "message": "TXT_KEY_OUTCOME_JOIN_AS_SLAVE_TUTOR_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SLAVE_COMPOUND"
+   ]
+  }
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city",
+ "replaces": [
+  "OUTCOME_JOIN_AS_SLAVE_TUTOR"
+ ]
+}

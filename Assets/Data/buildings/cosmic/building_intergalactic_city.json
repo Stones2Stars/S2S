@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_INTERGALACTIC_CITY",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_LOGISTICS_CENTER",
+   "BUILDING_INTERGALACTIC_STARPORT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SPACE_CREASING",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "cost": {
+  "production": 2634,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_CITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_CITY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

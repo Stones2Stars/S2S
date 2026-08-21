@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_PARROTFISH_NETS",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_FISH"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_AUTOMATED_URBANIZATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AQUAFARM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SAILING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FISHING_NETS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_WHALE",
+     "scope": "city",
+     "connection": "onSite"
+    },
+    {
+     "type": "BONUS_PEARLS",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ],
+   "dormant": [
+    "BUILDING_AQUAFARM"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 132,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PARROTFISH_NETS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PARROTFISH_NETS",
+  "civilopedia": "TXT_KEY_BUILDING_PARROTFISH_NETS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

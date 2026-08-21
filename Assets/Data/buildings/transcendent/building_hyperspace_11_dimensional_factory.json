@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_HYPERSPACE_11_DIMENSIONAL_FACTORY",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERSPACE_TRANSFINITE_SUPERCOMPUTER",
+   "BUILDING_YOTTAVERSE_PORTAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HYPERFACTORY",
+    "TECH_DECOMPACTIFIED_SPACE",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 2182,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYPERSPACE_11_DIMENSIONAL_FACTORY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_11_DIMENSIONAL_FACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_11_DIMENSIONAL_FACTORY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

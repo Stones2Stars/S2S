@@ -1,0 +1,101 @@
+{
+ "type": "BUILDING_TOKYO_SKY_TREE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SKYSCRAPER",
+    "TECH_COMMUNICATION_NETWORKS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_BROADCAST_TOWER": {
+     "flat": 3
+    },
+    "BUILDING_COMMUNICATION_TOWER": {
+     "flat": 3
+    },
+    "BUILDING_NETWORK_NODE": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "vision": {
+  "city": {
+   "elevation": {
+    "flat": 300
+   }
+  }
+ },
+ "cost": {
+  "production": 11550,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_TOKYO_SKY_TREE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TOKYO_SKY_TREE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TOKYO_SKY_TREE",
+  "civilopedia": "TXT_KEY_BUILDING_TOKYO_SKY_TREE_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

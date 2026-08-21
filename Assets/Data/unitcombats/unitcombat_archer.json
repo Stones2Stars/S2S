@@ -1,0 +1,25 @@
+{
+ "type": "UNITCOMBAT_ARCHER",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -10
+   },
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "tags": [
+  "archery"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/archers.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ARCHER",
+  "forMilitary": true
+ }
+}

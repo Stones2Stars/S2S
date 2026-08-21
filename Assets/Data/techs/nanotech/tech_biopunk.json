@@ -1,0 +1,65 @@
+{
+ "type": "TECH_BIOPUNK",
+ "enables": {
+  "bonuses": [
+   "BONUS_BIOPUNK"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_PUNK_BIO"
+  ],
+  "units": [
+   "UNIT_ORGANIC_INFANTRY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MAINSTREAM_CLONING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AUGMENTED_CONSUMABLES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 40165
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/biopunk.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_BIOPUNK",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_BIOPUNK",
+  "civilopedia": "TXT_KEY_TECH_BIOPUNK_PEDIA",
+  "quote": "TXT_KEY_TECH_BIOPUNK_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 6,
+  "gridX": 103,
+  "gridY": 11,
+  "tradeable": true
+ }
+}

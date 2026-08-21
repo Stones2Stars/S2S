@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_MASSAGETAE",
+ "enables": {
+  "units": [
+   "UNIT_MAUES",
+   "UNIT_SAKA_CATAPHRACT",
+   "UNIT_STEPPE_RIDER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MASSAGETAE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MASSAGETAE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "type": "SPECIALIST_MERCHANT",
+ "commerce": {
+  "city": {
+   "flat": 3
+  },
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_ADAM_SMITHS_TRADING_COMPANY",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_MARCO_POLOS_EMBASSY",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_SILK_ROAD",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "CIVIC_CONFEDERACY",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 50,
+     "enabled": {
+      "type": "CIVIC_CAPITALIST",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "CIVIC_GUILDS",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_TRADE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/merchant.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/merchant.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_MERCHANT",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
+  "visible": true,
+  "categories": [
+   "CATEGORY_ASSIGNABLE_SPECIALISTS",
+   "CATEGORY_SPECIALIST_GROUP_ECONOMIC"
+  ],
+  "greatPeopleUnit": "UNIT_MERCHANT"
+ }
+}

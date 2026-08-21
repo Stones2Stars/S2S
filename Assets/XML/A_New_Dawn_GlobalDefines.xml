@@ -76,11 +76,6 @@
 		<iDefineIntVal>50</iDefineIntVal>
 	</Define>
 	<Define>
-		<!-- Afforess: How much Golden Ages lower the food requirement for city growth -->
-		<DefineName>GOlDEN_AGE_PERCENT_LESS_FOOD_FOR_GROWTH</DefineName>
-		<iDefineIntVal>-25</iDefineIntVal>
-	</Define>
-	<Define>
 		<DefineName>TEST_GAMEFONTS</DefineName>
 		<iDefineIntVal>0</iDefineIntVal>
 	</Define>

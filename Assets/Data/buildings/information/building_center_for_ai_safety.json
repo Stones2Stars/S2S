@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_CENTER_FOR_AI_SAFETY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_APPLIED_SOCIOLOGY_LAB",
+    "TECH_COMPUTATIONAL_SOCIOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_INTUITIVE_ALGORITHMS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 5010,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CENTER_FOR_AI_SAFETY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CENTER_FOR_AI_SAFETY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CENTER_FOR_AI_SAFETY",
+  "civilopedia": "TXT_KEY_BUILDING_CENTER_FOR_AI_SAFETY_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

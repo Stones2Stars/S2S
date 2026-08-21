@@ -1,0 +1,65 @@
+{
+ "type": "TECH_COMPUTER_NETWORKS",
+ "enables": {
+  "buildings": [
+   "BUILDING_COMPUTER_NETWORK",
+   "BUILDING_ELECTRONIC_GAMING_LEAGUE",
+   "BUILDING_SILICON_VALLEY"
+  ],
+  "techs": [
+   "TECH_MICROPROCESSOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PERSONAL_COMPUTERS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "freeTechs": 1
+ },
+ "cost": {
+  "research": 14287
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GOLD": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/Networks.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,5,13"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_COMPUTER_NETWORKS",
+  "soundMP": "AS2D_TECH_COMPUTER_NETWORKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_COMPUTER_NETWORKS",
+  "civilopedia": "TXT_KEY_TECH_COMPUTER_NETWORKS_PEDIA",
+  "quote": "TXT_KEY_TECH_COMPUTER_NETWORKS_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 82,
+  "gridY": 17
+ }
+}

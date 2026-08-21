@@ -1,0 +1,648 @@
+{
+ "type": "UNIT_CAPTIVE_MILITARY",
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_CAPTIVE_MILITARY"
+  }
+ },
+ "skills": [
+  "onlyDefensive",
+  "tradable"
+ ],
+ "tags": [
+  "landUnit",
+  "captive",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_CAPTIVE",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_FREE_CAPTIVE",
+    "requires": {
+     "outcome": "OUTCOME_SET_CAPTIVE_FREE"
+    },
+    "chance": 100,
+    "food": 55
+   },
+   {
+    "mission": "MISSION_SELL_CAPTIVE",
+    "requires": {
+     "outcome": "OUTCOME_SLAVE_SALE_NOT_SLAVERY",
+     "plot": "IS_OWNED"
+    },
+    "chance": 100,
+    "commerce": 3
+   },
+   {
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_GATHERER",
+    "requires": {
+     "outcome": "OUTCOME_UPGRADE_TO_GATHERER",
+     "plot": {
+      "noneOf": [
+       "IS_ANARCHY"
+      ]
+     }
+    },
+    "chance": 100,
+    "spawns": {
+     "unit": "UNIT_GATHERER"
+    }
+   },
+   {
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_WORKER",
+    "requires": {
+     "outcome": "OUTCOME_UPGRADE_TO_WORKER",
+     "plot": {
+      "noneOf": [
+       "IS_ANARCHY"
+      ]
+     }
+    },
+    "chance": 100,
+    "spawns": {
+     "unit": "UNIT_WORKER"
+    }
+   },
+   {
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_STONE_THROWER",
+    "requires": {
+     "outcome": "OUTCOME_UPGRADE_TO_STONE_THROWER",
+     "plot": {
+      "noneOf": [
+       "IS_ANARCHY"
+      ]
+     }
+    },
+    "chance": 100,
+    "spawns": {
+     "unit": "UNIT_STONE_THROWER"
+    }
+   },
+   {
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_ARCHER",
+    "outcomes": [
+     {
+      "requires": {
+       "outcome": "OUTCOME_UPGRADE_TO_ARCHER",
+       "plot": {
+        "noneOf": [
+         "IS_ANARCHY"
+        ]
+       }
+      },
+      "chance": 100,
+      "spawns": {
+       "unit": "UNIT_ARCHER"
+      }
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_UPGRADE_TO_ARCHER_REPLACEMENT1",
+       "plot": {
+        "noneOf": [
+         "IS_ANARCHY"
+        ]
+       }
+      },
+      "chance": 100,
+      "spawns": {
+       "unit": "UNIT_ARCHER"
+      }
+     }
+    ]
+   },
+   {
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_AXEMAN",
+    "outcomes": [
+     {
+      "requires": {
+       "outcome": "OUTCOME_UPGRADE_TO_AXEMAN",
+       "plot": {
+        "noneOf": [
+         "IS_ANARCHY"
+        ]
+       }
+      },
+      "chance": 100,
+      "spawns": {
+       "unit": "UNIT_AXEMAN"
+      }
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_UPGRADE_TO_AXEMAN_REPLACEMENT1",
+       "plot": {
+        "noneOf": [
+         "IS_ANARCHY"
+        ]
+       }
+      },
+      "chance": 100,
+      "spawns": {
+       "unit": "UNIT_AXEMAN"
+      }
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_UPGRADE_TO_AXEMAN_REPLACEMENT2",
+       "plot": {
+        "noneOf": [
+         "IS_ANARCHY"
+        ]
+       }
+      },
+      "chance": 100,
+      "spawns": {
+       "unit": "UNIT_AXEMAN"
+      }
+     }
+    ]
+   },
+   {
+    "mission": "MISSION_CAPTIVE_UPGRADE_TO_SPEARMAN",
+    "outcomes": [
+     {
+      "requires": {
+       "outcome": "OUTCOME_UPGRADE_TO_SPEARMAN",
+       "plot": {
+        "noneOf": [
+         "IS_ANARCHY"
+        ]
+       }
+      },
+      "chance": 100,
+      "spawns": {
+       "unit": "UNIT_SPEARMAN"
+      }
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_UPGRADE_TO_SPEARMAN_REPLACEMENT1",
+       "plot": {
+        "noneOf": [
+         "IS_ANARCHY"
+        ]
+       }
+      },
+      "chance": 100,
+      "spawns": {
+       "unit": "UNIT_SPEARMAN"
+      }
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_UPGRADE_TO_SPEARMAN_REPLACEMENT2",
+       "plot": {
+        "noneOf": [
+         "IS_ANARCHY"
+        ]
+       }
+      },
+      "chance": 100,
+      "spawns": {
+       "unit": "UNIT_SPEARMAN"
+      }
+     }
+    ]
+   },
+   {
+    "mission": "MISSION_JOIN_CITY_AS_SETTLED_SLAVE",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE",
+     "plot": {
+      "all": [
+       {
+        "python": "hasSufficientPopulation"
+       },
+       "IS_OWNED"
+      ]
+     }
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlave"
+    }
+   },
+   {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_FOOD",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE_FOOD",
+     "plot": {
+      "all": [
+       {
+        "python": "getNumNonSpecialistSlavesFood"
+       },
+       "IS_OWNED"
+      ]
+     }
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlaveFood"
+    }
+   },
+   {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_PRODUCTION",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE_PRODUCTION",
+     "plot": {
+      "all": [
+       {
+        "python": "getNumNonSpecialistSlavesProduction"
+       },
+       "IS_OWNED"
+      ]
+     }
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlaveProduction"
+    }
+   },
+   {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_COMMERCE",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE_COMMERCE",
+     "plot": {
+      "all": [
+       {
+        "python": "getNumNonSpecialistSlavesCommerce"
+       },
+       "IS_OWNED"
+      ]
+     }
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlaveCommerce"
+    }
+   },
+   {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_HEALTH",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE_HEALTH",
+     "plot": {
+      "all": [
+       {
+        "python": "getNumNonSpecialistSlavesHealth"
+       },
+       "IS_OWNED"
+      ]
+     }
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlaveHealth"
+    }
+   },
+   {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_ENTERTAINMENT",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE_ENTERTAINMENT",
+     "plot": {
+      "all": [
+       {
+        "python": "getNumNonSpecialistSlavesEntertainment"
+       },
+       "IS_OWNED"
+      ]
+     }
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlaveEntertainment"
+    }
+   },
+   {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_TUTOR",
+    "outcomes": [
+     {
+      "requires": {
+       "outcome": "OUTCOME_JOIN_AS_SLAVE_TUTOR",
+       "plot": {
+        "all": [
+         {
+          "python": "getNumNonSpecialistSlavesTutor"
+         },
+         "IS_OWNED"
+        ]
+       }
+      },
+      "chance": 100,
+      "python": {
+       "callback": "doAddSettledSlaveTutor"
+      }
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_JOIN_AS_SLAVE_TUTOR_REPLACEMENT1",
+       "plot": {
+        "all": [
+         {
+          "python": "getNumNonSpecialistSlavesTutor"
+         },
+         "IS_OWNED"
+        ]
+       }
+      },
+      "chance": 100,
+      "python": {
+       "callback": "doAddSettledSlaveTutor"
+      }
+     }
+    ]
+   },
+   {
+    "mission": "MISSION_JOIN_CITY_AS_SLAVE_MILITARY",
+    "requires": {
+     "outcome": "OUTCOME_JOIN_AS_SLAVE_MILITARY",
+     "plot": {
+      "all": [
+       {
+        "python": "getNumNonSpecialistSlavesMilitary"
+       },
+       "IS_OWNED"
+      ]
+     }
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doAddSettledSlaveMilitary"
+    }
+   },
+   {
+    "mission": "MISSION_SELL_CAPTIVE",
+    "outcomes": [
+     {
+      "requires": {
+       "outcome": "OUTCOME_SLAVE_SALE_SLAVERY",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "commerce": 6
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_SLAVE_SALE_SLAVE_MARKET",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "commerce": 12
+     }
+    ]
+   },
+   {
+    "mission": "MISSION_BUTCHER_HUMAN",
+    "outcomes": [
+     {
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "food": 8,
+      "production": 2
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "food": 10,
+      "production": 4
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT1",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "food": 10,
+      "production": 4
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST_REPLACEMENT2",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "food": 10,
+      "production": 4
+     }
+    ]
+   },
+   {
+    "mission": "MISSION_SACRIFICE_CAPTIVE",
+    "outcomes": [
+     {
+      "requires": {
+       "outcome": "OUTCOME_SACRIFICE_CAPTIVE",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 1
+      },
+      "culture": 3
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_SACRIFICE_CAPTIVE_ALTER_I",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 2
+      },
+      "culture": 6
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_SACRIFICE_CAPTIVE_ALTER_II",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 3
+      },
+      "culture": 12
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_SACRIFICE_CAPTIVE_DRUID",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 2
+      },
+      "culture": 6
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_SACRIFICE_CAPTIVE_DRUID_ALTER_I",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 4
+      },
+      "culture": 12
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_SACRIFICE_CAPTIVE_DRUID_ALTER_II",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 6
+      },
+      "culture": 24
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_SACRIFICE_CAPTIVE_MESOAMERICAN",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 2
+      },
+      "culture": 6
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_SACRIFICE_CAPTIVE_MESOAMERICAN_ALTER_I",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 4
+      },
+      "culture": 12
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_SACRIFICE_CAPTIVE_MESOAMERICAN_ALTER_II",
+       "plot": "IS_OWNED"
+      },
+      "chance": 100,
+      "happiness": {
+       "duration": 6
+      },
+      "culture": 24
+     }
+    ]
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_WORLDVIEW_SLAVERY"
+   },
+   {
+    "building": "BUILDING_SLAVE_MARKET"
+   },
+   {
+    "building": "BUILDING_SLAVE_COMPOUND"
+   },
+   {
+    "building": "BUILDING_SLAVE_COMPOUND_MILITARY_SUPPORT"
+   },
+   {
+    "building": "BUILDING_SLAVE_COMPOUND_ENTERTAINMENT"
+   },
+   {
+    "building": "BUILDING_SLAVE_COMPOUND_FOOD"
+   },
+   {
+    "building": "BUILDING_SLAVE_COMPOUND_INDUSTRY"
+   },
+   {
+    "building": "BUILDING_SLAVE_COMPOUND_COMMERCE"
+   },
+   {
+    "building": "BUILDING_SLAVE_COMPOUND_SANITATION"
+   },
+   {
+    "building": "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+   },
+   {
+    "building": "BUILDING_WORLDVIEW_CANNIBALISM"
+   },
+   {
+    "building": "BUILDING_WORLDVIEW_HUMAN_SACRIFICE"
+   }
+  ],
+  "greatPersonAction": {
+   "hurry": {
+    "base": 25,
+    "multiplier": 2
+   }
+  }
+ },
+ "cost": {
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CAPTIVE",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_CAPTIVE",
+       "middle": "ART_DEF_UNIT_CAPTIVE_MEDIEVAL",
+       "late": "ART_DEF_UNIT_CAPTIVE_MODERN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_CAPTIVE_MILITARY",
+  "civilopedia": "TXT_KEY_UNIT_CAPTIVE_MILITARY_PEDIA",
+  "help": "TXT_KEY_UNIT_CAPTIVE_MILITARY_HELP",
+  "spawnOnly": true,
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SUBDUED_ANIMAL",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_SUBDUED_ANIMAL"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

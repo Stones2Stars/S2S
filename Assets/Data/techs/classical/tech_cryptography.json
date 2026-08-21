@@ -1,0 +1,70 @@
+{
+ "type": "TECH_CRYPTOGRAPHY",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BUILD_UP_SECURITY2"
+  ],
+  "techs": [
+   "TECH_CRITICAL_THOUGHT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ALPHABET",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_GREAT_SPY"
+ },
+ "cost": {
+  "research": 499
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/techtree/Cryptography.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CRYPTOGRAPHY",
+  "soundMP": "AS2D_TECH_CRYPTOGRAPHY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CRYPTOGRAPHY",
+  "civilopedia": "TXT_KEY_TECH_CRYPTOGRAPHY_PEDIA",
+  "quote": "TXT_KEY_TECH_CRYPTOGRAPHY_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 20,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "gridX": 34,
+  "gridY": 13
+ }
+}

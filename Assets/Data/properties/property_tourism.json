@@ -1,0 +1,42 @@
+{
+ "type": "PROPERTY_TOURISM",
+ "PROPERTY_TOURISM": {
+  "city": {
+   "percent": 3
+  }
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_TOURISM_LEVEL_1",
+   "BUILDING_TOURISM_LEVEL_2",
+   "BUILDING_TOURISM_LEVEL_3",
+   "BUILDING_TOURISM_LEVEL_4",
+   "BUILDING_TOURISM_LEVEL_5",
+   "BUILDING_TOURISM_LEVEL_6",
+   "BUILDING_TOURISM_LEVEL_7",
+   "BUILDING_TOURISM_LEVEL_8",
+   "BUILDING_TOURISM_LEVEL_9",
+   "BUILDING_TOURISM_LEVEL_10"
+  ]
+ },
+ "ai": {
+  "weight": 1,
+  "scale": "city",
+  "operationalRange": {
+   "min": 0,
+   "max": 10000
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROPERTY_TOURISM",
+  "sourceDrain": true,
+  "fontButtonIndex": 14,
+  "text": {
+   "value": "TXT_KEY_PROPERTY_TOURISM_DISPLAY",
+   "change": "TXT_KEY_PROPERTY_TOURISM_CHANGE",
+   "changeAllCities": "TXT_KEY_PROPERTY_TOURISM_CHANGE_ALL_CITIES",
+   "prereqMin": "TXT_KEY_PROPERTY_TOURISM_PREREQ_MIN",
+   "prereqMax": "TXT_KEY_PROPERTY_TOURISM_PREREQ_MAX"
+  }
+ }
+}

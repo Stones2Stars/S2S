@@ -1,0 +1,65 @@
+{
+ "type": "BUILDING_MOON_DANCE",
+ "enables": {
+  "buildings": [
+   "BUILDING_GRAND_SKY_FESTIVAL"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MUSICAL_NOTATION"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_PREHISTORIC_DANCE",
+    {
+     "any": [
+      "BUILDING_DANCE_HUT",
+      "BUILDING_DANCE_HALL",
+      "BUILDING_NIGHT_CLUB"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SPY": 1
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MOON_DANCE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MOON_DANCE",
+  "civilopedia": "TXT_KEY_BUILDING_MOON_DANCE_PEDIA",
+  "notConstructible": true,
+  "worth": 1,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

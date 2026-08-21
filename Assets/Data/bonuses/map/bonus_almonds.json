@@ -1,0 +1,83 @@
+{
+ "type": "BONUS_ALMONDS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CICADA_GATHERER",
+   "BUILDING_CULTURE_PALESTINIAN",
+   "BUILDING_GROVE_ALMOND",
+   "BUILDING_GROVE_BRAZIL_NUT",
+   "BUILDING_GROVE_CASHEW",
+   "BUILDING_GROVE_CHESTNUT",
+   "BUILDING_GROVE_CINNAMOMUM",
+   "BUILDING_GROVE_GEVUINA",
+   "BUILDING_GROVE_HAZELNUT",
+   "BUILDING_GROVE_MACADAMIA",
+   "BUILDING_GROVE_MONGONGO",
+   "BUILDING_GROVE_PECAN",
+   "BUILDING_GROVE_PINE_NUT",
+   "BUILDING_GROVE_WALNUT",
+   "BUILDING_MOREL_MUSHROOM_GATHERER",
+   "BUILDING_NATURE_ALTAR_ALMOND",
+   "BUILDING_NATURE_CIRCLE_ALMOND",
+   "BUILDING_PLANTATION_PEANUT"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ALMONDS"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "maxLatitude": 50,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 80,
+  "uniqueRange": 2,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_PLAINS"
+  ],
+  "validFeatures": [
+   "FEATURE_CACTUS",
+   "FEATURE_OASIS",
+   "FEATURE_SAVANNA",
+   "FEATURE_VERY_TALL_GRASS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ALMONDS",
+  "civilopedia": "TXT_KEY_BONUS_ALMONDS_PEDIA",
+  "bonusClassType": "BONUSCLASS_CROP",
+  "source": "natural"
+ }
+}

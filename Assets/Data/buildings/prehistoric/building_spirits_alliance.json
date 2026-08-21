@@ -1,0 +1,128 @@
+{
+ "type": "BUILDING_SPIRITS_ALLIANCE",
+ "enables": {
+  "buildings": [
+   "BUILDING_SPIRITS_LEGACY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INVOCATION_HUT",
+    {
+     "type": "BUILDING_INVOCATION_HUT",
+     "scope": "empire",
+     "min": 2,
+     "scaling": "amountBuildings"
+    },
+    "TECH_MEGALITH_CONSTRUCTION",
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_SHAMANISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_SHAMANISM"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_SHAMANISM"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 5,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 2
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_GUERILLA1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 104,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SPIRITS_ALLIANCE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SHAMAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SPIRITS_ALLIANCE",
+  "civilopedia": "TXT_KEY_BUILDING_SPIRITS_ALLIANCE_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 6,
+  "specialBuildingType": "SPECIALBUILDING_CATHEDRAL_II",
+  "religion": "RELIGION_SHAMANISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

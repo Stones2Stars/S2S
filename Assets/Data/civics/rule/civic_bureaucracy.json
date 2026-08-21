@@ -1,0 +1,159 @@
+{
+ "type": "CIVIC_BUREAUCRACY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CIVIL_SERVANTS_SCHOOL"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": [
+    1,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    3,
+    {
+     "value": 4,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    1,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 15
+   },
+   "numCities": {
+    "percent": 10
+   },
+   "percent": [
+    {
+     "value": 5,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 3,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
+   "corporation": {
+    "percent": 3
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 3
+    },
+    "production": {
+     "percent": 3
+    },
+    "commerce": {
+     "percent": 2
+    }
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 5
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "distanceModifier": {
+    "percent": 10
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_VILLAGE_HALL": {
+     "percent": 20
+    },
+    "BUILDING_TOWN_HALL": {
+     "percent": 20
+    },
+    "BUILDING_CITY_COUNCIL": {
+     "percent": 20
+    },
+    "BUILDING_METROPOLITAN_ADMINISTRATION": {
+     "percent": 20
+    },
+    "BUILDING_CAPITAL_ADMINISTRATION": {
+     "percent": 20
+    },
+    "BUILDING_FORBIDDEN_PALACE": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "grants": {
+  "revolution": 50
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/rule_bureaucracy.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_BUREAUCRACY",
+  "civilopedia": "TXT_KEY_CIVIC_BUREAUCRACY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_BUREAUCRACY_STRATEGY",
+  "civicOption": "CIVICOPTION_RULE",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

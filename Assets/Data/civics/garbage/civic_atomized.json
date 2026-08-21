@@ -1,0 +1,42 @@
+{
+ "type": "CIVIC_ATOMIZED",
+ "food": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": -15
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "civics": {
+    "CIVIC_WASTE_TO_SEA": {
+     "flat": -1
+    },
+    "CIVIC_WASTE_EXPORTATION": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/garbage_atomization.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_ATOMIZED",
+  "civilopedia": "TXT_KEY_CIVIC_ATOMIZED_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_ATOMIZED_STRATEGY",
+  "civicOption": "CIVICOPTION_GARBAGE",
+  "upkeepLevel": "UPKEEP_LOW"
+ }
+}

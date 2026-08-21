@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_COLONIZE_MAP_VENUS",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_VENUS",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_VENUS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PLANETARY_COLONIZATION"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

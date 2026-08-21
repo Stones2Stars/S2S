@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_HYPERSPACE_ALTERNATE_HISTORY_EXPLORATION",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HYPERSPACE_SIMULATED_UNIVERSE",
+    "TECH_ALTERNATE_HISTORY_EXPLORATION",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": 5
+   }
+  }
+ },
+ "cost": {
+  "production": 2914,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYPERSPACE_ALTERNATE_HISTORY_EXPLORATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_ALTERNATE_HISTORY_EXPLORATION",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_ALTERNATE_HISTORY_EXPLORATION_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

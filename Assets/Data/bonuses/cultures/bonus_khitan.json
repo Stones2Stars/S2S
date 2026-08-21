@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_KHITAN",
+ "enables": {
+  "units": [
+   "UNIT_KHITAN_INFANTRY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_KHITAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_KHITAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "type": "UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES",
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 200,
+    "unit": "HAS_SIZE"
+   },
+   {
+    "value": 200,
+    "unit": "HAS_CAMOUFLAGE"
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/nature_keen_senses.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ANIMAL_COMBAT_KEEN_SENSES"
+ }
+}

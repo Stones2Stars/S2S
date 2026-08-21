@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTION_SHRAPNEL_SHOWER2",
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 6
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SHRAPNEL_SHOWER": 2
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/ShrapnelShower2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SHRAPNEL_SHOWER2"
+ }
+}

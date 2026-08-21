@@ -1,0 +1,36 @@
+{
+ "type": "BUILDING_SAFETY_ALCATRAZ",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_CRIMINOLOGY"
+   ]
+  }
+ },
+ "PROPERTY_CRIME": {
+  "empire": {
+   "flat": -50
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SAFETY_ALCATRAZ",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SAFETY_ALCATRAZ",
+  "civilopedia": "TXT_KEY_BUILDING_SAFETY_ALCATRAZ_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

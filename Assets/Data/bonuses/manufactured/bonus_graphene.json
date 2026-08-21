@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_GRAPHENE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CARBYNE_FOUNDRY",
+   "BUILDING_LIQUID_METALS_FOUNDRY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_GRAPHENE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_GRAPHENE",
+  "civilopedia": "TXT_KEY_BONUS_GRAPHENE_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

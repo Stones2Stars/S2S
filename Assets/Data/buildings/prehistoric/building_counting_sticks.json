@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_COUNTING_STICKS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPULSORY_EDUCATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LYCEUM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_COUNTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BONE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_IVORY",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BAMBOO",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_LYCEUM",
+    "BUILDING_ELEMENTARY_SCHOOL",
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
+   ]
+  }
+ },
+ "production": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 60,
+  "countModifier": 2,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_COUNTING_STICKS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_COUNTING_STICKS",
+  "civilopedia": "TXT_KEY_BUILDING_COUNTING_STICKS_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

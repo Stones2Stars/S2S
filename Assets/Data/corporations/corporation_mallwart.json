@@ -1,0 +1,85 @@
+{
+ "type": "CORPORATION_MALLWART",
+ "enables": {
+  "buildings": [
+   "BUILDING_MALLWART_STORE"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 1.5,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_MALLWART"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_APPLE",
+       "BONUS_BANANA",
+       "BONUS_LEMONS",
+       "BONUS_OLIVES",
+       "BONUS_POTATOES"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HEADQUARTERS": "CORPORATION_MALLWART"
+     },
+     "per": "CORPORATION_LEVEL"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_MALLWART"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_APPLE",
+        "BONUS_BANANA",
+        "BONUS_LEMONS",
+        "BONUS_OLIVES",
+        "BONUS_POTATOES"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 18,
+   "icon": "Art/Interface/Buttons/corporations/Mallwart.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_MALLWART",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MALLWART_PEDIA",
+  "competingSpreadCostPercent": 200,
+  "spreadFactor": 50
+ }
+}

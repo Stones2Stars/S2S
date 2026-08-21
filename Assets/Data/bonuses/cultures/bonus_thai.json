@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_THAI",
+ "enables": {
+  "units": [
+   "UNIT_SHAN_WARRIOR"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_THAI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_THAI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

@@ -1,0 +1,136 @@
+{
+ "type": "BUILDING_BIOFUEL_REFINERY",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_BOTANICAL_ALCHEMY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ULTRAFUEL_REFINERY"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "TECH_BIOMATERIALS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_GRAINS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SUGAR",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_VEGETABLES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_FRUIT",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_HEMP",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_GRASS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_REEDS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STRAW",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_ALGAE",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_ULTRAFUEL_REFINERY"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_BIOFUEL"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2005,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BIOFUEL_REFINERY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_OIL_REFINERY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BIOFUEL_REFINERY",
+  "civilopedia": "TXT_KEY_BUILDING_BIOFUEL_REFINERY_PEDIA",
+  "worth": 6,
+  "militaryWorth": 30,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "type": "BUILD_COMMAND_CENTER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_METAMATERIALS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_COMMAND_CENTER"
+ },
+ "cost": {
+  "gold": 2800,
+  "time": 2000
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Buildings/Bunker.dds"
+  },
+  "hotkey": "KB_F",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_COMMAND_CENTER"
+ }
+}

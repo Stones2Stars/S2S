@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_HOVERCRAFTS",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HOVERCRAFTS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HOVERCRAFTS",
+  "civilopedia": "TXT_KEY_BONUS_HOVERCRAFTS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

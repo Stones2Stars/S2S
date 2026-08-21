@@ -1,0 +1,42 @@
+{
+ "type": "PROMOTION_SELF_REPAIR3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SELF_REPAIR4"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SELF_REPAIR2"
+   ]
+  }
+ },
+ "heal": {
+  "unit": {
+   "selfModifier": {
+    "percent": 2
+   },
+   "victory": {
+    "flat": 3
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SELF_REPAIR": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/SelfRepair3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "maxHP": 3
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SELF_REPAIR3"
+ }
+}

@@ -1,0 +1,127 @@
+{
+ "type": "BUILDING_BACTERIOPHAGE_THERAPY_CLINIC",
+ "enables": {
+  "buildings": [
+   "BUILDING_VIROTHERAPY_CLINIC"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_VACCINE_LAB",
+    "BUILDING_NUCLEIC_ACID_LAB",
+    "BUILDING_PROTEIN_LAB",
+    "TECH_PERSONAL_COMPUTERS",
+    "TECH_MOLECULAR_BIOLOGY",
+    {
+     "type": "BONUS_ENZYMES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_CHEMICALS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 7,
+     "enabled": "TECH_GENETICS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_GENE_MANIPULATION"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_GENETIC_BIOCHEMISTRY"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_MOLECULAR_MEDICINE"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_GENESIS_BIOLOGY"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_GENE_ENHANCEMENT"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_CYBERIMMUNOLOGY"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_EGGS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 1410,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BACTERIOPHAGE_THERAPY_CLINIC",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BACTERIOPHAGE_THERAPY_CLINIC",
+  "civilopedia": "TXT_KEY_BUILDING_BACTERIOPHAGE_THERAPY_CLINIC_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

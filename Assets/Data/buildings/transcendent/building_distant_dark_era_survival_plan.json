@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_DISTANT_DARK_ERA_SURVIVAL_PLAN",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_COMPUTRONIUM_FILAMENT",
+    {
+     "type": "BUILDING_INTERGALACTIC_BLACK_HOLE_ERA_SURVIVAL_PLAN",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_ENTROPY_REVERSAL",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 2182,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_DARK_ERA_SURVIVAL_PLAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_DARK_ERA_SURVIVAL_PLAN",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_DARK_ERA_SURVIVAL_PLAN_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

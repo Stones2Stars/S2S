@@ -1,0 +1,53 @@
+{
+ "type": "IMPROVEMENT_MACHU_PICCHU",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MOUNTAINEERING",
+     "scope": "team"
+    },
+    "HAS_PEAK",
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_PEAK"
+       ]
+      },
+      "HAS_PEAK"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 6
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": -1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_MACHU_PICCHU"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MACHU_PICCHU",
+  "civilopedia": "TXT_KEY_BUILDING_MACHU_PICCHU_PEDIA",
+  "advancedStart": {
+   "cost": -1
+  }
+ }
+}

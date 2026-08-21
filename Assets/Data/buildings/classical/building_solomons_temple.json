@@ -1,0 +1,153 @@
+{
+ "type": "BUILDING_SOLOMONS_TEMPLE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HUMANISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CONSTRUCTION",
+    "STATE_RELIGION_IN_CITY",
+    {
+     "STATE_RELIGION": "RELIGION_JUDAISM"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_JUDAISM"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "gold": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 4,
+   "percent": 12
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ],
+   "percent": 10
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_JUDAISM"
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2,
+   "percent": 10
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_JUDAISM": {
+    "flat": 6
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 1404,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 50
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SOLOMON"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SOLOMONS_TEMPLE"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_JEWISH"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SOLOMONS_TEMPLE",
+  "civilopedia": "TXT_KEY_BUILDING_SOLOMONS_TEMPLE_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 2,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "religion": "RELIGION_JUDAISM",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": "100.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

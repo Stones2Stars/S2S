@@ -1,0 +1,106 @@
+{
+ "type": "CIVIC_COLLECTIVIST",
+ "food": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    1,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1,
+   "buildings": {
+    "BUILDING_LABOR_UNION": {
+     "flat": 2
+    },
+    "BUILDING_WORLDVIEW_SLAVERY_ACTIVE": {
+     "flat": -3
+    },
+    "BUILDING_EFFECT_EMANCIPATION_PROCLAMATION": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "percent": [
+    {
+     "value": 2,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 3,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ]
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 2
+    },
+    "production": {
+     "percent": 3
+    },
+    "commerce": {
+     "percent": 2
+    }
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 10
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "laborFreedom": {
+    "flat": -1
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/labor_socialized.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_COLLECTIVIST",
+  "civilopedia": "TXT_KEY_CIVIC_COLLECTIVIST_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_COLLECTIVIST_STRATEGY",
+  "civicOption": "CIVICOPTION_WORKFORCE",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

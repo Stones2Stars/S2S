@@ -1,0 +1,11 @@
+{
+ "type": "OUTCOME_SET_CAPTIVE_FREE",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_SET_CAPTIVE_FREE",
+  "message": "TXT_KEY_OUTCOME_SET_CAPTIVE_FREE_MESSAGE"
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city"
+}

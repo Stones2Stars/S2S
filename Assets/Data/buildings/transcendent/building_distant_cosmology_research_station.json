@@ -1,0 +1,40 @@
+{
+ "type": "BUILDING_DISTANT_COSMOLOGY_RESEARCH_STATION",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_COMPUTRONIUM_FILAMENT",
+    "TECH_EXPERIMENTAL_COSMOLOGY",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 250
+  }
+ },
+ "cost": {
+  "production": 1945,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_COSMOLOGY_RESEARCH_STATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_COSMOLOGY_RESEARCH_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_COSMOLOGY_RESEARCH_STATION_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

@@ -1,0 +1,78 @@
+{
+ "type": "PROMOTION_SHADOWSTALKER1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SHADOWSTALKER2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT3"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "stealthStrikes": {
+    "flat": 1
+   },
+   "feature": {
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": 15
+     }
+    },
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": 15
+     }
+    },
+    "FEATURE_BAMBOO": {
+     "attack": {
+      "percent": 15
+     }
+    },
+    "FEATURE_FOREST_YOUNG": {
+     "attack": {
+      "percent": 15
+     }
+    },
+    "FEATURE_FOREST_BURNT": {
+     "attack": {
+      "percent": 15
+     }
+    },
+    "FEATURE_FOREST_ANCIENT": {
+     "attack": {
+      "percent": 15
+     }
+    }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": -5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SHADOWSTALKER": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/shadowstalker1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SHADOWSTALKER1"
+ }
+}

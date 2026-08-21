@@ -1,0 +1,92 @@
+{
+ "type": "BUILDING_DRAGONFLY_GATHERER",
+ "enables": {
+  "buildings": [
+   "BUILDING_DRAGONFLY_SANCTUARY",
+   "BUILDING_RESOURCES_BUGS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ENVIRONMENTAL_ECONOMICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ARBORETUM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SERICULTURE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_SILK",
+       "scope": "city",
+       "connection": "onSite"
+      },
+      {
+       "type": "BONUS_FISH",
+       "scope": "city",
+       "connection": "onSite"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_ARBORETUM",
+    "BUILDING_AGROFOREST"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 160,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 7
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DRAGONFLY_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DRAGONFLY_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_DRAGONFLY_GATHERER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

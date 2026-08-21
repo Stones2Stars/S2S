@@ -1,0 +1,58 @@
+{
+ "type": "TECH_CONTROLLED_FIRE",
+ "enables": {
+  "bonuses": [
+   "BONUS_CHARCOAL"
+  ],
+  "buildings": [
+   "BUILDING_CAPTURED_FIRE",
+   "BUILDING_FIRE_DANCE",
+   "BUILDING_FIRE_PIT",
+   "BUILDING_HOT_POTATO"
+  ],
+  "techs": [
+   "TECH_COOKING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GATHERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 5
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/controlledfire.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CONTROLLED_FIRE",
+  "soundMP": "AS2D_TECH_CONTROLLED_FIRE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CONTROLLED_FIRE",
+  "civilopedia": "TXT_KEY_TECH_CONTROLLED_FIRE_PEDIA",
+  "quote": "TXT_KEY_TECH_CONTROLLED_FIRE_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 3,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 3,
+  "gridY": 11
+ }
+}

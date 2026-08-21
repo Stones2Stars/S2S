@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_VIKING",
+ "enables": {
+  "units": [
+   "UNIT_CANUTE",
+   "UNIT_VIKING_BESERKER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_VIKING"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_VIKING",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

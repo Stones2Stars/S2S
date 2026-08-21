@@ -1,0 +1,127 @@
+{
+ "type": "BUILDING_LIQUID_METALS_FOUNDRY",
+ "enables": {
+  "buildings": [
+   "BUILDING_PLYMOUTH_ARCOLOGY"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ELECTROWEAK_MATTER"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_PICOTECH_COMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_BIOINFORMATICS_LAB",
+    "TECH_LIQUID_METALS",
+    {
+     "type": "BONUS_METAMATERIALS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_ORGANIC_PHOTONIC_CELLS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      "BUILDING_FOUNDRY",
+      "BUILDING_METALS_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_GRAPHENE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_PICOTECH_COMPLEX"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_LIQUID_METAL"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 9,
+     "enabled": "TECH_INTERNAL_SHOCKWAVE_ENGINE"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_PLASTIC_ELECTRONICS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_NOVUS_CHEMISTRY"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_SUPERSTRONG_ALLOYS"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 3245,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LIQUID_METALS_FOUNDRY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LIQUID_METALS_FOUNDRY",
+  "civilopedia": "TXT_KEY_BUILDING_LIQUID_METALS_FOUNDRY_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

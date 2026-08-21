@@ -1,0 +1,147 @@
+{
+ "type": "BUILDING_GUARDHOUSE",
+ "enables": {
+  "buildings": [
+   "BUILDING_SLAVE_COMPOUND_CRIME_PREVENTION"
+  ],
+  "units": [
+   "UNIT_ENFORCERS",
+   "UNIT_GUARD",
+   "UNIT_HARAPPA_WATCHER",
+   "UNIT_HOPLOMACHUS",
+   "UNIT_HUACA_GUARDIANS",
+   "UNIT_NEANDERTHAL_ENFORCER",
+   "UNIT_NEANDERTHAL_WATCHER",
+   "UNIT_ORONAO_WATCHER",
+   "UNIT_PATROLS",
+   "UNIT_PETRA_GUARD",
+   "UNIT_TOWN_WATCHMEN",
+   "UNIT_TREASURE_GUARD",
+   "UNIT_WATCHER"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_DEPUTIZATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GUARD_STATION"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_WARRANTS_AND_DECREES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_STONE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BRICKS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_MARBLE",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_GUARD_STATION",
+    "BUILDING_SHERIFFS_OFFICE",
+    "BUILDING_POLICE_STATION",
+    "BUILDING_POLICE_PRECINCT"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 5,
+     "enabled": "TECH_DIVINE_RIGHT"
+    }
+   ],
+   "percent": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 20
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "underworld": {
+  "city": {
+   "investigation": {
+    "flat": 25
+   }
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_INVESTIGATOR": 2
+  }
+ },
+ "cost": {
+  "production": 368,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GUARDHOUSE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GUARDHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_GUARDHOUSE_PEDIA",
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

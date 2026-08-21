@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_CISLUNAR_CONTROL_SYSTEM",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_GOVERNANCE",
+   "BUILDING_CISLUNAR_OMNISURVEILLANCE",
+   "BUILDING_ELYSIUM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_CISLUNAR",
+    "TECH_SYNTHETIC_SENTIENCE",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -5
+   }
+  }
+ },
+ "cost": {
+  "production": 800,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_CONTROL_SYSTEM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_CONTROL_SYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_CONTROL_SYSTEM_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

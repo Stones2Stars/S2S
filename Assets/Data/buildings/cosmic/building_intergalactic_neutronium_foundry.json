@@ -1,0 +1,50 @@
+{
+ "type": "BUILDING_INTERGALACTIC_NEUTRONIUM_FOUNDRY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_ELECTROWEAK_STAR_BASE",
+    "TECH_NEUTRONIUM",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_NEUTRONIUM"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 4492,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_NEUTRONIUM_FOUNDRY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_NEUTRONIUM_FOUNDRY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_NEUTRONIUM_FOUNDRY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

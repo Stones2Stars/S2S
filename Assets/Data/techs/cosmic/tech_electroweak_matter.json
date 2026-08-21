@@ -1,0 +1,57 @@
+{
+ "type": "TECH_ELECTROWEAK_MATTER",
+ "enables": {
+  "bonuses": [
+   "BONUS_MAGNETIC_MONOPOLES"
+  ],
+  "buildings": [
+   "BUILDING_ELECTROWEAK_FORGE",
+   "BUILDING_INTERGALACTIC_ACCELERATOR",
+   "BUILDING_INTERGALACTIC_PROTON_DECAY_GENERATOR",
+   "BUILDING_INTERGALACTIC_ULTRA_HIGH_PRESSURE_FORGE",
+   "BUILDING_INTERSTELLAR_HYPERMAGLEV",
+   "BUILDING_LIFE_CHIRAL_FLEXIBLE"
+  ],
+  "techs": [
+   "TECH_NEUTRONIUM",
+   "TECH_QUANTUM_RAMJET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ZEPTOTECHNOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DARK_MATTER_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 338869
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/electroweak_matter2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ELECTROWEAK_MATTER",
+  "civilopedia": "TXT_KEY_TECH_ELECTROWEAK_MATTER_PEDIA",
+  "quote": "TXT_KEY_TECH_ELECTROWEAK_MATTER_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 145,
+  "gridY": 13
+ }
+}

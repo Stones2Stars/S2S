@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST",
+ "enables": {
+  "buildings": [
+   "BUILDING_GALACTIC_CORE_BASE",
+   "BUILDING_INTERSTELLAR_COSMIC_NODE",
+   "BUILDING_INTERSTELLAR_HYPERVELOCITY_STAR",
+   "BUILDING_INTERSTELLAR_NETWORK_NODE",
+   "BUILDING_INTERSTELLAR_TIMEHOLE",
+   "BUILDING_WORMHOLE_NETWORK"
+  ],
+  "units": [
+   "UNIT_WORLDSHIP3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_WORMHOLE_BEACON",
+    "TECH_WORMHOLE_TRAVERSAL",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 12,
+     "enabled": "TECH_COMPACT_WORMHOLES"
+    },
+    {
+     "value": 12,
+     "enabled": "TECH_MEGAWORMHOLES"
+    },
+    {
+     "value": 12,
+     "enabled": "TECH_WORMHOLE_HIVEMIND"
+    }
+   ]
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 20
+   }
+  }
+ },
+ "cost": {
+  "production": 4555,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_WORMHOLE_TRADING_POST_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

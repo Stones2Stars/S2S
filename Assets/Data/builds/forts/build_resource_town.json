@@ -1,0 +1,35 @@
+{
+ "type": "BUILD_RESOURCE_TOWN",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ELECTRICITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_RESOURCE_TOWN"
+ },
+ "cost": {
+  "gold": 600,
+  "time": 1200
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/BuildVillage.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,5,9"
+  },
+  "hotkey": "KB_F",
+  "ctrlDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_RESOURCE_TOWN"
+ }
+}

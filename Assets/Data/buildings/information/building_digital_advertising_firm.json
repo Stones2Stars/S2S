@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_DIGITAL_ADVERTISING_FIRM",
+ "enables": {
+  "buildings": [
+   "BUILDING_PERSONALIZED_ADVERTISING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ADVERTISING_AGENCY",
+    "BUILDING_DIGITAL_OFFICES",
+    "TECH_MACHINE_LEARNING",
+    "TECH_ONLINE_COMMUNITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 8,
+     "enabled": "TECH_AUGMENTED_REALITY"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_DIRECT_MERCHANDISING"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_VIRTUAL_SOCIETY"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_MEGACORPORATIONS"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 8,
+     "enabled": "TECH_AUGMENTED_REALITY"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_DIRECT_MERCHANDISING"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_VIRTUAL_SOCIETY"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_MEGACORPORATIONS"
+    }
+   ]
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1,
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "cost": {
+  "production": 2305,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DIGITAL_ADVERTISING_FIRM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DIGITAL_ADVERTISING_FIRM",
+  "civilopedia": "TXT_KEY_BUILDING_DIGITAL_ADVERTISING_FIRM_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

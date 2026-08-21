@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_ZENU",
+ "enables": {
+  "units": [
+   "UNIT_PACHECO",
+   "UNIT_ZENU_GOLDSMITHS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ZENU"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ZENU",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_NEUROSCIENCE_CENTER",
+ "enables": {
+  "buildings": [
+   "BUILDING_APPLIED_PSYCHOLOGY_LAB",
+   "BUILDING_PSYCHOLOGY_LAB",
+   "BUILDING_SOMA_DISPENSARY"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PICOTECHNOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HEALTHCARE_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_STEM_CELL_LAB",
+    "BUILDING_MEDICAL_CLINIC",
+    "TECH_NEURAL_NETWORKS",
+    "TECH_GENETIC_BIOCHEMISTRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 8,
+     "enabled": "TECH_GENESIS_BIOLOGY"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_BRAIN_MACHINE_INTERFACE"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_THOUGHT_SCANNING"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 2205,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NEUROSCIENCE_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NEUROSCIENCE_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_NEUROSCIENCE_CENTER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

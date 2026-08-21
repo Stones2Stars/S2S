@@ -1,0 +1,161 @@
+{
+ "type": "UNIT_BOMBARD_MAMMOTH",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_MAMMOTH",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_CANNON_FORGE",
+    "TECH_CAVALRY_TACTICS",
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "type": "BONUS_IRON_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      "BUILDING_EFFECT_HERITAGE_MAMMOTHS",
+      "BUILDING_ANIMAL_TRAINER_MAMMOTH"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_EARLY_TANK"
+    ]
+   }
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 40
+   },
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE_WOODEN": {
+     "percent": 50
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 50
+    }
+   },
+   "unitTargets": {
+    "UNIT_MOUNTED_INFANTRY": true
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 23
+  }
+ },
+ "skills": [
+  "noDefensiveBonus",
+  "pillage",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_MOUNTED",
+ "combatClasses": [
+  "UNITCOMBAT_SIEGE",
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SIEGE_URBAN",
+  "UNITCOMBAT_SIEGE_GUNPOWDER",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_LONG_POLEARM",
+  "UNITCOMBAT_WEAPON_DIST_CANNONBALL",
+  "UNITCOMBAT_SHIELD_TOWER",
+  "UNITCOMBAT_ANIMAL_COMBAT_THICK_SKINNED",
+  "UNITCOMBAT_ANIMAL_COMBAT_SHARP_HORNED",
+  "UNITCOMBAT_ANIMAL_COMBAT_CHARGING",
+  "UNITCOMBAT_ANIMAL_COMBAT_STOMP",
+  "UNITCOMBAT_ANIMAL_COMBAT_CONSTRICT",
+  "UNITCOMBAT_ANIMAL_COMBAT_RAGING",
+  "UNITCOMBAT_MOTILITY_RIDING",
+  "UNITCOMBAT_MOUNT_MAMMOTH",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_ANIMALS",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_COLD1",
+   "PROMOTION_COLD2",
+   "PROMOTION_COLD3"
+  ]
+ },
+ "cost": {
+  "production": 550
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SEIGE_MAMMOTH_EUROPEAN",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 2,
+    "rangedWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_SEIGE_MAMMOTH_EUROPEAN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_BOMBARD_MAMMOTH",
+  "civilopedia": "TXT_KEY_UNIT_BALLISTA_MAMMOTH_PEDIA",
+  "worth": 2,
+  "militaryWorth": 15,
+  "xpValueAttack": 2,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_ATTACK",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_ATTACK",
+   "UNITAI_COUNTER"
+  ],
+  "notUnitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

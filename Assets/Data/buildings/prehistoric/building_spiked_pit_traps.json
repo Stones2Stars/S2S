@@ -1,0 +1,106 @@
+{
+ "type": "BUILDING_SPIKED_PIT_TRAPS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MINE_WARFARE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MECHANICAL_TRAPS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_WOODWORKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_WOOD",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BAMBOO",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_PRIME_TIMBER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_MECHANICAL_TRAPS",
+    "BUILDING_LANDMINES",
+    "BUILDING_BOOBY_TRAPS",
+    "BUILDING_ROBOTIC_TRAPS",
+    "BUILDING_GERM_TRAPS",
+    "BUILDING_EMP_TRAPS",
+    "BUILDING_NANOBOT_TRAPS",
+    "BUILDING_GRAVITY_TRAPS"
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 10
+   }
+  }
+ },
+ "cost": {
+  "production": 62,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SPIKED_PIT_TRAPS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FORGE"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SPIKED_PIT_TRAPS",
+  "civilopedia": "TXT_KEY_BUILDING_SPIKED_PIT_TRAPS_PEDIA",
+  "militaryWorth": 2,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

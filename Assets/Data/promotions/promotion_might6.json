@@ -1,0 +1,33 @@
+{
+ "type": "PROMOTION_MIGHT6",
+ "combat": {
+  "unit": {
+   "flat": 4
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MIGHT": 6
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Might6Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_MIGHT6",
+  "levelPrereq": 13,
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_SUPERIOR",
+   "UNITCOMBAT_QUALITY_EXCEPTIONAL",
+   "UNITCOMBAT_QUALITY_ELITE",
+   "UNITCOMBAT_QUALITY_EPIC",
+   "UNITCOMBAT_QUALITY_DIVINE"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_ANIMAL"
+  ]
+ }
+}

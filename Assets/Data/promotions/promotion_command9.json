@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_COMMAND9",
+ "enables": {
+  "promotions": [
+   "PROMOTION_COMMAND10",
+   "PROMOTION_GENERAL_STAFF10"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMMAND8"
+   ]
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COMMAND": 9
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/CommanderCommand9.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COMMAND9",
+  "controlPoints": 1
+ }
+}

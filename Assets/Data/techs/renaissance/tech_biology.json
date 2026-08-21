@@ -1,0 +1,74 @@
+{
+ "type": "TECH_BIOLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOLOGY_LAB"
+  ],
+  "techs": [
+   "TECH_ARCHEOLOGY",
+   "TECH_BOTANY",
+   "TECH_ELIXIRS_AND_TONICS",
+   "TECH_ZOOLOGY"
+  ],
+  "units": [
+   "UNIT_TAMED_AMPHIBIAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CHEMISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MICROBIOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ENLIGHTENMENT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "capabilities": {
+  "canIgnoreIrrigation": true
+ },
+ "cost": {
+  "research": 3484
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/Biology.dds,Art/Interface/Buttons/TechTree_Atlas.dds,1,9"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_BIOLOGY",
+  "soundMP": "AS2D_TECH_MP_BIOLOGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_BIOLOGY",
+  "civilopedia": "TXT_KEY_TECH_BIOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_BIOLOGY_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 57,
+  "gridY": 5
+ }
+}

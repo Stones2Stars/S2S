@@ -1,0 +1,149 @@
+{
+ "type": "BUILDING_WONDER_OF_NATURE_AUYANTEPUI",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_LANGUAGE",
+    {
+     "type": "FEATURE_PLATY_AUYANTEPUI",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": "TECH_MOUNTAINEERING"
+    },
+    {
+     "value": 5,
+     "enabled": "TECH_BIOLOGY"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": "TECH_MOUNTAINEERING"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 10,
+     "enabled": "TECH_TOURISM"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_VERTICAL_FLIGHT"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": "TECH_MOUNTAINEERING"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 7,
+     "enabled": "TECH_BIOLOGY"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_GEOLOGY"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 7,
+     "enabled": "TECH_TOURISM"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": "TECH_MOUNTAINEERING"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": {
+    "value": 5,
+    "enabled": "TECH_EXPLORATION"
+   }
+  }
+ },
+ "cost": {
+  "production": 10,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WONDER_OF_NATURE_AUYANTEPUI",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WONDER_OF_NATURE_AUYANTEPUI",
+  "civilopedia": "TXT_KEY_BUILDING_WONDER_OF_NATURE_AUYANTEPUI_PEDIA",
+  "conquestProbability": 70,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_ORDINANCE_YOUTH_CURFEW",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_POLICE_ACADEMY",
+    "BUILDING_COURTHOUSE",
+    "TECH_COMPULSORY_EDUCATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_SAFETY_YOUTH_CURFEW"
+   }
+  ]
+ },
+ "cost": {
+  "production": 870,
+  "complexityModifier": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ORDINANCE_YOUTH_CURFEW",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_POLICE_STATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ORDINANCE_YOUTH_CURFEW",
+  "civilopedia": "TXT_KEY_BUILDING_ORDINANCE_YOUTH_CURFEW_PEDIA",
+  "worth": 1,
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

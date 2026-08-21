@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_MATERIALIZATION_COMPLEX",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MATERIALIZER",
+    "TECH_MATERIALIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ANTIMATTER",
+   "BONUS_GRAVITY_GENERATORS",
+   "BONUS_SOYLENT_GREEN",
+   "BONUS_MEGASTRONG_ALLOYS",
+   "BONUS_PERSONAL_SPACECRAFT",
+   "BONUS_COMPUTRONIUM",
+   "BONUS_FEMTOBOTS",
+   "BONUS_VIBRANIUM",
+   "BONUS_CHAOS_WANDS"
+  ]
+ },
+ "food": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 80
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "cost": {
+  "production": 22755,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MATERIALIZATION_COMPLEX",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MATERIALIZATION_COMPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_MATERIALIZATION_COMPLEX_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

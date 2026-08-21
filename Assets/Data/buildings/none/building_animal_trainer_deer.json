@@ -1,0 +1,104 @@
+{
+ "type": "BUILDING_ANIMAL_TRAINER_DEER",
+ "enables": {
+  "buildings": [
+   "BUILDING_HERITAGE_DEER",
+   "BUILDING_MILITARY_STANDARD_DEER"
+  ],
+  "units": [
+   "UNIT_DEERRIDER",
+   "UNIT_DEER_ARCHER",
+   "UNIT_DEER_LIGHT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "latitude": {
+      "min": 45
+     }
+    },
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_FARM_ANIMAL_REINDEER",
+      "BUILDING_FOLKLORE_DEER",
+      "BUILDING_CAMP_DEER",
+      "BUILDING_HERD_DEER",
+      "BUILDING_CAMP_MEGALOCEROS",
+      "BUILDING_BREEDING_PROGRAM_DEER",
+      "BUILDING_ANIMAL_PRESERVE",
+      "BUILDING_INDUSTRIAL_FARMS",
+      "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DEER",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1038,
+  "sizeModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_DEER_RIDER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANIMAL_TRAINER_DEER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMAL_TRAINER_DEER",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_TRAINER_DEER_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 4,
+  "militaryWorth": 2,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

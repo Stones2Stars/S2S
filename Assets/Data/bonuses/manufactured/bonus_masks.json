@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_MASKS",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_MASKS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_MASKS",
+  "civilopedia": "TXT_KEY_BONUS_MASKS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

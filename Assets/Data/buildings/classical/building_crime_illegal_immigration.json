@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_CRIME_ILLEGAL_IMMIGRATION",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "any": [
+      "CIVIC_CLOSED_BORDERS",
+      "CIVIC_SKILLED_WORKERS",
+      "CIVIC_SECURED_BORDERS"
+     ]
+    },
+    "TECH_ALPHABET",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "PROPERTY_CRIME",
+     "scope": "city",
+     "min": 225,
+     "max": 100000
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    -4,
+    {
+     "value": -35,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": 10
+   }
+  }
+ },
+ "underworld": {
+  "city": {
+   "insidiousness": {
+    "flat": 20
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYCRIME",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CRIME_ILLEGAL_IMMIGRATION",
+  "civilopedia": "TXT_KEY_BUILDING_CRIME_ILLEGAL_IMMIGRATION_PEDIA",
+  "notConstructible": true,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

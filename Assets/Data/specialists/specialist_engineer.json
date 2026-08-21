@@ -1,0 +1,145 @@
+{
+ "type": "SPECIALIST_ENGINEER",
+ "production": {
+  "city": {
+   "flat": 2
+  },
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_ARCHIMEDES_WORKSHOP",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_EDISONS_WORKSHOP",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_GREAT_WALL_OF_CHINA",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_HADRIANS_WALL",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_LEONARDOS_WORKSHOP",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 2,
+      "enabled": {
+       "type": "BUILDING_LONDON_EYE",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_ATOMIUM",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  },
+  "city": {
+   "percent": [
+    {
+     "value": 200,
+     "enabled": {
+      "type": "CIVIC_TECHNOCRACY",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 50,
+     "enabled": {
+      "type": "CIVIC_GUILDS",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 2,
+      "enabled": {
+       "type": "BUILDING_BAUHAUS_SCHOOL",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_WORKER": {
+     "flat": 1
+    },
+    "UNITCOMBAT_SEA_WORKER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/engineer.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/engineer.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_ENGINEER",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
+  "visible": true,
+  "categories": [
+   "CATEGORY_ASSIGNABLE_SPECIALISTS",
+   "CATEGORY_SPECIALIST_GROUP_ARCHITECTURAL"
+  ],
+  "greatPeopleUnit": "UNIT_GREAT_ENGINEER"
+ }
+}

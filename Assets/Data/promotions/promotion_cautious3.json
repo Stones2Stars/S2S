@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_CAUTIOUS3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_CAUTIOUS4"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CAUTIOUS2"
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CAUTIOUS": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Cautious3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CAUTIOUS3"
+ }
+}

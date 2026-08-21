@@ -1,0 +1,603 @@
+{
+ "type": "TRAIT_COMPLEX_CREATIVE1",
+ "excludes": [
+  "TRAIT_COMPLEX_UNREFINED1"
+ ],
+ "production": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ARTIST": {
+     "flat": 1
+    },
+    "SPECIALIST_GREAT_ARTIST": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "worldWonder": {
+    "percent": 10
+   },
+   "buildings": {
+    "BUILDING_STORYTELLER": {
+     "percent": 25
+    },
+    "BUILDING_DANCE_HUT": {
+     "percent": 25
+    },
+    "BUILDING_MUSIC_HUT": {
+     "percent": 25
+    },
+    "BUILDING_OBELISK": {
+     "percent": 25
+    },
+    "BUILDING_JUGGLING": {
+     "percent": 25
+    },
+    "BUILDING_CAVE_PAINTINGS": {
+     "percent": 25
+    },
+    "BUILDING_SAND_PAINTINGS": {
+     "percent": 25
+    },
+    "BUILDING_ROCK_ART": {
+     "percent": 25
+    },
+    "BUILDING_HATTER": {
+     "percent": 25
+    },
+    "BUILDING_MASK_CARVER": {
+     "percent": 25
+    },
+    "BUILDING_TATTOOER": {
+     "percent": 25
+    },
+    "BUILDING_QUILT_MAKER": {
+     "percent": 25
+    },
+    "BUILDING_CRAFTS_HUT": {
+     "percent": 25
+    },
+    "BUILDING_WOODCARVER": {
+     "percent": 25
+    },
+    "BUILDING_TOTEM_POLE": {
+     "percent": 25
+    },
+    "BUILDING_DIVINE_MONUMENT": {
+     "percent": 25
+    },
+    "BUILDING_FRESCO_MURAL": {
+     "percent": 25
+    },
+    "BUILDING_DANCE_HALL": {
+     "percent": 25
+    },
+    "BUILDING_BRIDAL_SHOP": {
+     "percent": 25
+    },
+    "BUILDING_MARRIAGE_CEREMONY": {
+     "percent": 25
+    },
+    "BUILDING_TAPESTRY_MAKERS_WORKSHOP": {
+     "percent": 25
+    },
+    "BUILDING_SCULPTORS_WORKSHOP": {
+     "percent": 25
+    },
+    "BUILDING_TERRACOTTA_WORKSHOP": {
+     "percent": 25
+    },
+    "BUILDING_WIG_SHOP": {
+     "percent": 25
+    },
+    "BUILDING_LUXURY_FURNITURE_WORKSHOP": {
+     "percent": 25
+    },
+    "BUILDING_ROYAL_MONUMENT": {
+     "percent": 25
+    },
+    "BUILDING_ROCK_GARDEN": {
+     "percent": 25
+    },
+    "BUILDING_CALLIGRAPHY_SCHOOL": {
+     "percent": 25
+    },
+    "BUILDING_CARPET_MAKER": {
+     "percent": 25
+    },
+    "BUILDING_COSTUME_SHOP": {
+     "percent": 25
+    },
+    "BUILDING_DRAMA_SCHOOL": {
+     "percent": 25
+    },
+    "BUILDING_THEATRE": {
+     "percent": 25
+    },
+    "BUILDING_FLORIST": {
+     "percent": 25
+    },
+    "BUILDING_MOSAIC_WORKSHOP": {
+     "percent": 25
+    },
+    "BUILDING_BARBER_SHOP": {
+     "percent": 25
+    },
+    "BUILDING_MUSIC_SCHOOL": {
+     "percent": 25
+    },
+    "BUILDING_BARDIC_CIRCLE": {
+     "percent": 25
+    },
+    "BUILDING_STAINED_GLASS_WORKSHOP": {
+     "percent": 25
+    },
+    "BUILDING_CASTLE_GARDEN": {
+     "percent": 25
+    },
+    "BUILDING_ORGAN_HALL": {
+     "percent": 25
+    },
+    "BUILDING_NIGHT_CLUB": {
+     "percent": 25
+    },
+    "BUILDING_FACTORY_HATS": {
+     "percent": 25
+    },
+    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT": {
+     "percent": 25
+    },
+    "BUILDING_MANUFACTURING_DISTRICT": {
+     "percent": 25
+    },
+    "BUILDING_TATTOO_PARLOR": {
+     "percent": 25
+    },
+    "BUILDING_MALL": {
+     "percent": 25
+    },
+    "BUILDING_HYPERMARKET": {
+     "percent": 25
+    },
+    "BUILDING_FACTORY_SCULPTURES": {
+     "percent": 25
+    },
+    "BUILDING_FACTORY_TERRACOTTA_WARES": {
+     "percent": 25
+    },
+    "BUILDING_CITY_PARK": {
+     "percent": 25
+    },
+    "BUILDING_FACTORY_CARPETS": {
+     "percent": 25
+    },
+    "BUILDING_SCHOOL_OF_SCRIBES": {
+     "percent": 25
+    },
+    "BUILDING_LIBRARY": {
+     "percent": 25
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "percent": 25
+    },
+    "BUILDING_LYCEUM": {
+     "percent": 25
+    },
+    "BUILDING_ELEMENTARY_SCHOOL": {
+     "percent": 25
+    },
+    "BUILDING_HOLOGRAPHIC_SCHOOL": {
+     "percent": 25
+    },
+    "BUILDING_ANCIENT_CUSTOMS": {
+     "percent": 25
+    }
+   },
+   "units": {
+    "percent": [
+     {
+      "value": -5,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "researchRate": {
+  "empire": {
+   "techs": {
+    "TECH_ORAL_TRADITION": {
+     "percent": 20
+    },
+    "TECH_PREHISTORIC_DANCE": {
+     "percent": 20
+    },
+    "TECH_PREHISTORIC_MUSIC": {
+     "percent": 20
+    },
+    "TECH_NATURAL_PIGMENTS": {
+     "percent": 20
+    },
+    "TECH_CULTURAL_IDENTITY": {
+     "percent": 20
+    },
+    "TECH_PETROGLYPHS": {
+     "percent": 20
+    },
+    "TECH_PERSONAL_ADORNMENTS": {
+     "percent": 20
+    },
+    "TECH_TATTOOS": {
+     "percent": 20
+    },
+    "TECH_SEWING": {
+     "percent": 20
+    },
+    "TECH_BEAD_MAKING": {
+     "percent": 20
+    },
+    "TECH_WOODWORKING": {
+     "percent": 20
+    },
+    "TECH_PICTOGRAPHS": {
+     "percent": 20
+    },
+    "TECH_IDEOGRAMS": {
+     "percent": 20
+    },
+    "TECH_FOLK_DANCE": {
+     "percent": 20
+    },
+    "TECH_FOLK_MUSIC": {
+     "percent": 20
+    },
+    "TECH_CEREMONY": {
+     "percent": 20
+    },
+    "TECH_TEXTILE_LOOM": {
+     "percent": 20
+    },
+    "TECH_SCULPTURE": {
+     "percent": 20
+    },
+    "TECH_ORNAMENTATION": {
+     "percent": 20
+    },
+    "TECH_FURNITURE_MAKING": {
+     "percent": 20
+    },
+    "TECH_CUISINE": {
+     "percent": 20
+    },
+    "TECH_GLASS_BLOWING": {
+     "percent": 20
+    },
+    "TECH_LITERATURE": {
+     "percent": 20
+    },
+    "TECH_CALLIGRAPHY": {
+     "percent": 20
+    },
+    "TECH_AESTHETICS": {
+     "percent": 20
+    },
+    "TECH_DRAMA": {
+     "percent": 20
+    },
+    "TECH_FLORISTRY": {
+     "percent": 20
+    },
+    "TECH_MOSAIC_WORKING": {
+     "percent": 20
+    },
+    "TECH_MUSICAL_NOTATION": {
+     "percent": 20
+    },
+    "TECH_POETRY": {
+     "percent": 20
+    },
+    "TECH_ARCHITECTURE": {
+     "percent": 20
+    },
+    "TECH_STAINED_GLASS": {
+     "percent": 20
+    },
+    "TECH_HERALDRY": {
+     "percent": 20
+    },
+    "TECH_PERSPECTIVE": {
+     "percent": 20
+    },
+    "TECH_ACOUSTICS": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": 2,
+   "percent": [
+    5,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
+   "specialists": {
+    "SPECIALIST_CITIZEN": {
+     "flat": 1
+    },
+    "SPECIALIST_SLAVES": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_SLAVE": {
+     "flat": 1
+    },
+    "SPECIALIST_SETTLED_CITIZEN": {
+     "flat": 1
+    }
+   },
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 2,
+    "max": "TARGET_NUM_CITIES",
+    "orderedByDescending": "CITY_SIZE"
+   },
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "empire",
+      "min": 1
+     }
+    }
+   ],
+   "buildings": {
+    "BUILDING_DANCE_HUT": {
+     "flat": 1
+    },
+    "BUILDING_MUSIC_HUT": {
+     "flat": 1
+    },
+    "BUILDING_JUGGLING": {
+     "flat": 1
+    },
+    "BUILDING_CAVE_PAINTINGS": {
+     "flat": 1
+    },
+    "BUILDING_SAND_PAINTINGS": {
+     "flat": 1
+    },
+    "BUILDING_ROCK_ART": {
+     "flat": 1
+    },
+    "BUILDING_MASK_CARVER": {
+     "flat": 1
+    },
+    "BUILDING_TATTOOER": {
+     "flat": 1
+    },
+    "BUILDING_CRAFTS_HUT": {
+     "flat": 1
+    },
+    "BUILDING_WOODCARVER": {
+     "flat": 1
+    },
+    "BUILDING_FRESCO_MURAL": {
+     "flat": 1
+    },
+    "BUILDING_DANCE_HALL": {
+     "flat": 1
+    },
+    "BUILDING_TAPESTRY_MAKERS_WORKSHOP": {
+     "flat": 1
+    },
+    "BUILDING_SCULPTORS_WORKSHOP": {
+     "flat": 1
+    },
+    "BUILDING_TERRACOTTA_WORKSHOP": {
+     "flat": 1
+    },
+    "BUILDING_LUXURY_FURNITURE_WORKSHOP": {
+     "flat": 1
+    },
+    "BUILDING_CARPET_MAKER": {
+     "flat": 1
+    },
+    "BUILDING_COSTUME_SHOP": {
+     "flat": 1
+    },
+    "BUILDING_THEATRE": {
+     "flat": 1
+    },
+    "BUILDING_MOSAIC_WORKSHOP": {
+     "flat": 1
+    },
+    "BUILDING_BARDIC_CIRCLE": {
+     "flat": 1
+    },
+    "BUILDING_STAINED_GLASS_WORKSHOP": {
+     "flat": 1
+    },
+    "BUILDING_ORGAN_HALL": {
+     "flat": 1
+    },
+    "BUILDING_NIGHT_CLUB": {
+     "flat": 1
+    },
+    "BUILDING_MUSIC_SCHOOL": {
+     "flat": 1
+    },
+    "BUILDING_EFFECT_LASCAUX_CAVES": {
+     "flat": 1
+    },
+    "BUILDING_MANUFACTURING_DISTRICT": {
+     "flat": 1
+    },
+    "BUILDING_TATTOO_PARLOR": {
+     "flat": 1
+    },
+    "BUILDING_MALL": {
+     "flat": 1
+    },
+    "BUILDING_HYPERMARKET": {
+     "flat": 1
+    },
+    "BUILDING_TEXTILE_MANUFACTURING_DISTRICT": {
+     "flat": 1
+    },
+    "BUILDING_FACTORY_SCULPTURES": {
+     "flat": 1
+    },
+    "BUILDING_FACTORY_TERRACOTTA_WARES": {
+     "flat": 1
+    },
+    "BUILDING_FACTORY_CARPETS": {
+     "flat": 1
+    },
+    "BUILDING_HIGH_TECH_CULTURAL_ENRICHMENT": {
+     "flat": 1
+    },
+    "BUILDING_LYCEUM": {
+     "flat": 1
+    },
+    "BUILDING_ELEMENTARY_SCHOOL": {
+     "flat": 1
+    },
+    "BUILDING_HOLOGRAPHIC_SCHOOL": {
+     "flat": 1
+    },
+    "BUILDING_ANCIENT_CUSTOMS": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 10,
+   "units": {
+    "UNIT_ARTIST": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "experience": {
+  "empire": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "flat": -1
+    },
+    "UNITCOMBAT_NAVAL_COMBATANT": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 10
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": 10
+   },
+   "enemyWarWeariness": {
+    "percent": -10
+   }
+  }
+ },
+ "defense": {
+  "empire": {
+   "bombardDefense": {
+    "percent": -5
+   }
+  }
+ },
+ "capture": {
+  "empire": {
+   "resistance": {
+    "percent": -10
+   }
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -4
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": -1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 13
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitCreative.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_COMPLEX_CREATIVE1",
+  "civilopedia": "TXT_KEY_TRAIT_COMPLEX_CREATIVE1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_COMPLEX_CREATIVE_STRATEGY",
+  "shortDescription": "TXT_KEY_TRAIT_CREATIVE_SHORT"
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_COMPLEX_CREATIVE2"
+  ]
+ }
+}

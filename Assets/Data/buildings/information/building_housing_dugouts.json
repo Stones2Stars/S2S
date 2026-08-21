@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_HOUSING_DUGOUTS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_INTERSTELLAR_COLONIZATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HOUSING_COLONY_ARCOLOGY"
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "HAS_FRESHWATER",
+    "HAS_POWER",
+    "BUILDING_WATER_PIPES",
+    "BUILDING_SEWER_SYSTEM",
+    "BUILDING_TELEPHONE_NETWORK",
+    "TECH_RAPID_PROTOTYPING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "dormant": [
+    "BUILDING_HOUSING_COLONY_ARCOLOGY",
+    "BUILDING_LAUNCH_ARCOLOGY"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HOUSING_DUGOUTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HOUSING_DUGOUTS",
+  "civilopedia": "TXT_KEY_BUILDING_HOUSING_DUGOUTS_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,414 @@
+{
+ "type": "BUILDING_FOOD_MANUFACTURING_DISTRICT",
+ "enables": {
+  "buildings": [
+   "BUILDING_BEE_BOMBS",
+   "BUILDING_DW_CHAMPAGNE",
+   "BUILDING_DW_VINTAGE_RED",
+   "BUILDING_DW_VINTAGE_WHITE",
+   "BUILDING_DYE_MAKER",
+   "BUILDING_FACTORY_DYE",
+   "BUILDING_FARM_FLOWER_BEGONIA",
+   "BUILDING_FARM_FLOWER_BLUEBELL",
+   "BUILDING_FARM_FLOWER_CARNATION",
+   "BUILDING_FARM_FLOWER_DAISY",
+   "BUILDING_FARM_FLOWER_HIBISCUS",
+   "BUILDING_FARM_FLOWER_INDIGO",
+   "BUILDING_FARM_FLOWER_IRIS",
+   "BUILDING_FARM_FLOWER_LILY",
+   "BUILDING_FARM_FLOWER_ORCHID",
+   "BUILDING_FARM_FLOWER_PANSY",
+   "BUILDING_FARM_FLOWER_ROSE",
+   "BUILDING_FARM_FLOWER_SNAPDRAGON",
+   "BUILDING_FARM_FLOWER_SUNFLOWER",
+   "BUILDING_FARM_FLOWER_TULIP",
+   "BUILDING_FARM_FLOWER_VIOLET",
+   "BUILDING_GUILD_BAKERS",
+   "BUILDING_PERSONAL_FOOD_DESIGNER",
+   "BUILDING_UNIVERSAL_RESTAURANT",
+   "BUILDING_WANG_ZHENS_WORKSHOP",
+   "BUILDING_WONKA_CONFECTIONERIES_SHOP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE",
+    "BUILDING_EPSILON_ASSEMBLER",
+    "TECH_AUGMENTED_CONSUMABLES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ALCOHOL",
+   "BONUS_BREAD",
+   "BONUS_CANDY",
+   "BONUS_CHEESE",
+   "BONUS_DRIED_MEAT",
+   "BONUS_CHOCOLATE",
+   "BONUS_ENERGY_DRINK",
+   "BONUS_FLOUR",
+   "BONUS_HONEY",
+   "BONUS_ICE_CREAM",
+   "BONUS_MARZIPAN",
+   "BONUS_NUTELLA",
+   "BONUS_PASTA",
+   "BONUS_POTATO_CHIPS",
+   "BONUS_ROASTED_COFFEE",
+   "BONUS_SAUSAGE",
+   "BONUS_SEASONING",
+   "BONUS_SODA_POP",
+   "BONUS_WAX"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": [
+    175,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_ALMONDS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BARLEY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CHOCOLATE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HONEY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SUGAR",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WHEAT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_BARLEY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_CORN",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_RICE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 10,
+     "enabled": {
+      "type": "BONUS_WHEAT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ],
+   "improvements": {
+    "IMPROVEMENT_FARM": {
+     "flat": 6
+    }
+   }
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    125,
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_APPLE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_BANANA",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CHEESE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_CHOCOLATE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_COFFEE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BONUS_GRAPES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_GUAVAS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_HONEY",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "type": "BONUS_LEMONS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_MANGO",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "type": "BONUS_MELONS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_NUTS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OLIVE_OIL",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PAPAYA",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PIG",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SALT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHRIMP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SPICES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_SUGAR",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_VANILLA",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DYE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    20,
+    {
+     "value": 3,
+     "enabled": {
+      "type": "BONUS_SALT",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 5
+  }
+ },
+ "cost": {
+  "production": 3525,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FOOD_MANUFACTURING_DISTRICT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FOOD_MANUFACTURING_DISTRICT",
+  "civilopedia": "TXT_KEY_BUILDING_FOOD_MANUFACTURING_DISTRICT_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

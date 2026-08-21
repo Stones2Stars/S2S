@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_SOLAR_WEATHER_MONITOR",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SOLAR_PROPULSION",
+    {
+     "any": [
+      "BUILDING_MILITARY_SATELLITES",
+      "BUILDING_MILITARY_SPACEPORT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "empire": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 4010
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SOLAR_WEATHER_MONITOR"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SOLAR_WEATHER_MONITOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SOLAR_WEATHER_MONITOR",
+  "civilopedia": "TXT_KEY_BUILDING_SOLAR_WEATHER_MONITOR_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

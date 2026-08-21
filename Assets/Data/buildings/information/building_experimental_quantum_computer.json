@@ -1,0 +1,76 @@
+{
+ "type": "BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_GRAVITRONICS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_QUANTUM_SUPERCOMPUTER"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_QUANTUM_LAB",
+    "TECH_QUANTUM_TELEPORTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_QUANTUM_SUPERCOMPUTER",
+    "BUILDING_QUANTUM_GRAVITY_SUPERCOMPUTER"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    20,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_QUANTUM_DOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 2305,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER",
+  "civilopedia": "TXT_KEY_BUILDING_EXPERIMENTAL_QUANTUM_COMPUTER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

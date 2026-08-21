@@ -1,0 +1,40 @@
+{
+  "entity": "CivilizationInfo",
+  "rootElement": "CivilizationInfo",
+  "glob": "**/CIV4CivilizationInfos.xml",
+  "channels": {
+    "iSpawnRateNPCPeaceModifier": {"scope": "player", "channel": "spawnRate", "kind": "flat"},
+    "iSpawnRateModifier": {"scope": "player", "channel": "spawnRate", "kind": "flat"}
+  },
+  "inversionsOut": {
+    "DisableTechs": {"destEntity": "CvTechInfo", "shape": "disabledForCivilizations[]"}
+  },
+  "enablerEdges": {},
+  "prereqs": [],
+  "cost": [],
+  "art": [
+    "ArtDefineTag",
+    "ArtStyleType",
+    "UnitArtStyleType",
+    "CivilizationSelectionSound",
+    "CivilizationActionSound"
+  ],
+  "identity": [
+    "Type",
+    "Description",
+    "ShortDescription",
+    "Adjective",
+    "Civilopedia",
+    "DefaultPlayerColor",
+    "Leaders",
+    "Cities",
+    "FreeBuildings",
+    "InitialCivics",
+    "FreeTechs",
+    "DerivativeCiv",
+    "bPlayable",
+    "bAIPlayable",
+    "bStronglyRestricted"
+  ],
+  "boostsIn": []
+}

@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_COAST_GUARD_STATION",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COLONY_ARCOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_AI_POLICE_FORCE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    "BUILDING_HARBORMASTERS_OFFICE",
+    "BUILDING_NAVAL_ACADEMY",
+    "TECH_COAST_GUARD",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_AI_POLICE_FORCE"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "warWeariness": {
+  "city": {
+   "percent": -5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "cost": {
+  "production": 1030,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_COAST_GUARD_STATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_COAST_GUARD_STATION",
+  "civilopedia": "TXT_KEY_BUILDING_COAST_GUARD_STATION_PEDIA",
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

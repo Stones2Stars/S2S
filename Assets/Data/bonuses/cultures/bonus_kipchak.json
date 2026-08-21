@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_KIPCHAK",
+ "enables": {
+  "units": [
+   "UNIT_BATU_KHAN",
+   "UNIT_CHAPUL"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_KIPCHAK"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_KIPCHAK",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

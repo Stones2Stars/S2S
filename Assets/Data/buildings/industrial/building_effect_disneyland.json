@@ -1,0 +1,36 @@
+{
+ "type": "BUILDING_EFFECT_DISNEYLAND",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_ANIMATION"
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISNEYLAND",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_DISNEYLAND",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_DISNEYLAND_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

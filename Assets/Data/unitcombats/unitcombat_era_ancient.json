@@ -1,0 +1,12 @@
+{
+ "type": "UNITCOMBAT_ERA_ANCIENT",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/era_ancient.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ERA_ANCIENT",
+  "era": "C2C_ERA_ANCIENT"
+ }
+}

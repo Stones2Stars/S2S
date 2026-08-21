@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_COMBAT6",
+ "enables": {
+  "promotions": [
+   "PROMOTION_HEROIC2",
+   "PROMOTION_SPHINX"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT5"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 25
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COMBAT": 6
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat6.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,7,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COMBAT6"
+ }
+}

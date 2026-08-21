@@ -1,0 +1,116 @@
+{
+ "type": "BUILDING_OFFICIUM",
+ "enables": {
+  "buildings": [
+   "BUILDING_ADVENTURE_TOURS_FRANCHISE",
+   "BUILDING_ADVERTISING_AGENCY",
+   "BUILDING_ALUMINUM_CO_RESEARCH_AND_DEVELOPMENT",
+   "BUILDING_BOOK_PUBLISHER",
+   "BUILDING_CHAMBER_OF_COMMERCE",
+   "BUILDING_CREATIVE_CONSTRUCTIONS_CONTRACTORS",
+   "BUILDING_HQ_ADVENTURE_TOURS",
+   "BUILDING_HQ_ALUMINUM_CO",
+   "BUILDING_HQ_BIG_MCDOWELLS",
+   "BUILDING_HQ_BULLSEYE",
+   "BUILDING_HQ_BURGERWORLD",
+   "BUILDING_HQ_CEREAL_MILLS",
+   "BUILDING_HQ_CIVILIZED_JEWELERS_INC",
+   "BUILDING_HQ_CREATIVE_CONSTRUCTIONS",
+   "BUILDING_HQ_EAST_WEST_TRADERS",
+   "BUILDING_HQ_EMPERORS_CLOTHING",
+   "BUILDING_HQ_FASHION_HOUSE",
+   "BUILDING_HQ_MALLWART",
+   "BUILDING_HQ_MAPSTER",
+   "BUILDING_HQ_MILEHIGH_TRAVELS_INTERNATIONAL",
+   "BUILDING_HQ_MINING_INC",
+   "BUILDING_HQ_MOBBY_MEATS_INTERNATIONAL",
+   "BUILDING_HQ_MOONBEAN_COFFEE",
+   "BUILDING_HQ_RED_CURTAINS",
+   "BUILDING_HQ_SAFARI_HUNTERS",
+   "BUILDING_HQ_SIDS_SUSHI_CO",
+   "BUILDING_HQ_STANDARD_ETHANOL",
+   "BUILDING_HQ_ULTIMATE_SOLDIERS",
+   "BUILDING_HQ_WONKA_CONFECTIONERIES",
+   "BUILDING_MILEHIGH_TRAVELS_INTERNATIONAL_FRANCHISE",
+   "BUILDING_MINING_INC_SURVEY",
+   "BUILDING_PRESS_AGENCY",
+   "BUILDING_SAFARI_HUNTERS_GUIDE",
+   "BUILDING_ULTIMATE_SOLDIERS_TRAINER"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PERSONAL_COMPUTERS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_OFFICES"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CITY_PLANNING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_MODERN_OFFICES"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 243,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_OFFICIUM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_OFFICIUM",
+  "civilopedia": "TXT_KEY_BUILDING_OFFICIUM_PEDIA",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

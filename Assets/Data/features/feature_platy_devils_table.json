@@ -1,0 +1,46 @@
+{
+ "type": "FEATURE_PLATY_DEVILS_TABLE",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 5
+   }
+  }
+ },
+ "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
+  "nukeImmune",
+  "ignoreTerrainCulture"
+ ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_DEVILS_TABLE"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_DEVILS_TABLE",
+  "civilopedia": "TXT_KEY_FEATURE_DEVILS_TABLE_PEDIA",
+  "validTerrains": [
+   "TERRAIN_PLAINS",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB"
+  ]
+ }
+}

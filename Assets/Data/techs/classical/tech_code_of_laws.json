@@ -1,0 +1,107 @@
+{
+ "type": "TECH_CODE_OF_LAWS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ACHIEVEMENT_SAFETY",
+   "BUILDING_ASSASSINS_DEN",
+   "BUILDING_ASSASSINS_DEN_UNSANCTIONED",
+   "BUILDING_COURTHOUSE",
+   "BUILDING_CRIME_BRIBERY",
+   "BUILDING_CRIME_LOOTING",
+   "BUILDING_CRIME_VIGILANTISM",
+   "BUILDING_CRUCIFIXION_CROSSES",
+   "BUILDING_CULTURE_ABBASID",
+   "BUILDING_EFFECT_ACHIEVEMENT_SAFETY",
+   "BUILDING_EU_HARVARD_UNIVERSITY",
+   "BUILDING_EU_UNIVERSITY_OF_BOLOGNA",
+   "BUILDING_EU_UNIVERSITY_OF_SALAMANCA",
+   "BUILDING_RIVER_AUTHORITY",
+   "BUILDING_STOCKS"
+  ],
+  "civics": [
+   "CIVIC_MAGISTRATES"
+  ],
+  "promotions": [
+   "PROMOTION_BUILD_UP_CRIME_FIGHTING3",
+   "PROMOTION_CONNIVING3",
+   "PROMOTION_CORRUPTION3"
+  ],
+  "techs": [
+   "TECH_DEMOCRACY",
+   "TECH_DIPLOMACY",
+   "TECH_LAW_ENFORCEMENT"
+  ],
+  "units": [
+   "UNIT_AL_MANSUR",
+   "UNIT_ASSASSIN",
+   "UNIT_BEOWULF",
+   "UNIT_BULAN",
+   "UNIT_CAO_CAO",
+   "UNIT_JUDGE",
+   "UNIT_LIUTPRAND",
+   "UNIT_LORD_OF_SIPAN",
+   "UNIT_SHAPUR"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_AMBUSHER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORATORY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ALPHABET",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 499
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_RELIGION": 7
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": ",Art/Interface/Buttons/TechTree/Code_of_Laws.dds,Art/Interface/Buttons/TechTree_Atlas.dds,2,2"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CODE_OF_LAWS",
+  "soundMP": "AS2D_TECH_MP_CODE_OF_LAWS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CODE_OF_LAWS",
+  "civilopedia": "TXT_KEY_TECH_CODE_OF_LAWS_PEDIA",
+  "quote": "TXT_KEY_TECH_CODE_OF_LAWS_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "tradeable": true,
+  "gridX": 34,
+  "gridY": 17
+ }
+}

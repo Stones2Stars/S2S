@@ -1,0 +1,75 @@
+{
+ "type": "BUILDING_ENCYCLOPEDIA_GALACTICA",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_UNIVERSAL_LIBRARY",
+    {
+     "type": "BUILDING_UNIVERSAL_LIBRARY",
+     "scope": "empire",
+     "min": 3,
+     "scaling": "amountBuildings"
+    },
+    "TECH_GALACTIC_FEDERATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_UNIVERSAL_LIBRARY",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 75930,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ENCYCLOPEDIA_GALACTICA"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ENCYCLOPEDIA_GALACTICA",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ENCYCLOPEDIA_GALACTICA",
+  "civilopedia": "TXT_KEY_BUILDING_ENCYCLOPEDIA_GALACTICA_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_SNEAK",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Retinue/apprentice.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SNEAK",
+  "unitCombats": [
+   "UNITCOMBAT_HERO"
+  ]
+ }
+}

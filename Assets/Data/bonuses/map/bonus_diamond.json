@@ -1,0 +1,69 @@
+{
+ "type": "BONUS_DIAMOND",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_JUTE",
+   "BUILDING_CULTURE_KANEM_BORNU",
+   "BUILDING_CULTURE_TURKISH",
+   "BUILDING_GRAND_FIRE_FESTIVAL",
+   "BUILDING_MINE_BERLINITE",
+   "BUILDING_MINE_DIAMOND",
+   "BUILDING_MINE_QUARTZ"
+  ]
+ },
+ "commerce": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_DIAMOND"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 250,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 200,
+  "hills": true,
+  "peaks": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_DIAMOND",
+  "civilopedia": "TXT_KEY_BONUS_DIAMOND_PEDIA",
+  "bonusClassType": "BONUSCLASS_LUXURY",
+  "source": "natural"
+ }
+}

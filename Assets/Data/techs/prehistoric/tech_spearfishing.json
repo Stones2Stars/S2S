@@ -1,0 +1,69 @@
+{
+ "type": "TECH_SPEARFISHING",
+ "enables": {
+  "buildings": [
+   "BUILDING_SPEARFISHER"
+  ],
+  "promotions": [
+   "PROMOTION_SEA_HUNTER2"
+  ],
+  "techs": [
+   "TECH_BOAT_BUILDING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RAFT_BUILDING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SPEAR_MAKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 30
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/Spearfishing.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SPEARFISHING",
+  "soundMP": "AS2D_TECH_SPEARFISHING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SPEARFISHING",
+  "civilopedia": "TXT_KEY_TECH_SPEARFISHING_PEDIA",
+  "quote": "TXT_KEY_TECH_SPEARFISHING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "militaryWorth": 1,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 13,
+  "gridY": 1
+ }
+}

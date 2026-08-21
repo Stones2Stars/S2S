@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_ASTEROID_SHELL_LIGHTING",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ASTEROID_SHELL_WORLD",
+    "TECH_PARATERRAFORMING",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_ASTEROID_SURFACE",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_KUIPER_BELT_OBJECT",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 4123,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ASTEROID_SHELL_LIGHTING",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ASTEROID_SHELL_LIGHTING",
+  "civilopedia": "TXT_KEY_BUILDING_ASTEROID_SHELL_LIGHTING_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

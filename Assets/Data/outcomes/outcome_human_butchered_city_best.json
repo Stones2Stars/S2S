@@ -1,0 +1,21 @@
+{
+ "type": "OUTCOME_HUMAN_BUTCHERED_CITY_BEST",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_BUTCHER_CAPTIVE",
+  "message": "TXT_KEY_OUTCOME_BUTCHER_CAPTIVE_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE"
+   ]
+  }
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city",
+ "replaces": [
+  "OUTCOME_HUMAN_BUTCHERED_CITY"
+ ]
+}

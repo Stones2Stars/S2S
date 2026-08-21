@@ -1,0 +1,141 @@
+{
+ "type": "BUILDING_NATIONAL_AIRCRAFT_MUSEUM",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FLIGHT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_AIRCRAFT",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "culture": {
+  "city": {
+   "percent": 1,
+   "flat": [
+    {
+     "value": 7,
+     "enabled": "TECH_ZEPPELINS"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_AVIATION"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_ROCKETRY"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_ADVANCED_ROCKETRY"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_ADVANCED_AVIATION"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_NAVAL_FLIGHT"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_JET_PROPULSION"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_VERTICAL_FLIGHT"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_ASTRONAUTICS"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_SUPERSONIC_FLIGHT"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_STEALTH"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_UNMANNED_AIR_VEHICLES"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_HYPERSONIC_FLIGHT"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_SKYROADS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_ORBITAL_FLIGHT"
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 1900,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_AIRCRAFT_MUSEUM"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NATIONAL_AIRCRAFT_MUSEUM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NATIONAL_AIRCRAFT_MUSEUM",
+  "civilopedia": "TXT_KEY_BUILDING_NATIONAL_AIRCRAFT_MUSEUM_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "greatPeopleUnitType": "UNIT_GREAT_ENGINEER",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

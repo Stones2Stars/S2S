@@ -1,0 +1,96 @@
+{
+ "type": "BUILDING_POLICE_BOX",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_BINARY_LEGISLATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_POLICE_PRECINCT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TELEPHONE_NETWORK",
+    "TECH_TELEPHONE",
+    "TECH_CRIMINOLOGY",
+    "BUILDING_POLICE_STATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_POLICE_PRECINCT"
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 800,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_ESPIONAGE": 10
+   },
+   {
+    "FLAVOR_MILITARY": 6
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_POLICE_BOX",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_POLICE_STATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_POLICE_BOX",
+  "civilopedia": "TXT_KEY_BUILDING_POLICE_BOX_PEDIA",
+  "worth": 1,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

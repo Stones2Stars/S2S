@@ -1,0 +1,160 @@
+{
+ "type": "TRAIT_COMPLEX_PROGRESSIVE1",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_COMPLEX_PROGRESSIVE2"
+  ],
+  "traits": [
+   "TRAIT_COMPLEX_PROGRESSIVE2"
+  ]
+ },
+ "excludes": [
+  "TRAIT_COMPLEX_BIGOT1"
+ ],
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": -10,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": -5
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "any": [
+    {
+     "value": 1,
+     "per": {
+      "type": "NATIONAL_WONDER",
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "numCities": {
+    "percent": 10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 5
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "anger": {
+    "percent": 75
+   }
+  }
+ },
+ "goldenAge": {
+  "empire": {
+   "percent": 30
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "enemyWarWeariness": {
+    "percent": -10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": {
+    "value": -1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 2,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "policies": {
+  "allReligionsActive": true,
+  "nonStateReligionCommerce": true
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -2
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": -3
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 9
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitProgressive.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_PROGRESSIVE1",
+  "civilopedia": "TXT_KEY_TRAIT_PROGRESSIVE1_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_PROGRESSIVE_STRATEGY"
+ }
+}

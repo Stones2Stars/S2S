@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_HUMAN_MOD_ALIEN_HYBRID",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HUMAN_MOD_ALIEN_HYBRID"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HUMAN_MOD_ALIEN_HYBRID",
+  "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
+  "bonusClassType": "BONUSCLASS_GENMODS",
+  "source": "manufactured"
+ }
+}

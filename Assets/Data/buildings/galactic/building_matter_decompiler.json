@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_MATTER_DECOMPILER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_UTILITY_FOG",
+    "TECH_ATOMIZATION_FIELD",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    {
+     "value": 25,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 9805,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MATTER_DECOMPILER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_INCUBATION_CENTER"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MATTER_DECOMPILER",
+  "civilopedia": "TXT_KEY_BUILDING_MATTER_DECOMPILER_PEDIA",
+  "worth": 15,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 2,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

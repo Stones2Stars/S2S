@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_HERD_HORSE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_HORSE",
+   "BUILDING_RESOURCES_CARCASS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INDUSTRIAL_FARMS"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ],
+   "all": [
+    "TECH_ANIMAL_HUSBANDRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HORSE"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HERD_HORSE"
+  }
+ },
+ "sound": {
+  "construct": "SND_AMB_HORSE_COBBLESTONES"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HERD_HORSE",
+  "civilopedia": "TXT_KEY_BUILDING_HERD_HORSE_PEDIA",
+  "notConstructible": true,
+  "worth": 3,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

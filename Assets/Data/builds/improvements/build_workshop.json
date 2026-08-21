@@ -1,0 +1,117 @@
+{
+ "type": "BUILD_WORKSHOP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MACHINERY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_WORKSHOP",
+  "features": [
+   {
+    "feature": "FEATURE_JUNGLE",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 400,
+    "production": 20,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_MANGROVE",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 400,
+    "production": 20,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_YOUNG",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 30,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 40,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_ANCIENT",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 500,
+    "production": 60,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_SWAMP",
+    "tech": "TECH_CANAL_SYSTEMS",
+    "time": 800,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_PEAT_BOG",
+    "tech": "TECH_CANAL_SYSTEMS",
+    "time": 800,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_BAMBOO",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 20,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_BURNT",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 400,
+    "production": 5,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_CITY_RUINS",
+    "time": 200,
+    "production": 40,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_ARCOLOGY_RUINS",
+    "time": 200,
+    "production": 40,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_TAR_PIT",
+    "time": 200
+   },
+   {
+    "feature": "FEATURE_CRATER",
+    "time": 200
+   }
+  ]
+ },
+ "cost": {
+  "gold": 80,
+  "time": 600
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/BuildWorkshop.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,8,8"
+  },
+  "hotkey": "KB_K"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_MINE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_WORKSHOP"
+ }
+}

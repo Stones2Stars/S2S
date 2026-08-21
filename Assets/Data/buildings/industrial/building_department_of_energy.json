@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_DEPARTMENT_OF_ENERGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ORDINANCE_CLEAN_AIR_ACT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_POWER_LINES",
+    "TECH_ELECTRICITY",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT",
+      "BUILDING_MODERN_OFFICES"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_POWER_LINES",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 1540,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_DEPARTMENT_ENERGY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DEPARTMENT_OF_ENERGY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DEPARTMENT_OF_ENERGY",
+  "civilopedia": "TXT_KEY_BUILDING_DEPARTMENT_OF_ENERGY_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

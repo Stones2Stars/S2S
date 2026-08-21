@@ -1,0 +1,117 @@
+{
+ "type": "BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_AB_FOUNDRY",
+   "BUILDING_INTERSTELLAR_BLACKHOLE_JETSTREAM_PLANT",
+   "BUILDING_INTERSTELLAR_COMPUTRONIUM_FACTORY",
+   "BUILDING_INTERSTELLAR_DYSON_SPHERE_INDUSTRIAL_QUARTER",
+   "BUILDING_INTERSTELLAR_KUGELBLITZ_FACTORY",
+   "BUILDING_INTERSTELLAR_KUGELBLITZ_POWER_PLANT",
+   "BUILDING_INTERSTELLAR_STAR_CLUSTER_COLONY",
+   "BUILDING_INTERSTELLAR_STAR_ROAD",
+   "BUILDING_INTERSTELLAR_STAR_SCOOP",
+   "BUILDING_INTERSTELLAR_WARP_DRIVE_FACTORY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_SELF_REPLICATING_FACTORY",
+    "TECH_PLANET_ENGINEERING",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    50,
+    {
+     "value": 12,
+     "enabled": "TECH_DARK_MATTER_ENGINEERING"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_ASTROENGINEERING"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_ORBITAL_ENGINEERING"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_ARTIFICIAL_PLANETS"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 11,
+     "enabled": "TECH_STELLAR_COMPUTING"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    75,
+    {
+     "value": 12,
+     "enabled": "TECH_GRAVITRONICS"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 3212,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_INDUSTRIAL_PLANET_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

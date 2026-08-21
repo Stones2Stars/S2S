@@ -1,0 +1,87 @@
+{
+ "type": "CORPORATION_5",
+ "enables": {
+  "buildings": [
+   "BUILDING_MINING_INC_SURVEY"
+  ]
+ },
+ "production": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_5"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_COAL",
+       "BONUS_IRON_ORE",
+       "BONUS_COPPER_ORE",
+       "BONUS_GOLD_ORE",
+       "BONUS_SILVER_ORE",
+       "BONUS_LEAD_ORE"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HEADQUARTERS": "CORPORATION_5"
+     },
+     "per": "CORPORATION_LEVEL"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_5"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_COAL",
+        "BONUS_IRON_ORE",
+        "BONUS_COPPER_ORE",
+        "BONUS_GOLD_ORE",
+        "BONUS_SILVER_ORE",
+        "BONUS_LEAD_ORE"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "cost": {
+  "spread": 50
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 4,
+   "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,5,6"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_5",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_5_PEDIA",
+  "competingSpreadCostPercent": 200,
+  "spreadFactor": 60
+ }
+}

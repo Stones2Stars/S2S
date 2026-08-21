@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_INTERSTELLAR_BASE_CARBON_PLANET",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+    "TECH_PLANET_SCOUTING",
+    {
+     "type": "FEATURE_CARBON_PLANET",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_PLASMA",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 250
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 2536,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_BASE_CARBON_PLANET",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_BASE_CARBON_PLANET",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_BASE_CARBON_PLANET_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

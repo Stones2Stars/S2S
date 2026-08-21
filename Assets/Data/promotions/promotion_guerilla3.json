@@ -1,0 +1,55 @@
+{
+ "type": "PROMOTION_GUERILLA3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_HILLSMAN",
+   "PROMOTION_MOUNTAINEER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_GUERILLA2",
+    {
+     "any": [
+      "PROMOTION_COMBAT2"
+     ]
+    }
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "hillsAttack": {
+    "percent": 10
+   },
+   "hillsDefense": {
+    "percent": 20
+   },
+   "terrain": {
+    "TERRAIN_PEAK": {
+     "attack": {
+      "percent": 10
+     },
+     "defense": {
+      "percent": 20
+     }
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_GUERILLA": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Guerilla3.dds,Art/Interface/Buttons/Promotions_Atlas.dds,7,5"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_GUERILLA3"
+ }
+}

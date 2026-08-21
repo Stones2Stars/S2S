@@ -1,0 +1,22 @@
+{
+ "type": "BONUS_RAPA_NUI",
+ "enables": {
+  "builds": [
+   "BUILD_MOAI_STATUES"
+  ],
+  "units": [
+   "UNIT_RAPANUIWORKER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_RAPA_NUI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_RAPA_NUI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

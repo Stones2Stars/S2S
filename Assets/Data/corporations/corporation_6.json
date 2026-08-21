@@ -1,0 +1,84 @@
+{
+ "type": "CORPORATION_6",
+ "enables": {
+  "buildings": [
+   "BUILDING_ALUMINUM_CO_RESEARCH_AND_DEVELOPMENT"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HEADQUARTERS": "CORPORATION_6"
+     },
+     "per": "CORPORATION_LEVEL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_CORPORATION": "CORPORATION_6"
+     },
+     "per": {
+      "anyOf": [
+       "BONUS_COAL",
+       "BONUS_BAUXITE_ORE"
+      ],
+      "scope": "city"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "corporation": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "HAS_CORPORATION": "CORPORATION_6"
+      },
+      "per": {
+       "anyOf": [
+        "BONUS_COAL",
+        "BONUS_BAUXITE_ORE"
+       ],
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_ALUMINUM_INGOTS"
+  ]
+ },
+ "cost": {
+  "spread": 50
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 5,
+   "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,6,6"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CORPORATION_6",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_6_PEDIA",
+  "competingSpreadCostPercent": 200,
+  "spreadFactor": 60
+ }
+}

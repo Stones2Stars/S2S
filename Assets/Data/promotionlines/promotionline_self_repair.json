@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTIONLINE_SELF_REPAIR",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/SelfRepair1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SELF_HEAL",
+  "unitCombats": [
+   "UNITCOMBAT_HEALS_AS_AIRCRAFT",
+   "UNITCOMBAT_HEALS_AS_MECHANICAL",
+   "UNITCOMBAT_HEALS_AS_NAVAL",
+   "UNITCOMBAT_HEALS_AS_SPACECRAFT",
+   "UNITCOMBAT_HEALS_AS_TECH"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_CIVILIAN",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
+ }
+}

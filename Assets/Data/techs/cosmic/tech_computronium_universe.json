@@ -1,0 +1,66 @@
+{
+ "type": "TECH_COMPUTRONIUM_UNIVERSE",
+ "enables": {
+  "buildings": [
+   "BUILDING_COMPUTRONIUM_TITAN",
+   "BUILDING_COMPUTRONIUM_TOWER",
+   "BUILDING_DEEP_SPACE_COMPUTRONIUM_ASTEROID",
+   "BUILDING_INTERGALACTIC_COMPUTRONIUM_CONVERSION_FLEET",
+   "BUILDING_INTERSTELLAR_COMPUTRONIUM_PLANET",
+   "BUILDING_INTERSTELLAR_NEUTRON_STAR_COMPUTATIONAL_SUBSTRATE"
+  ],
+  "techs": [
+   "TECH_DARK_MATTER_ENGINEERING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ULTRACOMPUTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GALACTIC_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 302630
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/computronium_universe.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_COMPUTRONIUM_UNIVERSE",
+  "civilopedia": "TXT_KEY_TECH_COMPUTRONIUM_UNIVERSE_PEDIA",
+  "quote": "TXT_KEY_TECH_COMPUTRONIUM_UNIVERSE_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 142,
+  "gridY": 17
+ }
+}

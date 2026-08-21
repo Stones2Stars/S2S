@@ -1,0 +1,100 @@
+{
+ "type": "BUILDING_CASINO",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANDROID_BROTHEL",
+   "BUILDING_CIRCUS_CIRCUS_CASINO",
+   "BUILDING_COMEDY_CLUB",
+   "BUILDING_GENTLEMANS_CLUB",
+   "BUILDING_JAZZ_CLUB",
+   "BUILDING_KARAOKE_CLUB",
+   "BUILDING_LUXOR_CASINO",
+   "BUILDING_PACHINKO_ARCADE",
+   "BUILDING_STRATOSPHERE_CASINO",
+   "BUILDING_VIP_CLUB"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_LEGALIZED_GAMBLING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_STEEL_WARES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_CEMENT",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_ORDINANCE_GAMBLING_BAN"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 1345,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CASINO",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CASINO"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CASINO",
+  "civilopedia": "TXT_KEY_BUILDING_CASINO_PEDIA",
+  "worth": 7,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

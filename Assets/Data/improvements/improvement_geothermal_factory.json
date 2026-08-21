@@ -1,0 +1,82 @@
+{
+ "type": "IMPROVEMENT_GEOTHERMAL_FACTORY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_VOLCANOLOGY",
+     "scope": "team"
+    },
+    {
+     "bonus": [
+      "BONUS_GEOTHERMAL_ENERGY"
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    10,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_TELEPORTATION",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GEOTHERMAL_ENERGY"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_PLANETARY_ECONOMICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_GEOTHERMAL_ENERGY"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_GEOTHERMAL_FACTORY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_GEOTHERMAL_FACTORY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_GEOTHERMAL_FACTORY_PEDIA",
+  "advancedStart": {
+   "cost": 50
+  },
+  "pillageGold": 10,
+  "bonuses": {
+   "BONUS_GEOTHERMAL_ENERGY": {
+    "trade": true
+   }
+  }
+ }
+}

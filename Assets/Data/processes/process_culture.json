@@ -1,0 +1,14 @@
+{
+ "type": "PROCESS_CULTURE",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Process/ProcessCulture.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROCESS_CULTURE"
+ },
+ "conversion": {
+  "culture": 50
+ }
+}

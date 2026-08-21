@@ -1,0 +1,66 @@
+{
+ "type": "TECH_STELLAR_ENGINE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARTIFICIAL_CONSTELLATION",
+   "BUILDING_HYADES_STAR_CLUSTER_COLONY",
+   "BUILDING_INTERSTELLAR_SHKADOV_THRUSTER",
+   "BUILDING_NGC_6811_COLONY"
+  ],
+  "techs": [
+   "TECH_DIRECTED_PANSPERMIA",
+   "TECH_NEUTRINO_COMMUNICATIONS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORBITAL_ENGINEERING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PICOTECHNOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_STARS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 186934
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/stellar_engine.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_STELLAR_ENGINE",
+  "civilopedia": "TXT_KEY_TECH_STELLAR_ENGINE_PEDIA",
+  "quote": "TXT_KEY_TECH_STELLAR_ENGINE_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 135,
+  "gridY": 3
+ }
+}

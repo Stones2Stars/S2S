@@ -1,0 +1,70 @@
+{
+ "type": "TECH_CLOCKWORKS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIG_BEN",
+   "BUILDING_TOWNCLOCK",
+   "BUILDING_WATCHMAKERS_SHOP"
+  ],
+  "techs": [
+   "TECH_CLOCKPUNK",
+   "TECH_COMPASS"
+  ],
+  "units": [
+   "UNIT_GEAR_MECHANIC"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INVENTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 1688
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Clockworks.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,5,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CLOCKWORKS",
+  "soundMP": "AS2D_TECH_CLOCKWORKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CLOCKWORKS",
+  "civilopedia": "TXT_KEY_TECH_CLOCKWORKS_PEDIA",
+  "quote": "TXT_KEY_TECH_CLOCKWORKS_QUOTE",
+  "era": "C2C_ERA_MEDIEVAL",
+  "worth": 24,
+  "militaryWorth": 8,
+  "tradeable": true,
+  "gridX": 47,
+  "gridY": 1
+ }
+}

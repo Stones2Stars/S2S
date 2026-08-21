@@ -1,0 +1,170 @@
+{
+ "type": "BUILDING_TELEPORT_BOOTH",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANTIGRAV_VEHICLE_DEALERSHIP",
+   "BUILDING_AON_CENTER",
+   "BUILDING_BUNGEE_JUMPING_SITE",
+   "BUILDING_EL_CAMINO_DE_SANTIAGO",
+   "BUILDING_GOLDEN_GATE_BRIDGE",
+   "BUILDING_MICRO_WORMHOLE",
+   "BUILDING_NOMAD_SKYSCRAPER",
+   "BUILDING_ORIENT_EXPRESS",
+   "BUILDING_RAIL_SHIPPING_WAREHOUSE",
+   "BUILDING_SOLAR_HIGHWAY",
+   "BUILDING_SOLAR_PARKING_LOT",
+   "BUILDING_TELEPORT_SHIPPING_WAREHOUSE",
+   "BUILDING_TOURIST_TRAP",
+   "BUILDING_VIA_APPIA",
+   "BUILDING_WIND_TURBINE_HIGHWAY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TELEPORTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 70
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 70,
+   "percent": 30
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 120,
+   "percent": 1
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10,
+   "percent": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 10,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_OIL",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "riverDefensePenalty": {
+    "percent": 50
+   }
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 5,
+   "modifier": {
+    "percent": 60
+   }
+  }
+ },
+ "underworld": {
+  "city": {
+   "investigation": {
+    "flat": 10
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -135
+  }
+ },
+ "cost": {
+  "production": 10155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TELEPORT_BOOTH",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TELEPORT_BOOTH",
+  "civilopedia": "TXT_KEY_BUILDING_TELEPORT_BOOTH_PEDIA",
+  "worth": 4,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

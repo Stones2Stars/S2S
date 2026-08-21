@@ -1,0 +1,110 @@
+{
+ "type": "BUILDING_INVOCATION_HUT",
+ "enables": {
+  "buildings": [
+   "BUILDING_INVOCATION_HUT_BISON",
+   "BUILDING_INVOCATION_HUT_COW",
+   "BUILDING_INVOCATION_HUT_DEER",
+   "BUILDING_INVOCATION_HUT_PIG",
+   "BUILDING_INVOCATION_HUT_RABBIT",
+   "BUILDING_INVOCATION_HUT_SEAL",
+   "BUILDING_INVOCATION_HUT_SHEEP",
+   "BUILDING_INVOCATION_HUT_WALRUS",
+   "BUILDING_SPIRITS_ALLIANCE"
+  ],
+  "units": [
+   "UNIT_SHAMAN_MISSIONARY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SHAMANISTIC_TEMPLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "RELIGION_SHAMANISM"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_SHAMANISM"
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 2,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_ANIMALS"
+   }
+  }
+ ],
+ "cost": {
+  "production": 80,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INVOCATION_HUT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SHAMAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INVOCATION_HUT",
+  "civilopedia": "TXT_KEY_BUILDING_INVOCATION_HUT_PEDIA",
+  "pediaCategory": "religious",
+  "worth": 3,
+  "specialBuildingType": "SPECIALBUILDING_MONASTERY_II",
+  "religion": "RELIGION_SHAMANISM",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

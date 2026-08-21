@@ -1,0 +1,26 @@
+{
+ "type": "BONUS_IMMUNITY_DRUGS",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_HYPOSPRAYS"
+  ]
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_IMMUNITY_DRUGS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_IMMUNITY_DRUGS",
+  "civilopedia": "TXT_KEY_BONUS_IMMUNITY_DRUGS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

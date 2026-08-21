@@ -1,0 +1,102 @@
+{
+ "type": "IMPROVEMENT_MOAI",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MEGALITH_CONSTRUCTION",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_BARREN",
+      "TERRAIN_DESERT",
+      "TERRAIN_LUSH",
+      "TERRAIN_GRASSLAND",
+      "TERRAIN_PLAINS"
+     ]
+    }
+   ],
+   "noneOf": [
+    "HAS_FRESHWATER"
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": -1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_MASONRY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SCULPTURE",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_AESTHETICS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ANCESTOR_WORSHIP",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_ARCHEOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "TECH_TOURISM",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 5
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_MOAI"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_MOAI",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_SACRED_SITE_PEDIA",
+  "advancedStart": {
+   "cost": 30
+  },
+  "pillageGold": 25
+ }
+}

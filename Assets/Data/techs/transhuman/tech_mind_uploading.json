@@ -1,0 +1,82 @@
+{
+ "type": "TECH_MIND_UPLOADING",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_ILLEGAL_BRAINWASHING",
+   "BUILDING_MIND_STORAGE"
+  ],
+  "civics": [
+   "CIVIC_TELEPATHIC"
+  ],
+  "promotions": [
+   "PROMOTION_EDUCATE10"
+  ],
+  "techs": [
+   "TECH_COMPREHENSIVE_CYBERNETICS",
+   "TECH_TECHNOLOGICAL_SINGULARITY"
+  ],
+  "units": [
+   "UNIT_TURN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SOCIAL_CALCULUS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_EVOLUTION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SYNERGETICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 70029
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_ESPIONAGE": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/artificial_cognitive_system.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MIND_UPLOADING",
+  "soundMP": "AS2D_TECH_MIND_UPLOADING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MIND_UPLOADING",
+  "civilopedia": "TXT_KEY_TECH_MIND_UPLOADING_PEDIA",
+  "quote": "TXT_KEY_TECH_MIND_UPLOADING_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 114,
+  "gridY": 5
+ }
+}

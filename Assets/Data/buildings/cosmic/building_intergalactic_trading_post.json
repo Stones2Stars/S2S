@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_INTERGALACTIC_TRADING_POST",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_STARPORT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SPACE_CREASING",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 2634,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_TRADING_POST",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_TRADING_POST",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_TRADING_POST_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

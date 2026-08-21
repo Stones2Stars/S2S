@@ -1,0 +1,23 @@
+{
+ "type": "PROMOTION_LIBRA",
+ "costs": {
+  "unit": {
+   "upgrade": {
+    "percent": -25
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/StarSigns/libra.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_LIBRA",
+  "help": "TXT_KEY_PROMOTION_ASTRO_HELP",
+  "starsign": true
+ }
+}

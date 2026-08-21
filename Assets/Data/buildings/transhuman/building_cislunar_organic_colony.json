@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_CISLUNAR_ORGANIC_COLONY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_BIONIC_CORE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_ENHANCED_ALGAE_FARM",
+    "BUILDING_CISLUNAR_SPACEPORT",
+    "TECH_BOTANICAL_ALCHEMY",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -20
+  }
+ },
+ "cost": {
+  "production": 2544,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_ORGANIC_COLONY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_ORGANIC_COLONY",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_ORGANIC_COLONY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

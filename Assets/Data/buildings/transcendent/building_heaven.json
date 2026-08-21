@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_HEAVEN",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_MULTIVERSAL_ECONOMY",
+    "BUILDING_DISTANT_INFINITE_SPEED_TACHYON_GENERATOR",
+    {
+     "type": "BUILDING_INTERSTELLAR_COSMIC_NODE",
+     "scope": "empire",
+     "min": 3,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_HUMAN_MOD_METAPHYSICAL",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_OMEGA_POINT",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "happiness": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_INTERSTELLAR_COSMIC_NODE",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 14732,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_HEAVEN"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HEAVEN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HEAVEN",
+  "civilopedia": "TXT_KEY_BUILDING_HEAVEN_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

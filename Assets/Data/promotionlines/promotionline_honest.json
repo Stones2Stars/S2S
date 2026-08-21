@@ -1,0 +1,11 @@
+{
+ "type": "PROMOTIONLINE_HONEST",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitHonest.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_HONEST"
+ }
+}

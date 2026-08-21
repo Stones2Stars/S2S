@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_WEAPONIZED_FLORA",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_BIOPUNK_LAB",
+    "TECH_BIOPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BIOPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 10
+   },
+   "adjacentDamage": {
+    "percent": 20
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 3665,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WEAPONIZED_FLORA",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WEAPONIZED_FLORA",
+  "civilopedia": "TXT_KEY_BUILDING_WEAPONIZED_FLORA_PEDIA",
+  "specialBuildingType": "SPECIALBUILDING_PUNK_BIO",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

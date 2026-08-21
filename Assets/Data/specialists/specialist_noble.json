@@ -1,0 +1,64 @@
+{
+ "type": "SPECIALIST_NOBLE",
+ "production": {
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_NEUSCHWANSTEIN",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_VERSAILLES",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_CAPTAIN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/noble.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/noble.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_NOBLE",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
+  "visible": true,
+  "categories": [
+   "CATEGORY_ASSIGNABLE_SPECIALISTS",
+   "CATEGORY_SPECIALIST_GROUP_POLITICAL"
+  ]
+ }
+}

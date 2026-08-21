@@ -1,0 +1,79 @@
+{
+ "type": "TECH_ZOOLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_SHELTER",
+   "BUILDING_ENCLOSURE_SEAL",
+   "BUILDING_ENCLOSURE_WALRUS",
+   "BUILDING_ENTOMOLOGY_LAB",
+   "BUILDING_GERBIL_BREEDER",
+   "BUILDING_HAMSTER_BREEDER",
+   "BUILDING_HERPETOLOGY_LAB",
+   "BUILDING_INTERNATIONAL_DOG_SHOW",
+   "BUILDING_MOUSE_BREEDER",
+   "BUILDING_NATIONAL_ZOO",
+   "BUILDING_ORNITHOLOGY_LAB",
+   "BUILDING_PETTING_ZOO",
+   "BUILDING_PET_SHOP",
+   "BUILDING_RAT_BREEDER",
+   "BUILDING_TAXIDERMIST",
+   "BUILDING_ZOO"
+  ],
+  "techs": [
+   "TECH_MARINE_BIOLOGY",
+   "TECH_PALEONTOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BIOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 3704
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Zoology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ZOOLOGY",
+  "soundMP": "AS2D_TECH_ZOOLOGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ZOOLOGY",
+  "civilopedia": "TXT_KEY_TECH_ZOOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_ZOOLOGY_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 58,
+  "gridY": 3
+ }
+}

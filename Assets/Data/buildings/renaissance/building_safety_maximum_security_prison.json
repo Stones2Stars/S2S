@@ -1,0 +1,44 @@
+{
+ "type": "BUILDING_SAFETY_MAXIMUM_SECURITY_PRISON",
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_SAFETY_ORBITAL_PRISON"
+   ],
+   "all": [
+    "TECH_CONSTITUTION"
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_CRIME": {
+  "empire": {
+   "flat": -20
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SAFETY_MAXIMUM_SECURITY_PRISON",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SAFETY_MAXIMUM_SECURITY_PRISON",
+  "civilopedia": "TXT_KEY_BUILDING_SAFETY_MAXIMUM_SECURITY_PRISON_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

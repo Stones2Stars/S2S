@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_WHALE_SHRINE",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_HARPOON_MAKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_FOLKLORE",
+    {
+     "type": "BONUS_WHALE",
+     "scope": "city",
+     "connection": "onSite"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 104,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WHALE_SHRINE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WHALE_SHRINE",
+  "civilopedia": "TXT_KEY_BUILDING_WHALE_SHRINE_PEDIA",
+  "advisor": "ADVISOR_RELIGION",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

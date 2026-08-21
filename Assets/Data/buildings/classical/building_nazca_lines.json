@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_NAZCA_LINES",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FOLKLORE_E_SKY",
+    "BUILDING_FOLKLORE_E_EARTH",
+    "TECH_MATHEMATICS",
+    {
+     "type": "TERRAIN_BARREN",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_GEOGLYPH_PLANS"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 6,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1,
+   "SPECIALIST_PRIEST": 1,
+   "SPECIALIST_ARTIST": 1
+  }
+ },
+ "cost": {
+  "production": 1296,
+  "sizeModifier": 3,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NAZCA_LINES"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_NAZCA_LINES"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_NAZCA_LINES",
+  "civilopedia": "TXT_KEY_BUILDING_NAZCA_LINES_PEDIA",
+  "help": "TXT_KEY_BUILDING_NAZCA_LINES_HELP",
+  "pediaCategory": "greatWonder",
+  "worth": 6,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,38 @@
+{
+ "type": "SPECIALIST_GREAT_SPY",
+ "research": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 12
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_SPY": {
+     "flat": 2
+    },
+    "UNITCOMBAT_DIPLOMAT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,6,14",
+   "icon": ",Art/Interface/Buttons/TechTree/Corporation.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,6,14"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_GREAT_SPY",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_SPY_PEDIA",
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_ESPIONAGE"
+  ]
+ }
+}

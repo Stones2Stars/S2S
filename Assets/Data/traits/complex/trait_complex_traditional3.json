@@ -1,0 +1,367 @@
+{
+ "type": "TRAIT_COMPLEX_TRADITIONAL3",
+ "excludes": [
+  "TRAIT_SCIENTIFIC1"
+ ],
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_GASTRONOMY_LAB": {
+     "percent": -25
+    },
+    "BUILDING_SCIENCE_SYMPOSIUM": {
+     "percent": -25
+    },
+    "BUILDING_FORENSICS_LAB": {
+     "percent": -25
+    },
+    "BUILDING_INFO_NET": {
+     "percent": -25
+    },
+    "BUILDING_NANO_RESEARCH_DEPARTMENT": {
+     "percent": -25
+    },
+    "BUILDING_BIOINFORMATICS_LAB": {
+     "percent": -25
+    },
+    "BUILDING_EVOLUTION_SIMULATOR": {
+     "percent": -25
+    },
+    "BUILDING_ASTROBIOLOGY_LAB": {
+     "percent": -25
+    },
+    "BUILDING_CLONING_LABORATORY": {
+     "percent": -25
+    },
+    "BUILDING_STEM_CELL_LAB": {
+     "percent": -25
+    },
+    "BUILDING_QUANTUM_LAB": {
+     "percent": -25
+    },
+    "BUILDING_NEUROSCIENCE_CENTER": {
+     "percent": -25
+    },
+    "BUILDING_SYSTEMS_BIOLOGY_SIMULATOR": {
+     "percent": -25
+    },
+    "BUILDING_3D_BODY_ATLAS": {
+     "percent": -25
+    },
+    "BUILDING_AEROPONICS_LAB": {
+     "percent": -25
+    },
+    "BUILDING_TISSUE_ENGINEERING_LAB": {
+     "percent": -25
+    },
+    "BUILDING_CISLUNAR_LABS": {
+     "percent": -25
+    },
+    "BUILDING_BACTERIUM_BIOFORGE": {
+     "percent": -25
+    },
+    "BUILDING_BIOMORPHICS_LAB": {
+     "percent": -25
+    },
+    "BUILDING_MEGATOWER_RESEARCH_LEVEL": {
+     "percent": -25
+    },
+    "BUILDING_TRANSGENICS_LAB": {
+     "percent": -25
+    },
+    "BUILDING_NANITE_LAB": {
+     "percent": -25
+    },
+    "BUILDING_EVOLUTIONARY_ALGORITHMS": {
+     "percent": -25
+    },
+    "BUILDING_ANTHROPOMORPHICS_LAB": {
+     "percent": -25
+    },
+    "BUILDING_BINARY_CONSCIOUSNESS_ALGORITHMS": {
+     "percent": -25
+    },
+    "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE": {
+     "percent": -25
+    },
+    "BUILDING_NEUROTRANSMITTER_MANIPULATOR_LAB": {
+     "percent": -25
+    },
+    "BUILDING_CYBERNETIC_ORGAN_LAB": {
+     "percent": -25
+    },
+    "BUILDING_SOMATOSENSORY_MANIPULATOR_LAB": {
+     "percent": -25
+    },
+    "BUILDING_ANIMA_CHAMBER": {
+     "percent": -25
+    },
+    "BUILDING_ANIMA_STUDIO": {
+     "percent": -25
+    },
+    "BUILDING_SINGULARITY_BRAIN_LAB": {
+     "percent": -25
+    },
+    "BUILDING_SUBTERRANEAN_LAB": {
+     "percent": -25
+    },
+    "BUILDING_PICOTECH_COMPLEX": {
+     "percent": -25
+    },
+    "BUILDING_HEALTHCARE_MEGACOMPLEX": {
+     "percent": -25
+    }
+   },
+   "units": {
+    "percent": [
+     {
+      "value": 10,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "researchRate": {
+  "empire": {
+   "techs": {
+    "TECH_GASTRONOMY": {
+     "percent": -20
+    },
+    "TECH_KNOWLEDGE_MANAGEMENT": {
+     "percent": -20
+    },
+    "TECH_BIOINFORMATICS": {
+     "percent": -20
+    },
+    "TECH_SUPERSTRING_THEORY": {
+     "percent": -20
+    },
+    "TECH_NANOTECHNOLOGY": {
+     "percent": -20
+    },
+    "TECH_ASTROBIOLOGY": {
+     "percent": -20
+    },
+    "TECH_CLONING": {
+     "percent": -20
+    },
+    "TECH_QUANTUM_TELEPORTATION": {
+     "percent": -20
+    },
+    "TECH_GENETIC_BIOCHEMISTRY": {
+     "percent": -20
+    },
+    "TECH_BIOMATHEMATICS": {
+     "percent": -20
+    },
+    "TECH_COMPUTATIONAL_SOCIOLOGY": {
+     "percent": -20
+    },
+    "TECH_IMAGINARY_PHYSICS": {
+     "percent": -20
+    },
+    "TECH_GENOMIC_ENCYCLOPEDIA": {
+     "percent": -20
+    },
+    "TECH_THOUGHT_SCANNING": {
+     "percent": -20
+    },
+    "TECH_GENE_ENHANCEMENT": {
+     "percent": -20
+    },
+    "TECH_EXOCORTEX_NETWORKS": {
+     "percent": -20
+    },
+    "TECH_QUANTUM_COMPUTING": {
+     "percent": -20
+    },
+    "TECH_UNIVERSAL_TRANSLATOR": {
+     "percent": -20
+    },
+    "TECH_CYBERNETICS": {
+     "percent": -20
+    },
+    "TECH_TECHNOLOGICAL_SINGULARITY": {
+     "percent": -20
+    },
+    "TECH_TERRA_COMPUTER": {
+     "percent": -20
+    },
+    "TECH_ASTROECOLOGY": {
+     "percent": -20
+    },
+    "TECH_DATA_ARCHIVAL": {
+     "percent": -20
+    },
+    "TECH_ASTROANTHROPOLOGY": {
+     "percent": -20
+    },
+    "TECH_STELLAR_COMPUTING": {
+     "percent": -20
+    },
+    "TECH_ULTRACOMPUTING": {
+     "percent": -20
+    },
+    "TECH_PURE_INFORMATION_SOCIETY": {
+     "percent": -20
+    },
+    "TECH_STRING_MANIPULATION": {
+     "percent": -20
+    },
+    "TECH_EXPERIMENTAL_COSMOLOGY": {
+     "percent": -20
+    },
+    "TECH_HYPERINTELLIGENCE": {
+     "percent": -20
+    },
+    "TECH_SENTIENT_ENERGY_FIELDS": {
+     "percent": -20
+    },
+    "TECH_SIMULATION_AWARENESS": {
+     "percent": -20
+    }
+   }
+  }
+ },
+ "commerce": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": -1
+    },
+    "SPECIALIST_GREAT_SCIENTIST": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": -6,
+   "percent": [
+    -5,
+    {
+     "value": -5,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
+   "specialists": {
+    "SPECIALIST_DOCTOR": {
+     "flat": -2
+    },
+    "SPECIALIST_GREAT_DOCTOR": {
+     "flat": -2
+    },
+    "SPECIALIST_ANDROID_WORKER": {
+     "flat": -1
+    }
+   },
+   "cities": {
+    "flat": [
+     {
+      "value": -1,
+      "per": {
+       "type": "SPECIALIST",
+       "scope": "city"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": -20
+  }
+ },
+ "freeSpecialists": {
+  "empire": {
+   "any": 1
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_FOSSIL_DIG_SITE": {
+     "percent": -50
+    },
+    "BUILD_ARCHEOLOGICAL_SITE": {
+     "percent": -50
+    }
+   }
+  }
+ },
+ "durations": {
+  "empire": {
+   "civicAnarchy": {
+    "percent": 25
+   },
+   "religiousAnarchy": {
+    "percent": 50
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 4,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": -1
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 15
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitTraditional3.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_TRADITIONAL3",
+  "civilopedia": "TXT_KEY_TRAIT_TRADITIONAL3_PEDIA",
+  "strategy": "TXT_KEY_TRAIT_TRADITIONAL_STRATEGY",
+  "negativeTrait": true,
+  "impurePropertyManipulators": true
+ }
+}

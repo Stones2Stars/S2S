@@ -1,0 +1,87 @@
+{
+ "type": "BUILDING_KUIPER_BELT_OUTPOST",
+ "enables": {
+  "buildings": [
+   "BUILDING_KUIPER_BELT_FUSION_PLANT",
+   "BUILDING_KUIPER_BELT_GEOTHERMAL_PLANT",
+   "BUILDING_KUIPER_BELT_TETHER",
+   "BUILDING_LIFE_LIQUID_NITROGEN"
+  ],
+  "units": [
+   "UNIT_CAPTURED_COMET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ASTEROID_EXTRACTION",
+    {
+     "type": "TERRAIN_KUIPER_BELT_OBJECT",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_CARBON_DIOXIDE_ICE",
+   "BONUS_ROCKET_FUEL"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": [
+    {
+     "value": 11,
+     "enabled": "TECH_PARATERRAFORMING"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -10
+   }
+  }
+ },
+ "cost": {
+  "production": 2363,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_KUIPER_BELT_OUTPOST",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_KUIPER_BELT_OUTPOST",
+  "civilopedia": "TXT_KEY_BUILDING_KUIPER_BELT_OUTPOST_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "type": "TECH_REALISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_BAYREUTH_FESTSPIELHAUS",
+   "BUILDING_BOLSHOI",
+   "BUILDING_MODERN_ART_THEATRE",
+   "BUILDING_OPERA_HOUSE",
+   "BUILDING_ORCHESTRION_THEATER",
+   "BUILDING_SYDNEY_OPERA_HOUSE"
+  ],
+  "techs": [
+   "TECH_IMPRESSIONISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ROMANTICISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MARXISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 6673
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 1
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/Realism.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_REALISM",
+  "soundMP": "AS2D_TECH_REALISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_REALISM",
+  "civilopedia": "TXT_KEY_TECH_REALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_REALISM_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 32,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "gridX": 67,
+  "gridY": 17
+ }
+}

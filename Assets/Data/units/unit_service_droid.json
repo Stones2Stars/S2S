@@ -1,0 +1,167 @@
+{
+ "type": "UNIT_SERVICE_DROID",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SERVICE_BOTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_ARTIFICIAL_INTELLIGENCE_CORE",
+    "TECH_QUANTUM_COMPUTING",
+    "TECH_DROIDS",
+    {
+     "type": "BONUS_FIREARMS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_HELICOPTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_PERSONAL_ELECTRONICS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_FLASH_MEMORY_DEVICES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_REPLICATORS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_BIOFUEL",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_NANITE_REPAIR_CLOUD"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 6
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 60
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 30
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 12
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_MECHANICAL": {
+     "heal": 37,
+     "adjacentHeal": 20
+    },
+    "UNITCOMBAT_HEALS_AS_AIRCRAFT": {
+     "heal": 37
+    },
+    "UNITCOMBAT_HEALS_AS_SPACECRAFT": {
+     "heal": 27
+    },
+    "UNITCOMBAT_HEALS_AS_TECH": {
+     "heal": 20
+    }
+   }
+  }
+ },
+ "skills": [
+  "mechanized",
+  "onlyDefensive"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "vtol"
+ ],
+ "combatClass": "UNITCOMBAT_HELICOPTER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_ONLY",
+  "UNITCOMBAT_WEAPON_DIST_LASER",
+  "UNITCOMBAT_ARMOR_AIRCRAFT",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_SMALL",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL",
+  "UNITCOMBAT_HEALS_MECHANICAL",
+  "UNITCOMBAT_HEALS_AIRCRAFT",
+  "UNITCOMBAT_HEALS_SPACECRAFT",
+  "UNITCOMBAT_HEALS_TECH"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 4315,
+  "upkeep": 11,
+  "hurryCostModifier": 25
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SERVICE_DROID",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_SERVICE_DROID"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_SERVICE_DROID",
+  "civilopedia": "TXT_KEY_UNIT_SERVICE_DROID_PEDIA",
+  "worth": 15,
+  "militaryWorth": 40,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_HEALER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_HEALER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

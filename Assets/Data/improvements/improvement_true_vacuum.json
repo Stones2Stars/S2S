@@ -1,0 +1,44 @@
+{
+ "type": "IMPROVEMENT_TRUE_VACUUM",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CONTROLLED_VACUUM_COLLAPSE",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_INTERGALACTIC_VOID"
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": 25
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_TRUE_VACUUM"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_TRUE_VACUUM",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_TRUE_VACUUM_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200
+ }
+}

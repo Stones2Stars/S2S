@@ -1,0 +1,63 @@
+{
+ "type": "SPECIALIST_GREAT_PROPHET",
+ "production": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  },
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": -1,
+      "enabled": {
+       "type": "BUILDING_HOUSE_OF_WISDOM",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_HOUSE_OF_WISDOM",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MISSIONARY": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/Great_Priest.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/Great_Priest.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_GREAT_PROPHET",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_PEOPLE_PEDIA",
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_RELIGIOUS"
+  ]
+ }
+}

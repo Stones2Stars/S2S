@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_ROCK_N_ROLL",
+ "enables": {
+  "buildings": [
+   "BUILDING_WALK_OF_FAME"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ELECTRONICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   {
+    "BONUS_HIT_SINGLES": 6
+   }
+  ]
+ },
+ "culture": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 6480,
+  "complexityModifier": 2,
+  "hurryModifier": 200
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ROCK_AND_ROLL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ROCK_N_ROLL"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ROCK_N_ROLL",
+  "civilopedia": "TXT_KEY_BUILDING_ROCK_N_ROLL_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 18,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

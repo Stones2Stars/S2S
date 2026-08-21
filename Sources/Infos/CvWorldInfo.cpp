@@ -1,209 +1,69 @@
-//------------------------------------------------------------------------------------------------
-//  FILE:    CvWorldInfo.cpp
-//------------------------------------------------------------------------------------------------
-#include "CvGameCoreDLL.h"
-#include "CvArtFileMgr.h"
-#include "CvBuildingInfo.h"
-#include "CvHeritageInfo.h"
-#include "CvGameAI.h"
-#include "CvGameTextMgr.h"
-#include "CvGlobals.h"
-#include "CvInfos.h"
-#include "CvInfoUtil.h"
-#include "CvPlayerAI.h"
-#include "CvPython.h"
-#include "CvXMLLoadUtility.h"
-#include "CvXMLLoadUtilityModTools.h"
-#include "CheckSum.h"
-#include "CvImprovementInfo.h"
-#include "CvBonusInfo.h"
+//
+//	CvWorldInfo -- the world (map size) poco's config materialization (see the header). Pure CONFIG: mapFrom
+//	reads the authored `identity` block into the typed members; every getter is a bare member read
+//	(docs/architecture/patterns.md §Materialize at mapFrom). No section units are composed -- there is nothing per-turn here.
+//
+
+#include "CvGameCoreDLL.h"        // PCH umbrella -- picojson
+#include "CvInfos.h"              // umbrella: keeps the unity batch's info-type defs whole (leakage guard)
 #include "CvWorldInfo.h"
+#include "CvJsonParse.h"          // jsonChildObj / jsonIdInt
 
 
-
-//======================================================================================================
-//					CvWorldInfo
-//======================================================================================================
 CvWorldInfo::CvWorldInfo()
+	: m_iDefaultPlayers(0)
+	, m_iTargetNumCities(0)
+	, m_iGridWidth(0)
+	, m_iGridHeight(0)
+	, m_iTerrainGrainChange(0)
+	, m_iFeatureGrainChange(0)
+	, m_iOceanMinAreaSize(0)
+	, m_iBuildingPrereqModifier(0)
+	, m_iMaxConscriptModifier(0)
+	, m_iWarWearinessModifier(0)
+	, m_iTradeProfitPercent(0)
+	, m_iCorporationMaintenancePercent(0)
+	, m_iNumCitiesAnarchyPercent(0)
+	, m_iAdvancedStartPointsMod(0)
+	, m_iCityLimitsScalePercent(100)   // 100 = no change; an absent key must scale by 100, never 0
 {
-	CvInfoUtil(this).initDataMembers();
 }
 
 
-CvWorldInfo::~CvWorldInfo()
-{
-}
-
-
+// EXE-bound (DllExport): the staging screens read the size's default player count through the export table.
 int CvWorldInfo::getDefaultPlayers() const
 {
 	return m_iDefaultPlayers;
 }
 
 
-int CvWorldInfo::getUnitNameModifier() const
+// #430: the ONE load hook -- idempotent (CvInfo.h): every member is unconditionally redefined each call
+// (jsonIdInt serves the default when the key is absent).
+void CvWorldInfo::mapFrom(const picojson::value& entity)
 {
-	return m_iUnitNameModifier;
-}
+	CvInfo::mapFrom(entity);   // core reading (type / identity text keys / button); no sections composed
 
-
-int CvWorldInfo::getTargetNumCities() const
-{
-	return m_iTargetNumCities;
-}
-
-
-int CvWorldInfo::getBuildingPrereqModifier() const
-{
-	return m_iBuildingPrereqModifier;
-}
-
-
-int CvWorldInfo::getMaxConscriptModifier() const
-{
-	return m_iMaxConscriptModifier;
-}
-
-
-int CvWorldInfo::getWarWearinessModifier() const
-{
-	return m_iWarWearinessModifier;
-}
-
-
-int CvWorldInfo::getGridWidth() const
-{
-	return m_iGridWidth;
-}
-
-
-int CvWorldInfo::getGridHeight() const
-{
-	return m_iGridHeight;
-}
-
-
-int CvWorldInfo::getTerrainGrainChange() const
-{
-	return m_iTerrainGrainChange;
-}
-
-
-int CvWorldInfo::getFeatureGrainChange() const
-{
-	return m_iFeatureGrainChange;
-}
-
-
-int CvWorldInfo::getTradeProfitPercent() const
-{
-	return m_iTradeProfitPercent;
-}
-
-
-int CvWorldInfo::getDistanceMaintenancePercent() const
-{
-	return m_iDistanceMaintenancePercent;
-}
-
-
-int CvWorldInfo::getNumCitiesMaintenancePercent() const
-{
-	return m_iNumCitiesMaintenancePercent;
-}
-
-
-int CvWorldInfo::getColonyMaintenancePercent() const
-{
-	return m_iColonyMaintenancePercent;
-}
-
-
-int CvWorldInfo::getCorporationMaintenancePercent() const
-{
-	return m_iCorporationMaintenancePercent;
-}
-
-
-int CvWorldInfo::getNumCitiesAnarchyPercent() const
-{
-	return m_iNumCitiesAnarchyPercent;
-}
-
-
-int CvWorldInfo::getAdvancedStartPointsMod() const
-{
-	return m_iAdvancedStartPointsMod;
-}
-
-
-int CvWorldInfo::getCommandersLevelThresholdsPercent() const
-{
-	return m_iCommandersLevelThresholdsPercent;
-}
-
-
-int CvWorldInfo::getOceanMinAreaSize() const
-{
-	return m_iOceanMinAreaSize;
-}
-
-
-int CvWorldInfo::getCityLimitsScalePercent() const
-{
-	return m_iCityLimitsScalePercent;
-}
-
-
-void CvWorldInfo::getDataMembers(CvInfoUtil& util)
-{
-	util
-		.add(m_iDefaultPlayers, L"iDefaultPlayers")
-		.add(m_iUnitNameModifier, L"iUnitNameModifier")
-		.add(m_iTargetNumCities, L"iTargetNumCities")
-		.add(m_iBuildingPrereqModifier, L"iBuildingPrereqModifier")
-		.add(m_iMaxConscriptModifier, L"iMaxConscriptModifier")
-		.add(m_iWarWearinessModifier, L"iWarWearinessModifier")
-		.add(m_iGridWidth, L"iGridWidth")
-		.add(m_iGridHeight, L"iGridHeight")
-		.add(m_iTerrainGrainChange, L"iTerrainGrainChange")
-		.add(m_iFeatureGrainChange, L"iFeatureGrainChange")
-		.add(m_iTradeProfitPercent, L"iTradeProfitPercent")
-		.add(m_iDistanceMaintenancePercent, L"iDistanceMaintenancePercent")
-		.add(m_iNumCitiesMaintenancePercent, L"iNumCitiesMaintenancePercent")
-		.add(m_iColonyMaintenancePercent, L"iColonyMaintenancePercent")
-		.add(m_iCorporationMaintenancePercent, L"iCorporationMaintenancePercent")
-		.add(m_iNumCitiesAnarchyPercent, L"iNumCitiesAnarchyPercent")
-		.add(m_iAdvancedStartPointsMod, L"iAdvancedStartPointsMod")
-		.add(m_iCommandersLevelThresholdsPercent, L"iCommandersLevelThresholdsPercent")
-		.add(m_iOceanMinAreaSize, L"iOceanMinAreaSize")
-		.add(m_iCityLimitsScalePercent, L"iCityLimitsScalePercent", 100)
-	;
-}
-
-
-bool CvWorldInfo::read(CvXMLLoadUtility* pXML)
-{
-	if (!CvInfoBase::read(pXML))
+	const picojson::object* pIdentity = NULL;
+	if (entity.is<picojson::object>())
 	{
-		return false;
+		pIdentity = jsonChildObj(entity.get<picojson::object>(), "identity");
 	}
+	static const picojson::object emptyObject;
+	const picojson::object& identityObj = pIdentity ? *pIdentity : emptyObject;
 
-	CvInfoUtil(this).readXml(pXML);
-
-	return true;
-}
-
-
-void CvWorldInfo::copyNonDefaults(const CvWorldInfo* pClassInfo)
-{
-	CvInfoBase::copyNonDefaults(pClassInfo);
-
-	CvInfoUtil(this).copyNonDefaults(pClassInfo);
-}
-
-
-void CvWorldInfo::getCheckSum(uint32_t& iSum) const
-{
-	CvInfoUtil(this).checkSum(iSum);
+	m_iDefaultPlayers               = jsonIdInt(identityObj, "defaultPlayers");
+	m_iTargetNumCities              = jsonIdInt(identityObj, "targetNumCities");
+	m_iGridWidth                    = jsonIdInt(identityObj, "gridWidth");
+	m_iGridHeight                   = jsonIdInt(identityObj, "gridHeight");
+	m_iTerrainGrainChange           = jsonIdInt(identityObj, "terrainGrainChange");
+	m_iFeatureGrainChange           = jsonIdInt(identityObj, "featureGrainChange");
+	m_iOceanMinAreaSize             = jsonIdInt(identityObj, "oceanMinAreaSize");
+	m_iBuildingPrereqModifier       = jsonIdInt(identityObj, "buildingPrereqModifier");
+	m_iMaxConscriptModifier         = jsonIdInt(identityObj, "maxConscriptModifier");
+	m_iWarWearinessModifier         = jsonIdInt(identityObj, "warWearinessModifier");
+	m_iTradeProfitPercent           = jsonIdInt(identityObj, "tradeProfitPercent");
+	m_iCorporationMaintenancePercent = jsonIdInt(identityObj, "corporationMaintenancePercent");
+	m_iNumCitiesAnarchyPercent      = jsonIdInt(identityObj, "numCitiesAnarchyPercent");
+	m_iAdvancedStartPointsMod       = jsonIdInt(identityObj, "advancedStartPointsMod");
+	m_iCityLimitsScalePercent       = jsonIdInt(identityObj, "cityLimitsScalePercent", 100);
 }

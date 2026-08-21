@@ -1,0 +1,28 @@
+{
+ "type": "BONUS_HELICOPTERS",
+ "enables": {
+  "units": [
+   "UNIT_AH64_GUNSHIP",
+   "UNIT_DROID_HELICOPTER",
+   "UNIT_DROPSHIP",
+   "UNIT_EARLY_MEDIVAC",
+   "UNIT_GUNSHIP",
+   "UNIT_HYBRID_GUNSHIP",
+   "UNIT_MEDEVAC_DROPSHIP",
+   "UNIT_MODERN_MEDIVAC",
+   "UNIT_STEALTH_CHOPPER",
+   "UNIT_UNMANNED_HELICOPTER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HELICOPTERS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HELICOPTERS",
+  "civilopedia": "TXT_KEY_BONUS_HELICOPTERS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

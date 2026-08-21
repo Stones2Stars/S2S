@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_OORT_CLOUD_SOLAR_ARRAY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_OORT_CLOUD_BASE",
+    {
+     "type": "BUILDING_DEEP_SPACE_FOCUSED_SUNLIGHT_PLANT",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_INTERSTELLAR_TRAVEL",
+    {
+     "type": "FEATURE_OORT_CLOUD",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_INTERSTELLAR",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_SOLAR_SYSTEM",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 1192,
+  "hurryModifier": 10000
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_OORT_CLOUD_SOLAR_ARRAY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_OORT_CLOUD_SOLAR_ARRAY",
+  "civilopedia": "TXT_KEY_BUILDING_OORT_CLOUD_SOLAR_ARRAY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR",
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

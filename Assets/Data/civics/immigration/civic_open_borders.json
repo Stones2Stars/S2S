@@ -1,0 +1,65 @@
+{
+ "type": "CIVIC_OPEN_BORDERS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ELLIS_ISLAND",
+   "BUILDING_SEASTEAD"
+  ]
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_DEPARTMENT_OF_FOREIGN_POLICY": {
+     "flat": 1
+    },
+    "BUILDING_AMBASSADORS_HOUSE": {
+     "flat": 1
+    },
+    "BUILDING_EMPORIUM": {
+     "flat": 1
+    },
+    "BUILDING_HYPERMARKET": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "flat": 2,
+   "modifier": {
+    "food": {
+     "percent": 2
+    },
+    "production": {
+     "percent": 3
+    },
+    "commerce": {
+     "percent": 4
+    }
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/immigration_open_borders.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_OPEN_BORDERS",
+  "civilopedia": "TXT_KEY_CIVIC_OPEN_BORDERS_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_OPEN_BORDERS_STRATEGY",
+  "civicOption": "CIVICOPTION_IMMIGRATION",
+  "upkeepLevel": "UPKEEP_LOW"
+ }
+}

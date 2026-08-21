@@ -1,0 +1,52 @@
+{
+ "type": "PROMOTION_CITY_GARRISON3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_CITY_GARRISON4"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CITY_GARRISON2"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "attack": {
+    "percent": -15
+   },
+   "dynamicDefense": {
+    "percent": 10
+   },
+   "cityDefense": {
+    "percent": 30
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_GARRISON": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CityGarrison3.dds,Art/Interface/Buttons/Promotions_Atlas.dds,4,2"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_GARRISON3",
+  "notOnUnitCombats": [
+   "UNITCOMBAT_CIVILIAN"
+  ]
+ }
+}

@@ -1,0 +1,86 @@
+{
+ "type": "TECH_EQUINE_DOMESTICATION",
+ "enables": {
+  "bonuses": [
+   "BONUS_DONKEY",
+   "BONUS_HORSE"
+  ],
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_BUFFALO",
+   "BUILDING_ANIMAL_TRAINER_DONKEY",
+   "BUILDING_ANIMAL_TRAINER_HORSE",
+   "BUILDING_CENTRAL_BREEDER_DONKEY",
+   "BUILDING_CENTRAL_BREEDER_HORSE",
+   "BUILDING_CULTURE_SAMI",
+   "BUILDING_FARM_ANIMAL_DONKEY",
+   "BUILDING_FARM_ANIMAL_HORSE"
+  ],
+  "techs": [
+   "TECH_CHARIOTRY",
+   "TECH_PLOUGH",
+   "TECH_TENGRIISM"
+  ],
+  "units": [
+   "UNIT_DAREN",
+   "UNIT_HORSEMAN",
+   "UNIT_PERSIA_IMMORTAL",
+   "UNIT_REINDEER_RIDER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AGRICULTURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 96
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/equinedomestication.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_EQUINE_DOMESTICATION",
+  "soundMP": "AS2D_TECH_EQUINE_DOMESTICATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_EQUINE_DOMESTICATION",
+  "civilopedia": "TXT_KEY_TECH_EQUINE_DOMESTICATION_PEDIA",
+  "quote": "TXT_KEY_TECH_EQUINE_DOMESTICATION_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "gridX": 21,
+  "gridY": 5
+ }
+}

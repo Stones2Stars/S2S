@@ -1,0 +1,31 @@
+{
+ "type": "PROPERTY_FLAMMABILITY",
+ "properties": {
+  "changePropagation": [
+   {
+    "from": "city",
+    "to": "empire",
+    "percent": 100
+   }
+  ]
+ },
+ "ai": {
+  "weight": -50,
+  "scale": "city",
+  "operationalRange": {
+   "min": 0,
+   "max": 1000
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROPERTY_FLAMMABILITY",
+  "fontButtonIndex": 1,
+  "text": {
+   "value": "TXT_KEY_PROPERTY_FLAMMABILITY_DISPLAY",
+   "change": "TXT_KEY_PROPERTY_FLAMMABILITY_CHANGE",
+   "changeAllCities": "TXT_KEY_PROPERTY_FLAMMABILITY_CHANGE_ALL_CITIES",
+   "prereqMin": "TXT_KEY_PROPERTY_FLAMMABILITY_PREREQ_MIN",
+   "prereqMax": "TXT_KEY_PROPERTY_FLAMMABILITY_PREREQ_MAX"
+  }
+ }
+}

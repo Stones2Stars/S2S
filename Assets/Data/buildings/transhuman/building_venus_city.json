@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_VENUS_CITY",
+ "enables": {
+  "buildings": [
+   "BUILDING_VENUS_GOVERNING_COUNCIL",
+   "BUILDING_VENUS_ORBITAL_SOLAR_ARRAY",
+   "BUILDING_VENUS_SURFACE_CITY",
+   "BUILDING_VENUS_SURFACE_SCOOP",
+   "BUILDING_VENUS_TRADING_POST"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_VENUS",
+    "TECH_ARTIFICIAL_PHOTOSYNTHESIS",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -2
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -10
+   }
+  }
+ },
+ "cost": {
+  "production": 1921,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VENUS_CITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_CITY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTION_COPPER_PLATING",
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "skills": {
+  "immuneToFirstStrikes": true
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Stalwart.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,3,12"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COPPER_PLATING"
+ }
+}

@@ -1,0 +1,19 @@
+{
+ "type": "PROCESS_CULTURE_LESSER",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Process/processculturelesser.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROCESS_LESSER_CULTURE"
+ },
+ "conversion": {
+  "culture": 40
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_LITERATURE"
+  ]
+ }
+}

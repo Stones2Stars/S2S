@@ -1,0 +1,46 @@
+{
+ "type": "PROMOTION_FIREARMS3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_FIREARMS2",
+    {
+     "any": [
+      "PROMOTION_COMBAT2",
+      "PROMOTION_DRILL2"
+     ]
+    }
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WOODEN_SHIPS": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "firstStrike": {
+  "unit": {
+   "strikes": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_FIREARMS": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/firearms3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_FIREARMS3"
+ }
+}

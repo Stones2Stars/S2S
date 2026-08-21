@@ -1,0 +1,62 @@
+{
+ "type": "TECH_WEAPONIZED_GRAVITY_FIELDS",
+ "enables": {
+  "buildings": [
+   "BUILDING_GRAVITY_CROWD_CONTROL",
+   "BUILDING_INTERSTELLAR_TRACTOR_BEAM"
+  ],
+  "builds": [
+   "BUILD_INTERSTELLAR_BASE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_INTERSTELLAR_BASE"
+  ],
+  "techs": [
+   "TECH_SINGULARITY_STABILIZATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GRAVITY_CONTROL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 166029
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 9
+   },
+   {
+    "FLAVOR_SCIENCE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Buttons/Techs/TechWeaponizedGravityFields.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_WEAPONIZED_GRAVITY_FIELDS",
+  "soundMP": "AS2D_TECH_WEAPONIZED_GRAVITY_FIELDS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_WEAPONIZED_GRAVITY_FIELDS",
+  "civilopedia": "TXT_KEY_TECH_WEAPONIZED_GRAVITY_FIELDS_PEDIA",
+  "quote": "TXT_KEY_TECH_WEAPONIZED_GRAVITY_FIELDS_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 50,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 132,
+  "gridY": 13
+ }
+}

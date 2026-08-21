@@ -1,0 +1,37 @@
+{
+ "type": "TERRAIN_METHANE_OCEAN",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/methane_ocean.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_TERRAIN_METHANE_OCEAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TERRAIN_METHANE_OCEAN",
+  "civilopedia": "TXT_KEY_TERRAIN_METHANE_OCEAN_PEDIA",
+  "distanceToLand": 1,
+  "mapCategories": [
+   "MAPCATEGORY_TITANIC",
+   "MAPCATEGORY_AQUATIC"
+  ]
+ }
+}

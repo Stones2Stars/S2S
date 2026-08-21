@@ -1,0 +1,92 @@
+{
+ "type": "BONUS_BEAVER",
+ "enables": {
+  "buildings": [
+   "BUILDING_BREEDING_PROGRAM_BEAVER",
+   "BUILDING_BREEDING_PROGRAM_CHINCHILLA",
+   "BUILDING_BREEDING_PROGRAM_FOX",
+   "BUILDING_BREEDING_PROGRAM_MINK",
+   "BUILDING_BREEDING_PROGRAM_RACCOON",
+   "BUILDING_BREEDING_PROGRAM_SEA_OTTER",
+   "BUILDING_CAMP_CARIBOU",
+   "BUILDING_CARRION_GATHERER",
+   "BUILDING_CULTURE_AINU",
+   "BUILDING_CULTURE_CANADIAN",
+   "BUILDING_CULTURE_CZECH",
+   "BUILDING_CULTURE_FILIPINO",
+   "BUILDING_CULTURE_FLEMISH",
+   "BUILDING_CULTURE_KITARAN",
+   "BUILDING_CULTURE_RUSSIAN",
+   "BUILDING_CULTURE_TUNGUS",
+   "BUILDING_TRAP_BEAVER",
+   "BUILDING_TRAP_CHINCHILLA",
+   "BUILDING_TRAP_FOX",
+   "BUILDING_TRAP_MINK",
+   "BUILDING_TRAP_RACCOON",
+   "BUILDING_TRAP_SEA_OTTER"
+  ],
+  "units": [
+   "UNIT_NEANDERTHAL_SHEPHERD",
+   "UNIT_SHEPHERD"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 7
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_BEAVERS"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 5,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "minLatitude": 50,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "uniqueRange": 4,
+  "groupRange": 1,
+  "groupRand": 10,
+  "hills": true,
+  "flatlands": true,
+  "validFeatures": [
+   "FEATURE_FOREST",
+   "FEATURE_FOREST_ANCIENT",
+   "FEATURE_SWAMP",
+   "FEATURE_FLOOD_PLAINS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_MARSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_PLAINS",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_BEAVERS",
+  "civilopedia": "TXT_KEY_BONUS_BEAVERS_PEDIA",
+  "bonusClassType": "BONUSCLASS_PRODUCTION",
+  "source": "natural"
+ }
+}

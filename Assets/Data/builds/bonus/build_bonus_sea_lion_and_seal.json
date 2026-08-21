@@ -1,0 +1,24 @@
+{
+ "type": "BUILD_BONUS_SEA_LION_AND_SEAL",
+ "produces": {
+  "improvement": "IMPROVEMENT_BONUS_SEA_LION_AND_SEAL"
+ },
+ "cost": {
+  "gold": 30,
+  "time": 200
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Resources/Sea_Lions.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_IRRIGATE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_BONUS_SEA_LION_AND_SEAL",
+  "consumesUnit": true
+ }
+}

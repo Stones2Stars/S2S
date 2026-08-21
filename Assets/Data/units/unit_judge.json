@@ -1,0 +1,196 @@
+{
+ "type": "UNIT_JUDGE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COURTHOUSE",
+    "TECH_CODE_OF_LAWS"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 5
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "tags": [
+  "merchant",
+  "civilian",
+  "landUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_ADMINISTRATOR",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_PATHETIC",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_REMOVE_WV_SLAVERY",
+    "requires": {
+     "outcome": "OUTCOME_REMOVE_WV_SLAVERY",
+     "plot": "IS_OWNED"
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doRemoveWVSlavery"
+    }
+   },
+   {
+    "mission": "MISSION_REMOVE_WV_CANNIBALISM",
+    "requires": {
+     "outcome": "OUTCOME_REMOVE_WV_CANNIBALISM",
+     "plot": "IS_OWNED"
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doRemoveWVCannibalism"
+    }
+   },
+   {
+    "mission": "MISSION_REMOVE_WV_HUMAN_SACRIFICE",
+    "requires": {
+     "outcome": "OUTCOME_REMOVE_WV_HUMAN_SACRIFICE",
+     "plot": "IS_OWNED"
+    },
+    "chance": 100,
+    "python": {
+     "callback": "doRemoveWVHumanSacrifice"
+    }
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_ORDINANCE_CARPOOL"
+   },
+   {
+    "building": "BUILDING_ORDINANCE_SMOKE_DETECTOR"
+   },
+   {
+    "building": "BUILDING_ORDINANCE_FIRE_CODE"
+   },
+   {
+    "building": "BUILDING_ORDINANCE_NEIGHBORHOOD_WATCH"
+   },
+   {
+    "building": "BUILDING_ORDINANCE_YOUTH_CURFEW"
+   },
+   {
+    "building": "BUILDING_ORDINANCE_AUTOMOBILE_EMISSION_REDUCTION_ACT"
+   },
+   {
+    "building": "BUILDING_ORDINANCE_CLEAN_AIR_ACT"
+   },
+   {
+    "building": "BUILDING_ORDINANCE_CLEAN_WATER_ACT"
+   },
+   {
+    "building": "BUILDING_ORDINANCE_TIRE_RECYCLING_PROGRAM"
+   },
+   {
+    "building": "BUILDING_ORDINANCE_COMMUTER_SHUTTLE_SERVICE"
+   },
+   {
+    "building": "BUILDING_ORDINANCE_PROSTITUTION_BAN"
+   },
+   {
+    "building": "BUILDING_ORDINANCE_GAMBLING_BAN"
+   },
+   {
+    "building": "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION"
+   },
+   {
+    "building": "BUILDING_ORDINANCE_DRUG_PROHIBITION"
+   },
+   {
+    "building": "BUILDING_ORDINANCE_SMOKING_PROHIBITION"
+   },
+   {
+    "building": "BUILDING_NATIONAL_ALCOHOL_PROHIBITION"
+   },
+   {
+    "building": "BUILDING_NATIONAL_DRUG_PROHIBITION"
+   },
+   {
+    "building": "BUILDING_ORDINANCE_NATIONAL_SMOKING_PROHIBITION"
+   },
+   {
+    "building": "BUILDING_NATIONAL_PROSTITUTION_BAN"
+   },
+   {
+    "building": "BUILDING_NATIONAL_GAMBLING_BAN"
+   }
+  ]
+ },
+ "cost": {
+  "production": 225,
+  "upkeep": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_JUDGE",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "rangedWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_JUDGE"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_JUDGE",
+  "civilopedia": "TXT_KEY_UNIT_JUDGE_PEDIA",
+  "worth": 1,
+  "militaryWorth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MERCHANT",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_MERCHANT",
+   "UNITAI_PROPERTY_CONTROL"
+  ],
+  "notUnitAIs": [
+   "UNITAI_EXPLORE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": 1
+  }
+ }
+}

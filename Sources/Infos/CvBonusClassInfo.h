@@ -1,36 +1,30 @@
 #pragma once
-
 #ifndef CV_BONUS_CLASS_INFO_H
 #define CV_BONUS_CLASS_INFO_H
 
-#include "CvInfoBase.h"
+//
+//	CvBonusClassInfo -- the BONUSCLASS poco (a bonus grouping with a map-generation min-spacing). Pure
+//	intrinsic self-description on the exemplar surface (patterns.md § THE GETTER SETUP category 4): the census
+//	authors NO modifier family and no availability section on this type -- one mapGeneration config value.
+//	JSON-fed (Assets/Data/bonusclasses/*.json via mapFrom); no XML read.
+//
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//
-//  class : CvBonusClassInfo
-//
-//  DESC:
-//
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class CvBonusClassInfo
-	: public CvInfoBase
-	, private bst::noncopyable
+#include "CvInfo.h"   // JSON-info base (mapFrom); on /I -> bare include
+
+namespace picojson { class value; }
+
+class CvBonusClassInfo : public CvInfo
 {
-	//---------------------------PUBLIC INTERFACE---------------------------------
 public:
-
 	CvBonusClassInfo();
-	virtual ~CvBonusClassInfo();
 
-	int getUniqueRange() const;
+	virtual void mapFrom(const picojson::value& entity);
 
-	void getDataMembers(CvInfoUtil& util);
-	bool read(CvXMLLoadUtility* pXML);
-	void copyNonDefaults(const CvBonusClassInfo* pClassInfo);
-	void getCheckSum(uint32_t& iSum) const;
+	// ======================= INTRINSIC -- bare typed reads =======================
+	// mapGeneration.uniqueRange -- the min-spacing that prevents same-class bonus stacking (CvMapGenerator).
+	int getUniqueRange() const { return m_iUniqueRange; }
 
-	//----------------------PROTECTED MEMBER VARIABLES----------------------------
-protected:
+private:
 	int m_iUniqueRange;
 };
 

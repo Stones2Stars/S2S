@@ -1,0 +1,85 @@
+{
+ "type": "BUILDING_GREAT_FIREWALL",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_CYBERWARFARE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_STATUE_OF_LIBERTY"
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "any": [
+      "CIVIC_INQUISITORIAL",
+      "CIVIC_TOTALITARIANISM",
+      "CIVIC_MARXIST",
+      "CIVIC_PROPAGANDA",
+      "CIVIC_SINGLE_PARTY",
+      "CIVIC_GRID"
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -25
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SPY": 5
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_SAFETY_GREAT_FIREWALL"
+   }
+  ]
+ },
+ "cost": {
+  "production": 12030,
+  "complexityModifier": 2
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GREAT_FIREWALL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GREAT_FIREWALL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GREAT_FIREWALL",
+  "civilopedia": "TXT_KEY_BUILDING_GREAT_FIREWALL_PEDIA",
+  "pediaCategory": "greatWonder",
+  "militaryWorth": 5,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

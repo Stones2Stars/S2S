@@ -1,0 +1,34 @@
+{
+ "type": "UNITCOMBAT_SIZE_MICROSCOPIC",
+ "combat": {
+  "unit": {
+   "damageModifier": {
+    "percent": -60
+   }
+  }
+ },
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 2000
+  },
+  "detection": {
+   "value": -800,
+   "unit": "HAS_SIZE"
+  }
+ },
+ "skills": [
+  "size"
+ ],
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "sizeMatters": {
+  "sizeBase": 0
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/size_fine.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SIZE_MICROSCOPIC"
+ }
+}

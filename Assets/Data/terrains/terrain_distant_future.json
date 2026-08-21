@@ -1,0 +1,36 @@
+{
+ "type": "TERRAIN_DISTANT_FUTURE",
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/distant_future.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_TERRAIN_DISTANT_FUTURE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TERRAIN_DISTANT_FUTURE",
+  "civilopedia": "TXT_KEY_TERRAIN_DISTANT_FUTURE_PEDIA",
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_HYPERSPACE_QUANTUM_GRAPH_MANIFESTATION",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HYPERSPACE_TRANSFINITE_STRUCTURES",
+    "TECH_NONSTANDARD_MATHEMATICS",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 3423,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYPERSPACE_QUANTUM_GRAPH_MANIFESTATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_QUANTUM_GRAPH_MANIFESTATION",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_QUANTUM_GRAPH_MANIFESTATION_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

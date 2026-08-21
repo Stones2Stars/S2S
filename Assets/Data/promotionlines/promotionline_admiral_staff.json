@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTIONLINE_ADMIRAL_STAFF",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/CommodoreAdmiralStaff1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_GENERAL_STAFF",
+  "unitCombats": [
+   "UNITCOMBAT_COMMODORE"
+  ]
+ }
+}

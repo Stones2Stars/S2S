@@ -1,0 +1,166 @@
+{
+ "type": "CIVIC_MERCANTILISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTRAL_BANK",
+   "BUILDING_HIGHWAYMANS_HIDEOUT",
+   "BUILDING_MERCANTILISM_BONUS_GOLD",
+   "BUILDING_MERCANTILISM_BONUS_SILVER",
+   "BUILDING_NATIONAL_MINT",
+   "BUILDING_PIRATES_COVE",
+   "BUILDING_SMUGGLERS_SHANTY"
+  ],
+  "hurries": [
+   "HURRY_GOLD"
+  ],
+  "units": [
+   "UNIT_ASSAULT_SHIP",
+   "UNIT_BARBARY_CORSAIR",
+   "UNIT_DRAGON_SHIP_PIRATE",
+   "UNIT_LIBURNA",
+   "UNIT_MALACCAN_PIRATE",
+   "UNIT_MASTER_SAILOR_UBOAT",
+   "UNIT_PRIVATEER",
+   "UNIT_RAZZIA_PIRATES",
+   "UNIT_SAMBUK",
+   "UNIT_TAHITIAN_RIDERS",
+   "UNIT_TORPEDO_BOAT",
+   "UNIT_UBOAT",
+   "UNIT_UNMANNED_PIRATE_SKIFF"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    5,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    1,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    1,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    1,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 5
+   },
+   "numCities": {
+    "percent": 7
+   },
+   "percent": [
+    {
+     "value": 3,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 5,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
+   "corporation": {
+    "percent": -50
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 3
+    },
+    "production": {
+     "percent": 4
+    },
+    "commerce": {
+     "percent": 5
+    }
+   }
+  }
+ },
+ "hurry": {
+  "empire": {
+   "inflation": {
+    "percent": 20
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": -1
+   },
+   "nationalityMod": {
+    "percent": 10
+   },
+   "distanceModifier": {
+    "percent": -10
+   },
+   "environmentalProtection": {
+    "flat": -1
+   }
+  }
+ },
+ "inflation": {
+  "empire": {
+   "percent": 20
+  }
+ },
+ "costs": {
+  "empire": {
+   "hurry": {
+    "percent": -50
+   }
+  }
+ },
+ "policies": {
+  "noForeignCorporations": true,
+  "noForeignTrade": true
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/economy_mercantile.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_MERCANTILISM",
+  "civilopedia": "TXT_KEY_CIVIC_MERCANTILISM_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_MERCANTILISM_STRATEGY",
+  "civicOption": "CIVICOPTION_ECONOMY",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

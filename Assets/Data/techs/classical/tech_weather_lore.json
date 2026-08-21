@@ -1,0 +1,73 @@
+{
+ "type": "TECH_WEATHER_LORE",
+ "enables": {
+  "buildings": [
+   "BUILDING_WEATHER_VANES"
+  ],
+  "promotions": [
+   "PROMOTION_POLAR_WORKER3"
+  ],
+  "techs": [
+   "TECH_GEOCENTRISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CLOUD_PATTERNS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CALENDAR",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PHILOSOPHY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "domainMoves": {
+  "empire": {
+   "domains": {
+    "DOMAIN_SEA": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 824
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/techtree/weather_lore.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_WEATHER_LORE",
+  "soundMP": "AS2D_TECH_WEATHER_LORE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_WEATHER_LORE",
+  "civilopedia": "TXT_KEY_TECH_WEATHER_LORE_PEDIA",
+  "quote": "TXT_KEY_TECH_WEATHER_LORE_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 20,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 39,
+  "gridY": 19
+ }
+}

@@ -1,0 +1,68 @@
+{
+ "type": "TECH_NANOSHIELDING",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_RADIATION_TOLERANCE"
+  ],
+  "buildings": [
+   "BUILDING_CISLUNAR_NUCLEAR_DAMPER",
+   "BUILDING_HUMAN_MOD_RADIATION_TOLERANCE",
+   "BUILDING_JOVIAN_CORE_PROBE"
+  ],
+  "projects": [
+   "PROJECT_SS_CASING"
+  ],
+  "techs": [
+   "TECH_NANO_DISASSEMBLY",
+   "TECH_SOLAR_ORDNANCE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ADVANCED_SHIELDING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOMORPHICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 83654
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Buttons/Techs/TechNanoshielding.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NANOSHIELDING",
+  "soundMP": "AS2D_TECH_NANOSHIELDING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NANOSHIELDING",
+  "civilopedia": "TXT_KEY_TECH_NANOSHIELDING_PEDIA",
+  "quote": "TXT_KEY_TECH_NANOSHIELDING_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 50,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 119,
+  "gridY": 7
+ }
+}

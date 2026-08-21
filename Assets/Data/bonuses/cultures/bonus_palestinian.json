@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_PALESTINIAN",
+ "enables": {
+  "units": [
+   "UNIT_JASIR_ARAFAT",
+   "UNIT_PLO_FIGHTER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PALESTINIAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PALESTINIAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

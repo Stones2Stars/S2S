@@ -1,0 +1,25 @@
+{
+ "type": "CULTURELEVEL_DEVELOPING",
+ "enables": {
+  "buildings": [
+   "BUILDING_TOWN_HALL"
+  ]
+ },
+ "allowed": {
+  "worldWonders": 2,
+  "teamWonders": 2,
+  "nationalWonders": 8
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 12
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CULTURELEVEL_DEVELOPING",
+  "cityRadius": 2,
+  "cultureThreshold": 520
+ }
+}

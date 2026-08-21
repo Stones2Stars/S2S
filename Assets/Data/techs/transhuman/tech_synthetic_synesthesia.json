@@ -1,0 +1,78 @@
+{
+ "type": "TECH_SYNTHETIC_SYNESTHESIA",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_NOVEL_SENSES"
+  ],
+  "buildings": [
+   "BUILDING_HUMAN_MOD_NOVEL_SENSES",
+   "BUILDING_MORPHOGEN_NANOBOTS",
+   "BUILDING_SOMA_DISPENSARY"
+  ],
+  "techs": [
+   "TECH_BINARY_SUBCONSCIOUSNESS",
+   "TECH_SIMULATED_REALITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DESIGNER_MICROBIOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HYPOTHETICAL_BIOCHEMISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TRANSHUMAN_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 63426
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/syntheticsynesthesia.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SYNTHETIC_SYNESTHESIA",
+  "soundMP": "AS2D_TECH_SYNTHETIC_SYNESTHESIA"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SYNTHETIC_SYNESTHESIA",
+  "civilopedia": "TXT_KEY_TECH_SYNTHETIC_SYNESTHESIA_PEDIA",
+  "quote": "TXT_KEY_TECH_SYNTHETIC_SYNESTHESIA_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 111,
+  "gridY": 11
+ }
+}

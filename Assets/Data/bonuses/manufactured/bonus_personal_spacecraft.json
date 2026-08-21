@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_PERSONAL_SPACECRAFT",
+ "enables": {
+  "buildings": [
+   "BUILDING_OMEGA_ASSEMBLER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PERSONAL_SPACECRAFT"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PERSONAL_SPACECRAFT",
+  "civilopedia": "TXT_KEY_BONUS_PERSONAL_SPACECRAFT_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

@@ -1,0 +1,107 @@
+{
+ "type": "TECH_SCAVENGING",
+ "enables": {
+  "bonuses": [
+   "BONUS_BEAVER",
+   "BONUS_BISON",
+   "BONUS_BONE",
+   "BONUS_BUGS",
+   "BONUS_CAMEL",
+   "BONUS_CARCASS",
+   "BONUS_COW",
+   "BONUS_DEER",
+   "BONUS_DONKEY",
+   "BONUS_EGGS",
+   "BONUS_ELEPHANT",
+   "BONUS_GUINEA_PIG",
+   "BONUS_HORSE",
+   "BONUS_KANGAROO",
+   "BONUS_LLAMA",
+   "BONUS_MAMMOTH",
+   "BONUS_PARROT",
+   "BONUS_PIG",
+   "BONUS_POULTRY",
+   "BONUS_RABBIT",
+   "BONUS_SEA_LION_AND_SEAL",
+   "BONUS_SHEEP",
+   "BONUS_WALRUS"
+  ],
+  "buildings": [
+   "BUILDING_ANT_CATCHER",
+   "BUILDING_CARRION_GATHERER",
+   "BUILDING_EARTHWORM_GATHERER",
+   "BUILDING_GRASSHOPPER_CATCHER",
+   "BUILDING_NEST_THIEF",
+   "BUILDING_SNAIL_GATHERER",
+   "BUILDING_TERMITE_CATCHER",
+   "BUILDING_TIDEPOOL_SCAVENGER"
+  ],
+  "builds": [
+   "BUILD_SCAVENGING_CAMP_KILL"
+  ],
+  "improvements": [
+   "IMPROVEMENT_SCAVENGING_CAMP"
+  ],
+  "promotions": [
+   "PROMOTION_BACK_DOWN2",
+   "PROMOTION_HEROIC2",
+   "PROMOTION_LOYALTY"
+  ],
+  "techs": [
+   "TECH_TOOL_MAKING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NOMADISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 4
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/scavenging.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SCAVENGING",
+  "soundMP": "AS2D_TECH_SCAVENGING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SCAVENGING",
+  "civilopedia": "TXT_KEY_TECH_SCAVENGING_PEDIA",
+  "quote": "TXT_KEY_TECH_SCAVENGING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 2,
+  "gridY": 7
+ }
+}

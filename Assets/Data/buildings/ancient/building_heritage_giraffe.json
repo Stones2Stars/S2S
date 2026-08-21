@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_HERITAGE_GIRAFFE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "latitude": {
+      "max": 45
+     }
+    },
+    "BUILDING_ANIMAL_TRAINER_GIRAFFE",
+    "TECH_HERITAGE",
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_HERITAGE_GIRAFFES"
+   }
+  ]
+ },
+ "cost": {
+  "production": 139,
+  "sizeModifier": 1,
+  "complexityModifier": 2
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 7
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HERITAGE_GIRAFFE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HERITAGE_GIRAFFE",
+  "civilopedia": "TXT_KEY_BUILDING_HERITAGE_GIRAFFE_PEDIA",
+  "worth": 4,
+  "militaryWorth": 2,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

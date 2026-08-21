@@ -1,0 +1,14 @@
+{
+ "type": "PROMOTION_CULTURE_NORTH_AMERICAN",
+ "ui": {
+  "art": {
+   "icon": "art/Embassy/art/culturenamerican.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CULTURE_NORTH_AMERICAN",
+  "unitCombats": [
+   "UNITCOMBAT_SETTLER"
+  ]
+ }
+}

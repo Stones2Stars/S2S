@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_PANAMAN",
+ "enables": {
+  "units": [
+   "UNIT_PUBLIC_FORCES",
+   "UNIT_VASCO_DE_BALBOA"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PANAMAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PANAMAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

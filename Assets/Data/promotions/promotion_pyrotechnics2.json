@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTION_PYROTECHNICS2",
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 2
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_PYROTECHNICS": 2
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Pyrotechnics2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_PYROTECHNICS2"
+ }
+}

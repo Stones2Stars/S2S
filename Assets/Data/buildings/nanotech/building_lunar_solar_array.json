@@ -1,0 +1,82 @@
+{
+ "type": "BUILDING_LUNAR_SOLAR_ARRAY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_LUNAR_ASSEMBLY_PLANT",
+    "BUILDING_LUNAR_SILICON_PROCESSING_FACILITY",
+    "TECH_LUNAR_MANUFACTURING",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_PLASTIC",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_MICROCHIPS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_LUNAR_SOLAR_PANELS",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 7800,
+  "hurryModifier": 1000000
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_LUNAR_SOLAR_ARRAY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUNAR_SOLAR_ARRAY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_SOLAR_ARRAY",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_SOLAR_ARRAY_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

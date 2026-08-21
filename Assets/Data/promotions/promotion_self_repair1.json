@@ -1,0 +1,42 @@
+{
+ "type": "PROMOTION_SELF_REPAIR1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_RECOVER_TECH",
+   "PROMOTION_REPAIR_AIRCRAFT",
+   "PROMOTION_REPAIR_MECHANICAL",
+   "PROMOTION_REPAIR_NAVAL",
+   "PROMOTION_SELF_REPAIR2"
+  ]
+ },
+ "heal": {
+  "unit": {
+   "neutral": {
+    "flat": 1
+   },
+   "selfModifier": {
+    "percent": 1
+   },
+   "victory": {
+    "flat": 3
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SELF_REPAIR": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/SelfRepair1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "sizeMatters": {
+  "maxHP": 1
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SELF_REPAIR1"
+ }
+}

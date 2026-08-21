@@ -16,6 +16,16 @@
 		<DefineName>CIV4_VERSION</DefineName>
 		<iDefineIntVal>319</iDefineIntVal>
 	</Define>
+	<!-- Brings the dev HTTP server (127.0.0.1:7227) up at the MAIN MENU instead of at first game start. The BUG
+	     option Autolog__HttpServer cannot do this: it is read from setIsBug(), which by its own contract runs only
+	     the first time a game is started or loaded - so /events did not exist during the XML/JSON load, and the
+	     load-time streams (the readJson census, the grant resolutions the load bracket suppresses) had no consumer
+	     to reach. A global define is readable at SetGlobalDefines, before any info loads. 1 = force the server on
+	     from the menu; the BUG option can still enable it later, and never disables what this turned on. -->
+	<Define>
+		<DefineName>HTTP_SERVER_FROM_MENU</DefineName>
+		<iDefineIntVal>1</iDefineIntVal>
+	</Define>
 	<Define>
 		<DefineName>MIN_VERSION</DefineName>
 		<iDefineIntVal>000</iDefineIntVal>
@@ -28,14 +38,14 @@
 	<!-- Start paging out if memory exceeds this amount (in KB) -->
 	<Define>
 		<DefineName>MAX_DESIRED_MEMORY_USED</DefineName>
-		<iDefineIntVal>2000000</iDefineIntVal>
+		<iDefineIntVal>3500000</iDefineIntVal>
 	</Define>
 	<!-- Proactively page graphics out once this many plots are resident, instead of waiting
 		for MAX_DESIRED_MEMORY_USED. Lower = leaner memory, higher = bigger cache. Only ever
 		evicts not-required (out-of-radius) graphics, so it is safe at any value. -->
 	<Define>
 		<DefineName>PAGING_RESIDENT_SOFT_CAP</DefineName>
-		<iDefineIntVal>2500</iDefineIntVal>
+		<iDefineIntVal>3000000</iDefineIntVal>
 	</Define>
 	<!-- If specified, instead of MAX_DESIRED_MEMORY_USED, a set of test
 		allocations will be performed to test for low memory conditions -->
@@ -314,6 +324,14 @@
 	<Define>
 		<DefineName>MAX_UNIT_VISIBILITY_RANGE</DefineName>
 		<iDefineIntVal>8</iDefineIntVal>
+	</Define>
+	<Define>
+		<DefineName>CITY_VISIBILITY_RANGE</DefineName>
+		<iDefineIntVal>2</iDefineIntVal>
+	</Define>
+	<Define>
+		<DefineName>CITY_BASE_ELEVATION</DefineName>
+		<iDefineIntVal>1</iDefineIntVal>
 	</Define>
 	<Define>
 		<DefineName>MAX_YIELD_STACK</DefineName>
@@ -786,26 +804,6 @@
 		<iDefineIntVal>20</iDefineIntVal>
 	</Define>
 	<Define>
-		<DefineName>GLOBAL_WARMING_PROB</DefineName>
-		<iDefineIntVal>0</iDefineIntVal>
-	</Define>
-	<Define>
-		<DefineName>GLOBAL_WARMING_FOREST</DefineName>
-		<iDefineIntVal>25</iDefineIntVal>
-	</Define>
-	<Define>
-		<DefineName>GLOBAL_WARMING_UNHEALTH_WEIGHT</DefineName>
-		<iDefineIntVal>10</iDefineIntVal>
-	</Define>
-	<Define>
-		<DefineName>GLOBAL_WARMING_BONUS_WEIGHT</DefineName>
-		<iDefineIntVal>5</iDefineIntVal>
-	</Define>
-	<Define>
-		<DefineName>GLOBAL_WARMING_NUKE_WEIGHT</DefineName>
-		<iDefineIntVal>50</iDefineIntVal>
-	</Define>
-	<Define>
 		<DefineName>TECH_COST_EXTRA_TEAM_MEMBER_MODIFIER</DefineName>
 		<iDefineIntVal>100</iDefineIntVal>
 	</Define>
@@ -1107,15 +1105,26 @@
 		<DefineName>GAME_CITY_SIZE_METHOD</DefineName>
 		<DefineTextVal>METHOD_EXPONENTIAL</DefineTextVal>
 	</Define>
+	<!--
+		⛔ THESE TWO DECIDE HOW MUCH THE CITY ASKS THE LAYOUT ENGINE TO PLACE, AND ASKING FOR MORE THAN THE GRID
+		HOLDS IS NOT FREE. CvCity::getVisibleBuildings offers `10 + 2*pop^EXP_MODIFIER` objects, of which
+		MAX_PERCENT_UNIQUE are distinct building models and the rest generics; the LSystem seats what it can into
+		a 16x16 city and logs `Failed to place goal building` / `Layout failed to complete` for the remainder,
+		once per layout rebuild, per city (LSystem.log). That overflow is wasted layout work, not just noise.
+		At the previous 1.05/0.7 a population-40 city asked for 106 objects (74 of them unique models); the
+		values below ask for 64 (38 unique), which is a real reduction without emptying the city out.
+		⚑ The `* 2` in the exponential form is hardcoded engine-side, so EXP_MODIFIER is the only curve knob;
+		MAX_PERCENT_UNIQUE only splits the total between unique models and generics.
+	-->
 	<Define>
 		<!-- the maximum percentage of a city that can be wonders, regular buildings, etc -->
 		<DefineName>GAME_CITY_SIZE_MAX_PERCENT_UNIQUE</DefineName>
-		<fDefineFloatVal>0.7</fDefineFloatVal>
+		<fDefineFloatVal>0.6</fDefineFloatVal>
 	</Define>
 	<!-- this is the way to tweak city size when METHOD_EXPONENTIAL is chosen in the above define -->
 	<Define>
 		<DefineName>GAME_CITY_SIZE_EXP_MODIFIER</DefineName>
-		<fDefineFloatVal>1.05</fDefineFloatVal>
+		<fDefineFloatVal>0.9</fDefineFloatVal>
 	</Define>
 	<!-- this is the way to tweak city size when METHOD_LINMAP is chosen in the above define -->
 	<Define>
@@ -1697,6 +1706,10 @@
 	</Define>
 	<Define>
 		<DefineName>AI_WORKER_MAX_DISTANCE_FROM_CITY_OUT_BORDERS</DefineName>
+		<iDefineIntVal>5</iDefineIntVal>
+	</Define>
+	<Define>
+		<DefineName>AI_CONTRACT_MAX_TRAVEL_TURNS</DefineName>
 		<iDefineIntVal>5</iDefineIntVal>
 	</Define>
 	<Define>

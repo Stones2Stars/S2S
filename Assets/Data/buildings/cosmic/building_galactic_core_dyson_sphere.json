@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_GALACTIC_CORE_DYSON_SPHERE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_GALACTIC_CORE_BASE",
+    "TECH_GALACTIC_ENGINEERING",
+    {
+     "type": "TERRAIN_GALACTIC_CORE",
+     "scope": "plot"
+    },
+    {
+     "type": "FEATURE_SUPERMASSIVE_BLACK_HOLE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "production": {
+  "city": {
+   "flat": 500
+  }
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_INTERSTELLAR_DYSON_SPHERE": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 38440,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_GALACTIC_CORE_DYSON_SPHERE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GALACTIC_CORE_DYSON_SPHERE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GALACTIC_CORE_DYSON_SPHERE",
+  "civilopedia": "TXT_KEY_BUILDING_GALACTIC_CORE_DYSON_SPHERE_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

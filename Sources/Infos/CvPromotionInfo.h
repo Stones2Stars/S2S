@@ -1,697 +1,256 @@
 #pragma once
+#ifndef CV_JSON_PROMOTION_INFO_H
+#define CV_JSON_PROMOTION_INFO_H
 
-#ifndef CV_PROMOTION_INFO_H
-#define CV_PROMOTION_INFO_H
+//
+//	CvPromotionInfo -- the PROMOTION poco rebuilt to the full exemplar surface (patterns.md par. THE GETTER
+//	SETUP: the four read categories, nothing else). A promotion is the unit plane's runtime GRANTOR: it PROVIDES
+//	skills (the par.8 grant/revoke planes) and deposits par.6 unit-scope self-accumulator values (modifier.md
+//	par.6 -- the additive promotion stack) the unit folds in as it is gained. Styled for the JSON anatomy
+//	(json.md par.2): every magnitude read is a load-compiled fetch (docs/architecture/patterns.md §Materialize at mapFrom); kind and
+//	scope are separate parameters (docs/architecture/patterns.md §The coherent surface (scope is a separate axis)); every magnitude getter IS x100
+//	(docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); the type-keyed vs-entries (terrain/feature/unitCombat/domain/flanking/build
+//	targets) stay compiled ENTRY-LIST reads by design; no legacy getter name returns (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
+//
+//	The chain edges: enables.promotions rides the composed CvEdges (store-inverted onto the tech is
+//	reconstructed at load via the setters below -- the loadJson tech-FK reverse-index pass); the chain's
+//	AND-half is the composed requires.build tree (the enabler's PROMOTION_ atom reads ctx.unit).
+//
 
-#include "CvInfoBase.h"
+#include "CvInfo.h"
+#include "CvJsonParse.h"            // vectorHas -- the shared id-vector membership scan the has*/is* getters read
+#include "CvHideAndSeekSection.h"   // par.9 `hideAndSeek` typed section (the shared concealment/detection contest)
+#include "CvSizeMattersSection.h"   // par.9 `sizeMatters` typed section (the SM deltas live here)
+#include "Defines/CvEnums.h"        // TechTypes / PromotionLineTypes / NO_* + NO_COMMAND
+#include "Defines/CvStructs.h"      // UnitCombatModifier (the ai.unitCombatWeights rows)
+#include <vector>
 
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//
-//  class : CvPromotionInfo
-//
-//  DESC:
-//
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-class CvPromotionInfo
-	: public CvHotkeyInfo
-	, private bst::noncopyable
+class CvPromotionInfo : public CvInfo
 {
-	//---------------------------PUBLIC INTERFACE---------------------------------
 public:
 	CvPromotionInfo();
-	virtual ~CvPromotionInfo();
+	virtual void mapFrom(const picojson::value& entity);
 
-	int getLayerAnimationPath() const;
-	PromotionTypes getPrereqPromotion() const { return m_iPrereqPromotion; }
-	PromotionTypes getPrereqOrPromotion1() const { return m_iPrereqOrPromotion1; }
-	PromotionTypes getPrereqOrPromotion2() const { return m_iPrereqOrPromotion2; }
+	// ======================= 1. SECTIONS -- whole typed objects =======================
+	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvClassificationBlock* getSkills() const { return &m_skills; }
+	virtual const CvGate* getGate() const { return &m_gate; }
+	virtual const CvEdges* getEdges() const { return &m_edges; }         // enables.promotions chain edges
+	virtual const CvRequires* getRequires() const { return &m_requires; }   // the chain's requires.build AND-half
+	const CvHideAndSeekSection& getHideAndSeek() const { return m_hideAndSeek; }
+	const CvSizeMattersSection& getSizeMatters() const { return m_sizeMatters; }
 
-	TechTypes getTechPrereq() const;
-	int getMinEraType() const;
-	int getMaxEraType() const;
-	int getStateReligionPrereq() const;
-	int getVisibilityChange() const;
-	int getMovesChange() const;
-	int getMoveDiscountChange() const;
-	int getAirRangeChange() const;
-	int getInterceptChange() const;
-	int getEvasionChange() const;
-	int getWithdrawalChange() const;
-	int getCargoChange() const;
-	int getSMCargoChange() const;
-	int getSMCargoVolumeChange() const;
-	int getSMCargoVolumeModifierChange() const;
-	int getCollateralDamageChange() const;
-	int getBombardRateChange() const;
-	int getFirstStrikesChange() const;
-	int getChanceFirstStrikesChange() const;
-	int getEnemyHealChange() const;
-	int getNeutralHealChange() const;
-	int getFriendlyHealChange() const;
-	int getSameTileHealChange() const;
-	int getAdjacentTileHealChange() const;
-	int getCombatPercent() const;
-	int getCityAttackPercent() const;
-	int getCityDefensePercent() const;
-	int getHillsAttackPercent() const;
-	int getHillsDefensePercent() const;
-	int getHillsWorkPercent() const;
-	//ls612: Work rate modifiers
-	int getWorkRatePercent() const;
-	int getCommandType() const;
-	void setCommandType(int iNewType);
+	// ======================= 2. CLASSIFICATION -- O(1) bitset tests, hold-vs-provide in the NAME (json par.8) ==
+	// A promotion PROVIDES skills to the holding unit; the FALSE plane REVOKES (skills.md par.4 -- a promotion
+	// authoring `stampede:false` removes the ability). The unit instance folds the active set.
+	bool providesSkill(int iSkillId) const { return m_skills.hasId(iSkillId); }
+	bool revokesSkill(int iSkillId) const { return m_skills.hasFalseId(iSkillId); }
+	bool providesSkills() const { return !m_skills.isEmpty(); }
+	// The combat-class MEMBERSHIP the promotion mutates (skills.unitCombats / skills.removesUnitCombats --
+	// keyed extras, typed members per the CvClassificationBlock header).
+	const std::vector<int>& providesUnitCombats() const { return m_aiProvidesUnitCombats; }
+	const std::vector<int>& removesUnitCombats() const { return m_aiRemovesUnitCombats; }
 
-	int getRevoltProtection() const;
-	int getCollateralDamageProtection() const;
-	int getPillageChange() const;
-	int getUpgradeDiscount() const;
-	int getExperiencePercent() const;
-	int getKamikazePercent() const;
+	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums =======================
+	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. The census
+	// stragglers -- withdrawal / firstStrike strikes / revoltProtection / pillage / workRate(+hills) -- read
+	// through the base getScalar. survivor is TRIGGER-PLANE chance data (info-rebuild ruling 16): no getter
+	// is minted. The mixed-unit groups keep the flat-vs-modifier split in the NAME.)
+	int getFlatCombat(CombatKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_COMBAT, eKind, eScope, CASC_UNIT_FLAT); }
+	int getCombatModifier(CombatKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_COMBAT, eKind, eScope, CASC_UNIT_PERCENT); }
+	int getCapture(CaptureKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_CAPTURE, eKind, eScope, CASC_UNIT_FLAT); }
+	int getFlatHeal(HealKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_HEAL, eKind, eScope, CASC_UNIT_FLAT); }
+	int getHealModifier(HealKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_HEAL, eKind, eScope, CASC_UNIT_PERCENT); }
+	int getAir(AirKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_AIR, eKind, eScope, infoKindUnit(MODFAM_AIR, eKind, eScope)); }
+	int getMovement(MovementKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_MOVEMENT, eKind, eScope, CASC_UNIT_FLAT); }
+	// How much SIGHT this promotion sharpens ([vision.md] §1: a unit's strength is its base stat plus its
+	// promotions). Engine-native, so a reader wanting PLOTS divides by VISION_OPEN_GROUND_COST at its use.
+	int getFlatVision(VisionKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_VISION, eKind, eScope, CASC_UNIT_FLAT); }
+	int getFlatBombard(BombardKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_BOMBARD, eKind, eScope, CASC_UNIT_FLAT); }
+	int getBombardModifier(BombardKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_BOMBARD, eKind, eScope, CASC_UNIT_PERCENT); }
+	int getFlatCollateral(CollateralKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_COLLATERAL, eKind, eScope, CASC_UNIT_FLAT); }
+	int getCollateralModifier(CollateralKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_COLLATERAL, eKind, eScope, CASC_UNIT_PERCENT); }
+	int getCargo(CargoKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_CARGO, eKind, eScope, CASC_UNIT_FLAT); }
+	int getEspionage(EspionageKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_ESPIONAGE, eKind, eScope, CASC_UNIT_FLAT); }
+	// `underworld` is authored at UNIT scope as well as city ([json.md] §6: the in-city criminal contest --
+	// the city is the arena, the unit carries the stat). Both kinds are flats.
+	int getUnderworld(UnderworldKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_UNDERWORLD, eKind, eScope, CASC_UNIT_FLAT); }
+	int getExperienceModifier(ExperienceKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_EXPERIENCE, eKind, eScope, CASC_UNIT_PERCENT); }
+	int getUpkeepModifier(UpkeepKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_UPKEEP, eKind, eScope, CASC_UNIT_PERCENT); }
+	int getFlatUpkeep(UpkeepKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_UPKEEP, eKind, eScope, CASC_UNIT_FLAT); }
+	// costs.unit.upgrade.percent -- the ruling-18 upgrade-cost kind (the legacy upgrade discount).
+	int getCostsModifier(CostsKind eKind, CvCascScope eScope) const
+	{ return m_modifiers.sum(MODFAM_COSTS, eKind, eScope, CASC_UNIT_PERCENT); }
 
-	int getAirCombatLimitChange() const;
-	int getCelebrityHappy() const;
-	int getCollateralDamageLimitChange() const;
-	int getCollateralDamageMaxUnitsChange() const;
-	int getCombatLimitChange() const;
-	int getExtraDropRange() const;
+	// ======================= 4. INTRINSIC -- bare typed reads (the census identity set) =======================
+	bool isLeader() const { return m_bLeader; }                       // identity.leader (great-commander promotion)
+	bool isStatus() const { return m_bStatus; }                       // identity.status (status pseudo-promotion)
+	bool isQuick() const { return m_bQuick; }                         // identity.quick
+	bool isStarsign() const { return m_bStarsign; }                   // identity.starsign
+	bool isZeroesXP() const { return m_bZeroesXP; }                   // identity.zeroesXP
+	bool isForOffset() const { return m_bForOffset; }                 // identity.forOffset
+	bool isCargoPrereq() const { return m_bCargoPrereq; }             // identity.cargoPrereq
+	bool isSetOnInvestigated() const { return m_bSetOnInvestigated; } // identity.setOnInvestigated
+	bool isPrereqNormInvisible() const { return m_bPrereqNormInvisible; }   // identity.prereqNormInvisible
+	bool isRemoveAfterSet() const { return m_bRemoveAfterSet; }       // identity.removeAfterSet
+	int getStateReligionPrereq() const { return m_iStateReligionPrereq; }   // identity.stateReligionPrereq (RELIGION_* FK; parked availability gate)
+	int getControlPoints() const { return m_iControlPoints; }         // identity.controlPoints (commander plane)
+	int getCommandRange() const { return m_iCommandRange; }           // identity.commandRange (commander plane)
+	int getLevelPrereq() const { return m_iLevelPrereq; }             // identity.levelPrereq (unit-level gate)
+	int getMinEra() const { return m_iMinEra; }                       // identity.minEra (ERA FK band; NO_ERA = unbanded)
+	int getReplacesUnitCombat() const { return m_iReplacesUnitCombat; }     // identity.replacesUnitCombat (UNITCOMBAT_* FK)
+	int getDomainCargoChange() const { return m_iDomainCargoChange; }       // identity.domainCargoChange (DOMAIN_* FK)
+	int getSpecialCargoChange() const { return m_iSpecialCargoChange; }     // identity.specialCargoChange (SPECIALUNIT_* FK)
+	int getSMNotSpecialCargoChange() const { return m_iSMNotSpecialCargoChange; }   // identity.smNotSpecialCargoChange (SPECIALUNIT_* FK)
+	// identity.unitCombats -- the combat classes this promotion APPLIES to (the availability membership; the
+	// qualified-set caches below derive from it + the line's lists).
+	const std::vector<int>& getUnitCombats() const { return m_aiUnitCombats; }
+	bool appliesToUnitCombat(int iUnitCombat) const { return vectorHas(m_aiUnitCombats, iUnitCombat); }
+	const std::vector<int>& getNotOnUnitCombats() const { return m_aiNotOnUnitCombats; }
+	bool isNotOnUnitCombat(int iUnitCombat) const { return vectorHas(m_aiNotOnUnitCombats, iUnitCombat); }
+	const std::vector<int>& getNotOnDomains() const { return m_aiNotOnDomains; }
+	bool isNotOnDomain(int iDomain) const { return vectorHas(m_aiNotOnDomains, iDomain); }
+	// par.8 keyed-skill FK lists (skills.<name>.{TYPE}:true).
+	const std::vector<int>& getTerrainDoubleMoves() const { return m_aiTerrainDoubleMove; }
+	const std::vector<int>& getFeatureDoubleMoves() const { return m_aiFeatureDoubleMove; }
+	// par.9 promotionLine link: the top-level {LINE: rank} object.
+	PromotionLineTypes getPromotionLine() const { return m_ePromotionLine; }
+	int getLinePriority() const { return m_iLinePriority; }
 
-	int getSurvivorChance() const;
-	int getVictoryAdjacentHeal() const;
-	int getVictoryHeal() const;
-	int getVictoryStackHeal() const;
-	bool isDefensiveVictoryMove() const;
-	bool isFreeDrop() const;
-	bool isOffensiveVictoryMove() const;
-	bool isOneUp() const;
-
-	bool isPillageEspionage() const;
-	bool isPillageMarauder() const;
-	bool isPillageOnMove() const;
-	bool isPillageOnVictory() const;
-	bool isPillageResearch() const;
-
-	bool isLeader() const;
-	bool isBlitz() const;
-	bool isAmphib() const;
-	bool isRiver() const;
-	bool isEnemyRoute() const;
-	bool isAlwaysHeal() const;
-	bool isHillsDoubleMove() const;
-	bool isImmuneToFirstStrikes() const;
-
-	const char* getSound() const;
-
-	bool changesMoveThroughPlots() const;
-	//	This really belongs on CvInfoBase but you can't change the size of that
-	//	object without crashing the core engine :-(
-	inline int	getZobristValue() const { return m_zobristValue; }
-
-	// Arrays
-
-	int getTerrainAttackPercent(int i) const;
-	bool isAnyTerrainAttackPercent() const;
-	int getTerrainDefensePercent(int i) const;
-	bool isAnyTerrainDefensePercent() const;
-	int getFeatureAttackPercent(int i) const;
-	bool isAnyFeatureAttackPercent() const;
-	int getFeatureDefensePercent(int i) const;
-	bool isAnyFeatureDefensePercent() const;
-	int getUnitCombatModifierPercent(int i) const;
-	bool isAnyUnitCombatModifierPercent() const;
-	int getDomainModifierPercent(int i) const;
-	bool isAnyDomainModifierPercent() const;
-	//ls612: Terrain Work Modifiers
-	int getTerrainWorkPercent(int i) const;
-	int getFeatureWorkPercent(int i) const;
-
-	bool getTerrainDoubleMove(int i) const;
-	bool getFeatureDoubleMove(int i) const;
-	bool getUnitCombat(int i) const;
-	bool isCanMovePeaks() const;
-	//	Koshling - enhanced mountaineering mode to differentiate between ability to move through
-	//	mountains, and ability to lead a stack through mountains
-	bool isCanLeadThroughPeaks() const;
-	//const std::vector<PromotionTypes>& getPromotionOverwrites() const { return m_vPromotionOverwrites; }
-	TechTypes getObsoleteTech() const;
-	int getControlPoints() const;
-	int getCommandRange() const;
-	bool isZoneOfControl() const;
-
-	void getCheckSum(uint32_t& iSum) const;
-
+	// --- THE LINE ACCRUAL: this promotion PLUS every lower-priority promotion in its own line, this one first. ---
+	//
+	// A promotion line is a LADDER, and holding a rung IMPLIES the rungs beneath it -- each level's
+	// `requires.build` names the level below (ACCURACY3 -> ACCURACY2 -> ACCURACY), so a unit carrying the top
+	// of a line carries the whole chain and its EFFECTIVE value is the chain's SUM.
+	//
+	// ⚑ THAT IS WHY THERE ARE TWO READS, and they answer different questions: the promotion's OWN getters say
+	// what THIS rung contributes (what the pedia shows about the promotion itself), while the accrual says what
+	// a UNIT HOLDING IT ACTUALLY HAS (what the unit's tooltip shows). Neither is the other's approximation.
+	//
+	// ⛔ A STATUS promotion accrues only ITSELF: status / affliction / equipment lines are parallel states, not
+	// a ladder, so summing them would invent a compounding that does not exist. A promotion with no line
+	// likewise accrues only itself, which is why every promotion has a NON-EMPTY accrual and no reader needs an
+	// is-there-a-line branch.
+	//
+	// Derived by deriveAtRegistryComplete: it reads OTHER promotions, so it cannot be a mapFrom read (the twin
+	// of CvUnitInfo::m_aiUpgradeChain). The getter is a bare member read; the SUM over it is
+	// CvPromotionAccrual (docs/architecture/patterns.md §DRY (single implementation)), never open-coded at a consumer.
+	const std::vector<int>& getLineAccrual() const { return m_aiLineAccrual; }
+	// Fed the finished ordered list by the reverse pass, which groups the lines ONCE rather than having every
+	// promotion re-scan the registry for its siblings.
+	void deriveAtRegistryComplete(const std::vector<int>& aiLineAccrual);
+	// ai.unitCombatWeights {UC:int} -- AI metadata rows.
+	int getNumAIWeightsByUnitCombat() const { return (int)m_aAIWeights.size(); }
+	const UnitCombatModifier& getAIWeightByUnitCombat(int iIndex) const { return m_aAIWeights[iIndex]; }
+	// sound.sound -- the promotion-gained audio asset.
+	const char* getSound() const { return m_szSound.c_str(); }
+	// Derived at mapFrom over the promotion's own data (the hasCityOverLimitAnger materialization precedent).
+	bool changesMoveThroughPlots() const { return m_bChangesMoveThroughPlots; }
+	bool hasNegativeEffects() const { return m_bNegativeEffects; }
+	// Non-XML runtime map-hash contribution (archived ctor mirror; CvUnit XORs it into its movement hash).
+	int getZobristValue() const { return m_iZobristValue; }
+	// RUNTIME command-type (SetGlobalActionInfo assigns it at load and reads it back -- must be stored).
+	int getCommandType() const { return m_iCommandType; }
+	void setCommandType(int iNewType) { m_iCommandType = iNewType; }
+	// The property engine's uniform walk surface (fed from the PROPERTY_* families in mapFrom).
 	const CvPropertyManipulators* getPropertyManipulators() const { return &m_PropertyManipulators; }
 
-	//TB Combat Mods Begin  TB SubCombat Mod begin
-	//Text Strings
-	const wchar_t* getRenamesUnitTo() const;
-	// Textual References
-	PromotionLineTypes getPromotionLine() const;
-	UnitCombatTypes getReplacesUnitCombat() const;
-	DomainTypes getDomainCargoChange() const;
-	SpecialUnitTypes getSpecialCargoChange() const;
-	SpecialUnitTypes getSpecialCargoPrereq() const;
-	SpecialUnitTypes getSMNotSpecialCargoChange() const;
-	SpecialUnitTypes getSMNotSpecialCargoPrereq() const;
-	SpecialUnitTypes setSpecialUnit() const;
-	// integers
-	int getAttackCombatModifierChange() const;
-	int getDefenseCombatModifierChange() const;
-	int getTauntChange() const;
-	//
-	int getVSBarbsChange() const;
-	// S&D Extended
-	int getUnnerveChange() const;
-	int getEncloseChange() const;
-	int getLungeChange() const;
-	int getDynamicDefenseChange() const;
-	//
-	int getStrengthChange() const;
-	int getLinePriority() const;
-	int getDamageperTurn() const;
-	int getStrAdjperTurn() const;
-	int getWeakenperTurn() const;
-	int getEnduranceChange() const;
-	int getPoisonProbabilityModifierChange() const;
+	// --- the store-inverted tech FKs (tech.enables.promotions / tech.obsoletes.promotions), reconstructed at
+	// LOAD by the loadJson tech-FK reverse-index pass via the setters (the write-once-at-load window). ---
+	TechTypes getTechPrereq() const { return m_eTechPrereq; }
+	TechTypes getObsoleteTech() const { return m_eObsoleteTech; }
+	void setTechPrereq(TechTypes eTech) { m_eTechPrereq = eTech; }
+	void setObsoleteTech(TechTypes eTech) { m_eObsoleteTech = eTech; }
 
-	int getCaptureProbabilityModifierChange() const;
-	int getCaptureResistanceModifierChange() const;
-
-	//WorkRateMod
-	int getPeaksWorkPercent() const;
-	//
-	int getBreakdownChanceChange() const;
-	int getBreakdownDamageChange() const;
-	// Size Matters
-	int getMaxHPChange() const;
-	int getStrengthModifier() const;
-	//
-	int getQualityChange() const;
-	int getGroupChange() const;
-	int getLevelPrereq() const;
-	int getDamageModifierChange() const;
-	int getUpkeepModifier() const;
-	int getExtraUpkeep100() const;
-	int getRBombardDamageChange() const;
-	int getRBombardDamageLimitChange() const;
-	int getRBombardDamageMaxUnitsChange() const;
-	int getDCMBombRangeChange() const;
-	int getDCMBombAccuracyChange() const;
-	int getCombatModifierPerSizeMoreChange() const;
-	int getCombatModifierPerSizeLessChange() const;
-	int getCombatModifierPerVolumeMoreChange() const;
-	int getCombatModifierPerVolumeLessChange() const;
-	int getSelfHealModifier() const;
-	int getNumHealSupport() const;
-	int getExcileChange() const;
-	int getPassageChange() const;
-	int getNoNonOwnedCityEntryChange() const;
-	int getBarbCoExistChange() const;
-	int getBlendIntoCityChange() const;
-	int getUpgradeAnywhereChange() const;
-	int getInsidiousnessChange() const;
-	int getInvestigationChange() const;
-	int getAssassinChange() const;
-	int getStealthStrikesChange() const;
-	int getStealthCombatModifierChange() const;
-	int getStealthDefenseChange() const;
-	int getDefenseOnlyChange() const;
-	int getNoInvisibilityChange() const;
-	int getTrapDamageMax() const;
-	int getTrapDamageMin() const;
-	int getTrapComplexity() const;
-	int getNumTriggers() const;
-	int getTriggerBeforeAttackChange() const;
-	int getHiddenNationalityChange() const;
-	int getAnimalIgnoresBordersChange() const;
-	int getNoDefensiveBonusChange() const;
-	int getGatherHerdChange() const;
-	int getReligiousCombatModifierChange() const;
-	//booleans
-	bool isStampedeChange() const;
-	bool isRemoveStampede() const;
-	bool isOnslaughtChange() const;
-	bool isParalyze() const;
-	bool isAttackOnlyCitiesAdd() const;
-	bool isAttackOnlyCitiesSubtract() const;
-	bool isIgnoreNoEntryLevelAdd() const;
-	bool isIgnoreNoEntryLevelSubtract() const;
-	bool isIgnoreZoneofControlAdd() const;
-	bool isIgnoreZoneofControlSubtract() const;
-	bool isFliesToMoveAdd() const;
-	bool isFliesToMoveSubtract() const;
-	bool isZeroesXP() const;
-	bool isForOffset() const;
-	bool isCargoPrereq() const;
-	bool isRBombardPrereq() const;
-	bool isNoSelfHeal() const;
-	bool isSetOnHNCapture() const;
-	bool isSetOnInvestigated() const;
-	bool isStatus() const;
-	bool isPrereqNormInvisible() const;
-	bool isPlotPrereqsKeepAfter() const;
-	bool isRemoveAfterSet() const;
-	bool isQuick() const;
-	//Arrays
-	//int getAIWeightbyUnitCombatType(int i) const;
-	//bool isAnyAIWeightbyUnitCombatType() const;
-
-	// bool vector without delayed resolution
-	int getSubCombatChangeType(int i) const;
-	int getNumSubCombatChangeTypes() const;
-	bool isSubCombatChangeType(int i) const;
-
-	int getRemovesUnitCombatType(int i) const;
-	int getNumRemovesUnitCombatTypes() const;
-	bool isRemovesUnitCombatType(int i) const;
-
-	int getOnGameOption(int i) const;
-	int getNumOnGameOptions() const;
-	bool isOnGameOption(int i) const;
-
-	int getNotOnGameOption(int i) const;
-	int getNumNotOnGameOptions() const;
-	bool isNotOnGameOption(int i) const;
-
-	int getFreetoUnitCombat(int i) const;
-	int getNumFreetoUnitCombats() const;
-	bool isFreetoUnitCombat(int i) const;
-
-	int getNotOnUnitCombatType(int i) const;
-	int getNumNotOnUnitCombatTypes() const;
-	bool isNotOnUnitCombatType(int i) const;
-
-	int getNotOnDomainType(int i) const;
-	int getNumNotOnDomainTypes() const;
-	bool isNotOnDomainType(int i) const;
-
-
-	int getCategory(int i) const;
-	int getNumCategories() const;
-	bool isCategory(int i) const;
-
-	const std::vector<MapCategoryTypes>& getMapCategories() const { return m_aeMapCategoryTypes; }
-
-
-	const std::vector<BonusTypes>& getPrereqBonuses() const { return m_aiPrereqBonusTypes; }
-
-	int getAddsBuildType(int i) const;
-	int getNumAddsBuildTypes() const;
-	bool isAddsBuildType(int i) const;
-
-	int getNegatesInvisibilityType(int i) const;
-	int getNumNegatesInvisibilityTypes() const;
-	bool isNegatesInvisibilityType(int i) const;
-
-	int getPrereqTerrainType(int i) const;
-	int getNumPrereqTerrainTypes() const;
-	bool isPrereqTerrainType(int i) const;
-
-	int getPrereqFeatureType(int i) const;
-	int getNumPrereqFeatureTypes() const;
-	bool isPrereqFeatureType(int i) const;
-
-	int getPrereqImprovementType(int i) const;
-	int getNumPrereqImprovementTypes() const;
-	bool isPrereqImprovementType(int i) const;
-
-	int getPrereqPlotBonusType(int i) const;
-	int getNumPrereqPlotBonusTypes() const;
-	bool isPrereqPlotBonusType(int i) const;
-
-	int getPrereqLocalBuildingType(int i) const;
-	int getNumPrereqLocalBuildingTypes() const;
-	bool isPrereqLocalBuildingType(int i) const;
-
-	int getTrapSetWithPromotionType(int i) const;
-	int getNumTrapSetWithPromotionTypes() const;
-	bool isTrapSetWithPromotionType(int i) const;
-
-	int getTrapImmunityUnitCombatType(int i) const;
-	int getNumTrapImmunityUnitCombatTypes() const;
-	bool isTrapImmunityUnitCombatType(int i) const;
-
-	int getTargetUnitCombatType(int i) const;
-	int getNumTargetUnitCombatTypes() const;
-	bool isTargetUnitCombatType(int i) const;
-
-	// int vector utilizing pairing without delayed resolution
-
-	int getNumFlankingStrikesbyUnitCombatTypesChange() const;
-	int getFlankingStrengthbyUnitCombatTypeChange(int iUnitCombat) const;
-	bool isFlankingStrikebyUnitCombatTypeChange(int iUnitCombat) const;
-
-	int getNumTrapDisableUnitCombatTypes() const;
-	int getTrapDisableUnitCombatType(int iUnitCombat) const;
-	bool isTrapDisableUnitCombatType(int iUnitCombat) const;
-
-	int getNumTrapAvoidanceUnitCombatTypes() const;
-	int getTrapAvoidanceUnitCombatType(int iUnitCombat) const;
-	bool isTrapAvoidanceUnitCombatType(int iUnitCombat) const;
-
-	int getNumTrapTriggerUnitCombatTypes() const;
-	int getTrapTriggerUnitCombatType(int iUnitCombat) const;
-	bool isTrapTriggerUnitCombatType(int iUnitCombat) const;
-
-
-	int getNumBuildWorkRateModifierChangeTypes() const;
-	int getBuildWorkRateModifierChangeType(int iBuild) const;
-	bool isBuildWorkRateModifierChangeType(int iBuild) const;
-
-	int getNumVisibilityIntensityChangeTypes() const;
-	int getVisibilityIntensityChangeType(int iInvisibility) const;
-	bool isVisibilityIntensityChangeType(int iInvisibility) const;
-
-	int getNumInvisibilityIntensityChangeTypes() const;
-	int getInvisibilityIntensityChangeType(int iInvisibility) const;
-	bool isInvisibilityIntensityChangeType(int iInvisibility) const;
-
-	int getNumVisibilityIntensityRangeChangeTypes() const;
-	int getVisibilityIntensityRangeChangeType(int iInvisibility) const;
-	bool isVisibilityIntensityRangeChangeType(int iInvisibility) const;
-
-	int getNumAIWeightbyUnitCombatTypes() const;
-	const UnitCombatModifier& getAIWeightbyUnitCombatType(int iUnitCombat) const;
-
-	int getNumHealUnitCombatChangeTypes() const;
-	const HealUnitCombat& getHealUnitCombatChangeType(int iUnitCombat) const;
-
-	int getNumInvisibleTerrainChanges() const;
-	const InvisibleTerrainChanges& getInvisibleTerrainChange(int iIndex) const;
-
-	int getNumInvisibleFeatureChanges() const;
-	const InvisibleFeatureChanges& getInvisibleFeatureChange(int iIndex) const;
-
-	int getNumInvisibleImprovementChanges() const;
-	const InvisibleImprovementChanges& getInvisibleImprovementChange(int iIndex) const;
-
-	int getNumVisibleTerrainChanges() const;
-	const InvisibleTerrainChanges& getVisibleTerrainChange(int iIndex) const;
-
-	int getNumVisibleFeatureChanges() const;
-	const InvisibleFeatureChanges& getVisibleFeatureChange(int iIndex) const;
-
-	int getNumVisibleImprovementChanges() const;
-	const InvisibleImprovementChanges& getVisibleImprovementChange(int iIndex) const;
-
-	int getNumVisibleTerrainRangeChanges() const;
-	const InvisibleTerrainChanges& getVisibleTerrainRangeChange(int iIndex) const;
-
-	int getNumVisibleFeatureRangeChanges() const;
-	const InvisibleFeatureChanges& getVisibleFeatureRangeChange(int iIndex) const;
-
-	int getNumVisibleImprovementRangeChanges() const;
-	const InvisibleImprovementChanges& getVisibleImprovementRangeChange(int iIndex) const;
-
-	// TB Combat Mods End  TB SubCombat Mod end
-
-	//Pediahelp
-	int getQualifiedUnitCombatType(int i) const;
-	int getNumQualifiedUnitCombatTypes() const;
-	bool isQualifiedUnitCombatType(int i) const;
+	// --- the pedia qualified/disqualified caches, computed POST-LOAD (the load window) from this promotion's
+	// own unitCombats/notOnUnitCombats plus the promotion line's lists (CvPromotionLineInfo). ---
+	const std::vector<int>& getQualifiedUnitCombats() const { return m_aiQualifiedUnitCombats; }
+	bool isQualifiedUnitCombat(int iUnitCombat) const { return vectorHas(m_aiQualifiedUnitCombats, iUnitCombat); }
+	const std::vector<int>& getDisqualifiedUnitCombats() const { return m_aiDisqualifiedUnitCombats; }
 	void setQualifiedUnitCombatTypes();
-
-	int getDisqualifiedUnitCombatType(int i) const;
-	int getNumDisqualifiedUnitCombatTypes() const;
 	void setDisqualifiedUnitCombatTypes();
 
-	bool hasNegativeEffects() const;
-	inline bool isStarsign() const { return m_bStarsign; }
-
 protected:
-	bool m_bCanMovePeaks;
-	//	Koshling - enhanced mountaineering mode to differentiate between ability to move through
-	//	mountains, and ability to lead a stack through mountains
-	bool m_bCanLeadThroughPeaks;
-	int m_iNumPromotionOverwrites;
-	//std::vector<PromotionTypes> m_vPromotionOverwrites;
-	TechTypes m_iObsoleteTech;
-	int m_iControlPoints;
-	int m_iCommandRange;
-	bool m_bZoneOfControl;
-	int m_zobristValue;
-public:
-	void getDataMembers(CvInfoUtil& util);
-	bool read(CvXMLLoadUtility* pXML);
-	void copyNonDefaults(const CvPromotionInfo* pClassInfo);
+	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvClassificationBlock* mutSkills() { return &m_skills; }
+	virtual CvGate* mutGate() { return &m_gate; }
+	virtual CvEdges* mutEdges() { return &m_edges; }
+	virtual CvRequires* mutRequires() { return &m_requires; }
 
 private:
-	bool m_bStarsign;
-	CvPropertyManipulators m_PropertyManipulators;
+	// --- the composed section units ---
+	CvModifiers m_modifiers;
+	CvClassificationBlock m_skills;
+	CvGate m_gate;
+	CvEdges m_edges;
+	CvRequires m_requires;
+	CvHideAndSeekSection m_hideAndSeek;
+	CvSizeMattersSection m_sizeMatters;
 
-//----------------------PROTECTED MEMBER VARIABLES----------------------------
-
-protected:
-	int m_iLayerAnimationPath;
-	PromotionTypes m_iPrereqPromotion;
-	PromotionTypes m_iPrereqOrPromotion1;
-	PromotionTypes m_iPrereqOrPromotion2;
-
-	TechTypes m_iTechPrereq;
-	int m_iStateReligionPrereq;
-	int m_iMinEraType;
-	int m_iMaxEraType;
-	int m_iVisibilityChange;
-	int m_iMovesChange;
-	int m_iMoveDiscountChange;
-	int m_iAirRangeChange;
-	int m_iInterceptChange;
-	int m_iEvasionChange;
-	int m_iWithdrawalChange;
-	int m_iCargoChange;
-	int m_iSMCargoChange;
-	int m_iSMCargoVolumeChange;
-	int m_iSMCargoVolumeModifierChange;
-	int m_iCollateralDamageChange;
-	int m_iBombardRateChange;
-	int m_iFirstStrikesChange;
-	int m_iChanceFirstStrikesChange;
-	int m_iEnemyHealChange;
-	int m_iNeutralHealChange;
-	int m_iFriendlyHealChange;
-	int m_iSameTileHealChange;
-	int m_iAdjacentTileHealChange;
-	int m_iCombatPercent;
-	int m_iCityAttackPercent;
-	int m_iCityDefensePercent;
-	int m_iHillsAttackPercent;
-	int m_iHillsDefensePercent;
-	int m_iHillsWorkPercent;
-	int m_iWorkRatePercent;
-	int m_iCommandType;
-	int m_iRevoltProtection;
-	int m_iCollateralDamageProtection;
-	int m_iPillageChange;
-	int m_iUpgradeDiscount;
-	int m_iExperiencePercent;
-	int m_iKamikazePercent;
-
-	int m_iAirCombatLimitChange;
-	int m_iCelebrityHappy;
-	int m_iCollateralDamageLimitChange;
-	int m_iCollateralDamageMaxUnitsChange;
-	int m_iCombatLimitChange;
-	int m_iExtraDropRange;
-
-	int m_iSurvivorChance;
-	int m_iVictoryAdjacentHeal;
-	int m_iVictoryHeal;
-	int m_iVictoryStackHeal;
-	bool m_bDefensiveVictoryMove;
-	bool m_bFreeDrop;
-	bool m_bOffensiveVictoryMove;
-	bool m_bOneUp;
-
-	bool m_bPillageEspionage;
-	bool m_bPillageMarauder;
-	bool m_bPillageOnMove;
-	bool m_bPillageOnVictory;
-	bool m_bPillageResearch;
-
+	// --- the intrinsic identity members (materialized once at mapFrom) ---
 	bool m_bLeader;
-	bool m_bBlitz;
-	bool m_bAmphib;
-	bool m_bRiver;
-	bool m_bEnemyRoute;
-	bool m_bAlwaysHeal;
-	bool m_bHillsDoubleMove;
-	bool m_bImmuneToFirstStrikes;
-
-	CvString m_szSound;
-
-	// Arrays
-	int* m_piTerrainAttackPercent;
-	int* m_piTerrainDefensePercent;
-	int* m_piFeatureAttackPercent;
-	int* m_piFeatureDefensePercent;
-	int* m_piUnitCombatModifierPercent;
-	int* m_piDomainModifierPercent;
-	//ls612: Terrain Work Modifiers
-	int* m_piTerrainWorkPercent;
-	int* m_piFeatureWorkPercent;
-
-	std::vector<TerrainTypes> m_aeTerrainDoubleMove;
-	std::vector<FeatureTypes> m_aeFeatureDoubleMove;
-	std::vector<UnitCombatTypes> m_aeUnitCombat;
-
-	//TB Combat Mods Begin TB SubCombat Mod begin
-	//Text Strings
-	CvWString m_szRenamesUnitTo;
-	//Textual References
-	PromotionLineTypes m_ePromotionLine;
-	UnitCombatTypes m_eReplacesUnitCombat;
-	DomainTypes m_eDomainCargoChange;
-	SpecialUnitTypes m_eSpecialCargoChange;
-	SpecialUnitTypes m_eSpecialCargoPrereq;
-	SpecialUnitTypes m_eSMNotSpecialCargoChange;
-	SpecialUnitTypes m_eSMNotSpecialCargoPrereq;
-	SpecialUnitTypes m_eSetSpecialUnit;
-	//integers
-	int m_iAttackCombatModifierChange;
-	int m_iDefenseCombatModifierChange;
-	int m_iVSBarbsChange;
-	int m_iUnnerveChange;
-	int m_iEncloseChange;
-	int m_iLungeChange;
-	int m_iDynamicDefenseChange;
-	int m_iStrengthChange;
-	int m_iLinePriority;
-	int m_iDamageperTurn;
-	int m_iStrAdjperTurn;
-	int m_iWeakenperTurn;
-	int m_iEnduranceChange;
-	int m_iPoisonProbabilityModifierChange;
-
-	int m_iCaptureProbabilityModifierChange;
-	int m_iCaptureResistanceModifierChange;
-
-	//WorkRateMod
-	int m_iPeaksWorkPercent;
-
-	int m_iBreakdownChanceChange;
-	int m_iBreakdownDamageChange;
-	int m_iTauntChange;
-	int m_iMaxHPChange;
-	int m_iStrengthModifier;
-	int m_iQualityChange;
-	int m_iGroupChange;
-	int m_iLevelPrereq;
-	int m_iDamageModifierChange;
-
-	int m_iUpkeepModifier;
-	int m_iExtraUpkeep100;
-
-	int m_iRBombardDamageChange;
-	int m_iRBombardDamageLimitChange;
-	int m_iRBombardDamageMaxUnitsChange;
-	int m_iDCMBombRangeChange;
-	int m_iDCMBombAccuracyChange;
-	int m_iCombatModifierPerSizeMoreChange;
-	int m_iCombatModifierPerSizeLessChange;
-	int m_iCombatModifierPerVolumeMoreChange;
-	int m_iCombatModifierPerVolumeLessChange;
-	int m_iSelfHealModifier;
-	int m_iNumHealSupport;
-	int m_iExcileChange;
-	int m_iPassageChange;
-	int m_iNoNonOwnedCityEntryChange;
-	int m_iBarbCoExistChange;
-	int m_iBlendIntoCityChange;
-	int m_iUpgradeAnywhereChange;
-	int m_iInsidiousnessChange;
-	int m_iInvestigationChange;
-	int m_iAssassinChange;
-	int m_iStealthStrikesChange;
-	int m_iStealthCombatModifierChange;
-	int m_iStealthDefenseChange;
-	int m_iDefenseOnlyChange;
-	int m_iNoInvisibilityChange;
-	int m_iTrapDamageMax;
-	int m_iTrapDamageMin;
-	int m_iTrapComplexity;
-	int m_iNumTriggers;
-	int m_iTriggerBeforeAttackChange;
-	int m_iHiddenNationalityChange;
-	int m_iAnimalIgnoresBordersChange;
-	int m_iNoDefensiveBonusChange;
-	int m_iGatherHerdChange;
-	int m_iReligiousCombatModifierChange;
-	//booleans
-	bool m_bStampedeChange;
-	bool m_bRemoveStampede;
-	bool m_bOnslaughtChange;
-	bool m_bParalyze;
-	bool m_bAttackOnlyCitiesAdd;
-	bool m_bAttackOnlyCitiesSubtract;
-	bool m_bIgnoreNoEntryLevelAdd;
-	bool m_bIgnoreNoEntryLevelSubtract;
-	bool m_bIgnoreZoneofControlAdd;
-	bool m_bIgnoreZoneofControlSubtract;
-	bool m_bFliesToMoveAdd;
-	bool m_bFliesToMoveSubtract;
+	bool m_bStatus;
+	bool m_bQuick;
+	bool m_bStarsign;
 	bool m_bZeroesXP;
 	bool m_bForOffset;
 	bool m_bCargoPrereq;
-	bool m_bRBombardPrereq;
-	bool m_bNoSelfHeal;
-	bool m_bSetOnHNCapture;
 	bool m_bSetOnInvestigated;
-	bool m_bStatus;
 	bool m_bPrereqNormInvisible;
-	bool m_bPlotPrereqsKeepAfter;
 	bool m_bRemoveAfterSet;
-	bool m_bQuick;
-	//bool m_bAnyAIWeightbyUnitCombat;
-	//Arrays
-	//int* m_piAIWeightbyUnitCombatTypes;
-	// bool vectors without delayed resolution
-	std::vector<int> m_aiSubCombatChangeTypes;
-	std::vector<int> m_aiRemovesUnitCombatTypes;
-	std::vector<int> m_aiOnGameOptions;
-	std::vector<int> m_aiNotOnGameOptions;
-	std::vector<int> m_aiFreetoUnitCombats;
-	std::vector<int> m_aiNotOnUnitCombatTypes;
-	std::vector<int> m_aiNotOnDomainTypes;
-	std::vector<int> m_aiCategories;
-	std::vector<MapCategoryTypes> m_aeMapCategoryTypes;
-	std::vector<BonusTypes> m_aiPrereqBonusTypes;
-	std::vector<int> m_aiAddsBuildTypes;
-	std::vector<int> m_aiNegatesInvisibilityTypes;
-	std::vector<int> m_aiPrereqTerrainTypes;
-	std::vector<int> m_aiPrereqFeatureTypes;
-	std::vector<int> m_aiPrereqImprovementTypes;
-	std::vector<int> m_aiPrereqPlotBonusTypes;
-	std::vector<int> m_aiPrereqLocalBuildingTypes;
-	std::vector<int> m_aiTrapSetWithPromotionTypes;
-	std::vector<int> m_aiTrapImmunityUnitCombatTypes;
-	std::vector<int> m_aiTargetUnitCombatTypes;
-	// int vectors utilizing pairing without delayed resolution
-	UnitCombatModifierArray m_aFlankingStrengthbyUnitCombatTypeChange;
-	UnitCombatModifierArray m_aTrapDisableUnitCombatTypes;
-	UnitCombatModifierArray m_aTrapAvoidanceUnitCombatTypes;
-	UnitCombatModifierArray m_aTrapTriggerUnitCombatTypes;
+	int m_iStateReligionPrereq;
+	int m_iControlPoints;
+	int m_iCommandRange;
+	int m_iLevelPrereq;
+	int m_iMinEra;
+	int m_iReplacesUnitCombat;
+	int m_iDomainCargoChange;
+	int m_iSpecialCargoChange;
+	int m_iSMNotSpecialCargoChange;
+	std::vector<int> m_aiUnitCombats;
+	std::vector<int> m_aiNotOnUnitCombats;
+	std::vector<int> m_aiNotOnDomains;
+	std::vector<int> m_aiProvidesUnitCombats;
+	std::vector<int> m_aiRemovesUnitCombats;
+	std::vector<int> m_aiTerrainDoubleMove;
+	std::vector<int> m_aiFeatureDoubleMove;
+	PromotionLineTypes m_ePromotionLine;
+	int m_iLinePriority;
+	// Load-derived (deriveAtRegistryComplete), never JSON-mapped: this promotion followed by every lower-priority
+	// promotion in its line, descending. Always holds at least this promotion.
+	std::vector<int> m_aiLineAccrual;
+	std::vector<UnitCombatModifier> m_aAIWeights;
+	std::string m_szSound;
+	bool m_bChangesMoveThroughPlots;
+	bool m_bNegativeEffects;
+	int m_iZobristValue;
+	int m_iCommandType;
 
-	BuildModifierArray m_aBuildWorkRateModifierChangeTypes;
-	InvisibilityArray m_aVisibilityIntensityChangeTypes;
-	InvisibilityArray m_aInvisibilityIntensityChangeTypes;
-	InvisibilityArray m_aVisibilityIntensityRangeChangeTypes;
-	// int vector utilizing struct with delayed resolution
-	std::vector<UnitCombatModifier> m_aAIWeightbyUnitCombatTypes;
-	std::vector<HealUnitCombat> m_aHealUnitCombatChangeTypes;
-	std::vector<InvisibleTerrainChanges> m_aInvisibleTerrainChanges;
-	std::vector<InvisibleFeatureChanges> m_aInvisibleFeatureChanges;
-	std::vector<InvisibleImprovementChanges> m_aInvisibleImprovementChanges;
-	std::vector<InvisibleFeatureChanges> m_aVisibleFeatureChanges;
-	std::vector<InvisibleImprovementChanges> m_aVisibleImprovementChanges;
-	std::vector<InvisibleTerrainChanges> m_aVisibleTerrainChanges;
-	std::vector<InvisibleFeatureChanges> m_aVisibleFeatureRangeChanges;
-	std::vector<InvisibleImprovementChanges> m_aVisibleImprovementRangeChanges;
-	std::vector<InvisibleTerrainChanges> m_aVisibleTerrainRangeChanges;
-	//TB Combat Mods End  TB SubCombat Mod end
+	// --- load-window runtime members ---
+	TechTypes m_eTechPrereq;
+	TechTypes m_eObsoleteTech;
+	std::vector<int> m_aiQualifiedUnitCombats;
+	std::vector<int> m_aiDisqualifiedUnitCombats;
 
-	//Pediahelp
-	std::vector<int> m_aiQualifiedUnitCombatTypes;
-	std::vector<int> m_disqualifiedUnitCombatTypes;
-
+	CvPropertyManipulators m_PropertyManipulators;   // fed from the PROPERTY_* families (CascadePropertyBridge)
 };
 
-#endif // CV_PROMOTION_INFO_H
+#endif // CV_JSON_PROMOTION_INFO_H

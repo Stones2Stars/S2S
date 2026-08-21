@@ -1,0 +1,97 @@
+{
+ "type": "TECH_TERRA_COMPUTER",
+ "enables": {
+  "buildings": [
+   "BUILDING_NETWORK_NODE",
+   "BUILDING_SINGULARITY_BRAIN_LAB",
+   "BUILDING_TECHNOLOGICAL_CAPITAL",
+   "BUILDING_TITAN_SUPERCOMPUTER"
+  ],
+  "promotions": [
+   "PROMOTION_GLOBAL_AWERENESS",
+   "PROMOTION_POLICING10",
+   "PROMOTION_SLEUTH9"
+  ],
+  "techs": [
+   "TECH_NANOMORPHICS",
+   "TECH_SENTIENT_EARTH",
+   "TECH_WEATHER_CONTROL"
+  ],
+  "units": [
+   "UNIT_SENTINEL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GAIA_ECOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ARTIFICIAL_NUCLEOSYNTHESIS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SAPIENTROIDS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_KNOWLEDGE_MERCANTILISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 77770
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   },
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   },
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/terra_computer2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TERRA_COMPUTER",
+  "soundMP": "AS2D_TECH_TERRA_COMPUTER"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TERRA_COMPUTER",
+  "civilopedia": "TXT_KEY_TECH_TERRA_COMPUTER_PEDIA",
+  "quote": "TXT_KEY_TECH_TERRA_COMPUTER_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 117,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,25 @@
+{
+ "type": "PROMOTION_INSPIRE6",
+ "revoltProtection": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "skills": {
+  "celebrity": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_INSPIRE": 6
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/Inspire6Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_INSPIRE6"
+ }
+}

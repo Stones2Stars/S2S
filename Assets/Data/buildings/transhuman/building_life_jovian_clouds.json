@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_LIFE_JOVIAN_CLOUDS",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SPECULATIVE_PHYSIOLOGY",
+    {
+     "type": "TERRAIN_JUPITER",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "research": {
+  "city": {
+   "flat": 400
+  }
+ },
+ "cost": {
+  "production": 4952,
+  "hurryModifier": 10000
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LIFE_JOVIAN_CLOUDS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_JOVIAN_CLOUDS",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_JOVIAN_CLOUDS_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

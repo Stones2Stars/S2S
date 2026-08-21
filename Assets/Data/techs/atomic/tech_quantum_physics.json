@@ -1,0 +1,68 @@
+{
+ "type": "TECH_QUANTUM_PHYSICS",
+ "enables": {
+  "bonuses": [
+   "BONUS_HEAVY_WATER",
+   "BONUS_URANIUM"
+  ],
+  "buildings": [
+   "BUILDING_HEAVY_WATER_PRODUCTION_PLANT",
+   "BUILDING_MINE_URANIUM"
+  ],
+  "techs": [
+   "TECH_FISSION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_THEORY_OF_RELATIVITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 10309
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/QuantumPhysics.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,8,14"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_QUANTUM_PHYSICS",
+  "soundMP": "AS2D_TECH_QUANTUM_PHYSICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_QUANTUM_PHYSICS",
+  "civilopedia": "TXT_KEY_TECH_QUANTUM_PHYSICS_PEDIA",
+  "quote": "TXT_KEY_TECH_QUANTUM_PHYSICS_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 74,
+  "gridY": 3
+ }
+}

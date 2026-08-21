@@ -1,0 +1,91 @@
+{
+ "type": "TECH_STEEL",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_VIETNAMESE",
+   "BUILDING_DRYDOCK",
+   "BUILDING_IRONWORKS",
+   "BUILDING_SMALL_STEEL_ARCH_BRIDGE"
+  ],
+  "builds": [
+   "BUILD_STEEL_WATCHTOWER"
+  ],
+  "improvements": [
+   "IMPROVEMENT_STEEL_WATCHTOWER"
+  ],
+  "techs": [
+   "TECH_BARBED_WIRE",
+   "TECH_BICYCLES",
+   "TECH_ELECTRICITY",
+   "TECH_SEMI_AUTOMATIC_WEAPONS"
+  ],
+  "units": [
+   "UNIT_HENDRIK_WITBOOI",
+   "UNIT_IRON_FRIGATE",
+   "UNIT_JAN_FRANS_WILLEMS",
+   "UNIT_LUIS",
+   "UNIT_MASTER_SAILOR_IRON_FRIGATE",
+   "UNIT_QUANG_TRUNG",
+   "UNIT_RAFAEL_SOLARES"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_STONE_WATCHTOWER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_THERMODYNAMICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASSEMBLY_LINE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 6351
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Steel.dds,Art/Interface/Buttons/TechTree_Atlas.dds,2,12"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_STEEL",
+  "soundMP": "AS2D_TECH_MP_STEEL"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_STEEL",
+  "civilopedia": "TXT_KEY_TECH_STEEL_PEDIA",
+  "quote": "TXT_KEY_TECH_STEEL_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 66,
+  "gridY": 11
+ }
+}

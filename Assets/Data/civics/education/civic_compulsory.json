@@ -1,0 +1,97 @@
+{
+ "type": "CIVIC_COMPULSORY",
+ "food": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 4
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": 4
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "greatPeopleRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": -2
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_ELEMENTARY_SCHOOL": {
+     "percent": 20
+    },
+    "BUILDING_HOLOGRAPHIC_SCHOOL": {
+     "percent": 20
+    },
+    "BUILDING_UNIVERSITY": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/education_compulsory.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_COMPULSORY",
+  "civilopedia": "TXT_KEY_CIVIC_COMPULSORY_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_COMPULSORY_STRATEGY",
+  "civicOption": "CIVICOPTION_EDUCATION",
+  "upkeepLevel": "UPKEEP_HIGH"
+ }
+}

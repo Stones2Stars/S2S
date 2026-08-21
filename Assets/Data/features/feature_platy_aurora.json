@@ -1,0 +1,27 @@
+{
+ "type": "FEATURE_PLATY_AURORA",
+ "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
+  "nukeImmune",
+  "ignoreTerrainCulture"
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_AURORA"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_AURORA",
+  "civilopedia": "TXT_KEY_FEATURE_AURORA_PEDIA",
+  "validTerrains": [
+   "TERRAIN_ICE",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_TAIGA"
+  ]
+ }
+}

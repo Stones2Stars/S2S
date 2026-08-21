@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_IDENTIFY3",
+ "underworld": {
+  "unit": {
+   "investigation": {
+    "flat": 6
+   }
+  }
+ },
+ "hideAndSeek": {
+  "detection": {
+   "value": 100,
+   "unit": "HAS_DISGUISED"
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_IDENTIFY": 3
+ },
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Identify3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_IDENTIFY3"
+ }
+}

@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_PRESENCE_OF_REEF",
+ "requires": {
+  "operate": {
+   "all": [
+    "BUILDING_FOLKLORE_REQUIREMENT",
+    {
+     "any": [
+      {
+       "type": "FEATURE_REEF",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_REEF_BEACON",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_REEF_LIGHTHOUSE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CREATION_MYTH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PRESENCE_OF_REEF",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_PRESENCE_OF_ORIGIN_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,43 @@
+{
+ "type": "BUILDING_CISLUNAR_NUCLEAR_DAMPER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_SHIELDING",
+    "BUILDING_CISLUNAR_ONEILL_CYLINDER",
+    "TECH_NANOSHIELDING",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "defense": {
+  "city": {
+   "nukeDefense": {
+    "percent": -50
+   }
+  }
+ },
+ "cost": {
+  "production": 4032,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_NUCLEAR_DAMPER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_NUCLEAR_DAMPER",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_NUCLEAR_DAMPER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

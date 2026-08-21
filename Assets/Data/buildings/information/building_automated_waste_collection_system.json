@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_AUTOMATED_WASTE_COLLECTION_SYSTEM",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_INDUSTRIAL_ECOLOGY",
+    "BUILDING_METROPOLITAN_ADMINISTRATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 2505,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_AUTOMATED_WASTE_COLLECTION_SYSTEM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_AUTOMATED_WASTE_COLLECTION_SYSTEM",
+  "civilopedia": "TXT_KEY_BUILDING_AUTOMATED_WASTE_COLLECTION_SYSTEM_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

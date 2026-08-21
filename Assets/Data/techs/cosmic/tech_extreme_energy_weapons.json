@@ -1,0 +1,67 @@
+{
+ "type": "TECH_EXTREME_ENERGY_WEAPONS",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_GAMMA_RAY_BURST_CANNON",
+   "BUILDING_INTERGALACTIC_STARKILLER_BASE"
+  ],
+  "builds": [
+   "BUILD_INTERGALACTIC_BASE"
+  ],
+  "improvements": [
+   "IMPROVEMENT_INTERGALACTIC_BASE"
+  ],
+  "techs": [
+   "TECH_EXOTIC_STARS",
+   "TECH_INTERGALACTIC_EMPIRE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NEUTRINO_COMMUNICATIONS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_GALACTIC_WARFARE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ULTIMA_ARCHITECTURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 281279
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/wave_motion_gun.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_EXTREME_ENERGY_WEAPONS",
+  "civilopedia": "TXT_KEY_TECH_EXTREME_ENERGY_WEAPONS_PEDIA",
+  "quote": "TXT_KEY_TECH_EXTREME_ENERGY_WEAPONS_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 140,
+  "gridY": 7
+ }
+}

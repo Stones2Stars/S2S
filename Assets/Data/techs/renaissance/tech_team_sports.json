@@ -1,0 +1,75 @@
+{
+ "type": "TECH_TEAM_SPORTS",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRICKET_FIELD",
+   "BUILDING_MINOR_LEAGUE_STADIUM",
+   "BUILDING_POLO_FIELD",
+   "BUILDING_RECREATION_CENTER",
+   "BUILDING_RUGBY_FIELD",
+   "BUILDING_SOCCER_FIELD"
+  ],
+  "techs": [
+   "TECH_LAWN_SPORTS",
+   "TECH_MILITARY_SCIENCE",
+   "TECH_RADIO"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_HUMANISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DUELING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 2883
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Team_Sports.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TEAM_SPORTS",
+  "soundMP": "AS2D_TECH_TEAM_SPORTS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TEAM_SPORTS",
+  "civilopedia": "TXT_KEY_TECH_TEAM_SPORTS_PEDIA",
+  "quote": "TXT_KEY_TECH_TEAM_SPORTS_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 54,
+  "gridY": 3
+ }
+}

@@ -1,0 +1,125 @@
+{
+ "type": "BUILDING_COMPUTER_CENTER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COMPUTER_NETWORK",
+    "TECH_ADVANCED_COMPUTERS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "research": {
+  "city": {
+   "percent": 25
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 50,
+     "enabled": {
+      "type": "BONUS_COPPER_WIRES",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 60,
+     "enabled": {
+      "type": "BONUS_FIBER_OPTIC_CABLES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_ASSAULT_MECH": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "grants": {
+  "freeTechs": 1
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 4,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_TECH"
+   }
+  }
+ ],
+ "cost": {
+  "production": 7950,
+  "sizeModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_COMPUTER_CENTER"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_COMPUTER_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_COMPUTER_NETWORK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_COMPUTER_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_COMPUTER_CENTER_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "worth": 6,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

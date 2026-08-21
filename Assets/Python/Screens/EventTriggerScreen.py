@@ -44,7 +44,7 @@ class EventTriggerScreen:
 
 		aList = []
 		for iEvent in xrange(CyGlobalContext().getNumEventTriggerInfos()):
-			aList.append((str(CyGlobalContext().getEventTriggerInfo(iEvent).getType())[13:], iEvent))
+			aList.append((str(CyInfo().getType("EVENTTRIGGER_", iEvent))[13:], iEvent))
 
 		aList.sort()
 
@@ -129,13 +129,15 @@ class EventTriggerScreen:
 
 		if iCode == 11: # List Select
 			if iData1 > -1:
-				info = CyGlobalContext().getEventTriggerInfo(iData1)
+				info = CyInfo()
 				if inputClass.bShift or inputClass.bCtrl or inputClass.bAlt:
-					szTxt = "Desc: " + info.getDescription() + "\nPedia: " + info.getCivilopedia() + "\nHelp: " + info.getHelp() + "\nStrat: " + info.getStrategy() + "\nText: " + info.getText()
+					# "Text" shows the TXT KEY rather than the resolved string: CyInfo serves the key, and on a
+					# debug dump the key is the more useful of the two anyway.
+					szTxt = "Desc: " + info.getDescription("EVENTTRIGGER_", iData1) + "\nPedia: " + info.getCivilopedia("EVENTTRIGGER_", iData1) + "\nHelp: " + info.getHelp("EVENTTRIGGER_", iData1) + "\nStrat: " + info.getStrategy("EVENTTRIGGER_", iData1) + "\nTextKey: " + info.getTextKey("EVENTTRIGGER_", iData1)
 					self.tooltip.handle(screen, szTxt)
 				else:
 					screen.hideScreen()
-					CyInterface().addImmediateMessage('Event: %s[%d]' % (info.getType(), iData1), "")
+					CyInterface().addImmediateMessage('Event: %s[%d]' % (info.getType("EVENTTRIGGER_", iData1), iData1), "")
 					CyGlobalContext().getPlayer(CyGame().getActivePlayer()).trigger(iData1)
 			return
 

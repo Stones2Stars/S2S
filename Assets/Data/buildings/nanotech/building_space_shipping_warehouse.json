@@ -1,0 +1,79 @@
+{
+ "type": "BUILDING_SPACE_SHIPPING_WAREHOUSE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ONLINE_SHIPPING_WAREHOUSE",
+   "BUILDING_ORICHALCUM_FORGE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_WORMHOLE_HIVEMIND"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MODERN_WAREHOUSE",
+    "BUILDING_COMMERCIAL_SPACEPORT",
+    "TECH_ORBITAL_FLIGHT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_TELEPORT_SHIPPING_WAREHOUSE"
+   ]
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": [
+     5,
+     {
+      "value": 5,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 4485,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SPACE_SHIPPING_WAREHOUSE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_SHIPPING_WAREHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_SHIPPING_WAREHOUSE_PEDIA",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

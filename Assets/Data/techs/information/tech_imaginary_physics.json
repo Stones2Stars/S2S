@@ -1,0 +1,71 @@
+{
+ "type": "TECH_IMAGINARY_PHYSICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_DARK_MATTER_DETECTOR",
+   "BUILDING_GRAVITY_WAVE_DETECTOR",
+   "BUILDING_NEUTRINO_OBSERVATORY"
+  ],
+  "techs": [
+   "TECH_CONTROLLED_PLASMA",
+   "TECH_METAMATERIALS",
+   "TECH_QUANTUM_TELEPORTATION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_KNOWLEDGE_MANAGEMENT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SUPERSTRING_THEORY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 22847
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/TheoreticalPhysics.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_IMAGINARY_PHYSICS",
+  "soundMP": "AS2D_TECH_IMAGINARY_PHYSICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_IMAGINARY_PHYSICS",
+  "civilopedia": "TXT_KEY_TECH_IMAGINARY_PHYSICS_PEDIA",
+  "quote": "TXT_KEY_TECH_IMAGINARY_PHYSICS_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 91,
+  "gridY": 17
+ }
+}

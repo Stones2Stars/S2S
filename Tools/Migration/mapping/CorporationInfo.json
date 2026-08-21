@@ -1,0 +1,25 @@
+{
+  "entity": "CorporationInfo",
+  "rootElement": "CorporationInfo",
+  "glob": "**/CIV4CorporationInfo.xml",
+  "channels": {
+    "iMaintenance": {"scope": "city", "channel": "maintenance", "kind": "flat"},
+    "iHealth": {"scope": "city", "channel": "health", "kind": "flat"},
+    "iHappiness": {"scope": "city", "channel": "happiness", "kind": "flat"},
+    "iFreeXP": {"scope": "city", "channel": "experience", "kind": "flat"},
+    "iMilitaryProductionModifier": {"scope": "city", "channel": "militaryProduction", "kind": "percent"},
+    "HeadquarterCommerces": {"scope": "city", "channel": "commerce", "kind": "flat", "valueKeys": ["gold", "research", "culture", "espionage"]},
+    "CommercesProduced": {"scope": "city", "channel": "commerce", "kind": "flat", "valueKeys": ["gold", "research", "culture", "espionage"]},
+    "CommerceChanges": {"scope": "city", "channel": "commerce", "kind": "flat", "valueKeys": ["gold", "research", "culture", "espionage"]},
+    "YieldsProduced": {"scope": "city", "channel": "yield", "kind": "flat", "valueKeys": ["food", "production", "commerce"]},
+    "YieldChanges": {"scope": "city", "channel": "yield", "kind": "flat", "valueKeys": ["food", "production", "commerce"]},
+    "BonusProduced": {"scope": "city", "channel": "bonusProduced", "kind": "enabler"}
+  },
+  "inversionsOut": {},
+  "enablerEdges": {},
+  "prereqs": ["TechPrereq", "PrereqBonuses", "PrereqBuildings"],
+  "cost": ["iSpreadCost"],
+  "art": ["iTGAIndex", "Button", "MovieFile", "MovieSound", "Sound"],
+  "identity": ["Type", "Description", "Civilopedia", "iSpreadFactor", "iSpread"],
+  "boostsIn": []
+}

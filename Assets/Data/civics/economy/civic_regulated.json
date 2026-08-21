@@ -1,0 +1,130 @@
+{
+ "type": "CIVIC_REGULATED",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTRAL_BANK",
+   "BUILDING_CHAMBER_OF_COMMERCE"
+  ],
+  "hurries": [
+   "HURRY_GOLD"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 2,
+   "improvements": {
+    "IMPROVEMENT_COTTAGE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_HAMLET": {
+     "flat": 1
+    },
+    "IMPROVEMENT_VILLAGE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_TOWN": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SUBURBS": {
+     "flat": 1
+    },
+    "IMPROVEMENT_SUBMERGED_TOWN": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CENTRAL_BANK": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "percent": [
+    {
+     "value": 4,
+     "enabled": "IS_HOME_AREA"
+    },
+    {
+     "value": 5,
+     "enabled": "!IS_HOME_AREA"
+    }
+   ],
+   "corporation": {
+    "percent": -10
+   }
+  }
+ },
+ "tradeRoutes": {
+  "empire": {
+   "modifier": {
+    "food": {
+     "percent": 2
+    },
+    "production": {
+     "percent": 3
+    },
+    "commerce": {
+     "percent": 4
+    },
+    "percent": [
+     {
+      "value": 5,
+      "enabled": {
+       "all": [
+        "IS_FOREIGN",
+        "SHARES_CIVIC"
+       ]
+      }
+     }
+    ]
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "environmentalProtection": {
+    "flat": -1
+   }
+  }
+ },
+ "inflation": {
+  "empire": {
+   "percent": -10
+  }
+ },
+ "policies": {
+  "communism": true
+ },
+ "grants": {
+  "revolution": -10
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/economy_regulated.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_REGULATED",
+  "civilopedia": "TXT_KEY_CIVIC_REGULATED_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_REGULATED_STRATEGY",
+  "civicOption": "CIVICOPTION_ECONOMY",
+  "anarchyLength": 1,
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

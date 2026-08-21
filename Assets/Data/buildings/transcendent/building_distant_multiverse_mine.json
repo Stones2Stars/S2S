@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_DISTANT_MULTIVERSE_MINE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_BLAZAR_FACTORY",
+    "TECH_MULTIVERSE_TRAVERSAL",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 2422,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_MULTIVERSE_MINE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_MULTIVERSE_MINE",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_MULTIVERSE_MINE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

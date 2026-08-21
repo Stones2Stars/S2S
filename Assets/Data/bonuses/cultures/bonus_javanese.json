@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_JAVANESE",
+ "enables": {
+  "units": [
+   "UNIT_DIPONEGORO",
+   "UNIT_TARUMA_WARRIOR"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_JAVANESE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_JAVANESE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

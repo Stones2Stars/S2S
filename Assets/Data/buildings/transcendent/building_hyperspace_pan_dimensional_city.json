@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY",
+ "enables": {
+  "buildings": [
+   "BUILDING_HYPERPLANET",
+   "BUILDING_HYPERSPACE_11_DIMENSIONAL_CITY",
+   "BUILDING_HYPERSPACE_GOVERNING_COUNCIL",
+   "BUILDING_HYPERSPACE_NONCAUSAL_ENGINEERING_FIRM",
+   "BUILDING_HYPERSPACE_TESSERACT_HOMES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HYPERCITY",
+    "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 60
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "cost": {
+  "production": 1713,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

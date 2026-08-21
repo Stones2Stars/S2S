@@ -1,0 +1,76 @@
+{
+ "type": "BONUS_FOSSIL_BEDS",
+ "enables": {
+  "buildings": [
+   "BUILDING_DIG_SITE_AMMONITE_FOSSILS",
+   "BUILDING_DIG_SITE_ARCHAEOPTERYX_FOSSILS",
+   "BUILDING_DIG_SITE_DIMETRODON_FOSSILS",
+   "BUILDING_DIG_SITE_ICHTHYOSTEGA_FOSSILS",
+   "BUILDING_DIG_SITE_MAMMOTH_FOSSILS",
+   "BUILDING_DIG_SITE_NEANDERTHAL_FOSSILS",
+   "BUILDING_DIG_SITE_PETRIFIED_WOOD",
+   "BUILDING_DIG_SITE_PLESIOSAUR_FOSSILS",
+   "BUILDING_DIG_SITE_PTERODACTYL_FOSSILS",
+   "BUILDING_DIG_SITE_SHARK_TEETH",
+   "BUILDING_DIG_SITE_SMILODON_FOSSILS",
+   "BUILDING_DIG_SITE_TRICERATOPS_FOSSILS",
+   "BUILDING_DIG_SITE_TRILOBITE_FOSSILS",
+   "BUILDING_DIG_SITE_VELOCIRAPTOR_FOSSILS"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_FOSSIL_BEDS"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 5,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 256,
+  "uniqueRange": 8,
+  "hills": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_SALT_FLATS",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_MARSH",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_FOSSIL_BEDS",
+  "civilopedia": "TXT_KEY_BONUS_FOSSIL_BEDS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MISC",
+  "source": "natural"
+ }
+}

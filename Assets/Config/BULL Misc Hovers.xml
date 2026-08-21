@@ -60,22 +60,6 @@
 			<option id="GreatPeopleRateBreakdown" key="Great People Rate Breakdown"
 					type="boolean" default="True"/>
 
-			<option id="BuildingSavedMaintenance" key="Building Saved Maintenance"
-					type="boolean" default="True"/>
-			<option id="BuildingAdditionalFood" key="Building Additional Food"
-					type="boolean" default="True"/>
-			<option id="BuildingAdditionalProduction" key="Building Additional Production"
-					type="boolean" default="True"/>
-			<option id="BuildingAdditionalCommerce" key="Building Additional Commerce"
-					type="boolean" default="True"/>
-			<option id="BuildingAdditionalHealth" key="Building Additional Health"
-					type="boolean" default="True"/>
-			<option id="BuildingAdditionalHappiness" key="Building Additional Happiness"
-					type="boolean" default="True"/>
-			<option id="BuildingAdditionalGreatPeople" key="Building Additional Great People"
-					type="boolean" default="True"/>
-			<option id="BuildingAdditionalDefense" key="Building Additional Defense"
-					type="boolean" default="True" dll="2"/>
 		</section>
 
 

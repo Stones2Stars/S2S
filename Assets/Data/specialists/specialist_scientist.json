@@ -1,0 +1,110 @@
+{
+ "type": "SPECIALIST_SCIENTIST",
+ "food": {
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_SVALBARD_GLOBAL_SEED_VAULT",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "production": {
+  "empire": {
+   "cities": {
+    "flat": [
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_EINSTEINS_LABORATORY",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_HIPPOCRATIC_OATH",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_ISAAC_NEWTONS_COLLEGE",
+       "scope": "empire"
+      }
+     },
+     {
+      "value": 1,
+      "enabled": {
+       "type": "BUILDING_ATOMIUM",
+       "scope": "empire"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3,
+   "percent": [
+    {
+     "value": 150,
+     "enabled": {
+      "type": "CIVIC_TECHNOCRACY",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 50,
+     "enabled": {
+      "type": "CIVIC_ANTIRELIGION",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "CIVIC_GUILDS",
+      "scope": "empire"
+     }
+    },
+    {
+     "value": 50,
+     "enabled": {
+      "type": "CIVIC_CAPITALIST",
+      "scope": "empire"
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/MainScreen/CityScreen/scientist.dds",
+   "icon": "Art/Interface/MainScreen/CityScreen/scientist.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_SCIENTIST",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALISTS_PEDIA",
+  "visible": true,
+  "categories": [
+   "CATEGORY_ASSIGNABLE_SPECIALISTS",
+   "CATEGORY_SPECIALIST_GROUP_RESEARCH"
+  ],
+  "greatPeopleUnit": "UNIT_SCIENTIST"
+ }
+}

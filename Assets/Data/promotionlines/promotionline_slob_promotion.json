@@ -1,0 +1,15 @@
+{
+ "type": "PROMOTIONLINE_SLOB_PROMOTION",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PromotionSlob.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_SLOB_PROMOTION",
+  "unitCombats": [
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_SPECIES_NEANDERTHAL"
+  ]
+ }
+}

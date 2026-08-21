@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_QUECHUA",
+ "enables": {
+  "units": [
+   "UNIT_INCAN_QUECHUA"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_QUECHUA"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_QUECHUA",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

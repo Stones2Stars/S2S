@@ -1,0 +1,122 @@
+{
+ "type": "BUILDING_MILITARY_SPACEPORT",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTEROID_DEFLECTION_SYSTEM",
+   "BUILDING_CAPTURED_ASTEROID",
+   "BUILDING_CISLUNAR_LABS",
+   "BUILDING_CISLUNAR_MEDICAL_LAB",
+   "BUILDING_GLOBAL_POSITIONING_SYSTEM",
+   "BUILDING_MILITARY_SATELLITES",
+   "BUILDING_ORBITAL_PRISON",
+   "BUILDING_PROPAGANDA_SATELLITES",
+   "BUILDING_SENTINEL",
+   "BUILDING_SOLAR_POWER_SATELLITE",
+   "BUILDING_SOLAR_WEATHER_MONITOR",
+   "BUILDING_SPACE_LABORATORY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MILITARY_ROBOTICS",
+    "TECH_LUNAR_BASES",
+    {
+     "any": [
+      "BUILDING_MILITARY_AIRBASE",
+      "BUILDING_AEROSPACE_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ROCKET_FUEL",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_NANOTUBES",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "experience": {
+  "city": {
+   "domains": {
+    "DOMAIN_AIR": {
+     "flat": 3
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 12
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 4,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_AIRCRAFT"
+   }
+  },
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 4,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_SPACECRAFT"
+   }
+  }
+ ],
+ "cost": {
+  "production": 2865,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "attributes": {
+  "orbitalInfrastructure": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MILITARY_SPACEPORT",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_SPACEWAY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MILITARY_SPACEPORT",
+  "civilopedia": "TXT_KEY_BUILDING_MILITARY_SPACEPORT_PEDIA",
+  "worth": 6,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

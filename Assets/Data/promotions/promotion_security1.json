@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_SECURITY1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ESCAPE1",
+   "PROMOTION_SECURITY2"
+  ]
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 10
+   }
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SECURITY": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Security1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_PING"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SECURITY1"
+ }
+}

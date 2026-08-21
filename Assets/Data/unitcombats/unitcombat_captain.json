@@ -1,0 +1,17 @@
+{
+ "type": "UNITCOMBAT_CAPTAIN",
+ "skills": {
+  "cannotMergeSplit": true
+ },
+ "tags": [
+  "naval"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/captains.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_CAPTAIN"
+ }
+}

@@ -1,0 +1,35 @@
+{
+ "type": "PROMOTION_LIVE1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_LIVE2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT5",
+    {
+     "any": [
+      "PROMOTION_DRILL4"
+     ]
+    }
+   ]
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_LIVE": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Phoenix1.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_LIVE1",
+  "help": "TXT_KEY_PROMOTION_LIVE1_HELP"
+ }
+}

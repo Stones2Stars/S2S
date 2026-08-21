@@ -1,0 +1,15 @@
+{
+ "type": "PROMOTIONLINE_NATURALIST_PROMOTION",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/PromotionNaturalist.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_NATURALIST_PROMOTION",
+  "unitCombats": [
+   "UNITCOMBAT_SPECIES_HUMAN",
+   "UNITCOMBAT_SPECIES_NEANDERTHAL"
+  ]
+ }
+}

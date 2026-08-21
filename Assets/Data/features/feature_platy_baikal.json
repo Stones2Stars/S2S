@@ -1,0 +1,43 @@
+{
+ "type": "FEATURE_PLATY_BAIKAL",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
+  "nukeImmune",
+  "ignoreTerrainCulture"
+ ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_BAIKAL"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_BAIKAL",
+  "civilopedia": "TXT_KEY_FEATURE_BAIKAL_PEDIA",
+  "noCoast": true,
+  "noRiver": true,
+  "requiresFlatlands": true,
+  "addsFreshWater": true,
+  "validTerrains": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS",
+   "TERRAIN_TAIGA"
+  ]
+ }
+}

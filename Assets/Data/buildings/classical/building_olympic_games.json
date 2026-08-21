@@ -1,0 +1,117 @@
+{
+ "type": "BUILDING_OLYMPIC_GAMES",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MODERN_SPORTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CONSTRUCTION",
+    "TECH_ATHLETICS",
+    "TECH_COMBAT_SPORTS",
+    {
+     "any": [
+      "BUILDING_COLOSSEUM",
+      "BUILDING_MINOR_LEAGUE_STADIUM",
+      "BUILDING_MAJOR_LEAGUE_STADIUM"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": -90,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 10
+  },
+  "empire": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": 50
+   }
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "cost": {
+  "production": 1404,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_OLYMPIC"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_OLYMPIC"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_OLYMPIC_GAMES",
+  "civilopedia": "TXT_KEY_BUILDING_OLYMPIC_GAMES_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 20,
+  "militaryWorth": 4,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

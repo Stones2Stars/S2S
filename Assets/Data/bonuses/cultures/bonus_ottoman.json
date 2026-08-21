@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_OTTOMAN",
+ "enables": {
+  "units": [
+   "UNIT_BARBAROSSA",
+   "UNIT_OSMAN",
+   "UNIT_OTTOMAN_JANISSARY"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_OTTOMAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_OTTOMAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

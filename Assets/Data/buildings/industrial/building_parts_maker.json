@@ -1,0 +1,134 @@
+{
+ "type": "BUILDING_PARTS_MAKER",
+ "enables": {
+  "units": [
+   "UNIT_MACHINIST"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_3D_PRINTING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_PARTS_PLANT"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MACHINE_TOOLS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "any": [
+      {
+       "type": "BONUS_IRON_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_STEEL_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_TITANIUM_WARES",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_ALUMINUM_WARES",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ],
+   "dormant": [
+    "BUILDING_MOLECULAR_ASSEMBLER",
+    "BUILDING_ATOMIC_ASSEMBLER",
+    "BUILDING_QUANTUM_ASSEMBLER",
+    "BUILDING_MATERIALIZER",
+    "BUILDING_PARTS_PLANT",
+    "BUILDING_3D_PRINTING_MILL",
+    "BUILDING_NANOBOTIC_PRINTING_MILL"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_PARTS"
+  ]
+ },
+ "production": {
+  "city": {
+   "percent": 20
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "heal": 4,
+    "unitCombat": "UNITCOMBAT_HEALS_AS_MECHANICAL"
+   }
+  }
+ ],
+ "cost": {
+  "production": 680,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PARTS_MAKER",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_FACTORY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PARTS_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_PARTS_MAKER_PEDIA",
+  "worth": 5,
+  "militaryWorth": 2,
+  "conquestProbability": 66,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

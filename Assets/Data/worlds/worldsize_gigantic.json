@@ -1,0 +1,21 @@
+{
+ "type": "WORLDSIZE_GIGANTIC",
+ "identity": {
+  "description": "TXT_KEY_WORLD_GIGANTIC",
+  "defaultPlayers": 16,
+  "targetNumCities": 18,
+  "buildingPrereqModifier": 160,
+  "maxConscriptModifier": 100,
+  "warWearinessModifier": -40,
+  "gridWidth": 36,
+  "gridHeight": 24,
+  "oceanMinAreaSize": 30,
+  "terrainGrainChange": 2,
+  "featureGrainChange": 2,
+  "tradeProfitPercent": 20,
+  "corporationMaintenancePercent": 20,
+  "numCitiesAnarchyPercent": 5,
+  "advancedStartPointsMod": 250,
+  "cityLimitsScalePercent": 200
+ }
+}

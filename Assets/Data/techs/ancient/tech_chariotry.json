@@ -1,0 +1,90 @@
+{
+ "type": "TECH_CHARIOTRY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHARIOT_WORKSHOP",
+   "BUILDING_CIRCUS_MAXIMUS",
+   "BUILDING_CULTURE_HITTITE",
+   "BUILDING_HIPPODROME"
+  ],
+  "techs": [
+   "TECH_ANIMAL_RIDING"
+  ],
+  "units": [
+   "UNIT_CARTWRIGHT",
+   "UNIT_CHARIOT",
+   "UNIT_CHARIOTARCHER",
+   "UNIT_EARLYCHARIOT",
+   "UNIT_EGYPT_WARCHARIOT",
+   "UNIT_HITTITES_HITTITE_CHARIOT",
+   "UNIT_HYKSOSI_CHARIOT",
+   "UNIT_KIKKULI_CHARIOT",
+   "UNIT_SHANG_CHARIOT",
+   "UNIT_SINTASHTA_CHARIOT",
+   "UNIT_ZEBRA_CHARIOT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EQUINE_DOMESTICATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_THE_WHEEL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 126
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Chariotry.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,2,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CHARIOTRY",
+  "soundMP": "AS2D_TECH_CHARIOTRY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CHARIOTRY",
+  "civilopedia": "TXT_KEY_TECH_CHARIOTRY_PEDIA",
+  "quote": "TXT_KEY_TECH_CHARIOTRY_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "gridX": 23,
+  "gridY": 11
+ }
+}

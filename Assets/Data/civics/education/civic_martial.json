@@ -1,0 +1,132 @@
+{
+ "type": "CIVIC_MARTIAL",
+ "enables": {
+  "buildings": [
+   "BUILDING_MILITARY_SCHOOL",
+   "BUILDING_PARADE_GROUNDS"
+  ]
+ },
+ "food": {
+  "empire": {
+   "percent": 2
+  }
+ },
+ "production": {
+  "empire": {
+   "percent": 3
+  }
+ },
+ "commerce": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    3,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    5,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    5,
+    {
+     "value": 5,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    5,
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "experience": {
+  "empire": {
+   "flat": 5
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 10,
+   "domestic": {
+    "percent": 10
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": [
+     {
+      "value": 15,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
+   }
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "warWeariness": {
+    "percent": -10
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": 20,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/education_military.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_MARTIAL",
+  "civilopedia": "TXT_KEY_CIVIC_MARTIAL_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_MARTIAL_STRATEGY",
+  "civicOption": "CIVICOPTION_EDUCATION",
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

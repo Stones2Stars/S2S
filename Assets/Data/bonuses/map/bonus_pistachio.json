@@ -1,0 +1,72 @@
+{
+ "type": "BONUS_PISTACHIO",
+ "enables": {
+  "buildings": [
+   "BUILDING_CATCHER_COCKATOO",
+   "BUILDING_CULTURE_CANARI",
+   "BUILDING_CULTURE_PARAGUAYAN",
+   "BUILDING_FIREFLY_GATHERER",
+   "BUILDING_GROVE_PISTACHIO",
+   "BUILDING_NATURE_ALTAR_PISTACHIO",
+   "BUILDING_NATURE_CIRCLE_PISTACHIO"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PISTACHIO"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 7,
+  "constAppearance": 100,
+  "maxLatitude": 50,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 60,
+  "uniqueRange": 2,
+  "area": true,
+  "flatlands": true,
+  "noRiverSide": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_PLAINS",
+   "TERRAIN_SCRUB"
+  ],
+  "validFeatures": [
+   "FEATURE_OASIS",
+   "FEATURE_SAVANNA",
+   "FEATURE_VERY_TALL_GRASS"
+  ],
+  "validPlacementOn": [
+   "TERRAIN_DESERT",
+   "TERRAIN_DUNES"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PISTACHIO",
+  "civilopedia": "TXT_KEY_BONUS_PISTACHIO_PEDIA",
+  "bonusClassType": "BONUSCLASS_CROP",
+  "source": "natural"
+ }
+}

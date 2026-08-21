@@ -1,0 +1,68 @@
+{
+ "type": "BONUS_TIN_ORE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_CHOLA",
+   "BUILDING_CULTURE_PARTHIAN",
+   "BUILDING_CULTURE_TARASCAN",
+   "BUILDING_MINE_TIN",
+   "BUILDING_MINE_TUNGSTEN",
+   "BUILDING_NATIONAL_SMELTER_TIN",
+   "BUILDING_PRESENCE_OF_METAL",
+   "BUILDING_SMELTER_TIN"
+  ]
+ },
+ "production": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TIN_ORE"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 5,
+  "constAppearance": 100,
+  "minAreaSize": 3,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "hills": true,
+  "peaks": true,
+  "flatlands": true,
+  "normalize": true,
+  "validTerrains": [
+   "TERRAIN_ROCKY",
+   "TERRAIN_BADLAND",
+   "TERRAIN_JAGGED",
+   "TERRAIN_BARREN",
+   "TERRAIN_DESERT",
+   "TERRAIN_SCRUB",
+   "TERRAIN_DUNES",
+   "TERRAIN_PLAINS",
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_LUSH",
+   "TERRAIN_TAIGA",
+   "TERRAIN_TUNDRA",
+   "TERRAIN_PERMAFROST",
+   "TERRAIN_ICE"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TIN_ORE",
+  "civilopedia": "TXT_KEY_BONUS_TIN_ORE_PEDIA",
+  "bonusClassType": "BONUSCLASS_PRODUCTION",
+  "source": "natural"
+ }
+}

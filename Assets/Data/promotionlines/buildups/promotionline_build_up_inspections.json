@@ -1,0 +1,21 @@
+{
+ "type": "PROMOTIONLINE_BUILD_UP_INSPECTIONS",
+ "buildUp": {
+  "active": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Inspections1Buildup.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_INSPECTIONS",
+  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_INSPECTIONS_HELP",
+  "unitCombats": [
+   "UNITCOMBAT_LAW_ENFORCEMENT"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ]
+ }
+}

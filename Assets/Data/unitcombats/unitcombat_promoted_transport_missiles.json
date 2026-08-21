@@ -1,0 +1,11 @@
+{
+ "type": "UNITCOMBAT_PROMOTED_TRANSPORT_MISSILES",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/transport_missiles.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_PROMOTED_TRANSPORT_MISSILES"
+ }
+}

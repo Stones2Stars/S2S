@@ -16,8 +16,14 @@ import TradeUtil
 OPEN_LOG_EVENT_ID = CvUtil.getNewEventID()
 CUSTOM_ENTRY_EVENT_ID = CvUtil.getNewEventID()
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 CyIF = CyInterface()
 TRNSLTR = CyTranslator()
 
@@ -386,7 +392,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 					Logger.writeLog(message, vColor="Red")
 
 				if iCurrentConstrictCounter > self.CityConscriptCounter[i]:
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CONSCRIPT", (GC.getUnitInfo(iCity.getConscriptUnit()).getDescription(), iCity.getName()))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CONSCRIPT", (INFO.getDescription("UNIT_", iCity.getConscriptUnit()), iCity.getName()))
 					Logger.writeLog(message, vColor="Red")
 
 				if (self.CityWhipCounter[i] != 0
@@ -431,7 +437,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 				for iPlayer in xrange(GC.getMAX_PLAYERS()):
 					if GC.getPlayer(iPlayer).getTeam() == iHasMetTeamY:
-						sLeader = GC.getLeaderHeadInfo(GC.getPlayer(iPlayer).getLeaderType()).getDescription()
+						sLeader = INFO.getDescription("LEADER_", GC.getPlayer(iPlayer).getLeaderType())
 						sCivName = GC.getPlayer(iPlayer).getCivilizationShortDescription(0)
 
 						message = TRNSLTR.getText("TXT_KEY_AUTOLOG_FIRST_CONTACT_PLAYER", (sLeader, sCivName))
@@ -460,35 +466,40 @@ class AutoLogEvent(AbstractAutoLogEvent):
 	def onCombatResult(self, argsList):
 		if not AutologOpt.isLogCombat(): return
 		CyUnitW, CyUnitL = argsList # [W]inner & [L]ooser
+		iPlayerW, iUnitIdW = CyUnitW
+		iPlayerL, iUnitIdL = CyUnitL
 
 		self.UnitKilled = 1
 		iActivePlayer = GAME.getActivePlayer()
-		iPlayerW = CyUnitW.getOwner()
 
-		if iActivePlayer in (iPlayerW, CyUnitL.getOwner()):
-			fHealthW = CyUnitW.baseCombatStr() * CyUnitW.getHP() / float(CyUnitW.getMaxHP())
-			zsBattleLocn = self.getUnitLocation(CyUnitW)
+		if iActivePlayer in (iPlayerW, iPlayerL):
+			aW = STATE.getUnitRead(iPlayerW, iUnitIdW)
+			iStrW = STATE.getUnitBaseCombatStr(iPlayerW, iUnitIdW)
+			szNameW = STATE.getUnitName(iPlayerW, iUnitIdW)
+			szNameL = STATE.getUnitName(iPlayerL, iUnitIdL)
+			fHealthW = iStrW * aW[UnitReadKind.UNIT_READ_HP] / float(aW[UnitReadKind.UNIT_READ_MAX_HP])
+			zsBattleLocn = self.getUnitLocation(iPlayerW, iUnitIdW)
 
 			if iPlayerW == iActivePlayer:
-				szText = GC.getPlayer(CyUnitL.getVisualOwner()).getCivilizationAdjective(0)
+				szText = GC.getPlayer(STATE.getUnitVisualOwner(iPlayerL, iUnitIdL)).getCivilizationAdjective(0)
 				if self.bHumanPlaying:
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_WHILE_ATTACKING_DEFEATS", (zsBattleLocn, CyUnitW.getNameKey(), BugUtil.formatFloat(fHealthW, 2), CyUnitW.baseCombatStr(), szText, CyUnitL.getNameKey(), BugUtil.formatFloat(self.fOdds, 1), "%"))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_WHILE_ATTACKING_DEFEATS", (zsBattleLocn, szNameW, BugUtil.formatFloat(fHealthW, 2), iStrW, szText, szNameL, BugUtil.formatFloat(self.fOdds, 1), "%"))
 					self.iBattleWonAttacking += 1
 				else:
 					self.fOdds = 100 - self.fOdds
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_WHILE_DEFENDING_DEFEATS", (zsBattleLocn, CyUnitW.getNameKey(), BugUtil.formatFloat(fHealthW, 2), CyUnitW.baseCombatStr(), szText, CyUnitL.getNameKey(), BugUtil.formatFloat(self.fOdds, 1), "%"))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_WHILE_DEFENDING_DEFEATS", (zsBattleLocn, szNameW, BugUtil.formatFloat(fHealthW, 2), iStrW, szText, szNameL, BugUtil.formatFloat(self.fOdds, 1), "%"))
 					self.iBattleWonDefending += 1
 
 				Logger.writeLog(message, vColor="DarkRed")
 
 			else:
-				szText = GC.getPlayer(CyUnitW.getVisualOwner()).getCivilizationAdjective(0)
+				szText = GC.getPlayer(STATE.getUnitVisualOwner(iPlayerW, iUnitIdW)).getCivilizationAdjective(0)
 				if self.bHumanPlaying:
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_WHILE_ATTACKING_LOSES", (zsBattleLocn, CyUnitL.getNameKey(), szText, CyUnitW.getNameKey(), BugUtil.formatFloat(fHealthW, 2), CyUnitW.baseCombatStr(), BugUtil.formatFloat(self.fOdds, 1), "%"))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_WHILE_ATTACKING_LOSES", (zsBattleLocn, szNameL, szText, szNameW, BugUtil.formatFloat(fHealthW, 2), iStrW, BugUtil.formatFloat(self.fOdds, 1), "%"))
 					self.iBattleLostAttacking = self.iBattleLostAttacking + 1
 				else:
 					self.fOdds = 100 - self.fOdds
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_WHILE_DEFENDING_LOSES", (zsBattleLocn, CyUnitL.getNameKey(), szText, CyUnitW.getNameKey(), BugUtil.formatFloat(fHealthW, 2), CyUnitW.baseCombatStr(), BugUtil.formatFloat(self.fOdds, 1), "%"))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_WHILE_DEFENDING_LOSES", (zsBattleLocn, szNameL, szText, szNameW, BugUtil.formatFloat(fHealthW, 2), iStrW, BugUtil.formatFloat(self.fOdds, 1), "%"))
 					self.iBattleLostDefending = self.iBattleLostDefending + 1
 
 				Logger.writeLog(message, vColor="Red")
@@ -534,8 +545,9 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 		self.cdDefender = None
 
-	def getUnitLocation(self, CyUnit):
-		CyPlot = CyUnit.plot()
+	def getUnitLocation(self, iPlayer, iUnit):
+		aPos = STATE.getUnitPosition(iPlayer, iUnit)
+		CyPlot = GC.getMap().plot(aPos[0], aPos[1])
 		iOwner = CyPlot.getOwner()
 		if iOwner > -1:
 			szText = TRNSLTR.getText("TXT_KEY_AUTOLOG_IN_TERRITORY", (GC.getPlayer(iOwner).getCivilizationAdjective(0),))
@@ -562,31 +574,38 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 	def onBuildingBuilt(self, argsList):
 		if (AutologOpt.isLogBuildCompleted()):
-			pCity, iBuildingType = argsList
-			if pCity.getOwner() == GAME.getActivePlayer():
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_FINISH_BUILDING", (pCity.getName(), GC.getBuildingInfo(iBuildingType).getDescription()))
+			# The city arrives as its (owner, id) IDENTITY, so the name is read by that address.
+			aCity, iBuildingType = argsList
+			iOwner, iCity = aCity
+			if iOwner == GAME.getActivePlayer():
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_FINISH_BUILDING", (GC.getPlayer(iOwner).getCity(iCity).getName(), INFO.getDescription("BUILDING_", iBuildingType)))
 				Logger.writeLog(message, vColor="Purple")
 
 	def onProjectBuilt(self, argsList):
 		if (AutologOpt.isLogBuildCompleted()):
-			pCity, iProjectType = argsList
-			if pCity.getOwner() == GAME.getActivePlayer():
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_FINISH_PROJECT", (pCity.getName(), GC.getProjectInfo(iProjectType).getDescription()))
+			aCity, iProjectType = argsList
+			iOwner, iCity = aCity
+			if iOwner == GAME.getActivePlayer():
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_FINISH_PROJECT", (GC.getPlayer(iOwner).getCity(iCity).getName(), INFO.getDescription("PROJECT_", iProjectType)))
 				Logger.writeLog(message, vColor="Purple")
 
 	def onUnitBuilt(self, argsList):
 		if (AutologOpt.isLogBuildCompleted()):
 			pCity = argsList[0]
 			unit = argsList[1]
-			if pCity.getOwner() == GAME.getActivePlayer():
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_FINISH_UNIT", (pCity.getName(), GC.getUnitInfo(unit.getUnitType()).getDescription()))
+			iCityOwner, iCityID = pCity
+			iUnitOwner, iUnitID = unit
+			if iCityOwner == GAME.getActivePlayer():
+				aUnit = STATE.getUnitRead(iUnitOwner, iUnitID)
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_FINISH_UNIT", (GC.getPlayer(iCityOwner).getCity(iCityID).getName(), INFO.getDescription("UNIT_", aUnit[UnitReadKind.UNIT_READ_TYPE])))
 				Logger.writeLog(message, vColor="Purple")
 
 	def onUnitPromoted(self, argsList):
 		if AutologOpt.isLogPromotion():
 			CyUnit, iPromotion = argsList
-			if CyUnit.getOwner() == GAME.getActivePlayer():
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_PROMOTION", (CyUnit.getName(), GC.getPromotionInfo(iPromotion).getDescription()))
+			iUnitOwner, iUnitID = CyUnit
+			if iUnitOwner == GAME.getActivePlayer():
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_PROMOTION", (STATE.getUnitName(iUnitOwner, iUnitID), INFO.getDescription("PROMOTION_", iPromotion)))
 				Logger.writeLog(message, vColor="DarkOrange")
 
 	def onGoodyReceived(self, argsList):
@@ -731,9 +750,10 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 	def onGreatPersonBorn(self, argsList):
 		if (AutologOpt.isLogGreatPeople()):
-			pUnit, iPlayer, pCity = argsList
+			# Both the unit and the city arrive as their (owner, id) IDENTITY.
+			aUnit, iPlayer, aCity = argsList
 			if iPlayer == GAME.getActivePlayer():
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_GP_BORN", (pUnit.getName(), pCity.getName()))
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_GP_BORN", (STATE.getUnitName(aUnit[0], aUnit[1]), GC.getPlayer(aCity[0]).getCity(aCity[1]).getName()))
 				Logger.writeLog(message, vColor="Brown")
 
 	def onTechAcquired(self, argsList):
@@ -748,14 +768,14 @@ class AutoLogEvent(AbstractAutoLogEvent):
 				bWrite = True
 
 				if self.bHumanEndTurn:
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_TECH_RESEARCHED", (GC.getTechInfo(iTech).getDescription(),))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_TECH_RESEARCHED", (INFO.getDescription("TECH_", iTech),))
 				else:
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_TECH_ACQUIRED", (GC.getTechInfo(iTech).getDescription(),))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_TECH_ACQUIRED", (INFO.getDescription("TECH_", iTech),))
 			else:
 				if self.bHumanPlaying:
 					bWrite = True
 					zsCiv = GC.getPlayer(iPlayer).getName() + " (" + GC.getPlayer(iPlayer).getCivilizationShortDescription(0) + ")"
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_TECH_TRADED", (zsCiv, GC.getTechInfo(iTech).getDescription()))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_TECH_TRADED", (zsCiv, INFO.getDescription("TECH_", iTech)))
 
 			if bWrite:
 				Logger.writeLog(message, vColor="Green")
@@ -774,7 +794,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 					print "Divide by zero in autologEventManager | onTechSelected"
 				else:
 					zTurns = (iTechCost - iProgress - iOverflow) / iRate + 1
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_RESEARCH_BEGUN", (GC.getTechInfo(iTech).getDescription(), zTurns))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_RESEARCH_BEGUN", (INFO.getDescription("TECH_", iTech), zTurns))
 					Logger.writeLog(message, vColor="Green")
 
 	def onReligionFounded(self, argsList):
@@ -785,7 +805,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 				messageEnd = CyPlayer.getCity(GAME.getHolyCity(iReligion).getID()).getName()
 			else:
 				messageEnd = BugUtil.getPlainText("TXT_KEY_AUTOLOG_DISTANT_LAND")
-			message = TRNSLTR.getText("TXT_KEY_AUTOLOG_RELIGION_FOUNDED", (GC.getReligionInfo(iReligion).getDescription(), messageEnd))
+			message = TRNSLTR.getText("TXT_KEY_AUTOLOG_RELIGION_FOUNDED", (INFO.getDescription("RELIGION_", iReligion), messageEnd))
 			Logger.writeLog(message, vColor="DarkOrange")
 
 	def onReligionSpread(self, argsList):
@@ -795,10 +815,10 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 			if iOwner == iActivePlayer or GAME.getHolyCity(iReligion).getOwner() == iActivePlayer:
 				if iOwner == iActivePlayer:
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_RELIGION_SPREAD_IN", (GC.getReligionInfo(iReligion).getDescription(), CyCity.getName()))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_RELIGION_SPREAD_IN", (INFO.getDescription("RELIGION_", iReligion), CyCity.getName()))
 				else:
 					CyPlayer = GC.getPlayer(iOwner)
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_RELIGION_SPREAD_OUT", (GC.getReligionInfo(iReligion).getDescription(), CyCity.getName(), CyPlayer.getCivilizationDescription(0)))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_RELIGION_SPREAD_OUT", (INFO.getDescription("RELIGION_", iReligion), CyCity.getName(), CyPlayer.getCivilizationDescription(0)))
 				Logger.writeLog(message, vColor="DarkOrange")
 
 	def onReligionRemove(self, argsList):
@@ -808,10 +828,10 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 			if iOwner == iActivePlayer or GAME.getHolyCity(iReligion).getOwner() == iActivePlayer:
 				if iOwner == iActivePlayer:
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_RELIGION_REMOVED_IN", (GC.getReligionInfo(iReligion).getDescription(), CyCity.getName()))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_RELIGION_REMOVED_IN", (INFO.getDescription("RELIGION_", iReligion), CyCity.getName()))
 				else:
 					CyPlayer = GC.getPlayer(iOwner)
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_RELIGION_REMOVED_OUT", (GC.getReligionInfo(iReligion).getDescription(), CyCity.getName(), CyPlayer.getCivilizationDescription(0)))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_RELIGION_REMOVED_OUT", (INFO.getDescription("RELIGION_", iReligion), CyCity.getName(), CyPlayer.getCivilizationDescription(0)))
 				Logger.writeLog(message, vColor="DarkOrange")
 
 	def onCorporationFounded(self, argsList):
@@ -822,7 +842,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 				messageEnd = CyPlayer.getCity(GAME.getHeadquarters(iCorporation).getID()).getName()
 			else:
 				messageEnd = BugUtil.getPlainText("TXT_KEY_AUTOLOG_DISTANT_LAND")
-			message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CORP_FOUNDED", (GC.getCorporationInfo(iCorporation).getDescription(), messageEnd))
+			message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CORP_FOUNDED", (INFO.getDescription("CORPORATION_", iCorporation), messageEnd))
 			Logger.writeLog(message, vColor="DarkOrange")
 
 	def onCorporationSpread(self, argsList):
@@ -832,10 +852,10 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 			if iOwner == iActivePlayer or GAME.getHeadquarters(iCorporation).getOwner() == iActivePlayer:
 				if iOwner == iActivePlayer:
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CORP_SPREAD_IN", (GC.getCorporationInfo(iCorporation).getDescription(), CyCity.getName()))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CORP_SPREAD_IN", (INFO.getDescription("CORPORATION_", iCorporation), CyCity.getName()))
 				else:
 					CyPlayer = GC.getPlayer(iOwner)
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CORP_SPREAD_OUT", (GC.getCorporationInfo(iCorporation).getDescription(), CyCity.getName(), CyPlayer.getCivilizationDescription(0)))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CORP_SPREAD_OUT", (INFO.getDescription("CORPORATION_", iCorporation), CyCity.getName(), CyPlayer.getCivilizationDescription(0)))
 				Logger.writeLog(message, vColor="DarkOrange")
 
 	def onCorporationRemove(self, argsList):
@@ -845,9 +865,9 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 			if iOwner == iActivePlayer or GAME.getHeadquarters(iCorporation).getOwner() == iActivePlayer:
 				if iOwner == iActivePlayer:
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CORP_REMOVED_IN", (GC.getCorporationInfo(iCorporation).getDescription(), CyCity.getName()))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CORP_REMOVED_IN", (INFO.getDescription("CORPORATION_", iCorporation), CyCity.getName()))
 				else:
-					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CORP_REMOVED_OUT", (GC.getCorporationInfo(iCorporation).getDescription(), CyCity.getName(), GC.getPlayer(iOwner).getCivilizationDescription(0)))
+					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CORP_REMOVED_OUT", (INFO.getDescription("CORPORATION_", iCorporation), CyCity.getName(), GC.getPlayer(iOwner).getCivilizationDescription(0)))
 				Logger.writeLog(message, vColor="DarkOrange")
 
 	def onGoldenAge(self, argsList):
@@ -938,35 +958,36 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 	def onCityLost(self, argsList):
 		if (AutologOpt.isLogCityOwner()):
-			pCity = argsList[0]
-			if pCity.getOwner() == GAME.getActivePlayer():
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CITY_LOST", (pCity.getName(), ))
+			iOwner, iCity = argsList[0]
+			if iOwner == GAME.getActivePlayer():
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CITY_LOST", (GC.getPlayer(iOwner).getCity(iCity).getName(), ))
 				Logger.writeLog(message, vColor="RoyalBlue")
 
 	def onCultureExpansion(self, argsList):
 		if (AutologOpt.isLogCityBorders()):
-			pCity = argsList[0]
+			iOwner, iCity = argsList[0]
 			iPlayer = argsList[1]
-			if pCity.getOwner() == GAME.getActivePlayer():
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CITY_EXPANDED", (pCity.getName(), ))
+			if iOwner == GAME.getActivePlayer():
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CITY_EXPANDED", (GC.getPlayer(iOwner).getCity(iCity).getName(), ))
 				Logger.writeLog(message, vColor="RoyalBlue")
 
 	def onCityBuildingUnit(self, argsList):
 		if (AutologOpt.isLogBuildStarted()):
-			pCity = argsList[0]
+			iOwner, iCity = argsList[0]
 			iUnitType = argsList[1]
-			if pCity.getOwner() == GAME.getActivePlayer():
-				zTurns = pCity.getUnitProductionTurnsLeft(iUnitType, 1)
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CITY_PRODUCES_UNIT", (pCity.getName(),GC.getUnitInfo(iUnitType).getDescription(), zTurns))
+			if iOwner == GAME.getActivePlayer():
+				# The ORDER names which registry the type indexes; 1 is the item's position in the build queue.
+				zTurns = GC.getPlayer(iOwner).getCity(iCity).getProductionTurnsLeftFor(OrderTypes.ORDER_TRAIN, iUnitType, 1)
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CITY_PRODUCES_UNIT", (GC.getPlayer(iOwner).getCity(iCity).getName(),INFO.getDescription("UNIT_", iUnitType), zTurns))
 				Logger.writeLog(message, vColor="Purple")
 
 	def onCityBuildingBuilding(self, argsList):
 		if (AutologOpt.isLogBuildStarted()):
-			pCity = argsList[0]
+			iOwner, iCity = argsList[0]
 			iBuildingType = argsList[1]
-			if pCity.getOwner() == GAME.getActivePlayer():
-				zTurns = pCity.getBuildingProductionTurnsLeft(iBuildingType, 1)
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CITY_PRODUCES_BUILDING", (pCity.getName(),GC.getBuildingInfo(iBuildingType).getDescription(), zTurns))
+			if iOwner == GAME.getActivePlayer():
+				zTurns = GC.getPlayer(iOwner).getCity(iCity).getProductionTurnsLeftFor(OrderTypes.ORDER_CONSTRUCT, iBuildingType, 1)
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CITY_PRODUCES_BUILDING", (GC.getPlayer(iOwner).getCity(iCity).getName(),INFO.getDescription("BUILDING_", iBuildingType), zTurns))
 				Logger.writeLog(message, vColor="Purple")
 
 	def onImprovementBuilt(self, argsList):
@@ -977,7 +998,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 		if not AutologOpt.isLogImprovements(): return
 
 		if CyMap().plot(iX, iY).getOwner() == GAME.getActivePlayer():
-			message = TRNSLTR.getText("TXT_KEY_AUTOLOG_IMPROVEMENT_BUILT", (GC.getImprovementInfo(iImprovement).getDescription(),))
+			message = TRNSLTR.getText("TXT_KEY_AUTOLOG_IMPROVEMENT_BUILT", (INFO.getDescription("IMPROVEMENT_", iImprovement),))
 			zsLocn = ""
 			for CyPlot in CyMap().plot(iX, iY).rect(2, 2):
 				if CyPlot.isCity():
@@ -995,7 +1016,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 		if not AutologOpt.isLogImprovements(): return
 
 		if CyMap().plot(iX, iY).getOwner() == GAME.getActivePlayer():
-			message = TRNSLTR.getText("TXT_KEY_AUTOLOG_IMPROVEMENT_DESTROYED", (GC.getImprovementInfo(iImprovement).getDescription(),))
+			message = TRNSLTR.getText("TXT_KEY_AUTOLOG_IMPROVEMENT_DESTROYED", (INFO.getDescription("IMPROVEMENT_", iImprovement),))
 			zsLocn = ""
 			for CyPlot in CyMap().plot(iX, iY).rect(2, 2):
 				if CyPlot.isCity():
@@ -1013,9 +1034,9 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 		if CyPlot.getOwner() == iActivePlayer or CyUnit.getOwner() == iActivePlayer:
 			if iImprovement != -1:
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_IMPROVEMENT", (GC.getImprovementInfo(iImprovement).getDescription(),))
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_IMPROVEMENT", (INFO.getDescription("IMPROVEMENT_", iImprovement),))
 			elif iRoute != -1:
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_ROUTE", (GC.getRouteInfo(iRoute).getDescription(),))
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_ROUTE", (INFO.getDescription("ROUTE_", iRoute),))
 			else:
 				message = BugUtil.getPlainText("TXT_KEY_AUTOLOG_IMPROVEMENT_UNKNOWN")
 			szText = ""
@@ -1344,7 +1365,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 			message = TRNSLTR.getText("TXT_KEY_AUTOLOG_DIPLO_RELIGION_DEMAND",
 									(pDemandPlayer.getName(), pDemandPlayer.getCivilizationShortDescription(0),
 									pTargetPlayer.getName(), pTargetPlayer.getCivilizationShortDescription(0),
-									GC.getReligionInfo(eReligion).getDescription()))
+									INFO.getDescription("RELIGION_", eReligion)))
 			Logger.writeLog(message, vColor="Navy")
 
 	def onReligionAccepted(self, argsList):
@@ -1355,7 +1376,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 			message = TRNSLTR.getText("TXT_KEY_AUTOLOG_DIPLO_RELIGION_DEMAND",
 									(pDemandPlayer.getName(), pDemandPlayer.getCivilizationShortDescription(0),
 									pTargetPlayer.getName(), pTargetPlayer.getCivilizationShortDescription(0),
-									GC.getReligionInfo(eReligion).getDescription()))
+									INFO.getDescription("RELIGION_", eReligion)))
 			message = message + TRNSLTR.getText("TXT_KEY_AUTOLOG_DIPLO_GENERIC_ACCEPT", (pTargetPlayer.getName(),))
 			Logger.writeLog(message, vColor="Green")
 
@@ -1367,7 +1388,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 			message = TRNSLTR.getText("TXT_KEY_AUTOLOG_DIPLO_RELIGION_DEMAND",
 									(pDemandPlayer.getName(), pDemandPlayer.getCivilizationShortDescription(0),
 									pTargetPlayer.getName(), pTargetPlayer.getCivilizationShortDescription(0),
-									GC.getReligionInfo(eReligion).getDescription()))
+									INFO.getDescription("RELIGION_", eReligion)))
 			message = message + TRNSLTR.getText("TXT_KEY_AUTOLOG_DIPLO_GENERIC_REJECT", (pTargetPlayer.getName(),))
 			Logger.writeLog(message, vColor="Red")
 
@@ -1379,7 +1400,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 			message = TRNSLTR.getText("TXT_KEY_AUTOLOG_DIPLO_CIVIC_DEMAND",
 									(pDemandPlayer.getName(), pDemandPlayer.getCivilizationShortDescription(0),
 									pTargetPlayer.getName(), pTargetPlayer.getCivilizationShortDescription(0),
-									GC.getCivicInfo(eCivic).getDescription()))
+									INFO.getDescription("CIVIC_", eCivic)))
 			Logger.writeLog(message, vColor="Navy")
 
 	def onCivicAccepted(self, argsList):
@@ -1390,7 +1411,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 			message = TRNSLTR.getText("TXT_KEY_AUTOLOG_DIPLO_CIVIC_DEMAND",
 									(pDemandPlayer.getName(), pDemandPlayer.getCivilizationShortDescription(0),
 									pTargetPlayer.getName(), pTargetPlayer.getCivilizationShortDescription(0),
-									GC.getCivicInfo(eCivic).getDescription()))
+									INFO.getDescription("CIVIC_", eCivic)))
 			message = message + TRNSLTR.getText("TXT_KEY_AUTOLOG_DIPLO_GENERIC_ACCEPT", (pTargetPlayer.getName(),))
 			Logger.writeLog(message, vColor="Green")
 
@@ -1402,7 +1423,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 			message = TRNSLTR.getText("TXT_KEY_AUTOLOG_DIPLO_CIVIC_DEMAND",
 									(pDemandPlayer.getName(), pDemandPlayer.getCivilizationShortDescription(0),
 									pTargetPlayer.getName(), pTargetPlayer.getCivilizationShortDescription(0),
-									GC.getCivicInfo(eCivic).getDescription()))
+									INFO.getDescription("CIVIC_", eCivic)))
 			message = message + TRNSLTR.getText("TXT_KEY_AUTOLOG_DIPLO_GENERIC_REJECT", (pTargetPlayer.getName(),))
 			Logger.writeLog(message, vColor="Red")
 
@@ -1511,7 +1532,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 					if iPlayerX == iPlayerY: continue
 					if GC.getPlayer(iPlayerY).isAlive():
 						zKey = MAX_PC_PLAYERS * iPlayerX + iPlayerY
-						self.CIVAttitude[zKey] = GC.getAttitudeInfo(CyPlayerX.AI_getAttitude(iPlayerY)).getDescription()
+						self.CIVAttitude[zKey] = INFO.getDescription("ATTITUDE_", CyPlayerX.AI_getAttitude(iPlayerY))
 				# store the civ's civics
 				for iCivic in xrange(iCivicOptions):
 					zKey = iCivicOptions * iPlayerX + iCivic
@@ -1557,11 +1578,11 @@ class AutoLogEvent(AbstractAutoLogEvent):
 					if self.CIVReligion[iPlayerX] == -1:
 						zsOldRel = BugUtil.getPlainText("TXT_KEY_AUTOLOG_NO_STATE_RELIGION")
 					else:
-						zsOldRel = GC.getReligionInfo(self.CIVReligion[iPlayerX]).getDescription()
+						zsOldRel = INFO.getDescription("RELIGION_", self.CIVReligion[iPlayerX])
 					if iStateReligion == -1:
 						zsNewRel = BugUtil.getPlainText("TXT_KEY_AUTOLOG_NO_STATE_RELIGION")
 					else:
-						zsNewRel = GC.getReligionInfo(iStateReligion).getDescription()
+						zsNewRel = INFO.getDescription("RELIGION_", iStateReligion)
 					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_RELIGION_CHANGE", (szCivX, zsOldRel, zsNewRel))
 					Logger.writeLog(message, vColor="DarkOrange")
 
@@ -1573,7 +1594,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 					if not (CyPlayerY.isAlive() and GC.getTeam(CyPlayerY.getTeam()).isHasMet(iActiveTeam)):
 						continue
 					zKey = MAX_PC_PLAYERS * iPlayerX + iPlayerY
-					zsNewAttitude = GC.getAttitudeInfo(CyPlayerX.AI_getAttitude(iPlayerY)).getDescription()
+					zsNewAttitude = INFO.getDescription("ATTITUDE_", CyPlayerX.AI_getAttitude(iPlayerY))
 					if self.CIVAttitude[zKey] != zsNewAttitude:
 						zsCiv2 = CyPlayerY.getName() + " (" + CyPlayerY.getCivilizationShortDescription(0) + ")"
 						message = TRNSLTR.getText("TXT_KEY_AUTOLOG_ATTITUDE_CHANGE", (szCivX, zsCiv2, self.CIVAttitude[zKey], zsNewAttitude))
@@ -1584,8 +1605,8 @@ class AutoLogEvent(AbstractAutoLogEvent):
 				for iCivic in xrange(iCivicOptions):
 					zKey = iCivicOptions * iPlayerX + iCivic
 					if self.CIVCivics[zKey] != CyPlayerX.getCivics(iCivic):
-						zsOldCiv = GC.getCivicInfo(self.CIVCivics[zKey]).getDescription()
-						zsNewCiv = GC.getCivicInfo(CyPlayerX.getCivics(iCivic)).getDescription()
+						zsOldCiv = INFO.getDescription("CIVIC_", self.CIVCivics[zKey])
+						zsNewCiv = INFO.getDescription("CIVIC_", CyPlayerX.getCivics(iCivic))
 						message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CIVIC_CHANGE", (szCivX, zsOldCiv, zsNewCiv))
 						Logger.writeLog(message, vColor="SeaGreen")
 
@@ -1598,7 +1619,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 		for iI in xrange( CommerceTypes.NUM_COMMERCE_TYPES ):
 			eCommerce = (iI + 1) % CommerceTypes.NUM_COMMERCE_TYPES
 
-			zDesc = GC.getCommerceInfo(CommerceTypes(eCommerce)).getDescription()
+			zDesc = INFO.getDescription("COMMERCE_", CommerceTypes(eCommerce))
 			if (eCommerce == CommerceTypes.COMMERCE_GOLD):
 				zPercent = pPlayer.getCommercePercent(eCommerce)
 				zRate = pPlayer.calculateGoldRate()

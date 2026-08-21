@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_CISLUNAR_BIOFACTORY",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_BIONIC_CORE",
+   "BUILDING_CISLUNAR_ONEILL_CYLINDER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_CISLUNAR_FACTORY",
+    "BUILDING_CISLUNAR_MATERIALS_LAB",
+    "BUILDING_CISLUNAR_AGRICULTURAL_LAB",
+    "TECH_DYSTOPIA_PATHOGENS",
+    {
+     "type": "MAPCATEGORY_CISLUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    50,
+    {
+     "value": 10,
+     "enabled": "TECH_APOCALYPTIC_PATHOGENS"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 1577,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CISLUNAR_BIOFACTORY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CISLUNAR_BIOFACTORY",
+  "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_BIOFACTORY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_CISLUNAR"
+  ]
+ }
+}

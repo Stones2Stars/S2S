@@ -1,0 +1,89 @@
+{
+ "type": "BUILDING_SCHOOL_OF_RHETORIC",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_COMPULSORY_EDUCATION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_LYCEUM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ORATORY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_LYCEUM",
+    "BUILDING_ELEMENTARY_SCHOOL",
+    "BUILDING_HOLOGRAPHIC_SCHOOL"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_SPY": {
+     "flat": 1
+    },
+    "UNITCOMBAT_DIPLOMAT": {
+     "flat": 2
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "cost": {
+  "production": 168,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SCHOOL_OF_RHETORIC",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_LIBRARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SCHOOL_OF_RHETORIC",
+  "civilopedia": "TXT_KEY_BUILDING_SCHOOL_OF_RHETORIC_PEDIA",
+  "worth": 2,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

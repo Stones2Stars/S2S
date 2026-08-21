@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_HUMAN_MOD_DIGITAL_IDENTITY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_VIRTUAL_WORLD",
+    "TECH_VIRTUAL_SOCIETY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_DIGITAL_LIFESTYLE",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_DIGITAL_IDENTITY"
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_SOCIAL_NETWORKS",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 4810
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_DIGITAL_IDENTITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_DIGITAL_IDENTITY",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_DIGITAL_IDENTITY_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

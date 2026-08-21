@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_HUMAN_MOD_ROBOTIC_BODY",
+ "enables": {
+  "buildings": [
+   "BUILDING_HUMAN_MOD_COLD_TOLERANCE",
+   "BUILDING_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS",
+   "BUILDING_HUMAN_MOD_HEAT_TOLERANCE"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HUMAN_MOD_ROBOTIC_BODY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HUMAN_MOD_ROBOTIC_BODY",
+  "civilopedia": "TXT_KEY_BONUS_HUMAN_MOD_PEDIA",
+  "bonusClassType": "BONUSCLASS_GENMODS",
+  "source": "manufactured"
+ }
+}

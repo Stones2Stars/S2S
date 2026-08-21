@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_HQ_MOBBY_MEATS_INTERNATIONAL",
+ "enables": {
+  "corporations": [
+   "CORPORATION_MOBBY"
+  ],
+  "units": [
+   "UNIT_EXECUTIVE_MOBBY"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    "TECH_REFRIGERATION",
+    "TECH_CORPORATION",
+    {
+     "any": [
+      "BUILDING_MODERN_OFFICES",
+      "BUILDING_OFFICIUM",
+      "BUILDING_SKYSCRAPER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 2,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    }
+   ]
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "headquarters": "CORPORATION_MOBBY",
+ "disabled": "GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS",
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HQ_MOBBY_MEATS_INTERNATIONAL"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BANK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HQ_MOBBY_MEATS_INTERNATIONAL",
+  "civilopedia": "TXT_KEY_BUILDING_CORPORATION_MOBBY_PEDIA",
+  "pediaCategory": "greatWonder",
+  "notConstructible": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "specialBuildingType": "SPECIALBUILDING_CORPORATION_HQ",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "type": "BONUS_SOAP",
+ "enables": {
+  "units": [
+   "UNIT_APOTHECARY",
+   "UNIT_MANIQ_SPEAKER",
+   "UNIT_MEDICINE_MAN",
+   "UNIT_MONK",
+   "UNIT_SHAOLINMK",
+   "UNIT_VET"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SOAP"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SOAP",
+  "civilopedia": "TXT_KEY_BONUS_SOAP_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

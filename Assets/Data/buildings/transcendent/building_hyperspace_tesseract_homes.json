@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_HYPERSPACE_TESSERACT_HOMES",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HYPERSPACE_RESIDENTIAL_PORTAL",
+    "BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY",
+    "TECH_TESSERACT_CONSTRUCTION",
+    "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "cost": {
+  "production": 1713,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYPERSPACE_TESSERACT_HOMES",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_TESSERACT_HOMES",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_TESSERACT_HOMES_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

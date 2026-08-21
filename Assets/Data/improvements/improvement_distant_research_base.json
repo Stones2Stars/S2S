@@ -1,0 +1,83 @@
+{
+ "type": "IMPROVEMENT_DISTANT_RESEARCH_BASE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ENDLESS_EXPLORATION",
+     "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_DISTANT_COSMOS"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_EXOTIC_LIFEFORMS",
+        "BONUS_ABANDONED_MEGASTRUCTURE"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_EXOTIC_LIFEFORMS"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    15,
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_EXOTIC_LIFEFORMS"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_ABANDONED_MEGASTRUCTURE"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_DISTANT_RESEARCH_BASE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_DISTANT_RESEARCH_BASE",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_DISTANT_RESEARCH_BASE_PEDIA",
+  "extraterrestrial": true,
+  "pillageGold": 200,
+  "bonuses": {
+   "BONUS_EXOTIC_LIFEFORMS": {
+    "trade": true
+   },
+   "BONUS_ABANDONED_MEGASTRUCTURE": {
+    "trade": true
+   }
+  }
+ }
+}

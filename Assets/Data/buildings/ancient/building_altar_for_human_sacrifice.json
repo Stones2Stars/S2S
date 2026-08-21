@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_ALTAR_FOR_HUMAN_SACRIFICE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HUMANISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_WORLDVIEW_HUMAN_SACRIFICE_ACTIVE",
+    "TECH_SACRIFICE_CULT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    -3,
+    {
+     "value": -30,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HEMP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PEYOTE",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "hurryAnger": {
+  "city": {
+   "percent": -50
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_PRIEST": 1
+  }
+ },
+ "cost": {
+  "production": 132,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ALTAR_FOR_HUMAN_SACRIFICE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_CEREMONIAL_ALTAR"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ALTAR_FOR_HUMAN_SACRIFICE",
+  "civilopedia": "TXT_KEY_BUILDING_ALTAR_FOR_HUMAN_SACRIFICE_PEDIA",
+  "worth": 4,
+  "advisor": "ADVISOR_RELIGION",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

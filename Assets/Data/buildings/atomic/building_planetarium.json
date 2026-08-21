@@ -1,0 +1,120 @@
+{
+ "type": "BUILDING_PLANETARIUM",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTRONOMICAL_DATABASE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_OBSERVATORY",
+    "TECH_COSMOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_POLLUTION_BLACKENED_SKIES"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": {
+    "value": 7,
+    "enabled": "TECH_LASER"
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 7,
+     "enabled": "TECH_RADIO_ASTRONOMY"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_LUNAR_EXPLORATION"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_PLANETARY_EXPLORATION"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_JOVIAN_EXPLORATION"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 7,
+     "enabled": "TECH_LASER"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "TECH_LASER"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HIT_SINGLES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 1030,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PLANETARIUM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PLANETARIUM",
+  "civilopedia": "TXT_KEY_BUILDING_PLANETARIUM_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,68 @@
+{
+ "type": "TECH_UNIVERSAL_TRANSLATOR",
+ "enables": {
+  "buildings": [
+   "BUILDING_ADVANCED_METI"
+  ],
+  "civics": [
+   "CIVIC_UNIVERSAL_TRANSLATOR"
+  ],
+  "techs": [
+   "TECH_CYBERSOCIAL_INTEGRATION",
+   "TECH_PERSONAL_ROBOTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AMPLIFIED_WAVELENGTHS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANDROIDS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 47795
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/universaltranslator.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_UNIVERSAL_TRANSLATOR",
+  "soundMP": "AS2D_TECH_UNIVERSAL_TRANSLATOR"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_UNIVERSAL_TRANSLATOR",
+  "civilopedia": "TXT_KEY_TECH_UNIVERSAL_TRANSLATOR_PEDIA",
+  "quote": "TXT_KEY_TECH_UNIVERSAL_TRANSLATOR_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 108,
+  "gridY": 9
+ }
+}

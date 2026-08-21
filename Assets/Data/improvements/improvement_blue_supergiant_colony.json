@@ -1,0 +1,40 @@
+{
+ "type": "IMPROVEMENT_BLUE_SUPERGIANT_COLONY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_APPLIED_RELATIVITY",
+     "scope": "team"
+    },
+    {
+     "feature": [
+      "FEATURE_BLUE_SUPERGIANT"
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 10
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 20
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_BLUE_SUPERGIANT_COLONY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_BLUE_SUPERGIANT_COLONY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_BLUE_SUPERGIANT_COLONY_PEDIA",
+  "extraterrestrial": true,
+  "outsideBorders": true,
+  "pillageGold": 200
+ }
+}

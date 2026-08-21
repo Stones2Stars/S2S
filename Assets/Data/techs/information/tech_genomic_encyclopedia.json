@@ -1,0 +1,73 @@
+{
+ "type": "TECH_GENOMIC_ENCYCLOPEDIA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ENHANCED_SPECIES",
+   "BUILDING_GENOMIC_ENCYCLOPEDIA",
+   "BUILDING_PROETOMIC_ENCYCLOPEDIA"
+  ],
+  "techs": [
+   "TECH_PERSONALIZED_HEALTH"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_VIRTUAL_REALITY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MOLECULAR_MEDICINE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BIOINFORMATICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 23650
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Gencyclopedia.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENOMIC_ENCYCLOPEDIA",
+  "soundMP": "AS2D_TECH_GENOMIC_ENCYCLOPEDIA"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_GENOMIC_ENCYCLOPEDIA",
+  "civilopedia": "TXT_KEY_TECH_GENOMIC_ENCYCLOPEDIA_PEDIA",
+  "quote": "TXT_KEY_TECH_GENOMIC_ENCYCLOPEDIA_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 92,
+  "gridY": 1
+ }
+}

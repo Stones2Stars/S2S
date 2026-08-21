@@ -1,0 +1,48 @@
+{
+ "type": "SPECIALIST_DOCTOR",
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1.5
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_HEALTH_CARE": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/Buttons/Specialists/doctor.dds",
+   "icon": "Art/Interface/Buttons/Specialists/doctor.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_DOCTOR",
+  "civilopedia": "TXT_KEY_CONCEPT_SPECIALIST_DOCTOR_PEDIA",
+  "visible": true,
+  "categories": [
+   "CATEGORY_ASSIGNABLE_SPECIALISTS",
+   "CATEGORY_SPECIALIST_GROUP_MEDICAL"
+  ],
+  "greatPeopleUnit": "UNIT_DOCTOR"
+ }
+}

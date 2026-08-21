@@ -10,6 +10,8 @@ import CvReplayScreen
 import ScreenInput as PyScreenInput
 
 import BugCore
+GC = CyGlobalContext()
+GAME = GC.getGame()
 AdvisorOpt = BugCore.game.Advisors
 
 g_iScreenActive = -2
@@ -59,26 +61,26 @@ def numPlotListButtons(): return 0 # Called from exe
 
 def showTechChooser():
 	if CyGame().getActivePlayer() != -1:
-		screenMap[TECH_CHOOSER].interfaceScreen(TECH_CHOOSER)
+		getScreen(TECH_CHOOSER).interfaceScreen(TECH_CHOOSER)
 
 def showHallOfFame(argsList):
-	screenMap[HALL_OF_FAME].interfaceScreen(argsList[0])
+	getScreen(HALL_OF_FAME).interfaceScreen(argsList[0])
 
 def showCivicsScreen():
 	if CyGame().getActivePlayer() != -1:
-		screenMap[CIVICS_SCREEN].interfaceScreen()
+		getScreen(CIVICS_SCREEN).interfaceScreen()
 
 def showHeritageScreen():
 	if CyGame().getActivePlayer() != -1:
-		screenMap[HERITAGE_SCREEN].interfaceScreen()
+		getScreen(HERITAGE_SCREEN).interfaceScreen()
 
 def showReligionScreen():
 	if CyGame().getActivePlayer() != -1:
-		screenMap[RELIGION_SCREEN].interfaceScreen()
+		getScreen(RELIGION_SCREEN).interfaceScreen()
 
 def showCorporationScreen():
 	if CyGame().getActivePlayer() != -1:
-		screenMap[CORPORATION_SCREEN].interfaceScreen()
+		getScreen(CORPORATION_SCREEN).interfaceScreen()
 
 optionsScreen = CvOptionsScreen.CvOptionsScreen()
 def showOptionsScreen():
@@ -86,42 +88,42 @@ def showOptionsScreen():
 
 def showForeignAdvisorScreen(argsList):
 	if CyGame().getActivePlayer() != -1:
-		screenMap[FOREIGN_ADVISOR].interfaceScreen()
+		getScreen(FOREIGN_ADVISOR).interfaceScreen()
 
 def showFinanceAdvisor():
 	if CyGame().getActivePlayer() != -1:
-		screenMap[FINANCE_ADVISOR].interfaceScreen()
+		getScreen(FINANCE_ADVISOR).interfaceScreen()
 
 def showDomesticAdvisor(argsList):
 	if CyGame().getActivePlayer() != -1:
-		screenMap[DOMESTIC_ADVISOR].interfaceScreen()
+		getScreen(DOMESTIC_ADVISOR).interfaceScreen()
 
 def showMilitaryAdvisor():
 	if CyGame().getActivePlayer() != -1:
-		screenMap[MILITARY_ADVISOR].interfaceScreen()
+		getScreen(MILITARY_ADVISOR).interfaceScreen()
 
 def showEspionageAdvisor():
 	if CyGame().getActivePlayer() != -1:
-		screenMap[ESPIONAGE_ADVISOR].interfaceScreen()
+		getScreen(ESPIONAGE_ADVISOR).interfaceScreen()
 
 def showDawnOfMan(argsList):
-	screenMap[DAWN_OF_MAN].interfaceScreen(DAWN_OF_MAN)
+	getScreen(DAWN_OF_MAN).interfaceScreen(DAWN_OF_MAN)
 
 def showIntroMovie(argsList):
-	screenMap[INTRO_MOVIE_SCREEN].interfaceScreen()
+	getScreen(INTRO_MOVIE_SCREEN).interfaceScreen()
 
 def showVictoryMovie(argsList):
-	screenMap[VICTORY_MOVIE_SCREEN].interfaceScreen(argsList[0])
+	getScreen(VICTORY_MOVIE_SCREEN).interfaceScreen(argsList[0])
 
 def showWonderMovie(argsList):
-	screenMap[WONDER_MOVIE_SCREEN].interfaceScreen(argsList[0], argsList[1], argsList[2], WONDER_MOVIE_SCREEN)
+	getScreen(WONDER_MOVIE_SCREEN).interfaceScreen(argsList[0], argsList[1], argsList[2], WONDER_MOVIE_SCREEN)
 
 def showEraMovie(argsList):
-	screenMap[ERA_MOVIE_SCREEN].interfaceScreen(argsList[0])
+	getScreen(ERA_MOVIE_SCREEN).interfaceScreen(argsList[0])
 
 def showSpaceShip(argsList):
 	if CyGame().getActivePlayer() != -1:
-		screenMap[SPACE_SHIP_SCREEN].interfaceScreen(argsList[0])
+		getScreen(SPACE_SHIP_SCREEN).interfaceScreen(argsList[0])
 
 replayScreen = CvReplayScreen.CvReplayScreen(REPLAY_SCREEN)
 def showReplay(argsList):
@@ -130,23 +132,29 @@ def showReplay(argsList):
 	replayScreen.showScreen(argsList[4])
 
 def showDanQuayleScreen(argsList):
-	screenMap[DAN_QUAYLE_SCREEN].interfaceScreen()
+	getScreen(DAN_QUAYLE_SCREEN).interfaceScreen()
+
+unVictoryScreen = None
+def getUnVictoryScreen():
+	"""Built on first use, like the screenMap screens."""
+	global unVictoryScreen
+	if unVictoryScreen is None:
+		import CvUnVictoryScreen
+		unVictoryScreen = CvUnVictoryScreen.CvUnVictoryScreen()
+	return unVictoryScreen
 
 def showUnVictoryScreen(argsList):
-	unVictoryScreen.interfaceScreen()
+	getUnVictoryScreen().interfaceScreen()
 
 def showTopCivs():
-	screenMap[TOP_CIVS].showScreen()
+	getScreen(TOP_CIVS).showScreen()
 
 def showInfoScreen(argsList):
 	if CyGame().getActivePlayer() != -1:
-		screenMap[INFO_SCREEN].interfaceScreen(argsList[0], argsList[1])
+		getScreen(INFO_SCREEN).interfaceScreen(argsList[0], argsList[1])
 
 def showDebugInfoScreen():
-	screenMap[DEBUG_INFO_SCREEN].interfaceScreen()
-
-def showDebugScreen():
-	screenMap[DEBUG_SCREEN].interfaceScreen()
+	getScreen(DEBUG_INFO_SCREEN).interfaceScreen()
 
 def configTechSplash(option=None, value=None):
 	if value is None:
@@ -165,129 +173,110 @@ def configTechSplash(option=None, value=None):
 def showTechSplash(argsList):
 	if TECH_SPLASH not in screenMap:
 		configTechSplash()
-	screenMap[TECH_SPLASH].interfaceScreen(argsList[0])
+	getScreen(TECH_SPLASH).interfaceScreen(argsList[0])
 
 def showVictoryScreen():
 	if CyGame().getActivePlayer() != -1:
-		screenMap[VICTORY_SCREEN].interfaceScreen()
+		getScreen(VICTORY_SCREEN).interfaceScreen()
 
-
-# RevolutionWatchAdvisor
-revolutionWatchAdvisor = None
-def createRevolutionWatchAdvisor():
-	"""Creates the Revolution Watch Advisor."""
-	global revolutionWatchAdvisor
-	if revolutionWatchAdvisor is None:
-		import RevolutionWatchAdvisor
-		revolutionWatchAdvisor = RevolutionWatchAdvisor.RevolutionWatchAdvisor()
-		screenMap[REVOLUTION_WATCH_ADVISOR] = revolutionWatchAdvisor
-
-def showRevolutionWatchAdvisor(argsList):
-	if CyGame().getActivePlayer() != -1:
-		revolutionWatchAdvisor.interfaceScreen()
-
-def isRevolutionWatchAdvisor():
-	return revolutionWatchAdvisor.isVisible()
 
 def cityScreenRedraw():
 	mainInterface.updateCityScreen()
 
-# !RevolutionWatchAdvisor
-
 def showBuildListScreen():
 	if CyGame().getActivePlayer() != -1:
-		screenMap[BUILD_LIST_SCREEN].interfaceScreen()
+		getScreen(BUILD_LIST_SCREEN).interfaceScreen()
 
 def showForgetfulScreen():
-	screenMap[FORGETFUL_SCREEN].interfaceScreen(FORGETFUL_SCREEN)
+	getScreen(FORGETFUL_SCREEN).interfaceScreen(FORGETFUL_SCREEN)
 
 #################################################
 ## Pedia
 #################################################
 
 def linkToPedia(argsList):
-	screenMap[PEDIA].link(argsList)
+	getScreen(PEDIA).link(argsList)
 
 def pediaShow():
-	screenMap[PEDIA].pediaShow()
+	getScreen(PEDIA).pediaShow()
 
 def pediaBack():
-	screenMap[PEDIA].back()
+	getScreen(PEDIA).back()
 
 def pediaForward():
-	screenMap[PEDIA].forward()
+	getScreen(PEDIA).forward()
 
 def pediaJumpToBuilding(argsList):
-	screenMap[PEDIA].pediaJump(-3, "", argsList[0])
+	getScreen(PEDIA).pediaJump(-3, "", argsList[0])
 
 def pediaJumpToUnit(argsList):
 	if argsList[0] > -1:
-		screenMap[PEDIA].pediaJump(-2, "", argsList[0])
+		getScreen(PEDIA).pediaJump(-2, "", argsList[0])
 	else:
-		screenMap[PEDIA].pediaJump(10, "UnitCombat", argsList[0] + 100000)
+		getScreen(PEDIA).pediaJump(10, "UnitCombat", argsList[0] + 100000)
 
 def pediaMain(argsList):
-	screenMap[PEDIA].pediaJump(-1, "", argsList[0])
+	getScreen(PEDIA).pediaJump(-1, "", argsList[0])
 
 def pediaShowHistorical(argsList):
 	if argsList[0] == CivilopediaPageTypes.CIVILOPEDIA_PAGE_CONCEPT_NEW:
-		screenMap[PEDIA].pediaJump(0, "NEW", argsList[1])
+		getScreen(PEDIA).pediaJump(0, "NEW", argsList[1])
 	else:
-		screenMap[PEDIA].pediaJump(0, "", argsList[1])
+		getScreen(PEDIA).pediaJump(0, "", argsList[1])
 
 def pediaJumpToTech(argsList):
-	screenMap[PEDIA].pediaJump(1, "", argsList[0])
+	getScreen(PEDIA).pediaJump(1, "", argsList[0])
 
 def pediaJumpToPromotion(argsList):
-	screenMap[PEDIA].pediaJump(4, "", argsList[0])
+	getScreen(PEDIA).pediaJump(4, "", argsList[0])
 
 def pediaJumpToBonus(argsList):
-	screenMap[PEDIA].pediaJump(7, "", argsList[0])
+	getScreen(PEDIA).pediaJump(7, "", argsList[0])
 
 def pediaJumpToTerrain(argsList):
-	screenMap[PEDIA].pediaJump(8, "Terrain", argsList[0])
+	getScreen(PEDIA).pediaJump(8, "Terrain", argsList[0])
 
 def pediaJumpToFeature(argsList):
-	screenMap[PEDIA].pediaJump(8, "Feature", argsList[0])
+	getScreen(PEDIA).pediaJump(8, "Feature", argsList[0])
 
 def pediaJumpToImprovement(argsList):
-	screenMap[PEDIA].pediaJump(8, "Improvement", argsList[0])
+	getScreen(PEDIA).pediaJump(8, "Improvement", argsList[0])
 
 def pediaJumpToTrait(argsList):
-	screenMap[PEDIA].pediaJump(9, "Trait", argsList[0])
+	getScreen(PEDIA).pediaJump(9, "Trait", argsList[0])
 
 def pediaJumpToCiv(argsList):
-	screenMap[PEDIA].pediaJump(9, "Civ", argsList[0])
+	getScreen(PEDIA).pediaJump(9, "Civ", argsList[0])
 
 def pediaJumpToLeader(argsList):
-	screenMap[PEDIA].pediaJump(9, "Leader", argsList[0])
+	getScreen(PEDIA).pediaJump(9, "Leader", argsList[0])
 
 def pediaJumpToCivic(argsList):
-	screenMap[PEDIA].pediaJump(9, "Civic", argsList[0])
+	getScreen(PEDIA).pediaJump(9, "Civic", argsList[0])
 
 def pediaJumpToReligion(argsList):
-	screenMap[PEDIA].pediaJump(9, "Religion", argsList[0])
+	getScreen(PEDIA).pediaJump(9, "Religion", argsList[0])
 
 def pediaJumpToHeritage(argsList):
-	screenMap[PEDIA].pediaJump(9, "Heritage", argsList[0])
+	getScreen(PEDIA).pediaJump(9, "Heritage", argsList[0])
 
 def pediaJumpToProject(argsList):
-	screenMap[PEDIA].pediaJump(10, "Project", argsList[0])
+	getScreen(PEDIA).pediaJump(10, "Project", argsList[0])
 
 def pediaJumpToSpecialist(argsList):
-	screenMap[PEDIA].pediaJump(10, "Specialist", argsList[0])
+	getScreen(PEDIA).pediaJump(10, "Specialist", argsList[0])
 
 def pediaJumpToCorporation(argsList):
-	screenMap[PEDIA].pediaJump(10, "Corporation", argsList[0])
+	getScreen(PEDIA).pediaJump(10, "Corporation", argsList[0])
 
 def pediaJumpToRoute(argsList):
 	if argsList[0] > -1:
-		screenMap[PEDIA].pediaJump(8, "Route", argsList[0])
+		getScreen(PEDIA).pediaJump(8, "Route", argsList[0])
 	else:
-		screenMap[PEDIA].pediaJump(10, "Build", argsList[0] + 100000)
+		getScreen(PEDIA).pediaJump(10, "Build", argsList[0] + 100000)
 
 def pediaJumpToEra(iEra):
-	screenMap[PEDIA].pediaJump(0, "Eras", iEra)
+	getScreen(PEDIA).pediaJump(0, "Eras", iEra)
 
 #################################################
 ## Worldbuilder
@@ -338,7 +327,7 @@ def WorldBuilderRevealTabModeCB():
 
 def WorldBuilderDiplomacyModeCB():
 	print "WorldBuilderDiplomacyModeCB"
-	screenMap[WB_DIPLOMACY].interfaceScreen(CyGame().getActivePlayer(), False)
+	getScreen(WB_DIPLOMACY).interfaceScreen(CyGame().getActivePlayer(), False)
 
 def WorldBuilderRevealAllCB():
 	print "WorldBuilderRevealAllCB"
@@ -437,9 +426,9 @@ def hideOverlayScreen():
 
 def movieDone(argsList):
 	if argsList[0] == INTRO_MOVIE_SCREEN:
-		screenMap[INTRO_MOVIE_SCREEN].hideScreen()
+		getScreen(INTRO_MOVIE_SCREEN).hideScreen()
 	elif argsList[0] == VICTORY_MOVIE_SCREEN:
-		screenMap[VICTORY_MOVIE_SCREEN].hideScreen()
+		getScreen(VICTORY_MOVIE_SCREEN).hideScreen()
 
 def leftMouseDown(argsList):
 
@@ -503,7 +492,7 @@ def onClose(argsList):
 # Forced screen update (250 ms)
 def forceScreenUpdate(argsList):
 	if argsList[0] == TECH_CHOOSER:
-		screenMap[TECH_CHOOSER].updateTechRecords(False)
+		getScreen(TECH_CHOOSER).updateTechRecords(False)
 
 	elif argsList[0] == MAIN_INTERFACE:
 		mainInterface.updateScreen()
@@ -527,14 +516,14 @@ def forceScreenRedraw(argsList):
 		mainInterface.redraw()
 
 	elif argsList[0] == TECH_CHOOSER:
-		screenMap[TECH_CHOOSER].updateTechRecords(True)
+		getScreen(TECH_CHOOSER).updateTechRecords(True)
 
 	elif argsList[0] == ESPIONAGE_ADVISOR:
-		screenMap[ESPIONAGE_ADVISOR].redraw(CyGInterfaceScreen("EspionageAdvisor", ESPIONAGE_ADVISOR))
+		getScreen(ESPIONAGE_ADVISOR).redraw(CyGInterfaceScreen("EspionageAdvisor", ESPIONAGE_ADVISOR))
 
 def minimapClicked (argsList):
 	if MILITARY_ADVISOR == argsList[0]:
-		screenMap[MILITARY_ADVISOR].minimapClicked()
+		getScreen(MILITARY_ADVISOR).minimapClicked()
 
 
 ############################################################################
@@ -561,9 +550,9 @@ def handleForward(screens):
 
 def refreshMilitaryAdvisor(argsList):
 	if 1 == argsList[0]:
-		screenMap[MILITARY_ADVISOR].refreshSelectedGroup(argsList[1])
+		getScreen(MILITARY_ADVISOR).refreshSelectedGroup(argsList[1])
 	elif argsList[0] <= 0:
-		screenMap[MILITARY_ADVISOR].refreshSelectedUnit(-argsList[0], argsList[1])
+		getScreen(MILITARY_ADVISOR).refreshSelectedUnit(-argsList[0], argsList[1])
 
 def updateMusicPath(argsList):
 	szPathName = argsList[0]
@@ -670,120 +659,128 @@ def featAccomplishedOnFocusCallback(argsList):
 ####################
 # Handle Input Map #
 ####################
-screenMap = {
+class _LazyScreenMap(dict):
+	"""screenMap, with construction deferred to FIRST USE.
+
+	Reading screenMap[X] is unchanged for every caller; what changed is that a screen nobody opens is never
+	built. That matters because a screen constructor READS THE GAME, so eagerly building the tree put every
+	read it performs on the startup path.
+	"""
+	def __missing__(self, key):
+		moduleName, className, args = _screenFactories[key]
+		module = __import__(moduleName)
+		screen = getattr(module, className)(*args)
+		dict.__setitem__(self, key, screen)
+		return screen
+
+screenMap = _LazyScreenMap({
 	MAIN_INTERFACE			: mainInterface,
 	OPTIONS_SCREEN			: optionsScreen,
 	REPLAY_SCREEN			: replayScreen,
-	STRATEGY_OVERLAY_SCREEN		: overlayScreen,
-	REVOLUTION_WATCH_ADVISOR	: revolutionWatchAdvisor
-}
+	STRATEGY_OVERLAY_SCREEN		: overlayScreen
+})
 ##############
 # Initialize #
 ##############
 def lateInit():
-	import CvCorporationScreen
-	import CvEspionageAdvisor
-	import CvMilitaryAdvisor
-	import CvDomesticAdvisor
-	import CvForeignAdvisor
-	import CvFinanceAdvisor
-	import CvReligionScreen
-	import CvEraMovieScreen
-	import CvVictoryScreen
-	import CvCivicsScreen
-	import HeritageScreen
-	import CvInfoScreen
-	import CvDawnOfMan
-	import CvTopCivs
-	import Forgetful
-	import CvTechChooser
-	import BuildListScreen
-	import CvDebugInfoScreen
-	import DebugScreen
-	screenMap[CORPORATION_SCREEN]	= CvCorporationScreen.CvCorporationScreen()
-	screenMap[ESPIONAGE_ADVISOR]	= CvEspionageAdvisor.CvEspionageAdvisor()
-	screenMap[MILITARY_ADVISOR]		= CvMilitaryAdvisor.CvMilitaryAdvisor(MILITARY_ADVISOR)
-	screenMap[DOMESTIC_ADVISOR]		= CvDomesticAdvisor.CvDomesticAdvisor(DOMESTIC_ADVISOR)
-	screenMap[FOREIGN_ADVISOR]		= CvForeignAdvisor.CvForeignAdvisor(FOREIGN_ADVISOR)
-	screenMap[FINANCE_ADVISOR]		= CvFinanceAdvisor.CvFinanceAdvisor(FINANCE_ADVISOR)
-	screenMap[RELIGION_SCREEN]		= CvReligionScreen.CvReligionScreen()
-	screenMap[ERA_MOVIE_SCREEN]		= CvEraMovieScreen.CvEraMovieScreen()
-	screenMap[VICTORY_SCREEN]		= CvVictoryScreen.CvVictoryScreen(VICTORY_SCREEN)
-	screenMap[CIVICS_SCREEN]		= CvCivicsScreen.CvCivicsScreen(CIVICS_SCREEN)
-	screenMap[HERITAGE_SCREEN]		= HeritageScreen.HeritageScreen(HERITAGE_SCREEN)
-	screenMap[INFO_SCREEN]			= CvInfoScreen.CvInfoScreen(INFO_SCREEN)
-	screenMap[DAWN_OF_MAN]			= CvDawnOfMan.CvDawnOfMan()
-	screenMap[TOP_CIVS]				= CvTopCivs.CvTopCivs(TOP_CIVS)
-	screenMap[FORGETFUL_SCREEN]		= Forgetful.Forgetful()
-	screenMap[TECH_CHOOSER]			= CvTechChooser.CvTechChooser()
-	screenMap[BUILD_LIST_SCREEN]	= BuildListScreen.BuildListScreen()
-	screenMap[DEBUG_INFO_SCREEN]	= CvDebugInfoScreen.CvDebugInfoScreen()
-	screenMap[DEBUG_SCREEN]			= DebugScreen.DebugScreen(DEBUG_SCREEN)
+	"""Registers the LATE screens and does the remaining late-init work.
 
+	The screens are registered as FACTORIES, not constructed: building one reads the game, and constructing
+	twenty at startup put the whole advisor/screen tree on the path before anything could be shown. screenMap[X]
+	still reaches them -- they are simply built the first time they are asked for, exactly like earlyInit's.
+	"""
+	# WorldBuilder is built FIRST: its sub-screens take it as a constructor argument, so it has to exist before
+	# the factory rows below are evaluated.
 	import WorldBuilder, CvAdvancedStartScreen
 	global worldBuilderScreen, advancedStartScreen
 	advancedStartScreen = CvAdvancedStartScreen.CvAdvancedStartScreen()
 	worldBuilderScreen = WorldBuilder.WorldBuilder(WORLDBUILDER_SCREEN)
-	screenMap[WORLDBUILDER_SCREEN] = worldBuilderScreen
-	import WBPlotScreen
-	import WBEventScreen
-	import WBBuildingScreen
-	import WBCityDataScreen
-	import WBCityEditScreen
-	import WBProjectScreen
-	import WBTeamScreen
-	import WBPlayerScreen
-	import WBPromotionScreen
-	import WBDiplomacyScreen
-	import WBPlayerUnits
-	import WBReligionScreen
-	import WBCorporationScreen
-	import WBInfoScreen
-	import WBTradeScreen
-	screenMap[WB_PLOT]			= WBPlotScreen.WBPlotScreen(worldBuilderScreen)
-	screenMap[WB_EVENT]			= WBEventScreen.WBEventScreen(worldBuilderScreen)
-	screenMap[WB_BUILDING]		= WBBuildingScreen.WBBuildingScreen(worldBuilderScreen)
-	screenMap[WB_CITYDATA]		= WBCityDataScreen.WBCityDataScreen(worldBuilderScreen)
-	screenMap[WB_CITYEDIT]		= WBCityEditScreen.WBCityEditScreen(worldBuilderScreen)
-	screenMap[WB_PROJECT]		= WBProjectScreen.WBProjectScreen(worldBuilderScreen)
-	screenMap[WB_TEAM]			= WBTeamScreen.WBTeamScreen(worldBuilderScreen)
-	screenMap[WB_PLAYER]		= WBPlayerScreen.WBPlayerScreen(worldBuilderScreen)
-	screenMap[WB_PROMOTION]		= WBPromotionScreen.WBPromotionScreen(worldBuilderScreen)
-	screenMap[WB_DIPLOMACY]		= WBDiplomacyScreen.WBDiplomacyScreen(worldBuilderScreen)
-	screenMap[WB_UNITLIST]		= WBPlayerUnits.WBPlayerUnits(worldBuilderScreen)
-	screenMap[WB_RELIGION]		= WBReligionScreen.WBReligionScreen(worldBuilderScreen)
-	screenMap[WB_CORPORATION]	= WBCorporationScreen.WBCorporationScreen(worldBuilderScreen)
-	screenMap[WB_INFO]			= WBInfoScreen.WBInfoScreen(worldBuilderScreen)
-	screenMap[WB_TRADE]			= WBTradeScreen.WBTradeScreen(worldBuilderScreen)
+
+	_screenFactories.update({
+		CORPORATION_SCREEN    : ('CvCorporationScreen', 'CvCorporationScreen', ()),
+		ESPIONAGE_ADVISOR     : ('CvEspionageAdvisor', 'CvEspionageAdvisor', ()),
+		MILITARY_ADVISOR      : ('CvMilitaryAdvisor', 'CvMilitaryAdvisor', (MILITARY_ADVISOR,)),
+		DOMESTIC_ADVISOR      : ('CvDomesticAdvisor', 'CvDomesticAdvisor', (DOMESTIC_ADVISOR,)),
+		FOREIGN_ADVISOR       : ('CvForeignAdvisor', 'CvForeignAdvisor', (FOREIGN_ADVISOR,)),
+		FINANCE_ADVISOR       : ('CvFinanceAdvisor', 'CvFinanceAdvisor', (FINANCE_ADVISOR,)),
+		RELIGION_SCREEN       : ('CvReligionScreen', 'CvReligionScreen', ()),
+		ERA_MOVIE_SCREEN      : ('CvEraMovieScreen', 'CvEraMovieScreen', ()),
+		VICTORY_SCREEN        : ('CvVictoryScreen', 'CvVictoryScreen', (VICTORY_SCREEN,)),
+		CIVICS_SCREEN         : ('CvCivicsScreen', 'CvCivicsScreen', (CIVICS_SCREEN,)),
+		HERITAGE_SCREEN       : ('HeritageScreen', 'HeritageScreen', (HERITAGE_SCREEN,)),
+		INFO_SCREEN           : ('CvInfoScreen', 'CvInfoScreen', (INFO_SCREEN,)),
+		DAWN_OF_MAN           : ('CvDawnOfMan', 'CvDawnOfMan', ()),
+		TOP_CIVS              : ('CvTopCivs', 'CvTopCivs', (TOP_CIVS,)),
+		FORGETFUL_SCREEN      : ('Forgetful', 'Forgetful', ()),
+		TECH_CHOOSER          : ('CvTechChooser', 'CvTechChooser', ()),
+		BUILD_LIST_SCREEN     : ('BuildListScreen', 'BuildListScreen', ()),
+		DEBUG_INFO_SCREEN     : ('CvDebugInfoScreen', 'CvDebugInfoScreen', ()),
+		WB_PLOT               : ('WBPlotScreen', 'WBPlotScreen', (worldBuilderScreen,)),
+		WB_EVENT              : ('WBEventScreen', 'WBEventScreen', (worldBuilderScreen,)),
+		WB_BUILDING           : ('WBBuildingScreen', 'WBBuildingScreen', (worldBuilderScreen,)),
+		WB_CITYDATA           : ('WBCityDataScreen', 'WBCityDataScreen', (worldBuilderScreen,)),
+		WB_CITYEDIT           : ('WBCityEditScreen', 'WBCityEditScreen', (worldBuilderScreen,)),
+		WB_PROJECT            : ('WBProjectScreen', 'WBProjectScreen', (worldBuilderScreen,)),
+		WB_TEAM               : ('WBTeamScreen', 'WBTeamScreen', (worldBuilderScreen,)),
+		WB_PLAYER             : ('WBPlayerScreen', 'WBPlayerScreen', (worldBuilderScreen,)),
+		WB_PROMOTION          : ('WBPromotionScreen', 'WBPromotionScreen', (worldBuilderScreen,)),
+		WB_DIPLOMACY          : ('WBDiplomacyScreen', 'WBDiplomacyScreen', (worldBuilderScreen,)),
+		WB_UNITLIST           : ('WBPlayerUnits', 'WBPlayerUnits', (worldBuilderScreen,)),
+		WB_RELIGION           : ('WBReligionScreen', 'WBReligionScreen', (worldBuilderScreen,)),
+		WB_CORPORATION        : ('WBCorporationScreen', 'WBCorporationScreen', (worldBuilderScreen,)),
+		WB_INFO               : ('WBInfoScreen', 'WBInfoScreen', (worldBuilderScreen,)),
+		WB_TRADE              : ('WBTradeScreen', 'WBTradeScreen', (worldBuilderScreen,)),
+	})
 
 	import CivicData
 	CivicData.initCivicData()
 
+# ⛔ THE SCREENS ARE BUILT EAGERLY, AT earlyInit, AND THAT IS THE POINT.
+# Building them on first use let the load reach the main interface without the info plane being able to
+# answer what the screens ask -- the reads simply happened later, deep inside interfaceScreen(), where a
+# missing one is no longer a named Python AttributeError but a NULL handed to the EXE and dereferenced
+# there. Deferring the read moved the failure somewhere it cannot be read; it initialized nothing.
+# Constructing here puts every screen's reads back on the engine's entry path, so an info plane that is
+# not fully stood up fails AT THE MENU, naming the read it could not answer.
+_screenFactories = {
+	INTRO_MOVIE_SCREEN   : ('CvIntroMovieScreen',   'CvIntroMovieScreen',   ()),
+	WONDER_MOVIE_SCREEN  : ('CvWonderMovieScreen',  'CvWonderMovieScreen',  ()),
+	VICTORY_MOVIE_SCREEN : ('CvVictoryMovieScreen', 'CvVictoryMovieScreen', ()),
+	HALL_OF_FAME         : ('CvHallOfFameScreen',   'CvHallOfFameScreen',   (HALL_OF_FAME,)),
+	DAN_QUAYLE_SCREEN    : ('CvDanQuayle',          'CvDanQuayle',          ()),
+	SPACE_SHIP_SCREEN    : ('CvSpaceShipScreen',    'CvSpaceShipScreen',    ()),
+	PEDIA                : ('Pedia',                'Pedia',                (PEDIA,)),
+}
+
+def getScreen(screenId):
+	"""The screen for this id.
+
+	⛔ EVERY screen access goes through here, never screenMap[id] directly -- these are ENGINE entry points
+	(the intro / wonder / victory movies, the hall of fame, the spaceship, Dan Quayle), so a direct index
+	that raises leaves the engine holding nothing, and the failure lands on its side of the call.
+	earlyInit builds the factory-owned screens up front; this stays total so an id registered elsewhere is
+	still returned, and an unknown one says what is wrong rather than raising a bare KeyError.
+	"""
+	screen = screenMap.get(screenId)
+	if screen is None:
+		if screenId not in _screenFactories:
+			raise KeyError("screen %s is neither registered nor buildable" % (screenId,))
+		moduleName, className, args = _screenFactories[screenId]
+		module = __import__(moduleName)
+		screen = getattr(module, className)(*args)
+		screenMap[screenId] = screen
+	return screen
 
 def earlyInit():
-	import CvIntroMovieScreen
-	import CvWonderMovieScreen
-	import CvVictoryMovieScreen
-	import CvHallOfFameScreen
-	import CvDanQuayle
-	import CvSpaceShipScreen
+	"""Build every factory-owned screen NOW, before the menu.
 
-	screenMap[INTRO_MOVIE_SCREEN]	= CvIntroMovieScreen.CvIntroMovieScreen()
-	screenMap[WONDER_MOVIE_SCREEN]	= CvWonderMovieScreen.CvWonderMovieScreen()
-	screenMap[VICTORY_MOVIE_SCREEN]	= CvVictoryMovieScreen.CvVictoryMovieScreen()
-
-	screenMap[HALL_OF_FAME]	= CvHallOfFameScreen.CvHallOfFameScreen(HALL_OF_FAME)
-
-	screenMap[DAN_QUAYLE_SCREEN] = CvDanQuayle.CvDanQuayle()
-	screenMap[SPACE_SHIP_SCREEN] = CvSpaceShipScreen.CvSpaceShipScreen()
-
-	import Pedia
-	screenMap[PEDIA] = Pedia.Pedia(PEDIA)
-
-	import CvUnVictoryScreen
-	global unVictoryScreen
-	unVictoryScreen = CvUnVictoryScreen.CvUnVictoryScreen()
-	# RevolutionDCM
-	createRevolutionWatchAdvisor()
+	⛔ This is deliberately eager. A screen constructor reads the game, so constructing here is what puts
+	those reads on the engine's entry path -- which is exactly where we want a not-yet-initialized info
+	plane to fail: at the menu, as a named Python error naming the read, instead of surviving to the main
+	interface and dying as an access violation inside the EXE holding a NULL we returned.
+	"""
+	for screenId in _screenFactories:
+		getScreen(screenId)
+	getUnVictoryScreen()
 
 earlyInit()

@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_BROADWAY",
+ "enables": {
+  "buildings": [
+   "BUILDING_WALK_OF_FAME"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_THEATRE",
+    "TECH_INCANDESCENT_LIGHTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   {
+    "BONUS_HIT_MUSICALS": 6
+   }
+  ]
+ },
+ "culture": {
+  "city": {
+   "percent": 12
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 4800,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 200
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_BROADWAY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_BROADWAY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_BROADWAY",
+  "civilopedia": "TXT_KEY_BUILDING_BROADWAY_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 18,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

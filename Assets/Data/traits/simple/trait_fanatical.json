@@ -1,0 +1,78 @@
+{
+ "type": "TRAIT_FANATICAL",
+ "research": {
+  "empire": {
+   "percent": [
+    -10,
+    {
+     "value": -10,
+     "enabled": "IS_CAPITAL"
+    }
+   ],
+   "specialists": {
+    "SPECIALIST_SCIENTIST": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_INCENSE",
+      "scope": "empire",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "stateReligion": {
+  "empire": {
+   "unitProduction": {
+    "percent": 20
+   },
+   "freeExperience": {
+    "flat": 3
+   }
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_RELIGION": -1
+   },
+   {
+    "FLAVOR_PRODUCTION": -1
+   },
+   {
+    "FLAVOR_MILITARY": -2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitFanatical.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_FANATICAL",
+  "civilopedia": "TXT_KEY_TRAIT_FANATICAL_PEDIA",
+  "shortDescription": "TXT_KEY_TRAIT_FANATICAL_SHORT",
+  "negativeTrait": true
+ },
+ "enables": {
+  "traits": [
+   "TRAIT_FANATICAL1"
+  ]
+ }
+}

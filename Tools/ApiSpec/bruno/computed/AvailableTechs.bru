@@ -1,0 +1,19 @@
+meta {
+  name: computed/availableTechs
+  type: http
+  seq: 10
+}
+
+get {
+  url: {{baseUrl}}/computed/availableTechs?player=0
+  body: none
+  auth: none
+}
+
+params:query {
+  player: 0
+}
+
+docs {
+  Engine canResearch set for the player.
+}

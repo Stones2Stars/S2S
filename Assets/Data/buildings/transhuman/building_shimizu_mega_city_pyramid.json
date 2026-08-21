@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_SHIMIZU_MEGA_CITY_PYRAMID",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MEGASTRUCTURE_ENGINEERING",
+    {
+     "any": [
+      "BUILDING_ARCOLOGY",
+      "BUILDING_HOUSING_COLONY_ARCOLOGY",
+      "BUILDING_LAUNCH_ARCOLOGY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_CLIMATE_CONTROLLED_ARCOLOGY": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 32730,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SHIMIZU_MEGACITY_PYRAMID"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SHIMIZU_MEGA_CITY_PYRAMID",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SHIMIZU_MEGA_CITY_PYRAMID",
+  "civilopedia": "TXT_KEY_BUILDING_SHIMIZU_MEGA_CITY_PYRAMID_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

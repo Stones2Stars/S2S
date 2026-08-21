@@ -1,0 +1,78 @@
+{
+ "type": "TECH_PRINTING_PRESS",
+ "enables": {
+  "bonuses": [
+   "BONUS_BOOKS"
+  ],
+  "buildings": [
+   "BUILDING_BILLBOARDS",
+   "BUILDING_BOOK_PUBLISHER",
+   "BUILDING_BOOK_STORE",
+   "BUILDING_CULTURE_GERMAN",
+   "BUILDING_MONEY_PRESS",
+   "BUILDING_PRINTERS_WORKSHOP"
+  ],
+  "civics": [
+   "CIVIC_PAPER_MONEY"
+  ],
+  "promotions": [
+   "PROMOTION_FOMENT4",
+   "PROMOTION_INSPIRE4"
+  ],
+  "techs": [
+   "TECH_SCIENTIFIC_METHOD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RENAISSANCE_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "grants": {
+  "freeTechs": 1
+ },
+ "cost": {
+  "research": 2364
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 3
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 6
+   },
+   {
+    "FLAVOR_CULTURE": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/Printing_Press.dds,Art/Interface/Buttons/TechTree_Atlas.dds,6,11"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PRINTPRESS",
+  "soundMP": "AS2D_TECH_MP_PRINTPRESS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PRINTING_PRESS",
+  "civilopedia": "TXT_KEY_TECH_PRINTING_PRESS_PEDIA",
+  "quote": "TXT_KEY_TECH_PRINTING_PRESS_QUOTE",
+  "era": "C2C_ERA_RENAISSANCE",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 51,
+  "gridY": 5
+ }
+}

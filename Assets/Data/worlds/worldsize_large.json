@@ -1,0 +1,21 @@
+{
+ "type": "WORLDSIZE_LARGE",
+ "identity": {
+  "description": "TXT_KEY_WORLD_LARGE",
+  "defaultPlayers": 10,
+  "targetNumCities": 8,
+  "buildingPrereqModifier": 40,
+  "maxConscriptModifier": 25,
+  "warWearinessModifier": -10,
+  "gridWidth": 27,
+  "gridHeight": 18,
+  "oceanMinAreaSize": 18,
+  "terrainGrainChange": 1,
+  "featureGrainChange": 1,
+  "tradeProfitPercent": 230,
+  "corporationMaintenancePercent": 50,
+  "numCitiesAnarchyPercent": 13,
+  "advancedStartPointsMod": 125,
+  "cityLimitsScalePercent": 110
+ }
+}

@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_EDUCATION_KNOWLEDGE_BASE_RENAISSANCE",
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_EDUCATION_KNOWLEDGE_BASE_INDUSTRIAL"
+   ],
+   "all": [
+    "TECH_RENAISSANCE_LIFESTYLE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": {
+    "value": -4,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
+   }
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PROPERTYEDUCATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EDUCATION_KNOWLEDGE_BASE_RENAISSANCE",
+  "civilopedia": "TXT_KEY_BUILDING_EDUCATION_KNOWLEDGE_BASE_RENAISSANCE_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

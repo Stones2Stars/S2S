@@ -1,0 +1,32 @@
+{
+ "type": "BUILDING_EFFECT_NEUROIMPLANT_EXPORTER",
+ "enables": {
+  "buildings": [
+   "BUILDING_DEEP_SPACE_SIMULATED_WORLD"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_COMPREHENSIVE_CYBERNETICS"
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_NEUROIMPLANT_EXPORTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_NEUROIMPLANT_EXPORTER",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_NEUROIMPLANT_EXPORTER_PEDIA",
+  "notConstructible": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

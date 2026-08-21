@@ -1,0 +1,48 @@
+{
+ "type": "PROMOTION_MORALE4",
+ "enables": {
+  "promotions": [
+   "PROMOTION_INITIATIVE2",
+   "PROMOTION_MORALE5",
+   "PROMOTION_TACTICS4"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_MORALE3"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 5
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 3
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_MORALE": 4
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/morale4.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_MORALE4"
+ }
+}

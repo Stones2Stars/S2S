@@ -1,0 +1,91 @@
+{
+ "type": "UNIT_INQUISITOR",
+ "requires": {
+  "build": {
+   "all": [
+    "STATE_RELIGION_IN_CITY",
+    "TECH_FUNDAMENTALISM",
+    "CIVIC_INQUISITORIAL"
+   ]
+  }
+ },
+ "enabled": "GAMEOPTION_RELIGION_INQUISITIONS",
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "skills": [
+  "inquisitor",
+  "stateReligion"
+ ],
+ "tags": [
+  "merchant",
+  "civilian",
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_MISSIONARY",
+ "combatClasses": [
+  "UNITCOMBAT_LAW_ENFORCEMENT",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 233,
+  "upkeep": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_INQUISITOR",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_INQUISITOR"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_INQUISITOR",
+  "civilopedia": "TXT_KEY_UNIT_INQUISITOR_PEDIA",
+  "help": "TXT_KEY_UNIT_INQUISITOR_HELP",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_MERCHANT",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_RELIGION",
+  "unitAIs": [
+   "UNITAI_MERCHANT",
+   "UNITAI_MISSIONARY"
+  ],
+  "notUnitAIs": [
+   "UNITAI_EXPLORE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "advancedStart": {
+   "cost": 80
+  }
+ }
+}

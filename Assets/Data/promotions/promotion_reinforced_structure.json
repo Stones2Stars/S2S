@@ -1,0 +1,43 @@
+{
+ "type": "PROMOTION_REINFORCED_STRUCTURE",
+ "enables": {
+  "promotions": [
+   "PROMOTION_ARMOR_UPGRADE1",
+   "PROMOTION_AUTOMATIC_REPAIRS1",
+   "PROMOTION_FUSION_POWER_SOURCE",
+   "PROMOTION_WEAPON_UPGRADE1"
+  ]
+ },
+ "combat": {
+  "unit": {
+   "cityAttack": {
+    "percent": 15
+   },
+   "cityDefense": {
+    "percent": 15
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/CityRaider1.dds,Art/Interface/Buttons/Afterworld_Atlas.dds,4,9"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_REINFORCED_STRUCTURE",
+  "unitCombats": [
+   "UNITCOMBAT_ROBOT",
+   "UNITCOMBAT_ASSAULT_MECH"
+  ]
+ }
+}

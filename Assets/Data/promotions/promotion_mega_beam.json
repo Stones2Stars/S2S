@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_MEGA_BEAM",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_POWER_BEAM2",
+    {
+     "any": [
+      "PROMOTION_WIDE_BEAM2",
+      "PROMOTION_SNIPER_BEAM2"
+     ]
+    }
+   ]
+  }
+ },
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 10
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/MegaBeam1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_MEGA_BEAM"
+ }
+}

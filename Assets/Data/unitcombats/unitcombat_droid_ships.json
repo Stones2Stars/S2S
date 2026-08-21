@@ -1,0 +1,21 @@
+{
+ "type": "UNITCOMBAT_DROID_SHIPS",
+ "tags": [
+  "naval"
+ ],
+ "hideAndSeek": {
+  "detection": {
+   "value": 200,
+   "unit": "HAS_NAVAL_DISGUISE"
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/droid_ships.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_DROID_SHIPS",
+  "forNavalMilitary": true
+ }
+}

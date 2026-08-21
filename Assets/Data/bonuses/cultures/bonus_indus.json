@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_INDUS",
+ "enables": {
+  "units": [
+   "UNIT_HARAPPA_WATCHER",
+   "UNIT_PRIEST_KING"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_INDUS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_INDUS",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

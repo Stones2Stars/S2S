@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_AINU",
+ "enables": {
+  "units": [
+   "UNIT_KAMUY",
+   "UNIT_SHAK",
+   "UNIT_SURKU"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_AINU"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_AINU",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

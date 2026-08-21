@@ -1,0 +1,18 @@
+{
+ "type": "UNITCOMBAT_BALLISTIC",
+ "skills": {
+  "cannotMergeSplit": true
+ },
+ "tags": [
+  "missile"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/ballistic.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_BALLISTIC",
+  "forMilitary": true
+ }
+}

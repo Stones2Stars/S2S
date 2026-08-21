@@ -1,0 +1,116 @@
+{
+ "type": "RELIGION_CONFUCIANISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_CONFUCIAN_ACADEMY",
+   "BUILDING_CONFUCIAN_MONASTERY",
+   "BUILDING_CONFUCIAN_SCHOOL",
+   "BUILDING_CONFUCIAN_TEMPLE",
+   "BUILDING_DOSAN_SEOWON"
+  ],
+  "units": [
+   "UNIT_CONFUCIAN_MISSIONARY"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_CONFUCIANISM"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_CONFUCIANISM"
+     }
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_CONFUCIANISM"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 4,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_CONFUCIANISM"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_CONFUCIANISM"
+     }
+    }
+   ]
+  }
+ },
+ "grants": {
+  "freeUnit": "UNIT_CONFUCIAN_MISSIONARY",
+  "numFreeUnits": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 5,
+   "icon": "Art/Interface/Buttons/Religions/Confucianism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Confucianism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Confucianism.dds",
+   "movie": {
+    "file": "Art/Movies/Religion/Confucianism/Con_Found.nif",
+    "sound": "AS2D_BUILD_CONFUCIAN_MOVIE"
+   }
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_CONFUCIAN"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CONFUCIANISM",
+  "adjective": "TXT_KEY_TECH_CONFUCIANISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_CONFUCIANISM_PEDIA",
+  "spreadFactor": 50
+ }
+}

@@ -1,0 +1,69 @@
+{
+ "type": "BUILDING_LIFE_HYDROGEN_SULFIDE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_ORBITAL_BASE",
+    "TECH_KUIPER_BELT_EXPLORATION",
+    {
+     "type": "TERRAIN_GANYMEDE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_TERRAFORMED_GANYMEDE": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 1918,
+  "hurryModifier": 10000
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LIFE_HYDROGEN_SULFIDE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_HYDROGEN_SULFIDE",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_HYDROGEN_SULFIDE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

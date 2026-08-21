@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_HERD_LLAMA",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_TRAINER_LLAMA",
+   "BUILDING_FARM_ANIMAL_ALPACA",
+   "BUILDING_RESOURCES_CARCASS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INDUSTRIAL_FARMS"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ],
+   "all": [
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_LLAMA"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HERD_LLAMA",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "SND_AMB_HORSE_COBBLESTONES"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HERD_LLAMA",
+  "civilopedia": "TXT_KEY_BUILDING_HERD_LLAMA_PEDIA",
+  "notConstructible": true,
+  "worth": 3,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

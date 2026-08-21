@@ -1,0 +1,81 @@
+{
+ "type": "TECH_ADVANCED_ROCKETRY",
+ "enables": {
+  "buildings": [
+   "BUILDING_EFFECT_LAUNCH_SITE",
+   "BUILDING_JET_PROPULSION_LABORATORY",
+   "BUILDING_MISSILE_BATTERY",
+   "BUILDING_MISSILE_LAB",
+   "BUILDING_NATIONAL_AEROSPACE_AGENCY",
+   "BUILDING_SPUTNIK"
+  ],
+  "promotions": [
+   "PROMOTION_ANTITANK_DEFENSE1"
+  ],
+  "techs": [
+   "TECH_GUIDED_WEAPONS",
+   "TECH_SATELLITES"
+  ],
+  "units": [
+   "UNIT_ARMOR_M60",
+   "UNIT_ATTACK_SUBMARINE",
+   "UNIT_ICBM",
+   "UNIT_MASTER_SAILOR_ATTACK_SUBMARINE",
+   "UNIT_MUJAHIDEEN",
+   "UNIT_SAM_INFANTRY",
+   "UNIT_TACTICAL_NUKE",
+   "UNIT_WHEELED_TANK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EARLY_COMPUTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_JET_PROPULSION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 13181
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/Advanced_Rocketry.dds,Art/Interface/Buttons/RoM_Techtree_Atlas2.dds,8,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ADVANCED_ROCKETRY",
+  "soundMP": "AS2D_TECH_ADVANCED_ROCKETRY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ADVANCED_ROCKETRY",
+  "civilopedia": "TXT_KEY_TECH_ADVANCED_ROCKETRY_PEDIA",
+  "quote": "TXT_KEY_TECH_ADVANCED_ROCKETRY_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 80,
+  "gridY": 11
+ }
+}

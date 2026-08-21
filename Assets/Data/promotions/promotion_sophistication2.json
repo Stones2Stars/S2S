@@ -1,0 +1,33 @@
+{
+ "type": "PROMOTION_SOPHISTICATION2",
+ "combat": {
+  "unit": {
+   "percent": 5,
+   "vsBarbs": {
+    "percent": 20
+   },
+   "unitCombat": {
+    "UNITCOMBAT_STRIKE_TEAM": {
+     "percent": 5
+    },
+    "UNITCOMBAT_RUFFIAN": {
+     "percent": 5
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SOPHISTICATION": 2
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Sophistication2Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SOPHISTICATION2"
+ }
+}

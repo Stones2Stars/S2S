@@ -1,0 +1,33 @@
+{
+ "type": "BONUS_GRAINS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BIOFUEL_REFINERY",
+   "BUILDING_BREWERY",
+   "BUILDING_DONKEY_MILL",
+   "BUILDING_LSD_LAB",
+   "BUILDING_MODERN_MILL",
+   "BUILDING_OXEN_MILL",
+   "BUILDING_PESTS_CROWS",
+   "BUILDING_PESTS_GOPHERS",
+   "BUILDING_PESTS_LOCUST",
+   "BUILDING_PESTS_RATS",
+   "BUILDING_QUERN",
+   "BUILDING_RAT_CATCHER",
+   "BUILDING_ULTRAFUEL_REFINERY",
+   "BUILDING_WATERMILL",
+   "BUILDING_WINDMILL"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_GRAINS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_GRAINS",
+  "civilopedia": "TXT_KEY_BONUS_GRAINS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

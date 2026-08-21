@@ -1,0 +1,281 @@
+{
+ "type": "IMPROVEMENT_QUARRY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MASONRY",
+     "scope": "team"
+    },
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_ROCKY",
+        "TERRAIN_BADLAND",
+        "TERRAIN_JAGGED"
+       ]
+      },
+      {
+       "feature": [
+        "FEATURE_POLAR_ROCK_ARCH",
+        "FEATURE_POLAR_ROCK_ARCH2",
+        "FEATURE_POLAR_ROCK_FORM1",
+        "FEATURE_POLAR_ROCK_FORM2",
+        "FEATURE_POLAR_ROCK_FORM3",
+        "FEATURE_POLAR_ROCK_FORM4",
+        "FEATURE_DARK_ROCK_ARCH",
+        "FEATURE_DARK_ROCK_ARCH2",
+        "FEATURE_DARK_ROCK_FORM1",
+        "FEATURE_DARK_ROCK_FORM2",
+        "FEATURE_DARK_ROCK_FORM3",
+        "FEATURE_DARK_ROCK_FORM4",
+        "FEATURE_ROCK_ARCH",
+        "FEATURE_ROCK_ARCH2",
+        "FEATURE_ROCK_FORM1",
+        "FEATURE_ROCK_FORM2",
+        "FEATURE_ROCK_FORM3",
+        "FEATURE_ROCK_FORM4"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_MARBLE",
+        "BONUS_STONE",
+        "BONUS_SALT",
+        "BONUS_NATRON",
+        "BONUS_OBSIDIAN",
+        "BONUS_FINE_CLAY",
+        "BONUS_TURQUOISE",
+        "BONUS_JADE"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SALT"
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    5,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_HYDRAULIC_MINING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GEOLOGY",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_EXPLOSIVES",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_NITROGLYCERIN",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_ANDROIDS",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 3,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MARBLE"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_STONE"
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SALT"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OBSIDIAN"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_FINE_CLAY"
+     }
+    },
+    {
+     "value": -1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_JADE"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_CIVIL_ENGINEERING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "HAS_BONUS": "BONUS_MARBLE"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_SALT"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_NATRON"
+     }
+    },
+    {
+     "value": 4,
+     "enabled": {
+      "HAS_BONUS": "BONUS_OBSIDIAN"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "HAS_BONUS": "BONUS_FINE_CLAY"
+     }
+    },
+    {
+     "value": 5,
+     "enabled": {
+      "HAS_BONUS": "BONUS_TURQUOISE"
+     }
+    },
+    {
+     "value": 6,
+     "enabled": {
+      "HAS_BONUS": "BONUS_JADE"
+     }
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 10
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_WATER_POLLUTION": 1,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  }
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_QUARRY"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_QUARRY",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_QUARRY_PEDIA",
+  "advancedStart": {
+   "cost": 36
+  },
+  "upgradeTime": 40,
+  "pillageGold": 30,
+  "pillageTo": "IMPROVEMENT_EARLY_QUARRY",
+  "upgradesTo": "IMPROVEMENT_CORE_MINE",
+  "bonuses": {
+   "BONUS_MARBLE": {
+    "trade": true,
+    "discoverRand": 500,
+    "depletionRand": 1000
+   },
+   "BONUS_STONE": {
+    "trade": true,
+    "discoverRand": 500,
+    "depletionRand": 1000
+   },
+   "BONUS_SALT": {
+    "trade": true,
+    "discoverRand": 500,
+    "depletionRand": 1000
+   },
+   "BONUS_NATRON": {
+    "trade": true,
+    "discoverRand": 500
+   },
+   "BONUS_OBSIDIAN": {
+    "trade": true,
+    "discoverRand": 500,
+    "depletionRand": 1000
+   },
+   "BONUS_FINE_CLAY": {
+    "trade": true,
+    "discoverRand": 500
+   },
+   "BONUS_TURQUOISE": {
+    "trade": true,
+    "discoverRand": 500,
+    "depletionRand": 1000
+   },
+   "BONUS_JADE": {
+    "trade": true,
+    "discoverRand": 500,
+    "depletionRand": 1000
+   },
+   "BONUS_FOSSIL_BEDS": {
+    "discoverRand": 500
+   }
+  }
+ }
+}

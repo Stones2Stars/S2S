@@ -1,0 +1,46 @@
+{
+ "type": "BUILDING_INTERGALACTIC_GUIDED_PLANETARY_EVOLUTION",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_TERRAFORMING_BASE",
+    "TECH_DIRECTED_PANSPERMIA",
+    "TECH_SPACE_CREASING",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 2634,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_GUIDED_PLANETARY_EVOLUTION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_GUIDED_PLANETARY_EVOLUTION",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_GUIDED_PLANETARY_EVOLUTION_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

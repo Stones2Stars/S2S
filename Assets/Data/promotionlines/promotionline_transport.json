@@ -1,0 +1,16 @@
+{
+ "type": "PROMOTIONLINE_TRANSPORT",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/transport.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,3,13"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_TRANSPORT",
+  "unitCombats": [
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS"
+  ]
+ }
+}

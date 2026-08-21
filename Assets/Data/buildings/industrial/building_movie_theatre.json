@@ -1,0 +1,146 @@
+{
+ "type": "BUILDING_MOVIE_THEATRE",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMATION_STUDIO",
+   "BUILDING_GRAUMANS_CHINESE_THEATRE",
+   "BUILDING_RED_CURTAINS_THEATRE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MOTION_PICTURES",
+    {
+     "any": [
+      "BUILDING_TRADING_POST",
+      "BUILDING_SHOPPING_DISTRICT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 6,
+     "enabled": "TECH_ANIMATION"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_MASS_MEDIA"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_3D_MODELLING"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OSTRICH_FEATHERS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 6,
+     "enabled": "TECH_ANIMATION"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_MASS_MEDIA"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_3D_MODELLING"
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_OSTRICH_FEATHERS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HIT_MOVIES",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1
+  }
+ },
+ "cost": {
+  "production": 830,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MOVIE_THEATRE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MOVIE_THEATER"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MOVIE_THEATRE",
+  "civilopedia": "TXT_KEY_BUILDING_MOVIE_THEATRE_PEDIA",
+  "worth": 8,
+  "conquestProbability": 75,
+  "advisor": "ADVISOR_CULTURE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

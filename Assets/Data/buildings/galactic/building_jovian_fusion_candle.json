@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_JOVIAN_FUSION_CANDLE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_FUSION_CORE",
+    "TECH_ORBITAL_ENGINEERING",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_JUPITER",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_SATURN",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_URANUS",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_NEPTUNE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 120
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 10707,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_JOVIAN_FUSION_CANDLE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_JOVIAN_FUSION_CANDLE",
+  "civilopedia": "TXT_KEY_BUILDING_JOVIAN_FUSION_CANDLE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

@@ -1,0 +1,86 @@
+{
+ "type": "TECH_ASTEROID_EXTRACTION",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTEROID_INTERIOR_CITY",
+   "BUILDING_DEEP_SPACE_JOVIAN_TROJAN_MINE",
+   "BUILDING_DEEP_SPACE_ORGANIC_VOLATILE_EXTRACTION",
+   "BUILDING_KUIPER_BELT_GEOTHERMAL_PLANT",
+   "BUILDING_KUIPER_BELT_OUTPOST",
+   "BUILDING_KUIPER_BELT_TETHER",
+   "BUILDING_LUNAR_COMETARY_BOMBARDMENT",
+   "BUILDING_MARTIAN_AMMONIA_BOMBARDMENT",
+   "BUILDING_MARTIAN_MATERIAL_SUPPLY",
+   "BUILDING_MERCURY_COMETARY_BOMBARDMENT",
+   "BUILDING_MERCURY_SUNSHADE",
+   "BUILDING_VENUS_HYDROGEN_BOMBARDMENT"
+  ],
+  "techs": [
+   "TECH_NUCLEAR_PULSE_PROPULSION"
+  ],
+  "units": [
+   "UNIT_CAPTURED_COMET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORBITAL_MEGASTRUCTURES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_NANOMINING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FRICTIONLESS_FLIGHT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 83654
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/asteroidextraction.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ASTEROID_EXTRACTION",
+  "civilopedia": "TXT_KEY_TECH_ASTEROID_EXTRACTION_PEDIA",
+  "quote": "TXT_KEY_TECH_ASTEROID_EXTRACTION_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 119,
+  "gridY": 1
+ }
+}

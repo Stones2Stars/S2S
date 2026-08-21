@@ -1,0 +1,28 @@
+{
+ "type": "PROMOTION_MERGED_INTO_HORDE",
+ "skills": {
+  "unitCombats": [
+   "UNITCOMBAT_GROUP_HORDE"
+  ],
+  "removesUnitCombats": [
+   "UNITCOMBAT_GROUP_CLAN"
+  ]
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/UnitCombatClasses/Group8UnitCombat.fw.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_MERGED_INTO_HORDE",
+  "replacesUnitCombat": "UNITCOMBAT_GROUP_CLAN",
+  "forOffset": true
+ },
+ "sizeMatters": {
+  "group": 1
+ }
+}

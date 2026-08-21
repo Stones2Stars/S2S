@@ -1,0 +1,90 @@
+{
+ "type": "BUILDING_HI_TECH_NUCLEAR_REACTOR",
+ "enables": {
+  "buildings": [
+   "BUILDING_HIGH_ENERGY_LAB",
+   "BUILDING_NUCLEAR_POWERCOMPLEX"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_FUSION"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GENERATION_IV_REACTOR"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FACTORY",
+    "TECH_SUPERCONDUCTORS",
+    "TECH_ATOMPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_ATOMPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    },
+    {
+     "type": "BONUS_URANIUM",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_GENERATION_IV_REACTOR",
+    "BUILDING_D_T_FUSION_POWER_PLANT",
+    "BUILDING_D_HE3_FUSION_PLANT",
+    "BUILDING_HE3_FUSION_POWER_PLANT",
+    "BUILDING_ANTIMATTER_INITIATED_FUSION_PLANT",
+    "BUILDING_QUANTUM_VACUUM_POWER_PLANT"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1845,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HI_TECH_NUCLEAR_REACTOR",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HI_TECH_NUCLEAR_REACTOR",
+  "civilopedia": "TXT_KEY_BUILDING_HI_TECH_NUCLEAR_REACTOR_PEDIA",
+  "specialBuildingType": "SPECIALBUILDING_PUNK_ATOM",
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

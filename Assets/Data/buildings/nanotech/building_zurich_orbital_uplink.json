@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_ZURICH_ORBITAL_UPLINK",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_ZURICH_ORBITAL",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_ORBITAL_FLIGHT",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 13
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "espionageDefense": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "cost": {
+  "production": 4485,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ZURICH_ORBITAL_UPLINK",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ZURICH_ORBITAL_UPLINK",
+  "civilopedia": "TXT_KEY_BUILDING_ZURICH_ORBITAL_UPLINK_PEDIA",
+  "worth": 5,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

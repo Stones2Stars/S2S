@@ -1,0 +1,46 @@
+{
+ "type": "PROMOTION_AMBUSH",
+ "enables": {
+  "promotions": [
+   "PROMOTION_AMBUSH2"
+  ]
+ },
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_COMBAT2",
+    "PROMOTION_DRILL2"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_TRACKED": {
+     "percent": 20
+    },
+    "UNITCOMBAT_WHEELED": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_AMBUSH": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Ambush.dds,Art/Interface/Buttons/Promotions_Atlas.dds,2,1"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_AMBUSH",
+  "unitCombats": [
+   "UNITCOMBAT_SIEGE",
+   "UNITCOMBAT_CLONES"
+  ]
+ }
+}

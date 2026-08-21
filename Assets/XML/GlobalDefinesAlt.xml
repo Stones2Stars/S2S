@@ -6,28 +6,6 @@
 <Civ4Defines xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Schema\Stones2Stars.xsd">
 	<!-- DCM features -->
 	<Define>
-		<DefineName>DCM_AIR_BOMBING</DefineName>
-		<iDefineIntVal>1</iDefineIntVal>
-	</Define>
-	<Define>
-		<DefineName>DCM_RANGE_BOMBARD</DefineName>
-		<iDefineIntVal>1</iDefineIntVal>
-	</Define>
-	<Define>
-		<!-- RevolutionDCM variable - higher values increase ranged bombard inaccuracy making city attack/defense harder against the AI. 100 is equal to previous releases -->
-		<DefineName>DCM_RB_CITY_INACCURACY</DefineName>
-		<iDefineIntVal>100</iDefineIntVal>
-	</Define>
-	<Define>
-		<!-- RevolutionDCM variable - higher values increase ranged bombard chance to inflict city defense bombard damage over city defender collateral damage. -->
-		<DefineName>DCM_RB_CITYBOMBARD_CHANCE</DefineName>
-		<iDefineIntVal>25</iDefineIntVal>
-	</Define>
-	<Define>
-		<DefineName>DCM_OPP_FIRE</DefineName>
-		<iDefineIntVal>1</iDefineIntVal>
-	</Define>
-	<Define>
 		<DefineName>DCM_ACTIVE_DEFENSE</DefineName>
 		<iDefineIntVal>1</iDefineIntVal>
 	</Define>

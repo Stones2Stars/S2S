@@ -1,0 +1,16 @@
+{
+ "type": "PROMOTIONLINE_RAIN_OF_BOLTS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/RainOfBolts1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_RAIN_OF_BOLTS",
+  "unitCombats": [
+   "UNITCOMBAT_WEAPON_DIST_LIGHT_CROSSBOW",
+   "UNITCOMBAT_WEAPON_DIST_HEAVY_CROSSBOW",
+   "UNITCOMBAT_WEAPON_DIST_REPEATING_CROSSBOW"
+  ]
+ }
+}

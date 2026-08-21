@@ -1,0 +1,11 @@
+{
+ "type": "PROMOTIONLINE_TRADITIONAL",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitTraditional.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_TRADITIONAL"
+ }
+}

@@ -1,0 +1,102 @@
+{
+ "type": "FEATURE_SWAMP",
+ "food": {
+  "plot": {
+   "flat": -1
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": "HAS_RIVER"
+    }
+   ]
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "plot": {
+   "percent": -50
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 10
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onTurn",
+   "action": {
+    "PROPERTY_WATER_POLLUTION": -5,
+    "on": "plot",
+    "relation": "near",
+    "distance": 1
+   }
+  },
+  {
+   "trigger": {
+    "type": "POPULATION",
+    "scope": "city",
+    "min": 6
+   },
+   "action": {
+    "destroy": "self"
+   }
+  }
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_SWAMP"
+  }
+ },
+ "sound": {
+  "footsteps": [
+   {
+    "FOOTSTEP_AUDIO_HUMAN": "AS3D_UN_FOOT_UNIT_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_HUMAN_LOW": "AS3D_UN_FOOT_UNIT_LOW_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL": "AS3D_UN_ANIMAL_FOOT_LARGE_MUD"
+   },
+   {
+    "FOOTSTEP_AUDIO_ANIMAL_LOW": "AS3D_UN_ANIMAL_FOOT_LARGE_LOW_MUD"
+   }
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_SWAMP",
+  "civilopedia": "TXT_KEY_FEATURE_SWAMP_PEDIA",
+  "appearance": 200,
+  "requiresFlatlands": true,
+  "addsFreshWater": true,
+  "validTerrains": [
+   "TERRAIN_MARSH",
+   "TERRAIN_MUDDY",
+   "TERRAIN_LUSH",
+   "TERRAIN_GRASSLAND"
+  ]
+ }
+}

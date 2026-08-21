@@ -1,0 +1,11 @@
+{
+ "type": "UNITCOMBAT_PROMOTED_CAUTIOUS",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/promoted_cautious.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_PROMOTED_CAUTIOUS"
+ }
+}

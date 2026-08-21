@@ -1,0 +1,14 @@
+{
+ "type": "PROCESS_WEALTH",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Process/ProcessWealth.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROCESS_WEALTH"
+ },
+ "conversion": {
+  "gold": 50
+ }
+}

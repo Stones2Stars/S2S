@@ -1,0 +1,33 @@
+{
+ "type": "FEATURE_PLATY_BARRINGER_CRATER",
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
+  "nukeImmune",
+  "ignoreTerrainCulture"
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_BARRINGER_CRATER"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_BARRINGER_CRATER",
+  "civilopedia": "TXT_KEY_FEATURE_BARRINGER_CRATER_PEDIA",
+  "requiresFlatlands": true,
+  "validTerrains": [
+   "TERRAIN_SCRUB",
+   "TERRAIN_DESERT",
+   "TERRAIN_BARREN"
+  ]
+ }
+}

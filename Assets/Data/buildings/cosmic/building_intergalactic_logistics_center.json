@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_INTERGALACTIC_LOGISTICS_CENTER",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_COMMERCIAL_DISTRICT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_GALACTIC_GROUP_COLONY",
+    "BUILDING_INTERGALACTIC_CITY",
+    "TECH_SPACETIME_ECONOMICS",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_VIRGO_SUPERCLUSTER",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_OBSERVABLE_UNIVERSE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "cost": {
+  "production": 4492,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_LOGISTICS_CENTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_LOGISTICS_CENTER",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_LOGISTICS_CENTER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

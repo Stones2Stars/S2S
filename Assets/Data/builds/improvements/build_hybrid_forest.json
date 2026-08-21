@@ -1,0 +1,36 @@
+{
+ "type": "BUILD_HYBRID_FOREST",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLANETARY_ECONOMICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_HYBRID_FOREST"
+ },
+ "cost": {
+  "gold": 200,
+  "time": 3000
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/hybrid_forest.dds"
+  },
+  "hotkey": "KB_I",
+  "hotKeyPriority": 1,
+  "shiftDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_IRRIGATE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_HYBRID_FOREST"
+ }
+}

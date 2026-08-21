@@ -1,0 +1,17 @@
+{
+ "type": "UNITCOMBAT_DOOM",
+ "skills": {
+  "cannotMergeSplit": true
+ },
+ "tags": [
+  "doom"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/doomsday_devices.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_DOOM"
+ }
+}

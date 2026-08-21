@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_SPACE_COLONY_LUNAR_BASE",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUNAR_CHEMICAL_STORAGE",
+   "BUILDING_LUNAR_FERTILIZER_STORAGE",
+   "BUILDING_LUNAR_OBSERVATORY",
+   "BUILDING_LUNAR_ORGANIC_MATERIAL_STORAGE",
+   "BUILDING_LUNAR_ROCK_QUARRY",
+   "BUILDING_LUNAR_SOLAR_PANELS",
+   "BUILDING_LUNAR_WATER_EXTRACTION_FACILITY"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_LUNAR_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_MOON_ROCKS"
+  ]
+ },
+ "research": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1000
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SPACE_COLONY_LUNAR_BASE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SPACE_COLONY_LUNAR_BASE",
+  "civilopedia": "TXT_KEY_BUILDING_SPACE_COLONY_LUNAR_BASE_PEDIA",
+  "pediaCategory": "space",
+  "notConstructible": true,
+  "autoBuild": true,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

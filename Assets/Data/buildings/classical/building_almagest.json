@@ -1,0 +1,77 @@
+{
+ "type": "BUILDING_ALMAGEST",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_HELIOCENTRISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GEOCENTRISM",
+    {
+     "any": [
+      "BUILDING_ASTROLOGY_SCHOOL",
+      "BUILDING_OBSERVATORY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 7,
+   "percent": 10
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "cost": {
+  "production": 1680,
+  "complexityModifier": 2
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ALMAGEST"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ALMAGEST",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ALMAGEST",
+  "civilopedia": "TXT_KEY_BUILDING_ALMAGEST_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

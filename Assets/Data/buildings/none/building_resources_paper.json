@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_RESOURCES_PAPER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ANIMAMATERIALS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ELECTRONIC_PAPER_MAKER"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_ELECTRONIC_PAPER_MAKER"
+   ],
+   "all": [
+    {
+     "any": [
+      "BUILDING_FACTORY_PAPER",
+      "BUILDING_PAPER_MAKER",
+      "BUILDING_PAPER_RECLAMATION_PLANT"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_PAPER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESOURCES_PAPER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_PAPER",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,84 @@
+{
+ "type": "IMPROVEMENT_AQUATIC_FORCEFIELD",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SHIELDING",
+     "scope": "team"
+    },
+    "IS_WATER",
+    {
+     "terrain": [
+      "TERRAIN_COAST",
+      "TERRAIN_COAST_POLAR",
+      "TERRAIN_COAST_TROPICAL",
+      "TERRAIN_OCEAN",
+      "TERRAIN_OCEAN_POLAR",
+      "TERRAIN_OCEAN_TROPICAL",
+      "TERRAIN_SEA",
+      "TERRAIN_SEA_POLAR",
+      "TERRAIN_SEA_TROPICAL",
+      "TERRAIN_COAST_DEEP",
+      "TERRAIN_COAST_DEEP_POLAR",
+      "TERRAIN_COAST_DEEP_TROPICAL",
+      "TERRAIN_SEA_DEEP",
+      "TERRAIN_SEA_DEEP_POLAR",
+      "TERRAIN_SEA_DEEP_TROPICAL",
+      "TERRAIN_TRENCH",
+      "TERRAIN_TRENCH_POLAR",
+      "TERRAIN_TRENCH_TROPICAL",
+      "TERRAIN_LAKE_SHORE",
+      "TERRAIN_LAKE"
+     ]
+    }
+   ]
+  }
+ },
+ "culture": {
+  "plot": {
+   "flat": 10
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 50
+   },
+   "air": {
+    "flat": 20
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "elevation": {
+    "flat": 100
+   }
+  }
+ },
+ "characteristics": [
+  "actsAsCity",
+  "bombardable",
+  "zoneOfControl"
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_AQUATIC_FORCEFIELD"
+  }
+ },
+ "mapGeneration": {
+  "uniqueRange": 2
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_AQUATIC_FORCEFIELD",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_AQUATIC_FORCEFIELD_PEDIA",
+  "advancedStart": {
+   "cost": 60
+  },
+  "outsideBorders": true,
+  "militaryStructure": true,
+  "cultureRange": 1,
+  "universalBonusTrade": true
+ }
+}

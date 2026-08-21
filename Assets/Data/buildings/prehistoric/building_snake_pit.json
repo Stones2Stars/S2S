@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_SNAKE_PIT",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_POISON"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_POISON_CRAFTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "any": [
+      "HERITAGE_FOLKLORE_ADDER_PUFF",
+      "HERITAGE_FOLKLORE_COBRA",
+      "HERITAGE_FOLKLORE_VIPER_CHAIN",
+      "HERITAGE_FOLKLORE_VIPER_PIT"
+     ]
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 80,
+  "sizeModifier": 1
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SNAKE_PIT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SNAKE_PIT",
+  "civilopedia": "TXT_KEY_BUILDING_SNAKE_PIT_PEDIA",
+  "worth": 2,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_CULTURE",
+  "freeStartEra": "C2C_ERA_CLASSICAL",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

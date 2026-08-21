@@ -1,0 +1,33 @@
+{
+ "type": "PROMOTION_LEARNED_AGGRESSION",
+ "skills": {
+  "unitCombats": [
+   "UNITCOMBAT_QUALITY_INFERIOR"
+  ],
+  "removesUnitCombats": [
+   "UNITCOMBAT_QUALITY_PATHETIC"
+  ]
+ },
+ "enabled": "GAMEOPTION_COMBAT_SIZE_MATTERS",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/UnitCombatClasses/Quality2UnitCombat.fw.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_LEARNED_AGGRESSION",
+  "replacesUnitCombat": "UNITCOMBAT_QUALITY_PATHETIC",
+  "levelPrereq": 1,
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_ANIMAL"
+  ],
+  "zeroesXP": true
+ },
+ "sizeMatters": {
+  "quality": 1
+ }
+}

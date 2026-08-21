@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_VENUS_HOTEL",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_VENUS_TRADING_POST",
+    "BUILDING_VENUS_SURFACE_CITY",
+    "TECH_FUSION_SPACECRAFT",
+    {
+     "type": "MAPCATEGORY_VENUSIAN",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1200
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "cost": {
+  "production": 7666,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VENUS_HOTEL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VENUS_HOTEL",
+  "civilopedia": "TXT_KEY_BUILDING_VENUS_HOTEL_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ]
+ }
+}

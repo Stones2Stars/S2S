@@ -1,0 +1,122 @@
+{
+ "type": "TECH_INDUSTRIALISM",
+ "enables": {
+  "bonuses": [
+   "BONUS_ALUMINUM_INGOTS",
+   "BONUS_ALUMINUM_WARES",
+   "BONUS_BAUXITE_ORE",
+   "BONUS_BERLINITE",
+   "BONUS_CAESIUM_ORE",
+   "BONUS_CHROMITE_ORE",
+   "BONUS_LAZULITE_ORE",
+   "BONUS_NICKEL_ORE"
+  ],
+  "buildings": [
+   "BUILDING_CULTURE_MALAYSIAN",
+   "BUILDING_CULTURE_TAIWANESE",
+   "BUILDING_DESALINATION_PLANT",
+   "BUILDING_FASHION_HOUSE_STORE",
+   "BUILDING_HQ_FASHION_HOUSE",
+   "BUILDING_HQ_WONKA_CONFECTIONERIES",
+   "BUILDING_JUNKYARD",
+   "BUILDING_LAXMINARAYAN_TEMPLE",
+   "BUILDING_MINE_BAUXITE",
+   "BUILDING_MINE_BERLINITE",
+   "BUILDING_MINE_CAESIUM",
+   "BUILDING_MINE_CHROMITE",
+   "BUILDING_MINE_LAZULITE",
+   "BUILDING_MINE_NICKEL",
+   "BUILDING_NATIONAL_SMELTER_ALUMINUM",
+   "BUILDING_SMELTER_ALUMINUM",
+   "BUILDING_SMITH_ALUMINUM",
+   "BUILDING_WONKA_CONFECTIONERIES_SHOP"
+  ],
+  "civics": [
+   "CIVIC_CORPORATISM",
+   "CIVIC_WASTE_TO_ENERGY"
+  ],
+  "techs": [
+   "TECH_ADVANCED_METALLURGY",
+   "TECH_APPLIED_ECONOMICS",
+   "TECH_COMMUNISM",
+   "TECH_PLASTICS"
+  ],
+  "units": [
+   "UNIT_ABDUL_RAZAK_HUSSEIN",
+   "UNIT_AUSTIN_WONAEAMIRRI",
+   "UNIT_BATTLECRUISER",
+   "UNIT_DEWI_SARTIKA",
+   "UNIT_DREADNOUGHT_SHIP",
+   "UNIT_ERWIN_ROMMEL",
+   "UNIT_FARUK_IMAM",
+   "UNIT_JULES_WIJDENBOSCH",
+   "UNIT_MASTER_SAILOR_DREADNOUGHT_SHIP",
+   "UNIT_PACHECO",
+   "UNIT_PATTON",
+   "UNIT_SABAH_AL_AHMAD",
+   "UNIT_WILLIAM_MARINER",
+   "UNIT_YAMAMOTO"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_MASTER_SAILOR_PRE_DREADNOUGHT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ATOMIC_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 9484
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_ESPIONAGE": 5
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/Industrialism.dds,Art/Interface/Buttons/TechTree_Atlas.dds,8,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_INDUSTRIALISM",
+  "soundMP": "AS2D_TECH_MP_INDUSTRIALISM"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_INDUSTRIALISM",
+  "civilopedia": "TXT_KEY_TECH_INDUSTRIALISM_PEDIA",
+  "quote": "TXT_KEY_TECH_INDUSTRIALISM_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 72,
+  "gridY": 13
+ }
+}

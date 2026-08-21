@@ -1,0 +1,20 @@
+{
+ "type": "UNITCOMBAT_SHIELD_TOWER",
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY": {
+     "percent": 15
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/shield_tower.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SHIELD_TOWER"
+ }
+}

@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_MARINE_INSTITUTE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTER_FOR_CEPHALOPOD_STUDIES",
+   "BUILDING_CENTER_FOR_SHARK_STUDIES",
+   "BUILDING_CENTER_FOR_WHALE_STUDIES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    {
+     "latitude": {
+      "max": 70
+     }
+    },
+    "BUILDING_AQUARIUM",
+    "BUILDING_UNIVERSITY",
+    "BUILDING_FOLKLORE_T_FISH",
+    "TECH_MARINE_BIOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "cost": {
+  "production": 1260,
+  "sizeModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 2
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARINE_INSTITUTE",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_GRANARY"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARINE_INSTITUTE",
+  "civilopedia": "TXT_KEY_BUILDING_MARINE_INSTITUTE_PEDIA",
+  "worth": 2,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

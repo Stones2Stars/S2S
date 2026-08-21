@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_INTERGALACTIC_STRANGE_STAR_CITY",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_EXOTIC_STARS",
+    {
+     "any": [
+      "BUILDING_INTERGALACTIC_QUARK_STAR_BASE",
+      "BUILDING_INTERGALACTIC_ELECTROWEAK_STAR_BASE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 3301,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_STRANGE_STAR_CITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_STRANGE_STAR_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_STRANGE_STAR_CITY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

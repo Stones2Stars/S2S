@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_GRAND_MANOR",
+ "enables": {
+  "buildings": [
+   "BUILDING_NONSUCH_PALACE",
+   "BUILDING_PALACE_OF_BEAULIEU"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_FEUDALISM",
+    {
+     "any": [
+      "BUILDING_FORGE",
+      "BUILDING_FOUNDRY",
+      "BUILDING_METALS_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_VASSALAGE"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 15
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "hurryAnger": {
+  "city": {
+   "percent": -25
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_NOBLE": 1
+  }
+ },
+ "cost": {
+  "production": 310,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 5
+   },
+   {
+    "FLAVOR_GOLD": 3
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GRAND_MANOR"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MANOR"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GRAND_MANOR",
+  "civilopedia": "TXT_KEY_BUILDING_GRAND_MANOR_PEDIA",
+  "worth": 4,
+  "militaryWorth": 5,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

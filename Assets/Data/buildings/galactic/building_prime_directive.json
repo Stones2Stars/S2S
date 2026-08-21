@@ -1,0 +1,54 @@
+{
+ "type": "BUILDING_PRIME_DIRECTIVE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_PALACE",
+    "TECH_ASTROIMPERIALISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_PRIME_DIRECTIVE"
+   }
+  ]
+ },
+ "cost": {
+  "production": 23510
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_PRIME_DIRECTIVE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PRIME_DIRECTIVE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PRIME_DIRECTIVE",
+  "civilopedia": "TXT_KEY_BUILDING_PRIME_DIRECTIVE_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

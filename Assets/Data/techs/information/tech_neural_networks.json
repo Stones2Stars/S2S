@@ -1,0 +1,73 @@
+{
+ "type": "TECH_NEURAL_NETWORKS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ARTIFICIAL_INTELLIGENCE_LAB",
+   "BUILDING_NEUROSCIENCE_CENTER"
+  ],
+  "techs": [
+   "TECH_AUGMENTED_REALITY",
+   "TECH_MACHINE_LEARNING",
+   "TECH_RAPID_PROTOTYPING"
+  ],
+  "units": [
+   "UNIT_AEGIS_CRUISER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_KNOWLEDGE_MANAGEMENT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_VIRTUAL_REALITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 22847
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/Neural_Network.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_NEURAL_NETWORKS",
+  "soundMP": "AS2D_TECH_NEURAL_NETWORKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_NEURAL_NETWORKS",
+  "civilopedia": "TXT_KEY_TECH_NEURAL_NETWORKS_PEDIA",
+  "quote": "TXT_KEY_TECH_NEURAL_NETWORKS_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 50,
+  "tradeable": true,
+  "gridX": 91,
+  "gridY": 11
+ }
+}

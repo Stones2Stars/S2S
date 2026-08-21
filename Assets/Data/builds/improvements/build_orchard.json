@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_ORCHARD",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORCHARDS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_ORCHARD"
+ },
+ "cost": {
+  "gold": 60,
+  "time": 500
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/orchard.dds"
+  },
+  "hotkey": "KB_U"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_ORCHARD"
+ }
+}

@@ -1,0 +1,64 @@
+{
+ "type": "TECH_TELEGRAPH",
+ "enables": {
+  "buildings": [
+   "BUILDING_MAIL_ORDER_CATALOGUE",
+   "BUILDING_MORSE_CODE",
+   "BUILDING_TELEGRAPH_STATION"
+  ],
+  "techs": [
+   "TECH_METEOROLOGY",
+   "TECH_TELEPHONE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_JOURNALISM",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 6042
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 3
+   },
+   {
+    "FLAVOR_CULTURE": 9
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/telegraph.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_TELEGRAPH",
+  "soundMP": "AS2D_TECH_TELEGRAPH"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TELEGRAPH",
+  "civilopedia": "TXT_KEY_TECH_TELEGRAPH_PEDIA",
+  "quote": "TXT_KEY_TECH_TELEGRAPH_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 65,
+  "gridY": 1
+ }
+}

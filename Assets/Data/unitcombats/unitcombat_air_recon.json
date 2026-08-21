@@ -1,0 +1,37 @@
+{
+ "type": "UNITCOMBAT_AIR_RECON",
+ "tags": [
+  "air",
+  "recon"
+ ],
+ "hideAndSeek": {
+  "detection": [
+   {
+    "value": 200,
+    "unit": "HAS_SUBMARINE"
+   },
+   {
+    "value": 200,
+    "unit": "HAS_SUBMERGED"
+   },
+   {
+    "value": 200,
+    "unit": "HAS_CAMOUFLAGE"
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/air_recons.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_AIR_RECON",
+  "forMilitary": true
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ }
+}

@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_MAPINGUARI_COMPOUND",
+ "enables": {
+  "units": [
+   "UNIT_MAPINGUARI",
+   "UNIT_MAPINGUARI_OBSIDIAN",
+   "UNIT_MAPINGUARI_PIKE",
+   "UNIT_MAPINGUARI_STONE",
+   "UNIT_MAPINGUARI_WOODEN"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY"
+   ],
+   "all": [
+    "TECH_SIMPLE_WOOD_WORKING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MAPINGUARI_COMPOUND",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MAPINGUARI_COMPOUND",
+  "civilopedia": "TXT_KEY_BUILDING_MAPINGUARI_COMPOUND_PEDIA",
+  "notConstructible": true,
+  "worth": 2,
+  "militaryWorth": 2,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

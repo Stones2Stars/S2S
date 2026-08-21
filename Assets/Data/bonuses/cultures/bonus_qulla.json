@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_QULLA",
+ "enables": {
+  "units": [
+   "UNIT_CHULLPAS",
+   "UNIT_NUSTA_HUILLAC"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_QULLA"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_QULLA",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

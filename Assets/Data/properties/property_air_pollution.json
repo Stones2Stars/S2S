@@ -1,0 +1,81 @@
+{
+ "type": "PROPERTY_AIR_POLLUTION",
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "percent": 6,
+   "flat": {
+    "value": 1,
+    "per": {
+     "type": "POPULATION",
+     "each": 1,
+     "scope": "city"
+    }
+   }
+  },
+  "plot": {
+   "percent": 6
+  }
+ },
+ "properties": {
+  "diffuse": [
+   {
+    "from": "city",
+    "to": "plots",
+    "relation": "near",
+    "distance": 1,
+    "percent": 5
+   },
+   {
+    "from": "plot",
+    "to": "city",
+    "relation": "samePlot",
+    "percent": 12
+   },
+   {
+    "from": "plot",
+    "to": "plots",
+    "relation": "near",
+    "distance": 1,
+    "percent": 4
+   }
+  ]
+ },
+ "grants": {
+  "buildings": [
+   "BUILDING_POLLUTION_LIGHT_SMOG",
+   "BUILDING_POLLUTION_MODERATE_SMOG",
+   "BUILDING_POLLUTION_HEAVY_SMOG",
+   "BUILDING_POLLUTION_MINOR_GLOBAL_WARMING",
+   "BUILDING_POLLUTION_MODERATE_GLOBAL_WARMING",
+   "BUILDING_POLLUTION_MAJOR_GLOBAL_WARMING",
+   "BUILDING_POLLUTION_MINOR_OZONE_DEPLETION",
+   "BUILDING_POLLUTION_MODERATE_OZONE_DEPLETION",
+   "BUILDING_POLLUTION_MAJOR_OZONE_DEPLETION",
+   "BUILDING_POLLUTION_ACID_RAIN",
+   "BUILDING_POLLUTION_TOXIC_ATMOSPHERE",
+   "BUILDING_POLLUTION_BLACKENED_SKIES"
+  ]
+ },
+ "targetLevel": 0,
+ "ai": {
+  "weight": -50,
+  "scale": "city",
+  "trainReluctance": 10,
+  "operationalRange": {
+   "min": -2000,
+   "max": 3000
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROPERTY_AIR_POLLUTION",
+  "sourceDrain": true,
+  "fontButtonIndex": 3,
+  "text": {
+   "value": "TXT_KEY_PROPERTY_AIR_POLLUTION_DISPLAY",
+   "change": "TXT_KEY_PROPERTY_AIR_POLLUTION_CHANGE",
+   "changeAllCities": "TXT_KEY_PROPERTY_AIR_POLLUTION_CHANGE_ALL_CITIES",
+   "prereqMin": "TXT_KEY_PROPERTY_AIR_POLLUTION_PREREQ_MIN",
+   "prereqMax": "TXT_KEY_PROPERTY_AIR_POLLUTION_PREREQ_MAX"
+  }
+ }
+}

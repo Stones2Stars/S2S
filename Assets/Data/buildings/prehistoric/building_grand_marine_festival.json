@@ -1,0 +1,316 @@
+{
+ "type": "BUILDING_GRAND_MARINE_FESTIVAL",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_FOLKLORE_E_SEA",
+    "TECH_CELEBRATION",
+    {
+     "any": [
+      "BUILDING_RAIN_DANCE",
+      "BUILDING_FISHERMANS_HUT",
+      "BUILDING_SHIPYARD",
+      "BUILDING_DRYDOCK",
+      "BUILDING_NAVAL_YARD",
+      "BUILDING_AQUAFARM"
+     ]
+    },
+    {
+     "any": [
+      {
+       "type": "FEATURE_KELP",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_SEA_GRASS",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_CORAL_REEF",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_CORAL_REEF_BEACON",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_CORAL_REEF_LIGHTHOUSE",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_REEF",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_REEF_BEACON",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_REEF_LIGHTHOUSE",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_PLATY_GREAT_BARRIER",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_GREAT_BARRIER_REEF_BEACON",
+       "scope": "plot"
+      },
+      {
+       "type": "FEATURE_GREAT_BARRIER_REEF_LIGHTHOUSE",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "noneOf": [
+    "BUILDING_GRAND_SKY_FESTIVAL",
+    "BUILDING_GRAND_EARTH_FESTIVAL",
+    "BUILDING_GRAND_FIRE_FESTIVAL"
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_PEARLS",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_FISH",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_SHRIMP",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_LOBSTER",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_WHALE",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CLAM",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_CRAB",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "food": {
+  "city": {
+   "flat": -2
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_PEARLS",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FISH",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_SHRIMP",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_LOBSTER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_WHALE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CLAM",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_CRAB",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 2,
+     "enabled": "TECH_NAVAL_WARFARE"
+    },
+    {
+     "value": 3,
+     "enabled": "TECH_SHIP_BUILDING"
+    },
+    {
+     "value": 2,
+     "enabled": "TECH_FOLK_DANCE"
+    },
+    {
+     "value": 2,
+     "enabled": "TECH_FOLK_MUSIC"
+    },
+    {
+     "value": 3,
+     "enabled": "TECH_MUSICAL_NOTATION"
+    },
+    {
+     "value": 5,
+     "enabled": "TECH_NAVAL_TACTICS"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": "TECH_SEXTANT"
+    }
+   ]
+  },
+  "empire": {
+   "flat": 1
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": 10
+  }
+ },
+ "foodKept": {
+  "city": {
+   "percent": 30
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_TOURISM": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_SEA_HUNTER1"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 570,
+  "sizeModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 50
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_GOLD": 6
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MARINE_FESTIVAL"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_GRAND_MARINE_FESTIVAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_GRAND_MARINE_FESTIVAL",
+  "civilopedia": "TXT_KEY_BUILDING_GRAND_MARINE_FESTIVAL_PEDIA",
+  "pediaCategory": "greatWonder",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

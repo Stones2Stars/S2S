@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_TELEPORT_SHIPPING_WAREHOUSE",
+ "enables": {
+  "buildings": [
+   "BUILDING_DIGITAL_LOGISTICS_CENTER",
+   "BUILDING_ORICHALCUM_FORGE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MODERN_WAREHOUSE",
+    "BUILDING_TELEPORT_BOOTH",
+    "TECH_TELEPORTATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "modifier": {
+    "percent": [
+     60,
+     {
+      "value": 60,
+      "enabled": "IS_FOREIGN"
+     }
+    ]
+   }
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 10155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TELEPORT_SHIPPING_WAREHOUSE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TELEPORT_SHIPPING_WAREHOUSE",
+  "civilopedia": "TXT_KEY_BUILDING_TELEPORT_SHIPPING_WAREHOUSE_PEDIA",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

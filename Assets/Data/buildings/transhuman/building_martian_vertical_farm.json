@@ -1,0 +1,72 @@
+{
+ "type": "BUILDING_MARTIAN_VERTICAL_FARM",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MARTIAN_RADIATION_SHIELD",
+    "BUILDING_MARTIAN_METROPOLIS",
+    "TECH_BOTANICAL_ALCHEMY",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_MARTIAN_FRUIT",
+   "BONUS_MARTIAN_VEGETABLES"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 120
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 80
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "cost": {
+  "production": 2544,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_VERTICAL_FARM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_VERTICAL_FARM",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_VERTICAL_FARM_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

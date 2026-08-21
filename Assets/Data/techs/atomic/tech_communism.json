@@ -1,0 +1,96 @@
+{
+ "type": "TECH_COMMUNISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_COLLECTIVE_FARM",
+   "BUILDING_CULTURE_KONJO",
+   "BUILDING_CULTURE_SOVIET",
+   "BUILDING_MEAL_CENTER",
+   "BUILDING_PALACE_OF_THE_SOVIETS",
+   "BUILDING_PLANNING_OFFICE",
+   "BUILDING_REEDUCATION_CENTER",
+   "BUILDING_THE_KREMLIN"
+  ],
+  "civics": [
+   "CIVIC_PLANNED",
+   "CIVIC_STATE_OWNED"
+  ],
+  "techs": [
+   "TECH_GUERRILLA_WARFARE",
+   "TECH_SURREALISM"
+  ],
+  "units": [
+   "UNIT_ALFRED_A_THORNE",
+   "UNIT_AMON_BAZIRA",
+   "UNIT_CRISTINA_CALDERON",
+   "UNIT_JOSE_MUJICA",
+   "UNIT_OJANA",
+   "UNIT_TROTSKY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_INDUSTRIALISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PROPAGANDA",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "canTrade": {
+  "permanentAlliance": true
+ },
+ "grants": {
+  "firstFreeUnit": "UNIT_GREAT_SPY"
+ },
+ "cost": {
+  "research": 9889
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 10
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": ",Art/Interface/Buttons/TechTree/Communism.dds,Art/Interface/Buttons/TechTree_Atlas.dds,4,2"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_COMMUNISM",
+  "soundMP": "AS2D_TECH_MP_UTOPIA"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_COMMUNISM",
+  "civilopedia": "TXT_KEY_TECH_COMMUNISM_PEDIA",
+  "quote": "TXT_KEY_TECH_COMMUNISM_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "tradeable": true,
+  "gridX": 73,
+  "gridY": 5
+ }
+}

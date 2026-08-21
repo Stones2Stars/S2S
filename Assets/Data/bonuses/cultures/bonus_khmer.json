@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_KHMER",
+ "enables": {
+  "units": [
+   "UNIT_JAYAVARMAN_II",
+   "UNIT_JAYAVARMAN_VII",
+   "UNIT_KHMER_PHAKAK"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_KHMER"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_KHMER",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

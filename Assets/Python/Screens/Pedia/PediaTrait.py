@@ -1,6 +1,7 @@
 # Pedia overhaul by Toffer for Caveman2Cosmos.
 
 from CvPythonExtensions import *
+INFO = CyInfo()
 
 class Page:
 
@@ -21,8 +22,6 @@ class Page:
 
 
 	def interfaceScreen(self, iTheTrait):
-		GC = CyGlobalContext()
-		CvTheTraitInfo = GC.getTraitInfo(iTheTrait)
 		aName = self.main.getNextWidgetName
 
 		eWidGen		= WidgetTypes.WIDGET_GENERAL
@@ -42,15 +41,15 @@ class Page:
 		screen = self.main.screen()
 
 		# Main Panel
-		szTxt1 = szfontEdge + CvTheTraitInfo.getDescription()
+		szTxt1 = szfontEdge + INFO.getDescription("TRAIT_", iTheTrait)
 		screen.setText(aName(), "", szTxt1, 1<<0, X_COL_1, 0, 0, FontTypes.TITLE_FONT, eWidGen, 1, 1)
 		Pnl = aName()
 		screen.addPanel(Pnl, "", "", False, False, X_COL_1 - 3, Y_ROW_1 + 2, H_ROW_1 + 2, H_ROW_1 + 2, PanelStyles.PANEL_STYLE_MAIN)
 		Img = "ToolTip|TRAIT%d" % iTheTrait
-		screen.setImageButtonAt(Img, Pnl, CvTheTraitInfo.getButton(), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
+		screen.setImageButtonAt(Img, Pnl, INFO.getButton("TRAIT_", iTheTrait), 4, 6, S_ICON, S_ICON, eWidGen, 1, 1)
 		# Strategy & help text.
-		szTxt1 = CvTheTraitInfo.getStrategy()
-		szTxt2 = CvTheTraitInfo.getHelp()
+		szTxt1 = INFO.getStrategy("TRAIT_", iTheTrait)
+		szTxt2 = INFO.getHelp("TRAIT_", iTheTrait)
 		if szTxt2:
 			if szTxt1:
 				szTxt1 += "\n"
@@ -61,11 +60,11 @@ class Page:
 			screen.addPanel(aName(), "", "", True, True, x, Y_ROW_1, w, H_ROW_1, ePnlBlue50)
 			screen.addMultilineText(aName(), szfont2 + szTxt1, x + 4, Y_ROW_1 + 8, w - 8, H_ROW_1 - 16, eWidGen, 1, 1, 1<<0)
 		# Leaders
+		#  A leader holds its traits as a plain FK list and a trait never names a leader, so this reads the
+		#  inverse the load builds. It is EMPTY until the assignments are authored, which is expected.
 		aList = []
-		for iLeader in range(GC.getNumLeaderHeadInfos()):
-			CvLeaderHead = GC.getLeaderHeadInfo(iLeader)
-			if CvLeaderHead.hasTrait(iTheTrait):
-				aList.append([iLeader, CvLeaderHead.getButton()])
+		for iLeader in INFO.getEdgeIds("TRAIT_", iTheTrait, EdgeFamily.EDGEF_RELATED, EdgeBucket.EDGEB_LEADERS):
+			aList.append([iLeader, INFO.getButton("LEADER_", iLeader)])
 		if aList:
 			screen.addPanel(aName(), "", "", False, True, X_COL_1, Y_ROW_2, W_PEDIA_PAGE, H_ROW_2, ePnlBlue50)
 			iSize = H_ROW_2*4/5
@@ -81,7 +80,7 @@ class Page:
 			H_ROW_3 -= H_ROW_2
 		# Pedia Text & Effects
 		szTxt1 = CyGameTextMgr().parseTraits(iTheTrait, False, True)[1:]
-		szTxt2 = CvTheTraitInfo.getCivilopedia()
+		szTxt2 = INFO.getCivilopedia("TRAIT_", iTheTrait)
 		if szTxt1 or szTxt2:
 			if szTxt1 and szTxt2:
 				W_ROW_3 = W_PEDIA_PAGE/2 - 4

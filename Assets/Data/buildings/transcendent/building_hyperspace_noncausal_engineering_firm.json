@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_HYPERSPACE_NONCAUSAL_ENGINEERING_FIRM",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_HYPERFACTORY",
+    "BUILDING_HYPERSPACE_PAN_DIMENSIONAL_CITY",
+    "TECH_MULTIDIMENSIONAL_TIME",
+    {
+     "type": "MAPCATEGORY_HYPERSPACE",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "cost": {
+  "production": 3166,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HYPERSPACE_NONCAUSAL_ENGINEERING_FIRM",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HYPERSPACE_NONCAUSAL_ENGINEERING_FIRM",
+  "civilopedia": "TXT_KEY_BUILDING_HYPERSPACE_NONCAUSAL_ENGINEERING_FIRM_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_HYPERSPACE"
+  ]
+ }
+}

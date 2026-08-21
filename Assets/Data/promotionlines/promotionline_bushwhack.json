@@ -1,0 +1,18 @@
+{
+ "type": "PROMOTIONLINE_BUSHWHACK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Bushwhack1Buildup.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BUSHWHACK",
+  "unitCombats": [
+   "UNITCOMBAT_STRIKE_TEAM"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
+ }
+}

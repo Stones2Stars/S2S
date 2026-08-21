@@ -1,0 +1,65 @@
+{
+ "type": "TECH_PARTICLE_GENETICS",
+ "enables": {
+  "bonuses": [
+   "BONUS_FEMTOBOTS"
+  ],
+  "buildings": [
+   "BUILDING_FEMTOBOTIC_ASSEMBLER",
+   "BUILDING_FEMTOBOTIC_FIREFIGHTERS",
+   "BUILDING_FEMTOBOT_FACTORY",
+   "BUILDING_INTERSTELLAR_LILLIPUTIAN_CITY",
+   "BUILDING_LIFE_INTERSTELLAR_PARTICLE"
+  ],
+  "techs": [
+   "TECH_EXOTIC_STARS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DIRECTED_PANSPERMIA",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FEMTOTECHNOLOGY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 271404
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/particle_genetics.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PARTICLE_GENETICS",
+  "civilopedia": "TXT_KEY_TECH_PARTICLE_GENETICS_PEDIA",
+  "quote": "TXT_KEY_TECH_PARTICLE_GENETICS_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 139,
+  "gridY": 1
+ }
+}

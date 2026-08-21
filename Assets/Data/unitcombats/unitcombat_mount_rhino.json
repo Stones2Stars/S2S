@@ -1,0 +1,21 @@
+{
+ "type": "UNITCOMBAT_MOUNT_RHINO",
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": 15
+   }
+  }
+ },
+ "tags": [
+  "mounted"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/mount_rhino.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_MOUNT_RHINO"
+ }
+}

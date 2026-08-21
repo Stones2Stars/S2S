@@ -1,0 +1,119 @@
+{
+ "type": "BUILDING_ANTHROPOMORPHICS_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_BATTLEMECH_ARENA",
+   "BUILDING_CYBERNETICA_APPAREL_SHOP",
+   "BUILDING_CYBERNETICA_SALON",
+   "BUILDING_FACTORY_DIGITIZED_MEMBRANES",
+   "BUILDING_UTERINE_REPLICATOR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EVOLUTIONARY_ALGORITHMS",
+    "TECH_BIONICS",
+    "TECH_WIRELESS_ELECTRICITY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NANOACTUATORS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_EXOSKELETONS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    6,
+    {
+     "value": 10,
+     "enabled": "TECH_SPECIES_UPLIFTING"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_PERSONAL_ROBOTS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_ANDROIDS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_CYBERNETICS"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    3,
+    {
+     "value": 10,
+     "enabled": "TECH_SPECIES_UPLIFTING"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_CYBERNETICS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_ANDROIDS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_PERSONAL_ROBOTS"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1,
+   "SPECIALIST_ENGINEER": 1
+  }
+ },
+ "cost": {
+  "production": 3975,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANTHROPOMORPHICS_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANTHROPOMORPHICS_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_ANTHROPOMORPHICS_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_BLUE_SUPERGIANT_COLONY",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_APPLIED_RELATIVITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_BLUE_SUPERGIANT_COLONY"
+ },
+ "cost": {
+  "gold": 700,
+  "time": 2500
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/blue_supergiant_colony.dds"
+  },
+  "hotkey": "KB_S"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_BLUE_SUPERGIANT_COLONY"
+ }
+}

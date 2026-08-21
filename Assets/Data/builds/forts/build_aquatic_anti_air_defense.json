@@ -1,0 +1,37 @@
+{
+ "type": "BUILD_AQUATIC_ANTI_AIR_DEFENSE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ORBITAL_FLIGHT",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_AQUATIC_ANTI_AIR_DEFENSE"
+ },
+ "cost": {
+  "gold": 1200,
+  "time": 2000
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Builds/Sea_Air_defense.dds"
+  },
+  "hotkey": "KB_F",
+  "hotKeyPriority": 1,
+  "shiftDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_AQUATIC_ANTI_AIR_DEFENSE",
+  "help": "TXT_KEY_BUILD_AQUATIC_ANTI_AIR_DEFENSE_HELP"
+ }
+}

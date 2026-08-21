@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_NOK",
+ "enables": {
+  "units": [
+   "UNIT_LAMBOGA",
+   "UNIT_NOK_MERCHANTS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_NOK"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_NOK",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

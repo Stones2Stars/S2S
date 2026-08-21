@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTIONLINE_BUILD_UP_RESTFUL_RECOVERY",
+ "buildUp": {
+  "active": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/RestfulRecovery1BuildUp.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BUILD_UP_RESTFUL_RECOVERY",
+  "help": "TXT_KEY_PROMOTIONLINE_BUILD_UP_RESTFUL_RECOVERY_HELP",
+  "unitCombats": [
+   "UNITCOMBAT_HEALS_AS_PEOPLE",
+   "UNITCOMBAT_HEALS_AS_ANIMALS"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_PACIFIST",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
+ }
+}

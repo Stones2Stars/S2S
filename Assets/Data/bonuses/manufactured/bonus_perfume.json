@@ -1,0 +1,19 @@
+{
+ "type": "BONUS_PERFUME",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANCIENT_EMBALMER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_PERFUME"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_PERFUME",
+  "civilopedia": "TXT_KEY_BONUS_PERFUME_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

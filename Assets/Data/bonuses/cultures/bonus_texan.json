@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_TEXAN",
+ "enables": {
+  "units": [
+   "UNIT_STEPHEN_AUSTIN",
+   "UNIT_TEXAS_RANGER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_TEXAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_TEXAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

@@ -1,0 +1,81 @@
+{
+ "type": "TECH_ANDROIDS",
+ "enables": {
+  "bonuses": [
+   "BONUS_ANDROIDS"
+  ],
+  "buildings": [
+   "BUILDING_FACTORY_ANDROIDS",
+   "BUILDING_LUNAR_DROID_FACTORY"
+  ],
+  "civics": [
+   "CIVIC_AUTOMATED"
+  ],
+  "techs": [
+   "TECH_BATTLEFIELD_SPORTS",
+   "TECH_PLANETARY_ECONOMICS",
+   "TECH_UNIVERSAL_TRANSLATOR"
+  ],
+  "units": [
+   "UNIT_ANDROID_INFANTRY",
+   "UNIT_DROID_HELICOPTER",
+   "UNIT_DROID_TANK",
+   "UNIT_LUNAR_WORKER",
+   "UNIT_ROBOT_IMP_GUARD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WARMACHINES",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INTERACTIVE_GLASS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DROIDS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 46107
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/android.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,2"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ANDROIDS",
+  "soundMP": "AS2D_TECH_ANDROIDS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ANDROIDS",
+  "civilopedia": "TXT_KEY_TECH_ANDROIDS_PEDIA",
+  "quote": "TXT_KEY_TECH_ANDROIDS_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 107,
+  "gridY": 11
+ }
+}

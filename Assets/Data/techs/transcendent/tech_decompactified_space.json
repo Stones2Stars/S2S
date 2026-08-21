@@ -1,0 +1,60 @@
+{
+ "type": "TECH_DECOMPACTIFIED_SPACE",
+ "enables": {
+  "buildings": [
+   "BUILDING_EXTREME_FORCE_CONCENTRATOR",
+   "BUILDING_HYPERSPACE_11_DIMENSIONAL_CITY",
+   "BUILDING_HYPERSPACE_11_DIMENSIONAL_FACTORY"
+  ],
+  "techs": [
+   "TECH_BRANE_CROSSOVER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_EXPERIMENTAL_COSMOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_3D_PROJECTIONS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 563149
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/decompactified_space.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_DECOMPACTIFIED_SPACE",
+  "civilopedia": "TXT_KEY_TECH_DECOMPACTIFIED_SPACE_PEDIA",
+  "quote": "TXT_KEY_TECH_DECOMPACTIFIED_SPACE_QUOTE",
+  "era": "C2C_ERA_TRANSCENDENT",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 153,
+  "gridY": 17
+ }
+}

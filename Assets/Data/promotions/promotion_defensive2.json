@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_DEFENSIVE2",
+ "combat": {
+  "unit": {
+   "attack": {
+    "percent": -5
+   },
+   "defense": {
+    "percent": 15
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_DEFENSIVE_PROMOTION": 2
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/PromotionDefensive2.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_DEFENSIVE2",
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_NAVAL_COMBATANT"
+  ]
+ }
+}

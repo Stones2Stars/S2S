@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_SHEARING_BARN",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_REPLACEMENT_ORGANS"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_INDUSTRIAL_FARMS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ANIMAL_HUSBANDRY",
+    {
+     "any": [
+      "BUILDING_FARM_ANIMAL_SHEEP",
+      "BUILDING_FARM_ANIMAL_ALPACA",
+      "BUILDING_FARM_ANIMAL_YAK",
+      "BUILDING_ANGORA_GOAT_BREEDER",
+      "BUILDING_ANGORA_RABBIT_BREEDER",
+      "BUILDING_HERD_MUSKOX",
+      "BUILDING_WOOLLY_PIG_BREEDER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_INDUSTRIAL_FARMS",
+    "BUILDING_MEAT_INDUSTRY_CONGLOMERATE"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_WOOL"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 98,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SHEARING_BARN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SHEARING_BARN",
+  "civilopedia": "TXT_KEY_BUILDING_SHEARING_BARN_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

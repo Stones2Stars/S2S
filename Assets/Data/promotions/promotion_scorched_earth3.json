@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTION_SCORCHED_EARTH3",
+ "bombard": {
+  "unit": {
+   "rate": {
+    "percent": 7
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SCORCHED_EARTH": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/ScorchedEarth3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SCORCHED_EARTH3"
+ }
+}

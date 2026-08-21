@@ -1,0 +1,110 @@
+{
+ "type": "BUILDING_MANHATTAN_PROJECT",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_UNIVERSITY",
+    "TECH_FISSION",
+    {
+     "any": [
+      "BUILDING_MILITARY_AIRBASE",
+      "BUILDING_AEROSPACE_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ],
+   "disabled": "NO_NUKES"
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    },
+    {
+     "any": [
+      {
+       "type": "BONUS_URANIUM",
+       "scope": "city",
+       "connection": "trade"
+      },
+      {
+       "type": "BONUS_HEAVY_WATER",
+       "scope": "city",
+       "connection": "trade"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "research": {
+  "city": {
+   "percent": 5
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 2160,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_MANHATTAN_PROJECT"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MANHATTAN_PROJECT"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_PLANTNUCLEAR"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MANHATTAN_PROJECT",
+  "civilopedia": "TXT_KEY_BUILDING_MANHATTAN_PROJECT_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "allowsNukes": true,
+  "worth": 6,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

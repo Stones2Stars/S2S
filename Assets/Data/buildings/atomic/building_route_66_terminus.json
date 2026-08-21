@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_ROUTE_66_TERMINUS",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SKYROADS"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_HIGHWAY_SYSTEMS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "tradeRoutes": {
+  "city": {
+   "flat": 3,
+   "modifier": {
+    "percent": 50
+   }
+  }
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ROUTE_66_TERMINUS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ROUTE_66_TERMINUS",
+  "civilopedia": "TXT_KEY_BUILDING_ROUTE_66_PEDIA",
+  "help": "TXT_KEY_BUILDING_ROUTE_66_TERMINUS_HELP",
+  "notConstructible": true,
+  "worth": 10,
+  "conquestProbability": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

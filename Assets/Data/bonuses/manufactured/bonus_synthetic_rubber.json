@@ -1,0 +1,26 @@
+{
+ "type": "BONUS_SYNTHETIC_RUBBER",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_TIRES",
+   "BUILDING_LUNAR_MANUFACTURING_PLANT",
+   "BUILDING_LUNAR_SPACE_PORT"
+  ]
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SYNTHETIC_RUBBER"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SYNTHETIC_RUBBER",
+  "civilopedia": "TXT_KEY_BONUS_SYNTHETIC_RUBBER_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

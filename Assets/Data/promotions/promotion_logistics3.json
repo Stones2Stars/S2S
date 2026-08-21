@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_LOGISTICS3",
+ "requires": {
+  "build": {
+   "any": [
+    "PROMOTION_LOGISTICS2"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "moves": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_LOGISTICS": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/Logistics3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_PING"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_LOGISTICS3"
+ }
+}

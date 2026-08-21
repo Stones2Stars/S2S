@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_CIVIC_BANDITRY",
+ "requires": {
+  "operate": {
+   "all": [
+    "CIVIC_BANDITRY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_MARAUDER"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CIVIC_BANDITRY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CIVIC_BANDITRY",
+  "civilopedia": "TXT_KEY_BUILDING_CIVIC_BANDITRY_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

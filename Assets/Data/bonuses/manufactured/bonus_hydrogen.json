@@ -1,0 +1,29 @@
+{
+ "type": "BONUS_HYDROGEN",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLIMP_ADVERTISING",
+   "BUILDING_FACTORY_MICROGENERATORS",
+   "BUILDING_FACTORY_PLASMA_GENERATORS",
+   "BUILDING_GAS_LAMPS"
+  ],
+  "units": [
+   "UNIT_AIRSHIP",
+   "UNIT_BARRAGE_BALLOON",
+   "UNIT_BLIMP",
+   "UNIT_CLOUD_DESTROYER",
+   "UNIT_GOLIATH_AIRSHIP"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HYDROGEN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HYDROGEN",
+  "civilopedia": "TXT_KEY_BONUS_HYDROGEN_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

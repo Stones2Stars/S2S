@@ -1,0 +1,56 @@
+{
+ "type": "PROMOTION_TRANSPORT_TROOPS",
+ "enables": {
+  "promotions": [
+   "PROMOTION_TRANSPORT_TROOPS1"
+  ]
+ },
+ "combat": {
+  "unit": {
+   "percent": -20
+  }
+ },
+ "cargo": {
+  "unit": {
+   "space": {
+    "flat": 1
+   }
+  }
+ },
+ "skills": {
+  "unitCombats": [
+   "UNITCOMBAT_PROMOTED_TRANSPORT_TROOPS"
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/TransportTroops.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_TRANSPORT_TROOPS",
+  "domainCargoChange": "DOMAIN_LAND",
+  "unitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_PEOPLE",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_MISSILES",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_SEAPLANES",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_FIGHTERS",
+   "UNITCOMBAT_PROMOTED_TRANSPORT_CAPTIVES"
+  ]
+ },
+ "sizeMatters": {
+  "cargo": {
+   "smSpace": 100
+  }
+ }
+}

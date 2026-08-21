@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_DREAM_VISUALIZER",
+ "enables": {
+  "buildings": [
+   "BUILDING_DREAMTIME_MACHINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_NEURON_REGENERATOR_LAB",
+    "BUILDING_EXOCORTEX_NETWORKS",
+    "TECH_EXOCORTEX_NETWORKS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_NEUROIMPLANTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "percent": 40
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "research": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "espionage": {
+  "city": {
+   "percent": 2
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -10
+  }
+ },
+ "cost": {
+  "production": 4145,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DREAM_VISUALIZER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DREAM_VISUALIZER",
+  "civilopedia": "TXT_KEY_BUILDING_DREAM_VISUALIZER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

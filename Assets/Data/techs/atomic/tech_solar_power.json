@@ -1,0 +1,75 @@
+{
+ "type": "TECH_SOLAR_POWER",
+ "enables": {
+  "buildings": [
+   "BUILDING_SOLAR_HIGHWAY",
+   "BUILDING_SOLAR_MIRROR_ARRAY_POWER_PLANT",
+   "BUILDING_SOLAR_PARKING_LOT",
+   "BUILDING_SOLAR_PHOTOVOLTAIC_POWER_PLANT",
+   "BUILDING_SOLAR_PHOTOVOLTAIC_ROOFS"
+  ],
+  "builds": [
+   "BUILD_SOLAR_PANELS"
+  ],
+  "improvements": [
+   "IMPROVEMENT_SOLAR_PANELS"
+  ],
+  "techs": [
+   "TECH_LASER",
+   "TECH_SATELLITES"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEMICONDUCTORS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 13181
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/solarpower.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SOLAR_POWER",
+  "soundMP": "AS2D_TECH_SOLAR_POWER"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SOLAR_POWER",
+  "civilopedia": "TXT_KEY_TECH_SOLAR_POWER_PEDIA",
+  "quote": "TXT_KEY_TECH_SOLAR_POWER_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 80,
+  "gridY": 17
+ }
+}

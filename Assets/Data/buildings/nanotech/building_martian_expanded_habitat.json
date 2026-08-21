@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_MARTIAN_EXPANDED_HABITAT",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_NANOSHIELDING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MARTIAN_SKYSCRAPER"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_MARTIAN",
+    "TECH_PLANETARY_MANUFACTURING",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_MARTIAN_SKYSCRAPER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "cost": {
+  "production": 905,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_EXPANDED_HABITAT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_EXPANDED_HABITAT",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_EXPANDED_HABITAT_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "type": "UNITCOMBAT_DIPLOMAT",
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": -50
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 3
+  }
+ },
+ "skills": {
+  "cannotMergeSplit": true
+ },
+ "tags": [
+  "diplomat"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/diplomats.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_DIPLOMAT"
+ }
+}

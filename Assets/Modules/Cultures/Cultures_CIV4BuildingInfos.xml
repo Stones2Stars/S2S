@@ -156,7 +156,7 @@
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
 			<PrereqTech>TECH_TRACKING</PrereqTech>
-			<RawVicinityBonus>BONUS_BEAVERS</RawVicinityBonus>
+			<RawVicinityBonus>BONUS_BEAVER</RawVicinityBonus>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_C_AC_ASIAN</BuildingType>
 				<BuildingType>BUILDING_C_L_ASIAN</BuildingType>
@@ -673,7 +673,7 @@
 			</MapCategoryTypes>
 			<PrereqTech>TECH_RIFLING</PrereqTech>
 			<bWater>1</bWater>
-			<RawVicinityBonus>BONUS_PARROTS</RawVicinityBonus>
+			<RawVicinityBonus>BONUS_PARROT</RawVicinityBonus>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_C_AC_OCEANIAN</BuildingType>
 				<BuildingType>BUILDING_C_L_OCEANIAN</BuildingType>
@@ -2417,7 +2417,7 @@
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
 			<PrereqTech>TECH_SOCIAL_CONTRACT</PrereqTech>
-			<RawVicinityBonus>BONUS_BEAVERS</RawVicinityBonus>
+			<RawVicinityBonus>BONUS_BEAVER</RawVicinityBonus>
 			<PrereqOrTerrain>
 				<PrereqTerrain>TERRAIN_TAIGA</PrereqTerrain>
 			</PrereqOrTerrain>
@@ -3598,7 +3598,7 @@
 			</MapCategoryTypes>
 			<PrereqTech>TECH_EDUCATION</PrereqTech>
 			<bWater>1</bWater>
-			<RawVicinityBonus>BONUS_BEAVERS</RawVicinityBonus>
+			<RawVicinityBonus>BONUS_BEAVER</RawVicinityBonus>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_C_AC_EUROPEAN</BuildingType>
 				<BuildingType>BUILDING_C_L_EUROPEAN</BuildingType>
@@ -3737,7 +3737,7 @@
 			</MapCategoryTypes>
 			<PrereqTech>TECH_DUALISM</PrereqTech>
 			<bWater>1</bWater>
-			<RawVicinityBonus>BONUS_ELEPHANTS</RawVicinityBonus>
+			<RawVicinityBonus>BONUS_ELEPHANT</RawVicinityBonus>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_C_AC_OCEANIAN</BuildingType>
 				<BuildingType>BUILDING_C_L_OCEANIAN</BuildingType>
@@ -4382,7 +4382,7 @@
 			</MapCategoryTypes>
 			<PrereqTech>TECH_ARMOR_CRAFTING</PrereqTech>
 			<bWater>1</bWater>
-			<RawVicinityBonus>BONUS_BEAVERS</RawVicinityBonus>
+			<RawVicinityBonus>BONUS_BEAVER</RawVicinityBonus>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_C_AC_EUROPEAN</BuildingType>
 				<BuildingType>BUILDING_C_L_EUROPEAN</BuildingType>
@@ -7144,7 +7144,7 @@
 			</MapCategoryTypes>
 			<PrereqTech>TECH_ARMOR_CRAFTING</PrereqTech>
 			<bWater>1</bWater>
-			<RawVicinityBonus>BONUS_BEAVERS</RawVicinityBonus>
+			<RawVicinityBonus>BONUS_BEAVER</RawVicinityBonus>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_C_AC_AFRICAN</BuildingType>
 				<BuildingType>BUILDING_C_L_AFRICAN</BuildingType>
@@ -9747,7 +9747,7 @@
 			</MapCategoryTypes>
 			<PrereqTech>TECH_PIRACY</PrereqTech>
 			<bWater>1</bWater>
-			<RawVicinityBonus>BONUS_PARROTS</RawVicinityBonus>
+			<RawVicinityBonus>BONUS_PARROT</RawVicinityBonus>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_C_AC_MIDDLE_EASTERN</BuildingType>
 				<BuildingType>BUILDING_C_L_MIDDLE_EASTERN</BuildingType>
@@ -9782,7 +9782,7 @@
 			</MapCategoryTypes>
 			<PrereqTech>TECH_SEAFARING</PrereqTech>
 			<bWater>1</bWater>
-			<RawVicinityBonus>BONUS_ELEPHANTS</RawVicinityBonus>
+			<RawVicinityBonus>BONUS_ELEPHANT</RawVicinityBonus>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_C_AC_MIDDLE_EASTERN</BuildingType>
 				<BuildingType>BUILDING_C_L_MIDDLE_EASTERN</BuildingType>
@@ -9938,7 +9938,7 @@
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
 			<PrereqTech>TECH_CIVIL_SERVICE</PrereqTech>
-			<RawVicinityBonus>BONUS_ELEPHANTS</RawVicinityBonus>
+			<RawVicinityBonus>BONUS_ELEPHANT</RawVicinityBonus>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_C_AC_MIDDLE_EASTERN</BuildingType>
 				<BuildingType>BUILDING_C_L_MIDDLE_EASTERN</BuildingType>
@@ -10287,7 +10287,7 @@
 			</MapCategoryTypes>
 			<PrereqTech>TECH_SMITHING</PrereqTech>
 			<bWater>1</bWater>
-			<RawVicinityBonus>BONUS_BEAVERS</RawVicinityBonus>
+			<RawVicinityBonus>BONUS_BEAVER</RawVicinityBonus>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_C_AC_ASIAN</BuildingType>
 				<BuildingType>BUILDING_C_L_ASIAN</BuildingType>
@@ -11247,7 +11247,7 @@
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
 			<PrereqTech>TECH_GUILDS</PrereqTech>
-			<RawVicinityBonus>BONUS_BEAVERS</RawVicinityBonus>
+			<RawVicinityBonus>BONUS_BEAVER</RawVicinityBonus>
 			<PrereqOrTerrain>
 				<PrereqTerrain>TERRAIN_TAIGA</PrereqTerrain>
 			</PrereqOrTerrain>
@@ -12004,7 +12004,7 @@
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
 			<PrereqTech>TECH_LITERATURE</PrereqTech>
-			<RawVicinityBonus>BONUS_ELEPHANTS</RawVicinityBonus>
+			<RawVicinityBonus>BONUS_ELEPHANT</RawVicinityBonus>
 			<PrereqOrFeature>
 				<PrereqFeature>FEATURE_JUNGLE</PrereqFeature>
 			</PrereqOrFeature>
@@ -13854,7 +13854,7 @@
 			</MapCategoryTypes>
 			<PrereqTech>TECH_FERMENTATION</PrereqTech>
 			<bWater>1</bWater>
-			<RawVicinityBonus>BONUS_BEAVERS</RawVicinityBonus>
+			<RawVicinityBonus>BONUS_BEAVER</RawVicinityBonus>
 			<PrereqInCityBuildings>
 				<BuildingType>BUILDING_C_AC_ASIAN</BuildingType>
 				<BuildingType>BUILDING_C_L_ASIAN</BuildingType>
@@ -13923,7 +13923,7 @@
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
 			<PrereqTech>TECH_ARCHERY</PrereqTech>
-			<RawVicinityBonus>BONUS_PARROTS</RawVicinityBonus>
+			<RawVicinityBonus>BONUS_PARROT</RawVicinityBonus>
 			<PrereqOrFeature>
 				<PrereqFeature>FEATURE_JUNGLE</PrereqFeature>
 			</PrereqOrFeature>
@@ -15104,7 +15104,7 @@
 				<MapCategoryType>MAPCATEGORY_EARTH</MapCategoryType>
 			</MapCategoryTypes>
 			<PrereqTech>TECH_COPPER_WORKING</PrereqTech>
-			<RawVicinityBonus>BONUS_ELEPHANTS</RawVicinityBonus>
+			<RawVicinityBonus>BONUS_ELEPHANT</RawVicinityBonus>
 			<PrereqOrFeature>
 				<PrereqFeature>FEATURE_SAVANNA</PrereqFeature>
 			</PrereqOrFeature>

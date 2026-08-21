@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_NOK_SCULPTURES",
+ "happiness": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_NOK_SCULPTURES"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_NOK_SCULPTURES",
+  "civilopedia": "TXT_KEY_BONUS_NOK_SCULPTURES_PEDIA",
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
+ }
+}

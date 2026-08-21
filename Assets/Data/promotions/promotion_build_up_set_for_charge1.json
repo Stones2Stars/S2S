@@ -1,0 +1,29 @@
+{
+ "type": "PROMOTION_BUILD_UP_SET_FOR_CHARGE1",
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "skills": {
+  "noInvisibility": true
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BUILD_UP_SET_FOR_CHARGE": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Buttons/Promotions/SetForCharge1BuildUp.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BUILD_UP_SET_FOR_CHARGE1"
+ }
+}

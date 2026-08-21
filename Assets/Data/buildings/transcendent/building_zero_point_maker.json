@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_ZERO_POINT_MAKER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_QUANTUM_VACUUM_POWER_PLANT",
+    "BUILDING_ALEPH_ASSEMBLER",
+    "TECH_MATERIALIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 22755,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ZERO_POINT_MAKER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ZERO_POINT_MAKER",
+  "civilopedia": "TXT_KEY_BUILDING_ZERO_POINT_MAKER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,93 @@
+{
+ "type": "RELIGION_TAOISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_QUANZHEN_SCHOOL",
+   "BUILDING_TAOIST_MONASTERY",
+   "BUILDING_TAOIST_PAGODA",
+   "BUILDING_TAOIST_TEMPLE",
+   "BUILDING_TEMPLE_OF_HEAVEN",
+   "BUILDING_WUDANG_MOUNTAIN"
+  ],
+  "units": [
+   "UNIT_TAOIST_MISSIONARY"
+  ]
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 2,
+     "enabled": {
+      "IS_HOLY_CITY": "RELIGION_TAOISM"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    {
+     "value": 3,
+     "enabled": {
+      "STATE_RELIGION": "RELIGION_TAOISM"
+     }
+    }
+   ]
+  }
+ },
+ "grants": {
+  "freeUnit": "UNIT_TAOIST_MISSIONARY",
+  "numFreeUnits": 1
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 4
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "tgaIndex": 6,
+   "icon": "Art/Interface/Buttons/Religions/Taoism.dds",
+   "techButton": "Art/Interface/Buttons/TechTree/Found_Taoism.dds",
+   "genericTechButton": "Art/Interface/Buttons/TechTree/Taoism.dds",
+   "movie": {
+    "file": "Art/Movies/Religion/Taoism/Tao_Found.nif",
+    "sound": "AS2D_BUILD_TAOIST_MOVIE"
+   }
+  }
+ },
+ "sound": {
+  "sound": "AS2D_BUILD_TAOIST"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_TAOISM",
+  "adjective": "TXT_KEY_TECH_TAOISM_ADJECTIVE",
+  "civilopedia": "TXT_KEY_TECH_TAOISM_PEDIA",
+  "spreadFactor": 50
+ }
+}

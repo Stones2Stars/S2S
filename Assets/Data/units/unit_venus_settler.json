@@ -1,0 +1,174 @@
+{
+ "type": "UNIT_VENUS_SETTLER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_VENUS_CARBONWORKS",
+    "TECH_PLANETARY_MANUFACTURING"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_CAPTIVE_CIVILIAN"
+  }
+ },
+ "skills": [
+  "food",
+  "found"
+ ],
+ "tags": [
+  "settler",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SETTLER",
+ "combatClasses": [
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_SPACECRAFT"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_STABLE",
+    "enabled": "TECH_STEAM_POWER"
+   },
+   {
+    "building": "BUILDING_BARRACKS",
+    "enabled": "TECH_COLONIALISM"
+   },
+   {
+    "building": "BUILDING_COURTHOUSE",
+    "enabled": "TECH_STEAM_POWER"
+   },
+   {
+    "building": "BUILDING_FISHERMANS_HUT",
+    "enabled": {
+     "all": [
+      "HAS_COAST",
+      "TECH_COLONIALISM"
+     ]
+    }
+   },
+   {
+    "building": "BUILDING_FORGE",
+    "enabled": "TECH_COLONIALISM"
+   },
+   {
+    "building": "BUILDING_GARRISON",
+    "enabled": "TECH_STEAM_POWER"
+   },
+   {
+    "building": "BUILDING_GRANARY",
+    "enabled": "TECH_COLONIALISM"
+   },
+   {
+    "building": "BUILDING_GROCER",
+    "enabled": "TECH_STEAM_POWER"
+   },
+   {
+    "building": "BUILDING_HARBOR",
+    "enabled": {
+     "all": [
+      "HAS_COAST",
+      "TECH_COLONIALISM"
+     ]
+    }
+   },
+   {
+    "building": "BUILDING_LIBRARY",
+    "enabled": "TECH_STEAM_POWER"
+   },
+   {
+    "building": "BUILDING_LIGHTHOUSE",
+    "enabled": {
+     "all": [
+      "HAS_COAST",
+      "TECH_COLONIALISM"
+     ]
+    }
+   },
+   {
+    "building": "BUILDING_MARKET",
+    "enabled": "TECH_COLONIALISM"
+   },
+   {
+    "building": "BUILDING_PORT",
+    "enabled": {
+     "all": [
+      "HAS_COAST",
+      "TECH_STEAM_POWER"
+     ]
+    }
+   },
+   {
+    "building": "BUILDING_PALACE",
+    "enabled": {
+     "type": "BUILDING_PALACE",
+     "scope": "empire",
+     "max": 0
+    }
+   }
+  ]
+ },
+ "cost": {
+  "production": 3000,
+  "upkeep": 11,
+  "hurryCostModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_VENUS_SETTLER",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_VENUS_SETTLER",
+       "late": "ART_DEF_UNIT_VENUS_SETTLER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_VENUS_SETTLER",
+  "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SETTLE",
+  "formationType": "FORMATION_TYPE_SETTLER",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_SETTLE"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_VENUSIAN"
+  ],
+  "advancedStart": {
+   "cost": 100
+  }
+ }
+}

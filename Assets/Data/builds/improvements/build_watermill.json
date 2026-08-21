@@ -1,0 +1,35 @@
+{
+ "type": "BUILD_WATERMILL",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WATERWHEELS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_WATERMILL"
+ },
+ "cost": {
+  "gold": 120,
+  "time": 800
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/BuildWaterMill.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,3,8"
+  },
+  "hotkey": "KB_W",
+  "shiftDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_WATERMILL"
+ }
+}

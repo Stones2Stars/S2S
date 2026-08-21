@@ -1,0 +1,82 @@
+{
+ "type": "TECH_COOPERATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHILDCARE_HUT",
+   "BUILDING_CHILD_LABOR_CREW",
+   "BUILDING_WET_NURSE"
+  ],
+  "civics": [
+   "CIVIC_COMMUNAL"
+  ],
+  "processes": [
+   "PROCESS_WEALTH_MEAGER"
+  ],
+  "promotions": [
+   "PROMOTION_ADHERENT",
+   "PROMOTION_LEADERSHIP",
+   "PROMOTION_LOOSE_FORMATION",
+   "PROMOTION_OBSERVERS",
+   "PROMOTION_SOPHISTICATION1"
+  ],
+  "techs": [
+   "TECH_COUNTING",
+   "TECH_PREHISTORIC_DANCE",
+   "TECH_SHELTER_BUILDING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LANGUAGE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "workRate": {
+  "empire": {
+   "percent": 5
+  }
+ },
+ "cost": {
+  "research": 4
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_CULTURE": 2
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_GROWTH",
+   "icon": "Art/Interface/Buttons/TechTree/cooperation.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_COOPERATION",
+  "soundMP": "AS2D_TECH_COOPERATION"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_COOPERATION",
+  "civilopedia": "TXT_KEY_TECH_COOPERATION_PEDIA",
+  "quote": "TXT_KEY_TECH_COOPERATION_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "tradeable": true,
+  "gridX": 2,
+  "gridY": 15
+ }
+}

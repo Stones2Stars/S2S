@@ -1,0 +1,37 @@
+{
+ "type": "FEATURE_MINI_NEPTUNE",
+ "movement": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_MINI_NEPTUNE"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_ASTEROIDS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_MINI_NEPTUNE",
+  "civilopedia": "TXT_KEY_FEATURE_MINI_NEPTUNE_PEDIA",
+  "validTerrains": [
+   "TERRAIN_TRANSTELLAR_SPACE"
+  ]
+ }
+}

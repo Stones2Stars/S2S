@@ -1,0 +1,65 @@
+{
+ "type": "TECH_PICTOGRAPHS",
+ "enables": {
+  "bonuses": [
+   "BONUS_CARVED_EMU_EGGS"
+  ],
+  "buildings": [
+   "BUILDING_EMU_EGG_CARVER",
+   "BUILDING_ROCK_ART"
+  ],
+  "techs": [
+   "TECH_IDEOGRAMS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BARTER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 39
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 2
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   },
+   {
+    "FLAVOR_CULTURE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/pictographs.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PICTOGRAPHS",
+  "soundMP": "AS2D_TECH_PICTOGRAPHS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PICTOGRAPHS",
+  "civilopedia": "TXT_KEY_TECH_PICTOGRAPHS_PEDIA",
+  "quote": "TXT_KEY_TECH_PICTOGRAPHS_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 15,
+  "gridY": 17
+ }
+}

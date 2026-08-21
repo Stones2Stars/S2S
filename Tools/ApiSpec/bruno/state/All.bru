@@ -1,0 +1,19 @@
+meta {
+  name: state/all
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/state/all?player=0
+  body: none
+  auth: none
+}
+
+params:query {
+  player: 0
+}
+
+docs {
+  Entire RAW state in one document (world/players/cities/plots). No computed values.
+}

@@ -1,0 +1,103 @@
+{
+ "type": "BUILDING_PSYCHOLOGY_LAB",
+ "enables": {
+  "buildings": [
+   "BUILDING_APPLIED_PSYCHOLOGY_LAB"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PICOTECHNOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_HEALTHCARE_MEGACOMPLEX"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_UNIVERSITY",
+    "TECH_PSYCHOLOGY",
+    {
+     "any": [
+      "BUILDING_INSANE_ASYLUM",
+      "BUILDING_NEUROSCIENCE_CENTER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_HEALTHCARE_MEGACOMPLEX"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 6,
+     "enabled": "TECH_COMPULSORY_EDUCATION"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_PROPAGANDA"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_MASS_MEDIA"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_COUNTERCULTURE"
+    }
+   ]
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 830,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_PSYCHOLOGY_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_PSYCHOLOGY_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_PSYCHOLOGY_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

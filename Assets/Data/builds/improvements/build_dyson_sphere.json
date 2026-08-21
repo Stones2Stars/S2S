@@ -1,0 +1,34 @@
+{
+ "type": "BUILD_DYSON_SPHERE",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTROENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_DYSON_SPHERE"
+ },
+ "cost": {
+  "gold": 400,
+  "time": 4000
+ },
+ "ui": {
+  "art": {
+   "icon": "art/interface/buttons/improvements/dyson_sphere.dds"
+  },
+  "hotkey": "KB_F"
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_DYSON_SPHERE"
+ }
+}

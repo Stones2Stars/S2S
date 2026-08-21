@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_IROQUOIS",
+ "enables": {
+  "units": [
+   "UNIT_HIAWATHA",
+   "UNIT_POCAHONTAS",
+   "UNIT_TOMAHAWK_THROWER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_IROQUOIS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_IROQUOIS",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

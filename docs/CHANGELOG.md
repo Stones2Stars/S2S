@@ -1,0 +1,423 @@
+# S2S — cascade rebuild (draft changelog, 2026-08)
+
+> **DRAFT — pending owner curation.** Content is assembled from the repo docs and the
+> cascade-rebuild git history; nothing here is final until reviewed.
+>
+> **Maintenance:** a commit whose change a player or modder would notice appends one bullet to
+> `## Unreleased` in the SAME commit (AGENTS.md Git/delivery). The `/changelog-update` skill
+> digests anything that slipped, from the marker below. The old commit-message-derived
+> changelog script is dead and stays dead.
+
+<!-- last-digested: d77601a35 -->
+
+## Unreleased
+
+- **The city bar's culture line reads correctly, and no longer faults.** Hovering a city showed its culture
+  against a threshold of `0`, and the culture level's name was missing — while the game quietly took an access
+  violation behind the scenes, several times a session. Culture is stored as a 64-bit number (it used to overflow
+  into negatives in long games); the tooltip was still handing that wide number to the game's own text formatter,
+  which counts its arguments in 32-bit steps. Everything after the culture was therefore read one step early, so
+  the threshold was rendered as the *level name* and the engine tried to walk it as text. On Windows the fault was
+  swallowed; under Wine/Proton it need not be. The same slip is fixed in the city population line.
+
+- **Great people can build their wonders again.** A Great Prophet's shrines, and every other "consume me to put up
+  this building" action, had no button at all — the unit's list of what it may construct was being read with a
+  parser that only understood the short form of an entry, so any entry written in the longer form (the one that
+  can carry its own condition) was skipped without complaint. Nearly six thousand entries are written that way, so
+  in practice the list was empty for every unit that had one, and a unit that can construct nothing is offered
+  nothing.
+
+- **Unit actions with an outcome work again — butchering a subdued animal above all.** Every action that resolves
+  through an outcome was silently unavailable *inside your own borders*: butchering and fighting a subdued animal,
+  and the whole captive repertoire (butcher, sacrifice, and joining a city as a slave). The button did not grey
+  out, it was simply absent, because an action nothing can perform is never offered. Outcomes each carry a list of
+  territories they are allowed in, and "your own" had been dropped from all of them — an outcome that names no
+  territory is allowed nowhere, and the vast majority never named one because permission at home was the thing you
+  never had to write down. ⚑ Modders: `territory` on an outcome now always states the full allowed set. It is only
+  ever written to DENY; leaving it out no longer means "nowhere".
+
+- **A building is never obsoleted by another building — those are upgrade chains.** Every ladder in the game
+  (bridges, gatherers, medicine, arenas) was carrying two contradictory fates for the same successor: "destroy me
+  when it exists" and "park me while it exists". 1,521 of the 1,522 buildings that named an obsoleting building
+  named that same building as a dormancy source. Obsolescence is decided before the still-running check, so the
+  destroy would have won — a predecessor would have been demolished the turn its successor went up, instead of
+  going quiet and waking again if the successor were ever lost. Only a **tech** obsoletes a building now.
+  ⚑ Modders: `obsoletedBy.buildings` is gone from the data model; a building's `obsoletedBy` carries `techs` only.
+- **An obsolete building now becomes its successor instead of just vanishing.** When the tech that obsoletes a
+  building lands, it upgrades into the next tier in its line rather than being demolished — the behaviour the
+  original game had and that had been lost. It walks the line to find a tier you can actually take, so
+  researching far past a building doesn't strand you: an ancient bridge that has been superseded four times over
+  arrives at one you can hold. If you already own the successor, the old building simply goes.
+  ⚑ Modders: this is `whenObsolete.becomes`, the third fate beside "vanish" (empty) and "stay with reduced
+  output" (a modifier tree). It says what becomes of the building and deliberately never names what obsoleted
+  it. 1,522 buildings now carry one. There is no gold-paid building upgrade and there will not be one.
+- **The customizable domestic advisor works again — 12 of its 20 columns were rendering nothing.** The screen
+  holds each column's read as a NAME it evaluates at draw time, so a read that no longer exists fails per column
+  rather than per screen — and the draw loop caught every one of those failures and printed `draw table failure!`
+  without saying which column or why, so the columns looked merely empty instead of broken. The base and global
+  rank columns, the commerce columns, the wonder counts, maintenance, food difference and espionage defence all
+  answer again, and the catch now names the column and the error. Saved BUG layouts still resolve — the columns
+  kept their keys.
+- **A sick city loses the food it should.** The unhealth penalty was being subtracted on the wrong scale, so each
+  missing health cost about one hundredth of the food it was meant to — unhealth was very nearly free, and a
+  plagued city grew as though it were not.
+- **Loading a save no longer strips every city centre of its city yields.** The plot re-binds its identity before
+  the save stream has delivered its coordinates, so after a load every centre plot answered as though it were
+  somewhere else and lost the whole city block — the population term and the guaranteed minimums — on every
+  channel. Food happened to land on the right number at sizes 5–9, which is why this looked like a
+  production-and-commerce-only fault.
+- **"Can I build this?" is asked of the one machine that knows.** 22 places asked cities and players a pair of
+  questions the engine does not answer at all, and raised every time they were reached: the revolution loop,
+  barbarian civilization setup, tech conquest, several random events, the victory screen and the WorldBuilder
+  city editor. They now read the availability verdict directly.
+- **We Love the King Day fires again** — the event that starts it called a method that does not exist, so it
+  raised every time it came up. ⚑ Modders: the write lives on the action surface, not on the city; the city
+  surface is read-only by design.
+- **A civilization with several leaders draws the right one.** The leaderhead lookup counted every leader in the
+  game into an index it then compared against a per-civilization position, so any civ past the first with more
+  than one leader picked up somebody else's portrait.
+- **"Deal cancelled" tells you again**, and a loaded save re-derives its trade counts from the deals it actually
+  holds rather than trusting a stored tally. On the standing test save 314 deals load and the turn cancels 109,
+  every one of them attributable to a named reason.
+- Modders: **a resource crossing the trade network now reports how many copies moved**, not a literal 1. A source
+  supplying six of a resource announced one, so anything tracking holdings off the event stream — the
+  out-of-process readers above all — believed the network held a single copy and diverged further with every
+  trade after the first.
+- Modders: **the Python callback validator runs again, and no longer edits your data.** It was parsing 2.4-era
+  source with a 3.x parser and dying on the first `print` statement, so it reported nothing; worse, on an
+  unresolved callback it blanked the element and rewrote the XML in place. A validator reports — fixing is
+  yours. 457 XML files against 1,644 functions in 366 Python files, clean.
+- **143 unused bindings are gone from the Python API.** Every one was published to script and called from
+  nowhere in the shipped Python or the map scripts — legacy surface from `CyGame`, `CyPlayer`, `CyPlot`,
+  `CyMap`, the global context and the art/text managers. ⚑ Modders: if you used one, say so and it comes back
+  as a read on the new surface rather than as the old binding. Nothing that Python, a map script, or the
+  domestic advisor's name-table reaches was touched.
+- **A city can be asked whether it is the capital, a government centre, in disorder, or under occupation.**
+  All four getters existed in C++ and were never published to Python, so the ~33 places that asked — the
+  revolution loop, several event triggers, the finance and corporation advisors, the occupation alert — raised
+  instead of answering. ⚑ Modders: ask a city a single status question by name; the `getFlags()` list is for a
+  screen that wants several bits from one fetch, such as the city bar drawing its icons.
+- **`CyTeam.isHominid()` is gone from the Python API.** It was published as a second name for `isNPC` — the
+  registration pointed at `CyTeam::isNPC`, so the real `isHominid` body was never reachable and the name answered
+  a different question than it asked. Nothing called it. ⚑ Modders: use `isNPC()`.
+- **Power checks in Python were calling a binding that was never registered.** `CyCity::isPowered()` was
+  written but never published to Python, and the call sites asked for `isPower()`, which does not exist
+  at all — so each raised whenever it was reached: the "unlimited power" random-event trigger, the
+  Revolution index's power bonus, and the domestic advisor's power column (plus its spaceship build
+  advice). `isPowered()` is now published and the call sites use it. ⚑ Modders: ask a city a single
+  status question through its named getter; the `getFlags()` list is for a screen that needs many bits
+  from one fetch.
+- **Optics no longer claims to extend how far your ships see.** The `canSeeFurtherFromWater`
+  capability (legacy `bExtraWaterSeeFrom`) is removed outright. Its effect ran through a vision
+  accessor the rebuilt sight model deleted, so the ability had already stopped doing anything —
+  but it was still granted, still shown in the pedia, and still made the AI value the tech and
+  score coastal city sites as if it worked. Vision now answers one way, through the budget the
+  observer spends walking outward. ⚑ Modders: the XML tag and its schema entry are gone; an
+  observer-side sight bonus is expressed on the vision channel, not as a capability.
+- **Buildings that grant a third ring of workable tiles now actually grant it.** Twelve buildings
+  carry `adds3rdRing`, and nothing in the engine read it — the ring was promised in the data and
+  never delivered, so those cities worked two rings like any other. The city now reads the amenity
+  its buildings confer, and because that is refcounted, holding two grantors and losing one keeps
+  the ring instead of dropping it.
+- **Power restored** tells you again when a city's blackout ends. The message died with the
+  per-turn maintainer that used to emit it.
+- **A resource requirement now names ONE origin.** `connection: "trade"` means the network holds it;
+  `connection: "onSite"` means the city itself supplies it — a mine, or a building that manufactures it.
+  The old combined `"trade|vicinity"` form is gone: the two are genuinely different questions (a mounted
+  unit needs horses on site, a swordsman only needs iron in the network), and a gate wanting either now
+  states two atoms under an `any`. Shipped data is regenerated; hand-authored data using the combined
+  form needs updating.
+- The Heritage advisor has an **Empire** tab listing the empire-level buildings you hold. That class
+  is held by the empire rather than by a city, so nothing anywhere showed it — you owned things with
+  no way to see them. A held-but-dormant one is marked, since holding is not the same as working.
+- Build-list tooltips show the yield and commerce ICONS again instead of spelling the channel out
+  in words, so an entry reads `+6 <production>` rather than `+6 Production`.
+- Hovering a worker build action shows the build's name again. Builds were the one action type
+  never given a hotkey description, so the tooltip's heading came up empty.
+- **Hovering a unit on the map now shows that unit.** Previously only its FLAG did: a map hover
+  answered for the tile alone, so a worker's orders were readable off the flag and nowhere else.
+- Unit tooltips are laid out in blocks — name, then condition, then what it is doing — instead of
+  one long comma-separated line. A worker now states its build and the turns left on its own line,
+  and a unit under orders with no build (walking to lay a road, say) names its mission rather than
+  going silent. An idle unit still says nothing.
+- A worker mid-build shows what the build will CHANGE, beside how long is left on it — the name and the
+  turns say it is busy, this says whether being busy is worth it. It is the same figure the build's own
+  action button advertised before you ordered it, so the two cannot disagree.
+- Worker build tooltips lead with the **turns and the gold cost**. Both were already there, at the
+  bottom of a long block of yield detail, which made them effectively unfindable.
+- A plot tooltip names the city working the tile, while it is being worked. A plot yields either
+  way, but only a worked tile feeds a city.
+- Unit tooltips state what the unit COSTS to build, directly under the name — the same place a building
+  has always stated its own. Comparing a unit against a building in the build list meant reading one
+  price and guessing the other.
+- Random events fire again. Their handlers reached the engine through info accessors that no longer
+  exist, so a handler raised the moment it ran and its event did nothing — invisibly, since the
+  failure lands in a log no player reads.
+- Wonder movies no longer open an empty window. The screen kept per-movie state that was never set
+  up when there was no movie to play (and was torn down when one finished), so it failed on every
+  frame and drew nothing.
+- Units handed over by a popup or by the Crusade wonder no longer receive their city's free
+  experience twice. Creating a unit in a city settles that experience once, and these three paths
+  were still adding it a second time on top.
+- The score list works again. It threw on every screen redraw, so a newly met civilization never
+  appeared in it and clicking your own name to expand it took the game down.
+- Six things that had gone quietly dead now work again: the impeachment and chariotry events could
+  never trigger, the Malaccan pirates arrived without their promotions or their name, wonder movies
+  for terrain features would not open, and event landmark signs were not placed.
+- Modders: the Python endpoint that brings a unit into existence is now `createUnit`, on both the
+  player and the action surface — it was `initUnit`, which named the engine internal that callers
+  must never reach directly. It now matches the engine's own single creation step, so a reader
+  looking for how a unit comes into being finds one answer instead of two spellings. Every shipped
+  call site moved with it, including the Python embedded in module XML.
+- The tribal guardian arrives when the city is founded, and it no longer inherits the settler's
+  accumulated experience. Walking a settler for three turns used to hand its guardian 33 experience
+  — four turns, 44 — because the transfer read a hundredths-scaled value as whole points.
+- Fixed unit experience being read a hundred times too large in several places: the great-general
+  points Pergamon awards (a unit with 33 experience counted as 3,300, paying roughly ten times the
+  points it should), and three random-event requirements that asked for a veteran of 7, 25 or 50
+  experience and in practice accepted almost any unit.
+- Units that arrive by any route other than training — granted, awarded, spawned, captured, bribed,
+  founder escorts, free defenders, great people — now receive the free experience their city gives
+  units, exactly as a trained unit does. Previously it depended on which code path created them.
+- Units whose combat role has no promotions at all can no longer earn them: great people, subdued
+  animals, workers, executives, corporate agents, nukes and captives among them (389 units). They
+  kept picking up promotions through the species/size/quality classes attached to them for other
+  reasons. Promotions a unit is simply *given* by its own type are unaffected. Modders: this is the
+  new `unpromotable` unit tag, derived from whether any promotion accepts the unit's primary combat
+  class — if something ought to promote and cannot, giving that class a promotion is the fix.
+- Restored the combat-odds tooltip when hovering an attack target.
+- Fixed a crash when loading a save from inside a running game.
+- The city centre plot yields its guaranteed minimums again (3 food / 1 hammer / 1 commerce
+  floor) instead of acting like a regular tile.
+- Fixed a civilization-restriction misread that hid 21 empire-wide buildings (the rock/stick/
+  lumber gatherer class and kin) from every player's build list.
+- The civilization-whitelist mechanic is removed outright: what a civ can build is decided by
+  its techs and requirements — NPCs included — and deliberate bars use the disable mechanism.
+- Empire-wide gatherer-class buildings require their resource again (obsidian gatherer needs
+  obsidian in the city vicinity, and kin) — the empire conversion had dropped those build
+  requirements.
+- A trait's extra-yield-threshold bonus reaches its cities again: the per-tile step was being
+  applied to each plot but never added to the city's own food/hammer/commerce totals, so a
+  trait that grants it changed the tile readouts and nothing the city actually produced.
+- Golden ages give their per-tile bonus again (+1 hammer and +1 commerce on qualifying worked
+  tiles). It had stopped applying entirely, while the AI still valued golden ages as though it
+  were there. As before, a tile qualifies on what it makes *before* its improvement and route
+  are counted — so a tile whose whole output comes from a mine or a road does not qualify.
+- Negative traits impose their tile penalty again: the lazy, gluttonous, excessive and nomad
+  lines lower the output of tiles above their threshold, which had stopped applying entirely
+  while the matching bonus on positive traits kept working.
+- The city yield breakdown now reports the route's share of a tile's output separately.
+- Complex-trait games no longer hand a leader the base rung of a trait line *and* its rank-1 rung at the
+  same time. A line now runs 1 → 2 → 3, as complex games have always been played, and a leader holds the
+  rung rather than the rung plus a hidden extra copy underneath it. Leaders therefore start with the values
+  their rank actually states — noticeably less in some cases, because the duplicate was stacking on top.
+
+Stones2Stars (S2S) is a Civ4 / Caveman2Cosmos-derived mod. This release cycle is a ground-up
+rebuild of how the mod computes and displays everything: all game data moved from XML to JSON,
+all bonuses and requirements flow through one unified system, and the whole game state is
+observable live from outside the game.
+
+---
+
+## For players — what feels different
+
+### Build lists and the tech tree actually tell you why
+
+- Buildings, units, and techs now show in three states: **available** (build now), **greyed**
+  (missing something specific), or **hidden** (not unlocked yet).
+- Greyed entries name exactly what you're missing — "go get copper", "research Astronomy" —
+  per requirement (tech / resource / civic). Unmeetable entries are hidden instead of taunting you.
+- Tech tree correctly distinguishes "not yet obtainable" from "never obtainable".
+- Tech tree arrow layout fixed; tech splash screen restored.
+- The build list correctly drops buildings you've already queued.
+
+### Obsolescence and bans that behave sensibly
+
+- New tech makes old units/buildings **obsolete**: they leave the production queue, but existing
+  ones persist on the map.
+- Obsoleted buildings can stay active with reduced effects, or vanish entirely — per building.
+- Laws and policies can **ban** buildings (destroyed while the law holds; repeal rebuilds them)
+  or block techs.
+- Once a successor unit is trainable, its predecessor drops out of the build list.
+
+### One coherent bonus system
+
+- Food, production, gold, research, culture, espionage, happiness, health, and properties like
+  pollution all flow through one unified modifier system — effects from techs, civics, traits,
+  buildings, religions, and corporations combine cleanly instead of through dozens of special cases.
+- Conditional effects work as advertised: "+1 happiness while powered", "−production while
+  polluted", per-military-unit or per-population scaling.
+- Happiness and health run a four-channel model (happiness / anger / health / unhealth); excess
+  anger translates to rioting population, blocked by amenities.
+
+### UI and information
+
+- City and unit hover details; **ALT** shows a plot-yield breakdown.
+- Building tooltips show cost and hammers already sunk.
+- "Requires" tooltips name exactly what is missing, item by item.
+- Five advisor screens rewired to live data.
+- The Civilopedia rebuilt on the new data surface — hundreds of pedia errors eliminated.
+- Leader trait display: full trait names, one per line, rendered live pre-game.
+- Cities in anarchy show burning/disorder visuals.
+- Promotion icons laid out in rows.
+- Culture-threshold alert spam fixed.
+
+### Game setup and difficulty
+
+- Map scripts restored — new games generate again.
+- New-game start is fully data-driven: starting units, gold, buildings, and techs come from
+  start packages conditioned by era, difficulty, and civilization — and all of it announces
+  correctly on game start (research popup, start techs, wellbeing cushions).
+- Goody huts, traits, civics, and handicap effects all initialize and announce correctly.
+- One City Challenge now removes wonder limits outright.
+- Difficulty applies as a proper modifier set; flexible difficulty rewires AI advantage on the fly.
+
+### Rules and fixes
+
+- Golden age ends anarchy.
+- Valley of the Kings requires Pyramid and Sphinx **in the same city**.
+- Shrine and corporation-HQ revenue lands in the owning city.
+- Random events repaired: hurricane, cyclone, champion, fires.
+- Trade routes: profitability scales with civics, traits, and buildings; coastal/foreign/
+  shared-civic routes get their own bonuses; route counts cap by culture level.
+- Wonders cap properly as world (one per game), national (one per player), or team wonders.
+- Properties like pollution auto-place and remove their band buildings as the value crosses
+  thresholds — no per-turn churn.
+
+### Performance
+
+- Building evaluation no longer rebuilds the city per candidate.
+- AI loops sweep maintained lists instead of full registries.
+- Pathfinder cost fixes; runaway path searches capped.
+- Specialist processing reduced roughly 40× per citizen.
+
+---
+
+## For modders — the data platform
+
+### Everything is JSON now
+
+- All ~13,400 game entities across 33 info types (buildings, units, techs, civics, traits,
+  religions, corporations, terrain, features, improvements, routes, eras, handicaps, leaders, …)
+  migrated from XML to curated JSON, loaded by one reader.
+- One JSON file per entity: `Assets/Data/<Type>/<ENTITY_ID>.json`.
+- **Cold-read promise**: keys say what they mean — you can read an entity file and understand it
+  without engine knowledge.
+- Every entity type shares the same top-level shape: availability (`enables`, `requires`,
+  `allowed`), provisions (`grants`, `triggers`), effects (modifier families), and metadata.
+
+### Availability: one machine answers "can I build it?"
+
+- `enables` — what an entity unlocks (the forward edge: a tech lists what it opens up).
+- `requires.build` — conditions to construct (greyed in the UI if unmet).
+- `requires.operate` — conditions to keep running; losing them puts a building into dormancy.
+- `allowed` — caps: `world: 1`, `empire: 1`, `team: 1`, or category caps by culture level.
+- `obsoletes` / `replacedBy` / `disables` — soft supersession, hard unit replacement, and
+  law-driven bans, each with distinct semantics.
+- `whenObsolete` — a modifier tree applied to obsoleted buildings; empty means hard removal.
+- Entity-level `enabled` / `disabled` gates turn whole entities on or off by game option,
+  difficulty, or runtime predicate — no data removal needed.
+
+### Modifiers: one format for every number
+
+- Channels: `food`, `production`, `gold`, `research`, `culture`, `espionage`, `happiness`,
+  `anger`, `health`, `unhealth`, `maintenance`, `defense`, `tradeRoutes`, one per property, …
+- Three unit kinds per entry: `flat` (+N), `percent` (+%), `multiplier` (×), combined as
+  `(base + Σflat) × (1 + Σpercent) × Π multiplier`.
+- Scoped deposits: `food.empire.percent` vs `food.city.flat`; empire effects roll down to
+  cities, city effects stay local; plural targets (`cities`, `plots`, `units`) name receivers.
+- Count scaling: `per: {type, each, scope}` — e.g. happiness per military unit.
+- Conditional entries: `enabled` / `disabled` gates on any entry, applied and withdrawn
+  automatically when the condition crosses — including age gates (`existedFor`), which is how
+  legacy "commerce doubles after N years" authors as a second age-gated deposit.
+- Ranked subsets: `orderedBy: CITY_SIZE, max: 5` targets the five largest cities
+  [spec — verify: ranked entries currently apply unranked until the selection lands].
+
+### One condition vocabulary, used everywhere
+
+- Combinators: `all` / `any` / `noneOf`, nesting to any depth.
+- Atoms: any typed ID (`BUILDING_FORGE`, `TECH_ASTRONOMY`, `BONUS_IRON`) with optional
+  `min` / `max` thresholds and explicit `scope` overrides.
+- Resource connection filters: `trade` (via network), `vicinity` (radius tile), plus
+  `onSite` / `owned` variants.
+- Runtime predicates: `IS_CAPITAL`, `HAS_RIVER`, `IS_GOLDEN_AGE`, `HAS_POWER`, `IS_FOREIGN`,
+  `SHARES_CIVIC`, parameterized forms like `{HAS_RELIGION: RELIGION_X}`,
+  `{latitude: {min: 30, max: 60}}`, `{existedFor: {min: 1000}}`, and more — an extensible
+  registry, not a fixed list.
+- Property bands: `{type: PROPERTY_X, min: A, max: B}` gates on property value ranges.
+
+### Grants, triggers, start packages
+
+- `grants` — payloads delivered on an entity's considered action (research a tech, construct a
+  building, adopt a civic): units, gold, buildings, free specialists, free techs, promotions.
+- `triggers` — conditional recurring or event-fired effects: a `trigger` (when), a `chance`
+  (odds), and an `action` (grant, spawn, property change, script call).
+- Start packages (`STARTPACKAGE_*`) [spec — verify]: named grant bundles gated by era / handicap /
+  civ, stacking — specced; the entity type is not built yet (starts currently ride the civilization's
+  own grants).
+
+### Classification
+
+- **Tags**: immutable type membership on units (`military`, `air`, `ranged`, …) backing
+  predicates, condition atoms, and AI classification. Extensible.
+- **Skills**: mutable per-unit abilities (promotions, combat classes) that can be gained or
+  lost mid-game.
+- **Amenities**: city-held markers granted by buildings/civics/religions (power, freshwater,
+  government center, …), used to gate deposits.
+- **Capabilities**: team-held grants from techs and civics (trade routes, special units,
+  diplomacy verbs).
+- Vision, movement, cargo, and hide-and-seek rebuilt as data families on this classification.
+- Trait lines: leaders seed both the simple and complex trait sets; a line's base trait enables
+  its higher rungs; which set is active is a game option; all trait effects author on the trait itself.
+
+### Live observability
+
+Every state change in the game announces on an event spine, and you can watch from outside
+the process:
+
+- **HTTP endpoints** (`127.0.0.1:7227`, GET-only, loopback):
+  - `/` — liveness check (`hello world`).
+  - `/events` — SSE stream of live game facts (limited concurrent streams).
+  - `/computed/...` — decomposition censuses: per-city tri-state building lists with reasons,
+    per-entity gate verdicts with the failing leg named. `GET /computed` serves the live index.
+- **Log files** (`Documents/My Games/Beyond The Sword/Logs/`):
+  - `Cascade.log` — domain facts, modifier applications, grant firings; readable **while the
+    game runs**.
+  - `XmlLoad.log` — data load census with per-type counts.
+
+### Extending the platform
+
+- **New threshold condition**: `{type: TOKEN, min: N, max: M}` — no engine change needed.
+- **New per-thing scaling**: `per: {type: TOKEN, each: N, scope: SCOPE}` — routed by type prefix.
+- **New predicate**: define the evaluator, emit a spine fact when its state changes, register it.
+- **New modifier family**: register the channel, add it to the family list, emit the spine fact.
+- **New entity type**: create the `Assets/Data/<Type>/` folder, register the prefix, add a
+  one-row dispatch, create the `_order.json` manifest, author via `_additions/`.
+
+### Validation tooling
+
+- `Tools/XmlValidator.exe -a` — schema and data-load check (run from `Assets/`).
+- `Tools/verify-python24.py` — the embedded interpreter is Python 2.4; this catches newer syntax.
+- `Tools/verify-spine-fields.py` — event field types match declarations.
+- Save-migration checker for the format change (see "Under the hood").
+- `readjson.exe Assets/Data --render BUILDING_X` — parse and English-render a single entity.
+
+### Known future work [spec — verify]
+
+- **Volumetric resources**: bonus counts moving from presence-only (0/1) to quantities (0..N)
+  is specced as future work; not yet implemented.
+- **Events rework**: engine events gaining spine emits (Python callbacks still live) — partial;
+  full move to the trigger system is future work.
+
+---
+
+## Under the hood
+
+The engine's derived-state layer was rebuilt completely. One event spine announces every state
+change; caches are maintained running sums updated by those events instead of being recomputed
+in passes; loading a save and starting a new game build state through the same event-driven
+path, so there is one code path to be correct instead of two. Reads are O(1) against the
+accumulated value — no re-walk of sources — and invalidation is targeted: an event touches only
+the consumers it affects. There is one canonical answer per number: the legacy ad-hoc
+accumulators are gone, not shadowed. The save format changed as part of this; old saves migrate
+automatically via a named-tag mechanism.

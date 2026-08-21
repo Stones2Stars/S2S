@@ -1,0 +1,106 @@
+{
+ "type": "TECH_GUERRILLA_WARFARE",
+ "enables": {
+  "buildings": [
+   "BUILDING_BOOBY_TRAPS",
+   "BUILDING_REBEL_CAMP"
+  ],
+  "promotions": [
+   "PROMOTION_AMBUSH"
+  ],
+  "techs": [
+   "TECH_BIOLOGICAL_WARFARE",
+   "TECH_COUNTERCULTURE",
+   "TECH_MODERN_WARFARE"
+  ],
+  "units": [
+   "UNIT_AL_KHALIFA",
+   "UNIT_APOCALYPSE_URBAN_CROSSBOWMAN",
+   "UNIT_ARTILLERY",
+   "UNIT_CROWBAR_GUARD",
+   "UNIT_GUERRILLA",
+   "UNIT_HATCHET_MAN",
+   "UNIT_IAN_SMITH",
+   "UNIT_JASIR_ARAFAT",
+   "UNIT_KHOMEINI",
+   "UNIT_MACHETE_WARRIOR",
+   "UNIT_MILITIA_MODERN",
+   "UNIT_MODERN_FLAMETHROWER",
+   "UNIT_POST_APOCALYPTIC_GRENADIER",
+   "UNIT_SPECIAL_FORCES",
+   "UNIT_SSG",
+   "UNIT_TRUNG_SISTERS",
+   "UNIT_URBAN_GIRAFFEMAN",
+   "UNIT_URBAN_HORSEMAN",
+   "UNIT_VIETCONG",
+   "UNIT_WARLORDV",
+   "UNIT_WARLORDVS",
+   "UNIT_WRENCH_WARRIOR"
+  ]
+ },
+ "obsoletes": {
+  "units": [
+   "UNIT_PARTISAN"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMMUNISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_FASCISM",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AUTOMATIC_WEAPONS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 10309
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GROWTH": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": ",Art/Interface/Buttons/TechTree/guerrillawarfare.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,8"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GUERRILLA_WARFARE",
+  "soundMP": "AS2D_TECH_GUERRILLA_WARFARE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_GUERRILLA_WARFARE",
+  "civilopedia": "TXT_KEY_TECH_GUERRILLA_WARFARE_PEDIA",
+  "quote": "TXT_KEY_TECH_GUERRILLA_WARFARE_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 32,
+  "tradeable": true,
+  "gridX": 74,
+  "gridY": 15
+ }
+}

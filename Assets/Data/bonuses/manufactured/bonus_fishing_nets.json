@@ -1,0 +1,31 @@
+{
+ "type": "BONUS_FISHING_NETS",
+ "enables": {
+  "buildings": [
+   "BUILDING_MACKEREL_NETS",
+   "BUILDING_MARLIN_NETS",
+   "BUILDING_NETS_COD",
+   "BUILDING_NET_ANCHOVY",
+   "BUILDING_NET_FLOUNDER",
+   "BUILDING_NET_SARDINE",
+   "BUILDING_NET_SEA_BASS",
+   "BUILDING_NET_SHARK",
+   "BUILDING_NET_SNAPPER",
+   "BUILDING_NET_SQUID",
+   "BUILDING_NET_TUNA",
+   "BUILDING_PARROTFISH_NETS",
+   "BUILDING_SWORDFISH_NETS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_FISHING_NETS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_FISHING_NETS",
+  "civilopedia": "TXT_KEY_BONUS_FISHING_NETS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

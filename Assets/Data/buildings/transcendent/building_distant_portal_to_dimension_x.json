@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_DISTANT_PORTAL_TO_DIMENSION_X",
+ "enables": {
+  "buildings": [
+   "BUILDING_DISTANT_PARALLEL_UNIVERSE_PORTAL",
+   "BUILDING_INTERGALACTIC_INSTANT_TELEPORTATION_PORTAL"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_HORIZON_PORT",
+    "TECH_CONTROLLED_VACUUM_COLLAPSE",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": [
+    {
+     "value": 13,
+     "enabled": "TECH_MACROVERSE_TRAVERSAL"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "espionage": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 1713,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_PORTAL_TO_DIMENSION_X",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_PORTAL_TO_DIMENSION_X",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_PORTAL_TO_DIMENSION_X_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

@@ -1,0 +1,24 @@
+{
+ "type": "PROMOTIONLINE_INTERCEPTION",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/interception.dds,Art/Interface/Buttons/Beyond_the_Sword_Atlas.dds,3,15"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_INTERCEPTION",
+  "unitCombats": [
+   "UNITCOMBAT_EARLY_FIGHTERS",
+   "UNITCOMBAT_EARLY_BOMBERS",
+   "UNITCOMBAT_JET_FIGHTERS",
+   "UNITCOMBAT_BOMBERS",
+   "UNITCOMBAT_SUPERSONIC_PLANES",
+   "UNITCOMBAT_STEALTH",
+   "UNITCOMBAT_GUN"
+  ],
+  "notOnDomains": [
+   "DOMAIN_LAND",
+   "DOMAIN_AIR"
+  ]
+ }
+}

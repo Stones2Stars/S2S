@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_INTERSTELLAR_PLANETARY_SHELLWORLD",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_ARTIFICIAL_PLANET",
+    "TECH_ARTIFICIAL_PLANETS",
+    {
+     "any": [
+      {
+       "type": "MAPCATEGORY_PLASMA",
+       "scope": "plot"
+      },
+      {
+       "type": "MAPCATEGORY_MILKY_WAY",
+       "scope": "plot"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 3611,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_PLANETARY_SHELLWORLD",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_PLANETARY_SHELLWORLD",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_PLANETARY_SHELLWORLD_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

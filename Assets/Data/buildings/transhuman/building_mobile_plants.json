@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_MOBILE_PLANTS",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TRANSGENICS_LAB",
+    "TECH_NUTRACEUTICAL_ANIMALS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    10,
+    {
+     "value": 11,
+     "enabled": "TECH_ADAPTIVE_RADIATION"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 5655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MOBILE_PLANTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MOBILE_PLANTS",
+  "civilopedia": "TXT_KEY_BUILDING_MOBILE_PLANTS_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

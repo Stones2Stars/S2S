@@ -1,0 +1,52 @@
+{
+ "type": "PROMOTION_SHIP_TACTICS3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_SHIP_CONTROL",
+   "PROMOTION_SHIP_INITIATIVE3",
+   "PROMOTION_SHIP_OPERATIONS2",
+   "PROMOTION_SHIP_TACTICS4"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_SHIP_TACTICS2",
+    {
+     "any": [
+      "PROMOTION_SHIP_MORALE3"
+     ]
+    }
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 20
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 2
+   },
+   "resistance": {
+    "flat": -5
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_SHIP_TACTICS": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/promotions/shipTactics3.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_SHIP_TACTICS3"
+ }
+}

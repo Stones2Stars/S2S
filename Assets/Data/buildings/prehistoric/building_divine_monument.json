@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_DIVINE_MONUMENT",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MYSTICISM",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_DIVINE_CULT"
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_MELEE": {
+     "flat": 1
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 98,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 2,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_CULTURE": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DIVINE_MONUMENT",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_DIVINE_MONUMENT"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DIVINE_MONUMENT",
+  "civilopedia": "TXT_KEY_BUILDING_DIVINE_MONUMENT_PEDIA",
+  "worth": 3,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

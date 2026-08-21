@@ -229,11 +229,6 @@
 			<Civilopedia>TXT_KEY_CONCEPT_PROPERTIES_PEDIA</Civilopedia>
 		</NewConceptInfo>
 		<NewConceptInfo>
-			<Type>CONCEPT_RBOMBARD</Type>
-			<Description>TXT_KEY_CONCEPT_RBOMBARD</Description>
-			<Civilopedia>TXT_KEY_CONCEPT_RBOMBARD_PEDIA</Civilopedia>
-		</NewConceptInfo>
-		<NewConceptInfo>
 			<Type>CONCEPT_REALISTIC_CORPORATIONS</Type>
 			<Description>TXT_KEY_CONCEPT_REALISTIC_CORPORATIONS</Description>
 			<Civilopedia>TXT_KEY_CONCEPT_REALISTIC_CORPORATIONS_PEDIA</Civilopedia>

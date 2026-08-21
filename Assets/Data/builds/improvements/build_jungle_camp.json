@@ -1,0 +1,33 @@
+{
+ "type": "BUILD_JUNGLE_CAMP",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_SEDENTARY_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_JUNGLE_CAMP"
+ },
+ "cost": {
+  "gold": 20,
+  "time": 400
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/builds/junglecamp.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_JUNGLE_CAMP"
+ }
+}

@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_CULTURE_CETACEA_SAPIEN",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SPECIES_UPLIFTING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_WHALE",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_CETACEA_SAPIENS"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 30330,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 200
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_CETACEA_SAPIEN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_CETACEA_SAPIEN",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_CETACEA_SAPIEN_PEDIA",
+  "pediaCategory": "greatWonder",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

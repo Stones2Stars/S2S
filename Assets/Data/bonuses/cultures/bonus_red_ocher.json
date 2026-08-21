@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_RED_OCHER",
+ "enables": {
+  "units": [
+   "UNIT_ILLINIWEK_WARRIOR",
+   "UNIT_RED_CHIEF"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_RED_OCHER"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_RED_OCHER",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

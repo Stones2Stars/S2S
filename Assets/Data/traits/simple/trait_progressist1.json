@@ -1,0 +1,171 @@
+{
+ "type": "TRAIT_PROGRESSIST1",
+ "enables": {
+  "traitsAnd": [
+   "TRAIT_COMPLEX_PROGRESSIST2"
+  ]
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "UNIT_CYBORG": {
+     "percent": 25
+    },
+    "UNIT_ACV": {
+     "percent": 25
+    },
+    "UNIT_ACVSAM": {
+     "percent": 25
+    },
+    "UNIT_WALKER_MECH": {
+     "percent": 25
+    },
+    "UNIT_FUTURE_APC": {
+     "percent": 25
+    },
+    "UNIT_TESLA_INFANTRY": {
+     "percent": 25
+    },
+    "UNIT_SPACE_SAM_INFANTRY": {
+     "percent": 25
+    },
+    "UNIT_SPECIAL_INFANTRY": {
+     "percent": 25
+    }
+   }
+  }
+ },
+ "research": {
+  "empire": {
+   "specialists": {
+    "SPECIALIST_ENGINEER": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "corporation": {
+    "percent": 20
+   }
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "civic": {
+    "percent": 30
+   }
+  }
+ },
+ "workRate": {
+  "empire": {
+   "builds": {
+    "BUILD_HYBRID_FOREST": {
+     "percent": 50
+    },
+    "BUILD_GROUNDWATER_WELL": {
+     "percent": 50
+    },
+    "BUILD_MODERN_MINE": {
+     "percent": 50
+    },
+    "BUILD_LUMBERMILL": {
+     "percent": 50
+    },
+    "BUILD_PEAT_CUTTER": {
+     "percent": 50
+    }
+   }
+  }
+ },
+ "improvementUpgradeRate": {
+  "empire": {
+   "improvements": {
+    "IMPROVEMENT_HAMLET": {
+     "percent": 80
+    },
+    "IMPROVEMENT_LUMBERJACK": {
+     "percent": 60
+    }
+   }
+  }
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": -30
+   }
+  }
+ },
+ "policies": {
+  "upgradeAnywhere": true
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_COMBAT_AI1",
+       "enabled": {
+        "any": [
+         "IS_ARMORED",
+         "IS_MECHANIZED",
+         "IS_NAVAL",
+         "IS_SYNTHETIC"
+        ]
+       }
+      },
+      {
+       "promotion": "PROMOTION_DEFENSIVE_PROTOCOLS1",
+       "enabled": "IS_SYNTHETIC"
+      },
+      {
+       "promotion": "PROMOTION_REINFORCED_STRUCTURE",
+       "enabled": {
+        "any": [
+         "IS_ARMORED",
+         "IS_MECHANIZED",
+         "IS_SYNTHETIC"
+        ]
+       }
+      },
+      {
+       "promotion": "PROMOTION_IMPROVED_RADAR",
+       "enabled": "IS_STEALTH"
+      }
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 6
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitProgressist.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TRAIT_PROGRESSIST0",
+  "civilopedia": "TXT_KEY_TRAIT_PROGRESSIST_PEDIA",
+  "shortDescription": "TXT_KEY_TRAIT_PROGRESSIST_SHORT"
+ }
+}

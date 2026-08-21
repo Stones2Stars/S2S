@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_CAUTIOUS1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_CAUTIOUS2"
+  ]
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 5
+  }
+ },
+ "skills": {
+  "unitCombats": [
+   "UNITCOMBAT_PROMOTED_CAUTIOUS"
+  ]
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CAUTIOUS": 1
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Cautious1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CAUTIOUS1"
+ }
+}

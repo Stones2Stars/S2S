@@ -1,0 +1,63 @@
+{
+ "type": "BUILDING_FEMTOBOTIC_ASSEMBLER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_OMEGA_ASSEMBLER",
+    "TECH_PARTICLE_GENETICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FEMTOBOTS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 75
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 14655,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FEMTOBOTIC_ASSEMBLER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FEMTOBOTIC_ASSEMBLER",
+  "civilopedia": "TXT_KEY_BUILDING_FEMTOBOTIC_ASSEMBLER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

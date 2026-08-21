@@ -1,0 +1,27 @@
+{
+  "entity": "PromotionLineInfo",
+  "rootElement": "PromotionLineInfo",
+  "glob": "**/CIV4PromotionLineInfos.xml",
+  "channels": {},
+  "inversionsOut": {},
+  "enablerEdges": {},
+  "prereqs": [
+    "UnitCombatPrereqTypes",
+    "NotOnDomainTypes",
+    "NotOnUnitCombatTypes",
+    "OnGameOptions",
+    "PrereqTech"
+  ],
+  "cost": [],
+  "art": [
+    "Button"
+  ],
+  "identity": [
+    "Type",
+    "Description",
+    "Help",
+    "bBuildUp",
+    "PropertyType"
+  ],
+  "boostsIn": []
+}

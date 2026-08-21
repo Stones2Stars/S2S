@@ -1,0 +1,67 @@
+{
+ "type": "BUILDING_JOVIAN_CORE_PROBE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_FACTORY",
+    "TECH_NANOSHIELDING",
+    {
+     "type": "TERRAIN_JUPITER",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "flat": 1000
+  },
+  "empire": {
+   "buildings": {
+    "BUILDING_TRANSTELLAR_HELIOFORMED_GAS_GIANT": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 9454,
+  "hurryModifier": 10000
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_JUPITER_CORE"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_JOVIAN_CORE_PROBE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_JOVIAN_CORE_PROBE",
+  "civilopedia": "TXT_KEY_BUILDING_JOVIAN_CORE_PROBE_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

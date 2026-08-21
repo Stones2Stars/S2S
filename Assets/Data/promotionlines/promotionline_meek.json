@@ -1,0 +1,11 @@
+{
+ "type": "PROMOTIONLINE_MEEK",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Traits/TraitMeek.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_MEEK"
+ }
+}

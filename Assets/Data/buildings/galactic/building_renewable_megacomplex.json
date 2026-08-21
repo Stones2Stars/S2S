@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_RENEWABLE_MEGACOMPLEX",
+ "enables": {
+  "buildings": [
+   "BUILDING_OCEAN_CITY",
+   "BUILDING_SEASTEAD",
+   "BUILDING_SUPERCRITICAL_CO2_TURBINE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ATOMIC_SCALE_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_FULLERENE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_QUANTUM_DOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 9105,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "providesPower": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RENEWABLE_MEGACOMPLEX_PLANT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RENEWABLE_MEGACOMPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_RENEWABLE_MEGACOMPLEX_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

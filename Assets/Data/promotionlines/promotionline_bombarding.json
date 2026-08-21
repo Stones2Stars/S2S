@@ -1,0 +1,21 @@
+{
+ "type": "PROMOTIONLINE_BOMBARDING",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/bombarding1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_BOMBARDING",
+  "unitCombats": [
+   "UNITCOMBAT_WOODEN_SHIPS",
+   "UNITCOMBAT_STEAM_SHIPS",
+   "UNITCOMBAT_DIESEL_SHIPS",
+   "UNITCOMBAT_NUCLEAR_SHIPS"
+  ],
+  "notOnDomains": [
+   "DOMAIN_LAND",
+   "DOMAIN_AIR"
+  ]
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_CHAMORRAN",
+ "enables": {
+  "units": [
+   "UNIT_KALANG_MATAI",
+   "UNIT_MATAPANG"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CHAMORRAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CHAMORRAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

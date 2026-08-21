@@ -1,0 +1,77 @@
+{
+ "type": "TECH_SKYROADS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ROOFTOP_FLYING_CAR_PORT",
+   "BUILDING_SKYROAD_CONTROL_TOWER",
+   "BUILDING_SKYROAD_STATION"
+  ],
+  "builds": [
+   "BUILD_VACTRAIN"
+  ],
+  "techs": [
+   "TECH_BATTLEFIELD_SPORTS",
+   "TECH_LEVITATION",
+   "TECH_ORBITAL_FLIGHT"
+  ],
+  "units": [
+   "UNIT_DROPSHIP",
+   "UNIT_HITECH_HOVERCRAFT",
+   "UNIT_MEDEVAC_DROPSHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NOVUS_CHEMISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SUPERSONIC_RAILS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 46107
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/skyroads.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SKYROADS",
+  "soundMP": "AS2D_TECH_SKYROADS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SKYROADS",
+  "civilopedia": "TXT_KEY_TECH_SKYROADS_PEDIA",
+  "quote": "TXT_KEY_TECH_SKYROADS_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 107,
+  "gridY": 3
+ }
+}

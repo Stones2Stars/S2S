@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_APPRENTICE_WORKSHOP",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_GUILDS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_APPRENTICESHIP"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": -3
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1,
+   "SPECIALIST_PRIEST": 1,
+   "SPECIALIST_ENGINEER": 1,
+   "SPECIALIST_ARTIST": 1,
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 332,
+  "sizeModifier": 1,
+  "countModifier": 2,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_APPRENTICE_WORKSHOP",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MUSEUM"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_APPRENTICE_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_APPRENTICE_WORKSHOP_PEDIA",
+  "worth": 4,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

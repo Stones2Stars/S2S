@@ -1,0 +1,98 @@
+{
+ "type": "BUILDING_MEDICAL_DIAGNOSTAT",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMA_CHAMBER",
+   "BUILDING_PSYCHOSCANNER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CYBERIMMUNOLOGY",
+    {
+     "any": [
+      "BUILDING_AUTODOCTOR",
+      "BUILDING_HEALTHCARE_MEGACOMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DIGITIZED_MEMBRANES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_SMART_MEDICINE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "health": {
+  "city": {
+   "flat": [
+    7,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_HYPOSPRAYS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -35
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_DOCTOR": 1
+  }
+ },
+ "cost": {
+  "production": 4485,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MEDICAL_DIAGNOSTAT",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MEDICAL_DIAGNOSTAT",
+  "civilopedia": "TXT_KEY_BUILDING_MEDICAL_DIAGNOSTAT_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

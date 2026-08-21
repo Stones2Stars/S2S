@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_SALT_EVAPORATION_POND",
+ "enables": {
+  "buildings": [
+   "BUILDING_RESOURCES_SALT"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SMART_DUST"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MATERIALS_CONGLOMERATE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "HAS_COAST",
+    {
+     "latitude": {
+      "max": 35
+     }
+    },
+    "TECH_SALT_PROCESSING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_MATERIALS_CONGLOMERATE"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 168,
+  "sizeModifier": 3,
+  "countModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SALT_EVAPORATION_POND",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SALT_EVAPORATION_POND",
+  "civilopedia": "TXT_KEY_BUILDING_SALT_EVAPORATION_POND_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

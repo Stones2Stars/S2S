@@ -1,0 +1,34 @@
+{
+ "type": "PROMOTION_BACK_DOWN3",
+ "enables": {
+  "promotions": [
+   "PROMOTION_BACK_DOWN4"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_BACK_DOWN2"
+   ]
+  }
+ },
+ "withdrawal": {
+  "unit": {
+   "percent": 15
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_BACK_DOWN": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/BackDown3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BACK_DOWN3"
+ }
+}

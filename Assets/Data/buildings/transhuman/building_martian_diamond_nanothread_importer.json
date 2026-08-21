@@ -1,0 +1,56 @@
+{
+ "type": "BUILDING_MARTIAN_DIAMOND_NANOTHREAD_IMPORTER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_MARS_CYCLER",
+    "BUILDING_MARTIAN_CITY",
+    "TECH_PLANETARY_TRADE",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_DIAMOND_NANOTHREADS"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 60
+  }
+ },
+ "cost": {
+  "production": 1921,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_DIAMOND_NANOTHREAD_IMPORTER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_DIAMOND_NANOTHREAD_IMPORTER",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_DIAMOND_NANOTHREAD_IMPORTER_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

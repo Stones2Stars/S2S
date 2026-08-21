@@ -1,0 +1,94 @@
+{
+ "type": "PROMOTION_RETINUE_BANDIT",
+ "combat": {
+  "unit": {
+   "hillsAttack": {
+    "percent": 15
+   },
+   "hillsDefense": {
+    "percent": 15
+   },
+   "feature": {
+    "FEATURE_JUNGLE": {
+     "attack": {
+      "percent": 15
+     },
+     "defense": {
+      "percent": 15
+     }
+    },
+    "FEATURE_FOREST": {
+     "attack": {
+      "percent": 15
+     },
+     "defense": {
+      "percent": 15
+     }
+    },
+    "FEATURE_BAMBOO": {
+     "attack": {
+      "percent": 15
+     },
+     "defense": {
+      "percent": 15
+     }
+    },
+    "FEATURE_FOREST_YOUNG": {
+     "attack": {
+      "percent": 15
+     },
+     "defense": {
+      "percent": 15
+     }
+    },
+    "FEATURE_FOREST_BURNT": {
+     "attack": {
+      "percent": 15
+     },
+     "defense": {
+      "percent": 15
+     }
+    },
+    "FEATURE_FOREST_ANCIENT": {
+     "attack": {
+      "percent": 15
+     },
+     "defense": {
+      "percent": 15
+     }
+    }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 20
+   },
+   "resistance": {
+    "flat": -5
+   }
+  }
+ },
+ "skills": {
+  "hillsDoubleMove": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Retinue/bandit.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_GET_RETINUE"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_RETINUE_BANDIT",
+  "unitCombats": [
+   "UNITCOMBAT_HERO"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
+ }
+}

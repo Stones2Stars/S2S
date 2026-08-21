@@ -1,0 +1,92 @@
+{
+ "type": "BUILDING_HOLOGRAPHIC_NETWORKS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLOGS",
+   "BUILDING_DISTRIBUTED_SOCIAL_NETWORK",
+   "BUILDING_HOLOGRAPHICA_APPAREL_SHOP",
+   "BUILDING_HOLOGRAPHIC_GAMING_LEAGUE",
+   "BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE",
+   "BUILDING_MEGATOWER_HOLOGRAM_ADVERTISING_CROWN_SECTION",
+   "BUILDING_MEME_GENERATOR",
+   "BUILDING_SHOCKWAVE_VEHICLE_DEALERSHIP",
+   "BUILDING_SOCIAL_MEDIA_SURVEILLANCE"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_TERRA_COMPUTER"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_EXOCORTEX_NETWORKS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_ENCRYPTED_FIREWALL",
+    "BUILDING_MARKET_RESEARCH",
+    "TECH_HOLOGRAPHICS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HOLOGRAPHIC_PROJECTORS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_EXOCORTEX_NETWORKS"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "freeSpecialists": {
+  "city": {
+   "SPECIALIST_CELEBRITY": 1
+  }
+ },
+ "cost": {
+  "production": 3525,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HOLOGRAPHIC_NETWORKS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HOLOGRAPHIC_NETWORKS",
+  "civilopedia": "TXT_KEY_BUILDING_HOLOGRAPHIC_NETWORKS_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

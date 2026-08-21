@@ -1,0 +1,61 @@
+{
+ "type": "BUILDING_TELEVANGELIST_STUDIO",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TV_STUDIO",
+    "TECH_TELEVISION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER",
+    {
+     "any": [
+      "CIVIC_DIVINE_CULT",
+      "CIVIC_STATE_CHURCH",
+      "CIVIC_FREE_CHURCH",
+      "CIVIC_INQUISITORIAL",
+      "CIVIC_SECULARISM"
+     ]
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1130,
+  "sizeModifier": 2,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TELEVANGELIST_STUDIO",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TELEVANGELIST_STUDIO",
+  "civilopedia": "TXT_KEY_BUILDING_TELEVANGELIST_STUDIO_PEDIA",
+  "advisor": "ADVISOR_CULTURE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

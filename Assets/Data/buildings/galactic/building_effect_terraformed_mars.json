@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_EFFECT_TERRAFORMED_MARS",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_PLANETARY_TERRAFORMING"
+   ]
+  }
+ },
+ "food": {
+  "empire": {
+   "flat": 20
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": 100
+  }
+ },
+ "research": {
+  "empire": {
+   "flat": 200
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "empire": {
+   "flat": -50
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "empire": {
+   "flat": -50
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EFFECT_TERRAFORMED_MARS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_TERRAFORMED_MARS",
+  "civilopedia": "TXT_KEY_BUILDING_EFFECT_TERRAFORMED_MARS_PEDIA",
+  "pediaCategory": "space",
+  "notConstructible": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ],
+  "empireLevel": true
+ }
+}

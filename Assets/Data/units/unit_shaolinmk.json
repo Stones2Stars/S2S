@@ -1,0 +1,182 @@
+{
+ "type": "UNIT_SHAOLINMK",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BONUS_SOAP",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "BUILDING_SHAOLIN_TEMPLE",
+    "TECH_MARTIAL_ARTS",
+    {
+     "type": "BONUS_SCROLLS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CITY_GUARD",
+     "UNIT_AMBULANCE"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "combat": {
+  "unit": {
+   "dynamicDefense": {
+    "percent": 50
+   },
+   "stealthStrikes": {
+    "flat": 1
+   },
+   "stealth": {
+    "percent": 50
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 12
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 25
+   }
+  }
+ },
+ "heal": {
+  "unit": {
+   "support": {
+    "flat": 4
+   },
+   "unitCombat": {
+    "UNITCOMBAT_HEALS_AS_PEOPLE": {
+     "heal": 10
+    }
+   }
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -5
+  },
+  "plot": {
+   "flat": -3
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -5
+  },
+  "plot": {
+   "flat": -3
+  }
+ },
+ "skills": [
+  "noCapture",
+  "pillage",
+  "onlyDefensive",
+  "ignoreNoEntryLevel",
+  "camouflage"
+ ],
+ "tags": [
+  "military",
+  "landUnit",
+  "people"
+ ],
+ "combatClass": "UNITCOMBAT_MELEE",
+ "combatClasses": [
+  "UNITCOMBAT_HEALTH_CARE",
+  "UNITCOMBAT_LAW_ENFORCEMENT",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_SECONDARY",
+  "UNITCOMBAT_WEAPON_H2H_MARTIAL_ART",
+  "UNITCOMBAT_WEAPON_DIST_MARTIAL_ART",
+  "UNITCOMBAT_SPEED_FAST",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_ELITE",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_PEOPLE"
+ ],
+ "hideAndSeek": {
+  "concealment": {
+   "flat": 400
+  },
+  "detection": {
+   "value": 300,
+   "unit": "HAS_CAMOUFLAGE"
+  }
+ },
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "grants": {
+  "promotions": [
+   "PROMOTION_MARTIAL_ARTS",
+   "PROMOTION_MARTIAL_ARTS2",
+   "PROMOTION_MARTIAL_ARTS3"
+  ]
+ },
+ "cost": {
+  "production": 345,
+  "upkeep": 4,
+  "hurryCostModifier": 25
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SHAOLINMK",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 3,
+      "define": {
+       "early": "ART_DEF_UNIT_SHAOLINMK"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_SHAOLINMK",
+  "civilopedia": "TXT_KEY_UNIT_SHAOLINMK_PEDIA",
+  "worth": 6,
+  "militaryWorth": 15,
+  "xpValueAttack": 4,
+  "xpValueDefense": 2,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_RESERVE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_CITY_DEFENSE",
+   "UNITAI_RESERVE",
+   "UNITAI_ATTACK",
+   "UNITAI_HEALER",
+   "UNITAI_PROPERTY_CONTROL",
+   "UNITAI_ESCORT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

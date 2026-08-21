@@ -1,0 +1,84 @@
+{
+ "type": "TECH_SENTIENT_EARTH",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS"
+  ],
+  "buildings": [
+   "BUILDING_HUMAN_MOD_COLLECTIVE_CONSCIOUSNESS"
+  ],
+  "civics": [
+   "CIVIC_GESTALT_MIND"
+  ],
+  "techs": [
+   "TECH_MOLECULAR_SCANNING",
+   "TECH_NANO_DISASSEMBLY"
+  ],
+  "units": [
+   "UNIT_HITECH_ROBOT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BINARY_PSYCHOKINESIS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HUMAN_TRANSMUTATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_TERRA_COMPUTER",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 83654
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_SCIENCE": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/sentient_earth.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,1,16"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SENTIENT_EARTH",
+  "soundMP": "AS2D_TECH_SENTIENT_EARTH"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SENTIENT_EARTH",
+  "civilopedia": "TXT_KEY_TECH_SENTIENT_EARTH_PEDIA",
+  "quote": "TXT_KEY_TECH_SENTIENT_EARTH_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 119,
+  "gridY": 9
+ }
+}

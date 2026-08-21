@@ -6,7 +6,12 @@
 from CvPythonExtensions import *
 
 # globals
-GC = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+INFO = CyInfo()
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 
 #SplitOutgoing is similar, but for a unit that holds together two trees by what it upgrades to.  For instance,
 #you might have a commoner unit that upgrades to Scout, Warrior, and Worker, while otherwise those units have
@@ -68,23 +73,23 @@ class UnitUpgradesGraph:
 		self.bBuilding = False
 
 	def getNumberOfUnits(self):
-		return GC.getNumUnitInfos()
+		return INFO.getCount("UNIT_")
 
 	def getPromotionType(self, e):
-		return GC.getPromotionInfo(e).getType()
+		return INFO.getType("PROMOTION_", e)
 
 	def getGraphEdges(self, graph):
+		# A unit's DIRECT upgrades ARE its dormant triggers -- `UnitUpgrades` maps to `requires.build.dormant.all`
+		# (enabler.md par.3), so the upgrade tree reads the same list the buildable gate does.
 		for iUnitA in graph.iterkeys():
-			CvUnitInfoA = GC.getUnitInfo(iUnitA)
-			for i in range(CvUnitInfoA.getNumUnitUpgrades()):
-				iUnitB = CvUnitInfoA.getUnitUpgrade(i)
+			for iUnitB in INFO.getDormantTriggerIds("UNIT_", iUnitA):
 				self.addUpgradePath(graph, iUnitA, iUnitB)
 
 	def placeOnScreen(self, screen, unit, xPos, yPos):
-		screen.setImageButtonAt(self.pediaScreen.getNextWidgetName(), self.upgradesList, GC.getUnitInfo(unit).getButton(), xPos, yPos, self.buttonSize, self.buttonSize, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, unit, 1)
+		screen.setImageButtonAt(self.pediaScreen.getNextWidgetName(), self.upgradesList, INFO.getButton("UNIT_", unit), xPos, yPos, self.buttonSize, self.buttonSize, WidgetTypes.WIDGET_PEDIA_JUMP_TO_UNIT, unit, 1)
 
 	def unitToString(self, unit):
-		return GC.getUnitInfo(unit).getDescription() + ":%d"%(unit, )
+		return INFO.getDescription("UNIT_", unit) + ":%d"%(unit, )
 
 	################## Stuff to generate Unit Upgrade Graph ##################
 
@@ -95,6 +100,13 @@ class UnitUpgradesGraph:
 			graph[unitFrom].upgradesTo.add(unitTo)
 			graph[unitTo].upgradesFrom.add(unitFrom)
 
+
+	def namesCultureBonus(self, iUnit, iCultureClass):
+		"True when the unit's requires names a bonus of the culture class -- the tree's readability filter"
+		for iBonus in INFO.getRequiresIds("UNIT_", iUnit, EdgeBucket.EDGEB_BONUSES):
+			if INFO.getIntrinsic("BONUS_", iBonus, IntrinsicSlot.PYINT_BONUS_CLASS) == iCultureClass:
+				return True
+		return False
 
 	def getMedianY(self, mGraph, unitSet):
 		"Returns the average Y position of the units in unitSet"
@@ -127,23 +139,19 @@ class UnitUpgradesGraph:
 		self.mGraphs.append(MGraph())
 		graph = self.mGraphs[0].graph
 
-		BONUSCLASS_CULTURE = GC.getInfoTypeForString("BONUSCLASS_CULTURE")
+		# The two DISPLAY filters that keep the unit tree readable. Both ask what the unit's `requires` NAMES,
+		# which is what getRequiresIds answers (a MENTION read -- exactly a filter's question, and never a
+		# statement that the id is required); legacy asked a dedicated prereq getter per axis.
+		iCultureClass = ENUMS.getInfoType("BONUSCLASS_CULTURE")
 		for iUnit in xrange(self.getNumberOfUnits()):
 			if self.bUnit:
-				CvUnitInfo = GC.getUnitInfo(iUnit)
 				# Ignore Corporation units
-				if CvUnitInfo.getPrereqCorporation() != -1:
+				if INFO.getRequiresIds("UNIT_", iUnit, EdgeBucket.EDGEB_CORPORATIONS):
 					continue
-				# If unit requires a culture bonus ignore it.
-				if BONUSCLASS_CULTURE > -1:
-					iPrereq = CvUnitInfo.getPrereqAndBonus()
-					if iPrereq > -1 and GC.getBonusInfo(iPrereq).getBonusClassType() == BONUSCLASS_CULTURE:
-						continue
-				graph[iUnit] = Node()
-			elif self.bBuilding:
-				graph[iUnit] = Node()
-			else:
-				graph[iUnit] = Node()
+				# Ignore culture-gated units -- 807 of 2073 name one, so the tree is unreadable without this
+				if iCultureClass > -1 and self.namesCultureBonus(iUnit, iCultureClass):
+					continue
+			graph[iUnit] = Node()
 
 		self.getGraphEdges(graph)
 
@@ -173,10 +181,10 @@ class UnitUpgradesGraph:
 							continue
 
 						if self.bUnit:
-							if GC.getUnitInfo(unit).getType() in self.splitOutgoing:
+							if INFO.getType("UNIT_", unit) in self.splitOutgoing:
 								continue
 						elif self.bBuilding:
-							if GC.getBuildingInfo(unit) in self.BuildingSplitOutgoing:
+							if INFO.getType("BUILDING_", unit) in self.BuildingSplitOutgoing:
 								continue
 						else:
 							if self.getPromotionType(unit) in self.promotionsSplitOutgoing:
@@ -202,10 +210,10 @@ class UnitUpgradesGraph:
 							continue
 
 						if self.bUnit:
-							if GC.getUnitInfo(unit).getType() in self.splitIncoming:
+							if INFO.getType("UNIT_", unit) in self.splitIncoming:
 								continue
 						elif self.bBuilding:
-							if GC.getBuildingInfo(unit) in self.BuildingSplitIncoming:
+							if INFO.getType("BUILDING_", unit) in self.BuildingSplitIncoming:
 								continue
 						else:
 							if self.getPromotionType(unit) in self.promotionsSplitIncoming:
@@ -529,25 +537,24 @@ class PromotionsGraph(UnitUpgradesGraph):
 		self.bBuilding = False
 
 	def getNumberOfUnits(self):
-		return GC.getNumPromotionInfos()
+		return INFO.getCount("PROMOTION_")
 
 	def getPromotionType(self, e):
-		return GC.getPromotionInfo(e).getType()
+		return INFO.getType("PROMOTION_", e)
 
 	def getGraphEdges(self, graph):
+		# A LADDER IS AN `enables` EDGE (json.md par.9): a rung enables the rung above it, so the ladder is read
+		# FORWARDS off the edge family. Legacy walked it backwards through three prereq slots, which capped a
+		# rung at three predecessors; the edge has no such bound.
 		for unitA in graph.iterkeys():
-			unitD = GC.getPromotionInfo(unitA).getPrereqPromotion()
-			self.addUpgradePath(graph, unitD, unitA)
-			unitB = GC.getPromotionInfo(unitA).getPrereqOrPromotion1()
-			self.addUpgradePath(graph, unitB, unitA)
-			unitC = GC.getPromotionInfo(unitA).getPrereqOrPromotion2()
-			self.addUpgradePath(graph, unitC, unitA)
+			for unitB in INFO.getEdgeIds("PROMOTION_", unitA, EdgeFamily.EDGEF_ENABLES, EdgeBucket.EDGEB_PROMOTIONS):
+				self.addUpgradePath(graph, unitA, unitB)
 
 	def unitToString(self, unit):
-		return GC.getPromotionInfo(unit).getDescription() + ":%d"%(unit, )
+		return INFO.getDescription("PROMOTION_", unit) + ":%d"%(unit, )
 
 	def placeOnScreen(self, screen, unit, xPos, yPos):
-		screen.setImageButtonAt(self.pediaScreen.getNextWidgetName(), self.upgradesList, GC.getPromotionInfo(unit).getButton(), xPos, yPos, self.buttonSize, self.buttonSize, WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, unit, 1)
+		screen.setImageButtonAt(self.pediaScreen.getNextWidgetName(), self.upgradesList, INFO.getButton("PROMOTION_", unit), xPos, yPos, self.buttonSize, self.buttonSize, WidgetTypes.WIDGET_PEDIA_JUMP_TO_PROMOTION, unit, 1)
 
 
 class BuildingsGraph(UnitUpgradesGraph):
@@ -569,51 +576,42 @@ class BuildingsGraph(UnitUpgradesGraph):
 		self.bBuilding = True
 
 	def getNumberOfUnits(self):
-		return GC.getNumBuildingInfos()
+		return INFO.getCount("BUILDING_")
+
+	def successors(self, iBuilding):
+		"""The buildings that SUPERSEDE this one, split out of the merged dormant bucket.
+
+		A building's `requires.operate.dormant` holds the legacy ReplacementBuildings (enabler.md par.2) AND
+		the unrelated buildings whose mere PRESENCE dorms it -- a pollution band dorming an observatory. The
+		two mechanisms were unified deliberately, so the distinction does not survive into the data and no
+		read can recover it.
+
+		The discriminator is STRUCTURAL: a genuine successor is a real buildable, while a band or an ordinance
+		is excluded from the production queue and placed by its own system (json.md par.7 notConstructible).
+		That replaces the hand-kept list of five offending ids this used to carry -- which covered only the
+		offenders somebody had noticed, against the 705 queue-excluded buildings that exist.
+		"""
+		aOut = []
+		for iOther in INFO.getDormantTriggerIds("BUILDING_", iBuilding):
+			if not INFO.isNotConstructible("BUILDING_", iOther):
+				aOut.append(iOther)
+		return aOut
 
 	def getGraphEdges(self, graph):
-		import copy
-
-		aSpecialReplacementsList = ["BUILDING_POLLUTION_BLACKENED_SKIES", "BUILDING_ORDINANCE_GAMBLING_BAN", "BUILDING_ORDINANCE_ALCOHOL_PROHIBITION", "BUILDING_ORDINANCE_DRUG_PROHIBITION", "BUILDING_ORDINANCE_PROSTITUTION_BAN"]
 		for buildingA in graph.iterkeys():
-			info = GC.getBuildingInfo(buildingA)
-			if not info:
-				continue
-			buildingReplacesA = []
-			buildingReplacesAList = []
-			#Create a list of buildings that replace buildingA
-			for i in xrange(info.getNumReplacementBuilding()):
-				CvReplacementBuilding = GC.getBuildingInfo(info.getReplacementBuilding(i))
-				if CvReplacementBuilding.getType() not in aSpecialReplacementsList: #Ignore bans
-					buildingReplacesA.append(info.getReplacementBuilding(i))
-
-			#Create a list of buildings that replace the list buildingReplacesA
-			for numB in buildingReplacesA:
-				info = GC.getBuildingInfo(numB)
-				if not info:
-					continue
-				for i in xrange(info.getNumReplacementBuilding()):
-					iReplacement = info.getReplacementBuilding(i)
-					if iReplacement not in buildingReplacesAList:
-						buildingReplacesAList.append(iReplacement)
-			#Create a deepcopy
-			replacesA = copy.deepcopy(buildingReplacesA)
-			#If the building is replaced by a building that replaces A, remove it from the path
-			for numB in replacesA:
-				if GC.getBuildingInfo(numB) is None:
-					continue
-				for numC in buildingReplacesAList:
-					if GC.getBuildingInfo(numC) is None:
-						continue
-					if numC == numB:
-						buildingReplacesA.remove(numB)
-						break
-			#Generate graph
-			for numB in buildingReplacesA:
-				self.addUpgradePath(graph, buildingA, numB)
+			aDirect = self.successors(buildingA)
+			# Transitive reduction: where A is superseded by B and B by C, draw A->B->C rather than also A->C.
+			aIndirect = []
+			for iB in aDirect:
+				for iC in self.successors(iB):
+					if iC not in aIndirect:
+						aIndirect.append(iC)
+			for iB in aDirect:
+				if iB not in aIndirect:
+					self.addUpgradePath(graph, buildingA, iB)
 
 	def unitToString(self, unit):
-		return GC.getBuildingInfo(unit).getDescription() + ":%d"%(unit, )
+		return INFO.getDescription("BUILDING_", unit) + ":%d"%(unit, )
 
 	def placeOnScreen(self, screen, unit, xPos, yPos):
-		screen.setImageButtonAt(self.pediaScreen.getNextWidgetName(), self.upgradesList, GC.getBuildingInfo(unit).getButton(), xPos, yPos, self.buttonSize, self.buttonSize, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, unit, 1)
+		screen.setImageButtonAt(self.pediaScreen.getNextWidgetName(), self.upgradesList, INFO.getButton("BUILDING_", unit), xPos, yPos, self.buttonSize, self.buttonSize, WidgetTypes.WIDGET_PEDIA_JUMP_TO_BUILDING, unit, 1)

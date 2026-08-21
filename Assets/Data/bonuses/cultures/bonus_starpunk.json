@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_STARPUNK",
+ "enables": {
+  "buildings": [
+   "BUILDING_NEO_PYRAMID",
+   "BUILDING_STARGATE"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_STARPUNK"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_STARPUNK",
+  "civilopedia": "TXT_KEY_BONUS_STARPUNK_PEDIA",
+  "bonusClassType": "BONUSCLASS_GENMODS",
+  "source": "culture"
+ }
+}

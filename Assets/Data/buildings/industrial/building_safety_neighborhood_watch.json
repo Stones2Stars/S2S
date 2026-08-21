@@ -1,0 +1,62 @@
+{
+ "type": "BUILDING_SAFETY_NEIGHBORHOOD_WATCH",
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_CRIMINOLOGY"
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "flat": [
+    {
+     "value": -50,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "flat": [
+    {
+     "value": 100,
+     "per": {
+      "type": "POPULATION",
+      "each": 100
+     }
+    }
+   ]
+  }
+ },
+ "PROPERTY_CRIME": {
+  "empire": {
+   "flat": -50
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SAFETY_NEIGHBORHOOD_WATCH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SAFETY_NEIGHBORHOOD_WATCH",
+  "civilopedia": "TXT_KEY_BUILDING_SAFETY_NEIGHBORHOOD_WATCH_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

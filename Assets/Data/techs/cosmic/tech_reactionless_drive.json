@@ -1,0 +1,67 @@
+{
+ "type": "TECH_REACTIONLESS_DRIVE",
+ "enables": {
+  "bonuses": [
+   "BONUS_PERSONAL_STARCRAFT"
+  ],
+  "buildings": [
+   "BUILDING_GN_DRIVE",
+   "BUILDING_INTERSTELLAR_PERSONAL_STARCRAFT_FACTORY",
+   "BUILDING_INTERSTELLAR_SPEEDWAY",
+   "BUILDING_INTERSTELLAR_TOURIST_AGENCY"
+  ],
+  "techs": [
+   "TECH_COMPACT_WORMHOLES",
+   "TECH_NEUTRONIUM",
+   "TECH_OMEGA_MINUS_ENGINEERING",
+   "TECH_QUANTUM_RAMJET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ZEPTOTECHNOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_INDUCED_SUPERNOVA",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 326209
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/reactionless_drive.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_REACTIONLESS_DRIVE",
+  "civilopedia": "TXT_KEY_TECH_REACTIONLESS_DRIVE_PEDIA",
+  "quote": "TXT_KEY_TECH_REACTIONLESS_DRIVE_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 144,
+  "gridY": 19
+ }
+}

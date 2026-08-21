@@ -1,0 +1,79 @@
+{
+ "type": "TECH_FOLDING_SPACE",
+ "enables": {
+  "bonuses": [
+   "BONUS_WARP_DRIVES"
+  ],
+  "buildings": [
+   "BUILDING_EFFECT_GALACTIC_ECONOMY",
+   "BUILDING_GALACTIC_ECONOMY",
+   "BUILDING_INTERSTELLAR_WARP_DRIVE_FACTORY",
+   "BUILDING_MARTIAN_STARPORT",
+   "BUILDING_VOYAGE_TO_ANDROMEDA"
+  ],
+  "techs": [
+   "TECH_APPLIED_RELATIVITY",
+   "TECH_COSMIC_LIFESTYLE",
+   "TECH_GALACTIC_WARFARE",
+   "TECH_SPACE_CREASING",
+   "TECH_TIME_TRAVEL"
+  ],
+  "units": [
+   "UNIT_INTERGALACTIC_REWARD",
+   "UNIT_VON_NEUMANN_PROBE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_WORMHOLE_TRAVERSAL",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 194821
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_MILITARY": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/foldingspace.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_FOLDING_SPACE",
+  "soundMP": "AS2D_TECH_FOLDING_SPACE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_FOLDING_SPACE",
+  "civilopedia": "TXT_KEY_TECH_FOLDING_SPACE_PEDIA",
+  "quote": "TXT_KEY_TECH_FOLDING_SPACE_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 136,
+  "gridY": 11
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "type": "BUILDING_WIRELESS_SPACE_LAUNCH",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MAGLEV_LAUNCHER",
+    "TECH_ELECTROMAGNETIC_VOLTAGE",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 4485,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WIRELESS_SPACE_LAUNCH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WIRELESS_SPACE_LAUNCH",
+  "civilopedia": "TXT_KEY_BUILDING_WIRELESS_SPACE_LAUNCH_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

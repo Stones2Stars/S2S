@@ -1,0 +1,102 @@
+{
+ "type": "BUILDING_THE_ISE_JINGU",
+ "requires": {
+  "operate": {
+   "all": [
+    {
+     "IS_HOLY_CITY": "RELIGION_SHINTO"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 1,
+     "per": {
+      "type": "RELIGION_SHINTO",
+      "scope": "world"
+     }
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    4,
+    {
+     "value": 4,
+     "enabled": {
+      "existedFor": {
+       "min": 1000
+      }
+     }
+    },
+    {
+     "value": 1,
+     "per": {
+      "type": "RELIGION_SHINTO",
+      "scope": "world"
+     }
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "percent": -10
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "religion": {
+  "city": {
+   "RELIGION_SHINTO": {
+    "flat": 1
+   }
+  }
+ },
+ "shrine": "RELIGION_SHINTO",
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SHRINE_SHINTO"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_THE_ISE_JINGU"
+  }
+ },
+ "sound": {
+  "construct": "SND_BUILD_SHINTO"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_THE_ISE_JINGU",
+  "civilopedia": "TXT_KEY_BUILDING_THE_ISE_JINGU_PEDIA",
+  "pediaCategory": "religious",
+  "notConstructible": true,
+  "worth": 8,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_PROPHET",
+  "religion": "RELIGION_SHINTO",
+  "advisor": "ADVISOR_RELIGION",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

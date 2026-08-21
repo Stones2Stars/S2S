@@ -1,0 +1,26 @@
+{
+ "type": "IMPROVEMENT_CITY_RUINS",
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": 10
+   },
+   "amount": {
+    "percent": 15
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_CITY_RUINS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_CITY_RUINS",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_CITY_RUINS_PEDIA",
+  "advancedStart": {
+   "cost": -1
+  },
+  "graphicalOnly": true
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "type": "PROMOTION_LEAD_STORM3",
+ "promotionLine": {
+  "PROMOTIONLINE_LEAD_STORM": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/LeadStorm3Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_LEAD_STORM3"
+ }
+}

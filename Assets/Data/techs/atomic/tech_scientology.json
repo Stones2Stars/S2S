@@ -1,0 +1,59 @@
+{
+ "type": "TECH_SCIENTOLOGY",
+ "enables": {
+  "religions": [
+   "RELIGION_SCIENTOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_FRANCHISES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "grants": {
+  "firstFreeProphet": "UNIT_PROPHET"
+ },
+ "cost": {
+  "research": 11665
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 10
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   },
+   {
+    "FLAVOR_MILITARY": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/Scientology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_SCIENTOLOGY2",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_SCIENTOLOGY",
+  "civilopedia": "TXT_KEY_TECH_SCIENTOLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_SCIENTOLOGY_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "gridX": 77,
+  "gridY": 7,
+  "worth": 8
+ }
+}

@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_MONEY_PRESS",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PRINTING_PRESS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "CIVIC_PAPER_MONEY"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 1
+  }
+ },
+ "cost": {
+  "production": 410,
+  "sizeModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 4
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MONEY_PRESS",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_MUSEUM"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MONEY_PRESS",
+  "civilopedia": "TXT_KEY_BUILDING_MONEY_PRESS_PEDIA",
+  "worth": 4,
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

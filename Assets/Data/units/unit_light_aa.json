@@ -1,0 +1,136 @@
+{
+ "type": "UNIT_LIGHT_AA",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_AUTOMATIC_WEAPONS",
+    {
+     "any": [
+      "BUILDING_FACTORY_AMMUNITION",
+      "BUILDING_AMMUNITIONS_WORKSHOP",
+      "BUILDING_MILITARY_INDUSTRIAL_COMPLEX"
+     ]
+    }
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_HALFTRACK"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_TRACKED": {
+     "percent": -25
+    }
+   }
+  }
+ },
+ "strength": {
+  "unit": {
+   "flat": 35
+  }
+ },
+ "range": {
+  "unit": {
+   "flat": 1
+  }
+ },
+ "air": {
+  "unit": {
+   "intercept": {
+    "percent": 20
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_LIGHT_AA"
+  }
+ },
+ "skills": [
+  "noCapture",
+  "mechanized",
+  "onlyDefensive",
+  "tradable"
+ ],
+ "tags": [
+  "military",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WHEELED",
+ "combatClasses": [
+  "UNITCOMBAT_COMBATANT",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_WEAPON_METHOD_DISTANCE_PRIMARY",
+  "UNITCOMBAT_WEAPON_H2H_BAYONETTE",
+  "UNITCOMBAT_WEAPON_DIST_FULLY_AUTOMATIC",
+  "UNITCOMBAT_SPEED_SLOW",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_SQUAD",
+  "UNITCOMBAT_SIZE_LARGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 1030,
+  "upkeep": 2
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_LIGHT_AA",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "rangedWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 3,
+      "define": {
+       "early": "ART_DEF_UNIT_LIGHT_AA"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_LIGHT_AA",
+  "civilopedia": "TXT_KEY_UNIT_LIGHT_AA_PEDIA",
+  "worth": 5,
+  "militaryWorth": 80,
+  "xpValueAttack": 1,
+  "xpValueDefense": 5,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_CITY_COUNTER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_MILITARY",
+  "unitAIs": [
+   "UNITAI_COUNTER",
+   "UNITAI_CITY_COUNTER",
+   "UNITAI_CITY_SPECIAL",
+   "UNITAI_ESCORT"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "combatLimit": 85
+  }
+ }
+}

@@ -1,0 +1,118 @@
+{
+ "type": "CIVIC_ANARCHISM",
+ "enables": {
+  "buildings": [
+   "BUILDING_BLOODHUNTRESSS_HUT",
+   "BUILDING_BLOOD_DANCE"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    -2,
+    {
+     "value": -3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    -2,
+    {
+     "value": -2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": [
+    -3,
+    {
+     "value": -3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    -3,
+    {
+     "value": -3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": [
+    {
+     "value": -6,
+     "per": {
+      "type": "CITY",
+      "above": "CITY_LIMIT"
+     },
+     "enabled": "GAMEOPTION_EXP_OVEREXPANSION_PENALTIES"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 35
+   },
+   "numCities": {
+    "percent": 35
+   }
+  }
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 0
+   },
+   {
+    "FLAVOR_RELIGION": 0
+   },
+   {
+    "FLAVOR_PRODUCTION": 0
+   },
+   {
+    "FLAVOR_GOLD": 0
+   },
+   {
+    "FLAVOR_SCIENCE": 0
+   },
+   {
+    "FLAVOR_CULTURE": 0
+   },
+   {
+    "FLAVOR_GROWTH": 0
+   },
+   {
+    "FLAVOR_ESPIONAGE": 0
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/government_anarchism.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_ANARCHISM",
+  "civilopedia": "TXT_KEY_CIVIC_ANARCHISM_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_ANARCHISM_STRATEGY",
+  "civicOption": "CIVICOPTION_GOVERNMENT",
+  "cityLimit": 2,
+  "weLoveTheKing": "TXT_KEY_CIVIC_WE_LOVE_ANARCHY"
+ }
+}

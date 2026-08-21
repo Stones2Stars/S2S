@@ -1,0 +1,60 @@
+{
+ "type": "IMPROVEMENT_GOODY_HUT",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "any": [
+      {
+       "terrain": [
+        "TERRAIN_GRASSLAND",
+        "TERRAIN_PLAINS",
+        "TERRAIN_DESERT",
+        "TERRAIN_TAIGA",
+        "TERRAIN_MARSH",
+        "TERRAIN_LUSH",
+        "TERRAIN_SCRUB",
+        "TERRAIN_MUDDY"
+       ]
+      },
+      {
+       "feature": [
+        "FEATURE_JUNGLE",
+        "FEATURE_FOREST",
+        "FEATURE_FOREST_ANCIENT",
+        "FEATURE_SWAMP"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "defense": {
+  "plot": {
+   "air": {
+    "flat": -1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_GOODY_HUT"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_FOREST_SELECT_AMB"
+ },
+ "mapGeneration": {
+  "goody": true,
+  "tilesPerGoody": 35,
+  "goodyRange": 3
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_GOODY_HUT",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_GOODY_HUT_PEDIA",
+  "advancedStart": {
+   "cost": -1
+  }
+ }
+}

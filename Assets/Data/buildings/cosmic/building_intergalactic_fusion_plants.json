@@ -1,0 +1,51 @@
+{
+ "type": "BUILDING_INTERGALACTIC_FUSION_PLANTS",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERGALACTIC_MECHANOSYNTHESIS_FACTORIES",
+   "BUILDING_INTERGALACTIC_STARKILLER_BASE",
+   "BUILDING_INTERGALACTIC_VON_NEUMANN_COLONIZERS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SPACE_CREASING",
+    {
+     "type": "MAPCATEGORY_UNIVERSAL",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 25
+  }
+ },
+ "cost": {
+  "production": 2634,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERGALACTIC_FUSION_PLANTS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERGALACTIC_FUSION_PLANTS",
+  "civilopedia": "TXT_KEY_BUILDING_INTERGALACTIC_FUSION_PLANTS_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL"
+  ]
+ }
+}

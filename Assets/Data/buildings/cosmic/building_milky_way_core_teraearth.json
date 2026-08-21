@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_MILKY_WAY_CORE_TERAEARTH",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MILKY_WAY_CORE_COLONY",
+    "TECH_EXOTIC_STARS",
+    {
+     "type": "TERRAIN_GALACTIC_CORE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_MILKY_WAY",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_WARP_DRIVES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_AB_MATTER",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 15
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 30
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 9710,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MILKY_WAY_CORE_TERAEARTH",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MILKY_WAY_CORE_TERAEARTH",
+  "civilopedia": "TXT_KEY_BUILDING_MILKY_WAY_CORE_TERAEARTH_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MILKY_WAY"
+  ]
+ }
+}

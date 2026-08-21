@@ -51,8 +51,15 @@
 from CvPythonExtensions import *
 import CvUtil
 
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
+STATE = CyState()
+ENABLER = CyEnabler()
+ACT = CyAct()
+ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
 def onCityAcquired(argsList):
@@ -95,7 +102,7 @@ def onCityAcquired(argsList):
 		nPartisan = nPartisan * (100 - CyCity.plot().calculateCulturePercent(iOwnerNew)) / 100
 
 	# +1 partisans with protective trait (only loserPlayer) ###
-	if nPartisan > -1 and CyPlayerOld.hasTrait(GC.getInfoTypeForString('TRAIT_PROTECTIVE')):
+	if nPartisan > -1 and CyPlayerOld.hasTrait(CvUtil.getActiveTraitId('TRAIT_PROTECTIVE')):
 		nPartisan += 1
 
 	# +3 partisans with Nationhood civic (only loserPlayer)
@@ -109,8 +116,8 @@ def onCityAcquired(argsList):
 ### set Partisan Units ###
 ##########################
 
-	ft_forest = GC.getFEATURE_FOREST()
-	ft_jungle = GC.getFEATURE_JUNGLE()
+	ft_forest = GC.getInfoTypeForString("FEATURE_FOREST")
+	ft_jungle = GC.getInfoTypeForString("FEATURE_JUNGLE")
 	it_fort = GC.getInfoTypeForString("IMPROVEMENT_FORT")
 	# Check all city radius plots
 	iX = CyCity.getX()
@@ -224,7 +231,7 @@ def onCityAcquired(argsList):
 		CyPlot = plots[GAME.getSorenRandNum(iPlots, "Random CyPlot for Partisan")]
 		iiX = CyPlot.getX()
 		iiY = CyPlot.getY()
-		pNewUnit = CyPlayerOld.initUnit(UNIT_PARTISAN, iiX, iiY, UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.NO_DIRECTION )
+		pNewUnit = CyPlayerOld.createUnit(UNIT_PARTISAN, iiX, iiY, UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.NO_DIRECTION )
 
 ################################
 ### set aditional promotions ###
@@ -361,8 +368,8 @@ def onCityAcquired(argsList):
 	if nPartisan > 1:
 		nPartisan -= 1
 		if iPop > nPartisan:
-			CyCity.changePopulation(-nPartisan)
-		elif iPop > 1: CyCity.changePopulation(1 - iPop)
+			ACT.changeCityPopulation(CyCity.getOwner(), CyCity.getID(), -nPartisan)
+		elif iPop > 1: ACT.changeCityPopulation(CyCity.getOwner(), CyCity.getID(), 1 - iPop)
 
 
 # Partisan War Prize
@@ -370,34 +377,41 @@ def onCombatResult(argsList):
 	##  First we check that the winning unit is a patisan and the loosing a seige or "armour" unit
 	##  There is a small chance that the unit will be captured.
 	CyUnitW, CyUnitL = argsList
+	iOwnerW, iUnitIdW = CyUnitW
+	iOwnerL, iUnitIdL = CyUnitL
 
-	if CyUnitW.getUnitType() == GC.getInfoTypeForString('UNIT_PARTISAN'):
+	aW = STATE.getUnitRead(iOwnerW, iUnitIdW)
+	aL = STATE.getUnitRead(iOwnerL, iUnitIdL)
+
+	if aW[UnitReadKind.UNIT_READ_TYPE] == GC.getInfoTypeForString('UNIT_PARTISAN'):
 		captureChance = None
-		iCombatL = CyUnitL.getUnitCombatType()
+		iCombatL = aL[UnitReadKind.UNIT_READ_COMBAT_CLASS]
 		if iCombatL == GC.getInfoTypeForString('UNITCOMBAT_SIEGE'):
 			captureChance = 10
 		elif iCombatL in (GC.getInfoTypeForString('UNITCOMBAT_TRACKED'), GC.getInfoTypeForString('UNITCOMBAT_WHEELED')):
 			captureChance = 5
 		if captureChance and GAME.getSorenRandNum(100, "Partisan capture unit") < captureChance:
 
-			iPlayerW = CyUnitW.getOwner()
-			CyPlayerW = GC.getPlayer(iPlayerW)
+			iPlayerW = iOwnerW
 
-			iUnitL = CyUnitL.getUnitType()
-			iX = CyUnitW.getX()
-			iY = CyUnitW.getY()
-			CyUnit = CyPlayerW.initUnit(iUnitL, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
-			CyUnit.setDamage(75, False)
-			CyUnit.finishMoves()
+			iUnitL = aL[UnitReadKind.UNIT_READ_TYPE]
+			aPosW = STATE.getUnitPosition(iOwnerW, iUnitIdW)
+			iX = aPosW[0]
+			iY = aPosW[1]
+			iNewUnit = ACT.createUnit(iPlayerW, iUnitL, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
+			# -1 = NO_PLAYER: the damage is not attributed to anyone. The old call passed `False`, which coerced
+			# to 0 and therefore blamed player 0 -- a latent bug this conversion drops rather than carries over.
+			ACT.setUnitDamage(iPlayerW, iNewUnit, 75, -1)
+			ACT.finishUnitMoves(iPlayerW, iNewUnit)
 
 			iPlayerAct = GAME.getActivePlayer()
 			if iPlayerAct == iPlayerW:
 				CvUtil.sendMessage(
-					TRNSLTR.getText("TXT_KEY_PARTISAN_CAPTURE_UNIT2", (GC.getUnitInfo(iUnitL).getDescription(),)),
+					TRNSLTR.getText("TXT_KEY_PARTISAN_CAPTURE_UNIT2", (INFO.getDescription("UNIT_", iUnitL),)),
 					iPlayerAct, 16, 'Art/Interface/Buttons/civics/despotism.dds', ColorTypes(7), iX, iY, True, True
 				)
-			elif iPlayerAct == CyUnitL.getOwner():
+			elif iPlayerAct == iOwnerL:
 				CvUtil.sendMessage(
-					TRNSLTR.getText("TXT_KEY_PARTISAN_CAPTURE_UNIT1", (GC.getUnitInfo(iUnitL).getDescription(),)),
+					TRNSLTR.getText("TXT_KEY_PARTISAN_CAPTURE_UNIT1", (INFO.getDescription("UNIT_", iUnitL),)),
 					iPlayerAct, 16, 'Art/Interface/Buttons/civics/despotism.dds', ColorTypes(44), iX, iY, True, True
 				)

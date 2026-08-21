@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_MILITARY_STANDARD_DEER",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_AVIATION"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+    "TECH_MEGAFAUNA_DOMESTICATION",
+    {
+     "any": [
+      "BUILDING_ANIMAL_TRAINER_DEER",
+      "BUILDING_EFFECT_HERITAGE_DEER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "UNIT_DEERRIDER": {
+     "percent": 10
+    },
+    "UNIT_DEER_ARCHER": {
+     "percent": 10
+    },
+    "UNIT_DEER_LIGHT": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MILITARY_STANDARD_DEER",
+  "civilopedia": "TXT_KEY_BUILDING_MILITARY_STANDARD_ANIMAL_MASCOT_PEDIA",
+  "help": "TXT_KEY_BUILDING_MILITARY_STANDARD_DEER_HELP",
+  "notConstructible": true,
+  "worth": 2,
+  "conquestProbability": 25,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_MEGAFAUNA",
+  "advisor": "ADVISOR_MILITARY",
+  "freeStartEra": "C2C_ERA_ANCIENT",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

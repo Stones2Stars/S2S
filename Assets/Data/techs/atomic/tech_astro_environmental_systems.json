@@ -1,0 +1,73 @@
+{
+ "type": "TECH_ASTRO_ENVIRONMENTAL_SYSTEMS",
+ "enables": {
+  "buildings": [
+   "BUILDING_COSMONAUT_TRAINING_CENTRE",
+   "BUILDING_PROJECT_GEMINI"
+  ],
+  "projects": [
+   "PROJECT_APOLLO_PROGRAM"
+  ],
+  "techs": [
+   "TECH_LUNAR_EXPLORATION",
+   "TECH_SPACE_STATIONS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_RECYCLING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASTRONAUTICS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 14870
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/astroenvironmentalsystems.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ASTRO_ENVIRONMENTAL_SYSTEMS",
+  "soundMP": "AS2D_TECH_ASTRO_ENVIRONMENTAL_SYSTEMS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ASTRO_ENVIRONMENTAL_SYSTEMS",
+  "civilopedia": "TXT_KEY_TECH_ASTRO_ENVIRONMENTAL_SYSTEMS_PEDIA",
+  "quote": "TXT_KEY_TECH_ASTRO_ENVIRONMENTAL_SYSTEMS_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 83,
+  "gridY": 11
+ }
+}

@@ -1,0 +1,175 @@
+{
+ "type": "UNIT_WORKER_MODERN",
+ "builds": [
+  "BUILD_BURN_VEGETATION",
+  "BUILD_DESERT_CAMP",
+  "BUILD_HUNTING_PRESERVE",
+  "BUILD_JUNGLE_CAMP",
+  "BUILD_REMOVE_VEGETATION",
+  "BUILD_SALT_GATHERER",
+  "BUILD_THATCH_CUTTER",
+  "BUILD_WETLANDS_CAMP",
+  "BUILD_MUSHROOM_GATHERER",
+  "BUILD_ORCHARD",
+  "BUILD_PASTURE",
+  "BUILD_SILK_FARM",
+  "BUILD_WINERY",
+  "BUILD_FARM",
+  "BUILD_QUARRY",
+  "BUILD_GEOGLYPH",
+  "BUILD_MACHU_PICCHU",
+  "BUILD_PAVED_ROAD",
+  "BUILD_WATERMILL",
+  "BUILD_WORKSHOP",
+  "BUILD_DRAIN_SWAMP",
+  "BUILD_LUMBERMILL",
+  "BUILD_PEAT_CUTTER",
+  "BUILD_PLANTATION",
+  "BUILD_ROAD",
+  "BUILD_WINDMILL",
+  "BUILD_MOUNTAIN_MINE",
+  "BUILD_YOUNG_FOREST",
+  "BUILD_TOWN",
+  "BUILD_REMOVE_ROCK_FORMATION",
+  "BUILD_SHAFT_MINE",
+  "BUILD_ARCHEOLOGICAL_SITE",
+  "BUILD_FOSSIL_DIG_SITE",
+  "BUILD_STEEL_WATCHTOWER",
+  "BUILD_COMMAND_BUNKER",
+  "BUILD_RESOURCE_TOWN",
+  "BUILD_FACTORY",
+  "BUILD_RAILROAD",
+  "BUILD_FOREST_PRESERVE",
+  "BUILD_HYDROCARBON_WELL",
+  "BUILD_HYDRO_DAM",
+  "BUILD_RADIO_TOWER",
+  "BUILD_SUBURBS",
+  "BUILD_SCRUB_FALLOUT",
+  "BUILD_HIGHWAY",
+  "BUILD_ELECTRIC_RAILROAD",
+  "BUILD_TREEFARM",
+  "BUILD_MODERN_MINE",
+  "BUILD_GEOTHERMAL_FACTORY",
+  "BUILD_GROUNDWATER_WELL",
+  "BUILD_GROW_FOREST",
+  "BUILD_MANUFACTURING_COMPLEX",
+  "BUILD_MODERN_WINDMILL",
+  "BUILD_NATURE_PRESERVE",
+  "BUILD_PLANT_BAMBOO",
+  "BUILD_PLANT_JUNGLE",
+  "BUILD_PLANT_SAVANNA",
+  "BUILD_RADAR_TOWER",
+  "BUILD_SOLAR_PANELS",
+  "BUILD_WILDLIFE_SANCTUARY",
+  "BUILD_MAGLEV",
+  "BUILD_CLEAR_FALLOUT_FAST",
+  "BUILD_COMMAND_CENTER",
+  "BUILD_RESOURCE_COMPLEX",
+  "BUILD_RECLAIM_LAND",
+  "BUILD_SANITIZE",
+  "BUILD_HYBRID_FOREST",
+  "BUILD_VACTRAIN",
+  "BUILD_VERTICAL_FARM"
+ ],
+ "obsoletedBy": {
+  "techs": [
+   "TECH_PERSONAL_ROBOTS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_LOGISTICS"
+   ],
+   "dormant": {
+    "all": [
+     "UNIT_CLONES"
+    ]
+   }
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 2
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_WORKER_MODERN"
+  }
+ },
+ "skills": [
+  "food",
+  "tradable"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_WHEELED",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_DRIVING",
+  "UNITCOMBAT_QUALITY_STANDARD",
+  "UNITCOMBAT_GROUP_PARTY",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 848,
+  "upkeep": 5
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WORKER_FREIGHT",
+   "meshGroups": {
+    "groupSize": 2,
+    "meleeWaveSize": 2,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WORKER_FREIGHT"
+      }
+     },
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_WORKERMODERN"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_WORKER_MODERN",
+  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "workRate": 175
+  }
+ }
+}

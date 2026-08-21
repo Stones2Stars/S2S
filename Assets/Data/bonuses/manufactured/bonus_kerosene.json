@@ -1,0 +1,24 @@
+{
+ "type": "BONUS_KEROSENE",
+ "enables": {
+  "buildings": [
+   "BUILDING_OIL_LAMPS"
+  ],
+  "units": [
+   "UNIT_AKAVAI",
+   "UNIT_ARSONIST",
+   "UNIT_POST_APOCALYPTIC_GRENADIER"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_KEROSENE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_KEROSENE",
+  "civilopedia": "TXT_KEY_BONUS_KEROSENE_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

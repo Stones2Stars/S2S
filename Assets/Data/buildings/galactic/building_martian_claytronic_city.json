@@ -1,0 +1,55 @@
+{
+ "type": "BUILDING_MARTIAN_CLAYTRONIC_CITY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MARTIAN_ARCOLOGY",
+    "TECH_NANOMORPHIC_TROIDS",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 9246,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_CLAYTRONIC_CITY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_CLAYTRONIC_CITY",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_CLAYTRONIC_CITY_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

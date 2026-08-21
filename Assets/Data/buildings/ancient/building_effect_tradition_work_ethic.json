@@ -1,0 +1,49 @@
+{
+ "type": "BUILDING_EFFECT_TRADITION_WORK_ETHIC",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MOTORIZED_TRANSPORTATION"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_SPECIALIZATION"
+   ]
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      "PROMOTION_TRADITION_WORK_ETHIC"
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRADITION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EFFECT_TRADITION_WORK_ETHIC",
+  "civilopedia": "TXT_KEY_BUILDING_TRADITION_WORK_ETHIC_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

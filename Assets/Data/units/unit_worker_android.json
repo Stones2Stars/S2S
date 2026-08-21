@@ -1,0 +1,152 @@
+{
+ "type": "UNIT_WORKER_ANDROID",
+ "builds": [
+  "BUILD_MUSHROOM_GATHERER",
+  "BUILD_ORCHARD",
+  "BUILD_PASTURE",
+  "BUILD_SILK_FARM",
+  "BUILD_WINERY",
+  "BUILD_FARM",
+  "BUILD_QUARRY",
+  "BUILD_GEOGLYPH",
+  "BUILD_PLANTATION",
+  "BUILD_ROAD",
+  "BUILD_MOUNTAIN_MINE",
+  "BUILD_YOUNG_FOREST",
+  "BUILD_ARCHEOLOGICAL_SITE",
+  "BUILD_FOSSIL_DIG_SITE",
+  "BUILD_FOREST_PRESERVE",
+  "BUILD_HYDROCARBON_WELL",
+  "BUILD_HYDRO_DAM",
+  "BUILD_RADIO_TOWER",
+  "BUILD_SUBURBS",
+  "BUILD_TREEFARM",
+  "BUILD_MODERN_MINE",
+  "BUILD_GEOTHERMAL_FACTORY",
+  "BUILD_GROUNDWATER_WELL",
+  "BUILD_GROW_FOREST",
+  "BUILD_MANUFACTURING_COMPLEX",
+  "BUILD_MODERN_WINDMILL",
+  "BUILD_NATURE_PRESERVE",
+  "BUILD_PLANT_BAMBOO",
+  "BUILD_PLANT_JUNGLE",
+  "BUILD_PLANT_SAVANNA",
+  "BUILD_RADAR_TOWER",
+  "BUILD_SOLAR_PANELS",
+  "BUILD_WILDLIFE_SANCTUARY",
+  "BUILD_MAGLEV",
+  "BUILD_CLEAR_FALLOUT_FAST",
+  "BUILD_COMMAND_CENTER",
+  "BUILD_RESOURCE_COMPLEX",
+  "BUILD_RECLAIM_LAND",
+  "BUILD_SANITIZE",
+  "BUILD_HYBRID_FOREST",
+  "BUILD_VACTRAIN",
+  "BUILD_VERTICAL_FARM",
+  "BUILD_CORE_MINE",
+  "BUILD_GRAVITY_TRAIN",
+  "BUILD_TERRAFORM_DESERT",
+  "BUILD_TERRAFORM_DUNES",
+  "BUILD_TERRAFORM_GRASS",
+  "BUILD_TERRAFORM_LUSH",
+  "BUILD_TERRAFORM_MUDDY",
+  "BUILD_TERRAFORM_PERMAFROST",
+  "BUILD_TERRAFORM_PLAINS",
+  "BUILD_TERRAFORM_ROCKY",
+  "BUILD_TERRAFORM_SCRUB",
+  "BUILD_TERRAFORM_TAIGA",
+  "BUILD_TERRAFORM_TUNDRA",
+  "BUILD_JUMPLANE"
+ ],
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_PERSONAL_ROBOTS",
+    {
+     "any": [
+      "BUILDING_FACTORY_ANDROIDS",
+      "BUILDING_NANOTECH_COMPLEX"
+     ]
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 3
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_WORKER_ANDROID"
+  }
+ },
+ "skills": [
+  "ignoreTerrainCost",
+  "tradable"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 3500,
+  "upkeep": 7
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_WORKER_ANDROID",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_WORKER_ANDROID",
+       "late": "ART_DEF_UNIT_WORKER_ANDROID"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_WORKER_ANDROID",
+  "civilopedia": "TXT_KEY_UNIT_WORKER_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "base": {
+   "workRate": 250
+  }
+ }
+}

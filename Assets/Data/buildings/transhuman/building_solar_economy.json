@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_SOLAR_ECONOMY",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_EFFECT_CISLUNAR_ECONOMY",
+    {
+     "type": "BUILDING_STARPORT",
+     "scope": "empire",
+     "min": 5,
+     "scaling": "amountBuildings"
+    },
+    {
+     "type": "BUILDING_STRATOSPHERIC_TOWER",
+     "scope": "empire",
+     "min": 2,
+     "scaling": "amountBuildings"
+    },
+    "TECH_PLANETARY_MEGASTRUCTURES",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_EFFECT_SOLAR_ECONOMY"
+   }
+  ]
+ },
+ "cost": {
+  "production": 15610
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_SOLAR_ECONOMY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SOLAR_ECONOMY",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SOLAR_ECONOMY",
+  "civilopedia": "TXT_KEY_BUILDING_SOLAR_ECONOMY_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

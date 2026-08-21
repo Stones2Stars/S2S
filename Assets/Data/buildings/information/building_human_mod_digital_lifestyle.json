@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DIGITAL_OFFICES",
+    "TECH_ONLINE_COMMUNITY",
+    {
+     "any": [
+      "BUILDING_SOCIAL_NETWORKS",
+      "BUILDING_HOLOGRAPHIC_NETWORKS",
+      "BUILDING_EXOCORTEX_NETWORKS"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CELLPHONES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_DIGITAL_LIFESTYLE"
+  ]
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_MARKET_RESEARCH",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 4210
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_DIGITAL_LIFESTYLE_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

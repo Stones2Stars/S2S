@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_ANTARCTIC_SKYSCRAPER",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_STRATOSPHERIC_TOWER",
+    "TECH_CRYSTALPUNK",
+    {
+     "type": "FEATURE_ICE",
+     "scope": "plot"
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_CRYSTALPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 5455,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANTARCTIC_SKYSCRAPER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANTARCTIC_SKYSCRAPER",
+  "civilopedia": "TXT_KEY_BUILDING_ANTARCTIC_SKYSCRAPER_PEDIA",
+  "specialBuildingType": "SPECIALBUILDING_PUNK_CRYSTAL",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

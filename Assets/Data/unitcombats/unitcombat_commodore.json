@@ -1,0 +1,17 @@
+{
+ "type": "UNITCOMBAT_COMMODORE",
+ "skills": {
+  "cannotMergeSplit": true
+ },
+ "tags": [
+  "naval"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/commanders.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_COMMODORE"
+ }
+}

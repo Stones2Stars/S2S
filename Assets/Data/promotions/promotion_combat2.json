@@ -1,0 +1,60 @@
+{
+ "type": "PROMOTION_COMBAT2",
+ "enables": {
+  "promotions": [
+   "PROMOTION_AMBUSH",
+   "PROMOTION_AMPHIBIOUS",
+   "PROMOTION_ANTIBIOLOGICAL",
+   "PROMOTION_ANTITANK_DEFENSE3",
+   "PROMOTION_CAMOUFLAGE",
+   "PROMOTION_CHARGE",
+   "PROMOTION_CITY_GARRISON4",
+   "PROMOTION_COMBAT3",
+   "PROMOTION_COVER3",
+   "PROMOTION_DEDICATION",
+   "PROMOTION_FIELD1",
+   "PROMOTION_FIREARMS3",
+   "PROMOTION_FORMATION",
+   "PROMOTION_GUERILLA3",
+   "PROMOTION_HIT_AND_RUN",
+   "PROMOTION_LOOSE_FORMATION",
+   "PROMOTION_OBSERVERS",
+   "PROMOTION_PARAMEDIC2",
+   "PROMOTION_PINCH3",
+   "PROMOTION_SHOCK3",
+   "PROMOTION_STREET_FIGHTER1",
+   "PROMOTION_STREET_FIGHTER4",
+   "PROMOTION_SUPPRESIVE_FIRE",
+   "PROMOTION_WOODSMAN3"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT1"
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "percent": 10
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_COMBAT": 2
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Combat2.dds,Art/Interface/Buttons/Promotions_Atlas.dds,1,6"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COMBAT2",
+  "notOnUnitCombats": [
+   "UNITCOMBAT_ANIMAL"
+  ]
+ }
+}

@@ -1,0 +1,19 @@
+meta {
+  name: computed/game
+  type: http
+  seq: 15
+}
+
+get {
+  url: {{baseUrl}}/computed/game?player=0
+  body: none
+  auth: none
+}
+
+params:query {
+  player: 0
+}
+
+docs {
+  Turn / game-over / winner / victory countdowns.
+}

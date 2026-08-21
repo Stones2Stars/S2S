@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_BAHRAINI",
+ "enables": {
+  "units": [
+   "UNIT_AL_KHALIFA",
+   "UNIT_BANYAN_XEBEC"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_BAHRAINI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_BAHRAINI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

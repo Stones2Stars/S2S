@@ -1,0 +1,76 @@
+{
+ "type": "TECH_PLANETARY_ECONOMICS",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANIMAL_PRESERVE",
+   "BUILDING_GLOBAL_RAIL_NETWORK",
+   "BUILDING_WORLD_ELECTRIC_GRID"
+  ],
+  "builds": [
+   "BUILD_HYBRID_FOREST"
+  ],
+  "improvements": [
+   "IMPROVEMENT_HYBRID_FOREST"
+  ],
+  "techs": [
+   "TECH_LUNAR_TRADE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NANOROBOTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ENVIRONMENTAL_ECONOMICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ANDROIDS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 47795
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/planetaryeconomics.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_PLANETARY_ECONOMICS",
+  "soundMP": "AS2D_TECH_PLANETARY_ECONOMICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_PLANETARY_ECONOMICS",
+  "civilopedia": "TXT_KEY_TECH_PLANETARY_ECONOMICS_PEDIA",
+  "quote": "TXT_KEY_TECH_PLANETARY_ECONOMICS_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 108,
+  "gridY": 11
+ }
+}

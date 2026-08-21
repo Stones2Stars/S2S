@@ -1,0 +1,104 @@
+{
+ "type": "TECH_MATHEMATICS",
+ "enables": {
+  "bonuses": [
+   "BONUS_GEOGLYPH_PLANS"
+  ],
+  "buildings": [
+   "BUILDING_ARCHIMEDES_WORKSHOP",
+   "BUILDING_CULTURE_HELVETIAN",
+   "BUILDING_CULTURE_NUMIDIAN",
+   "BUILDING_GRAND_VILLA",
+   "BUILDING_GREAT_WALL_OF_CHINA",
+   "BUILDING_MATHEMATICS_ACADEMY",
+   "BUILDING_NAZCA_LINES",
+   "BUILDING_PLATOS_ACADEMY",
+   "BUILDING_TLALOCS_ALTAR",
+   "BUILDING_WATCH_TOWER"
+  ],
+  "builds": [
+   "BUILD_FORT"
+  ],
+  "improvements": [
+   "IMPROVEMENT_FORT"
+  ],
+  "specialBuildings": [
+   "SPECIALBUILDING_PANTHEON"
+  ],
+  "techs": [
+   "TECH_DEMOCRACY",
+   "TECH_GEOMETRY"
+  ],
+  "units": [
+   "UNIT_ARCHIMEDES",
+   "UNIT_BRENNUS",
+   "UNIT_DIVICO",
+   "UNIT_ITHOBAAL",
+   "UNIT_MASINISSA",
+   "UNIT_NABOPOLASSAR",
+   "UNIT_SAKAYENGA"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_FORTIFIED_CAVE_WITH_CACHE",
+   "BUILD_WOODEN_PALISADE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CLASSICAL_LIFESTYLE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "featureProduction": {
+  "empire": {
+   "percent": 50
+  }
+ },
+ "cost": {
+  "research": 448
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 1
+   },
+   {
+    "FLAVOR_PRODUCTION": 1
+   },
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": ",Art/Interface/Buttons/TechTree/Mathematics.dds,Art/Interface/Buttons/TechTree_Atlas.dds,3,5"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MATHEMATICS",
+  "soundMP": "AS2D_TECH_MP_MATHEMATICS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MATHEMATICS",
+  "civilopedia": "TXT_KEY_TECH_MATHEMATICS_PEDIA",
+  "quote": "TXT_KEY_TECH_MATHEMATICS_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "militaryWorth": 6,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 33,
+  "gridY": 9
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "type": "UNITCOMBAT_SIEGE_GUNPOWDER",
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": -25
+   },
+   "resistance": {
+    "flat": -10
+   }
+  }
+ },
+ "tags": [
+  "siege",
+  "gunpowder"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/siege_design_gunpowder.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SIEGE_GUNPOWDER",
+  "forMilitary": true
+ }
+}

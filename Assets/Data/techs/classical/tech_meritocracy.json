@@ -1,0 +1,70 @@
+{
+ "type": "TECH_MERITOCRACY",
+ "enables": {
+  "civics": [
+   "CIVIC_MERITOCRACY"
+  ],
+  "techs": [
+   "TECH_CONFUCIANISM",
+   "TECH_PHILOSOPHY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_LITERATURE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_LAW_ENFORCEMENT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DEMOCRACY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 614
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 4
+   },
+   {
+    "FLAVOR_CULTURE": 10
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/meritocracy.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_MERITOCRACY",
+  "soundMP": "AS2D_TECH_MERITOCRACY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MERITOCRACY",
+  "civilopedia": "TXT_KEY_TECH_MERITOCRACY_PEDIA",
+  "quote": "TXT_KEY_TECH_MERITOCRACY_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 36,
+  "gridY": 19
+ }
+}

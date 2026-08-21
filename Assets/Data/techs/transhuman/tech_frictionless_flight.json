@@ -1,0 +1,80 @@
+{
+ "type": "TECH_FRICTIONLESS_FLIGHT",
+ "enables": {
+  "bonuses": [
+   "BONUS_SUPERSOLID_MATERIAL"
+  ],
+  "buildings": [
+   "BUILDING_GRAVITY_TRAIN",
+   "BUILDING_STRATOSPHERIC_MAGLEV_TERMINAL",
+   "BUILDING_SUPERCONDUCTING_GRID",
+   "BUILDING_SUPERSOLID_HELIUM_PLANT"
+  ],
+  "builds": [
+   "BUILD_GRAVITY_TRAIN"
+  ],
+  "promotions": [
+   "PROMOTION_REPAIR_AIRCRAFT7"
+  ],
+  "techs": [
+   "TECH_ASTEROID_EXTRACTION",
+   "TECH_PLANETARY_DEFENSES"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_ELECTRIC_RAILROAD"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ASTROGATION_CONSTELLATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SHIELDING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 75052
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 8
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Buttons/Techs/TechFrictionlessFlight.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_FRICTIONLESS_FLIGHT",
+  "soundMP": "AS2D_TECH_FRICTIONLESS_FLIGHT"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_FRICTIONLESS_FLIGHT",
+  "civilopedia": "TXT_KEY_TECH_FRICTIONLESS_FLIGHT_PEDIA",
+  "quote": "TXT_KEY_TECH_FRICTIONLESS_FLIGHT_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 50,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 116,
+  "gridY": 1
+ }
+}

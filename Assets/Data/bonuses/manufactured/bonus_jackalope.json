@@ -1,0 +1,14 @@
+{
+ "type": "BONUS_JACKALOPE",
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_JACKALOPE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_JACKALOPE",
+  "civilopedia": "TXT_KEY_BONUS_JACKALOPE_PEDIA",
+  "bonusClassType": "BONUSCLASS_WONDER",
+  "source": "manufactured"
+ }
+}

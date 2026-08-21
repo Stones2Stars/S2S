@@ -1,0 +1,48 @@
+{
+ "type": "TERRAIN_MARTIAN_DESERT",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 3
+  }
+ },
+ "defense": {
+  "plot": {
+   "amount": {
+    "percent": -25
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/baseterrain/DuneGraben.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_TERRAIN_DESERT"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_DESERT_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_TERRAIN_MARTIAN_DESERT",
+  "civilopedia": "TXT_KEY_TERRAIN_MARTIAN_DESERT_PEDIA",
+  "foundCoast": true,
+  "foundFreshWater": true,
+  "buildTimeModifier": 25,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

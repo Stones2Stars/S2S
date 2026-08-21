@@ -1,0 +1,23 @@
+{
+ "type": "UNITCOMBAT_SPECIES_NEANDERTHAL",
+ "skills": {
+  "stealthDefense": true
+ },
+ "tags": [
+  "neanderthal"
+ ],
+ "hideAndSeek": {
+  "detection": {
+   "value": 500,
+   "unit": "HAS_POLITICAL"
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/species_neanderthal.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_SPECIES_NEANDERTHAL"
+ }
+}

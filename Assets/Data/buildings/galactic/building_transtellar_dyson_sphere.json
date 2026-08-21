@@ -1,0 +1,47 @@
+{
+ "type": "BUILDING_TRANSTELLAR_DYSON_SPHERE",
+ "enables": {
+  "buildings": [
+   "BUILDING_TRANSTELLAR_PORTAL_PLANET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TRANSTELLAR_ARTIFICIAL_RED_DWARF",
+    "TECH_ARTIFICIAL_STARS",
+    {
+     "type": "MAPCATEGORY_INTERSTELLAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 150
+  }
+ },
+ "cost": {
+  "production": 4056,
+  "hurryModifier": 10000
+ },
+ "amenities": {
+  "adds3rdRing": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TRANSTELLAR_DYSON_SPHERE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TRANSTELLAR_DYSON_SPHERE",
+  "civilopedia": "TXT_KEY_BUILDING_TRANSTELLAR_DYSON_SPHERE_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

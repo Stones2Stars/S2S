@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_SUDANESE",
+ "enables": {
+  "units": [
+   "UNIT_DARFUR_MILITIA",
+   "UNIT_MUHAMMAD_AHMAD"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SUDANESE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SUDANESE",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

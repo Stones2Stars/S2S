@@ -1,0 +1,88 @@
+{
+ "type": "BUILDING_SUN_TZUS_ART_OF_WAR",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_MILITARY_SCIENCE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MILITARY_TRAINING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 3
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "greatGeneralRate": {
+  "city": {
+   "percent": 50
+  }
+ },
+ "costs": {
+  "empire": {
+   "upgrade": {
+    "percent": -50
+   }
+  }
+ },
+ "cost": {
+  "production": 1296,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "attributes": {
+  "teamShare": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ART_OF_WAR"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SUN_TZUS_ART_OF_WAR"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_BARRACKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SUN_TZUS_ART_OF_WAR",
+  "civilopedia": "TXT_KEY_BUILDING_SUN_TZUS_ART_OF_WAR_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 100,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

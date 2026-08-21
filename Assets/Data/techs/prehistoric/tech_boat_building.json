@@ -1,0 +1,71 @@
+{
+ "type": "TECH_BOAT_BUILDING",
+ "enables": {
+  "buildings": [
+   "BUILDING_CANOE_BUILDER",
+   "BUILDING_RIVER_PORT"
+  ],
+  "promotions": [
+   "PROMOTION_REPAIR_NAVAL",
+   "PROMOTION_REPAIR_NAVAL1"
+  ],
+  "techs": [
+   "TECH_FISHING"
+  ],
+  "units": [
+   "UNIT_CANOE",
+   "UNIT_KAYAK",
+   "UNIT_MASTER_SAILOR_KAYAK",
+   "UNIT_NEANDERTHAL_CANOE",
+   "UNIT_NEANDERTHAL_KAYAK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CARPENTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SPEARFISHING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 39
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GOLD": 2
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Interface/Buttons/TechTree/boatbuilding.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_BOAT_BUILDING",
+  "soundMP": "AS2D_TECH_BOAT_BUILDING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_BOAT_BUILDING",
+  "civilopedia": "TXT_KEY_TECH_BOAT_BUILDING_PEDIA",
+  "quote": "TXT_KEY_TECH_BOAT_BUILDING_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 4,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 15,
+  "gridY": 1
+ }
+}

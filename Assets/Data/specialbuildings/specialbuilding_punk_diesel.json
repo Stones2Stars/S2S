@@ -1,0 +1,11 @@
+{
+ "type": "SPECIALBUILDING_PUNK_DIESEL",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/TechTree/dieselpunk.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALBUILDING_PUNK_DIESEL"
+ }
+}

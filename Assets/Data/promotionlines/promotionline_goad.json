@@ -1,0 +1,20 @@
+{
+ "type": "PROMOTIONLINE_GOAD",
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/Goad1Promotion.fw.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_GOAD",
+  "unitCombats": [
+   "UNITCOMBAT_COMBATANT",
+   "UNITCOMBAT_EXPLORER",
+   "UNITCOMBAT_CANINE"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
+ }
+}

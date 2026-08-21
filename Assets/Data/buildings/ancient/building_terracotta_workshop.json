@@ -1,0 +1,94 @@
+{
+ "type": "BUILDING_TERRACOTTA_WORKSHOP",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_FACTORY_TERRACOTTA_WARES"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ORNAMENTATION",
+    {
+     "any": [
+      "BUILDING_POTTERS_WORKSHOP",
+      "BUILDING_POTTERS_HUT",
+      "BUILDING_FACTORY_POTTERY"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_FINE_CLAY",
+     "scope": "city",
+     "connection": "trade"
+    },
+    {
+     "type": "BONUS_MARBLE",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ],
+   "dormant": [
+    "BUILDING_MANUFACTURING_DISTRICT",
+    "BUILDING_FACTORY_TERRACOTTA_WARES"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_TERRACOTTA"
+  ]
+ },
+ "commerce": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": -1
+  }
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "cost": {
+  "production": 168,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TERRACOTTA_WORKSHOP",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TERRACOTTA_WORKSHOP",
+  "civilopedia": "TXT_KEY_BUILDING_TERRACOTTA_WORKSHOP_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

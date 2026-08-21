@@ -1,0 +1,29 @@
+{
+ "type": "UNITCOMBAT_ENTERTAINER",
+ "capture": {
+  "unit": {
+   "resistance": {
+    "flat": -50
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": 3
+  }
+ },
+ "skills": {
+  "cannotMergeSplit": true
+ },
+ "tags": [
+  "entertainer"
+ ],
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/units/sparth/categories/entertainer.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNITCOMBAT_ENTERTAINER"
+ }
+}

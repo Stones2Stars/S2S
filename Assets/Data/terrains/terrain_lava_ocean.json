@@ -1,0 +1,38 @@
+{
+ "type": "TERRAIN_LAVA_OCEAN",
+ "commerce": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/lava_ocean.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_TERRAIN_LAVA_OCEAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TERRAIN_LAVA_OCEAN",
+  "civilopedia": "TXT_KEY_TERRAIN_LAVA_OCEAN_PEDIA",
+  "distanceToLand": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_AQUATIC",
+   "MAPCATEGORY_JOVIAN"
+  ]
+ }
+}

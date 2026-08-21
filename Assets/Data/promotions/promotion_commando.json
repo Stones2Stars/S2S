@@ -1,0 +1,47 @@
+{
+ "type": "PROMOTION_COMMANDO",
+ "enables": {
+  "promotions": [
+   "PROMOTION_COVERT_OPERATIONS1"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_COMBAT4"
+   ]
+  }
+ },
+ "skills": {
+  "enemyRoute": true
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Commando.dds,Art/Interface/Buttons/Promotions_Atlas.dds,1,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_COMMANDO",
+  "unitCombats": [
+   "UNITCOMBAT_ANIMAL",
+   "UNITCOMBAT_RECON",
+   "UNITCOMBAT_HUNTER",
+   "UNITCOMBAT_ARCHER",
+   "UNITCOMBAT_MOUNTED",
+   "UNITCOMBAT_MELEE",
+   "UNITCOMBAT_GUN",
+   "UNITCOMBAT_HITECH",
+   "UNITCOMBAT_WHEELED",
+   "UNITCOMBAT_TRACKED",
+   "UNITCOMBAT_CLONES",
+   "UNITCOMBAT_THROWING"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_SEA"
+  ]
+ }
+}

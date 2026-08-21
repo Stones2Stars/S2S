@@ -1,0 +1,109 @@
+{
+ "type": "BUILDING_VIDEO_GAME_ARCADE",
+ "enables": {
+  "buildings": [
+   "BUILDING_PACHINKO_ARCADE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SHOPPING_DISTRICT",
+    "TECH_PERSONAL_COMPUTERS",
+    "TECH_ANIMATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_VIDEO_GAMES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 7,
+     "enabled": "TECH_3D_MODELLING"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_WEARABLE_COMPUTERS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_THOUGHT_SCANNING"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_DROIDS"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": [
+    2,
+    {
+     "value": 7,
+     "enabled": "TECH_3D_MODELLING"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_WEARABLE_COMPUTERS"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_THOUGHT_SCANNING"
+    },
+    {
+     "value": 9,
+     "enabled": "TECH_DROIDS"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 1410,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VIDEO_GAME_ARCADE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VIDEO_GAME_ARCADE",
+  "civilopedia": "TXT_KEY_BUILDING_VIDEO_GAME_ARCADE_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

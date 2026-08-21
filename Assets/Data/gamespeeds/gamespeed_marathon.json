@@ -1,0 +1,17 @@
+{
+ "type": "GAMESPEED_MARATHON",
+ "speed": {
+  "world": {
+   "percent": 400
+  }
+ },
+ "missionYieldMultiplier": {
+  "world": {
+   "percent": 1000
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_GAMESPEED_MARATHON",
+  "help": "TXT_KEY_GAMESPEED_MARATHON_HELP"
+ }
+}

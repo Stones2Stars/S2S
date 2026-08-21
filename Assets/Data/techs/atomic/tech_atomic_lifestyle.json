@@ -1,0 +1,104 @@
+{
+ "type": "TECH_ATOMIC_LIFESTYLE",
+ "enables": {
+  "buildings": [
+   "BUILDING_EDUCATION_DIMWITTED",
+   "BUILDING_EDUCATION_ENLIGHTENED",
+   "BUILDING_TOURISM_LEVEL_6"
+  ],
+  "promotions": [
+   "PROMOTION_MIGHT7"
+  ],
+  "techs": [
+   "TECH_ABSTRACT_MATHEMATICS",
+   "TECH_CAO_DAI",
+   "TECH_FLIGHT",
+   "TECH_INDUSTRIALISM",
+   "TECH_PROPAGANDA",
+   "TECH_TRENCH_WARFARE"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_TOWN",
+   "BUILD_WATERMILL",
+   "BUILD_WORKSHOP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ANTIBIOTICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_REFRIGERATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_WOMENS_SUFFRAGE",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_MASS_TRANSIT",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COMPULSORY_EDUCATION",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_RADIO",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 9094
+ },
+ "ai": {
+  "behaviour": {
+   "tradeModifier": 10
+  },
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 10
+   },
+   {
+    "FLAVOR_ESPIONAGE": 5
+   },
+   {
+    "FLAVOR_GOLD": 3
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/modernlifestyle.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ATOMIC_LIFESTYLE",
+  "soundMP": "AS2D_TECH_ATOMIC_LIFESTYLE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ATOMIC_LIFESTYLE",
+  "civilopedia": "TXT_KEY_TECH_ATOMIC_LIFESTYLE_PEDIA",
+  "quote": "TXT_KEY_TECH_ATOMIC_LIFESTYLE_QUOTE",
+  "era": "C2C_ERA_ATOMIC",
+  "worth": 40,
+  "militaryWorth": 10,
+  "tradeable": true,
+  "gridX": 71,
+  "gridY": 9
+ }
+}

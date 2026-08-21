@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_RESOURCES_GEMSTONE",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_CORE_MINE"
+ },
+ "requires": {
+  "operate": {
+   "dormant": [
+    "BUILDING_CORE_MINE"
+   ],
+   "all": [
+    {
+     "any": [
+      "BUILDING_MINE_AMETHYST",
+      "BUILDING_MINE_CITRINE",
+      "BUILDING_MINE_DIAMOND",
+      "BUILDING_MINE_EMERALD",
+      "BUILDING_MINE_FLUORITE",
+      "BUILDING_MINE_AMBER",
+      "BUILDING_MINE_GARNET",
+      "BUILDING_AMBER_GATHERER",
+      "BUILDING_JADE_GATHERER",
+      "BUILDING_MINE_GEODE",
+      "BUILDING_MINE_JADE",
+      "BUILDING_MINE_JET",
+      "BUILDING_MINE_ONYX",
+      "BUILDING_MINE_QUARTZ",
+      "BUILDING_MINE_RUBY",
+      "BUILDING_MINE_SAPPHIRE",
+      "BUILDING_MINE_TOPAZ",
+      "BUILDING_MINE_TURQUOISE"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_GEMSTONE"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_RESOURCES_GEMSTONE",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_RESOURCES_GEMSTONE",
+  "civilopedia": "TXT_KEY_BUILDING_RESOURCE_PROVIDER_PEDIA",
+  "pediaCategory": "specialBuilding",
+  "notConstructible": true,
+  "autoBuild": true,
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

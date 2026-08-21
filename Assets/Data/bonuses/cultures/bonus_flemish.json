@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_FLEMISH",
+ "enables": {
+  "units": [
+   "UNIT_BRABANT_MERCENARIES",
+   "UNIT_JAN_FRANS_WILLEMS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_FLEMISH"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_FLEMISH",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

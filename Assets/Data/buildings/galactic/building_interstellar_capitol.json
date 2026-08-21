@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_INTERSTELLAR_CAPITOL",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_ADMINISTRATION_CENTER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERSTELLAR_PLANETARY_LANDING",
+    "TECH_GERONTOCRACY",
+    {
+     "type": "MAPCATEGORY_PLASMA",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    50,
+    {
+     "value": 11,
+     "enabled": "TECH_GALACTIC_FEDERATION"
+    },
+    {
+     "value": 11,
+     "enabled": "TECH_ASTROIMPERIALISM"
+    },
+    {
+     "value": 12,
+     "enabled": "TECH_GALACTIC_WARFARE"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "revolution": {
+  "city": {
+   "local": {
+    "flat": -10
+   }
+  }
+ },
+ "cost": {
+  "production": 2856,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_INTERSTELLAR_CAPITOL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_INTERSTELLAR_CAPITOL",
+  "civilopedia": "TXT_KEY_BUILDING_INTERSTELLAR_CAPITOL_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_PLASMA"
+  ]
+ }
+}

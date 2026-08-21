@@ -1,0 +1,68 @@
+{
+ "type": "TECH_STELLAR_COMPUTING",
+ "enables": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_TRANSAPIENT"
+  ],
+  "buildings": [
+   "BUILDING_HUMAN_MOD_TRANSAPIENT",
+   "BUILDING_INTERSTELLAR_BIOTIC_SPHERE_WORLD",
+   "BUILDING_INTERSTELLAR_CEPHEID_BEACON",
+   "BUILDING_INTERSTELLAR_MATRIOSHKA_BRAIN",
+   "BUILDING_SOLAR_MATRIOSHKA_BRAIN"
+  ],
+  "techs": [
+   "TECH_NEUTRINO_COMMUNICATIONS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_JOVIAN_TERRAFORMING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ASTROENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 179514
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/stellar_computing.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_STELLAR_COMPUTING",
+  "civilopedia": "TXT_KEY_TECH_STELLAR_COMPUTING_PEDIA",
+  "quote": "TXT_KEY_TECH_STELLAR_COMPUTING_QUOTE",
+  "era": "C2C_ERA_GALACTIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 134,
+  "gridY": 17
+ }
+}

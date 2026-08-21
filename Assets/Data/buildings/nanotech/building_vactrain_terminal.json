@@ -1,0 +1,73 @@
+{
+ "type": "BUILDING_VACTRAIN_TERMINAL",
+ "enables": {
+  "buildings": [
+   "BUILDING_CHUO_SHINKANSEN",
+   "BUILDING_GLOBAL_RAIL_NETWORK",
+   "BUILDING_HYPERLOOP",
+   "BUILDING_STRATOSPHERIC_MAGLEV_TERMINAL",
+   "BUILDING_TRANSATLANTIC_TUNNEL"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ATOMIC_SCALE_ENGINEERING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_GRAVITY_TRAIN"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MEGATOWER",
+    "TECH_SUPERSONIC_RAILS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ],
+   "dormant": [
+    "BUILDING_GRAVITY_TRAIN"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "cost": {
+  "production": 4145,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_VACTRAIN_TERMINAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_VACTRAIN_TERMINAL",
+  "civilopedia": "TXT_KEY_BUILDING_VACTRAIN_TERMINAL_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

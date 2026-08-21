@@ -1,0 +1,66 @@
+{
+ "type": "TECH_FOLK_DANCE",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_MASAI",
+   "BUILDING_DANCE_HALL",
+   "BUILDING_PUPPET_THEATER"
+  ],
+  "promotions": [
+   "PROMOTION_MARCH"
+  ],
+  "techs": [
+   "TECH_ANCESTOR_WORSHIP"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_COMMUNITY",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 96
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_RELIGION": 9
+   },
+   {
+    "FLAVOR_GOLD": 1
+   },
+   {
+    "FLAVOR_CULTURE": 8
+   },
+   {
+    "FLAVOR_GROWTH": 2
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_RELIGION",
+   "icon": "Art/Interface/Buttons/TechTree/folkdance.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_FOLK_DANCE",
+  "soundMP": "AS2D_TECH_FOLK_DANCE"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_FOLK_DANCE",
+  "civilopedia": "TXT_KEY_TECH_FOLK_DANCE_PEDIA",
+  "quote": "TXT_KEY_TECH_FOLK_DANCE_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 21,
+  "gridY": 17
+ }
+}

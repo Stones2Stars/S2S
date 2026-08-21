@@ -1,0 +1,17 @@
+{
+ "type": "PROMOTION_BY_THE_HORNS",
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/ByTheHorns.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_BY_THE_HORNS",
+  "unitCombats": [
+   "UNITCOMBAT_WEAPON_H2H_FIST"
+  ]
+ }
+}

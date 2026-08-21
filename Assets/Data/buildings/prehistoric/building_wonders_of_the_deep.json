@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_WONDERS_OF_THE_DEEP",
+ "enables": {
+  "buildings": [
+   "BUILDING_CENTER_FOR_CEPHALOPOD_STUDIES",
+   "BUILDING_CENTER_FOR_SHARK_STUDIES",
+   "BUILDING_CENTER_FOR_WHALE_STUDIES",
+   "BUILDING_NAVAL_STANDARD_ANIMAL_MASCOT"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "BUILDING_FOLKLORE_E_SEA",
+    "TECH_ORAL_TRADITION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_WONDERS_OF_THE_DEEP",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "SND_AMB_HORSE_COBBLESTONES"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_WONDERS_OF_THE_DEEP",
+  "civilopedia": "TXT_KEY_BUILDING_WONDERS_OF_THE_DEEP_PEDIA",
+  "notConstructible": true,
+  "worth": 3,
+  "advisor": "ADVISOR_MILITARY",
+  "freeStartEra": "C2C_ERA_MEDIEVAL",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

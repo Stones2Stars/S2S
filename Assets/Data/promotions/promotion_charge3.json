@@ -1,0 +1,39 @@
+{
+ "type": "PROMOTION_CHARGE3",
+ "requires": {
+  "build": {
+   "all": [
+    "PROMOTION_CHARGE2",
+    {
+     "any": [
+      "PROMOTION_COMBAT3",
+      "PROMOTION_DRILL3"
+     ]
+    }
+   ]
+  }
+ },
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_SIEGE": {
+     "percent": 30
+    }
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CHARGE": 3
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Charge3.dds,Art/Interface/Buttons/RoM_Promotion_Atlas2.dds,2,3"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CHARGE3"
+ }
+}

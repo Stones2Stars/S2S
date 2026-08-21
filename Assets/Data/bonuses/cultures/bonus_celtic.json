@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_CELTIC",
+ "enables": {
+  "units": [
+   "UNIT_ARTHUR",
+   "UNIT_CELTIC_GALLIC_WARRIOR",
+   "UNIT_MERLIN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_CELTIC"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_CELTIC",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

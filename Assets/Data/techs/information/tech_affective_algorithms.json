@@ -1,0 +1,74 @@
+{
+ "type": "TECH_AFFECTIVE_ALGORITHMS",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTELLIGENT_PERSONAL_ASSISTANT",
+   "BUILDING_INTUITIVE_ALGORITHMS"
+  ],
+  "techs": [
+   "TECH_AUTOMATED_TRAFFIC",
+   "TECH_DISASTER_ROBOTS",
+   "TECH_GENESIS_BIOLOGY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_BIOMATHEMATICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_COMPUTATIONAL_SOCIOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_AUTONOMOUS_VEHICLES",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 26259
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_RELIGION": 5
+   },
+   {
+    "FLAVOR_PRODUCTION": 3
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_GROWTH": 4
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/TechTree/Affectivealgorithms.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_AFFECTIVE_ALGORITHMS",
+  "soundMP": "AS2D_TECH_AFFECTIVE_ALGORITHMS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_AFFECTIVE_ALGORITHMS",
+  "civilopedia": "TXT_KEY_TECH_AFFECTIVE_ALGORITHMS_PEDIA",
+  "quote": "TXT_KEY_TECH_AFFECTIVE_ALGORITHMS_QUOTE",
+  "era": "C2C_ERA_INFORMATION",
+  "worth": 14,
+  "tradeable": true,
+  "gridX": 95,
+  "gridY": 11
+ }
+}

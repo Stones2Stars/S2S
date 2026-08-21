@@ -1,0 +1,37 @@
+{
+ "type": "TERRAIN_TRANSTELLAR_SPACE",
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/WorldBuilder/transtellar.dds"
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_TERRAIN_TRANSTELLAR_SPACE"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_TERRAIN_TRANSTELLAR_SPACE",
+  "civilopedia": "TXT_KEY_TERRAIN_TRANSTELLAR_SPACE_PEDIA",
+  "found": true,
+  "mapCategories": [
+   "MAPCATEGORY_GALACTIC",
+   "MAPCATEGORY_INTERSTELLAR"
+  ]
+ }
+}

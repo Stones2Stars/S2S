@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_LIFE_STRUCTURAL_BACTERIA",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_LIFE_CRISPR_CAS9_BACTERIA",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_PROTOTYPED_PATHOGENS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "cost": {
+  "production": 6490,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LIFE_STRUCTURAL_BACTERIA",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_STRUCTURAL_BACTERIA",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_STRUCTURAL_BACTERIA_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

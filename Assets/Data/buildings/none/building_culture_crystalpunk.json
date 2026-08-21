@@ -1,0 +1,57 @@
+{
+ "type": "BUILDING_CULTURE_CRYSTALPUNK",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CRYSTALPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_CRYSTALPUNK"
+  ]
+ },
+ "culture": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 32730,
+  "complexityModifier": 1
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_CRYSTALPUNK_EMBASSY"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_CRYSTALPUNK",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CULTURE_CRYSTALPUNK",
+  "civilopedia": "TXT_KEY_BUILDING_CULTURE_CRYSTALPUNK_PEDIA",
+  "pediaCategory": "greatWonder",
+  "noInstanceLimit": true,
+  "conquestProbability": 100,
+  "specialBuildingType": "SPECIALBUILDING_PUNK_CRYSTAL",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,70 @@
+{
+ "type": "BUILDING_DIRIGIBLE_TERMINAL",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SKYROADS"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ZEPPELINS",
+    "TECH_DIESELPUNK",
+    {
+     "any": [
+      "BUILDING_SKYSCRAPER",
+      "BUILDING_EMPIRE_STATE_BUILDING"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_DIESELPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER",
+    {
+     "type": "POPULATION",
+     "scope": "city",
+     "min": 7
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 4
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "cost": {
+  "production": 1080,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DIRIGIBLE_TERMINAL",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DIRIGIBLE_TERMINAL",
+  "civilopedia": "TXT_KEY_BUILDING_DIRIGIBLE_TERMINAL_PEDIA",
+  "specialBuildingType": "SPECIALBUILDING_PUNK_DIESEL",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

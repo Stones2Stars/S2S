@@ -1,0 +1,31 @@
+{
+ "type": "PROMOTION_DISEASE_CONTROL4",
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -8
+  },
+  "plot": {
+   "flat": -4
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_DISEASE_CONTROL": 4
+ },
+ "ai": {
+  "unitCombatWeights": {
+   "UNITCOMBAT_HEALTH_CARE": 50
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Buttons/Promotions/DiseaseControl4Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_DISEASE_CONTROL4",
+  "minEra": "C2C_ERA_MEDIEVAL"
+ }
+}

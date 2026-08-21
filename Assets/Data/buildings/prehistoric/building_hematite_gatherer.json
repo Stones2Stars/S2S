@@ -1,0 +1,83 @@
+{
+ "type": "BUILDING_HEMATITE_GATHERER",
+ "enables": {
+  "buildings": [
+   "BUILDING_CAVE_PAINTINGS"
+  ]
+ },
+ "obsoletedBy": {
+  "techs": [
+   "TECH_RAPID_PROTOTYPING"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MODERN_EARTHWORKS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_NATURAL_PIGMENTS",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    },
+    {
+     "type": "BONUS_OBSIDIAN",
+     "scope": "city",
+     "vicinity": "owned"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_MODERN_EARTHWORKS"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HAEMATITE_ORE"
+  ]
+ },
+ "production": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "empire": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "cost": {
+  "production": 70,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HEMATITE_GATHERER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HEMATITE_GATHERER",
+  "civilopedia": "TXT_KEY_BUILDING_HEMATITE_GATHERER_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

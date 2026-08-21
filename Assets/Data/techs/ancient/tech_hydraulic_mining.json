@@ -1,0 +1,55 @@
+{
+ "type": "TECH_HYDRAULIC_MINING",
+ "enables": {
+  "buildings": [
+   "BUILDING_LAS_MEDULAS"
+  ],
+  "techs": [
+   "TECH_CONSTRUCTION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLUMBING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 309
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/hmining.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_HYDRAULIC_MINING",
+  "soundMP": "AS2D_TECH_HYDRAULIC_MINING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_HYDRAULIC_MINING",
+  "civilopedia": "TXT_KEY_TECH_HYDRAULIC_MINING_PEDIA",
+  "quote": "TXT_KEY_TECH_HYDRAULIC_MINING_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 30,
+  "gridY": 7
+ }
+}

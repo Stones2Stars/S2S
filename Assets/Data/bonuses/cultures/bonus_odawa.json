@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_ODAWA",
+ "enables": {
+  "units": [
+   "UNIT_EGUSHAWA",
+   "UNIT_ODAWA_TRADERS"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ODAWA"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ODAWA",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

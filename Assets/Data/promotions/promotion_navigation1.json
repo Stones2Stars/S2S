@@ -1,0 +1,32 @@
+{
+ "type": "PROMOTION_NAVIGATION1",
+ "enables": {
+  "promotions": [
+   "PROMOTION_COASTAL_ASSAULT1",
+   "PROMOTION_COASTAL_GUARD1",
+   "PROMOTION_MANUEVERING1",
+   "PROMOTION_NAVIGATION2"
+  ]
+ },
+ "movement": {
+  "unit": {
+   "moves": {
+    "flat": 1
+   }
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_NAVIGATION": 1
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Promotions/Navigation1.dds,Art/Interface/Buttons/Promotions_Atlas.dds,7,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_NAVIGATION1"
+ }
+}

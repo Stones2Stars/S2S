@@ -1,0 +1,99 @@
+{
+ "type": "CIVIC_WASTE_IMPORTATION",
+ "enables": {
+  "buildings": [
+   "BUILDING_BACTERIUM_LANDFILL",
+   "BUILDING_JUNKYARD",
+   "BUILDING_LANDFILL",
+   "BUILDING_WASTE_COMPACTOR",
+   "BUILDING_WASTE_INCINERATOR_POWER_PLANT"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    7,
+    {
+     "value": 4,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    2,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "percent": 1
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    3,
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": -1
+  }
+ },
+ "health": {
+  "empire": {
+   "flat": -5
+  }
+ },
+ "growth": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "diplomacy": {
+  "empire": {
+   "civics": {
+    "CIVIC_WASTE_TO_SEA": {
+     "flat": -1
+    },
+    "CIVIC_WASTE_EXPORTATION": {
+     "flat": -1
+    }
+   }
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_WATER_POLLUTION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/garbage_waste_importation.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_WASTE_IMPORTATION",
+  "civilopedia": "TXT_KEY_CIVIC_WASTE_IMPORTATION_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_WASTE_IMPORTATION_STRATEGY",
+  "civicOption": "CIVICOPTION_GARBAGE",
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

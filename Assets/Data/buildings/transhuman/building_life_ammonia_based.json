@@ -1,0 +1,71 @@
+{
+ "type": "BUILDING_LIFE_AMMONIA_BASED",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TITAN_BIOFACTORY",
+    "TECH_ABYSS_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_TITANIC",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "food": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 300
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "buildings": {
+    "BUILDING_TERRAFORMED_TRITON": {
+     "percent": 10
+    },
+    "BUILDING_TERRAFORMED_TITANIA": {
+     "percent": 10
+    },
+    "BUILDING_TERRAFORMED_OBERON": {
+     "percent": 10
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 2904,
+  "hurryModifier": 10000
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LIFE_AMMONIA_BASED",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LIFE_AMMONIA_BASED",
+  "civilopedia": "TXT_KEY_BUILDING_LIFE_AMMONIA_BASED_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_TITANIC"
+  ]
+ }
+}

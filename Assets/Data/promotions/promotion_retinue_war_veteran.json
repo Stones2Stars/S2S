@@ -1,0 +1,46 @@
+{
+ "type": "PROMOTION_RETINUE_WAR_VETERAN",
+ "combat": {
+  "unit": {
+   "unitCombat": {
+    "UNITCOMBAT_ARCHER": {
+     "percent": 33
+    },
+    "UNITCOMBAT_SIEGE": {
+     "percent": 33
+    },
+    "UNITCOMBAT_RECON": {
+     "percent": 33
+    }
+   }
+  }
+ },
+ "capture": {
+  "unit": {
+   "probability": {
+    "flat": 5
+   },
+   "resistance": {
+    "flat": 25
+   }
+  }
+ },
+ "skills": {
+  "amphib": true,
+  "river": true
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Retinue/Veteran.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_GET_RETINUE"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_RETINUE_WAR_VETERAN",
+  "unitCombats": [
+   "UNITCOMBAT_HERO"
+  ]
+ }
+}

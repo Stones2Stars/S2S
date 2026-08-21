@@ -4,7 +4,14 @@ from CvPythonExtensions import *
 import CvScreenEnums
 
 # globals
-gc = CyGlobalContext()
+# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
+# ENUMS = the engine enum vocabulary + name->id resolution.
+GC = CyGlobalContext()
+INFO = CyInfo()
+gc = GC   # this module spells it lowercase
+STATE = CyState()
+ENABLER = CyEnabler()
+ENUMS = CyEnums()
 ArtFileMgr = CyArtFileMgr()
 localText = CyTranslator()
 
@@ -252,7 +259,7 @@ class BuildListScreen:
       iNumInGroup = pPlayer.getUnitListNumInGroup(iGroup)
       for iPos in range(iNumInGroup):
         eLoopUnit = pPlayer.getUnitListType(iGroup, iPos)
-        screen.appendMultiListButton( "ButtonContainer", gc.getUnitInfo(eLoopUnit).getButton(), iRow, WidgetTypes.WIDGET_BUILD_LIST_TRAIN, eLoopUnit, iCurrentList, False )
+        screen.appendMultiListButton( "ButtonContainer", INFO.getButton("UNIT_", eLoopUnit), iRow, WidgetTypes.WIDGET_BUILD_LIST_TRAIN, eLoopUnit, iCurrentList, False )
 
         iCount = iCount + 1
         bFound = True
@@ -267,7 +274,7 @@ class BuildListScreen:
       iNumInGroup = pPlayer.getBuildingListNumInGroup(iGroup)
       for iPos in range(iNumInGroup):
         eLoopBuilding = pPlayer.getBuildingListType(iGroup, iPos)
-        screen.appendMultiListButton( "ButtonContainer", gc.getBuildingInfo(eLoopBuilding).getButton(), iRow, WidgetTypes.WIDGET_BUILD_LIST_CONSTRUCT, eLoopBuilding, iCurrentList, False )
+        screen.appendMultiListButton( "ButtonContainer", INFO.getButton("BUILDING_", eLoopBuilding), iRow, WidgetTypes.WIDGET_BUILD_LIST_CONSTRUCT, eLoopBuilding, iCurrentList, False )
 
         iCount = iCount + 1
         bFound = True
@@ -278,7 +285,7 @@ class BuildListScreen:
 
     # Projects
     for i in range( gc.getNumProjectInfos() ):
-        screen.appendMultiListButton( "ButtonContainer", gc.getProjectInfo(i).getButton(), iRow, WidgetTypes.WIDGET_BUILD_LIST_CREATE, i, iCurrentList, False )
+        screen.appendMultiListButton( "ButtonContainer", INFO.getButton("PROJECT_", i), iRow, WidgetTypes.WIDGET_BUILD_LIST_CREATE, i, iCurrentList, False )
 
         iCount = iCount + 1
 
@@ -315,16 +322,16 @@ class BuildListScreen:
       bSave = order.bSave # get if perma build from list
 
       if ( eOrder == OrderTypes.ORDER_TRAIN ):
-        szLeftBuffer = gc.getUnitInfo(iData).getDescription()
+        szLeftBuffer = INFO.getDescription("UNIT_", iData)
 
         if (bSave):
           szLeftBuffer = u"*" + szLeftBuffer
 
       elif ( eOrder == OrderTypes.ORDER_CONSTRUCT ):
-        szLeftBuffer = gc.getBuildingInfo(iData).getDescription()
+        szLeftBuffer = INFO.getDescription("BUILDING_", iData)
 
       elif ( eOrder == OrderTypes.ORDER_CREATE ):
-        szLeftBuffer = gc.getProjectInfo(iData).getDescription()
+        szLeftBuffer = INFO.getDescription("PROJECT_", iData)
 
       screen.appendTableRow( "BuildQueueTable" )
       screen.setTableText( "BuildQueueTable", 0, iRow, szLeftBuffer, "", WidgetTypes.WIDGET_BUILD_LIST_QUEUE, pPlayer.getBLID(iCurrentList), i, 1<<0 )

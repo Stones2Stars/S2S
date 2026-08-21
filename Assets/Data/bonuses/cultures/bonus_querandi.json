@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_QUERANDI",
+ "enables": {
+  "units": [
+   "UNIT_BOLA_HUNTER",
+   "UNIT_NANDUAPAQUE"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_QUERANDI"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_QUERANDI",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

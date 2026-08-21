@@ -1,0 +1,48 @@
+{
+ "type": "BUILD_SANITIZE_WATER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_AQUACULTURE",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_SANITIZE_WATER",
+  "features": [
+   {
+    "feature": "FEATURE_INFECTIOUS_SMOG",
+    "tech": "TECH_GENE_MANIPULATION",
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_PLAGUED_SMOG",
+    "tech": "TECH_ARTIFICIAL_LIFE",
+    "time": 400,
+    "remove": true
+   }
+  ]
+ },
+ "cost": {
+  "gold": 800,
+  "time": 600
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Actions/SanitizeWater.dds"
+  },
+  "hotkey": "KB_S",
+  "hotKeyPriority": 1
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_SANITIZE_WATER"
+ }
+}

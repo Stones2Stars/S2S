@@ -1,0 +1,84 @@
+{
+ "type": "BUILDING_LUNAR_ROCK_QUARRY",
+ "enables": {
+  "buildings": [
+   "BUILDING_LUNAR_ALUMINIUM_PROCESSING_FACILITY",
+   "BUILDING_LUNAR_ASSEMBLY_PLANT",
+   "BUILDING_LUNAR_CONCRETE_MILL",
+   "BUILDING_LUNAR_GLASS_FACTORY",
+   "BUILDING_LUNAR_IRON_PROCESSING_FACILITY",
+   "BUILDING_LUNAR_LAUNCH_SITE",
+   "BUILDING_LUNAR_MAGNESIUM_EXTRACTION_FACILITY",
+   "BUILDING_LUNAR_MANGANESE_EXTRACTION_FACILITY",
+   "BUILDING_LUNAR_MANUFACTURING_PLANT",
+   "BUILDING_LUNAR_SILICON_PROCESSING_FACILITY",
+   "BUILDING_LUNAR_TITANIUM_PROCESSING_FACILITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_SPACE_COLONY_LUNAR_BASE",
+    "TECH_LUNAR_COLONIZATION",
+    {
+     "type": "MAPCATEGORY_LUNAR",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 5,
+   "percent": 200
+  }
+ },
+ "buildRate": {
+  "city": {
+   "units": {
+    "percent": [
+     {
+      "value": -200,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 50
+  }
+ },
+ "cost": {
+  "production": 15,
+  "hurryModifier": 10000
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_PRODUCTION": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LUNAR_ROCK_QUARRY",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LUNAR_ROCK_QUARRY",
+  "civilopedia": "TXT_KEY_BUILDING_LUNAR_ROCK_QUARRY_PEDIA",
+  "pediaCategory": "space",
+  "conquestProbability": 70,
+  "advisor": "ADVISOR_ECONOMY",
+  "visibilityPriority": "1.0",
+  "mapCategories": [
+   "MAPCATEGORY_LUNAR"
+  ]
+ }
+}

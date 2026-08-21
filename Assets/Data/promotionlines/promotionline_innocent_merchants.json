@@ -1,0 +1,26 @@
+{
+ "type": "PROMOTIONLINE_INNOCENT_MERCHANTS",
+ "enabled": "GAMEOPTION_COMBAT_HIDE_SEEK",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/InnocentMerchants1Promotion.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_INNOCENT_MERCHANTS",
+  "unitCombats": [
+   "UNITCOMBAT_PIRATE"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR",
+   "DOMAIN_LAND"
+  ],
+  "notOnUnitCombats": [
+   "UNITCOMBAT_SPY",
+   "UNITCOMBAT_COMMANDER",
+   "UNITCOMBAT_IDEA",
+   "UNITCOMBAT_ATTACHE",
+   "UNITCOMBAT_CAPTIVE"
+  ]
+ }
+}

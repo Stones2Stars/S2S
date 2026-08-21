@@ -1,0 +1,59 @@
+{
+ "type": "BUILDING_DISTANT_SPIRIT_WORLD",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DISTANT_LAYERED_REALITY",
+    "TECH_SPIRITUAL_REALMS",
+    {
+     "type": "MAPCATEGORY_DISTANT",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": [
+    {
+     "value": 13,
+     "enabled": "TECH_ARCHETYPAL_VECTOR_SPACES"
+    },
+    {
+     "value": 13,
+     "enabled": "TECH_OMEGA_POINT"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 6
+  }
+ },
+ "cost": {
+  "production": 3166,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_DISTANT_SPIRIT_WORLD",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_DISTANT_SPIRIT_WORLD",
+  "civilopedia": "TXT_KEY_BUILDING_DISTANT_SPIRIT_WORLD_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_DISTANT"
+  ]
+ }
+}

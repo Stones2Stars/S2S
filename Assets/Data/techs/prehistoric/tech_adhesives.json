@@ -1,0 +1,78 @@
+{
+ "type": "TECH_ADHESIVES",
+ "enables": {
+  "bonuses": [
+   "BONUS_RESIN",
+   "BONUS_TAR"
+  ],
+  "buildings": [
+   "BUILDING_GROVE_RESIN",
+   "BUILDING_LACQUERWARE_MAKER",
+   "BUILDING_TAR_PIT"
+  ],
+  "builds": [
+   "BUILD_TAR_GATHERER_KILL"
+  ],
+  "improvements": [
+   "IMPROVEMENT_TAR_GATHERER"
+  ],
+  "techs": [
+   "TECH_COMPOSITE_TOOLS",
+   "TECH_RAFT_BUILDING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_NATURAL_PIGMENTS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_BARK_WORKING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 15
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 2
+   },
+   {
+    "FLAVOR_PRODUCTION": 4
+   },
+   {
+    "FLAVOR_GOLD": 6
+   },
+   {
+    "FLAVOR_CULTURE": 3
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/Interface/Buttons/TechTree/adhesives.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ADHESIVES",
+  "soundMP": "AS2D_TECH_ADHESIVES"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ADHESIVES",
+  "civilopedia": "TXT_KEY_TECH_ADHESIVES_PEDIA",
+  "quote": "TXT_KEY_TECH_ADHESIVES_QUOTE",
+  "era": "C2C_ERA_PREHISTORIC",
+  "worth": 8,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 8,
+  "gridY": 3
+ }
+}

@@ -1,0 +1,56 @@
+{
+  "type": "HERITAGE_TAXON_GNARLIDAE",
+
+  "identity": {
+    "description": "TXT_KEY_HERITAGE_TAXON_GNARLIDAE",
+    "spreadFactor": 50
+  },
+
+  "requires": {
+    "build": {
+      "all": [
+        { "type": "TECH_GNARLOLOGY", "scope": "team" },
+        { "any": [
+            [ { "type": "BONUS_GNARLITE", "scope": "city", "connection": "trade|vicinity", "min": 1 },
+              { "type": "BONUS_STONE", "scope": "city", "min": 1 } ]
+        ] },
+        { "noneOf": [ { "type": "SELF", "scope": "world", "min": 1 } ] }
+      ],
+      "any": [
+        [ { "type": "BUILDING_TEMPLE_OF_GNARL", "scope": "city", "min": 1 },
+          { "all": [ { "HAS_RELIGION": "RELIGION_GNARLODOXY" }, "HAS_POWER" ] } ]
+      ]
+    }
+  },
+
+  "grants": {
+    "buildings": ["BUILDING_EFFECT_GNARL_INFESTATION"],
+    "units": ["UNIT_GNARL_BEAST"],
+    "freeUnits": 2,
+    "repeatable": [
+      { "unit": "UNIT_GNARL_BEAST", "interval": { "perTurn": 3 },
+        "chance": { "per": { "anyOf": ["PROPERTY_GNARL_INFESTATION", "PROPERTY_CRIME"], "scope": "empire", "each": 20 } },
+        "enabled": { "all": [ { "type": "TECH_GNARLOLOGY", "scope": "team" }, "HAS_POWER" ] } }
+    ]
+  },
+
+  "PROPERTY_GNARL_INFESTATION": {
+    "empire": {
+      "flat": [
+        { "value": 2, "enabled": { "type": "TECH_GNARLOLOGY", "scope": "team" } },
+        { "value": 1, "per": { "type": "BONUS_GNARLITE", "scope": "empire", "each": 1 }, "ai": { "flat": 2 } }
+      ]
+    }
+  },
+
+  "culture": {
+    "empire": {
+      "byEra": {
+        "C2C_ERA_RENAISSANCE": { "flat": 5 },
+        "C2C_ERA_INDUSTRIAL": { "flat": [ 10, { "value": 5, "enabled": "HAS_STATE_RELIGION" } ] }
+      }
+    }
+  },
+
+  "ui": { "art": { "icon": "ART_DEF_HERITAGE_TAXON_GNARLIDAE" } }
+}

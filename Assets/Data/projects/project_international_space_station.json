@@ -1,0 +1,43 @@
+{
+ "type": "PROJECT_INTERNATIONAL_SPACE_STATION",
+ "enables": {
+  "specialBuildings": [
+   "SPECIALBUILDING_SPACE_LABORATORY"
+  ]
+ },
+ "allowed": {
+  "team": 1
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_ALUMINUM_INGOTS",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "create": 13480
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_ISS"
+   },
+   "icon": "art/Interface/Buttons/Projects/iss.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROJECT_INTERNATIONAL_SPACE_STATION",
+  "civilopedia": "TXT_KEY_PROJECT_INTERNATIONAL_SPACE_STATION_PEDIA",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

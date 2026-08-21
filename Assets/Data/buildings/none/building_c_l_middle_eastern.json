@@ -1,0 +1,163 @@
+{
+ "type": "BUILDING_C_L_MIDDLE_EASTERN",
+ "enables": {
+  "buildings": [
+   "BUILDING_CULTURE_ABBASID",
+   "BUILDING_CULTURE_AFGHAN",
+   "BUILDING_CULTURE_AKKADIAN",
+   "BUILDING_CULTURE_ARABIAN",
+   "BUILDING_CULTURE_ARMENIAN",
+   "BUILDING_CULTURE_ASSYRIAN",
+   "BUILDING_CULTURE_BABYLONIAN",
+   "BUILDING_CULTURE_BACTRIC",
+   "BUILDING_CULTURE_BAHRAINI",
+   "BUILDING_CULTURE_BYZANTINE",
+   "BUILDING_CULTURE_CHECHEN",
+   "BUILDING_CULTURE_FATIMID",
+   "BUILDING_CULTURE_GALATIAN",
+   "BUILDING_CULTURE_GEORGIAN",
+   "BUILDING_CULTURE_GHURID",
+   "BUILDING_CULTURE_HIMYARITE",
+   "BUILDING_CULTURE_HITTITE",
+   "BUILDING_CULTURE_HURRIANS",
+   "BUILDING_CULTURE_IRANIAN",
+   "BUILDING_CULTURE_IRAQI",
+   "BUILDING_CULTURE_ISRAELI",
+   "BUILDING_CULTURE_JORDANIAN",
+   "BUILDING_CULTURE_KHWARAZMIAN",
+   "BUILDING_CULTURE_KURDISH",
+   "BUILDING_CULTURE_KUWAITI",
+   "BUILDING_CULTURE_LEBANESE",
+   "BUILDING_CULTURE_LYDIAN",
+   "BUILDING_CULTURE_MASSAGETAE",
+   "BUILDING_CULTURE_MEDIAN",
+   "BUILDING_CULTURE_MITTANNI",
+   "BUILDING_CULTURE_NABATEANS",
+   "BUILDING_CULTURE_OMANI",
+   "BUILDING_CULTURE_OPHIR",
+   "BUILDING_CULTURE_OTTOMAN",
+   "BUILDING_CULTURE_PAKISTANI",
+   "BUILDING_CULTURE_PALESTINIAN",
+   "BUILDING_CULTURE_PARTHIAN",
+   "BUILDING_CULTURE_PASHTUN",
+   "BUILDING_CULTURE_PERSIAN",
+   "BUILDING_CULTURE_PHILISTINE",
+   "BUILDING_CULTURE_PHOENICIAN",
+   "BUILDING_CULTURE_SABBATEAN",
+   "BUILDING_CULTURE_SAFAVID",
+   "BUILDING_CULTURE_SAFFARID",
+   "BUILDING_CULTURE_SASSANIAN",
+   "BUILDING_CULTURE_SAUDI",
+   "BUILDING_CULTURE_SCYTHIAN",
+   "BUILDING_CULTURE_SELJUK",
+   "BUILDING_CULTURE_SUMERIAN",
+   "BUILDING_CULTURE_SYRIAN",
+   "BUILDING_CULTURE_TAJIK",
+   "BUILDING_CULTURE_TIMURID",
+   "BUILDING_CULTURE_TRANSOXANIAN",
+   "BUILDING_CULTURE_TURKISH",
+   "BUILDING_CULTURE_TURKMEN",
+   "BUILDING_CULTURE_YEMENI",
+   "BUILDING_FINE_STONEWARE_CARVERS",
+   "BUILDING_PHOENIX_BREEDER"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_C_AC_MIDDLE_EASTERN",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "costs": {
+  "city": {
+   "percent": [
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_AFRICAN"
+    },
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_ASIAN"
+    },
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_EUROPEAN"
+    },
+    {
+     "value": -5,
+     "enabled": "BUILDING_C_L_MIDDLE_EASTERN"
+    },
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_NEANDERTHAL"
+    },
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_NORTH_AMERICAN"
+    },
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_OCEANIAN"
+    },
+    {
+     "value": 10,
+     "enabled": "BUILDING_C_L_SOUTH_AMERICAN"
+    }
+   ]
+  }
+ },
+ "triggers": [
+  {
+   "trigger": "onUnitEnteredCity",
+   "action": {
+    "promote": {
+     "promotions": [
+      {
+       "promotion": "PROMOTION_CULTURE_MIDDLE_EASTERN",
+       "enabled": "IS_SETTLER"
+      }
+     ],
+     "units": "present"
+    }
+   }
+  }
+ ],
+ "cost": {
+  "production": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 1
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CULTURE_MIDDLE_EASTERN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_C_L_MIDDLE_EASTERN",
+  "civilopedia": "TXT_KEY_BUILDING_C_L_PEDIA",
+  "help": "TXT_KEY_BUILDING_C_L_HELP",
+  "conquestProbability": 85,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

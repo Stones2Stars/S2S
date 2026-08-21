@@ -1,0 +1,92 @@
+{
+ "type": "BONUS_SHEEP",
+ "enables": {
+  "buildings": [
+   "BUILDING_ANGORA_GOAT_BREEDER",
+   "BUILDING_BREEDING_PROGRAM_MINK",
+   "BUILDING_BREEDING_PROGRAM_MOUFLON",
+   "BUILDING_BREEDING_PROGRAM_MUSKOX",
+   "BUILDING_CAMP_MOUFLON",
+   "BUILDING_CAMP_MUSKOX",
+   "BUILDING_CARRION_GATHERER",
+   "BUILDING_CULTURE_AFGHAN",
+   "BUILDING_CULTURE_ALBANIAN",
+   "BUILDING_CULTURE_BERBER",
+   "BUILDING_CULTURE_CELTIC",
+   "BUILDING_CULTURE_NAVAJO",
+   "BUILDING_CULTURE_NEW_ZEALANDER",
+   "BUILDING_CULTURE_SERBIAN",
+   "BUILDING_CULTURE_SUMERIAN",
+   "BUILDING_DISEASE_ANTHRAX",
+   "BUILDING_FARM_ANIMAL_GOAT",
+   "BUILDING_FARM_ANIMAL_SHEEP",
+   "BUILDING_INVOCATION_HUT_SHEEP",
+   "BUILDING_NGAI_NAROK_BLESS_SHEEP",
+   "BUILDING_SHAMANISTIC_TEMPLE_SHEEP",
+   "BUILDING_TRAP_MINK",
+   "BUILDING_VIROTHERAPY_CLINIC"
+  ],
+  "units": [
+   "UNIT_NEANDERTHAL_SHEPHERD",
+   "UNIT_SHEPHERD",
+   "UNIT_TAMED_SHEEP"
+  ]
+ },
+ "food": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": 2
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_SHEEP"
+  }
+ },
+ "mapGeneration": {
+  "placementOrder": 6,
+  "constAppearance": 200,
+  "minAreaSize": 3,
+  "minLatitude": 20,
+  "rands": {
+   "iRandApp1": 25,
+   "iRandApp2": 25,
+   "iRandApp3": 25,
+   "iRandApp4": 25
+  },
+  "tilesPer": 128,
+  "groupRange": 1,
+  "groupRand": 10,
+  "area": true,
+  "hills": true,
+  "flatlands": true,
+  "validTerrains": [
+   "TERRAIN_GRASSLAND",
+   "TERRAIN_PLAINS",
+   "TERRAIN_ROCKY",
+   "TERRAIN_SCRUB"
+  ]
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_SHEEP",
+  "civilopedia": "TXT_KEY_BONUS_SHEEP_PEDIA",
+  "bonusClassType": "BONUSCLASS_LIVESTOCK",
+  "source": "natural"
+ }
+}

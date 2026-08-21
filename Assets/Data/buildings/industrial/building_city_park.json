@@ -1,0 +1,91 @@
+{
+ "type": "BUILDING_CITY_PARK",
+ "enables": {
+  "buildings": [
+   "BUILDING_BALLOON_RIDES",
+   "BUILDING_MEGATOWER_PARK_LEVEL",
+   "BUILDING_TUMEN_AMUGULANG_PALACE"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_CIVIL_ENGINEERING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 7
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_AIR_POLLUTION": {
+  "city": {
+   "flat": -5
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_ARTIST": 1,
+   "SPECIALIST_NOBLE": 1
+  }
+ },
+ "cost": {
+  "production": 800,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_GROWTH": 8
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CITY_PARK",
+   "notShownInCity": true
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_PARK"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CITY_PARK",
+  "civilopedia": "TXT_KEY_BUILDING_CITY_PARK_PEDIA",
+  "worth": 2,
+  "militaryWorth": 2,
+  "greatPeopleUnitType": "UNIT_ARTIST",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

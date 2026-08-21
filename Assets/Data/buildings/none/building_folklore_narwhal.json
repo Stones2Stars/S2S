@@ -1,0 +1,86 @@
+{
+ "type": "BUILDING_FOLKLORE_NARWHAL",
+ "enables": {
+  "buildings": [
+   "BUILDING_FOLKLORE_T_FISH",
+   "BUILDING_FOLKLORE_T_LEVIATHAN",
+   "BUILDING_FOLKLORE_T_TALES_OF_FISH"
+  ]
+ },
+ "research": {
+  "empire": {
+   "flat": [
+    1,
+    {
+     "value": -0.6,
+     "enabled": "TECH_LANGUAGE"
+    },
+    {
+     "value": -0.1,
+     "enabled": "TECH_SEDENTARY_LIFESTYLE"
+    },
+    {
+     "value": -0.1,
+     "enabled": "TECH_CLASSICAL_LIFESTYLE"
+    },
+    {
+     "value": -0.1,
+     "enabled": "TECH_MEDIEVAL_LIFESTYLE"
+    },
+    {
+     "value": -0.1,
+     "enabled": "TECH_RENAISSANCE_LIFESTYLE"
+    }
+   ]
+  }
+ },
+ "culture": {
+  "empire": {
+   "flat": [
+    {
+     "value": 0.1,
+     "enabled": "TECH_LANGUAGE"
+    },
+    {
+     "value": 0.1,
+     "enabled": "TECH_SEDENTARY_LIFESTYLE"
+    },
+    {
+     "value": 0.1,
+     "enabled": "TECH_CLASSICAL_LIFESTYLE"
+    },
+    {
+     "value": 0.1,
+     "enabled": "TECH_MEDIEVAL_LIFESTYLE"
+    },
+    {
+     "value": 0.1,
+     "enabled": "TECH_RENAISSANCE_LIFESTYLE"
+    }
+   ]
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_FOLKLORE_T_LEVIATHAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_FOLKLORE_NARWHAL",
+  "civilopedia": "TXT_KEY_BUILDING_FOLKLORE_ANIMAL_PEDIA",
+  "pediaCategory": "animalistic",
+  "notConstructible": true,
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

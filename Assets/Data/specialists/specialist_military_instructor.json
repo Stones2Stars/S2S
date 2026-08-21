@@ -1,0 +1,25 @@
+{
+ "type": "SPECIALIST_MILITARY_INSTRUCTOR",
+ "experience": {
+  "city": {
+   "unitCombats": {
+    "UNITCOMBAT_COMBATANT": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "ui": {
+  "art": {
+   "texture": "Art/Interface/Buttons/Specialists/Warlord_Instructor.dds",
+   "icon": "Art/Interface/Buttons/Specialists/Warlord_Instructor.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_SPECIALIST_MILITARY_INSTRUCTOR",
+  "civilopedia": "TXT_KEY_CONCEPT_GREAT_GENERALS_PEDIA",
+  "categories": [
+   "CATEGORY_SPECIALIST_GROUP_MILITARY"
+  ]
+ }
+}

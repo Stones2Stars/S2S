@@ -1,0 +1,83 @@
+{
+ "type": "IMPROVEMENT_TAR_GATHERER",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ADHESIVES",
+     "scope": "team"
+    },
+    "HAS_FEATURE",
+    {
+     "any": [
+      {
+       "feature": [
+        "FEATURE_TAR_PIT"
+       ]
+      },
+      {
+       "bonus": [
+        "BONUS_OIL"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": [
+    3,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_SHIP_BUILDING",
+      "scope": "team"
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_GEOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": [
+    {
+     "value": 1,
+     "enabled": {
+      "type": "TECH_PALEONTOLOGY",
+      "scope": "team"
+     }
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_TAR_GATHERER"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_IMPROVEMENT_TAR_GATHERER",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_TAR_GATHERER_PEDIA",
+  "upgradeTime": 30,
+  "pillageGold": 15,
+  "upgradesTo": "IMPROVEMENT_HYDROCARBON_WELL",
+  "bonuses": {
+   "BONUS_OIL": {
+    "trade": true,
+    "discoverRand": 5000
+   },
+   "BONUS_FOSSIL_BEDS": {
+    "discoverRand": 5000
+   }
+  }
+ }
+}

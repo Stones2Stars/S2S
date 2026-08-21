@@ -1,0 +1,58 @@
+{
+ "type": "BUILDING_TYRANNOSAURUS_REX_BREEDER",
+ "enables": {
+  "buildings": [
+   "BUILDING_PALEO_PARK"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_TRANSGENICS_LAB",
+    "TECH_NOVO_PALEONTOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    "HAS_POWER"
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "cost": {
+  "production": 5255,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_TYRANNOSAURUS_REX_BREEDER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_TYRANNOSAURUS_REX_BREEDER",
+  "civilopedia": "TXT_KEY_BUILDING_TYRANNOSAURUS_REX_BREEDER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

@@ -1,0 +1,62 @@
+{
+ "type": "TECH_METEOROLOGY",
+ "enables": {
+  "buildings": [
+   "BUILDING_METEOROLOGY_LAB",
+   "BUILDING_NATIONAL_WEATHER_SERVICE"
+  ],
+  "techs": [
+   "TECH_LONG_RANGE_FORECASTING"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_TELEGRAPH",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "domainMoves": {
+  "empire": {
+   "domains": {
+    "DOMAIN_AIR": {
+     "flat": 1
+    }
+   }
+  }
+ },
+ "cost": {
+  "research": 6351
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_SCIENCE",
+   "icon": "Art/Interface/Buttons/techtree/Meteorology.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_METEOROLOGY",
+  "soundMP": "AS2D_TECH_METEOROLOGY"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_METEOROLOGY",
+  "civilopedia": "TXT_KEY_TECH_METEOROLOGY_PEDIA",
+  "quote": "TXT_KEY_TECH_METEOROLOGY_QUOTE",
+  "era": "C2C_ERA_INDUSTRIAL",
+  "worth": 40,
+  "militaryWorth": 2,
+  "tradeable": true,
+  "gridX": 66,
+  "gridY": 1
+ }
+}

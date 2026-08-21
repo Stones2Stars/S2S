@@ -1,0 +1,47 @@
+{
+ "type": "FEATURE_FALLOUT",
+ "food": {
+  "plot": {
+   "flat": -5
+  }
+ },
+ "production": {
+  "plot": {
+   "flat": -5
+  }
+ },
+ "commerce": {
+  "plot": {
+   "flat": -5
+  }
+ },
+ "cultureDistance": {
+  "plot": {
+   "flat": 4
+  }
+ },
+ "health": {
+  "plot": {
+   "percent": -80
+  }
+ },
+ "movement": {
+  "plot": {
+   "flat": 1
+  }
+ },
+ "characteristics": [
+  "unimprovable"
+ ],
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_FALLOUT"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_FALLOUT",
+  "civilopedia": "TXT_KEY_FEATURE_FALLOUT_PEDIA",
+  "disappearance": 800,
+  "growth": 60
+ }
+}

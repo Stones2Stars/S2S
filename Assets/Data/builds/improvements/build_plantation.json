@@ -1,0 +1,132 @@
+{
+ "type": "BUILD_PLANTATION",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_CALENDAR",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "produces": {
+  "improvement": "IMPROVEMENT_PLANTATION",
+  "features": [
+   {
+    "feature": "FEATURE_JUNGLE",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 400,
+    "production": 20,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_MANGROVE",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 400,
+    "production": 20,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 40,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_ANCIENT",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 500,
+    "production": 60,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_YOUNG",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 30,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_FOREST_BURNT",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 400,
+    "production": 5,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_VERY_TALL_GRASS",
+    "tech": "TECH_SLASH_AND_BURN",
+    "time": 300,
+    "production": 10,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_BAMBOO",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 20,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_SWAMP",
+    "tech": "TECH_CANAL_SYSTEMS",
+    "time": 800,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_PEAT_BOG",
+    "tech": "TECH_CANAL_SYSTEMS",
+    "time": 800,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_SAVANNA",
+    "tech": "TECH_SLASH_AND_BURN",
+    "time": 300,
+    "production": 10,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_CACTUS",
+    "tech": "TECH_BRONZE_WORKING",
+    "time": 300,
+    "production": 5,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_CITY_RUINS",
+    "time": 200,
+    "production": 40,
+    "remove": true
+   },
+   {
+    "feature": "FEATURE_ARCOLOGY_RUINS",
+    "time": 200,
+    "production": 40,
+    "remove": true
+   }
+  ]
+ },
+ "cost": {
+  "gold": 60,
+  "time": 500
+ },
+ "ui": {
+  "art": {
+   "icon": ",Art/Interface/Buttons/Builds/BuildPlantation.dds,Art/Interface/Buttons/Actions_Builds_LeaderHeads_Specialists_Atlas.dds,1,9"
+  },
+  "hotkey": "KB_P",
+  "hotKeyPriority": 1,
+  "shiftDown": true
+ },
+ "world": {
+  "art": {
+   "entityEvent": "ENTITY_EVENT_BUILD"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILD_PLANTATION"
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_NEWSPAPERS",
+ "enables": {
+  "buildings": [
+   "BUILDING_NEWS_STAND",
+   "BUILDING_PAPER_RECLAMATION_PLANT"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_NEWSPAPERS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_NEWSPAPERS",
+  "civilopedia": "TXT_KEY_BONUS_NEWSPAPERS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

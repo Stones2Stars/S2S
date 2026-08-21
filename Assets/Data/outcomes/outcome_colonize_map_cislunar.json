@@ -1,0 +1,18 @@
+{
+ "type": "OUTCOME_COLONIZE_MAP_CISLUNAR",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_GO_TO_MAP_CISLUNAR",
+  "message": "TXT_KEY_OUTCOME_GO_TO_MAP_CISLUNAR"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ]
+}

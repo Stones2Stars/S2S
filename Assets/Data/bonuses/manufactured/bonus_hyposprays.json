@@ -1,0 +1,26 @@
+{
+ "type": "BONUS_HYPOSPRAYS",
+ "enables": {
+  "buildings": [
+   "BUILDING_FACTORY_STIM_PACKS"
+  ]
+ },
+ "health": {
+  "empire": {
+   "cities": {
+    "flat": 1
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_HYPOSPRAYS"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_HYPOSPRAYS",
+  "civilopedia": "TXT_KEY_BONUS_HYPOSPRAYS_PEDIA",
+  "bonusClassType": "BONUSCLASS_MANUFACTURED",
+  "source": "manufactured"
+ }
+}

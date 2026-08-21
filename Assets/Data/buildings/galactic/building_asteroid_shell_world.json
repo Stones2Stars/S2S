@@ -1,0 +1,66 @@
+{
+ "type": "BUILDING_ASTEROID_SHELL_WORLD",
+ "enables": {
+  "buildings": [
+   "BUILDING_ASTEROID_SHELL_FACTORY",
+   "BUILDING_ASTEROID_SHELL_FLIGHT_LANES",
+   "BUILDING_ASTEROID_SHELL_HANGING_CITY",
+   "BUILDING_ASTEROID_SHELL_LIGHTING",
+   "BUILDING_ASTEROID_SHELL_SPACEPORT"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_DEEP_SPACE_ORBITAL_BASE",
+    "TECH_PARATERRAFORMING",
+    {
+     "any": [
+      {
+       "type": "TERRAIN_ASTEROID_SURFACE",
+       "scope": "plot"
+      },
+      {
+       "type": "TERRAIN_KUIPER_BELT_OBJECT",
+       "scope": "plot"
+      }
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_SOLAR_SYSTEM",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 200
+  }
+ },
+ "cost": {
+  "production": 4123,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ASTEROID_SHELL_WORLD",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ASTEROID_SHELL_WORLD",
+  "civilopedia": "TXT_KEY_BUILDING_ASTEROID_SHELL_WORLD_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_SOLAR_SYSTEM"
+  ]
+ }
+}

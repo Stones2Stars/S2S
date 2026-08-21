@@ -1,0 +1,66 @@
+{
+ "type": "TECH_MACROSCOPIC_SUPERPOSITION",
+ "enables": {
+  "buildings": [
+   "BUILDING_INTERSTELLAR_SELECTIVE_DECOHERENCE",
+   "BUILDING_INTERSTELLAR_SPATIAL_EMULATION_STUDIO",
+   "BUILDING_QUANTUM_ASSEMBLER",
+   "BUILDING_QUANTUM_DATA_STORAGE"
+  ],
+  "techs": [
+   "TECH_FANTASY_MATERIALS",
+   "TECH_OMEGA_MINUS_ENGINEERING",
+   "TECH_PURE_INFORMATION_SOCIETY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_ZERO_POINT_ENERGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_DARK_MATTER_ENGINEERING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 338869
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_CULTURE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 5
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": "Art/interface/buttons/TechTree/macroscopic_superposition.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_GENERIC",
+  "soundMP": "AS2D_TECH_GENERIC"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_MACROSCOPIC_SUPERPOSITION",
+  "civilopedia": "TXT_KEY_TECH_MACROSCOPIC_SUPERPOSITION_PEDIA",
+  "quote": "TXT_KEY_TECH_MACROSCOPIC_SUPERPOSITION_QUOTE",
+  "era": "C2C_ERA_COSMIC",
+  "worth": 48,
+  "tradeable": true,
+  "gridX": 145,
+  "gridY": 7
+ }
+}

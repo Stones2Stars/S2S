@@ -1,0 +1,14 @@
+{
+ "type": "HURRY_GOLD",
+ "conversion": {
+  "goldPerProduction": 3
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/MainScreen/CityScreen/hurry_commerce.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_HURRY_GOLD"
+ }
+}

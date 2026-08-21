@@ -1,0 +1,64 @@
+{
+ "type": "BUILDING_CENTER_FOR_THE_STUDY_OF_CIVILIZATION",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_COMPUTATIONAL_METAPHYSICS_CENTER",
+    "TECH_SPACEPUNK",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_SPACEPUNK",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "culture": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 8755,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_CENTER_FOR_THE_STUDY_OF_CIVILIZATION",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_CENTER_FOR_THE_STUDY_OF_CIVILIZATION",
+  "civilopedia": "TXT_KEY_BUILDING_CENTER_FOR_THE_STUDY_OF_CIVILIZATION_PEDIA",
+  "specialBuildingType": "SPECIALBUILDING_PUNK_SPACE",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

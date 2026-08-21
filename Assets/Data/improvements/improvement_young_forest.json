@@ -1,0 +1,39 @@
+{
+ "type": "IMPROVEMENT_YOUNG_FOREST",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_GUILDS",
+     "scope": "team"
+    },
+    {
+     "terrain": [
+      "TERRAIN_GRASSLAND",
+      "TERRAIN_PLAINS",
+      "TERRAIN_TAIGA",
+      "TERRAIN_SCRUB",
+      "TERRAIN_ROCKY",
+      "TERRAIN_LUSH",
+      "TERRAIN_MUDDY",
+      "TERRAIN_MARSH"
+     ]
+    }
+   ]
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_IMPROVEMENT_YOUNG_FOREST"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_FOREST_YOUNG",
+  "civilopedia": "TXT_KEY_IMPROVEMENT_YOUNG_FOREST_PEDIA",
+  "advancedStart": {
+   "cost": -1
+  },
+  "placesFeature": true,
+  "graphicalOnly": true
+ }
+}

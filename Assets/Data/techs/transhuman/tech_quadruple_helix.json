@@ -1,0 +1,74 @@
+{
+ "type": "TECH_QUADRUPLE_HELIX",
+ "enables": {
+  "buildings": [
+   "BUILDING_MARTIAN_ECOSYSTEM",
+   "BUILDING_MARTIAN_GARDEN",
+   "BUILDING_VENUS_ECOSYSTEM"
+  ],
+  "techs": [
+   "TECH_ARTIFICIAL_EVOLUTION"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_DESIGNER_MICROBIOLOGY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_HYPOTHETICAL_BIOCHEMISTRY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SPECIES_UPLIFTING",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 65511
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_SCIENCE": 10
+   },
+   {
+    "FLAVOR_CULTURE": 1
+   },
+   {
+    "FLAVOR_GROWTH": 1
+   },
+   {
+    "FLAVOR_ESPIONAGE": 1
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/quadruplehelix.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_QUADRUPLE_HELIX",
+  "soundMP": "AS2D_TECH_QUADRUPLE_HELIX"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_QUADRUPLE_HELIX",
+  "civilopedia": "TXT_KEY_TECH_QUADRUPLE_HELIX_PEDIA",
+  "quote": "TXT_KEY_TECH_QUADRUPLE_HELIX_QUOTE",
+  "era": "C2C_ERA_TRANSHUMAN",
+  "worth": 48,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 112,
+  "gridY": 19
+ }
+}

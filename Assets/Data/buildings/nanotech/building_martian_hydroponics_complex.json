@@ -1,0 +1,81 @@
+{
+ "type": "BUILDING_MARTIAN_HYDROPONICS_COMPLEX",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_ASTROECOLOGY"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_MARTIAN_VERTICAL_FARM"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_MARTIAN_RADIATION_SHIELD",
+    "BUILDING_SPACE_COLONY_MARTIAN",
+    "TECH_ELECTROMAGNETIC_FIELD_SHIELDING",
+    "TECH_AUGMENTED_CONSUMABLES",
+    "TECH_PLANETARY_MANUFACTURING",
+    {
+     "type": "MAPCATEGORY_MARTIAN",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_MARTIAN_VERTICAL_FARM"
+   ]
+  }
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_MARTIAN_VEGETABLES"
+  ]
+ },
+ "food": {
+  "city": {
+   "flat": 8
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 100
+  }
+ },
+ "research": {
+  "city": {
+   "flat": 40
+  }
+ },
+ "health": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "PROPERTY_DISEASE": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "cost": {
+  "production": 905,
+  "hurryModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_MARTIAN_HYDROPONICS_COMPLEX",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_MARTIAN_HYDROPONICS_COMPLEX",
+  "civilopedia": "TXT_KEY_BUILDING_MARTIAN_HYDROPONICS_COMPLEX_PEDIA",
+  "pediaCategory": "space",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_MARTIAN"
+  ]
+ }
+}

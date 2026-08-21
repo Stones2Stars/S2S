@@ -1,0 +1,14 @@
+{
+ "type": "OUTCOME_ENTERTAIN_CITY_EXALTED",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_ENTERTAIN_CITY",
+  "message": "TXT_KEY_OUTCOME_ENTERTAIN_CITY_MESSAGE"
+ },
+ "territory": [
+  "friendly"
+ ],
+ "in": "city",
+ "odds": {
+  "PROMOTION_EXPERIENCED_ARTIST": 20
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "type": "CULTURELEVEL_MONUMENTAL",
+ "allowed": {
+  "worldWonders": 14,
+  "teamWonders": 16,
+  "nationalWonders": 31
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 50
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CULTURELEVEL_MONUMENTAL",
+  "cityRadius": 3,
+  "cultureThreshold": 2129920
+ }
+}

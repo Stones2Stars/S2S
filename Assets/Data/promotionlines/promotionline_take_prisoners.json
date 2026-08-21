@@ -1,0 +1,16 @@
+{
+ "type": "PROMOTIONLINE_TAKE_PRISONERS",
+ "ui": {
+  "art": {
+   "icon": "Art/Interface/Buttons/Promotions/flaming1.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_TAKE_PRISONERS",
+  "unitCombats": [
+   "UNITCOMBAT_STRIKE_TEAM",
+   "UNITCOMBAT_CRIMINAL",
+   "UNITCOMBAT_RUFFIAN"
+  ]
+ }
+}

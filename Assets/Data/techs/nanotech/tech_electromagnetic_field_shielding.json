@@ -1,0 +1,62 @@
+{
+ "type": "TECH_ELECTROMAGNETIC_FIELD_SHIELDING",
+ "enables": {
+  "buildings": [
+   "BUILDING_CISLUNAR_SHIELDING",
+   "BUILDING_MARTIAN_HYDROPONICS_COMPLEX",
+   "BUILDING_MARTIAN_RADIATION_SHIELD",
+   "BUILDING_TECTONIC_DAMPERS"
+  ],
+  "techs": [
+   "TECH_WIRELESS_ELECTRICITY"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_PLASTIC_ELECTRONICS",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ACOUSTOPHORESIS",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 41539
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   },
+   {
+    "FLAVOR_SCIENCE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_MILITARY",
+   "icon": "Art/Buttons/Techs/TechElectromagneticShielding.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_ELECTROMAGNETIC_FIELD_SHIELDING",
+  "soundMP": "AS2D_TECH_ELECTROMAGNETIC_FIELD_SHIELDING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_ELECTROMAGNETIC_FIELD_SHIELDING",
+  "civilopedia": "TXT_KEY_TECH_ELECTROMAGNETIC_FIELD_SHIELDING_PEDIA",
+  "quote": "TXT_KEY_TECH_ELECTROMAGNETIC_FIELD_SHIELDING_QUOTE",
+  "era": "C2C_ERA_NANOTECH",
+  "worth": 43,
+  "militaryWorth": 5,
+  "tradeable": true,
+  "gridX": 104,
+  "gridY": 7
+ }
+}

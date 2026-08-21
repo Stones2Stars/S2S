@@ -1,0 +1,156 @@
+{
+ "type": "CIVIC_CONSCRIPTION",
+ "enables": {
+  "buildings": [
+   "BUILDING_DRAFT_OFFICE"
+  ]
+ },
+ "production": {
+  "empire": {
+   "percent": [
+    {
+     "value": 3,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "empire": {
+   "percent": [
+    1,
+    {
+     "value": -2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "research": {
+  "empire": {
+   "percent": [
+    1,
+    {
+     "value": 2,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": [
+    {
+     "value": 1,
+     "enabled": "IS_CAPITAL"
+    }
+   ]
+  }
+ },
+ "greatGeneralRate": {
+  "empire": {
+   "percent": 10
+  }
+ },
+ "conscript": {
+  "empire": {
+   "flat": 7
+  }
+ },
+ "capture": {
+  "empire": {
+   "resistance": {
+    "percent": -10
+   }
+  }
+ },
+ "maintenance": {
+  "empire": {
+   "distance": {
+    "percent": 15
+   },
+   "numCities": {
+    "percent": 15
+   },
+   "percent": [
+    {
+     "value": 3,
+     "enabled": "IS_HOME_AREA"
+    }
+   ]
+  }
+ },
+ "upkeep": {
+  "empire": {
+   "freeMilitary": {
+    "flat": [
+     {
+      "value": 30,
+      "per": {
+       "type": "POPULATION",
+       "each": 100
+      }
+     }
+    ]
+   }
+  }
+ },
+ "revolution": {
+  "empire": {
+   "national": {
+    "flat": 2
+   },
+   "violentMod": {
+    "percent": -100
+   }
+  }
+ },
+ "buildRate": {
+  "empire": {
+   "units": {
+    "percent": [
+     {
+      "value": 10,
+      "enabled": "IS_MILITARY"
+     }
+    ]
+   },
+   "unitCombats": {
+    "UNITCOMBAT_MELEE": {
+     "percent": 20
+    },
+    "UNITCOMBAT_ARCHER": {
+     "percent": 20
+    },
+    "UNITCOMBAT_MOUNTED": {
+     "percent": 20
+    },
+    "UNITCOMBAT_GUN": {
+     "percent": 20
+    }
+   }
+  }
+ },
+ "policies": {
+  "militaryFoodProduction": true
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "icon": "art/Interface/buttons/civics/sparth/military_conscription.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_CIVIC_CONSCRIPTION",
+  "civilopedia": "TXT_KEY_CIVIC_CONSCRIPTION_PEDIA",
+  "strategy": "TXT_KEY_CIVIC_CONSCRIPTION_STRATEGY",
+  "civicOption": "CIVICOPTION_MILITARY",
+  "upkeepLevel": "UPKEEP_MEDIUM"
+ }
+}

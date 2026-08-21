@@ -1,0 +1,120 @@
+{
+ "type": "BUILDING_ANIMAL_SNARE_TRAPS",
+ "enables": {
+  "buildings": [
+   "BUILDING_SKINNER",
+   "BUILDING_TRAP_BEAVER",
+   "BUILDING_TRAP_CHINCHILLA",
+   "BUILDING_TRAP_FOX",
+   "BUILDING_TRAP_MINK",
+   "BUILDING_TRAP_RABBIT",
+   "BUILDING_TRAP_RACCOON",
+   "BUILDING_TRAP_SEA_OTTER"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_ANCIENT_CUSTOMS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_TRAPPING",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_ANCIENT_CUSTOMS"
+   ]
+  }
+ },
+ "food": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BEAVER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DEER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_RABBIT",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 2,
+     "enabled": {
+      "type": "BONUS_POULTRY",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "commerce": {
+  "city": {
+   "flat": [
+    1,
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_BEAVER",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 1,
+     "enabled": {
+      "type": "BONUS_DEER",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "cost": {
+  "production": 35,
+  "countModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ANIMAL_SNARE_TRAPS",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ANIMAL_SNARE_TRAPS",
+  "civilopedia": "TXT_KEY_BUILDING_ANIMAL_SNARE_TRAPS_PEDIA",
+  "advisor": "ADVISOR_GROWTH",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

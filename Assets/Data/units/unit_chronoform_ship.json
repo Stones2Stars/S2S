@@ -1,0 +1,134 @@
+{
+ "type": "UNIT_CHRONOFORM_SHIP",
+ "builds": [
+  "BUILD_HYPERLANE",
+  "BUILD_ASPATIAL_ROUTE",
+  "BUILD_TERRAFORM_HYPERSPACE",
+  "BUILD_TERRAFORM_PAST",
+  "BUILD_TERRAFORM_FUTURE",
+  "BUILD_TERRAFORM_BRANESPACE",
+  "BUILD_TIME_MANIFOLD",
+  "BUILD_DISTANT_PAST_CITY",
+  "BUILD_DISTANT_FUTURE_CITY",
+  "BUILD_PARALLEL_UNIVERSE",
+  "BUILD_BRANE_FACTORY",
+  "BUILD_BRANE_FARM",
+  "BUILD_SPIRITUAL_REALM",
+  "BUILD_HYPERSPACE_BUNKER"
+ ],
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_INTERGALACTIC_CHRONOTON_GENERATOR",
+    "TECH_STABLE_TIME_LOOPS"
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 24
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_CHRONOFORM_SHIP"
+  }
+ },
+ "skills": [
+  "canMoveAllTerrain",
+  "canMoveImpassable",
+  "ignoreTerrainCost"
+ ],
+ "tags": [
+  "worker",
+  "civilian",
+  "landUnit",
+  "unpromotable"
+ ],
+ "combatClass": "UNITCOMBAT_SPACE_WORKER",
+ "combatClasses": [
+  "UNITCOMBAT_WORMHOLE_SPACESHIP",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_AI",
+  "UNITCOMBAT_MOTILITY_FOOT",
+  "UNITCOMBAT_QUALITY_SUPERIOR",
+  "UNITCOMBAT_GROUP_COMPANY",
+  "UNITCOMBAT_SIZE_MEDIUM",
+  "UNITCOMBAT_HEALS_AS_TECH",
+  "UNITCOMBAT_HEALS_AS_MECHANICAL"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "cost": {
+  "production": 5000,
+  "upkeep": 1,
+  "hurryCostModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_CHRONOFORM_SHIP",
+   "meshGroups": {
+    "groupSize": 3,
+    "meleeWaveSize": 3,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 2,
+      "define": {
+       "early": "ART_DEF_UNIT_CHRONOFORM_SHIP",
+       "late": "ART_DEF_UNIT_CHRONOFORM_SHIP"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_CHRONOFORM_SHIP",
+  "civilopedia": "TXT_KEY_UNIT_CHRONOFORM_SHIP_PEDIA",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_WORKER",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_ECONOMY",
+  "unitAIs": [
+   "UNITAI_WORKER"
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_UNIVERSAL",
+   "MAPCATEGORY_DISTANT",
+   "MAPCATEGORY_HYPERSPACE"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_VIRGO_SUPERCLUSTER",
+   "TERRAIN_INTERGALACTIC_VOID",
+   "TERRAIN_OBSERVABLE_UNIVERSE",
+   "TERRAIN_DISTANT_COSMOS"
+  ],
+  "terrainPassableTechs": [
+   {
+    "TERRAIN_VIRGO_SUPERCLUSTER": "TECH_INTERGROUP_TRAVEL"
+   },
+   {
+    "TERRAIN_OBSERVABLE_UNIVERSE": "TECH_INTERCLUSTER_TRAVEL"
+   },
+   {
+    "TERRAIN_INTERGALACTIC_VOID": "TECH_INTERCLUSTER_TRAVEL"
+   },
+   {
+    "TERRAIN_DISTANT_COSMOS": "TECH_HORIZON_BREAKING"
+   }
+  ],
+  "advancedStart": {
+   "cost": 100
+  },
+  "base": {
+   "workRate": 350
+  }
+ }
+}

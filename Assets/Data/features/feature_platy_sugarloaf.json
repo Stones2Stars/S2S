@@ -1,0 +1,36 @@
+{
+ "type": "FEATURE_PLATY_SUGARLOAF",
+ "characteristics": [
+  "unfoundable",
+  "unimprovable",
+  "prohibitsBonus",
+  "nukeImmune",
+  "countsAsPeak",
+  "ignoreTerrainCulture"
+ ],
+ "vision": {
+  "plot": {
+   "obstruction": {
+    "flat": 100
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_FEATURE_SUGARLOAF"
+  }
+ },
+ "sound": {
+  "soundscape": "ASSS_OASIS_SELECT_AMB"
+ },
+ "identity": {
+  "description": "TXT_KEY_FEATURE_SUGARLOAF",
+  "civilopedia": "TXT_KEY_FEATURE_SUGARLOAF_PEDIA",
+  "noCoast": true,
+  "validTerrains": [
+   "TERRAIN_COAST",
+   "TERRAIN_COAST_TROPICAL",
+   "TERRAIN_COAST_POLAR"
+  ]
+ }
+}

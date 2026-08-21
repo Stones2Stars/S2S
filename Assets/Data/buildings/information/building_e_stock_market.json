@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_E_STOCK_MARKET",
+ "enables": {
+  "buildings": [
+   "BUILDING_AI_INVESTMENT",
+   "BUILDING_ECOSYSTEM_SERVICES_MARKET",
+   "BUILDING_FUTARCHY_MARKET",
+   "BUILDING_INTERTEMPORAL_STOCK_MARKET"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_E_BANK",
+    "BUILDING_STOCK_MARKET",
+    "TECH_DIGITIZATION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_COMPUTERS",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "commerce": {
+  "city": {
+   "percent": 1,
+   "flat": [
+    {
+     "value": 9,
+     "enabled": "TECH_MEGACORPORATIONS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_DIRECT_MERCHANDISING"
+    }
+   ]
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_MERCHANT": 1
+  }
+ },
+ "cost": {
+  "production": 2205,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_E_STOCK_MARKET",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_E_STOCK_MARKET",
+  "civilopedia": "TXT_KEY_BUILDING_E_STOCK_MARKET_PEDIA",
+  "advisor": "ADVISOR_ECONOMY",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

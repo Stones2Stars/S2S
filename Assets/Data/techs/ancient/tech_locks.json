@@ -1,0 +1,73 @@
+{
+ "type": "TECH_LOCKS",
+ "enables": {
+  "buildings": [
+   "BUILDING_BURGLARS_HIDEOUT_UNSANCTIONED",
+   "BUILDING_CULTURE_ROMANI",
+   "BUILDING_LOCKSMITH"
+  ],
+  "promotions": [
+   "PROMOTION_CONNIVING2",
+   "PROMOTION_CORRUPTION2"
+  ],
+  "techs": [
+   "TECH_CONSTRUCTION"
+  ],
+  "units": [
+   "UNIT_BEGGAR",
+   "UNIT_BURGLAR"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_METAL_CASTING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_PIRACY",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_SPECIALIZATION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 274
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 5
+   },
+   {
+    "FLAVOR_CULTURE": 7
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_CULTURE",
+   "icon": "Art/Interface/Buttons/TechTree/locks.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_LOCKS",
+  "soundMP": "AS2D_TECH_LOCKS"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_LOCKS",
+  "civilopedia": "TXT_KEY_TECH_LOCKS_PEDIA",
+  "quote": "TXT_KEY_TECH_LOCKS_QUOTE",
+  "era": "C2C_ERA_ANCIENT",
+  "worth": 2,
+  "tradeable": true,
+  "goodyTech": true,
+  "gridX": 29,
+  "gridY": 1
+ }
+}

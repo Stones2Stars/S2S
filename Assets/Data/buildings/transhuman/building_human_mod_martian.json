@@ -1,0 +1,78 @@
+{
+ "type": "BUILDING_HUMAN_MOD_MARTIAN",
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "BUILDING_MARTIAN_CITY",
+     "scope": "empire",
+     "min": 1,
+     "scaling": "amountBuildings"
+    },
+    "TECH_ARTIFICIAL_EVOLUTION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_HUMAN_MOD_NOVEL_SENSES",
+     "scope": "city",
+     "connection": "trade"
+    },
+    "HAS_POWER"
+   ]
+  }
+ },
+ "allowed": {
+  "empire": 1
+ },
+ "provides": {
+  "bonuses": [
+   "BONUS_HUMAN_MOD_MARTIAN"
+  ]
+ },
+ "gold": {
+  "empire": {
+   "buildings": {
+    "BUILDING_MARTIAN_ARCOLOGY": {
+     "flat": 5
+    },
+    "BUILDING_MARTIAN_MEGACITY": {
+     "flat": 5
+    },
+    "BUILDING_MARTIAN_CITY": {
+     "flat": 5
+    },
+    "BUILDING_MARTIAN_METROPOLIS": {
+     "flat": 5
+    }
+   }
+  }
+ },
+ "cost": {
+  "production": 10910
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HUMAN_MOD_MARTIAN",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMAN_MOD_MARTIAN",
+  "civilopedia": "TXT_KEY_BUILDING_HUMAN_MOD_MARTIAN_PEDIA",
+  "pediaCategory": "nationalWonder",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

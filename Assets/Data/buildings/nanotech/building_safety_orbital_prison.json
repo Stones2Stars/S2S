@@ -1,0 +1,68 @@
+{
+ "type": "BUILDING_SAFETY_ORBITAL_PRISON",
+ "enables": {
+  "buildings": [
+   "BUILDING_CRIME_PRISON_BREAKOUTS"
+  ]
+ },
+ "requires": {
+  "operate": {
+   "all": [
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS"
+   ]
+  }
+ },
+ "espionage": {
+  "empire": {
+   "percent": 125
+  }
+ },
+ "happiness": {
+  "empire": {
+   "flat": 5
+  }
+ },
+ "revolution": {
+  "empire": {
+   "local": {
+    "flat": -50
+   }
+  }
+ },
+ "warWeariness": {
+  "empire": {
+   "percent": -25
+  }
+ },
+ "PROPERTY_CRIME": {
+  "empire": {
+   "flat": -100
+  }
+ },
+ "allowedSpecialists": {
+  "empire": {
+   "SPECIALIST_SPY": 3
+  }
+ },
+ "attributes": {
+  "destroyedOnCapture": true
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_SAFETY_ORBITAL_PRISON",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_SAFETY_ORBITAL_PRISON",
+  "civilopedia": "TXT_KEY_BUILDING_SAFETY_ORBITAL_PRISON_PEDIA",
+  "notConstructible": true,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ],
+  "empireLevel": true
+ }
+}

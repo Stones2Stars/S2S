@@ -1,0 +1,99 @@
+{
+ "type": "BUILDING_LIBRARY_OF_NINEVEH",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_INDUSTRIALISM"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_IDEOGRAMS",
+    {
+     "any": [
+      "BUILDING_TABLET_MAKER",
+      "BUILDING_ANTIQUE_SHOP"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "allowed": {
+  "world": 1
+ },
+ "research": {
+  "city": {
+   "percent": 7
+  },
+  "empire": {
+   "percent": 2
+  }
+ },
+ "greatPeopleRate": {
+  "city": {
+   "flat": 2
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "grants": {
+  "buildings": [
+   {
+    "building": "BUILDING_TABLET_MAKER",
+    "scope": "empire"
+   }
+  ]
+ },
+ "cost": {
+  "production": 708,
+  "sizeModifier": 3,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 250
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_SCIENCE": 5
+   },
+   {
+    "FLAVOR_GOLD": 5
+   }
+  ]
+ },
+ "amenities": {
+  "nukeImmune": true
+ },
+ "ui": {
+  "art": {
+   "movie": {
+    "defineTag": "ART_DEF_MOVIE_NINEVEH"
+   }
+  }
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_LIBRARY_OF_NINEVEH"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_LIBRARY_OF_NINEVEH",
+  "civilopedia": "TXT_KEY_BUILDING_LIBRARY_OF_NINEVEH_PEDIA",
+  "pediaCategory": "greatWonder",
+  "worth": 10,
+  "conquestProbability": 100,
+  "greatPeopleUnitType": "UNIT_SCIENTIST",
+  "advisor": "ADVISOR_GROWTH",
+  "visibilityPriority": 10,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

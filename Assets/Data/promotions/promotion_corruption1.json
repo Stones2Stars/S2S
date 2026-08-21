@@ -1,0 +1,49 @@
+{
+ "type": "PROMOTION_CORRUPTION1",
+ "combat": {
+  "unit": {
+   "stealth": {
+    "percent": 5
+   }
+  }
+ },
+ "underworld": {
+  "unit": {
+   "insidiousness": {
+    "flat": 1
+   }
+  }
+ },
+ "revoltProtection": {
+  "unit": {
+   "percent": -1
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": 2
+  },
+  "plot": {
+   "flat": 2
+  }
+ },
+ "promotionLine": {
+  "PROMOTIONLINE_CORRUPTION": 1
+ },
+ "ai": {
+  "unitCombatWeights": {
+   "UNITCOMBAT_CRIMINAL": 50
+  }
+ },
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Corruption1Promotion.dds"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_IF_LEVELUP"
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTION_CORRUPTION1"
+ }
+}

@@ -1,0 +1,121 @@
+{
+ "type": "BUILDING_EARTH_WALL",
+ "obsoletedBy": {
+  "techs": [
+   "TECH_SIEGE_WARFARE"
+  ]
+ },
+ "whenObsolete": {
+  "becomes": "BUILDING_WALLS"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_MEGALITH_CONSTRUCTION",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "dormant": [
+    "BUILDING_WALLS",
+    "BUILDING_HIGH_WALLS"
+   ]
+  }
+ },
+ "buildRate": {
+  "self": {
+   "percent": [
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_STONE",
+      "scope": "city",
+      "min": 1
+     }
+    },
+    {
+     "value": 100,
+     "enabled": {
+      "type": "BONUS_FINE_CLAY",
+      "scope": "city",
+      "min": 1
+     }
+    }
+   ]
+  }
+ },
+ "happiness": {
+  "city": {
+   "flat": 1
+  }
+ },
+ "defense": {
+  "city": {
+   "amount": {
+    "percent": 40
+   },
+   "bombardDefense": {
+    "percent": 10
+   },
+   "min": {
+    "percent": 10
+   },
+   "noEntryLevel": {
+    "percent": 80
+   }
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 3
+  }
+ },
+ "PROPERTY_CRIME": {
+  "city": {
+   "flat": -3
+  }
+ },
+ "cost": {
+  "production": 208,
+  "sizeModifier": 3,
+  "materialsModifier": 1,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 10
+   }
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_EARTH_WALL"
+  }
+ },
+ "sound": {
+  "construct": "AS2D_BUILD_WALLS"
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_EARTH_WALL",
+  "civilopedia": "TXT_KEY_BUILDING_EARTH_WALL_PEDIA",
+  "centerInCity": true,
+  "worth": 1,
+  "militaryWorth": 3,
+  "conquestProbability": 25,
+  "advisor": "ADVISOR_MILITARY",
+  "visibilityPriority": 1000,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ },
+ "PROPERTY_FLAMMABILITY": {
+  "city": {
+   "flat": -3
+  }
+ }
+}

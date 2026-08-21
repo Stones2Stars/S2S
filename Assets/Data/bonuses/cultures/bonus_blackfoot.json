@@ -1,0 +1,21 @@
+{
+ "type": "BONUS_BLACKFOOT",
+ "enables": {
+  "units": [
+   "UNIT_BLOOD_WARRIOR",
+   "UNIT_CROWFOOT",
+   "UNIT_MAHKAN"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_BLACKFOOT"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_BLACKFOOT",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

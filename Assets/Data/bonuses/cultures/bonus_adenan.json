@@ -1,0 +1,20 @@
+{
+ "type": "BONUS_ADENAN",
+ "enables": {
+  "units": [
+   "UNIT_MOUND_GUARDIAN",
+   "UNIT_SAKAYENGA"
+  ]
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BONUS_ADENAN"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BONUS_ADENAN",
+  "civilopedia": "TXT_KEY_BONUS_CULTURE_PEDIA",
+  "bonusClassType": "BONUSCLASS_CULTURE",
+  "source": "culture"
+ }
+}

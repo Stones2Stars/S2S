@@ -1,0 +1,53 @@
+{
+ "type": "BUILDING_HUMANOID_DESIGNER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_SAPIENTROIDS",
+    {
+     "any": [
+      "BUILDING_FACTORY_ANDROIDS",
+      "BUILDING_NANOTECH_COMPLEX"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  }
+ },
+ "production": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": 10
+  }
+ },
+ "cost": {
+  "production": 6155,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_HUMANOID_DESIGNER",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_HUMANOID_DESIGNER",
+  "civilopedia": "TXT_KEY_BUILDING_HUMANOID_DESIGNER_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "visibilityPriority": 1,
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}

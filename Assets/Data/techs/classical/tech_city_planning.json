@@ -1,0 +1,100 @@
+{
+ "type": "TECH_CITY_PLANNING",
+ "enables": {
+  "buildings": [
+   "BUILDING_CITY_COUNCIL",
+   "BUILDING_CRIME_ARSON",
+   "BUILDING_FORBIDDEN_PALACE",
+   "BUILDING_GREAT_ZIMBABWE",
+   "BUILDING_HELLENIC_PANTHEON",
+   "BUILDING_NAVAL_SHIPPING_WAREHOUSE",
+   "BUILDING_OFFICIUM",
+   "BUILDING_PHIDIAS_STATUE_WORKSHOP",
+   "BUILDING_PORT"
+  ],
+  "builds": [
+   "BUILD_RESOURCE_SETTLEMENT",
+   "BUILD_VILLAGE"
+  ],
+  "civics": [
+   "CIVIC_PUBLIC_WORKS"
+  ],
+  "improvements": [
+   "IMPROVEMENT_RESOURCE_SETTLEMENT",
+   "IMPROVEMENT_VILLAGE"
+  ],
+  "techs": [
+   "TECH_CANAL_SYSTEMS",
+   "TECH_PAVED_ROADS"
+  ]
+ },
+ "obsoletes": {
+  "builds": [
+   "BUILD_RESOURCE_OUTPOST"
+  ]
+ },
+ "requires": {
+  "build": {
+   "all": [
+    {
+     "type": "TECH_MAIL",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_ROAD_BUILDING",
+     "scope": "team"
+    },
+    {
+     "type": "TECH_CONSTRUCTION",
+     "scope": "team"
+    }
+   ]
+  }
+ },
+ "cost": {
+  "research": 614
+ },
+ "ai": {
+  "flavours": [
+   {
+    "FLAVOR_MILITARY": 3
+   },
+   {
+    "FLAVOR_RELIGION": 3
+   },
+   {
+    "FLAVOR_PRODUCTION": 6
+   },
+   {
+    "FLAVOR_SCIENCE": 2
+   },
+   {
+    "FLAVOR_GOLD": 8
+   },
+   {
+    "FLAVOR_CULTURE": 9
+   }
+  ]
+ },
+ "ui": {
+  "art": {
+   "advisor": "ADVISOR_ECONOMY",
+   "icon": ",Art/Interface/Buttons/TechTree/CityPlanning.dds,Art/Interface/Buttons/RoM_Techtree_Atlas.dds,4,4"
+  }
+ },
+ "sound": {
+  "sound": "AS2D_TECH_CITY_PLANNING",
+  "soundMP": "AS2D_TECH_CITY_PLANNING"
+ },
+ "identity": {
+  "description": "TXT_KEY_TECH_CITY_PLANNING",
+  "civilopedia": "TXT_KEY_TECH_CITY_PLANNING_PEDIA",
+  "quote": "TXT_KEY_TECH_CITY_PLANNING_QUOTE",
+  "era": "C2C_ERA_CLASSICAL",
+  "worth": 16,
+  "militaryWorth": 4,
+  "tradeable": true,
+  "gridX": 36,
+  "gridY": 11
+ }
+}

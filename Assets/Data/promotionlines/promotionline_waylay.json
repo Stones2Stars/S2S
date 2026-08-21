@@ -1,0 +1,18 @@
+{
+ "type": "PROMOTIONLINE_WAYLAY",
+ "ui": {
+  "art": {
+   "icon": "Art/Buttons/Promotions/Waylay1Buildup.dds"
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_PROMOTIONLINE_WAYLAY",
+  "unitCombats": [
+   "UNITCOMBAT_RUFFIAN",
+   "UNITCOMBAT_PIRATE"
+  ],
+  "notOnDomains": [
+   "DOMAIN_AIR"
+  ]
+ }
+}

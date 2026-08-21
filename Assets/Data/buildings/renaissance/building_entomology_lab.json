@@ -1,0 +1,108 @@
+{
+ "type": "BUILDING_ENTOMOLOGY_LAB",
+ "requires": {
+  "build": {
+   "all": [
+    "BUILDING_BIOLOGY_LAB",
+    "BUILDING_ZOO",
+    "TECH_ZOOLOGY",
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
+  },
+  "operate": {
+   "all": [
+    {
+     "type": "BONUS_BUGS",
+     "scope": "city",
+     "connection": "trade"
+    }
+   ]
+  }
+ },
+ "gold": {
+  "city": {
+   "flat": {
+    "value": 8,
+    "enabled": "TECH_BIOMATERIALS"
+   }
+  }
+ },
+ "research": {
+  "city": {
+   "flat": [
+    5,
+    {
+     "value": 5,
+     "enabled": "TECH_PALEONTOLOGY"
+    },
+    {
+     "value": 6,
+     "enabled": "TECH_WILDLIFE_CONSERVATION"
+    },
+    {
+     "value": 6,
+     "enabled": "TECH_MARINE_BIOLOGY"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_ECOLOGY"
+    },
+    {
+     "value": 7,
+     "enabled": "TECH_GENETICS"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_GENESIS_BIOLOGY"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_ECOLOGICAL_ENGINEERING"
+    },
+    {
+     "value": 8,
+     "enabled": "TECH_GENOMIC_ENCYCLOPEDIA"
+    }
+   ]
+  }
+ },
+ "maintenance": {
+  "city": {
+   "flat": 20
+  }
+ },
+ "PROPERTY_EDUCATION": {
+  "city": {
+   "flat": 5
+  }
+ },
+ "allowedSpecialists": {
+  "city": {
+   "SPECIALIST_SCIENTIST": 1
+  }
+ },
+ "cost": {
+  "production": 535,
+  "sizeModifier": 2,
+  "materialsModifier": 2,
+  "complexityModifier": 2,
+  "hurryModifier": 100
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_BUILDING_ENTOMOLOGY_LAB",
+   "notShownInCity": true
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_BUILDING_ENTOMOLOGY_LAB",
+  "civilopedia": "TXT_KEY_BUILDING_ENTOMOLOGY_LAB_PEDIA",
+  "advisor": "ADVISOR_SCIENCE",
+  "mapCategories": [
+   "MAPCATEGORY_EARTH"
+  ]
+ }
+}
