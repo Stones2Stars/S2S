@@ -214,7 +214,18 @@ public:
 
 	// allowed cap gate: current tally count vs each scope cap (world/team/empire).
 	static bool allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer, bool bUnit, EnEdgeBucket eBucket = NO_EDGEB);
-	static bool queueExcludedArrivalOk(const CvCity* pCity, int iBuilding);   // may a notConstructible building ARRIVE here (mission construct / first-to-earn award) -- cap + obsolescence + the operate gate; the queue tri-state cannot answer it (HIDDEN by design)
+	/// <summary>Does the HOLDER already have this building? An `identity.empireLevel` building is held by the
+	/// PLAYER and is never in any city (enabler.md §2), so a per-city read answers NO forever and the thing
+	/// keeps being offered after the empire owns it. Every construct/arrival gate asks THIS, never the city
+	/// directly.</summary>
+	static bool holderHasBuilding(const CvCity* pCity, int iBuilding);
+
+	/// <summary>May a notConstructible building ARRIVE here (mission construct / first-to-earn award) --
+	/// cap + obsolescence + the operate gate; the queue tri-state cannot answer it (HIDDEN by design).
+	/// `bTestVisible` is the SHOW test: it admits a target whose only failure is the authored operate
+	/// condition, so the button appears GREYED instead of vanishing. Everything the asker cannot act on --
+	/// already held, capped out, obsolete -- still hides.</summary>
+	static bool queueExcludedArrivalOk(const CvCity* pCity, int iBuilding, bool bTestVisible = false);
 	// WHICH clause refused, for every domain whose gate is the standard trio -- the entity-level option gate, the
 	// `allowed` cap, and `requires` ([enabler.md] par.6: the gate carries the REASON, so a greyed candidate can
 	// say what is missing instead of leaving the player and the AI to guess). ONE implementation, so two domains

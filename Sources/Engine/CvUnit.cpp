@@ -8627,7 +8627,9 @@ bool CvUnit::canConstruct(const CvPlot* pPlot, BuildingTypes eBuilding, bool bTe
 		return false;
 	}
 
-	if (pCity->hasBuilding(eBuilding))
+	//	The HOLDER, not the city: an empireLevel building lives on the player, so a per-city read would
+	//	keep offering a folklore the empire already owns (enabler.md §2).
+	if (EnablerKernel::holderHasBuilding(pCity, (int)eBuilding))
 	{
 		return false;
 	}
@@ -8639,7 +8641,7 @@ bool CvUnit::canConstruct(const CvPlot* pPlot, BuildingTypes eBuilding, bool bTe
 	// second copy for the same player. One implementation, shared with the first-to-earn awarder.
 	if (GC.getBuildingInfo(eBuilding).isNotConstructible())
 	{
-		return EnablerKernel::queueExcludedArrivalOk(pCity, (int)eBuilding);
+		return EnablerKernel::queueExcludedArrivalOk(pCity, (int)eBuilding, bTestVisible);
 	}
 
 	if (pCity->getBuildingAvailability(eBuilding) < (bTestVisible ? EnablerDomain::STATE_GREYED : EnablerDomain::STATE_LISTED))

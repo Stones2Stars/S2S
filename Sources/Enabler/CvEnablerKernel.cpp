@@ -443,7 +443,8 @@ bool EnablerKernel::canPlaceBuilding(const CvCity* pCity, int iBuilding, const C
 	const CvCascadeEvalFlags& kFlags)
 {
 	if (pCity == NULL || iBuilding < 0) return false;
-	if (pCity->hasBuilding((BuildingTypes)iBuilding)) return false;
+	//	the HOLDER, not the city -- an empireLevel building is never IN a city (holderHasBuilding)
+	if (holderHasBuilding(pCity, iBuilding)) return false;
 	// An obsolete building must not be resurrected. The team already owns the tech list, so this is the derived
 	// predicate rather than a stored flag.
 	if (GET_TEAM(pCity->getTeam()).isObsoleteBuilding((BuildingTypes)iBuilding)) return false;
@@ -588,14 +589,30 @@ bool EnablerKernel::allowedOk(const CvInfo* j, int iId, const CvPlayer& kPlayer,
 // (enabler.md §3), so its arrival gates are asked HERE, once, for every arriving system
 // (docs/architecture/patterns.md §DRY (single implementation)): not already held, the allowed cap has room, not obsolete, and the authored
 // gate (build folded into operate for the whole class) holds through the ONE evaluator against the contexts.
-bool EnablerKernel::queueExcludedArrivalOk(const CvCity* pCity, int iBuilding)
+bool EnablerKernel::holderHasBuilding(const CvCity* pCity, int iBuilding)
 {
-	if (pCity == NULL || pCity->hasBuilding((BuildingTypes)iBuilding)) return false;
+	if (pCity == NULL || iBuilding < 0) return false;
+	//	An empire-level building is held by the PLAYER and is never IN a city, so asking the city answers
+	//	NO forever -- which is how a folklore kept being offered long after the empire owned it.
+	if (GC.getBuildingInfo((BuildingTypes)iBuilding).isEmpireLevel())
+	{
+		return GET_PLAYER(pCity->getOwner()).hasEmpireBuilding((BuildingTypes)iBuilding);
+	}
+	return pCity->hasBuilding((BuildingTypes)iBuilding);
+}
+
+bool EnablerKernel::queueExcludedArrivalOk(const CvCity* pCity, int iBuilding, bool bTestVisible)
+{
+	if (pCity == NULL || holderHasBuilding(pCity, iBuilding)) return false;
 	const CvInfo* j = InfoRepo<CvBuildingInfo>::get().get(iBuilding);
 	if (j == NULL) return false;
 	CvPlayer& kPlayer = GET_PLAYER(pCity->getOwner());
 	if (!allowedOk(j, iBuilding, kPlayer, /*bUnit*/ false)) return false;
 	if (GET_TEAM(pCity->getTeam()).isObsoleteBuilding((BuildingTypes)iBuilding)) return false;
+	//	The SHOW test stops here: everything above is something the asker cannot act on (already held,
+	//	capped, obsolete) and so still HIDES, while a failing operate condition is exactly the "go make
+	//	this true" case grey exists for (enabler.md §6).
+	if (bTestVisible) return true;
 	const CvCondition* pOperate = j->requiresOperate();
 	if (pOperate != NULL)
 	{
