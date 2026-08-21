@@ -614,7 +614,11 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 	{
 		jsonReadIdList(*pGrants, "promotions", m_aiGrantedPromotions);
 		jsonReadIdList(*pGrants, "greatPeople", m_aiGrantedGreatPeople);
-		jsonReadIdList(*pGrants, "buildings", m_aiGrantedBuildings);
+		//	The MISSION_CONSTRUCT repertoire. Authored as the CONDITIONED OBJECT form
+		//	({"building": X, "enabled"?: <cond>}, json.md §5) on every unit that has one -- 5,758 entries --
+		//	so a string-only read leaves the list EMPTY and canConstruct refuses every building the unit
+		//	owns, with no button and nothing logged.
+		jsonReadIdList(*pGrants, "buildings", m_aiGrantedBuildings, "building");
 		if (const picojson::object* pAction = jsonChildObj(*pGrants, "greatPersonAction"))
 		{
 			if (const picojson::object* pDiscover = jsonChildObj(*pAction, "discover"))

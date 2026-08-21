@@ -134,7 +134,8 @@ void jsonReadFlavours(const picojson::object& aiObj, std::map<int, int>& out)
 		}
 }
 
-void jsonReadIdList(const picojson::object& parent, const char* key, std::vector<int>& out)
+void jsonReadIdList(const picojson::object& parent, const char* key, std::vector<int>& out,
+	const char* szObjectKey)
 {
 	picojson::object::const_iterator iter = parent.find(key);
 	if (iter == parent.end() || !iter->second.is<picojson::array>())
@@ -144,11 +145,23 @@ void jsonReadIdList(const picojson::object& parent, const char* key, std::vector
 	const picojson::array& entries = iter->second.get<picojson::array>();
 	for (size_t i = 0; i < entries.size(); ++i)
 	{
-		if (!entries[i].is<std::string>())
+		std::string szId;
+		if (entries[i].is<std::string>())
+		{
+			szId = entries[i].get<std::string>();
+		}
+		else if (szObjectKey != NULL && entries[i].is<picojson::object>())
+		{
+			//	The conditioned entry form: the id sits under its own key beside the entry's gate. The GATE is
+			//	not read here -- this list is the REPERTOIRE (what the unit may be offered), and the machine
+			//	that delivers it evaluates the condition at delivery.
+			jsonIdStr(entries[i].get<picojson::object>(), szObjectKey, szId);
+		}
+		if (szId.empty())
 		{
 			continue;
 		}
-		const int iResolved = jsonResolveId(entries[i].get<std::string>());
+		const int iResolved = jsonResolveId(szId);
 		if (iResolved >= 0)
 		{
 			out.push_back(iResolved);

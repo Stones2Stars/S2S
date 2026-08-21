@@ -12,6 +12,13 @@
 
 ## Unreleased
 
+- **Great people can build their wonders again.** A Great Prophet's shrines, and every other "consume me to put up
+  this building" action, had no button at all — the unit's list of what it may construct was being read with a
+  parser that only understood the short form of an entry, so any entry written in the longer form (the one that
+  can carry its own condition) was skipped without complaint. Nearly six thousand entries are written that way, so
+  in practice the list was empty for every unit that had one, and a unit that can construct nothing is offered
+  nothing.
+
 - **Unit actions with an outcome work again — butchering a subdued animal above all.** Every action that resolves
   through an outcome was silently unavailable *inside your own borders*: butchering and fighting a subdued animal,
   and the whole captive repertoire (butcher, sacrifice, and joining a city as a slave). The button did not grey

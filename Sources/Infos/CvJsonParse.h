@@ -87,7 +87,13 @@ bool jsonIdStr(const picojson::object& io, const char* key, std::string& out);
 void jsonReadFkMap(const picojson::object& parent, const char* key, std::map<int, int>& out);
 // FK-id ARRAY: parent[key] = ["TYPE_A", ...] -> resolved ids APPENDED to out in authored order (non-strings
 // skipped; unresolved ids surface via jsonResolveId and are not appended).
-void jsonReadIdList(const picojson::object& parent, const char* key, std::vector<int>& out);
+//	A list of typed ids. Entries are bare STRINGS by default (the §3.4 bare-atom sugar).
+//	`szObjectKey` opts in to the CONDITIONED OBJECT FORM beside them -- json.md §5 lets a grant entry carry
+//	its own gate ({"building": "BUILDING_X", "enabled": <cond>}) -- and names the key holding the id.
+//	⛔ Without it an object entry is SKIPPED SILENTLY, which reads as an empty list rather than a parse
+//	error: the unit simply cannot do the thing, with nothing logged anywhere.
+void jsonReadIdList(const picojson::object& parent, const char* key, std::vector<int>& out,
+	const char* szObjectKey = NULL);
 // Keyed-bool FK object: parent[key] = {"TYPE_A": true, ...} -> resolved ids of the TRUE entries APPENDED to out
 // (the par.8 keyed-skill FK shape -- skills.terrainDoubleMove / featureDoubleMove; false/non-bool entries skipped).
 void jsonReadKeyedBoolIdList(const picojson::object& parent, const char* key, std::vector<int>& out);
