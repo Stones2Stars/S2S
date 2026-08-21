@@ -289,6 +289,50 @@ std::string describeException(EXCEPTION_POINTERS* pep)
 	return ss.str();
 }
 
+// THE DUMP WRITER -- the one implementation both callers reach (the fatal filter and the vectored handler for a
+// CAUGHT exception). It writes the file and reports the outcome; it logs NOTHING, because the two callers have
+// genuinely different headlines to write and a shared line would have to guess which.
+// ⛔ `szPrefix` is what keeps the two populations apart ON DISK. A caught first-chance exception is NOT a crash --
+// the process kept running -- so a dump from one must never land in the same name space as a real crash dump, or
+// the crash workflow starts symbolizing dumps of a game that never died.
+static bool s2sWriteMiniDumpFile(EXCEPTION_POINTERS* pep, const char* szPrefix, _TCHAR* szFilenameOut,
+	DWORD& dumpErrorOut)
+{
+	time_t rawtime;
+	struct tm* timeinfo;
+	time (&rawtime);
+	timeinfo = localtime (&rawtime);
+
+	// tm_mon is 0-based (January == 0), so add 1 to print the calendar month. tm_year is
+	// already adjusted via +1900. (Fixes #324 — dumps were stamped one month early.)
+	_stprintf(szFilenameOut, _T("%s-%s-%d%02d%02d-%02d%02d%02d.dmp"), szPrefix, C2C_VERSION,
+		1900 + timeinfo->tm_year, timeinfo->tm_mon + 1, timeinfo->tm_mday,
+		timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+
+	dumpErrorOut = 0;
+	HANDLE hFile = CreateFile(szFilenameOut, GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS,
+		FILE_ATTRIBUTE_NORMAL, NULL);
+	if ((hFile == NULL) || (hFile == INVALID_HANDLE_VALUE))
+	{
+		dumpErrorOut = GetLastError();
+		return false;
+	}
+
+	MINIDUMP_EXCEPTION_INFORMATION mdei;
+	mdei.ThreadId           = GetCurrentThreadId();
+	mdei.ExceptionPointers  = pep;
+	mdei.ClientPointers     = FALSE;
+
+	const BOOL result = MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hFile, MiniDumpNormal,
+		(pep != NULL) ? &mdei : NULL, NULL, NULL);
+	// ⛔ A FAILED WRITE MUST NOT LEAVE A FILE BEHIND (see the caller's note): CreateFile has already made the
+	// .dmp, so a discarded failure leaves a ZERO-BYTE husk that reads as a real dump until cdb refuses it.
+	if (!result) dumpErrorOut = GetLastError();
+	CloseHandle(hFile);
+	if (!result) DeleteFile(szFilenameOut);
+	return result != FALSE;
+}
+
 void CreateMiniDump(EXCEPTION_POINTERS *pep)
 {
 	_TCHAR filename[256];
@@ -383,6 +427,7 @@ LONG WINAPI S2SVectoredHandler(EXCEPTION_POINTERS* pep)
 {
 	static int s_logged = 0;
 	static std::string s_last;
+	static bool s_dumped = false;   // one caught-exception dump per session (see the write below)
 	if (pep != NULL && pep->ExceptionRecord != NULL && gDLL != NULL && s_logged < 200)
 	{
 		const DWORD code = pep->ExceptionRecord->ExceptionCode;
@@ -395,7 +440,26 @@ LONG WINAPI S2SVectoredHandler(EXCEPTION_POINTERS* pep)
 			{
 				s_last = exc;
 				++s_logged;
-				gDLL->logMsg("Exceptions.log", CvString::format("[EXCEPTION.caught] %s", exc.c_str()).c_str(), true, false);
+				// ⚑ ONE dump for the whole session, and only for an ACCESS VIOLATION. The line alone names the
+				// faulting module and address, which is never enough to say WHO called it -- the stack is, and a
+				// caught exception writes none today, so a handled AV is characterizable and unattributable at
+				// once. This closes that: the first one leaves a symbolizable stack behind.
+				// ⛔ Capped at ONE rather than deduped like the line, because writing a dump is expensive and a
+				// first-chance AV can sit in a hot path -- a per-occurrence dump would be a stall, and the second
+				// dump of the same fault tells us nothing the first did not.
+				// ⚠ The name is DELIBERATELY not `MiniDump-`: the process did not die, so it must never enter the
+				// crash-dump population the symbolization workflow reads.
+				std::string line = CvString::format("[EXCEPTION.caught] %s", exc.c_str());
+				if (code == EXCEPTION_ACCESS_VIOLATION && !s_dumped)
+				{
+					s_dumped = true;
+					_TCHAR caughtFile[256];
+					DWORD caughtErr = 0;
+					const bool ok = s2sWriteMiniDumpFile(pep, "CaughtDump", caughtFile, caughtErr);
+					line += ok ? CvString::format(" caughtDump=%s", caughtFile)
+					           : CvString::format(" caughtDump=FAILED err=0x%08X", (unsigned)caughtErr);
+				}
+				gDLL->logMsg("Exceptions.log", line.c_str(), true, false);
 			}
 		}
 	}

@@ -15,13 +15,24 @@ here (single-source — [`AGENTS.md`](../../AGENTS.md)).
 
 ## Crash-dump analysis (offline)
 
-An S2S crash writes a minidump to the **BTS root** via the EXE's own handler — `CreateMiniDump`, called
-from the top-level exception filter in `Sources/Defines/CvGlobals.cpp:216` (filter installed at
-`:270`). This is separate from Windows WER's `%LOCALAPPDATA%\CrashDumps`:
+An S2S crash writes a minidump to the **BTS root** via `CreateMiniDump`, called from the top-level
+`CustomFilter` (installed with `SetUnhandledExceptionFilter` in `Sources/Defines/CvGlobals.cpp`). This is
+separate from Windows WER's `%LOCALAPPDATA%\CrashDumps`:
 
 ```
 C:\Games\Civilization IV Complete\Civ4\Beyond the Sword\MiniDump-*.dmp
 ```
+
+> **⚖ TWO DUMP POPULATIONS, AND THE NAME IS WHAT KEEPS THEM APART.** `MiniDump-*.dmp` is a **crash** — the
+> process died. **`CaughtDump-*.dmp` is NOT a crash**: it is a first-chance exception that something downstream
+> caught and handled, written once per session by the vectored handler (`S2SVectoredHandler`, installed via
+> `AddVectoredExceptionHandler`). ⛔ Never let one into the crash population — symbolizing a dump of a game that
+> never died reads as a crash investigation and is not one.
+> ⚑ **Why it exists at all:** the `[EXCEPTION.caught]` line names the faulting module and address, which is never
+> enough to say WHO called it. Without a stack a handled access violation is *characterizable and unattributable
+> at once* — this closes that gap. It fires for ACCESS_VIOLATION only, and exactly **once** per session: writing a
+> dump is expensive and a first-chance AV can sit in a hot path, so a per-occurrence dump would be a stall while
+> the second dump of one fault says nothing the first did not. Symbolize it with the same `cdb` flow below.
 
 Other failure artifacts (all under `Documents\My Games\Beyond the Sword\Logs\`):
 
