@@ -91,7 +91,8 @@ namespace
 		UNTF_unitAI, UNTF_missionAI, UNTF_targetX, UNTF_targetY,
 		UNTF_decision, UNTF_reason,
 		UNTF_buildType, UNTF_headMission,
-		UNTF_mission, UNTF_foundOn, UNTF_possible, UNTF_testVisible
+		UNTF_mission, UNTF_foundOn, UNTF_possible, UNTF_testVisible,
+		UNTF_leg, UNTF_inCity
 	};
 	const char* untFieldInfo(int iFieldTag, SpineFieldType* peType)
 	{
@@ -126,6 +127,8 @@ namespace
 		case UNTF_foundOn:    return "foundOn";      // 0 none - 1 the unit's own info - 2 one of its unitcombats
 		case UNTF_possible:   return "possible";
 		case UNTF_testVisible:return "testVisible";  // 1 = the SHOW test (button existence), 0 = the ENABLE test
+		case UNTF_leg:        return "leg";          // CvOutcomeMission::OutcomeMissionLeg -- WHICH gate refused
+		case UNTF_inCity:     return "inCity";
 		default:          return NULL;
 		}
 	}

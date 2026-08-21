@@ -31,7 +31,21 @@ public:
 //	const IntExpr* getCost() const;
 	GameObjectTypes getPayerType() const;
 
-	bool isPossible(const CvUnit* pUnit, bool bTestVisible = false) const;
+	/// <summary>Which of isPossible's independent gates refused. Diagnostic only -- the gates have completely
+	/// different causes, so a bare false cannot be acted on.</summary>
+	enum OutcomeMissionLeg
+	{
+		OUTCOMEMISSION_LEG_NONE = 0,        // passed
+		OUTCOMEMISSION_LEG_GOLD,            // the owner cannot afford m_iCost
+		OUTCOMEMISSION_LEG_PLOT_CONDITION,  // m_pPlotCondition refused the unit's plot
+		OUTCOMEMISSION_LEG_UNIT_CONDITION,  // m_pUnitCondition refused the unit
+		OUTCOMEMISSION_LEG_OUTCOME_LIST,    // no outcome in the list is possible (CvOutcome's own gates)
+		OUTCOMEMISSION_LEG_PROPERTY_COST    // the payer cannot meet m_PropertyCost
+	};
+
+	/// <summary>May this unit take the mission now? `piRefusalLeg` is OPTIONAL and diagnostic: when non-NULL it
+	/// receives the OutcomeMissionLeg that refused. Every gameplay caller passes NULL and is unaffected.</summary>
+	bool isPossible(const CvUnit* pUnit, bool bTestVisible = false, int* piRefusalLeg = NULL) const;
 	void buildDisplayString(CvWStringBuffer& szBuffer, const CvUnit* pUnit) const;
 	void execute(CvUnit* pUnit) const;
 

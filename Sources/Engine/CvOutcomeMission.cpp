@@ -112,30 +112,43 @@ void callSetPayer(const CvGameObject* pObject, const CvGameObject** ppPayer)
 	*ppPayer = pObject;
 }
 
-bool CvOutcomeMission::isPossible(const CvUnit* pUnit, bool bTestVisible) const
+//	The REFUSAL LEG, for the [UNT/action] probe. isPossible answers one bool over five independent gates, so a
+//	`possible=0` on its own says nothing about WHICH refused -- and they have completely different causes
+//	(no gold, wrong plot, wrong unit, the outcome's own gates, an unaffordable property cost). Opt-in: the
+//	out-param is NULL for every gameplay caller, so nothing changes for them.
+bool CvOutcomeMission::isPossible(const CvUnit* pUnit, bool bTestVisible, int* piRefusalLeg) const
 {
 	PROFILE_EXTRA_FUNC();
+	if (piRefusalLeg != NULL) *piRefusalLeg = CvOutcomeMission::OUTCOMEMISSION_LEG_NONE;
 	//if (!bTestVisible)
 	//{
 		if (m_iCost)
 		{
 			if (GET_PLAYER(pUnit->getOwner()).getGold() < m_iCost->evaluate(pUnit->getGameObject()))
 			{
+				if (piRefusalLeg != NULL) *piRefusalLeg = CvOutcomeMission::OUTCOMEMISSION_LEG_GOLD;
 				return false;
 			}
 		}
 
 		if (m_pPlotCondition)
 			if (!m_pPlotCondition->evaluate(pUnit->plot()->getGameObject()))
+			{
+				if (piRefusalLeg != NULL) *piRefusalLeg = CvOutcomeMission::OUTCOMEMISSION_LEG_PLOT_CONDITION;
 				return false;
+			}
 	//}
 
 	if (m_pUnitCondition)
 		if (!m_pUnitCondition->evaluate(pUnit->getGameObject()))
+		{
+			if (piRefusalLeg != NULL) *piRefusalLeg = CvOutcomeMission::OUTCOMEMISSION_LEG_UNIT_CONDITION;
 			return false;
+		}
 
 	if (!getOutcomeList()->isPossible(*pUnit))
 	{
+		if (piRefusalLeg != NULL) *piRefusalLeg = CvOutcomeMission::OUTCOMEMISSION_LEG_OUTCOME_LIST;
 		return false;
 	}
 
@@ -155,11 +168,13 @@ bool CvOutcomeMission::isPossible(const CvUnit* pUnit, bool bTestVisible) const
 
 			if (!pPayer)
 			{
+				if (piRefusalLeg != NULL) *piRefusalLeg = CvOutcomeMission::OUTCOMEMISSION_LEG_PROPERTY_COST;
 				return false;
 			}
 
 			if (! (*(pPayer->getProperties()) > m_PropertyCost ))
 			{
+				if (piRefusalLeg != NULL) *piRefusalLeg = CvOutcomeMission::OUTCOMEMISSION_LEG_PROPERTY_COST;
 				return false;
 			}
 		}

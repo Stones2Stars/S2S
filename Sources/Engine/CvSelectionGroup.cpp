@@ -1242,12 +1242,13 @@ bool CvSelectionGroup::canStartMission(int iMission, int iData1, int iData2, CvP
 				//	whether isPossible refused. LEVEL 4 (inner loop) -- this runs per action per redraw, so it
 				//	costs nothing until someone asks for it.
 				int iFoundOn = 0;
+				int iLeg = 0;
 				bool bPossible = false;
 				const CvOutcomeMission* pOutcomeMission = unitX->getUnitInfo().getOutcomeMissionByMission((MissionTypes)iMission);
 				if (pOutcomeMission)
 				{
 					iFoundOn = 1;
-					bPossible = pOutcomeMission->isPossible(unitX, bTestVisible);
+					bPossible = pOutcomeMission->isPossible(unitX, bTestVisible, &iLeg);
 				}
 				if (!bPossible)
 				{
@@ -1260,7 +1261,7 @@ bool CvSelectionGroup::canStartMission(int iMission, int iData1, int iData2, CvP
 							if (pCombatMission)
 							{
 								iFoundOn = 2;
-								if (pCombatMission->isPossible(unitX, bTestVisible))
+								if (pCombatMission->isPossible(unitX, bTestVisible, &iLeg))
 								{
 									bPossible = true;
 									break;
@@ -1274,7 +1275,8 @@ bool CvSelectionGroup::canStartMission(int iMission, int iData1, int iData2, CvP
 					//	enum cannot cross a translation unit (the CvGameTextMgr probe idiom).
 					enum { UNT_ACTION_ID = 11 };   // == UNT_ACTION in CvUnitAI.cpp
 					enum { UNTF_OWNER = 0, UNTF_UNIT = 1, UNTF_TYPE = 2,
-					       UNTF_MISSION = 24, UNTF_FOUNDON = 25, UNTF_POSSIBLE = 26, UNTF_TESTVISIBLE = 27 };
+					       UNTF_MISSION = 24, UNTF_FOUNDON = 25, UNTF_POSSIBLE = 26, UNTF_TESTVISIBLE = 27,
+					       UNTF_LEG = 28, UNTF_INCITY = 29 };
 					//	⚠ The unit TYPE is what makes a foundOn=0 line readable: most (unit, mission) pairs
 					//	legitimately do not match, so the absence only means something once you know WHICH unit
 					//	was asked. Without it the line cannot distinguish "this unit has no such mission" from
@@ -1285,7 +1287,9 @@ bool CvSelectionGroup::canStartMission(int iMission, int iData1, int iData2, CvP
 						.addI(UNTF_MISSION, iMission)
 						.addI(UNTF_FOUNDON, iFoundOn)
 						.addI(UNTF_POSSIBLE, bPossible ? 1 : 0)
-						.addI(UNTF_TESTVISIBLE, bTestVisible ? 1 : 0));
+						.addI(UNTF_TESTVISIBLE, bTestVisible ? 1 : 0)
+						.addI(UNTF_LEG, iLeg)
+						.addI(UNTF_INCITY, (unitX->plot() != NULL && unitX->plot()->isCity()) ? 1 : 0));
 				}
 				if (bPossible)
 				{
