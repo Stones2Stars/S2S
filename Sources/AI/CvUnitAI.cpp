@@ -59,7 +59,8 @@ namespace
 		UNT_GARRISON_LEAVE,  // [UNT/garrison] action=leave
 		UNT_MISSION,         // [UNT/mission]
 		UNT_ACT,             // [UNT/act] -- instrumented commit point; decision/reason are SFT_STR free-text (existing literals)
-		UNT_TOOLTIP          // [UNT/tooltip] -- what the unit hover could see: the build it is on, and the head mission it came from
+		UNT_TOOLTIP,         // [UNT/tooltip] -- what the unit hover could see: the build it is on, and the head mission it came from
+		UNT_ACTION           // [UNT/action] -- why an OUTCOME MISSION is absent from the unit's button row (see CvSelectionGroup)
 	};
 	const char* untLinePrefix(int iEventId)
 	{
@@ -76,6 +77,7 @@ namespace
 		case UNT_MISSION:        return "[UNT/mission]";
 		case UNT_ACT:            return "[UNT/act]";
 		case UNT_TOOLTIP:        return "[UNT/tooltip]";
+		case UNT_ACTION:         return "[UNT/action]";
 		default:                 return NULL;
 		}
 	}
@@ -88,7 +90,8 @@ namespace
 		UNTF_city,
 		UNTF_unitAI, UNTF_missionAI, UNTF_targetX, UNTF_targetY,
 		UNTF_decision, UNTF_reason,
-		UNTF_buildType, UNTF_headMission
+		UNTF_buildType, UNTF_headMission,
+		UNTF_mission, UNTF_foundOn, UNTF_possible, UNTF_testVisible
 	};
 	const char* untFieldInfo(int iFieldTag, SpineFieldType* peType)
 	{
@@ -119,6 +122,10 @@ namespace
 		case UNTF_reason:   *peType = SFT_STR; return "reason";
 		case UNTF_buildType:  return "buildType";
 		case UNTF_headMission:return "headMission";
+		case UNTF_mission:    return "mission";
+		case UNTF_foundOn:    return "foundOn";      // 0 none - 1 the unit's own info - 2 one of its unitcombats
+		case UNTF_possible:   return "possible";
+		case UNTF_testVisible:return "testVisible";  // 1 = the SHOW test (button existence), 0 = the ENABLE test
 		default:          return NULL;
 		}
 	}

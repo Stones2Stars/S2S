@@ -15,6 +15,7 @@
 #include "CvInfos.h"
 #include "CvMap.h"
 #include "Infrastructure/CvPathGenerator.h"
+#include "Spine/CvEventSpine.h"          // the [UNT/action] probe emits into the UNT domain CvUnitAI registers
 #include "CvPlot.h"
 #include "CvReachablePlotSet.h"
 #include "AI/CvPlayerAI.h"
@@ -1231,22 +1232,59 @@ bool CvSelectionGroup::canStartMission(int iMission, int iData1, int iData2, CvP
 			}
 			default: // AIAndy: Assumed to be an outcome mission
 			{
+				//	⚑ THE PROBE -- [UNT/action]. A missing button and a GREYED one are decided in DIFFERENT places:
+				//	the EXE builds its button ROW from our canHandleAction with bTestVisible TRUE, and Python's
+				//	canHandleAction(iType, False) only greys what is already in that row. So an action reported
+				//	"completely missing rather than greyed" (butcher on a subdued animal, the great person's
+				//	construct) failed the SHOW test here, and static reading cannot say which leg refused.
+				//	Two things it separates that nothing else does: whether an outcome mission was FOUND AT ALL
+				//	for this mission id (a mismatch means the id or the lookup, not the gate), and if found,
+				//	whether isPossible refused. LEVEL 4 (inner loop) -- this runs per action per redraw, so it
+				//	costs nothing until someone asks for it.
+				int iFoundOn = 0;
+				bool bPossible = false;
 				const CvOutcomeMission* pOutcomeMission = unitX->getUnitInfo().getOutcomeMissionByMission((MissionTypes)iMission);
-				if (pOutcomeMission && pOutcomeMission->isPossible(unitX, bTestVisible))
+				if (pOutcomeMission)
 				{
-					return true;
+					iFoundOn = 1;
+					bPossible = pOutcomeMission->isPossible(unitX, bTestVisible);
 				}
-				// Outcome missions on unit combats
-				for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
+				if (!bPossible)
 				{
-					if (unitX->isHasUnitCombat((UnitCombatTypes)iI))
+					// Outcome missions on unit combats
+					for (int iI = 0; iI < GC.getNumUnitCombatInfos(); iI++)
 					{
-						const CvOutcomeMission* pOutcomeMission = GC.getUnitCombatInfo((UnitCombatTypes)iI).getOutcomeMissionByMission((MissionTypes)iMission);
-						if (pOutcomeMission && pOutcomeMission->isPossible(unitX, bTestVisible))
+						if (unitX->isHasUnitCombat((UnitCombatTypes)iI))
 						{
-							return true;
+							const CvOutcomeMission* pCombatMission = GC.getUnitCombatInfo((UnitCombatTypes)iI).getOutcomeMissionByMission((MissionTypes)iMission);
+							if (pCombatMission)
+							{
+								iFoundOn = 2;
+								if (pCombatMission->isPossible(unitX, bTestVisible))
+								{
+									bPossible = true;
+									break;
+								}
+							}
 						}
 					}
+				}
+				{
+					//	Local integer values matching CvUnitAI.cpp's anonymous-namespace enums -- a file-local
+					//	enum cannot cross a translation unit (the CvGameTextMgr probe idiom).
+					enum { UNT_ACTION_ID = 11 };   // == UNT_ACTION in CvUnitAI.cpp
+					enum { UNTF_OWNER = 0, UNTF_UNIT = 1,
+					       UNTF_MISSION = 24, UNTF_FOUNDON = 25, UNTF_POSSIBLE = 26, UNTF_TESTVISIBLE = 27 };
+					eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_ACTION_ID, 4)
+						.addI(UNTF_OWNER, (int)unitX->getOwner()).addI(UNTF_UNIT, unitX->getID())
+						.addI(UNTF_MISSION, iMission)
+						.addI(UNTF_FOUNDON, iFoundOn)
+						.addI(UNTF_POSSIBLE, bPossible ? 1 : 0)
+						.addI(UNTF_TESTVISIBLE, bTestVisible ? 1 : 0));
+				}
+				if (bPossible)
+				{
+					return true;
 				}
 				break;
 			}
