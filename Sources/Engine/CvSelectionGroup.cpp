@@ -1273,10 +1273,15 @@ bool CvSelectionGroup::canStartMission(int iMission, int iData1, int iData2, CvP
 					//	Local integer values matching CvUnitAI.cpp's anonymous-namespace enums -- a file-local
 					//	enum cannot cross a translation unit (the CvGameTextMgr probe idiom).
 					enum { UNT_ACTION_ID = 11 };   // == UNT_ACTION in CvUnitAI.cpp
-					enum { UNTF_OWNER = 0, UNTF_UNIT = 1,
+					enum { UNTF_OWNER = 0, UNTF_UNIT = 1, UNTF_TYPE = 2,
 					       UNTF_MISSION = 24, UNTF_FOUNDON = 25, UNTF_POSSIBLE = 26, UNTF_TESTVISIBLE = 27 };
+					//	⚠ The unit TYPE is what makes a foundOn=0 line readable: most (unit, mission) pairs
+					//	legitimately do not match, so the absence only means something once you know WHICH unit
+					//	was asked. Without it the line cannot distinguish "this unit has no such mission" from
+					//	"the mission it should have did not load".
 					eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_UNIT, UNT_ACTION_ID, 4)
 						.addI(UNTF_OWNER, (int)unitX->getOwner()).addI(UNTF_UNIT, unitX->getID())
+						.addI(UNTF_TYPE, (int)unitX->getUnitType())
 						.addI(UNTF_MISSION, iMission)
 						.addI(UNTF_FOUNDON, iFoundOn)
 						.addI(UNTF_POSSIBLE, bPossible ? 1 : 0)
