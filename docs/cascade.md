@@ -2774,7 +2774,19 @@ A deposit lands in one of three ways ([json](specs/json.md) §6.1):
 > PLOT scope a keyed entry deliberately does **not** fold into the scope's Σflat/Σpercent slots (only the plot's own
 > substrate keys resolve there, §2 plot-as-base; the `empires` fan is the one target whose fold IS the deposit). So
 > a consumer answering *"how much does this source give THIS target"* asks each live source what IT deposits onto
-> that key — the city's OPERATING buildings, its assigned specialists × count, the empire's held traits — and sums.
+> that key — the city's OPERATING buildings, its specialists × count, the empire's held traits — and sums.
+>
+> ⛔ **A SPECIALIST IS A SPECIALIST — FREE OR OTHERWISE DOES NOT MATTER (owner).** The count is the city's WHOLE
+> specialist population: the assigned citizens **plus** the free ones (the derivable `freeSpecialists.{X}` grants
+> of its operating buildings and empire sources, plus the unattributed ledger a settled Great Person lands in).
+> They are one provider kind (§ THE FOUR-PROVIDER LAW), so the origin of a specialist has no standing in what it
+> provides. ⚠ Reading only the assigned plane is the shape to recognise, because the two live in SEPARATE members
+> (`m_paiSpecialistCount` vs the `getFreeSpecialists` group read) and the assigned one is the obvious getter:
+> it makes a settled Great Person contribute NOTHING while the city visibly holds it, which is silent and
+> plausible in exactly the way this rule exists to prevent. *(Worked: a settled Great Hunter granted no
+> `experience.city.unitCombats` to the hunters trained beside it — the whole point of settling one.)*
+> ⚑ **Take the GROUP read once** (`getFreeSpecialists`): it builds an eval ctx and walks the city's operating set
+> AND the empire's sources, so a per-specialist call inside a loop pays all of that per specialist.
 >
 > **⚖ A KEYED ROW'S REACH IS ITS AUTHORED SCOPE, AND BOTH SCOPES ARE REAL ON A BUILDING (owner).** A building is
 > a per-city source, so a CITY-scope keyed row means faster HERE — *"units are scoped on the city the building is

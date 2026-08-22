@@ -874,7 +874,10 @@ public:
 
 	bool isBombardable(const CvUnit* pUnit) const;
 	int cascadeValue(ModifierFamily eFamily, int eKind) const;   // ANY (family,kind) slot; unit per infoKindUnit
-	int keyedExperience(int iTargetSegment, int iTargetFk) const;   // the keyed experience.<scope>.{unitCombats|domains} legs
+	// The keyed experience.<scope>.{unitCombats|domains} legs. pFreeSpecialists is the caller's ONE
+	// getFreeSpecialists read, passed in where a caller fans this over a unit's combat classes; NULL takes it here.
+	int keyedExperience(int iTargetSegment, int iTargetFk,
+		const std::vector<int64_t>* pFreeSpecialists = NULL) const;
 	int getDomainExperience(DomainTypes eDomain) const;             // experience.<scope>.domains.{DOMAIN}, every live source
 	// Every (unitCombat, experience) this city's live sources deposit, collected ONCE. ⛔ A consumer wanting the
 	// military subset filters THESE rows -- it never asks per id over the unitcombat registry, which is the
