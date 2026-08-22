@@ -913,12 +913,17 @@ the total-observability bar below.)
   `Start-Process -FilePath 'C:\code\s2s\s2s\agentstart.bat' -WorkingDirectory 'C:\code\s2s\s2s'`, and do **not** wait
   on or block the call. Confirm the launch ONLY by polling the HTTP surface (`/` → `hello world`) — never by the
   launcher's exit code. *(Repeat offence — agents keep re-learning this one the hard way.)*
-- **THE CHANGELOG RIDES THE COMMIT (owner): a change a player or modder would NOTICE appends one bullet to
-  `docs/CHANGELOG.md`'s `## Unreleased` section in the SAME commit.** Internal refactors, docs and tooling do
-  not. The old commit-message-derived changelog script is DEAD and is never revived — commit subjects here are
-  engineering statements, not changelog lines. The safety net for anything that slips is the committed
-  `/changelog-update` skill (an agent digest from the file's own `last-digested` marker); the owner curates
-  Unreleased into release sections, never an agent unasked.
+- **⛔ DO NOT TOUCH `docs/CHANGELOG.md` IN AN ORDINARY COMMIT (owner). The changelog-rides-the-commit convention
+  is RETIRED.** It was invented by an agent from a request for a **release feature list**, and the per-commit
+  append is what made it a liability: every branch appends at the same `## Unreleased` anchor, so **any two
+  concurrent branches conflict BY CONSTRUCTION** — a merge conflict per branch, forever, for a file nobody reads
+  between releases.
+  ⚑ **The feature list is GENERATED WHEN IT IS NEEDED, from git history** — that is what was actually wanted, and
+  it costs nothing until a release. The `/changelog-update` skill is the digester (it reads from the file's own
+  `last-digested` marker); the owner curates the result, never an agent unasked.
+  ⇒ **So a player-facing change writes its story in the COMMIT BODY, which is where the author's context already
+  is, and the digest reads it there.** Commit SUBJECTS remain engineering statements — the dead
+  subject-derived script is still dead and is not revived; it is the BODY that carries the player-facing account.
 - **⛔ NO SESSION LINKS IN COMMITS (owner).** An agent commit carries no `Claude-Session:` / session-URL
   trailer — the default harness footer is overridden for this repo. The `Co-Authored-By` line stays.
 - **Keep quirky/intermediate commits — do NOT push to squash them (owner taste).** Mention squashing exists at most

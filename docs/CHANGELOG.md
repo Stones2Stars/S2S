@@ -3,10 +3,15 @@
 > **DRAFT — pending owner curation.** Content is assembled from the repo docs and the
 > cascade-rebuild git history; nothing here is final until reviewed.
 >
-> **Maintenance:** a commit whose change a player or modder would notice appends one bullet to
-> `## Unreleased` in the SAME commit (AGENTS.md Git/delivery). The `/changelog-update` skill
-> digests anything that slipped, from the marker below. The old commit-message-derived
-> changelog script is dead and stays dead.
+> **⛔ DO NOT APPEND TO THIS FILE FROM AN ORDINARY COMMIT.** This is a **release feature list**, GENERATED when a
+> release is being prepared — not a file maintained per commit. The per-commit append was retired because every
+> branch appended at the same `## Unreleased` anchor, so any two concurrent branches conflicted by construction
+> ([AGENTS.md](../AGENTS.md#git--delivery)).
+>
+> **How it gets written:** a player-facing change tells its story in its **commit body**; the `/changelog-update`
+> skill digests those from the `last-digested` marker below when a list is wanted, and the owner curates the
+> result. ⚠ Commit SUBJECTS are engineering statements and are not changelog lines — the old subject-derived
+> script is dead and stays dead.
 
 <!-- last-digested: d77601a35 -->
 
