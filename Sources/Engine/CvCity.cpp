@@ -2360,7 +2360,8 @@ bool CvCity::canContinueProduction(const OrderData& order) const
 // ⛔ Never a walk of a keyed container the info no longer holds (the own-data inversion,
 // pedia-read-map finding 2), and never a package read: a keyed entry deliberately does NOT fold into a scope
 // package outside plot scope, because folding it would hand EVERY unit the melee-only experience.
-int CvCity::keyedExperience(int iTargetSegment, int iTargetFk) const
+int CvCity::keyedExperience(int iTargetSegment, int iTargetFk,
+	const std::vector<int64_t>* pFreeSpecialists) const
 {
 	if (iTargetSegment < 0 || iTargetFk < 0)
 	{
@@ -2375,9 +2376,25 @@ int CvCity::keyedExperience(int iTargetSegment, int iTargetFk) const
 			GC.getBuildingInfo((BuildingTypes)*it).getModifiers(), MODFAM_EXPERIENCE, -1, iTargetSegment, iTargetFk);
 	}
 
+	// ⛔ A SETTLED GREAT PERSON IS A **FREE** SPECIALIST, NOT AN ASSIGNED ONE -- the join path calls
+	// changeFreeSpecialistCount, and the two planes are separate members. Reading only the assigned plane made
+	// every settled specialist contribute nothing to this leg (#465: hunters got no experience from a settled
+	// great hunter, whose experience.city.unitCombats deposit is the whole point of settling one).
+	// ⚠ getFreeSpecialists walks an eval ctx + the operating set + the whole empire, so a caller that fans this
+	// over a unit's combat classes takes the GROUP read once and hands it down; only a lone caller reads here.
+	std::vector<int64_t> aiFreeSpecialistsLocal;
+	if (pFreeSpecialists == NULL)
+	{
+		getFreeSpecialists(aiFreeSpecialistsLocal);
+		pFreeSpecialists = &aiFreeSpecialistsLocal;
+	}
+
 	for (int iSpecialist = 0; iSpecialist < GC.getNumSpecialistInfos(); ++iSpecialist)
 	{
-		const int iCount = getSpecialistCount((SpecialistTypes)iSpecialist);
+		const int iFreeCount = (iSpecialist < (int)pFreeSpecialists->size())
+			? (int)((*pFreeSpecialists)[iSpecialist] / 100)
+			: 0;
+		const int iCount = getSpecialistCount((SpecialistTypes)iSpecialist) + iFreeCount;
 		if (iCount > 0)
 		{
 			iExperience += iCount * InfoValuation::keyedTarget(
@@ -2416,9 +2433,16 @@ void CvCity::collectUnitCombatExperience(std::vector<std::pair<int, int> >& rows
 			GC.getBuildingInfo((BuildingTypes)*it).getModifiers(), MODFAM_EXPERIENCE, -1, iSegment, sourceRows);
 		mergeKeyedRows(rows, sourceRows, 1);
 	}
+	// Assigned + free, exactly as the VALUE leg counts them (keyedExperience) -- a decomposition that counted a
+	// different population than the number it explains is the drift the census exists to catch.
+	std::vector<int64_t> aiFreeSpecialists;
+	getFreeSpecialists(aiFreeSpecialists);
 	for (int iSpecialist = 0; iSpecialist < GC.getNumSpecialistInfos(); ++iSpecialist)
 	{
-		const int iCount = getSpecialistCount((SpecialistTypes)iSpecialist);
+		const int iFreeCount = (iSpecialist < (int)aiFreeSpecialists.size())
+			? (int)(aiFreeSpecialists[iSpecialist] / 100)
+			: 0;
+		const int iCount = getSpecialistCount((SpecialistTypes)iSpecialist) + iFreeCount;
 		if (iCount > 0)
 		{
 			InfoValuation::collectKeyedTarget(
@@ -2474,15 +2498,21 @@ int CvCity::getProductionExperience(UnitTypes eUnit, ProductionExperienceLegs* p
 			const int iUnitCombatsSegment = InfoValuation::keyedTargetSegment("unitCombats");
 			const int iDomainsSegment = InfoValuation::keyedTargetSegment("domains");
 
+			// The GROUP read, ONCE for the whole fan below: a unit carries a primary combat class plus a
+			// dozen secondaries, and each keyedExperience would otherwise re-walk the eval ctx, the operating
+			// set and the whole empire to answer the same question.
+			std::vector<int64_t> aiFreeSpecialists;
+			getFreeSpecialists(aiFreeSpecialists);
+
 			// The ROOT combat-class FKs (json §8: `combatClass` + `combatClasses`, never identity). An absent
 			// primary is -1, which keyedExperience already answers 0 for, so it needs no test of its own.
-			lKeyedCombat += keyedExperience(iUnitCombatsSegment, kUnit.getCombatClass());
+			lKeyedCombat += keyedExperience(iUnitCombatsSegment, kUnit.getCombatClass(), &aiFreeSpecialists);
 			const std::vector<int>& kSubCombats = kUnit.getCombatClasses();
 			for (size_t iSub = 0; iSub < kSubCombats.size(); ++iSub)
 			{
-				lKeyedCombat += keyedExperience(iUnitCombatsSegment, kSubCombats[iSub]);
+				lKeyedCombat += keyedExperience(iUnitCombatsSegment, kSubCombats[iSub], &aiFreeSpecialists);
 			}
-			lKeyedDomain += keyedExperience(iDomainsSegment, (int)kUnit.getDomain());
+			lKeyedDomain += keyedExperience(iDomainsSegment, (int)kUnit.getDomain(), &aiFreeSpecialists);
 			lExperience += lKeyedCombat + lKeyedDomain;
 		}
 	}

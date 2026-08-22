@@ -19,6 +19,13 @@
   network is now rebuilt when something actually changes it, and once per player per turn as it always was.
   Trade routes and their yields are unchanged; only the amount of repeated work is.
 
+- **A settled Great Hunter trains better hunters again.** Settling a great person makes it a *free* specialist,
+  which the game tracks separately from the citizens you assign to specialist jobs — and the experience a
+  specialist grants to units trained in its city was counting only the assigned ones. A settled Great Hunter
+  therefore sat in the city contributing nothing to the thing it exists for. Every settled specialist that grants
+  experience was affected, not just hunters. ⚑ A specialist is a specialist: free or assigned makes no difference
+  to what it provides.
+
 - **Starting units can no longer be units nobody can build.** A player could begin a Prehistoric game holding a
   Gladiator — an arena-placed unit — and it was not the worst case available: a strength-17 Master Big Game
   Hunter and a strength-15 Crusader were both reachable. Starting unit identities are not authored anywhere;
