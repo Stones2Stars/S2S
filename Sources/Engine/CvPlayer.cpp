@@ -1991,6 +1991,19 @@ bool CvPlayer::addStartUnitAI(const UnitAITypes eUnitAI, const int iCount)
 		}
 		const CvUnitInfo& kUnit = GC.getUnitInfo((UnitTypes) iI);
 
+		// ⛔ A CALCULATED START UNIT MUST BE ONE THIS PLAYER COULD EVER BE OFFERED, and `requiresMetForPlayer`
+		// below cannot answer that: it is the SYSTEM-PLACEMENT gate, which deliberately admits statically-
+		// excluded entities because trigger spawns and WB placements legitimately place them
+		// (CvEnablerKernel.h). The city-scoped tri-state is not reachable here either -- the trainable domain
+		// lives on CvCity (enabler.md par.8) and no city exists yet at game start, which is the whole reason
+		// this identity is CALCULATED rather than authored (triggers.md, START PACKAGES).
+		// So ask the ONE offerability verdict the enabler's own static exclusion folds (CvUnitEnabler seeds
+		// setStaticExcluded from this same getter) -- never the underlying flag, which would be a second
+		// implementation of one verdict.
+		if (!kUnit.isOfferable())
+		{
+			continue;
+		}
 		if (!GET_TEAM(getTeam()).isUnitBonusEnabledByTech(kUnit, true))
 		{
 			continue;
