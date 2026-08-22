@@ -21,6 +21,12 @@ environment:
   svn_user: s2sappveyour
   svn_pass:
     secure: T8MivnrThpqDptrSafu2kWSvadsSCOtu9KkamwqNm20=
+  # SourceForge's gateway 504s on a single whole-release commit, so the deploy
+  # pushes the payload in bounded batches (Tools/CI/SvnBatchCommit.ps1).
+  # A batch closes on whichever cap it hits first; lower these if 504s return.
+  svn_batch_files: 400
+  svn_batch_megabytes: 64
+  svn_batch_retries: 5
   WEBHOOK_URL:
     secure: 6hg1/q82Oatu+Swl6MRrqf81pFqjPTwPSfIDwzoERyCfYbjWeE+xm6NObTx+8MwGGxDmvpYKs0olhCbgp5txi4eBO/Er5o7eHydLganoCvIld/bPMP8LrzIMKoEZOGfryI5D0/qSBFdgmyzVrmaX7PVkRzYZJQUSQLUucJXUHls=
   git_email:

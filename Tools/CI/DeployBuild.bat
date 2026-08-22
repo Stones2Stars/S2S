@@ -168,15 +168,24 @@ del ..\missing.list 2>NUL
 call %SVN% add * --force
 
 :: COMMIT TO SVN -----------------------------------------------
-echo Commiting new build to SVN...
-call %SVN% commit -F "%root_dir%\commit_desc.md" --non-interactive --no-auth-cache --username %svn_user% --password %svn_pass%
+:: SourceForge's HTTP front end times out on a single whole-release transaction
+:: (504 Gateway Time-out, then a 500 on the txn) -- the derived JSON alone is
+:: over 13000 files and the FPKs are ~256 MB each. SvnBatchCommit.ps1 sends the
+:: same payload as a sequence of bounded transactions, retrying each one.
+:: Credentials are read from the environment by the script, so the password is
+:: never placed on a command line.
+if not defined svn_batch_files set svn_batch_files=400
+if not defined svn_batch_megabytes set svn_batch_megabytes=64
+if not defined svn_batch_retries set svn_batch_retries=5
+
+set "PS_EXE=pwsh"
+where /q pwsh || set "PS_EXE=powershell"
+
+echo Commiting new build to SVN in batches of %svn_batch_files% path(s) / %svn_batch_megabytes% MB...
+%PS_EXE% -NoProfile -ExecutionPolicy Bypass -File "%root_dir%\Tools\CI\SvnBatchCommit.ps1" -WorkingCopyPath "." -MessageFile "%root_dir%\commit_desc.md" -Version "%C2C_VERSION%" -MaxFilesPerBatch %svn_batch_files% -MaxMegabytesPerBatch %svn_batch_megabytes% -MaxRetriesPerBatch %svn_batch_retries%
 if %ERRORLEVEL% neq 0 (
-    call %SVN% cleanup --non-interactive
-    call %SVN% commit -F "%root_dir%\commit_desc.md" --non-interactive --no-auth-cache --username %svn_user% --password %svn_pass%
-    if %ERRORLEVEL% neq 0 (
-        echo SVN commit failed, aborting...
-        exit /B 3
-    )
+    echo SVN commit failed, aborting...
+    exit /B 3
 )
 
 :: REFRESH SVN -------------------------------------------------
@@ -208,7 +217,7 @@ call git push "%git_push_url%" %C2C_VERSION% --force
 :: GitHub distribution repo. Runs after SVN so a GitHub failure
 :: cannot block the proven SVN channel. Reuses commit_desc.md and
 :: the git credentials configured by InitGit.ps1. The repo must be
-:: seeded once locally first (see Tools/CI README / deploy plan).
+:: seeded once locally first (see docs/reference/release-deploy.md).
 echo Publishing build to GitHub...
 set "git_dist_dir=%root_dir%\_gitbuild"
 set "git_dist_url=https://%git_access_token%:x-oauth-basic@github.com/Stones2Stars/Stones2Stars.git"

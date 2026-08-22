@@ -84,6 +84,7 @@ Verify against the tree before acting on any claim that something is built.
 - **[reference/mission-outcome-system.md](reference/mission-outcome-system.md)** — the `CvOutcome` mission/outcome system (feeds the json.md §8 `missions` block).
 - **[reference/memory-footprint.md](reference/memory-footprint.md)** — where the RAM goes under the 32-bit ceiling: the static clusters (info classes, per-object arrays, cascade caches) vs the per-turn churn; textures/icons are loaded once (shared).
 - **[reference/external-tools-and-workflows.md](reference/external-tools-and-workflows.md)** — crash-dump symbolization, FpkBuilder.
+- **[reference/release-deploy.md](reference/release-deploy.md)** — how a build reaches players: the AppVeyor → SVN → GitHub pipeline, the FPK patch step, and the **batched** SVN commit (SourceForge 504s on a whole-release transaction) incl. the ordering rules that make each batch legal and the non-atomicity that follows.
 - **The LEGACY censuses** — how the legacy behaves today, so the cascade can replace it:
   **[legacy-grant-apply-sites](reference/legacy-grant-apply-sites.md)** (where provisions are handed
   over) · **[pedia-read-map](reference/pedia-read-map.md)** +
