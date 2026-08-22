@@ -12,6 +12,14 @@
 
 ## Unreleased
 
+- **Starting units can no longer be units nobody can build.** A player could begin a Prehistoric game holding a
+  Gladiator — an arena-placed unit — and it was not the worst case available: a strength-17 Master Big Game
+  Hunter and a strength-15 Crusader were both reachable. Starting unit identities are not authored anywhere;
+  they are chosen at game start by scanning every unit and keeping whichever scores highest for the role. That
+  scan checked whether a unit's requirements were met but never whether it may be built at all, so the 46
+  never-buildable units that advertise a starting role were all candidates — and being strong is exactly what
+  made them win. The scan now asks the same offerability verdict the rest of the game uses.
+
 - **The city bar's culture line reads correctly, and no longer faults.** Hovering a city showed its culture
   against a threshold of `0`, and the culture level's name was missing — while the game quietly took an access
   violation behind the scenes, several times a session. Culture is stored as a 64-bit number (it used to overflow
