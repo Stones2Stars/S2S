@@ -34,6 +34,9 @@ open remainder is the live item.
   it is a cascade channel driven by ACTUAL EXPENDITURE, and that plan does not exist yet).
 - **Performance / other** — `turn-time-optimization`, `codebase-bug-hunt`, `worker-stranded-tiles-reachability`,
   `surround-destroy-removal-map`, `multimap-zone-rework`, `unified-civilopedia`.
+- **Delivery** — `deploy-split-build-and-commit` (cutting `DeployBuild.bat` in two at the commit boundary so a
+  failed publish can be retried without redoing the ~8-minute `FinalRelease` build; parked because re-running
+  the build is an accepted repair, and records what must NOT be built on a single batch failure).
 - **Modules** — `module-system-rework` (the inherited C2C module mechanism is not the future one; also records
   why the curator's module exclusions are an intentional boundary, so the dangling refs they leave are not
   chased as curator gaps).

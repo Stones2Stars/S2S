@@ -179,8 +179,13 @@ function Remove-DescendantPaths([string[]] $paths)
 
 <#
     Splits an ordered entry list into batches bounded by BOTH a file count and a
-    byte total, appending each batch to $destination. A single file larger than
-    the byte cap becomes its own batch rather than being merged into a neighbour.
+    byte total, appending each batch to $destination.
+
+    Both axes bind at once because it is their INTERACTION that fails: one file
+    succeeds however large, and many small files are survivable, but many files
+    that are also large in a single transaction are not. A file bigger than the
+    byte cap is therefore committed ALONE, over the cap -- it cannot be split,
+    and a lone file was never the failing case.
 
     Batches are APPENDED to a caller-supplied list rather than returned, because
     a PowerShell function that returns an array of arrays has both levels

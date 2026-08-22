@@ -30,22 +30,44 @@ the `release` branch (`skip_tags` plus the branch filter keep it from looping on
 
 ## Why the commit is batched
 
-**A single commit carrying a whole release does not survive SourceForge's HTTP front end.** It fails as a
-`504 Gateway Time-out` on the trunk, followed by a `500` on the transaction:
+⚖ **It is the BULK push that breaks SourceForge, not a routine release (owner).** A daily commit was never the
+problem and still is not — it carries a modest change set and goes up in a handful of batches, or one. What
+does not survive as a single transaction is a mass regeneration of `Assets/Data`: **~15000 JSON files at once
+is guaranteed to fail.** Read the batching as insurance that only actually binds on the bulk case, never as
+evidence the channel was broadly broken.
+
+The failure is a `504 Gateway Time-out` on the trunk, followed by a `500` on the transaction:
 
 ```
 svn: E175002: Unexpected HTTP status 504 'Gateway Time-out' on '/p/stones2stars/code/trunk'
 svn: E175002: Unexpected server error 500 'Internal Server Error' on '/p/stones2stars/code/!svn/txn/...'
 ```
 
-The payload is why: `Assets/Data` alone is **over 13000 derived JSON files**, and the FPKs are ~256 MB each.
+⚑ **Read where the 504 lands, because it rules out the obvious suspects.** It arrives *after* the client has
+printed `Committing transaction...`, which is the **MERGE** request — every file had already been PUT to the
+server successfully, so the uploads, the network and the individual files are all exonerated. What times out is
+the server FINALIZING a transaction it has already received in full. The `500` on the `!svn/txn/...` URL that
+follows is just the client failing to clean up the orphaned transaction afterwards; it is a consequence, not a
+second fault. ⛔ So a 504 here is never fixed by retrying harder or by pacing the uploads — nothing is
+contending. The only lever is how much work one transaction asks the server to finalize.
 
-`Tools/CI/SvnBatchCommit.ps1` sends the same payload as a sequence of **bounded transactions**. A batch closes
-on whichever cap it hits first — a file count or a byte total — so a lone 256 MB FPK gets its own transaction
-instead of riding along with several hundred JSON files. Each batch retries independently.
+`Tools/CI/SvnBatchCommit.ps1` sends the same payload as a sequence of **bounded transactions**, each retried
+independently.
+
+⚑ **It is the INTERACTION that kills a commit, not either dimension alone (owner).** A single file always
+succeeds however large it is, and a great many small files are survivable; what fails is **many files that are
+also large, in one transaction**. That is why a batch is bounded on **both** axes at once and closes on
+whichever cap it meets first — the caps exist to keep the payload out of the many-and-large corner, not to
+protect any individual file from its own size.
+
+⛔ The corollary, because it reads backwards otherwise: a file bigger than the byte cap is committed **alone,
+exceeding the cap**. That is not a hole in the bound — a single file cannot be split, and a lone file is
+precisely the case that was never failing. Do not "fix" it.
 
 The knobs live in `appveyor.yml` (`svn_batch_files`, `svn_batch_megabytes`, `svn_batch_retries`) and have
-in-script defaults, so the script also runs standalone. **Lower them if 504s return.**
+in-script defaults, so the script also runs standalone. **If 504s return, `svn_batch_megabytes` is the lever to
+reach for first** — the file count alone was never the thing that broke, so cutting it while leaving the byte
+total untouched can leave the failing shape intact.
 
 ### Batch ordering — every transaction must be legal on its own
 
