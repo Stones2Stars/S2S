@@ -6901,7 +6901,9 @@ int64_t CvCityAI::AI_processValue(ProcessTypes eProcess, CommerceTypes eCommerce
 		{
 			continue;
 		}
-		int64_t iTempValue = GC.getProcessInfo(eProcess).getProductionToCommerce(eCommerce, CASC_SCOPE_CITY);
+		// The authored PERCENT, reduced from its ×100 storage. The divisor below accounts for the commerce
+		// WEIGHT's ×100 only ("60 * 100"), so leaving this operand scaled valued every process a hundredfold.
+		int64_t iTempValue = GC.getProcessInfo(eProcess).getProductionToCommerce(eCommerce, CASC_SCOPE_CITY) / 100;
 
 		iTempValue *= GET_PLAYER(getOwner()).AI_commerceWeight(eCommerce, this); // scaled by 100 at this point
 		if (iTempValue == 0) continue; // weight may very well be 0 if commerce is worthless.

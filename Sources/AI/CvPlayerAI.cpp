@@ -5418,7 +5418,9 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 		for (int iK = 0; iK < NUM_COMMERCE_TYPES; iK++)
 		{
-			iTempValue = (GC.getProcessInfo(eLoopProcess).getProductionToCommerce((CommerceTypes)iK, CASC_SCOPE_CITY) * 4);
+			// The authored PERCENT, reduced from its ×100 storage -- the ÷100 below accounts for the commerce
+			// WEIGHT's scale, not this operand's.
+			iTempValue = (GC.getProcessInfo(eLoopProcess).getProductionToCommerce((CommerceTypes)iK, CASC_SCOPE_CITY) / 100 * 4);
 
 			iTempValue *= AI_commerceWeight((CommerceTypes)iK);
 			iTempValue /= 100;
