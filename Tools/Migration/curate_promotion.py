@@ -57,11 +57,13 @@ from store import Store, REPO
 
 # ---- scalar deposits: tag -> (member|None, unit). All at `unit` scope (self-accumulator, §5). ----
 # The `combat` family = everything that MODIFIES the unit's base strength (ruling 5, info-rebuild.md):
-# general % + flat + situational members + the TB/S&D sub-stats. A promotion never authors `strength`
-# (that family holds ONLY a unit's base value, strength.unit.flat).
+# general % + situational members + the TB/S&D sub-stats.
+# ⛔ A FLAT STRENGTH DELTA IS NOT IN THIS FAMILY -- iStrengthChange lives in FAMILIES below, on `strength`.
+# The engine reads `combat` at PERCENT only (URS_STRENGTH_PERCENT), so a flat deposit here has no reader at
+# all and the promotion does nothing. `strength.unit.flat` is the DELTA channel by design: the gather excludes
+# the unit's own TYPE from it, and baseCombatStr is m_iBaseCombat100 + resolvedValue(URS_STRENGTH_FLAT).
 COMBAT_MODS = {
     "iCombatPercent":               (None, "percent"),        # general combat strength %
-    "iStrengthChange":              (None, "flat"),           # flat strength points
     "iAttackCombatModifierChange":  ("attack", "percent"),
     "iDefenseCombatModifierChange": ("defense", "percent"),
     "iVSBarbsChange":               ("vsBarbs", "percent"),
@@ -86,6 +88,7 @@ COMBAT_MODS = {
 }
 # other families: tag -> (family, member|None, unit)
 FAMILIES = {
+    "iStrengthChange":              ("strength", None, "flat"),   # the flat strength DELTA (URS_STRENGTH_FLAT)
     "iWithdrawalChange":            ("withdrawal", None, "percent"),
     "iFirstStrikesChange":          ("firstStrike", "strikes", "flat"),
     "iChanceFirstStrikesChange":    ("firstStrike", "chance", "flat"),

@@ -1,6 +1,6 @@
 {
  "type": "PROMOTION_MIGHT12",
- "combat": {
+ "strength": {
   "unit": {
    "flat": 25
   }
