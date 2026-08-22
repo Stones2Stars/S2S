@@ -12,6 +12,13 @@
 
 ## Unreleased
 
+- **Loading a large game is around half a minute faster.** Every time a building was added to a city — including
+  the several dozen the game quietly places in *every* city while a save loads — the whole empire's trade-route
+  network was rebuilt from scratch. Each rebuild threw away the one before it, so on a large save the game did
+  the work fifty-two thousand times to arrive at seventeen answers, and spent about thirty seconds doing it. The
+  network is now rebuilt when something actually changes it, and once per player per turn as it always was.
+  Trade routes and their yields are unchanged; only the amount of repeated work is.
+
 - **A settled Great Hunter trains better hunters again.** Settling a great person makes it a *free* specialist,
   which the game tracks separately from the citizens you assign to specialist jobs — and the experience a
   specialist grants to units trained in its city was counting only the assigned ones. A settled Great Hunter
