@@ -472,7 +472,9 @@ class CvCivicsScreen:
 
 		elif iCode == NotifyCode.NOTIFY_CLICKED:
 
-			if NAME.startswith("Civic_Tab"):
+			# Only the NUMBERED tabs carry an index. startswith alone also matches the bare "Civic_Tab",
+			# whose last character is "b", so int(NAME[-1]) raised and killed the whole click handler.
+			if NAME.startswith("Civic_Tab") and NAME[len("Civic_Tab"):].isdigit():
 				if "|" not in NAME:
 					screen.hide("Civic_Tab|Col" + str(self.iTab))
 					screen.show("Civic_Tab" + str(self.iTab))
