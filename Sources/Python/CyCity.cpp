@@ -2355,6 +2355,8 @@ void CyCity::pythonPublish()
 		.def("getProductionNameKey",  &CyCity::getProductionNameKey)
 		.def("getOrderQueueLength",   &CyCity::getOrderQueueLength)
 		.def("isProductionUnit",      &CyCity::isProductionUnit)
+		.def("isProductionProcess",   &CyCity::isProductionProcess)
+		.def("hasBuilding",           &CyCity::hasBuilding)
 		.def("getBuildingListFilterActive", &CyCity::getBuildingListFilterActive)
 		.def("getUnitListFilterActive",     &CyCity::getUnitListFilterActive)
 
