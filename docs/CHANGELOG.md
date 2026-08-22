@@ -12,6 +12,13 @@
 
 ## Unreleased
 
+- **Loading a large game is around half a minute faster.** Every time a building was added to a city — including
+  the several dozen the game quietly places in *every* city while a save loads — the whole empire's trade-route
+  network was rebuilt from scratch. Each rebuild threw away the one before it, so on a large save the game did
+  the work fifty-two thousand times to arrive at seventeen answers, and spent about thirty seconds doing it. The
+  network is now rebuilt when something actually changes it, and once per player per turn as it always was.
+  Trade routes and their yields are unchanged; only the amount of repeated work is.
+
 - **The city bar's culture line reads correctly, and no longer faults.** Hovering a city showed its culture
   against a threshold of `0`, and the culture level's name was missing — while the game quietly took an access
   violation behind the scenes, several times a session. Culture is stored as a 64-bit number (it used to overflow
