@@ -483,6 +483,11 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 	case CASC_PRED_IS_LAND:         return FoldTargets::defines(CASC_PRED_IS_LAND)
 	                                     ? (plotContext != NULL && FoldTargets::terrainMatches(CASC_PRED_IS_LAND, plotContext->terrainId()))
 	                                     : (plotContext == NULL || plotContext->isLand());
+	// WHERE a unit OPERATES -- read off its own domain, never through the tag set: a tag says what a unit IS and
+	// the domain is a separate axis with its own entry (docs/specs/tags.md). Without a case here it fell to the
+	// IGNORED default, so every `IS_AIR` gate answered TRUE for every unit -- a carrier accepting any cargo, and
+	// an `any` group carrying it granting its promotion to the whole army.
+	case CASC_PRED_IS_AIR:          return ctx.unit != NULL && ctx.unit->getUnitInfo().getDomain() == DOMAIN_AIR;
 	case CASC_PRED_HAS_COAST:       return pr->min >= 0 ? (cityContext != NULL && cityContext->isCoastal(pr->min))
 	                                                     : (plotContext != NULL && plotContext->hasCoast());
 	// Fresh water is target-relative (json §3.5): on a PLOT target the tile's own access; with a CITY in

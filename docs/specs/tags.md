@@ -35,9 +35,14 @@ The catalogue of a unit's **immutable, accounting-only classification tags** (th
 
 | tag | meaning | derivation |
 |---|---|---|
-| `landUnit` | a land unit | `DOMAIN_LAND` → `landUnit` (read by `IS_LAND`) |
-| `seaUnit` | a sea unit | `DOMAIN_SEA` → `seaUnit` (read by `IS_WATER`) |
-| `airUnit` | an air unit | `DOMAIN_AIR` → `airUnit` (read by `IS_AIR`) |
+| `landUnit` | a land unit | `DOMAIN_LAND` → `landUnit` |
+| `seaUnit` | a sea unit | `DOMAIN_SEA` → `seaUnit` |
+| `airUnit` | an air unit | `DOMAIN_AIR` → `airUnit` |
+
+⛔ **None of the three is what `IS_LAND` / `IS_WATER` / `IS_AIR` read, and believing otherwise is how a gate goes
+silently wrong.** Those are NATIVE predicates, not tag lookups: `IS_LAND`/`IS_WATER` ask about a PLOT, and
+`IS_AIR` asks the unit's own `identity.domain` — which is the ruling below, working. Only a token with no native
+spelling falls through to the tag registry (`IS_RECON` → the `recon` tag).
 
 > **⛔ A TAG SAYS WHAT A UNIT *IS*; A DOMAIN SAYS WHERE IT *OPERATES* — two axes, and the domain is NOT a tag
 > question (owner).** The domain has its OWN entry on the unit (`identity.domain` → `CvUnitInfo::getDomain()`),

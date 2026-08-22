@@ -19,8 +19,6 @@ static CvCascPredKind cp_predKind(const std::string& s)
 {
 	if (s == "IS_WATER") return CASC_PRED_IS_WATER;       if (s == "IS_LAND") return CASC_PRED_IS_LAND;
 	if (s == "IS_FLATLANDS") return CASC_PRED_IS_FLATLANDS; if (s == "IS_AIR") return CASC_PRED_IS_AIR;
-	if (s == "IS_SPACE") return CASC_PRED_IS_SPACE;       if (s == "IS_LUNAR") return CASC_PRED_IS_LUNAR;
-	if (s == "IS_MARS") return CASC_PRED_IS_MARS;
 	if (s == "HAS_PEAK") return CASC_PRED_HAS_PEAK;       if (s == "HAS_HILLS") return CASC_PRED_HAS_HILLS;
 	if (s == "HAS_COAST") return CASC_PRED_HAS_COAST;     if (s == "HAS_RIVER") return CASC_PRED_HAS_RIVER;
 	if (s == "HAS_FRESHWATER") return CASC_PRED_HAS_FRESHWATER; if (s == "HAS_IRRIGATION") return CASC_PRED_HAS_IRRIGATION;
@@ -49,9 +47,6 @@ const char* cascadeSpellPredKind(CvCascPredKind ePredKind)
 	case CASC_PRED_IS_LAND:                    return "IS_LAND";
 	case CASC_PRED_IS_FLATLANDS:               return "IS_FLATLANDS";
 	case CASC_PRED_IS_AIR:                     return "IS_AIR";
-	case CASC_PRED_IS_SPACE:                   return "IS_SPACE";
-	case CASC_PRED_IS_LUNAR:                   return "IS_LUNAR";
-	case CASC_PRED_IS_MARS:                    return "IS_MARS";
 	case CASC_PRED_HAS_PEAK:                   return "HAS_PEAK";
 	case CASC_PRED_HAS_HILLS:                  return "HAS_HILLS";
 	case CASC_PRED_HAS_COAST:                  return "HAS_COAST";

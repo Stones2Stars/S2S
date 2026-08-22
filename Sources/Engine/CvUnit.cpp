@@ -22954,9 +22954,8 @@ void CvUnit::setFreePromotion(PromotionTypes ePromotion, bool bAdding, TraitType
 	// `enabled: "IS_<TAG>"` predicate for the classes it arms -- the same shape the BUILDING leg uses.
 	// ⛔ Do NOT answer a dangling trait promotion by restoring a trait-side promotion x unitcombat map -- that is
 	// the legacy mechanism whose data moved, and it swept the whole trait registry per promotion to do it.
-	// Until the trigger engine's promote pass consults HELD TRAITS (it walks the city's operating buildings
-	// only), trait-granted promotions reach no unit; that hole is tracked, and is the correct exposed state
-	// rather than a legacy path kept breathing.
+	// The trigger engine's promote pass consults HELD TRAITS alongside the city's operating buildings, so the
+	// trait payload lands there and nothing is owed here.
 }
 
 void CvUnit::doSetFreePromotions(bool bAdding, TraitTypes eTrait)

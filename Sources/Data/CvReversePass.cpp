@@ -360,7 +360,9 @@ namespace
 				rp_relatedConditionWalk(pTrigger->condition, eSourceBucket, iSourceId);
 				for (size_t iPromotion = 0; iPromotion < pTrigger->promotePromotions.size(); ++iPromotion)
 				{
-					rp_landRelated(rp_infoForBucket(EDGEB_PROMOTIONS, pTrigger->promotePromotions[iPromotion]), eSourceBucket, iSourceId);
+					const CvTriggerPromotion* pPromotion = pTrigger->promotePromotions[iPromotion];
+					rp_landRelated(rp_infoForBucket(EDGEB_PROMOTIONS, pPromotion->promotionId), eSourceBucket, iSourceId);
+					rp_relatedConditionWalk(pPromotion->enabled, eSourceBucket, iSourceId);
 				}
 				rp_relatedFromGrants(pTrigger->grant, eSourceBucket, iSourceId);
 				// healUnitCombatId / propertyId reference kinds outside the bucket vocabulary that also compose

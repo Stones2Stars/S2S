@@ -297,10 +297,14 @@ void CvInfo::triggerPromotions(std::vector<int>& outAlways, std::vector<int>& ou
 	{
 		const CvTriggerEntry* pEntry = entries[i];
 		if (pEntry->happening != TRIGGER_UNIT_ENTERED_CITY || pEntry->promotePromotions.empty()) continue;
-		std::vector<int>& out = (pEntry->condition != NULL) ? outConditional : outAlways;
 		for (size_t k = 0; k < pEntry->promotePromotions.size(); ++k)
 		{
-			out.push_back(pEntry->promotePromotions[k]);
+			const CvTriggerPromotion* pPromotion = pEntry->promotePromotions[k];
+			// EITHER gate makes it conditional: the entry's own condition, or the promotion's unit filter. The
+			// second is the usual one -- a source hands its promotion to one unit class and not the rest.
+			const bool bConditional = (pEntry->condition != NULL) || (pPromotion->enabled != NULL);
+			std::vector<int>& out = bConditional ? outConditional : outAlways;
+			out.push_back(pPromotion->promotionId);
 		}
 	}
 }

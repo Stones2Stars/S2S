@@ -33,6 +33,27 @@ class CvGrants;
 // property-scaled criminal spawn, json.md §5).
 extern const char* const TRIGGER_UNIT_ENTERED_CITY;
 
+///<summary>
+/// One promotion inside an `action.promote.promotions` list, with the gate deciding WHICH UNITS may take it.
+/// The gate is PER PROMOTION rather than per entry, which is the whole reason this is a type: one source hands
+/// different promotions to different unit classes from a SINGLE entry (a Riding School's `mounted` promotion
+/// beside an unconditional one), so an entry-level condition cannot express it and a parallel condition array
+/// can drift out of step with its ids -- which is exactly how the gate came to be dropped.
+///</summary>
+class CvTriggerPromotion
+{
+public:
+	explicit CvTriggerPromotion(int iPromotionId) : promotionId(iPromotionId), enabled(NULL) {}
+	~CvTriggerPromotion() { delete enabled; }
+
+	int promotionId;         // the PROMOTION_* FK id (always resolved -- an unresolvable one never gets here)
+	CvCondition* enabled;    // owned; NULL = every unit present takes it
+
+private:
+	CvTriggerPromotion(const CvTriggerPromotion&);              // noncopyable -- owns the condition
+	CvTriggerPromotion& operator=(const CvTriggerPromotion&);
+};
+
 class CvTriggerEntry
 {
 public:
@@ -61,7 +82,7 @@ public:
 	// feature), so the feature reads the city's POPULATION fact and goes.
 	bool destroySelf;
 	// --- action: promote (units in scope gain promotions) ---
-	std::vector<int> promotePromotions;   // action.promote.promotions FK ids
+	std::vector<CvTriggerPromotion*> promotePromotions;   // owned; action.promote.promotions, each with its gate
 	std::string promoteUnits;             // action.promote.units target selector ("present")
 	// --- action: grant (the §5 payload vocabulary nested whole) ---
 	CvGrants* grant;           // owned (NULL = none)
