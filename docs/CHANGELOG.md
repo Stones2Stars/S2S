@@ -12,6 +12,13 @@
 
 ## Unreleased
 
+- **Loading a large game is around half a minute faster.** Every time a building was added to a city — including
+  the several dozen the game quietly places in *every* city while a save loads — the whole empire's trade-route
+  network was rebuilt from scratch. Each rebuild threw away the one before it, so on a large save the game did
+  the work fifty-two thousand times to arrive at seventeen answers, and spent about thirty seconds doing it. The
+  network is now rebuilt when something actually changes it, and once per player per turn as it always was.
+  Trade routes and their yields are unchanged; only the amount of repeated work is.
+
 - **Starting units can no longer be units nobody can build.** A player could begin a Prehistoric game holding a
   Gladiator — an arena-placed unit — and it was not the worst case available: a strength-17 Master Big Game
   Hunter and a strength-15 Crusader were both reachable. Starting unit identities are not authored anywhere;

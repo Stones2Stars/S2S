@@ -6848,13 +6848,15 @@ void CvPlayer::processBuilding(BuildingTypes eBuilding, int iChange, CvArea* pAr
 
 	const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
 
-	// The EMPIRE-scope route COUNT -- the memberless flat deposit (ruling 11: kind 0 IS the count). The slot is
-	// a FLAT amount and therefore ×100, so the reader reduces at its point of use (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)): a
-	// route count is a whole game quantity.
-	// The cascade owns the AMOUNT now; what this site still owes is the changer's RIDER --
-	// the stored per-city trade YIELD must rebuild when a route input moves ([save.md] par.6).
-	updateTradeRoutes();
-
+	// ⛔ NO TRADE-ROUTE REBUILD RIDES HERE. Route SELECTION is a SPATIAL result -- it resolves through
+	// isConnectedToCapital/getPlotGroup, so it moves non-locally and no fact can name what it invalidated
+	// ([cascade.md] § THE SPATIAL CARVE-OUT). It is therefore cleared by the facts that can move it (route,
+	// ownership, city membership), never by a building being processed: the cascade already owns the route
+	// COUNT and the yield MODIFIERS, so this site deposits and nothing more.
+	// ⚠ updateTradeRoutes() opens with clearTradeRoutes() across every city, so it is a TOTAL rebuild -- a
+	// per-building call is discarded whole by the next one, and only the last of a batch survives.
+	// Measured on a 185-city save: the load-time placeSystemBuildings backfill drove 52,465 calls costing
+	// 30.3s to produce 17 surviving answers.
 	changeForceAllTradeRoutes(kBuilding.providesAmenity(CLS_AMENITY_FORCE_ALL_TRADE_ROUTES) * iChange);
 
 	// `national` is a revolution KIND, not a scope fragment -- the data authors `revolution.city.national`, so the

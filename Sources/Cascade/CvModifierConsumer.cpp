@@ -96,13 +96,16 @@ namespace
 	// and `CvCity::m_aiTradeYield` is the engine's OUTPUT, folded into TIER-1 BASE at the combine
 	// ([modifier.md] §2a). It is not a package slot, so the maintained sum does not reach it and no compiled
 	// deposit index can name what moves it -- it is REBUILT rather than delta'd.
-	// ⚑ THIS IS ONE OF ITS FOUR REBUILD MOMENTS, not the only one ([modifier.md] §2a carries the whole set): the
-	// load-end pass, the plot-group / network changes, the per-player `doTurn`, and THIS -- targeted at whichever
-	// owner a fact just moved a tradeRoutes channel for. What this route buys is MID-TURN precision for the
-	// cascade-driven half; the fact names the owner, so the recompute follows the fact and never sweeps.
-	// ⚠ It is DEFERRED to the end of the event rather than fired per deposit: one civic swap moves several
-	// channels, and rebuilding a player's whole route network once per channel would pay the network walk many
-	// times over for one happening.
+	// ⚑ THIS IS ONE OF ITS REBUILD MOMENTS, not the only one ([modifier.md] §2a carries the whole set): the
+	// load-end pass, the plot-group / network changes, and THIS -- targeted at whichever owner a fact moved a
+	// tradeRoutes channel for. The fact names the owner, so the recompute follows the fact and never sweeps.
+	// ⛔ THE MARK IS TAKEN PER FACT; THE REBUILD IS SPENT AT THE OWNER'S TURN END, NEVER MID-TURN (owner).
+	// This turn's trade yield is ALREADY DEPOSITED by the time a building lands, so a mid-turn rebuild cannot
+	// change any number anyone reads this turn -- it only pays the network walk to reach a value that next
+	// turn's deposit would compute anyway. ⇒ mid-turn precision is not a thing worth buying here; the pending
+	// set carries the "something moved" answer across the turn and one rebuild spends it.
+	// ⚠ Marking, not rebuilding, is also what makes a civic swap cheap: it moves several channels, and the set
+	// collapses them to one rebuild rather than one per channel.
 	std::set<int> s_tradeRoutePendingOwners;
 
 	bool mc_isTradeRouteChannel(int iChannel)
@@ -271,17 +274,21 @@ namespace
 		}
 	}
 
-	void mc_flushTradeRouteUpdates()
+	// Spend ONE owner's pending mark, at that owner's turn end. Silent when nothing moved a tradeRoutes
+	// channel for it this turn -- which is the common case, and the reason this is a mark rather than a sweep.
+	void mc_flushTradeRouteUpdatesForOwner(int iOwner)
 	{
-		for (std::set<int>::const_iterator it = s_tradeRoutePendingOwners.begin();
-			it != s_tradeRoutePendingOwners.end(); ++it)
+		const std::set<int>::iterator itPending = s_tradeRoutePendingOwners.find(iOwner);
+		if (itPending == s_tradeRoutePendingOwners.end())
 		{
-			if (*it >= 0 && *it < MAX_PLAYERS)
-			{
-				GET_PLAYER((PlayerTypes)*it).updateTradeRoutes();
-			}
+			return;
 		}
-		s_tradeRoutePendingOwners.clear();
+		s_tradeRoutePendingOwners.erase(itPending);
+
+		if (iOwner >= 0 && iOwner < MAX_PLAYERS)
+		{
+			GET_PLAYER((PlayerTypes)iOwner).updateTradeRoutes();
+		}
 	}
 
 	// ⚖ THE CARRIER SLOT'S RESOLVE -- a source info back to its BUILDING id, for the one predicate class that
@@ -3138,6 +3145,12 @@ namespace
 				{
 					CascadeChannelRegistry::reportChannelCensus();   // once-guarded, so the load path wins when there is one
 				}
+				else
+				{
+					// The owner's turn is closing, so this turn's trade yield is banked and the route network may
+					// now be re-derived for whatever moved it. Silent unless a fact marked this owner.
+					mc_flushTradeRouteUpdatesForOwner(kEvent.iC);
+				}
 				break;
 			}
 			// ---- the load bracket end: DRAIN the banked marks, then the channel-set census ----
@@ -3161,12 +3174,11 @@ namespace
 				break;   // events with no deposit reach (name changes, counts, unit lifecycle, load bracket)
 			}
 
-			// ONE targeted rebuild per FACT, for the owners this event actually moved a tradeRoutes channel for.
-			// The engine owns the route network, so its output has to be re-derived rather than delta'd -- but only
-			// where the fact reached, never as a sweep (owner: "it needs to run targeted, for where an event has hit").
-			mc_flushTradeRouteUpdates();
-			// ...and the plots whose RESOLVE operand moved (a trait moving an owner's yield threshold, or a
-			// golden age starting or ending).
+			// ⛔ NO TRADE-ROUTE REBUILD HERE. The fact only MARKS its owner (mc_isTradeRouteChannel, above); the
+			// rebuild is spent once at that owner's turn end, because this turn's trade yield is already
+			// deposited and no mid-turn rebuild can move a number anyone reads this turn.
+			// The plots whose RESOLVE operand moved (a trait moving an owner's yield threshold, or a
+			// golden age starting or ending) are a different question and still settle per fact.
 			mc_flushOwnerPlotResolves();
 		}
 
