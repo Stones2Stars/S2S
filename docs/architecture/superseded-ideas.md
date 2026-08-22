@@ -511,3 +511,27 @@
     consequence, a transformation verb that is not the creation path,
     [parked/upgrade-chains.md](../plans/parked/upgrade-chains.md)). **Don't add a cost, a price function, a
     prompt or a player action to the building-obsolescence fate.**
+
+42. **DLL-SIDE GRAPHICS ASSET SHARING — "make every plot using the same forest model hold ONE copy"**
+    *(dead — investigated with a live-process measurement, impossible from our side of the boundary)* — the
+    intent was to stop N plots each carrying their own copy of an asset, so that full-map residency became
+    affordable and paging/viewports were unnecessary. **It cannot be done from the DLL, and the reason is
+    structural rather than a matter of effort:** plot graphics are requested by COORDINATE — `RebuildPlot(x,y)`,
+    `RebuildTileArt(x,y)`, `RebuildRiverPlotTile`, `ForceTreeOffsets` — and **an asset handle never crosses the
+    boundary at all.** A census of the entire EXE-side surface (`CvDLLEngineIFaceBase` 71 virtuals,
+    `CvDLLEntityIFaceBase` 26) finds **no instancing, sharing, clone or reuse primitive anywhere**; there is no
+    call that expresses "reuse the node you already built". Everything between `(x,y)` and the finished scene
+    node is EXE-internal, unsymbolized, and unreachable.
+    ⇒ **Only two quantities remain controllable: HOW MANY objects have graphics (residency) and WHAT ONE COPY
+    COSTS (art payload).** Since per-plot cost tracks mesh size (~70–190 KB/plot measured, against a 68 KB mean
+    NIF), decimating the most-frequently-placed feature/improvement meshes is the only lever that attacks the
+    copying itself; everything else is residency.
+    ⚑ **The revival risk is that the idea is correct and obvious** — sharing IS the right design, a forest tile
+    plainly *should* reference one mesh, and the conclusion "so let's make it do that" follows naturally from
+    looking at the art defines. The blocker is invisible until someone enumerates the interface headers, which
+    is why this is a tombstone. ⛔ **Do not re-derive it; and do not read `CvArtInfo`/`ARTFILEMGR` sharing as
+    evidence the engine shares** — the DLL side is already shared (one `CvArtInfo*` per art define, tag strings
+    only, §4), which says nothing about what the EXE does downstream.
+    ⚖ **The same closed EXE is the root of the 32-bit ceiling, the frozen VC7.1/Python 2.4 toolchain
+    ([engine.md](../reference/engine.md)) and this copying** — so the only thing that would genuinely dissolve
+    it is not owning that constraint, which is a far larger question than an optimisation.

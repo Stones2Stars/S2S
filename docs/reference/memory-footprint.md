@@ -134,21 +134,45 @@ the (shared) Info, and per instance an index into the shared Info array.
   closed-EXE / no-symbols: the mechanism is inferred from the paging delta, not a symbol read — but the paging delta is
   a real measurement, no longer pure reasoning.) The **DLL art surface is a separate question and stays shared-once**
   (the DLL holds only the tag string, above) — per-instance texture memory lives on the EXE side.
-- **⛔ FPK IS NOT A PACKAGING DETAIL — IT IS THE LARGEST SINGLE MEMORY LEVER (owner).** *"FPKs force loading of
-  all assets to memory. If we don't use FPKs but let the game load graphics directly, over half of memory use is
-  gone — but it takes about 10-15 minutes to load the game."* So a large part of the working set is a **RESIDENT
-  ART BASELINE** that has nothing to do with instance counts, and the earlier reading here — that FPK was "a
-  packaging container, orthogonal to the once-vs-per-instance question" — was wrong
-  ([external-tools-and-workflows.md](external-tools-and-workflows.md) owns the packing mechanics).
-  ⚑ **The two effects are SEPARATE and both are real:** the FPK baseline is flat and enormous, and the per-turn
-  climb happens **on top of it, with every FPK already loaded** — *"it makes no sense that, when all FPKs are
-  loaded, we still get graphic use increases every turn, but that is what happens, and graphics paging proves
-  this by managing it."* ⇒ Do not let either explain the other away.
-  ⚖ **THE HOME RUN IS NAMED (owner): *"if we can have the actual game load faster, without FPKs, that is the
-  home run."*** Halving memory is already established; the load time is the whole of what stands in the way, so
-  the work is a LOAD-TIME problem, not a memory investigation. ⚠ Note this inverts the usual ordering rule —
-  [turn time is king](../cascade.md#-the-per-scope-package-model--the-cascades-founding-design-1-stated-as-cache-architecture) spends load time to buy turn time,
-  and here load time is the currency that has run out.
+- **⛔ FPK IS A RESIDENCY QUESTION, NOT A LOAD-TIME ONE — AND THE ART PATH IS NOT WHERE THE LOAD TIME GOES.**
+  Packed, the whole art set is resident from the start; unpacked, assets load on demand and the working set
+  climbs toward the same ceiling as the map is revealed. ⇒ **The memory difference is REAL AT LOAD and ERODES
+  AS YOU PLAY**, which is why a mid-session comparison shows packed and unpacked as near-identical while a
+  measurement taken at the loading screen shows a large saving. Both readings are true of different moments;
+  neither is the other's refutation.
+  ⚑ **MEASURED, unpacked (31,716 loose files, 1,113 MB, 5,210 dirs):** the engine **indexes every art file in
+  ~5 seconds** (30,162 reads, ~90 MB — a ~3 KB header per file) and then **issues ZERO further file reads for
+  the entire remainder of the load.** ⛔ So no art-packing change can move load time: after indexing, nothing
+  is being fetched from disk at all. The filesystem is not the constraint either — traversing all 31,418 files
+  costs 0.13 s and reading all 887 MB costs 1.7 s, against 0.35 s packed.
+  ⚠ **The load time that remains is DLL/EXE compute, not art.** One named hot path, sampled repeatedly:
+  `CvGame::onFinalInitialized → CvCity::placeSystemBuildings → setHasBuilding → processBuilding →
+  CvPlayer::updateTradeRoutes`, which recomputes **every** city's trade routes for **each** system building
+  placed, each walking plot groups via `isConnectedToCapital`.
+  ⛔ **The "load faster without FPKs" framing that stood here is RETIRED** — it named a target that the
+  measurements do not support.
+
+- **⛔ THE DLL CANNOT MAKE TWO PLOTS SHARE ONE ASSET — THERE IS NO SHARING PRIMITIVE TO REACH FOR.** Plot
+  graphics are requested by COORDINATE (`RebuildPlot(x,y)`, `RebuildTileArt(x,y)`, `RebuildRiverPlotTile`,
+  `ForceTreeOffsets`); an asset handle never crosses the boundary. A census of both EXE-side interfaces
+  (`CvDLLEngineIFaceBase` 71 virtuals, `CvDLLEntityIFaceBase` 26) finds **no instancing / sharing / clone /
+  reuse vocabulary anywhere**. ⇒ Whatever copying happens between `(x,y)` and the finished scene node is
+  EXE-internal and unreachable. **The only two quantities we control are HOW MANY objects have graphics
+  (residency) and WHAT ONE COPY COSTS (art payload).**
+  ⚑ **MEASURED, paging on, fog of war, no units visible: panning alone took the process 1.1 GB → 1.8 GB.**
+  That is ~70–190 KB per plot against a **68 KB mean NIF** — asset-scale, not pointer-scale, so per-plot
+  duplication is the better-supported reading. ⚠ It is bounded at roughly ONE copy per plot (~9,600), never a
+  large multiple: the 32-bit ceiling would not hold otherwise.
+- **The plot-graphics residency configuration is what makes that growth permanent.** `ENABLE_VIEWPORTS = 0`, so
+  `CvPlot::shouldHaveGraphics()` (= `IsGraphicsInitialized() && isInViewport()`) passes for **every** plot; its
+  `&& isRevealed(...)` clause is commented out, so panning over unexplored fog still builds graphics.
+  `ECvPlotGraphics` annotates its own costs — **`FEATURE` (improvements + resources + terrain features) is the
+  ONLY High-memory plot component**; `SYMBOLS`/`RIVER`/`ROUTE` are Low, which is why their `PAGE_IN_DIST_* = 999`
+  (whole-map) values are deliberate and not a misconfiguration. ⛔ **But `PAGING_RESIDENT_SOFT_CAP = 3000000` is
+  compared against `g_iNumPagedInPlots`, a PLOT COUNT bounded by map size (~9,600) — so the proactive evictor
+  can never fire** (code default is `6000`), and `MAX_DESIRED_MEMORY_USED = 3500000` KB (~3.58 GB) sits above the
+  32-bit ceiling, so the safety net cannot fire either. ⇒ `FEATURE` graphics page IN within 15 tiles and are
+  never given back: a ratchet, which is exactly the measured climb.
 
 **Implication:** the **DLL art surface is flat after load** (shared once — tag strings only), so a per-turn
 working-set climb is not DLL art re-instantiation. But on the **EXE side** the per-instance texture evidence (above)
