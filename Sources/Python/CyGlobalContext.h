@@ -45,6 +45,16 @@ public:
 
 	int getNumCivilizationInfos() const { return GC.getNumCivilizationInfos(); }   // the correctly-spelled twin
 
+	// PLAYER + GRAPHIC OPTIONS are SETTINGS, so they are served here rather than by CyInfo, which answers
+	// ENTITY data (CyInfo.h states the split). The options screen needs a label and a hover text per option and
+	// is handed those two strings; it is NOT handed the info object, which is the legacy escape hatch the
+	// rebuild closed. Their infos are XML-loaded and have no InfoRepo home, so the prefix plane cannot route
+	// them at all.
+	std::wstring getPlayerOptionDescription(int iOption) const;
+	std::wstring getPlayerOptionHelp(int iOption) const;
+	std::wstring getGraphicOptionDescription(int iOption) const;
+	std::wstring getGraphicOptionHelp(int iOption) const;
+
 	// The Cy* HANDLES. NOT infos -- they are the game-object wrappers the engine already hands to Python
 	// callbacks, so the ruling that this class serves no INFOS does not reach them. Cutting them was an
 	// over-reach: getPlayer/getTeam/getMap/getGame are the most-called names in the whole tree.

@@ -219,6 +219,14 @@ public:
 	// ⚠ It EVALUATES (unlike every read above), so it is a per-decision call and never an inner-loop one.
 	bool couldConstructWith(BuildingTypes eCandidate, BuildingTypes eExtraBuilding) const;
 	bool isWorldWondersMaxed() const;
+	///<summary>
+	/// The culture level to READ an info by. A city with no culture yet answers NO_CULTURELEVEL, and the info
+	/// plane holds no entry at -1 -- an unloaded read ABORTS in every config, so founding a city died here.
+	/// CULTURELEVEL_NONE is the entry that authors what "no culture yet" means, which is what getCityRadius
+	/// already answers with.
+	///</summary>
+	CultureLevelTypes cultureLevelForRead() const;
+
 	int getMaxNumWorldWonders() const;
 	int getMaxNumTeamWonders() const;
 	int getMaxNumNationalWonders() const;

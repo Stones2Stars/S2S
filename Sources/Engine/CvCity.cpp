@@ -2159,9 +2159,25 @@ bool CvCity::couldConstructWith(BuildingTypes eCandidate, BuildingTypes eExtraBu
 }
 
 
+CultureLevelTypes CvCity::cultureLevelForRead() const
+{
+	const CultureLevelTypes eLevel = getCultureLevel();
+	if (eLevel != NO_CULTURELEVEL)
+	{
+		return eLevel;
+	}
+	static int s_iNoneLevel = -1;
+	if (s_iNoneLevel < 0)
+	{
+		s_iNoneLevel = GC.getInfoTypeForString("CULTURELEVEL_NONE", /*bHideAssert*/true);
+	}
+	return (CultureLevelTypes)std::max(0, s_iNoneLevel);
+}
+
+
 int CvCity::getMaxNumWorldWonders() const
 {
-	return GC.getCultureLevelInfo(getCultureLevel()).getMaxWorldWonders();
+	return GC.getCultureLevelInfo(cultureLevelForRead()).getMaxWorldWonders();
 }
 
 bool CvCity::isWorldWondersMaxed() const
@@ -2184,13 +2200,13 @@ bool CvCity::isWorldWondersMaxed() const
 
 int CvCity::getMaxNumTeamWonders() const
 {
-	return GC.getCultureLevelInfo(getCultureLevel()).getMaxTeamWonders();
+	return GC.getCultureLevelInfo(cultureLevelForRead()).getMaxTeamWonders();
 }
 
 
 int CvCity::getMaxNumNationalWonders() const
 {
-	return GC.getCultureLevelInfo(getCultureLevel()).getMaxNationalWonders();
+	return GC.getCultureLevelInfo(cultureLevelForRead()).getMaxNationalWonders();
 }
 
 void CvCity::clearUpgradeCache(UnitTypes eUnit) const
@@ -11679,7 +11695,7 @@ void CvCity::doPlotCulture(PlayerTypes ePlayer, int iCultureRate)
 	PROFILE_FUNC();
 	FASSERT_BOUNDS(0, MAX_PLAYERS, ePlayer);
 
-	int iCultureLevel = GC.getCultureLevelInfo(getCultureLevel()).getLevel();
+	int iCultureLevel = GC.getCultureLevelInfo(cultureLevelForRead()).getLevel();
 
 	clearCultureDistanceCache();
 

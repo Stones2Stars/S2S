@@ -59,6 +59,27 @@ int CyGlobalContext::getInfoTypeForString(const char* szInfoType, bool bHideAsse
 // data rather than a new method.
 
 
+std::wstring CyGlobalContext::getPlayerOptionDescription(int iOption) const
+{
+	return GC.getPlayerOptionInfo((PlayerOptionTypes)iOption).getDescription();
+}
+
+std::wstring CyGlobalContext::getPlayerOptionHelp(int iOption) const
+{
+	return GC.getPlayerOptionInfo((PlayerOptionTypes)iOption).getHelp();
+}
+
+std::wstring CyGlobalContext::getGraphicOptionDescription(int iOption) const
+{
+	return GC.getGraphicOptionInfo((GraphicOptionTypes)iOption).getDescription();
+}
+
+std::wstring CyGlobalContext::getGraphicOptionHelp(int iOption) const
+{
+	return GC.getGraphicOptionInfo((GraphicOptionTypes)iOption).getHelp();
+}
+
+
 CyGame* CyGlobalContext::getCyGame() const
 {
 	static CyGame cyGame(GC.getGame());
