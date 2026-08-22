@@ -277,6 +277,31 @@ row in the ONE per-type repo dispatch (which earns it the full-registry re-map, 
 info-repo home) · an `_order.json` manifest · and authoring through `_additions`, since entity curation is
 complete and there is no legacy XML to convert — the unit identities never existed as data.
 
+## Free promotions — TWO SOURCES, one relation
+
+A city's OPERATING BUILDINGS and the unit owner's HELD TRAITS both arm units, and they author the identical
+shape, so the plane carries no trait-specific payload — only a different owner and a different leg (2).
+
+|  | the source is | leg (1) unit arrives | leg (2) source arrives |
+|---|---|---|---|
+| **building** | the CITY's, active per the operating set | walk the city's active buildings | `SEVT_CITY_BUILDING_ACTIVATED` — that city's units |
+| **trait** | the UNIT OWNER's, held per the empire | walk the owner's held traits | `SEVT_EMPIRE_TRAIT_ADDED` — that empire's units, over all its cities |
+
+⚠ **The owner axis differs and the difference is load-bearing:** a same-team ally's unit standing in your city
+is armed by your BUILDING (the city arms whoever it shelters) and by its OWN empire's traits — never by yours.
+So the building leg filters on TEAM and the trait leg on the unit's OWNER; using one filter for both silently
+hands your traits to a teammate.
+
+⛔ **Do NOT answer a dangling trait promotion by restoring a trait-side promotion × unitcombat map** — that is
+the legacy mechanism whose data moved, and it swept the whole trait registry per promotion to do it. The trait
+legs of `CvUnit::setFreePromotion` are gone deliberately.
+
+⚑ **A trait is EMPIRE-scoped while this happening is a CITY relation, and that is the authored model, not an
+oversight:** a trait's promotions reach a unit that is in one of the empire's cities. In practice that is every
+unit at birth (creation runs the same applier) and every unit that ever passes through one; a promotion once
+handed over is permanent, so nothing has to hold the unit there. The re-fire is free — the applier skips a
+promotion the unit already holds.
+
 ## See also
 - [json.md §5](json.md) — the authoring shapes (`grants`, `triggers`).
 - [spine.md](../spine.md) — the `IEventConsumer` front door and the DOMAIN facts this dispatches on.

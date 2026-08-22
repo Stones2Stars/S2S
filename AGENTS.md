@@ -868,8 +868,21 @@ the total-observability bar below.)
 - **Before adding commits to a PR, verify it has not already been merged**: `gh pr view <n> --json
   state,baseRefName` — confirm `state` is `OPEN` and `baseRefName` is what you assume (stacked PRs here can target a
   feature branch and merge out of order, silently missing `main`). If either is surprising, surface it before pushing.
-- **Confirm behaviour before opening a PR:** a behaviour/feature change needs a real in-game playtest
-  (`FinalRelease` + `rebuild deploy`), not just a green Assert build.
+- **⚖ THE PLAYTEST IS NOT ALWAYS IN-HOUSE — THE COMMUNITY IS A REAL VERIFICATION CHANNEL, AND THE RELEASE PIPES
+  EXIST FOR IT (owner): *"the community can also playtest, it's the only way I can get bugs fixed in a timely
+  manner when they start coming in now"* — *"this is why we have the git and svn release pipes."*** A green
+  `Assert` build is still not evidence a change is CORRECT, and an agent still never CLAIMS a behaviour is
+  verified it has not observed. What is retired is the idea that an unplayed change BLOCKS a PR: the owner ships
+  it and the reports come back.
+  ⇒ **So the agent's obligation moves from "prove it works" to "make it DIAGNOSABLE when a report arrives"**, and
+  that is the part to actually spend effort on: say plainly in the PR what was and was not observed, name the
+  concrete thing a tester should look at, and make sure the change announces itself on the existing surfaces (the
+  load-time `readJson` census, the spine domains, the gated logs) so a vague *"X doesn't work"* can be resolved
+  against data instead of re-derived.
+  ⚠ **A community report is good at catching *"X STOPPED working"* and blind to *"Y NEVER worked"*** — the whole
+  conditioned free-promotion plane sat dead and un-reported because the unconditional half kept working. So a
+  silent-drop class is found by CENSUSING the authored data against what the engine actually consumes, never by
+  waiting for a report.
 - **Runtime verification: with PER-SESSION owner permission, an agent may kill/rebuild/start the game via
   `agentstart.bat`.** The permission is per session, never standing — absent it, the owner launches; agents never
   start/kill the game. The mechanism is ONLY the repo-root `agentstart.bat` (paths from the gitignored `.env`); it

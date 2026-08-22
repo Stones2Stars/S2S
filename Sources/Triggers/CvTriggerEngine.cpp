@@ -53,7 +53,8 @@ enum GrFld
 	TF_CITY, TF_SPAWNED, TF_HEALED,                          // the per-turn apply (increment 5): what actually LANDED
 	TF_APPLIED,                                              // 1 = the machine ran the FIRST-BUILD apply (NOT a claim about every grant on the line)
 	TF_MATMISMATCH,                                          // 1 = a mapFrom-materialized getter disagrees with its composed grants read
-	TF_ERA, TF_SPECIALISTS                                   // the era-advance apply: which era, and how many specialists LANDED
+	TF_ERA, TF_SPECIALISTS,                                  // the era-advance apply: which era, and how many specialists LANDED
+	TF_TRAIT                                                 // the trait half of the free-promotion relation
 };
 static const char* tr_prefix(int evt)
 {
@@ -107,6 +108,7 @@ static const char* tr_field(int tag, SpineFieldType* peType)
 	case TF_MATMISMATCH:    return "matMismatch";
 	case TF_ERA:            return "era";
 	case TF_SPECIALISTS:    return "specialists";
+	case TF_TRAIT:          *peType = SFT_TRAIT;    return "trait";
 	default:                return NULL;
 	}
 }
@@ -213,6 +215,10 @@ static int tr_promoteFromEntries(CvCity* pCity, CvUnit* pUnit, const CvInfo* j)
 	if (pCity == NULL || pUnit == NULL || j == NULL || j->getTriggers() == NULL) return 0;
 	const std::vector<CvTriggerEntry*>& entries = j->getTriggers()->entries();
 	if (entries.empty()) return 0;
+	// Settle "has this source anything to hand over at all?" BEFORE building an eval ctx: the walk below runs
+	// once per active building AND once per held trait, and a source whose triggers are all `onTurn` would
+	// otherwise pay for a context it never reads.
+	if (!j->hasTriggerPromotions()) return 0;
 
 	CvCascadeEvalCtx ec;
 	pCity->getCityContext().fillEvalCtx(ec);
@@ -233,12 +239,35 @@ static int tr_promoteFromEntries(CvCity* pCity, CvUnit* pUnit, const CvInfo* j)
 		if (pEntry->condition != NULL && !cascadeEvalCondition(pEntry->condition, ec, kFlags)) continue;
 		for (size_t k = 0; k < pEntry->promotePromotions.size(); ++k)
 		{
-			const PromotionTypes ePromotion = (PromotionTypes)pEntry->promotePromotions[k];
+			const CvTriggerPromotion* pPromotion = pEntry->promotePromotions[k];
+			// The per-promotion gate: WHICH UNITS this source can deal with. It reads the unit through the same
+			// ctx the entry condition does (`ec.unit`, set above), so an IS_<TAG> filter answers about the unit
+			// being promoted rather than about the city.
+			if (pPromotion->enabled != NULL && !cascadeEvalCondition(pPromotion->enabled, ec, kFlags)) continue;
+			const PromotionTypes ePromotion = (PromotionTypes)pPromotion->promotionId;
 			if (pUnit->isHasPromotion(ePromotion)) continue;
 			if (!pUnit->canAcquirePromotion(ePromotion, PromotionRequirements::Promote | PromotionRequirements::ForFree)) continue;
 			pUnit->setHasPromotion(ePromotion, true);
 			++n;
 		}
+	}
+	return n;
+}
+
+// The TRAIT half of the same relation. A curated trait authors the IDENTICAL `onUnitEnteredCity` ->
+// `action.promote` shape a building does, so there is nothing trait-specific about the payload -- only about
+// who owns it, and that difference is the whole reason this is its own walk.
+// ⚠ The traits are the UNIT OWNER's, while the buildings are the CITY's: a same-team ally's unit standing in
+// your city is armed by your BUILDING and by its OWN empire's traits, never by yours.
+// ⚑ A PRESENCE read (which traits does this player HOLD), never the banned own-data inversion.
+static int tr_promoteFromHeldTraits(CvCity* pCity, CvUnit* pUnit)
+{
+	const CvPlayer& unitOwner = GET_PLAYER(pUnit->getOwner());
+	int n = 0;
+	for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); ++iTrait)
+	{
+		if (!unitOwner.hasTrait((TraitTypes)iTrait)) continue;
+		n += tr_promoteFromEntries(pCity, pUnit, InfoRepo<CvTraitInfo>::get().get(iTrait));
 	}
 	return n;
 }
@@ -252,6 +281,27 @@ static int tr_promoteOneUnit(CvCity* pCity, CvUnit* pUnit)
 	for (std::set<int>::const_iterator it = ob.active.begin(); it != ob.active.end(); ++it)
 	{
 		n += tr_promoteFromEntries(pCity, pUnit, InfoRepo<CvBuildingInfo>::get().get(*it));
+	}
+	n += tr_promoteFromHeldTraits(pCity, pUnit);
+	return n;
+}
+
+// Leg (2) for the trait side: the empire GAINED a trait, so complete the relation for every own unit already
+// standing in one of its cities -- the twin of a building going active in one city, fanned over the empire
+// because a trait is held at the empire scope.
+// ⚠ Filtered on the unit's OWNER, not its team: tr_promoteCityUnits' team filter is right for a BUILDING (the
+// city arms whoever it shelters) and wrong here, since a teammate's units are not armed by your trait.
+static int tr_promoteTraitUnits(CvPlayer& player, const CvInfo* jTrait)
+{
+	if (jTrait == NULL) return 0;
+	int n = 0;
+	foreach_(CvCity* pCity, player.cities())
+	{
+		foreach_(CvUnit* pLoopUnit, pCity->plot()->units())
+		{
+			if (pLoopUnit->getOwner() != player.getID()) continue;
+			n += tr_promoteFromEntries(pCity, pLoopUnit, jTrait);
+		}
 	}
 	return n;
 }
@@ -1239,6 +1289,21 @@ void CvTriggerEngine::onEvent(const CvSpineEvent& e)
 				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_REPEAT, 1)
 					.addI(TF_SUPPRESSED, 0).addI(TF_PLAYER, e.iC).addI(TF_CITY, e.iSrcLoc)
 					.addI(TF_BUILDING, e.iType).addI(TF_FREEPROMOS, n).addI(TF_APPLIED, nGranted));
+			}
+		}
+		break;
+	// Trigger (2) for free promotions, TRAIT side: an empire GAINED a trait. iType = trait, iC = player.
+	// Re-firing is safe by construction -- the applier skips a promotion the unit already holds.
+	case SEVT_EMPIRE_TRAIT_ADDED:
+		if (!s_bSuppressed && e.iC >= 0)
+		{
+			CvPlayer& p = GET_PLAYER((PlayerTypes)e.iC);
+			const int n = tr_promoteTraitUnits(p, InfoRepo<CvTraitInfo>::get().get(e.iType));
+			if (n > 0)
+			{
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_TRIGGERS, TRE_REPEAT, 1)
+					.addI(TF_SUPPRESSED, 0).addI(TF_PLAYER, e.iC)
+					.addI(TF_TRAIT, e.iType).addI(TF_FREEPROMOS, n));
 			}
 		}
 		break;

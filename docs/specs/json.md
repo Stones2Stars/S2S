@@ -794,6 +794,14 @@ declare the number. Enforcement reads the [tally](tally.md) count.
   > ⛔ **The genuine per-turn trigger `onTurn` is a DIFFERENT thing and STAYS (owner)** — a recurring roll is a real
   > happening, and the property-scaled criminal spawn above is exactly it. Do not read this as trimming the turn
   > trigger; it retires ONE fossilised token, not the cadence vocabulary.
+  > ⚑ **AND THE GATE IS PER PROMOTION, NOT PER ENTRY.** `action.promote.promotions` is a list of ordinary §3.9
+  > entries — a bare `"PROMOTION_X"`, or `{"promotion": "PROMOTION_X", "enabled": <condition>}` — because ONE
+  > source arms different unit classes differently from a SINGLE entry (a Riding School's `mounted` promotion
+  > beside an unconditional one). The gate is the legacy `<FreePromotionCondition>`, mapped onto the `IS_<TAG>`
+  > predicate (§3.5), and it reads the UNIT being promoted.
+  > ⛔ **A reader that takes only the bare string does not degrade to "ungated" — it drops the conditioned entry
+  > WHOLE, so the promotion reaches NOBODY.** That is the silent shape to watch for on every §3.9 list: the
+  > unconditional authorings keep working, so the feature looks alive while every targeted one is missing.
 - **Property pulses are `triggers` entries carrying spatial intent in the action** — a per-turn `PROPERTY_*`
   change an entity emits (the engine's `PropertyManipulator`):
   `{ "trigger": "onTurn", "action": { "PROPERTY_AIR_POLLUTION": -5, "on": "plot", "relation": "near",

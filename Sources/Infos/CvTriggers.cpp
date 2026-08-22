@@ -36,6 +36,10 @@ CvTriggerEntry::~CvTriggerEntry()
 {
 	delete condition;
 	delete grant;
+	for (size_t i = 0; i < promotePromotions.size(); ++i)
+	{
+		delete promotePromotions[i];
+	}
 }
 
 CvTriggers::~CvTriggers()
@@ -145,6 +149,62 @@ static void triggersParseChance(CvTriggerEntry* pEntry, const picojson::value& v
 	}
 }
 
+// ONE entry of `action.promote.promotions`, in either authored form: a bare "PROMOTION_X", or the §3.9
+// conditioned entry {"promotion": "PROMOTION_X", "enabled": <condition>} whose gate says WHICH UNITS the source
+// can deal with. Reading only the bare form is not a narrower feature -- it drops the conditioned entry whole,
+// so a targeted promotion reaches NOBODY (the sibling failure CvGrants' list already had to fix).
+static void triggersParsePromotion(CvTriggerEntry* pEntry, const picojson::value& v)
+{
+	std::string szPromotion;
+	const picojson::value* pEnabled = NULL;
+	if (v.is<std::string>())
+	{
+		szPromotion = v.get<std::string>();
+	}
+	else if (v.is<picojson::object>())
+	{
+		const picojson::object& entryObj = v.get<picojson::object>();
+		for (picojson::object::const_iterator entryIt = entryObj.begin(); entryIt != entryObj.end(); ++entryIt)
+		{
+			if (entryIt->first == "promotion" && entryIt->second.is<std::string>())
+			{
+				szPromotion = entryIt->second.get<std::string>();
+			}
+			else if (entryIt->first == "enabled")
+			{
+				pEnabled = &entryIt->second;
+			}
+			else
+			{
+				// A key this form does not model yet -- `disabled`, a `scope`, a qualifier. It must announce:
+				// applying the entry while ignoring a gate it carries is the silent-wrong-grant this whole
+				// parse exists to prevent.
+				jsonNoteUnconsumed("triggers.action.promote", entryIt->first);
+			}
+		}
+	}
+	else
+	{
+		jsonNoteUnconsumed("triggers.action.promote", "promotionNotAStringOrObject");   // never silent
+		return;
+	}
+
+	const int iPromotion = szPromotion.empty() ? -1 : jsonResolveId(szPromotion);
+	if (iPromotion < 0)
+	{
+		// An authored promotion that names nothing, or resolves to nothing -- the entry keeps parsing, but this
+		// promotion is GONE, so it has to announce rather than vanish into a shorter list.
+		jsonNoteUnconsumed("triggers.action.promote", szPromotion.empty() ? "promotionMissing" : szPromotion);
+		return;
+	}
+	CvTriggerPromotion* pPromotion = new CvTriggerPromotion(iPromotion);
+	if (pEnabled != NULL)
+	{
+		pPromotion->enabled = cascadeParseCondition(*pEnabled);
+	}
+	pEntry->promotePromotions.push_back(pPromotion);
+}
+
 // `action` -- the verb object (an OPEN registry; json.md §5). The authored verbs parse to typed fields; an
 // unrecognized verb key is recorded, never silently dropped.
 static void triggersParseAction(CvTriggerEntry* pEntry, const picojson::value& v)
@@ -167,22 +227,7 @@ static void triggersParseAction(CvTriggerEntry* pEntry, const picojson::value& v
 				const picojson::array& promos = promosIt->second.get<picojson::array>();
 				for (size_t i = 0; i < promos.size(); ++i)
 				{
-					if (!promos[i].is<std::string>())
-					{
-						jsonNoteUnconsumed("triggers.action.promote", "promotionNotAString");   // never silent
-						continue;
-					}
-					const int iPromotion = jsonResolveId(promos[i].get<std::string>());
-					if (iPromotion >= 0)
-					{
-						pEntry->promotePromotions.push_back(iPromotion);
-					}
-					else
-					{
-						// An authored promotion that resolves to nothing -- the entry keeps parsing, but this
-						// promotion is GONE, so it has to announce rather than vanish into a shorter list.
-						jsonNoteUnconsumed("triggers.action.promote", promos[i].get<std::string>());
-					}
+					triggersParsePromotion(pEntry, promos[i]);
 				}
 			}
 			picojson::object::const_iterator unitsIt = promoteObj.find("units");
