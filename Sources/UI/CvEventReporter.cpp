@@ -234,7 +234,8 @@ void CvEventReporter::combatResult(CvUnit* pWinner, CvUnit* pLoser)
 		const CvPlot* pCombatPlot = pWinner->plot();
 		emitCombatResult((int)pWinner->getUnitType(), pWinner->getID(), (int)pWinner->getOwner(),
 						 (int)pLoser->getUnitType(),  pLoser->getID(),  (int)pLoser->getOwner(),
-						 (pCombatPlot != NULL) ? GC.getMap().plotNum(pCombatPlot->getX(), pCombatPlot->getY()) : -1);
+						 (pCombatPlot != NULL) ? GC.getMap().plotNum(pCombatPlot->getX(), pCombatPlot->getY()) : -1,
+						 pWinner->getPreCombatDamage(), pWinner->getDamage(), pWinner->getMaxHP());
 	}
 
 	m_kPythonEventMgr.reportCombatResult(pWinner, pLoser);
