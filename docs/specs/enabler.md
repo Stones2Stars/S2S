@@ -1079,6 +1079,24 @@ than split per domain, and it is where the option read lives for every entity-ga
   than merely avoided. ⛔ Do not gate an enabler entity on a live option; if one is ever wanted, it needs its emit
   first.
 
+> **⛔ A TRANSFORMATION ASKS `everAvailable` + THE TARGET'S `requires` — NEVER THE QUEUE-OFFER VERDICT (owner).**
+> `STATE_LISTED` means *"offered in the production queue, in this city, right now"*. That is the right question
+> for a BUILD and the wrong one for an **UPGRADE**, a gift, a merge or any other `modifyUnit` transformation —
+> none of which is a creation ([triggers.md](triggers.md): a transformation stands a successor up in place of a
+> predecessor and deliberately does NOT ride the creation step), so what the queue is willing to OFFER has no
+> bearing on it.
+> ⚠ **The failure is total and silent, because a whole population can never reach LISTED.** A unit carrying
+> `identity.spawnOnly` (legacy's `iCost == -1` sentinel) is excluded from the trainable set outright (§3), so
+> gating a transformation on LISTED bars it permanently rather than conditionally. ⚑ **Measured: every
+> great-person CONVERSION in the game — 49 units, the whole `MASTER_SAILOR_*` chain plus
+> `MASTER_HUNTER → MASTER_RANGER → MASTER_WARDEN`** — while the SETTLE action kept working, because that is a
+> `grants` payload that never asks the enabler. The tell to recognise: *one action on a unit works and another
+> is missing*, rather than the unit being broken.
+> ⇒ **The pair is the answer, and each half is doing its own job:** `everAvailable(bucket, id)` is the
+> whole-game bar, and `requiresMetInCity(city, bucket, id)` is the target's own tech/resource gate asked where
+> the transformation would happen — which is what keeps an upgrade chain following the RESEARCH the data gates
+> it on. ⛔ Neither half substitutes for the other, and neither is `STATE_LISTED`.
+
 ⛔ **TECHS stay the picking logic's, and the reason is the distinction to apply elsewhere: their bar is a
 COMPOSITION, not a gate.** `CvGame::canEverResearch` composes `NO_FUTURE` against the tech's own era and `isRepeat`
 data — a consuming-system calc ([engine.md](../reference/engine.md)), which no entity gate carries and which an

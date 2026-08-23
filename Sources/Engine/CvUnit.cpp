@@ -10272,7 +10272,18 @@ CvCity* CvUnit::getUpgradeCity(bool bSearch) const
 	{
 		const UnitTypes eUnitX = (UnitTypes)iUnitX;
 
-		if (upgradeAvailable(m_eUnitType, eUnitX) && kPlayer.getUnitAvailabilityAnywhere(eUnitX) == EnablerDomain::STATE_LISTED
+		// ⛔ AN UPGRADE ASKS CAN-I-EVER PLUS THE TARGET'S OWN `requires` -- NEVER THE QUEUE-OFFER VERDICT.
+		// STATE_LISTED means "offered in the production queue right now", and a unit the queue never offers can
+		// never reach it: `identity.spawnOnly` (legacy's iCost == -1 sentinel) excludes a unit from the trainable
+		// set outright (enabler.md par.3). That is exactly what marks a great-person master unit, so gating the
+		// upgrade on LISTED made every great-person CONVERSION impossible -- 49 units, the whole MASTER_SAILOR_*
+		// chain and MASTER_HUNTER -> MASTER_RANGER -> MASTER_WARDEN among them -- while JOIN kept working,
+		// because JOIN is a grants payload that never asks the enabler.
+		// ⚠ An upgrade is a TRANSFORMATION, not a creation (triggers.md: `modifyUnit` stands a successor up in
+		// place of a predecessor and is deliberately NOT the createUnit step), so the queue's offer has no say in
+		// it. everAvailable answers the whole-game bar; the target's `requires` is asked per CITY below, which is
+		// what keeps the chain gated on research the way the data intends.
+		if (upgradeAvailable(m_eUnitType, eUnitX) && EnablerKernel::everAvailable(EDGEB_UNITS, (int)eUnitX)
 		&& kPlayer.AI_unitValue(eUnitX, eUnitAI, pArea) > iCurrentValue)
 		{
 			int iSearchValue;
@@ -10306,7 +10317,8 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 {
 	PROFILE_FUNC();
 
-	if (eUnit == NO_UNIT || !upgradeAvailable(m_eUnitType, eUnit) || GET_PLAYER(getOwner()).getUnitAvailabilityAnywhere(eUnit) != EnablerDomain::STATE_LISTED)
+	// The whole-game bar only (see the chain overload above); the per-city `requires` is asked in the city loops.
+	if (eUnit == NO_UNIT || !upgradeAvailable(m_eUnitType, eUnit) || !EnablerKernel::everAvailable(EDGEB_UNITS, (int)eUnit))
 	{
 		return NULL;
 	}
@@ -10370,7 +10382,9 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 					CvArea* pCityArea = bCoastalOnly ? pLoopCity->waterArea() : pLoopCity->area();
 
 					// Toffer, units should not be compelled to travel between areas just to get an upgrade.
-					if ((bIgnoreDistance || pMyArea == pCityArea) && pLoopCity->getUnitAvailability(eUnit) == EnablerDomain::STATE_LISTED)
+					// The target's own `requires` in THIS city -- the tech/resource gate the upgrade chain is meant
+					// to follow -- rather than whether the queue happens to offer it here.
+					if ((bIgnoreDistance || pMyArea == pCityArea) && EnablerKernel::requiresMetInCity(*pLoopCity, EDGEB_UNITS, (int)eUnit))
 					{
 						// if we do not care about distance, then the first match will do
 						if (bIgnoreDistance)
@@ -10405,7 +10419,7 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 		CvCity* pClosestCity = GC.getMap().findCity(getX(), getY(), NO_PLAYER, getTeam(), true, bCoastalOnly);
 
 		// If we can train, then return this city (otherwise it will return NULL)
-		if (pClosestCity != NULL && pClosestCity->getUnitAvailability(eUnit) == EnablerDomain::STATE_LISTED)
+		if (pClosestCity != NULL && EnablerKernel::requiresMetInCity(*pClosestCity, EDGEB_UNITS, (int)eUnit))
 		{
 			// did not search, always return 1 for search value
 			iBestValue = 1;
