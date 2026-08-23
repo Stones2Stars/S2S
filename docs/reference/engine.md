@@ -38,6 +38,39 @@ Measured against the deployed `Assets/CvGameCoreDLL.dll`: **1,205 of 1,302 expor
 not.** The 97 are the ones a cut may freely take. ⚠ The test needs a DEPLOYED DLL to read the export table from,
 so run it against the last good build, not a red tree.
 
+## ⛔ AN EXE-BOUND ENUM'S ORDINAL IS AN ABI OBLIGATION — never remove a member above one (owner)
+
+**Home of [a core enum entry is never removed](#-an-exe-bound-enums-ordinal-is-an-abi-obligation--never-remove-a-member-above-one-owner).** The section above answers whether a SYMBOL is
+EXE-bound. This is the other half, and it is the one that hides: some enum VALUES are hardcoded in the closed
+executable, so the ordinal itself is the contract. **Removing any member ABOVE such an entry shifts it, and every
+entry after it, by one** — the DLL then hands the EXE a number that means something else.
+
+⛔ **So a dead member of a core enum is NOT ordinary dead code.** [Leave no evidence of the abandoned
+path](../../AGENTS.md#design) governs code, comments and docs; it does not reach an ordinal an outside binary
+counts on. **The slot stays, INERT** (owner) — never renumbered, never reused for something else, never
+"tidied". Being unreferenced is exactly what makes it look safe to take.
+
+⚠ **The failure mode is silent and total, which is why this earns a rule rather than care.** Nothing errors,
+nothing logs, and the compiler cannot see an ordinal change at all — it compiles clean and the game runs. The
+worked case: `WIDGET_HELP_LOS_BONUS` was removed from the middle of `WidgetTypes` as part of cutting the inert
+water-sight capability. It sat above `WIDGET_CLOSE_SCREEN`, whose value the EXE hardcodes, shifting it 157 → 156
+— and **every close button in the game stopped responding**: the Dawn of Man "Continue" and Exit on ten advisor
+screens. ESC and ENTER kept working (the keyboard path, not the widget path), and the ONE screen that closes
+itself in Python rather than through the widget kept working too, so the break presented as an incoherent
+scattering of dead buttons rather than as one cut.
+
+⇒ **PIN THE ORDINAL WHERE IT IS CONSUMED, so the next removal is a compile error** ([anything not enforced by
+hard typing gets rollerskated](../../AGENTS.md#design) — a comment on the enum had already
+existed for years, and failed). `STATIC_ASSERT(WIDGET_CLOSE_SCREEN == 157, …)` sits beside the case that reads
+it in `CvDLLWidgetData.cpp`; `CvEnums.h` cannot see `FAssert.h` and must not gain the include. ⛔ If such an
+assert fires, **restore the slot above it** — never update the number, or the same break simply moves to
+whichever entry shifted next.
+
+⚑ **Finding the others is an open audit, not a closed list.** `WIDGET_CLOSE_SCREEN` carries the only such pin
+today, and it is known to be EXE-bound only because a comment recorded it. Treat any enum the EXE indexes into —
+widgets, interface modes, control and mission types — as ordinal-bound until shown otherwise, and prefer adding
+at the END over inserting anywhere.
+
 ## Save / load
 
 The name-keyed save format, the soft-add / soft-remove rules, the `Assets/savemigration.txt` drain, the two kinds of

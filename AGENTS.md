@@ -687,6 +687,12 @@ the total-observability bar below.)
 - **⛔ LEAVE NO EVIDENCE OF THE ABANDONED PATH (owner).** Dead and
   commented-out code, superseded dual surfaces, transitional shims and `was X` / `(formerly …)` trails are all
   REMOVED, in code as well as docs.
+  **⛔ THE ONE CARVE-OUT IS AN EXE-BOUND ENUM ORDINAL — a dead member of a core enum STAYS, inert (owner).** The
+  closed EXE hardcodes certain enum VALUES, so removing any member ABOVE one shifts it and every entry after it;
+  being unreferenced is precisely what makes it look safe to take, and the compiler cannot see an ordinal move.
+  *(Measured: one such deletion turned off every close button in the game.)* The rule, the failure signature and
+  how to pin an ordinal so the next removal is a COMPILE error:
+  [a core enum entry is never removed](docs/reference/engine.md#-an-exe-bound-enums-ordinal-is-an-abi-obligation--never-remove-a-member-above-one-owner).
   **⚖ FOR AN `#ifdef` THE QUESTION IS WHAT IS BEHIND IT, NEVER THE GUARD (owner): *"some ifdefs are useful, but
   if caching, or game mechanics are hidden behind ifdefs, instead of legitimate game options, that is what is
   wrong."*** Four dispositions, and only the last is mechanical:
