@@ -207,13 +207,15 @@ class WBCityEditScreen:
 		iY += 30
 		screen.setButtonGFC("CityChangeHappyPlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("CityChangeHappyMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = "<font=3>%s: %d%s, %d%s</font>" %(CyTranslator().getText("TXT_KEY_CONCEPT_HAPPINESS",()), pCity.happyLevel(), CyTranslator().getText("[ICON_HAPPY]",()), pCity.unhappyLevel(0), CyTranslator().getText("[ICON_UNHAPPY]",()))
+		aWellbeing = pCity.getRealizedWellbeing(0)
+		sText = "<font=3>%s: %d%s, %d%s</font>" %(CyTranslator().getText("TXT_KEY_CONCEPT_HAPPINESS",()), aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS], CyTranslator().getText("[ICON_HAPPY]",()), aWellbeing[WellbeingChannel.WELLBEING_ANGER], CyTranslator().getText("[ICON_UNHAPPY]",()))
 		screen.setLabel("CityChangeHappyText", "Background", sText, 1<<0, iX + 50, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
 		screen.setButtonGFC("CityChangeHealthPlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("CityChangeHealthMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = "<font=3>%s: %d%s, %d%s</font>" %(CyTranslator().getText("TXT_KEY_CONCEPT_HEALTH",()), pCity.goodHealth(), CyTranslator().getText("[ICON_HEALTHY]",()), pCity.badHealth(False), CyTranslator().getText("[ICON_UNHEALTHY]",()))
+		aWellbeing = pCity.getRealizedWellbeing(0)
+		sText = "<font=3>%s: %d%s, %d%s</font>" %(CyTranslator().getText("TXT_KEY_CONCEPT_HEALTH",()), aWellbeing[WellbeingChannel.WELLBEING_HEALTH], CyTranslator().getText("[ICON_HEALTHY]",()), aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH], CyTranslator().getText("[ICON_UNHEALTHY]",()))
 		screen.setLabel("CityChangeHealthText", "Background", sText, 1<<0, iX + 50, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30

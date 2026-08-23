@@ -442,7 +442,8 @@ def checkRebelBonuses(argsList):
 	elif newOwnerCiv == RevData.getCityVal(pCity, 'RevolutionCiv'):
 
 		# TODO: Check whether revolt is active in RevoltData
-		if pCity.getReinforcementCounter() > 0 or (pCity.unhappyLevel(0) - pCity.happyLevel()) > 0:
+		aWellbeing = pCity.getRealizedWellbeing(0)
+		if pCity.getReinforcementCounter() > 0 or (aWellbeing[WellbeingChannel.WELLBEING_ANGER] - aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS]) > 0:
 			print "[REV] Rebellious pCity %s is captured by rebel identity %s (%d)!!!" %(pCity.getName(), newOwner.getCivilizationDescription(0), newOwnerCiv)
 
 			newOwnerTeam = GC.getTeam(newOwner.getTeam())

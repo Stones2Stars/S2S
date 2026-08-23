@@ -461,11 +461,9 @@ class CityHappiness(AbstractCityTestAlert):
 			iExtra = -1
 		else:
 			iExtra = 0
-		# The channels are x100 native; this comparison is in whole citizens, so it reduces at the point of use
-		# ([DEC-fixedpoint-x100]: no getter reduces).
 		aWellbeing = GC.getPlayer(cityId[0]).getCity(cityId[1]).getRealizedWellbeing(iExtra)
-		iHappy = aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS] / 100
-		iUnhappy = aWellbeing[WellbeingChannel.WELLBEING_ANGER] / 100
+		iHappy = aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS]
+		iUnhappy = aWellbeing[WellbeingChannel.WELLBEING_ANGER]
 		aCountdowns = GC.getPlayer(cityId[0]).getCity(cityId[1]).getCountdowns()
 		aDecaying = (
 			(CityCountdownKind.COUNTDOWN_HURRY_ANGER, CityCountdownKind.COUNTDOWN_HURRY_ANGER_PERIOD),
@@ -527,7 +525,7 @@ class CityHealthiness(AbstractCityTestAlert):
 			iExtra = 0
 		aWellbeing = GC.getPlayer(cityId[0]).getCity(cityId[1]).getRealizedWellbeing(iExtra)
 		iHealthRate = (aWellbeing[WellbeingChannel.WELLBEING_HEALTH]
-		               - aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH]) / 100
+		               - aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH])
 		aCountdowns = GC.getPlayer(cityId[0]).getCity(cityId[1]).getCountdowns()
 		if aCountdowns[CityCountdownKind.COUNTDOWN_ESPIONAGE_HEALTH] > 0:
 			iHealthRate += 1

@@ -1396,7 +1396,8 @@ class Revolution:
 
 			# Health
 			healthIdx = 0
-			numUnhealthy = (pCity.badHealth(False) - pCity.goodHealth())
+			aWellbeing = pCity.getRealizedWellbeing(0)
+			numUnhealthy = (aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH] - aWellbeing[WellbeingChannel.WELLBEING_HEALTH])
 			if numUnhealthy > 0:
 				healthIdx = int(int(2*pow(numUnhealthy, .6) + .5) * self.happinessModifier)
 				if pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_ESPIONAGE_HEALTH] > 0 or pPlayer.isRebel():
@@ -6243,7 +6244,8 @@ class Revolution:
 			else:
 				# Compare strength of revolution and garrison
 				iRevStrength = iNumUnits
-				if pCity.unhappyLevel(0) - pCity.happyLevel() > 0:
+				aWellbeing = pCity.getRealizedWellbeing(0)
+				if aWellbeing[WellbeingChannel.WELLBEING_ANGER] - aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS] > 0:
 					iRevStrength += 2
 				if bIsJoinWar:
 					iRevStrength -= 2

@@ -2636,8 +2636,8 @@ class CvMainInterface:
 			aCityFlags  = GC.getPlayer(iCityOwner).getCity(iCityID).getFlags()
 			aCountdowns = GC.getPlayer(iCityOwner).getCity(iCityID).getCountdowns()
 			aWellbeing  = GC.getPlayer(iCityOwner).getCity(iCityID).getRealizedWellbeing(0)
-			iHappy = aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS] / 100
-			iAnger = aWellbeing[WellbeingChannel.WELLBEING_ANGER] / 100
+			iHappy = aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS]
+			iAnger = aWellbeing[WellbeingChannel.WELLBEING_ANGER]
 
 			# Liberate Button Show
 			if -1 != GC.getPlayer(iCityOwner).getCity(iCityID).getLiberationPlayer():
@@ -2665,8 +2665,8 @@ class CvMainInterface:
 
 			screen.setText("CityNameText", "", szTxt, 1<<2, halfX, 32, 0, eFontGame, WidgetTypes.WIDGET_CITY_NAME, 0, 1)
 
-			iHealthGood = aWellbeing[WellbeingChannel.WELLBEING_HEALTH] / 100
-			iHealthBad = aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH] / 100
+			iHealthGood = aWellbeing[WellbeingChannel.WELLBEING_HEALTH]
+			iHealthBad = aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH]
 			if iHealthBad > 0 or iHealthGood >= 0:
 				if iHealthGood < iHealthBad:
 					# BUG - Negative Health Rate is Positive Eaten Food
@@ -5047,7 +5047,7 @@ class CvMainInterface:
 		screen.setStyle(panel, "ScrollPanel_Min_Style")
 
 		aWellbeing = GC.getPlayer(iCityOwner).getCity(iCityID).getRealizedWellbeing(0)
-		iAngryPop = max(0, min((aWellbeing[WellbeingChannel.WELLBEING_ANGER] - aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS]) / 100, GC.getPlayer(iCityOwner).getCity(iCityID).getPopulation()))
+		iAngryPop = max(0, min(int(aWellbeing[WellbeingChannel.WELLBEING_ANGER] - aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS]), GC.getPlayer(iCityOwner).getCity(iCityID).getPopulation()))
 		x = 0
 		if iAngryPop:
 

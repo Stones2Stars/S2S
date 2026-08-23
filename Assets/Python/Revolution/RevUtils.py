@@ -634,7 +634,8 @@ def getModNumUnhappy(CyCity, fWarWearinessMod):
 	iNumUnhappy = CyCity.getAngryPopulation(0) - iMod - 1
 
 	if iNumUnhappy < 1:
-		return CyCity.unhappyLevel(0) - CyCity.happyLevel()
+		aWellbeing = CyCity.getRealizedWellbeing(0)
+		return aWellbeing[WellbeingChannel.WELLBEING_ANGER] - aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS]
 	return iNumUnhappy
 
 def doRevRequestDeniedPenalty(CyCity, iHomeArea, iRevIdxInc=100, bExtraHomeland=False, bExtraColony=False):

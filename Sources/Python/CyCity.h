@@ -235,11 +235,7 @@ public:
 
 	int getRevIndexPercentAnger() const;
 
-	int unhappyLevel(int iExtra) const;
-	int happyLevel() const;
 	int totalFreeSpecialists() const;
-	int goodHealth() const;
-	int badHealth() const;
 	int healthRate(int iExtra) const;
 	int foodConsumption(bool bNoAngry, int iExtra) const;
 	int foodDifference(bool bBottom) const;
