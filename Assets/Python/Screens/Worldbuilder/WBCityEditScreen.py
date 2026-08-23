@@ -195,7 +195,7 @@ class WBCityEditScreen:
 		iY += 30
 		screen.setButtonGFC("CityDefensePlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("CityDefenseMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = "<font=3>" + CyTranslator().getText("TXT_KEY_WB_DAMAGE",()) + ": " + str(pCity.getDefenseDamage()) + "</font>"
+		sText = "<font=3>" + CyTranslator().getText("TXT_KEY_WB_DAMAGE",()) + ": " + str(pCity.getCounts()[CityCountRead.CITY_COUNT_DEFENSE_DAMAGE]) + "</font>"
 		screen.setLabel("CityDefenseDamageText", "Background", sText, 1<<0, iX + 50, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
@@ -207,19 +207,21 @@ class WBCityEditScreen:
 		iY += 30
 		screen.setButtonGFC("CityChangeHappyPlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("CityChangeHappyMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = "<font=3>%s: %d%s, %d%s</font>" %(CyTranslator().getText("TXT_KEY_CONCEPT_HAPPINESS",()), pCity.happyLevel(), CyTranslator().getText("[ICON_HAPPY]",()), pCity.unhappyLevel(0), CyTranslator().getText("[ICON_UNHAPPY]",()))
+		aWellbeing = pCity.getRealizedWellbeing(0)
+		sText = "<font=3>%s: %d%s, %d%s</font>" %(CyTranslator().getText("TXT_KEY_CONCEPT_HAPPINESS",()), aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS], CyTranslator().getText("[ICON_HAPPY]",()), aWellbeing[WellbeingChannel.WELLBEING_ANGER], CyTranslator().getText("[ICON_UNHAPPY]",()))
 		screen.setLabel("CityChangeHappyText", "Background", sText, 1<<0, iX + 50, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
 		screen.setButtonGFC("CityChangeHealthPlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("CityChangeHealthMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = "<font=3>%s: %d%s, %d%s</font>" %(CyTranslator().getText("TXT_KEY_CONCEPT_HEALTH",()), pCity.goodHealth(), CyTranslator().getText("[ICON_HEALTHY]",()), pCity.badHealth(False), CyTranslator().getText("[ICON_UNHEALTHY]",()))
+		aWellbeing = pCity.getRealizedWellbeing(0)
+		sText = "<font=3>%s: %d%s, %d%s</font>" %(CyTranslator().getText("TXT_KEY_CONCEPT_HEALTH",()), aWellbeing[WellbeingChannel.WELLBEING_HEALTH], CyTranslator().getText("[ICON_HEALTHY]",()), aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH], CyTranslator().getText("[ICON_UNHEALTHY]",()))
 		screen.setLabel("CityChangeHealthText", "Background", sText, 1<<0, iX + 50, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
 		screen.setButtonGFC("CityOccupationTurnPlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("CityOccupationTurnMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = "<font=3>" + CyTranslator().getText("TXT_KEY_CONCEPT_RESISTANCE",()) + ": " + str(pCity.getOccupationTimer()) + CyTranslator().getText("[ICON_OCCUPATION]", ()) + "</font>"
+		sText = "<font=3>" + CyTranslator().getText("TXT_KEY_CONCEPT_RESISTANCE",()) + ": " + str(pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION]) + CyTranslator().getText("[ICON_OCCUPATION]", ()) + "</font>"
 		screen.setLabel("CityOccupationTurnText", "Background", sText, 1<<0, iX + 50, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
@@ -237,25 +239,25 @@ class WBCityEditScreen:
 		iY += 30
 		screen.setButtonGFC("CityDefyResolutionPlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("CityDefyResolutionMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = "<font=3>" + CyTranslator().getText("TXT_KEY_WB_DEFY_RESOLUTION",(pCity.getDefyResolutionAngerTimer(),)) + "</font>"
+		sText = "<font=3>" + CyTranslator().getText("TXT_KEY_WB_DEFY_RESOLUTION",(pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_DEFY_RESOLUTION_ANGER],)) + "</font>"
 		screen.setLabel("CityDefyResolutionText", "Background", sText, 1<<0, iX + 50, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
 		screen.setButtonGFC("CityEspionageHealthPlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("CityEspionageHealthMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = u"<font=3>%s %s: %d</font>" %(CyTranslator().getText("TXT_WORD_ESPIONAGE",()), CyTranslator().getText("[ICON_UNHEALTHY]", ()), pCity.getEspionageHealthCounter())
+		sText = u"<font=3>%s %s: %d</font>" %(CyTranslator().getText("TXT_WORD_ESPIONAGE",()), CyTranslator().getText("[ICON_UNHEALTHY]", ()), pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_ESPIONAGE_HEALTH])
 		screen.setLabel("CityEspionageHealthText", "Background", sText, 1<<0, iX + 50, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
 		screen.setButtonGFC("CityEspionageHappyPlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("CityEspionageHappyMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = u"<font=3>%s %s: %d</font>" %(CyTranslator().getText("TXT_WORD_ESPIONAGE",()), CyTranslator().getText("[ICON_UNHAPPY]", ()), pCity.getEspionageHappinessCounter())
+		sText = u"<font=3>%s %s: %d</font>" %(CyTranslator().getText("TXT_WORD_ESPIONAGE",()), CyTranslator().getText("[ICON_UNHAPPY]", ()), pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_ESPIONAGE_HAPPINESS])
 		screen.setLabel("CityEspionageHappyText", "Background", sText, 1<<0, iX + 50, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
 		screen.setButtonGFC("CityTemporaryHappyPlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("CityTemporaryHappyMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = "<font=3>" + CyTranslator().getText("TXT_KEY_WB_TEMP_HAPPY",(pCity.getHappinessTimer(),)) + "</font>"
+		sText = "<font=3>" + CyTranslator().getText("TXT_KEY_WB_TEMP_HAPPY",(pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_HAPPINESS],)) + "</font>"
 		screen.setLabel("CityTemporaryHappyText", "Background", sText, 1<<0, iX + 50, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 	def placeScript(self):
@@ -429,9 +431,9 @@ class WBCityEditScreen:
 
 		elif inputClass.getFunctionName() in ("CityDefensePlus", "CityDefenseMinus"):
 			if inputClass.getData1() == 1030:
-				pCity.changeDefenseDamage(min(iChange, GC.getDefineINT("MAX_CITY_DEFENSE_DAMAGE") - pCity.getDefenseDamage()))
+				pCity.changeDefenseDamage(min(iChange, GC.getDefineINT("MAX_CITY_DEFENSE_DAMAGE") - pCity.getCounts()[CityCountRead.CITY_COUNT_DEFENSE_DAMAGE]))
 			elif inputClass.getData1() == 1031:
-				pCity.changeDefenseDamage(- min(iChange, pCity.getDefenseDamage()))
+				pCity.changeDefenseDamage(- min(iChange, pCity.getCounts()[CityCountRead.CITY_COUNT_DEFENSE_DAMAGE]))
 			self.placeStats()
 
 		elif inputClass.getFunctionName() in ("CityTradeRoutePlus", "CityTradeRouteMinus"):
@@ -471,7 +473,7 @@ class WBCityEditScreen:
 			if inputClass.getData1() == 1030:
 				pCity.changeOccupationTimer(iChange)
 			elif inputClass.getData1() == 1031:
-				pCity.changeOccupationTimer(- min(iChange, pCity.getOccupationTimer()))
+				pCity.changeOccupationTimer(- min(iChange, pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION]))
 			self.placeStats()
 
 		elif inputClass.getFunctionName().find("CityDraftAnger") > -1:
@@ -492,28 +494,28 @@ class WBCityEditScreen:
 			if inputClass.getData1() == 1030:
 				pCity.changeDefyResolutionAngerTimer(iChange)
 			elif inputClass.getData1() == 1031:
-				pCity.changeDefyResolutionAngerTimer(- min(iChange, pCity.getDefyResolutionAngerTimer()))
+				pCity.changeDefyResolutionAngerTimer(- min(iChange, pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_DEFY_RESOLUTION_ANGER]))
 			self.placeStats()
 
 		elif inputClass.getFunctionName() in ("CityEspionageHappyPlus", "CityEspionageHappyMinus"):
 			if inputClass.getData1() == 1030:
 				pCity.changeEspionageHappinessCounter(iChange)
 			elif inputClass.getData1() == 1031:
-				pCity.changeEspionageHappinessCounter(- min(iChange, pCity.getEspionageHappinessCounter()))
+				pCity.changeEspionageHappinessCounter(- min(iChange, pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_ESPIONAGE_HAPPINESS]))
 			self.placeStats()
 
 		elif inputClass.getFunctionName() in ("CityEspionageHealthPlus", "CityEspionageHealthMinus"):
 			if inputClass.getData1() == 1030:
 				pCity.changeEspionageHealthCounter(iChange)
 			elif inputClass.getData1() == 1031:
-				pCity.changeEspionageHealthCounter(- min(iChange, pCity.getEspionageHealthCounter()))
+				pCity.changeEspionageHealthCounter(- min(iChange, pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_ESPIONAGE_HEALTH]))
 			self.placeStats()
 
 		elif inputClass.getFunctionName().find("CityTemporaryHappy") > -1:
 			if inputClass.getData1() == 1030:
 				pCity.changeHappinessTimer(iChange)
 			elif inputClass.getData1() == 1031:
-				pCity.changeHappinessTimer(- min(iChange, pCity.getHappinessTimer()))
+				pCity.changeHappinessTimer(- min(iChange, pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_HAPPINESS]))
 			self.placeStats()
 
 		elif inputClass.getFunctionName() == "WBCityProduction":

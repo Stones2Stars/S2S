@@ -30,11 +30,6 @@ void CyCity::kill()
 	m_pCity->kill(true);
 }
 
-int CyCity::getRevolutionIndex() const
-{
-	return m_pCity->getRevolutionIndex();
-}
-
 void CyCity::setRevolutionIndex(int iNewValue)
 {
 	m_pCity->setRevolutionIndex(iNewValue);
@@ -53,11 +48,6 @@ int CyCity::getLocalRevIndex() const
 void CyCity::setLocalRevIndex(int iNewValue)
 {
 	m_pCity->setLocalRevIndex(iNewValue);
-}
-
-int CyCity::getRevIndexAverage() const
-{
-	return m_pCity->getRevIndexAverage();
 }
 
 void CyCity::setRevIndexAverage(int iNewValue)
@@ -411,42 +401,9 @@ int CyCity::getRevIndexPercentAnger() const
 }
 
 // The wellbeing reads index the realized channel array; ÷100 here because this is the reader boundary.
-int CyCity::unhappyLevel(int iExtra) const
-{
-	int aWellbeing[NUM_WELLBEING_CHANNELS];
-	m_pCity->realizedWellbeing(iExtra, aWellbeing);
-	return aWellbeing[WELLBEING_ANGER] / 100;
-}
-
-int CyCity::happyLevel() const
-{
-	int aWellbeing[NUM_WELLBEING_CHANNELS];
-	m_pCity->realizedWellbeing(0, aWellbeing);
-	return aWellbeing[WELLBEING_HAPPINESS] / 100;
-}
-
-int CyCity::angryPopulation(int iExtra) const
-{
-	return m_pCity->angryPopulation(iExtra);
-}
-
 int CyCity::totalFreeSpecialists() const
 {
 	return m_pCity->totalFreeSpecialists();
-}
-
-int CyCity::goodHealth() const
-{
-	int aWellbeing[NUM_WELLBEING_CHANNELS];
-	m_pCity->realizedWellbeing(0, aWellbeing);
-	return aWellbeing[WELLBEING_HEALTH] / 100;
-}
-
-int CyCity::badHealth() const
-{
-	int aWellbeing[NUM_WELLBEING_CHANNELS];
-	m_pCity->realizedWellbeing(0, aWellbeing);
-	return aWellbeing[WELLBEING_UNHEALTH] / 100;
 }
 
 int CyCity::healthRate(int iExtra) const
@@ -571,11 +528,6 @@ int CyCity::getGameDateFounded() const
 	return m_pCity->getGameDateFounded(bHistoricalCalendar);
 }
 
-int CyCity::getGameTurnAcquired() const
-{
-	return m_pCity->getGameTurnAcquired();
-}
-
 int CyCity::getPopulation() const
 {
 	return m_pCity->getPopulation();
@@ -683,19 +635,9 @@ int CyCity::getMaintenanceTimes100() const
 	return (int)m_pCity->getMaintenanceTimes100();
 }
 
-int CyCity::getEspionageHealthCounter() const
-{
-	return m_pCity->getEspionageHealthCounter();
-}
-
 void CyCity::changeEspionageHealthCounter(int iChange)
 {
 	m_pCity->changeEspionageHealthCounter(iChange);
-}
-
-int CyCity::getEspionageHappinessCounter() const
-{
-	return m_pCity->getEspionageHappinessCounter();
 }
 
 void CyCity::changeEspionageHappinessCounter(int iChange)
@@ -773,11 +715,6 @@ void CyCity::changeConscriptAngerTimer(int iChange)
 	m_pCity->changeConscriptAngerTimer(iChange);
 }
 
-int CyCity::getDefyResolutionAngerTimer() const
-{
-	return m_pCity->getDefyResolutionAngerTimer();
-}
-
 void CyCity::changeDefyResolutionAngerTimer(int iChange)
 {
 	m_pCity->changeDefyResolutionAngerTimer(iChange);
@@ -786,11 +723,6 @@ void CyCity::changeDefyResolutionAngerTimer(int iChange)
 int CyCity::flatDefyResolutionAngerLength() const
 {
 	return m_pCity->flatDefyResolutionAngerLength();
-}
-
-int CyCity::getHappinessTimer() const
-{
-	return m_pCity->getHappinessTimer();
 }
 
 void CyCity::changeHappinessTimer(int iChange)
@@ -874,11 +806,6 @@ bool CyCity::isPowered() const
 	return m_pCity->isPowered();
 }
 
-int CyCity::getDefenseDamage() const
-{
-	return m_pCity->getDefenseDamage();
-}
-
 void CyCity::changeDefenseDamage(int iChange)
 {
 	m_pCity->changeDefenseDamage(iChange);
@@ -892,11 +819,6 @@ int CyCity::getTotalDefense(bool bIgnoreBuilding) const
 int CyCity::getDefenseModifier(bool bIgnoreBuilding) const
 {
 	return m_pCity->getDefenseModifier(bIgnoreBuilding);
-}
-
-int CyCity::getOccupationTimer() const
-{
-	return m_pCity->getOccupationTimer();
 }
 
 bool CyCity::isOccupation() const
@@ -1365,19 +1287,9 @@ void CyCity::setScriptData(std::string szNewValue)
 	m_pCity->setScriptData(szNewValue);
 }
 
-int CyCity::getBuildingYieldChange(int /*BuildingTypes*/ eBuilding, int /*YieldTypes*/ eYield) const
-{
-	return m_pCity->getBuildingYieldChange((BuildingTypes)eBuilding, (YieldTypes)eYield);
-}
-
 void CyCity::setBuildingYieldChange(int /*BuildingTypes*/ eBuilding, int /*YieldTypes*/ eYield, int iChange)
 {
 	m_pCity->setBuildingYieldChange((BuildingTypes)eBuilding, (YieldTypes)eYield, iChange);
-}
-
-int CyCity::getBuildingCommerceChange(int /*BuildingTypes*/ eBuilding, int /*CommerceTypes*/ eCommerce) const
-{
-	return m_pCity->getBuildingCommerceChange((BuildingTypes)eBuilding, (CommerceTypes)eCommerce);
 }
 
 void CyCity::setBuildingCommerceChange(int /*BuildingTypes*/ eBuilding, int /*CommerceTypes*/ eCommerce, int iChange)
@@ -1553,6 +1465,8 @@ namespace
 {
 	//	The whole group out, in one call. N is deduced from the array the group read filled, so a family that
 	//	grows a channel needs no edit here.
+	//	⚠ RAW relay -- for a group whose members are NOT ×100 amounts (counts, timers, percents, enum ids).
+	//	An AMOUNT group uses cyc_toHuman below.
 	template <int N>
 	python::list cyc_toList(const int (&values)[N])
 	{
@@ -1560,6 +1474,24 @@ namespace
 		for (int i = 0; i < N; ++i)
 		{
 			list.append(values[i]);
+		}
+		return list;
+	}
+
+	//	⛔ THE READER BOUNDARY -- an AMOUNT converts HERE, once, and Python does no scale math.
+	//	The Cy layer is the CONTROLLER (patterns.md § the Cy* layer is the controller): thin means no LOGIC, and
+	//	representation is not logic -- turning the engine's internal ×100 fixed point into the external form is
+	//	precisely this layer's job, and the only place it should happen. Push it outward and every consumer has
+	//	to know the engine's internal scale, and they then disagree about it -- which is the state this replaces.
+	//	⚖ FLOAT, not a truncating int: nothing downstream of the controller does deterministic math, so the two
+	//	decimals the fixed point exists to carry survive the boundary instead of being thrown away at it.
+	template <int N>
+	python::list cyc_toHuman(const int (&values)[N])
+	{
+		python::list list = python::list();
+		for (int i = 0; i < N; ++i)
+		{
+			list.append(values[i] / 100.0);
 		}
 		return list;
 	}
@@ -1591,7 +1523,7 @@ python::list CyCity::getWellbeing() const
 {
 	int values[NUM_WELLBEING_CHANNELS] = { 0 };
 	if (m_pCity) m_pCity->getWellbeing(values);
-	return cyc_toList(values);
+	return cyc_toHuman(values);
 }
 
 python::list CyCity::getDefenseKinds() const
@@ -1676,7 +1608,7 @@ python::list CyCity::getRealizedWellbeing(int iExtraPopulation) const
 	PERF_SCOPE("CyCity::getRealizedWellbeing", -1);
 	int values[NUM_WELLBEING_CHANNELS] = { 0 };
 	if (m_pCity) m_pCity->realizedWellbeing(iExtraPopulation, values);
-	return cyc_toList(values);
+	return cyc_toHuman(values);
 }
 
 int CyCity::getHealthRate(int iExtraPopulation) const
@@ -2379,8 +2311,6 @@ void CyCity::pythonPublish()
 		.def("getNameKey",            &CyCity::getNameKey)
 		.def("getFood",               &CyCity::getFood)
 		.def("growthThreshold",       &CyCity::growthThreshold)
-		.def("goodHealth",            &CyCity::goodHealth)
-		.def("badHealth",             &CyCity::badHealth)
 		.def("getCultureThreshold",   &CyCity::getCultureThreshold)
 		.def("getMaintenanceTimes100", &CyCity::getMaintenanceTimes100)
 		.def("getDefenseModifier",    &CyCity::getDefenseModifier)

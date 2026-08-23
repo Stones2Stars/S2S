@@ -274,8 +274,9 @@ class WBPlayerUnits:
 			screen.setTableInt("WBCityList", 2, iRow, "<font=3>" + str(loopCity.getID()) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 7200 + i[0], i[1], 1<<2)
 			screen.setTableInt("WBCityList", 3, iRow, "<font=3>" + self.WB.addComma(loopCity.getCulture(i[0])) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 7200 + i[0], i[1], 1<<2)
 			screen.setTableInt("WBCityList", 4, iRow, "<font=3>" + str(loopCity.getPopulation()) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 7200 + i[0], i[1], 1<<2)
-			screen.setTableInt("WBCityList", 5, iRow, "<font=3>" + str(loopCity.happyLevel() - loopCity.unhappyLevel(0)) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 7200 + i[0], i[1], 1<<2)
-			screen.setTableInt("WBCityList", 6, iRow, "<font=3>" + str(loopCity.goodHealth() - loopCity.badHealth(0)) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 7200 + i[0], i[1], 1<<2)
+			aWellbeing = loopCity.getRealizedWellbeing(0)
+			screen.setTableInt("WBCityList", 5, iRow, "<font=3>%d</font>" % (aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS] - aWellbeing[WellbeingChannel.WELLBEING_ANGER]), "", WidgetTypes.WIDGET_PYTHON, 7200 + i[0], i[1], 1<<2)
+			screen.setTableInt("WBCityList", 6, iRow, "<font=3>%d</font>" % (aWellbeing[WellbeingChannel.WELLBEING_HEALTH] - aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH]), "", WidgetTypes.WIDGET_PYTHON, 7200 + i[0], i[1], 1<<2)
 		self.placeCityMap()
 
 	def placeCityMap(self):

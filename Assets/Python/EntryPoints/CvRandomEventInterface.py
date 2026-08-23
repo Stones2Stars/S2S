@@ -2974,11 +2974,11 @@ def canTriggerImmigrantCity(argsList):
     return False
 
   #  angryPopulation/healthRate are FINAL-STATE calculations over the four channels, so the surplus is read
-  #  off the channels themselves ([patterns.md] THE TWO READ ROLES rule 6). x100 native, compared x100.
+  #  off the channels themselves ([patterns.md] THE TWO READ ROLES rule 6).
   aWellbeing = GC.getPlayer(ePlayer).getCity(iCity).getRealizedWellbeing(0)
-  if aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS] - aWellbeing[WellbeingChannel.WELLBEING_ANGER] < 100:
+  if aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS] - aWellbeing[WellbeingChannel.WELLBEING_ANGER] < 1:
     return False
-  if aWellbeing[WellbeingChannel.WELLBEING_HEALTH] - aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH] < 100:
+  if aWellbeing[WellbeingChannel.WELLBEING_HEALTH] - aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH] < 1:
     return False
 
   if GC.getPlayer(ePlayer).getCity(iCity).getCommerces()[CommerceTypes.COMMERCE_CULTURE] < 5500:
@@ -5192,7 +5192,8 @@ def canTriggerMeasles(argsList):
     return False
 
   # city health is positive, no epidemic
-  if ((city.goodHealth() - city.badHealth(True)) > 1):
+  aWellbeing = city.getRealizedWellbeing(0)
+  if ((aWellbeing[WellbeingChannel.WELLBEING_HEALTH] - aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH]) > 1):
     return False
 
   return True

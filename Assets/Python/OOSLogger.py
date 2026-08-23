@@ -99,8 +99,9 @@ def writeLog():
 					pFile.write("Improved Plots: %d\n" % (pCity.countNumImprovedPlots()))
 					pFile.write("Tiles Worked: %d, Specialists: %d\n" % (pCity.getWorkingPopulation(), pCity.getSpecialistPopulation()))
 					pFile.write("Great People: %d\n" % pCity.getNumGreatPeople())
-					pFile.write("Good Health: %d, Bad Health: %d\n" % (pCity.goodHealth(), pCity.badHealth(False)))
-					pFile.write("Happy Level: %d, Unhappy Level: %d\n" % (pCity.happyLevel(), pCity.unhappyLevel(0)))
+					aWellbeing = pCity.getRealizedWellbeing(0)
+					pFile.write("Good Health: %d, Bad Health: %d\n" % (aWellbeing[WellbeingChannel.WELLBEING_HEALTH], aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH]))
+					pFile.write("Happy Level: %d, Unhappy Level: %d\n" % (aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS], aWellbeing[WellbeingChannel.WELLBEING_ANGER]))
 					pFile.write("Food: %d\n" % pCity.getFood())
 					pCity, i = pPlayer.nextCity(i, False)
 			else:

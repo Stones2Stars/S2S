@@ -1268,11 +1268,13 @@ class WorldBuilder:
 
 			pNewCity.setProgressOnBuilding(iBuilding, pOldCity.getProgressOnBuilding(iBuilding))
 
+			aOldCommerces = pOldCity.getBuildingGrantedCommerces(iBuilding)
 			for iCommerce in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
-				pNewCity.setBuildingCommerceChange(iBuilding, iCommerce, pOldCity.getBuildingCommerceChange(iBuilding, iCommerce))
+				pNewCity.setBuildingCommerceChange(iBuilding, iCommerce, aOldCommerces[iCommerce])
 
+			aOldYields = pOldCity.getBuildingGrantedYields(iBuilding)
 			for iYield in xrange(YieldTypes.NUM_YIELD_TYPES):
-				pNewCity.setBuildingYieldChange(iBuilding, iYield, pOldCity.getBuildingYieldChange(iBuilding, iYield))
+				pNewCity.setBuildingYieldChange(iBuilding, iYield, aOldYields[iYield])
 
 			if GC.getBuildingInfo(iBuilding).isCapital() and not bMove:
 				continue
@@ -1308,15 +1310,15 @@ class WorldBuilder:
 			OrderData = pOldCity.getOrderFromQueue(iOrder)
 			pNewCity.pushOrder(OrderData.eOrderType, OrderData.iData1, OrderData.iData2, OrderData.bSave, False, True, False)
 		pNewCity.changeConscriptAngerTimer(pOldCity.getConscriptAngerTimer() - pNewCity.getConscriptAngerTimer())
-		pNewCity.changeDefenseDamage(pOldCity.getDefenseDamage() - pNewCity.getDefenseDamage())
-		pNewCity.changeDefyResolutionAngerTimer(pOldCity.getDefyResolutionAngerTimer() - pNewCity.getDefyResolutionAngerTimer())
-		pNewCity.changeEspionageHappinessCounter(pOldCity.getEspionageHappinessCounter() - pNewCity.getEspionageHappinessCounter())
-		pNewCity.changeEspionageHealthCounter(pOldCity.getEspionageHealthCounter() - pNewCity.getEspionageHealthCounter())
+		pNewCity.changeDefenseDamage(pOldCity.getCounts()[CityCountRead.CITY_COUNT_DEFENSE_DAMAGE] - pNewCity.getCounts()[CityCountRead.CITY_COUNT_DEFENSE_DAMAGE])
+		pNewCity.changeDefyResolutionAngerTimer(pOldCity.getCountdowns()[CityCountdownKind.COUNTDOWN_DEFY_RESOLUTION_ANGER] - pNewCity.getCountdowns()[CityCountdownKind.COUNTDOWN_DEFY_RESOLUTION_ANGER])
+		pNewCity.changeEspionageHappinessCounter(pOldCity.getCountdowns()[CityCountdownKind.COUNTDOWN_ESPIONAGE_HAPPINESS] - pNewCity.getCountdowns()[CityCountdownKind.COUNTDOWN_ESPIONAGE_HAPPINESS])
+		pNewCity.changeEspionageHealthCounter(pOldCity.getCountdowns()[CityCountdownKind.COUNTDOWN_ESPIONAGE_HEALTH] - pNewCity.getCountdowns()[CityCountdownKind.COUNTDOWN_ESPIONAGE_HEALTH])
 		pNewCity.changeExtraHappiness(pOldCity.getExtraHappiness() - pNewCity.getExtraHappiness())
 		pNewCity.changeExtraHealth(pOldCity.getExtraHealth() - pNewCity.getExtraHealth())
 		pNewCity.changeExtraTradeRoutes(pOldCity.getExtraTradeRoutes() - pNewCity.getExtraTradeRoutes())
 		pNewCity.changeGreatPeopleProgress(pOldCity.getGreatPeopleProgress() - pNewCity.getGreatPeopleProgress())
-		pNewCity.changeHappinessTimer(pOldCity.getHappinessTimer() - pNewCity.getHappinessTimer())
+		pNewCity.changeHappinessTimer(pOldCity.getCountdowns()[CityCountdownKind.COUNTDOWN_HAPPINESS] - pNewCity.getCountdowns()[CityCountdownKind.COUNTDOWN_HAPPINESS])
 		pNewCity.changeHurryAngerTimer(pOldCity.getHurryAngerTimer() - pNewCity.getHurryAngerTimer())
 		pNewCity.setAirliftTargeted(pOldCity.isAirliftTargeted())
 		pNewCity.setBombarded(pOldCity.isBombarded())
@@ -1326,7 +1328,7 @@ class WorldBuilder:
 		pNewCity.setFood(pOldCity.getFood())
 		pNewCity.setHighestPopulation(pOldCity.getHighestPopulation())
 		pNewCity.setNeverLost(pOldCity.isNeverLost())
-		pNewCity.setOccupationTimer(pOldCity.getOccupationTimer())
+		pNewCity.setOccupationTimer(pOldCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION])
 		pNewCity.setOverflowProduction(pOldCity.getOverflowProduction())
 		pNewCity.setPlundered(pOldCity.isPlundered())
 		pNewCity.setProductionProgress(pOldCity.getProductionProgress())

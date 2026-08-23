@@ -555,7 +555,7 @@ def giveCityCulture(CyCity, iPlayer, newCityVal, newPlotVal):
 
 def isCanBribeCity(CyCity):
 
-	iRevIdx = CyCity.getRevolutionIndex()
+	iRevIdx = CyCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 
 	if iRevIdx > 1700:
 		return [False, 'Violent']
@@ -577,7 +577,7 @@ def computeBribeCosts(CyCity):
 	iPlayer = CyCity.getOwner()
 	CyPlayer = GC.getPlayer(iPlayer)
 
-	iRevIdx = CyCity.getRevolutionIndex()
+	iRevIdx = CyCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 	localRevIdx = CyCity.getLocalRevIndex()
 
 	iPop = CyCity.getPopulation()
@@ -601,19 +601,19 @@ def bribeCity(CyCity, bribeSize):
 
 	if bribeSize == 'Small':
 		# Small reduction in rev index, mostly just for buyoffturns
-		newRevIdx = int( 0.9*CyCity.getRevolutionIndex() - 10 )
+		newRevIdx = int( 0.9*CyCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX] - 10 )
 		if newRevIdx < 0:
 			newRevIdx = 0
 		CyCity.changeRevolutionCounter(5)
 	elif bribeSize == 'Med':
 		# Med reduction in rev index
-		newRevIdx = int(0.8*CyCity.getRevolutionIndex() - 25)
+		newRevIdx = int(0.8*CyCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX] - 25)
 		if newRevIdx < 0:
 			newRevIdx = 0
 		CyCity.changeRevolutionCounter(7)
 	elif bribeSize == 'Large':
 		# Large reduction in rev index, longer time till next revolt too
-		newRevIdx = int( 0.7*CyCity.getRevolutionIndex() - 50 )
+		newRevIdx = int( 0.7*CyCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX] - 50 )
 		if newRevIdx < 0:
 			newRevIdx = 0
 		CyCity.changeRevolutionCounter(10)
@@ -631,10 +631,11 @@ def getModNumUnhappy(CyCity, fWarWearinessMod):
 
 	iMod = int(fWarWearinessMod*iPop*CyCity.getWarWearinessPercentAnger()/1000)
 
-	iNumUnhappy = CyCity.angryPopulation(0) - iMod - 1
+	iNumUnhappy = CyCity.getAngryPopulation(0) - iMod - 1
 
 	if iNumUnhappy < 1:
-		return CyCity.unhappyLevel(0) - CyCity.happyLevel()
+		aWellbeing = CyCity.getRealizedWellbeing(0)
+		return aWellbeing[WellbeingChannel.WELLBEING_ANGER] - aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS]
 	return iNumUnhappy
 
 def doRevRequestDeniedPenalty(CyCity, iHomeArea, iRevIdxInc=100, bExtraHomeland=False, bExtraColony=False):

@@ -523,7 +523,7 @@ class CvDomesticAdvisor:
 		if CyCity.isDisorder():
 			if CyCity.isOccupation():
 				szOccu = unichr(8871)
-				szReturn += szOccu +":"+unicode(CyCity.getOccupationTimer())
+				szReturn += szOccu +":"+unicode(CyCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION])
 			else:
 				szReturn += unichr(8867)
 

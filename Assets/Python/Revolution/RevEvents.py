@@ -132,11 +132,11 @@ def onEndGameTurn(argsList):
 				playerI.setIsRebel(False)
 				if LOG_DEBUG:
 					print "[REV] %s (Player %d) is no longer a rebel due to no rebel against"%(playerI.getCivilizationDescription(0), i)
-			elif playerI.getNumCities() > 3 and GAME.getGameTurn() - playerI.getCapitalCity().getGameTurnAcquired() > 15:
+			elif playerI.getNumCities() > 3 and GAME.getGameTurn() - playerI.getCapitalCity().getCounts()[CityCountRead.CITY_COUNT_GAME_TURN_ACQUIRED] > 15:
 				playerI.setIsRebel(False)
 				if LOG_DEBUG:
 					print "[REV] %s (Player %d) is no longer a rebel by cities and capital ownership turns"%(playerI.getCivilizationDescription(0), i)
-			elif playerI.getNumCities() > 0 and GAME.getGameTurn() - playerI.getCapitalCity().getGameTurnAcquired() > 30:
+			elif playerI.getNumCities() > 0 and GAME.getGameTurn() - playerI.getCapitalCity().getCounts()[CityCountRead.CITY_COUNT_GAME_TURN_ACQUIRED] > 30:
 				playerI.setIsRebel( False )
 				if LOG_DEBUG:
 					print "[REV] %s (Player %d) is no longer a rebel by capital ownership turns"%(playerI.getCivilizationDescription(0), i)
@@ -200,7 +200,7 @@ def onSetPlayerAlive(argsList):
 					print "[REV] The dying %s are the rebel type for %s"%(pPlayer.getCivilizationDescription(0), pCity.getName())
 
 				if GC.getTeam(pPlayer.getTeam()).isAtWarWith(pCity.getTeam()):
-					revIdx = pCity.getRevolutionIndex()
+					revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 					localIdx = pCity.getLocalRevIndex()
 					revCnt = pCity.getNumRevolts(iPlayerX)
 					if pCity.getReinforcementCounter() > 0:
@@ -217,14 +217,14 @@ def onSetPlayerAlive(argsList):
 						changeRevIdx = -revIdx * iDividend // 100
 						pCity.changeRevolutionIndex(changeRevIdx)
 						pCity.changeRevRequestAngerTimer(-pCity.getRevRequestAngerTimer())
-						pCity.setRevolutionIndex(min([pCity.getRevolutionIndex(), RevOpt.getAlwaysViolentThreshold()]))
+						pCity.setRevolutionIndex(min([pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX], RevOpt.getAlwaysViolentThreshold()]))
 						revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
 						revIdxHist['Events'][0] += changeRevIdx
 						RevData.updateCityVal(pCity, 'RevIdxHistory', revIdxHist)
 						pCity.setReinforcementCounter(0)
 						pCity.setOccupationTimer(0)
 						if LOG_DEBUG:
-							print "[REV] Rev index in %s decreased to %d (from %d)"%(pCity.getName(), pCity.getRevolutionIndex(), revIdx)
+							print "[REV] Rev index in %s decreased to %d (from %d)"%(pCity.getName(), pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX], revIdx)
 
 					elif GAME.getGameTurn() - revTurn < 30:
 						# Put down after a while
@@ -241,13 +241,13 @@ def onSetPlayerAlive(argsList):
 						changeRevIdx = -revIdx * iDividend // 100
 						pCity.changeRevolutionIndex(changeRevIdx)
 						pCity.changeRevRequestAngerTimer(-pCity.getRevRequestAngerTimer())
-						pCity.setRevolutionIndex(min([pCity.getRevolutionIndex(),RevOpt.getAlwaysViolentThreshold()]))
+						pCity.setRevolutionIndex(min([pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX],RevOpt.getAlwaysViolentThreshold()]))
 						revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
 						revIdxHist['Events'][0] += changeRevIdx
 						RevData.updateCityVal(pCity, 'RevIdxHistory', revIdxHist)
 						pCity.setOccupationTimer(0)
 						if LOG_DEBUG:
-							print "[REV] Rev index in %s decreased to %d (from %d)"%(pCity.getName(), pCity.getRevolutionIndex(), revIdx)
+							print "[REV] Rev index in %s decreased to %d (from %d)"%(pCity.getName(), pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX], revIdx)
 
 
 	if not pPlayer.isFoundedFirstCity():
@@ -315,7 +315,7 @@ def onChangeWar(argsList):
 			):
 				# City recently rebelled for civ now at peace
 				localIdx = pCity.getLocalRevIndex()
-				revIdx = pCity.getRevolutionIndex()
+				revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 				revCnt = pCity.getNumRevolts(pCity.getOwner())
 				if LOG_DEBUG:
 					print "[REV] Rebels in %s have agreed to peace (%d, %d, %d)"%(pCity.getName(), revIdx, localIdx, revCnt)
@@ -329,13 +329,13 @@ def onChangeWar(argsList):
 
 				changeRevIdx = -revIdx * iDividend / 100
 				pCity.changeRevolutionIndex(changeRevIdx)
-				pCity.setRevolutionIndex(min([pCity.getRevolutionIndex(),RevOpt.getAlwaysViolentThreshold()]))
+				pCity.setRevolutionIndex(min([pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX],RevOpt.getAlwaysViolentThreshold()]))
 				revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
 				revIdxHist['Events'][0] += changeRevIdx
 				RevData.updateCityVal(pCity, 'RevIdxHistory', revIdxHist)
 				pCity.setOccupationTimer(0)
 				if LOG_DEBUG:
-					print "[REV] Rev index in %s decreased to %d (from %d)"%(pCity.getName(), pCity.getRevolutionIndex(), revIdx)
+					print "[REV] Rev index in %s decreased to %d (from %d)"%(pCity.getName(), pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX], revIdx)
 
 		GC.getTeam(pPlayer.getTeam()).setRebelAgainst(iRivalTeam, False)
 
@@ -349,7 +349,7 @@ def onChangeWar(argsList):
 			):
 				# City recently rebelled for civ now at peace
 				localIdx = pCity.getLocalRevIndex()
-				revIdx = pCity.getRevolutionIndex()
+				revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 				revCnt = pCity.getNumRevolts(pCity.getOwner())
 				if LOG_DEBUG:
 					print "[REV] Rebels in %s have sued for peace" % pCity.getName()
@@ -363,13 +363,13 @@ def onChangeWar(argsList):
 
 				changeRevIdx = -revIdx * iDividend / 100
 				pCity.changeRevolutionIndex( changeRevIdx )
-				pCity.setRevolutionIndex(min([pCity.getRevolutionIndex(), RevOpt.getAlwaysViolentThreshold()]))
+				pCity.setRevolutionIndex(min([pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX], RevOpt.getAlwaysViolentThreshold()]))
 				revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
 				revIdxHist['Events'][0] += changeRevIdx
 				RevData.updateCityVal(pCity, 'RevIdxHistory', revIdxHist)
 				pCity.setOccupationTimer(0)
 				if LOG_DEBUG:
-					print "[REV] Rev index in %s decreased to %d (from %d)"%(pCity.getName(), pCity.getRevolutionIndex(), revIdx)
+					print "[REV] Rev index in %s decreased to %d (from %d)"%(pCity.getName(), pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX], revIdx)
 
 		GC.getTeam(pPlayer.getTeam()).setRebelAgainst(iTeam, False)
 
@@ -385,14 +385,14 @@ def onCityBuilt( argsList ):
 
 	if( pPlayer.isNPC() ) :
 		city.setRevolutionIndex( int(.4*RevOpt.getAlwaysViolentThreshold()) )
-		city.setRevIndexAverage(city.getRevolutionIndex())
+		city.setRevIndexAverage(city.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX])
 		return
 
 	if( not city.area().getID() == pPlayer.getCapitalCity().area().getID() ) :
 		city.setRevolutionIndex( int(.35*RevOpt.getInstigateRevolutionThreshold()) )
 	else :
 		city.setRevolutionIndex( int(.25*RevOpt.getInstigateRevolutionThreshold()) )
-	city.setRevIndexAverage(city.getRevolutionIndex())
+	city.setRevIndexAverage(city.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX])
 
 	revTurn = RevData.revObjectGetVal( pPlayer, 'RevolutionTurn' )
 	if revTurn != None and pPlayer.getNumCities() < 4 and GAME.getGameTurn() - revTurn < 25:
@@ -414,7 +414,7 @@ def onCityAcquired(argsList):
 	RevData.initCity(city)
 	RevData.setCityVal(city, 'RevolutionCiv', iRevCiv)
 
-	iTurns = city.getOccupationTimer()
+	iTurns = city.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION]
 	city.setRevolutionCounter( max([int(1.5*iTurns),3]) )
 
 
@@ -442,7 +442,8 @@ def checkRebelBonuses(argsList):
 	elif newOwnerCiv == RevData.getCityVal(pCity, 'RevolutionCiv'):
 
 		# TODO: Check whether revolt is active in RevoltData
-		if pCity.getReinforcementCounter() > 0 or (pCity.unhappyLevel(0) - pCity.happyLevel()) > 0:
+		aWellbeing = pCity.getRealizedWellbeing(0)
+		if pCity.getReinforcementCounter() > 0 or (aWellbeing[WellbeingChannel.WELLBEING_ANGER] - aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS]) > 0:
 			print "[REV] Rebellious pCity %s is captured by rebel identity %s (%d)!!!" %(pCity.getName(), newOwner.getCivilizationDescription(0), newOwnerCiv)
 
 			newOwnerTeam = GC.getTeam(newOwner.getTeam())
@@ -525,7 +526,7 @@ def checkRebelBonuses(argsList):
 						print "Rev - Rebels get a %s to raid motherland" % bestUnit.getDescription()
 
 				# Change city disorder timer to favor new player
-				iTurns = pCity.getOccupationTimer()
+				iTurns = pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION]
 				iTurns = iTurns/4 + 1
 				pCity.setOccupationTimer(iTurns)
 
@@ -549,7 +550,7 @@ def checkRebelBonuses(argsList):
 				RevUtils.giveCityCulture(pCity, iOwnerNew, newCulVal, newPlotVal)
 
 				# Change city disorder timer to favor new player
-				iTurns = pCity.getOccupationTimer()
+				iTurns = pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION]
 				iTurns = min([iTurns, iTurns/3 + 1])
 				pCity.setOccupationTimer(iTurns)
 
@@ -569,7 +570,7 @@ def checkRebelBonuses(argsList):
 			newPlotVal = int( revCultureModifier*max([pCity.plot().getCulture(iOwnerOld)/2,pCity.plot().countTotalCulture()/4]) )
 			RevUtils.giveCityCulture( pCity, iOwnerNew, newCulVal, newPlotVal)
 
-			iTurns = pCity.getOccupationTimer()
+			iTurns = pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION]
 			iTurns = iTurns/2 + 1
 			pCity.setOccupationTimer(iTurns)
 
@@ -586,7 +587,7 @@ def updateRevolutionIndices(argsList):
 
 	if bConquest:
 		# Occupied cities also rack up rev points each turn
-		newRevIdx += pCity.getRevolutionIndex()/4
+		newRevIdx += pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]/4
 		newRevIdx = min( [newRevIdx, 600] )
 
 		if pCity.plot().calculateCulturePercent( iOwnerNew ) > 90:
@@ -599,7 +600,7 @@ def updateRevolutionIndices(argsList):
 			changeRevIdx -= 30
 
 	elif bTrade:
-		newRevIdx += pCity.getRevolutionIndex()/3
+		newRevIdx += pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]/3
 		newRevIdx = min( [newRevIdx, 650] )
 
 		if pCity.plot().calculateCulturePercent( iOwnerNew ) > 90:
@@ -670,7 +671,7 @@ def playerCityLost(CyPlayer, CyCity, bConquest = True):
 	if CyPlayer.isNPC() or CyPlayer.getNumCities() < 1:
 		return
 
-	revIdxChange = (GAME.getGameTurn() - CyCity.getGameTurnAcquired()) * 100.0 / GAME.getSpeedPercent()
+	revIdxChange = (GAME.getGameTurn() - CyCity.getCounts()[CityCountRead.CITY_COUNT_GAME_TURN_ACQUIRED]) * 100.0 / GAME.getSpeedPercent()
 	revIdxChange += CyCity.getHighestPopulation()
 	revIdxChange *= CyCity.plot().calculateCulturePercent(CyPlayer.getID()) / 100.0
 
@@ -705,11 +706,11 @@ def onBuildingBuilt(argsList):
 	if buildingInfo.getMaxGlobalInstances() == 1 and buildingInfo.getPrereqReligion() < 0 and buildingInfo.getProductionCost() > 10:
 		if LOG_DEBUG:
 			print"[REV] World wonder %s build in %s"%(buildingInfo.getDescription(), pCity.getName())
-		curRevIdx = pCity.getRevolutionIndex()
+		curRevIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 		pCity.changeRevolutionIndex(-max([150, curRevIdx / 4]))
 
 		for cityX in GC.getPlayer(pCity.getOwner()).cities():
-			curRevIdx = cityX.getRevolutionIndex()
+			curRevIdx = cityX.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 			iRevIdxChange = -max([75, curRevIdx * 12/100])
 			cityX.changeRevolutionIndex(iRevIdxChange)
 			revIdxHist = RevData.getCityVal(cityX,'RevIdxHistory')
@@ -719,11 +720,11 @@ def onBuildingBuilt(argsList):
 	elif buildingInfo.getMaxPlayerInstances() == 1 and buildingInfo.getPrereqReligion() < 0 and buildingInfo.getProductionCost() > 10:
 		if LOG_DEBUG:
 			print "[REV] National wonder %s build in %s"%(buildingInfo.getDescription(), pCity.getName())
-		curRevIdx = pCity.getRevolutionIndex()
+		curRevIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 		pCity.changeRevolutionIndex(-max([80, curRevIdx * 12/100]))
 
 		for cityX in GC.getPlayer(pCity.getOwner()).cities():
-			curRevIdx = cityX.getRevolutionIndex()
+			curRevIdx = cityX.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 			iRevIdxChange = -max([50, curRevIdx * 7/100])
 			cityX.changeRevolutionIndex(iRevIdxChange)
 			revIdxHist = RevData.getCityVal(cityX,'RevIdxHistory')
@@ -743,10 +744,10 @@ def onReligionFounded(argsList):
 			if iStateReligion > -1 and iStateReligion != iReligion:
 				pCity = GC.getGame().getHolyCity(iReligion)
 				if pCity.getOwner() == argsList[1]:
-					curRevIdx = pCity.getRevolutionIndex()
+					curRevIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 					pCity.setRevolutionIndex(max([int(.35*RevDefs.revInstigatorThreshold),curRevIdx+100]))
 					if LOG_DEBUG:
-						print "[REV] %s founded non-state religion, index of %s now %d ... state %d, new %d"%(pCity.getName(),pCity.getName(),pCity.getRevolutionIndex(),player.getStateReligion(),iReligion)
+						print "[REV] %s founded non-state religion, index of %s now %d ... state %d, new %d"%(pCity.getName(),pCity.getName(),pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX],player.getStateReligion(),iReligion)
 
 
 
@@ -849,7 +850,7 @@ def checkForAssimilation():
 		CyTeamX = GC.getTeam(CyPlayerX.getTeam())
 		CyCity0 = CyPlayerX.getCapitalCity()
 		if CyCity0 is None: continue
-		iTurnAcquiredCity0 = CyCity0.getGameTurnAcquired()
+		iTurnAcquiredCity0 = CyCity0.getCounts()[CityCountRead.CITY_COUNT_GAME_TURN_ACQUIRED]
 		CyPlot0 = None
 		szCiv = CyPlayerX.getCivilizationDescription(0)
 
@@ -900,10 +901,10 @@ def checkForAssimilation():
 
 				iOdds = 2*(minNumPlots - iTotalLand) + (4 + 4*iMaxEra)/CyCity0.getPopulation()
 
-				if CyCity0.getOccupationTimer() > 0:
+				if CyCity0.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION] > 0:
 					iOdds *= 3
 
-				iOdds += CyCity0.getRevolutionIndex()/100
+				iOdds += CyCity0.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]/100
 
 				CyPlot0 = CyCity0.plot()
 				### Special cases
@@ -1076,12 +1077,12 @@ def doSmallRevolts(iPlayer, CyPlayer):
 
 	for city in CyPlayer.cities():
 
-		revIdx = city.getRevolutionIndex()
+		revIdx = city.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 
 		if revIdx <= 5 * RevDefs.revReadyDividend * RevDefs.revInstigatorThreshold / (4 * RevDefs.revReadyDivisor):
 			continue
 
-		if city.getOccupationTimer() > 0 or city.getRevolutionCounter() > 0 or RevData.getCityVal(city, 'SmallRevoltCounter') > 0:
+		if city.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION] > 0 or city.getRevolutionCounter() > 0 or RevData.getCityVal(city, 'SmallRevoltCounter') > 0:
 			continue # Already in a revolt
 
 		localRevIdx = city.getLocalRevIndex()
