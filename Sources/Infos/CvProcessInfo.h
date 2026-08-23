@@ -30,7 +30,7 @@ public:
 	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
 
 	// ======================= 3. THE CONVERSION PLANE -- one materialized §9 block ============================
-	// The production->commerce conversion rate (×100: authored 50 reads 5000), per channel -- a bare member
+	// The production->commerce conversion rate -- an authored PERCENT, so it is NOT scaled, per channel -- a bare member
 	// read over the plane mapFrom materializes from the `conversion` block. The conversion is the CITY's
 	// hammers-fold (the §2a EXTRA leg `production × prodToCommerce`), so only the city scope answers; the
 	// scope parameter stays spelled out (docs/architecture/patterns.md §The coherent surface (scope is a separate axis) -- the signature the consumers already ask).

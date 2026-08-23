@@ -2493,7 +2493,7 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 				iGreed < 140 && itProcess != availableProcesses.end(); ++itProcess)
 			{
 				const CvProcessInfo& kProcess = GC.getProcessInfo((ProcessTypes)*itProcess);
-				iGreed = std::max(iGreed, 100 + 20 * std::min(2, (kProcess.getProductionToCommerce(COMMERCE_CULTURE, CASC_SCOPE_CITY) / 100)));
+				iGreed = std::max(iGreed, 100 + 20 * std::min(2, kProcess.getProductionToCommerce(COMMERCE_CULTURE, CASC_SCOPE_CITY)));
 			}
 
 			for (int iI = 0; (iGreed < 140 && iI < GC.getNumSpecialistInfos()); iI++)
@@ -5418,9 +5418,9 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 
 		for (int iK = 0; iK < NUM_COMMERCE_TYPES; iK++)
 		{
-			// The authored PERCENT, reduced from its ×100 storage -- the ÷100 below accounts for the commerce
+			// The authored PERCENT, unscaled at the load edge -- the ÷100 below accounts for the commerce
 			// WEIGHT's scale, not this operand's.
-			iTempValue = (GC.getProcessInfo(eLoopProcess).getProductionToCommerce((CommerceTypes)iK, CASC_SCOPE_CITY) / 100 * 4);
+			iTempValue = (GC.getProcessInfo(eLoopProcess).getProductionToCommerce((CommerceTypes)iK, CASC_SCOPE_CITY) * 4);
 
 			iTempValue *= AI_commerceWeight((CommerceTypes)iK);
 			iTempValue /= 100;

@@ -6,7 +6,7 @@
 
 #include "CvGameCoreDLL.h"
 #include "CvProcessInfo.h"
-#include "CvJsonParse.h"   // jsonChildObj + jsonX100 -- the shared parse primitives (never re-hand-rolled)
+#include "CvJsonParse.h"   // jsonChildObj + jsonIdInt -- the shared parse primitives (never re-hand-rolled)
 
 CvProcessInfo::CvProcessInfo()
 	: m_eTechPrereq(NO_TECH)
@@ -39,10 +39,6 @@ void CvProcessInfo::mapFrom(const picojson::value& entity)
 	const char* aszChannels[NUM_COMMERCE_TYPES] = { "gold", "research", "culture", "espionage" };
 	for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
 	{
-		picojson::object::const_iterator channelIt = pConversion->find(aszChannels[iCommerce]);
-		if (channelIt != pConversion->end() && channelIt->second.is<double>())
-		{
-			m_aiProductionToCommerce[iCommerce] = jsonX100(channelIt->second.get<double>());
-		}
+		m_aiProductionToCommerce[iCommerce] = jsonIdInt(*pConversion, aszChannels[iCommerce]);
 	}
 }
