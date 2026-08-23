@@ -229,7 +229,7 @@ class Revolution:
 			# Get rev index change
 			revIdxCityList = []
 			for cityX in GC.getPlayer(iPlayer).cities():
-				revIdxCityList.append((cityX.getRevolutionIndex(), cityX))
+				revIdxCityList.append((cityX.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX], cityX))
 
 			if revIdxCityList:
 				revIdxCityList.sort()
@@ -242,7 +242,7 @@ class Revolution:
 			for revIdx, CyCityX in revIdxCityList:
 
 				localRevIdx = CyCityX.getLocalRevIndex()
-				deltaTrend = deltaTrend = revIdx - CyCityX.getRevIndexAverage()
+				deltaTrend = deltaTrend = revIdx - CyCityX.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_AVERAGE]
 
 				if revIdx >= self.revInstigatorThreshold:
 					if deltaTrend > self.showTrend:
@@ -333,7 +333,7 @@ class Revolution:
 		if self.isLocalHumanPlayer(iPlayer):
 			lCity = []
 			for city in GC.getPlayer(iPlayer).cities():
-				lCity.append((city.getRevolutionIndex(), city.getName(), city.getID()))
+				lCity.append((city.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX], city.getName(), city.getID()))
 
 			if not lCity:
 				popup = CyPopup(-1, EventContextTypes.NO_EVENTCONTEXT, True)
@@ -607,7 +607,7 @@ class Revolution:
 			return # Revolt has ended
 
 		# City must still be rebellious
-		revIdx = pCity.getRevolutionIndex()
+		revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 		localRevIdx = pCity.getLocalRevIndex()
 		localRevEffect = 0
 		revIdxHist = RevData.getCityVal( pCity, 'RevIdxHistory' )
@@ -650,7 +650,7 @@ class Revolution:
 		iy = pCity.getY()
 
 		for cityX in pRevPlayer.cities():
-			if GAME.getGameTurn() - cityX.getGameTurnAcquired() < 6 and cityX.getPreviousOwner() == ownerID:
+			if GAME.getGameTurn() - cityX.getCounts()[CityCountRead.CITY_COUNT_GAME_TURN_ACQUIRED] < 6 and cityX.getPreviousOwner() == ownerID:
 				bRecentSuccess = True
 				break
 		else: bRecentSuccess = False
@@ -1015,16 +1015,16 @@ class Revolution:
 		for pCity in cityList:
 
 			# Incase interturn stuff set out of range
-			if pCity.getRevolutionIndex() < 0:
+			if pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX] < 0:
 				pCity.setRevolutionIndex(0)
-			elif pCity.getRevolutionIndex() > (2*self.alwaysViolentThreshold):
+			elif pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX] > (2*self.alwaysViolentThreshold):
 				pCity.setRevolutionIndex( (2*self.alwaysViolentThreshold) )
 
 			revIdxHist = RevData.getCityVal(pCity, 'RevIdxHistory')
 			if revIdxHist == None:
 				revIdxHist = RevDefs.initRevIdxHistory()
 
-			prevRevIdx = pCity.getRevolutionIndex()
+			prevRevIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 
 			# Record lists of (#, string type) effects, seperate for positive and negative
 			posList = []
@@ -1033,7 +1033,7 @@ class Revolution:
 			# Sum up local factors for the city
 			localRevIdx = 0
 
-			recentlyAcquired = (GAME.getGameTurn()-pCity.getGameTurnAcquired() < 12*RevUtils.getGameSpeedMod())
+			recentlyAcquired = (GAME.getGameTurn()-pCity.getCounts()[CityCountRead.CITY_COUNT_GAME_TURN_ACQUIRED] < 12*RevUtils.getGameSpeedMod())
 
 			culturePercent = 0
 			maxCult = 0
@@ -1060,7 +1060,7 @@ class Revolution:
 
 				numUnhappy = max([numUnhappy - (pCity.getRevIndexPercentAnger()*pCity.getPopulation())/1000, 0])
 
-				if( pCity.getOccupationTimer() > 0 ) :
+				if( pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION] > 0 ) :
 					# Resistance is counted below ...
 					numUnhappy = min([numUnhappy/3.0,0.5])
 				elif( recentlyAcquired ) :
@@ -1068,7 +1068,7 @@ class Revolution:
 
 				happyIdx = int((15 + 15*(min([numUnhappy,pCity.getPopulation()])/min([pCity.getPopulation(),12])))*pow(numUnhappy, .8) + .5)
 
-				if( pCity.getEspionageHappinessCounter() > 0 ) :
+				if( pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_ESPIONAGE_HAPPINESS] > 0 ) :
 					# Reduce effect if unhappiness is from spy mission
 					happyIdx = happyIdx/3.0
 
@@ -1399,7 +1399,7 @@ class Revolution:
 			numUnhealthy = (pCity.badHealth(False) - pCity.goodHealth())
 			if numUnhealthy > 0:
 				healthIdx = int(int(2*pow(numUnhealthy, .6) + .5) * self.happinessModifier)
-				if pCity.getEspionageHealthCounter() > 0 or pPlayer.isRebel():
+				if pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_ESPIONAGE_HEALTH] > 0 or pPlayer.isRebel():
 					healthIdx = healthIdx/3
 				if bIsRevWatch:
 					negList.append( (healthIdx, TRNSLTR.getText("TXT_KEY_REV_WATCH_UNHEALTHY",())) )
@@ -1460,7 +1460,7 @@ class Revolution:
 				else :
 					starvingIdx = min([4*abs(pCity.foodDifference(True)),20])
 
-				if( pCity.getEspionageHealthCounter() > 0 or pPlayer.isRebel() ) :
+				if( pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_ESPIONAGE_HEALTH] > 0 or pPlayer.isRebel() ) :
 					starvingIdx = max([starvingIdx/5,min([starvingIdx,10])])
 
 				localRevIdx += starvingIdx
@@ -1469,7 +1469,7 @@ class Revolution:
 
 			# Disorder
 			disorderIdx = 0
-			if pCity.getOccupationTimer() > 0:
+			if pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION] > 0:
 				if recentlyAcquired or pPlayer.isRebel():
 					# Give recently acquired cities a break
 					disorderIdx = 10
@@ -1520,7 +1520,7 @@ class Revolution:
 			if pPlayer.isHuman():
 				localRevIdx = int(self.humanIdxModifier*localRevIdx + self.humanIdxOffset + .5)
 
-			revIdx = pCity.getRevolutionIndex()
+			revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 
 			# Feedback on Rev Index
 			if( localRevIdx < 0 and revIdx > self.alwaysViolentThreshold ) :
@@ -1553,13 +1553,13 @@ class Revolution:
 				pCity.updateRevIndexAverage()
 				RevData.updateCityVal(pCity, 'RevIdxHistory', revIdxHist )
 
-			if( pCity.getRevolutionIndex() < 0 ) :
+			if( pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX] < 0 ) :
 				pCity.setRevolutionIndex( 0 )
-			elif( pCity.getRevolutionIndex() > (2*self.alwaysViolentThreshold) ) :
+			elif( pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX] > (2*self.alwaysViolentThreshold) ) :
 				pCity.setRevolutionIndex( (2*self.alwaysViolentThreshold) )
 
-			revIdx = pCity.getRevolutionIndex()
-			revIdxAvg = pCity.getRevIndexAverage()
+			revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
+			revIdxAvg = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_AVERAGE]
 
 			if self.LOG_DEBUG and not (iGameTurn%25):
 				print "[REV] Revolt: %s:   Hap %d,   Loc %d,   Rel %d,   Nat %d,   Cult %d,   Gar %d" % (pCity.getName(), happyIdx, locationRevIdx, relIdx, natIdx, cultIdx, garIdx)
@@ -1963,7 +1963,7 @@ class Revolution:
 			if iSmall > iGold:
 				continue
 
-			revIdx = cityX.getRevolutionIndex()
+			revIdx = cityX.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 			localRevIdx = cityX.getLocalRevIndex()
 
 			if localRevIdx > 2*self.badLocalThreshold:
@@ -2017,7 +2017,7 @@ class Revolution:
 
 		for pCity in pPlayer.cities():
 
-			revIdx = pCity.getRevolutionIndex()
+			revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 			prevRevIdx = RevData.getCityVal(pCity, 'PrevRevIndex')
 			localRevIdx = pCity.getLocalRevIndex()
 
@@ -2052,7 +2052,7 @@ class Revolution:
 		# TODO: turn this and instigator bit above into a function, when revolt odds > 0 then is an instigator
 		if( len(revInstigatorCities) > 0 ) :
 			for pCity in revInstigatorCities :
-				revIdx = pCity.getRevolutionIndex()
+				revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 				localRevIdx = pCity.getLocalRevIndex()
 				revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
 
@@ -2199,7 +2199,7 @@ class Revolution:
 ##--- Game turn functions  ---------------------------------------------------
 
 	def revIndexAdjusted(self, pCity):
-		return pCity.getRevolutionIndex() - pCity.isCapital() * self.revInstigatorThreshold
+		return pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX] - pCity.isCapital() * self.revInstigatorThreshold
 
 
 	def pickRevolutionStyle(self, pPlayer, instigator, revReadyCities):
@@ -2230,7 +2230,7 @@ class Revolution:
 
 		# Peaceful or violent?
 		bPeaceful = True
-		instRevIdx = instigator.getRevolutionIndex()
+		instRevIdx = instigator.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 		instLocalIdx = instigator.getLocalRevIndex()
 
 		if instRevIdx > self.alwaysViolentThreshold:
@@ -2349,7 +2349,7 @@ class Revolution:
 								if( RevData.getCityVal(pCity, 'RevolutionCiv') == revCivType ) :
 									joinRevCities.append(pCity)
 									if self.LOG_DEBUG: print "[REV] Revolt: %s has same rev type" % pCity.getName()
-								elif( pCity.getRevolutionIndex() > self.revInstigatorThreshold and cityDist <= 0.8*self.closeRadius ) :
+								elif( pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX] > self.revInstigatorThreshold and cityDist <= 0.8*self.closeRadius ) :
 									joinRevCities.append(pCity)
 									if self.LOG_DEBUG: print "[REV] Revolt: %s is close and over threshold, joining" % pCity.getName()
 
@@ -2358,7 +2358,7 @@ class Revolution:
 							handoverCities = []
 							toSort = []
 							for pCity in citiesInRevolt :
-								revIdx = pCity.getRevolutionIndex()
+								revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 								if( pCity.isCapital() ) :
 									if( revIdx > self.alwaysViolentThreshold and pCity.getLocalRevIndex() > 0 ) :
 										if self.LOG_DEBUG: print "[REV] Revolt: %s (capital), %d qualifies as revolting city" % (pCity.getName(), revIdx)
@@ -2377,7 +2377,7 @@ class Revolution:
 										break
 
 								if not bInList:
-									revIdx = pCity.getRevolutionIndex()
+									revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 									if pCity.isCapital():
 										if( revIdx > self.alwaysViolentThreshold and pCity.getLocalRevIndex() > 0 ) :
 											if self.LOG_DEBUG: print "[REV] Revolt: %s (capital), %d qualifies as joining city" % (pCity.getName(), revIdx)
@@ -2721,7 +2721,7 @@ class Revolution:
 						if self.LOG_DEBUG: print "[REV] Revolt: Asking change in state religion, %d practice new, %d practice state" % (revRelCount, stateRelCount)
 						totalRevIdx = 0
 						for pCity in relCities :
-							totalRevIdx += pCity.getRevolutionIndex()
+							totalRevIdx += pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 						iBuyOffCost = totalRevIdx/(17-pPlayer.getCurrentEra()) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 						#iBuyOffCost = (60 + 12*pPlayer.getCurrentEra())*len(relCities) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 						if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
@@ -2776,7 +2776,7 @@ class Revolution:
 					#iBuyOffCost = (60 + 12*pPlayer.getCurrentEra())*len(indCities) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 					totalRevIdx = 0
 					for pCity in indCities :
-						totalRevIdx += pCity.getRevolutionIndex()
+						totalRevIdx += pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 					iBuyOffCost = totalRevIdx/(17-pPlayer.getCurrentEra()) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 					if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 					iBuyOffCost = max( [iBuyOffCost, pPlayer.getGold()/12 + GAME.getSorenRandNum(50,'Rev')] )
@@ -2959,7 +2959,7 @@ class Revolution:
 						#iBuyOffCost = (50 + 10*pPlayer.getCurrentEra())*len(revCities) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 						totalRevIdx = 0
 						for pCity in revCities :
-							totalRevIdx += pCity.getRevolutionIndex()
+							totalRevIdx += pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 						iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 						if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 						iBuyOffCost = max( [iBuyOffCost, pPlayer.getGold()/10 + GAME.getSorenRandNum(50,'Rev')] )
@@ -3049,7 +3049,7 @@ class Revolution:
 						#iBuyOffCost = (50 + 10*pPlayer.getCurrentEra())*len(revCities) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 						totalRevIdx = 0
 						for pCity in revCities :
-							totalRevIdx += pCity.getRevolutionIndex()
+							totalRevIdx += pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 						iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 						if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 						iBuyOffCost = max( [iBuyOffCost, pPlayer.getGold()/10 + GAME.getSorenRandNum(50,'Rev')] )
@@ -3109,7 +3109,7 @@ class Revolution:
 						#iBuyOffCost = (75 + 12*pPlayer.getCurrentEra())*len(foreignCities) + GAME.getSorenRandNum(100+10*pPlayer.getCurrentEra(),'Rev')
 						totalRevIdx = 0
 						for pCity in foreignCities :
-							totalRevIdx += pCity.getRevolutionIndex()
+							totalRevIdx += pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 						iBuyOffCost = totalRevIdx/(15-pPlayer.getCurrentEra()) + GAME.getSorenRandNum(80+10*pPlayer.getCurrentEra(),'Rev')
 						if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 						iBuyOffCost = max( [iBuyOffCost, pPlayer.getGold()/8 + GAME.getSorenRandNum(50,'Rev')] )
@@ -3158,7 +3158,7 @@ class Revolution:
 						#iBuyOffCost = (50 + 12*pPlayer.getCurrentEra())*len(revCities) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 						totalRevIdx = 0
 						for pCity in revCities :
-							totalRevIdx += pCity.getRevolutionIndex()
+							totalRevIdx += pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 						iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 						if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 						iBuyOffCost = max( [iBuyOffCost, pPlayer.getGold()/10 + GAME.getSorenRandNum(50,'Rev')] )
@@ -3225,7 +3225,7 @@ class Revolution:
 							#iBuyOffCost = (50 + 15*pPlayer.getCurrentEra())*len(revCities) + GAME.getSorenRandNum(150+15*pPlayer.getCurrentEra(),'Rev')
 							totalRevIdx = 0
 							for pCity in revCities :
-								totalRevIdx += pCity.getRevolutionIndex()
+								totalRevIdx += pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 							iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + GAME.getSorenRandNum(100+10*pPlayer.getCurrentEra(),'Rev')
 							if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 							iBuyOffCost = max( [iBuyOffCost, pPlayer.getGold()/8 + GAME.getSorenRandNum(50,'Rev')] )
@@ -3260,7 +3260,7 @@ class Revolution:
 							#iBuyOffCost = (50 + 10*pPlayer.getCurrentEra())*len(revCities) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 							totalRevIdx = 0
 							for pCity in revCities :
-								totalRevIdx += pCity.getRevolutionIndex()
+								totalRevIdx += pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 							iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + GAME.getSorenRandNum(50+12*pPlayer.getCurrentEra(),'Rev')
 							if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 							iBuyOffCost = max( [iBuyOffCost, pPlayer.getGold()/10 + GAME.getSorenRandNum(50,'Rev')] )
@@ -3301,7 +3301,7 @@ class Revolution:
 								#iBuyOffCost = (50 + 15*pPlayer.getCurrentEra())*len(revCities) + GAME.getSorenRandNum(100+10*pPlayer.getCurrentEra(),'Rev')
 								totalRevIdx = 0
 								for pCity in revCities :
-									totalRevIdx += pCity.getRevolutionIndex()
+									totalRevIdx += pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 								iBuyOffCost = totalRevIdx/(20-pPlayer.getCurrentEra()) + GAME.getSorenRandNum(80+10*pPlayer.getCurrentEra(),'Rev')
 								if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 								iBuyOffCost = max( [iBuyOffCost, pPlayer.getGold()/10 + GAME.getSorenRandNum(50,'Rev')] )
@@ -3334,7 +3334,7 @@ class Revolution:
 							#iBuyOffCost = (30 + 10*pPlayer.getCurrentEra())*len(revCities) + GAME.getSorenRandNum(100+10*pPlayer.getCurrentEra(),'Rev')
 							totalRevIdx = 0
 							for pCity in revCities :
-								totalRevIdx += pCity.getRevolutionIndex()
+								totalRevIdx += pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 							iBuyOffCost = totalRevIdx/(25-pPlayer.getCurrentEra()) + GAME.getSorenRandNum(90+10*pPlayer.getCurrentEra(),'Rev')
 							if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
 							iBuyOffCost = max( [iBuyOffCost, pPlayer.getGold()/12 + GAME.getSorenRandNum(50,'Rev')] )
@@ -3386,7 +3386,7 @@ class Revolution:
 							#iBuyOffCost = (50 + 12*pPlayer.getCurrentEra())*len(revCities) + GAME.getSorenRandNum(100+10*pPlayer.getCurrentEra(),'Rev')
 							totalRevIdx = 0
 							for pCity in revCities:
-								totalRevIdx += pCity.getRevolutionIndex()
+								totalRevIdx += pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 							iBuyOffCost = totalRevIdx/(22-pPlayer.getCurrentEra()) + GAME.getSorenRandNum(80+10*pPlayer.getCurrentEra(),'Rev')
 							if not pPlayer.isHuman(): iBuyOffCost = iBuyOffCost * 7 / 10
 							iBuyOffCost = max( [iBuyOffCost, pPlayer.getGold()/8 + GAME.getSorenRandNum(50,'Rev')] )
@@ -3465,7 +3465,7 @@ class Revolution:
 			totalRevIdx = 0
 			totalPop = 0
 			for pCity in indCities :
-				totalRevIdx += pCity.getRevolutionIndex()
+				totalRevIdx += pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 				totalPop += pCity.getPopulation()
 			iBuyOffCost = totalRevIdx/(17-pPlayer.getCurrentEra()) + GAME.getSorenRandNum(50+10*pPlayer.getCurrentEra(),'Rev')
 			if( not pPlayer.isHuman() ) : iBuyOffCost = int( iBuyOffCost*.7 )
@@ -3635,7 +3635,7 @@ class Revolution:
 
 						if playerI.getCitiesLost() < 3 and playerI.getNumCities() < 4:
 							pCapital = playerI.getCapitalCity()
-							if pCapital is not None and GAME.getGameTurn() - pCapital.getGameTurnAcquired() < 30 \
+							if pCapital is not None and GAME.getGameTurn() - pCapital.getCounts()[CityCountRead.CITY_COUNT_GAME_TURN_ACQUIRED] < 30 \
 							and not GC.getPlayer(pCapital.getPreviousOwner()).isNPC():
 
 								if (playerI.getCivilizationType() == RevData.getCityVal(pCity, 'RevolutionCiv')):
@@ -4750,7 +4750,7 @@ class Revolution:
 			for pCity in cityList:
 				if self.LOG_DEBUG:
 					print "[REV] Revolt: Buying off revolutionaries in " + pCity.getName()
-				revIdx = pCity.getRevolutionIndex()
+				revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 				pCity.setRevolutionIndex(min([self.revInstigatorThreshold * self.revReadyDividend / self.revReadyDivisor, revIdx - 200]))
 				pCity.setRevolutionCounter(self.buyoffTurns)
 				pCity.setReinforcementCounter(0)
@@ -4776,7 +4776,7 @@ class Revolution:
 
 				# Make those cities happier
 				for pCity in cityList :
-					revIdx = pCity.getRevolutionIndex()
+					revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 					pCity.setRevolutionIndex( min([revIdx/2,int(.6*self.revInstigatorThreshold)]) )
 					pCity.setRevolutionCounter( self.acceptedTurns )
 					pCity.setReinforcementCounter(0)
@@ -4810,7 +4810,7 @@ class Revolution:
 				pPlayer.convert(iNewReligion)
 				# Make those cities happier
 				for pCity in cityList :
-					revIdx = pCity.getRevolutionIndex()
+					revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 					pCity.setRevolutionIndex( min([revIdx/2,int(.6*self.revInstigatorThreshold)]) )
 					pCity.setRevolutionCounter( self.acceptedTurns )
 					pCity.setReinforcementCounter(0)
@@ -4840,7 +4840,7 @@ class Revolution:
 
 				# Lower indices
 				for pCity in cityList :
-					revIdx = pCity.getRevolutionIndex()
+					revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 					pCity.setRevolutionIndex( min([revIdx/2,int(.6*self.revInstigatorThreshold)]) )
 					pCity.setRevolutionCounter( self.acceptedTurns )
 					pCity.setReinforcementCounter(0)
@@ -4961,7 +4961,7 @@ class Revolution:
 				pRevPlayer = GC.getPlayer( revData.dict['iRevPlayer'] )
 
 				for pCity in cityList :
-					revIdx = pCity.getRevolutionIndex()
+					revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 					pCity.setRevolutionIndex( min([revIdx/2,int(.5*self.revInstigatorThreshold)]) )
 					pCity.setRevolutionCounter( self.acceptedTurns )
 					pCity.setReinforcementCounter(0)
@@ -5051,7 +5051,7 @@ class Revolution:
 					# Special case where pPlayer turns over control of handover cities instead of having cityList revolt
 
 					for pCity in handoverCities :
-						revIdx = pCity.getRevolutionIndex()
+						revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 						pCity.setRevolutionIndex(min([revIdx / 2, self.revInstigatorThreshold * 4 * self.revReadyDividend / (5 * self.revReadyDivisor)]))
 						# Other changes handled by acquired city logic
 						if pCity.getNumRevolts(pPlayer.getID()) > 1:
@@ -5062,7 +5062,7 @@ class Revolution:
 					for pCity in cityList :
 						if( not pCity.getID() in revData.dict.get('HandoverCities', []) ) :
 							if self.LOG_DEBUG: print "[REV] Revolt: Turning down rebelliousness in non-handed over city " + pCity.getName()
-							revIdx = pCity.getRevolutionIndex()
+							revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 							pCity.setRevolutionIndex( min([(3*revIdx)/4,int(self.revInstigatorThreshold)]) )
 							if( pCity.getNumRevolts(pPlayer.getID()) > 2 ) :
 								pCity.changeNumRevolts( pPlayer.getID(), -2 )
@@ -5071,7 +5071,7 @@ class Revolution:
 
 					pCity = pPlayer.getCapitalCity()
 					if( not pCity.getID() in revData.dict.get('HandoverCities', []) ) :
-						revIdx = pCity.getRevolutionIndex()
+						revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 						if( not pCity.getID() in revData.dict.get('cityList', []) and (revIdx > self.revInstigatorThreshold and RevData.getCityVal(pCity,'RevolutionCiv') == pRevPlayer.getCivilizationType()) ) :
 							if self.LOG_DEBUG: print "[REV] Revolt: Also turning down rebelliousness in capital " + pCity.getName()
 							pCity.setRevolutionIndex( min([(7*revIdx)/8,int(self.revInstigatorThreshold)]) )
@@ -5086,7 +5086,7 @@ class Revolution:
 
 				else:
 					for pCity in cityList:
-						revIdx = pCity.getRevolutionIndex()
+						revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 						pCity.setRevolutionIndex(min([revIdx/2, self.revInstigatorThreshold * 4 * self.revReadyDividend / (5 * self.revReadyDivisor)]))
 						# Other changes handled by acquired city logic
 						if pCity.getNumRevolts(pPlayer.getID()) > 1:
@@ -5560,7 +5560,7 @@ class Revolution:
 								if( not pCity.getID() in revData.dict.get('cityList', []) ) :
 									if self.LOG_DEBUG: print "[REV] Revolt: Bolstering rebellious spirit in %s (handover city only)" % pCity.getName()
 
-									revIdx = pCity.getRevolutionIndex()
+									revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 									localRevIdx = pCity.getLocalRevIndex()
 									reinfTurns = pCity.getReinforcementCounter()
 
@@ -5921,10 +5921,10 @@ class Revolution:
 		if len(cityList) > 2:
 			revIdxCityList = []
 			for pCity in cityList[1:]:
-				revIdx = pCity.getRevolutionIndex()
+				revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 				revIdxCityList.append(pCity)
 
-			revIdxCityList.sort(key=lambda i: (i.getRevolutionIndex(), i.getName()))
+			revIdxCityList.sort(key=lambda i: (i.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX], i.getName()))
 			revIdxCityList.reverse()
 
 			newCityList = []
@@ -6111,7 +6111,7 @@ class Revolution:
 
 		for [cityIdx, pCity] in enumerate(cityList):
 
-			revIdx = pCity.getRevolutionIndex()
+			revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 			localRevIdx = pCity.getLocalRevIndex()
 			ix = pCity.getX()
 			iy = pCity.getY()
@@ -6473,7 +6473,7 @@ class Revolution:
 
 				pCity.setOccupationTimer( max([iTurns,1]) )
 				if self.LOG_DEBUG:
-					print "[REV] Revolt: City occupation timer set to " + str(pCity.getOccupationTimer())
+					print "[REV] Revolt: City occupation timer set to " + str(pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION])
 
 				if pCity.getRevRequestAngerTimer() < 3*self.turnsBetweenRevs:
 					pCity.changeRevRequestAngerTimer( min([2*self.turnsBetweenRevs, 3*self.turnsBetweenRevs - pCity.getRevRequestAngerTimer()]) )

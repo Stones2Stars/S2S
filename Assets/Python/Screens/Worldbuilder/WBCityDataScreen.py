@@ -213,12 +213,14 @@ class WBCityDataScreen:
 				sText += u"%d%s" %(iVal, CyTranslator().getText("[ICON_HEALTHY]", ()))
 			elif iVal < 0:
 				sText += u"%d%s" %(-iVal, CyTranslator().getText("[ICON_UNHEALTHY]", ()))
+			aGrantedYields = pCity.getBuildingGrantedYields(item[1])
 			for j in xrange(YieldTypes.NUM_YIELD_TYPES):
-				iVal = pCity.getBuildingYieldChange(item[1], j)
+				iVal = aGrantedYields[j]
 				if iVal != 0:
 					sText += u"%d%c" %(iVal, TEXT.getSymbolChar("YIELD_", j))
+			aGrantedCommerces = pCity.getBuildingGrantedCommerces(item[1])
 			for j in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
-				iVal = pCity.getBuildingCommerceChange(item[1], j)
+				iVal = aGrantedCommerces[j]
 				if iVal != 0:
 					sText += u"%d%c" %(iVal, TEXT.getSymbolChar("COMMERCE_", j))
 			screen.setTableInt("WBModifyBuilding", 1, iRow, "<font=3>" + sText + "</font>", "", WidgetTypes.WIDGET_HELP_BUILDING, item[1], -1, 1<<0)
@@ -434,11 +436,11 @@ class WBCityDataScreen:
 		if bRemove:
 			iCount = -iCount
 		if iType < YieldTypes.NUM_YIELD_TYPES:
-			pCity.setBuildingYieldChange(iBuilding, iType, pCity.getBuildingYieldChange(iBuilding, iType) + iCount)
+			pCity.setBuildingYieldChange(iBuilding, iType, pCity.getBuildingGrantedYields(iBuilding)[iType] + iCount)
 		else:
 			iType -= YieldTypes.NUM_YIELD_TYPES
 			if iType < CommerceTypes.NUM_COMMERCE_TYPES:
-				pCity.setBuildingCommerceChange(iBuilding, iType, pCity.getBuildingCommerceChange(iBuilding, iType) + iCount)
+				pCity.setBuildingCommerceChange(iBuilding, iType, pCity.getBuildingGrantedCommerces(iBuilding)[iType] + iCount)
 			else:
 				iType -= CommerceTypes.NUM_COMMERCE_TYPES
 				if iType == 0:

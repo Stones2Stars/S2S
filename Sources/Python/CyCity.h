@@ -144,14 +144,12 @@ public:
 
 	void kill();
 
-	int getRevolutionIndex() const;
 	void setRevolutionIndex(int iNewValue);
 	void changeRevolutionIndex(int iChange);
 
 	int getLocalRevIndex() const;
 	void setLocalRevIndex(int iNewValue);
 
-	int getRevIndexAverage() const;
 	void setRevIndexAverage(int iNewValue);
 	void updateRevIndexAverage();
 
@@ -239,7 +237,6 @@ public:
 
 	int unhappyLevel(int iExtra) const;
 	int happyLevel() const;
-	int angryPopulation(int iExtra) const;
 	int totalFreeSpecialists() const;
 	int goodHealth() const;
 	int badHealth() const;
@@ -267,7 +264,6 @@ public:
 
 	int getGameTurnFounded() const;
 	int getGameDateFounded() const;
-	int getGameTurnAcquired() const;
 	int getPopulation() const;
 	void setPopulation(int iNewValue);
 	void changePopulation(int iChange);
@@ -290,9 +286,7 @@ public:
 	int getMaintenance() const;
 	int getMaintenanceTimes100() const;
 
-	int getEspionageHealthCounter() const;
 	void changeEspionageHealthCounter(int iChange);
-	int getEspionageHappinessCounter() const;
 	void changeEspionageHappinessCounter(int iChange);
 
 	int getBuildingHealth(int iBuilding) const;
@@ -312,10 +306,8 @@ public:
 
 	int getConscriptAngerTimer() const;
 	void changeConscriptAngerTimer(int iChange);
-	int getDefyResolutionAngerTimer() const;
 	void changeDefyResolutionAngerTimer(int iChange);
 	int flatDefyResolutionAngerLength() const;
-	int getHappinessTimer() const;
 	void changeHappinessTimer(int iChange);
 	bool isNoUnhappiness() const;
 
@@ -333,12 +325,10 @@ public:
 	int getBuildingDefense() const;
 	int getMaxAirlift() const;
 	bool isPowered() const;
-	int getDefenseDamage() const;
 	void changeDefenseDamage(int iChange);
 	int getTotalDefense(bool bIgnoreBuilding) const;
 	int getDefenseModifier(bool bIgnoreBuilding) const;
 
-	int getOccupationTimer() const;
 	bool isOccupation() const;
 	void setOccupationTimer(int iNewValue);
 	void changeOccupationTimer(int iChange);
@@ -466,9 +456,7 @@ public:
 	int getOrderQueueLength() const;
 	OrderData getOrderFromQueue(int iIndex) const;
 
-	int getBuildingYieldChange(int /*BuildingTypes*/ eBuilding, int /*YieldTypes*/ eYield) const;
 	void setBuildingYieldChange(int /*BuildingTypes*/ eBuilding, int /*YieldTypes*/ eYield, int iChange);
-	int getBuildingCommerceChange(int /*BuildingTypes*/ eBuilding, int /*CommerceTypes*/ eCommerce) const;
 	void setBuildingCommerceChange(int /*BuildingTypes*/ eBuilding, int /*CommerceTypes*/ eCommerce, int iChange);
 	int getBuildingHappyChange(int /*BuildingTypes*/ eBuilding) const;
 	void setBuildingHappyChange(int /*BuildingTypes*/ eBuilding, int iChange);

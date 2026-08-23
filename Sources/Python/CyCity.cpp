@@ -30,11 +30,6 @@ void CyCity::kill()
 	m_pCity->kill(true);
 }
 
-int CyCity::getRevolutionIndex() const
-{
-	return m_pCity->getRevolutionIndex();
-}
-
 void CyCity::setRevolutionIndex(int iNewValue)
 {
 	m_pCity->setRevolutionIndex(iNewValue);
@@ -53,11 +48,6 @@ int CyCity::getLocalRevIndex() const
 void CyCity::setLocalRevIndex(int iNewValue)
 {
 	m_pCity->setLocalRevIndex(iNewValue);
-}
-
-int CyCity::getRevIndexAverage() const
-{
-	return m_pCity->getRevIndexAverage();
 }
 
 void CyCity::setRevIndexAverage(int iNewValue)
@@ -425,11 +415,6 @@ int CyCity::happyLevel() const
 	return aWellbeing[WELLBEING_HAPPINESS] / 100;
 }
 
-int CyCity::angryPopulation(int iExtra) const
-{
-	return m_pCity->angryPopulation(iExtra);
-}
-
 int CyCity::totalFreeSpecialists() const
 {
 	return m_pCity->totalFreeSpecialists();
@@ -571,11 +556,6 @@ int CyCity::getGameDateFounded() const
 	return m_pCity->getGameDateFounded(bHistoricalCalendar);
 }
 
-int CyCity::getGameTurnAcquired() const
-{
-	return m_pCity->getGameTurnAcquired();
-}
-
 int CyCity::getPopulation() const
 {
 	return m_pCity->getPopulation();
@@ -683,19 +663,9 @@ int CyCity::getMaintenanceTimes100() const
 	return (int)m_pCity->getMaintenanceTimes100();
 }
 
-int CyCity::getEspionageHealthCounter() const
-{
-	return m_pCity->getEspionageHealthCounter();
-}
-
 void CyCity::changeEspionageHealthCounter(int iChange)
 {
 	m_pCity->changeEspionageHealthCounter(iChange);
-}
-
-int CyCity::getEspionageHappinessCounter() const
-{
-	return m_pCity->getEspionageHappinessCounter();
 }
 
 void CyCity::changeEspionageHappinessCounter(int iChange)
@@ -773,11 +743,6 @@ void CyCity::changeConscriptAngerTimer(int iChange)
 	m_pCity->changeConscriptAngerTimer(iChange);
 }
 
-int CyCity::getDefyResolutionAngerTimer() const
-{
-	return m_pCity->getDefyResolutionAngerTimer();
-}
-
 void CyCity::changeDefyResolutionAngerTimer(int iChange)
 {
 	m_pCity->changeDefyResolutionAngerTimer(iChange);
@@ -786,11 +751,6 @@ void CyCity::changeDefyResolutionAngerTimer(int iChange)
 int CyCity::flatDefyResolutionAngerLength() const
 {
 	return m_pCity->flatDefyResolutionAngerLength();
-}
-
-int CyCity::getHappinessTimer() const
-{
-	return m_pCity->getHappinessTimer();
 }
 
 void CyCity::changeHappinessTimer(int iChange)
@@ -874,11 +834,6 @@ bool CyCity::isPowered() const
 	return m_pCity->isPowered();
 }
 
-int CyCity::getDefenseDamage() const
-{
-	return m_pCity->getDefenseDamage();
-}
-
 void CyCity::changeDefenseDamage(int iChange)
 {
 	m_pCity->changeDefenseDamage(iChange);
@@ -892,11 +847,6 @@ int CyCity::getTotalDefense(bool bIgnoreBuilding) const
 int CyCity::getDefenseModifier(bool bIgnoreBuilding) const
 {
 	return m_pCity->getDefenseModifier(bIgnoreBuilding);
-}
-
-int CyCity::getOccupationTimer() const
-{
-	return m_pCity->getOccupationTimer();
 }
 
 bool CyCity::isOccupation() const
@@ -1365,19 +1315,9 @@ void CyCity::setScriptData(std::string szNewValue)
 	m_pCity->setScriptData(szNewValue);
 }
 
-int CyCity::getBuildingYieldChange(int /*BuildingTypes*/ eBuilding, int /*YieldTypes*/ eYield) const
-{
-	return m_pCity->getBuildingYieldChange((BuildingTypes)eBuilding, (YieldTypes)eYield);
-}
-
 void CyCity::setBuildingYieldChange(int /*BuildingTypes*/ eBuilding, int /*YieldTypes*/ eYield, int iChange)
 {
 	m_pCity->setBuildingYieldChange((BuildingTypes)eBuilding, (YieldTypes)eYield, iChange);
-}
-
-int CyCity::getBuildingCommerceChange(int /*BuildingTypes*/ eBuilding, int /*CommerceTypes*/ eCommerce) const
-{
-	return m_pCity->getBuildingCommerceChange((BuildingTypes)eBuilding, (CommerceTypes)eCommerce);
 }
 
 void CyCity::setBuildingCommerceChange(int /*BuildingTypes*/ eBuilding, int /*CommerceTypes*/ eCommerce, int iChange)
