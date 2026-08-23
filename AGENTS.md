@@ -375,6 +375,47 @@ not findings to re-discover.
   THRESHOLD, so it is incidental rather than a competing objective the AI could steer by. Modelling it buys no
   better decision at per-(route × improvement) cost on a hot loop.
 
+### AI valuation of STRENGTH — a valuation that cannot tell strengths apart is FIXED, never filed
+
+- **⛔ AN AI VALUATION DEFECT THAT UNDERVALUES STRENGTH IS SOLVED IN THE WORK ITEM THAT FINDS IT (owner): it
+  *"should be solved, otherwise AI will permanently undervalue strength, and would be a chief source of low cost
+  unit spam."*** ⚑ This is the one place where the standing "the AI side is a consumer, out of active scope"
+  framing ([north-star.md](docs/architecture/north-star.md)) does NOT license leaving it — an AI that cannot
+  rank strength does not merely tune badly, it stops choosing on strength at all, which is the behaviour-break-
+  wearing-a-balance-costume class ([fixed-point-and-scales.md §5](docs/specs/curators/fixed-point-and-scales.md)).
+  ⇒ "That's AI weighting, so it comes after correctness" is NOT a reason to defer one
+  (["deferred" is banned](#design)).
+- **⛔ THE FAILURE SHAPE IS A CHOICE THAT DOES NOT VARY WITH STRENGTH — look for it at the RANKING, not in the
+  formula.** `AI_unitValue` does weigh strength: it multiplies nearly every term by
+  `CvGameAI::AI_combatValue`, which is linear in the unit's own strength. So a strength-blind AI decision is
+  almost never a missing term — it is a call site that never lets the value decide. Two proven instances:
+  - **`AI_unitValue` returns 0 for EVERY unit under a great-person UNITAI.** `UNITAI_GREAT_HUNTER` and its
+    siblings (`PROPHET`/`ARTIST`/`SCIENTIST`/`GENERAL`/`GREAT_ADMIRAL`/`MERCHANT`/`ENGINEER`/`SPY`/
+    `ATTACK_CITY_LEMMING`) fall through the validity switch leaving `bValid` false, so the function returns 0
+    before scoring. Correct for production (they are not trainable roles) and **silently degenerate anywhere
+    that RANKS with it** — every candidate ties at 0. ⇒ Where a role scores everything 0, rank the candidate as
+    the unit it will actually BE (its `getDefaultUnitAI()`).
+  - **`CvUnitAI::AI_upgrade` picked the upgrade with a die roll.** `AI_unitValue` was only a `>=` admission
+    filter and the winner came from `getSorenRandNum(1000, "AI Upgrade")` — so strength contributed NOTHING to
+    which unit a chain upgraded into. ⚑ The correct idiom is twenty lines below it in the same file:
+    `AI_promote` ranks on `AI_promotionValue`.
+- **⛔ THE DRAW STAYS — DEMOTE IT TO A TIE-BREAK, NEVER DELETE IT.** The number and order of draws on the
+  synchronized stream is shared game state
+  ([engine.md](docs/reference/engine.md#-the-synchronized-rng-is-shared-save-state--do-not-touch-the-draws-owner)),
+  so a strength-blind `getSorenRandNum` pick is repaired by keeping the draw exactly where it is — one per
+  admitted candidate, same order, same label — and letting it settle only an exact tie. ⚠ And keep the ADMISSION
+  test byte-identical: a candidate that newly passes the filter is a new draw, so a fallback valuation must be
+  gated on the degenerate case rather than applied to every candidate.
+- **⚑ TWO THINGS VERIFIED, so they are not re-tread as suspects.** (1) **Every authored unit strength is a whole
+  number** (1583 of 1583), so `AI_combatValue`'s `strength / 100` truncates nothing on real data — it is a latent
+  [a CALCULATION never scales](docs/specs/curators/fixed-point-and-scales.md#2-the-unit-table-what-readjson-does)
+  violation that belongs to the §4c-ter cluster pass, NOT today's balance defect. ⛔ Do not "fix" it by converting
+  `getBestLandUnitCombat()` alone: two sites already lift it back with `100 *`, and the air sites read the genuinely
+  human `getAirCombat()`, so a lone conversion manufactures fresh fudge factors and fails the cluster gate.
+  (2) **`CvCityAI::AI_bestUnit` has NO cost term** — it takes the highest `AI_unitValue` outright — so unit spam
+  can never originate in a value-per-hammer ratio there; it originates in value failing to DISCRIMINATE, or in the
+  needed-counts ([parked/unit-ai-valuation.md](docs/plans/parked/unit-ai-valuation.md)).
+
 ### The CONTRACT BROKER — matching is THREE STAGES, and distance never scores
 
 - **⛔ DISTANCE IS A GATE AND A TIE-BREAK, NEVER A TERM IN THE SCORE (owner): *"I am in general very reticent
