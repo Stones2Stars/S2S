@@ -298,23 +298,33 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   game mechanics are not, and the preprocessor cannot tell you which. The check REPORTS those three classes for
   a human verdict and never fails on them. ⛔ It also flags TU-LOCAL guards (`#define`d in a `Sources/` file, so
   ON in some translation units and OFF in others) as never-collapse-mechanically.
-- **Dead Python bindings: `python Tools/verify-python-bindings.py [--list]`** — a `Cy*` method is reachable from
-  Python ONLY if some `class_<CyX>` block `.def("name", …)`s it; being a public C++ member is not enough. Remove
-  the `.def` and the C++ still compiles, the header still looks alive, and every Python caller starts raising
-  `AttributeError`. ⚑ The COMPILER CANNOT SEE IT — the break lives between a registration list and a `.py` file
-  the compiler never reads — and it fails naming the CALLER, so it reads as *"the advisor is broken"*, never as
-  *"a binding is missing"*. A binding sweep produces it in bulk: one commit cut 494 dangling Cy bindings and
-  nothing checked what still called them. ⛔ **Registration lives in TWO styles and scanning one under-reports
-  badly**: inline `class_<CyX>("CyX").def(…)` under `Sources/Python/`, and loader functions taking
-  `class_<CyX>& inst` under `Sources/Infrastructure/CvPython*Loader.cpp` — so the tool takes the UNION of every
-  `.def("name")` and deliberately does NOT attribute a name to a class (attribution is not needed for the verdict
-  and every attempt at it manufactured false positives). It also requires the call's RECEIVER to denote a Cy
-  handle, which is what makes it precise — `add` is both a `CvArgsList` member and Python's own `set.add`, so a
+- **Python migration burndown: `python Tools/verify-python-bindings.py [--list]`** — counts the methods still
+  DECLARED on a `Cy*` wrapper, registered nowhere, and still CALLED from Python: i.e. consumers not yet
+  re-pointed onto the new read surface. ⛔ **NOT a bug count.** The `Cy*` read-surface cut is DIRECTIONAL and
+  intentional ([the cut is directional](docs/architecture/patterns.md)) — Python→engine READS die, the wrapper
+  keeps only its IDENTITY SET (owner + id + position), the engine→Python callback direction stays — and it
+  deliberately ran AHEAD of the Python migration, because the cut is the forcing function that drives
+  completeness. `CyUnit` publishing 8 methods is that design, not damage. What never existed is a way to count
+  what is LEFT. ⚖ **ADVISORY, and a RATCHET like the registry scans: the count may only FALL**; a rise means a
+  legacy declaration was revived or a legacy call added. It does not fail the run — a permanently-red gate on a
+  known in-progress migration is one nobody can act on.
+  ⛔ **CLOSE ONE BY KILLING THE DECLARATION, NEVER BY RE-REGISTERING IT.** An unpublished legacy method on a
+  wrapper is the per-field contract still written down, so the next agent reads it as the surface and *"just
+  publish what is already declared"* looks like the cheap fix exactly when the new surface arrives. The
+  declaration AND its body go; the Python re-points onto the new surface homed on the type it addresses
+  (`CyCity::getPopulation()`, never `getCityPopulation(owner, id)` — *"the moment you have
+  `getAnotherObjectSomething`, we have failed"*). ⚠ NOT killed with them: the `class_<>` REGISTRATION (a
+  zero-`.def` registration is the type identity the kept engine→Python direction needs — the marshaller throws
+  without a registered converter), the identity set, and anything the ENGINE calls on the wrapper.
+  ⛔ **Registration lives in TWO styles and scanning one under-reports badly**: inline `class_<CyX>("CyX").def(…)`
+  under `Sources/Python/`, and loader functions taking `class_<CyX>& inst` under
+  `Sources/Infrastructure/CvPython*Loader.cpp` — so the tool takes the UNION of every `.def("name")` and
+  deliberately does NOT attribute a name to a class. It also requires the call's RECEIVER to denote a Cy handle,
+  which is what makes it precise — `add` is both a `CyArgsList` member and Python's own `set.add`, so a
   receiver-blind scan reports 40 phantom sites for it and buries the real findings under ~200 like it.
-  ⛔ If it fires, fix the SIDE THAT IS WRONG: a binding Python legitimately needs is RE-REGISTERED; a call into a
-  mechanic that is gone has its PYTHON deleted. **Never register a method just to silence it** — an endpoint is a
-  live consumer, so re-exposing a legacy read keeps that member alive past the compiler census. ⚖ It also REPORTS
-  (never fails on) unresolved calls — names registered nowhere, defined on no `Cy*` class, and not a Python `def`.
+  ⚖ It also reports UNRESOLVED CALLS — names registered nowhere, declared on no `Cy*` class, and not a Python
+  `def`: usually a mechanic removed outright, or one that never existed (`getCommerceRateTimes100` is called by
+  two `canTrigger` predicates and has never existed in the tree, so those two random events cannot fire).
 
 ### Adding a new source subdirectory
 

@@ -1,21 +1,30 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""verify-python-bindings -- a Cy method Python CALLS must actually be REGISTERED.
+"""verify-python-bindings -- the PYTHON-SIDE MIGRATION BURNDOWN, counted.
 
-The `Cy*` classes are the engine's API endpoint for Python. A method is reachable from
-Python only if some `class_<CyX>` block `.def("name", ...)`s it -- being a public C++
-member of CyX is NOT enough. Remove the `.def` and the C++ method still compiles, still
-looks alive in the header, and every Python caller starts raising AttributeError.
+⛔ THIS IS NOT A BUG COUNT. The `Cy*` read-surface cut is DIRECTIONAL AND INTENTIONAL
+(patterns.md, THE CUT IS DIRECTIONAL): Python->engine READS die, the wrapper classes stay
+carrying only their IDENTITY SET (owner + id + position), and the engine->Python callback
+direction is kept. `CyUnit` publishing 8 methods is that design, not damage. The cut
+deliberately ran AHEAD of the Python migration -- "the cut is the forcing function that
+DRIVES completeness, so it never waits on it."
+
+What never existed is a way to COUNT WHAT IS LEFT. That is this tool. It reports the
+methods still DECLARED on a `Cy*` wrapper, registered nowhere, and still CALLED from
+Python -- i.e. Python consumers not yet re-pointed onto the new read surface.
+
+⚖ ADVISORY, AND A RATCHET -- exactly like verify-registry-scans. The count may only FALL;
+a rise means a legacy declaration was revived or a legacy call was added. It does not fail
+the run, because a permanently-red gate on a known in-progress migration is a gate nobody
+can act on.
 
 That is worth a check rather than a rule for the reasons this repo keeps choosing one:
 
   - the COMPILER CANNOT SEE IT. The C++ side is well-formed with or without the `.def`;
-    the break lives between a registration list and a `.py` file the compiler never reads.
-  - it is SILENT until that screen or callback runs, and it fails as a Python traceback
-    naming the CALLER, so it reads as "the advisor is broken", never as "a binding is
-    missing".
-  - a binding sweep is exactly the operation that produces it in bulk. One commit here
-    cut 494 dangling Cy bindings; nothing checked what still called them.
+    the debt lives between a registration list and a `.py` file the compiler never reads.
+  - it is SILENT until that screen or callback runs, and it surfaces as a Python traceback
+    naming the CALLER, so it reads as "the advisor is broken", never as "this consumer was
+    never migrated".
   - and it is trivially mechanical to detect, which is the whole test for a checker.
 
 ⛔ REGISTRATION LIVES IN TWO PLACES AND SCANNING ONLY ONE UNDER-REPORTS BADLY. Some
@@ -28,29 +37,43 @@ of every `.def("name")` under `Sources/`, which is why it does not attribute a n
 class: attribution is not needed for the verdict, and every attempt at it was the thing
 that produced false positives.
 
-Two findings, deliberately separated because only one is provable:
+Two findings, deliberately separated:
 
-  DEAD BINDING (fails the run) -- the method IS defined on a `Cy*` class in C++, is
-  registered NOWHERE, and Python calls that name. There is no reading of that state in
-  which the call works.
+  UNMIGRATED CONSUMER -- the method IS declared on a `Cy*` class in C++, is registered
+  NOWHERE, and Python calls that name. The call raises today; the DECLARATION is legacy
+  contract still written down; the CALL is a consumer not yet re-pointed.
 
-  UNRESOLVED CALL (reported, never fails) -- Python calls a name that is registered
-  nowhere AND defined on no `Cy*` class AND is not a Python `def` anywhere in
-  `Assets/Python`. Usually a method removed outright, or one that never existed; but the
-  receiver's type cannot be known from Python source, so a human decides. ⚖ Advisory for
-  the same reason `verify-registry-scans` is: the mechanical part is certain, the
-  CONTEXT is not.
+  UNRESOLVED CALL -- Python calls a name registered nowhere, declared on no `Cy*` class,
+  and not a Python `def` anywhere in `Assets/Python`. Usually a mechanic removed outright,
+  or one that never existed at all. The receiver's type cannot be known from Python
+  source, so a human decides.
 
-Worked case: `CyUnit` registers exactly 8 methods, while `CvMilitaryAdvisor.py` calls
-`baseCombatStr()` and `airBaseCombatStr()` on the normal unit-row render path -- both
-defined in `CyUnit.cpp`, neither registered. Separately `getCommerceRateTimes100` is
-called by two `canTrigger` predicates and exists nowhere in the tree at all, so those
-random events can never fire.
+⛔ HOW TO CLOSE ONE, AND THE ONE MOVE THAT IS BANNED. The declaration is KILL-ON-SIGHT
+(patterns.md): an unpublished legacy method on a wrapper is not harmless dead weight -- it
+is the per-field contract still written down, so the next agent reads it as the surface
+and "JUST PUBLISH WHAT IS ALREADY DECLARED" looks like the cheap fix at exactly the moment
+the new surface arrives. ⛔ So RE-REGISTERING IT IS THE ANTI-PATTERN, never the fix. The
+declaration and its body go; the Python re-points onto the new surface, homed on the type
+it addresses -- `CyCity::getPopulation()`, never `getCityPopulation(owner, id)`, because
+"the moment you have getAnotherObjectSomething, we have failed."
 
-⛔ If it fires, fix the SIDE THAT IS WRONG. A binding Python legitimately needs is
-RE-REGISTERED; a call into a mechanic that is gone has its PYTHON deleted. Never widen
-the tool, and never register a method just to silence it -- an endpoint is a live
-consumer, and re-exposing a legacy read keeps that member alive past the compiler census.
+⚠ NOT killed alongside them: the `class_<>` REGISTRATION (a zero-`.def` registration is
+the TYPE IDENTITY the kept engine->Python direction needs -- the marshaller throws without
+a registered converter), the identity set, and anything the ENGINE calls on the wrapper.
+
+⚖ And the counterweight, without which killing under-serves: the surface is designed from
+DEMAND and freely given where a consumer genuinely needs a read -- never derived from the
+legacy list. Killing without serving pushes the next consumer back onto legacy; serving by
+preserving the legacy set re-creates the per-field contract.
+
+Worked case: `CvMilitaryAdvisor.py:329/331` calls `baseCombatStr()` / `airBaseCombatStr()`
+on the normal unit-row render path -- declared in `CyUnit.cpp`, registered nowhere, so the
+advisor raises. Separately `getCommerceRateTimes100` is called by two `canTrigger`
+predicates and exists nowhere in the tree at all, so those two random events can never
+fire -- the silent class nobody reports, since you do not miss an event you have never
+seen.
+
+⛔ Never widen the tool to make a count fall.
 
 Run from the repo root:  python Tools/verify-python-bindings.py
                          python Tools/verify-python-bindings.py --list
@@ -156,7 +179,7 @@ def main():
     print("")
 
     if dead:
-        print("DEAD BINDINGS -- defined on a Cy class, registered nowhere, called from Python:")
+        print("UNMIGRATED CONSUMERS -- declared on a Cy class, registered nowhere, called from Python:")
         for method, classes, sites in dead:
             print("  %s   (%s)  -- %d call site(s)" % (method, ", ".join(classes), len(sites)))
             shown = sites if want_list else sites[:3]
@@ -166,11 +189,11 @@ def main():
                 print("      ... and %d more (--list for all)" % (len(sites) - 3))
         print("")
     else:
-        print("DEAD BINDINGS: none")
+        print("UNMIGRATED CONSUMERS: none")
         print("")
 
     if unresolved:
-        print("UNRESOLVED CALLS (ADVISORY -- a human decides; never fails the run):")
+        print("UNRESOLVED CALLS -- a human decides:")
         print("  Python calls these on a Cy-looking receiver; they are registered nowhere,")
         print("  defined on no Cy class, and are not a Python def. Likely a removed mechanic.")
         for method, sites in unresolved:
@@ -178,13 +201,12 @@ def main():
             print("  %s  -- %d call site(s): %s" % (method, len(sites), ", ".join(shown)))
         print("")
 
-    if dead:
-        print("FAILED: %d dead binding(s). Fix the side that is WRONG -- re-register a binding"
-              % len(dead))
-        print("Python legitimately needs, or delete the Python for a mechanic that is gone.")
-        return 1
-
-    print("OK: every Cy method Python calls is registered.")
+    total_sites = sum(len(sites) for _, _, sites in dead)
+    print("BURNDOWN: %d unmigrated method(s) across %d Python call site(s)."
+          % (len(dead), total_sites))
+    print("ADVISORY, and a RATCHET: the count may only FALL. A rise means a legacy declaration")
+    print("was revived or a legacy call added. Close one by KILLING the declaration and")
+    print("re-pointing the Python onto the new surface -- never by re-registering it.")
     return 0
 
 
