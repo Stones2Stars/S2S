@@ -38,8 +38,12 @@ the `CvPlayer`/`CvTeam` side is where the work is.** The replacement surface sta
 > **the victory thresholds** (authored on the building/project, wanted per victory — a reverse view, so it lands
 > at load like the build's produces does, never a per-victory registry sweep), **the ERA** (no registered prefix;
 > ⚠ contrast `WORLD_`, which is NOT a JSON prefix either yet IS mapped explicitly in `CyInfo.cpp` — so absence
-> from the `readJson` X-macro list is not proof a prefix is unserved, CHECK the mapper), and the odd art read
-> (`getButtonDisabled`, the leader art-define / diplo-music tags).
+> from the `readJson` X-macro list is not proof a prefix is unserved, CHECK the mapper).
+> ⚑ **The odd ART reads that used to sit on that list are SERVED, and how they landed is the pattern to copy:**
+> the leader art-define and diplo-music tags as `CyInfo::getLeaderHeadArt` / `getLeaderDiploPeaceMusicScriptId`,
+> and the religion disabled-icon as `CyInfo::getReligionButtonDisabled`. A read belonging to ONE registry is a
+> NAMED endpoint on `CyInfo` taking that registry's bare id — never a new per-type class, and never a generic
+> `getButtonDisabled(prefix, id)` that would answer empty for every registry that has no such art.
 > The `Cy*` WRAPPER classes stay for the engine→Python direction, and each carries its **IDENTITY SET** — owner,
 > id, position, and nothing else ([patterns.md](../architecture/patterns.md) § THE IDENTITY SET). ⛔ The earlier
 > reading here — *"a wrapper with no binding is the correct end state"* — is SUPERSEDED: it was right about the

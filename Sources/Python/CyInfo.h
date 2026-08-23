@@ -420,6 +420,13 @@ public:
 	// image. Art is an untouched system boundary (the roadmap's scope decision 3): this hands over the path the
 	// info already resolved, and resolves nothing itself.
 	std::string getLeaderHeadArt(int iLeaderId) const;
+
+	// ---- RELIGION facts. ----
+	// The GREYED icon path for a religion nobody has founded yet -- the disabled twin of getButton's icon, which
+	// the religion advisor draws for every unfounded slot. Like getLeaderHeadArt this hands over a path the info
+	// already resolved and resolves nothing itself; the derivation (the icon with its "_D.dds" suffix) stays the
+	// info's, so a consumer never rebuilds it from the base button.
+	std::string getReligionButtonDisabled(int iReligionId) const;
 	// The peace-loop entry of the leader's era-keyed diplomacy-music table (-1 = engine default) -- what the
 	// Dawn-of-Man screen plays. Named per table rather than parameterized over the music kind: Python has no
 	// LeaderDiploMusic vocabulary, so an int-slot argument would hide which table a call site reads.

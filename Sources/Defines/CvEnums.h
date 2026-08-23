@@ -466,6 +466,16 @@ enum WidgetTypes
 	WIDGET_HELP_HEALTH_RATE,
 	WIDGET_HELP_HAPPINESS_RATE,
 	WIDGET_HELP_FREE_TECH,
+	//	⛔ INNATE AND PERMANENT -- NEVER REMOVE, REORDER OR REUSE, whatever the authored data does.
+	//	This slot's ORDINAL is load-bearing: the EXE hardcodes WIDGET_CLOSE_SCREEN's numeric value (see its own
+	//	comment below), so deleting ANY member above it shifts that value and every one after it. The DLL then
+	//	sends a number the EXE does not recognise as "close" and EVERY close button in the game stops responding
+	//	-- silently, with ESC still working because that is the keyboard path, not the widget path.
+	//	⚠ It is exactly the shape that reads as safe: no code referenced this widget, so removing it looked like
+	//	an ordinary dead-surface cut. Above WIDGET_CLOSE_SCREEN a dead member is still an ABI obligation, and the
+	//	compiler cannot see it -- which is why CvDLLWidgetData.cpp pins the ordinal with a STATIC_ASSERT beside
+	//	the case that consumes it. If that assert fires, a member above here moved: put it back.
+	WIDGET_HELP_LOS_BONUS,
 	WIDGET_HELP_MAP_CENTER,
 	WIDGET_HELP_MAP_REVEAL,
 	WIDGET_HELP_MAP_TRADE,

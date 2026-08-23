@@ -2087,8 +2087,8 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 				gDLL->getText(
 					"TXT_KEY_CITY_BAR_CULTURE",
 					CvWString::format(L"%I64d", pCity->getCulture(pCity->getOwner())).GetCString(), iThreshold,
-					GC.getCultureLevelInfo(pCity->getCultureLevel()).getTextKeyWide(),
-					GC.getCultureLevelInfo(pCity->getCultureLevel()).getLevel()
+					GC.getCultureLevelInfo(pCity->cultureLevelForRead()).getTextKeyWide(),
+					GC.getCultureLevelInfo(pCity->cultureLevelForRead()).getLevel()
 				)
 			);
 			int aiCityCommerces[NUM_COMMERCE_TYPES];
@@ -2110,8 +2110,8 @@ void CvGameTextMgr::setCityBarHelp(CvWStringBuffer &szString, CvCity* pCity)
 				gDLL->getText(
 					"TXT_KEY_CITY_BAR_CULTURE_MAX",
 					CvWString::format(L"%I64d", pCity->getCulture(pCity->getOwner())).GetCString(),
-					GC.getCultureLevelInfo(pCity->getCultureLevel()).getTextKeyWide(),
-					GC.getCultureLevelInfo(pCity->getCultureLevel()).getLevel()
+					GC.getCultureLevelInfo(pCity->cultureLevelForRead()).getTextKeyWide(),
+					GC.getCultureLevelInfo(pCity->cultureLevelForRead()).getLevel()
 				)
 			);
 		}

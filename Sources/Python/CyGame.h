@@ -203,6 +203,7 @@ public:
 	bool isPitbossHost() const;				// remove once CvApp is exposed
 	int getCurrentLanguage() const;				// remove once CvApp is exposed
 	void setCurrentLanguage(int iNewLanguage);				// remove once CvApp is exposed
+	int getNumLanguages() const;				// remove once CvApp is exposed -- moves WITH the two above
 
 	int getReplayMessageTurn(int i) const;
 	ReplayMessageTypes getReplayMessageType(int i) const;

@@ -29,6 +29,7 @@
 #include "AI/CvPlayerAI.h"       // GET_PLAYER -- the player resolve behind the (player, city) address
 #include "Infos/CvUnitInfo.h"                 // the spread block behind the named canSpreadReligion endpoint
 #include "Infos/CvCivicInfo.h"       // the civic column the bulk index reads
+#include "Infos/CvReligionInfo.h"    // the derived disabled-icon path behind getReligionButtonDisabled
 // The straggler dispatch reaches these concrete registries -- specific headers, never the CvInfos.h umbrella.
 #include "Infos/CvBuildingInfo.h"
 #include "Infos/CvPromotionInfo.h"      // the promotion classification endpoints
@@ -504,6 +505,14 @@ std::string CyInfo::getLeaderHeadArt(int iLeaderId) const
 	const char* szArt = GC.getLeaderHeadInfo((LeaderHeadTypes)iLeaderId).getLeaderHead();
 	return szArt ? std::string(szArt) : std::string();
 }
+
+std::string CyInfo::getReligionButtonDisabled(int iReligionId) const
+{
+	if (iReligionId < 0 || iReligionId >= GC.getNumReligionInfos()) return std::string();
+	const char* szButton = GC.getReligionInfo((ReligionTypes)iReligionId).getButtonDisabled();
+	return szButton ? std::string(szButton) : std::string();
+}
+
 int CyInfo::getLeaderDiploPeaceMusicScriptId(int iLeaderId, int iEra) const
 {
 	//	The peace-loop entry of the era-keyed diplomacy music table (-1 = engine default). Named for what it
@@ -1593,6 +1602,7 @@ void CyInfo::pythonPublish()
 		.def("getUnitAirCombat",        &CyInfo::getUnitAirCombat)
 		.def("isNPCLeader",             &CyInfo::isNPCLeader)
 		.def("getLeaderHeadArt",        &CyInfo::getLeaderHeadArt)
+		.def("getReligionButtonDisabled", &CyInfo::getReligionButtonDisabled)
 		.def("getLeaderDiploPeaceMusicScriptId", &CyInfo::getLeaderDiploPeaceMusicScriptId)
 		.def("providesBonus",           &CyInfo::providesBonus)
 		.def("isGlobalTech",            &CyInfo::isGlobalTech)
