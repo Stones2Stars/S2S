@@ -1535,6 +1535,17 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   > exactly the factor the pivot was already applying — a fudge factor whose existence says two operands are on
   > different scales ([AGENTS.md](../../AGENTS.md#conduct) drift detector 2). *(This is the pattern for every game-option-specific system — each gets its own block; `hideAndSeek`
   below is its sibling.)*
+
+  > **⚖ THE SM REVOLT-PROTECTION PLANE IS DELIBERATELY OFF, AND IT STAYS OFF UNTIL REVOLUTIONS ARE REWORKED
+  > (owner).** `CvUnit::revoltProtectionTotal` returns the plain authored value — the SM branch and the
+  > `setSMRevoltProtection()` call that feeds it are both commented out, because the multiplicative plane
+  > *"seems to give some weird results"*.
+  > ⛔ **So `m_iSMRevoltProtection` is SERIALIZED with no live writer, and that is NOT a defect to clean up.**
+  > It is the exact shape a writerless-accumulator sweep deletes on sight, and deleting it would silently retire
+  > a switch someone turned off on purpose — a deliberate off-switch is protected by its REASON
+  > ([AGENTS.md](../../AGENTS.md#design)), which is why the reason is recorded here rather than left in a
+  > comment. Leave the member, its save tag and the commented plane as they are; the verdict is re-taken when
+  > revolutions are.
 - **`hideAndSeek`** — the concealment-vs-detection CONTEST (gated by `GAMEOPTION_COMBAT_HIDE_AND_SEEK`), the
   own-block sibling of `sizeMatters`. **Two contest members, one per side of the equation:** `concealment` (how
   well this unit hides) and `detection` (how well it finds a hidden one, per method it answers, each entry
