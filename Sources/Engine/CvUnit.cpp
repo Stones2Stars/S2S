@@ -11067,9 +11067,18 @@ void CvUnit::setBaseCombatStr(int iCombat)
 	m_iBaseCombat100 = 100 * iCombat;
 }
 
+// ⛔ AN UNCOMPUTED SM CACHE FALLS BACK -- it is never returned raw. m_iSMStrength is derived state that only
+// setSMValues() writes, so between an owner's reset() and that call it reads 0; returning it makes maxCombatStr
+// floor at max(1, 0) and the unit fights at 0.01 strength while its HP, odds and damage all stay correct. Every
+// other member of this family already guards the same way (getMaxHP, getSMCargoCapacity, getSMAirBombBaseRate,
+// getSMBaseWorkRate); strength was the one that did not.
 int CvUnit::baseCombatStr() const
 {
-	return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? getSMStrength() : baseCombatStrPreCheck();
+	if (!GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) || getSMStrength() == 0)
+	{
+		return baseCombatStrPreCheck();
+	}
+	return getSMStrength();
 }
 
 // THE human read boundary -- the ONE ÷100 on this cluster. Strength is ×100 everywhere inside the engine, so
@@ -11083,11 +11092,11 @@ int CvUnit::baseCombatStrHuman() const
 
 int CvUnit::airBaseCombatStr() const
 {
-	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
+	if (!GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) || getSMStrength() == 0)
 	{
-		return getSMStrength();
+		return baseAirCombatStrPreCheck();
 	}
-	return baseAirCombatStrPreCheck();
+	return getSMStrength();
 }
 
 int CvUnit::baseCombatStrPreCheck() const
@@ -11134,7 +11143,22 @@ int CvUnit::getSMStrength() const
 void CvUnit::setSMStrength()
 {
 	const int iStrength = getDomainType() == DOMAIN_AIR? baseAirCombatStrPreCheck() : baseCombatStrPreCheck();
-	m_iSMStrength = applySMRank(iStrength, getSizeMattersOffsetValue(), GC.getSIZE_MATTERS_MOST_MULTIPLIER());
+	const int iOffset = getSizeMattersOffsetValue();
+
+	// ⛔ A UNIT WITH NO SIZE CATEGORY IS NOT RANKED -- the offset is quality + group + size - 15, so a unit
+	// carrying none of the three taxonomy classes lands on -15 and applySMRank divides its strength by
+	// 1.5^15 (~438x), which floors it to 0.01 whatever it was authored at. That is not a small unit, it is an
+	// unclassified one, and Size Matters has nothing to say about it. setSMAssetValue already carves the same
+	// case out ("Special Case for size cat undefined units"); strength did not, so five spacecraft fought at
+	// the floor while their asset value was left correct.
+	if (iOffset == -15)
+	{
+		m_iSMStrength = iStrength;
+	}
+	else
+	{
+		m_iSMStrength = applySMRank(iStrength, iOffset, GC.getSIZE_MATTERS_MOST_MULTIPLIER());
+	}
 	FASSERT_NOT_NEGATIVE(m_iSMStrength);
 }
 
