@@ -1478,6 +1478,16 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   key suffix. Members: base ranks `qualityBase`/`groupBase`/`sizeBase` (UnitCombat only); the scalars `quality`,
   `group`, `sizeModifier`, `maxHP`; `combatModifier: { perSizeMore, perSizeLess, perVolumeMore, perVolumeLess }`;
   `cargo: { smSpace, volume, volumeModifier }`.
+  > **⛔ `maxHP` IS ONLY EVER AN INCREASE — HP ITSELF IS A PURE ENGINE VALUE AND IS NOT CURATED (owner).** The
+  > base is the `MAX_HIT_POINTS` global; authored data contributes percentage/flat INCREASES on top and nothing
+  > else, which is why every consumer of this key feeds `changeExtraMaxHP` rather than seating a base.
+  > ⚠ **Reading it as the base is silent and total.** No entity authors `sizeMatters.maxHP` — none does in the
+  > legacy XML either, because the value was always the engine default — so a base read resolves to 0 and every
+  > unit in the game floors to ONE hit point. Combat then ends on the first connecting hit, so the WINNER takes
+  > no damage (the loser still dies, through a direct `setDamage`), and the interface draws every health bar
+  > against `MAX_HIT_POINTS` and shows them all red. Nothing errors and the build is green throughout.
+  > ⚑ The same test settles the rest of this block: a key here is a DELTA unless the entity's own row says it is
+  > a base rank, and the three `*Base` names are the only bases.
   - **UnitCombat** (the intrinsic **base ranks** + SM combat data): carries `qualityBase`/`groupBase`/`sizeBase` plus
     `maxHP`/`combatModifier`/`cargo`. A base equal to the legacy `−10` "unset" sentinel is emitted **absent** (never
     `0` — `0` is a real rank).

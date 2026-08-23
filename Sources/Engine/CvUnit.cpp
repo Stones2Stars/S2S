@@ -24064,7 +24064,17 @@ int CvUnit::getMaxHP() const
 
 int CvUnit::HPValueTotalPreCheck() const
 {
-	return std::max(1, m_pUnitInfo->getSizeMatters().maxHP + getExtraMaxHP());
+	//	⛔ HP IS A PURE ENGINE VALUE AND IS NOT CURATED (owner). The base is MAX_HIT_POINTS; authored data
+	//	contributes only INCREASES, and those already arrive through getExtraMaxHP -- which is exactly how every
+	//	other reader of sizeMatters.maxHP treats it (a promotion or unit-combat DELTA fed to changeExtraMaxHP).
+	//	⚠ Reading that field as the BASE put a curated value in front of an engine one. Nothing authors it, in
+	//	JSON or in the legacy XML, so the base was 0 and this floored to 1 -- every unit in the game had ONE hit
+	//	point. Combat then ended on the first connecting hit, so the WINNER never took damage (the loser dies via
+	//	a direct setDamage elsewhere, which is why losses still worked), and the interface drew every bar against
+	//	MAX_HIT_POINTS, so all of them read red.
+	//	⚑ This restores the archived semantic exactly: CvUnitInfo::getMaxHP returned 100 whenever Size Matters
+	//	was off OR its per-unit value was unset. The SM path is untouched and still answers getSMHPValue().
+	return std::max(1, GC.getMAX_HIT_POINTS() + getExtraMaxHP());
 }
 
 int CvUnit::getSMHPValue() const
