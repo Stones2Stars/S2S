@@ -911,13 +911,8 @@ of them:
   > declarations its Python still calls is the work outstanding, not the design achieved. The burndown is
   > countable — `python Tools/verify-python-bindings.py` (Validation).
 
-  > **⚖ THE IDENTITY SET — A HANDLE ALWAYS PUBLISHES OWNER + ID + POSITION, AND THAT ALONE IS WHAT KEEPS A
-  > LEGACY CONSUMER WORKING (owner).**
-  > *"Carry identity set — if that is what it takes for legacy to keep working then it's an obvious tradeoff. I
-  > only want to refactor the python I have to, otherwise we **never** will be done."* A legacy consumer holding
-  > a handle must be able to say WHICH object it holds; re-pointing every such site onto the read planes is
-  > refactoring that buys nothing and does not converge.
-  > ⛔ **It is the ADDRESS, and it is what a legacy consumer needs to name its object.** Owner, id, position.
+  > **⚖ THE IDENTITY SET — EVERY HANDLE PUBLISHES OWNER + ID + POSITION (owner).** It is the ADDRESS: what a
+  > consumer needs in order to say WHICH object it holds.
   > [the Cy* surface is not a fixed contract](#-the-python-read-boundary--one-complete-data-fetching-library-owner)'s ban on the legacy info/state GETTER contract is untouched:
   > what a handle must never become is the old per-field surface restored wholesale.
   >

@@ -892,6 +892,15 @@ the total-observability bar below.)
   chronicles): it states what IS. Anything outdated is DELETED, not annotated — git history is the archaeology, and
   [superseded-ideas.md](docs/architecture/superseded-ideas.md) is the only tombstone registry (one line per dead
   approach that carries revival risk). Migration/status chronicles belong in `docs/plans/`, never in specs.
+- **⛔ A RULE CARRIES NO EXPIRING REASON — state the rule, not the circumstance that prompted it (owner).** A
+  justification that is true only while some task is in flight does not retire with the task: it stays on the
+  page as PERMISSION, and the next agent reads it as licence to do the smaller thing. ⚑ Measured: *"I only want
+  to refactor the python I have to, otherwise we never will be done"* was scoped to one migration; once that
+  work finished the sentence remained, still reading as a standing instruction to minimise the refactor — beside
+  a rule the tree had already outgrown. **A reason that can expire is a liability, not context.** ⚖ This does
+  NOT ban the durable WHY — why a site is an edge, why a value is genuinely exceptional, why a switch protects
+  against a crash nobody remembers. The test is whether the reason survives the work: if it was true only
+  *during*, it does not go in.
 - **⛔ SPEC + a SHORT BULLETED TODO — never a TODO LIST *inside* a doc, and never status woven through prose
   (owner).** Status claims DRIFT — that is their nature, not a discipline failure — so the more of them a doc
   carries, the faster the whole doc rots and the more confidently it misleads. **A doc is therefore one of two
