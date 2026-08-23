@@ -82,9 +82,10 @@ Live verification reads the HTTP surface ([http-endpoints.md](http-endpoints.md)
 still-open work of building ONE new uniform getter set and disconnecting the legacy channel-shaped getters —
 [build a new getter surface, never widen a legacy one](../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner),
 [patterns.md § THE TWO READ ROLES](../architecture/patterns.md)), so a
-manifestation poll reads the SPINE-WRITTEN LOGS plus the four stored-side DECOMPOSITION censuses that survive
-(`/computed/cascade/packages`, `/computed/enabler/operating`, `/computed/city/yield`, `/computed/capabilities` —
-[http-endpoints.md](http-endpoints.md)). ⛔ Their `oracle` twins are DEAD for the reason above (§ THERE IS NO
+manifestation poll reads the SPINE-WRITTEN LOGS plus the stored-side DECOMPOSITION censuses that survive. ⚠ Their
+number is deliberately NOT stated here — an enumerated route list in a doc has drifted twice: the `ROUTES` table in
+`Sources/Tools/CvHttpServer.cpp::handleRequest` is their census, and `GET /computed` serves the live index
+([http-endpoints.md](http-endpoints.md)). ⛔ Their `oracle` twins are DEAD for the reason above (§ THERE IS NO
 COMPARISON TWIN) and must not be run as evidence nor rebuilt. Everything else a check wants must be EMITTED
 first; emitting it is step one of that item's fix, and a value not on the surface is not verifiable — never
 eyeballed off the screen as a substitute.

@@ -1546,7 +1546,7 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   > ([AGENTS.md](../../AGENTS.md#design)), which is why the reason is recorded here rather than left in a
   > comment. Leave the member, its save tag and the commented plane as they are; the verdict is re-taken when
   > revolutions are.
-- **`hideAndSeek`** — the concealment-vs-detection CONTEST (gated by `GAMEOPTION_COMBAT_HIDE_AND_SEEK`), the
+- **`hideAndSeek`** — the concealment-vs-detection CONTEST (gated by `GAMEOPTION_COMBAT_HIDE_SEEK`), the
   own-block sibling of `sizeMatters`. **Two contest members, one per side of the equation:** `concealment` (how
   well this unit hides) and `detection` (how well it finds a hidden one, per method it answers, each entry
   qualified `{unit: HAS_<SKILL>}`). Both are graduated magnitudes and both may be NEGATIVE — a negative

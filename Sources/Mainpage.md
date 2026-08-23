@@ -189,8 +189,8 @@ Groups multiple `CvSelectionGroup` objects under a unified command:
 - Tracks a leader group, a list of member group IDs, a target plot, and a mission type.
 - `doTurn()` drives coordinated movement; `CheckTargetCity()` and
   `CheckTargetDefendPlot()` evaluate objective validity each turn.
-- Guarded by the `CVARMY_BREAKSAVE` compile switch (disabled by default to maintain
-  save-game compatibility).
+- Compiled in: `CVARMY_BREAKSAVE` is defined unconditionally in `Sources/Defines/CvDefines.h`, and
+  `CvPlayerAI::AI_formArmies()` runs from the per-turn AI pass.
 
 ### Map and Plot (`CvMap`, `CvPlot`)
 
