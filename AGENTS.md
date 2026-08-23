@@ -298,6 +298,23 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   game mechanics are not, and the preprocessor cannot tell you which. The check REPORTS those three classes for
   a human verdict and never fails on them. ⛔ It also flags TU-LOCAL guards (`#define`d in a `Sources/` file, so
   ON in some translation units and OFF in others) as never-collapse-mechanically.
+- **Dead Python bindings: `python Tools/verify-python-bindings.py [--list]`** — a `Cy*` method is reachable from
+  Python ONLY if some `class_<CyX>` block `.def("name", …)`s it; being a public C++ member is not enough. Remove
+  the `.def` and the C++ still compiles, the header still looks alive, and every Python caller starts raising
+  `AttributeError`. ⚑ The COMPILER CANNOT SEE IT — the break lives between a registration list and a `.py` file
+  the compiler never reads — and it fails naming the CALLER, so it reads as *"the advisor is broken"*, never as
+  *"a binding is missing"*. A binding sweep produces it in bulk: one commit cut 494 dangling Cy bindings and
+  nothing checked what still called them. ⛔ **Registration lives in TWO styles and scanning one under-reports
+  badly**: inline `class_<CyX>("CyX").def(…)` under `Sources/Python/`, and loader functions taking
+  `class_<CyX>& inst` under `Sources/Infrastructure/CvPython*Loader.cpp` — so the tool takes the UNION of every
+  `.def("name")` and deliberately does NOT attribute a name to a class (attribution is not needed for the verdict
+  and every attempt at it manufactured false positives). It also requires the call's RECEIVER to denote a Cy
+  handle, which is what makes it precise — `add` is both a `CvArgsList` member and Python's own `set.add`, so a
+  receiver-blind scan reports 40 phantom sites for it and buries the real findings under ~200 like it.
+  ⛔ If it fires, fix the SIDE THAT IS WRONG: a binding Python legitimately needs is RE-REGISTERED; a call into a
+  mechanic that is gone has its PYTHON deleted. **Never register a method just to silence it** — an endpoint is a
+  live consumer, so re-exposing a legacy read keeps that member alive past the compiler census. ⚖ It also REPORTS
+  (never fails on) unresolved calls — names registered nowhere, defined on no `Cy*` class, and not a Python `def`.
 
 ### Adding a new source subdirectory
 
