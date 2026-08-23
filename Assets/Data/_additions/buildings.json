@@ -22,5 +22,70 @@
  "BUILDING_WATERPROOF_CEMENT_MAKER": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -5 } } },
  "BUILDING_BRICK_BRIDGE": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -3 } } },
  "BUILDING_MOAT": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -12 } } },
- "BUILDING_GUILD_MASONS": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -6 } } }
+ "BUILDING_GUILD_MASONS": { "PROPERTY_FLAMMABILITY": { "city": { "flat": -6 } } },
+
+ "BUILDING_RAIN_DANCE": {
+  "cost": { "production": 120, "sizeModifier": 1, "countModifier": 1, "materialsModifier": 1, "complexityModifier": 1, "hurryModifier": 100 },
+  "identity": { "notConstructible": false },
+  "requires": { "build": { "all": [
+   "TECH_PREHISTORIC_DANCE",
+   { "any": [ "BUILDING_DANCE_HUT", "BUILDING_DANCE_HALL", "BUILDING_NIGHT_CLUB" ] },
+   { "type": "MAPCATEGORY_EARTH", "scope": "plot" }
+  ] } }
+ },
+ "BUILDING_WAR_DANCE": {
+  "cost": { "production": 120, "sizeModifier": 1, "countModifier": 1, "materialsModifier": 1, "complexityModifier": 1, "hurryModifier": 100 },
+  "identity": { "notConstructible": false },
+  "requires": { "build": { "all": [
+   "TECH_PREHISTORIC_DANCE",
+   { "any": [ "BUILDING_DANCE_HUT", "BUILDING_DANCE_HALL", "BUILDING_NIGHT_CLUB" ] },
+   { "type": "MAPCATEGORY_EARTH", "scope": "plot" }
+  ] } }
+ },
+ "BUILDING_FIRE_DANCE": {
+  "cost": { "production": 120, "sizeModifier": 1, "countModifier": 1, "materialsModifier": 1, "complexityModifier": 1, "hurryModifier": 100 },
+  "identity": { "notConstructible": false },
+  "requires": { "build": { "all": [
+   "TECH_PREHISTORIC_DANCE",
+   "TECH_CONTROLLED_FIRE",
+   { "any": [ "BUILDING_IMU", "BUILDING_FIRE_PIT", "BUILDING_BONFIRE", "BUILDING_CHARCOAL_BURNER" ] },
+   { "type": "MAPCATEGORY_EARTH", "scope": "plot" }
+  ] } }
+ },
+ "BUILDING_NATURE_DANCE": {
+  "cost": { "production": 120, "sizeModifier": 1, "countModifier": 1, "materialsModifier": 1, "complexityModifier": 1, "hurryModifier": 100 },
+  "identity": { "notConstructible": false },
+  "requires": { "build": { "all": [
+   "TECH_PREHISTORIC_DANCE",
+   { "any": [ "BUILDING_DANCE_HUT", "BUILDING_DANCE_HALL", "BUILDING_NIGHT_CLUB" ] },
+   { "type": "MAPCATEGORY_EARTH", "scope": "plot" }
+  ] } }
+ },
+ "BUILDING_MOON_DANCE": {
+  "cost": { "production": 120, "sizeModifier": 1, "countModifier": 1, "materialsModifier": 1, "complexityModifier": 1, "hurryModifier": 100 },
+  "identity": { "notConstructible": false },
+  "requires": { "build": { "all": [
+   "TECH_PREHISTORIC_DANCE",
+   { "any": [ "BUILDING_DANCE_HUT", "BUILDING_DANCE_HALL", "BUILDING_NIGHT_CLUB" ] },
+   { "type": "MAPCATEGORY_EARTH", "scope": "plot" }
+  ] } }
+ },
+ "BUILDING_FERTILITY_DANCE": {
+  "cost": { "production": 120, "sizeModifier": 1, "countModifier": 1, "materialsModifier": 1, "complexityModifier": 1, "hurryModifier": 100 },
+  "identity": { "notConstructible": false },
+  "requires": { "build": { "all": [
+   "TECH_PREHISTORIC_DANCE",
+   { "any": [ "BUILDING_DANCE_HUT", "BUILDING_DANCE_HALL", "BUILDING_NIGHT_CLUB" ] },
+   { "type": "MAPCATEGORY_EARTH", "scope": "plot" }
+  ] } }
+ },
+ "BUILDING_BLOOD_DANCE": {
+  "cost": { "production": 120, "sizeModifier": 1, "countModifier": 1, "materialsModifier": 1, "complexityModifier": 1, "hurryModifier": 100 },
+  "identity": { "notConstructible": false },
+  "requires": { "build": { "all": [
+   "TECH_PREHISTORIC_DANCE",
+   { "any": [ "BUILDING_DANCE_HUT", "BUILDING_DANCE_HALL", "BUILDING_NIGHT_CLUB", "BUILDING_FIRE_PIT", "BUILDING_BONFIRE", "BUILDING_IMU", "BUILDING_CHARCOAL_BURNER" ] },
+   { "type": "MAPCATEGORY_EARTH", "scope": "plot" }
+  ] } }
+ }
 }

@@ -29,6 +29,22 @@
      "scope": "plot"
     }
    ]
+  },
+  "build": {
+   "all": [
+    "TECH_PREHISTORIC_DANCE",
+    {
+     "any": [
+      "BUILDING_DANCE_HUT",
+      "BUILDING_DANCE_HALL",
+      "BUILDING_NIGHT_CLUB"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
   }
  },
  "food": {
@@ -58,11 +74,19 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FERTILITY_DANCE",
   "civilopedia": "TXT_KEY_BUILDING_FERTILITY_DANCE_PEDIA",
-  "notConstructible": true,
+  "notConstructible": false,
   "worth": 1,
   "advisor": "ADVISOR_ECONOMY",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]
+ },
+ "cost": {
+  "production": 120,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
  }
 }

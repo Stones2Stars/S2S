@@ -28,6 +28,24 @@
      "scope": "plot"
     }
    ]
+  },
+  "build": {
+   "all": [
+    "TECH_PREHISTORIC_DANCE",
+    "TECH_CONTROLLED_FIRE",
+    {
+     "any": [
+      "BUILDING_IMU",
+      "BUILDING_FIRE_PIT",
+      "BUILDING_BONFIRE",
+      "BUILDING_CHARCOAL_BURNER"
+     ]
+    },
+    {
+     "type": "MAPCATEGORY_EARTH",
+     "scope": "plot"
+    }
+   ]
   }
  },
  "culture": {
@@ -62,12 +80,20 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_FIRE_DANCE",
   "civilopedia": "TXT_KEY_BUILDING_FIRE_DANCE_PEDIA",
-  "notConstructible": true,
+  "notConstructible": false,
   "worth": 1,
   "conquestProbability": 70,
   "advisor": "ADVISOR_CULTURE",
   "mapCategories": [
    "MAPCATEGORY_EARTH"
   ]
+ },
+ "cost": {
+  "production": 120,
+  "sizeModifier": 1,
+  "countModifier": 1,
+  "materialsModifier": 1,
+  "complexityModifier": 1,
+  "hurryModifier": 100
  }
 }
