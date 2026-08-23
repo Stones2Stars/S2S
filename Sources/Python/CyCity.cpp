@@ -400,7 +400,6 @@ int CyCity::getRevIndexPercentAnger() const
 	return m_pCity->getRevIndexPercentAnger();
 }
 
-// The wellbeing reads index the realized channel array; ÷100 here because this is the reader boundary.
 int CyCity::totalFreeSpecialists() const
 {
 	return m_pCity->totalFreeSpecialists();
@@ -1483,15 +1482,22 @@ namespace
 	//	representation is not logic -- turning the engine's internal ×100 fixed point into the external form is
 	//	precisely this layer's job, and the only place it should happen. Push it outward and every consumer has
 	//	to know the engine's internal scale, and they then disagree about it -- which is the state this replaces.
-	//	⚖ FLOAT, not a truncating int: nothing downstream of the controller does deterministic math, so the two
-	//	decimals the fixed point exists to carry survive the boundary instead of being thrown away at it.
+	//	⛔ IT REDUCES TO AN INT, AND A FLOAT HERE IS A CRASH-CLASS BUG -- the reason is the EXE, not the model.
+	//	Python hands these straight to CyTranslator().getText(), which is the EXE's VARARGS text call: arguments
+	//	match a TXT_KEY's placeholders positionally BY 4-BYTE SLOT (the rule Tools/verify-gettext-widths.py
+	//	enforces on the C++ side). A Python float is an 8-byte double, so it eats TWO slots -- `%d1` renders the
+	//	double's HIGH half (5.0 -> 1075052544, "over a billion") and every later placeholder reads one slot early,
+	//	until a `%s` lands on an integer and the EXE walks it as a pointer.
+	//	⚑ So "nothing downstream does deterministic math, therefore a float is safe" is true of the MATH and false
+	//	of the ABI. Widening this to float requires first sweeping every getText call site that renders one of
+	//	these values -- it is not a property of the getter alone.
 	template <int N>
 	python::list cyc_toHuman(const int (&values)[N])
 	{
 		python::list list = python::list();
 		for (int i = 0; i < N; ++i)
 		{
-			list.append(values[i] / 100.0);
+			list.append(values[i] / 100);
 		}
 		return list;
 	}
