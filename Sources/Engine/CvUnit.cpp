@@ -10317,8 +10317,13 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 {
 	PROFILE_FUNC();
 
-	// The whole-game bar only (see the chain overload above); the per-city `requires` is asked in the city loops.
-	if (eUnit == NO_UNIT || !upgradeAvailable(m_eUnitType, eUnit) || !EnablerKernel::everAvailable(EDGEB_UNITS, (int)eUnit))
+	// The whole-game bar and the instance CAP; the per-city `requires` is asked in the city loops below.
+	// ⚠ The cap is not optional here. STATE_LISTED folded THREE tests -- membership, `requires` and `allowed` --
+	// so replacing it with the first two alone silently dropped the cap, and an upgrade is exactly a path that
+	// can breach one: every master unit in the great-person chain is `allowed {empire: 1}`, so converting into a
+	// second one must refuse (enabler.md §4 -- a build is permitted while count(me, scope) < allowed).
+	if (eUnit == NO_UNIT || !upgradeAvailable(m_eUnitType, eUnit) || !EnablerKernel::everAvailable(EDGEB_UNITS, (int)eUnit)
+	|| !EnablerKernel::allowedOk(&GC.getUnitInfo(eUnit), (int)eUnit, GET_PLAYER(getOwner()), /*bUnit*/ true, EDGEB_UNITS))
 	{
 		return NULL;
 	}
