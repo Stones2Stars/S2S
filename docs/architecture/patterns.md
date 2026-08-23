@@ -714,6 +714,19 @@ Four words carry the whole requirement:
   when the library cannot answer a read, the move is to ADD the read, never to borrow legacy meanwhile.
 - **DATA FETCHING, not gameplay.** It serves reads/payloads; Python-authoritative gameplay (Revolution, events)
   stays Python and becomes a CONSUMER of it.
+  > **⚖ THE `Cy*` LAYER IS THE CONTROLLER, AND IT STAYS THIN — BUT THE INTERNAL→EXTERNAL CONVERSION IS ITS JOB
+  > (owner).** Engine is the model, `Cy*` is the controller, Python is the view. Thin means **no logic**: no
+  > computation, no policy, no aggregation the model does not already answer — a controller that starts deciding
+  > things is a second engine, and it will disagree with the first.
+  > ⛔ **What is NOT a violation of thin is REPRESENTATION.** Where an internal form has to become an external
+  > one, this is exactly where it happens and the only place it should: the ×100 fixed point reduces here
+  > ([the ×100 fixed-point model](../specs/curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries) names the
+  > `Cy*` wrappers as one of the readers that does its own conversion), an enum-indexed group becomes a list, a
+  > handle becomes an address. ⚑ Pushing that conversion OUTWARD is what forces every consumer to know the
+  > engine's internal scale, and then to disagree about it — the failure this boundary exists to end.
+  > ⚖ Because nothing downstream of the controller does deterministic math, an external getter is free to hand
+  > out a FLOAT rather than truncating to an int: the two decimals the fixed point carries survive the boundary
+  > instead of being thrown away at it.
 - **⛔ ENUM OPERATIONS ARE FIRST CLASS** — name→type/enum resolution is a supported operation, covering
   **resolution AND EXTENSION**: BUG resolves `WidgetTypes`/`InputTypes`/`InterfaceDirtyBits` by name from config
   strings *and* MINTS new `WidgetTypes` members at runtime, handing them back as widget ids. A read-only lookup
@@ -907,9 +920,11 @@ of them:
   > endpoints, `CyCity` 157 (the coherent group reads: `getYields`, `getCommerces`, `getWellbeing`,
   > `getScalars`, `getDefenseKinds`, … plus its mutators), `CyTeam` 116, `CyPlot` 106. That IS the per-type
   > accessor this section's own next ruling prescribes, already built.
-  > ⇒ So a thin wrapper is an UN-RE-HOMED TYPE, never a finished one: `CyUnit` at 8 endpoints against 58 legacy
-  > declarations its Python still calls is the work outstanding, not the design achieved. The burndown is
-  > countable — `python Tools/verify-python-bindings.py` (Validation).
+  > ⇒ So an UNDER-PUBLISHED wrapper is an UN-RE-HOMED TYPE, never a finished one: `CyUnit` at 8 endpoints
+  > against 58 legacy declarations its Python still calls is the work outstanding, not the design achieved. The
+  > burndown is countable — `python Tools/verify-python-bindings.py` (Validation).
+  > ⚠ "Under-published" is about COVERAGE, not about depth — a controller stays THIN in the sense below
+  > (no logic) however many endpoints it carries. The two are independent.
 
   > **⚖ THE IDENTITY SET — EVERY HANDLE PUBLISHES OWNER + ID + POSITION (owner).** It is the ADDRESS: what a
   > consumer needs in order to say WHICH object it holds.
