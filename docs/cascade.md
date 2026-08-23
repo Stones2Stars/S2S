@@ -1657,8 +1657,12 @@ OPEN (a new predicate/type is a new key, never a reshape). It is also the destin
 component retires ONTO ([ContextDict replaces CvDerivedCache](#-cvderivedcache-is-replaced-by-contextdict--virtually-everywhere-owner)). `plotAttrs` keys on the `CASC_PRED_*` HAS_/IS_ plot
 predicate ids; `policies` on the `POLICY_*` classification ids.
 
-Non-dictionary scalars stay plain: population/power are `int` (power carries 0/1 today but stays `int` so a future
-**volumetric** model needs no reshape); state religion is a **single enum**, not a dictionary (there is exactly one).
+Non-dictionary scalars stay plain: population is an `int` forwarded from `CvCity::m_iPopulation`; state religion is a
+**single enum**, not a dictionary (there is exactly one). ⛔ **Power is NOT one of them** — it is an amenity
+DICTIONARY count (`CityContext::amenityCount(CLS_AMENITY_PROVIDES_POWER)`), which is why a removal DECREMENTS and a
+city with two plants stays lit. A **volumetric** power model would not widen a scalar either: it would move power
+from a classification key to a modifier-family CHANNEL (§ the airlift worked case), so there is nothing here to
+future-proof.
 
 ### Maintained EVENT-DRIVEN — never a per-turn recompute
 

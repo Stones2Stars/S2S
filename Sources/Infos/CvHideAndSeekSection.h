@@ -5,7 +5,7 @@
 //
 //	CvHideAndSeekSection -- the json.md par.9 `hideAndSeek` own-block as ONE composable typed section object
 //	(patterns.md par. THE GETTER SETUP category 1: sections are whole typed objects). The concealment-vs-detection
-//	CONTEST, gated by GAMEOPTION_COMBAT_HIDE_AND_SEEK, and the own-block sibling of CvSizeMattersSection. Units,
+//	CONTEST, gated by GAMEOPTION_COMBAT_HIDE_SEEK, and the own-block sibling of CvSizeMattersSection. Units,
 //	promotions and unit-combats share the exact key vocabulary, so ONE unit serves all three.
 //
 //	⛔ THIS IS NOT `vision`, AND THE SPLIT IS THE POINT (owner). `vision` is an ordinary modifier FAMILY answering

@@ -8,10 +8,17 @@
 
 ## 1. The format — name-keyed, not positional
 
-Saves are `(id, type-code, value)` tuples keyed by a normalized **`"ClassName::memberName"`** tag; there is **no
-save-version number** — compatibility resolves dynamically by name (`CvTaggedSaveFormatWrapper`). A read asks for a
-tag and `Expect()` matches it against the stream. Because position doesn't matter, adding / removing / reordering
-fields is handled by name, never by a version gate.
+Saves are `(id, type-code, value)` tuples keyed by a normalized **`"ClassName::memberName"`** tag: **field-level**
+compatibility resolves dynamically by name (`CvTaggedSaveFormatWrapper`). A read asks for a tag and `Expect()` matches
+it against the stream. Because position doesn't matter, adding / removing / reordering fields is handled by name,
+never by a version gate.
+
+⚠ **There IS a whole-save version stamp, and it is an all-or-nothing GATE, not a migration router.**
+`SAVE_FORMAT_VERSION` (`Sources/Defines/CvDefines.h`) is written by `CvInitCore::write` and read back by
+`CvInitCore::read`, which throws `std::invalid_argument` behind an "Unreadable Save Game!" message box on any
+mismatch (`Sources/Engine/CvInitCore.cpp` ~:1701-1709). Bumping it makes **every** existing save unreadable in one
+step — it is the deliberate hard-break switch, and it is unrelated to the per-field name matching above. ⛔ Do not
+reach for it to solve a field-level change: that is what §3's soft-remove exists for.
 
 ## 2. Adding a field is SOFT (nothing to declare)
 
