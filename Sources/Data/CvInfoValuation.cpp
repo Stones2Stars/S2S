@@ -716,10 +716,9 @@ int64_t InfoValuation::commerceSplit(int64_t commerceYieldRate, int iSliderPerce
 	}
 	// TIER 2 -- the process conversion, added AFTER the percentages and never multiplied by them. The production
 	// yield truncates to whole hammers BEFORE the conversion scales it (the engine's order, mirrored verbatim).
-	// ⚠ The rate is an authored PERCENT carried ×100, so reducing it needs ÷100 for the fixed point AND ÷100 for
-	// the percent. Only the first was applied, so a 50% process paid FIFTY times the hammers instead of half.
-	// Reduced ONCE here, at the read edge, so the authored two decimals survive the multiply.
-	int64_t iProcessConversion = (productionYieldRate / 100) * (int64_t)iProductionToCommerce / 10000;
+	// The rate is an authored PERCENT, so it is unscaled: whole hammers × the percent IS the ×100 amount this
+	// sum is in, and no divisor belongs here.
+	int64_t iProcessConversion = (productionYieldRate / 100) * (int64_t)iProductionToCommerce;
 	const int64_t iRate = iShare * iModifier / 100 + channelDeposits + iProcessConversion;
 	if (pTerms != NULL)
 	{
