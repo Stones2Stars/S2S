@@ -621,11 +621,10 @@ private:
 			// A heritage is a HAVE axis the player holds but NOT an enabler DOMAIN (nothing offers heritages through
 			// the frontier -- they arrive by mission), so it re-gates its dependents and applies no edges.
 			// ⛔ SKIPPED INSIDE THE LOAD BRACKET, and this is not optional. Every fact here fires from
-			// CvPlayer::read / CvCity::read, where the city's other slots have NOT landed yet -- and unlike the
-			// small gate classes beside it, GATE_DYNAMIC contains the CAPPED buildings, so gating one mid-read
-			// reaches the wonder-category cap and reads GC.getCultureLevelInfo(NO_CULTURELEVEL): a fail-loud
-			// info-plane read that kills the load (docs/architecture/patterns.md §WRITE-ONCE-AT-LOAD). The load-end pass gates every city
-			// once after the stream ends, which is the par.7.1 order rule's second option and covers all of this.
+			// CvPlayer::read / CvCity::read, where the city's other slots have NOT landed yet, so a verdict
+			// gated here is evaluated against half-deserialized state. enabler.md §7.1 admits exactly two
+			// shapes -- every event's re-gates apply as they arrive, or gating runs once after the stream ends
+			// -- and bans the MIX; the load-end pass is that second option and covers all of this.
 			if (spineGameLoadInProgress()) break;
 			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
 			{
@@ -644,7 +643,7 @@ private:
 		case SEVT_CITY_AMENITY_REMOVED:
 		{
 			// The city-scope twins of the above: one city's designation moved, so only that city re-gates.
-			// Same load-bracket skip, same reason (the capped buildings' culture-level read).
+			// Same load-bracket skip, same reason (gating against half-deserialized state; enabler.md §7.1).
 			if (spineGameLoadInProgress()) break;
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
@@ -760,7 +759,8 @@ private:
 		{
 			// ⛔ SKIPPED INSIDE THE LOAD BRACKET. This is the FIRST fact CvCity::read emits -- ownership is
 			// established before population, buildings, religion and culture level -- so a full gate pass here runs
-			// against a city that is barely deserialized, and the capped buildings' culture-level read fails loud.
+			// against a city that is barely deserialized, and every verdict it stores is computed from state the
+			// stream has not delivered yet.
 			// A conquest in PLAY is what this route is for; the loaded state is the load-end pass's job.
 			if (spineGameLoadInProgress()) break;
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);

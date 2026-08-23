@@ -212,7 +212,12 @@ static bool bd_categoryCapOk(int iB, const CvCity& kCity)
 	{
 		return true;
 	}
-	const CvCultureLevelInfo& kLevel = GC.getCultureLevelInfo(kCity.getCultureLevel());
+	// ⛔ cultureLevelForRead, NEVER getCultureLevel. A city with no culture answers NO_CULTURELEVEL and the info
+	// plane holds no entry at -1, so the raw read is an UNLOADED READ and aborts the process (patterns.md
+	// §WRITE-ONCE-AT-LOAD). A city is FOUNDED with no culture, so this fired on every founding outside the load
+	// bracket. It is also the ONE implementation of that read -- the three CvCity::getMaxNum*Wonders getters
+	// already go through it, so reading the level raw here answered a different question than the city did.
+	const CvCultureLevelInfo& kLevel = GC.getCultureLevelInfo(kCity.cultureLevelForRead());
 	// world / team / empire self-cap -> world / team / NATIONAL wonder, in that order.
 	if (a->cap(ALLOWEDCAP_WORLD) >= 0)
 	{

@@ -10272,7 +10272,18 @@ CvCity* CvUnit::getUpgradeCity(bool bSearch) const
 	{
 		const UnitTypes eUnitX = (UnitTypes)iUnitX;
 
-		if (upgradeAvailable(m_eUnitType, eUnitX) && kPlayer.getUnitAvailabilityAnywhere(eUnitX) == EnablerDomain::STATE_LISTED
+		// ⛔ AN UPGRADE ASKS CAN-I-EVER PLUS THE TARGET'S OWN `requires` -- NEVER THE QUEUE-OFFER VERDICT.
+		// STATE_LISTED means "offered in the production queue right now", and a unit the queue never offers can
+		// never reach it: `identity.spawnOnly` (legacy's iCost == -1 sentinel) excludes a unit from the trainable
+		// set outright (enabler.md par.3). That is exactly what marks a great-person master unit, so gating the
+		// upgrade on LISTED made every great-person CONVERSION impossible -- 49 units, the whole MASTER_SAILOR_*
+		// chain and MASTER_HUNTER -> MASTER_RANGER -> MASTER_WARDEN among them -- while JOIN kept working,
+		// because JOIN is a grants payload that never asks the enabler.
+		// ⚠ An upgrade is a TRANSFORMATION, not a creation (triggers.md: `modifyUnit` stands a successor up in
+		// place of a predecessor and is deliberately NOT the createUnit step), so the queue's offer has no say in
+		// it. everAvailable answers the whole-game bar; the target's `requires` is asked per CITY below, which is
+		// what keeps the chain gated on research the way the data intends.
+		if (upgradeAvailable(m_eUnitType, eUnitX) && EnablerKernel::everAvailable(EDGEB_UNITS, (int)eUnitX)
 		&& kPlayer.AI_unitValue(eUnitX, eUnitAI, pArea) > iCurrentValue)
 		{
 			int iSearchValue;
@@ -10306,7 +10317,13 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 {
 	PROFILE_FUNC();
 
-	if (eUnit == NO_UNIT || !upgradeAvailable(m_eUnitType, eUnit) || GET_PLAYER(getOwner()).getUnitAvailabilityAnywhere(eUnit) != EnablerDomain::STATE_LISTED)
+	// The whole-game bar and the instance CAP; the per-city `requires` is asked in the city loops below.
+	// ⚠ The cap is not optional here. STATE_LISTED folded THREE tests -- membership, `requires` and `allowed` --
+	// so replacing it with the first two alone silently dropped the cap, and an upgrade is exactly a path that
+	// can breach one: every master unit in the great-person chain is `allowed {empire: 1}`, so converting into a
+	// second one must refuse (enabler.md §4 -- a build is permitted while count(me, scope) < allowed).
+	if (eUnit == NO_UNIT || !upgradeAvailable(m_eUnitType, eUnit) || !EnablerKernel::everAvailable(EDGEB_UNITS, (int)eUnit)
+	|| !EnablerKernel::allowedOk(&GC.getUnitInfo(eUnit), (int)eUnit, GET_PLAYER(getOwner()), /*bUnit*/ true, EDGEB_UNITS))
 	{
 		return NULL;
 	}
@@ -10370,7 +10387,9 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 					CvArea* pCityArea = bCoastalOnly ? pLoopCity->waterArea() : pLoopCity->area();
 
 					// Toffer, units should not be compelled to travel between areas just to get an upgrade.
-					if ((bIgnoreDistance || pMyArea == pCityArea) && pLoopCity->getUnitAvailability(eUnit) == EnablerDomain::STATE_LISTED)
+					// The target's own `requires` in THIS city -- the tech/resource gate the upgrade chain is meant
+					// to follow -- rather than whether the queue happens to offer it here.
+					if ((bIgnoreDistance || pMyArea == pCityArea) && EnablerKernel::requiresMetInCity(*pLoopCity, EDGEB_UNITS, (int)eUnit))
 					{
 						// if we do not care about distance, then the first match will do
 						if (bIgnoreDistance)
@@ -10405,7 +10424,7 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 		CvCity* pClosestCity = GC.getMap().findCity(getX(), getY(), NO_PLAYER, getTeam(), true, bCoastalOnly);
 
 		// If we can train, then return this city (otherwise it will return NULL)
-		if (pClosestCity != NULL && pClosestCity->getUnitAvailability(eUnit) == EnablerDomain::STATE_LISTED)
+		if (pClosestCity != NULL && EnablerKernel::requiresMetInCity(*pClosestCity, EDGEB_UNITS, (int)eUnit))
 		{
 			// did not search, always return 1 for search value
 			iBestValue = 1;
@@ -11067,9 +11086,18 @@ void CvUnit::setBaseCombatStr(int iCombat)
 	m_iBaseCombat100 = 100 * iCombat;
 }
 
+// ⛔ AN UNCOMPUTED SM CACHE FALLS BACK -- it is never returned raw. m_iSMStrength is derived state that only
+// setSMValues() writes, so between an owner's reset() and that call it reads 0; returning it makes maxCombatStr
+// floor at max(1, 0) and the unit fights at 0.01 strength while its HP, odds and damage all stay correct. Every
+// other member of this family already guards the same way (getMaxHP, getSMCargoCapacity, getSMAirBombBaseRate,
+// getSMBaseWorkRate); strength was the one that did not.
 int CvUnit::baseCombatStr() const
 {
-	return GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) ? getSMStrength() : baseCombatStrPreCheck();
+	if (!GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) || getSMStrength() == 0)
+	{
+		return baseCombatStrPreCheck();
+	}
+	return getSMStrength();
 }
 
 // THE human read boundary -- the ONE ÷100 on this cluster. Strength is ×100 everywhere inside the engine, so
@@ -11083,11 +11111,11 @@ int CvUnit::baseCombatStrHuman() const
 
 int CvUnit::airBaseCombatStr() const
 {
-	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
+	if (!GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) || getSMStrength() == 0)
 	{
-		return getSMStrength();
+		return baseAirCombatStrPreCheck();
 	}
-	return baseAirCombatStrPreCheck();
+	return getSMStrength();
 }
 
 int CvUnit::baseCombatStrPreCheck() const
@@ -11134,6 +11162,9 @@ int CvUnit::getSMStrength() const
 void CvUnit::setSMStrength()
 {
 	const int iStrength = getDomainType() == DOMAIN_AIR? baseAirCombatStrPreCheck() : baseCombatStrPreCheck();
+
+	// An unclassified unit needs no carve-out here: its type pivot and its own rank sum are both 0, so the
+	// offset is 0 and applySMRank returns the value untouched (getSizeMattersOffsetValue, above).
 	m_iSMStrength = applySMRank(iStrength, getSizeMattersOffsetValue(), GC.getSIZE_MATTERS_MOST_MULTIPLIER());
 	FASSERT_NOT_NEGATIVE(m_iSMStrength);
 }
@@ -24064,7 +24095,17 @@ int CvUnit::getMaxHP() const
 
 int CvUnit::HPValueTotalPreCheck() const
 {
-	return std::max(1, m_pUnitInfo->getSizeMatters().maxHP + getExtraMaxHP());
+	//	⛔ HP IS A PURE ENGINE VALUE AND IS NOT CURATED (owner). The base is MAX_HIT_POINTS; authored data
+	//	contributes only INCREASES, and those already arrive through getExtraMaxHP -- which is exactly how every
+	//	other reader of sizeMatters.maxHP treats it (a promotion or unit-combat DELTA fed to changeExtraMaxHP).
+	//	⚠ Reading that field as the BASE put a curated value in front of an engine one. Nothing authors it, in
+	//	JSON or in the legacy XML, so the base was 0 and this floored to 1 -- every unit in the game had ONE hit
+	//	point. Combat then ended on the first connecting hit, so the WINNER never took damage (the loser dies via
+	//	a direct setDamage elsewhere, which is why losses still worked), and the interface drew every bar against
+	//	MAX_HIT_POINTS, so all of them read red.
+	//	⚑ This restores the archived semantic exactly: CvUnitInfo::getMaxHP returned 100 whenever Size Matters
+	//	was off OR its per-unit value was unset. The SM path is untouched and still answers getSMHPValue().
+	return std::max(1, GC.getMAX_HIT_POINTS() + getExtraMaxHP());
 }
 
 int CvUnit::getSMHPValue() const
@@ -24200,9 +24241,25 @@ void CvUnit::setSMCargoVolume()
 	);
 }
 
+// ⛔ THE PIVOT IS THE UNIT TYPE'S OWN RANK SUM, NEVER A GLOBAL CONSTANT (owner). Size Matters scales a value by
+// how far THIS unit sits from what its TYPE is, so a unit at its type's profile is offset 0 and receives exactly
+// what the data authored -- which is what makes an authored number mean the same thing whether or not the option
+// is on. The deviation is then the only thing SM expresses: a group-spawn roll below the type's own group class,
+// a merge, a rank promotion.
+// ⚠ The retired form subtracted a flat 15 (three ranks at a nominal 5). That is the MILITARY plane's profile --
+// 851 of ~1000 non-animal combat units sum to exactly 15 -- but the animal taxonomy was never normalised to it:
+// only 316 of 582 animals reach 15, and 79 sit at 4-11, where the shortfall multiplies their authored strength
+// by 1/1.5^n (up to 86x down). An Asian elephant authored 6 was delivered 4.0 at its own profile and 1.77 once
+// groupSpawn rolled SOLO, i.e. it displayed and fought as 1 while still paying a full kill reward.
+// ⛔ The authored data is NOT the place to correct that: GAMEOPTION_COMBAT_SIZE_MATTERS defaults OFF and the
+// non-SM read uses the authored value RAW, so raising it would inflate every one of those animals in the default
+// game (up to 86x). The pivot is the half that was wrong.
 int CvUnit::getSizeMattersOffsetValue() const
 {
-	return qualityRank() + groupRank() + sizeRank() - 15;
+	const int iTypePivot =
+		m_pUnitInfo->getBaseQualityRank() + m_pUnitInfo->getBaseGroupRank() + m_pUnitInfo->getBaseSizeRank();
+
+	return qualityRank() + groupRank() + sizeRank() - iTypePivot;
 }
 
 int CvUnit::getSizeMattersSpacialOffsetValue() const

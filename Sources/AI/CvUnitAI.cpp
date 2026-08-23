@@ -1025,22 +1025,44 @@ bool CvUnitAI::AI_upgrade()
 
 		UnitTypes eBestUnit = NO_UNIT;
 		int iBestValue = -1;
+		int iBestTieBreak = -1;
+
+		// A great-person role -- UNITAI_GREAT_HUNTER and its siblings -- is not a trainable role, so
+		// AI_unitValue scores EVERY unit at 0 under it. That makes the whole chain tie, which is what left the
+		// pick to the draw below. Where the role itself is degenerate, rank each candidate as the unit it will
+		// actually BE; the role filter above still holds the unit to its own role (the TB note).
+		const bool bRankAsTargetRole = (iCurrentValue == 0);
 
 		foreach_(int iUnitX, upgradeChain)
 		{
 			const UnitTypes eUnitX = (UnitTypes)iUnitX;
 
-			if (!GC.getUnitInfo(eUnitX).hasNotUnitAI(eUnitAI)
-			&& canUpgrade(eUnitX)
-			&& kPlayer.AI_unitValue(eUnitX, eUnitAI, pArea) >= iCurrentValue)
+			if (GC.getUnitInfo(eUnitX).hasNotUnitAI(eUnitAI) || !canUpgrade(eUnitX))
 			{
-				const int iValue = GC.getGame().getSorenRandNum(1000, "AI Upgrade");
+				continue;
+			}
+			const int iRoleValue = kPlayer.AI_unitValue(eUnitX, eUnitAI, pArea);
 
-				if (iValue > iBestValue)
-				{
-					iBestValue = iValue;
-					eBestUnit = eUnitX;
-				}
+			if (iRoleValue < iCurrentValue)
+			{
+				continue;
+			}
+			// The draw keeps its place, its order and its label -- it decides only an exact tie now, because the
+			// STRENGTH of the candidate has to be what picks the upgrade (docs/reference/engine.md owns why the
+			// draw may not simply be deleted).
+			const int iTieBreak = GC.getGame().getSorenRandNum(1000, "AI Upgrade");
+			int iUpgradeValue = iRoleValue;
+
+			if (bRankAsTargetRole)
+			{
+				iUpgradeValue = kPlayer.AI_unitValue(eUnitX, GC.getUnitInfo(eUnitX).getDefaultUnitAI(), pArea);
+			}
+
+			if (iUpgradeValue > iBestValue || iUpgradeValue == iBestValue && iTieBreak > iBestTieBreak)
+			{
+				iBestValue = iUpgradeValue;
+				iBestTieBreak = iTieBreak;
+				eBestUnit = eUnitX;
 			}
 		}
 		if (eBestUnit != NO_UNIT)

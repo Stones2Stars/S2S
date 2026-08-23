@@ -12,6 +12,7 @@
 #include "CyPlot.h"
 #include "CyReplayInfo.h"
 #include "CvReplayInfo.h"
+#include "Infos/CvGameText.h"   // getNumLanguages -- the options screen's language dropdown
 
 //
 // Python wrapper class for CvGame
@@ -687,6 +688,14 @@ void CyGame::setCurrentLanguage(int iNewLanguage)			// remove once CvApp is expo
 	gDLL->setCurrentLanguage(iNewLanguage);
 }
 
+int CyGame::getNumLanguages() const			// remove once CvApp is exposed
+{
+	//	The options screen's language dropdown needs the COUNT beside the current selection it already reads
+	//	here. CvGameText is a C++ class Python was never published, so the call site named it directly and
+	//	raised NameError -- taking the whole Game tab, and with it the rest of the options screen, blank.
+	return CvGameText::getNumLanguages();
+}
+
 int CyGame::getReplayMessageTurn(int i) const
 {
 	return m_pGame.getReplayMessageTurn(i);
@@ -985,6 +994,7 @@ void CyGame::pythonPublish()
 		.def("isPitbossHost", &CyGame::isPitbossHost)
 		.def("getCurrentLanguage", &CyGame::getCurrentLanguage)
 		.def("setCurrentLanguage", &CyGame::setCurrentLanguage)
+		.def("getNumLanguages", &CyGame::getNumLanguages)
 
 		.def("getReplayMessageTurn", &CyGame::getReplayMessageTurn)
 		.def("getReplayMessageType", &CyGame::getReplayMessageType)

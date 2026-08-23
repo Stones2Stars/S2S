@@ -11,6 +11,7 @@ import TextUtil
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 gc = GC   # this module spells it lowercase
+INFO = CyInfo()
 STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -285,8 +286,8 @@ class CvOptionsScreen:
 
 			if (bContinue):
 
-				szOptionDesc = gc.getPlayerOptionDescription(iOptionLoop)
-				szHelp = gc.getPlayerOptionHelp(iOptionLoop)
+				szOptionDesc = INFO.getDescription("PLAYEROPTION_", iOptionLoop)
+				szHelp = INFO.getHelp("PLAYEROPTION_", iOptionLoop)
 				szCallbackFunction = "handleGameOptionsClicked"
 				szWidgetName = "GameOptionCheckBox_" + str(iOptionLoop)
 				bOptionOn = UserProfile.getPlayerOption(iOptionLoop)
@@ -310,7 +311,7 @@ class CvOptionsScreen:
 		tab.attachSpacer("LangHBox")
 
 		aszDropdownElements = ()
-		for i in range(CvGameText.getNumLanguages()):
+		for i in range(CyGame().getNumLanguages()):
 			szKey = "TXT_KEY_LANGUAGE_%d" % i
 			aszDropdownElements = aszDropdownElements + (localText.getText(szKey, ()),)
 
@@ -489,8 +490,8 @@ class CvOptionsScreen:
 
 		# Checkboxes
 		for iOptionLoop in range(GraphicOptionTypes.NUM_GRAPHICOPTION_TYPES):
-			szOptionDesc = gc.getGraphicOptionDescription(iOptionLoop)
-			szHelp = gc.getGraphicOptionHelp(iOptionLoop)
+			szOptionDesc = INFO.getDescription("GRAPHICOPTION_", iOptionLoop)
+			szHelp = INFO.getHelp("GRAPHICOPTION_", iOptionLoop)
 			szCallbackFunction = "handleGraphicOptionsClicked"
 			szWidgetName = "GraphicOptionCheckbox_" + str(iOptionLoop)
 			bOptionOn = UserProfile.getGraphicOption(iOptionLoop)

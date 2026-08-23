@@ -940,6 +940,14 @@ bool CvDLLWidgetData::executeAction(CvWidgetDataStruct &widgetDataStruct)
 			doRefreshMilitaryAdvisor(widgetDataStruct);
 			break;
 
+		//	⛔ THE EXE HARDCODES THIS WIDGET'S NUMERIC VALUE, so its ordinal is an ABI obligation and not ours to
+		//	move. Removing or inserting ANY member above it in WidgetTypes shifts it, and the failure is SILENT
+		//	and total: the DLL sends a number the executable does not recognise as "close", so every close button
+		//	in the game stops responding while ESC keeps working (keyboard path, not widget path). The compiler
+		//	cannot see an ordinal change, so it is pinned here instead.
+		//	⚠ If this fires, a member above WIDGET_CLOSE_SCREEN was moved or deleted -- restore the slot rather
+		//	than updating this number, or the same break simply moves to whichever widget shifted next.
+		STATIC_ASSERT(WIDGET_CLOSE_SCREEN == 157, WIDGET_CLOSE_SCREEN_ordinal_is_hardcoded_in_the_exe__restore_the_slot_above_it_instead_of_changing_this);
 		case WIDGET_CLOSE_SCREEN:
 		{
 			if (GC.getCurrentViewport()->getTransformType() == VIEWPORT_TRANSFORM_TYPE_SCALE)

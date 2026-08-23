@@ -356,6 +356,11 @@ enum SpineDomainField
 	// the combat fact's SECOND party: a resolved combat has two units, and the five DOMAIN ints hold the winner
 	// plus the loser's id only, so the loser's type and owner ride here
 	SPF_LOSER_UNIT, SPF_LOSER_UNIT_ID, SPF_LOSER_OWNER,
+	//	The WINNER's health across the combat it just won. combatResult names who won and nothing about what it
+	//	cost, so "did the winner take damage" was not answerable from any surface -- and a value not on the
+	//	surface is not verifiable (validation.md). BEFORE is the pre-combat snapshot updateCombat takes just
+	//	ahead of resolveCombat, so BEFORE == AFTER on a win means the winner took none.
+	SPF_WINNER_DAMAGE_BEFORE, SPF_WINNER_DAMAGE_AFTER, SPF_WINNER_MAX_HP,
 	// the traded-item fact: WHAT moved and BETWEEN WHOM, plus the deal it belonged to (correlation only, so a
 	// reader can see several items ending together because one agreement was cancelled).
 	// ⚠ SPF_TRADE_DATA is SFT_INT deliberately: it is a BONUS only for TRADE_RESOURCES and a tech / city / unit
@@ -610,6 +615,9 @@ static const char* spineDomainFieldInfo(int iFieldTag, SpineFieldType* peType)
 	case SPF_LOSER_UNIT:    *peType = SFT_UNIT;      return "loserUnit";
 	case SPF_LOSER_UNIT_ID: *peType = SFT_INT;       return "loserUnitId";
 	case SPF_LOSER_OWNER:   *peType = SFT_PLAYER;    return "loserOwner";
+	case SPF_WINNER_DAMAGE_BEFORE: *peType = SFT_INT; return "winnerDmgBefore";
+	case SPF_WINNER_DAMAGE_AFTER:  *peType = SFT_INT; return "winnerDmgAfter";
+	case SPF_WINNER_MAX_HP:        *peType = SFT_INT; return "winnerMaxHP";
 	case SPF_TRADE_ITEM:  *peType = SFT_INT;         return "item";
 	case SPF_TRADE_DATA:  *peType = SFT_INT;         return "data";
 	case SPF_FROM_PLAYER: *peType = SFT_PLAYER;      return "fromPlayer";
@@ -1955,14 +1963,21 @@ void emitUnitKilled(int iUnitType, int iUnitId, int iOwner, int iPlot)
 // A resolved combat, emitted beside CvEventReporter's Python callback. The payload is the reporter's own
 // arguments and nothing more -- what a combat event MEANS is formalized when the event system moves to C++.
 void emitCombatResult(int iWinnerUnitType, int iWinnerUnitId, int iWinnerOwner,
-					  int iLoserUnitType, int iLoserUnitId, int iLoserOwner, int iPlot)
+					  int iLoserUnitType, int iLoserUnitId, int iLoserOwner, int iPlot,
+					  int iWinnerDamageBefore, int iWinnerDamageAfter, int iWinnerMaxHP)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_COMBAT_RESULT,
 				   iWinnerUnitType, iWinnerUnitId, iLoserUnitId, iWinnerOwner, iPlot);
 	e.iDomainTag = SD_SPINE;
+	//	⚑ The three health fields are RENDER-ONLY: the DOMAIN ints above are untouched, so every machine consumer
+	//	sees exactly what it saw before and this stays a diagnostic read of the reporter's own arguments rather
+	//	than a designed payload (spine.md -- the reporter facts invent nothing).
 	e.addI(SPF_UNIT, iWinnerUnitType).addI(SPF_UNIT_ID, iWinnerUnitId).addI(SPF_OWNER, iWinnerOwner)
 	 .addI(SPF_LOSER_UNIT, iLoserUnitType).addI(SPF_LOSER_UNIT_ID, iLoserUnitId)
-	 .addI(SPF_LOSER_OWNER, iLoserOwner).addI(SPF_PLOT, iPlot);
+	 .addI(SPF_LOSER_OWNER, iLoserOwner).addI(SPF_PLOT, iPlot)
+	 .addI(SPF_WINNER_DAMAGE_BEFORE, iWinnerDamageBefore)
+	 .addI(SPF_WINNER_DAMAGE_AFTER, iWinnerDamageAfter)
+	 .addI(SPF_WINNER_MAX_HP, iWinnerMaxHP);
 	eventSpine().emit(e);
 }
 

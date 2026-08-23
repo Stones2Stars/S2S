@@ -29,6 +29,7 @@
 #include "AI/CvPlayerAI.h"       // GET_PLAYER -- the player resolve behind the (player, city) address
 #include "Infos/CvUnitInfo.h"                 // the spread block behind the named canSpreadReligion endpoint
 #include "Infos/CvCivicInfo.h"       // the civic column the bulk index reads
+#include "Infos/CvReligionInfo.h"    // the derived disabled-icon path behind getReligionButtonDisabled
 // The straggler dispatch reaches these concrete registries -- specific headers, never the CvInfos.h umbrella.
 #include "Infos/CvBuildingInfo.h"
 #include "Infos/CvPromotionInfo.h"      // the promotion classification endpoints
@@ -60,6 +61,8 @@
 #include "Infos/CvSeaLevelInfo.h"
 #include "Infos/CvGameOptionInfo.h"
 #include "Infos/CvColorInfo.h"
+#include "Infos/CvPlayerOptionInfo.h"    // the options screen's PLAYEROPTION_ description/help
+#include "Infos/CvGraphicOptionInfo.h"   // the options screen's GRAPHICOPTION_ description/help
 #include "Infos/CvMissionInfo.h"
 #include "Infos/CvProcessInfo.h"   // getProductionToCommerce -- the process conversion group
 #include "Infos/CvActionInfo.h"
@@ -133,6 +136,11 @@ namespace
 		if (szTypePrefix == "UNITAI_")      return iId < NUM_UNITAI_TYPES    ? &GC.getUnitAIInfo((UnitAITypes)iId) : NULL;
 		if (szTypePrefix == "ATTITUDE_")    return iId < NUM_ATTITUDE_TYPES  ? &GC.getAttitudeInfo((AttitudeTypes)iId) : NULL;
 		if (szTypePrefix == "MEMORY_")      return iId < NUM_MEMORY_TYPES    ? &GC.getMemoryInfo((MemoryTypes)iId) : NULL;
+		//	The two option registries the options screen reads. Unrouted, its per-option description/help raised
+		//	AttributeError mid-draw -- and because interfaceScreen draws the four tabs in sequence, that took the
+		//	Graphics, Audio and Other tabs with it, Exit buttons included, before they ever ran.
+		if (szTypePrefix == "PLAYEROPTION_")  return iId < NUM_PLAYEROPTION_TYPES  ? &GC.getPlayerOptionInfo((PlayerOptionTypes)iId) : NULL;
+		if (szTypePrefix == "GRAPHICOPTION_") return iId < NUM_GRAPHICOPTION_TYPES ? &GC.getGraphicOptionInfo((GraphicOptionTypes)iId) : NULL;
 
 		// Counted registries.
 		if (szTypePrefix == "DENIAL_")           return iId < GC.getNumDenialInfos()           ? &GC.getDenialInfo((DenialTypes)iId) : NULL;
@@ -504,6 +512,14 @@ std::string CyInfo::getLeaderHeadArt(int iLeaderId) const
 	const char* szArt = GC.getLeaderHeadInfo((LeaderHeadTypes)iLeaderId).getLeaderHead();
 	return szArt ? std::string(szArt) : std::string();
 }
+
+std::string CyInfo::getReligionButtonDisabled(int iReligionId) const
+{
+	if (iReligionId < 0 || iReligionId >= GC.getNumReligionInfos()) return std::string();
+	const char* szButton = GC.getReligionInfo((ReligionTypes)iReligionId).getButtonDisabled();
+	return szButton ? std::string(szButton) : std::string();
+}
+
 int CyInfo::getLeaderDiploPeaceMusicScriptId(int iLeaderId, int iEra) const
 {
 	//	The peace-loop entry of the era-keyed diplomacy music table (-1 = engine default). Named for what it
@@ -1593,6 +1609,7 @@ void CyInfo::pythonPublish()
 		.def("getUnitAirCombat",        &CyInfo::getUnitAirCombat)
 		.def("isNPCLeader",             &CyInfo::isNPCLeader)
 		.def("getLeaderHeadArt",        &CyInfo::getLeaderHeadArt)
+		.def("getReligionButtonDisabled", &CyInfo::getReligionButtonDisabled)
 		.def("getLeaderDiploPeaceMusicScriptId", &CyInfo::getLeaderDiploPeaceMusicScriptId)
 		.def("providesBonus",           &CyInfo::providesBonus)
 		.def("isGlobalTech",            &CyInfo::isGlobalTech)

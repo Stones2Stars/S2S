@@ -1018,8 +1018,11 @@ void emitUnitCreated(int iUnitType, int iUnitId, int iOwner);
 void emitUnitKilled(int iUnitType, int iUnitId, int iOwner, int iPlot);
 // A resolved combat. Called from CvEventReporter::combatResult, BESIDE its Python callback -- the reporter's
 // arguments verbatim, so the spine sees exactly what Python sees and a later migration is a swap.
+// The three winner-health arguments are RENDER-ONLY diagnostics -- BEFORE is the pre-combat snapshot, AFTER the
+// damage the winner carries now, so a win where they are equal says the winner took nothing.
 void emitCombatResult(int iWinnerUnitType, int iWinnerUnitId, int iWinnerOwner,
-					  int iLoserUnitType, int iLoserUnitId, int iLoserOwner, int iPlot);
+					  int iLoserUnitType, int iLoserUnitId, int iLoserOwner, int iPlot,
+					  int iWinnerDamageBefore, int iWinnerDamageAfter, int iWinnerMaxHP);
 // A unit's death SCHEDULE. Call AFTER m_bDeathDelay is written, at BOTH transitions: ADDED where a delayed kill
 // deferred the death, REMOVED where an outcome brought the unit back.
 void emitUnitDeathScheduleAdded(int iUnitType, int iUnitId, int iOwner, int iPlot);

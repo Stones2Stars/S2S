@@ -1478,6 +1478,22 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   key suffix. Members: base ranks `qualityBase`/`groupBase`/`sizeBase` (UnitCombat only); the scalars `quality`,
   `group`, `sizeModifier`, `maxHP`; `combatModifier: { perSizeMore, perSizeLess, perVolumeMore, perVolumeLess }`;
   `cargo: { smSpace, volume, volumeModifier }`.
+  > **⛔ `maxHP` IS ONLY EVER AN INCREASE — HP ITSELF IS A PURE ENGINE VALUE AND IS NOT CURATED (owner).** The
+  > base is the `MAX_HIT_POINTS` global; authored data contributes percentage/flat INCREASES on top and nothing
+  > else, which is why every consumer of this key feeds `changeExtraMaxHP` rather than seating a base.
+  > ⚠ **Reading it as the base is silent and total.** No entity authors `sizeMatters.maxHP` — none does in the
+  > legacy XML either, because the value was always the engine default — so a base read resolves to 0 and every
+  > unit in the game floors to ONE hit point. Combat then ends on the first connecting hit, so the WINNER takes
+  > no damage (the loser still dies, through a direct `setDamage`), and the interface draws every health bar
+  > against `MAX_HIT_POINTS` and shows them all red. Nothing errors and the build is green throughout.
+  > ⛔ **AND IT REACHES COMBAT RESOLUTION, NOT ONLY THE DISPLAY, BECAUSE A UNIT'S STRENGTH IS SCALED BY ITS HP
+  > (owner): a damaged unit also does less damage.** `CvUnit::currCombatStr` is
+  > `maxCombatStr × getHP() / getMaxHP()`, and `currEffectiveStr` normalizes by firepower over the same ratio —
+  > so `getMaxHP()` returning 1 collapses that whole curve to a STEP: a unit is at full strength or it is dead,
+  > with nothing in between. ⇒ The wrong base did not merely mis-draw a bar; it deleted attrition from every
+  > combat in the game, which is why this key's disposition is a combat question rather than a UI one.
+  > ⚑ The same test settles the rest of this block: a key here is a DELTA unless the entity's own row says it is
+  > a base rank, and the three `*Base` names are the only bases.
   - **UnitCombat** (the intrinsic **base ranks** + SM combat data): carries `qualityBase`/`groupBase`/`sizeBase` plus
     `maxHP`/`combatModifier`/`cargo`. A base equal to the legacy `−10` "unset" sentinel is emitted **absent** (never
     `0` — `0` is a real rank).
@@ -1497,7 +1513,27 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
 
   Effective runtime rank = the derived info base + `Σ` held-promotion changes + the engine merge/split accumulators
   (`getExtraQuality`/`Group`/`Size` — live engine state, **never** data). Block absent ⇒ the entity carries no SM
-  data. *(This is the pattern for every game-option-specific system — each gets its own block; `hideAndSeek`
+  data.
+
+  > **⛔ SIZE MATTERS PIVOTS ON THE UNIT TYPE'S OWN RANK SUM, NEVER ON A GLOBAL CONSTANT (owner).** The rank
+  > scaling expresses how far THIS unit sits from what its TYPE is, so a unit at its type's profile is offset 0
+  > and receives **exactly what the data authored**. The deviation is the only thing SM says: a `groupSpawn` roll
+  > below the type's own group class, a merge, a rank promotion.
+  > ⚑ **This is what keeps an authored number meaningful, and the option gate is why it has to.**
+  > `GAMEOPTION_COMBAT_SIZE_MATTERS` **defaults OFF** and the non-SM read takes the authored strength RAW, so any
+  > pivot that is not the type's own makes one number mean two different things depending on a player toggle.
+  > ⛔ **So the authored data is NEVER the place to correct a pivot mismatch** — raising a strength to compensate
+  > inflates that unit in the DEFAULT game, by the same factor, invisibly.
+  > ⚠ **The retired form subtracted a flat 15** (three ranks at a nominal 5). That is the MILITARY plane's
+  > profile — 851 of ~1000 non-animal combat units sum to exactly 15 — but **the animal taxonomy was never
+  > normalised to it**: only 316 of 582 animals reach 15, and 79 sit at 4–11, where the shortfall divides their
+  > authored strength by `1.5^n` (up to 86×). ⚑ The worked case: `UNIT_ELEPHANT_ASIAN` authors 6, its type sums
+  > 14 (`QUALITY_MEDIOCRE 4` + `GROUP_SQUAD 3` + `SIZE_HUGE 7`), and `groupSpawn` rolls SOLO half the time — so it
+  > was delivered 4.0 at its own profile and **1.77** once solo, displaying and fighting as **1** while still
+  > paying a full `outcomes.kill` reward.
+  > ⚑ **The tell that the pivot was the wrong half, not the data:** the correction the data would have needed is
+  > exactly the factor the pivot was already applying — a fudge factor whose existence says two operands are on
+  > different scales ([AGENTS.md](../../AGENTS.md#conduct) drift detector 2). *(This is the pattern for every game-option-specific system — each gets its own block; `hideAndSeek`
   below is its sibling.)*
 - **`hideAndSeek`** — the concealment-vs-detection CONTEST (gated by `GAMEOPTION_COMBAT_HIDE_AND_SEEK`), the
   own-block sibling of `sizeMatters`. **Two contest members, one per side of the equation:** `concealment` (how

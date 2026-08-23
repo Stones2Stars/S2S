@@ -219,7 +219,7 @@ class CvReligionScreen:
 			if GAME.getReligionGameTurnFounded(iRel) >= 0:
 				screen.addCheckBoxGFCAt(szArea, szButtonName, INFO.getButton("RELIGION_", iRel), ArtFileMgr.getInterfaceArtInfo("BUTTON_HILITE_SQUARE").getPath(), self.X_SCROLLABLE_RELIGION_AREA + xLoop - 25, self.Y_SCROLLABLE_RELIGION_AREA + 5, self.BUTTON_SIZE, self.BUTTON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1, ButtonStyles.BUTTON_STYLE_LABEL, False)
 			else:
-				screen.setImageButtonAt(szButtonName, szArea, GC.getReligionInfo(iRel).getButtonDisabled(), self.X_SCROLLABLE_RELIGION_AREA + xLoop - 25, self.Y_SCROLLABLE_RELIGION_AREA + 5, self.BUTTON_SIZE, self.BUTTON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1)
+				screen.setImageButtonAt(szButtonName, szArea, INFO.getReligionButtonDisabled(iRel), self.X_SCROLLABLE_RELIGION_AREA + xLoop - 25, self.Y_SCROLLABLE_RELIGION_AREA + 5, self.BUTTON_SIZE, self.BUTTON_SIZE, WidgetTypes.WIDGET_GENERAL, -1, -1)
 			szName = self.getReligionTextName(iRel)
 			szLabel = INFO.getDescription("RELIGION_", iRel)
 			screen.setLabelAt(szName, szArea, szLabel, 1<<2, self.X_SCROLLABLE_RELIGION_AREA + xLoop, self.Y_RELIGION_NAME, self.DZ, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
