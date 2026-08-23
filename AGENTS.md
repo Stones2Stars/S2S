@@ -300,14 +300,18 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   ON in some translation units and OFF in others) as never-collapse-mechanically.
 - **Python migration burndown: `python Tools/verify-python-bindings.py [--list]`** — counts the methods still
   DECLARED on a `Cy*` wrapper, registered nowhere, and still CALLED from Python: i.e. consumers not yet
-  re-pointed onto the new read surface. ⛔ **NOT a bug count.** The `Cy*` read-surface cut is DIRECTIONAL and
-  intentional ([the cut is directional](docs/architecture/patterns.md)) — Python→engine READS die, the wrapper
-  keeps only its IDENTITY SET (owner + id + position), the engine→Python callback direction stays — and it
-  deliberately ran AHEAD of the Python migration, because the cut is the forcing function that drives
-  completeness. `CyUnit` publishing 8 methods is that design, not damage. What never existed is a way to count
-  what is LEFT. ⚖ **ADVISORY, and a RATCHET like the registry scans: the count may only FALL**; a rise means a
-  legacy declaration was revived or a legacy call added. It does not fail the run — a permanently-red gate on a
-  known in-progress migration is one nobody can act on.
+  re-pointed onto the coherent reads. ⛔ **NOT a bug count, and NOT a re-registration list.** The `Cy*` bindings
+  ARE the API surface for Python — a type publishes the GET/PUT/POST it is required to
+  ([the identity set is the floor, not the ceiling](docs/architecture/patterns.md)); the legacy per-field
+  contract is what died, not the surface. The tree shows the re-home well under way — `CyPlayer` 332 endpoints,
+  `CyCity` 157 (the group reads `getYields`/`getCommerces`/`getWellbeing`/`getScalars`/… plus mutators),
+  `CyTeam` 116, `CyPlot` 106 — so a THIN wrapper is an UN-RE-HOMED TYPE, never a finished one.
+  ⚑ **The count is CONCENTRATED, which is the useful part**, and splits into two different jobs: a type that HAS
+  its group reads and still carries the legacy names beside them (`CyCity` — 157 published against 110 legacy;
+  *the collision IS the work*), and a type not re-homed at all whose GET surface must be built first (`CyUnit` —
+  8 published against 58 legacy). ⚖ **ADVISORY, and a RATCHET like the registry scans: the count may only
+  FALL**; a rise means a legacy declaration was revived or a legacy call added. It does not fail the run — a
+  permanently-red gate on a known in-progress migration is one nobody can act on.
   ⛔ **CLOSE ONE BY KILLING THE DECLARATION, NEVER BY RE-REGISTERING IT.** An unpublished legacy method on a
   wrapper is the per-field contract still written down, so the next agent reads it as the surface and *"just
   publish what is already declared"* looks like the cheap fix exactly when the new surface arrives. The

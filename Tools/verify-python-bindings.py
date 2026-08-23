@@ -2,16 +2,26 @@
 # -*- coding: utf-8 -*-
 """verify-python-bindings -- the PYTHON-SIDE MIGRATION BURNDOWN, counted.
 
-⛔ THIS IS NOT A BUG COUNT. The `Cy*` read-surface cut is DIRECTIONAL AND INTENTIONAL
-(patterns.md, THE CUT IS DIRECTIONAL): Python->engine READS die, the wrapper classes stay
-carrying only their IDENTITY SET (owner + id + position), and the engine->Python callback
-direction is kept. `CyUnit` publishing 8 methods is that design, not damage. The cut
-deliberately ran AHEAD of the Python migration -- "the cut is the forcing function that
-DRIVES completeness, so it never waits on it."
+⛔ THIS IS NOT A BUG COUNT, AND IT IS NOT A LIST OF THINGS TO RE-REGISTER. The `Cy*`
+bindings ARE the API surface for Python -- a type publishes the GET / PUT / POST it is
+required to (patterns.md, THE IDENTITY SET IS THE FLOOR, NOT THE CEILING). The legacy
+per-field contract is what died, not the surface.
+
+The tree shows the re-home well under way: CyPlayer publishes 332 endpoints, CyCity 157
+(the coherent group reads -- getYields, getCommerces, getWellbeing, getScalars,
+getDefenseKinds ... plus its mutators), CyTeam 116, CyPlot 106. A THIN wrapper is
+therefore an UN-RE-HOMED TYPE, never a finished one.
 
 What never existed is a way to COUNT WHAT IS LEFT. That is this tool. It reports the
 methods still DECLARED on a `Cy*` wrapper, registered nowhere, and still CALLED from
-Python -- i.e. Python consumers not yet re-pointed onto the new read surface.
+Python -- i.e. Python consumers not yet re-pointed onto the coherent reads.
+
+⚑ THE COUNT IS CONCENTRATED, WHICH IS THE USEFUL PART. It splits into two different jobs:
+a type that HAS its group reads and still carries the legacy names beside them (CyCity:
+157 published, 110 legacy -- "the collision is the work"; e.g. getWellbeing is published
+while happyLevel / unhappyLevel / angryPopulation are still called from 13 sites), and a
+type not re-homed at all, whose GET surface has to be built first (CyUnit: 8 published,
+58 legacy).
 
 ⚖ ADVISORY, AND A RATCHET -- exactly like verify-registry-scans. The count may only FALL;
 a rise means a legacy declaration was revived or a legacy call was added. It does not fail

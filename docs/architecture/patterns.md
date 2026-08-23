@@ -896,11 +896,23 @@ of them:
   known destination, not a permanent Python carve-out — do not read "permanent carve-out" on the event surface
   as "Python owns this forever", and equally do not start the move inside #430. The triggers machine
   ([triggers.md](../specs/triggers.md)) is where it lands when its own work item is taken.
-- ⚑ Consequence: the `Cy*` WRAPPER classes (`CyCity`/`CyUnit`/`CyPlayer`/…) STAY while their bindings do not —
-  33 engine files hold them for that direction. **A wrapper carries its IDENTITY SET and nothing else**, and
-  reading it as a half-cut to complete would delete working gameplay.
+- ⚑ Consequence: the `Cy*` WRAPPER classes (`CyCity`/`CyUnit`/`CyPlayer`/…) STAY while the legacy per-field
+  binding contract does not — 33 engine files hold them for that direction. Reading that as a half-cut to
+  complete would delete working gameplay.
 
-  > **⚖ THE IDENTITY SET — A HANDLE PUBLISHES OWNER + ID + POSITION, AND THE REFACTOR STOPS THERE (owner).**
+  > **⛔ THE IDENTITY SET IS THE FLOOR, NOT THE CEILING — AND READING IT AS THE CEILING IS STALE (owner): the
+  > `Cy*` bindings are the literal API surface for Python, so a type publishes the GET / PUT / POST it is
+  > required to.** The identity set is what a handle must ALWAYS carry so a legacy consumer can name its object;
+  > it was never a cap on what the accessor answers. ⚑ **The tree settles it** — `CyPlayer` publishes 332
+  > endpoints, `CyCity` 157 (the coherent group reads: `getYields`, `getCommerces`, `getWellbeing`,
+  > `getScalars`, `getDefenseKinds`, … plus its mutators), `CyTeam` 116, `CyPlot` 106. That IS the per-type
+  > accessor this section's own next ruling prescribes, already built.
+  > ⇒ So a thin wrapper is an UN-RE-HOMED TYPE, never a finished one: `CyUnit` at 8 endpoints against 58 legacy
+  > declarations its Python still calls is the work outstanding, not the design achieved. The burndown is
+  > countable — `python Tools/verify-python-bindings.py` (Validation).
+
+  > **⚖ THE IDENTITY SET — A HANDLE ALWAYS PUBLISHES OWNER + ID + POSITION, AND THAT ALONE IS WHAT KEEPS A
+  > LEGACY CONSUMER WORKING (owner).**
   > *"Carry identity set — if that is what it takes for legacy to keep working then it's an obvious tradeoff. I
   > only want to refactor the python I have to, otherwise we **never** will be done."* A legacy consumer holding
   > a handle must be able to say WHICH object it holds; re-pointing every such site onto the read planes is
