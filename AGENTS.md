@@ -298,6 +298,37 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   game mechanics are not, and the preprocessor cannot tell you which. The check REPORTS those three classes for
   a human verdict and never fails on them. ⛔ It also flags TU-LOCAL guards (`#define`d in a `Sources/` file, so
   ON in some translation units and OFF in others) as never-collapse-mechanically.
+- **Python migration burndown: `python Tools/verify-python-bindings.py [--list]`** — counts the methods still
+  DECLARED on a `Cy*` wrapper, registered nowhere, and still CALLED from Python: i.e. consumers not yet
+  re-pointed onto the coherent reads. ⛔ **NOT a bug count, and NOT a re-registration list.** The `Cy*` bindings
+  ARE the API surface for Python — a type publishes the GET/PUT/POST it is required to
+  ([the identity set is the floor, not the ceiling](docs/architecture/patterns.md)); the legacy per-field
+  contract is what died, not the surface. The tree shows the re-home well under way — `CyPlayer` 332 endpoints,
+  `CyCity` 157 (the group reads `getYields`/`getCommerces`/`getWellbeing`/`getScalars`/… plus mutators),
+  `CyTeam` 116, `CyPlot` 106 — so a THIN wrapper is an UN-RE-HOMED TYPE, never a finished one.
+  ⚑ **The count is CONCENTRATED, which is the useful part**, and splits into two different jobs: a type that HAS
+  its group reads and still carries the legacy names beside them (`CyCity` — 157 published against 110 legacy;
+  *the collision IS the work*), and a type not re-homed at all whose GET surface must be built first (`CyUnit` —
+  8 published against 58 legacy). ⚖ **ADVISORY, and a RATCHET like the registry scans: the count may only
+  FALL**; a rise means a legacy declaration was revived or a legacy call added. It does not fail the run — a
+  permanently-red gate on a known in-progress migration is one nobody can act on.
+  ⛔ **CLOSE ONE BY KILLING THE DECLARATION, NEVER BY RE-REGISTERING IT.** An unpublished legacy method on a
+  wrapper is the per-field contract still written down, so the next agent reads it as the surface and *"just
+  publish what is already declared"* looks like the cheap fix exactly when the new surface arrives. The
+  declaration AND its body go; the Python re-points onto the new surface homed on the type it addresses
+  (`CyCity::getPopulation()`, never `getCityPopulation(owner, id)` — *"the moment you have
+  `getAnotherObjectSomething`, we have failed"*). ⚠ NOT killed with them: the `class_<>` REGISTRATION (a
+  zero-`.def` registration is the type identity the kept engine→Python direction needs — the marshaller throws
+  without a registered converter), the identity set, and anything the ENGINE calls on the wrapper.
+  ⛔ **Registration lives in TWO styles and scanning one under-reports badly**: inline `class_<CyX>("CyX").def(…)`
+  under `Sources/Python/`, and loader functions taking `class_<CyX>& inst` under
+  `Sources/Infrastructure/CvPython*Loader.cpp` — so the tool takes the UNION of every `.def("name")` and
+  deliberately does NOT attribute a name to a class. It also requires the call's RECEIVER to denote a Cy handle,
+  which is what makes it precise — `add` is both a `CyArgsList` member and Python's own `set.add`, so a
+  receiver-blind scan reports 40 phantom sites for it and buries the real findings under ~200 like it.
+  ⚖ It also reports UNRESOLVED CALLS — names registered nowhere, declared on no `Cy*` class, and not a Python
+  `def`: usually a mechanic removed outright, or one that never existed (`getCommerceRateTimes100` is called by
+  two `canTrigger` predicates and has never existed in the tree, so those two random events cannot fire).
 
 ### Adding a new source subdirectory
 
@@ -861,6 +892,15 @@ the total-observability bar below.)
   chronicles): it states what IS. Anything outdated is DELETED, not annotated — git history is the archaeology, and
   [superseded-ideas.md](docs/architecture/superseded-ideas.md) is the only tombstone registry (one line per dead
   approach that carries revival risk). Migration/status chronicles belong in `docs/plans/`, never in specs.
+- **⛔ A RULE CARRIES NO EXPIRING REASON — state the rule, not the circumstance that prompted it (owner).** A
+  justification that is true only while some task is in flight does not retire with the task: it stays on the
+  page as PERMISSION, and the next agent reads it as licence to do the smaller thing. ⚑ Measured: *"I only want
+  to refactor the python I have to, otherwise we never will be done"* was scoped to one migration; once that
+  work finished the sentence remained, still reading as a standing instruction to minimise the refactor — beside
+  a rule the tree had already outgrown. **A reason that can expire is a liability, not context.** ⚖ This does
+  NOT ban the durable WHY — why a site is an edge, why a value is genuinely exceptional, why a switch protects
+  against a crash nobody remembers. The test is whether the reason survives the work: if it was true only
+  *during*, it does not go in.
 - **⛔ SPEC + a SHORT BULLETED TODO — never a TODO LIST *inside* a doc, and never status woven through prose
   (owner).** Status claims DRIFT — that is their nature, not a discipline failure — so the more of them a doc
   carries, the faster the whole doc rots and the more confidently it misleads. **A doc is therefore one of two
