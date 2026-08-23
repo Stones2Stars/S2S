@@ -1486,6 +1486,12 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   > unit in the game floors to ONE hit point. Combat then ends on the first connecting hit, so the WINNER takes
   > no damage (the loser still dies, through a direct `setDamage`), and the interface draws every health bar
   > against `MAX_HIT_POINTS` and shows them all red. Nothing errors and the build is green throughout.
+  > ⛔ **AND IT REACHES COMBAT RESOLUTION, NOT ONLY THE DISPLAY, BECAUSE A UNIT'S STRENGTH IS SCALED BY ITS HP
+  > (owner): a damaged unit also does less damage.** `CvUnit::currCombatStr` is
+  > `maxCombatStr × getHP() / getMaxHP()`, and `currEffectiveStr` normalizes by firepower over the same ratio —
+  > so `getMaxHP()` returning 1 collapses that whole curve to a STEP: a unit is at full strength or it is dead,
+  > with nothing in between. ⇒ The wrong base did not merely mis-draw a bar; it deleted attrition from every
+  > combat in the game, which is why this key's disposition is a combat question rather than a UI one.
   > ⚑ The same test settles the rest of this block: a key here is a DELTA unless the entity's own row says it is
   > a base rank, and the three `*Base` names are the only bases.
   - **UnitCombat** (the intrinsic **base ranks** + SM combat data): carries `qualityBase`/`groupBase`/`sizeBase` plus
