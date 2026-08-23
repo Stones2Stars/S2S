@@ -1513,7 +1513,27 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
 
   Effective runtime rank = the derived info base + `Σ` held-promotion changes + the engine merge/split accumulators
   (`getExtraQuality`/`Group`/`Size` — live engine state, **never** data). Block absent ⇒ the entity carries no SM
-  data. *(This is the pattern for every game-option-specific system — each gets its own block; `hideAndSeek`
+  data.
+
+  > **⛔ SIZE MATTERS PIVOTS ON THE UNIT TYPE'S OWN RANK SUM, NEVER ON A GLOBAL CONSTANT (owner).** The rank
+  > scaling expresses how far THIS unit sits from what its TYPE is, so a unit at its type's profile is offset 0
+  > and receives **exactly what the data authored**. The deviation is the only thing SM says: a `groupSpawn` roll
+  > below the type's own group class, a merge, a rank promotion.
+  > ⚑ **This is what keeps an authored number meaningful, and the option gate is why it has to.**
+  > `GAMEOPTION_COMBAT_SIZE_MATTERS` **defaults OFF** and the non-SM read takes the authored strength RAW, so any
+  > pivot that is not the type's own makes one number mean two different things depending on a player toggle.
+  > ⛔ **So the authored data is NEVER the place to correct a pivot mismatch** — raising a strength to compensate
+  > inflates that unit in the DEFAULT game, by the same factor, invisibly.
+  > ⚠ **The retired form subtracted a flat 15** (three ranks at a nominal 5). That is the MILITARY plane's
+  > profile — 851 of ~1000 non-animal combat units sum to exactly 15 — but **the animal taxonomy was never
+  > normalised to it**: only 316 of 582 animals reach 15, and 79 sit at 4–11, where the shortfall divides their
+  > authored strength by `1.5^n` (up to 86×). ⚑ The worked case: `UNIT_ELEPHANT_ASIAN` authors 6, its type sums
+  > 14 (`QUALITY_MEDIOCRE 4` + `GROUP_SQUAD 3` + `SIZE_HUGE 7`), and `groupSpawn` rolls SOLO half the time — so it
+  > was delivered 4.0 at its own profile and **1.77** once solo, displaying and fighting as **1** while still
+  > paying a full `outcomes.kill` reward.
+  > ⚑ **The tell that the pivot was the wrong half, not the data:** the correction the data would have needed is
+  > exactly the factor the pivot was already applying — a fudge factor whose existence says two operands are on
+  > different scales ([AGENTS.md](../../AGENTS.md#conduct) drift detector 2). *(This is the pattern for every game-option-specific system — each gets its own block; `hideAndSeek`
   below is its sibling.)*
 - **`hideAndSeek`** — the concealment-vs-detection CONTEST (gated by `GAMEOPTION_COMBAT_HIDE_AND_SEEK`), the
   own-block sibling of `sizeMatters`. **Two contest members, one per side of the equation:** `concealment` (how

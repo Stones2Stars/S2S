@@ -11143,22 +11143,10 @@ int CvUnit::getSMStrength() const
 void CvUnit::setSMStrength()
 {
 	const int iStrength = getDomainType() == DOMAIN_AIR? baseAirCombatStrPreCheck() : baseCombatStrPreCheck();
-	const int iOffset = getSizeMattersOffsetValue();
 
-	// ⛔ A UNIT WITH NO SIZE CATEGORY IS NOT RANKED -- the offset is quality + group + size - 15, so a unit
-	// carrying none of the three taxonomy classes lands on -15 and applySMRank divides its strength by
-	// 1.5^15 (~438x), which floors it to 0.01 whatever it was authored at. That is not a small unit, it is an
-	// unclassified one, and Size Matters has nothing to say about it. setSMAssetValue already carves the same
-	// case out ("Special Case for size cat undefined units"); strength did not, so five spacecraft fought at
-	// the floor while their asset value was left correct.
-	if (iOffset == -15)
-	{
-		m_iSMStrength = iStrength;
-	}
-	else
-	{
-		m_iSMStrength = applySMRank(iStrength, iOffset, GC.getSIZE_MATTERS_MOST_MULTIPLIER());
-	}
+	// An unclassified unit needs no carve-out here: its type pivot and its own rank sum are both 0, so the
+	// offset is 0 and applySMRank returns the value untouched (getSizeMattersOffsetValue, above).
+	m_iSMStrength = applySMRank(iStrength, getSizeMattersOffsetValue(), GC.getSIZE_MATTERS_MOST_MULTIPLIER());
 	FASSERT_NOT_NEGATIVE(m_iSMStrength);
 }
 
@@ -24234,9 +24222,25 @@ void CvUnit::setSMCargoVolume()
 	);
 }
 
+// ⛔ THE PIVOT IS THE UNIT TYPE'S OWN RANK SUM, NEVER A GLOBAL CONSTANT (owner). Size Matters scales a value by
+// how far THIS unit sits from what its TYPE is, so a unit at its type's profile is offset 0 and receives exactly
+// what the data authored -- which is what makes an authored number mean the same thing whether or not the option
+// is on. The deviation is then the only thing SM expresses: a group-spawn roll below the type's own group class,
+// a merge, a rank promotion.
+// ⚠ The retired form subtracted a flat 15 (three ranks at a nominal 5). That is the MILITARY plane's profile --
+// 851 of ~1000 non-animal combat units sum to exactly 15 -- but the animal taxonomy was never normalised to it:
+// only 316 of 582 animals reach 15, and 79 sit at 4-11, where the shortfall multiplies their authored strength
+// by 1/1.5^n (up to 86x down). An Asian elephant authored 6 was delivered 4.0 at its own profile and 1.77 once
+// groupSpawn rolled SOLO, i.e. it displayed and fought as 1 while still paying a full kill reward.
+// ⛔ The authored data is NOT the place to correct that: GAMEOPTION_COMBAT_SIZE_MATTERS defaults OFF and the
+// non-SM read uses the authored value RAW, so raising it would inflate every one of those animals in the default
+// game (up to 86x). The pivot is the half that was wrong.
 int CvUnit::getSizeMattersOffsetValue() const
 {
-	return qualityRank() + groupRank() + sizeRank() - 15;
+	const int iTypePivot =
+		m_pUnitInfo->getBaseQualityRank() + m_pUnitInfo->getBaseGroupRank() + m_pUnitInfo->getBaseSizeRank();
+
+	return qualityRank() + groupRank() + sizeRank() - iTypePivot;
 }
 
 int CvUnit::getSizeMattersSpacialOffsetValue() const
