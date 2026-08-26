@@ -1186,6 +1186,19 @@ void CvCityAI::AI_chooseProduction()
 		return;
 	}
 
+	// A PROCESS IS NEVER A COMMITMENT (owner): it never completes, so one that survives a decision blocks the
+	// queue forever. Strip every ORDER_MAINTAIN before deciding -- the end-of-cascade fallback re-adds one only
+	// when there is still nothing better to do this turn.
+	for (int iOrder = getOrderQueueLength() - 1; iOrder >= 0; iOrder--)
+	{
+		if (getOrderAt(iOrder).eOrderType == ORDER_MAINTAIN)
+		{
+			logCityAI(2, "[CIT/dropProcess] city=%S owner=%d slot=%d",
+				getName().GetCString(), (int)getOwner(), iOrder);
+			popOrder(iOrder);
+		}
+	}
+
 	//#0 : Establish all needed Values that will be used for multple prio/conditions
 	const bool bDanger = AI_isDanger();
 	const int iDangerValue = GET_PLAYER(getOwner()).AI_getPlotDanger(plot(), 2, false);
@@ -9289,9 +9302,13 @@ bool CvCityAI::AI_chooseProcess(CommerceTypes eCommerceType, int64_t* commerceWe
 		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ORDER_PROCESS, 1)
 			.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
 			.addI(CITF_process, (int)eBestProcess).addI(CITF_commerce, (int)eCommerceType));
+		// Whether the order LANDED is read off the queue length, never assumed from having asked: a process
+		// is refused outright when the AI queue already holds a real order, and a caller that returns on a
+		// bare true would end its decision cascade having set nothing.
+		const int iQueueLengthBefore = getOrderQueueLength();
 		pushOrder(ORDER_MAINTAIN, eBestProcess, -1, false, false, !bforce);
 
-		return true;
+		return getOrderQueueLength() > iQueueLengthBefore;
 	}
 
 	return false;

@@ -59,10 +59,59 @@
   project is effectively single-city built. Changing that is a post-migration redesign, not a #430 item.
 - **Hammers/turn** = `max(1, extraYield + overflow(if flag) + foodSurplus(if FoodProduction) + (baseYieldRate +
   specialistYield)·baseYieldRateModifier/100)`. `isDisorder()` → 0. Process-mode converts to gold/science/culture
-  (no overflow).
+  as a live rate (no accrual); a NON-converting process is idle and banks overflow instead (§ The order queue).
 - **Overflow cap** = `getYieldRate(PRODUCTION) × CityScreen__ProductionOverflowLimit` (default **2** — 2× base/turn);
   beyond cap → gold at `MAXED_{UNIT,BUILDING,PROJECT}_GOLD_PERCENT`. Feature production (chop hammers) banks
   alongside; both cleared each turn.
+### The order queue — a PROCESS may only ever stand ALONE
+
+The queue holds `ORDER_TRAIN` / `ORDER_CONSTRUCT` / `ORDER_CREATE` / `ORDER_MAINTAIN` (a process) / `ORDER_LIST`.
+The AI **queues rather than re-deciding per completion**
+([ai-build-queue-parity.md](../plans/parked/ai-build-queue-parity.md)): `AI_chooseBuilding` appends construct
+orders up to `AI_BUILDING_SHORTLIST_DEPTH`, and `doProduction` re-enters `AI_chooseProduction` when the queue
+empties. **A process is the exception at every point below, because it is the one order that NEVER COMPLETES.**
+
+- ⛔ **A PROCESS MAY ONLY EVER STAND ALONE IN AN AI QUEUE (owner): *"idle should not be possible to add unless
+  there is literally nothing else."*** Enforced at both ends of `pushOrder` — the `ORDER_MAINTAIN` case REFUSES
+  the push when an AI/automated queue already holds any non-process order (`[CIT/push/reject]
+  reason=queueNotEmpty`), and the tail purge pops EVERY queued process wherever it sits the moment a real order
+  joins. Humans keep the free hand and manage their own queue.
+  ⚑ **The failure it closes is the SANDWICHED process:** one sitting BETWEEN real orders is never reached at the
+  head, and because the re-decide fires on the queue EMPTYING, nothing ever strips it — the city locks on it
+  permanently, for the rest of the game.
+  ⚠ **Whether the push LANDED is read off the QUEUE LENGTH, never assumed from having asked** —
+  `AI_chooseProcess` returns the queue delta, because a decision-cascade rung that returns on a bare `true` ends
+  the entire decision having set nothing.
+- ⛔ **A PROCESS HAS A FAKE ONE-TURN COMPLETION TIME AT ALL TIMES (owner).** `getOrderProductionTurnsLeft`
+  returns **1** for `ORDER_MAINTAIN`, and `getTotalProductionQueueTurnsLeft` counts it as one turn instead of
+  reading `getProductionNeeded` (`MAX_INT` for a process). ⚑ The reason is that both feed SUMS shared with real
+  orders: the queue total bails to **999** for any order needing >999 hammers, so a single queued process made
+  the contract broker read `turns=1000` for a unit costing six hammers, collapsing that city's bid.
+- ⛔ **A PROCESS NEVER EATS THE COMPLETION OVERFLOW (owner: *"idle eats the remaining production, and then the
+  cycle repeats"*).** `doProduction`'s completion loop breaks before `changeProduction(getOverflowProduction())`
+  when the new head is a process. ⚑ `changeProduction` routes the hammers through the process's
+  `productionToCommerce` rates — and `PROCESS_IDLE` declares NONE — so the overflow was converted at zero and
+  then cleared: destroyed outright. Breaking leaves it BANKED, and a process head returns from `doProduction`
+  before the per-turn overflow clear, so it survives to the next real order.
+- ⛔ **AN IDLE ORDER BEHAVES AS NO ORDER (owner).** A process whose `conversion` block is empty converts
+  nothing (`CvProcessInfo::convertsProduction()` is false), so `doProduction` **banks the city's hammers as
+  overflow** exactly as the no-order path does, rather than discarding them. ⚑ **The rule is about IDLE
+  itself, not about who selected it** — a human parking a city and an AI falling back to it get the same
+  answer, and the production survives to whatever the city can finally build. ⚠ A **converting** process
+  accrues nothing here by design: its conversion is a live rate read off the city, never an accrual.
+  ⚑ **Why this is load-bearing rather than tidiness:** `PROCESS_IDLE` is the only process
+  `TECH_GAME_START` carries, and every real one is unlocked by a tech (`PROCESS_WEALTH_MEAGER` ←
+  `TECH_COOPERATION`, `PROCESS_RESEARCH_MEAGER` ← `TECH_ORAL_TRADITION`, both ← `TECH_LANGUAGE`) — the domain
+  is built purely from `enables` edges, so a low-tech player's ONLY reachable process is idle. Discarding
+  production there is a trap with no exit: no hammers, so no building, so no economy, so no tech.
+- ⚖ **A QUEUED PROCESS IS RE-DECIDED EVERY TURN (owner): *"if PROCESS is being run, recalc has to happen for
+  that city every turn as long as process is run."*** `doProduction` re-enters `AI_chooseProduction` when a
+  process sits ANYWHERE in the queue, and `AI_chooseProduction` strips every `ORDER_MAINTAIN` before deciding
+  (`[CIT/dropProcess]`) — **a process is a fallback, never a commitment.** The end-of-cascade fallback re-adds
+  one only when there is still nothing better this turn. ⚠ The strip pops with `bChoose = false`, so it never
+  re-enters the chooser — derived data must never drive a loop
+  ([ai-architecture-north-star.md](../plans/parked/ai-architecture-north-star.md) §2.4).
+
 - **Hurry:** Buy (gold, `getGoldPerProduction>0`) or Whip (pop + `m_iHurryAngerTimer`, `getProductionPerPopulation>0`);
   `maxHurryPopulation = pop/2`. **Decay** (`doDecay`, human cities only): non-head queued items bleed
   `BUILDING_PRODUCTION_DECAY_PERCENT`% per `BUILDING_PRODUCTION_DECAY_TIME` turns (speed-scaled).
