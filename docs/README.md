@@ -1,9 +1,18 @@
 # Stones2Stars — docs
 
-The condensed spec surface, **ONE FILE PER CONCEPT**. Find the file that owns the subsystem you are touching and
-read **that one** end to end — then confirm it against `Sources/`, because [the tree outranks the
-doc](../AGENTS.md). ⛔ The blanket read-everything protocol is **retired**: it front-loaded a corpus too large to
-actually re-read, which is what made a stale line dangerous rather than harmless.
+The condensed spec surface, roughly **one file per concept** — which is a statement about how these files are
+ORGANISED (a concept split across tiers grew two accounts that disagreed), and **never a statement about how much
+you read**.
+
+⛔ **GREP THE WHOLE OF `docs/` FOR WHAT YOU ARE ABOUT TO TOUCH, AND READ EVERY FILE THAT HITS, END TO END** — the
+subsystem, the symbols, the mechanism. The number of relevant files is something you FIND, not something you
+DECIDE, and it is regularly more than one: a behaviour lives in the spec that designs it, the reference that
+records how it behaves today, and often a plan doc that measured it. Then confirm all of it against `Sources/`,
+because [the tree outranks the doc](../AGENTS.md).
+⛔ **Any wording — here or anywhere — that lets an agent SELECT which core docs to read is a defect, and is
+deleted on sight** ([AGENTS.md](../AGENTS.md)). What was retired is re-reading the whole corpus at SESSION START;
+that moved the reading to work-start and made it exhaustive *for the subsystem*, and it has been misread as
+permission to read one file and stop.
 
 > Rules & conventions for agents/contributors live in the root **[AGENTS.md](../AGENTS.md)** (the one rule home),
 > never here. This is the *knowledge* map.
@@ -83,6 +92,7 @@ Verify against the tree before acting on any claim that something is built.
 - **[reference/unit-lifecycle.md](reference/unit-lifecycle.md)** — a unit's birth, the five-operation death sequence (only `die()` kills), delayed death vs delayed DELETION, the off-map unit, and the re-entrancy routes.
 - **[reference/mission-outcome-system.md](reference/mission-outcome-system.md)** — the `CvOutcome` mission/outcome system (feeds the json.md §8 `missions` block).
 - **[reference/memory-footprint.md](reference/memory-footprint.md)** — where the RAM goes under the 32-bit ceiling: the static clusters (info classes, per-object arrays, cascade caches) vs the per-turn churn; textures/icons are loaded once (shared).
+- **[reference/unit-rendering.md](reference/unit-rendering.md)** — how the DLL drives unit graphics: one centre unit per plot, real vs dummy scene entities, every call that creates/sets up/places/destroys a node and when; **graphics paging ON vs OFF** as a two-column table, the ranked list of code that is not gated on paging but only behaves with it on, the load and new-game timelines, where the tree differs from the owner's working model of rendering (a lens, not a ruling), and the doc-vs-tree contradictions this census found.
 - **[reference/external-tools-and-workflows.md](reference/external-tools-and-workflows.md)** — crash-dump symbolization, FpkBuilder.
 - **[reference/release-deploy.md](reference/release-deploy.md)** — how a build reaches players: the AppVeyor → SVN → GitHub pipeline, the FPK patch step, and the **batched** SVN commit (SourceForge 504s on a whole-release transaction) incl. the ordering rules that make each batch legal and the non-atomicity that follows.
 - **The LEGACY censuses** — how the legacy behaves today, so the cascade can replace it:

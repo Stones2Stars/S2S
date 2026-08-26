@@ -21645,7 +21645,9 @@ bool CvUnitAI::processContracts(int iMinPriority)
 				//GC.getUnitAIInfo(AI_getUnitAIType())->getType();
 				
 			}
-			logContractBroker(1, "	Unit %S (%d) for player %d (%S) at (%d,%d) found work (%S) at (%d,%d) %S\n",
+			// MissionInfos/JoinInfos are NARROW CvStrings: %s, never %S -- a %S here makes the CRT scan the narrow
+			// buffer as wchar_t* for a two-byte terminator it may never find (the paging-toggle end-turn AV).
+			logContractBroker(1, "	Unit %S (%d) for player %d (%S) at (%d,%d) found work (%s) at (%d,%d) %s\n",
 					getUnitInfo().getDescription(),
 					getID(),
 					getOwner(),

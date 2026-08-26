@@ -2,7 +2,7 @@
 
 > # ⛔ STOP — READ THIS BEFORE YOU TOUCH ANYTHING ⛔
 >
-> ## HOURS WASTED ON ROLLERSKATING: **195** &nbsp;·&nbsp; *and counting*
+> ## HOURS WASTED ON ROLLERSKATING: **207** &nbsp;·&nbsp; *and counting*
 >
 > *(Increment this every time an agent ships an ungrounded fix / design / edit — one the docs already answered — that the owner has to rein in. It is a real number, not a joke.)*
 >
@@ -12,17 +12,27 @@
 >
 > **You are not the exception. Assume you are about to add to that number unless you deliberately do the opposite:**
 >
-> - **⚑ READ THE CONCEPT DOC FOR WHAT YOU TOUCH — IN FULL, BEFORE YOU ACT.** `docs/` is ONE FILE PER CONCEPT
->   (cascade · enabler · json · spine · triggers · save · vision · tally · …); [`docs/README.md`](docs/README.md)
->   is the index. Read the one that owns your subsystem end to end — not a grep of it, not the section you think
->   is relevant. **Your judgment of what is "necessary" is systematically biased toward reading too little.**
+> - **⚑ READ EVERY DOC THAT TOUCHES WHAT YOU TOUCH — IN FULL, BEFORE YOU ACT.** [`docs/README.md`](docs/README.md)
+>   is the index, and `docs/` is roughly one file per concept — but **the count of relevant files is something you
+>   FIND, never something you DECIDE.** Before the first edit, **grep the whole of `docs/` for the subsystem, the
+>   symbols and the mechanism you are about to touch, and read every file that hits, end to end** — not a grep of
+>   it, not the section you think is relevant. **Your judgment of what is "necessary" is systematically biased
+>   toward reading too little.**
+>   ⛔ **THERE IS NO CLAUSE HERE THAT LETS YOU READ ONE FILE AND STOP, AND ANY WORDING THAT READS LIKE ONE IS A
+>   DEFECT TO DELETE ON SIGHT (owner).** A rule that lets an agent SELECT its reading is not a reading rule; it is
+>   a permission slip, and it is *"a gigantic failure mechanism"*. ⚠ **Measured: a full day burned on a bug that
+>   should have taken twenty minutes** — the agent picked the one doc it judged to own the subsystem, never
+>   searched for the others, and shipped ~10 ungrounded edits into a system whose behaviour two unread docs
+>   already described.
+>   ⚑ **What was actually retired is re-reading the WHOLE CORPUS at session start** — front-loading a lagging
+>   corpus manufactured confidence rather than knowledge. That is not licence to read one file when you touch a
+>   subsystem: it moves the reading from session-start to WORK-START, and it makes it *exhaustive for that
+>   subsystem* rather than exhaustive for the repo.
 >   ⛔ **THE TREE OUTRANKS THE DOC.** The engine has been rebuilt and the docs lag it, so a doc line is a
 >   HYPOTHESIS you confirm against `Sources/` — never the other way round. Where the two disagree the code wins,
->   and **fixing the doc is part of the same work item** (Conventions § Docs, below).
->   ⚑ **The blanket read-everything protocol is RETIRED, deliberately** (owner). It was made for the engine
->   switch, when the docs were the only account of a system in flux. It now does the opposite: it front-loads a
->   corpus that lags the tree, and — being far too large to actually re-read — it manufactures the confidence
->   that makes a stale line dangerous. One concept, one file, read properly, verified against the code.
+>   and **fixing the doc is part of the same work item** (Conventions § Docs, below). ⚠ This is NOT a reason to
+>   skip the doc and go straight to the code: the doc is what tells you which behaviour is DESIGNED and which is
+>   accidental, and the code alone cannot.
 >   **⛔ ALL docs live in the repo — a plan or design note kept only in a local/private notes folder
 >   (`.claude/plans/`, assistant memory) is a core-rule VIOLATION to fix by moving it into `docs/`, not a doc you
 >   may skip.**
@@ -523,35 +533,27 @@ not findings to re-discover.
   signature points to a graphics path running pre-init, not a logic bug. Established
   guard sites: `CvPlot.cpp` `setPlotType` graphics block, `setLayoutDirty`,
   `shouldHaveGraphics`; `CvMap::setupGraphical`.
-- **⛔ THE UNIT'S IN-FLIGHT ANIMATION LIVES ON ITS SCENE ENTITY, so DESTROYING THE ENTITY DISCARDS THE QUEUED
-  MOVE.** `QueueMove` pushes onto the entity and `ExecuteMove` plays it; `CvUnit::reloadEntity`'s own
-  `RemoveUnitFromBattle` call — *"remove this unit from any active mission"* — is the admission, and the entity
-  interface is pointer-keyed throughout, with no re-bind and no queue transfer.
-  ⚠ **"MISSION" IS TWO DIFFERENT THINGS HERE AND CONFLATING THEM IS THE TRAP.** The entity holds the EXE's
-  VISUAL mission definition (`addMission(CvMissionDefinition…)` — the walk, the combat sequence). The ORDER is
-  DLL-side and untouched: `CvSelectionGroup::m_missionQueue`, with `isBusy()` = `getMissionTimer() > 0 ||
-  isCombat()`, both plain members. ⇒ Losing an entity loses the PICTURE, never the instruction — so this class
-  presents as a purely visual orphan while game state advances correctly, which is exactly why it survives.
-  ⛔ **It is NOT caused by graphics paging.** Paging only makes `isGraphicsVisible(UNIT)` false, and that path
-  EARLY-RETURNS before any reload. ⚑ **The window that makes this bite is `CvSelectionGroup::groupMove`:** it inhibits centre-unit
-  recalc on both plots, `setXY` **queues** the move onto the current entity, the inhibit **nulls
-  `m_pCenterUnit`** as a dangling-pointer guard, and lifting it therefore makes `newCenterUnit != m_pCenterUnit`
-  unconditionally true — so `updateCenterUnit` reloads the entity **between `QueueMove` and `ExecuteMove`**.
-  ⇒ **An entity that is already the kind the unit wants is KEPT**; only a genuine MODEL change (a warlord
-  attaching) rebuilds one, through `rebuildEntityArt()`. ⚠ The signature to recognise, because none of it looks
-  like a graphics bug: the walk animation plays **in place on the tile the unit left**, animations never end,
-  units render **stacked** (`setupGraphical`'s `ExecuteMove(0, false)` is what separates a stack, and it is
-  spent on the empty queue), and **re-selecting the unit fixes it** — `reloadEntity` skips a selected unit.
-  ⛔ **AND AN ENTITY MAY BE CREATED BEFORE GRAPHICS INIT, SO THE SETUP LATCH IS OWNED BY `setupGraphical` AND
-  SET ONLY WHEN ITS GATE PASSES.** A NEW game forms the starting units' groups during `CvGame::init` — before
-  `SetGraphicsInitialized` — and the head-unit swap in `CvSelectionGroup::addUnit` calls `reloadEntity` right
-  there, creating a REAL entity with no landscape to set it up against (a LOAD never hits this: deserialization
-  writes coordinates raw, so no pre-graphics reload fires — which is why the defect class is invisible on every
-  save-based test). Creating pre-graphics is fine (the non-dynamic ctor path always has); what must survive is
-  the RETRY: `bGraphicsSetup` latched on the *attempt* left the entity model-less forever, and the EXE dies at
-  `faultAddr=0x24` the first time that unit is selected or moved. The keep-the-entity rule above is what removed
-  the accidental repair (the old churn recreated the entity post-init, resetting the latch), so the two rules
-  only compose because the latch is honest.
+- **⛔ THE UNIT RENDERING PIPELINE IS DOCUMENTED IN FULL, CITED, IN
+  [`docs/reference/unit-rendering.md`](docs/reference/unit-rendering.md) — READ IT BEFORE TOUCHING ANY GRAPHICS
+  OR ENTITY PATH.** The entity lifecycle (create · setup · place · destroy), how a plot chooses the one unit it
+  draws (`m_pCenterUnit`), graphics paging ON vs OFF, and the load / new-game timelines all live there against
+  `Sources/` line cites. What stays here is only the HARD RULES; the knowledge is the reference's.
+- **⛔ NEVER DESTROY A REAL SCENE NODE OUT FROM UNDER A SELECTED UNIT.** The engine's move queue lives ON the
+  scene node, so a needless destroy between a `QueueMove` and its `ExecuteMove` strands the walk animation.
+  `reloadEntity` therefore KEEPS an entity already of the wanted kind; only a genuine MODEL change (a warlord
+  attaching) rebuilds one, through `rebuildEntityArt()`.
+- **⛔ EVERY EXE ENTITY CALL GUARDS ON `isRealEntity(getEntity())`, NEVER ON `!isUsingDummyEntities()`.** The
+  latter answers FALSE for a NULL entity, so it hands NULL to an EXE that does not null-check; `isRealEntity` is
+  the only test that excludes both the shared dummy and NULL (`CvDLLEntity` — every member that passes an entity
+  over).
+- **⛔ GRAPHICS PAGING OFF IS A LIVE LOOP — "PAGE EVERYTHING IN, PAGE NOTHING OUT" — NEVER A ONE-SHOT.**
+  `CvPlotPaging::UpdatePaging` runs every `CvGame::update`; ON it requires plots by camera distance, OFF it
+  requires ALL on every plot every frame (a NONE no-op once a plot is fully shown). The inherited code ran a
+  one-shot disable sweep that latched dead, so a plot that could not render at that instant — the whole map, if
+  the sweep landed pre-landscape — stayed blank forever and unit nodes were built later against plots whose
+  `updateGraphics` never ran. ⚑ Its partner: `CvPlot::showRequiredGraphics` must not mark a bit visible before
+  `IsGraphicsInitialized()`, or a pre-init pass poisons the visible mask (`required ^ visible` = NONE forever)
+  and nothing retries. This asymmetry is what made *"works with paging on, broken with it off"* the signature.
 
 ### ⛔ THE NO-GUESSING RULE — map everything, always
 
