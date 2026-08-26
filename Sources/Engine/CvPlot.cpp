@@ -391,7 +391,10 @@ void CvPlot::reset(int iX, int iY, bool bConstructorCall)
 	m_movementCharacteristicsHash = 0;
 
 	m_eOwner = NO_PLAYER;
-	m_ePlotType = PLOT_OCEAN;
+	// NO_PLOT, not the legacy PLOT_OCEAN default: reset is the announced-nothing state. With a real value here,
+	// setPlotTypeInternal's no-op guard swallowed the type fact for every WATER plot on load and generation alike,
+	// so those plots' IS_WATER verdict bits never derived and every coastal plot's HAS_COAST read false map-wide.
+	m_ePlotType = NO_PLOT;
 	m_eTerrainType = NO_TERRAIN;
 	m_eFeatureType = NO_FEATURE;
 	m_eBonusType = NO_BONUS;

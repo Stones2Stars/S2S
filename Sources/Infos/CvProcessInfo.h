@@ -43,6 +43,20 @@ public:
 		return m_aiProductionToCommerce[(int)eCommerce];
 	}
 
+	///<summary>Whether this process converts production into any commerce channel at all.</summary>
+	///<remarks>A process that converts nothing is an IDLE order, and an idle order behaves as NO order.</remarks>
+	bool convertsProduction() const
+	{
+		for (int iCommerce = 0; iCommerce < NUM_COMMERCE_TYPES; ++iCommerce)
+		{
+			if (m_aiProductionToCommerce[iCommerce] != 0)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	// ======================= 4. INTRINSIC -- the reverse-pass-fed tech FK ====================================
 	// store-inverted onto the tech (tech.enables.processes); reconstructed at LOAD by the readJson reverse
 	// pass (CvReversePass), which calls the setter below. LOAD-ONLY writer.
@@ -57,7 +71,7 @@ private:
 	CvEdges     m_edges;
 	CvModifiers m_modifiers;
 	TechTypes m_eTechPrereq;
-	// the materialized §9 `conversion` plane (per-channel ×100; fully redefined on every (re-)map)
+	// the materialized §9 `conversion` plane (fully redefined on every (re-)map)
 	int m_aiProductionToCommerce[NUM_COMMERCE_TYPES];
 };
 

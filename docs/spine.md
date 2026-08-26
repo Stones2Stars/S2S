@@ -889,6 +889,18 @@ events and formats the raw typed payload to text **only when its gate is on** (a
 - **Level semantics:** 1 = headline (`begin`/`best`/`decision`), 2 = per-decision (`score`/`order`/`act`), 3 =
   per-candidate (`cand`/`skip`), 4 = inner-loop (a genuine fire hazard — CTB emits 10k+ lines/turn at 4). Owner plays
   at 3.
+- **⛔ A DIAGNOSTIC BUILT FOR A DEBUGGING SESSION MOVES TO LEVEL 4 WHEN THAT SESSION ENDS (owner): *"we do not
+  need diagnostics like this; 4 is where trace logs belong after we have finished debugging."*** The tiers above
+  describe what a line COSTS; this says what it is FOR. **Because the owner plays at 3, anything at 1–3 is on
+  during ordinary play** — so a trace kept at its investigation-time tier does not merely sit there, it runs
+  forever, in every session, for a question nobody is asking any more.
+  ⚑ **The instrument is KEPT, not deleted** — that is the point of moving it rather than removing it. It cost
+  real effort to build, it is the thing that makes the same class of defect findable next time, and at 4 it is
+  free until someone raises the gate. ⇒ Closing an investigation has a step: **re-tier its diagnostics to 4**.
+  ⚠ The cost of skipping it is measurable, not theoretical: the `[GFX]` domain left at its investigation tiers
+  (2 and 3) wrote a **133 MB** `Graphics.log` in one ordinary session — 77,245 `centerUnit` lines per 8 MB,
+  including a full-map sweep of plots that draw no units at all — which is exactly the legibility loss the
+  own-file rule below exists to prevent, arriving through the level gate instead.
 - `OutputDebugString` is `#define`d to nothing under `FINAL_RELEASE` — it fires only in Release/Assert/Debug (any
   "fires in FinalRelease, CRIT" framing is wrong for the shipped build).
 

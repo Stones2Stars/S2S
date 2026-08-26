@@ -12,6 +12,9 @@ turns production choice into an RTS-style choice instead of a turn-based choice.
 sorted candidate list and APPENDS `ORDER_CONSTRUCT` orders up to `AI_BUILDING_SHORTLIST_DEPTH`, and
 `CvCity::doProduction` re-invokes `AI_chooseProduction` only when the queue EMPTIES. So the scoring is paid
 ONCE per shortlist rather than once per build, and a city coasts on the shortlist between decisions.
+⚑ **The ONE exception is a queued PROCESS, which forces the re-decide every turn** — it never completes, so the
+queue-empties re-entry can never reach it, and a process may therefore only ever stand ALONE in an AI queue
+([yields-growth.md](../../reference/yields-growth.md) § The order queue).
 
 **⛔ THE DEPTH IS A COUNT, NEVER A PRODUCTION-TURNS BUDGET (owner).** A turns budget makes the depth shrink as
 a city's output grows — the more production it has, the fewer builds the budget covers, the sooner its queue
@@ -29,7 +32,7 @@ entirely rather than merely becoming rarer.
 > **⚖ THE OPEN QUESTION THE DEPTH RAISES — DOES A STANDING BUILDING QUEUE SQUEEZE UNITS OUT (owner)?** The
 > depth is what makes the scoring cheap, and it has a cost on the other side: `AI_chooseProduction` is the ONE
 > cascade that decides units as well as buildings, and `CvCity::doProduction` only re-enters it when the queue
-> EMPTIES. So a city holding three construct orders does not weigh a unit for three completions, and a shallow
+> EMPTIES (a queued process aside). So a city holding three construct orders does not weigh a unit for three completions, and a shallow
 > queue — which is what the production-turns budget produced — was implicitly buying responsiveness.
 > ⚑ **What decides whether it actually bites is the INSERT path, and that is where a review starts:** unit
 > orders mostly APPEND like buildings do, but one site pushes with `bAppend = false` and therefore jumps a
@@ -56,7 +59,7 @@ score.
 
 ⛔ **THE STACK RETAINS THE SCORING, NEVER THE DECISION — and that is what dissolves the unit question above.**
 `AI_chooseProduction` is the ONE cascade that weighs units as well as buildings, and `CvCity::doProduction`
-re-enters it only when the production queue EMPTIES. A pop that refills the queue by itself means the queue
+re-enters it only when the production queue EMPTIES (a queued process aside). A pop that refills the queue by itself means the queue
 never empties, so the unit half is never reached at all — the depth's own defect, taken further. So the pop
 goes THROUGH the decision: a completion re-enters `AI_chooseProduction` as it does today, and the building
 half CONSULTS the stack instead of re-scoring.

@@ -1130,6 +1130,18 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   > not degrade to "no art": a max animation speed of **0** is a unit that plays its walk cycle and never
   > translates, and **0** group definitions is a formation with no per-member offsets, so the models stack on
   > one another.
+  > ⛔ **AND THE SIX ANSWER THE AUTHORED MESH-GROUP BLOCK *ALONE* — a value from another system is the same
+  > defect wearing a plausible name.** The EXE reads a figure COUNT and the per-member OFFSETS across these
+  > calls and lays one formation out of them, so the layout is coherent only while all of them come from the one
+  > block. ⚑ The trap is a name collision: Size Matters' `groupRank()` also says "group", and
+  > `CvUnit::getGroupSize` returned it whenever `GAMEOPTION_COMBAT_SIZE_MATTERS` was on — a merge/size rank
+  > summed from the combat classes, whose consumer is `getUnitCountSM`, handed to the renderer as a figure
+  > count the art cannot supply. That is the pivot rule in the `sizeMatters` block below failing on the ART
+  > plane: **one `DllExport` read meaning two different things depending on a player toggle.**
+  > ⚠ It stayed invisible because the whole family answered `0/-1` while the mesh-group data was uncarried —
+  > the formation loop never ran, so the override had no consumer. **Carrying the data is what made it
+  > reachable**, which is the shape to expect from any stub this family is restored from: the bug is not in the
+  > restoration, it is the pre-existing wrong answer the restoration finally delivers to someone.
   > ⛔ It is NOT covered by the ART CARVE-OUT above, which carves out the art DEFINES and asset files — these are
   > the unit's own numbers, authored in the unit XML, that merely reference a define.
   > **⛔ ART IS NOT A DECIMAL (owner) — the animation numbers carry NO fixed-point scale.**

@@ -2968,7 +2968,10 @@ int CvCity::getOrderProductionTurnsLeft(const OrderData& order, int iIndex) cons
 	case ORDER_CREATE:
 		return getProductionTurnsLeft(order.getProjectType(), iIndex);
 	case ORDER_MAINTAIN:
-		break;
+		// A process has a fake ONE-TURN completion time at all times (owner). It never completes, so the
+		// honest answer is infinite -- and this feeds SUMS (queue totals, the broker's nearly-finished
+		// test) that an infinity poisons for every real order sharing the queue.
+		return 1;
 	case ORDER_LIST:
 		return 0;
 	default:
@@ -2996,6 +2999,13 @@ int CvCity::getTotalProductionQueueTurnsLeft() const
 	int turns = 1;
 	foreach_ (const OrderData & order, m_orderQueue)
 	{
+		if (order.eOrderType == ORDER_MAINTAIN)
+		{
+			// A process needs no production and never completes, so it contributes its ruled one turn
+			// (getOrderProductionTurnsLeft) rather than the MAX_INT that would bail this whole sum to 999.
+			++turns;
+			continue;
+		}
 		int productionNeeded = getProductionNeeded(order);
 		if (productionNeeded > 999)
 		{
@@ -11025,6 +11035,20 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 			const ProcessTypes processType = static_cast<ProcessTypes>(iData1);
 			if (canMaintain(processType) || bForce)
 			{
+				// A process may enter an AI queue ONLY when there is literally nothing else in it (owner).
+				// Humans keep the free hand: they manage their own queue.
+				if (!bForce && (!bIsHuman || isProductionAutomated()))
+				{
+					for (int iOrder = getOrderQueueLength() - 1; iOrder >= 0; iOrder--)
+					{
+						if (getOrderAt(iOrder).eOrderType != ORDER_MAINTAIN)
+						{
+							logCityAI(2, "[CIT/push/reject] city=%S owner=%d PROCESS reason=queueNotEmpty",
+								getName().GetCString(), (int)getOwner());
+							return;
+						}
+					}
+				}
 				order = OrderData::createProcessOrder(processType, bSave);
 				CvEventReporter::getInstance().cityBuildingProcess(this, processType);
 				bValid = true;
@@ -11106,15 +11130,28 @@ void CvCity::pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bo
 		}
 	}
 
-	//Check the Queue, and remove process if there's something else to do
-	if (!bJustAddedProcess && getOrderQueueLength() > 1 && m_orderQueue[0].eOrderType == ORDER_MAINTAIN)
+	//Check the Queue, and remove processes if there's something else to do
+	if (!bJustAddedProcess && getOrderQueueLength() > 1)
 	{
-		const PlayerTypes eOwner = getOwner();
-		CvPlayerAI& player = GET_PLAYER(eOwner);
-		const bool bFinancialTrouble = player.AI_isFinancialTrouble();
+		const bool bFinancialTrouble = GET_PLAYER(getOwner()).AI_isFinancialTrouble();
 		if (!bFinancialTrouble)
 		{ // IF financial Trouble, keep the process if needed
-			popOrder(0);
+			if (!bIsHuman || isProductionAutomated())
+			{
+				// AI: a process may only ever stand ALONE (owner) -- purge every queued one, wherever it
+				// sits, the moment a real order joins. A sandwiched one is never reached at the head.
+				for (int iOrder = getOrderQueueLength() - 1; iOrder >= 0; iOrder--)
+				{
+					if (m_orderQueue[iOrder].eOrderType == ORDER_MAINTAIN)
+					{
+						popOrder(iOrder);
+					}
+				}
+			}
+			else if (m_orderQueue[0].eOrderType == ORDER_MAINTAIN)
+			{
+				popOrder(0);
+			}
 		}
 	}
 
@@ -11898,9 +11935,20 @@ void CvCity::doProduction(bool bAllowNoProduction)
 	PROFILE_EXTRA_FUNC();
 	if (!isHuman() || isProductionAutomated())
 	{
+		// A process anywhere in the queue -- not only at head -- forces the per-turn re-decide: a process never
+		// completes, so the queue-empties re-entry can never reach it, and AI_chooseProduction is what strips it.
+		bool bQueuedProcess = false;
+		for (int iOrder = getOrderQueueLength() - 1; iOrder >= 0; iOrder--)
+		{
+			if (getOrderAt(iOrder).eOrderType == ORDER_MAINTAIN)
+			{
+				bQueuedProcess = true;
+				break;
+			}
+		}
 		// Koshling - with the unit contracting system we only build units to contractual orders
 		//	(apart from a few emergency cases) and we should not change from building them due to new techs, etc.
-		if (!isProduction() || isProductionProcess() || AI_isChooseProductionDirty() && !isProductionUnit())
+		if (!isProduction() || bQueuedProcess || AI_isChooseProductionDirty() && !isProductionUnit())
 		{
 			AI_chooseProduction();
 		}
@@ -11913,10 +11961,19 @@ void CvCity::doProduction(bool bAllowNoProduction)
 
 	if (isProductionProcess())
 	{
+		const ProcessTypes eRunningProcess = getProductionProcess();
 		if (m_bPopProductionProcess)
 		{
 			popOrder(0, false, true);
 			m_bPopProductionProcess = false;
+		}
+		// AN IDLE ORDER BEHAVES AS NO ORDER (owner). A process that converts nothing is idle, so the city banks
+		// its hammers as overflow exactly as the no-order path below does, instead of discarding them -- the
+		// production then survives to whatever it can finally build. A CONVERTING process accumulates nothing
+		// here by design: its conversion is a live rate read off the city, not an accrual.
+		if (eRunningProcess != NO_PROCESS && !GC.getProcessInfo(eRunningProcess).convertsProduction())
+		{
+			changeOverflowProduction(getCurrentProductionDifference(ProductionCalc::FoodProduction));
 		}
 		return;
 	}
@@ -11981,6 +12038,13 @@ void CvCity::doProduction(bool bAllowNoProduction)
 
 			// Eliminate pre-build exploits for Settlers and Workers
 			if (isFoodProduction() && !isBuiltFoodProducedUnit())
+			{
+				break;
+			}
+			// A process must not eat the completion overflow (owner). Feeding it to changeProduction converts
+			// it at the process's commerce rates -- and PROCESS_IDLE declares none, so the hammers are
+			// destroyed outright. Breaking leaves the overflow banked for the next real order.
+			if (isProductionProcess())
 			{
 				break;
 			}
