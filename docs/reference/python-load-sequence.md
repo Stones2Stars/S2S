@@ -89,7 +89,7 @@ comment that states the dependency.
    reads the game, so constructing there is what puts those reads on the engine's entry path, where an info
    plane that cannot answer them fails at the MENU as a named Python error. Building them on first use instead
    moves the same failure to an access violation inside the EXE, deep in `interfaceScreen()`, while initializing
-   nothing ([the info plane is write-once-at-load](../architecture/patterns/04-the-info-data-out-contract-what-an.md#-write-once-at-load--a-read-never-creates-and-an-unanswerable-read-fails-loud)). Every screen
+   nothing ([the info plane is write-once-at-load](../architecture/patterns/04-the-info-data-out-contract-what-an/01-write-once-at-load-a-read-never.md#-write-once-at-load--a-read-never-creates-and-an-unanswerable-read-fails-loud)). Every screen
    access still goes through `getScreen`, which stays total.
 
 ## Where the two sides meet — the marshalling contract

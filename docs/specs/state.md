@@ -195,7 +195,7 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > ⚠ **The load therefore LANDS through it, never straight into the array.** The store deserializes wholesale, so
 > a status written directly into the slot announces nothing and every consumer gating on it reads a holder that
 > is not held — the same hole the plot substrate had. ⛔ That id is not the discriminator
-> [a fact names the happening](../spine/03-the-domain-emit-surface-every-fact.md#-a-fact-names-the-happening--something-changed-is-not-a-fact) bans: it names which
+> [a fact names the happening](../spine/03-the-domain-emit-surface-every-fact/01-a-fact-names-the-happening.md#-a-fact-names-the-happening--something-changed-is-not-a-fact) bans: it names which
 > member of an OPEN registry moved, exactly as a religion or property id does, and the direction is in the event
 > name. A fact per status would mean an engine change per authored status — the very thing the open registry and
 > the no-named-accessor rule exist to avoid.

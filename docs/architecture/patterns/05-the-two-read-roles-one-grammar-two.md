@@ -83,7 +83,7 @@ two surfaces.
    key and is never something a consumer learns.
 3. **×100 native, always** — no `100` in any name, no `getX`/`getX100` pair, no scale variant
    ([the ×100 fixed-point model](../../specs/curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries)). A reader ÷100s at the point of use.
-4. **Scope is a spelled-out ARGUMENT, never a name fragment** ([scope is a separate axis, never folded into the kind](04-the-info-data-out-contract-what-an.md#the-coherent-surface--grouped-storage-parameterized-getters-clarity-and-predictability-is-king)).
+4. **Scope is a spelled-out ARGUMENT, never a name fragment** ([scope is a separate axis, never folded into the kind](04-the-info-data-out-contract-what-an/03-the-coherent-surface-grouped.md#the-coherent-surface--grouped-storage-parameterized-getters-clarity-and-predictability-is-king)).
 5. **⛔ THE VALUATION PROTOCOL — THE LIVE CONTEXTS GO IN, THE PROPOSED INCREASE COMES OUT.** The caller
    passes the live [contexts](../../cascade.md) and gets back **the DELTA** — what this candidate would ADD — never
    the raw percentage and never the new total.

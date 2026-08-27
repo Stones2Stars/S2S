@@ -88,7 +88,7 @@ the origin readable.
 > precedent — a field the machine consumers do not read), so the log answers *where did this come from* at a
 > glance while `UNIT_CREATED` stays the one fact every "does this unit exist" consumer rides.
 > ⛔ **The moment anything ROUTES on that field it is no longer diagnostic and must become its own fact**
-> ([a fact names the happening](03-the-domain-emit-surface-every-fact.md#-a-fact-names-the-happening--something-changed-is-not-a-fact): a payload a consumer
+> ([a fact names the happening](03-the-domain-emit-surface-every-fact/01-a-fact-names-the-happening.md#-a-fact-names-the-happening--something-changed-is-not-a-fact): a payload a consumer
 > branches on is the calculation relocated into a `switch`).
 > ⚑ Two facts at one birth is not a duplicate and the tree already does it deliberately —
 > `SEVT_WORLD_UNIT_CREATED_COUNT_ADDED`, `SEVT_EMPIRE_UNIT_COUNT_ADDED` and `SEVT_UNIT_CREATED` all fire at one

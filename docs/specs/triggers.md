@@ -152,7 +152,7 @@ against nothing and quietly answers false.
 > ([validation.md](validation.md): the spec leads).
 > ⚑ **And it is RE-ADDABLE, not lost: *"if we want the met part, we put that in after the fact."*** It
 > comes back as an ordinary CONDITION on the entry — a met predicate — which *extends* the vocabulary rather than
-> reshaping anything ([conditions are predicates, never bespoke members](json/03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query):
+> reshaping anything ([conditions are predicates, never bespoke members](json/03-the-shared-vocabulary/05-predicates-a-systems-runtime-state.md#35-predicates--a-systems-runtime-state-query):
 > the predicate registry is extensible by design). ⛔ So do NOT preserve the legacy filter now "to keep the option
 > open" — the option is open by construction, and keeping it is the half-migration.
 > ⚠ Two residues of that swap, both harmless but worth knowing rather than rediscovering: the world count is over

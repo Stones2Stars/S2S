@@ -83,7 +83,7 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   > **⛔ THE TAG KEY IS `define`, AND AN INFO THAT READS A DIFFERENT ONE FAILS AS A CRASH, NOT AS A MISSING
   > PICTURE.** `getArtInfo()` is `DllExport` and the EXE does **not** null-check it, so an unresolved tag makes
   > `ARTFILEMGR` answer NULL and the EXE dereferences it while reading the art's own path strings — an access
-  > violation in the EXE's frame with nothing naming the entity ([the info plane is write-once-at-load](../../architecture/patterns/04-the-info-data-out-contract-what-an.md#-write-once-at-load--a-read-never-creates-and-an-unanswerable-read-fails-loud):
+  > violation in the EXE's frame with nothing naming the entity ([the info plane is write-once-at-load](../../architecture/patterns/04-the-info-data-out-contract-what-an/01-write-once-at-load-a-read-never.md#-write-once-at-load--a-read-never-creates-and-an-unanswerable-read-fails-loud):
   > the address is the bait). ⚠ The DLL-side reads around it (`getLeaderHead`, `getButton`) DO null-check, so
   > they degrade quietly to "no art" and hide the fault until the EXE asks.
   > ⚑ **The failure is a silent key mismatch, which no census catches:** the reader accounts every authored key

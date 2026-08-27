@@ -145,7 +145,7 @@ gotcha is the per-plot bonus's **pre-improvement/pre-route** threshold test (`Cv
 > scope.
 
 > **Cascade representation — PERMANENT engine member-mirror, effect-only.**
-> [conditions are predicates, never bespoke members](../specs/json/03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query) retires condition-as-member
+> [conditions are predicates, never bespoke members](../specs/json/03-the-shared-vocabulary/05-predicates-a-systems-runtime-state.md#35-predicates--a-systems-runtime-state-query) retires condition-as-member
 > shapes (`empire.capital` → `enabled:IS_CAPITAL`). **The golden-age YIELD EFFECT is the standing PERMANENT exception:**
 > the per-plot threshold bonus, the player golden-age yield, and the golden-age commerce are applied by the **core
 > engine** and are **not defined as data anywhere** — the per-plot bonus is a base-yield threshold test ("does the plot

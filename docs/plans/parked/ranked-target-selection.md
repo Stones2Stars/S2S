@@ -9,7 +9,7 @@
 Some effects target the **top-N cities by a metric**, not a boolean per-city condition:
 - **largestCity happiness** — engine `getLargestCityHappiness` (`CvCity.cpp:5551`) applies a flat to a city whose
   `findPopulationRank() ≤ world TargetNumCities` (i.e. the empire's largest *cities*, plural — top-N, not the single
-  largest). This is the [conditions are predicates, never bespoke members](../../specs/json/03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query) retirement target for the `largestCity` member — **blocked on
+  largest). This is the [conditions are predicates, never bespoke members](../../specs/json/03-the-shared-vocabulary/05-predicates-a-systems-runtime-state.md#35-predicates--a-systems-runtime-state-query) retirement target for the `largestCity` member — **blocked on
   this design**.
 - **Wonders that grant to the X largest cities** — same selection shape on the `grants` side.
 
@@ -88,5 +88,5 @@ through the reverse pass. Spelling is SETTLED — `orderedBy` / `orderedByDescen
   largestCity-happiness parity case.
 
 ## Related
-- [conditions are predicates, never bespoke members](../../specs/json/03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query) — the invention sweep this unblocks (`largestCity`).
+- [conditions are predicates, never bespoke members](../../specs/json/03-the-shared-vocabulary/05-predicates-a-systems-runtime-state.md#35-predicates--a-systems-runtime-state-query) — the invention sweep this unblocks (`largestCity`).
 - `Tools/Migration/curate_civic.py` / `curate_trait.py` — `iLargestCityHappiness` stays a `largestCity` member **until this lands**.

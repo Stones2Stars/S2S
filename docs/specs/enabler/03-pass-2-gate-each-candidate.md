@@ -239,7 +239,7 @@ affected buildings into the authoritative set in place (via an operate reverse-i
 > ⛔ So a candidate whose `requires` reads live state does not earn a sweep: either its axis has a fact and is
 > routed on it, or the axis is STATIC for the city's life (a plot's latitude, a victory condition) and is gated
 > once at creation. Nothing in the authored data falls outside those two, and a future atom that appears to must
-> get its fact ([an event gap is closed the moment it is found](../../spine/03-the-domain-emit-surface-every-fact.md#-a-fact-names-the-happening--something-changed-is-not-a-fact)), never a
+> get its fact ([an event gap is closed the moment it is found](../../spine/03-the-domain-emit-surface-every-fact/01-a-fact-names-the-happening.md#-a-fact-names-the-happening--something-changed-is-not-a-fact)), never a
 > re-check.
 
 **Obsolescence is the THIRD outcome of this same pass.** A present building whose `obsoletedBy` tech is held is

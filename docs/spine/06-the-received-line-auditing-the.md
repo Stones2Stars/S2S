@@ -7,7 +7,7 @@
 
 **A consumer announces that it ACTED on a fact.** Emitted lines and received lines then stream side by side on
 `/events`, and the audit is a diff: **a DOMAIN fact with no matching received line names a MISSING CONSUMER
-ROUTE** — the third gap form in [an event gap is closed the moment it is found](03-the-domain-emit-surface-every-fact.md#-a-fact-names-the-happening--something-changed-is-not-a-fact),
+ROUTE** — the third gap form in [an event gap is closed the moment it is found](03-the-domain-emit-surface-every-fact/01-a-fact-names-the-happening.md#-a-fact-names-the-happening--something-changed-is-not-a-fact),
 and the only one with no other observable signature. The first two forms are visible today (a missing emit leaves
 the stream silent, a missing field leaves the payload short); this one is not, because the fact goes out
 perfectly and is simply dropped on the floor. The worked case is `SEVT_PROPERTY_ADDED / _REMOVED`, which fires from
@@ -29,7 +29,7 @@ rather than the number that falls out of it.
 > means neither consumer can tell which arrived — a completion notice and a state change are not two readings of
 > one event, they are two events.
 > ⛔ The repair for such a conflation is always ADDITIVE, never a deletion
-> ([an event gap is closed the moment it is found](03-the-domain-emit-surface-every-fact.md#-a-fact-names-the-happening--something-changed-is-not-a-fact)): mint the state fact, leave
+> ([an event gap is closed the moment it is found](03-the-domain-emit-surface-every-fact/01-a-fact-names-the-happening.md#-a-fact-names-the-happening--something-changed-is-not-a-fact)): mint the state fact, leave
 > the notice a notice, re-point the folds.
 > ⛔ **Do NOT suppress an EMIT to fix a CONSUMER.** Conflating "this fact fired" with "this consumer should act"
 > is what produced both the plot-mark fan and this shared id. **Emit every distinct fact, always; decide handling

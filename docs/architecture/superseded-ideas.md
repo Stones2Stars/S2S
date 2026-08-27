@@ -40,7 +40,7 @@
    (json.md §6). **No bespoke era key.**
 7. **Condition-carrying sub-scope members** (`empire.capital`, `perMilitaryUnit`, …) *(dead as a class)* — encoding
    a deposit's condition as a bespoke member instead of a predicate/`unit:` qualifier. Killed by
-   [conditions are predicates, never bespoke members](../specs/json/03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query) (the golden-age yield-effect member-mirror is the one PERMANENT exception).
+   [conditions are predicates, never bespoke members](../specs/json/03-the-shared-vocabulary/05-predicates-a-systems-runtime-state.md#35-predicates--a-systems-runtime-state-query) (the golden-age yield-effect member-mirror is the one PERMANENT exception).
    `perMilitaryUnit` specifically authors as the `cities.{unit: IS_MILITARY}` entry (json.md §3.7).
 8. **The "deliberately more permissive" vicinity model** *(dead)* — vicinity with no ownership filter. Killed:
    vicinity mirrors the engine's ownership tiers (owned ⊂ owned+neutral ⊂ crossBorder; json.md §3.4, enabler.md §3).
@@ -278,7 +278,7 @@
     out rather than the old shape being preserved. If the mechanic is wanted it is authored fresh on the trigger
     plane (an `onCaptured` happening + the `promote` action), never by restoring a promotion-side "apply me when
     X" flag, which is the condition-as-member shape
-    ([conditions are predicates, never bespoke members](../specs/json/03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query)) inverted onto the target.
+    ([conditions are predicates, never bespoke members](../specs/json/03-the-shared-vocabulary/05-predicates-a-systems-runtime-state.md#35-predicates--a-systems-runtime-state-query)) inverted onto the target.
     ⚠ **The revival risk is the surviving SCHEMA tag**: it reads like an unmigrated field. The curator now DROPs
     it explicitly so the mapping cannot quietly re-emit a key nothing reads.
 30. **DIRTY-AND-RECOMPUTE FOR THE CASCADE PACKAGES** — the mark protocol (`markDirty(mask)` → `rebuildMarked` →

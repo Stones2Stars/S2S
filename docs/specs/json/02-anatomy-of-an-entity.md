@@ -29,7 +29,7 @@
 > ⚖ **Two axes, neither the other's member:** the **COUNT** axis (how many routes, and the cap) and the
 > **MODIFIER** axis (the route-PROFIT percentage by route kind, plus the per-channel percentage on the yield a
 > route delivers). ⛔ **Route KIND is a CONDITION, never a kind of its own** —
-> `coastal`/`foreign`/`sharedCivic` are predicates on the entry ([§3.5](03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query)):
+> `coastal`/`foreign`/`sharedCivic` are predicates on the entry ([§3.5](03-the-shared-vocabulary/05-predicates-a-systems-runtime-state.md#35-predicates--a-systems-runtime-state-query)):
 > `IS_FOREIGN`/`SHARES_CIVIC` evaluate against the route's partner city. ⚠ Not the same predicate shape:
 > `coastal` is a verdict about the CITY; `foreign`/`sharedCivic` about the ROUTE.
 >

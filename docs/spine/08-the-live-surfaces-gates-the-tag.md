@@ -165,7 +165,7 @@ consumer, and the off-thread writer for free.
 > means that is an emit that should be in the spine."*
 > ⇒ **The migration is DEMAND-DRIVEN, and the trigger is an INVESTIGATION, not a sweep.** The moment answering a
 > question requires reading a legacy `log<Domain>AI` sink, that requirement IS the finding: the fact belongs on
-> the spine and is not there. **Emit it** ([an event gap is closed the moment it is found](03-the-domain-emit-surface-every-fact.md#-a-fact-names-the-happening--something-changed-is-not-a-fact))
+> the spine and is not there. **Emit it** ([an event gap is closed the moment it is found](03-the-domain-emit-surface-every-fact/01-a-fact-names-the-happening.md#-a-fact-names-the-happening--something-changed-is-not-a-fact))
 > — the domain then gets the file consumer, the `/events` stream and the off-thread writer for free, and the legacy
 > line beside it stops mattering whether or not anyone deletes it.
 > ⛔ So do NOT plan, size, or schedule a wholesale conversion of the remaining call sites; a count of them is not

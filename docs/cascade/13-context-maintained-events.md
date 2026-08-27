@@ -102,7 +102,7 @@ FOSSIL OF A MISSING EMIT, above ([self-heal is not a backstop](03-no-staleness-n
   > NOT-YET-READ SENTINEL.** `CvMap::read` fills the map ONE PLOT AT A TIME and each plot announces as it lands,
   > so a derivation that reaches a NEIGHBOUR reaches one that may still hold `NO_TERRAIN` / `NO_FEATURE` / no
   > city. Every such leg tests its sentinel and answers false; an unguarded `getTerrainInfo(NO_TERRAIN)` is a
-  > fail-loud info-plane read ([the info plane is write-once-at-load](../architecture/patterns/04-the-info-data-out-contract-what-an.md#-write-once-at-load--a-read-never-creates-and-an-unanswerable-read-fails-loud)) and kills the
+  > fail-loud info-plane read ([the info plane is write-once-at-load](../architecture/patterns/04-the-info-data-out-contract-what-an/01-write-once-at-load-a-read-never.md#-write-once-at-load--a-read-never-creates-and-an-unanswerable-read-fails-loud)) and kills the
   > load outright. ⚠ **The self-correcting load order does NOT cover this** — it guarantees the VALUE converges
   > (the neighbour's own fact fans back and both sides re-derive), which is worth nothing if the first pass
   > raised. Convergence is about the answer; totality is about surviving to give one.

@@ -203,7 +203,7 @@ stays is an owner-ruled carve-out.
 > the choke point already applied it" — that skip is the compensation, and it fails the moment anything else
 > routes on the same fact.
 > ⛔ **Do not record one as a todo entry.** Finding it IS the work item
-> ([an event gap is closed the moment it is found](../spine/03-the-domain-emit-surface-every-fact.md#-a-fact-names-the-happening--something-changed-is-not-a-fact)); it closes in the same
+> ([an event gap is closed the moment it is found](../spine/03-the-domain-emit-surface-every-fact/01-a-fact-names-the-happening.md#-a-fact-names-the-happening--something-changed-is-not-a-fact)); it closes in the same
 > change, and the compensating skip goes with it.
 
 **⚖ AN AI *WEIGHT* IS NOT A CORRECTNESS GATE — THE AI HAS TO FUNCTION, AND BALANCE COMES AFTER:**

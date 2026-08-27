@@ -91,7 +91,7 @@ by asking whose property it is:
 > ⛔ **The legacy spellings it retires each hid something in the NAME.** `noUnhappiness`/`noUnhealthyPopulation`
 > used the `no…` negation; `buildingOnlyHealthy` named a CONSEQUENCE ("buildings are only ever healthy") rather
 > than the mechanic; and `noCapitalUnhappiness` baked the WHERE in — which is the condition-as-member shape
-> [conditions are predicates, never bespoke members](03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query) retires, and it is
+> [conditions are predicates, never bespoke members](03-the-shared-vocabulary/05-predicates-a-systems-runtime-state.md#35-predicates--a-systems-runtime-state-query) retires, and it is
 > now `abolishedAnger` gated `IS_CAPITAL`. ⛔ A future narrowing is a PREDICATE or a target, never a new key
 > spelling.
 
@@ -133,7 +133,7 @@ of the empire — the ordinary scope spine (§3.2), on the same derived-union-ov
 > grantor does; a gate read only on arrival strands the amenity wherever it last landed.
 > ⚑ **This is what retires a WHERE baked into a key NAME.** The legacy `noCapitalUnhappiness` encoded its
 > condition in its spelling — the condition-as-member shape
-> [conditions are predicates, never bespoke members](03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query) retires — so it is
+> [conditions are predicates, never bespoke members](03-the-shared-vocabulary/05-predicates-a-systems-runtime-state.md#35-predicates--a-systems-runtime-state-query) retires — so it is
 > ONE key, `abolishedAnger`, gated by `IS_CAPITAL`, never a second key meaning "the same thing but over there".
 > ⛔ And the reverse is equally binding: dropping the condition to keep the block a plain bitset would abolish
 > anger in EVERY city. A shape whose only faithful reading is the wrong behaviour must not ship.

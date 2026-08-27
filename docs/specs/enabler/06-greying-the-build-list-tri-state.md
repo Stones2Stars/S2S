@@ -31,7 +31,7 @@ Grey vs hide is a **UI choice per clause**, not engine behaviour: author a resou
 > [the no-guessing rule](../../../AGENTS.md#conduct) pointed at the CONSUMER: a greyed entry that
 > does not say what is missing hands the player and the AI a question instead of an answer, the same defect a
 > non-specific fact commits on the emit side
-> ([a fact names the happening](../../spine/03-the-domain-emit-surface-every-fact.md#-a-fact-names-the-happening--something-changed-is-not-a-fact)).
+> ([a fact names the happening](../../spine/03-the-domain-emit-surface-every-fact/01-a-fact-names-the-happening.md#-a-fact-names-the-happening--something-changed-is-not-a-fact)).
 > ⇒ **So "unavailable" is never a complete verdict.** A candidate the player can act on says what to go get; one
 > they cannot says so and stops occupying the list — stored at the gate, never re-derived by whoever displays it.
 >

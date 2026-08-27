@@ -8,7 +8,7 @@ predicates — so a conditioned deposit is, in essence, **a `requires`-shaped ga
 enabler resolves that shape to *availability* ("can I?"), the modifier resolves the *same* shape to a *magnitude*
 ("how much?").
 
-> **⛔ A condition is a PREDICATE, never a bespoke sub-scope MEMBER ([conditions are predicates, never bespoke members](../specs/json/03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query)).**
+> **⛔ A condition is a PREDICATE, never a bespoke sub-scope MEMBER ([conditions are predicates, never bespoke members](../specs/json/03-the-shared-vocabulary/05-predicates-a-systems-runtime-state.md#35-predicates--a-systems-runtime-state-query)).**
 > A deposit that applies only under some game state carries that state as a **predicate** in its `enabled`/`disabled`
 > (or a `per`/`unit:` scaler, [json](../specs/json.md) §3.7), at the deposit's normal scope — `{family}.empire.percent` +
 > `enabled:"IS_CAPITAL"`, never a bespoke `{family}.empire.capital.percent` member. Encoding the condition as a new

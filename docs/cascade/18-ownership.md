@@ -236,7 +236,7 @@ filing an item discount under `production.city`.)
 > `{value, enabled: IS_MILITARY | IS_SPACE}` — which is [§6.1](../specs/json.md)'s own `units {IS_WATER}` exemplar and
 > needs no vocabulary of its own.
 > ⛔ **A category member per legacy tag NAME is the curator minting a kind off a spelling** — the
-> condition-as-member shape [conditions are predicates, never bespoke members](../specs/json/03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query)
+> condition-as-member shape [conditions are predicates, never bespoke members](../specs/json/03-the-shared-vocabulary/05-predicates-a-systems-runtime-state.md#35-predicates--a-systems-runtime-state-query)
 > retires, and it is what the §6 member-triage test already rejects: a member is a KIND only if it answers WHICH
 > COMPONENT, never WHICH TARGET or WHEN.
 > ⚠ **The buildRate MECHANIC is legit and is not under review: *"buildRate is a legit mechanic, we do not

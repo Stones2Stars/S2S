@@ -65,7 +65,7 @@ The full address of a deposit:
 - **⛔ THE MEMBER TRIAGE TEST — a member is a KIND only if it answers *WHICH component does this modify*.**
   `defense.bombardDefense` and `maintenance.distance` name components, so they are genuine kinds. A member that
   answers **WHEN or WHERE** the value applies is a **condition-as-member rollerskate** — the predicate simply has
-  not been defined yet ([conditions are predicates, never bespoke members](03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query)),
+  not been defined yet ([conditions are predicates, never bespoke members](03-the-shared-vocabulary/05-predicates-a-systems-runtime-state.md#35-predicates--a-systems-runtime-state-query)),
   and it re-authors as a conditioned deposit (the worked case: `maintenance.empire.{homeArea,otherArea}` →
   `enabled: "IS_HOME_AREA"` / `"!IS_HOME_AREA"`, §3.5). Run this test on every proposed member: the scope axis and
   the conditions must never inflate a family's vocabulary. ⚑ A **`per<X>`-named member is its own verdict** — it IS
@@ -100,7 +100,7 @@ The full address of a deposit:
   plus the entity's own self-data (`hurryCost` = "hurrying ME"; `buildTime`). (2) **What CHANGES a cost** is the ONE
   `costs` modifier family, kinds by category (`train`/`construct`/`create`/`build`/`research`/`improvementUpgrade`/
   `hurry`/`upgrade`), with **scope as the axis** — never a `world*`-prefixed kind
-  ([scope is a separate axis, never folded into the kind](../../architecture/patterns/04-the-info-data-out-contract-what-an.md#the-coherent-surface--grouped-storage-parameterized-getters-clarity-and-predictability-is-king)). (3) The **derived price** (upgrade
+  ([scope is a separate axis, never folded into the kind](../../architecture/patterns/04-the-info-data-out-contract-what-an/03-the-coherent-surface-grouped.md#the-coherent-surface--grouped-storage-parameterized-getters-clarity-and-predictability-is-king)). (3) The **derived price** (upgrade
   gold, hurry gold/pop) is engine-computed from planes 1 × 2; its formula parameters are world/handicap config, never
   vocabulary.
 - **`underworld` is the in-city criminal contest** (criminals burrow, investigators drag them out): kinds

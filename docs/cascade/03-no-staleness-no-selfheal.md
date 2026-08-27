@@ -35,7 +35,7 @@ deposits — so the flag becomes a lossy summary of an answer already in hand.
 ⇒ **The mechanical test, and it applies to the whole engine, not just this plane: every staleness bit, staleness
 stamp, epoch counter and version number is asserting that what changed is unknowable. Under a complete spine that
 assertion is FALSE BY CONSTRUCTION.** So each surviving one is exactly two things and never a third: a **missing
-emit wearing a flag** (wire the fact — [an event gap is closed the moment it is found](../spine/03-the-domain-emit-surface-every-fact.md#-a-fact-names-the-happening--something-changed-is-not-a-fact)), or
+emit wearing a flag** (wire the fact — [an event gap is closed the moment it is found](../spine/03-the-domain-emit-surface-every-fact/01-a-fact-names-the-happening.md#-a-fact-names-the-happening--something-changed-is-not-a-fact)), or
 **dead weight** (delete it). ⛔ It is never a mechanism to keep because it works.
 
 ### ⛔ A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT — so it is a SEARCH, not just a ban

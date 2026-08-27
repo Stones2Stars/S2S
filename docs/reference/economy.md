@@ -49,7 +49,7 @@ supply + corporate maintenance.
   > ⚖ **There is NO effective-modifier sum to maintain, and no area surface.** The percent stack IS the roll-up
   > over the chain the city sits under (team + empire + city), so the hand-summed city + player + area +
   > connected-city legs collapse into one read. Three of those legs were never kinds but CONDITIONS wearing a
-  > member's name ([conditions are predicates, never bespoke members](../specs/json/03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query)):
+  > member's name ([conditions are predicates, never bespoke members](../specs/json/03-the-shared-vocabulary/05-predicates-a-systems-runtime-state.md#35-predicates--a-systems-runtime-state-query)):
   > `coastalDistance` is *while coastal*, `connectedCity` is *while connected to the capital*, and
   > `homeArea`/`otherArea` IS `IS_HOME_AREA` — *"maintenance increases in another area"* is literally "this
   > city's area is not the capital's" ([json.md §3.5](../specs/json.md)), which is why `CvArea` carries no

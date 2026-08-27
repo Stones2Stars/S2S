@@ -5,7 +5,7 @@ walking outward, where open ground costs 1 and difficult ground costs more. A si
 ground, and fewer through anything costlier.
 
 **Vision is ONE family** — `vision` — with three kinds and the scope axis
-([scope is a separate axis, never folded into the kind](../architecture/patterns/04-the-info-data-out-contract-what-an.md#the-coherent-surface--grouped-storage-parameterized-getters-clarity-and-predictability-is-king)) saying whose is whose. It had no spec
+([scope is a separate axis, never folded into the kind](../architecture/patterns/04-the-info-data-out-contract-what-an/03-the-coherent-surface-grouped.md#the-coherent-surface--grouped-storage-parameterized-getters-clarity-and-predictability-is-king)) saying whose is whose. It had no spec
 until now, which is exactly why it had no family: each curator invented a shape, and `seeFrom` / `seeThrough` /
 `visibilityRange` ended up as three names sliding between the same two ideas.
 
@@ -122,225 +122,17 @@ fractional obstruction needs no new scale.
 breaks.** Movement may route around a mountain; vision must not, because routing around is exactly what would let
 you see behind it. The SPEND itself mirrors movement fully (the remainder rule above); only the routing differs.
 
-### Why STRENGTH and ELEVATION stay two channels
+⛔ **THIS PAGE CARRIES RULINGS OF ITS OWN, AND THE PAGES BELOW CARRY THE REST — read both.** It is not a
+map you may skip; the parts your work touches are read END TO END on top of it, and the count that applies is
+something you FIND, not something you decide ([AGENTS.md](../../AGENTS.md)).
 
-Both add budget, so they are interchangeable currencies against obstruction — and that IS the mechanic:
-**a jungle demands extra strength, and you may pay it either by seeing better (a hunter's promotion) or by
-standing above it (elevation).** Two routes to the same view is the design, not a redundancy to collapse.
+## The parts
 
-They stay two channels because they answer different questions — **strength is how well you see, elevation is how
-high you stand** — and the difference is where the room is. A spyglass is strength; a tower is elevation. Keeping
-them apart now means a later rule that treats them *unlike* (elevation weighed against an obstruction's own
-height, so height sees OVER what strength must see THROUGH) needs no re-authoring. ⚑ The 1:1 sum is the SIMPLE
-rule, not the final word.
+| part | what it settles |
+|---|---|
+| **[why strength and elevation stay](vision/01-why-strength-and-elevation-stay.md)** | Why STRENGTH and ELEVATION stay two channels |
+| **[the rule the code never states](vision/02-the-rule-the-code-never-states.md)** | The rule the code never states |
+| **[what the data actually uses](vision/03-what-the-data-actually-uses.md)** | What the data actually uses (measured, not assumed) |
+| **[where it lands the hideandseek](vision/04-where-it-lands-the-hideandseek.md)** | Where it lands — THE `hideAndSeek` BLOCK, never inside `vision` |
+| **[what survived the collapse](vision/05-what-survived-the-collapse.md)** | What survived the collapse |
 
----
-
-## 3. Worked authoring
-
-```jsonc
-// a jungle: one extra plot's worth to see through, so it costs 2 plots in all
-"vision": { "plot": { "obstruction": { "flat": 100 } } }
-
-// a peak: three plots of elevation to stand on
-"vision": { "plot": { "elevation": { "flat": 300 } } }
-
-// a watchtower improvement: raises whoever stands here by a plot
-"vision": { "plot": { "elevation": { "flat": 100 } } }
-
-// a unit's own sight, and a promotion sharpening it
-"vision": { "unit": { "flat": 200 } }
-
-// tree platforms: the city's lookout goes up a storey
-"vision": { "city": { "elevation": { "flat": 100 } } }
-```
-
-Ground that authors no `vision.plot.obstruction` costs the open-ground default — **absent means ordinary**, never a special
-case to encode.
-
----
-
-## 4. HIDE AND SEEK — the intent, written down
-
-> **⛔ MEMBERSHIP IS ASKED BEFORE THE CONTEST, AND HOLDING THE METHOD SKILL *IS* THE MEMBERSHIP QUESTION.** A
-> unit is hidden only by a method it actually hides BY, so `hasInvisibilityType(method)` asks whether the unit
-> holds `GC.getMethodSkill(method)` and only then applies the negation filters. ⚠ This is the clause that
-> carries the whole mechanic: the engine returns INVISIBLE for the first method no seer has registered against,
-> **before** the graduated contest is reached — so a membership test that answers yes for every method makes
-> every unit invisible to every foreign team, and no amount of authored detection can counter it.
-> ⚑ The legacy engine got the same discrimination for free from its per-method `invisibilityIntensityTotal`,
-> which the collapse to one method-agnostic `concealment` magnitude removed; the skill is what replaces it.
-> ⛔ **The failure direction is FAIL-OPEN TOWARD INVISIBILITY**, which is why this is stated rather than left to
-> the code: every way of getting the test wrong hides units rather than revealing them, and a hidden unit
-> produces no error, no wrong number and no log line.
->
-> ⚠ **DETECTION IS KEYED BY SKILL ID, NEVER BY THE `INVISIBLE_*` INDEX.** `detectionAgainst` takes the method's
-> SKILL, so a registration passing the index files a seer's detection under whichever method happens to share
-> that number and reads 0 under the one it was authored for — silently, since `setSpotIntensity` stores nothing
-> for a zero.
->
-> ⚑ **A PROMOTION-GRANTED METHOD REGISTERS THROUGH THE RESOLVED FOLD.** The membership test
-> (`hasInvisibilityType`) reads the unit's resolved `hideAndSeek` block — method-skill grants minus revokes
-> over info ∪ held promotions ∪ held unit-combat classes, gathered on the promotion/combat facts — never a
-> per-read walk of the carriers inside `isInvisible`, which is one of the engine's hottest reads. The
-> `noInvisibility` canceller skill rides the same fold.
-> ⛔ **The CLASSIC method read stays the INFO's own datum** (§ the classic callout below): only a UNIT authors
-> `hideAndSeek.method`, so there is nothing promotion- or combat-class-granted for the classic read to see —
-> deriving it from the skill union is the border-patrol bug, never a gap to close.
->
-> ⚑ **WHY THIS MATTERS MORE THAN TIDINESS — the mechanic is playable but not UNDERSTANDABLE:**
-> *"it's expressed in icons, and nowhere is it really stated what counters what"*, with four kinds of
-> invisibility live in the early game. It rested on the assumption that *"the AI should be able to create
-> perfect unit combination counters at all times"* — and humans even less so; *"the designer worked under
-> the theory that if he understood it, everyone could."* Add animals that instakill from invisibility with
-> absurd strength and the whole thing stops being a mechanic and becomes noise.
->
-> ⇒ **Comprehensibility is the requirement, not a nice-to-have.** A rule nobody can state is a rule nobody
-> can play against. That is why the pairing is written down here, and why the collapse matters: a detection
-> entry now RENDERS itself — *"+1 Detection — units matching IS_DISGUISED"* — through the one per-entry
-> renderer ([patterns.md](../architecture/patterns.md) category 5), so what counters what is finally SAYABLE
-> in the pedia instead of being inferred from icons.
-
-### The rule the code never states
-
-**ONE detection type counters ONE concealment type**. It is a PAIRING, not a matrix and not a single
-contest: a seeker's strength against submarines is weighed against a hider's submarine concealment, and against
-nothing else.
-
-The shipped data says so plainly once you know to look — the same key appears on both sides:
-
-| side | carries | means |
-|---|---|---|
-| the hider | `invisible: INVISIBLE_SUBMARINE` | the METHOD it hides by |
-| | `invisibilityIntensity: { INVISIBLE_SUBMARINE: n }` | how well it hides by that method |
-| the seeker | `visibilityIntensity: { INVISIBLE_SUBMARINE: n }` | how well it answers that method |
-| | `visibilityIntensityRange` | ⚠ a SECOND reach, parallel to vision's |
-| | `visibilityIntensitySameTile` | a bonus at zero distance |
-
-**The type IS the pairing.** Nothing in the engine says so, which is why it reads as an arbitrary pile of tables.
-
-### What the data actually uses (measured, not assumed)
-
-14 invisible types across 13 table keys, 477 authorings.
-
-- **Magnitudes are genuinely graduated** — 1 … 26, plus ~100 NEGATIVE entries (counter-detection, something
-  actively reducing what a seeker perceives). This texture is real and any redesign keeps it.
-- **The per-type CROSS-PRODUCT is largely fiction** — **270 of 355 authoring entities name exactly ONE type**;
-  only 10 name four or more, and `CAMOUFLAGE` / `SIZE` / `DISGUISED` are three quarters of everything. The
-  14×13 surface serves a quarter of its own data.
-
-### Where it lands — THE `hideAndSeek` BLOCK, never inside `vision`
-
-⛔ **HIDE AND SEEK IS ITS OWN BLOCK AND ITS OWN EVALUATION.** `vision` answers ONE question — *how far
-do you see* — and stops there. Whether a unit standing inside that reach is PERCEIVED is a graduated CONTEST
-between how well it hides and how well the seeker detects, which is a different mechanic with a different
-evaluation. ⚑ **The separation is the deliverable, not tidiness: the legacy engine's hide-and-seek evaluation
-bled into its classic-visibility evaluation for years**, so the two must not be expressed in one family
-where the same bleed can re-form. The contest data therefore lives in **`hideAndSeek`**, the option-gated block
-([json.md §9](json.md): a dedicated system's data lives in its own block, and the module is ON iff that block
-exists and is non-empty), and `vision` keeps only the budget — strength, `elevation`, `obstruction`.
-
-> **⚖ THE CONTEST'S CARRIERS TODAY ARE UNITS, PROMOTIONS AND UNIT-COMBAT CLASSES: no building shows
-> hidden units, classically or in the contest — detection travels with seeker UNITS ("various kinds of
-> dogs").** The absence is INHERITED DESIGN, not a data accident: vanilla Civ4 deliberately had no detection
-> on buildings at all, which is why no building surface down the whole lineage ever carried one. So the block
-> folds onto the UNIT's resolved plane and nowhere else today.
-> ⚖ **A BUILDING-FED CITY PLANE IS UN-KILLED FORWARD INTENT, not a dead idea: a scenario is wanted
-> where buildings do it — a NEW mechanic, since legacy never had one — so the city must stay PREPARED for
-> it.** When data authors a building `hideAndSeek` block, the city gains its own cached fold over its
-> OPERATING buildings, marked on the building facts (the unit block's shape one scope over). ⛔ Until that
-> data exists nothing is built (a shape with zero authorings is an example, not live data —
-> [triggers.md](triggers.md)); a building authoring the block today surfaces on the readJson
-> unconsumed-section census, which is the fail-loud signal that the wiring's moment has come.
-
-> **⛔ VISIBILITY ITSELF IS NOT A SKILL, AND IS NOT MODELLED AS ONE BEYOND FILTERING: *"if visibility was
-> a skill it would only be absolute values, and hide and seek has gradient values."*** A skill is a pure boolean
-> ENABLER ([json.md §8](json.md)) — it carries no value — so it can express WHICH method is in play and never HOW
-> WELL. The contest is graduated on both sides, so the strength lives in `concealment` / `detection` and the skill
-> plane is used **only as the membership filter**: which method a hider hides by, which method a seeker answers.
-> ⛔ So do not model a visibility LEVEL as skills (a ladder of `camouflage1/2/3`, a per-tier key) — that re-encodes
-> a magnitude in a plane that cannot hold one, which is exactly what the retired per-type intensity tables did
-> ([superseded-ideas #35](../architecture/superseded-ideas.md)). ⚑ And it is why the membership test is the SKILL
-> while the contest reads the magnitudes beside it — the two are not alternatives, they are the filter and the
-> value.
->
-> **⚖ ⇒ AND THEREFORE THE VISIBILITY AND HIDING VALUES ARE MODELLED THE SAME WAY NORMAL VISION IS, JUST WITH
-> DIFFERENT PARAMETERS.** That is the conclusion the gradient forces, not a separate preference: §1a's
-> scale and §2's budget-against-cost shape already express a graduated quantity correctly, so `concealment` and
-> `detection` are the same KIND of number as `sight` and `obstruction` — same ×100 fixed point, same
-> one-step-is-100 denominator, differing only in the parameters they carry.
-> ⛔ **So there is no bespoke intensity scale here, and none is to be invented.** A per-method 1…26 ladder is the
-> legacy shape that died ([superseded-ideas #35](../architecture/superseded-ideas.md)); a fresh one would be the
-> same mistake re-authored.
-> ⚠ **What this does NOT reopen is the REACH** — detection still gets none of its own (§4 below), and "modelled
-> like vision" is a statement about how the VALUES behave, never a licence to grow the second range system
-> `visibilityIntensityRange` was retired for. The contest runs on the plot the §2 budget already granted.
-
-⚖ **THE METHOD IS A SKILL, NOT A TAG.** The operative test is *can a promotion grant it?*
-([json.md §8](json.md)) — and it plainly can: **optical camouflage** is exactly a late-game promotion INTO a
-hiding method. So the method is a [skill](skills.md), which fits on both counts: promotion-grantable, and a pure
-boolean enabler carrying no value — correct, because the LEVEL is the `concealment` magnitude beside it.
-⛔ It is NOT a [tag](tags.md), and the reason generalizes: a tag says what a unit **IS**, while `camouflage` /
-`size` / `political` say how it **HIDES**. **`submarine` is the case that proves the split** — it is a genuine
-identity tag AND carries the method skill, because a surfaced submarine is not hidden: *"submarine does not need
-to be hidden/invisible, it just mostly is"*.
-⚑ **The tag reading also DESTROYED authored data, which is what settles it.** Tags are not promotion-grantable,
-so a method named by a PROMOTION had nowhere to land and was dropped on the floor — and **73 promotions author
-one** (`CAMOUFLAGE` 40 · `DISGUISED` 21 · `NAVAL_DISGUISE` 16 · `POLITICAL` 15 · `INVISIBLE` 10 · `SIZE` 9 ·
-`CLOAKED` 8 · `SUBMARINE` 3), the cloaking line among them. A carrier that cannot hold what the data authors is
-the wrong carrier.
-
-```jsonc
-// the hider: the METHOD is a skill (promotion-grantable), the LEVEL is a magnitude
-"skills":      [ "camouflage" ],
-"hideAndSeek": { "concealment": { "flat": 300 } }
-
-// the seeker: sonar answers submarines well and camouflage poorly
-"hideAndSeek": { "detection": [ { "value": 500, "unit": "HAS_SUBMARINE" },
-                                { "value": 200, "unit": "HAS_CAMOUFLAGE" } ] }
-```
-
-A skill is something a unit **HAS**, so the qualifier reads `HAS_<SKILL>` ([json.md §3.5](json.md): `IS_*` is
-what the target IS, `HAS_*` is what it has) — the same `{unit: …}` qualifier cargo uses, pointed at the skill
-plane rather than the tag plane.
-
-`perceived ⟺ reachable ∧ detection(against that method) ≥ concealment`
-
-⛔ **Detection gets NO reach of its own.** Reach is the §2 budget, already computed; the contest only
-ever runs on a plot that budget already granted. That is what retires `visibilityIntensityRange` — a second
-range system running beside vision's, with nothing keeping the two in step. Negatives need no mechanism either:
-the block's entries sum, so counter-detection is a negative deposit.
-
-### What survived the collapse
-
-The legacy per-invisible-type table pair is retired — [superseded-ideas.md #35](../architecture/superseded-ideas.md).
-**What survived is what the data used:** the 1:1 pairing, graduated strengths, and negatives as
-counter-detection (the entries sum, so a negative deposit just subtracts). A promotion carries **both** — the
-method skill it grants, and the magnitudes it adds — which is precisely what the tag reading could not express.
-
-⛔ **The CLASSIC system keeps its own datum — `hideAndSeek.method` — and the contest never reads it.** Legacy
-carried TWO invisibility planes: the single `<Invisible>` tag (what the classic branch reads with the option
-OFF) and the intensity tables (the contest's ancestor). The method-skill SET is the contest's membership and
-deliberately wider than the classic plane — a robber contests by disguise and politics yet authors no classic
-tag, i.e. it was **never classically invisible at all**. Deriving the classic method from the skill union
-therefore made the whole contest-only population classically invisible for the first time ever (border patrols
-stopped killing criminals — the live find that forced this datum). The curator emits `method` from the single
-tag alone; absent means classically never-invisible ([json.md §9](json.md)).
-
-## 5. What this model retires
-
-The legacy engine expressed one idea with two unrelated number systems: a **radius**
-(`visibilityRange = 1 + terrainElevation + extraVisibility + improvement.visibilityChange`, clamped) and an
-**elevation tier** compared per step (`seeFromLevel` against `seeThroughLevel`). Both collapse into the single
-budget above, and the `seeFrom` / `seeThrough` / `visibilityRange` members go with them — a feature's
-see-through value IS its obstruction, an improvement's see-from IS its elevation.
-
-`MAX_UNIT_VISIBILITY_RANGE` survives as a plain clamp on `sight`. Nothing else of the old shape does.
-
----
-
-## See also
-- [json.md](json.md) — the modifier grammar this family is authored in (§6 the address, §3.9 the entry).
-- [modifier.md](../cascade.md) — the machine, and the `movement` family this one mirrors (§6: a bespoke resolver
-  still reads an ordinary family).
-- [naming.md](naming.md) — the `TERRAIN_`/`FEATURE_`/`ROUTE_` ids that carry the ground side.

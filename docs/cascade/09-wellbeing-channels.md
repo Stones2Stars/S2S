@@ -93,7 +93,7 @@ table is rebuilt it wants one field per named engine term, so a divergence local
   finding the building side unauthored is never licence to author one, and equally never a reason to purge the
   key as unused. ⚠ The CHANNEL is nonetheless LIVE: a civic confers `abolishedAnger` gated `IS_CAPITAL`, which
   is what retired the legacy key that baked the capital into its name
-  ([conditions are predicates, never bespoke members](../specs/json/03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query)).
+  ([conditions are predicates, never bespoke members](../specs/json/03-the-shared-vocabulary/05-predicates-a-systems-runtime-state.md#35-predicates--a-systems-runtime-state-query)).
 - **`unhealthyPopulation`** (= `max(0, pop − angryPop)` unless flagged) enters the BAD side as the engine's
   population term — a state-derived input (it reads the happiness verdict; the calc computes it from its own
   happiness result, never reads the engine's).

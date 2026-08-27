@@ -54,7 +54,7 @@ buys. Four consequences:
   tests the source's liveness at that owner — an O(1) `has()` — and applies for nobody else.
 - ⚠ **THE HAZARD IS DOUBLE APPLICATION, NOT DRIFT.** One fact drives exactly ONE route class. Where a happening
   moves both a source and a count they are two distinct FACTS
-  ([a fact names the happening](../spine/03-the-domain-emit-surface-every-fact.md#-a-fact-names-the-happening--something-changed-is-not-a-fact)), each applying its own — never one fact
+  ([a fact names the happening](../spine/03-the-domain-emit-surface-every-fact/01-a-fact-names-the-happening.md#-a-fact-names-the-happening--something-changed-is-not-a-fact)), each applying its own — never one fact
   applying both.
 
 - **⛔ NO PLANE HAS AN EVALUATION MOMENT TO DEFER, WHICH IS WHY NONE OF THEM CARRIES A STALENESS FLAG.** There is
@@ -148,7 +148,7 @@ cache build is the step AFTER"* was sequencing advice under recompute; under a m
 spine cannot produce a correct number **at all**, so completeness of the emit surface is a PRECONDITION of the
 cascade being right rather than a quality target it trends toward.
 ⇒ Every ruling that pushes the emit surface toward exhaustive — *"add all the events, ever"*, *"too many events
-is better than not enough"*, [an event gap is closed the moment it is found](../spine/03-the-domain-emit-surface-every-fact.md#-a-fact-names-the-happening--something-changed-is-not-a-fact) — is load-bearing
+is better than not enough"*, [an event gap is closed the moment it is found](../spine/03-the-domain-emit-surface-every-fact/01-a-fact-names-the-happening.md#-a-fact-names-the-happening--something-changed-is-not-a-fact) — is load-bearing
 on this model, not enthusiasm.
 
 ⚠ **The bound on the damage, so the trade is stated honestly: a phantom lives at most ONE SESSION.** Nothing
