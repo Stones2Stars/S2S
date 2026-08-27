@@ -214,6 +214,9 @@ namespace
 #define BUILDINGFOCUSINDEX_CAPITAL				17
 
 #define NUM_REAL_BUILDINGFOCUS_FLAGS			18
+
+//	How many buildings the city's own frontier must offer before it emphasizes production over growth.
+#define AI_EMPHASIZE_BUILD_FRONTIER				3
 //	Pseudo flags which represent combinations used in the calculation
 //	and are not independent so have to be accumulated separately
 #define BUILDINGFOCUSINDEX_GOLDANDRESEARCH		18
@@ -8788,16 +8791,8 @@ void CvCityAI::AI_doHurry(bool bForce)
 }
 
 
-// Improved use of emphasize by Blake, to go with his whipping strategy - thank you!
 void CvCityAI::AI_doEmphasize()
 {
-	//Note from Blake:
-	//Emphasis proved to be too clumsy to manage AI economies,
-	//as such it's been nearly completely phased out by
-	//the AI_specialYieldMultiplier system which allows arbitary
-	//value-boosts and works very well.
-	//Ideally the AI should never use emphasis.
-
 	PROFILE_FUNC();
 	FAssert(!isHuman());
 
@@ -8812,11 +8807,28 @@ void CvCityAI::AI_doEmphasize()
 	const bool bCultureVictory = GET_PLAYER(getOwner()).AI_isDoVictoryStrategy(AI_VICTORY_CULTURE2);
 	const int iPopulationRank = findPopulationRank();
 
+	std::vector<int> availableBuildings;
+	getAvailableBuildings(availableBuildings);
+	const bool bLotToBuild = (int)availableBuildings.size() >= AI_EMPHASIZE_BUILD_FRONTIER;
+
+	const bool bRoomToGrow =
+		netHappiness(0) > 0
+		&& netHealth(0) > 0
+		&& AI_countGoodTiles(true, true) + AI_countGoodSpecialists(true) > 0;
+
 	for (int iI = 0; iI < GC.getNumEmphasizeInfos(); iI++)
 	{
 		bool bEmphasize = false;
 
-		if (AI_specialYieldMultiplier(YIELD_PRODUCTION) < 50)
+		if (GC.getEmphasizeInfo((EmphasizeTypes)iI).getYieldChange(YIELD_PRODUCTION) > 0)
+		{
+			bEmphasize = bLotToBuild;
+		}
+		else if (GC.getEmphasizeInfo((EmphasizeTypes)iI).getYieldChange(YIELD_FOOD) > 0)
+		{
+			bEmphasize = !bLotToBuild && bRoomToGrow;
+		}
+		else
 		{
 			if (bFirstTech && GC.getEmphasizeInfo((EmphasizeTypes)iI).getYieldChange(YIELD_COMMERCE) > 0)
 			{
@@ -10154,7 +10166,7 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 	const int iBaseProductionValue = 15;
 	const int iBaseCommerceValue[NUM_COMMERCE_TYPES] = { 7,10,7,7 };	//	Koshling - boost science a bit
 
-	const int iMaxFoodValue = (3 * iBaseProductionValue) - 1;
+	const int iBaseFoodValue = iBaseProductionValue;
 
 	int aiYields[NUM_YIELD_TYPES];
 	int aiCommerceYieldsTimes100[NUM_COMMERCE_TYPES];
@@ -10215,7 +10227,6 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 	int iValue = 0;
 	int iSlaveryValue = 0;
 
-	int iFoodGrowthValue = 0;
 	int iFoodGPPValue = 0;
 
 	if (!bIgnoreFood && aiYields[YIELD_FOOD] != 0)
@@ -10295,178 +10306,6 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 		{
 			if (!bAvoidGrowth)
 			{
-				int iPopToGrow = 0;
-				// only do relative checks on food if we want to grow AND we not emph food
-				// the emp food case will just give a big boost to all food under all circumstances
-				if (bWorkerOptimization || (!bIgnoreGrowth))// && !bEmphasizeFood))
-				{
-					// also avail: iFoodLevel, iFoodToGrow
-
-					// adjust iFoodPerTurn assuming that we work plots all equal to iConsumtionPerPop
-					// that way it is our guesstimate of how much excess food we will have
-					iFoodPerTurn += (iExtraPopulationThatCanWork * iConsumptionByPopulation);
-
-					// we have less than 10 extra happy, do some checks to see if we can increase it
-					if (iHappinessLevel < 10)
-					{
-						// if we have anger becase no military, do not count it, on the assumption that it will
-						// be remedied soon, and that we still want to grow
-						if (getMilitaryHappinessUnits() == 0)
-						{
-							if (GET_PLAYER(getOwner()).getNumCities() > 2)
-							{
-								iHappinessLevel += ((GC.getNO_MILITARY_PERCENT_ANGER() * (iPopulation + 1)) / GC.getPERCENT_ANGER_DIVISOR());
-							}
-						}
-
-						// currently we can at most increase happy by 2 in the following checks
-						const int kMaxHappyIncrease = 2;
-
-						// if happy is large enough so that it will be over zero after we do the checks
-						int iNewFoodPerTurn = iFoodPerTurn + aiYields[YIELD_FOOD] - iConsumptionByPopulation;
-						if ((iHappinessLevel + kMaxHappyIncrease) > 0 && iNewFoodPerTurn > 0)
-						{
-							int iApproxTurnsToGrow = (iNewFoodPerTurn > 0) ? ((iFoodToGrow - iFoodLevel) / iNewFoodPerTurn) : MAX_INT;
-
-							// do we have hurry anger?
-							int iHurryAngerTimer = getHurryAngerTimer();
-							if (iHurryAngerTimer > 0)
-							{
-								int iTurnsUntilAngerIsReduced = iHurryAngerTimer % flatHurryAngerLength();
-
-								// angry population is bad but if we'll recover by the time we grow...
-								if (iTurnsUntilAngerIsReduced <= iApproxTurnsToGrow)
-								{
-									iHappinessLevel++;
-								}
-							}
-
-							// do we have conscript anger?
-							int iConscriptAngerTimer = getConscriptAngerTimer();
-							if (iConscriptAngerTimer > 0)
-							{
-								int iTurnsUntilAngerIsReduced = iConscriptAngerTimer % flatConscriptAngerLength();
-
-								// angry population is bad but if we'll recover by the time we grow...
-								if (iTurnsUntilAngerIsReduced <= iApproxTurnsToGrow)
-								{
-									iHappinessLevel++;
-								}
-							}
-
-							// do we have defy resolution anger?
-							int iDefyResolutionAngerTimer = getDefyResolutionAngerTimer();
-							if (iDefyResolutionAngerTimer > 0)
-							{
-								int iTurnsUntilAngerIsReduced = iDefyResolutionAngerTimer % flatDefyResolutionAngerLength();
-
-								// angry population is bad but if we'll recover by the time we grow...
-								if (iTurnsUntilAngerIsReduced <= iApproxTurnsToGrow)
-								{
-									iHappinessLevel++;
-								}
-							}
-						}
-					}
-
-					if (bEmphasizeFood)
-					{
-						//If we are emphasize food, pay less heed to caps.
-						iHealthLevel += 5;
-						iHappinessLevel += 2;
-					}
-
-					bool bBarFull = (iFoodLevel + iFoodPerTurn /*+ aiYields[YIELD_FOOD]*/ > ((90 * iFoodToGrow) / 100));
-
-					iPopToGrow = std::max(0, iHappinessLevel);
-					int iGoodTiles = AI_countGoodTiles(iHealthLevel > 0, true, 50, true);
-					iGoodTiles += AI_countGoodSpecialists(iHealthLevel > 0);
-					iGoodTiles += bBarFull ? 0 : 1;
-
-					if (!bEmphasizeFood)
-					{
-						iPopToGrow = std::min(iPopToGrow, iGoodTiles + ((bRemove) ? 1 : 0));
-					}
-
-					// if we have growth pontential, fill food bar to 85%
-					bool bFillingBar = false;
-					if (iPopToGrow == 0 && iHappinessLevel >= 0 && iGoodTiles >= 0 && iHealthLevel >= 0)
-					{
-						if (!bBarFull)
-						{
-							if (AI_specialYieldMultiplier(YIELD_PRODUCTION) < 50)
-							{
-								bFillingBar = true;
-							}
-						}
-					}
-
-					if (getPopulation() < 3)
-					{
-						iPopToGrow = std::max(iPopToGrow, 3 - getPopulation());
-						iPopToGrow += 2;
-					}
-
-					// if we want to grow
-					if (iPopToGrow > 0 || bFillingBar)
-					{
-
-						// will multiply this by factors
-						iFoodGrowthValue = aiYields[YIELD_FOOD];
-						if (iHealthLevel < (bFillingBar ? 0 : 1))
-						{
-							iFoodGrowthValue--;
-						}
-
-						// (range 1-25) - we want to grow more if we have a lot of growth to do
-						// factor goes up like this: 0:1, 1:8, 2:9, 3:10, 4:11, 5:13, 6:14, 7:15, 8:16, 9:17, ... 17:25
-						int iFactorPopToGrow;
-
-						if (iPopToGrow < 1 || bFillingBar)
-							iFactorPopToGrow = 20 - (10 * (iFoodLevel + iFoodPerTurn + aiYields[YIELD_FOOD])) / iFoodToGrow;
-						else if (iPopToGrow < 7)
-							iFactorPopToGrow = 17 + 3 * iPopToGrow;
-						else
-							iFactorPopToGrow = 41;
-
-						iFoodGrowthValue *= iFactorPopToGrow;
-
-						//If we already grow somewhat fast, devalue further food
-						//Remember growth acceleration is not dependent on food eaten per
-						//pop, 4f twice as fast as 2f twice as fast as 1f...
-						//	⛔ THE THRESHOLD IS A FOOD-PER-TURN RATE, so it LIFTS to meet iFoodPerTurn rather than
-						//	the rate being reduced to meet it. Built from POPULATION counts, it is whole by
-						//	construction, and against a x100 surplus the comparison below is true for any surplus
-						//	above a hundredth of a food -- so the damper saturated at x0.26 on every city that grows
-						//	at all, and the emphasis doubling that exists to hold it off was swamped with it.
-						int iHighGrowthThreshold = 100 * (2 + std::max(std::max(0, 5 - getPopulation()), (iPopToGrow + 1) / 2));
-						if (bEmphasizeFood)
-						{
-							iHighGrowthThreshold *= 2;
-						}
-
-						if (iFoodPerTurn > iHighGrowthThreshold)
-						{
-							iFoodGrowthValue *= 25 + ((75 * iHighGrowthThreshold) / iFoodPerTurn);
-							iFoodGrowthValue /= 100;
-						}
-					}
-				}
-
-				//very high food override
-				if ((isHuman()) && ((iPopToGrow > 0) || bCanPopRush))
-				{
-					//very high food override
-					int iTempValue = std::max(0, 30 * aiYields[YIELD_FOOD] - 15 * iConsumptionByPopulation);
-					iTempValue *= std::max(0, 3 * iConsumptionByPopulation - iAdjustedFoodDifference);
-					iTempValue /= 3 * std::max(1, iConsumptionByPopulation);
-					if (iHappinessLevel < 0)
-					{
-						iTempValue *= 2;
-						iTempValue /= 1 + 2 * -iHappinessLevel;
-					}
-					iFoodGrowthValue += iTempValue;
-				}
 				//Slavery Override
 				if (bCanPopRush && (iHappinessLevel > 0))
 				{
@@ -10498,29 +10337,16 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 
 	int iProductionValue = 0;
 	int iCommerceValue = 0;
-	//	⛔ SURPLUS FOOD IS NOT WASTED, SO ITS VALUE IS NOT CAPPED BY HOW BADLY THIS CITY WANTS TO GROW (owner).
-	//	`CvCity::doGrowth` SUBTRACTS the threshold and the remainder rolls into the next bar, so every point of
-	//	food eventually becomes a citizen. Capping the food term at `iFoodGrowthValue` therefore threw the tile's
-	//	real output away the moment growth was slow or unwanted: a 7-food plot scored its hammers alone and lost
-	//	to a specialist, which is the base-yield-under-a-commerce-yield inversion the ruling forbids
-	//	([citizen-assignment.md]).
-	//	⚑ THE ONE STATE WHERE THE CAP IS RIGHT is the one the engine itself discards food in: under avoid-growth
-	//	it PINS `m_iFood` at the threshold, so surplus above it genuinely evaporates. The cap belongs there and
-	//	nowhere else.
-	int iFoodValue = iMaxFoodValue * aiYields[YIELD_FOOD];
+	int iFoodValue = iBaseFoodValue * aiYields[YIELD_FOOD];
 	if (bAvoidGrowth || AI_isEmphasizeAvoidGrowth())
 	{
-		iFoodValue = std::min(iFoodGrowthValue, iFoodValue);
+		iFoodValue = 0;
 	}
 	// if food is production, the count it
 	int adjustedYIELD_PRODUCTION = (((bFoodIsProduction) ? aiYields[YIELD_FOOD] : 0) + aiYields[YIELD_PRODUCTION]);
 
 	// value production medium(15)
 	iProductionValue += (adjustedYIELD_PRODUCTION * iBaseProductionValue);
-	if (!isProduction() && !isHuman())
-	{
-		iProductionValue /= 2;
-	}
 	/************************************************************************************************/
 	/* BETTER_BTS_AI_MOD                      05/18/09                                jdog5000      */
 	/*                                                                                              */
@@ -10530,7 +10356,7 @@ int CvCityAI::AI_yieldValueInternal(short* piYields, short* piCommerceYields, bo
 		// Particularly helps coastal cities with plains forests
 	if (aiYields[YIELD_PRODUCTION] > 0)
 	{
-		if (!bFoodIsProduction && isProduction())
+		if (!bFoodIsProduction)
 		{
 			if (foodDifference(false) >= 100 * GC.getFOOD_CONSUMPTION_PER_POPULATION())
 			{
