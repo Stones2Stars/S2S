@@ -88,6 +88,17 @@ defines itself — `getText` above all, which is why TEXT is not sized here at a
 and the per-info accessors (`CyWorldInfo`) publish reads too. It does not distort the UNSERVED total, which keys on
 what is published ANYWHERE under `Sources/`.
 
+⛔ **AND THE OVER-REPORT HAS A SECOND MECHANISM — A NAME DECLARED ON A `CvDLL*` EXE-INTERFACE BASE.** The tool
+matches a method NAME, so a name declared in one of our headers purely to describe the EXE's own vtable is read as
+"declared on a Cy class, registered nowhere". `CyInterface`'s whole surface arrives this way:
+`CvDLLInterfaceIFaceBase.h` declares `setDirty`, `isScoresVisible`, `shouldDisplayFlag`, `toggleBareMapMode` and
+their kin, `CyInterface` is registered by NOTHING under `Sources/`, and every one of them works in the running
+game because the EXE serves them. ⚑ **Measured: 41% of all Python calls on a `Cy*`/`Ni*` receiver go to an
+EXE-published handle.**
+⇒ **Before calling any flagged method a latent `AttributeError`, check the RECEIVER, not the name.** A call on
+`CyInterface` / `CyTranslator` / `CyGameTextMgr` / `CyArtFileMgr` and their kin is served and always has been —
+`CyIF.toggleBareMapMode()` has never once failed. The burndown is a ratchet on OUR surface, not a defect list.
+
 ⛔ **THE PREFIX PLANE HAS TWO HALVES, AND CHECKING ONLY ONE UNDER-REPORTS BADLY.** A JSON-backed registry is routed
 GENERICALLY by the `RJ_REPO_TYPES` table (`Data/CvReadJson.cpp`) that `rjInfoForTypeConst` dispatches through — it
 is never named in `CyInfo.cpp`. Only the XML-only registries are spelled out there (`cyi_xmlOnlyInfo`). ⚠ So a grep
