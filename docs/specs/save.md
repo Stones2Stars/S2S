@@ -160,7 +160,7 @@ An apply-site audit alone misses non-obvious riders. Legacy changers carry them:
 > | **FAIL-LOUD** | not valid, and NO substitute exists | read stays hard; the Type is UNDELETABLE | terrain · gamespeed · mapcategory |
 >
 > **The FALLBACK class, worked (civics).** A player must hold *a* civic per option slot, but any valid one will
-> do — *"you can just replace with whatever is first in the list"*. The substitute only has to be
+> do — the substitute may simply be whichever is first in the list. The substitute only has to be
 > VALID, never optimal.
 >
 > ⚑ **Why first-in-list is ALWAYS a legal substitute — it is structural, not luck.** Category id order
@@ -182,12 +182,11 @@ An apply-site audit alone misses non-obvious riders. Legacy changers carry them:
 >
 > | Type | Why it breaks the game | Where it is protected |
 > |---|---|---|
-> | **`TERRAIN_`** | every plot must have one — *"if you remove plot terrain, you get a black hole there"* | `CvPlot::m_eTerrainType` read stays `WRAPPER_READ_CLASS_ENUM` (hard) |
+> | **`TERRAIN_`** | every plot must have one; removing plot terrain leaves a black hole | `CvPlot::m_eTerrainType` read stays `WRAPPER_READ_CLASS_ENUM` (hard) |
 > | **`GAMESPEED_`** | the save's every scaled cost/threshold/turn was accumulated against it — *"changing gamespeed literally breaks the game"* | `CvInitCore::m_eGameSpeed` read stays hard |
 > | **`MAPCATEGORY_`** | gates building placement / feature spread / bonus placement | ⚠ **NOT a save-path concern — a DATA-integrity one** (below) |
 >
-> ⛔ **THE TABLE IS KNOWN-INCOMPLETE: *"there may be more that will completely break the game, but those
-> are the ones I could think of."*** Treat it as the members identified so far, NEVER as a cleared list — the
+> ⛔ **THE TABLE IS KNOWN-INCOMPLETE** — more Types may break the game outright; these are the identified ones. Treat it as the members identified so far, NEVER as a cleared list — the
 > absence of a Type from it is not evidence that deleting that Type is safe. **The mechanical tell of a missing
 > member is an UNGUARDED dereference of a possibly-absent id** — `GC.get<X>Info(getX())` with no `NO_<X>` check
 > (exactly the shape of `CvPlot::getMapCategories()`'s `GC.getTerrainInfo(getTerrainType())`), or a consumer for

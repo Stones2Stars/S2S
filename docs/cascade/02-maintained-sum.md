@@ -3,9 +3,8 @@
 > Part of the **[cascade](../cascade.md)** spec.
 
 > **⚖ THE FOUNDING CORRECTION — A PACKAGE IS NEVER DIRTIED AND RECALCULATED. IT IS A COMPILED SUM THAT
-> IS ALWAYS CURRENT, BECAUSE EVERY EVENT THAT MOVES IT UPDATES IT.** *"What I got wrong is that I thought the
-> yield packages had to be marked, and recalculated all the time, when it is in essence just a compiled sum
-> that is always updated, based on incoming spine events."*
+> IS ALWAYS CURRENT, BECAUSE EVERY EVENT THAT MOVES IT UPDATES IT.** The error was assuming yield packages had to be marked and recalculated all the time, when a package is in
+> essence just a compiled sum that is always updated, based on incoming spine events."*
 >
 > A package slot is Σ over the scope's sources of their deposit into that `(channel, unit)`. A DOMAIN event
 > NAMES the source, and the compiled index already holds that source's deposits — so applying them is a handful
@@ -83,16 +82,15 @@ A derived cache in this model is:
 
 **Worked shape (the plot-yield cache):** `getYield()` = `return cached` — a bare fetch, always O(1), because the
 fact that moved the plot already applied its deposits into the slot;
-**⚖ A CROSS-SCOPE RECEIVER TOTAL IS RE-SUMMED AT READ, AND NO SLOT HOLDS IT.** *"I believe it will cost
-more to cache such a number in most cases than it would to just do the sum of all cities."* Each channel has ONE
+**⚖ A CROSS-SCOPE RECEIVER TOTAL IS RE-SUMMED AT READ, AND NO SLOT HOLDS IT.** Caching such a number costs more in most cases than simply summing the cities. Each channel has ONE
 consuming scope (production → city; the commerces further up), and where that scope is ABOVE its members the
 total is the Σ of their realized values, taken at the read — there is no `sum` slot, no `readSum`, and no
 `applySum`, and none is to be built.
 ⚑ **The arithmetic is why, not thrift:** a member's realized value is the §2a combine, which is NOT linear in the
 deposits, so a cached total could not be moved by a deposit delta at all — it would have to be re-derived on
 every fact that touches any member, which is strictly more work than summing the members when someone asks.
-⚖ **THE THRESHOLD, so this is re-derivable rather than remembered: *"I do not think for a million years
-it would ever be worth caching a value that loops X cities for 1 number and sums it, unless the number of cities
+⚖ **THE THRESHOLD, so this is re-derivable rather than remembered.** It is never worth caching a value that
+loops X cities for 1 number and sums it, unless the number of cities
 is in the thousands."*** An empire holds tens of cities, so the Σ is tens of adds over values each member already
 holds. ⛔ That bar is nowhere near met, and it applies to a HAND-ROLLED bank of the same number just as much as
 to a package slot — caching it anywhere is the move being refused, not merely caching it in the cascade.

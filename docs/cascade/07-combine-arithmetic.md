@@ -18,8 +18,7 @@ All integer, ×100 fixed-point throughout ([the ×100 fixed-point model](../spec
 the single human→×100 conversion happened once in `readJson` ([json](../specs/json.md) §3.6); the slot does pure integer
 math and never sees the human boundary.
 
-> **⛔ PLOT SCALING CAN ONLY AFFECT ITSELF — A HARD RULE.** *"I do not think there is any scenario where a
-> plot gives 1 hammer per 5 commerce, and as such we codify that as a hard rule, that the plot scaling can only
+> **⛔ PLOT SCALING CAN ONLY AFFECT ITSELF — A HARD RULE.** No scenario exists where a plot gives 1 hammer per 5 commerce, so it is codified as a hard rule, that the plot scaling can only
 > effect itself."* A per-plot scaling of a channel reads that channel's own value on that plot and grants THAT
 > CHANNEL. There is no cross-channel plot scaling, and none may be authored: a threshold on commerce cannot pay
 > out in production.
@@ -27,11 +26,8 @@ math and never sees the human boundary.
 > channel, the whole mechanic is plot-local — it needs no cross-scope reach at resolve time, no ordering between
 > channels, and no fan-out when one channel moves another. That is what lets it live in the package.
 >
-> **⚖ THE MECHANIC IS TWO SEPARATE NUMBERS, BOTH FED IN: a THRESHOLD and an AMOUNT.** *"You maintain the
-> per-yield threshold, and the amount you get on the per-yield — treat them as 2 separate numbers that get fed
-> in."* The interval is "per how much" of the plot's own value; the amount is what each whole interval grants.
-> ⚖ **The AMOUNT comes from the `EXTRA_YIELD` global define, and that is fine:** *"we can live with the
-> EXTRA_YIELD define for now — we don't need to change that at this point."* ⛔ So a define read here is NOT a
+> **⚖ THE MECHANIC IS TWO SEPARATE NUMBERS, BOTH FED IN: a THRESHOLD and an AMOUNT.** Maintain the per-yield threshold and the amount granted per yield as TWO separate numbers, both fed in. The interval is "per how much" of the plot's own value; the amount is what each whole interval grants.
+> ⚖ **The AMOUNT comes from the `EXTRA_YIELD` global define, and that is fine** — the `EXTRA_YIELD` define stands and needs no change. ⛔ So a define read here is NOT a
 > gap to close and NOT a missing authoring surface; do not "fix" it into curated data. What the ruling requires is
 > that it stays a SEPARATE number the plane carries per channel — which it is — so that authoring it later is a
 > data change and never a reshape.

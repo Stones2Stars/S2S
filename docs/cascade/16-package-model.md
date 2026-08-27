@@ -49,8 +49,8 @@ cascade receives a FINISHED value and folds it at the combine — it is the one 
 (§2a). ⛔ **So no trade-route package exists and none is to be built.**
 Nothing deposits into it: a package with no depositors is an empty slot inviting a future deposit to be routed
 somewhere the engine already answered, which would double the route's yield.
-⚑ **WHAT THE CASCADE OWNS IS THE COUNT, AND ONLY THE COUNT: *"we only tell the engine how many trade
-routes we can have."*** The `tradeRoutes` channel — how many routes a city may run — is cascade-computed like
+⚑ **WHAT THE CASCADE OWNS IS THE COUNT, AND ONLY THE COUNT** — it tells the engine how many trade routes
+are allowed, and nothing more. The `tradeRoutes` channel — how many routes a city may run — is cascade-computed like
 any other modifier-influenced value; the YIELD those routes then produce is entirely the engine's.
 ⛔ **Do not conflate them** (§2a states this at length and is the
 authority). ⚠ The trap is one-directional and worth naming: listing trade routes among the PROVIDERS reads as
@@ -190,8 +190,8 @@ player-scope evaluation left persistent +18..+27 percent errors on every non-cap
   not retroactive; start of next turn is what is expected"*. A newly-founded city is the one ruled exception (it
   must read correct values the turn it exists, so its packages build eagerly at creation rather than waiting for
   the next slice).
-- **EAGERLY BUILD ALL CACHES AT LOAD — the general policy stands.** *"I am happy to add even MINUTES to load time
-  in order to have caches eagerly built on load in general."* ALL caches are warmed at load: a game-object's own
+- **EAGERLY BUILD ALL CACHES AT LOAD — the general policy stands**, and even MINUTES of extra load time are an
+  acceptable price for it. ALL caches are warmed at load: a game-object's own
   derived cache (the plot-yield cache) eagerly from that object's own state, and the **cascade** eagerly by the
   **event reseed** — the spine fires every present-fact, so the cache-build/invalidation consumer populates every
   cascade package and turn 1 runs warm. What changed is ONLY the cascade's population MECHANISM: the

@@ -3,7 +3,7 @@
 > Part of the **[cascade](../cascade.md)** spec.
 
 **"Context should be built on events — that is the design of it."** And the purpose of storing is that the state
-becomes DISTINGUISHABLE: *"so that an info can say 'yes, I will actually deliver this, based on this state.'"*
+becomes DISTINGUISHABLE, so an info can say it will actually deliver this, based on this state.
 A context that merely forwards to its bound object delivers none of that — it is the same pointer hop with an
 extra name, so the design collapses into "pass the god-object like always."
 
@@ -116,8 +116,7 @@ supply is a union of two independently-owned halves, and storing either one twic
 The reader unions the two. A mirror of the building half on the context would also *drift*, because the enabler
 mutates its set in place as the fixpoint ripples.
 
-> **⚖ THE MAP HALF IS TWO DICTIONARIES, NOT ONE — bonuses, and natural features.** *"There is nothing
-> wrong with having 2 dictionaries, 1 for bonuses and 1 for natural features; what I don't want is the constant
+> **⚖ THE MAP HALF IS TWO DICTIONARIES, NOT ONE — bonuses, and natural features.** There is nothing wrong with two dictionaries, one for bonuses and one for natural features; what I don't want is the constant
 > rewalk."* So the vicinity store is a **`BONUS_*`-keyed** dictionary beside a **`CASC_PRED_*`-keyed** one (the
 > vicinity twin of `plotAttrs` — river / coast / hills / peak / fresh water), each an ordinary `ContextDict`.
 > ⛔ **They are NOT merged into one dictionary**, and the reason is the one `ContextDict` already states as its

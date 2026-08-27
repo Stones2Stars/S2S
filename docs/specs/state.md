@@ -130,8 +130,8 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > [derived data is never trusted from a save](save.md#5-derived-data-serializes-nothing-) does not reach it: that
 > rule bans serializing DERIVED data.
 > ⛔ **What is deliberately dropped is the MIGRATION of a legacy timer into the store.** Re-homing one deletes
-> its old save field, so an existing save's in-flight value is lost — *"we just don't convert the old statuses
-> to the new object for virtually no real gain"*. **The blackout is the worked case:** a save taken mid-blackout
+> its old save field, so an existing save's in-flight value is lost. The old statuses are NOT converted to the
+> new object, for virtually no real gain. **The blackout is the worked case:** a save taken mid-blackout
 > loads with the power already back on. The old tag is named in `Assets/savemigration.txt` and drains
 > ([save.md §3](save.md)).
 > ⚑ **The recipe generalizes to every status that follows:** re-home onto the store, name the old tag, take the
@@ -163,7 +163,7 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > each object the effect reaches. ⛔ The storage never moves up to the announcing scope.
 
 > **⛔ A STATUS IS MIDDLEWARE BETWEEN A SOURCE AND ITS TARGETS — IT GATES WHAT IS DELIVERED, NEVER WHAT IS STORED
->.** *"What status should do is live as kind of middleware, inputs and outputs — so if blackout, even
+>.** A status lives as middleware — inputs and outputs — so if blackout, even
 > though power amenity is operational, it doesn't get to the targets."* The source keeps its own truth and the
 > status decides whether that truth reaches anyone.
 > ⚑ **The worked case is POWER, and the two planes stay entirely separate** (§ the id→COUNT note above): the

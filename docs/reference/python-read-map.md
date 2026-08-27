@@ -183,9 +183,9 @@ reconciling against the unserved total.**
 
 **Excluding the pedia, this census covers 6,779 unserved sites.**
 
-## 2. ⚑ The owner's hypothesis: is the pedia a completeness oracle?
+## 2. ⚑ The hypothesis: is the pedia a completeness oracle?
 
-> *"Build the reader surface for the pedia and we have everything."*
+> Build the reader surface for the pedia and everything is covered.
 
 **VERDICT: TRUE-WITH-A-LISTED-APPENDIX — for the INFO plane only, and the appendix is not small.**
 
@@ -383,8 +383,8 @@ that needs the **complete per-type index across every registered type**, includi
 `Upkeep`, `Victory`, `Vote`, `VoteSource`, `World`, `Denial`). Treat it as the acceptance case for
 "the library can enumerate every type", not as a long-tail screen.
 
-> **⛔ IT IS A WANTED MODDER-INFO SURFACE AND IT STAYS — do not sweep it as dead code.** *"We do need to
-> have modder info in the future, even if no one knows of it."* The screen is an XML-tag REFERENCE
+> **⛔ IT IS A WANTED MODDER-INFO SURFACE AND IT STAYS — do not sweep it as dead code.** Modder info is wanted
+> in future, whether or not anyone knows of it today. The screen is an XML-tag REFERENCE
 > (`TXT_KEY_XML_TAGS`): a dropdown of every info category over a table of **ID · NAME · TYPE · TEXT**, i.e. the
 > `BUILDING_FORGE`-style type key and `TXT_KEY_` for any entity — *for when you forget one*.
 > ⚠ **It reads EXACTLY like an abandoned screen, which is the hazard:** it is reached only by an undocumented
@@ -810,7 +810,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    `Cy*` cut. A future map-gen boundary redesign is its own work item, never a stage-4 rider.
 
 2. **`Screens/Debug/TestCode.py` is DELETED, not migrated** —
-   *"nuke testcode, if we want that we do it properly"*, the Python refactor making it worthless. It was the
+   if that capability is wanted it gets built properly; the Python refactor made this one worthless. It was the
    largest INFO consumer after the pedia hub (1,488 INFO sites) and the sole consumer of 90 residue names /
    296 sites, all of which drop out of the library's obligations (**the appendix shrinks ~30%**). The whole
    feature chain went with it (`DebugBtn` → `showDebugScreen` → `DebugScreen` → `TestCode`, plus the dead
@@ -871,7 +871,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    consumers to keep a legacy reach-around — the second live surface the one-surface ruling forbids.
 
 6. **~~What is the MUTATION boundary's shape, and is it stage 4's job?~~ — CLOSED: THE WRITE SURFACE EXISTS
-.** *"We have a write surface."* ~144 `set*`/`change*`/`do*`/`create*` defs are published across
+.** ~144 `set*`/`change*`/`do*`/`create*` defs are published across
    `CvPythonPlayerLoader` / `CvPythonPlotLoader` / `CyGame` / `CyTeam` / `CyMap` / `CyArea` / `CyAct` — the cut
    was DIRECTIONAL and took the READ bindings only. ⛔ So this is not an open question and must not be cited as
    one: a mutating consumer that fails is WIRED, and a write it needs that is not published yet is ADDED to that

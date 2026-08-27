@@ -86,8 +86,8 @@ authored shape.
 > space across two sets breaks no edge. ⚠ The dependency runs the other way and is real: a TECH names trait ids
 > to gate a developing rung, so those edges must name the ACTIVE set's ids — which is why a re-key regenerates
 > techs, not just traits.
-> **⚖ A SAVE IS RESOLVED INTO THE ACTIVE SET AT LOAD: *"for savegames, if you see it is a complex trait
-> game, you make sure the trait is the complex version."*** A stored plain `TRAIT_X` in a game running
+> **⚖ A SAVE IS RESOLVED INTO THE ACTIVE SET AT LOAD** — in a complex-trait game the stored trait resolves to the
+> complex version. A stored plain `TRAIT_X` in a game running
 > `GAMEOPTION_LEADER_COMPLEX_TRAITS` resolves into the active set. This is distinct from the
 > `savemigration.txt` rename plane (which id, not which SET), so it lives at the ONE stored-Type resolution
 > point (`sm_resolveStoredType`), beside the rename lookup rather than inside it — otherwise a loaded save could
@@ -239,8 +239,7 @@ filing an item discount under `production.city`.)
 > condition-as-member shape [conditions are predicates, never bespoke members](../specs/json/03-the-shared-vocabulary/05-predicates-a-systems-runtime-state.md#35-predicates--a-systems-runtime-state-query)
 > retires, and it is what the §6 member-triage test already rejects: a member is a KIND only if it answers WHICH
 > COMPONENT, never WHICH TARGET or WHEN.
-> ⚠ **The buildRate MECHANIC is legit and is not under review: *"buildRate is a legit mechanic, we do not
-> kill them all."*** This narrows how two members are ADDRESSED; it removes no effect.
+> ⚠ **The buildRate MECHANIC is legit and is not under review.** This narrows how two members are ADDRESSED; it removes no effect.
 > ⚑ **Spacecraft are not a class outside the military one**, which is why space is a sibling predicate rather
 > than a tier of its own. ⛔ And the legacy consumer's gate — `CvProjectInfo::isSpaceship`, the vanilla
 > space-VICTORY spaceship parts — **does not apply**: that is vanilla Civ's victory machinery, not the space

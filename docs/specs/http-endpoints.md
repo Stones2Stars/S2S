@@ -12,8 +12,8 @@ next section before you change anything here.
 
 The route bodies were purged **wholesale**, and the reason is not that they were untidy:
 
-> *"I expected the entire http endpoint doc to be mostly empty, because keeping any endpoints would ensure legacy
-> has a potential to survive when it should not."*
+> The endpoint surface is expected to be mostly EMPTY: keeping endpoints gives legacy a way to survive when it
+> should not.
 
 A legacy data member whose only remaining reader is a route is **not actually still used** — but the **compiler
 census cannot tell the difference**. The member compiles, so the delete-driven cut walks past it; it survives by

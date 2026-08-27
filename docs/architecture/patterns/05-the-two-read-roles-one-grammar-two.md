@@ -13,8 +13,8 @@ surface — never a per-getter migration worklist. Mapping legacy→new one sign
 half-migration reflex in its purest form: it lets the legacy contract dictate the replacement's shape, which is
 precisely how that surface accumulated.
 
-> **⚖ AND THE DELIVERABLE IS THE SURVIVING SURFACE, NOT "A GETTER CUT": *"we should ensure that we
-> just have the getters we need, and have an understandable structure."*** The `CvCity`/`CvPlayer` work is
+> **⚖ AND THE DELIVERABLE IS THE SURVIVING SURFACE, NOT "A GETTER CUT".** What must survive is the getters
+> that are needed, in an understandable structure. The `CvCity`/`CvPlayer` work is
 > judged by its END STATE — a surface carrying exactly the reads consumers genuinely NEED, organized so a
 > reader can tell where a value lives — never by how much legacy was deleted. The deletion of the legacy
 > channel-shaped names is the CONSEQUENCE of consumers moving onto that surface; it is not the unit of work
@@ -132,8 +132,7 @@ two surfaces.
      which re-sums all 185 cities' §2a combines — asked once per BUILDING CANDIDATE, it was the whole of a
      45-second `AI_chooseProduction` on the standing save.
 6. **⛔ A GROUP HANDS OUT ITS CHANNELS; A FINAL-STATE CALCULATION IS DOWNSTREAM OF IT.** The wellbeing
-   group returns `happiness` and `anger` as **two separate numbers** (and `health`/`unhealth` likewise) — *"then
-   you will know the results from that"*. The realized end-state values (`angryPopulation`, `healthRate`) are
+   group returns `happiness` and `anger` as **two separate numbers** (and `health`/`unhealth` likewise), from which the end results are derivable. The realized end-state values (`angryPopulation`, `healthRate`) are
    **NOT group entries and NOT getters**: they are a final-state calculation over numbers the group already
    handed out ([modifier.md §2b](../../cascade.md) specs the arithmetic). ⛔ Folding a final-state value into
    the channel array is a category error — it puts a computed OUTCOME in a slot that means "a channel a source

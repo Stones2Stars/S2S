@@ -127,8 +127,7 @@ number entirely plausible while making the slot unmaintainable by any mechanism 
 
 ### ⛔ THE COST IS THE FORCING FUNCTION — a saturated emit surface is now STRUCTURAL, not a discipline
 
-> *"We have to take that cost — the system will by its very definition collapse if we do not saturate with
-> events."*
+> That cost has to be taken: the system collapses by definition if the event surface is not saturated.
 
 A maintained sum fails differently from a recomputed one, and the difference is the POINT:
 
@@ -159,7 +158,7 @@ state expects ([http-endpoints.md](../specs/http-endpoints.md)).
 
 ### ⚖ AND IT IS THE EASIER CORRECTNESS PROBLEM — the deciding argument
 
-> *"It is far easier to ensure we have all the events, than to ensure that we have all packages correctly
+> It is far easier to ensure every event exists than to ensure that we have all packages correctly
 > marked."*
 
 This holds independently of the cost trade above, and it is the reason to prefer the maintained sum even where

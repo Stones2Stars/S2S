@@ -9,8 +9,8 @@ The catalogue of a unit's **immutable, accounting-only classification tags** (th
 > glossary catalogues the tags identified so far and more arriving is the normal state, never a gap to close. A unit
 > carrying no tag yet is fine (low-risk, filled in validation).
 >
-> ⚖ **AN EXTRA TAG COSTS NOTHING — certainty is NOT a gate:** *"you can always have more tags, it doesn't
-> hurt to add an extra tag, even though we don't fully know what it does."* A tag is inert until something queries
+> ⚖ **AN EXTRA TAG COSTS NOTHING — certainty is NOT a gate.** There can always be more tags, and it does not
+> hurt to add an extra one, even though we don't fully know what it does."* A tag is inert until something queries
 > it, so a surplus one is harmless while a MISSING one is not: it leaves its combat class doing identifier duty,
 > which is precisely what blocks the class purge ([engine.md](../reference/engine.md) UnitCombat). ⛔ So do not
 > withhold a tag pending a decision about what it means — author it and refine later; a wrong tag is a one-line
@@ -128,8 +128,8 @@ through it, so the data says so directly instead of the engine rediscovering it 
 > executives · great people · warlord/captain ranks · nukes · captives · `unit_sleeper`.
 > ⚠ **It gates EARNING a promotion, never RECEIVING one** — the free/granted bypass sits ahead of it, so a
 > tagged unit still gets what its own type hands it (a great general keeps `PROMOTION_LEADER`).
-> ⚖ **A WRONG VERDICT IS CHEAP, SO CERTAINTY IS NOT A GATE HERE EITHER: *"if we notice something that
-> should have promos but doesn't, we will figure that out real fast — it's not gamebreaking for a unit to have
+> ⚖ **A WRONG VERDICT IS CHEAP, SO CERTAINTY IS NOT A GATE HERE EITHER.** Anything that should have promos and
+> does not is spotted fast, and it is not gamebreaking for a unit to have
 > promotions."*** ⛔ This has to be stated for the NEGATIVE tag specifically, because the extra-tag ruling above
 > does not carry over unchanged: a surplus POSITIVE tag is inert, while a surplus negative one takes a capability
 > away. It is still not a reason to withhold the derivation — a unit that should promote and cannot is loud in

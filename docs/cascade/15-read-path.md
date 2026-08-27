@@ -131,8 +131,7 @@ built beside them. `expectedPlotYields` scales each plots-target deposit by `cit
     ⚖ **STRENGTH'S BASE IS PER-UNIT STATE AND IS DELIBERATELY SERIALIZED.** Every other resolved
     slot takes the unit's own TYPE from the gather, because it is a pure function of that type. Base strength is
     not: **WorldBuilder edits an individual unit's strength**, and the WBS scenario format persists the result
-    (`CombatStr=`, written only when it differs from the type). *"You want people to be able to do things in
-    WorldBuilder."* So the base lives on `CvUnit` as the serialized `m_iBaseCombat`, the resolved plane carries
+    (`CombatStr=`, written only when it differs from the type). WorldBuilder must stay able to do this. So the base lives on `CvUnit` as the serialized `m_iBaseCombat`, the resolved plane carries
     the promotion / unit-combat **DELTA ONLY**, and the consumer adds the two. ⛔ This is the ONE carve-out in an
     otherwise uniform gather, and it is load-bearing: letting the type contribute to the strength slot as well
     silently DOUBLE-COUNTS every unit's authored base. ⚠ It is therefore NOT a
@@ -142,11 +141,11 @@ built beside them. `expectedPlotYields` scales each plots-target deposit by `cit
     YOU PUT IT.** A per-unit stat change is expressed as a CARRIER — a promotion or a status — *"so you
     actually see what is going on with the unit and why"*, which is also why the gather walks the carriers it
     does: each is visible on the unit. ⇒ A mechanic that would force a second carve-out is the MECHANIC that
-    goes — an event handing one unit a stat outright is source-less one-shot state, and *"I would be inclined
-    to nuke such an event."* ⚠ It has no claim anyway: its only delivery is a promotion
+    goes — an event handing one unit a stat outright is source-less one-shot state, and such an event is a candidate for
+    removal. ⚠ It has no claim anyway: its only delivery is a promotion
     ([state.md](../specs/state.md)), which is already what serializes.
-    ⚖ **A NEW SPECIAL CASE SHIPS WITH THE MEANS TO SHOW IT, OR IT IS NOT ADDED: *"if we want to
-    support special casing, we also need to support the ability to show it — so if we want to add that in the
+    ⚖ **A NEW SPECIAL CASE SHIPS WITH THE MEANS TO SHOW IT, OR IT IS NOT ADDED.** Supporting a special case
+    means supporting the ability to show it — so if you want to add that in the
     WorldBuilder, then we need to create tooling for it."***
     ⛔ **STRENGTH ITSELF STAYS FOR NOW AND IS NOT TO BE TOUCHED — it works**: illegible in exactly the
     way this dislikes, and knowingly kept, so an agent "fixing" it is undoing a decision rather than closing a

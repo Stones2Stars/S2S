@@ -27,8 +27,8 @@ authors a seed, a stream or a draw and neither the cascade nor the curator model
 
 ## ⛔ A GRANTED ENTITY IS AN ORDINARY ENTITY
 
-*"The only difference between a building granted and a building constructed is that we didn't use production if
-granted."* So the machine gets **no** parallel apply path, no "granted" flag, no distinct lifecycle, no ledger of
+The ONLY difference between a building granted and one constructed is that a grant spent no production.
+So the machine gets **no** parallel apply path, no "granted" flag, no distinct lifecycle, no ledger of
 its own: it places the entity through the **SAME creation mechanism** as normal creation, and the ONLY divergence
 is that the production/cost step is skipped. Settled by this, not open:
 
@@ -77,8 +77,8 @@ is that the production/cost step is skipped. Settled by this, not open:
 > and the events carve-out, bound what may be REDESIGNED and what may be folded into this machine — neither
 > licenses a system keeping its own creation shape meanwhile. Re-pointing a creation call is not a redesign.
 > **⛔ A SECOND WAY TO CREATE A UNIT IS A ROLLERSKATING SURFACE — AND THE MODDER-FACING ONE MOST OF ALL
->.** *"The more unified we have createUnit the better it is; if there is 1 place that can create a unit
-> in other ways, that is a rollerskating surface, particularly for modders."* ⇒ **The EDITOR goes through it
+>.** The more unified `createUnit` is, the better: a single place that can create a unit by some other route
+> is a rollerskating surface, and a modder-facing one most of all. ⇒ **The EDITOR goes through it
 > too** — `CyAct` / `CyPlayer` create through the step, which is why it carries a FACING DIRECTION parameter;
 > WorldBuilder is exactly where an alternate path would teach the wrong lesson, and WorldBuilder is already
 > required to travel the engine's own paths — every WB mutation emits like any other ([spine.md](../spine.md)).
@@ -147,10 +147,10 @@ against nothing and quietly answers false.
 > **The condition form, settled:** `{type: TECH_X, scope: world, min: N}` — the world tech count
 > ([tally.md](tally.md)), evaluated on the tech-acquired happening, with the action granting that tech.
 > ⚖ **The legacy `isHasMet` filter is DROPPED:** `CvTeam::updateTechShare` counted only teams you had
-> MET, and the world count does not — *"it happens sufficiently late in the game that you have normally met all
-> players."* An intentional, owner-ruled divergence, stated rather than reproduced
+> MET, and the world count does not — tech-sharing happens late enough that all players have normally been met
+> by then. An intentional divergence, stated rather than reproduced
 > ([validation.md](validation.md): the spec leads).
-> ⚑ **And it is RE-ADDABLE, not lost: *"if we want the met part, we put that in after the fact."*** It
+> ⚑ **And it is RE-ADDABLE, not lost** — the met filter goes back in after the fact if it is wanted. It
 > comes back as an ordinary CONDITION on the entry — a met predicate — which *extends* the vocabulary rather than
 > reshaping anything ([conditions are predicates, never bespoke members](json/03-the-shared-vocabulary/05-predicates-a-systems-runtime-state.md#35-predicates--a-systems-runtime-state-query):
 > the predicate registry is extensible by design). ⛔ So do NOT preserve the legacy filter now "to keep the option
