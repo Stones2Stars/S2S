@@ -661,7 +661,9 @@ def updateRevolutionIndices(argsList):
 
 
 def onCityLost(argsList):
-	CyCity, = argsList
+	# A game-object event arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+	(iCityOwner, iCityID), = argsList
+	CyCity = GC.getPlayer(iCityOwner).getCity(iCityID)
 	iPlayer = CyCity.getOwner()
 
 	playerCityLost(GC.getPlayer(iPlayer), CyCity, bConquest = CyCity.plot().getNumDefenders(iPlayer) == 0)
@@ -699,7 +701,9 @@ def playerCityLost(CyPlayer, CyCity, bConquest = True):
 
 
 def onBuildingBuilt(argsList):
-	pCity, iBuildingType = argsList
+	# A game-object event arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+	(iCityOwner, iCityID), iBuildingType = argsList
+	pCity = GC.getPlayer(iCityOwner).getCity(iCityID)
 
 	buildingInfo = GC.getBuildingInfo(iBuildingType)
 

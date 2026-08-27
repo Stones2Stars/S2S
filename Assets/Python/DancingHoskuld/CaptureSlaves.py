@@ -108,7 +108,9 @@ def onCombatResult(argsList):
 
 
 def onCityRazed(argsList):
-	CyCity, iPlayer = argsList
+	# A game-object event arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+	(iCityOwner, iCityID), iPlayer = argsList
+	CyCity = GC.getPlayer(iCityOwner).getCity(iCityID)
 	if not CyCity: return
 
 	CyPlayer = GC.getPlayer(iPlayer)

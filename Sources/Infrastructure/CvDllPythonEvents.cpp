@@ -451,12 +451,8 @@ void CvDllPythonEvents::reportCityBuilt( CvCity *pCity, CvUnit *pUnit )
 	EventArgs eventData;
 	eventData
 		.arg("event", "cityBuilt")
-		.arg("pCity", pCity);
-
-	if (pUnit)
-		eventData.arg("pUnit", pUnit);
-	else
-		eventData.arg("pUnit", NULL);
+		.arg("pCity", pCity)
+		.arg("pUnit", pUnit);
 
 	postEvent(eventData, "cityBuilt");
 }
@@ -738,14 +734,9 @@ void CvDllPythonEvents::reportGoodyReceived(PlayerTypes ePlayer, CvPlot *pGoodyP
 	eventData
 		.arg("event", "goodyReceived")
 		.arg("ePlayer", ePlayer)
-		.arg("pGoodyPlot", pGoodyPlot);
-
-	if (pGoodyUnit)
-		eventData.arg("pGoodyUnit", pGoodyUnit);
-	else
-		eventData.arg("pGoodyUnit", NULL);
-
-	eventData.arg("eGoodyType", eGoodyType);
+		.arg("pGoodyPlot", pGoodyPlot)
+		.arg("pGoodyUnit", pGoodyUnit)
+		.arg("eGoodyType", eGoodyType);
 	postEvent(eventData, "goodyReceived");
 }
 

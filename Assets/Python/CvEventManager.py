@@ -1955,8 +1955,9 @@ class CvEventManager:
 
 
 	def onProjectBuilt(self, argsList):
-		CyCity, iProject = argsList
-		iPlayer = CyCity.getOwner()
+		# A game-object event arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+		(iPlayer, iCityID), iProject = argsList
+		CyCity = GC.getPlayer(iPlayer).getCity(iCityID)
 		iPlayerAct = GAME.getActivePlayer()
 		# Movie
 		if not self.bNetworkMP and iPlayer == iPlayerAct:
@@ -2245,7 +2246,9 @@ class CvEventManager:
 
 
 	def onGreatPersonBorn(self, argsList):
-		CyUnit, iPlayer, CyCity = argsList
+		# A game-object event arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+		(iUnitOwner, iUnitID), iPlayer, (iCityOwner, iCityID) = argsList
+		CyCity = GC.getPlayer(iCityOwner).getCity(iCityID)
 
 		aWonderTuple = self.aWonderTuple
 		if "LASCAUX" in aWonderTuple[0] and iPlayer == aWonderTuple[4][aWonderTuple[0].index("LASCAUX")] and CyCity.getCultureThreshold() > 0:
@@ -2875,8 +2878,10 @@ class CvEventManager:
 
 
 	def onCityRename(self, argsList):
-		CyCity, = argsList
-		if CyCity.getOwner() == GAME.getActivePlayer():
+		# A game-object event arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+		(iCityOwner, iCityID), = argsList
+		CyCity = GC.getPlayer(iCityOwner).getCity(iCityID)
+		if iCityOwner == GAME.getActivePlayer():
 			self.__eventEditCityNameBegin((CyCity, True))
 
 

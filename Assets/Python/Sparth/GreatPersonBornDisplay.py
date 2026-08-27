@@ -36,7 +36,8 @@ g_GreatPeople = {
 
 def onGreatPersonBorn(argsList):
 
-	CyUnit, iPlayer, CyCity, = argsList
+	# A game-object event arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+	(iUnitOwner, iUnitID), iPlayer, cityIdentity = argsList
 	if CyGame().isNetworkMultiPlayer() or CyGame().isPitbossHost():
 		return
 
@@ -45,7 +46,8 @@ def onGreatPersonBorn(argsList):
 		if GC.getPlayer(iPlayer).isHumanDisabled():
 			return
 
-		sUnitName = CyUnit.getNameNoDesc()
+		pGreatPerson = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
+		sUnitName = pGreatPerson.getNameNoDesc()
 		if sUnitName == "": return
 
 		# Get screen resolution.
@@ -79,7 +81,7 @@ def onGreatPersonBorn(argsList):
 		W_TEXT_PANEL = 355
 		H_TEXT_PANEL = 250
 
-		iType = CyUnit.getUnitType()
+		iType = pGreatPerson.getUnitType()
 		Info = CyGlobalContext().getUnitInfo(iType)
 
 		for i in xrange(Info.getNumUnitNames()):

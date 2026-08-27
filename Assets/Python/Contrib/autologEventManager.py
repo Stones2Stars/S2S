@@ -929,7 +929,9 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 	def onCityRazed(self, argsList):
 		if AutologOpt.isLogCityRazed():
-			CyCity, iPlayer = argsList
+			# A game-object event arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+			(iCityOwner, iCityID), iPlayer = argsList
+			CyCity = GC.getPlayer(iCityOwner).getCity(iCityID)
 			iActivePlayer = GAME.getActivePlayer()
 
 			if iPlayer == iActivePlayer:
@@ -1028,7 +1030,9 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 	def onUnitPillage(self, argsList):
 		if not AutologOpt.isLogPillage(): return
-		CyUnit, iImprovement, iRoute, iPlayer = argsList
+		# A game-object event arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+		(iUnitOwner, iUnitID), iImprovement, iRoute, iPlayer = argsList
+		CyUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 		CyPlot = CyUnit.plot()
 		iActivePlayer = GAME.getActivePlayer()
 

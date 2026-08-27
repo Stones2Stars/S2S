@@ -105,7 +105,7 @@ def applyBlessedSea2(argsList):
 
 	for loopCity in GC.getPlayer(data.ePlayer).cities():
 		if loopCity.getPopulation() >= 5:
-			if loopCity.canConstruct(iBuilding, False, False, True):
+			if ENABLER.getBuildingAvailability(loopCity.getOwner(), loopCity.getID(), iBuilding) == EnablerState.ENABLER_LISTED:
 				ACT.setCityBuilding(loopCity.getOwner(), loopCity.getID(), iBuilding, True)
 
 
@@ -124,7 +124,7 @@ def canApplyBlessedSea2(argsList):
 
 	for loopCity in GC.getPlayer(data.ePlayer).cities():
 		if loopCity.getPopulation() >= 5:
-			if loopCity.canConstruct(iBuilding, False, False, True):
+			if ENABLER.getBuildingAvailability(loopCity.getOwner(), loopCity.getID(), iBuilding) == EnablerState.ENABLER_LISTED:
 				return True
 	return False
 
@@ -546,7 +546,7 @@ def canApplyHurricane1(argsList):
 	CyCity = CyPlayer.getCity(data.iCityId)
 
 	for i in xrange(GC.getNumBuildingInfos()):
-		if BUILDING.isLimitedWonder(i) or not CyCity.hasBuilding(i) or CyCity.isFreeBuilding(i):
+		if BUILDING.isLimitedWonder(i) or not CyCity.hasBuilding(i):
 			continue
 		if INFO.providesNukeImmunity(i) or INFO.isAutoBuild(i) or BUILDING.getCost(i) < 1:
 			continue
@@ -566,7 +566,7 @@ def applyHurricane1(argsList):
 
 	aList = []
 	for i in xrange(GC.getNumBuildingInfos()):
-		if BUILDING.isLimitedWonder(i) or not CyCity.hasBuilding(i) or CyCity.isFreeBuilding(i):
+		if BUILDING.isLimitedWonder(i) or not CyCity.hasBuilding(i):
 			continue
 		if INFO.providesNukeImmunity(i) or INFO.isAutoBuild(i) or BUILDING.getCost(i) < 1:
 			continue
@@ -3222,7 +3222,7 @@ def applyRubicon2(argsList):
 	pPlayer2 = GC.getPlayer(data.ePlayer)
 	unit2 = pPlayer2.getUnit(data.iUnitId)
 	iMorale = GC.getInfoTypeForString("PROMOTION_MORALE")
-	unit2.setHasPromotion(iMorale, True)
+	ACT.setUnitPromotion(unit2.getOwner(), unit2.getID(), iMorale, True)
 
 def getHelpRubicon3(argsList):
 	return TRNSLTR.getText("TXT_KEY_EVENT_CROSSING_THE_RUBICON_3_HELP", (1, ))
@@ -3799,12 +3799,11 @@ def canTriggerPiratesoftheNeutralZones(argsList):
 	CyPlayer = GC.getPlayer(iPlayer)
 	iNavy = 0
 	for CyUnit in CyPlayer.units():
-		if CyUnit.getDomainType() == DomainTypes.DOMAIN_SEA:
-			iNavy += CyUnit.baseCombatStr()
+		if STATE.getUnitRead(CyUnit.getOwner(), CyUnit.getID())[UnitReadKind.UNIT_READ_DOMAIN] == DomainTypes.DOMAIN_SEA:
+			iNavy += STATE.getUnitBaseCombatStr(CyUnit.getOwner(), CyUnit.getID())
 
-	# ÷100 at the point of use: the info plane carries strength ×100 like every amount, while the iNavy sum above
-	# is built from CyUnit.baseCombatStr(), which is already the HUMAN read. Both sides of the comparison have to
-	# be on one scale ([DEC-fixedpoint-x100]: a reader reduces, and it reduces where it consumes).
+	# ÷100 at the point of use: the info plane carries strength ×100 like every amount, while the iNavy sum
+	# above is the HUMAN read already. Both sides of the comparison have to be on one scale.
 	iPirate = INFO.getScalar("UNIT_", GC.getInfoTypeForString("UNIT_STEALTH_DESTROYER"), InfoScalar.SCALAR_STRENGTH, CascScope.CASC_SCOPE_UNIT, CascUnit.CASC_UNIT_FLAT) / 100
 
 	MAP = GC.getMap()
@@ -3846,7 +3845,7 @@ def applyPiratesoftheNeutralZones1(argsList):
 	y = plot.getY()
 	for i in xrange(iNumUnits):
 		CyUnit = barbarian.createUnit(iUnit, x, y, UnitAITypes.UNITAI_ATTACK_SEA, DirectionTypes.DIRECTION_SOUTH)
-		CyUnit.setHasPromotion(iNav, True)
+		ACT.setUnitPromotion(CyUnit.getOwner(), CyUnit.getID(), iNav, True)
 		CyUnit.setName("Pirate Corvette")
 
 
@@ -4114,7 +4113,7 @@ def applyHenryMorgan1(argsList):
   iCbt4 = GC.getInfoTypeForString("PROMOTION_COMBAT4")
   for i in xrange(iNumUnit1):
       CyUnit = barbPlayer.createUnit(iUnitType1, plot.getX(), plot.getY(), UnitAITypes.UNITAI_PIRATE_SEA, DirectionTypes.DIRECTION_SOUTH)
-      CyUnit.setHasPromotion(iCbt4, True)
+      ACT.setUnitPromotion(CyUnit.getOwner(), CyUnit.getID(), iCbt4, True)
   for i in xrange(iNumUnit2):
       barbPlayer.createUnit(iUnitType2, plot.getX(), plot.getY(), UnitAITypes.UNITAI_PIRATE_SEA, DirectionTypes.DIRECTION_SOUTH)
   for i in xrange(iNumUnit3):
@@ -4267,7 +4266,7 @@ def applyStedeBonnet1(argsList):
   for i in xrange(iNumUnit2):
       CyUnit = barbPlayer.createUnit(iUnitType2, plot.getX(), plot.getY(), UnitAITypes.UNITAI_PIRATE_SEA, DirectionTypes.DIRECTION_SOUTH)
       CyUnit.setName("Fast Galleon")
-      CyUnit.setHasPromotion(iNav1, True)
+      ACT.setUnitPromotion(CyUnit.getOwner(), CyUnit.getID(), iNav1, True)
 
 ######## THE_CORSAIRS ###########
 
@@ -5488,7 +5487,7 @@ def TriggerHarryPotter2(argsList):
 	iLibrary = GC.getInfoTypeForString("BUILDING_LIBRARY")
 	iStateReligion = CyPlayer.getStateReligion()
 	for CyCity in CyPlayer.cities():
-		if CyCity.canConstruct(iLibrary, False, False, True):
+		if ENABLER.getBuildingAvailability(CyCity.getOwner(), CyCity.getID(), iLibrary) == EnablerState.ENABLER_LISTED:
 			ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iLibrary, True)
 
 		if CyCity.isHasReligion(iStateReligion):
@@ -6318,7 +6317,7 @@ def doWildFire(argsList):
 
 	validHousesList = []
 	for i in range(GC.getNumBuildingInfos()):
-		if BUILDING.isLimitedWonder(i) or not CyCity.hasBuilding(i) or CyCity.isFreeBuilding(i):
+		if BUILDING.isLimitedWonder(i) or not CyCity.hasBuilding(i):
 			continue
 		if BUILDING.getCost(i) < 1 or INFO.providesNukeImmunity(i) or INFO.isAutoBuild(i):
 			continue
@@ -6353,7 +6352,7 @@ def doMinorFire(argsList):
 	iBurnBuilding = -1
 	iHighFlamm = 0
 	for i in xrange(GC.getNumBuildingInfos()):
-		if BUILDING.isLimitedWonder(i) or not CyCity.hasBuilding(i) or CyCity.isFreeBuilding(i):
+		if BUILDING.isLimitedWonder(i) or not CyCity.hasBuilding(i):
 			continue
 		if INFO.getIntrinsic("BUILDING_", i, IntrinsicSlot.PYINT_COST) < 1 or INFO.providesNukeImmunity(i) or INFO.isAutoBuild(i):
 			continue
@@ -6392,7 +6391,7 @@ def doMajorFire(argsList):
 		if currFlamm <= iFlammEnd:
 			break
 		for j in xrange(GC.getNumBuildingInfos()):
-			if BUILDING.isLimitedWonder(j) or not CyCity.hasBuilding(j) or CyCity.isFreeBuilding(j):
+			if BUILDING.isLimitedWonder(j) or not CyCity.hasBuilding(j):
 				continue
 			if INFO.getIntrinsic("BUILDING_", j, IntrinsicSlot.PYINT_COST) < 1 or INFO.providesNukeImmunity(j) or INFO.isAutoBuild(j):
 				continue
@@ -6446,7 +6445,7 @@ def doCatastrophicFire(argsList):
 		iHighFlamm = 0
 
 		for j in xrange(GC.getNumBuildingInfos()):
-			if BUILDING.isLimitedWonder(j) or not CyCity.hasBuilding(j) or CyCity.isFreeBuilding(j):
+			if BUILDING.isLimitedWonder(j) or not CyCity.hasBuilding(j):
 				continue
 			if INFO.getIntrinsic("BUILDING_", j, IntrinsicSlot.PYINT_COST) < 1 or INFO.providesNukeImmunity(j) or INFO.isAutoBuild(j):
 				continue
@@ -6755,9 +6754,6 @@ def ApplyNativegood2(argsList):
 	data = argsList[1]
 
 	CyPlayer = GC.getPlayer(data.ePlayer)
-	iRelationship = CyPlayer.getNativeRelationship()
-	iRelationship += 40
-	CyPlayer.setNativeRelationship(iRelationship)
 
 	CyCity = CyPlayer.getCapitalCity()
 	if CyCity is None:
@@ -6990,7 +6986,7 @@ def applyCivilWar(argsList):
 	# Hand over units
 	for pUnit in CyMap().plot(iX, iY).units():
 		if pUnit.getOwner() == pPlayer.getID():
-			pUnit.doCommand(CommandTypes.COMMAND_GIFT, -1, -1)
+			ACT.doUnitCommand(pUnit.getOwner(), pUnit.getID(), CommandTypes.COMMAND_GIFT, -1, -1)
 
 	for i in xrange(2):
 		pNewPlayer.createUnit(pCity.getConscriptUnit(), iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
