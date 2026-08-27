@@ -47,7 +47,7 @@ def onGreatPersonBorn(argsList):
 			return
 
 		pGreatPerson = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
-		sUnitName = pGreatPerson.getNameNoDesc()
+		sUnitName = STATE.getUnitNameNoDesc(iUnitOwner, iUnitID)
 		if sUnitName == "": return
 
 		# Get screen resolution.

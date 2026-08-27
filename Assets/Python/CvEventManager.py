@@ -2969,7 +2969,7 @@ class CvEventManager:
 		popup = CyPopup(5006, EventContextTypes.EVENTCONTEXT_ALL, True)
 		popup.setUserData((pUnit.getOwner(), pUnit.getID()))
 		popup.setBodyString(TRNSLTR.getText("TXT_KEY_RENAME_UNIT", ()), 1<<0)
-		popup.createEditBox(pUnit.getNameNoDesc(), 0)
+		popup.createEditBox(STATE.getUnitNameNoDesc(pUnit.getOwner(), pUnit.getID()), 0)
 		popup.setEditBoxMaxCharCount(24, 0, 0)
 		popup.launch(True, PopupStates.POPUPSTATE_IMMEDIATE)
 

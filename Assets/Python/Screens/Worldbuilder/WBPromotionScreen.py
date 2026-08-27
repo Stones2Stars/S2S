@@ -146,8 +146,8 @@ class WBPromotionScreen:
 			if pUnitX is None: continue
 			iRow = screen.appendTableRow("WBCurrentUnit")
 			sText = pUnitX.getName()
-			if len(pUnitX.getNameNoDesc()):
-				sText = pUnitX.getNameNoDesc()
+			if len(STATE.getUnitNameNoDesc(pUnitX.getOwner(), pUnitX.getID())):
+				sText = STATE.getUnitNameNoDesc(pUnitX.getOwner(), pUnitX.getID())
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 			if pUnitX.getOwner() == pUnit.getOwner():
 				if pUnitX.getID() == pUnit.getID():

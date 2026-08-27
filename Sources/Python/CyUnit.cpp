@@ -577,11 +577,6 @@ std::wstring CyUnit::getNameKey() const
 	return m_pUnit->getNameKey();
 }
 
-std::wstring CyUnit::getNameNoDesc() const
-{
-	return m_pUnit->getNameNoDesc();
-}
-
 void CyUnit::setName(std::wstring szNewValue)
 {
 	m_pUnit->setName(szNewValue);

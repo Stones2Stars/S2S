@@ -603,8 +603,8 @@ class WBUnitScreen:
 			if unitX is None: continue
 			iRow = screen.appendTableRow(ID)
 			sText = unitX.getName()
-			if len(unitX.getNameNoDesc()):
-				sText = unitX.getNameNoDesc()
+			if len(STATE.getUnitNameNoDesc(unitX.getOwner(), unitX.getID())):
+				sText = STATE.getUnitNameNoDesc(unitX.getOwner(), unitX.getID())
 			sColor = "<color=255,80,80>"
 			if unitX.getOwner() == self.currentUnit.getOwner():
 				if unitX.getID() == self.currentUnit.getID():
@@ -672,8 +672,8 @@ class WBUnitScreen:
 					if iOtherID == iUnitID:
 						continue
 
-					if unitX.getNameNoDesc():
-						sText = unitX.getNameNoDesc()
+					if STATE.getUnitNameNoDesc(unitX.getOwner(), unitX.getID()):
+						sText = STATE.getUnitNameNoDesc(unitX.getOwner(), unitX.getID())
 					else:
 						sText = unitX.getName()
 
@@ -717,8 +717,8 @@ class WBUnitScreen:
 				if iOtherID == iUnitID:
 					continue
 
-				if unitX.getNameNoDesc():
-					sText = unitX.getNameNoDesc()
+				if STATE.getUnitNameNoDesc(unitX.getOwner(), unitX.getID()):
+					sText = STATE.getUnitNameNoDesc(unitX.getOwner(), unitX.getID())
 				else: sText = unitX.getName()
 
 				sText += " (" + str(unitX.getCargo()) + "/" + str(unitX.cargoSpace()) + ")"
@@ -930,7 +930,7 @@ class WBUnitScreen:
 				popup = CyPopup(5006, EventContextTypes.EVENTCONTEXT_ALL, True)
 				popup.setUserData((self.currentUnit.getOwner(), self.currentUnit.getID()))
 				popup.setBodyString(TRNSLTR.getText("TXT_KEY_RENAME_UNIT", ()), 1<<0)
-				popup.createEditBox(self.currentUnit.getNameNoDesc(), 0)
+				popup.createEditBox(STATE.getUnitNameNoDesc(self.currentUnit.getOwner(), self.currentUnit.getID()), 0)
 				popup.setEditBoxMaxCharCount(25, 32, 0)
 				popup.launch(True, PopupStates.POPUPSTATE_IMMEDIATE)
 
@@ -1146,8 +1146,8 @@ class WBUnitScreen:
 	def modifyCargoEntry(self, screen, unitX, ID, color):
 		NAME = "WID|WBCargoUnits" + str(ID)
 		screen.hide(NAME)
-		if unitX.getNameNoDesc():
-			sText = unitX.getNameNoDesc()
+		if STATE.getUnitNameNoDesc(unitX.getOwner(), unitX.getID()):
+			sText = STATE.getUnitNameNoDesc(unitX.getOwner(), unitX.getID())
 		else: sText = unitX.getName()
 
 		if self.bCargo:

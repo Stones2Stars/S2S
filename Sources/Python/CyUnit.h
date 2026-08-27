@@ -163,7 +163,6 @@ public:
 	std::wstring getName() const;
 	std::wstring getNameForm(int iForm) const;
 	std::wstring getNameKey() const;
-	std::wstring getNameNoDesc() const;
 	void setName(std::wstring szNewValue);
 	std::string getScriptData() const;
 	void setScriptData(std::string szNewValue);

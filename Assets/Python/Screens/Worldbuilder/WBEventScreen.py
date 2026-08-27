@@ -139,8 +139,8 @@ class WBEventScreen:
 		for pUnitX in pPlot.units():
 			iRow = screen.appendTableRow("WBEventUnit")
 			sText = pUnitX.getName()
-			if len(pUnitX.getNameNoDesc()):
-				sText = pUnitX.getNameNoDesc()
+			if len(STATE.getUnitNameNoDesc(pUnitX.getOwner(), pUnitX.getID())):
+				sText = STATE.getUnitNameNoDesc(pUnitX.getOwner(), pUnitX.getID())
 			iPlayerX = pUnitX.getOwner()
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 			if pUnitX.getID() == iSelectedUnit:

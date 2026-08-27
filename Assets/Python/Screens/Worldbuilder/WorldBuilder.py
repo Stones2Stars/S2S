@@ -16,7 +16,7 @@ import WBPlayerUnits
 import WBInfoScreen
 import WBTradeScreen
 
-# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
+# The one data-fetching library: STATE = live state, ENABLER = availability,
 # ENUMS = the engine enum vocabulary + name->id resolution.
 GC = CyGlobalContext()
 INFO = CyInfo()
@@ -24,6 +24,7 @@ BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 GAME = GC.getGame()
 MAP = GC.getMap()
 ACT = CyAct()
+STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 bPython = True
@@ -1241,7 +1242,7 @@ class WorldBuilder:
 						loopUnit = GC.getPlayer(item[0]).getUnit(item[1])
 						if loopUnit is None: continue
 						pNewUnit = pPlayer.createUnit(loopUnit.getUnitType(), self.m_pCurrentPlot.getX(), self.m_pCurrentPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-						pNewUnit.setName(loopUnit.getNameNoDesc())
+						pNewUnit.setName(STATE.getUnitNameNoDesc(loopUnit.getOwner(), loopUnit.getID()))
 						pNewUnit.setLevel(loopUnit.getLevel())
 						pNewUnit.setExperience(loopUnit.getExperience())
 						pNewUnit.setBaseCombatStr(loopUnit.baseCombatStr())
