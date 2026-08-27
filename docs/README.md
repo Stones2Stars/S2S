@@ -101,7 +101,7 @@ Verify against the tree before acting on any claim that something is built.
 - **[reference/external-tools-and-workflows.md](reference/external-tools-and-workflows.md)** — crash-dump symbolization, FpkBuilder.
 - **[reference/release-deploy.md](reference/release-deploy.md)** — how a build reaches players: the AppVeyor → SVN → GitHub pipeline, the FPK patch step, and the **batched** SVN commit (SourceForge 504s on a whole-release transaction) incl. the ordering rules that make each batch legal and the non-atomicity that follows.
 - **The LEGACY censuses** — how the legacy behaves today, so the cascade can replace it:
-  **[legacy-grant-apply-sites](reference/legacy-grant-apply-sites.md)** (where provisions are handed
+  **[triggers.md](specs/triggers.md)** (where provisions are handed
   over) · **[pedia-read-map](reference/pedia-read-map.md)** +
   **[python-read-map](reference/python-read-map.md)** (what the Python surface consumes).
 - **[reference/python-load-sequence.md](reference/python-load-sequence.md)** — the C++/Python boundary MECHANISM

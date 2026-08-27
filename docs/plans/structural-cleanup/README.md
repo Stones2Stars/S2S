@@ -18,4 +18,4 @@
 
 **Where the legacy MAPS went:** they are censuses of how the legacy behaves, not work to do, so they live in
 [`docs/reference/`](../../reference/) — a legacy map filed under `plans/` reads as planned work, which is exactly
-the bait. See `legacy-grant-apply-sites`, `pedia-read-map`, `python-read-map`.
+the bait. See `pedia-read-map`, `python-read-map`.

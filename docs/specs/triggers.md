@@ -25,6 +25,148 @@ its own draw against it. That draw comes off the SYNCHRONIZED stream, which is s
 authors a seed, a stream or a draw and neither the cascade nor the curator models one
 ([the synchronized RNG is shared state](../reference/engine.md#-the-synchronized-rng-is-shared-save-state--do-not-touch-the-draws)).
 
+## ⚖ THE SCOPE RULE — what the machine is for
+
+**The machine's job is to UNIFY ALL THE RANDOM PLACES THAT ADD RANDOM THINGS TO THE MAP, OUTSIDE "NORMAL
+CREATION"** — construct / research / train / adopt / purchase.
+
+That is the membership test, and it is deliberately broad: the qualifier is *how the thing arrived*, not which
+info class declared it. If something appears in the world and the player did not build, research, train, adopt or
+buy it, the machine owns it.
+
+- **IN** — vote awards (including a whole city), NPC/barbarian spawners, combat loot / pillage / capture units,
+  plot bonus discovery, leader-level-up traits, the trait city-founding provisions (`cityStartCulture`,
+  `bonusPopulationinNewCities`), `barbarianInitialDefenders`, the start-era `freePopulation` / `FreeStartEra`
+  buildings. **Being authored outside a `grants` block is not an exemption** — the scope test is how the thing
+  arrived, not which block holds it; a provision homed elsewhere is a HOMING question, not a scope one.
+- **OUT — normal creation.** A built building, a trained unit, a researched tech, an adopted civic, an
+  advanced-start *purchase*. (The advanced-start *budget* is granted; what it buys is normal creation.)
+- **OUT — not an arrival.** A transfer or transformation of something already owned: `CvUnit::convert`
+  (upgrade/merge promotion carry-over), unit merge/split, scrap refunds, production→gold overflow, negotiated
+  deal/gift transfers, improvement upgrades.
+- **OUT — modifiers.** Anything alive only while its source is never "arrived" independently; it is the source's
+  ongoing effect, and it belongs to [the cascade](../cascade.md).
+
+⛔ **OUT OF SCOPE — Python-driven subsystems.** Goody huts, random events and espionage are Python-based and stay
+OUT of the machine. They have C++ apply helpers (`receiveGoody`, `applyEvent`, `doEspionageMission`) — do NOT read
+those as gaps to close: the C++ is the hand-over mechanism for a Python-driven system, and re-flagging them as
+"unmigrated grants" is a rediscovery loop. They move only if the Python boundary moves.
+
+⛔ **OUTCOMES ARE NOT GRANTS.** The `outcomes.kill[]`/`actions[]` reward payloads are their OWN system, already set
+up separately: the `CvOutcome`/`CvOutcomeMission`/`CvOutcomeList` classes and their `execute()`/dispatch are
+UNCHANGED, fed from JSON via `mapFrom` ([mission-outcome-system.md](../reference/mission-outcome-system.md)).
+`CvOutcome::execute` is that system's apply, NOT an unmigrated grant site — do not fold it into this machine.
+
+⛔ **THE MACHINE REPLACES LEGACY — IT NEVER WIDENS IT.** The goal is a FULL replacement and a **vast reduction of
+endpoints**: many scattered apply sites collapse into one. So a change that *widens a legacy apply path to
+accommodate the machine* is backwards by construction — it grows the endpoint count in service of a machine whose
+whole purpose is to shrink it. Widening a condemned legacy member is the transitional shim
+[build the proper structure once](../../AGENTS.md#design) bans.
+
+## The classification that decides ownership
+
+Three distinctions, each of which has been got wrong at least once:
+
+- **GRANT** — handed over once, then persists with no living source. The machine's business.
+- **MODIFIER** — alive only while its source is; refcounted or toggled with the source's presence. NOT the
+  machine's business ([the cascade](../cascade.md) — the `freeSpecialists` precedent).
+- **READ** — a consumer of the same info data for pedia/AI/UI. Not an apply, but **must keep working when an apply
+  moves**.
+
+And, orthogonally:
+
+- **LEGACY-THAT-STOPPED** — a legacy behaviour whose apply is dead today (usually a stubbed poco getter). Needs a
+  ruling: was the drop intended?
+- **NEW-DESIGN-NOT-YET-BUILT** — authored data for a mechanic that never had an apply. Not a regression.
+  `grants.foundBuildings` (settlers seeding buildings at settle time) is this: a **new mechanic coined for this
+  rework**, not a port of the legacy `bNewCityFree`.
+
+⚖ **Reuse the engine's own partition — do not re-derive one.** `CvPlayer::applyEvent` takes
+`iEventTriggeredId == -1` to mean "replay the MODIFIER effects only" (`adjustModifiersOnly`), and every one-shot
+handout in the event surface is already guarded by `!adjustModifiersOnly`. That flag is an existing, load-bearing,
+hand-audited grant-vs-modifier split over the whole event surface. Adopt it.
+
+**MODIFIER, not grant** — building `getFreeTraitTypes` ("conferred while active"); vote
+`tradeRoutes`/`isFreeTrade`/`isNoNukes`/`forceCivic` (reversed on repeal); vote-source religion yields;
+building/civic/trait `freeSpecialists`.
+
+⚖ **THE FREE BUILDING IS A GRANT — in all scenarios these behave like grants.** A building naming another (or
+itself) hands that building over, and the receiving city genuinely HAS it: the authored data gates on holding
+these targets in over a thousand `requires` atoms, so a shape that delivered only the EFFECTS would silently break
+every one of them. It authors `grants.buildings` on the SOURCE, landing in every city of the empire.
+⚠ **This is a behaviour change from legacy, stated rather than hidden** ([validation.md](validation.md)): the
+legacy pair was refcounted ±1 with the source's presence and REMOVED the copies when the source went. A grant
+persists — losing the wonder keeps the granted buildings.
+⚖ **The population SPLITS on empire-uniformity, and only the varying half stays a grant.** A building granting
+ITSELF into every city, and a `notConstructible` marker whose only arrival is an empire-wide grant, are
+`identity.empireLevel` buildings the PLAYER holds once ([enabler.md §2](enabler.md)) — no fan, no fold, nothing to
+transfer on capture. What remains is the wonder granting an ordinary constructible building to every city (a
+Granary, Irrigation Canals): real per-city copies whose presence genuinely varies.
+⛔ **For that surviving population THE APPLY HAS TWO LEGS, and the second is the one a fan-at-construction
+misses: "AFTERWARDS".** A city FOUNDED or ACQUIRED later must receive the copies for every source its owner
+already holds, so the grantor fact fanning over the cities that already stand is only half of it — the other half
+fires when a CITY STARTS EXISTING and folds what the owner holds. ⚠ A one-shot fan passes every test on the
+cities standing at the time and silently misses every future one.
+
+## ⛔ The traps, and the cases that only LOOK like defects
+
+- ⚠ **Do NOT confuse the two `getNumUnitFullHeal`s — they are DIFFERENT RECEIVERS with different fates.** The
+  **city-side** `CvCity::getNumUnitFullHeal()` is the applier and STAYS (its accumulator was cut; the mechanic was
+  not). The **info-side** read is GONE from the rebuilt info: the effect — the herbalist shape, "set N units to
+  100% HP" — is authored as a `triggers` entry ([json.md §5](json.md): a recurring handout is a trigger, never a
+  grant), so its payload lives on the compiled entry (`healFull` + `healCount`) and a consumer that SCORES or
+  DISPLAYS it reads `CvInfo::hasTriggerFullHeal()`.
+  ⚑ **It touches no cache and no cascade** — setting units to full HP moves no deposit and no derived value, so the
+  applier needs no mark and the read needs no eval context. ⛔ Do not wire an invalidation for it.
+- ⚠ **`m_aPropertySpawns`'s serialization survives as an inert stream drain**, and it cannot simply be dropped.
+  Its shape is a count tag named `iNumElts` — **shared by 23 variable-length blocks in `CvCity::read`** — followed
+  by N raw untagged records, so naming it in `savemigration.txt` would drain the WRONG block, and dropping the
+  write would orphan a tag old saves carry (leaving `iNumElts` holding the previous block's value and reading
+  garbage). It retires when those blocks get per-block tags ([save.md](save.md)).
+- ⚖ **The religion founder grant — two things that LOOK like defects and are BY DESIGN.** Under
+  `GAMEOPTION_RELIGION_DIVINE_PROPHETS`, `foundReligion` early-returns because **founding a religion is an
+  OUTCOME** under that option — the outcome system's job, which is a separate system. Nothing is missing. And the
+  `eSlotReligion` / `eReligion` split is deliberate: the **SLOT** is what is being claimed (it drives
+  `isReligionSlotTaken` / `getTechPrereq`) and therefore sets the free-unit **COUNT**; the **CHOSEN** religion sets
+  the free-unit **TYPE**. Slot = reward size, chosen religion = its flavour.
+  ⚑ To MOVE this grant the emit must carry what the apply needs: the chosen religion, the slot religion, the award
+  flag and the target city — a religion-founded fact carrying only player + religion is not enough.
+- ⚠ **A separate ARRIVAL mechanism feeds the same targets and is NOT this machine:** the buildings and heritages
+  handed over by animals or entertainers come from the unit's CONSTRUCT MISSION — its own repertoire, not a grant.
+- ⚑ **`bFirst` is deliberately NOT a second event.** It does not say how the building arrived, so it names no
+  happening; folding it in would mint a fact for a flag.
+
+⚠ **THE THREE LEGACY PER-TURN LEDGERS ARE NOT ONE CLASS — the replacement OWNER differs**, which is the
+classification above applied to the very sites that look most alike. All three are Σ over the city's buildings of
+a static info field (the stored-accumulator drift class, cut via the `savemigration.txt` soft-remove), but they do
+not all land in the same machine:
+
+| ledger | mechanic | replaced by |
+|---|---|---|
+| `m_aPropertySpawns` | per-turn unit spawn — an arrival outside normal creation | **this machine** |
+| `m_iNumUnitFullHeal` | discrete per-turn action (fully heals up to N damaged units) — [json.md §5](json.md) names a heal as a `repeatable` payload | **this machine** |
+| `m_paiHealUnitCombatTypeVolume` | **continuous heal-RATE contribution**, not a discrete event | **the MODIFIER heal channel** — alive-with-source ⇒ modifier, the `freeSpecialists` precedent |
+
+## ⚖ THE PALACE: two triggers, not one
+
+The capital building is placed by **two different events**, and covering only one leaves an empire with no capital:
+
+| event | who places it |
+|---|---|
+| a city is FOUNDED and the empire has no palace | the settler's `grants.foundBuildings`, gated `{BUILDING_PALACE, empire, max:0}` |
+| a capital is CAPTURED and the capital relocates | **OWNER CHANGE must handle it** — not the founding gate |
+
+**The gate is "the empire has NO PALACE", never a city count.** A `{CITY, empire, max:0}` proxy is wrong twice: it
+can never hold at founding (the grant applies after `initCity` has registered the new city, so the count is
+already 1 — verified live: the Palace was silently never seeded and games started with no capital), and it refuses
+the case that matters — losing your capital while other cities stand should re-seed one. The building gating on
+its OWN absence is correct at both triggers and needs no off-by-one reasoning.
+
+⛔ **The civ-grant palace was NOT redundant.** `BUILDING_PALACE` sat in ~48 civilizations' `grants.buildings` and
+was dropped as a duplicate of the settler's `foundBuildings`. It was not: `foundBuildings` covers FOUNDING, while
+`CvPlayer::findNewCapital` / `setCapitalCity` place the **civilization building list** into the newly-chosen
+capital — that list was the only thing that moved a palace on RELOCATION. Dropping it removed the mechanism.
+
 ## ⛔ A GRANTED ENTITY IS AN ORDINARY ENTITY
 
 The ONLY difference between a building granted and one constructed is that a grant spent no production.
@@ -296,6 +438,25 @@ hands your traits to a teammate.
 the legacy mechanism whose data moved, and it swept the whole trait registry per promotion to do it. The trait
 legs of `CvUnit::setFreePromotion` are gone deliberately.
 
+⚖ **THE LEGACY FUNCTION SPLIT THREE WAYS, AND ONLY TWO LEGS ARE THIS MACHINE'S.** `CvUnit::setFreePromotion`
+folded three sources with different LIFETIMES, so it must never be moved wholesale:
+
+| leg | lifetime | owner |
+|---|---|---|
+| the unit info's own free promotions — fed from **`grants.promotions`** | set at creation, never removed | **GRANT — this machine** |
+| the player free-promotion registry, keyed by unit type AND unitcombat | written **ONLY** by `CvPlayer::applyEvent` | **OUT OF SCOPE — random events** (genuine one-shot event-store state) |
+| trait `isFreePromotionUnitCombats` | removed when the trait is lost | **TRIGGER/GRANT — this machine** |
+
+Moving the whole function would import an out-of-scope event store into the machine — the exact classification
+mistake above. The unit-info and TRAIT legs migrate; the event-registry leg does not.
+
+⚖ **FREE PROMOTIONS LIVE ON THIS PLANE — EVERY LEG, INCLUDING THE TRAIT'S.** The alive-with-source lifetime does
+NOT re-home this one to the modifier plane: a free promotion is a PAYLOAD handed to units, not a magnitude
+deposited into a channel, and there is no `freePromotions` modifier family for it to land in.
+⛔ So the removing-the-source-removes-it test ([json.md §5](json.md)) does not decide the PLANE here; it decides
+`grants`-vs-`freeSpecialists` for a SPECIALIST, and reading it as a general plane test is what put this row on the
+modifier plane.
+
 ⚑ **A trait is EMPIRE-scoped while this happening is a CITY relation, and that is the authored model, not an
 oversight:** a trait's promotions reach a unit that is in one of the empire's cities. In practice that is every
 unit at birth (creation runs the same applier) and every unit that ever passes through one; a promotion once
@@ -306,5 +467,5 @@ promotion the unit already holds.
 - [json.md §5](json.md) — the authoring shapes (`grants`, `triggers`).
 - [spine.md](../spine.md) — the `IEventConsumer` front door and the DOMAIN facts this dispatches on.
 - [enabler.md §3.2](enabler.md) — the operating-building set the per-turn apply gates on.
-- [legacy-grant-apply-sites.md](../reference/legacy-grant-apply-sites.md) — where the legacy engine hands
-  provisions over today (the surface this replaces).
+- [mission-outcome-system.md](../reference/mission-outcome-system.md) — the outcome system, which is NOT this
+  machine and must not be folded into it.

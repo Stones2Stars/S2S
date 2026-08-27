@@ -191,7 +191,7 @@ via `enables` (the space line), doctrine bans via `disables` + empire modifiers.
 > ⛔ **The per-city GRANT stays the model for everything else.** A wonder granting an ordinary constructible
 > building to every city (a Granary, Irrigation Canals) grants real per-city copies whose presence genuinely
 > varies — that is the two-leg apply of
-> [legacy-grant-apply-sites.md §4](../../reference/legacy-grant-apply-sites.md), unchanged. The line is
+> [triggers.md](../../specs/triggers.md), unchanged. The line is
 > EMPIRE-UNIFORMITY: presence that cannot vary per city moves up; presence that can stays down.
 
 > **The two fates are two mechanisms — nothing to declare.** `disables` = **destroy** (a law/ban

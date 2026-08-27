@@ -70,7 +70,7 @@ already fact-maintained, so no per-turn re-check exists for either.
   marker on adoption. Re-activation re-fires the leg, and that is safe by construction: the place path skips a
   held target and the empire-level choke point folds to held-once, so the grant is idempotent — and the grant
   PERSISTS when the marker later dorms (losing the adoption keeps the earned access; grants are never
-  refcounted, [legacy-grant-apply-sites.md §4](../../reference/legacy-grant-apply-sites.md)).
+  refcounted, [triggers.md](../../specs/triggers.md)).
   ⛔ The one-shot PULSE legs (population / goldenAge / freeTechs) deliberately do NOT fire on activation — a
   building that can wake repeatedly gives them no defined moment, which is the second reason the world-capped
   member above is excluded rather than band-placed.
