@@ -448,8 +448,149 @@ not findings to re-discover.
   can never originate in a value-per-hammer ratio there; it originates in value failing to DISCRIMINATE, or in the
   needed-counts ([parked/unit-ai-valuation.md](docs/plans/parked/unit-ai-valuation.md)).
 
+### AI unit COUNTS — a needed-count is a CAP, never a target to chase
+
+- **⛔ THE NUMBERS ARE A MAXIMUM, NOT A MINIMUM.** A per-role count is a CEILING the AI may not exceed, never a
+  quota it builds TOWARD. Read as a minimum, a count manufactures a permanent deficit: the AI is always short of
+  something, so there is always a reason to train one more, and production never returns to anything else.
+- **⚑ THE DEFICIT IS SELF-REFILLING, which is what turns it from a bias into a loop.** Anything that lowers the
+  COUNT while leaving CAPACITY intact re-opens the gap and triggers a rebuild. **Merging is the worked case:**
+  3 units → 1 stronger unit drops the owned count by two while the hunting/fighting capacity is unchanged, so the
+  target reopens and the city rebuilds toward it — merge → deficit → rebuild, pumping hammers into units whose
+  capacity never fell ([parked/unit-ai-valuation.md](docs/plans/parked/unit-ai-valuation.md) §A5).
+  ⇒ The same loop explains an AI that will not merge: under a count target, merging is self-harm.
+- **⛔ SO THE UPKEEP SYMPTOM IS DOWNSTREAM, and fixing upkeep does not fix it.** Unit upkeep sums the player's
+  UNITS ([economy.md](docs/reference/economy.md)), so a count that only ever climbs turns into an upkeep bill that
+  only ever climbs, and the AI stagnates paying for units it did not need. Treating that as an upkeep-tuning
+  problem tunes the symptom while the count keeps producing it.
+- ⚠ **`CvCityAI::AI_bestUnit` has NO cost term** (§ AI valuation of STRENGTH), so nothing downstream of the count
+  restrains it either: whatever the count asks for, the city builds the highest-valued answer regardless of price.
+
+**⛔ A BUILDING BEATS A PROCESS IN VIRTUALLY EVERY SCENARIO, AND MOST OF ALL EARLY — so the process being LAST is
+CORRECT, and promoting it is the wrong fix.** A process converts production into one commerce stream; a building
+changes what the city IS, permanently. ⚠ Building passes are interleaved the whole length of
+`AI_chooseProduction`, right down to the final tiers, so there is no insertion point that lifts the process above
+a marginal unit WITHOUT also lifting it above real building work.
+⇒ **Therefore a city that trains a marginal unit instead of running research is fixed on the UNIT side, never by
+re-ranking the process.** Cap the count, floor it, put the top-up on the spending budget — make the unit stop
+asking. ⛔ The tempting move this refuses: "the AI builds wanderers when research would be better, so raise the
+process." That starves buildings to fix units.
+
+**⛔ THE PROCESS IS THE LAST DECISION IN `AI_chooseProduction`, SO ANY UNIT DEMAND PREEMPTS IT.**
+`AI_chooseProcess(NO_COMMERCE, …)` sits three lines from the end of a ~3000-line function; the only earlier call
+is gated on `bFinancialTrouble` AND being the capital. Buildings are offered many times BEFORE the marginal unit
+tiers, so by the time those run, "nothing worth building" is already established — and the process then loses
+only to a marginal unit top-up. ⚑ **That is why a city with an empty building frontier still trains bodies
+instead of running research**: not because research scored worse, but because it was never reached.
+⇒ A role whose count is a TARGET therefore starves the process permanently — the deficit never closes, so the
+`return` fires every turn. Making the count a floor is what lets production fall through at all.
+⚠ **A `[CIT/order] … MAINTAIN_PROCESS` line does NOT mean a process is running.** The push is REFUSED when the
+queue already holds a real order, so the diagnostic carries `landed=` for exactly that reason; read the flag, not
+the line. Reporting the ask instead of the outcome is what made a city training units look like a city
+researching.
+
+**⛔ A DEFICIT PERCENTAGE IS THE TARGET SHAPE — THE TEST IS `owned < floor`, AND NOTHING ELSE.** Expressing the
+need as `(needed - owned) * 100 / needed` and building whenever it exceeds a threshold reads ANY shortfall as
+demand, so the number can never be reached and production never moves on. ⚑ Its tell is a GRADUATED LADDER: a
+percent compared against 80, then 50, then 25, then 0, each with its own build. That ladder is the count
+re-asserting itself as a target at four priorities.
+⛔ **Two things hide inside such a ladder, and both are their own targets:** a HARDCODED absolute ceiling beside
+the percent (`owned < 8`, `owned < 16` — a second count the real one never governs), and a per-turn RNG that
+"pumps" the role whenever any deficit exists — the compounding-dice shape § Unit AI fallback terminals already
+bans, here deciding production rather than movement.
+⇒ **Collapse the ladder to one boolean.** `owned < needed`, computed once and named for what it means; the only
+legitimate second tier is the genuine ZERO case (`owned < 1`), which is an emergency rather than a floor.
+⚠ **Removing a `getSorenRandNum` changes the synchronized stream, and that is acceptable when the DLL change is
+uniform** — every client and every future turn draws the same way, so this is a behaviour change, never a desync.
+⛔ It is still never removed to make a number look better ([the draws are shared state](docs/reference/engine.md#-the-synchronized-rng-is-shared-save-state--do-not-touch-the-draws)).
+
+**⛔ WHAT CREATES DEMAND IS THE VALUATION, NOT THE COUNT.** A unit gets built because it is WORTH building; the
+count only ever says when to stop. ⇒ Removing a deficit trigger is not removing the demand signal — the valuation
+was always the demand signal, and the deficit was competing with it.
+**⛔ A FLOOR MAY ONLY FORCE A UNIT THAT CAN SURVIVE TO DO THE JOB.** A floor FORCES production, so filling it with
+a unit that dies on contact converts hammers into nothing — and it does so worst exactly when the AI is already
+far behind and can least afford it, digging the hole deeper every turn. ⛔ **MEASURE AGAINST THE TYPICAL THREAT, NEVER THE WEAKEST ONE — sampling the weak end is how the bar ends up
+meaningless.** Over the 582 authored ANIMAL-class units the median strength is **7** and 69% sit at 4 or above,
+while an early scout is **1**. ⚑ So the floor was mandating a unit seven times smaller than what it would
+typically meet — and since much of the danger is CONCEALED ([vision.md](docs/specs/vision.md): hide and seek is
+a graduated `concealment` vs `detection` contest, not a visibility flag), the scout does not even get to choose
+the fight. ⚠ Consequence, and it is intended: in the ancient era nothing available clears the bar, so the early
+explorer floor does not fire at all. ⇒ `CvCityAI::AI_roleFloorIsFillable` asks the question before the floor fires.
+⛔ **AND IT ASKS IN RAW STRENGTH, NEVER IN `AI_combatValue` — that one is RELATIVE, not absolute.**
+`CvGameAI::AI_combatValue` divides by `getBestLandUnitCombat()`, the best unit CURRENTLY AVAILABLE, so it is a
+0-100 score against the field rather than a magnitude. Early on, when the best thing available IS the scout, a
+scout scores ~100 — so testing it against an absolute animal strength passes exactly when it must fail. ⚑ That
+is the surviving-fudge-factor shape (§ Conduct, THE THREE DRIFT DETECTORS: two operands on different scales), and
+it made the gate a no-op while reading as a working check. A floor that cannot be
+filled survivably does not fire, and production falls through.
+⚠ **The COUNT is the EFFECTIVE one (`AI_totalEffAreaUnitAIs`), never the body count**, so a merged unit counts as
+its strength equivalent and consolidating never re-opens the floor.
+
+⚖ **ONLY SCOUTS AND HUNTERS ARE MINIMUM-NUMBER ROLES, and the reason is specific: the AI does not fully
+understand the need to defend against HUNTING.** It cannot see that threat in its own valuation, so for those two
+the floor stands in for a judgement it cannot make. ⛔ That is the whole carve-out — every OTHER role's count is a
+CAP only, and "this role also feels like it needs a floor" is the reasoning this rule refuses.
+⚖ **Even there the floor is SMALL — on the order of 3, never 10-15.** A floor exists so a role cannot reach zero
+and strand the AI, not so a city has something to produce. ⚠ Today's numbers are the wrong magnitude for that
+job: workers `1 + √cities × 2` (~11 at 25 cities), explorers `max(5, 3 + cities/3)`, hunters capped near 14.
+
+**⚑ CITY DEFENSE ALREADY CREATES DEMAND CORRECTLY, AND IT IS THE SHAPE TO COPY — it asks for STRENGTH, not for
+BODIES.** `AI_isDefended` gates on `getGarrisonStrength() >= AI_neededDefenseStrength() × pct/100`, so the
+requirement is CAPACITY and any mix of units that meets it satisfies it.
+⛔ **That is what makes it merge-SAFE, and it is a structural property rather than a tuning one:** consolidating
+three units into a stronger one leaves capacity intact, so a strength requirement stays satisfied and nothing
+rebuilds — while the identical merge under a COUNT requirement re-opens the deficit and triggers a rebuild. The
+garrison code already reasons in these terms (`GARRISON_CONSOLIDATE_KEEP_PERCENT`, sized because *a 3→1 merge
+keeps only half the triple's aggregate strength*).
+⇒ **A role whose need is expressed as a count is the thing to convert** — to capacity where the role has a
+measurable one, and otherwise to a small floor plus the valuation.
+
+**⛔ THE VALUATIONS ARE REDESIGNED IN ONE GO, AND THE REASON IS COMMENSURABILITY — `AI_unitValue`,
+`AI_buildingValue` and every other `AI_*Value`.** A production choice does not read one valuation, it COMPARES
+them: a unit's number against a building's against a process's. So the numbers only mean anything if they sit in
+the SAME BALLPARK, and a scale is a property of the whole family, never of one member.
+⛔ **THE FAILURE SHAPE IS AN EVALUATOR THAT ALWAYS WINS.** Whichever one emits the biggest numbers takes every
+comparison it enters — and once it is an ORDER OF MAGNITUDE above its siblings it wins unconditionally, on merit
+it does not have. The AI then looks like it has a preference (it always builds units, it never builds X) when
+what it actually has is one evaluator on a different scale. ⚑ So read a lopsided AI preference as a SCALE
+question first, and go compare the magnitudes the evaluators emit before touching any of their terms.
+⇒ **Therefore a term added to ONE valuation is worse than the gap it closes.** It shifts that member's scale
+relative to its siblings, so every comparison the AI makes against it silently tilts — the member gets better and
+the DECISION gets worse. ⚑ The move this refuses is concrete and will occur to you the moment you read the next
+paragraph: *"upkeep is missing from `AI_unitValue`, so add an upkeep term."* That is a compensating constant on a
+formula nobody has redesigned (§ Conduct, THE THREE DRIFT DETECTORS: a surviving fudge factor means two operands
+are on different scales) — and here it manufactures exactly that mismatch rather than revealing one.
+⇒ **The near-term lever is the SPENDING GATE, not the valuation.** Restrain what gets BUILT; the question of what
+things are WORTH is one work item covering every valuation at once, and it does not start piecemeal.
+
+**⛔ THE AI IS UPKEEP-BLIND WHEN IT BUILDS AND UPKEEP-AWARE ONLY WHEN IT SCRAPS, and MOST UNITS COST UPKEEP NOW.**
+`AI_unitValue` contains **no upkeep term at all** — the sole value-per-upkeep ratio in the tree
+(`iValue /= getUnitInfo().getUpkeepCost() + 1`) sits inside the DISBAND selection, choosing what to throw away.
+So the cost of keeping a unit reaches the AI only once it is already in financial trouble. ⚑ That ordering is what
+guarantees overshoot: nothing restrains the build, and the correction is a panic scrap.
+⚖ **The production budget it DOES have is `iUnitCostPercentage < iMaxUnitSpending`** — unit upkeep as a share of
+pre-inflated costs, against `AI_evaluateMaxUnitSpending()`.
+⛔ **It gates the MILITARY builds and nothing else.** Workers were exempt from it entirely, which is why they are
+the expensive half: a count deficit spent freely past a budget every military build respects. A civilian build
+beyond its floor answers to the same budget — and ⚠ the genuine zero-of-a-role case stays OUTSIDE it, or a city
+with no worker at all can never build its first one.
+
 ### The CONTRACT BROKER — matching is THREE STAGES, and distance never scores
 
+- **⛔ THE BID DIVIDES BY BUILD TIME, AND THAT IS THE SAME BAN ON A DIFFERENT AXIS — `iValue *=
+  hammerCostPercent(); iValue /= iTurns;` (`CvContractBroker.cpp`).** A unit that finishes in one turn is not
+  divided at all, so the CHEAPEST candidate wins by construction. ⚑ **Measured live: a 1-turn scout bid
+  `value=9800100`** against useful units taking ten to twenty turns — an order of magnitude clear, which is the
+  always-wins shape (§ AI unit COUNTS). The ruling below was written about travel distance; depreciating by
+  PRODUCTION time does the identical damage and is the mechanism behind the observed scout spam.
+- **⛔ ONE UNIT DEMAND PER CITY PER TURN — `AI_chooseUnit` has TWO production paths and the counter admitted
+  two passes.** It posts a broker TENDER and otherwise falls through to a direct `AI_chooseUnitImmediate`, and
+  after tendering it deliberately returns false so the city keeps looking for a BUILDING of its own. ⚠ What that
+  must not do is let the cascade post a SECOND unit demand in the same pass — the broker then trains both for
+  one need. `MAX_REQUESTEDUNIT_PER_CITY` is 1 while the guard tested `>`, admitting counts 0 AND 1, and most
+  call sites never checked the counter at all. ⇒ Gate it centrally, in `AI_chooseUnit`, never per call site.
+  ⚑ `[CIT/order] action=tenderUnit` records the demand: before it, the order log carried construct and
+  maintainProcess only, so unit production was invisible in the one place a reader looks for what a city decided.
 - **⛔ DISTANCE IS A GATE AND A TIE-BREAK, NEVER A TERM IN THE SCORE.** Path distance does not belong in scoring
   at all: over-relying on travel speed is how the AI ends up spamming fast cheap units. A bid that depreciates by
   its own haul rewards a unit for being FAST on top of already rewarding it for being CHEAP — cheap-and-fast wins

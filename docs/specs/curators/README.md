@@ -9,6 +9,14 @@
 > data IS); this area is **how the data got there** (transient). It is **dropped when the migration completes** — do
 > NOT fold it into the durable JSON spec.
 >
+> ⛔ **THE CURATOR IS BEING GOT RID OF, BECAUSE THE XML DOES NOT STAY.** The legacy XML is curator INPUT and
+> nothing else; when it goes, the curator has no input and stops existing. ⇒ **`Assets/Data/**` then becomes the
+> AUTHORED SOURCE rather than a derived artifact**, and the `_additions/` overlay dissolves into it — an addition
+> is only an overlay because something downstream regenerates over it. ⛔ So do not build NEW dependence on the
+> curator, and do not treat "the curator does it" as an answer to where data should live. ⚠ Until the XML is
+> actually gone the current rules bind exactly as written: `Assets/Data/**` is DERIVED and never hand-edited, and
+> gameplay data authors in `_additions/`.
+>
 > ⚖ **ONE FILE IN THIS FOLDER IS THE EXCEPTION: `fixed-point-and-scales.md` does NOT drop.** It is the permanent
 > home of the ×100 fixed-point model and the curator-owns-descale rule — the ×100 scale MODEL and its per-field
 > registry are durable rulings, not a migration artifact, even though the file happens to live beside the
