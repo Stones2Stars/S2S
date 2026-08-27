@@ -14,6 +14,10 @@ subsystem, the symbols, the mechanism. The number of relevant files is something
 DECIDE, and it is regularly more than one: a behaviour lives in the spec that designs it, the reference that
 records how it behaves today, and often a plan doc that measured it. Then confirm all of it against `Sources/`,
 because [the tree outranks the doc](../AGENTS.md).
+⚖ **ONE TIER IS OUT OF THAT SWEEP, AND IT IS A DIRECTORY, NEVER A JUDGEMENT: [`plans/parked/`](plans/parked/README.md).**
+Those initiatives are out of active scope and carried as-is, with stale paths and stale status BY DESIGN — reading
+one as current is the harm, not skipping it. A parked doc is opened when ITS initiative becomes active, and is
+re-grounded on the way out of `parked/`. ⛔ This exempts a DIRECTORY and nothing else.
 ⛔ **Any wording — here or anywhere — that lets an agent SELECT which core docs to read is a defect, and is
 deleted on sight** ([AGENTS.md](../AGENTS.md)). What was retired is re-reading the whole corpus at SESSION START;
 that moved the reading to work-start and made it exhaustive *for the subsystem*, and it has been misread as

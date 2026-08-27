@@ -13,6 +13,13 @@
 >   that reads like one is a defect to delete on sight. ⚠ A large concept's home is a DIRECTORY behind a hub page
 >   — `cascade.md` is a map and the spec is the pages in `cascade/`, so stopping at a hub is reading the contents
 >   page and calling it the book.
+>   ⚖ **ONE TIER IS OUT OF THAT SWEEP, AND IT IS A DIRECTORY, NEVER A JUDGEMENT: `docs/plans/parked/`.** Those are
+>   initiatives OUT of active scope, carried as-is with stale paths and stale status by design
+>   ([parked README](docs/plans/parked/README.md)) — reading one as current is the harm, not skipping it. A parked
+>   doc is opened when ITS initiative becomes active, at which point it is re-grounded and moves out of `parked/`.
+>   ⛔ This exempts a DIRECTORY and nothing else: every `specs/`, `reference/`, `architecture/` and top-level file
+>   the grep hits is read END TO END, and "this looks parked to me" about anything outside `plans/parked/` is the
+>   permission slip this rule exists to refuse.
 > - **⛔ THE TREE OUTRANKS THE DOC.** The engine was rebuilt and the docs lag it, so a doc line is a HYPOTHESIS you
 >   confirm against `Sources/`. Where they disagree the code wins, and **fixing the doc is part of the same work
 >   item** (§ Docs). ⚠ This is not licence to skip the doc: only the doc tells you which behaviour is DESIGNED and
