@@ -271,6 +271,17 @@ facts, the culture-level fact and the working-city fact all announce today. No n
 reassignment; the radius growing with culture / `adds3rdRing`, adding tiles that were never candidates — no
 per-plot fact announces this) and the water-work TEAM capability.
 
+### ⛔ WILDLIFE DOES NOT BESIEGE A PLOT — a siege is a HOSTILE FACTION denying the tile
+
+`CvUnit::canSiege` is what takes a plot away from its working city, and **`isAnimal()` refuses it outright**:
+predators, prey and beasts are a threat to a UNIT standing on the tile, never an occupation that stops the city
+harvesting it. What may still siege is every hostile faction — enemy nations, barbarians, neanderthals and the
+insectoids (a city-owning faction, which is why `isAnimal()` deliberately excludes `INSECT_PLAYER`).
+⚑ **The cost was never only the lost tile.** `canSiege` also gates the `AI_setAssignWorkDirty` marks in
+`CvUnit::setXY`, so while wildlife qualified, every animal step marked its working city for a FULL citizen
+re-assignment — and animals are both numerous and constantly moving. A predicate this narrow reaches the
+governor's churn as much as the tile.
+
 ⛔ **Three marks are UNIT-MOVEMENT driven and stand as live per-move marks PENDING A DELIBERATE DECISION:** an enemy unit sieging a plot (`CvUnit::setXY`), a naval blockade (`CvPlot::changeBlockadedCount`),
 and the military-happiness garrison count (`CvCity::changeMilitaryHappinessUnits`). Unit movement never dirties
 a cache ([unit-carried modifiers apply on top, live, never cached](../cascade/09-wellbeing-channels.md#2b-the-wellbeing-channels--health--happiness-signed-split-the-2a-sibling)), so these must

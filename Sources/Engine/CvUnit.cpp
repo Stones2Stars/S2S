@@ -12135,7 +12135,7 @@ bool CvUnit::canSiege(TeamTypes eTeam) const
 		return false;
 	}
 
-	if (getOwner() == PREY_PLAYER)
+	if (isAnimal())
 	{
 		return false;
 	}

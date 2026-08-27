@@ -1885,7 +1885,7 @@ bool CvCity::canWork(const CvPlot* pPlot) const
 
 	if (getCityPlotIndex(pPlot) >= getNumCityPlots()) return false; // Just in case FAssertMsg doesn't end the function.
 
-	//in the rare case that a city ends up with an invisible animal inside the city or something, the city plot should be made immune to the following effect.
+	//	the centre plot is always worked, so nothing standing on it may take it away
 	if (pPlot != plot())
 	{
 		if (pPlot->plotCheck(PUF_canSiege, getOwner()) != NULL)
