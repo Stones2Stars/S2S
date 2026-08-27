@@ -39,7 +39,7 @@
 > the city's plots to find out what it now has.
 
 > **⚖ THE SANCTIONED EXCEPTION — AN EVENT-TRIGGERED RECALC, WHERE THE FACT CANNOT NAME WHAT MOVES.**
-> *"It is the best example of event triggered recalc we need."* The rule above assumes the fact NAMES the thing
+> It is the best example of the event-triggered recalc that is wanted. The rule above assumes the fact NAMES the thing
 > that moved, so the applier can set it. Where that assumption fails the recalc is CORRECT, and banning it on the
 > word `refresh` mistakes the name for the mechanism.
 > ⚑ **The exemplar is `DISTANCE_TO_GOVERNMENT_CENTER`** (`CityContext::refreshGovernmentCenterDistance`, driven by

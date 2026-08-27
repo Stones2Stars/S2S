@@ -2,8 +2,7 @@
 
 > Part of the **[cascade](../cascade.md)** spec.
 
-> *"We should have some pathfinding cache, because it is the most expensive, and at the same time
-> unmaintainable thing we can do — it has to scan plots by its very definition."*
+> A pathfinding cache is warranted, because it is the most expensive and at the same time unmaintai
 
 Everything above says derived state is a MAINTAINED SUM and a cache is a defect. **SPATIAL results are the one
 class that rule does not reach, and the reason is structural rather than an exemption granted to them:**

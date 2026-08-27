@@ -2,8 +2,7 @@
 
 > Part of the **[cascade](../cascade.md)** spec.
 
-**"Otherwise we can just pass the full player, city, and whatever other objects again, without any
-distinguishing."** That is the whole test, and it is a CONTRACT, not a prohibition: if the evaluation context
+*Otherwise the full player, city and whatever other objects are simply passed again, without any distingu* That is the whole test, and it is a CONTRACT, not a prohibition: if the evaluation context
 holds a `CvCity*`/`CvPlayer*`, then "the reader goes through the context" is enforced only by reviewer memory —
 the god-object is right there, and reaching past the context is one `->` away (a derived
 `&ctx.city->getCityContext()` is the tell: the ctx never held a context at all). The isolation must be

@@ -32,8 +32,7 @@ The **tally** is NOT a consumer — it reads the object-owned counts (`Tally/CvT
 
 ### ⚖ `CvEventReporter` emits spine facts beside its Python calls
 
-> *"I don't want to convert the current `CvEventReporter` yet, I simply want it to emit spineevents — so that
-> things can be actually migrated down the line."*
+> CvEventReporter is not converted yet; it simply emits spine events, so that
 
 **A happening that reaches only Python is invisible to the spine, to `/events`, to the file consumers and to
 every C++ consumer.** `CvEventReporter` (`Sources/UI/CvEventReporter.{h,cpp}`, 85 `void` report methods) is the
@@ -51,9 +50,7 @@ point: every method is CALLED at the happening with the parties already in hand
 **exactly what Python receives**, which is the property that makes the later migration a SWAP rather than a
 re-investigation. An emit placed anywhere else would have to rediscover those arguments.
 
-**⛔ THE FACT IS RAW, NOT FORMALIZED — and this is the part to get right: *"we have no info, or way to
-define a lot of these events in C++ yet; that will happen when we move the actual eventsystem over, when we can
-clearly formalize all these python things in a structured json."*** The emit announces the happening with the
+**⛔ THE FACT IS RAW, NOT FORMALIZED — and this is the part to get right: there is no info, and no way to define many of these events in C++ yet; that happens when the ac** The emit announces the happening with the
 reporter's OWN arguments and invents nothing: no designed payload, no modelled semantics, no `on<Happening>`
 token, no action verb. ⚑ That is also why this does not breach [triggers.md](../specs/triggers.md)'s ban on minting
 a happening or a verb speculatively — the AUTHORING vocabulary stays unminted; only the engine's announcement

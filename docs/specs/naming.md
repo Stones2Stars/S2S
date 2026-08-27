@@ -87,6 +87,5 @@ at the wrong entity and the wrong machine.
 
 ⚠ **The shortened form reads fine, which is the trap.** `buildList` looks like an unremarkable abbreviation of
 `buildingList` and is a different concept. ⇒ Never shorten `building` to `build` in a name YOU write.
-⛔ **The INHERITED offenders are NOT a rename backlog: *"that the naming is ass is unfortunately not
-something we can do a lot with."*** The C2C-era UI classes (`BuildingFilterCanBuild`, `CvBuildingList`, …) carry
+⛔ **The INHERITED offenders are NOT a rename backlog: the naming is poor and there is little that can be done about it.** The C2C-era UI classes (`BuildingFilterCanBuild`, `CvBuildingList`, …) carry
 this throughout and a sweep buys nothing. The rule binds what you NAME, not what you find.

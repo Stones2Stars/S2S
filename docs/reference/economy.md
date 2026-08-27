@@ -66,8 +66,7 @@ supply + corporate maintenance.
   > TO CUT AND LIVE WITH THE CONSEQUENCES.** The mechanic above is what the engine still COMPUTES; it is
   > not a model anyone is standing behind. ⇒ A gap found in it is **not** a defect to repair and **not** a
   > wiring job: the correct action is the ordinary cut, and the consequence is accepted.
-  > **⚖ WHEN IT RETURNS IT IS A CASCADE CHANNEL DRIVEN BY ACTUAL EXPENDITURE** — *"we need to have a
-  > real plan for how it is to be modelled based on actual expenditure."* That is the whole of the forward
+  > **⚖ WHEN IT RETURNS IT IS A CASCADE CHANNEL DRIVEN BY ACTUAL EXPENDITURE** — there has to be a real plan for how it is modelled, based on actual expenditure. That is the whole of the forward
   > direction, and it is the part that does not exist yet: today's formula keys on **`hurriedCount`** — how often
   > you RUSHED — which is a proxy for spending rather than spending, so no amount of re-wiring the present shape
   > reaches the intended one.

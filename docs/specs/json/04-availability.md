@@ -74,8 +74,7 @@ Same per-kind bucket shape as `enables`.
   > swap did. ⚠ If the walk finds nothing placeable the fate falls back to **HARD REMOVED** — the predecessor is
   > obsolete either way; there is simply no tier to hand it to.
   > ⚖ **THE FATE FIRES ROUTINELY; THE PLACEMENT LEG IS *VERY* RARE — and the two must not be conflated.**
-  > The obsoleting tech sits typically **2–3 eras past** the successor's own availability, and *"it is very rare
-  > that we have not already built the building"* — so the walk almost always finds the successor already held,
+  > The obsoleting tech sits typically **2–3 eras past** the successor's own availability, and it is very rare that the building has not already been built — so the walk almost always finds the successor already held,
   > stops on its first test, and the fate resolves to a plain REMOVAL.
   > ⚑ **It still fires, and visibly, BECAUSE OF DORMANCY.** A superseded predecessor is parked, not
   > removed, so it is still PRESENT in the city for those 2–3 eras; the obsoleting tech is what finally clears it.

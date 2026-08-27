@@ -21,8 +21,7 @@ magnitude — carried that way through the cascade, the realized getters and the
 this is OOS-load-bearing (Civ4 MP is deterministic lockstep; CPU-dependent float math desyncs).
 `V100 = round(human × 100)`, so `1.00 → 100`, `7 → 700`, `0.5 → 50`; `FIXED_ONE = 100`.
 
-> **⛔ THE ×100 EXISTS FOR ONE REASON — TWO DECIMALS ON AN AMOUNT.** *"The reason for multiplying int
-> values by 100 is so we can have 2 decimals… so we can express anything with 2 decimals at edge."* That is the
+> **⛔ THE ×100 EXISTS FOR ONE REASON — TWO DECIMALS ON AN AMOUNT.** Integer values are multiplied by 100 so two decimals are available, so anything That is the
 > whole of it, and it is what decides where the scale applies.
 >
 > **⛔ A PERCENTAGE IS THEREFORE NOT SCALED: *"percentages should not have decimals."*** A percent is a
@@ -116,8 +115,7 @@ cost.
 | `percent: 25` | +25% | **`25` — NOT scaled** (a percent has no decimals) | summed: `Σpercent`, applied as `(100 + Σpercent)/100` |
 | `multiplier: 2` (or `1.5`) | ×2.00 / ×1.50 | `200` / `150` (×100 — identity 100) | product: `Π(mult100/100)` |
 
-⛔ **readJson is the ONE place that knows this, and a CALCULATION never scales:** *"you should not need
-to scale any value inside any actual calculation — it is literally readJson's job to ensure it's scaled."* The
+⛔ **readJson is the ONE place that knows this, and a CALCULATION never scales:** no value is scaled inside an actual calculation - it is literally readJson's job to The
 unit-aware conversion lives at the parse edge (`CvModifiers.cpp`, the entry-value sites); every consumer then
 receives what it can use directly. A `/100` or a `×100` appearing inside a calculation to make two operands
 agree is the defect, never the fix.

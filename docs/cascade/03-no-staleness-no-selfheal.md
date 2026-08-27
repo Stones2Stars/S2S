@@ -23,8 +23,7 @@
 > is the whole of the argument for it. Performance framing around a package read is how "cache it" comes back.
 
 > **⚖ THE PROTOCOL IS SUPERSEDED, NOT A ROLLERSKATE — full archaeology in [superseded-ideas #30](../architecture/superseded-ideas.md)
-> (contrast #14, the ensure-on-read protocol, which genuinely was one).** *"I did not recognize that marking became
-> obsolete the moment we landed on eventspine for everything"*: it was correctly designed and faithfully
+> (contrast #14, the ensure-on-read protocol, which genuinely was one).** marking became obsolete the moment eventspine landed for everything: it was correctly designed and faithfully
 > built for a world with no unified eventing, and the premise dissolved SILENTLY the moment the spine went
 > universal — it kept producing correct numbers at unnecessary cost, with no error or symptom to chase.
 

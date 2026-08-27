@@ -82,8 +82,7 @@ The full address of a deposit:
   > counter specific other units, which leaves grand-canyon-sized gaps in what is efficient for flanking."* The
   > class key closes them by construction, which is the whole reason it is the axis.
   > ⛔ **The per-unit table was encoding a BALANCE THEORY, and the theory is rejected:** it existed so
-  > that knights and horsemen could not flank cannons — *"but that is, pardon the pun, horseshit; if you manage
-  > to get horses close, the artilleryman is just as fucked as any previous siege."* So there is no era gate and
+  > that knights and horsemen could not flank cannons — but that is nonsense; if you manage to get horses close, the artilleryman is just So there is no era gate and
   > no per-unit carve-out to preserve: getting cavalry onto a siege crew is the mechanic, and which century the
   > crew is from does not enter into it.
   > ⚑ This is the [engine.md](../../reference/engine.md) UnitCombat distinction doing its job — a UNITCOMBAT is the

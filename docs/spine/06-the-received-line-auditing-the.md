@@ -2,8 +2,7 @@
 
 > Part of the **[spine](../spine.md)** spec.
 
-> *"We can literally audit the entire eventflow with the `/events` endpoint live — all we have to do is have a
-> 'received' event on the other side that is purely for logging."*
+> The entire event flow is auditable live through the /events endpoint; all it takes is having
 
 **A consumer announces that it ACTED on a fact.** Emitted lines and received lines then stream side by side on
 `/events`, and the audit is a diff: **a DOMAIN fact with no matching received line names a MISSING CONSUMER
@@ -18,8 +17,7 @@ to find and that a missing received row would have named at a glance.
 ([cascade.md](../cascade.md)), so this audits the correctness mechanism itself
 rather than the number that falls out of it.
 
-> **⚖ A "JOB DONE" ANNOUNCEMENT IS A RECEIVED LINE, AND IT IS ALWAYS `DIAGNOSTIC`.** *"`SEVT_CITY_BUILDING_PROCESSED`
-> is a 'I have completed my job' event, if anything, and should purely be logging."*
+> **⚖ A "JOB DONE" ANNOUNCEMENT IS A RECEIVED LINE, AND IT IS ALWAYS `DIAGNOSTIC`.** `SEVT_CITY_BUILDING_PROCESSED` is an I-have-completed-my-job event, if anything, and should purely be logging.
 > ⛔ **THE TEST: does the fact say WHAT THE STATE IS, or WHAT SOME CODE DID?** A completion notice is the second,
 > so it is `DIAGNOSTIC` and **NO CONSUMER MAY BUILD STATE FROM IT** — deriving held state from an announcement
 > that an apply ran is the failure this kind exists to make unsayable.

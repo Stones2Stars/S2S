@@ -35,8 +35,7 @@ Grey vs hide is a **UI choice per clause**, not engine behaviour: author a resou
 > ⇒ **So "unavailable" is never a complete verdict.** A candidate the player can act on says what to go get; one
 > they cannot says so and stops occupying the list — stored at the gate, never re-derived by whoever displays it.
 >
-> **⚖ THE DISPOSITION IS PER ATOM KIND, AND THE KINDS STAY DISTINCT: *"per atom kind … then we can
-> collapse as needed when we want to."*** A `requires` tree mixes kinds freely (`all: [TECH_X, BONUS_Y]`), so one
+> **⚖ THE DISPOSITION IS PER ATOM KIND, AND THE KINDS STAY DISTINCT: per atom kind, collapsing later as needed** A `requires` tree mixes kinds freely (`all: [TECH_X, BONUS_Y]`), so one
 > disposition per clause is wrong for both halves — a missing BONUS is the "go get copper" case grey exists for,
 > an unresearched TECH is not fetchable. The reason names the ATOM KIND that refused, never the clause as a
 > whole. Carry kinds separately even where two share a disposition today: collapsing later is a cheap mapping
@@ -70,8 +69,7 @@ it, and the AI's production decision iterates **only this small frontier** inste
 database. That consolidation — one recompute replacing dozens of scattered ad-hoc `canBuild` checks — is the
 biggest systemic win.
 
-> **⛔ A CONSUMER TAKES THE FRONTIER WHOLE — NOTHING FILTERS IT ON THE WAY OUT: *"if it does anything
-> other than just give us the complete `canConstruct` list from enabler, then we are doing something wrong."***
+> **⛔ A CONSUMER TAKES THE FRONTIER WHOLE — NOTHING FILTERS IT ON THE WAY OUT: if it does anything other than hand back the complete canConstruct list from the enabler, it is**
 > The frontier IS the narrowing, so a second filter at the consumer is never a refinement of it — it is a
 > competing gate.
 > ⛔ **And NARROWING IT FOR COST IS REFUSED OUTRIGHT: *"trying to do some fancy calculation to reduce

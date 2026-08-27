@@ -30,7 +30,7 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
 > defined by the space-map work.
 
 > **⛔ A GENERALIZED PLOT PREDICATE RESOLVES THROUGH A `foldTargets` INFO — WE NEVER FOLD ONTO A BOOLEAN
->.** *"We can never fold onto a boolean predicate, we need a target to fold onto."* A deposit lands on a
+>.** A fold can never land on a boolean predicate; it needs a target to fold onto. A deposit lands on a
 > concrete substrate ENTITY (a terrain, an improvement), so a predicate that names a CATEGORY rather than an
 > entity — `IS_WATER`, `IS_LAND`, `HAS_HILLS`, `HAS_PEAK`, `IS_FLATLANDS`, and the space/planet domains — has
 > nothing to attach to and silently delivers NOTHING. ⚑ **The failure is total and silent, which is why this is a
@@ -49,8 +49,7 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
 > `HAS_HILLS`/`HAS_PEAK` fold exactly like the rest and nothing special-cases them.
 > ⚑ **A file exists for a predicate the DATA authors, never speculatively** — the registry is open like its
 > siblings (§8), so `IS_LAND` / `IS_FLATLANDS` / `HAS_HILLS` get one the moment a deposit names them.
-> ⚖ **THE GRANULAR DIFFERENTIATION IS THE SECOND STEP, DELIBERATELY: *"I want this to just work first,
-> then … use the capability to differentiate between similar types, the way the old xml did super granularly."***
+> ⚖ **THE GRANULAR DIFFERENTIATION IS THE SECOND STEP, DELIBERATELY: it works first, and the capability is only then used to differentiate similar types, the**
 > The fold set is what makes that reachable — once a predicate resolves to a NAMED set, distinguishing coast from
 > ocean from deep-sea is authoring another set rather than an engine change. ⛔ Do not build the granular split
 > ahead of the plain one working; this is an owner-ruled ORDERING, so

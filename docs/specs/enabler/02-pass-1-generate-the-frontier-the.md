@@ -42,9 +42,7 @@ pre-concept save produces an empty tree. **This backfill is the ONLY engine spec
 > pollution effects (blackened-skies dorms the observatory). `replaces` stays a defined family member for a future
 > genuine-removal source; there is none today.
 
-> **⛔ NO BUILDING EVER OBSOLETES A BUILDING — a building→building relation is an UPGRADE CHAIN.** *"I
-> don't think having a building obsoleting another building is very good design at all; they should be considered
-> upgrade chains more than anything else."* So a building's `obsoletedBy` carries **`techs` only**, and the
+> **⛔ NO BUILDING EVER OBSOLETES A BUILDING — a building→building relation is an UPGRADE CHAIN.** A building obsoleting another building is not good design; such relations are upgrade chains. So a building's `obsoletedBy` carries **`techs` only**, and the
 > successor relation is carried by the chain's reversible dormancy (above). ⛔ Do not emit, author, or wire
 > `obsoletedBy.buildings` for a building.
 > ⚑ **The two mechanisms CANNOT COEXIST on one pair, and obsolescence wins silently.** Obsolescence is evaluated

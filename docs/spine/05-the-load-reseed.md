@@ -15,9 +15,7 @@ derived state the object owns, and announces the fact.
 > is authoritative for base state; the fact is TESTIMONY about a completed act, in the past tense.**
 >
 > **⚖ THE PRINCIPLE, AND WHY THE OTHER ORDER COLLAPSES: state is set DIRECTLY, in one request, and the
-> event fires as a RESULT of that state having been set.** *"That is the core principle I violated… if you try to
-> set state with events, you start getting real concurrency issues, and you have to start responding to state
-> setting with more events, and the clownfiesta gets real."*
+> event fires as a RESULT of that state having been set.** That is the core principle violated: setting state with events produces real con
 >
 > **⛔ AND THE LINE IS BASE STATE vs DERIVED — THIS IS THE SPLIT THE CASCADE AND THE ENABLER ARE BUILT ON
 >.** The two halves take OPPOSITE rules, and collapsing them in either direction breaks the model:

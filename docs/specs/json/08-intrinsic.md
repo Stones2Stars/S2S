@@ -13,8 +13,7 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   > **⚖ `identity.pediaCategory` IS THE PEDIA-PLACEMENT MEMBER** — the concrete form of the
   > "display/pedia placement" clause above: which pedia bucket an entity is listed in. It passes identity's own
   > test outright, producing nothing on its own.
-  > **⚑ AND UNIVERSALITY IS WHY IT IS ON IDENTITY AT ALL: *"that is why I wanted it on identity, because
-  > it lives on all of them."*** That is the discriminator to reuse, not a fact about this one field: a datum
+  > **⚑ AND UNIVERSALITY IS WHY IT IS ON IDENTITY AT ALL: that is why it lives on identity: it applies to all of them.** That is the discriminator to reuse, not a fact about this one field: a datum
   > every entity KIND carries belongs on the shared identity plane, while one only some kinds carry belongs to
   > their own block (a unit's `skills`, a building's `attributes`, a plot substrate's `characteristics` — §8).
   > ⇒ Pedia placement is asked of buildings, units, techs, promotions and the rest identically, so putting it on

@@ -26,8 +26,7 @@
 - **Level semantics:** 1 = headline (`begin`/`best`/`decision`), 2 = per-decision (`score`/`order`/`act`), 3 =
   per-candidate (`cand`/`skip`), 4 = inner-loop (a genuine fire hazard — CTB emits 10k+ lines/turn at 4). Owner plays
   at 3.
-- **⛔ A DIAGNOSTIC BUILT FOR A DEBUGGING SESSION MOVES TO LEVEL 4 WHEN THAT SESSION ENDS: *"we do not
-  need diagnostics like this; 4 is where trace logs belong after we have finished debugging."*** The tiers above
+- **⛔ A DIAGNOSTIC BUILT FOR A DEBUGGING SESSION MOVES TO LEVEL 4 WHEN THAT SESSION ENDS: diagnostics like this are not needed; 4 is where trace logs belong once debugging is finished.** The tiers above
   describe what a line COSTS; this says what it is FOR. **Because the owner plays at 3, anything at 1–3 is on
   during ordinary play** — so a trace kept at its investigation-time tier does not merely sit there, it runs
   forever, in every session, for a question nobody is asking any more.
@@ -161,8 +160,7 @@ events (the field census above is the prepared input), whereupon it gains the fi
 consumer, and the off-thread writer for free.
 
 > **⚖ THE OLD LOGGING IS NOT A CLEANUP BACKLOG — IT IS A SURFACE YOU MUST NOT RELY ON TO FIND THINGS:**
-> *"I am not prioritizing removing the old logging; it should just not be relied on to find things, because it
-> means that is an emit that should be in the spine."*
+> Removing the old logging is not a priority; it should simply not be relied on to find things, because
 > ⇒ **The migration is DEMAND-DRIVEN, and the trigger is an INVESTIGATION, not a sweep.** The moment answering a
 > question requires reading a legacy `log<Domain>AI` sink, that requirement IS the finding: the fact belongs on
 > the spine and is not there. **Emit it** ([an event gap is closed the moment it is found](03-the-domain-emit-surface-every-fact/01-a-fact-names-the-happening.md#-a-fact-names-the-happening--something-changed-is-not-a-fact))

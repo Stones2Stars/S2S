@@ -35,9 +35,7 @@ building ONE new uniform, parameterized getter set over the channel index and di
 channel-shaped getters ([build a new getter surface, never widen a legacy one](../architecture/patterns/05-the-two-read-roles-one-grammar-two.md#-the-two-read-roles--one-grammar-two-answers),
 [patterns.md § THE TWO READ ROLES](../architecture/patterns.md)).
 
-⚖ **WHAT IT SHOULD CARRY *IS* DECIDED, THOUGH: DECOMPOSITION CENSUSES.** *"Censuses like this are the
-exact censuses we want to have in the http endpoints, because they give us real breakdowns, that are
-observable."* A route that serves ONE number answers nothing when that number is wrong; a route that serves a
+⚖ **WHAT IT SHOULD CARRY *IS* DECIDED, THOUGH: DECOMPOSITION CENSUSES.** Censuses like this are exactly what the HTTP endpoints should carry, because they give real A route that serves ONE number answers nothing when that number is wrong; a route that serves a
 value **term by term** — the growth threshold beside its base, its gamespeed percent and its era percent; the
 consumption beside its per-pop rate — attributes a divergence to a NAMED source without a code read. That is
 the [the Orwell observability bar](../spine/07-what-to-log-the-orwell-bar-the.md#the-reconstruction-bar-orwell) Orwell bar as a route shape, and it is what the
