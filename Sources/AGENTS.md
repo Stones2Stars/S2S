@@ -12,13 +12,13 @@ root `AGENTS.md`.
 - Keep one primary class per file.
 - Keep include guards and `#pragma once` for headers.
 - Follow formatting/style from `Sources/.editorconfig`.
-- **One statement per line; one variable declaration per statement (owner).** Never smash multiple declarations
+- **One statement per line; one variable declaration per statement.** Never smash multiple declarations
   or statements onto one line (`std::ostringstream ss; ss << f.rdbuf();` is the banned shape) — code is written
   for the human reading it.
-- **No 2-letter or cryptic-abbreviation identifiers (owner)** — no `ss`, `fd`, `cx`, `pg`; names are spelled out
+- **No 2-letter or cryptic-abbreviation identifiers** — no `ss`, `fd`, `cx`, `pg`; names are spelled out
   in full for locals, parameters, members, and enum entries alike (the no-abbreviated-parameters ruling in
   [cascade.md](../docs/cascade.md), generalized to every identifier).
-  **⛔ THE REASON IS ANTI-CONCEALMENT, not style (owner): *"it is not unknown for agents to hide poor
+  **⛔ THE REASON IS ANTI-CONCEALMENT, not style: *"it is not unknown for agents to hide poor
   implementation behind abbreviated variables, that I don't immediately catch."*** An unreadable name defeats
   REVIEW — the owner cannot audit what they cannot read, so the abbreviation is where a weak or wrong structure
   survives unexamined. ⚑ The worked case: a family of `s_op*` file-statics read as one uniform "operate index",
@@ -26,7 +26,7 @@ root `AGENTS.md`.
   genuinely different classes** — per-id reverse buckets, and coarse axis-flag lists that are correct as they are
   and must NOT be converged. The names were the only thing hiding that. ⇒ Treat an abbreviated identifier as a
   review-blocker on sight, and rename it before reasoning about the code it names.
-  **⚖ THE ONE SANCTIONED ABBREVIATION — a FILE-SCOPE PREFIX, anchored by its own FILE (owner):** *"when the prefix
+  **⚖ THE ONE SANCTIONED ABBREVIATION — a FILE-SCOPE PREFIX, anchored by its own FILE:** *"when the prefix
   is in the name of the file, it makes sense to have the prefix; it does not make sense to have it as a standalone
   collection somewhere."* A short prefix on the file-static helpers of ONE translation unit is legitimate — the
   unity build shares a TU, so file-scope helpers need collision-proofing, and **the FILENAME supplies the
