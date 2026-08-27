@@ -179,7 +179,8 @@
    "IMPROVEMENT_BONUS_WHEAT"
   ],
   "processes": [
-   "PROCESS_IDLE"
+   "PROCESS_IDLE",
+   "PROCESS_RESEARCH_MEAGER"
   ],
   "promotions": [
    "PROMOTION_ABSOLUTE_ENFEEBLEMENT",

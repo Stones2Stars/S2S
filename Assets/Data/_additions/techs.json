@@ -1,5 +1,11 @@
 {
  "TECH_GAME_START": {
+  "enables": {
+   "processes": [
+    "PROCESS_IDLE",
+    "PROCESS_RESEARCH_MEAGER"
+   ]
+  },
   "maintenance": {
    "city": {
     "distance": {
@@ -24,6 +30,11 @@
      { "value": -50, "enabled": "IS_REBEL" }
     ]
    }
+  }
+ },
+ "TECH_ORAL_TRADITION": {
+  "enables": {
+   "processes": []
   }
  }
 }

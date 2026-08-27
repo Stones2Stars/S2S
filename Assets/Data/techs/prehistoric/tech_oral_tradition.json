@@ -16,9 +16,7 @@
   "heritages": [
    "HERITAGE_FOLKLORE_UNICORN"
   ],
-  "processes": [
-   "PROCESS_RESEARCH_MEAGER"
-  ],
+  "processes": [],
   "promotions": [
    "PROMOTION_SILVER_TONGUE1"
   ],
