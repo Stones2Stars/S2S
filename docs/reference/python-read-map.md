@@ -272,7 +272,7 @@ asks. That is the precise sense in which the pedia under-specifies.
 219 names / 599 sites read fields on types the pedia *does* page. **90 of those names (296 sites) had exactly
 one consumer: the deleted `Screens/Debug/TestCode.py`** — a diagnostic screen that dumped the entire legacy
 field contract of every info. Exhaustiveness was its whole purpose, so it inflated the residue with reads no
-gameplay or UI surface needs. **It is DELETED (owner ruling — see §7), so those 90 names carry no obligation.**
+gameplay or UI surface needs. **It is DELETED (see §7), so those 90 names carry no obligation.**
 
 **The per-field residue is therefore 129 names / 303 sites**, whose consumers are
 `Contrib/RevDCM.py` (26), `Screens/CvVictoryScreen.py` (25), `Revolution/RevUtils.py` (25),
@@ -828,7 +828,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    (1) — the Python-authoritative contrib stacks, each due its own rework (Revolution explicitly). They are the
    BUG-option → global-define bridge.
 
-   ⚑ **What they ARE — "LIVE" options (owner's term), a distinct KIND, not a duplicate of `GAMEOPTION_*`.**
+   ⚑ **What they ARE — "LIVE" options (the established term), a distinct KIND, not a duplicate of `GAMEOPTION_*`.**
    The verified chain: a BUG option declared in `Assets/Config/<mod>.xml` and persisted to its own `.ini`
    (`<options id="RevDCM" file="RevDCM.ini">`, each `<option>` carrying `get`/`set` + a `<change>` callback) →
    BUG fires that Python callback on change → `GC.setDefineINT(...)` → `cvInternalGlobals::setDefineINT`

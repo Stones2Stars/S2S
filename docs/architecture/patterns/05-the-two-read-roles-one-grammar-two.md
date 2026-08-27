@@ -52,8 +52,8 @@ two surfaces.
    > to attach to; a channel-indexed group read offers no such point. The full ruling, its ungated/gated shape and
    > why the announced crossing follows the GATED value live at its home,
    > [state.md](../../specs/state.md) § A STATUS IS MIDDLEWARE.
-   > ⛔ This is NOT licence to grow the per-channel surface back (owner: *"what I don't want is to have the getter
-   > spaghetti we used to have"*). **The test is whether the getter carries a CONCEPT something else attaches
+   > ⛔ This is NOT licence to grow the per-channel surface back (what I don't want is to have the getter
+   > spaghetti we used to have). **The test is whether the getter carries a CONCEPT something else attaches
    > to** — a gate tapping it, a predicate resolving through it — never whether a caller would like one value
    > without indexing. A getter that only names a channel is the spaghetti; a getter that names the thing a
    > status suppresses is a seam.
@@ -83,7 +83,7 @@ two surfaces.
    key and is never something a consumer learns.
 3. **×100 native, always** — no `100` in any name, no `getX`/`getX100` pair, no scale variant
    ([the ×100 fixed-point model](../../specs/curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries)). A reader ÷100s at the point of use.
-4. **Scope is a spelled-out ARGUMENT, never a name fragment** ([scope is a separate axis, never folded into the kind](04-the-info-data-out-contract-what-an.md#the-coherent-surface--grouped-storage-parameterized-getters-owner-clarity-and-predictability-is-king)).
+4. **Scope is a spelled-out ARGUMENT, never a name fragment** ([scope is a separate axis, never folded into the kind](04-the-info-data-out-contract-what-an.md#the-coherent-surface--grouped-storage-parameterized-getters-clarity-and-predictability-is-king)).
 5. **⛔ THE VALUATION PROTOCOL — THE LIVE CONTEXTS GO IN, THE PROPOSED INCREASE COMES OUT.** The caller
    passes the live [contexts](../../cascade.md) and gets back **the DELTA** — what this candidate would ADD — never
    the raw percentage and never the new total.

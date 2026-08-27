@@ -5,7 +5,7 @@ walking outward, where open ground costs 1 and difficult ground costs more. A si
 ground, and fewer through anything costlier.
 
 **Vision is ONE family** — `vision` — with three kinds and the scope axis
-([scope is a separate axis, never folded into the kind](../architecture/patterns/04-the-info-data-out-contract-what-an.md#the-coherent-surface--grouped-storage-parameterized-getters-owner-clarity-and-predictability-is-king)) saying whose is whose. It had no spec
+([scope is a separate axis, never folded into the kind](../architecture/patterns/04-the-info-data-out-contract-what-an.md#the-coherent-surface--grouped-storage-parameterized-getters-clarity-and-predictability-is-king)) saying whose is whose. It had no spec
 until now, which is exactly why it had no family: each curator invented a shape, and `seeFrom` / `seeThrough` /
 `visibilityRange` ended up as three names sliding between the same two ideas.
 

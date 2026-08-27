@@ -74,7 +74,7 @@ each matching worked plot (§5). The target reads a combined value — it never 
 > roll-up therefore never hand-gates a scope out of its chain** — the channel set is the gate; a hand-written one
 > silently deletes an authored family's contribution, and with no runtime to catch it (the empire wellbeing flats
 > are the case that bites: 558 authorings).
-> **Consequence (owner requirement): every modifier/yield cache consolidates to ONE shape** — the per-family
+> **Consequence: every modifier/yield cache consolidates to ONE shape** — the per-family
 > hand-named scalar members (`scGpBaseBld`, `scDefense`, `scMaintModCity`, …) collapse into the same
 > Σflat/Σpercent-per-channel form the yields and commerce already use, so a new scope or channel is DATA rather
 > than a new struct.

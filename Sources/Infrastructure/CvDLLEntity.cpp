@@ -51,7 +51,6 @@ void CvDLLEntity::createUnitEntity(CvUnit* pUnit)
 		OutputDebugString(CvString::format("Num unit entities created: %d, destroyed: %d - %d extant\n", g_numEntitiesCreated, g_numEntitiesDestroyed, g_numEntitiesCreated - g_numEntitiesDestroyed).c_str());
 	}
 
-	//OutputDebugString(CvString::format("createUnitEntity for %08lx\n", this).c_str());
 	gDLL->getEntityIFace()->createUnitEntity(pUnit);
 }
 
@@ -59,7 +58,6 @@ void CvDLLEntity::destroyEntity()
 {
 	g_numEntitiesDestroyed++;
 
-	//OutputDebugString(CvString::format("destroyEntity for %08lx\n", this).c_str());
 	if (CvUnit::isRealEntity(m_pEntity))
 	{
 		gDLL->getEntityIFace()->destroyEntity(m_pEntity);

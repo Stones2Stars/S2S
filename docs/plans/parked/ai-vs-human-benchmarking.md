@@ -5,7 +5,7 @@ behind* a human player over a real game — and use what the gap looks like to d
 improvements. The owner plays a normal game; agents observe every civ's trajectory through
 the live instrumentation and compare.
 
-**Design principle (owner ruling 2026-06-11): challenge through competence, not handicaps.**
+**Design principle: challenge through competence, not handicaps.**
 The goal of AI work is an AI that is *better and more challenging to play against* because it
 makes better decisions — NOT because its numbers are scaled "to infinity" (production/research
 bonuses, free units, cost discounts). Difficulty-style numeric bonuses are a last resort, not

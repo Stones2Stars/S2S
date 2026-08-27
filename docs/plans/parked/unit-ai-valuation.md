@@ -63,7 +63,7 @@ A hunter only reverts to its default UNITAI when `iOwnedHunters>5` (or deficit �
 surplus. So absent financial pressure, hunters persist on the roster indefinitely, which feeds
 back into A3 (owned count) but never satisfies the inflated need.
 
-### A5. Merging deflates the count under a count-based target — **[H]** (owner hypothesis, 2026-06-11)
+### A5. Merging deflates the count under a count-based target — **[H]** (hypothesis)
 
 Hunter-line units can merge (`CvUnit::canMerge`/`doMerge`; note §B's dog exception — dogs
 cannot). Every merge (e.g. 3 units → 1 stronger unit) drops `iOwnedHunters` while hunting

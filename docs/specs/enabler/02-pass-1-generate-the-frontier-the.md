@@ -103,7 +103,7 @@ into other techs' `enables` for generation and does not keep them on the child**
 off the child. `requires.build` only —
 techs are monotonic, no `operate`.
 
-> **Reverse-mapping the forward compat views (owner standing direction — "reverse-map everything on load").** The
+> **Reverse-mapping the forward compat views (standing direction: reverse-map everything on load).** The
 > store's prereq-inversion is *for the GENERATE pass* (it flattens each entity's prereqs into the prereq entity's
 > `enables`). But many legacy consumers still read the **forward** view off the child — a route's `getPrereqBonus`
 > (the `CvPlot` build gate), a trait's `getPrereqTrait`, a tech's `leadsTo`. These are **reconstructed AT LOAD from
@@ -177,8 +177,8 @@ via `enables` (the space line), doctrine bans via `disables` + empire modifiers.
 > - **The self-grant is DELETED with the copies.** Holding at the player IS the empire-wide effect, so the
 >   `grants.buildings` self-entry, the construction fan over standing cities and the city-starts-existing fold
 >   all cease to exist for this class — and a city capture or culture flip moves NOTHING for it, which is the
->   point (owner: it *"vastly reduces the amount of domain-event flips we have to handle when a city gets
->   taken"*).
+>   point (it *"vastly reduces the amount of domain-event flips we have to handle when a city gets
+>   taken).
 > - **Removal is the ordinary machinery at the holder:** `obsoletedBy`/`whenObsolete` and `disables` evaluate
 >   against the player exactly as they evaluate against a city. An empire-level building's ONGOING gate is
 >   empire-evaluable by construction; a per-city atom in one's `requires.operate` is a data shape the curator

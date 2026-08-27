@@ -101,7 +101,7 @@ the JSON model drives the info's shape; the legacy variable set is gone, not for
   improvement ends up owning its yield regardless of which side authored it. A target-keyed map survives on the
   source **only** where the source is the genuine deliverer with no target-owner (governing-deliverer, modifier.md §4).
 
-### The coherent surface — grouped storage, parameterized getters (owner: CLARITY AND PREDICTABILITY IS KING)
+### The coherent surface — grouped storage, parameterized getters (CLARITY AND PREDICTABILITY IS KING)
 
 The numbers and the booleans are **organized into named groups, each read by ONE getter parameterized over the
 group's natural index** — never N individual getters for a groupable set. This is the whole shape of a sane info;
@@ -128,13 +128,13 @@ group's natural index** — never N individual getters for a groupable set. This
   families ([reverse lookups are populated once, at load](../../cascade/01-deposit-and-read.md#1-one-step-deposit-down-accumulate-read-o1)); intrinsic lone values to plain typed
   members. No string, no parse node, and no anatomy tree survives into a runtime read path.
 - **⛔ THE SCOPE AXIS — a kind-enum names its CONCEPT ONLY; scope is a separate dimension**
-  ([scope is a separate axis, never folded into the kind](#the-coherent-surface--grouped-storage-parameterized-getters-owner-clarity-and-predictability-is-king)). Scope is its own axis of the deposit address + a
+  ([scope is a separate axis, never folded into the kind](#the-coherent-surface--grouped-storage-parameterized-getters-clarity-and-predictability-is-king)). Scope is its own axis of the deposit address + a
   spelled-out getter parameter, NEVER a fragment of an enum, member, or getter name — a scope word (`GLOBAL`,
   `ALL_CITY`, `WORLD`, `AREA`, …) inside a kind name collapses two of the address's axes into bespoke per-pair
   entries. `getDefense(DEFENSE_AMOUNT, SCOPE_CITY)` — kind and scope are separate arguments, exactly as the
   JSON's own `<family>.<scope>.<member>` separates them.
-- **⚖ THE DECISION PROTOCOL IS TWO STAGES, IN ORDER: *"first it should ask enabler what is possible,
-  and then it asks cascade 'what if I do this?'"*** Every AI decision is that pair — the ENABLER narrows to the
+- **⚖ THE DECISION PROTOCOL IS TWO STAGES, IN ORDER: ask the ENABLER what is possible, then ask the CASCADE
+  what happens if you do it.** Every AI decision is that pair — the ENABLER narrows to the
   candidates ([enabler.md §6](../../specs/enabler.md): the frontier is the shared choice set, iterated instead of
   the entity database), and the CASCADE values each survivor through the what-if. ⛔ Neither half substitutes
   for the other: scoring what cannot be done wastes the expensive half on candidates the cheap half would have
@@ -157,7 +157,7 @@ group's natural index** — never N individual getters for a groupable set. This
 - **THE GETTER SETUP — one exemplar shape for every info (the aim). Four read categories, nothing else:**
   1. **Sections** — whole typed objects the enabler + grants/provides machinery read: `getRequires()` /
      `getEdges()` / `getAllowed()` / `getGrants()` / `getProvides()` / `getWhenObsolete()`.
-  2. **Classification** — O(1) bitset tests, the **name encoding hold-vs-provide** (owner, json.md §8): what the
+  2. **Classification** — O(1) bitset tests, the **name encoding hold-vs-provide** (json.md §8): what the
      entity HAS is `hasAttribute(id)`/`hasAttributes()` (building) and `hasSkill(id)`/`hasTag(id)` (unit); what it
      PROVIDES to something else is `providesCapability(id)`/`providesCapabilities()` (to the empire) and
      `providesSkill(id)` (a grantor handing a skill on).
@@ -200,7 +200,7 @@ group's natural index** — never N individual getters for a groupable set. This
   3. **Modifier groups — three reads per group, all over the LOAD-COMPILED forms:**
      - the **straight point read** over the compiled unconditioned sum — `getDefense(DefenseKind eKind,
        ScopeKind eScope)` → one array load, **0 calculation** (kind and scope separate arguments,
-       [scope is a separate axis, never folded into the kind](#the-coherent-surface--grouped-storage-parameterized-getters-owner-clarity-and-predictability-is-king));
+       [scope is a separate axis, never folded into the kind](#the-coherent-surface--grouped-storage-parameterized-getters-clarity-and-predictability-is-king));
      - the **compiled conditioned list** (`defenseConditioned()` / `yieldConditioned()` / … — the typed entries
        with prebuilt condition trees; what the package rebuild, the pedia, and the valuation walk);
      - the **what-if valuation** — the [contexts.md](../../cascade.md) per-GROUP endpoints
@@ -211,8 +211,8 @@ group's natural index** — never N individual getters for a groupable set. This
   4. **Intrinsic** — bare typed reads (`getAirlift`, the shrine/corpHQ FKs, flavours), plus `getScalar(SCALAR_X)`
      for the 1–2-entry stragglers (genuinely lone unconditioned values).
      > **⛔ A TEXT read NAMES WHICH SIDE OF THE BOUNDARY IT IS ON — `*Key()` returns a TXT_KEY, the bare form
-     > returns RESOLVED TEXT.** *"Update these text namings to actually specify that you are getting a
-     > key, not the actual text — so we are clear when text is fetched, or when key is fetched."* TXT is an
+     > returns RESOLVED TEXT.** A text naming must specify that a KEY is being fetched rather than the actual
+     > text, so it is unambiguous which of the two a call site holds. TXT is an
      > unmigrated system the JSON only REFERENCES ([json.md §7](../../specs/json.md)), so an INFO holds keys and
      > resolution belongs to the text manager; a name that hides which one you are holding is how a raw key ends
      > up rendered to a player, or a resolved string ends up fed back into `getText`.
@@ -221,7 +221,7 @@ group's natural index** — never N individual getters for a groupable set. This
      > ⚠ The four bare EXE-bound reads (`getTextKeyWide`, `getDescription`, `getText`, `getHelp` on
      > `CvInfoBase`) are FIXED BY ABI and are not renameable — check `DllExport` before proposing any text
      > rename ([engine.md § Is a symbol really EXE-bound?](../../reference/engine.md)).
-  5. **The per-entry TEXT render (owner: "so that tooltips work properly")** — every compiled entry renders
+  5. **The per-entry TEXT render (so that tooltips work properly)** — every compiled entry renders
      itself as ONE localized detail line (`+25% Production — while Coal connected`), the `detailLines` pattern
      of the combat calculator (`CvCombatModel::computeCombatPreview`'s itemised per-modifier breakdown),
      through ONE shared renderer ([the DRY single-implementation law](03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)) — the
@@ -260,14 +260,14 @@ group's natural index** — never N individual getters for a groupable set. This
      > each converted band removes its legacy accessor call with it. ⛔ Altered visible text is never a reason
      > to hesitate — say what changed and move on.
      >
-     > **⚖ TOOLTIPS ARE NOW THE INSTRUMENT — FEATURE-COMPLETE, AND THEY MUST LOOK RIGHT: *"we are now
-     > so far along that tooltips are now very relevant … I want them to look right, get all the data, so we can
-     > find the final missing pieces."*** A tooltip carrying every term of a value is a DECOMPOSITION CENSUS in
+     > **⚖ TOOLTIPS ARE NOW THE INSTRUMENT — FEATURE-COMPLETE, AND THEY MUST LOOK RIGHT.** The work is far
+     > enough along that tooltips are highly relevant: they must look right and carry ALL the data, because that
+     > is how the final missing pieces get found. A tooltip carrying every term of a value is a DECOMPOSITION CENSUS in
      > UI form, reached through the screen instead of the wire — an incomplete tooltip does not merely look
      > sparse, it **hides the gap it exists to reveal**.
      > ⛔ The acceptance test is EVERY FAMILY THE ENTITY CARRIES RENDERS, not the subset a composer happens to
-     > have been converted onto. ⚑ MOVEMENT is the named exemplar (owner: *"especially with things like
-     > movement, it's easy to spot when it's wrong"*) — a player checks it against the unit in front of them, so
+     > have been converted onto. ⚑ MOVEMENT is the named exemplar (especially with things like
+     > movement, it's easy to spot when it's wrong) — a player checks it against the unit in front of them, so
      > it is the canary for the rest.
      > ⚠ The composer that renders NOTHING is the one to hunt, and it is silent — an empty tooltip logs no line,
      > fails no build, and reads like an entity with nothing to say. Enumerate composers mechanically rather
@@ -279,8 +279,8 @@ group's natural index** — never N individual getters for a groupable set. This
      > was fucked"* and agents *"consistently and constantly tried to 'keep the game running' despite it not
      > even compiling"*. A red tree renders nothing, so attention spent there was unrecoverable. ⇒ The guard was
      > scoped to a CONDITION that is over — the tree builds, so the work it deferred is now the work.
-     > ⚠ What does NOT come back: legacy PARITY — the tooltip SET stays demand-driven (owner: *"we will figure
-     > out what tooltips we need … from community requests and playtests"*), so a legacy line a cut removed is
+     > ⚠ What does NOT come back: legacy PARITY — the tooltip SET stays demand-driven, decided from community
+     > requests and playtests, so a legacy line a cut removed is
      > not a regression. Completeness is measured against what the ENTITY CARRIES, never what the legacy
      > composer used to print.
      >
@@ -290,18 +290,18 @@ group's natural index** — never N individual getters for a groupable set. This
      > here (`CvDLLWidgetData::parseActionHelp`) and what it IS doing (`CvGameTextMgr::setUnitHelp`'s instance
      > form).
      >
-     > **⚖ A TOOLTIP IS AN ORDERED SET OF BLOCKS, AND THE BLOCKS ARE THE DESIGN: *"we do design tooltips
-     > around the concepts of blocks"*.** A composer's deliverable is a BLOCK LIST; per block there are exactly
+     > **⚖ A TOOLTIP IS AN ORDERED SET OF BLOCKS, AND THE BLOCKS ARE THE DESIGN.** Tooltips are designed around
+     > the concept of blocks. A composer's deliverable is a BLOCK LIST; per block there are exactly
      > three decisions — which sources compose it, what heading it sits under, and WHEN IT SHOWS.
-     > ⛔ The content is NOT the concern (owner: *"most of the info should be able to be programmatically
+     > ⛔ The content is NOT the concern (most of the info should be able to be programmatically
      > generated — it is the final structuring of the tooltips themselves, and when they show, that is the
-     > trick"*) — `appendEntryLines` needs no design; a pass spent generating lines worked the half that was
+     > trick) — `appendEntryLines` needs no design; a pass spent generating lines worked the half that was
      > never the problem.
      > ⚠ A run-on comma-separated line is NOT a block structure, however complete its content. ⛔ A SHOW
      > CONDITION is a design call, asked never inferred.
      >
-     > **⚖ THE DLL DOES NOT CONVERT FOR DISPLAY — THE CONSUMER CONVERTS ITSELF (owner: "let python convert
-     > themselves").** A composer doing `(float)value / 100 / denominator` to print `%.2f` is the DLL doing the
+     > **⚖ THE DLL DOES NOT CONVERT FOR DISPLAY — THE CONSUMER CONVERTS ITSELF (let python convert
+     > themselves).** A composer doing `(float)value / 100 / denominator` to print `%.2f` is the DLL doing the
      > presentation layer's arithmetic, in FLOAT, for a value the engine holds as an integer. ⚠ Not an OOS risk
      > while display-only — exactly why it survives unnoticed — but it is the wrong side of the boundary: remove
      > it as each composer moves, never copy it into a new one.
@@ -353,7 +353,7 @@ group's natural index** — never N individual getters for a groupable set. This
   `getFlatCommerce(eCommerce, CASC_SCOPE_CITY)`, `getGlobalFreeSpecialist` / `getAreaFreeSpecialist` →
   `getFreeSpecialistsAny(CASC_SCOPE_EMPIRE)` (area authors at EMPIRE — a landmass is not a scope,
   [cascade.md](../../cascade.md)). The name lost the fragment because scope became an axis
-  ([scope is a separate axis, never folded into the kind](#the-coherent-surface--grouped-storage-parameterized-getters-owner-clarity-and-predictability-is-king)); nothing was removed.
+  ([scope is a separate axis, never folded into the kind](#the-coherent-surface--grouped-storage-parameterized-getters-clarity-and-predictability-is-king)); nothing was removed.
   ⚠ Confirm the KIND enum at the call site rather than pattern-matching the name — the prefix tells you the
   SCOPE, never which kind the value is, and a wrong kind compiles clean and reports a plausible wrong number.
 - **Extensible by DATA, not by new members/getters.** A new scalar family is a new `m_scalars` enum entry; a new

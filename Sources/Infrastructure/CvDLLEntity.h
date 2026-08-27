@@ -28,14 +28,14 @@ public:
 	CvDLLEntity();
 	virtual ~CvDLLEntity();
 
-	CvEntity* getEntity() { return m_pEntity;	}
-	const CvEntity* getEntity() const { return m_pEntity;	}
-	CvUnitEntity* getUnitEntity() { return reinterpret_cast<CvUnitEntity*>(m_pEntity);	}
-	CvCityEntity* getCityEntity() { return reinterpret_cast<CvCityEntity*>(m_pEntity);	}
-	const CvUnitEntity* getUnitEntity() const { return reinterpret_cast<CvUnitEntity*>(m_pEntity);	}
-	const CvCityEntity* getCityEntity() const { return reinterpret_cast<CvCityEntity*>(m_pEntity);	}
+	CvEntity* getEntity() { return m_pEntity; }
+	const CvEntity* getEntity() const { return m_pEntity; }
+	CvUnitEntity* getUnitEntity() { return reinterpret_cast<CvUnitEntity*>(m_pEntity); }
+	CvCityEntity* getCityEntity() { return reinterpret_cast<CvCityEntity*>(m_pEntity); }
+	const CvUnitEntity* getUnitEntity() const { return reinterpret_cast<CvUnitEntity*>(m_pEntity); }
+	const CvCityEntity* getCityEntity() const { return reinterpret_cast<CvCityEntity*>(m_pEntity); }
 
-	void setEntity(CvEntity* pG) { m_pEntity = pG;	}
+	void setEntity(CvEntity* pG) { m_pEntity = pG; }
 
 	void removeEntity();
 	virtual void setup();
@@ -45,14 +45,13 @@ public:
 	void destroyEntity();
 
 	DllExport bool IsSelected() const;
-	void PlayAnimation(AnimationTypes eAnim, float fSpeed = 1.0f, bool bQueue = false, int iLayer = 0,
-		float fStartPct = 0.0f, float fEndPct = 1.0f);
+	void PlayAnimation(AnimationTypes eAnim, float fSpeed = 1.0f, bool bQueue = false, int iLayer = 0, float fStartPct = 0.0f, float fEndPct = 1.0f);
 	void StopAnimation(AnimationTypes eAnim);
-	void MoveTo( const CvPlot * pkPlot );
-	void QueueMove( const CvPlot * pkPlot );
-	void ExecuteMove( float fTimeToExecute, bool bCombat );
-	void SetPosition( const CvPlot * pkPlot );
-	void NotifyEntity( MissionTypes eMission );
+	void MoveTo(const CvPlot* pkPlot);
+	void QueueMove(const CvPlot* pkPlot);
+	void ExecuteMove(float fTimeToExecute, bool bCombat);
+	void SetPosition(const CvPlot* pkPlot);
+	void NotifyEntity(MissionTypes eMission);
 	void SetSiegeTower(bool show);
 	bool GetSiegeTower();
 

@@ -45,7 +45,7 @@ Consequences worth having, none of them urgent:
   would be a nightmare ([superseded-ideas #41](../../architecture/superseded-ideas.md)).
 - **AI valuation is chain-blind.** A tier that is one step from obsolete and a terminal tier score alike.
 
-## The UNIT-UPGRADE parallel — how far it actually carries (owner question)
+## The UNIT-UPGRADE parallel — how far it actually carries
 
 > *"In reality, we can use pretty much the same logic for building upgrades as unit upgrades, can't we?"*
 

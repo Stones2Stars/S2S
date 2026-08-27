@@ -44,8 +44,7 @@ heal, unit promotions) as game-thread snapshots, so a manifestation check is a p
 eyeballing the screen. A value not yet on the surface (e.g. free-promotion grants, grants-applied) must be EMITTED
 first; emitting it is step one of that item's fix.
 
-**⚖ AND IT IS A SNAPSHOT, NEVER A PROPERTY — AN EVALUATION PATH IS NEVER "DONE": *"I don't think any
-evaluation path can ever be called done."*** The reason is structural rather than cautious: the classification
+**⚖ AND IT IS A SNAPSHOT, NEVER A PROPERTY — NO EVALUATION PATH IS EVER "DONE".** The reason is structural rather than cautious: the classification
 registries and the modifier families are OPEN BY DESIGN
 ([the classification-infos registry](json/09-classification-unit-skillstagsstate-building-a.md#8-classification--unit-skillstagsstate-building-attributes--empire-capabilities)), so a valuation that reads
 every source today becomes incomplete the moment data authors a new one — with no code change, nothing failing,
@@ -123,7 +122,7 @@ banned shortcut — 99% of the time the value DOES reconcile once the missing so
 > the specific case of the general rule that nothing is "deferred" (["deferred" is banned](../../AGENTS.md#design)).
 >
 > **⛔ AND IT IS AN ORDERING WITHIN THE WORK ITEM, NOT ONLY A PRIORITY BETWEEN THEM — THE CURATOR UPDATE GOES
-> FIRST, ALWAYS: *"every time we have waited with a curator update, without fail, it has bitten me."***
+> FIRST, ALWAYS — every deferral of a curator update has, without fail, bitten later.**
 > Not "usually", not "as a rule of thumb" — the owner reports it has cost them EVERY time, which is why this is
 > stated as a sequence rather than a preference. ⇒ When a work item touches both the data and its consumer,
 > the curator change + regen land BEFORE the engine side, even when the engine side is the part that looks
@@ -144,7 +143,7 @@ banned shortcut — 99% of the time the value DOES reconcile once the missing so
 
 ## ⛔ A GATE THAT IS NOT HONOURED MAKES EVERY DATA CHECK MEANINGLESS
 
-> *"We cannot find curation errors when we literally do not honour the specced gates."*
+> Curation errors cannot be found while the specced gates are not honoured.
 
 **Gate ENFORCEMENT is a PRECONDITION of validating the data, never a parallel workstream.** A gate the engine does
 not consult answers YES to everything, so every entity behind it looks correct and every check run against it
@@ -174,13 +173,13 @@ sides share the evaluator, so a gate that always says yes says yes on both.
 ([neither playability nor compiling gates removing legacy](#playability-not-a-gate)): chasing it is what makes
 an agent shoehorn the new implementation into legacy, so everything goes in place FIRST and the tree compiles at
 the END, as the result of the completed rewire. A red tree during a cut is an ACCEPTED state, never a defect to
-fix by re-attaching what was archived (owner: *"I could not possibly care less if this compiles; having a clean
-slate to do this right is the target."*), and equally **"get it building" is not a milestone** — a green tree is
+fix by re-attaching what was archived (I could not possibly care less if this compiles; having a clean
+slate to do this right is the target.), and equally **"get it building" is not a milestone** — a green tree is
 the by-product of a finished rewire, not evidence of progress toward one.
 
 **While the tree is red, WIRED OUTRANKS CORRECT** — a machine's facts emitted, consumer registered and surface
-reachable beats knowing its output is right (owner: *"it is more important that triggers are wired than knowing
-if they give the correct result."*), because correctness is endpoint-observable and so cannot be tested until
+reachable beats knowing its output is right (it is more important that triggers are wired than knowing
+if they give the correct result.), because correctness is endpoint-observable and so cannot be tested until
 green. A wrong wiring is removed on sight, with an interim wrong number accepted.
 
 ⚠ **That SEQUENCES the acceptance bar, it does not relax it** — and it lapses the moment the tree builds, when
@@ -208,7 +207,7 @@ stays is an owner-ruled carve-out.
 > change, and the compensating skip goes with it.
 
 **⚖ AN AI *WEIGHT* IS NOT A CORRECTNESS GATE — THE AI HAS TO FUNCTION, AND BALANCE COMES AFTER:**
-*"AI weights we will figure out down the line; AI needs to function, then we balance it later."* This is the one
+AI weights get figured out down the line; AI needs to function, then we balance it later."* This is the one
 place "wired outranks correct" does NOT lapse at green: it scopes that sequencing to a RED tree, so an agent
 reading it literally could conclude AI weights must now be right the moment the tree builds, and stall a
 conversion on tuning. They must not.
@@ -285,8 +284,7 @@ endpoints prove it; the result is ephemeral and stays ephemeral.
 
 ## ⛔ A REFERENCE NUMBER IS A SMELL TEST, NEVER A TARGET
 
-> *"I already regret talking about baselines, because every time you use it as a target, and mangle implementation
-> to reach the target, instead of ensuring implementation is correct."*
+> Baselines are regrettable: they get used as a target, and implementation gets mangled to reach the target, instead of ensuring implementation is correct."*
 
 When the owner says what a value **used to be** — "hammers were about 5000", "the tech took 2.5 turns" — that is a
 SMELL TEST offered to say *something is wrong, go look*. It is not an acceptance criterion, and nothing is finished

@@ -36,7 +36,7 @@ built beside them. `expectedPlotYields` scales each plots-target deposit by `cit
 > existing engine + family enums — a new family mints one typed enum, and the group's entries + its `expected*`
 > array both key off it ([patterns.md § THE GETTER SETUP](../architecture/patterns.md)).
 
-### ⚖ THE READ PATH — THE CASCADE PROVIDES, THE GAME OBJECT SUMS (owner, LOCKED)
+### ⚖ THE READ PATH — THE CASCADE PROVIDES, THE GAME OBJECT SUMS (LOCKED)
 
 - **The cascade is the PACKAGE STORE, nothing more.** Per `(scope × channel × combine-position)` it holds one
   standing sum — how a yield is influenced, and by how much, from every source. It answers *what influences

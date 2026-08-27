@@ -74,8 +74,7 @@ by asking whose property it is:
   `providesPower` · `abolishedAnger` · `abolishedUnhealthFromPopulation` · `abolishedUnhealthFromBuildings` ·
   `adds3rdRing` · `borderObstacle` · `forceAllTradeRoutes` · `capital` · `protectedCulture` · `zoneOfControl`.
 
-> **⚖ THE WELLBEING OFF-SWITCHES ARE ONE NAMED FAMILY — `abolished<Channel>` optionally `From<Source>` (owner:
-> "a group of names that all tell the same story for different targets").** They are HARD off-switches, not
+> **⚖ THE WELLBEING OFF-SWITCHES ARE ONE NAMED FAMILY — `abolished<Channel>` optionally `From<Source>` (> "a group of names that all tell the same story for different targets).** They are HARD off-switches, not
 > modifiers ([modifier.md §2b](../../cascade.md)): the side ceases to exist rather than being reduced. The unqualified
 > form abolishes the channel from EVERY source; a `From<Source>` suffix narrows it to one:
 >
@@ -96,7 +95,7 @@ by asking whose property it is:
 > now `abolishedAnger` gated `IS_CAPITAL`. ⛔ A future narrowing is a PREDICATE or a target, never a new key
 > spelling.
 
-⚑ **The grantor is not only a building, and the SCOPE says how far it reaches (owner: "a city or cities").** A
+⚑ **The grantor is not only a building, and the SCOPE says how far it reaches (a city or cities).** A
 building's `amenities` land on its OWN city; a civic / trait / tech authoring the same block reaches EVERY city
 of the empire — the ordinary scope spine (§3.2), on the same derived-union-over-live-sources mechanic
 `capabilities` uses, so no new machinery and no per-grantor special case.
@@ -121,8 +120,8 @@ of the empire — the ordinary scope spine (§3.2), on the same derived-union-ov
 > substrate's means the **feature itself** survives (a `characteristic`). One word, two mechanics, kept
 > separable only by the blocks being distinct.
 
-> **⚖ A GRANT MAY BE CONDITIONED — the ENTRY carries it, never the KEY (owner: "make the block carry the
-> condition").** A classification entry's value may be the §3.9 entry object instead of a bare `true`, so a
+> **⚖ A GRANT MAY BE CONDITIONED — the ENTRY carries it, never the KEY (make the block carry the
+> condition).** A classification entry's value may be the §3.9 entry object instead of a bare `true`, so a
 > grantor states *when* its grant applies:
 >
 > ```jsonc

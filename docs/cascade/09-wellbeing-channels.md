@@ -56,7 +56,7 @@ table is rebuilt it wants one field per named engine term, so a divergence local
   is deliberately dropped from the data, so the engine's `improvementGood/Bad` term is an **intentional
   divergence** — attributed by the engine's own `improvementGood100/Bad100` terms, shown, never chased
   ([validation](../specs/validation.md) intentional-model-change class); the term dies at the channel's legacy cut.
-  ⚖ **Improvement HAPPINESS, by contrast, IS represented** (owner ruling — no gaps): the intrinsic per-radius
+  ⚖ **Improvement HAPPINESS, by contrast, IS represented** — no gaps: the intrinsic per-radius
   improvement happiness (`happiness.plot.flat` on the improvement) and the civic per-improvement happiness
   (`happiness.empire.improvements.{I}.flat`) are **folded into the feature happiness terms** (`featSubstrate` +
   `featMember`) — because the legacy `getFeatureGoodHappiness` bundles feature + improvement happiness into ONE

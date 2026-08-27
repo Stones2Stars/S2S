@@ -123,8 +123,8 @@ Empire-agnostic self-description. Read directly — never summed or cascaded.
   > `iMeleeWaveSize` · `iRangedWaveSize`, then per `<UnitMeshGroup>` an `iRequired` and its **per-era** art
   > tags). They belong in `world.art` **as that one block**, never split between an art half and an
   > "animation numbers" half.
-  > ⛔ **THE PER-(ERA, STYLE) GRID IS CARRIED, NOT COLLAPSED (owner: *"I don't think the exe survives without
-  > it"*).** `getArtInfo(iIndex, eEra, eStyle)` resolves a civilization's UNIT ART STYLE override first
+  > ⛔ **THE PER-(ERA, STYLE) GRID IS CARRIED, NOT COLLAPSED (I don't think the exe survives without
+  > it).** `getArtInfo(iIndex, eEra, eStyle)` resolves a civilization's UNIT ART STYLE override first
   > (`CvUnitArtStyleTypeInfo`, keyed by unit) and falls back to the unit's own per-era tag. ⚠ Reducing the era
   > or style dimensions is a SEPARATE consolidation pass and unrelated to carrying them — do not slim the grid
   > while restoring it.

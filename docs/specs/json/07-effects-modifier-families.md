@@ -25,8 +25,8 @@ The full address of a deposit:
   `gold`/`research`/`culture`/`espionage`; each property is its own family (`PROPERTY_CRIME`, …).
 - **Grouped families** keep `<member>` parts (`maintenance`, `defense`, …): `maintenance` uses a `distance`
   member; `defense` uses an `amount` member, with a `min` member for the floor.
-  ⚑ **`defense.amount` SUMS LIKE A FLAT and is APPLIED as a percentage (owner: "it is not a percentage in
-  calculations, it's a flat sum added as a percentage for the defense calc") — which is exactly what the
+  ⚑ **`defense.amount` SUMS LIKE A FLAT and is APPLIED as a percentage (it is not a percentage in
+  calculations, it's a flat sum added as a percentage for the defense calc) — which is exactly what the
   `percent` unit already means** (§3.6 / [modifier.md §2](../../cascade.md): percents are ADDITIVE DELTAS that sum
   and apply ONCE, never a per-source multiplier). So it authors `percent` and accumulates on the percent side;
   the value is measured in defense points, not scaled ([the ×100 fixed-point model](../curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries):
@@ -100,7 +100,7 @@ The full address of a deposit:
   plus the entity's own self-data (`hurryCost` = "hurrying ME"; `buildTime`). (2) **What CHANGES a cost** is the ONE
   `costs` modifier family, kinds by category (`train`/`construct`/`create`/`build`/`research`/`improvementUpgrade`/
   `hurry`/`upgrade`), with **scope as the axis** — never a `world*`-prefixed kind
-  ([scope is a separate axis, never folded into the kind](../../architecture/patterns/04-the-info-data-out-contract-what-an.md#the-coherent-surface--grouped-storage-parameterized-getters-owner-clarity-and-predictability-is-king)). (3) The **derived price** (upgrade
+  ([scope is a separate axis, never folded into the kind](../../architecture/patterns/04-the-info-data-out-contract-what-an.md#the-coherent-surface--grouped-storage-parameterized-getters-clarity-and-predictability-is-king)). (3) The **derived price** (upgrade
   gold, hurry gold/pop) is engine-computed from planes 1 × 2; its formula parameters are world/handicap config, never
   vocabulary.
 - **`underworld` is the in-city criminal contest** (criminals burrow, investigators drag them out): kinds

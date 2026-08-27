@@ -647,8 +647,8 @@ bypassing their own cache; `canBeSelected`'s foreign-city espionage loop) are ch
 
 **Measured outcome:** #1 + #2 shipped → owner reports FPS "significantly better," with a smaller residual left
 for a separate pass (candidates: #3, and the S&D-ON combat-str follow-up). The fog compute (per-turn full
-`clearVisibilityCounts` + `updateSight` rebuild, `CvGame::doTurn`) is CORRECT to run per-turn (owner: "the
-nature of the beast") — the concern was only MID-turn per-frame compute, which is the three items above.
+`clearVisibilityCounts` + `updateSight` rebuild, `CvGame::doTurn`) is CORRECT to run per-turn (the
+nature of the beast) — the concern was only MID-turn per-frame compute, which is the three items above.
 
 ## Cross-references
 

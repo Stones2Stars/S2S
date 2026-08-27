@@ -135,7 +135,7 @@ commerce** — plus faster great people and zero-anarchy civic swaps elsewhere. 
 gotcha is the per-plot bonus's **pre-improvement/pre-route** threshold test (`CvPlot.cpp:8403`).
 ⛔ It does **not** touch city GROWTH: the food-for-growth discount is a dead mechanic that never once ran (§2).
 
-> **⚖ WHERE EACH OF THE THREE ACTUALLY APPLIES (owner: the cascade's say in a golden age is its LENGTH and its
+> **⚖ WHERE EACH OF THE THREE ACTUALLY APPLIES (the cascade's say in a golden age is its LENGTH and its
 > grant — the yield EFFECT is the engine's).** The two player-wide legs (2 and 3) apply at the CITY combine, as
 > a plain package read of the `{ch}.empire.goldenAge` mirror. The PER-PLOT leg (1) applies in the PLOT RESOLVE,
 > read live off the plot's owner — the same engine-core shape the city-centre block already uses

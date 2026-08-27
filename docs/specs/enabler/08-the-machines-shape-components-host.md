@@ -340,7 +340,7 @@ must not be swept into one: the reverse pass deliberately excludes engine tokens
 ⚑ **`civicAny` is coarse by the same logic, and that coarseness is a known gap for AI VALUATION, not just
 re-gating.** `CascadeCondDeps::civicAny` unions every `requires civic` clause into one bool — enough to re-gate,
 but not enough to answer "which civic gates this candidate." `CvPlayerAI::AI_civicValue`'s civic-choice building
-valuation dropped its cross-category half-value damper (owner: civic valuations are linearly combined across
+valuation dropped its cross-category half-value damper (civic valuations are linearly combined across
 categories, so a building gated by civics in two options could be counted at full value from both, risking
 oscillating choices) without replacing it with per-civic precision. If choices start oscillating, the principled
 fix is an id-keyed `civics` set on `CascadeCondDeps` — never reviving the whole-civic-database sweep that such a

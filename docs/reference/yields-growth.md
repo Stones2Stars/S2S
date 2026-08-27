@@ -87,8 +87,8 @@ empties. **A process is the exception at every point below, because it is the on
   reading `getProductionNeeded` (`MAX_INT` for a process). ⚑ The reason is that both feed SUMS shared with real
   orders: the queue total bails to **999** for any order needing >999 hammers, so a single queued process made
   the contract broker read `turns=1000` for a unit costing six hammers, collapsing that city's bid.
-- ⛔ **A PROCESS NEVER EATS THE COMPLETION OVERFLOW (owner: *"idle eats the remaining production, and then the
-  cycle repeats"*).** `doProduction`'s completion loop breaks before `changeProduction(getOverflowProduction())`
+- ⛔ **A PROCESS NEVER EATS THE COMPLETION OVERFLOW (idle eats the remaining production, and then the
+  cycle repeats).** `doProduction`'s completion loop breaks before `changeProduction(getOverflowProduction())`
   when the new head is a process. ⚑ `changeProduction` routes the hammers through the process's
   `productionToCommerce` rates — and `PROCESS_IDLE` declares NONE — so the overflow was converted at zero and
   then cleared: destroyed outright. Breaking leaves it BANKED, and a process head returns from `doProduction`

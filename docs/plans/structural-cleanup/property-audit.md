@@ -26,17 +26,17 @@
 > removed AND need a player-scope active count built only to be thrown away.
 >
 > **Mandate:** the property *engine* (decay math, spatial-diffusion math, the turn-solver `CvPropertySolver`) is
-> intact and **must NOT be rewritten** (owner, standing). The bug: the property **SOURCE DATA** was wrongly stubbed
+> intact and **must NOT be rewritten** (standing). The bug: the property **SOURCE DATA** was wrongly stubbed
 > empty in every JSON poco (a prior agent conflated "defer the engine rework" with "defer the data migration" — the
 > owner has **NEVER** wanted the data deferred). Feed the legacy engine its authored source data from JSON. It only
 > surfaced now because the JSON-load crash (fixed `8f80100ea`) previously stopped the game before a turn ran.
 > Symptom: `+264 PROPERTY_CRIME`, `-198 PROPERTY_EDUCATION`/turn in Canterbury (crime never decays, buildings never
 > cut it); commerce craters **downstream** (education→science, crime→happiness/maintenance), not an independent bug.
 >
-> **Owner decisions (2026-07-11):** `CvCascadeProperty.cpp` is diagnostic-only (`CvHttpServer.cpp:1778`) — NOT the
+> **Decisions:** `CvCascadeProperty.cpp` is diagnostic-only (`CvHttpServer.cpp:1778`) — NOT the
 > fix, do not extend.
 >
-> **DIFFUSION IS KEPT (owner 2026-07-11, final):** the owner briefly considered dropping property spread, then ruled
+> **DIFFUSION IS KEPT (final):** the owner briefly considered dropping property spread, then ruled
 > *"it seems to be fairly ingrained in how properties work, so may as well keep it."* So the earlier `#429` drop in
 > `curate_property.py` is **overridden** — the curator now emits the diffuse propagators + `changePropagation` into the
 > approved `properties` block, and `CvPropertyInfo` reads them into `CvPropertyPropagatorDiffuse` + the change-prop
@@ -83,7 +83,7 @@
 > **Then validate** — the turn-level pass (per-turn `PROPERTY_*` deltas attributed, education/crime normalise) on
 > played turns.
 >
-> **⚖ THE ONE-SHOT RULING (owner 2026-07-16 — ruled earlier but never written down, twice, so it was "re-found"
+> **⚖ THE ONE-SHOT RULING (ruled earlier but never written down, twice, so it was "re-found"
 > a third time): the legacy one-shot `<Properties>`/`<PropertiesAllCities>` semantic is DEAD — EVERY such value
 > RE-CLASSIFIES as a PER-TURN source. No exceptions: flammability converts too.**
 >
@@ -121,7 +121,7 @@
 > Fixed: `CvPropertyManipulators::clear()` + clear-and-refill at the top of each bridge walk (the CvInfo.h
 > contract).
 >
-> **THE CARRIER BRIDGES (owner 2026-07-16: "stubbing is straight up not allowed"):** every legacy
+> **THE CARRIER BRIDGES (stubbing is straight up not allowed):** every legacy
 > property-source carrier delivers from its curated JSON through the ONE shared walk
 > (`CascadePropertyBridge::bridgeFamilies` / `bridgePulses`), mirroring each category's legacy delivery shape:
 > civics/traits/heritages CITY+RELATION_ASSOCIATED (player gather → every owner city; heritage's legacy XML

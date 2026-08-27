@@ -25,8 +25,8 @@ self-accumulator, set on the unit or a promotion), with two complementary member
   > `iCargo`** and earns its hold by promotion (TRANSPORT1/2/3 on `UNITCOMBAT_WOODEN_SHIPS`), so the carrier
   > declaring WHAT and the promotion supplying HOW MUCH is the normal shape there, not an anomaly.
   >
-  > ⚖ **A PROMOTION ADDS SPACE, NEVER PERMISSION — an INTENTIONAL divergence from legacy (owner: "we go with
-  > yours, it's cleaner").** In the legacy game a transport promotion WIDENS the class carried: an unpromoted
+  > ⚖ **A PROMOTION ADDS SPACE, NEVER PERMISSION — an INTENTIONAL divergence from legacy (we go with
+  > yours, it's cleaner).** In the legacy game a transport promotion WIDENS the class carried: an unpromoted
   > galley takes a settler, a promoted one takes military. The ruled model does not reproduce that — WHAT is the
   > carrier's, fixed, and a promotion only ever changes HOW MUCH. ⛔ So do not "repair" this back by letting a
   > promotion author a wider qualifier: the behaviour change is chosen, and the reason is that a permission that

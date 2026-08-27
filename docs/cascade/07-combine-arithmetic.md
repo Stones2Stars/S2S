@@ -57,8 +57,8 @@ math and never sees the human boundary.
 > **The plot yields ARE "the base the rest is calculated from."** So anything that scales a *specific improvement or
 > plot component* resolves **inside** this per-plot package, **before** the city-level `(100+Σpercent)` stack ever runs.
 > ⚖ **The CITY-CENTRE constant is the legacy `calculateYield` city block, inside this same isolated resolve,
-> reading the plot's OWN city-ness LIVE (owner: "the flooring should be on the plot itself, not on the
-> cascade")** — three terms on a city plot's yield channels: the YieldInfo `CityChange` constant (food −1 /
+> reading the plot's OWN city-ness LIVE (the flooring should be on the plot itself, not on the
+> cascade)** — three terms on a city plot's yield channels: the YieldInfo `CityChange` constant (food −1 /
 > production +1 / commerce +1) **plus** `population / PopulationChangeDivisor` (food /5, production /2,
 > commerce /4 — integer division), both added BEFORE the plot scaling so the threshold plane tests the total
 > legacy tested; and the `MinCity` floor (3/1/1) applied LAST. City-ness is the plot's own state, so none of it

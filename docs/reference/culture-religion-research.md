@@ -8,7 +8,7 @@
 - **Accrual:** `doCulture` adds `getCommerceRateTimes100(CULTURE)` to `m_aiCulture[owner]`; `doPlotCulture` spreads
   to a Chebyshev square of radius `cultureLevel`, linear dropoff via `CITY_CULTURE_DENSITY_FACTOR` (min 1).
   Improvement culture radiates **flat** within `getCultureRange()`.
-  > **⛔ CULTURE IS 64-BIT, AND THE REASON IS A BUG THAT WAS LIVE IN SHIPPING SAVES (owner: late-game overflow is
+  > **⛔ CULTURE IS 64-BIT, AND THE REASON IS A BUG THAT WAS LIVE IN SHIPPING SAVES (late-game overflow is
   > real).** City culture accumulates the ×100 rate every turn and **never decays**, so on a long game it wrapped
   > `int`; plot culture only decays *proportionally*, so it settles at an equilibrium that scales with the city
   > feeding it rather than being bounded. Both are `int64_t`, per-player, at both scopes

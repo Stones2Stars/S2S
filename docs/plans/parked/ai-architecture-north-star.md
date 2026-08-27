@@ -173,7 +173,7 @@ Read-side (repository, base objects, change-driven):
   counts. (Absorb the `AI_doTurnPre` blanket `.clear()`s.)
 - **City:** constructible set, building values, best-build, **declared needs** (the substrate for
   city-driven worker AI), workers-needed.
-  - **Declared-needs channel = the emphasis system (owner ruling 2026-06-11, #367).** Emphasis is
+  - **Declared-needs channel = the emphasis system (#367).** Emphasis is
     the city's "what I want" signal and must genuinely steer the governor before it can carry
     AI-declared needs: the same channel is read by humans-steering-the-governor today and will be
     *written* by AI cities tomorrow (one signal for plot/specialist allocation, building preference,

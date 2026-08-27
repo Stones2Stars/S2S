@@ -93,8 +93,8 @@ EVERY completion and a staleness bound of one turn, and pays back what the depth
 report it as the optimization; the optimization is the horizon extending, and the structure landing now is
 what that plugs into.
 
-⚖ **FRESHNESS BECOMES THE SPINE'S JOB (owner: *"later we can derive ways to have that stack invalidated on
-other eventspine events"*), and it is what RETIRES the clock rather than merely refining it.**
+⚖ **FRESHNESS BECOMES THE SPINE'S JOB (later we can derive ways to have that stack invalidated on
+other eventspine events), and it is what RETIRES the clock rather than merely refining it.**
 ⚠ **The risk to design against is an interest set that degenerates to "everything".** A building's score reads
 the enabler frontier, the what-if valuation and the empire's standing, so a naive declaration invalidates on
 nearly every fact and the stack stops being worth keeping. [patterns.md](../../architecture/patterns.md)'s
@@ -138,7 +138,7 @@ a MEASUREMENT, never an argument).
 the AI plane cache its own scores" LAST, after the wrong-shaped reads are fixed, and a cache added over one of
 those hides it ([self-heal is not a backstop](../../cascade/03-no-staleness-no-selfheal.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban) one plane over).
 
-**The governing principle (owner, same day):** *"we should not allow AI to calculate next build based on just
+**The governing principle:** *"we should not allow AI to calculate next build based on just
 getting a new building mid-processing, because humans do not get to do that either — they have already gotten
 the dump at that point."* Decision INPUTS are frozen as of the last recalc, so mid-processing mutations are
 invisible to deciders — which the stack satisfies by construction, since a pop re-derives nothing. (This

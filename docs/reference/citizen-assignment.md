@@ -35,8 +35,8 @@ Both cursors move only forward, so a whole fill is `O(options)` rather than `O(c
 
 **Both halves, or it does nothing.** An emphasis is a ratio shift between channels, so promoting one channel
 without suppressing its rivals moves the ranking only by the promotion — which is how food emphasis came to be
-roughly half the strength of the other two and read as inert (owner: *"emphasis has never really worked
-properly for the longest time"*).
+roughly half the strength of the other two and read as inert (emphasis has never really worked
+properly for the longest time).
 
 | emphasis | promotes | suppresses |
 |---|---|---|
@@ -223,8 +223,8 @@ mark IS one full re-assignment at the city's next drain, which is what makes an 
 rather than a spare bit. The mechanism (a dirty mark drained by a re-run) is right and stays — the AI needs a
 way to be told the best plots may have moved.
 
-**The assignment is re-decided ON LOAD (owner: "recalculate workers and specialists should also happen on
-load").** `CvGame::onFinalInitialized` marks every alive player's cities after the load-end rebuilds settle, so
+**The assignment is re-decided ON LOAD (recalculate workers and specialists should also happen on
+load).** `CvGame::onFinalInitialized` marks every alive player's cities after the load-end rebuilds settle, so
 the first post-load sweep re-runs the assignment against this build's values rather than trusting the save's —
 a mark only; no assignment work runs inside the load path
 ([spine.md](../spine.md) § AI RE-EVALUATION).

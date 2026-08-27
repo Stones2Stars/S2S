@@ -203,7 +203,7 @@
     **ranged attack has to DO SOMETHING to be worthwhile** — the retired failure is not that ranged existed, it
     is that it dealt ~nothing while still satisfying the turn, so a redesign that reintroduces a near-zero-damage
     ranged action has reproduced the bug. ⚑ Naval shore bombardment is a DELIBERATE divergence from vanilla,
-    which did not allow it: *"we want them to, otherwise they are pretty damn worthless."*
+    which did not allow it — without it these ships are near worthless.
 25. **The PER-INSTANCE unit build-cost ramp** (`iInstanceCostModifier` → `costs.empire.perInstance` with
     `per:{SELF}`, consumed in `CvPlayer::getProductionNeeded(UnitTypes)` as
     `productionNeeded × unitCount(eUnit) × modifier`) *(dead — owner: the concept "is dumb in the first place,
@@ -222,11 +222,9 @@
     FUSES 3 equal units into 1 bigger one, so a bigger unit costing more upkeep *"makes sense"*. The arithmetic
     agrees: the multiplier is ×1.5 per rank while a rank represents 3 fused units, i.e. a fused unit paid 1.5×
     the upkeep of one unit while BEING three — a discount against fielding them separately, not a punishment.
-    ⚑ **The failure was COMPOSITION:** *"the problem came from when you added the per unit scaling in the mix as
-    well, then it got real out of hand"*. A defensible per-size cost and an unbounded per-unit percentage
+    ⚑ **The failure was COMPOSITION:** adding the per-unit scaling into the mix on top is what got it out of hand. A defensible per-size cost and an unbounded per-unit percentage
     multiplied each other, and the product is what made armies unaffordable.
-    ⚖ **FLAT is an INTERIM, not the destination: *"we want to have unit maintenance make more sense in
-    the future, so we leave it like this for now"*.** Unit maintenance is owed a coherent redesign; this removal
+    ⚖ **FLAT is an INTERIM, not the destination.** Unit maintenance is owed a coherent redesign; this removal
     clears the incoherent version rather than settling the model. A standing example of what that redesign must
     address: **FREE UNITS did not take Size Matters into account** — the free-unit allowance counted units
     while SM changed what a unit IS.
@@ -285,9 +283,8 @@
     it explicitly so the mapping cannot quietly re-emit a key nothing reads.
 30. **DIRTY-AND-RECOMPUTE FOR THE CASCADE PACKAGES** — the mark protocol (`markDirty(mask)` → `rebuildMarked` →
     a gather that re-walks the scope's sources), the banked-marks load drain, the derived dirty MASK per event,
-    and the planned "flags all turn, ONE batched rebuild at turn end in dependency order" end-state *(dead —
-    owner: **"what I got wrong is that I thought the yield packages had to be dirtied and recalculated all the
-    time, when it is in essence just a compiled sum that is always updated, based on incoming spine events"**)*.
+    and the planned "flags all turn, ONE batched rebuild at turn end in dependency order" end-state *(dead — the error was assuming yield packages had to be dirtied and recalculated all the
+     time, when it is in essence just a compiled sum that is always updated, based on incoming spine events"**)*.
     A package is a MAINTAINED SUM: the fact names the source, the compiled index names that source's deposits,
     and applying them IS the maintenance — so there is nothing to mark, nothing to defer, and nothing to batch
     ([cascade.md](../cascade.md) § THE MAINTAINED SUM).
@@ -307,8 +304,7 @@
     leaves a stale-but-plausible value that reads fine forever, where a missed emit leaves a loud compounding
     one ([self-heal is not a backstop](../cascade/03-no-staleness-no-selfheal.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban) prefers the failure that announces itself); and the
     mark derivation is a SECOND completeness census that — unlike the emit census — is **not answerable at any
-    one site, moves with the authored data, and cannot be made safe by over-inclusion** (*"it is far easier to
-    ensure we have all the events than to ensure that we have all packages correctly dirtied"*).
+    one site, moves with the authored data, and cannot be made safe by over-inclusion** (it is far easier to ensure every event exists than to ensure every package is correctly dirtied).
     ⛔ **Never re-add a dirty flag, a derived dirty mask, a mark-then-rebuild protocol, or a batched rebuild
     phase to the package plane.** ⚠ The CONDITIONED tail is NOT this: a deposit gated on state or scaled by a
     count is genuinely re-resolved when its DEPENDENCY moves, routed by the condition-atom reverse index — that
@@ -383,8 +379,7 @@
     ⚑ Worked, same session: a trait's `maintenance` deposit read `-70` against an authored `-10%` — which looks
     like a 7x over-application until the third leg answers it, the spine showing exactly 7 owners holding that
     trait and the log's own apply count saying 7. Fully attributed, without one.
-    **⛔ AND THE WORD GOES WITH THE MECHANISM — "ORACLE" IS NOT A TERM WE USE.** *"Why do you insist on
-    calling it an oracle? We cannot rebuild the entire event machinery based on an endpoint call — that is a call
+    **⛔ AND THE WORD GOES WITH THE MECHANISM — "ORACLE" IS NOT A TERM WE USE.** The machinery cannot be rebuilt from an endpoint call — that is a call
     that would take more than a minute to complete."* ⚑ That is a SHARPER disqualification than the one above and
     worth holding separately: even granting an endpoint could replay the chain, the replay is minutes of work, so
     it could never be an endpoint's answer. The two reasons compose — it cannot be done, and if it could it would

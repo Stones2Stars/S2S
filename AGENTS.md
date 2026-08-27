@@ -119,8 +119,8 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   regardless of position (`... _Build.ps1 Assert build nostop`). The `MakeDLL*.bat` shortcuts forward their extra
   arguments, so `MakeDLLAssert.bat nostop` works too. ⚠ It changes only how MUCH gets reported, never what
   compiles — and MSVC's 100-errors-per-TU cap (`C1003`) still truncates each unity batch.
-  - **⚖ THE OWNER'S LAUNCH PATH ALWAYS REBUILDS THE DLL — `LaunchS2S.bat`: *"I will ALWAYS rebuild dll
-    when starting the game, I always run the game via LaunchS2S.bat, so it is unavoidable."*** ⇒ **Do NOT tell the
+  - **⚖ THE OWNER'S LAUNCH PATH ALWAYS REBUILDS THE DLL.** The game is always started via `LaunchS2S.bat`, which
+    rebuilds the DLL every time — this is unavoidable, not a habit. ⇒ **Do NOT tell the
     owner to build or deploy before playing, and do not report "not deployed" as a blocker on a C++ change** —
     starting the game IS the deploy. A C++ edit sitting in the working tree reaches the next session by
     construction.
@@ -171,7 +171,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   `rebuild`, and the whole incremental-PCH question stops being reachable on the config you compile-check with.
   ⚠ FastBuild reports **CPU** time in its per-step summary and **wall** time only on the closing `Time: Real`
   line; reading the former as the latter is what makes a 15-second build look like three minutes.
-  - **✅ BUILDING IS A LEGITIMATE CHECK AGAIN (owner ruling — the don't-build rule is RETIRED).** It was binding
+  - **✅ BUILDING IS A LEGITIMATE CHECK AGAIN (the don't-build rule is RETIRED).** It was binding
     only because a red tree made a build uninformative; that premise is gone, so an `Assert rebuild` (~15s) is a
     real signal and the compiler is once more a census you can actually run. ⛔ It is still not a substitute for
     reading what you changed, and green is still not evidence that a change is CORRECT
@@ -618,13 +618,13 @@ the total-observability bar below.)
 - **Narrate your work verbosely.** Before each search/read/build step, state the question the step answers, what you
   expect, and what the result actually told you. The owner follows along in real time; terse status lines hide the
   reasoning.
-- **⛔ EDIT WITH THE EDIT TOOL — A CHANGE BURIED IN A SCRIPT IS UNREVIEWABLE: *"it is fantastically hard for
-  me to see what you are doing when you are hiding all edits inside python scripts."*** An `Edit` shows the owner the
+- **⛔ EDIT WITH THE EDIT TOOL — A CHANGE BURIED IN A SCRIPT IS UNREVIEWABLE.** Hiding edits inside python
+  scripts makes it fantastically hard to see what is being done. An `Edit` shows the owner the
   exact before/after as it happens; a `python - <<'PY'` heredoc shows them `removed 159 lines` and nothing else, so
   the change lands unseen and the review surface is gone.
   ⚑ **This is the ANTI-CONCEALMENT rule again, one level up** (`Sources/AGENTS.md`: an abbreviated identifier is a
-  review-blocker because *"agents hide poor implementation behind abbreviated variables, that I don't immediately
-  catch"*). A scripted edit hides the whole change rather than one name — same failure, larger blast radius, and it
+  review-blocker because agents hide poor implementation behind abbreviated variables, and it is not caught on
+  sight). A scripted edit hides the whole change rather than one name — same failure, larger blast radius, and it
   is reached for exactly when an agent finds the Edit tool inconvenient. Convenience for the writer is not a reason
   to cost the reviewer their only view.
   ⚖ **A script IS the right tool for a genuinely MECHANICAL bulk pass** — the same transform over dozens of sites,
@@ -647,8 +647,7 @@ the total-observability bar below.)
   sibling curator, the calc surface, the call site itself — never to build a parallel mechanism beside it.
   ⚑ **The tell is the moment you catch yourself DESIGNING**, and it is worth naming because it does not feel like
   rollerskating; it feels like diligence. A new table, a new getter, a new read, a new slot "because the existing
-  one does not quite fit" is the shape — and *"does not quite fit"* is nearly always *"I did not find the right
-  one"*.
+  one does not quite fit" is the shape — and "does not quite fit" nearly always means the right one was not found.
   ⚠ **MEASURED, in one task:** three inventions, each with the answer already in front of it — a composed getter
   when the group read existed; a new curator table when `SCALAR_COND` + `_put_cond` already mapped a scalar tag
   onto a conditioned deposit; and a proposed eval-ctx slot plus a new valuation read when the candidate's tag test
@@ -722,7 +721,7 @@ the total-observability bar below.)
 
 ### Design
 
-- **⛔ ANYTHING NOT ENFORCED BY HARD TYPING GETS ROLLERSKATED (owner, learned the hard way).** A rule written
+- **⛔ ANYTHING NOT ENFORCED BY HARD TYPING GETS ROLLERSKATED (learned the hard way).** A rule written
   in a doc or a comment binds only an agent who reads it, believes it, and still remembers it at the moment of
   writing the code — which is exactly the population this file already says is systematically unreliable. **So a
   design invariant that matters is expressed as a TYPE that makes the wrong move fail to COMPILE**, never as a
@@ -790,8 +789,8 @@ the total-observability bar below.)
   no brake on deliberate structural rework (the cascade, the docs rebuild, dissolving the `Cv*AI` god-classes),
   which is large by design and answers to build-the-proper-structure-once, above.
 - **⛔ AGENTS ARE BANNED FROM BUILDING ON THE EXISTING PYTHON BINDINGS.** Do NOT treat a `Cy*`
-  binding as a destination, a contract to satisfy, or a place to park a conversion — *"every time you try, you start
-  shoehorning."* Reaching for an existing binding is what makes the ENGINE bend to fit Python instead of the boundary
+  binding as a destination, a contract to satisfy, or a place to park a conversion — every such attempt ends in
+  shoehorning. Reaching for an existing binding is what makes the ENGINE bend to fit Python instead of the boundary
   being redesigned around the cascade/JSON model ([the Cy* surface is not a fixed contract](docs/architecture/patterns/06-the-python-read-boundary-one.md#-the-python-read-boundary--one-complete-data-fetching-library):
   that `.def` surface is explicitly NOT a fixed contract). The tell is a change that leaves every Python consumer
   untouched — that is the half-migration, not a clean cut.
@@ -825,8 +824,8 @@ the total-observability bar below.)
 - **When documentation is lacking or wrong, FIX IT NOW — it is part of the SAME work item**, never "noted for the
   next agent." A doc gap that bit you will bite the next contributor; close it in the same change.
 - **⛔ A CODE COMMENT NEVER RESTATES A SPEC RULING — a comment that CONTRADICTS the spec is ROLLERSKATING
-  LICENSE.** *"Comments that contradict what spec says is rollerskating license, and license to tilt
-  me... again."* The spec states a rule ONCE, for the whole engine; a comment repeating it at a call site is a
+  LICENSE**, and licence to tilt the owner again. The spec states a rule ONCE, for the whole engine; a comment
+  repeating it at a call site is a
   second copy, second copies DRIFT, and a drifted copy does not merely go stale — it **authorizes** the next
   agent to act against the spec while believing they are conforming. That is strictly worse than no comment,
   and it is the same delete-don't-duplicate discipline
@@ -894,8 +893,8 @@ the total-observability bar below.)
   reticent about" are not rules. Rewrite them into what IS or MUST BE.
 - **⛔ A RULE CARRIES NO EXPIRING REASON — state the rule, not the circumstance that prompted it.** A
   justification that is true only while some task is in flight does not retire with the task: it stays on the
-  page as PERMISSION, and the next agent reads it as licence to do the smaller thing. ⚑ Measured: *"I only want
-  to refactor the python I have to, otherwise we never will be done"* was scoped to one migration; once that
+  page as PERMISSION, and the next agent reads it as licence to do the smaller thing. ⚑ Measured: a line saying
+  to refactor only the Python strictly necessary, so the work could finish, was scoped to one migration; once that
   work finished the sentence remained, still reading as a standing instruction to minimise the refactor — beside
   a rule the tree had already outgrown. **A reason that can expire is a liability, not context.** ⚖ This does
   NOT ban the durable WHY — why a site is an edge, why a value is genuinely exceptional, why a switch protects
@@ -956,8 +955,8 @@ the total-observability bar below.)
   state,baseRefName` — confirm `state` is `OPEN` and `baseRefName` is what you assume (stacked PRs here can target a
   feature branch and merge out of order, silently missing `main`). If either is surprising, surface it before pushing.
 - **⚖ THE PLAYTEST IS NOT ALWAYS IN-HOUSE — THE COMMUNITY IS A REAL VERIFICATION CHANNEL, AND THE RELEASE PIPES
-  EXIST FOR IT: *"the community can also playtest, it's the only way I can get bugs fixed in a timely
-  manner when they start coming in now"* — *"this is why we have the git and svn release pipes."*** A green
+  EXIST FOR IT.** Community playtesting is the only way bug reports arrive in a timely manner at this volume,
+  and it is what the git and svn release pipes are for. A green
   `Assert` build is still not evidence a change is CORRECT, and an agent still never CLAIMS a behaviour is
   verified it has not observed. What is retired is the idea that an unplayed change BLOCKS a PR: the owner ships
   it and the reports come back.
@@ -1026,7 +1025,7 @@ the total-observability bar below.)
   subject-derived script is still dead and is not revived; it is the BODY that carries the player-facing account.
 - **⛔ NO SESSION LINKS IN COMMITS.** An agent commit carries no `Claude-Session:` / session-URL
   trailer — the default harness footer is overridden for this repo. The `Co-Authored-By` line stays.
-- **Keep quirky/intermediate commits — do NOT push to squash them (owner taste).** Mention squashing exists at most
+- **Keep quirky/intermediate commits — do NOT push to squash them.** Mention squashing exists at most
   once; default to preserving history as-is.
 - **PG-13 public quotes.** When quoting the owner in public artifacts (issues, PR bodies, commits, repo docs), keep
   the colorful voice but drop the profanity. The rulings the quotes carry are still wanted.
@@ -1053,7 +1052,7 @@ The hosted DESPAIR/REALISM/COMPLEXITY catalogs live at **`indexes/`** (repo root
 - Cross-cutting, must-not-rediscover facts → "Key Subsystem Knowledge" above (or the nearest `AGENTS.md`).
 - The mod's front-door / build-pipeline readme (the code repo's mirror) → `docs/MOD-README.md`.
 - A newly-found bug of exceptional absurdity may *additionally* earn an entry in
-  [`indexes/DESPAIR_INDEX.md`](indexes/DESPAIR_INDEX.md) (owner-sanctioned, lighthearted,
+  [`indexes/DESPAIR_INDEX.md`](indexes/DESPAIR_INDEX.md) (sanctioned, lighthearted,
   optional — never a substitute for the real fix/issue/doc). Its sibling
   [`indexes/REALISM_INDEX.md`](indexes/REALISM_INDEX.md) catalogues "super realistic" *mechanics*
   — absurdities working exactly as designed (same policy).

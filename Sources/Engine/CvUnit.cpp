@@ -272,16 +272,13 @@ void CvUnit::destroyCurrentEntity()
 
 	if (isRealEntity(pEntity))
 	{
-		// Destroy old entity, don't need to remove entity when the app is shutting down, or crash can occur
 		if (!gDLL->GetDone() && GC.IsGraphicsInitialized())
 		{
 			gDLL->getEntityIFace()->RemoveUnitFromBattle(this);
-			CvDLLEntity::removeEntity(); // remove entity from engine
+			CvDLLEntity::removeEntity();
 		}
-		CvDLLEntity::destroyEntity(); // delete CvUnitEntity and detach from us
+		CvDLLEntity::destroyEntity();
 
-		//	Only the dummy-entity path ever incremented this, so only it may decrement — otherwise the count
-		//	the [GFX] entity line reports drifts negative on a build that hands every unit a real entity.
 		if (g_bUseDummyEntities)
 		{
 			g_numEntities--;
@@ -296,8 +293,6 @@ void CvUnit::destroyCurrentEntity()
 
 void CvUnit::rebuildEntityArt()
 {
-	//	The unit's MODEL changed — a warlord attaching swaps its art — which is the one reason a scene node
-	//	genuinely has to be recreated. reloadEntity keeps a still-wanted one, so it cannot serve this.
 	if (!IsSelected())
 	{
 		destroyCurrentEntity();
@@ -318,10 +313,6 @@ void CvUnit::reloadEntity(bool bForceLoad)
 
 	if (!IsSelected())
 	{
-		//	⛔ AN ENTITY THAT IS ALREADY THE KIND WE WANT IS KEPT. The engine's move queue lives ON the scene
-		//	node — which this function's own RemoveUnitFromBattle call concedes — and CvSelectionGroup::groupMove
-		//	destroys it between QueueMove and ExecuteMove. Recreating there executes the move on a node whose
-		//	queue is empty and strands the walk animation on the tile the unit left.
 		if (getEntity() != NULL && isRealEntity(getEntity()) != bNeedsRealEntity)
 		{
 			destroyCurrentEntity();
@@ -344,13 +335,6 @@ void CvUnit::reloadEntity(bool bForceLoad)
 					g_dummyUsage++;
 				}
 
-				//	A REAL entity is a scene node, and a scene node is where the EXE's per-instance model/texture
-				//	memory goes (memory-footprint.md) -- so this is the memory question asked at the moment it
-				//	moves. It replaces an every-100 OutputDebugString, which put the one number that answers it on
-				//	no readable surface at all and compiled to nothing in FinalRelease besides.
-				//	bNeedsRealEntity's own terms, so the decision is readable rather than just its outcome -- it is
-				//	partly circular (a unit needs a real entity because it IS the centre unit, and the centre unit is
-				//	chosen from units that have one).
 				gfxTraceEntity(this, bNeedsRealEntity, g_numEntities, g_dummyUsage,
 					plot() != NULL && plot()->isActiveVisible(false),
 					plot() != NULL && plot()->getCenterUnit(false) == this,

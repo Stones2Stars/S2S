@@ -5,7 +5,7 @@ anything; identify and pull the levers that make them impactful. Closely tied to
 campaign (#367 — emphasis is the steering channel that pushes citizens INTO specialists) and the
 city-owns-what-it-wants direction (`ai-architecture-north-star.md` §read-side declared-needs).
 
-Distinguish **firm** (committed) from **fluid** (owner floated, to be designed — not locked).
+Distinguish **firm** (committed) from **fluid** (floated, to be designed — not locked).
 
 ## Why specialists are weak (audited 2026-06-11, all claims source-verified)
 

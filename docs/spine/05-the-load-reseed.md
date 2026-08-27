@@ -147,8 +147,7 @@ consumes the in-read events to build the cascade. New game builds the same way: 
 events, with grants active because those are genuine acquisitions. Ledgered as
 [the load reseed](#5-the-load-reseed).
 
-> **⛔ `spineGameLoadInProgress()` IS RESULT-PRODUCER SUPPRESSION, AND AGENTS KEEP MISCONSTRUING IT (owner —
-> repeatedly, across sessions).** It answers ONE question: *would acting on this fact HAND SOMETHING OUT for a
+> **⛔ `spineGameLoadInProgress()` IS RESULT-PRODUCER SUPPRESSION, AND AGENTS KEEP MISCONSTRUING IT (repeatedly, across sessions).** It answers ONE question: *would acting on this fact HAND SOMETHING OUT for a
 > load, which is not an acquisition?* That is why the trigger/grant machinery consults it. ⛔ It is **NOT** a
 > licence for a LOAD-ACTIVE consumer to skip work the reseed exists to perform — reaching for it there asserts
 > that the load cannot be trusted to build the state, which is precisely the claim

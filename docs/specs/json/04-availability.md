@@ -49,8 +49,8 @@ Same per-kind bucket shape as `enables`.
   >
   > **⚖ THE UPGRADE LIVES HERE — `whenObsolete` IS WHERE THE UPGRADE GOES.** Becoming obsolete and what
   > becomes of the instance are ONE happening, so the fate and the successor are authored in one place. ⛔ Do
-  > **not** mint a separate top-level upgrade section for it. The key is **`becomes`** (owner: *"becomes works
-  > well, it's unambiguous"*), a reserved key beside the modifier families in the tree:
+  > **not** mint a separate top-level upgrade section for it. The key is **`becomes`** (becomes works
+  > well, it's unambiguous), a reserved key beside the modifier families in the tree:
   >
   > ```jsonc
   > "whenObsolete": { "becomes": "BUILDING_FOUNDRY" }

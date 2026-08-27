@@ -178,7 +178,7 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > blackout as a status can tap into makes sense here"* — the one qualification to
 > [patterns.md](../architecture/patterns.md)'s one-getter-per-group grammar: **a gate needs a named point to tap
 > into**, which a channel-indexed group read does not offer. ⛔ That is not licence to grow the per-channel
-> getter surface back (owner: *"what I don't want is to have the getter spaghetti we used to have"*) — the test
+> getter surface back (what I don't want is to have the getter spaghetti we used to have) — the test
 > is whether a getter carries a CONCEPT something else attaches to, not whether a caller wants one value.
 > ⚑ The shape it takes: an **UNGATED** read (the source's own answer, `CvCity::hasPowerSource`) and the **GATED**
 > read every consumer uses (`CvCity::isPowered`), the second composing the first with the status.

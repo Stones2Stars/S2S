@@ -38,13 +38,13 @@ curator's docstring + body. To read the map for an entity, **read its curator.**
 > `Assets/Data/<type>/**` JSON as the **final offline step** (dicts recurse; leaves/lists override). It matches the
 > curators' exact `indent=1` serialization, so an addition is a minimal additive diff, never a reformat.
 >
-> **The GAME never knows curation OR additions exist** (owner: *"the c++ should not know or care that the json is
-> now different from xml; the game does not, and should not know that there is such a thing as curation"*) — the
+> **The GAME never knows curation OR additions exist** (the c++ should not know or care that the json is
+> now different from xml; the game does not, and should not know that there is such a thing as curation) — the
 > whole Python pipeline (curators + additions re-apply) is a **separate offline entity** that merely PRODUCES the
 > `Assets/Data` JSON the engine loads. The `_additions` files are the reviewable/revertible source layer.
 >
-> **⚖ THE RE-APPLY IS PART OF THE WRITE — there is no step to remember (owner: *"it probably should be part of
-> core loop"*).** A per-entity `--write` CLEARS its folder before rewriting, so running one curator alone used to
+> **⚖ THE RE-APPLY IS PART OF THE WRITE — there is no step to remember (it probably should be part of
+> core loop).** A per-entity `--write` CLEARS its folder before rewriting, so running one curator alone used to
 > silently drop that entity's overlay and leave the committed data disagreeing with a fresh regen. It was a
 > documented instruction ("re-run `curate_additions.py` after any re-curate") and it was missed **more than once**
 > — which is the point: a rule has to be remembered, a check does not ([AGENTS.md](../../../AGENTS.md)).

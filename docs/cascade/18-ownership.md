@@ -55,8 +55,8 @@ authored shape.
 > handed out** — because a trait id is named from several curators, above all the TECH edge that GATES a rung
 > ([enabler.md](../specs/enabler.md): without it every upper rung is permanently unreachable, and silently so). A
 > per-curator copy would drift and emit an id no record defines.
-> ⛔ **A COMPLEX ID IS DERIVED FROM THE SIMPLE ONE, NEVER READ FROM THE AUTHORED `<ReplacementID>` (owner: "use
-> the simple names as base, because that is the base of the names").** `complex_variant_id` (a module-level
+> ⛔ **A COMPLEX ID IS DERIVED FROM THE SIMPLE ONE, NEVER READ FROM THE AUTHORED `<ReplacementID>` (use
+> the simple names as base, because that is the base of the names).** `complex_variant_id` (a module-level
 > function in `Tools/Migration/store.py`, not a `Store` method) is that one derivation — the base's own stem
 > under the `TRAIT_COMPLEX_` prefix — and both callers go through it: the
 > replacement variant keyed at load, and the re-key of a complex-ONLY record.
