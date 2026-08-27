@@ -929,6 +929,12 @@ private:
 	//	effect on properties
 	int buildingPropertiesValue(const CvBuildingInfo& kBuilding) const;
 
+	///<summary>Whether a MINIMUM-NUMBER role's floor can be filled by a unit that would actually SURVIVE to do
+	/// the job. A floor forces production, so filling it with a unit that dies on contact converts hammers into
+	/// nothing -- worst exactly when the AI is already behind and can least afford it.</summary>
+	///<returns>false when the best candidate for the role cannot hold its own, so the floor must NOT fire.</returns>
+	bool AI_roleFloorIsFillable(UnitAITypes eUnitAI);
+
 	bool AI_establishSeeInvisibleCoverage();
 	bool AI_establishInvestigatorCoverage();
 	bool AI_isNegativePropertyUnit(UnitTypes eUnit) const;

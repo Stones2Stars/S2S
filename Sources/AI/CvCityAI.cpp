@@ -73,6 +73,7 @@ namespace
 		case CIT_ORDER_CONSTRUCT:     return "[CIT/order] action=construct";
 		case CIT_ORDER_PROJECT:       return "[CIT/order] action=createProject";
 		case CIT_ORDER_PROCESS:       return "[CIT/order] action=maintainProcess";
+		case CIT_ORDER_TENDER_UNIT:   return "[CIT/order] action=tenderUnit";
 		case CIT_PROP:                return "[CIT/prop]";
 		case CIT_PROPLEVEL:           return "[CIT/proplevel]";
 		case CIT_ASSIGN_DIRTY:        return "[CIT/assign/dirty]";
@@ -155,6 +156,7 @@ namespace
 		case CITF_project:      return "project";
 		case CITF_process:      return "process";
 		case CITF_commerce:     return "commerce";
+		case CITF_landed:       return "landed";
 		case CITF_alreadyQueued:return "alreadyQueued";
 		case CITF_append:       return "append";
 		case CITF_force:        return "force";
@@ -1503,7 +1505,10 @@ void CvCityAI::AI_chooseProduction()
 	// equivalent (x1.5 per rank) -- merged hunters punching up vs strong animals is the
 	// intended counter, so capacity, not bodies, satisfies the need.
 	const int iOwnedHunters = player.AI_totalEffAreaUnitAIs(pArea, UNITAI_HUNTER);
-	const int iHunterDeficitPercent = (iNeededHunters <= iOwnedHunters) ? 0 : (iNeededHunters - iOwnedHunters) * 100 / iNeededHunters;
+	//	Hunters are a MINIMUM-NUMBER role (AGENTS.md § AI unit COUNTS): below the floor is a reason to build,
+	//	and at or above it is not. A graduated DEFICIT PERCENT is what turned the count into a target -- any
+	//	shortfall read as demand, so the number could never be reached and production never moved on.
+	const bool bBelowHunterFloor = iOwnedHunters < iNeededHunters;
 
 	const int iLowlimitProductionRank = (player.getNumCities() + 1) * 2 / 3;
 
@@ -2064,7 +2069,7 @@ void CvCityAI::AI_chooseProduction()
 	m_iTempBuildPriority--;
 
 	//#7 Emergency Hunters
-	if (!bInhibitUnits && iOwnedHunters < 1 && iHunterDeficitPercent > 80)
+	if (!bInhibitUnits && iOwnedHunters < 1 && AI_roleFloorIsFillable(UNITAI_HUNTER))
 	{
 		if (AI_chooseExperienceBuilding(UNITAI_HUNTER, 2))
 		{
@@ -2099,7 +2104,11 @@ void CvCityAI::AI_chooseProduction()
 				}
 			}
 
-			if (!bChooseWorker && iWorkersNeeded > 1 && getPopulation() > 1)
+			//	A worker BEYOND the first respects the same unit-spending budget every military build does.
+			//	Workers are not a minimum-number role (AGENTS.md § AI unit COUNTS) and they carry upkeep like
+			//	anything else, so a count deficit is not on its own a reason to spend past the budget.
+			if (!bChooseWorker && iWorkersNeeded > 1 && getPopulation() > 1
+			&& iUnitCostPercentage < iMaxUnitSpending)
 			{
 				if (AI_chooseUnit("secondary worker", UNITAI_WORKER))
 				{
@@ -2202,9 +2211,12 @@ void CvCityAI::AI_chooseProduction()
 			}
 		}
 
+		//	Chasing the AREA worker count is the biggest single unit-spend in the civilian half, so it answers to
+		//	the unit-spending budget (AGENTS.md § AI unit COUNTS: the count is a CAP, and it never justifies
+		//	spending past what the empire can keep).
 		if (!bChooseWorker && iWorkersInArea <= iNeededWorkersInArea
+		&& iUnitCostPercentage < iMaxUnitSpending
 		&& (iWorkersNeeded > 0 || iNeededWorkersInArea > iWorkersInArea * 4/5)
-		// Fuyu: anything bigger than 0 is ok
 		&& AI_totalBestBuildValue(pArea) > 0)
 		{
 			if (AI_chooseUnit("capital with no workers", UNITAI_WORKER))
@@ -2382,7 +2394,7 @@ void CvCityAI::AI_chooseProduction()
 		return;
 	}
 	//#14b, Check for at least one explorer
-	if (player.AI_totalAreaUnitAIs(pArea, UNITAI_EXPLORE) == 0)
+	if (player.AI_totalEffAreaUnitAIs(pArea, UNITAI_EXPLORE) == 0 && AI_roleFloorIsFillable(UNITAI_EXPLORE))
 	{
 		if (AI_chooseUnit("need explorers", UNITAI_EXPLORE))
 		{
@@ -2404,7 +2416,8 @@ void CvCityAI::AI_chooseProduction()
 	m_iTempBuildPriority--;
 
 	//#16 Hunters, Prio2
-	if (!bInhibitUnits && iOwnedHunters < 8 && iHunterDeficitPercent > 50)
+	if (!bInhibitUnits && bBelowHunterFloor && iUnitCostPercentage < iMaxUnitSpending
+	&& AI_roleFloorIsFillable(UNITAI_HUNTER))
 	{
 		if (AI_chooseExperienceBuilding(UNITAI_HUNTER, 4))
 		{
@@ -2670,7 +2683,7 @@ void CvCityAI::AI_chooseProduction()
 	//#26 worker sub-stage -- with spare production and the area short on workers, grab a worker.
 	if (iDangerValue < 5 && (eCurrentEra > GC.getGame().getStartEra() + iProductionRank / 2 || eCurrentEra > GC.getNumEraInfos() / 2))
 	{
-		if (!bChooseWorker && !bInhibitUnits && (!bDefenseWar || iWarSuccessRatio >= -30) && iWorkersInArea < iNeededWorkersInArea
+		if (!bChooseWorker && !bInhibitUnits && (!bDefenseWar || iWarSuccessRatio >= -30) && iWorkersInArea < iNeededWorkersInArea && iUnitCostPercentage < iMaxUnitSpending
 		&& (getPopulation() > 3 || iProductionRank < (player.getNumCities() + 1) / 2))
 		{
 			if (AI_chooseUnit("no danger workers", UNITAI_WORKER))
@@ -2726,7 +2739,7 @@ void CvCityAI::AI_chooseProduction()
 	m_iTempBuildPriority--;
 
 	//#29 Extra Workers for large city, if no danger 
-	if (!bInhibitUnits && !bChooseWorker && iDangerValue < 7 && iWorkersInArea < iNeededWorkersInArea && (!bDefenseWar || iWarSuccessRatio >= -50) && iProductionRank < (player.getNumCities() + 1) / 2)
+	if (!bInhibitUnits && !bChooseWorker && iDangerValue < 7 && iWorkersInArea < iNeededWorkersInArea && iUnitCostPercentage < iMaxUnitSpending && (!bDefenseWar || iWarSuccessRatio >= -50) && iProductionRank < (player.getNumCities() + 1) / 2)
 	{
 		if (AI_chooseUnit("no danger large city extra worker", UNITAI_WORKER))
 		{
@@ -2743,7 +2756,7 @@ void CvCityAI::AI_chooseProduction()
 	}
 
 	//#30 Extra Sea Workers, if no danger 
-	if ((m_iRequestedUnit <= MAX_REQUESTEDUNIT_PER_CITY) && !bInhibitUnits && !bWaterDanger && (!bDefenseWar || iWarSuccessRatio >= -30) && iNeededSeaWorkers > iExistingSeaWorkers && AI_chooseUnit("no danger extra sea worker", UNITAI_WORKER_SEA))
+	if ((m_iRequestedUnit <= MAX_REQUESTEDUNIT_PER_CITY) && !bInhibitUnits && !bWaterDanger && iUnitCostPercentage < iMaxUnitSpending && (!bDefenseWar || iWarSuccessRatio >= -30) && iNeededSeaWorkers > iExistingSeaWorkers && AI_chooseUnit("no danger extra sea worker", UNITAI_WORKER_SEA))
 	{
 		return;
 	}
@@ -2879,7 +2892,8 @@ void CvCityAI::AI_chooseProduction()
 	m_iTempBuildPriority--;
 
 	//#33 Hunters Prio3
-	if (iOwnedHunters < 16 && iHunterDeficitPercent > 25)
+	if (bBelowHunterFloor && iUnitCostPercentage < iMaxUnitSpending
+	&& AI_roleFloorIsFillable(UNITAI_HUNTER))
 	{
 		if (AI_chooseExperienceBuilding(UNITAI_HUNTER, 6))
 		{
@@ -3020,8 +3034,11 @@ void CvCityAI::AI_chooseProduction()
 	if ((bMassing || !bLandWar) && iDangerValue < 4 && !bFinancialTrouble)
 	{
 		const int iNeededExplorers = player.AI_neededExplorers(pArea);
-		const int iExplorerDeficitPercent = (iNeededExplorers == 0) ? 0 : (iNeededExplorers - player.AI_totalAreaUnitAIs(pArea, UNITAI_EXPLORE)) * 100 / iNeededExplorers;
-		if (iExplorerDeficitPercent >= iHunterDeficitPercent && iExplorerDeficitPercent > 0)
+		//	the EFFECTIVE count, like hunters: a merged unit counts as its strength equivalent, so consolidating
+		//	never re-opens the floor and triggers a rebuild (AGENTS.md § AI unit COUNTS).
+		const bool bBelowExplorerFloor = player.AI_totalEffAreaUnitAIs(pArea, UNITAI_EXPLORE) < iNeededExplorers;
+		if (bBelowExplorerFloor && iUnitCostPercentage < iMaxUnitSpending
+		&& AI_roleFloorIsFillable(UNITAI_EXPLORE))
 		{
 			// If we are just pumping out explorer units and having them die fast go for EXP giving buildings first
 			if (AI_chooseExperienceBuilding(UNITAI_EXPLORE, 8))
@@ -3034,7 +3051,8 @@ void CvCityAI::AI_chooseProduction()
 			}
 		}
 
-		if (iHunterDeficitPercent > 0)
+		if (bBelowHunterFloor && iUnitCostPercentage < iMaxUnitSpending
+		&& AI_roleFloorIsFillable(UNITAI_HUNTER))
 		{
 			// If we are just pumping out hunting units and having them die fast go for EXP giving buildings first
 			if (AI_chooseExperienceBuilding(UNITAI_HUNTER, 8))
@@ -3191,14 +3209,15 @@ void CvCityAI::AI_chooseProduction()
 			if ((AI_countNumBonuses(NO_BONUS, /*bIncludeOurs*/ true, /*bIncludeNeutral*/ true, -1, /*bLand*/ true, /*bWater*/ false) > 0) ||
 				(isCapital() && (getPopulation() > 3) && iNumCitiesInArea > 1))
 			{
-				if (!bChooseWorker && AI_chooseUnit("optional worker", UNITAI_WORKER))
+				if (!bChooseWorker && iUnitCostPercentage < iMaxUnitSpending
+				&& AI_chooseUnit("optional worker", UNITAI_WORKER))
 				{
 					return;
 				}
 				bChooseWorker = true;
 			}
 
-			if (iNeededSeaWorkers > iExistingSeaWorkers)
+			if (iNeededSeaWorkers > iExistingSeaWorkers && iUnitCostPercentage < iMaxUnitSpending)
 			{
 				if (AI_chooseUnit("optional sea worker", UNITAI_WORKER_SEA))
 				{
@@ -4007,7 +4026,8 @@ void CvCityAI::AI_chooseProduction()
 	m_iTempBuildPriority--;
 
 	//#83 Hunters (prio4)
-	if (!bInhibitUnits && !bFinancialTrouble && iHunterDeficitPercent > 0 && GC.getGame().getSorenRandNum(5, "pump hunter") == 0)
+	if (!bInhibitUnits && !bFinancialTrouble && bBelowHunterFloor && iUnitCostPercentage < iMaxUnitSpending
+	&& AI_roleFloorIsFillable(UNITAI_HUNTER))
 	{
 		// If we are just pumping out hunting units and having them die fast go for EXP giving buildings first
 		if (AI_chooseExperienceBuilding(UNITAI_HUNTER, 6))
@@ -8862,7 +8882,13 @@ bool CvCityAI::AI_chooseUnit(const char* reason, UnitAITypes eUnitAI, int iOdds,
 {//Adding a unit type direct selection here...
 	PERF_ACCUM(g_chooseUnitMs); ++g_chooseUnitN;
 	//	Have we already contracted for a unit?
-	if (m_iRequestedUnit > MAX_REQUESTEDUNIT_PER_CITY)
+	//	⛔ ONE unit demand per city per turn, and the comparison is `>=` on purpose. There are TWO production
+	//	paths out of this function -- a broker TENDER and a direct AI_chooseUnitImmediate -- and posting a
+	//	tender deliberately returns false so the city carries on looking for a BUILDING of its own. What that
+	//	must NOT do is let the cascade post a SECOND unit demand for a different role in the same pass: the
+	//	broker then trains both, for one need. With MAX_REQUESTEDUNIT_PER_CITY at 1 a `>` test admitted counts
+	//	0 AND 1, so every city could tender twice a turn, and most call sites never checked the counter at all.
+	if (m_iRequestedUnit >= MAX_REQUESTEDUNIT_PER_CITY)
 	{
 		return false;
 	}
@@ -8889,6 +8915,15 @@ bool CvCityAI::AI_chooseUnit(const char* reason, UnitAITypes eUnitAI, int iOdds,
 					eUnitAI,
 					iUnitStrength,
 					criteria);
+
+				//	The unit half of [CIT/order]: a DEMAND posted to the broker, which is what actually causes a
+				//	train somewhere. Without it the log carried construct/maintainProcess only, so unit
+				//	production was invisible in the one place a reader looks for what a city decided.
+				logCityAI(1, "[CIT/order] action=tenderUnit city=%S unitAI=%d priority=%d reason=%s",
+					getName().GetCString(), (int)eUnitAI, iPriorityOverride, reason);
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ORDER_TENDER_UNIT, 1)
+					.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
+					.addI(CITF_unitAI, (int)eUnitAI).addI(CITF_score, iPriorityOverride));
 
 				m_iRequestedUnit ++;
 
@@ -9296,19 +9331,25 @@ bool CvCityAI::AI_chooseProcess(CommerceTypes eCommerceType, int64_t* commerceWe
 
 	if (eBestProcess != NO_PROCESS)
 	{
-		// [CIT/order] -- city falls back to running a process (gold/research/culture/...).
-		logCityAI(1, "[CIT/order] city=%S MAINTAIN_PROCESS %S commerce=%d",
-			getName().GetCString(), GC.getProcessInfo(eBestProcess).getDescription(), (int)eCommerceType);
-		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ORDER_PROCESS, 1)
-			.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
-			.addI(CITF_process, (int)eBestProcess).addI(CITF_commerce, (int)eCommerceType));
 		// Whether the order LANDED is read off the queue length, never assumed from having asked: a process
 		// is refused outright when the AI queue already holds a real order, and a caller that returns on a
 		// bare true would end its decision cascade having set nothing.
 		const int iQueueLengthBefore = getOrderQueueLength();
 		pushOrder(ORDER_MAINTAIN, eBestProcess, -1, false, false, !bforce);
+		const bool bLanded = getOrderQueueLength() > iQueueLengthBefore;
 
-		return getOrderQueueLength() > iQueueLengthBefore;
+		// [CIT/order] -- reported AFTER the push and carrying the OUTCOME, because the two disagree often and
+		// the disagreement is the interesting signal: a REFUSED process means the queue already holds a real
+		// order, so the city is not running a process at all however many times it asked to.
+		logCityAI(1, "[CIT/order] city=%S MAINTAIN_PROCESS %S commerce=%d landed=%d",
+			getName().GetCString(), GC.getProcessInfo(eBestProcess).getDescription(), (int)eCommerceType,
+			bLanded ? 1 : 0);
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CITY, CIT_ORDER_PROCESS, 1)
+			.addI(CITF_city, getID()).addI(CITF_owner, (int)getOwner())
+			.addI(CITF_process, (int)eBestProcess).addI(CITF_commerce, (int)eCommerceType)
+			.addI(CITF_landed, bLanded ? 1 : 0));
+
+		return bLanded;
 	}
 
 	return false;
@@ -14018,6 +14059,31 @@ int CvCityAI::worstWorkedPlotValue() const
 	}
 
 	return (iWorstPlotValue == MAX_INT ? 0 : iWorstPlotValue);
+}
+
+bool CvCityAI::AI_roleFloorIsFillable(UnitAITypes eUnitAI)
+{
+	//	The bar is the TYPICAL predator, not the weakest one: measured over the 582 authored ANIMAL-class
+	//	units the median strength is 7 and 69% sit at 4 or above, while an early scout is 1 -- so a floor
+	//	filled with a scout is feeding units to something seven times its size, and most of the killers are
+	//	concealed as well, so it does not even get to choose the fight ([vision.md] hide and seek).
+	//	⚠ This DELIBERATELY stops the early explorer floor from firing at all: in the ancient era nothing
+	//	available clears the bar, which is the intended outcome -- a floor that cannot be filled survivably
+	//	must not force production (AGENTS.md § AI unit COUNTS).
+	const int AI_ROLE_FLOOR_SURVIVABLE_COMBAT = 7;
+
+	int iBestValue = 0;
+	const UnitTypes eBest = AI_bestUnitAI(eUnitAI, iBestValue, false, true);
+	if (eBest == NO_UNIT)
+	{
+		return false;
+	}
+	//	⛔ RAW strength, never AI_combatValue: that one divides by getBestLandUnitCombat() -- the best unit
+	//	CURRENTLY AVAILABLE -- so it is a 0-100 RELATIVE score, and early on, when the best thing available
+	//	is the scout itself, a scout scores ~100. Comparing it against an absolute animal strength is a
+	//	scale mismatch that makes the test pass exactly when it must fail.
+	return (GC.getUnitInfo(eBest).getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) / 100)
+		>= AI_ROLE_FLOOR_SURVIVABLE_COMBAT;
 }
 
 bool CvCityAI::AI_establishSeeInvisibleCoverage()

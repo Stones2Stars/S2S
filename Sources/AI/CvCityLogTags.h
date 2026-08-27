@@ -21,6 +21,7 @@ enum CitEvent
 	CIT_ORDER_CONSTRUCT,     // [CIT/order] action=construct
 	CIT_ORDER_PROJECT,       // [CIT/order] action=createProject
 	CIT_ORDER_PROCESS,       // [CIT/order] action=maintainProcess
+	CIT_ORDER_TENDER_UNIT,   // [CIT/order] action=tenderUnit -- a unit demand posted to the contract broker
 	CIT_PROP,                // [CIT/prop]
 	CIT_PROPLEVEL,           // [CIT/proplevel]
 	CIT_PUSH_REJECT_UNIT,    // [CIT/push/reject] kind=unit reason=spamGuard
@@ -72,7 +73,7 @@ enum CitField
 	CITF_unitType, CITF_unitAI,
 	CITF_building,
 	CITF_score, CITF_rank, CITF_count, CITF_focus,
-	CITF_project, CITF_process, CITF_commerce,
+	CITF_project, CITF_process, CITF_commerce, CITF_landed,
 	CITF_alreadyQueued, CITF_append, CITF_force,
 	CITF_progressLost, CITF_willChoose,
 	CITF_overflow, CITF_lost, CITF_ownerHas, CITF_aiRoleHas,

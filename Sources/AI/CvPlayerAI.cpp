@@ -11885,6 +11885,11 @@ int CvPlayerAI::AI_countCargoSpace(UnitAITypes eUnitAI) const
 }
 
 
+//	SCOUTS and HUNTERS are the only two MINIMUM-NUMBER roles (AGENTS.md § AI unit COUNTS): the AI cannot see the
+//	need to defend against hunting, so a small floor stands in for a judgement it cannot make. Every other role's
+//	count is a CAP, and the VALUATION is what asks for a unit at all.
+#define AI_MINIMUM_ROLE_UNITS 3
+
 int CvPlayerAI::AI_neededExplorers(const CvArea* pArea) const
 {
 	PROFILE_EXTRA_FUNC();
@@ -11896,8 +11901,7 @@ int CvPlayerAI::AI_neededExplorers(const CvArea* pArea) const
 			(1 + pArea->getNumUnrevealedTiles(getTeam()) + pArea->getNumUnownedTiles())
 			/
 			(100 * pArea->getNumTiles()),
-			// Limit the need for very big land based on empire size.
-			std::max(5, 3 + getNumCities() / 3)
+			AI_MINIMUM_ROLE_UNITS
 		)
 	);
 
@@ -11945,13 +11949,7 @@ int CvPlayerAI::AI_neededHunters(const CvArea* pArea) const
 	int iHuntersneeded = std::min(
 			intSqrt(getNumCities()) + pArea->getNumUnownedTiles() / 16 + 1,
 			getNumCities() / 2 + pArea->getNumUnownedTiles() / 64);
-	//Calvitix, limit the amount of hunters
-	#define NB_MAX_HUNTERS  10
-	WorldSizeTypes eWorldSize = GC.getMap().getWorldSize();
-	int iWorldSize = (int)eWorldSize;
-	int iMaxhunters = 4 + int(NB_MAX_HUNTERS * pow((iWorldSize + 1) / 6.0, 0.8));
-	return std::min(iHuntersneeded, iMaxhunters);
-	return (iHuntersneeded);
+	return std::min(iHuntersneeded, AI_MINIMUM_ROLE_UNITS);
 }
 
 
