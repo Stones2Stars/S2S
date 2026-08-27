@@ -117,3 +117,6 @@ __pycache__/
 *.log
 .cdb_path.txt
 .cdb_pid.txt
+
+# ruling-census snapshot for Tools/verify-doc-rulings.py (transient, pre-editorial-pass)
+Tools/.doc-rulings-snapshot.json
