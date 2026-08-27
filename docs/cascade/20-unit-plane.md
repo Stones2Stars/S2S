@@ -95,5 +95,23 @@ No bespoke host↔cargo family is needed. The full unit-stat family vocabulary
   summed deposits replace the `changeFreeSpecialistCount` process-applies feeding the placement); the
   placement machinery and its output reads stay.
 
----
+## ⛔ A CACHE IS INVALIDATED BY EVERY INPUT THAT FEEDS IT, NEVER BY A SUBSET
 
+`URS_STRENGTH_FLAT` gathers over the unit's held set, and `baseCombatStrPreCheck()` adds it to the serialized
+base. But with `GAMEOPTION_COMBAT_SIZE_MATTERS` on, `baseCombatStr()` returns the **`m_iSMStrength` cache
+INSTEAD** of that sum, and the cache is only rebuilt when `processPromotion` sets its recalc rider.
+
+⛔ **That rider was gated on ONE family.** It fired for `combat` (`COMBAT_AMOUNT`) and not for `strength`
+(`SCALAR_STRENGTH` / `CASC_UNIT_FLAT`), while the gather reads BOTH — so a `strength` promotion was gathered
+correctly into the resolved plane and then never read, because the cache still held the pre-promotion value.
+⚑ **Measured: all thirteen `PROMOTION_MIGHT*` were inert under Size Matters**, up to `MIGHT13`'s **+30
+strength**, while every `combat` promotion applied normally. The signature to recognise is exactly that split —
+*one family of promotion works and another silently does nothing* — and it points at an invalidation rider, never
+at the gather or the authored data.
+⇒ **When a value has TWO source families, its invalidation names both.** The slot table
+(`CvUnitResolved.cpp`, `g_aSlotAddress`) is the list of what feeds a slot; a rider that does not cover every row
+feeding the cached value is the defect.
+⚠ `processUnitCombat` is the correct shape beside it: it recalcs on `bSM && bByPromo` with no family filter at
+all, so it cannot fall out of step with the gather.
+
+---

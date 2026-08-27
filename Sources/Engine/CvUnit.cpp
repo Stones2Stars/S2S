@@ -17673,7 +17673,13 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	//	maxHP is applied from the sizeMatters section below, where json.md §9 homes the promotion's SM deltas.
 	//	The value itself is gathered by the RESOLVED plane off the held set; only the size-matters recalc rider
 	//	belongs at the apply site.
-	if (kPromotion.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) != 0)
+	//	⛔ BOTH strength families ride the recalc, not just `combat`. Size Matters caches the unit's base in
+	//	m_iSMStrength and baseCombatStr() returns that cache INSTEAD OF baseCombatStrPreCheck(), so a
+	//	promotion whose deposit lands in URS_STRENGTH_FLAT is gathered correctly and then never read: the
+	//	cache still holds the pre-promotion value. Gating the rider on COMBAT_AMOUNT alone meant every
+	//	`combat` promotion applied and every `strength` one silently did nothing (the MIGHT line).
+	if (kPromotion.getCombatModifier(COMBAT_AMOUNT, CASC_SCOPE_UNIT) != 0
+	||  kPromotion.getScalar(SCALAR_STRENGTH, CASC_SCOPE_UNIT, CASC_UNIT_FLAT) != 0)
 	{
 		bSMrecalc = true;
 	}
