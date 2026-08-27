@@ -2187,6 +2187,7 @@ void CyCity::pythonPublish()
 	python::class_<CyCity>("CyCity", python::no_init)
 		.def("getOwner", &CyCity::getOwner)
 		.def("getID",    &CyCity::getID)
+		.def("getOriginalOwner", &CyCity::getOriginalOwner)
 		.def("getX",     &CyCity::getX)
 		.def("getY",     &CyCity::getY)
 

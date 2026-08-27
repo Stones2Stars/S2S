@@ -66,6 +66,10 @@ public:
 	// gameplay being kept working, not new logic authored in script. It routes through CvUnit::setHasPromotion,
 	// so the promotion fact is emitted and the resolved plane re-gathers exactly as an engine-side promote does.
 	bool setUnitPromotion(int iPlayer, int iUnit, int iPromotion, bool bNewValue) const;
+	///<summary>Issues one of the engine's own unit COMMANDS (gift, upgrade, join, …) through
+	/// CvUnit::doCommand, so the command runs its normal validation and emits its normal facts.</summary>
+	///<returns>false when the unit handle does not resolve, or the command is out of range.</returns>
+	bool doUnitCommand(int iPlayer, int iUnit, int iCommand, int iData1, int iData2) const;
 
 	// Create a unit for this player at (iX, iY). ⚖ It earns its place the way this surface requires -- by
 	// EXISTING call sites that need it, several of them: the WarPrizes capture in CvEventManager.onCombatResult,
@@ -159,6 +163,10 @@ public:
 	// ([culture-religion-research.md]: city culture accumulates the ×100 rate and never decays, which is why it
 	// is int64_t at all).
 	bool setCityCulture(int iPlayer, int iCity, int iForPlayer, int64_t iCulture) const;
+	///<summary>Re-stamps who FOUNDED the city. Used when a barbarian city becomes a real civ's, so the
+	/// emergent player reads as the founder rather than as a conqueror.</summary>
+	///<returns>false when the city handle does not resolve, or the new owner is out of range.</returns>
+	bool setCityOriginalOwner(int iPlayer, int iCity, int iOriginalOwner) const;
 	bool setCityScriptData(int iPlayer, int iCity, std::string szData) const;
 	// PRESENCE of a building in this city, both directions. ⛔ ONE bool-parameterized verb, because the ENGINE
 	// models it as one (CvCity::changeHasBuilding) -- an add-only verb with a remove twin bolted beside it would be

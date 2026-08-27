@@ -267,6 +267,16 @@ bool CyAct::changeCityCulture(int iPlayer, int iCity, int iForPlayer, int64_t iC
 	return true;
 }
 
+bool CyAct::doUnitCommand(int iPlayer, int iUnit, int iCommand, int iData1, int iData2) const
+{
+	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return false;
+	if (iCommand < 0 || iCommand >= NUM_COMMAND_TYPES) return false;
+	CvUnit* pUnit = GET_PLAYER((PlayerTypes)iPlayer).getUnit(iUnit);
+	if (pUnit == NULL) return false;
+	pUnit->doCommand((CommandTypes)iCommand, iData1, iData2);
+	return true;
+}
+
 bool CyAct::setUnitPromotion(int iPlayer, int iUnit, int iPromotion, bool bNewValue) const
 {
 	if (iPlayer < 0 || iPlayer >= MAX_PLAYERS) return false;
@@ -361,6 +371,14 @@ bool CyAct::setCityCulture(int iPlayer, int iCity, int iForPlayer, int64_t iCult
 	CvCity* pCity = cya_city(iPlayer, iCity);
 	if (pCity == NULL || iForPlayer < 0 || iForPlayer >= MAX_PLAYERS) return false;
 	pCity->setCultureTimes100((PlayerTypes)iForPlayer, iCulture, false, false);
+	return true;
+}
+
+bool CyAct::setCityOriginalOwner(int iPlayer, int iCity, int iOriginalOwner) const
+{
+	CvCity* pCity = cya_city(iPlayer, iCity);
+	if (pCity == NULL || iOriginalOwner < 0 || iOriginalOwner >= MAX_PLAYERS) return false;
+	pCity->setOriginalOwner((PlayerTypes)iOriginalOwner);
 	return true;
 }
 
@@ -528,6 +546,7 @@ void CyAct::pythonPublish()
 		.def("invalidateBuildingList", &CyAct::invalidateBuildingList)
 		.def("setBuildDisabled", &CyAct::setBuildDisabled)
 		.def("setUnitPromotion", &CyAct::setUnitPromotion)
+		.def("doUnitCommand", &CyAct::doUnitCommand)
 		.def("createUnit", &CyAct::createUnit)
 		.def("addUnitProductionExperience", &CyAct::addUnitProductionExperience)
 		.def("finishUnitMoves", &CyAct::finishUnitMoves)
@@ -551,6 +570,7 @@ void CyAct::pythonPublish()
 		.def("setUnitExperience", &CyAct::setUnitExperience)
 		.def("setCityStoredFood", &CyAct::setCityStoredFood)
 		.def("setCityCulture", &CyAct::setCityCulture)
+		.def("setCityOriginalOwner", &CyAct::setCityOriginalOwner)
 		.def("setCityScriptData", &CyAct::setCityScriptData)
 		.def("setCityBuilding", &CyAct::setCityBuilding)
 		.def("disbandCity", &CyAct::disbandCity)
