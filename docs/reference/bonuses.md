@@ -25,7 +25,7 @@ answered a DIFFERENT number than the engine, because it carried none of the thre
 ## 2. THE TWO ORIGINS — `trade` and `onSite`, mutually exclusive
 
 **⛔ A resource atom's `connection` names WHERE IT ORIGINATES, and the two values may never be combined
-(owner).**
+.**
 
 | value | means |
 |---|---|
@@ -47,7 +47,7 @@ plots in the city's control, and only that.
 
 ---
 
-## 3. ⚖ A MANUFACTURED BONUS IS THE SAME CLASS AS EVERY OTHER BONUS (owner)
+## 3. ⚖ A MANUFACTURED BONUS IS THE SAME CLASS AS EVERY OTHER BONUS
 
 **This is why the relationship was changed, and it is what makes §2 expressible at all.** A resource a building
 PRODUCES enters the plot group through the operate/provides fixpoint exactly as a mined or traded one does, so

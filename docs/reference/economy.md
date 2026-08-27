@@ -27,15 +27,15 @@ supply + corporate maintenance.
   ⚠ The trap: its deposit is a city-scope FLAT (the corp's own per-city gold amount), so it lands in the city's
   package exactly like the other three — a read that loops every maintenance kind double-counts it. Skip the
   kind explicitly; do not infer the component set from the enum.
-  ⚠ **This EXPRESSES THE INTENT, it does not reproduce the legacy curve (owner ruling).** Size-scaling went
+  ⚠ **This EXPRESSES THE INTENT, it does not reproduce the legacy curve.** Size-scaling went
   multiplicative → additive; the colony quadratic and the corp handicap square went linear; the 2,000,000 cap
   and the vassal-cities term are gone — a behaviour change to STATE and weigh
   ([validation.md](../specs/validation.md): the spec leads), never to preserve for its own sake.
   The city's realized value is a BARE PACKAGE READ; nothing is cached, because no formula's result needs it.
   **The empire total is the Σ over its cities' realized values, re-summed at the read** — no stored receiver
-  slot holds it ([state-repositories.md](../cascade.md) § A CROSS-SCOPE RECEIVER TOTAL) —
+  slot holds it ([cascade.md](../cascade.md) § A CROSS-SCOPE RECEIVER TOTAL) —
   the one non-commerce receiver with no cache of its own.
-  > **⛔ THE ONE SPECIAL CASE MAINTENANCE HAS OVER ANY OTHER CASCADE CHANNEL (owner): a city emits 0 instead of
+  > **⛔ THE ONE SPECIAL CASE MAINTENANCE HAS OVER ANY OTHER CASCADE CHANNEL: a city emits 0 instead of
   > its package while WE LOVE THE KING DAY or DISORDER holds** — sent to the rest of the cascade only if no
   > status negates it.
   > ⚑ **It suppresses CONSUMPTION of the value, never its contents — so neither is a cache input and neither
@@ -49,12 +49,12 @@ supply + corporate maintenance.
   > ⚖ **There is NO effective-modifier sum to maintain, and no area surface.** The percent stack IS the roll-up
   > over the chain the city sits under (team + empire + city), so the hand-summed city + player + area +
   > connected-city legs collapse into one read. Three of those legs were never kinds but CONDITIONS wearing a
-  > member's name ([conditions are predicates, never bespoke members](../specs/json.md#35-predicates--a-systems-runtime-state-query)):
+  > member's name ([conditions are predicates, never bespoke members](../specs/json/03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query)):
   > `coastalDistance` is *while coastal*, `connectedCity` is *while connected to the capital*, and
   > `homeArea`/`otherArea` IS `IS_HOME_AREA` — *"maintenance increases in another area"* is literally "this
   > city's area is not the capital's" ([json.md §3.5](../specs/json.md)), which is why `CvArea` carries no
   > maintenance surface at all (a landmass is not an ownable scope,
-  > [state-repositories.md](../cascade.md)).
+  > [cascade.md](../cascade.md)).
   ⛔ **The COLONY CAP is GONE — data, kind and getter.** It bounded the colony component as a RATIO of the
   distance component, a cross-component bound the grammar cannot express, so it went with the quadratic:
   `MAINTENANCE_CAP`, `CvHandicapInfo::getColonyMaintenanceCap` and the `iMaxColonyMaintenance` curator row are
@@ -63,17 +63,17 @@ supply + corporate maintenance.
 - **Civic upkeep** = `max(0,(pop+offset)·popPct/100) + max(0,(cities+offset)·cityPct/100)`, handicap-scaled.
 - **Inflation** = `100 · hurriedCount · handicapInflationPct/100`, × civic/tech/building/event/rebel chain; decays per `HURRY_INFLATION_DECAY_RATE`.
   > **⛔ INFLATION IS NOT ACTUALLY USED IN THE GAME, AND #430 DOES NOT REMODEL IT — IT IS A CONSCIOUS DECISION
-  > TO CUT AND LIVE WITH THE CONSEQUENCES (owner).** The mechanic above is what the engine still COMPUTES; it is
+  > TO CUT AND LIVE WITH THE CONSEQUENCES.** The mechanic above is what the engine still COMPUTES; it is
   > not a model anyone is standing behind. ⇒ A gap found in it is **not** a defect to repair and **not** a
   > wiring job: the correct action is the ordinary cut, and the consequence is accepted.
-  > **⚖ WHEN IT RETURNS IT IS A CASCADE CHANNEL DRIVEN BY ACTUAL EXPENDITURE (owner)** — *"we need to have a
+  > **⚖ WHEN IT RETURNS IT IS A CASCADE CHANNEL DRIVEN BY ACTUAL EXPENDITURE** — *"we need to have a
   > real plan for how it is to be modelled based on actual expenditure."* That is the whole of the forward
   > direction, and it is the part that does not exist yet: today's formula keys on **`hurriedCount`** — how often
   > you RUSHED — which is a proxy for spending rather than spending, so no amount of re-wiring the present shape
   > reaches the intended one.
   > ⛔ **So do NOT re-point an inflation read onto a cascade kind to "finish" it.** Wiring a live read onto a
   > mechanic that is being replaced whole is the half-migration
-  > ([build a new getter surface, never widen a legacy one](../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner)), and the plan the replacement
+  > ([build a new getter surface, never widen a legacy one](../architecture/patterns/05-the-two-read-roles-one-grammar-two.md#-the-two-read-roles--one-grammar-two-answers)), and the plan the replacement
   > needs is a DESIGN decision the owner has not taken — inventing one is the rollerskate
   > ([the no-guessing rule](../../AGENTS.md#conduct)).
   > ⚠ **THREE UNRELATED ADDRESSES SHARE THE WORD, and that is worth knowing before touching any of them** — a
@@ -86,7 +86,7 @@ supply + corporate maintenance.
   > | `hurry.empire.inflation.percent` | `SCALAR_HURRY_INFLATION` | the modifier on the hurried-count DECAY rate — **now read by NOBODY** |
   >
   > ⚑ The third lost its only consumer when the stranded `hurryInflationModifier` accumulator was cut
-  > ([the uniform legacy-accumulator cut](../cascade.md#-the-legacy-accumulator-cut--every-accumulator-one-uniform-mechanism)); its kind and its
+  > ([the uniform legacy-accumulator cut](../cascade/03-no-staleness-no-selfheal.md#-the-legacy-accumulator-cut--every-accumulator-one-uniform-mechanism)); its kind and its
   > two civic authorings STAY, inert, because purging them is the remodel's call and not a tidy-up.
 - **Per-turn order:** `verifyGoldCommercePercent` (silently raises the gold slider on deficit) → `doGold` (strike +
   forced-disband when gold < 0) → `doAdvancedEconomy` (inflation decay, unmodified).
@@ -104,10 +104,10 @@ supply + corporate maintenance.
   × `100/(100−mod)` if −; free allowances subtracted after, floor 0. `getFinalUnitUpkeepChange(iExtra, bMilitary)`
   *temporarily* mutates the accumulators for marginal-cost AI valuation.
 - Final = `(civilianNet + militaryNet) × handicapPct/100 × AI-handicap × era-scale`, 0 for NPCs.
-  > **⛔ UPKEEP *IS* MAINTENANCE — THERE IS NO DIFFERENCE (owner); IT ONLY COMES FROM UNITS INSTEAD OF CITIES.**
+  > **⛔ UPKEEP *IS* MAINTENANCE — THERE IS NO DIFFERENCE; IT ONLY COMES FROM UNITS INSTEAD OF CITIES.**
   > It is the same expense, subtracted from gold earned at the end, and it therefore rides the SAME empire
   > receiver rather than a parallel one. The receiver rule is unchanged — a cross-scope total is the Σ of its
-  > MEMBERS' realized values ([state-repositories.md](../cascade.md)) — and the only
+  > MEMBERS' realized values ([cascade.md](../cascade.md)) — and the only
   > thing that varies is WHICH members: maintenance sums the player's cities, upkeep sums its units. So the
   > empire's Σ has two legs into one slot.
   > ⛔ Do NOT mint a second receiver for it. Reading "upkeep" as its own machine is what produces a parallel
@@ -155,7 +155,7 @@ supply + corporate maintenance.
   by a real detonation (`CvPlot`), is serialized and is published to Python; it merely happened to be READ by the
   warming calc. Owner-ruled KEEP even with no C++ consumer — *"it's worth having"* — so a removal that follows
   the NAME rather than the WRITER zeroes a live counter.
-  > **⛔ THE PYTHON GLOBAL WARMING IS NOT ALIVE EITHER — "it just pretends to be" (owner).**
+  > **⛔ THE PYTHON GLOBAL WARMING IS NOT ALIVE EITHER — "it just pretends to be".**
   > `CvRandomEventInterface.doGlobalWarming`, its `TXT_KEY_EVENT_GLOBAL_WARMING*` text, the
   > `BUILDING_POLLUTION_*_GLOBAL_WARMING` pseudo-buildings and the event trigger that requires one are all still
   > in the tree and all still reachable — which is exactly why it reads as a live mechanic on inspection.

@@ -21,11 +21,11 @@ magnitude — carried that way through the cascade, the realized getters and the
 this is OOS-load-bearing (Civ4 MP is deterministic lockstep; CPU-dependent float math desyncs).
 `V100 = round(human × 100)`, so `1.00 → 100`, `7 → 700`, `0.5 → 50`; `FIXED_ONE = 100`.
 
-> **⛔ THE ×100 EXISTS FOR ONE REASON — TWO DECIMALS ON AN AMOUNT (owner).** *"The reason for multiplying int
+> **⛔ THE ×100 EXISTS FOR ONE REASON — TWO DECIMALS ON AN AMOUNT.** *"The reason for multiplying int
 > values by 100 is so we can have 2 decimals… so we can express anything with 2 decimals at edge."* That is the
 > whole of it, and it is what decides where the scale applies.
 >
-> **⛔ A PERCENTAGE IS THEREFORE NOT SCALED (owner): *"percentages should not have decimals."*** A percent is a
+> **⛔ A PERCENTAGE IS THEREFORE NOT SCALED: *"percentages should not have decimals."*** A percent is a
 > whole number, so it has no decimals to carry and the ×100 buys nothing. Scaling it costs a **second identity
 > constant**: `100 + Σpercent` becomes `10000 + Σpercent` at every site a percent is combined, and that magic
 > `10000` then has to be threaded through every consumer — which is exactly the fudge-factor class §4c-bis exists
@@ -48,13 +48,13 @@ Human numbers exist at exactly **two boundaries** — nobody in between guesses 
 | **CASCADE + getters + consumers** (the engine) | pure integer ×100 math; the realized getters return ×100 and every consumer carries it | ×100 throughout |
 | **READERS** (the OUT boundary) | ×100 → human, once: any READER (UI / the `/computed` HTTP fields / the `Cy*` Python wrappers) does its own trivial `÷100`. A value that is physically a **whole game count** (angry citizens, a food modifier) reduces at the **point of use** that consumes it as a whole number — that use is itself a reader | converts ← ×100 |
 
-> **⛔ NO getter reduces, and there are NO discrete carve-outs — every channel works identically (owner ruling).**
+> **⛔ NO getter reduces, and there are NO discrete carve-outs — every channel works identically.**
 > This uniformity IS the rework: *"then we never have to care about what format inside the structure."* A getter that
 > reduces internally hands every consumer a pre-rounded number whether or not it wants one, and a consumer needing
 > precision cannot get it back — which is the same shoehorn as a `getX`+`getX100` pair, just spelled differently.
 > Discreteness is a property of a USE (the game unassigns whole citizens), not of a getter.
 >
-> **⛔ And the NAME never carries the scale (owner ruling): no `100` suffix on any internal getter / function /
+> **⛔ And the NAME never carries the scale: no `100` suffix on any internal getter / function /
 > member.** Every value is ×100 by the universal rule above, so a `100` in the name is redundant noise —
 > `getScalar` / `sum` / `expectedModifier`, never `getScalar100`. The one algebra rule universal ×100 brings:
 > **never multiply two ×100 values together without rescaling** — the product is ×10000, so a `÷100` belongs at
@@ -116,7 +116,7 @@ cost.
 | `percent: 25` | +25% | **`25` — NOT scaled** (a percent has no decimals) | summed: `Σpercent`, applied as `(100 + Σpercent)/100` |
 | `multiplier: 2` (or `1.5`) | ×2.00 / ×1.50 | `200` / `150` (×100 — identity 100) | product: `Π(mult100/100)` |
 
-⛔ **readJson is the ONE place that knows this, and a CALCULATION never scales (owner):** *"you should not need
+⛔ **readJson is the ONE place that knows this, and a CALCULATION never scales:** *"you should not need
 to scale any value inside any actual calculation — it is literally readJson's job to ensure it's scaled."* The
 unit-aware conversion lives at the parse edge (`CvModifiers.cpp`, the entry-value sites); every consumer then
 receives what it can use directly. A `/100` or a `×100` appearing inside a calculation to make two operands
@@ -211,7 +211,7 @@ and none is.
 constants, the cluster boundary was drawn WRONG — stop and redraw it, never push through. (This is the second of
 [AGENTS.md](../../../AGENTS.md)'s drift detectors, stated as a conversion method.)
 
-⚑ **A fudge factor points AT the unmigrated consumer (owner).** In practice the constant is not a mis-drawn
+⚑ **A fudge factor points AT the unmigrated consumer.** In practice the constant is not a mis-drawn
 boundary in the abstract — it is **legacy being forced into the new surface at an AI call site**: the multiplier
 exists so a consumer that has not moved can keep reading a new-surface value in its old shape. ⛔ So when one turns
 up, do not ask where the conversion belongs — ask **WHICH SIDE IS STILL LEGACY**, and re-point that side. The
@@ -219,17 +219,17 @@ constant then deletes itself, and it takes its scale question with it: a hand-ro
 ever needed to know its operands' units, so re-pointing DISSOLVES the question rather than answering it.
 ⚠ The failure mode is the opposite move — adding the multiplier and calling it done. That leaves the AI half on
 legacy while the surface beneath it moves, which is exactly the half-migrated state
-[build a new getter surface, never widen a legacy one](../../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner) names.
+[build a new getter surface, never widen a legacy one](../../architecture/patterns/05-the-two-read-roles-one-grammar-two.md#-the-two-read-roles--one-grammar-two-answers) names.
 
 ⚑ **A cluster is defined by what MIXES, not by what looks similar.** Worked groupings: the yield/food/wellbeing
 chain is one unit because food consumption subtracts angry population and health rate; commerce joins it at the
 production→commerce term; gold/maintenance/upkeep joins commerce because gold IS a yield
-([every modifiable number is a yield](../../cascade.md#1-one-step-deposit-down-accumulate-read-o1)); unit experience is genuinely
+([every modifiable number is a yield](../../cascade/01-deposit-and-read.md#1-one-step-deposit-down-accumulate-read-o1)); unit experience is genuinely
 self-contained and so is the one safely parallelizable cluster.
 ⚠ **Same SHAPE is not same NATURE:** a `…Times100` on AI unit counts or plot strength carries *fractional
 SizeMatters counts*, not a modifier channel — it is not a scale violation and must not be swept in with the yields.
 
-**Sequencing within a cluster (owner): set the mechanic up to spec FIRST, then wire the consumers.** Do not open
+**Sequencing within a cluster: set the mechanic up to spec FIRST, then wire the consumers.** Do not open
 with a hundred consumer edits; build the value chain so it is internally ×100-consistent, then reduce at the readers.
 
 ### 4c-unit. ⛔ ASK THE KIND'S UNIT, NEVER THE FAMILY'S
@@ -238,7 +238,7 @@ with a hundred consumer edits; build the value chain so it is internally ×100-c
 point of use. ⚠ **A family-wide blanket on a per-kind-split family produced every defect in that cluster** — the
 unit belongs to the KIND, so reading it off the family is how a percent gets scaled or a flat does not.
 
-### 4c-zero. ⛔ NO EXCEPTIONS — AN INDIVISIBLE QUANTITY IS STILL ×100 INTERNALLY (owner)
+### 4c-zero. ⛔ NO EXCEPTIONS — AN INDIVISIBLE QUANTITY IS STILL ×100 INTERNALLY
 
 > *"If I had allowed for free specialists to not be a ×100 number internally, it is a virtual guarantee that
 > some agent would bullshit their way through and decide more numbers should be like that."*
@@ -248,10 +248,10 @@ There is no COUNT unit and none is to be added.** Anything authored on an info a
 takes the ×100, whatever it counts.
 
 ⚑ **FREE SPECIALISTS ARE THE WORKED CASE, and the argument that gets made for exempting them is the one to
-refuse.** A free specialist is authored on an info as a flat — *technically a yield* (owner) — so it is ×100
+refuse.** A free specialist is authored on an info as a flat — *technically a yield* — so it is ×100
 like every other authored amount. The tempting objection is that a specialist is a person and half of one does
 not exist, so the two decimals carry nothing; that is true and it is not a reason. ⛔ **The rule's value is
-that it has NO exceptions (owner): *"if I had allowed for free specialists to not be a ×100 number internally,
+that it has NO exceptions: *"if I had allowed for free specialists to not be a ×100 number internally,
 it is a virtual guarantee that some agent would bullshit their way through and decide more numbers should be
 like that."*** An exemption argued well for one field is a precedent the next agent widens.
 ⚠ **THE COST IS MEASURED, not hypothetical, which is why the argument is spelled out rather than left to
@@ -260,12 +260,12 @@ unscaled while the unattributed ledger was lifted to meet them — so every deri
 read edge and roughly **200 buildings authoring `freeSpecialists` granted nothing at all**. The carve-out's own
 justification generalised past specialist slots to "population and era" in the same sentence it was written,
 which is the widening in miniature: state and authored data reasoned about as one thing.
-⛔ **POPULATION IS NOT A COUNTER-EXAMPLE — IT IS NOT FROM AN INFO (owner).** It is engine state read by a
+⛔ **POPULATION IS NOT A COUNTER-EXAMPLE — IT IS NOT FROM AN INFO.** It is engine state read by a
 `per:` count-scaler ([json.md §3.1](../json.md)), never an authored deposit, so it never enters this table at
 all. "X is a count" is therefore never an argument about a deposit's scale; the question is only ever whether
 the value is AUTHORED ON AN INFO.
 
-### 4c-bis. ⛔ ×100 EVERYWHERE INTERNALLY — TRUNCATE ONCE, AT THE EDGE (owner)
+### 4c-bis. ⛔ ×100 EVERYWHERE INTERNALLY — TRUNCATE ONCE, AT THE EDGE
 
 > *"This, right here, is why we truncate once, at edge — and use ×100 everywhere internally."*
 
@@ -306,7 +306,7 @@ reduction in the wrong place.
 > inside a `#ifdef`, resolve the GUARD first — if it cannot vary, delete it and re-read the code as the plain
 > arithmetic it actually is.
 
-### 4c-ter. The COMBAT-STRENGTH cluster — the target shape (owner ruling)
+### 4c-ter. The COMBAT-STRENGTH cluster — the target shape
 
 ⚖ **"The strength legs should not need to reduce to human until actually SHOWN IN THE UI."** Combat strength is an
 AMOUNT, so it is ×100 all the way through the calculation and reduces ONLY at the OUT boundary.
@@ -343,7 +343,7 @@ CROSSES A BOUNDARY** — which makes the audit an ENUMERATION OF BOUNDARIES, nev
 2. the **OUT** boundary — a reader's `÷100` at the point of use;
 3. a **sanctioned engine INPUT** — a value the cascade folds in rather than computes.
 
-⚑ **The trade-route fold is THE EDGE (owner)** — the exemplar of class 3 and the reason class 3 exists.
+⚑ **The trade-route fold is THE EDGE** — the exemplar of class 3 and the reason class 3 exists.
 `tradeYield` is the ONE sanctioned live-yield input ([modifier.md §2a](../../cascade.md)): the cascade cannot
 re-derive the trade NETWORK, so that calculation stays engine-owned ([north-star.md](../../architecture/north-star.md)
 KEEP — it is none of the four systems' job) and its value is FOLDED IN. That is precisely why the scales differ
@@ -363,7 +363,7 @@ multiply.
 > (×100 — the reader reduces). So "this getter set is ×100, reduce at the reader" is never a safe blanket; it
 > zeroes every percent it touches. **Ask the KIND's unit, never the family's or the getter's name.**
 >
-> **⛔ MOVEMENT IS ALREADY A PER-100 VALUE — `MOVE_DENOMINATOR` is its fixed point, and always was (owner).**
+> **⛔ MOVEMENT IS ALREADY A PER-100 VALUE — `MOVE_DENOMINATOR` is its fixed point, and always was.**
 > That is why routes author 5–100: they are denominator units expressing PART STEPS. So the cascade's ×100
 > sits on top of a denominator the mechanic already had, and the family slot holds **two scales, each ×100'd**
 > — terrain/feature as whole moves (1–6), routes as denominator units (5–100).
@@ -387,7 +387,7 @@ authored JSON produces is observed live on the `/computed` decomposition censuse
 ([done = observable in the running game](../validation.md)). **Residual divergence localises
 the next mis-scaled field** → fix the curator → regenerate → re-check. Exact parity is the bar — 0 in-scope mismatches; a residual divergence is a data-collection gap (a still-mis-scaled field), never a formula difference ([the completeness+attribution bar](../validation.md#the-observation-surface)).
 
-⚖ **CALIBRATION — a scale error BREAKS BALANCE AND BEHAVIOUR, NOT THE GAME (owner).** *"It's obvious when numbers
+⚖ **CALIBRATION — a scale error BREAKS BALANCE AND BEHAVIOUR, NOT THE GAME.** *"It's obvious when numbers
 are out of whack in a new game, and it does not actually break the game — it just breaks balance."* A wrong scale
 (and the fudge factor that hides one) costs no crash and no corrupt save; it shows up on a fresh start.
 ⚠ **But do not read "just balance" as "just tuning."** Integer truncation does not mis-tune a mechanic, it SWITCHES
@@ -400,10 +400,10 @@ because a mis-scaled field sitting unconverted is just as wrong and nobody is lo
 is unchanged: establish the unit from `infoKindUnit` + the authored data, then convert.
 ⛔ The exceptions that are NOT cheap, and still want care before landing: anything that changes what a SAVE means
 (a serialized member's scale), and anything feeding the synchronized RNG
-([the synchronized RNG is shared state](../../reference/engine.md#-the-synchronized-rng-is-shared-save-state--do-not-touch-the-draws-owner)) — those fail
+([the synchronized RNG is shared state](../../reference/engine.md#-the-synchronized-rng-is-shared-save-state--do-not-touch-the-draws)) — those fail
 silently or desync rather than looking odd.
 
-⚑ **AND THE AI DECISION LOG IS A SCALE INSTRUMENT (owner): a decision that NEVER VARIES is a truncated-to-zero
+⚑ **AND THE AI DECISION LOG IS A SCALE INSTRUMENT: a decision that NEVER VARIES is a truncated-to-zero
 input.** Integer division is what makes a mis-scaled value fail this way — a percent reduced by 100 lands on 0,
 and the branch it gates then resolves the same way forever. Because every AI decision is logged
 ([spine.md](../../spine.md)), that shows up as a decision going one way 100% of the time, which is far easier to

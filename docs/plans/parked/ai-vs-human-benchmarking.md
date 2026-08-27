@@ -1,6 +1,6 @@
 # AI-vs-human benchmarking — live playthrough observation
 
-**Goal (owner, 2026-06-11).** Determine empirically whether the AI *runs ahead of* or *lags
+**Goal.** Determine empirically whether the AI *runs ahead of* or *lags
 behind* a human player over a real game — and use what the gap looks like to drive AI
 improvements. The owner plays a normal game; agents observe every civ's trajectory through
 the live instrumentation and compare.
@@ -12,7 +12,7 @@ bonuses, free units, cost discounts). Difficulty-style numeric bonuses are a las
 the improvement lever. When a benchmark shows the AI lagging, the response is a competence fix
 (valuation, coordination, production choice), not a multiplier.
 
-**Equally valid output: game-balance findings (owner, 2026-06-11).** Not every observed AI
+**Equally valid output: game-balance findings.** Not every observed AI
 failure is an AI bug. "Animals are simply too strong too early" is a legitimate benchmark
 conclusion — nothing requires the AI to magically beat a strength-9 rhino with strength-2
 hunters. When the data shows *no* good decision exists (e.g. most wildlife unattackable at
@@ -46,7 +46,7 @@ Observation runs on shipping FinalRelease infrastructure (no FASSERT there — s
   Per-game output lands in `Benchmarks/` — see `Benchmarks/README.md` for the folder naming
   and contents conventions (data is gitignored; conventions are tracked).
 - The human player's civ is identified per game and **excluded from AI-health conclusions**.
-- **Record the difficulty, and normalize for it (owner, 2026-06-11).** Handicap bonuses
+- **Record the difficulty, and normalize for it.** Handicap bonuses
   mean an AI lead is partly difficulty-assisted (the 2026-06-11 game runs on Emperor) —
   the competence question is whether the AI *converts* its head start into a durable lead,
   not whether it leads. `/players` carries per-player `handicap` (XML key) and the
@@ -116,7 +116,7 @@ per-decision *why* (Autolog channels).
   pressure with vision coverage alone while a small civ absorbs it — and barb cities
   seeded in that same wilderness keep producing. The loop compounds onto whoever is
   already behind (Korea died to it before t265). Levers + data in #408.
-- **Balance finding: early wildlife may be overtuned** (owner observation). With
+- **Balance finding: early wildlife may be overtuned**. With
   era-available units capping at str ~4 and a quarter of land animals at str 5–7 (74%
   aggressive), turtling is the *only* correct AI play; civs bleed anyway (one dead by t84,
   another at zero units by t188 with its city standing open). If the intended early game is

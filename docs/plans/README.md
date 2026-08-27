@@ -1,6 +1,6 @@
 # Plans
 
-> In-flight + parked work. **Far-future roadmaps / sequencing are deliberately kept OUT** (owner) — they poison
+> In-flight + parked work. **Far-future roadmaps / sequencing are deliberately kept OUT** — they poison
 > context and are wildly fluid. This is just the index of what lives here.
 
 - **[structural-cleanup/](structural-cleanup/README.md)** — the *bulldozer reference*: what gets deleted when the

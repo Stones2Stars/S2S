@@ -16,7 +16,7 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > authoring shape to fill the gap** — that is exactly the guessing [the no-guessing rule](../../AGENTS.md#conduct)
 > bans. The shape is undesigned; see [Open](#open).
 
-> **⚖ STATUS IS A SCOPE CONCEPT, NOT A UNIT ONE (owner).** A unit is PARALYZED, a PLAYER is in a GOLDEN AGE, a
+> **⚖ STATUS IS A SCOPE CONCEPT, NOT A UNIT ONE.** A unit is PARALYZED, a PLAYER is in a GOLDEN AGE, a
 > CITY is CELEBRATING — all three are the same mechanic: applied, ticking down every turn, over at zero. So each
 > scope that carries statuses gets its own enum and the identical store / accessor / tick shape on its owner
 > (`Engine/CvStatus.h`), instead of every timer being a hand-named member with its own getter, setter,
@@ -27,21 +27,21 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > store replaces the hand-named counter, never the crossing logic ([save.md §6](save.md): audit a changer's
 > whole body before cutting it).
 
-> ⚖ **A DURATION-1 STATUS IS THE NATURAL SHAPE FOR "WHILE X HOLDS" (owner).** We Love the King/Emperor Day is a
+> ⚖ **A DURATION-1 STATUS IS THE NATURAL SHAPE FOR "WHILE X HOLDS".** We Love the King/Emperor Day is a
 > ONE-TURN status re-applied every turn by a trigger while its conditions match — so it lapses by simply not
 > being re-applied, and needs no separate clear. The trigger owns the TEST; the counter owns the ENDING.
-> ⛔ **Its legacy trigger wiring STAYS (owner):** re-homing that per-turn condition test is funky, so the status
+> ⛔ **Its legacy trigger wiring STAYS:** re-homing that per-turn condition test is funky, so the status
 > owns the storage and the read while the existing code owns deciding whether the conditions match. That is a
 > ruled carve-out, not a half-migration to finish opportunistically.
 
 ## What a state is (recap)
-- **A SPECIFIC COUNTER, DECREMENTED EVERY TURN (owner)** — applied to the unit, ticking down, over at zero.
+- **A SPECIFIC COUNTER, DECREMENTED EVERY TURN** — applied to the unit, ticking down, over at zero.
   Unlike a *mutable* skill (persists until changed) or an *immutable* tag (set at creation).
 - ⚑ **The block's name is `status`** ([json.md §8](json.md)); this file is its glossary.
 - ⛔ **A status is NOT a skill**, and mis-filing one as a skill is a recurring error the owner has rejected more
   than once: a skill is an ability the unit HAS, a status is a condition something PUT ON it for N turns. The
   curator therefore maps no status tag into `skills` — an unmapped tag reports loudly instead.
-- **The read is `count > 0` (owner)** — a status HOLDS while its value is above zero, the ordinary
+- **The read is `count > 0`** — a status HOLDS while its value is above zero, the ordinary
   `ContextDict` semantic ([contexts.md](../cascade.md)). Expiry IS the counter reaching 0; there
   is no separate present/absent plane beside it.
 - ⚠ **It is id→COUNT like a city's `amenities`, but the COUNT MEANS SOMETHING ELSE** — an amenity's count is a
@@ -49,7 +49,7 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
   its own. Same shape, different model; do not merge the mechanisms.
 - Historically NOT a data block — a pseudo-promotion or a Python event stands in for it.
 
-> **⚖ OPEN BY DESIGN — when we find more, we add more (owner).** The `UnitStatus` enum is a HAND-MAINTAINED
+> **⚖ OPEN BY DESIGN — when we find more, we add more.** The `UnitStatus` enum is a HAND-MAINTAINED
 > list and identifying new statuses is an ongoing activity for the life of the mod, exactly as it is for
 > [tags](tags.md): a new member is a one-line addition, and **more arriving is the normal state, never a gap to
 > close**. ⛔ So this glossary is never "incomplete" against a finish line, and the short list is not a backlog.
@@ -83,7 +83,7 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 
 ⛔ **None is wired, deliberately** — see the carve-out below; `CvPlayer` carries no status store at all.
 
-> **⚖ ANARCHY IS CITY DISORDER, EMPIRE-WIDE — AND IT IS AN EMPIRE-SIDE STATUS IN ITS OWN RIGHT (owner).** The
+> **⚖ ANARCHY IS CITY DISORDER, EMPIRE-WIDE — AND IT IS AN EMPIRE-SIDE STATUS IN ITS OWN RIGHT.** The
 > city half is already the model working: `CvCity::isDisorder()` is `isOccupation() || owner.isAnarchy()`, so
 > an anarchic empire's cities are in disorder and the [economy.md](../reference/economy.md) participation gate
 > already declines their packages at the Σ. ⛔ That does NOT make anarchy a purely city-landed effect: it
@@ -94,7 +94,7 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > zero, gated `> 0` and ticked once per turn, with the UI reading *"while in anarchy"* and then *"wait N more
 > turns"* off them. ⛔ So they are not timers to leave longhand on the grounds that anarchy is the interesting
 > one — they are members of this enum.
-> ⚖ **AND THE COOLDOWN IS PER-ACTION: TWO members, never one (owner).** A civic change and a religion change
+> ⚖ **AND THE COOLDOWN IS PER-ACTION: TWO members, never one.** A civic change and a religion change
 > bar only THEMSELVES, from counters set at different moments, so folding them into a single empire cooldown
 > would make converting your religion bar a civic swap. ⛔ That is a BEHAVIOUR change wearing a consolidation,
 > which is exactly what the one-member reading looks like from the outside — the two counters are the mechanic,
@@ -102,12 +102,12 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > ⚠ **The city fan is therefore anarchy's CITY HALF, never its whole expression** — reading the
 > land-on-each-city design below as the complete model is what leaves the empire-side effects homeless.
 
-> **⛔ GOLDEN AGE AND ANARCHY ARE THE TWO DELIBERATE EXCEPTIONS, AND THEY ARE NOT WIRED (owner).** They remain the
+> **⛔ GOLDEN AGE AND ANARCHY ARE THE TWO DELIBERATE EXCEPTIONS, AND THEY ARE NOT WIRED.** They remain the
 > hand-named `m_iGoldenAgeTurns` / `m_iAnarchyTurns` on `CvPlayer`, and **the existing engine handles their
 > empire-wide effect today**. `PlayerStatus` is forward intent; nothing implements it, and `CvPlayer` carries no
 > status store. **A held decision, not an unfinished conversion** — do not read the enum entry as wired.
 >
-> **⚖ THE DESIGN IS SETTLED — this is SEQUENCING, not an open question (owner).** Their CITY-reaching half
+> **⚖ THE DESIGN IS SETTLED — this is SEQUENCING, not an open question.** Their CITY-reaching half
 > resolves by **landing a status ON EACH CITY**, driven by the empire-scope happening:
 > `SEVT_EMPIRE_GOLDEN_AGE_ADDED` / `_REMOVED` and `SEVT_EMPIRE_ANARCHY_ADDED` / `_REMOVED`, both of which
 > **already exist**. The player holds the status; each city holds the per-city EFFECT as an ordinary city
@@ -118,13 +118,13 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > displacing the research line, the two post-anarchy countdowns barring their own action — is held and read at
 > the PLAYER, and has no city to land on.
 >
-> **⛔ AND IT IS BUILT AT THE END, WHEN THE STRUCTURE IS SET — NOT AS PART OF INITIAL SETUP (owner):** *"that is
+> **⛔ AND IT IS BUILT AT THE END, WHEN THE STRUCTURE IS SET — NOT AS PART OF INITIAL SETUP:** *"that is
 > how rollerskating happens."* ⛔ Do not wire the consumer now, and do not re-home the two members onto a player
 > store to "prepare" for it — both look like progress while pre-committing a structure that is not settled yet.
 > ⚠ This is an owner-ruled ORDERING, so ["deferred" is banned](../../AGENTS.md#design) does not
 > reach it: the work is named, its design is decided, and its position in the sequence is the ruling.
 
-> **⚖ THE STORE IS SERIALIZED; WHAT IS NOT CARRIED IS THE CONVERSION (owner).** Turns-remaining is genuine
+> **⚖ THE STORE IS SERIALIZED; WHAT IS NOT CARRIED IS THE CONVERSION.** Turns-remaining is genuine
 > NON-DERIVABLE state — nothing reconstructs *"three turns of blackout left"* from anything else — so it is
 > exactly the class [save.md §5](save.md) keeps a serialized store for, and
 > [derived data is never trusted from a save](save.md#5-derived-data-serializes-nothing-) does not reach it: that
@@ -139,7 +139,7 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > ⚠ Its PLAYER-ALERT ("power restored") died with the per-turn maintainer, as those alerts do, and comes back
 > as a CONSUMER of the fact ([spine.md](../spine.md)).
 
-> **⚖ A STATUS ACTS ON ITS OWN OBJECT — ITS CONSUMERS ARE NOTIFICATIONS AND LOGGING (owner).** *"Not a lot of
+> **⚖ A STATUS ACTS ON ITS OWN OBJECT — ITS CONSUMERS ARE NOTIFICATIONS AND LOGGING.** *"Not a lot of
 > things outside of notifications and logging actually care about statuses; they mostly have an effect on the
 > actual ongoings on its own object."* A paralyzed unit cannot move, a blackout city is not powered, a
 > celebrating city pays no maintenance — the effect lands **where the status is held**, so almost nothing
@@ -163,7 +163,7 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > each object the effect reaches. ⛔ The storage never moves up to the announcing scope.
 
 > **⛔ A STATUS IS MIDDLEWARE BETWEEN A SOURCE AND ITS TARGETS — IT GATES WHAT IS DELIVERED, NEVER WHAT IS STORED
-> (owner).** *"What status should do is live as kind of middleware, inputs and outputs — so if blackout, even
+>.** *"What status should do is live as kind of middleware, inputs and outputs — so if blackout, even
 > though power amenity is operational, it doesn't get to the targets."* The source keeps its own truth and the
 > status decides whether that truth reaches anyone.
 > ⚑ **The worked case is POWER, and the two planes stay entirely separate** (§ the id→COUNT note above): the
@@ -174,7 +174,7 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > of its maintenance package** ([economy.md](../reference/economy.md) — *"the package is sent out to the rest of
 > the cascade only if no status negates it"*, suppressing the CONSUMPTION of the value and never its contents).
 > That was written as a maintenance quirk; it is this rule, and the rule is what binds.
-> ⚖ **AND THE GATED VALUE THEREFORE EARNS AN EXPLICIT GETTER (owner)** — *"power having an explicit getter that
+> ⚖ **AND THE GATED VALUE THEREFORE EARNS AN EXPLICIT GETTER** — *"power having an explicit getter that
 > blackout as a status can tap into makes sense here"* — the one qualification to
 > [patterns.md](../architecture/patterns.md)'s one-getter-per-group grammar: **a gate needs a named point to tap
 > into**, which a channel-indexed group read does not offer. ⛔ That is not licence to grow the per-channel
@@ -185,7 +185,7 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > ⛔ **The gated read is then the ONE definition, and the CROSSING that is announced is ITS crossing, never the
 > store's.** The two genuinely differ — a grantor arriving mid-blackout moves the store and delivers nothing; the
 > blackout lifting delivers power while the store stands still — so announcing the store would put the fact and
-> every consumer's read on two different values, leaving [the maintained sum](../cascade.md#-the-maintained-sum--three-planes-one-slot-and-nothing-is-ever-recomputed)'s
+> every consumer's read on two different values, leaving [the maintained sum](../cascade/05-three-planes.md#-the-maintained-sum--three-planes-one-slot-and-nothing-is-ever-recomputed)'s
 > plane C holding deposits nothing withdraws. The fold owns that announcement
 > ([contexts.md](../cascade.md)), and the status crossing reaches the fold for that reason alone.
 
@@ -195,7 +195,7 @@ namings); the **system** is the [json spec](json.md) §8. Sibling of [skills.md]
 > ⚠ **The load therefore LANDS through it, never straight into the array.** The store deserializes wholesale, so
 > a status written directly into the slot announces nothing and every consumer gating on it reads a holder that
 > is not held — the same hole the plot substrate had. ⛔ That id is not the discriminator
-> [a fact names the happening](../spine.md#-a-fact-names-the-happening--something-changed-is-not-a-fact-owner) bans: it names which
+> [a fact names the happening](../spine/03-the-domain-emit-surface-every-fact.md#-a-fact-names-the-happening--something-changed-is-not-a-fact) bans: it names which
 > member of an OPEN registry moved, exactly as a religion or property id does, and the direction is in the event
 > name. A fact per status would mean an engine change per authored status — the very thing the open registry and
 > the no-named-accessor rule exist to avoid.

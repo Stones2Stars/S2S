@@ -16,7 +16,7 @@ DELIBERATE pass that happens once the migration is complete.
 Culture). Verified mechanism: a Culture national wonder (`SPECIALBUILDING_C2C_CULTURE`) grants its `BONUS_*` via
 `ExtraFreeBonuses`, **purely so** the buildings that require it (PrereqAndBonus `<Bonus>`) become buildable —
 i.e. `building → bonus → building`. The bonus tier is collapsible to a direct **building → building** enable,
-which also kills the "AI tries to trade a culture as a resource" oddity (owner-recalled, rare/stale).
+which also kills the "AI tries to trade a culture as a resource" oddity.
 
 Now **ISOLATED in `Assets/Data/bonuses/cultures/`** — the whole class is one contained folder, so removal is
 self-contained. (The other bonuses split `map/` = spawns on the map vs `manufactured/` = produced.) Migrate the

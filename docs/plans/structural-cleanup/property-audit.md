@@ -1,10 +1,10 @@
-# Property source-data migration — LOCKED SPEC (owner-approved 2026-07-11)
+# Property source-data migration — LOCKED SPEC
 
 > **⚖ THE GOVERNING MODEL — EACH PROPERTY IS A CHANNEL IN THE CASCADE, AND THE CASCADE FEEDS WHEREVER THE
-> PROPERTIES ARE SUPPOSED TO GO (owner).** That is not a new axis: it is
-> [every modifiable number is a yield](../../cascade.md#1-one-step-deposit-down-accumulate-read-o1) applied to the plane it already
+> PROPERTIES ARE SUPPOSED TO GO.** That is not a new axis: it is
+> [every modifiable number is a yield](../../cascade/01-deposit-and-read.md#1-one-step-deposit-down-accumulate-read-o1) applied to the plane it already
 > names — every number game mechanics modify is a channel in the ONE machine — and
-> [state-repositories.md](../../cascade.md) already carries `PROPERTY_*` as one channel
+> [cascade.md](../../cascade.md) already carries `PROPERTY_*` as one channel
 > per property info in the minted channel sets.
 > ⇒ **The line falls where the WORK differs, and both halves keep their owner:**
 > - **the CASCADE owns WHICH SOURCES APPLY and their summed per-turn contribution** — a maintained sum like any
@@ -65,16 +65,16 @@
 > the same delivery). Do not "fix" that one to empire.
 >
 > > **⛔ TWO DIFFERENT MECHANISMS SHARE THE WORDS "ALL CITIES", AND CONFLATING THEM IS WHY THIS ENTRY READ AS A
-> > MISSING GATHER (owner).** Get the DIRECTION right and they separate instantly:
+> > MISSING GATHER.** Get the DIRECTION right and they separate instantly:
 > > - **the RECEIVER Σ — many cities → one empire total.** The empire's gold / research / culture / espionage
 > >   (and maintenance) summed from its cities' realized values at the read
-> >   ([state-repositories.md](../../cascade.md) § A CROSS-SCOPE RECEIVER). It is REQUIRED
+> >   ([cascade.md](../../cascade.md) § A CROSS-SCOPE RECEIVER). It is REQUIRED
 > >   and it is BUILT (`InfoValuation::realizedAtEmpire`, gated on `!isDisorder()`) — *"otherwise research would
-> >   have failed"* (owner).
+> >   have failed"*.
 > > - **the PROPERTY FAN — one source → many cities.** A single building's property source applying in every city
 > >   of its owner. That is the item above, and it is a FAN, never a gather.
 > > ⛔ Nothing gathers properties FROM cities today, and this entry never asked for one.
-> > ⚖ **Doing so is WANTED but only as STATS (owner): *"there is nothing stopping us to gather it all, just for
+> > ⚖ **Doing so is WANTED but only as STATS: *"there is nothing stopping us to gather it all, just for
 > > shits and giggles, stats more than anything else."*** So an empire-wide per-property total is un-killed
 > > forward intent for the demographics/observability surface
 > > ([the keep-unkilled-ideas policy](../parked/README.md#parked--out-of-active-scope-plans-kept-for-intent)) — ⛔ never a cascade input
@@ -166,7 +166,7 @@
 
 - **Property own decay + population baseline** in `Assets/Data/properties/*.json` (7 files): decay = `PROPERTY_X.city.percent`
   / `.plot.percent`; population baseline = `PROPERTY_X.city.flat:{value,per:{type:POPULATION,each}}`. Matches XML exactly.
-  > **⚖ FLAMMABILITY AUTHORS NEITHER — ITS BASELINE IS 0 (owner).** No decay, no population baseline — the
+  > **⚖ FLAMMABILITY AUTHORS NEITHER — ITS BASELINE IS 0.** No decay, no population baseline — the
   > city's flammability is a PURE ACCUMULATOR over its source deltas: the per-turn building adders push it up
   > and the reducers pull it down, and nothing else moves it. ⚖ A REAL decay/baseline for it is a LATER owner
   > design decision, not a gap to fill by matching the siblings — the owner also notes flammability is a bit

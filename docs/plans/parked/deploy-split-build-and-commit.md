@@ -1,6 +1,6 @@
 # Parked — split the deploy into separate build and commit scripts
 
-> **Parked (owner):** *"we can consider running build and commit in 2 separate scripts, if that is required, but
+> **Parked:** *"we can consider running build and commit in 2 separate scripts, if that is required, but
 > we deal with that if and when."* Batching is good enough; this is **not** open work. It is recorded so the
 > idea is not rediscovered from scratch, and not half-built on a hunch.
 
@@ -26,7 +26,7 @@ recomputes from the server, so only what had not landed is resent —
 publish can be retried on its own against an already-built payload.
 
 ⚑ **The likeliest trigger is the #430 migration release.** Landing the full regenerated `Assets/Data` — over
-13000 JSON files — is **guaranteed** to fail as a single transaction (owner), which is precisely what the
+13000 JSON files — is **guaranteed** to fail as a single transaction, which is precisely what the
 batching exists for. But it is also the largest batch count the pipeline will ever run, so it carries the
 highest chance that *some* batch fails mid-sequence, and it is where the cost of re-running an 8-minute build
 to resume is felt hardest. If the split is ever going to earn itself, that is the release that proves it.

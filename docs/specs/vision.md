@@ -1,11 +1,11 @@
 # Vision — "how far can I see?"
 
-How far an observer sees, and what stops them. **Vision works the way movement works** (owner): a budget spent
+How far an observer sees, and what stops them. **Vision works the way movement works**: a budget spent
 walking outward, where open ground costs 1 and difficult ground costs more. A sight of N sees N plots of open
 ground, and fewer through anything costlier.
 
 **Vision is ONE family** — `vision` — with three kinds and the scope axis
-([scope is a separate axis, never folded into the kind](../architecture/patterns.md#the-coherent-surface--grouped-storage-parameterized-getters-owner-clarity-and-predictability-is-king)) saying whose is whose. It had no spec
+([scope is a separate axis, never folded into the kind](../architecture/patterns/04-the-info-data-out-contract-what-an.md#the-coherent-surface--grouped-storage-parameterized-getters-owner-clarity-and-predictability-is-king)) saying whose is whose. It had no spec
 until now, which is exactly why it had no family: each curator invented a shape, and `seeFrom` / `seeThrough` /
 `visibilityRange` ended up as three names sliding between the same two ideas.
 
@@ -25,17 +25,17 @@ splitting them out would scatter one mechanic across three families to no end.
 
 **Where each observer's sight comes from:**
 
-- **A unit's vision STRENGTH is exclusively its own base stat plus its promotions** (owner) — no other source
+- **A unit's vision STRENGTH is exclusively its own base stat plus its promotions** — no other source
   raises it. Its **elevation** then comes from the ground it stands on, which is what a hill or a watchtower is
   for. Strength travels with the unit; elevation belongs to the place.
 - **A city's elevation is what its BUILDINGS raise** — a tree platform puts the lookout a storey up. The deposit
   is **city-scoped**, and that is not a detail: ⛔ *a building by its very definition cannot add elevation to a
-  unit that moves* (owner). It elevates the fixed observer it belongs to and transfers to nobody passing through,
+  unit that moves*. It elevates the fixed observer it belongs to and transfers to nobody passing through,
   which is precisely what distinguishes it from an improvement on the same plot.
 - **A city's base STRENGTH is engine config, not authored data: the `CITY_VISIBILITY_RANGE` global define**,
   written in PLOTS and lifted to the scale at the read (the `MAX_UNIT_VISIBILITY_RANGE` shape). No data authors a
   memberless `vision.city` strength — every city sees the same base, and buildings differentiate via elevation.
-- **⛔ A CITY'S RING IS BOUGHT BY THE BUDGET, NEVER GUARANTEED PAST IT (owner): "a guaranteed innermost vision
+- **⛔ A CITY'S RING IS BOUGHT BY THE BUDGET, NEVER GUARANTEED PAST IT: "a guaranteed innermost vision
   feels wrong — this should be modelled by a default elevation increase and sight strength."** A settlement
   stands tall by construction, so beside its base strength (`CITY_VISIBILITY_RANGE`) every city carries a
   DEFAULT ELEVATION (`CITY_BASE_ELEVATION`, plots, lifted at the read like its sibling); buildings raise the
@@ -46,19 +46,19 @@ splitting them out would scatter one mechanic across three families to no end.
   vassal / espionage / embassy viewers — legacy leaned on the owned-plot leg's RANGE semantics to light the
   owner's ring, which the budget walk deliberately does not reproduce — so `CvPlot::updateSight`'s city leg
   carries the own-team condition first.
-- **⛔ A FOREIGN VIEWER SEES THE CITY, NEVER *FROM* THE CITY (owner).** Espionage, embassy and vassal city
+- **⛔ A FOREIGN VIEWER SEES THE CITY, NEVER *FROM* THE CITY.** Espionage, embassy and vassal city
   visibility register the city PLOT alone — a ZERO budget, which collapses the walk's box to the origin — never
   the city's own observer budget: a watcher must not inherit the watched city's eyes and see into the lands
   around it.
 
-> **⚖ `elevation`, never "vantage" (owner).** The plain-English word wins: not every reader knows "vantage", and a
+> **⚖ `elevation`, never "vantage".** The plain-English word wins: not every reader knows "vantage", and a
 > name nobody has to look up beats a precise one that some do.
 
 ---
 
 ## 1a. THE SCALE — one plot of open ground costs 100
 
-**A baseline of 1 is too low** (owner), and the shipped data shows exactly what it cost: **all 78
+**A baseline of 1 is too low**, and the shipped data shows exactly what it cost: **all 78
 obstruction-authoring features carried the identical `1`**, because there was no value between "free" and
 "twice as expensive" — forest simply could not be made cheaper than jungle. One plot now costs **100**, the same
 "one step = 100" denominator movement already uses, so both families read alike and there is room to say what
@@ -76,7 +76,7 @@ you mean.
 ⛔ **ONE SCALE, ALWAYS.** Movement fractured into two — terrain in whole moves, routes in denominator units —
 because its baseline could not express a part-step. Vision inherits no such split and must never grow one.
 
-⚑ **A modder writes the sensible number and nothing else** (owner). `100` is the authored value; readJson's
+⚑ **A modder writes the sensible number and nothing else**. `100` is the authored value; readJson's
 ×100 conversion at the boundary is none of their business, and that the engine then works in 10,000 has no real
 consequence. Anything finer than a hundredth of a plot authors `0.5` and the fixed point carries it — so there
 is never a reason to invent a second unit.
@@ -95,13 +95,13 @@ cost(p)     = Σ vision.plot.obstruction.flat  on p           (open ground = 1)
 visible(T)  ⟺  Σ cost(p)  over p on the straight line O → T, excluding O AND T  <  sight
 ```
 
-**⚖ THE SPEND MIRRORS MOVEMENT EXACTLY (owner): a positive REMAINDER reaches the next plot** — as a unit with
+**⚖ THE SPEND MIRRORS MOVEMENT EXACTLY: a positive REMAINDER reaches the next plot** — as a unit with
 a fraction of a move left still enters an expensive tile. A plot is seen on the budget left BEFORE its own cost
 is charged; the charge then gates seeing PAST it. Two things fall out for free: any ADJACENT plot is visible to
 any observer with a positive budget (no intervening plot to charge — a city's innermost ring needs no
 guarantee), and "into the jungle, not past it" is the charge doing its one job.
 
-⚑ **Elevation is POSITIONAL, never carried** (owner): a peak has 2 elevation, so a unit standing on the peak has
+⚑ **Elevation is POSITIONAL, never carried**: a peak has 2 elevation, so a unit standing on the peak has
 2 — *and only while on that plot*. Step off and it is gone. That is what makes elevation the ground's property
 rather than the unit's, and why it is authored on the GROUND rather than on whoever stands there: the peak is 2
 high whether or not anyone is looking at it.
@@ -124,7 +124,7 @@ you see behind it. The SPEND itself mirrors movement fully (the remainder rule a
 
 ### Why STRENGTH and ELEVATION stay two channels
 
-Both add budget, so they are interchangeable currencies against obstruction — and that IS the mechanic (owner):
+Both add budget, so they are interchangeable currencies against obstruction — and that IS the mechanic:
 **a jungle demands extra strength, and you may pay it either by seeing better (a hunter's promotion) or by
 standing above it (elevation).** Two routes to the same view is the design, not a redundancy to collapse.
 
@@ -188,7 +188,7 @@ case to encode.
 > `hideAndSeek.method`, so there is nothing promotion- or combat-class-granted for the classic read to see —
 > deriving it from the skill union is the border-patrol bug, never a gap to close.
 >
-> ⚑ **WHY THIS MATTERS MORE THAN TIDINESS — the mechanic is playable but not UNDERSTANDABLE (owner):**
+> ⚑ **WHY THIS MATTERS MORE THAN TIDINESS — the mechanic is playable but not UNDERSTANDABLE:**
 > *"it's expressed in icons, and nowhere is it really stated what counters what"*, with four kinds of
 > invisibility live in the early game. It rested on the assumption that *"the AI should be able to create
 > perfect unit combination counters at all times"* — and humans even less so; *"the designer worked under
@@ -203,7 +203,7 @@ case to encode.
 
 ### The rule the code never states
 
-**ONE detection type counters ONE concealment type** (owner). It is a PAIRING, not a matrix and not a single
+**ONE detection type counters ONE concealment type**. It is a PAIRING, not a matrix and not a single
 contest: a seeker's strength against submarines is weighed against a hider's submarine concealment, and against
 nothing else.
 
@@ -231,21 +231,21 @@ The shipped data says so plainly once you know to look — the same key appears 
 
 ### Where it lands — THE `hideAndSeek` BLOCK, never inside `vision`
 
-⛔ **HIDE AND SEEK IS ITS OWN BLOCK AND ITS OWN EVALUATION (owner).** `vision` answers ONE question — *how far
+⛔ **HIDE AND SEEK IS ITS OWN BLOCK AND ITS OWN EVALUATION.** `vision` answers ONE question — *how far
 do you see* — and stops there. Whether a unit standing inside that reach is PERCEIVED is a graduated CONTEST
 between how well it hides and how well the seeker detects, which is a different mechanic with a different
 evaluation. ⚑ **The separation is the deliverable, not tidiness: the legacy engine's hide-and-seek evaluation
-bled into its classic-visibility evaluation for years** (owner), so the two must not be expressed in one family
+bled into its classic-visibility evaluation for years**, so the two must not be expressed in one family
 where the same bleed can re-form. The contest data therefore lives in **`hideAndSeek`**, the option-gated block
 ([json.md §9](json.md): a dedicated system's data lives in its own block, and the module is ON iff that block
 exists and is non-empty), and `vision` keeps only the budget — strength, `elevation`, `obstruction`.
 
-> **⚖ THE CONTEST'S CARRIERS TODAY ARE UNITS, PROMOTIONS AND UNIT-COMBAT CLASSES (owner): no building shows
+> **⚖ THE CONTEST'S CARRIERS TODAY ARE UNITS, PROMOTIONS AND UNIT-COMBAT CLASSES: no building shows
 > hidden units, classically or in the contest — detection travels with seeker UNITS ("various kinds of
 > dogs").** The absence is INHERITED DESIGN, not a data accident: vanilla Civ4 deliberately had no detection
 > on buildings at all, which is why no building surface down the whole lineage ever carried one. So the block
 > folds onto the UNIT's resolved plane and nowhere else today.
-> ⚖ **A BUILDING-FED CITY PLANE IS UN-KILLED FORWARD INTENT, not a dead idea (owner): a scenario is wanted
+> ⚖ **A BUILDING-FED CITY PLANE IS UN-KILLED FORWARD INTENT, not a dead idea: a scenario is wanted
 > where buildings do it — a NEW mechanic, since legacy never had one — so the city must stay PREPARED for
 > it.** When data authors a building `hideAndSeek` block, the city gains its own cached fold over its
 > OPERATING buildings, marked on the building facts (the unit block's shape one scope over). ⛔ Until that
@@ -253,7 +253,7 @@ exists and is non-empty), and `vision` keeps only the budget — strength, `elev
 > [triggers.md](triggers.md)); a building authoring the block today surfaces on the readJson
 > unconsumed-section census, which is the fail-loud signal that the wiring's moment has come.
 
-> **⛔ VISIBILITY ITSELF IS NOT A SKILL, AND IS NOT MODELLED AS ONE BEYOND FILTERING (owner): *"if visibility was
+> **⛔ VISIBILITY ITSELF IS NOT A SKILL, AND IS NOT MODELLED AS ONE BEYOND FILTERING: *"if visibility was
 > a skill it would only be absolute values, and hide and seek has gradient values."*** A skill is a pure boolean
 > ENABLER ([json.md §8](json.md)) — it carries no value — so it can express WHICH method is in play and never HOW
 > WELL. The contest is graduated on both sides, so the strength lives in `concealment` / `detection` and the skill
@@ -265,7 +265,7 @@ exists and is non-empty), and `vision` keeps only the budget — strength, `elev
 > value.
 >
 > **⚖ ⇒ AND THEREFORE THE VISIBILITY AND HIDING VALUES ARE MODELLED THE SAME WAY NORMAL VISION IS, JUST WITH
-> DIFFERENT PARAMETERS (owner).** That is the conclusion the gradient forces, not a separate preference: §1a's
+> DIFFERENT PARAMETERS.** That is the conclusion the gradient forces, not a separate preference: §1a's
 > scale and §2's budget-against-cost shape already express a graduated quantity correctly, so `concealment` and
 > `detection` are the same KIND of number as `sight` and `obstruction` — same ×100 fixed point, same
 > one-step-is-100 denominator, differing only in the parameters they carry.
@@ -276,14 +276,14 @@ exists and is non-empty), and `vision` keeps only the budget — strength, `elev
 > like vision" is a statement about how the VALUES behave, never a licence to grow the second range system
 > `visibilityIntensityRange` was retired for. The contest runs on the plot the §2 budget already granted.
 
-⚖ **THE METHOD IS A SKILL, NOT A TAG (owner).** The operative test is *can a promotion grant it?*
+⚖ **THE METHOD IS A SKILL, NOT A TAG.** The operative test is *can a promotion grant it?*
 ([json.md §8](json.md)) — and it plainly can: **optical camouflage** is exactly a late-game promotion INTO a
 hiding method. So the method is a [skill](skills.md), which fits on both counts: promotion-grantable, and a pure
 boolean enabler carrying no value — correct, because the LEVEL is the `concealment` magnitude beside it.
 ⛔ It is NOT a [tag](tags.md), and the reason generalizes: a tag says what a unit **IS**, while `camouflage` /
 `size` / `political` say how it **HIDES**. **`submarine` is the case that proves the split** — it is a genuine
 identity tag AND carries the method skill, because a surfaced submarine is not hidden: *"submarine does not need
-to be hidden/invisible, it just mostly is"* (owner).
+to be hidden/invisible, it just mostly is"*.
 ⚑ **The tag reading also DESTROYED authored data, which is what settles it.** Tags are not promotion-grantable,
 so a method named by a PROMOTION had nowhere to land and was dropped on the floor — and **73 promotions author
 one** (`CAMOUFLAGE` 40 · `DISGUISED` 21 · `NAVAL_DISGUISE` 16 · `POLITICAL` 15 · `INVISIBLE` 10 · `SIZE` 9 ·
@@ -306,7 +306,7 @@ plane rather than the tag plane.
 
 `perceived ⟺ reachable ∧ detection(against that method) ≥ concealment`
 
-⛔ **Detection gets NO reach of its own (owner).** Reach is the §2 budget, already computed; the contest only
+⛔ **Detection gets NO reach of its own.** Reach is the §2 budget, already computed; the contest only
 ever runs on a plot that budget already granted. That is what retires `visibilityIntensityRange` — a second
 range system running beside vision's, with nothing keeping the two in step. Negatives need no mechanism either:
 the block's entries sum, so counter-detection is a negative deposit.

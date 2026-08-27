@@ -12,7 +12,7 @@ them by value, and WALKS the order.
 
 | step | what it does |
 |---|---|
-| `AI_scoreCitizenOptions` | the ONE scoring body — every free workable plot + every valid specialist type, scored into a caller-owned list ([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)) |
+| `AI_scoreCitizenOptions` | the ONE scoring body — every free workable plot + every valid specialist type, scored into a caller-owned list ([the DRY single-implementation law](../architecture/patterns/03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)) |
 | `AI_fillCitizensByPriority` | sorts that list descending and seats the whole unassigned population from it |
 | `AI_addBestCitizen` | the single-placement entry point (the juggle pass uses it); reads the SAME scoring body |
 
@@ -31,7 +31,7 @@ index:
 
 Both cursors move only forward, so a whole fill is `O(options)` rather than `O(citizens × options)`.
 
-## ⚖ EMPHASIS — an emphasis PROMOTES what was asked for and SUPPRESSES what was not (owner)
+## ⚖ EMPHASIS — an emphasis PROMOTES what was asked for and SUPPRESSES what was not
 
 **Both halves, or it does nothing.** An emphasis is a ratio shift between channels, so promoting one channel
 without suppressing its rivals moves the ranking only by the promotion — which is how food emphasis came to be
@@ -64,7 +64,7 @@ one pass per emphasizer.
 > seat citizens on net LOSSES. It was invisible only because the test it guards could not answer false; the
 > waiver is gone.
 
-## ⚖ THE WHIP TERM IS NEVER WORTH TAKING (owner)
+## ⚖ THE WHIP TERM IS NEVER WORTH TAKING
 
 **"With how whipping currently functions, it is never worth it."** `iSlaveryValue` re-books a tile's food value
 as PRODUCTION whenever pop-rush is available and the city is happy, steering citizen assignment toward whip
@@ -73,7 +73,7 @@ same — *"it harms production for eras going forward."* Against an 8-population
 the term models does not exist, so no coefficient tunes it into shape; the term is sized for a BTS-era 1–2
 population whip. ⚠ Emphasis already refuses it outright — emphasis never cares about whipping.
 
-## ⚖ GROWTH BEATS ALMOST ANYTHING — THE STANDING WEIGHT OF THIS GAME (owner)
+## ⚖ GROWTH BEATS ALMOST ANYTHING — THE STANDING WEIGHT OF THIS GAME
 
 **"The way this game works, growth > almost anything."** S2S is a very long game with an enormous build tree,
 so a citizen added early compounds for the rest of it — which makes FOOD the dominant term in a citizen
@@ -85,7 +85,7 @@ food term before the ratio is ever applied, and both known instances did exactly
 ⚠ **It governs the DEFAULT.** An explicit emphasis is the player overriding this, so suppressing food while
 production is emphasized is the model working — the ruling binds where nothing was asked for.
 
-## ⚖ A BASE YIELD ALWAYS OUTWEIGHS A COMMERCE YIELD (owner)
+## ⚖ A BASE YIELD ALWAYS OUTWEIGHS A COMMERCE YIELD
 
 **Food and production are worth more than the commerce channels they compete with, in every citizen decision.**
 A plot's worth is what it PRODUCES, and a tile carrying real food and hammers must not lose to an option whose
@@ -103,7 +103,7 @@ being ranked against.
 > ⇒ **Growth value is an ADDITION on top of food's intrinsic worth, never a CEILING over it.** The food a tile
 > yields does not stop existing when growth is unwanted: it offsets consumption and feeds the very specialists
 > that are out-scoring it.
-> ⚑ **THE DECIDING FACT IS THE ENGINE'S OWN (owner): SURPLUS FOOD IS NOT WASTED.** `CvCity::doGrowth`
+> ⚑ **THE DECIDING FACT IS THE ENGINE'S OWN: SURPLUS FOOD IS NOT WASTED.** `CvCity::doGrowth`
 > SUBTRACTS the threshold and the remainder rolls into the next bar, so every point of food eventually
 > becomes a citizen — which is why a cap on food's value can never be right in general.
 > ⚖ **The ONE state where a cap IS right is the one the engine discards food in:** under avoid-growth it
@@ -208,7 +208,7 @@ lifted ×100 ranks identically — the conversion changed no decision. Where the
 change is the repair, not a rebalance: **20 specialist flats are fractional**, and the reductions were
 flattening `1.5 → 1` and `0.4 → 0`.
 
-> **⚖ WELLBEING IS COUNTED IN WHOLE FACES, AND THAT IS THE EXPECTED BEHAVIOUR (owner).**
+> **⚖ WELLBEING IS COUNTED IN WHOLE FACES, AND THAT IS THE EXPECTED BEHAVIOUR.**
 > `healthValue` / `happynessValue` iterate ONCE PER health or happiness face
 > (`for (iI = 0; iI < iAddedHealth; ++iI)`), so their first argument is a **LOOP BOUND, not a magnitude** and
 > reduces at that point of use — you cannot iterate 1.5 times. ⛔ This is NOT the banned interior reduction and
@@ -216,7 +216,7 @@ flattening `1.5 → 1` and `0.4 → 0`.
 > wellbeing term by the same factor. ⚠ A fractional authored face is therefore floored HERE by design; the other
 > reader of the same data (`AI_countGoodSpecialists`) sums rather than loops, so it keeps the fraction.
 
-## Dirtying the assignment — the ruled trigger set (owner)
+## Dirtying the assignment — the ruled trigger set
 
 `AI_setAssignWorkDirty` marks a city for a full `AI_updateAssignWork` re-run — the drain is FLAG-GATED, so a
 mark IS one full re-assignment at the city's next drain, which is what makes an over-broad fan a real cost
@@ -234,16 +234,16 @@ game-wide fan any more (`CvGameAI` carries none): a civic/religion/wellbeing gra
 cities, war and peace fan the TWO teams involved, a holy-city designation marks the two cities it moved
 between, and a city's population change marks that city. A mark whose value fed no citizen input at all — the
 Python-only yield/commerce modifier planes, non-state-religion building commerce, the corp-HQ designation — is
-gone ([a staleness flag is the fossil of a missing emit](../cascade.md#-a-staleness-flag-is-the-fossil-of-an-incomplete-emit-surface--the-same-rule-one-level-up): each asserted a change no citizen
+gone ([a staleness flag is the fossil of a missing emit](../cascade/03-no-staleness-no-selfheal.md#-a-staleness-flag-is-the-fossil-of-an-incomplete-emit-surface--the-same-rule-one-level-up): each asserted a change no citizen
 decision could read).
 
-⚖ **It LISTENS TO THE EVENT SPINE; no AI loop ever touches it directly (owner).** This is a ROUTING job, never a
+⚖ **It LISTENS TO THE EVENT SPINE; no AI loop ever touches it directly.** This is a ROUTING job, never a
 judgement re-made per call site — the same shape the player-alert re-attach uses
 ([spine.md](../spine.md)).
 ⚑ **Every trigger below is already a DOMAIN fact** — the plot substrate, the building/population/civic/trait
 facts, the culture-level fact and the working-city fact all announce today. No new emit is a prerequisite here.
 
-**The ruled set (owner):**
+**The ruled set:**
 - a PLOT CHANGED inside the city's WORKABLE SET — not an upgrade only; pillage, bonus depletion and a chop are
   the same fact in the other direction, and the substrate already announces each per plot;
 - a BUILDING FINISHED that actually changes specialist slots or plot output — tested against the building's own
@@ -259,10 +259,9 @@ facts, the culture-level fact and the working-city fact all announce today. No n
 reassignment; the radius growing with culture / `adds3rdRing`, adding tiles that were never candidates — no
 per-plot fact announces this) and the water-work TEAM capability.
 
-⛔ **Three marks are UNIT-MOVEMENT driven and stand as live per-move marks PENDING A DELIBERATE DECISION
-(owner):** an enemy unit sieging a plot (`CvUnit::setXY`), a naval blockade (`CvPlot::changeBlockadedCount`),
+⛔ **Three marks are UNIT-MOVEMENT driven and stand as live per-move marks PENDING A DELIBERATE DECISION:** an enemy unit sieging a plot (`CvUnit::setXY`), a naval blockade (`CvPlot::changeBlockadedCount`),
 and the military-happiness garrison count (`CvCity::changeMilitaryHappinessUnits`). Unit movement never dirties
-a cache ([unit-carried modifiers apply on top, live, never cached](../cascade.md#2b-the-wellbeing-channels--health--happiness-signed-split-the-2a-sibling)), so these must
+a cache ([unit-carried modifiers apply on top, live, never cached](../cascade/09-wellbeing-channels.md#2b-the-wellbeing-channels--health--happiness-signed-split-the-2a-sibling)), so these must
 not ride the spine routing when it lands — but they were NOT cut with the fossils, because the siege/blockade
 marks are LOAD-BEARING today: `verifyWorkingPlots` runs only inside the flag-gated assignment, so without them
 a besieged city would keep working a plot it cannot work. The deliberate decision (a turn-cadence `canWork`

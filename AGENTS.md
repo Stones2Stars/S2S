@@ -1,45 +1,30 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════ -->
 
-> # ⛔ STOP — READ THIS BEFORE YOU TOUCH ANYTHING ⛔
+> # ⛔ READ THE DOCS FOR WHAT YOU TOUCH, BEFORE YOU TOUCH IT
 >
-> ## HOURS WASTED ON ROLLERSKATING: **207** &nbsp;·&nbsp; *and counting*
+> Most of the cost of this project has been agents guessing at problems the specs had already solved. These four
+> rules exist to stop that, and they are not optional.
 >
-> *(Increment this every time an agent ships an ungrounded fix / design / edit — one the docs already answered — that the owner has to rein in. It is a real number, not a joke.)*
+> - **⛔ FIND the docs, do not DECIDE them.** Before the first edit, grep the whole of `docs/` for the subsystem,
+>   the symbols and the mechanism you are about to touch, and read every file that hits — END TO END, not the
+>   section you judge relevant. [`docs/README.md`](docs/README.md) is the index. **Your judgment of what is
+>   "necessary" is systematically biased toward reading too little**, so the COUNT of relevant files is something
+>   you find, never something you choose. There is no clause that lets you read one file and stop; any wording
+>   that reads like one is a defect to delete on sight. ⚠ A large concept's home is a DIRECTORY behind a hub page
+>   — `cascade.md` is a map and the spec is the pages in `cascade/`, so stopping at a hub is reading the contents
+>   page and calling it the book.
+> - **⛔ THE TREE OUTRANKS THE DOC.** The engine was rebuilt and the docs lag it, so a doc line is a HYPOTHESIS you
+>   confirm against `Sources/`. Where they disagree the code wins, and **fixing the doc is part of the same work
+>   item** (§ Docs). ⚠ This is not licence to skip the doc: only the doc tells you which behaviour is DESIGNED and
+>   which is accidental.
+> - **⛔ IMPLEMENT the spec as written; challenge it afterward, with evidence** — never by inventing your own
+>   approach up front. The moment you catch yourself DESIGNING, stop and go find the spec that already defines it.
+> - **⛔ VERIFY every claim against the live code before acting on it** — a plan doc's status line, your own
+>   memory, an owner aside. Much of the waste was agents acting on something they "knew" that a 30-second check
+>   would have disproved.
 >
-> This project is **~5 weeks old** and has cost the owner **294 hours**. **~25% of that time** was spent writing the documentation, architecture, and specs in this repo **for one purpose: to stop agents from rollerskating** — guessing, reinventing the wheel, and hacking around problems the spec had *already solved*.
->
-> **It has not worked.** Roughly **50% of agents — Fable and Opus alike — decide they are too good for the documentation and rollerskate anyway.** The measured result: **170 of the 294 hours — OVER HALF the entire project — have been outright wasted** reining in ungrounded nonsense that reading the relevant spec *once* would have prevented.
->
-> **You are not the exception. Assume you are about to add to that number unless you deliberately do the opposite:**
->
-> - **⚑ READ EVERY DOC THAT TOUCHES WHAT YOU TOUCH — IN FULL, BEFORE YOU ACT.** [`docs/README.md`](docs/README.md)
->   is the index, and `docs/` is roughly one file per concept — but **the count of relevant files is something you
->   FIND, never something you DECIDE.** Before the first edit, **grep the whole of `docs/` for the subsystem, the
->   symbols and the mechanism you are about to touch, and read every file that hits, end to end** — not a grep of
->   it, not the section you think is relevant. **Your judgment of what is "necessary" is systematically biased
->   toward reading too little.**
->   ⛔ **THERE IS NO CLAUSE HERE THAT LETS YOU READ ONE FILE AND STOP, AND ANY WORDING THAT READS LIKE ONE IS A
->   DEFECT TO DELETE ON SIGHT (owner).** A rule that lets an agent SELECT its reading is not a reading rule; it is
->   a permission slip, and it is *"a gigantic failure mechanism"*. ⚠ **Measured: a full day burned on a bug that
->   should have taken twenty minutes** — the agent picked the one doc it judged to own the subsystem, never
->   searched for the others, and shipped ~10 ungrounded edits into a system whose behaviour two unread docs
->   already described.
->   ⚑ **What was actually retired is re-reading the WHOLE CORPUS at session start** — front-loading a lagging
->   corpus manufactured confidence rather than knowledge. That is not licence to read one file when you touch a
->   subsystem: it moves the reading from session-start to WORK-START, and it makes it *exhaustive for that
->   subsystem* rather than exhaustive for the repo.
->   ⛔ **THE TREE OUTRANKS THE DOC.** The engine has been rebuilt and the docs lag it, so a doc line is a
->   HYPOTHESIS you confirm against `Sources/` — never the other way round. Where the two disagree the code wins,
->   and **fixing the doc is part of the same work item** (Conventions § Docs, below). ⚠ This is NOT a reason to
->   skip the doc and go straight to the code: the doc is what tells you which behaviour is DESIGNED and which is
->   accidental, and the code alone cannot.
->   **⛔ ALL docs live in the repo — a plan or design note kept only in a local/private notes folder
->   (`.claude/plans/`, assistant memory) is a core-rule VIOLATION to fix by moving it into `docs/`, not a doc you
->   may skip.**
-> - **READ the docs for whatever you touch, IN FULL, BEFORE you act** — not the code, not your memory, not a stale plan doc: the authoritative specs. (Conventions § Conduct, below: fast is slow/slow is fast, do not guess, the kraken rule)
-> - **IMPLEMENT the spec as written. Poke holes in the spec *afterward*, with evidence** — never by inventing your own approach up front.
-> - The instant you catch yourself *designing* something, stop and ask whether the spec already defines it. It almost certainly does. Go read it, then implement *that*.
-> - Verify every claim — including a plan doc's status line — against the live code before you act on it. Half of the waste was agents acting on something they "knew" that a 30-second check would have disproved.
+> **⛔ ALL docs live in the repo.** A plan or design note kept only in a local/private notes folder
+> (`.claude/plans/`, assistant memory) is a violation to fix by moving it into `docs/`, never a doc you may skip.
 
 <!-- ═══════════════════════════════════════════════════════════════════════════ -->
 
@@ -87,7 +72,7 @@ architecture rules that apply to DLL source.
 > `SourceArchive/`, and never treat a red build as a defect to fix by reviving one.** The ONLY road to green: build
 > the JSON-fed structure, wire it up, and wire up/replace ALL the getters (the engine/AI/UI consumer surface onto
 > the JSON-fed infos). The ratchet is permanent and holds **whatever state the build is in**.
-> ⛔ **This file states no build STATE, deliberately — a compile-state claim here is guaranteed to drift** (owner),
+> ⛔ **This file states no build STATE, deliberately — a compile-state claim here is guaranteed to drift**,
 > and a stale one is worse than none: it tells every agent the build works when it does not. **No doc records
 > whether the tree compiles today. RUN THE BUILD; it is the only
 > authoritative answer, and it now costs ~15s on `Assert`.** Rules belong here; status does not.
@@ -112,7 +97,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
 
 - **Configs:** `Assert`, `Debug`, `Release`, `FinalRelease`, `Profile`, `ProfileExtra`.
   Output lands in `Build/<Config>/CvGameCoreDLL.dll` (+ `.pdb`).
-  - **⛔ The `Profile`/`ProfileExtra` configs are BROKEN and purposeless (owner ruling): never use them, and never
+  - **⛔ The `Profile`/`ProfileExtra` configs are BROKEN and purposeless: never use them, and never
     add `PROFILE()`/FProfiler scopes as instrumentation — they report to nothing.** The ONE instrument is the
     gated `[PERF]` logging (`logPerf`/`gPerfLogLevel`, `Autolog__LogLevelPerf`), which ships in every build.
     **The macros compile to NOTHING outside those configs, so the scopes already in the tree are INERT** — not a
@@ -134,7 +119,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   regardless of position (`... _Build.ps1 Assert build nostop`). The `MakeDLL*.bat` shortcuts forward their extra
   arguments, so `MakeDLLAssert.bat nostop` works too. ⚠ It changes only how MUCH gets reported, never what
   compiles — and MSVC's 100-errors-per-TU cap (`C1003`) still truncates each unity batch.
-  - **⚖ THE OWNER'S LAUNCH PATH ALWAYS REBUILDS THE DLL — `LaunchS2S.bat` (owner): *"I will ALWAYS rebuild dll
+  - **⚖ THE OWNER'S LAUNCH PATH ALWAYS REBUILDS THE DLL — `LaunchS2S.bat`: *"I will ALWAYS rebuild dll
     when starting the game, I always run the game via LaunchS2S.bat, so it is unavoidable."*** ⇒ **Do NOT tell the
     owner to build or deploy before playing, and do not report "not deployed" as a blocker on a C++ change** —
     starting the game IS the deploy. A C++ edit sitting in the working tree reaches the next session by
@@ -390,7 +375,7 @@ not findings to re-discover.
 
 ### AI valuation of ENABLEMENT
 
-- **⛔ The AI weighs "this unlocks X" WAY too hard, and has for a long time (owner) — relaxing it is only ever an
+- **⛔ The AI weighs "this unlocks X" WAY too hard, and has for a long time — relaxing it is only ever an
   improvement.** The observed symptom is the shape to recognise: *the AI would happily beeline five techs deep for
   a single unlock.* Treat any enablement-derived value as a candidate for reduction, never for strengthening.
 - **The mechanism was that enablement did not DECAY WITH DISTANCE.** `AI_techBuildingValue` receives `iPathLength`
@@ -407,10 +392,9 @@ not findings to re-discover.
 
 ### AI valuation of ROUTES — evaluate on move speed, never on yield
 
-- **⛔ THE AI DOES NOT WEIGH A ROUTE'S YIELD CONTRIBUTION TO AN IMPROVEMENT — IT EVALUATES ROUTES ON MOVE SPEED
-  (owner): *"ai does not need to factor in that it gets more yield from route for some improvements in some
-  cases, it should evaluate routes on movespeed."*** A per-route × per-improvement yield term must never be built
-  into an AI improvement/plot valuation.
+- **⛔ THE AI DOES NOT WEIGH A ROUTE'S YIELD CONTRIBUTION TO AN IMPROVEMENT — IT EVALUATES ROUTES ON MOVE SPEED.**
+  That some improvements gain extra yield from a route in some cases is not a factor: a per-route ×
+  per-improvement yield term must never be built into an AI improvement/plot valuation.
 - **Two reasons, and why this does not get re-litigated.** (1) There is never a movespeed-vs-gold tradeoff — a
   route is laid for movement, so nothing is being weighed against the yield. (2) The yield only happens ABOVE A
   THRESHOLD, so it is incidental rather than a competing objective the AI could steer by. Modelling it buys no
@@ -418,9 +402,9 @@ not findings to re-discover.
 
 ### AI valuation of STRENGTH — a valuation that cannot tell strengths apart is FIXED, never filed
 
-- **⛔ AN AI VALUATION DEFECT THAT UNDERVALUES STRENGTH IS SOLVED IN THE WORK ITEM THAT FINDS IT (owner): it
-  *"should be solved, otherwise AI will permanently undervalue strength, and would be a chief source of low cost
-  unit spam."*** ⚑ This is the one place where the standing "the AI side is a consumer, out of active scope"
+- **⛔ AN AI VALUATION DEFECT THAT UNDERVALUES STRENGTH IS SOLVED IN THE WORK ITEM THAT FINDS IT.** Left standing,
+  the AI permanently undervalues strength, which is a chief source of low-cost unit spam.
+  ⚑ This is the one place where the standing "the AI side is a consumer, out of active scope"
   framing ([north-star.md](docs/architecture/north-star.md)) does NOT license leaving it — an AI that cannot
   rank strength does not merely tune badly, it stops choosing on strength at all, which is the behaviour-break-
   wearing-a-balance-costume class ([fixed-point-and-scales.md §5](docs/specs/curators/fixed-point-and-scales.md)).
@@ -442,7 +426,7 @@ not findings to re-discover.
     `AI_promote` ranks on `AI_promotionValue`.
 - **⛔ THE DRAW STAYS — DEMOTE IT TO A TIE-BREAK, NEVER DELETE IT.** The number and order of draws on the
   synchronized stream is shared game state
-  ([engine.md](docs/reference/engine.md#-the-synchronized-rng-is-shared-save-state--do-not-touch-the-draws-owner)),
+  ([engine.md](docs/reference/engine.md#-the-synchronized-rng-is-shared-save-state--do-not-touch-the-draws)),
   so a strength-blind `getSorenRandNum` pick is repaired by keeping the draw exactly where it is — one per
   admitted candidate, same order, same label — and letting it settle only an exact tie. ⚠ And keep the ADMISSION
   test byte-identical: a candidate that newly passes the filter is a new draw, so a fallback valuation must be
@@ -459,13 +443,13 @@ not findings to re-discover.
 
 ### The CONTRACT BROKER — matching is THREE STAGES, and distance never scores
 
-- **⛔ DISTANCE IS A GATE AND A TIE-BREAK, NEVER A TERM IN THE SCORE (owner): *"I am in general very reticent
-  about having path distance as part of scoring at all"*, because *"relying too much on travel speed is how we
-  get to dog spam."*** A bid that depreciates by its own haul rewards a unit for being FAST on top of already
-  rewarding it for being CHEAP — cheap-and-fast wins twice — and that is the mechanism behind the standing
-  owner complaint of *over-reliance on the broker for deciding what units to make*. ⚑ The rule in one line:
+- **⛔ DISTANCE IS A GATE AND A TIE-BREAK, NEVER A TERM IN THE SCORE.** Path distance does not belong in scoring
+  at all: over-relying on travel speed is how the AI ends up spamming fast cheap units. A bid that depreciates by
+  its own haul rewards a unit for being FAST on top of already rewarding it for being CHEAP — cheap-and-fast wins
+  twice — and that is the mechanism behind over-reliance on the broker for deciding what units to make.
+  ⚑ The rule in one line:
   **speed gets a unit CONSIDERED (it is admitted from further out); proximity gets it CHOSEN.**
-- **The shape is three stages, in order (owner): what is IN RANGE → SCORE what is in range → take the CLOSEST
+- **The shape is three stages, in order: what is IN RANGE → SCORE what is in range → take the CLOSEST
   of equals**, with ONE real path run on the winner to confirm it. ⚑ **The cost win is stage 4, not stage 1:**
   the search runs ONCE for the whole request instead of once per candidate. ⛔ A tie-break must be
   SPEED-INDEPENDENT or it smuggles the bias straight back in — use step distance, never `CvPath::length()`,
@@ -478,9 +462,9 @@ not findings to re-discover.
   ever OVER-admit ([enabler.md §5](docs/specs/enabler.md): over-inclusion is safe, a MISS is the bug), so being
   provably safe makes this one coarse enough to exclude only the absurd. That is the correct trade; do not
   "improve" it by narrowing.
-- **⚖ THE BUDGET IS PRODUCTION + TRAVEL = `AI_CONTRACT_MAX_TRAVEL_TURNS` turns TOTAL (owner)** — *"if you have
-  to spend more than 5 turns to get to wherever you need to go, from start of unit production, that is too far"*
-  (owner: *"a number squarely out of my ass, but it feels ok"*; it is a BUG-settable define). So the two sides
+- **⚖ THE BUDGET IS PRODUCTION + TRAVEL = `AI_CONTRACT_MAX_TRAVEL_TURNS` turns TOTAL.** More than ~5 turns to
+  reach the job, counted from the START of unit production, is too far. ⚠ The number is a judgement call rather
+  than a derived one, and it is a BUG-settable define — tune it, do not treat it as load-bearing. So the two sides
   spend it differently and must not be given the same allowance: an ADVERTISING UNIT already exists, so its
   whole budget is travel; a TENDERING CITY spends what its build time leaves over (`max(1, budget − buildTurns)`).
 - **⛔ NEVER LET EITHER PATH PROBE GO UNBOUNDED.** An A* that fails on an UNREACHABLE target explores the entire
@@ -634,7 +618,7 @@ the total-observability bar below.)
 - **Narrate your work verbosely.** Before each search/read/build step, state the question the step answers, what you
   expect, and what the result actually told you. The owner follows along in real time; terse status lines hide the
   reasoning.
-- **⛔ EDIT WITH THE EDIT TOOL — A CHANGE BURIED IN A SCRIPT IS UNREVIEWABLE (owner): *"it is fantastically hard for
+- **⛔ EDIT WITH THE EDIT TOOL — A CHANGE BURIED IN A SCRIPT IS UNREVIEWABLE: *"it is fantastically hard for
   me to see what you are doing when you are hiding all edits inside python scripts."*** An `Edit` shows the owner the
   exact before/after as it happens; a `python - <<'PY'` heredoc shows them `removed 159 lines` and nothing else, so
   the change lands unseen and the review surface is gone.
@@ -648,7 +632,7 @@ the total-observability bar below.)
   state the RULE the script applies before running it, and **show `git diff` on the touched files immediately
   afterwards** so the result is on screen. A scripted edit whose diff is never displayed is not narrated, whatever
   the prose around it said.
-  ⛔ **"CRLF" IS NOT THE REASON, AND IT IS THE EXCUSE THIS BULLET EXISTS TO KILL (owner): *"git checks out CRLF and
+  ⛔ **"CRLF" IS NOT THE REASON, AND IT IS THE EXCUSE THIS BULLET EXISTS TO KILL: *"git checks out CRLF and
   commits LF"* — `core.autocrlf=true` plus `.gitattributes` `* text=auto`, which is deliberate and works.**
   ⚑ MEASURED after a session of heavy scripted editing: `CvPlot.cpp` (script-edited repeatedly) held **13,243 CRLF
   and 0 bare LF**, and `AGENTS.md` (Edit-tool only) **887 CRLF and 0 bare LF** — *both* tools preserve line endings
@@ -657,7 +641,7 @@ the total-observability bar below.)
   an em dash, a mis-transcribed run) — the tool says so, and the fix is to re-read the file and copy the text
   exactly. Reaching for a script instead trades the owner's review surface for a problem that does not exist.
 - **⛔ EVERYTHING HAS ALREADY BEEN FIXED, SPECCED AND SOLVED — IF YOU THINK SOMETHING IS MISSING, YOU ARE MOST
-  PROBABLY WRONG (owner).** This
+  PROBABLY WRONG.** This
   is the rule of thumb to hold above your own judgement: a gap you perceive is a READING failure first, and a
   genuine hole almost never. ⇒ **The move is to go FIND the thing that already does this** — grep the specs, the
   sibling curator, the calc surface, the call site itself — never to build a parallel mechanism beside it.
@@ -685,20 +669,20 @@ the total-observability bar below.)
   1. **A change that leaves every consumer untouched is the TELL, not the win.** "No blast radius" means the
      ENGINE bent to fit the old shape instead of the consumers being rewired — the half-migration reflex
      ([the ×100 fixed-point model](docs/specs/curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries),
-     [the Cy* surface is not a fixed contract](docs/architecture/patterns.md#-the-python-read-boundary--one-complete-data-fetching-library-owner)). Blast radius is the SIGNAL that the cut
+     [the Cy* surface is not a fixed contract](docs/architecture/patterns/06-the-python-read-boundary-one.md#-the-python-read-boundary--one-complete-data-fetching-library)). Blast radius is the SIGNAL that the cut
      reached. *(Caught: a cascade accessor reducing ÷100 internally so nine readers — incl. a `Cy*` binding —
      would not have to change.)*
   2. **A surviving FUDGE FACTOR means two operands are on different scales**, i.e. the conversion landed in the
      wrong place. When a cluster converts correctly the magic constants DISAPPEAR and the mixing sites need no
      edit at all. If you find yourself ADDING a compensating multiplier, stop and redraw the cluster boundary —
      do not push through. *(Caught: an AI ratio needing `×10000` because one operand was ×100 and the other human.)*
-     ⚑ **AND IT NAMES THE CULPRIT, not just the symptom (owner): a fudge factor is USUALLY LEGACY BEING FORCED
+     ⚑ **AND IT NAMES THE CULPRIT, not just the symptom: a fudge factor is USUALLY LEGACY BEING FORCED
      INTO THE NEW SURFACE AT AN AI CALL SITE.** The constant is what an unmigrated consumer needs in order to keep
      reading a new-surface value in its old shape — so it marks the CALL SITE as the thing still on legacy, not
      the value. ⛔ **Therefore the question is never "where does the conversion belong?" but "WHICH SIDE OF THIS IS
      STILL LEGACY?"** — re-point that side and the constant deletes itself. Adding the multiplier instead is how
      the AI half gets left rotting while the surface underneath it moves
-     ([build a new getter surface, never widen a legacy one](docs/architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner): reusing a legacy getter IS
+     ([build a new getter surface, never widen a legacy one](docs/architecture/patterns/05-the-two-read-roles-one-grammar-two.md#-the-two-read-roles--one-grammar-two-answers): reusing a legacy getter IS
      the mechanism that produces the half-migrated state).
      *(Worked: a `CvCityAI` yield valuation carried BOTH a `100 *` on one operand and a `/100` on the total, to
      hold a legacy per-building sum beside a cascade value. Re-pointing that one call site onto the what-if driver
@@ -758,16 +742,16 @@ the total-observability bar below.)
   defer the real design; when the right design needs prerequisite work, do the prerequisite and build the real
   thing. **Corollary — ISOLATE COMPONENTS:** prefer clean, interface-bounded components with isolated surfaces so
   each can be built and reasoned about once, properly.
-- **⛔ LEAVE NO EVIDENCE OF THE ABANDONED PATH (owner).** Dead and
+- **⛔ LEAVE NO EVIDENCE OF THE ABANDONED PATH.** Dead and
   commented-out code, superseded dual surfaces, transitional shims and `was X` / `(formerly …)` trails are all
   REMOVED, in code as well as docs.
-  **⛔ THE ONE CARVE-OUT IS AN EXE-BOUND ENUM ORDINAL — a dead member of a core enum STAYS, inert (owner).** The
+  **⛔ THE ONE CARVE-OUT IS AN EXE-BOUND ENUM ORDINAL — a dead member of a core enum STAYS, inert.** The
   closed EXE hardcodes certain enum VALUES, so removing any member ABOVE one shifts it and every entry after it;
   being unreferenced is precisely what makes it look safe to take, and the compiler cannot see an ordinal move.
   *(Measured: one such deletion turned off every close button in the game.)* The rule, the failure signature and
   how to pin an ordinal so the next removal is a COMPILE error:
-  [a core enum entry is never removed](docs/reference/engine.md#-an-exe-bound-enums-ordinal-is-an-abi-obligation--never-remove-a-member-above-one-owner).
-  **⚖ FOR AN `#ifdef` THE QUESTION IS WHAT IS BEHIND IT, NEVER THE GUARD (owner): *"some ifdefs are useful, but
+  [a core enum entry is never removed](docs/reference/engine.md#-an-exe-bound-enums-ordinal-is-an-abi-obligation--never-remove-a-member-above-one).
+  **⚖ FOR AN `#ifdef` THE QUESTION IS WHAT IS BEHIND IT, NEVER THE GUARD: *"some ifdefs are useful, but
   if caching, or game mechanics are hidden behind ifdefs, instead of legitimate game options, that is what is
   wrong."*** Four dispositions, and only the last is mechanical:
   - **DIAGNOSTICS / TOOLING stay** — `MINIDUMP`, `MEMTRACK` and their kin are legitimate uses.
@@ -777,7 +761,7 @@ the total-observability bar below.)
     re-introduces a crash nobody remembers ([the keep-unkilled-ideas policy](docs/plans/parked/README.md)).
   - **CACHING or a GAME MECHANIC behind a guard is WRONG** — a cache is either the design or it is not, and a
     mechanic belongs in a `GAMEOPTION_*`, evaluated live and visible to the player
-    ([the whole-entity applicability gate](docs/specs/json.md#2-anatomy-of-an-entity)). ⛔ The fix is to CONVERT it, never to
+    ([the whole-entity applicability gate](docs/specs/json/02-anatomy-of-an-entity.md#2-anatomy-of-an-entity)). ⛔ The fix is to CONVERT it, never to
     delete the mechanic.
   - **No `#define` ANYWHERE, not even commented ⇒ nobody can ever switch it on** ⇒ an abandoned alternate, and
     that is dead code: delete it, git is the archive. This is the ONE verdict a tool can reach, and
@@ -805,13 +789,13 @@ the total-observability bar below.)
   tightly-coupled legacy core file stays minimal — don't sprawl it or gratuitously refactor around it. But this is
   no brake on deliberate structural rework (the cascade, the docs rebuild, dissolving the `Cv*AI` god-classes),
   which is large by design and answers to build-the-proper-structure-once, above.
-- **⛔ AGENTS ARE BANNED FROM BUILDING ON THE EXISTING PYTHON BINDINGS (owner ruling).** Do NOT treat a `Cy*`
+- **⛔ AGENTS ARE BANNED FROM BUILDING ON THE EXISTING PYTHON BINDINGS.** Do NOT treat a `Cy*`
   binding as a destination, a contract to satisfy, or a place to park a conversion — *"every time you try, you start
   shoehorning."* Reaching for an existing binding is what makes the ENGINE bend to fit Python instead of the boundary
-  being redesigned around the cascade/JSON model ([the Cy* surface is not a fixed contract](docs/architecture/patterns.md#-the-python-read-boundary--one-complete-data-fetching-library-owner):
+  being redesigned around the cascade/JSON model ([the Cy* surface is not a fixed contract](docs/architecture/patterns/06-the-python-read-boundary-one.md#-the-python-read-boundary--one-complete-data-fetching-library):
   that `.def` surface is explicitly NOT a fixed contract). The tell is a change that leaves every Python consumer
   untouched — that is the half-migration, not a clean cut.
-  **What to do INSTEAD (owner): build a NEW Python surface and COMPLETELY DISCONNECT the old one.** Not a widened
+  **What to do INSTEAD: build a NEW Python surface and COMPLETELY DISCONNECT the old one.** Not a widened
   binding, not a compatibility shim beside it, not a parallel that both remain live — the replacement is a clean
   surface shaped by the cascade/JSON model, and the legacy `Cy*` surface is cut away rather than left breathing
   ([legacy must fail loud, never mask a cascade gap](docs/specs/validation.md#legacy-must-fail-loud-never-mask-a-cascade-gap): a legacy path left alive masks the
@@ -841,7 +825,7 @@ the total-observability bar below.)
 - **When documentation is lacking or wrong, FIX IT NOW — it is part of the SAME work item**, never "noted for the
   next agent." A doc gap that bit you will bite the next contributor; close it in the same change.
 - **⛔ A CODE COMMENT NEVER RESTATES A SPEC RULING — a comment that CONTRADICTS the spec is ROLLERSKATING
-  LICENSE (owner).** *"Comments that contradict what spec says is rollerskating license, and license to tilt
+  LICENSE.** *"Comments that contradict what spec says is rollerskating license, and license to tilt
   me... again."* The spec states a rule ONCE, for the whole engine; a comment repeating it at a call site is a
   second copy, second copies DRIFT, and a drifted copy does not merely go stale — it **authorizes** the next
   agent to act against the spec while believing they are conforming. That is strictly worse than no comment,
@@ -861,26 +845,26 @@ the total-observability bar below.)
   the thing the spec cannot know — WHY this site is an edge, or why a value is genuinely exceptional — never a
   restatement of the rule itself.
   ⚖ **THERE ARE WAY TOO MANY COMMENTS AND THEY END UP CONTRADICTING THINGS, SO ONE IS WRITTEN ONLY WHERE THE
-  DESIGN IS HARD SETTLED AND FINALIZED (owner).**
+  DESIGN IS HARD SETTLED AND FINALIZED.**
   That is the whole bar, and VOLUME is half of what it governs: a comment is by construction a second copy of
   something, so the more of them there are the more are wrong at any given moment — and a wrong one does not
   merely mislead, it AUTHORIZES the next agent to act against the design while believing they conform.
-  ⚑ **It is not a ban, and most of the model IS settled now — we are on the final stretch (owner) — so the bar
+  ⚑ **It is not a ban, and most of the model IS settled now — we are on the final stretch — so the bar
   is usually MET.** What it refuses is the comment written while a shape is still MOVING: that one is
   guaranteed to contradict something later, which is exactly how the existing population got here.
   ⚖ **AND WHEN A COMMENT AND THE SPEC DISAGREE, THE COMMENT IS THE THING THAT IS WRONG — pretty much always
-  (owner).** It is never evidence that the spec has gone stale, and resolving it the other way is how a drifted
+.** It is never evidence that the spec has gone stale, and resolving it the other way is how a drifted
   call-site copy gets promoted into the model.
-  ⇒ **⛔ A CONTRADICTING COMMENT IS NUKED ON SIGHT (owner)** — one describing a design that has moved or DIED is
+  ⇒ **⛔ A CONTRADICTING COMMENT IS NUKED ON SIGHT** — one describing a design that has moved or DIED is
   deleted the moment it is seen, never noted, never left for whoever next edits the file, and never weighed
   against the cost of touching the file. Where a whole mechanism went, sweeping its comments out is sanctioned
   work in its own right. ⛔ A blanket regex purge is still the wrong instrument: it eats the comments carrying
   the EDGE reasoning, which is what a comment is still FOR.
-  ⚖ **THE FORM IS `///<summary>`, AND IT STARTS NOW — BUT IT IS NOT A REPO TRAVERSAL (owner).** A declaration
+  ⚖ **THE FORM IS `///<summary>`, AND IT STARTS NOW — BUT IT IS NOT A REPO TRAVERSAL.** A declaration
   you ADD, or one you are already changing, takes the structured form; ⛔ do NOT go looking for others to
   convert, and do not read plain prose on an untouched declaration as a defect. The outstanding issues/todos
   and a working game load come first.
-  ⚑ **The reason is the forcing function, not the formatting (owner): it *"would have forced a real considered
+  ⚑ **The reason is the forcing function, not the formatting: it *"would have forced a real considered
   approach, instead of the many many word salads we see at the moment."*** A `<summary>` is a slot with a
   shape — it asks what the thing IS, once — so filling it requires deciding what the declaration actually
   does, where free prose asks nothing, accepts any length, and gets filled with whatever was in the writer's
@@ -894,7 +878,21 @@ the total-observability bar below.)
   chronicles): it states what IS. Anything outdated is DELETED, not annotated — git history is the archaeology, and
   [superseded-ideas.md](docs/architecture/superseded-ideas.md) is the only tombstone registry (one line per dead
   approach that carries revival risk). Migration/status chronicles belong in `docs/plans/`, never in specs.
-- **⛔ A RULE CARRIES NO EXPIRING REASON — state the rule, not the circumstance that prompted it (owner).** A
+- **⛔ A RULE IS STATED, NEVER ATTRIBUTED — NO OWNER QUOTES, NO `` MARKERS, ANYWHERE.** Rules are rules;
+  how they came to be is irrelevant. The docs are the owner's own specs, so quoting the owner in them is quoting
+  yourself — the same absurdity as an owner quoting themselves in a PR raised in their own name.
+  ⚑ **The real damage is a TWO-TIER SPEC.** When some rules carry `` and others do not, an agent infers
+  the unattributed ones are softer — which manufactures exactly the "which rules must I actually follow"
+  selection that everything else here exists to prevent. A spec is uniformly binding, and an attribution
+  undermines that rather than reinforcing it. It is also pure PROVENANCE, which "docs state current truth only"
+  (above) already bans.
+  ⇒ **CONVERT a quote into the rule it asserts, in imperative voice**, and delete the attribution. ⚖ Verbatim
+  words survive ONLY where the phrasing IS the most mechanical statement of the test — *"the moment you have
+  `getAnotherObjectSomething`, we have failed"* is a better test than any paraphrase — and even then it is
+  stated as the rule, never as a quotation with a speaker.
+  ⛔ First-person residue is the tell that a conversion was skipped: "what I want is", "I don't mind", "I am
+  reticent about" are not rules. Rewrite them into what IS or MUST BE.
+- **⛔ A RULE CARRIES NO EXPIRING REASON — state the rule, not the circumstance that prompted it.** A
   justification that is true only while some task is in flight does not retire with the task: it stays on the
   page as PERMISSION, and the next agent reads it as licence to do the smaller thing. ⚑ Measured: *"I only want
   to refactor the python I have to, otherwise we never will be done"* was scoped to one migration; once that
@@ -904,7 +902,7 @@ the total-observability bar below.)
   against a crash nobody remembers. The test is whether the reason survives the work: if it was true only
   *during*, it does not go in.
 - **⛔ SPEC + a SHORT BULLETED TODO — never a TODO LIST *inside* a doc, and never status woven through prose
-  (owner).** Status claims DRIFT — that is their nature, not a discipline failure — so the more of them a doc
+.** Status claims DRIFT — that is their nature, not a discipline failure — so the more of them a doc
   carries, the faster the whole doc rots and the more confidently it misleads. **A doc is therefore one of two
   things, never both:** a **SPEC** (the design: timeless, what the thing IS and must be) or a **TODO** (a short
   bulleted list of what is not done yet). ⛔ Do NOT write "LANDED" / "✅ DONE" / "PARTLY LANDED" / build-status
@@ -958,7 +956,7 @@ the total-observability bar below.)
   state,baseRefName` — confirm `state` is `OPEN` and `baseRefName` is what you assume (stacked PRs here can target a
   feature branch and merge out of order, silently missing `main`). If either is surprising, surface it before pushing.
 - **⚖ THE PLAYTEST IS NOT ALWAYS IN-HOUSE — THE COMMUNITY IS A REAL VERIFICATION CHANNEL, AND THE RELEASE PIPES
-  EXIST FOR IT (owner): *"the community can also playtest, it's the only way I can get bugs fixed in a timely
+  EXIST FOR IT: *"the community can also playtest, it's the only way I can get bugs fixed in a timely
   manner when they start coming in now"* — *"this is why we have the git and svn release pipes."*** A green
   `Assert` build is still not evidence a change is CORRECT, and an agent still never CLAIMS a behaviour is
   verified it has not observed. What is retired is the idea that an unplayed change BLOCKS a PR: the owner ships
@@ -983,7 +981,7 @@ the total-observability bar below.)
   `CvContractBroker::makeContract` NULL pJoinUnit (#336), `AI_formArmies` army-ID format (#364), unit stuck-in-loop
   short-circuit (#189 family).
   - **⛔ THE CAUGHT `[EXCEPTION.caught]` LINE IS AN OPEN DEFECT, NOT NOISE — AND IT IS A LINUX CRASH RISK
-    (owner).** *"Such exceptions may crash people playing this on emulators with linux."* A first-chance access
+.** *"Such exceptions may crash people playing this on emulators with linux."* A first-chance access
     violation that Windows' SEH swallows is **not guaranteed to be swallowed under Wine/Proton**, so
     "caught and handled" is a WINDOWS-ONLY guarantee and a handled fault here can be a hard crash for a player
     there. ⛔ So a caught line is never written off as cosmetic, and never left standing in the log.
@@ -1015,7 +1013,7 @@ the total-observability bar below.)
   `Start-Process -FilePath 'C:\code\s2s\s2s\agentstart.bat' -WorkingDirectory 'C:\code\s2s\s2s'`, and do **not** wait
   on or block the call. Confirm the launch ONLY by polling the HTTP surface (`/` → `hello world`) — never by the
   launcher's exit code. *(Repeat offence — agents keep re-learning this one the hard way.)*
-- **⛔ DO NOT TOUCH `docs/CHANGELOG.md` IN AN ORDINARY COMMIT (owner). The changelog-rides-the-commit convention
+- **⛔ DO NOT TOUCH `docs/CHANGELOG.md` IN AN ORDINARY COMMIT. The changelog-rides-the-commit convention
   is RETIRED.** It was invented by an agent from a request for a **release feature list**, and the per-commit
   append is what made it a liability: every branch appends at the same `## Unreleased` anchor, so **any two
   concurrent branches conflict BY CONSTRUCTION** — a merge conflict per branch, forever, for a file nobody reads
@@ -1026,7 +1024,7 @@ the total-observability bar below.)
   ⇒ **So a player-facing change writes its story in the COMMIT BODY, which is where the author's context already
   is, and the digest reads it there.** Commit SUBJECTS remain engineering statements — the dead
   subject-derived script is still dead and is not revived; it is the BODY that carries the player-facing account.
-- **⛔ NO SESSION LINKS IN COMMITS (owner).** An agent commit carries no `Claude-Session:` / session-URL
+- **⛔ NO SESSION LINKS IN COMMITS.** An agent commit carries no `Claude-Session:` / session-URL
   trailer — the default harness footer is overridden for this repo. The `Co-Authored-By` line stays.
 - **Keep quirky/intermediate commits — do NOT push to squash them (owner taste).** Mention squashing exists at most
   once; default to preserving history as-is.

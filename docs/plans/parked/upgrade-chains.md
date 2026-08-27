@@ -1,16 +1,16 @@
 # Upgrade chains as a first-class concept — parked
 
-> **Status:** parked forward intent (owner) · **Policy:**
+> **Status:** parked forward intent · **Policy:**
 > [the keep-unkilled-ideas policy](README.md).
 > The RULING that governs the model today lives in the spec —
-> [enabler.md §2, NO BUILDING EVER OBSOLETES A BUILDING](../../specs/enabler.md#2-pass-1--generate-the-frontier-the-enables-family).
+> [enabler.md §2, NO BUILDING EVER OBSOLETES A BUILDING](../../specs/enabler/02-pass-1-generate-the-frontier-the.md#2-pass-1--generate-the-frontier-the-enables-family).
 > This file carries only the direction that is NOT built.
 
 ## The intent
 
 > *"I don't think having a building obsoleting another building is very good design at all; they should be
 > considered upgrade chains more than anything else."* — *"which is actually something we can lean into more
-> later."* (owner)
+> later."*
 
 A building superseding another building is not obsolescence and not removal. It is a **chain**: a tier that
 supersedes the tier below it, where the predecessor parks while the successor stands, and becomes the successor
@@ -23,7 +23,7 @@ order, still is not.
 - **The PRESENCE half** is the predecessor's `requires.operate.dormant: [successor, …]`, mirrored from the legacy
   `ReplacementBuildings` (the engine's `setDisabledBuilding` — reversible dormancy). 1,685 buildings carry one.
 - **The OBSOLESCENCE half** is `whenObsolete.becomes`, which names the single next tier and is applied by walking
-  the chain to the first placeable link ([json.md §4.2](../../specs/json.md#42-obsoletes--replaces--disables--removal-permanent-source-side)).
+  the chain to the first placeable link ([json.md §4.2](../../specs/json/04-availability.md#42-obsoletes--replaces--disables--removal-permanent-source-side)).
 - The two are different triggers in different directions and a building carries both.
 
 ## What is NOT built
@@ -39,7 +39,7 @@ Consequences worth having, none of them urgent:
   unanswerable without walking.
 - **No CHOSEN upgrade, and there will not be one.** The automatic upgrade IS specified — a building becomes its
   successor once it is obsolete, authored on `whenObsolete`
-  ([json.md §4.2](../../specs/json.md#42-obsoletes--replaces--disables--removal-permanent-source-side)). What
+  ([json.md §4.2](../../specs/json/04-availability.md#42-obsoletes--replaces--disables--removal-permanent-source-side)). What
   does not exist — and is ruled out permanently — is a *player-chosen, priced* upgrade in the unit sense
   ("upgrade this Forge for N gold"): it is trivially exploitable via the cheapest rung, and the interface for it
   would be a nightmare ([superseded-ideas #41](../../architecture/superseded-ideas.md)).
@@ -47,7 +47,7 @@ Consequences worth having, none of them urgent:
 
 ## The UNIT-UPGRADE parallel — how far it actually carries (owner question)
 
-> *"In reality, we can use pretty much the same logic for building upgrades as unit upgrades, can't we?"* (owner)
+> *"In reality, we can use pretty much the same logic for building upgrades as unit upgrades, can't we?"*
 
 **The STRUCTURE transfers; the SEMANTICS of the middle part do not.** The unit side is two separate mechanisms
 and only one of them has a building counterpart today:

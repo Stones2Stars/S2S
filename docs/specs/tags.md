@@ -4,12 +4,12 @@ The catalogue of a unit's **immutable, accounting-only classification tags** (th
 **glossary** (the namings); the **system** — what a tag is, the *"can a promotion grant it?"* mutability test, how
 `IS_<TAG>` predicates read tags — is the [json spec](json.md) §8. Sibling of [skills.md](skills.md).
 
-> **Open by design (owner).** The tag set grows as data is authored — identifying new tags is an ongoing activity
+> **Open by design.** The tag set grows as data is authored — identifying new tags is an ongoing activity
 > for the life of the mod ([json.md §8](json.md): the classification registries mint from authored keys), so this
 > glossary catalogues the tags identified so far and more arriving is the normal state, never a gap to close. A unit
 > carrying no tag yet is fine (low-risk, filled in validation).
 >
-> ⚖ **AN EXTRA TAG COSTS NOTHING — certainty is NOT a gate (owner):** *"you can always have more tags, it doesn't
+> ⚖ **AN EXTRA TAG COSTS NOTHING — certainty is NOT a gate:** *"you can always have more tags, it doesn't
 > hurt to add an extra tag, even though we don't fully know what it does."* A tag is inert until something queries
 > it, so a surplus one is harmless while a MISSING one is not: it leaves its combat class doing identifier duty,
 > which is precisely what blocks the class purge ([engine.md](../reference/engine.md) UnitCombat). ⛔ So do not
@@ -45,14 +45,14 @@ silently wrong.** Those are NATIVE predicates, not tag lookups: `IS_LAND`/`IS_WA
 spelling falls through to the tag registry (`IS_RECON` → the `recon` tag).
 
 > **⛔ A TAG SAYS WHAT A UNIT *IS*; A DOMAIN SAYS WHERE IT *OPERATES* — two axes, and the domain is NOT a tag
-> question (owner).** The domain has its OWN entry on the unit (`identity.domain` → `CvUnitInfo::getDomain()`),
+> question.** The domain has its OWN entry on the unit (`identity.domain` → `CvUnitInfo::getDomain()`),
 > and every domain read goes there. ⚑ The reason is the one that decides it: answering "where does this operate"
 > from the tag set means FILTERING ALL TAGS for something a single field already holds.
 > ⚖ The three tags below are still carried, and that is fine — a surplus tag is inert (the ruling above), so
 > there is nothing to gain by removing them. ⛔ What must not happen is a consumer reading a DOMAIN through
 > them; there is deliberately no composition over them for that.
 
-> **⛔ IMMOBILE IS NOT A DOMAIN (owner).** A domain says WHERE a unit operates — land / sea / air / space — and
+> **⛔ IMMOBILE IS NOT A DOMAIN.** A domain says WHERE a unit operates — land / sea / air / space — and
 > not-moving is orthogonal to that, so it never belongs on this axis and gets no tag. ⚠ The data does not yet
 > agree: a handful of units author `DOMAIN_IMMOBILE` (space defenders and the ICBM), which is why they carry no
 > domain tag at all — they are the unmodelled `space` set, not a fourth kind of place.
@@ -84,13 +84,13 @@ Only the OBVIOUS identities map; the size/species/motility/weapon taxonomy stays
 - **type / combat:** `melee` · `archery` · `siege` · `recon`.
 - **domain (from a combat class, complementing the `DOMAIN_*`-derived `landUnit`/`seaUnit`/`airUnit`):** `naval` ·
   `air`.
-- **NEW vocabulary (owner-approved 2026-07-21):** `hero` (hero-unit identity, `UNITCOMBAT_HERO`) · `animal`
+- **NEW vocabulary:** `hero` (hero-unit identity, `UNITCOMBAT_HERO`) · `animal`
   (`UNITCOMBAT_ANIMAL`/`SEA_ANIMAL`) · `space` (spacecraft + space workers, `UNITCOMBAT_*_SPACESHIP`/`SPACE_WORKER`).
 - **Animal LIFECYCLE states:** `tamed` (`UNITCOMBAT_TAMED`, 53 units) · `wild` (`UNITCOMBAT_WILD`, 198). `wild`
   is derivable as animal-and-not-`tamed` and is carried anyway, per the extra-tag ruling above — it lets a
   consumer ask for wild animals EXACTLY rather than widening to `animal` and sweeping tamed ones in with it
   (the spawn-neutrality test is the live case).
-- **NEW functional/role vocabulary (owner-approved 2026-07-21, flagged-remainder 2nd pass):** `police`
+- **NEW functional/role vocabulary:** `police`
   (`UNITCOMBAT_LAW_ENFORCEMENT`) · `medic` (`UNITCOMBAT_HEALTH_CARE`) · `missile` (`UNITCOMBAT_MISSILE`/`BALLISTIC`) ·
   `synthetic` (hi-tech artificial troops — `UNITCOMBAT_ROBOT`/`HITECH`/`CLONES`/`NANITE`/`NANOMORPHIC`) · `diplomat`
   (`UNITCOMBAT_DIPLOMAT`) · `entertainer` (`UNITCOMBAT_ENTERTAINER`). Plus more units folded onto EXISTING tags:
@@ -107,15 +107,15 @@ tally (`CvCascadeTally::countUnitsWithTag`) counts them at empire/team/world sco
 through it, so the data says so directly instead of the engine rediscovering it by matching
 (`CvUnit::canAcquirePromotion` refuses a tagged unit beside its existing no-primary-class gate).
 
-> **⚖ IT IS NEGATIVE BECAUSE THE VAST MAJORITY OF UNITS ARE PROMOTABLE (owner)** — absent means promotable, so
+> **⚖ IT IS NEGATIVE BECAUSE THE VAST MAJORITY OF UNITS ARE PROMOTABLE** — absent means promotable, so
 > the authored membership is the small side: **389 of 2073**, against the 1,684 a positive `promotable` would
 > have to carry.
-> **⛔ IT ASKS THE PRIMARY ONLY, AND THAT DISTINCTION IS THE WHOLE MECHANIC (owner).** A unit HAS a primary
+> **⛔ IT ASKS THE PRIMARY ONLY, AND THAT DISTINCTION IS THE WHOLE MECHANIC.** A unit HAS a primary
 > combat class and a LIST of them, and they answer different questions: the engine's *can this be promoted at
 > all* gate reads the PRIMARY (`getUnitCombatType()`), while promotion MATCHING runs over the whole HELD set
 > (`isHasUnitCombat` — primary + subs + promotion-granted). Only the primary is a genuine combat ROLE.
 > ⚑ **The subs are the Thunderbrd SPECIES / QUALITY / SIZE / MOTILITY taxonomy — the core reason the unitcombat
-> enum bloated at all (owner)**, which [engine.md](../reference/engine.md) already records as ~96% inert
+> enum bloated at all**, which [engine.md](../reference/engine.md) already records as ~96% inert
 > identifiers and which the tag work exists to unwind. So matching on the held set leaks promotions into units
 > whose real class grants none.
 > ⚑ **The worked case is the GREAT PERSON, and it is what forced the tag:** every one has primary
@@ -128,7 +128,7 @@ through it, so the data says so directly instead of the engine rediscovering it 
 > executives · great people · warlord/captain ranks · nukes · captives · `unit_sleeper`.
 > ⚠ **It gates EARNING a promotion, never RECEIVING one** — the free/granted bypass sits ahead of it, so a
 > tagged unit still gets what its own type hands it (a great general keeps `PROMOTION_LEADER`).
-> ⚖ **A WRONG VERDICT IS CHEAP, SO CERTAINTY IS NOT A GATE HERE EITHER (owner): *"if we notice something that
+> ⚖ **A WRONG VERDICT IS CHEAP, SO CERTAINTY IS NOT A GATE HERE EITHER: *"if we notice something that
 > should have promos but doesn't, we will figure that out real fast — it's not gamebreaking for a unit to have
 > promotions."*** ⛔ This has to be stated for the NEGATIVE tag specifically, because the extra-tag ruling above
 > does not carry over unchanged: a surplus POSITIVE tag is inert, while a surplus negative one takes a capability

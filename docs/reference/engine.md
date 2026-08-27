@@ -38,16 +38,16 @@ Measured against the deployed `Assets/CvGameCoreDLL.dll`: **1,205 of 1,302 expor
 not.** The 97 are the ones a cut may freely take. ⚠ The test needs a DEPLOYED DLL to read the export table from,
 so run it against the last good build, not a red tree.
 
-## ⛔ AN EXE-BOUND ENUM'S ORDINAL IS AN ABI OBLIGATION — never remove a member above one (owner)
+## ⛔ AN EXE-BOUND ENUM'S ORDINAL IS AN ABI OBLIGATION — never remove a member above one
 
-**Home of [a core enum entry is never removed](#-an-exe-bound-enums-ordinal-is-an-abi-obligation--never-remove-a-member-above-one-owner).** The section above answers whether a SYMBOL is
+**Home of [a core enum entry is never removed](#-an-exe-bound-enums-ordinal-is-an-abi-obligation--never-remove-a-member-above-one).** The section above answers whether a SYMBOL is
 EXE-bound. This is the other half, and it is the one that hides: some enum VALUES are hardcoded in the closed
 executable, so the ordinal itself is the contract. **Removing any member ABOVE such an entry shifts it, and every
 entry after it, by one** — the DLL then hands the EXE a number that means something else.
 
 ⛔ **So a dead member of a core enum is NOT ordinary dead code.** [Leave no evidence of the abandoned
 path](../../AGENTS.md#design) governs code, comments and docs; it does not reach an ordinal an outside binary
-counts on. **The slot stays, INERT** (owner) — never renumbered, never reused for something else, never
+counts on. **The slot stays, INERT** — never renumbered, never reused for something else, never
 "tidied". Being unreferenced is exactly what makes it look safe to take.
 
 ⚠ **The failure mode is silent and total, which is why this earns a rule rather than care.** Nothing errors,
@@ -80,9 +80,9 @@ spec — **[../specs/save.md](../specs/save.md)** (home of [the soft-remove save
 matter for engine work: field removal is a soft `savemigration.txt` drain (**never** a `WRAPPER_SKIP_ELEMENT`, never a
 save-break); derived data serializes nothing; deleting a changer means auditing its whole body for riders.
 
-## ⛔ NO FLOAT WHERE IT CAN REACH SYNCHRONIZED STATE (owner)
+## ⛔ NO FLOAT WHERE IT CAN REACH SYNCHRONIZED STATE
 
-**Home of [no float where it can reach synchronized state](#-no-float-where-it-can-reach-synchronized-state-owner).**
+**Home of [no float where it can reach synchronized state](#-no-float-where-it-can-reach-synchronized-state).**
 
 > *"Using float in any calc that is used in any kind of multiplayer scenario sounds like a gigantic no."*
 
@@ -90,7 +90,7 @@ Civ4 multiplayer is deterministic lockstep: every client runs the same turn and 
 CPU-dependent float math (`pow`, `exp`, x87-vs-SSE intermediates, compiler reassociation) can differ in the last
 bits, and a **truncation to int turns that into a different answer** — which is an OOS, not a rounding wobble.
 
-**⚖ THE DISCRIMINATOR IS SYNCHRONIZED STATE, NOT "GAMEPLAY" (owner): *"gameplay path does not always mean
+**⚖ THE DISCRIMINATOR IS SYNCHRONIZED STATE, NOT "GAMEPLAY": *"gameplay path does not always mean
 multiplayer."*** The test is whether the value can reach state every client must agree on:
 
 - **BANNED** — anything feeding a STATE MUTATION or a DECISION every client computes. **An AI decision counts**:
@@ -109,9 +109,9 @@ well-defined across clients, so it is not the baseline. Measured there: 87% of c
 difference 66 on a score of 1,000,000, and every ranking change confined to candidates whose scores differed by
 ≤ 1. A near-tie resolving differently is not a behaviour change; it is the tie being resolved *reproducibly*.
 
-## ⛔ THE SYNCHRONIZED RNG IS SHARED SAVE STATE — do not touch the draws (owner)
+## ⛔ THE SYNCHRONIZED RNG IS SHARED SAVE STATE — do not touch the draws
 
-**Home of [the synchronized RNG is shared state](#-the-synchronized-rng-is-shared-save-state--do-not-touch-the-draws-owner).**
+**Home of [the synchronized RNG is shared state](#-the-synchronized-rng-is-shared-save-state--do-not-touch-the-draws).**
 
 There are three random streams, and only the distinction between them is what keeps a game in sync:
 
@@ -131,7 +131,7 @@ few that [superseded-ideas #22](../architecture/superseded-ideas.md) accepts in 
 ⚠ Beware the subtle form: a short-circuit (`bCheap && getSorenRandNum(...)`) skips the draw when the left side is
 false, so a refactor that merely REORDERS a condition can desync the stream without touching a single draw.
 
-**⛔ THE RNG IS NOT DATA, AND NO JSON AUTHORS IT (owner).** No seed, stream, or draw is curated, and neither the
+**⛔ THE RNG IS NOT DATA, AND NO JSON AUTHORS IT.** No seed, stream, or draw is curated, and neither the
 cascade nor the curator owns any part of it — do not model it, do not migrate it, do not invent a `random`
 vocabulary. ⚑ **The line to hold, because it is easy to blur:** what JSON authors is the **ODDS** — a plain number
 (`chance`, a probability percent) that the engine's own roll compares against. The **ROLL** is engine mechanism on
@@ -194,7 +194,7 @@ the synchronized stream. Authoring the threshold is data; performing the draw is
   derivation is a consuming-system calc (json.md §9 — never an info getter).
 - **`CvGameSpeedScale` (`Sources/Engine/`) is the ONE consuming-system calc for "scale this by game speed"** —
   `speedPercent()` / `hammerCostPercent()` / `missionYieldPercent()`, each returning a HUMAN percent
-  ([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)). It exists because the
+  ([the DRY single-implementation law](../architecture/patterns/03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)). It exists because the
   info deliberately cannot serve two of them: `hammerCostPercent` composes `GAMEOPTION_EXP_UPSCALED_BUILDING_AND_UNIT_COSTS`
   with `UPSCALED_HAMMER_COST_MODIFIER`, and **an info never reads game state** (json.md §9 — a game option gates
   at the CONSUMING system). ⚠ It converts NOTHING: `CvGameSpeedInfo` serves `speed.world.percent` /
@@ -207,7 +207,7 @@ the synchronized stream. Authoring the threshold is data; performing the draw is
 
 **⚖ An info never reads game state, so a value composing a GAME OPTION gets its own consuming-system calc — one
 place, never re-derived per call site** (json.md §9 +
-[the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)). This generalizes the
+[the DRY single-implementation law](../architecture/patterns/03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)). This generalizes the
 `CvGameSpeedScale` note above, and is the shape any future one copies: a purely-organizational static-methods
 class (no data members, never instantiated — a namespace risks VC7.1/Boost name-mangling) holding the
 composition the info structurally cannot.
@@ -238,7 +238,7 @@ where it is. Read what the option is being ASKED, never match on the option name
 
 ## Info loading — `readJson` (the ONE JSON reader) + `CvInfoUtil` (XML residue)
 
-- **The ONE JSON reader ([exactly one JSON reader](../architecture/patterns.md#the-one-reader--the-load-pipeline-law)) is the load pipeline in `Sources/Data/CvReadJson.{h,cpp}`, entry
+- **The ONE JSON reader ([exactly one JSON reader](../architecture/patterns/08-the-one-reader-the-load-pipeline.md#the-one-reader--the-load-pipeline-law)) is the load pipeline in `Sources/Data/CvReadJson.{h,cpp}`, entry
   point `loadJson()`.** `Assets/Data` is walked, read, and parsed exactly ONCE per process, on first use, into a
   RETAINED in-memory store (~21 MB of JSON text → ~70 MB of picojson structures on the 32-bit heap); every
   downstream step reads the store, never the disk:
@@ -253,7 +253,7 @@ where it is. Read what the option is being ASKED, never match on the option name
     `mapFrom` on EVERY entity against the complete registry, mints + resolves the classification registries,
     runs the FK/reverse passes — whose closing `rp_derive*` sub-passes are the ONE home for a member derived
     from ANOTHER info's edges (`deriveAtRegistryComplete`; the reverse view is final there, so such a member
-    materializes once and its getter is a bare read, [materialize at mapFrom](../architecture/patterns.md#materialize-at-mapfrom--no-runtime-string-reads-in-info-getters-the-single-source-laws-load-time-sibling)) — and compiles the
+    materializes once and its getter is a bare read, [materialize at mapFrom](../architecture/patterns/07-materialize-at-mapfrom-no-runtime.md#materialize-at-mapfrom--no-runtime-string-reads-in-info-getters-the-single-source-laws-load-time-sibling)) — and compiles the
     DepositIndex. The premenu/postmenu PHASING is load-bearing:
     premenu consumers need premenu categories mapped before the menu; the postmenu types
     (processes/votes/espionage-missions/spawns) register late, so the postmenu re-run is what completes every
@@ -271,7 +271,7 @@ where it is. Read what the option is being ASKED, never match on the option name
 - The asset **checksum** is serialized and nothing consumes it: it does NOT gate MP OOS, does NOT block loading,
   and no code compares the savegame's value against the current one — so checksum parity is irrelevant when
   restructuring data, at zero cost to an existing save.
-  ⚖ **It is WRITE-ONLY state, and it is cut in a FOCUSED PURGE PASS at the end (owner)** — not piecemeal here.
+  ⚖ **It is WRITE-ONLY state, and it is cut in a FOCUSED PURGE PASS at the end** — not piecemeal here.
   Removing it is a serialized-member soft-remove ([save.md §3](../specs/save.md): full-delete the read + write,
   name the tag in `Assets/savemigration.txt`), and that discipline is done once, deliberately, across every
   orphaned serialized member together rather than one at a time as each is noticed. ⛔ This is owner-ruled
@@ -305,14 +305,14 @@ where it is. Read what the option is being ASKED, never match on the option name
 > Ties directly into the [unit-classification](../specs/skills.md) work — `tags` like `gunpowder`/`mounted` come
 > from unitcombats (post-migration).
 
-- **What a UnitCombat IS (owner):** a definition of a unit's **strengths and weaknesses** — the good/bad-against
+- **What a UnitCombat IS:** a definition of a unit's **strengths and weaknesses** — the good/bad-against
   column (a shared vs-tag stat bundle), NOT a definition of the unit's TYPE (that is the [tag](../specs/skills.md))
   nor its ABILITIES (those are skills). Three concerns, three homes. This is what it originally was in BTS (a
   vs-based combat grouping); the S2S distillation below restores it.
 - Vanilla: a thin label. **S2S/C2C:** a fat `CvUnitCombatInfo` (~150 fields, near-mirror of `CvPromotionInfo` — a
   combat class ≈ a free promotion for every member), many-to-many membership, proliferated to **~981 classes (~77%
   attached to no unit — vestigial)**; ~96% of live classes are inert tags (size/species/motility taxonomies crammed
-  into the combat-role enum). **The proliferation came largely from the killed EQUIPMENT mod (owner)** — it minted a
+  into the combat-role enum). **The proliferation came largely from the killed EQUIPMENT mod** — it minted a
   combat class per equipment permutation, which is why the enum bloated into a size/species/weapon taxonomy far
   beyond the strengths/weaknesses role.
 - Combat resolution: **additive-accumulate, multiply-once** — ~40 signed-% layers sum into one `iModifier`, applied
@@ -334,7 +334,7 @@ where it is. Read what the option is being ASKED, never match on the option name
   sharing Promotion's modifier-family vocabulary (**do UnitCombat + Promotion together**). Its non-stat content
   distills out: identity → tags, abilities → skills, leaving the pure strengths/weaknesses list. Verify live, then
   purge only vestigial/duplicate classes.
-- **⚖ THE LOAD-BEARING DISTINCTION (owner): a TAG is what a unit IS; a UNITCOMBAT is the good/bad-AGAINST column,
+- **⚖ THE LOAD-BEARING DISTINCTION: a TAG is what a unit IS; a UNITCOMBAT is the good/bad-AGAINST column,
   and its "vs" modifiers key on TAGS — never on another unit-combat id.** The canonical pair: **`anti-mounted` is a
   UnitCombat** (the modifier group carrying the bonuses), **`mounted` is a TAG** (the identity of the unit it
   fights). So a vs-modifier authors as `strength.unit.percent {unit: IS_MOUNTED}` **ON** the anti-mounted
@@ -345,13 +345,13 @@ where it is. Read what the option is being ASKED, never match on the option name
   unit-combat (the vs-tag stat bundle) *and* has the `mounted` tag (its queryable type), because they answer
   different questions — *how does it fight?* vs *what is it?* A unit's effective tags are its own ∪ its combat
   classes'.
-  ⚑ **The payoff is a LARGE purge, and it is GATED, not opportunistic (owner): *"I expect to be able to purge
+  ⚑ **The payoff is a LARGE purge, and it is GATED, not opportunistic: *"I expect to be able to purge
   literally 100's of unitcombat files eventually, when they stop being used as identifiers, but we are not there
   yet."*** That names the dependency exactly — the proliferation exists because the combat-class enum doubles as an
   IDENTIFIER (the size/species/weapon/motility taxonomy). Once TAGS carry identity, every class that existed only to
   identify becomes dead weight and goes. ⛔ So the purge follows the tag re-expression; purging ahead of it removes
   classes still doing identifier duty (the blunt purge that over-reached and was reverted).
-  ⚖ **This is the GOAL, not the now (owner) — and TAGS AND UNITCOMBATS LIVING SIDE BY SIDE IS SANCTIONED, not a
+  ⚖ **This is the GOAL, not the now — and TAGS AND UNITCOMBATS LIVING SIDE BY SIDE IS SANCTIONED, not a
   half-state to fix.** The shipped data still keys vs-entries by `UNITCOMBAT_*` ([skills.md](../specs/skills.md) §1
   documents that current shape) and that is FINE: *"there is nothing stopping us from letting tags and unitcombats
   live side by side."* Actually solving the re-expression needs its own **post-rework dedicated pass**, so the two

@@ -17,7 +17,7 @@
   > ⚑ **It degraded SILENTLY, which is why it survived:** the getters carried `< 0 ? MAX_INT` guards that detected
   > the wrap and saturated, so a pinned city kept returning a plausible number. Everything downstream then read a
   > total that was not the total — `calculateCulturePercent`, `calculateCulturalOwner`, the level thresholds.
-  > ⚠ **CONSEQUENCE ON AN EXISTING SAVE (owner) — recorded so it is not mistaken for a regression:** a city that
+  > ⚠ **CONSEQUENCE ON AN EXISTING SAVE — recorded so it is not mistaken for a regression:** a city that
   > had pinned now reports its real culture, which shifts **tile ownership and revolt risk** the first time such a
   > save is loaded. That is the fix landing ([validation.md](../specs/validation.md): an intentional divergence is
   > named and shown, never a mystery).
@@ -27,7 +27,7 @@
 - **Decay:** `max(0, culture·(1000−decayPermille)/1000)`, `decayPermille = TILE_CULTURE_DECAY_PERCENT·1000/speedPercent`;
   ×15 when the plot is out of any city's culture range; a value >1 cannot decay below 1.
 - **Ownership** (`calculateCulturalOwner`): keep the current owner when `hasFixedBorders() &&
-  culture(owner)·FIXED_BORDERS_CULTURE_RATIO_PERCENT/100 ≥ culture(highest)`. `GAMEOPTION_CULTURE_MIN_CITY_BORDER`:
+  culture·FIXED_BORDERS_CULTURE_RATIO_PERCENT/100 ≥ culture(highest)`. `GAMEOPTION_CULTURE_MIN_CITY_BORDER`:
   a plot adjacent to a city goes unconditionally to that city's owner.
 - **Revolt:** `baseRevoltRisk100 = highestPop·2 + (era+1)·adjacentAttackerTiles`, × `10000·attackerPct/max(1,defenderPct)`,
   × garrison modifier `10000/(100+garrison)`. **Two rolls:** `rand(100) < REVOLT_TEST_PROB`, then `rand(10000) <
@@ -105,7 +105,7 @@ refcounted; an intentional divergence from the legacy autobuild tear-out, stated
   and the city's count of those bonuses together — summing the count by hand re-implements the scaler the entry
   already states. The corp's active gate rides the same entry's `{HAS_CORPORATION: SELF}` condition. Its set half
   (which bonuses, for the spread/dormancy gate) is `getConsumedBonuses()`, the union of those `per.anyOf` ids.
-  > **⚖ Cascade boundary (owner ruling): corp active/dormant is ENGINE-DRIVEN SPREAD STATE — an engine-owned INPUT the
+  > **⚖ Cascade boundary: corp active/dormant is ENGINE-DRIVEN SPREAD STATE — an engine-owned INPUT the
   > modifier cascade READS, never a cascade-computed dormancy verdict.** Corporations spawn and spread themselves per
   > turn like religion (autonomously under `GAMEOPTION_ADVANCED_REALISTIC_CORPORATIONS`), so "is this corp active in
   > this city?" is asked of the engine (`isActiveCorporation`) — the same sanctioned class as religion presence and the
@@ -118,7 +118,7 @@ refcounted; an intentional divergence from the legacy autobuild tear-out, stated
   > [spine.md](../spine.md)): the store re-reads this one engine implementation on each leg's
   > fact and remembers only what held before, so the engine keeps owning the verdict while plane C's
   > `{HAS_CORPORATION}`-gated deposits get the crossing they route on.
-- **⚖ A CORPORATION CAN BE OBSOLETED, and the capability is KEPT (owner) — it is HEADROOM, not dead surface.**
+- **⚖ A CORPORATION CAN BE OBSOLETED, and the capability is KEPT — it is HEADROOM, not dead surface.**
   The chain is wired end to end and needs no code to activate: a tech authoring `obsoletes.corporations` lands on
   its `EDGEF_OBSOLETES`/`EDGEB_CORPORATIONS` edge, the readJson reverse pass stamps the corporation's obsoleting
   tech from exactly that edge, and every consumer already reads it — the city dormancy gate above, the

@@ -29,7 +29,7 @@
   subtract threshold, pull from granary if `food < foodKept`, then `+1 pop`. `growthThreshold = getModifiedIntValue(
   player.threshold(pop), cityGrowthRatePercent + playerGrowthRatePercent)`, halved for barbarian.
 
-- ⛔ **THE FOOD STORE EMITS NO SPINE FACT, AND THAT IS CORRECT (owner):** *"changing food in and of itself does
+- ⛔ **THE FOOD STORE EMITS NO SPINE FACT, AND THAT IS CORRECT:** *"changing food in and of itself does
   not actually alter any other state anywhere"* — it is an inert accumulator. The fact belongs where the store
   CROSSES into state something else depends on, which is the population step, and `setPopulationInternal` already
   emits `SEVT_CITY_POPULATION_ADDED`/`_REMOVED` carrying the delta as a magnitude. ⚑ So a food mutator reaching
@@ -71,7 +71,7 @@ The AI **queues rather than re-deciding per completion**
 orders up to `AI_BUILDING_SHORTLIST_DEPTH`, and `doProduction` re-enters `AI_chooseProduction` when the queue
 empties. **A process is the exception at every point below, because it is the one order that NEVER COMPLETES.**
 
-- ⛔ **A PROCESS MAY ONLY EVER STAND ALONE IN AN AI QUEUE (owner): *"idle should not be possible to add unless
+- ⛔ **A PROCESS MAY ONLY EVER STAND ALONE IN AN AI QUEUE: *"idle should not be possible to add unless
   there is literally nothing else."*** Enforced at both ends of `pushOrder` — the `ORDER_MAINTAIN` case REFUSES
   the push when an AI/automated queue already holds any non-process order (`[CIT/push/reject]
   reason=queueNotEmpty`), and the tail purge pops EVERY queued process wherever it sits the moment a real order
@@ -82,7 +82,7 @@ empties. **A process is the exception at every point below, because it is the on
   ⚠ **Whether the push LANDED is read off the QUEUE LENGTH, never assumed from having asked** —
   `AI_chooseProcess` returns the queue delta, because a decision-cascade rung that returns on a bare `true` ends
   the entire decision having set nothing.
-- ⛔ **A PROCESS HAS A FAKE ONE-TURN COMPLETION TIME AT ALL TIMES (owner).** `getOrderProductionTurnsLeft`
+- ⛔ **A PROCESS HAS A FAKE ONE-TURN COMPLETION TIME AT ALL TIMES.** `getOrderProductionTurnsLeft`
   returns **1** for `ORDER_MAINTAIN`, and `getTotalProductionQueueTurnsLeft` counts it as one turn instead of
   reading `getProductionNeeded` (`MAX_INT` for a process). ⚑ The reason is that both feed SUMS shared with real
   orders: the queue total bails to **999** for any order needing >999 hammers, so a single queued process made
@@ -93,7 +93,7 @@ empties. **A process is the exception at every point below, because it is the on
   `productionToCommerce` rates — and `PROCESS_IDLE` declares NONE — so the overflow was converted at zero and
   then cleared: destroyed outright. Breaking leaves it BANKED, and a process head returns from `doProduction`
   before the per-turn overflow clear, so it survives to the next real order.
-- ⛔ **AN IDLE ORDER BEHAVES AS NO ORDER (owner).** A process whose `conversion` block is empty converts
+- ⛔ **AN IDLE ORDER BEHAVES AS NO ORDER.** A process whose `conversion` block is empty converts
   nothing (`CvProcessInfo::convertsProduction()` is false), so `doProduction` **banks the city's hammers as
   overflow** exactly as the no-order path does, rather than discarding them. ⚑ **The rule is about IDLE
   itself, not about who selected it** — a human parking a city and an AI falling back to it get the same
@@ -104,7 +104,7 @@ empties. **A process is the exception at every point below, because it is the on
   `TECH_COOPERATION`, `PROCESS_RESEARCH_MEAGER` ← `TECH_ORAL_TRADITION`, both ← `TECH_LANGUAGE`) — the domain
   is built purely from `enables` edges, so a low-tech player's ONLY reachable process is idle. Discarding
   production there is a trap with no exit: no hammers, so no building, so no economy, so no tech.
-- ⚖ **A QUEUED PROCESS IS RE-DECIDED EVERY TURN (owner): *"if PROCESS is being run, recalc has to happen for
+- ⚖ **A QUEUED PROCESS IS RE-DECIDED EVERY TURN: *"if PROCESS is being run, recalc has to happen for
   that city every turn as long as process is run."*** `doProduction` re-enters `AI_chooseProduction` when a
   process sits ANYWHERE in the queue, and `AI_chooseProduction` strips every `ORDER_MAINTAIN` before deciding
   (`[CIT/dropProcess]`) — **a process is a fallback, never a commitment.** The end-of-cascade fallback re-adds

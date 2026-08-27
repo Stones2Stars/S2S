@@ -22,14 +22,14 @@ sibling case — **policies enacted by a civic** → the `policies` block (emitt
 boolean gates that are neither (a building's `damageAllAttackers`, a wonder's `buildingOnlyHealthy`) stay as-is.
 
 **Current state:** readJson maps the `capabilities` block onto the entity's `CvInfo` — each key realized as a
-runtime-generated **`CAPABILITY_*` info** ([the classification-infos registry](json.md#8-classification--unit-skillstagsstate-building-attributes--empire-capabilities),
+runtime-generated **`CAPABILITY_*` info** ([the classification-infos registry](json/09-classification-unit-skillstagsstate-building-a.md#8-classification--unit-skillstagsstate-building-attributes--empire-capabilities),
 [json.md §8](json.md)) with the grantor-side getters reading O(1) id bitsets; the legacy counters
 are deleted, their serialization retired by the soft-remove — the read + write dropped and the tags named in
 `Assets/savemigration.txt` ([save.md §3](save.md)).
 
 **The union is the PLAYER's, keyed and fact-fed** — `EmpireContext.policies`' shape with the `CAPABILITY_*` key
-space, fed by the tech / civic / building facts ([plot/city/player each own one live-state context](../cascade.md#the-contexts--the-per-scope-live-state-read-surface):
-a team owns no live-state surface; [ContextDict replaces CvDerivedCache](../cascade.md#-cvderivedcache-is-replaced-by-contextdict--virtually-everywhere-owner)).
+space, fed by the tech / civic / building facts ([plot/city/player each own one live-state context](../cascade/10-contexts.md#the-contexts--the-per-scope-live-state-read-surface):
+a team owns no live-state surface; [ContextDict replaces CvDerivedCache](../cascade/06-spatial-and-contextdict.md#-cvderivedcache-is-replaced-by-contextdict--virtually-everywhere)).
 NPC guards + game-option compositions live in the getters; the side effects the deleted changers carried (the
 trade-network recompute `updatePlotGroups` + `MarkBridgesDirty`, the improvement-validity cache round,
 `updateYield`) survive in `processTech`.

@@ -1,10 +1,6 @@
-# Structural cleanup — the #430 work tier
+# Structural cleanup
 
-> **The #430 ENGINE is built and wired; its CONSUMER half is not.** The cascade, enabler and spine are in the tree
-> and maintained rather than recomputed, and that half's leftovers are polish, tracked per-concept in
-> `docs/specs/`/`docs/reference/` rather than as a standing worklist here.
->
-> ⛔ **What is NOT polish: the AI/engine consumers that still walk the INFO REGISTRIES instead of reading the
+> ⛔ **What is left here: the AI/engine consumers that still walk the INFO REGISTRIES instead of reading the
 > compiled edges.** `python Tools/verify-registry-scans.py` is that census — ENABLER-DOMAIN sites re-point onto the
 > maintained frontier, OTHER-REGISTRY sites invert onto the entity's own compiled entries.
 > ⚖ Only a DECISION path is a defect: init, reset, serialization, save/load, UI enumeration and text rendering

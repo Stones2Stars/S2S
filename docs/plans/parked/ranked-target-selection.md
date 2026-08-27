@@ -1,6 +1,6 @@
 # Ranked target selection (`max:` + `orderedBy`/`orderedByDescending`) — design LOCKED, impl pending
 
-> **Status:** design **LOCKED (owner 2026-06-28)** and spec'd in [json.md §3.3](../../specs/json.md). This note now
+> **Status:** design **LOCKED** and spec'd in [json.md §3.3](../../specs/json.md). This note now
 > tracks the **implementation TODO** (not yet built). It **extends** the existing `max:` (used by grants + conditions),
 > so nothing existing breaks. Spelling: **`orderedBy`** (ascending) / **`orderedByDescending`** (descending) — the
 > standardized LINQ-style UX; the earlier `rankedBy` working name is superseded.
@@ -9,12 +9,12 @@
 Some effects target the **top-N cities by a metric**, not a boolean per-city condition:
 - **largestCity happiness** — engine `getLargestCityHappiness` (`CvCity.cpp:5551`) applies a flat to a city whose
   `findPopulationRank() ≤ world TargetNumCities` (i.e. the empire's largest *cities*, plural — top-N, not the single
-  largest). This is the [conditions are predicates, never bespoke members](../../specs/json.md#35-predicates--a-systems-runtime-state-query) retirement target for the `largestCity` member — **blocked on
+  largest). This is the [conditions are predicates, never bespoke members](../../specs/json/03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query) retirement target for the `largestCity` member — **blocked on
   this design**.
 - **Wonders that grant to the X largest cities** — same selection shape on the `grants` side.
 
 ## Why NOT a predicate
-`IS_LARGEST_CITY` as a bare predicate was tried and **rejected (owner 2026-06-28): "does not fly fundamentally."**
+`IS_LARGEST_CITY` as a bare predicate was tried and **rejected: "does not fly fundamentally."**
 Ranking is a *selection/threshold* concern, not a yes/no state query — and it would need a world constant
 (`TargetNumCities`) baked into a boolean. (The bare-predicate wiring was reverted.)
 
@@ -30,20 +30,20 @@ Ranking is a *selection/threshold* concern, not a yes/no state query — and it 
 - `max: N` + `rankedBy: METRIC` ⇒ **the top-N objects** of the plural target ordered by `METRIC` (descending).
   Without `rankedBy`, `max:` stays a plain count threshold (backward-compatible — nothing existing breaks).
 - **Metrics:** `CITY_SIZE` (population) first; an **extensible registry** — "general rankings for more things as
-  needed" (owner 2026-06-28).
+  needed".
 - **N source:** a literal (wonders: `5`) **or** a world token for the largestCity-happiness case (the engine's
   `TargetNumCities`) — exact token spelling TBD when formulated (a `/state` world scalar; `targetNumCities` is **not**
   emitted today, so this also needs a (batched) engine `/state` addition).
-- **Implementation hook (owner 2026-06-28):** the **sort/ranking step is added into cascade PARSING** — the parser
+- **Implementation hook:** the **sort/ranking step is added into cascade PARSING** — the parser
   recognizes `rankedBy` on a plural target and the cascade ranks the in-scope objects by the metric, selecting the
   top-N. One place, general for all future ranking metrics.
 
-## ⚖ ONE ORDERING MECHANISM, USED EVERYWHERE (owner)
+## ⚖ ONE ORDERING MECHANISM, USED EVERYWHERE
 
 **"There is no reason why we can't use the same sorting/filtering in all places."** The ranked TARGET selection
 here and the BUILD-LIST UI's filter/sort are the same operation — *order a set of objects by a named metric,
 optionally keep the top N* — so they are ONE implementation with one extensible metric registry, not two
-([the DRY single-implementation law](../../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)). json.md §3.3 already
+([the DRY single-implementation law](../../architecture/patterns/03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)). json.md §3.3 already
 calls the metric set "an extensible registry", so this is the registry being taken at its word rather than a new
 concept.
 
@@ -56,7 +56,7 @@ source differs. The registry must therefore be keyed by metric, not assume an in
 ⛔ Do NOT build a second ordering step for the UI. If the UI's sort needs a metric the registry lacks, ADD THE
 METRIC — that is the extension point.
 
-⚖ **THE CONTRACT IS SET-IN → SET-OUT (owner):** *"it is full set in -> filtered or sorted out."* The operation
+⚖ **THE CONTRACT IS SET-IN → SET-OUT:** *"it is full set in -> filtered or sorted out."* The operation
 takes the FULL candidate set and returns the narrowed/ordered one; it does not iterate a database, does not know
 what produced the set, and does not know who consumes the result. That is what lets one implementation serve
 both callers, because both already hold a full set:
@@ -88,5 +88,5 @@ through the reverse pass. Spelling is SETTLED — `orderedBy` / `orderedByDescen
   largestCity-happiness parity case.
 
 ## Related
-- [conditions are predicates, never bespoke members](../../specs/json.md#35-predicates--a-systems-runtime-state-query) — the invention sweep this unblocks (`largestCity`).
+- [conditions are predicates, never bespoke members](../../specs/json/03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query) — the invention sweep this unblocks (`largestCity`).
 - `Tools/Migration/curate_civic.py` / `curate_trait.py` — `iLargestCityHappiness` stays a `largestCity` member **until this lands**.

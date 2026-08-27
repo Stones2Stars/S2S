@@ -5,11 +5,11 @@ A **golden age** is a temporary, player-wide boost period. Everything hangs off 
 (`CvPlayer.cpp:9390`). Every effect below is gated on `isGoldenAge()` and stops the turn the counter hits 0.
 It decrements 1/turn at end of the player's turn (`CvPlayer.cpp:3852`).
 
-> **⚖ A GOLDEN AGE INSTANTLY ENDS ANARCHY (owner) — it is not merely mutually exclusive with it.** On the
+> **⚖ A GOLDEN AGE INSTANTLY ENDS ANARCHY — it is not merely mutually exclusive with it.** On the
 > 0 → non-zero crossing `changeGoldenAgeTurns` runs `changeAnarchyTurns(-getAnarchyTurns())`, so an anarchic
 > empire that triggers one is out of anarchy that instant, with the anarchy crossing's own fact and every
 > consequence riding it. ⚑ **It sits in the PUBLIC setter's EFFECT half, never in
-> `changeGoldenAgeTurnsInternal`** — which is exactly the [the load reseed](../spine.md#5-the-load-reseed)
+> `changeGoldenAgeTurnsInternal`** — which is exactly the [the load reseed](../spine/05-the-load-reseed.md#5-the-load-reseed)
 > split doing its job: a genuine golden-age START cancels anarchy, while a save read (which reaches the internal
 > setter directly, commit + maintain + announce and nothing else) restores a loaded golden age without
 > retroactively clearing the anarchy the save recorded beside it.
@@ -59,7 +59,7 @@ live in the cascade, not raw engine reads — see "Cascade representation" below
      intrinsic + city/player yields decide. (Thresholds are low for some yields — e.g. commerce — so the bonus
      fires almost everywhere and *looks* like "+1 on everything", but it is genuinely gated, and a
      low-pre-improvement tile can miss it.)
-   - **⚖ THE PRE-IMPROVEMENT, PRE-ROUTE OPERAND IS REPRODUCED FAITHFULLY (owner ruling), and it is what forced
+   - **⚖ THE PRE-IMPROVEMENT, PRE-ROUTE OPERAND IS REPRODUCED FAITHFULLY, and it is what forced
      the ROUTE into a plot segment of its own.** The plot package stores nature / improvement / **route** / rest
      precisely so this operand — `nature + the city block + the owner's plot flats` — is expressible at all;
      while route and the owner's flats shared one sum it was not ([modifier.md §2](../cascade.md)).
@@ -80,11 +80,11 @@ live in the cascade, not raw engine reads — see "Cascade representation" below
 
 ### 2. Growth — UNAFFECTED
 
-⛔ **A golden age does NOT lower the food a city needs to grow (owner).** `CvPlayer::getGrowthThreshold` finishes
+⛔ **A golden age does NOT lower the food a city needs to grow.** `CvPlayer::getGrowthThreshold` finishes
 at the AI-handicap step and returns; there is no golden-age term, and one must not be added — **never re-add a
 golden-age term to `getGrowthThreshold`.**
 
-> **⚖ THE MECHANIC IS DEAD BECAUSE IT NEVER LIVED, AND THAT IS WHAT DECIDES IT (owner):** *"if growth reduction
+> **⚖ THE MECHANIC IS DEAD BECAUSE IT NEVER LIVED, AND THAT IS WHAT DECIDES IT:** *"if growth reduction
 > for golden age has never worked, we won't introduce it now — the game has been balanced around not having
 > it."* The legacy define it depended on was misspelled and defined nowhere, so the discount was inert in every
 > game ever played while reading as implemented at the call site — every balance judgement the mod has ever made
@@ -145,7 +145,7 @@ gotcha is the per-plot bonus's **pre-improvement/pre-route** threshold test (`Cv
 > scope.
 
 > **Cascade representation — PERMANENT engine member-mirror, effect-only.**
-> [conditions are predicates, never bespoke members](../specs/json.md#35-predicates--a-systems-runtime-state-query) retires condition-as-member
+> [conditions are predicates, never bespoke members](../specs/json/03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query) retires condition-as-member
 > shapes (`empire.capital` → `enabled:IS_CAPITAL`). **The golden-age YIELD EFFECT is the standing PERMANENT exception:**
 > the per-plot threshold bonus, the player golden-age yield, and the golden-age commerce are applied by the **core
 > engine** and are **not defined as data anywhere** — the per-plot bonus is a base-yield threshold test ("does the plot

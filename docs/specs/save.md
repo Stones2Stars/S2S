@@ -121,10 +121,10 @@ drain / read-to-throwaway? ⇒ the member is dead ⇒ case (a), convert per §3.
 A recompute-only cache (yields, commerce, the cascade packages, network bonus counts, power, dormancy verdicts, …) is
 **never trusted from a save**: don't read it, don't write it, drain any old-save orphan via §3. `reset()` /
 marked-on-construct means the first read after load recomputes from current state — never stale-from-save. This is
-**universal, not per-field-optional** (owner ruling): no cache is ever serialized. With nothing derived read from a
-save there is nothing to purge, so no blanket recompute exists to purge it ([self-heal is not a backstop](../cascade.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban)).
+**universal, not per-field-optional**: no cache is ever serialized. With nothing derived read from a
+save there is nothing to purge, so no blanket recompute exists to purge it ([self-heal is not a backstop](../cascade/03-no-staleness-no-selfheal.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban)).
 A serialized store survives ONLY for genuine **non-derivable** state (event/vote grants,
-e.g. `CvCity::m_paiFreeBonusEvents`). Cache mechanics: [state-repositories.md](../cascade.md).
+e.g. `CvCity::m_paiFreeBonusEvents`). Cache mechanics: [cascade.md](../cascade.md).
 
 ## 6. Deleting a changer? Audit its whole BODY for side effects
 
@@ -160,10 +160,10 @@ An apply-site audit alone misses non-obvious riders. Legacy changers carry them:
 > | **FAIL-LOUD** | not valid, and NO substitute exists | read stays hard; the Type is UNDELETABLE | terrain · gamespeed · mapcategory |
 >
 > **The FALLBACK class, worked (civics).** A player must hold *a* civic per option slot, but any valid one will
-> do — *"you can just replace with whatever is first in the list"* (owner). The substitute only has to be
+> do — *"you can just replace with whatever is first in the list"*. The substitute only has to be
 > VALID, never optimal.
 >
-> ⚑ **Why first-in-list is ALWAYS a legal substitute — it is structural, not luck (owner).** Category id order
+> ⚑ **Why first-in-list is ALWAYS a legal substitute — it is structural, not luck.** Category id order
 > comes from the curator's `_order.json` manifest, which reproduces the legacy XML document order
 > ([engine.md § Info loading](../reference/engine.md)), so the FIRST civic in an option slot is that slot's BASE
 > civic — and the base civics are exactly what `TECH_GAME_START`'s `enables` unlocks, the synthetic root node
@@ -177,7 +177,7 @@ An apply-site audit alone misses non-obvious riders. Legacy changers carry them:
 > a FALLBACK-class Type, copy that shape: repair at load, immediately after the read, in the same loop that
 > knows the slot's meaning.
 >
-> ⛔ **The FAIL-LOUD class — the DO-NOT-DELETE list (owner).** Here allow-missing is the WORST outcome: it loads
+> ⛔ **The FAIL-LOUD class — the DO-NOT-DELETE list.** Here allow-missing is the WORST outcome: it loads
 > `-1` and yields a silent black hole / a broken game, where a throw would have named the problem at once.
 >
 > | Type | Why it breaks the game | Where it is protected |
@@ -186,7 +186,7 @@ An apply-site audit alone misses non-obvious riders. Legacy changers carry them:
 > | **`GAMESPEED_`** | the save's every scaled cost/threshold/turn was accumulated against it — *"changing gamespeed literally breaks the game"* | `CvInitCore::m_eGameSpeed` read stays hard |
 > | **`MAPCATEGORY_`** | gates building placement / feature spread / bonus placement | ⚠ **NOT a save-path concern — a DATA-integrity one** (below) |
 >
-> ⛔ **THE TABLE IS KNOWN-INCOMPLETE (owner): *"there may be more that will completely break the game, but those
+> ⛔ **THE TABLE IS KNOWN-INCOMPLETE: *"there may be more that will completely break the game, but those
 > are the ones I could think of."*** Treat it as the members identified so far, NEVER as a cleared list — the
 > absence of a Type from it is not evidence that deleting that Type is safe. **The mechanical tell of a missing
 > member is an UNGUARDED dereference of a possibly-absent id** — `GC.get<X>Info(getX())` with no `NO_<X>` check
@@ -210,7 +210,7 @@ An apply-site audit alone misses non-obvious riders. Legacy changers carry them:
 > exists (a two-phase read that can reject, or a post-load sweep). Every other class read in the tree is
 > allow-missing.
 
-⛔ **A `@SAVEBREAK` comment is a CLAIM TO VERIFY, not a fact (owner).** Check it against the list below before
+⛔ **A `@SAVEBREAK` comment is a CLAIM TO VERIFY, not a fact.** Check it against the list below before
 believing it — several in-tree labels do not survive that check — and never park work behind an unverified one.
 
 Enum/Type drift is name-remapped on load (`getInfoTypeForString`); XML reorder/insert is free. The real
@@ -254,7 +254,7 @@ there is no safe conversion, only truncation. The direction is one-way by design
 still real save-break #1 (the silent-wrong-load class) and this does nothing for it.
 ## See also
 
-- [state-repositories.md](../cascade.md) — the derived-cache model that rests on §5.
+- [cascade.md](../cascade.md) — the derived-cache model that rests on §5.
 - [leave no evidence of the abandoned path](../../AGENTS.md#design) — the same discipline applied to a lingering
   `WRAPPER_SKIP_ELEMENT`.
 - [engine.md](../reference/engine.md) — the closed-`.exe` VC7.1 toolchain the save format is frozen by.

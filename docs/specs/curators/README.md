@@ -32,7 +32,7 @@ curator's docstring + body. To read the map for an entity, **read its curator.**
 
 ## Post-curation additions (`curate_additions.py`) — the hand-authored layer
 
-> **Entity curation is complete (owner), so new GAMEPLAY data no longer goes in the legacy XML
+> **Entity curation is complete, so new GAMEPLAY data no longer goes in the legacy XML
 > (curator input) — it is a POST-CURATION ADDITION.** Additions author in `Assets/Data/_additions/<type>.json`
 > (an entity id → a partial object) and `curate_additions.py` DEEP-MERGES them into the curated
 > `Assets/Data/<type>/**` JSON as the **final offline step** (dicts recurse; leaves/lists override). It matches the
@@ -51,7 +51,7 @@ curator's docstring + body. To read the map for an entity, **read its curator.**
 > So `curate_common` hooks the re-apply to the ONE act every writer must perform — clearing its folder
 > (`wipe_entity_json`) — and runs it at process exit over exactly the folders that run rewrote. The merge stays
 > the ONE implementation in `curate_additions`
-> ([the DRY single-implementation law](../../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)); the hook only decides
+> ([the DRY single-implementation law](../../architecture/patterns/03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)); the hook only decides
 > WHEN it runs, and re-merging the same partial is a no-op, so `curate_all`'s closing pass still lands the same
 > bytes.
 > ⛔ **The hook reaches ONLY a writer that calls `wipe_entity_json` — a bespoke in-place write skips BOTH halves**
@@ -63,7 +63,7 @@ curator's docstring + body. To read the map for an entity, **read its curator.**
 > ⚠ A `--sample`/dry run clears nothing, so it registers nothing and applies no overlay — reading a sample still
 > shows the pre-overlay curator output, which is what you want when checking the CURATOR.
 
-## ⛔ THE CURATOR SKIPS DEAD THINGS — a MECHANISM, never a hand-kept list (owner)
+## ⛔ THE CURATOR SKIPS DEAD THINGS — a MECHANISM, never a hand-kept list
 
 An entity that produces **no effect, unlocks nothing, and is named by nothing** is dead weight: loaded resident,
 listed in the manifest, offered in the build list and scored by the AI, all to do nothing. The legacy XML

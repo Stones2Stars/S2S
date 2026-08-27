@@ -1,6 +1,6 @@
 # Validation — the live-verification discipline
 
-> **Project-specific (owner).** Validation is how a migration work item is proven DONE: its effect is observed in the
+> **Project-specific.** Validation is how a migration work item is proven DONE: its effect is observed in the
 > running game, through the endpoints, on a real save and a real turn — not a side test suite, but the acceptance
 > discipline legacy-removal work answers to. Most of it retires when the migration is done. (Specs aren't permanent;
 > they exist so agents don't get yoinked. This one lives in the **one** specs surface, never a siloed project
@@ -17,7 +17,7 @@
 
 > **⛔ THERE IS NO COMPARISON TWIN, AND NONE COMES BACK.** The `*Legacy` oracle getters and the
 > `*Recomputed`/`*Leg` `/computed` twin fields are GONE — zero such symbols remain in `Sources/` — and their
-> removal was one of the reasons the hard rebuild was forced (owner): agents had learned to cheat the comparison
+> removal was one of the reasons the hard rebuild was forced: agents had learned to cheat the comparison
 > by feeding legacy-computed data into the cascade calc so it could not fail (now banned outright by
 > [the pollution guardrail](#the-pollution-guardrail--engine-computed-data-never-rides-in)), and once the legacy accumulators
 > were deleted both sides read the same derivation, so the check could never turn red anyway. The problem is
@@ -44,10 +44,10 @@ heal, unit promotions) as game-thread snapshots, so a manifestation check is a p
 eyeballing the screen. A value not yet on the surface (e.g. free-promotion grants, grants-applied) must be EMITTED
 first; emitting it is step one of that item's fix.
 
-**⚖ AND IT IS A SNAPSHOT, NEVER A PROPERTY — AN EVALUATION PATH IS NEVER "DONE" (owner): *"I don't think any
+**⚖ AND IT IS A SNAPSHOT, NEVER A PROPERTY — AN EVALUATION PATH IS NEVER "DONE": *"I don't think any
 evaluation path can ever be called done."*** The reason is structural rather than cautious: the classification
 registries and the modifier families are OPEN BY DESIGN
-([the classification-infos registry](json.md#8-classification--unit-skillstagsstate-building-attributes--empire-capabilities)), so a valuation that reads
+([the classification-infos registry](json/09-classification-unit-skillstagsstate-building-a.md#8-classification--unit-skillstagsstate-building-attributes--empire-capabilities)), so a valuation that reads
 every source today becomes incomplete the moment data authors a new one — with no code change, nothing failing,
 and no build that could name it. Completeness DECAYS on a data edit.
 ⇒ **So the deliverable is the INSTRUMENT, not the claim**: the load-time censuses (`unkinded-member`, the FK and
@@ -55,18 +55,18 @@ unconsumed-key counts), attribution to a named source with numbers, and the thre
 ([http-endpoints.md](http-endpoints.md)) keep working as the data moves; a completion statement does not.
 ⛔ Report an evaluation path as *"no known divergence, on this save, on this turn"* — never as done, which
 asserts a property the model cannot have. It is the same reason a remembered figure is a smell test rather than
-a target ([a reference number is a smell test](#-a-reference-number-is-a-smell-test-never-a-target-owner)).
+a target ([a reference number is a smell test](#-a-reference-number-is-a-smell-test-never-a-target)).
 
 **Turn time is the performance half of acceptance.** The second live signal is the wall clock, not a counter:
 **≤ 2 minutes per turn** on the standing late-game save
-([turn time is king](../cascade.md#-the-per-scope-package-model--the-cascades-founding-design-1-stated-as-cache-architecture)), with the process-memory gauge
+([turn time is king](../cascade/16-package-model.md#-the-per-scope-package-model--the-cascades-founding-design-1-stated-as-cache-architecture)), with the process-memory gauge
 beside it under the 32-bit ceiling — a gauge whose route went with the purge and which needs re-emitting
 ([memory-footprint.md](../reference/memory-footprint.md)). A
 read is an unconditional bare fetch and the only work on the turn path is APPLYING a moved source's deposits, so
 per-turn cost tracks what CHANGED — event volume, which is already visible on the spine — never what EXISTS. A
 regression shows up as turn time; the spine's event stream names what drove it. Numbers gathered while any legacy calc still runs on a
 hot read path are poisoned and prove nothing
-([legacy decache poisons perf measurement](../cascade.md#-legacy-decache-poisons-perf-measurement--and-converts-an-ai-loop-into-a-hang-owner)).
+([legacy decache poisons perf measurement](../cascade/03-no-staleness-no-selfheal.md#-legacy-decache-poisons-perf-measurement--and-converts-an-ai-loop-into-a-hang)).
 
 **The MEMORY hunt stays PARKED by the same sequencing ruling.** Chasing per-turn memory is pointless until legacy
 is gone and everything runs on the cascade + enabler, because the growth is turn-processing-borne and that
@@ -80,7 +80,7 @@ Live verification reads the HTTP surface ([http-endpoints.md](http-endpoints.md)
 
 ⚠ **The route surface is barely built.** The route table was purged and is defined with the access surface (⛔ the
 still-open work of building ONE new uniform getter set and disconnecting the legacy channel-shaped getters —
-[build a new getter surface, never widen a legacy one](../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner),
+[build a new getter surface, never widen a legacy one](../architecture/patterns/05-the-two-read-roles-one-grammar-two.md#-the-two-read-roles--one-grammar-two-answers),
 [patterns.md § THE TWO READ ROLES](../architecture/patterns.md)), so a
 manifestation poll reads the SPINE-WRITTEN LOGS plus the stored-side DECOMPOSITION censuses that survive. ⚠ Their
 number is deliberately NOT stated here — an enumerated route list in a doc has drifted twice: the `ROUTES` table in
@@ -106,11 +106,11 @@ source the engine uses — the job is to FIND it (map it to a named legacy sourc
 change the legacy/curator/numbers to make it reconcile. "It doesn't reconcile, so I'll change the numbers" is the
 banned shortcut — 99% of the time the value DOES reconcile once the missing source is found by reading ALL the writers.
 
-> **⛔ THE SPEC LEADS — NOW, not after some later flip (owner).** The ground truth is the **JSON spec**, not the
+> **⛔ THE SPEC LEADS — NOW, not after some later flip.** The ground truth is the **JSON spec**, not the
 > legacy engine: where the current code and the spec disagree, the spec is right and the code is the defect. There
 > is no "mirror the engine faithfully now, diverge later" phase — that framing died with the thing it described.
-> **We are not mirroring the legacy surface, we are NUKING it** (owner): the legacy getters are a DELETION list,
-> not a contract to reproduce ([build a new getter surface, never widen a legacy one](../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner)), and
+> **We are not mirroring the legacy surface, we are NUKING it**: the legacy getters are a DELETION list,
+> not a contract to reproduce ([build a new getter surface, never widen a legacy one](../architecture/patterns/05-the-two-read-roles-one-grammar-two.md#-the-two-read-roles--one-grammar-two-answers)), and
 > "this is how it works today" carries no weight by itself — only a live, named reason does (a spec requirement,
 > the EXE calling in, save state, an ordering the engine genuinely depends on). A change that alters observable
 > behaviour is a FACT to state plainly and weigh, never a thing to defer.
@@ -123,7 +123,7 @@ banned shortcut — 99% of the time the value DOES reconcile once the missing so
 > the specific case of the general rule that nothing is "deferred" (["deferred" is banned](../../AGENTS.md#design)).
 >
 > **⛔ AND IT IS AN ORDERING WITHIN THE WORK ITEM, NOT ONLY A PRIORITY BETWEEN THEM — THE CURATOR UPDATE GOES
-> FIRST, ALWAYS (owner): *"every time we have waited with a curator update, without fail, it has bitten me."***
+> FIRST, ALWAYS: *"every time we have waited with a curator update, without fail, it has bitten me."***
 > Not "usually", not "as a rule of thumb" — the owner reports it has cost them EVERY time, which is why this is
 > stated as a sequence rather than a preference. ⇒ When a work item touches both the data and its consumer,
 > the curator change + regen land BEFORE the engine side, even when the engine side is the part that looks
@@ -142,7 +142,7 @@ banned shortcut — 99% of the time the value DOES reconcile once the missing so
 > *proposed*, and it then requires explicit owner authorization for that specific case. It is NOT a general licence to
 > change numbers, and this exception must never be cited to skip the mapping work.
 
-## ⛔ A GATE THAT IS NOT HONOURED MAKES EVERY DATA CHECK MEANINGLESS (owner)
+## ⛔ A GATE THAT IS NOT HONOURED MAKES EVERY DATA CHECK MEANINGLESS
 
 > *"We cannot find curation errors when we literally do not honour the specced gates."*
 
@@ -151,7 +151,7 @@ not consult answers YES to everything, so every entity behind it looks correct a
 passes — the data is being measured with an instrument that cannot report a fault. ⇒ Fix the enforcement FIRST;
 only then does a data divergence mean anything.
 
-⚑ **The DATA is curated to be correct (owner) — it was inadvertently tested against the previous branch's
+⚑ **The DATA is curated to be correct — it was inadvertently tested against the previous branch's
 rollerskating behaviour**, so a surviving wrong verdict is the ENGINE failing to honour what the data says, not
 the data needing another pass. ⛔ So the reflex to "fix" a wrong offer by re-authoring the entity is backwards
 here, and it is the move that would bake the engine's gap into the data permanently.
@@ -190,7 +190,7 @@ compile error is a WORKLIST ENTRY, never a reason to re-shape what is being buil
 rewire onto the cascade + endpoint-observable correctness on a LOADED save (not *playing*). The only legacy that
 stays is an owner-ruled carve-out.
 
-> **⚖ A WRONG WIRING IS REMOVED ON SIGHT, AND AN INTERIM WRONG NUMBER IS ACCEPTABLE (owner): *"it does not
+> **⚖ A WRONG WIRING IS REMOVED ON SIGHT, AND AN INTERIM WRONG NUMBER IS ACCEPTABLE: *"it does not
 > really matter if we temporarily doublecount, it is more important that things are wired correctly, and wrong
 > wirings are removed on sight."*** This extends the same ruling from legacy CODE to legacy STRUCTURE.
 > ⛔ **So a double-count is NEVER a reason to keep a second maintenance surface alive, and it is never a thing to
@@ -199,15 +199,15 @@ stays is an owner-ruled carve-out.
 > permanent and quiet, and it is what the next consumer route silently doubles against.
 > ⚑ **The shape to recognise:** a mutation choke point that MAINTAINS a derived store directly beside the fact it
 > emits. The mutation site owns the SOURCE, never the store
-> ([a context dictionary is a spine consumer](../cascade.md#what-a-context-stores-vs-forwards---a-context-is-an-event-built-store-not-a-forwarding-facade-owner)); a store is maintained by its
+> ([a context dictionary is a spine consumer](../cascade/11-context-stores-vs-forwards.md#what-a-context-stores-vs-forwards---a-context-is-an-event-built-store-not-a-forwarding-facade)); a store is maintained by its
 > OWN consumer, off the fact. ⚠ The tell that one is present is a consumer deliberately IGNORING a fact "because
 > the choke point already applied it" — that skip is the compensation, and it fails the moment anything else
 > routes on the same fact.
 > ⛔ **Do not record one as a todo entry.** Finding it IS the work item
-> ([an event gap is closed the moment it is found](../spine.md#-a-fact-names-the-happening--something-changed-is-not-a-fact-owner)); it closes in the same
+> ([an event gap is closed the moment it is found](../spine/03-the-domain-emit-surface-every-fact.md#-a-fact-names-the-happening--something-changed-is-not-a-fact)); it closes in the same
 > change, and the compensating skip goes with it.
 
-**⚖ AN AI *WEIGHT* IS NOT A CORRECTNESS GATE — THE AI HAS TO FUNCTION, AND BALANCE COMES AFTER (owner):**
+**⚖ AN AI *WEIGHT* IS NOT A CORRECTNESS GATE — THE AI HAS TO FUNCTION, AND BALANCE COMES AFTER:**
 *"AI weights we will figure out down the line; AI needs to function, then we balance it later."* This is the one
 place "wired outranks correct" does NOT lapse at green: it scopes that sequencing to a RED tree, so an agent
 reading it literally could conclude AI weights must now be right the moment the tree builds, and stall a
@@ -220,7 +220,7 @@ conversion on tuning. They must not.
 
 ⇒ So converting an AI read is DONE when it reads the right thing. State the behaviour change plainly (above) and
 move on; do not re-tune the surrounding arithmetic to keep a number where it used to sit, which is
-[a reference number is a smell test](#-a-reference-number-is-a-smell-test-never-a-target-owner) in AI clothing.
+[a reference number is a smell test](#-a-reference-number-is-a-smell-test-never-a-target) in AI clothing.
 ⚠ It does NOT license leaving an AI read on legacy because "the weight is wrong anyway" — that inverts it.
 
 ## The pollution guardrail — engine-computed data never rides in
@@ -267,7 +267,7 @@ event spine, accumulators, all condition *evaluation*) — dictates *when* each 
   data; (2) the parts we will replace — `canTrain`/`canConstruct` and the modifier rates — produce the right values in
   the AI's real per-turn calls (end-turn so the AI calls them), observed on the spine — the gate and rate routes are gone.
   Consumers — engine, AI and Python alike — read the NEW uniform parameterized surface
-  ([build a new getter surface, never widen a legacy one](../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner)), so every layer observes the same
+  ([build a new getter surface, never widen a legacy one](../architecture/patterns/05-the-two-read-roles-one-grammar-two.md#-the-two-read-roles--one-grammar-two-answers)), so every layer observes the same
   values because it reads the same slots, not because a legacy contract was held stable underneath it.
 - **⛔ An end turn does NOT confirm a STRUCTURE** ([structure before shadow](#cadence--what-load-verifies-vs-what-end-turn-verifies)).
   A per-change observation produces false confirmation even on a wrong structure — a gameobject side-table can read
@@ -283,7 +283,7 @@ contexts: an agent fixates on a number and misdiagnoses (a ~1100-building enable
 band-model change it had nothing to do with). The spec says what the model **is**; the curator code + the live
 endpoints prove it; the result is ephemeral and stays ephemeral.
 
-## ⛔ A REFERENCE NUMBER IS A SMELL TEST, NEVER A TARGET (owner)
+## ⛔ A REFERENCE NUMBER IS A SMELL TEST, NEVER A TARGET
 
 > *"I already regret talking about baselines, because every time you use it as a target, and mangle implementation
 > to reach the target, instead of ensuring implementation is correct."*

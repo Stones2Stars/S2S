@@ -16,7 +16,7 @@ ONCE per shortlist rather than once per build, and a city coasts on the shortlis
 queue-empties re-entry can never reach it, and a process may therefore only ever stand ALONE in an AI queue
 ([yields-growth.md](../../reference/yields-growth.md) § The order queue).
 
-**⛔ THE DEPTH IS A COUNT, NEVER A PRODUCTION-TURNS BUDGET (owner).** A turns budget makes the depth shrink as
+**⛔ THE DEPTH IS A COUNT, NEVER A PRODUCTION-TURNS BUDGET.** A turns budget makes the depth shrink as
 a city's output grows — the more production it has, the fewer builds the budget covers, the sooner its queue
 empties, and the MORE often it re-decides. Queue depth would be inversely proportional to output, which is the
 opposite of what depth is for. The count is taken from the queue's own standing `ORDER_CONSTRUCT` entries, so
@@ -29,7 +29,7 @@ of the shortlist without any second gate at this site ([enabler.md §6](../../sp
 half below (§ THE DOUBLE QUEUE) — which is what makes the mid-processing re-decision privilege disappear
 entirely rather than merely becoming rarer.
 
-> **⚖ THE OPEN QUESTION THE DEPTH RAISES — DOES A STANDING BUILDING QUEUE SQUEEZE UNITS OUT (owner)?** The
+> **⚖ THE OPEN QUESTION THE DEPTH RAISES — DOES A STANDING BUILDING QUEUE SQUEEZE UNITS OUT?** The
 > depth is what makes the scoring cheap, and it has a cost on the other side: `AI_chooseProduction` is the ONE
 > cascade that decides units as well as buildings, and `CvCity::doProduction` only re-enters it when the queue
 > EMPTIES (a queued process aside). So a city holding three construct orders does not weigh a unit for three completions, and a shallow
@@ -41,18 +41,18 @@ entirely rather than merely becoming rarer.
 > ⛔ **It is not settleable on the standing save.** The effect is a shifted unit/building MIX over many turns,
 > not a value a turn's census can show, so it needs exposure rather than a measurement — which is why this
 > belongs to the pre-ship pass and not to the perf thread that produced the depth.
-> ⚑ **AND THE DEPTH IS THE WRONG LEVER FOR THE COST IT WAS REACHING FOR (owner).** Queue depth buys cheap
+> ⚑ **AND THE DEPTH IS THE WRONG LEVER FOR THE COST IT WAS REACHING FOR.** Queue depth buys cheap
 > scoring by suppressing the DECISION, which is what spends the responsiveness. The scoring is what should be
 > retained instead, and the shape that does it is § THE DOUBLE QUEUE below — which is also where this risk
 > goes away, since a decision that still runs still weighs units.
 
-## ⚖ THE DOUBLE QUEUE — a retained SCORING stack beside the production queue (owner)
+## ⚖ THE DOUBLE QUEUE — a retained SCORING stack beside the production queue
 
-**The shape (owner):** *"a stack, with the highest scoring item on top, that gets popped and pushed to queue
+**The shape:** *"a stack, with the highest scoring item on top, that gets popped and pushed to queue
 when previous item is finished; we only reevaluate buildings when that stack is empty."* Earlier phrasing of
 the same model: *"build processing then uses the CACHE, until all buildings it can has been produced — and
 then the cache gets recalced in expectation of the next cycle."* It is
-[state-repositories.md](../../cascade.md) § THE AI PLANE IS NOT EXEMPT's sanctioned
+[cascade.md](../../cascade.md) § THE AI PLANE IS NOT EXEMPT's sanctioned
 residual made concrete for this one consumer — the AI keeping its OWN scores — and it is the successor to the
 queue-DEPTH lever above, which bought cheap scoring by suppressing the decision instead of retaining the
 score.
@@ -67,11 +67,11 @@ half CONSULTS the stack instead of re-scoring.
 keeping the decision costs the sliver that is not scoring while restoring every unit evaluation. Suppressing
 it saves that sliver and buys back the unit-squeeze risk this document already records.
 
-⚖ **THE RECALC IS ONCE PER TURN — FOR NOW, AND FRESHNESS IS THE REASON (owner).** The clock is the STAND-IN
+⚖ **THE RECALC IS ONCE PER TURN — FOR NOW, AND FRESHNESS IS THE REASON.** The clock is the STAND-IN
 for the spine invalidation that does not exist yet: a purely drain-driven stack would outlive its inputs
 indefinitely, so the turn boundary is what bounds the staleness until an interest set can.
 
-⛔ **AND THE INVALIDATION IS OUT OF #430 — ITS OWN LANE, NOT A LATER STEP OF THIS ONE (owner): *"I do plan to
+⛔ **AND THE INVALIDATION IS OUT OF #430 — ITS OWN LANE, NOT A LATER STEP OF THIS ONE: *"I do plan to
 introduce eventspine and cache management the same way to the AI side, but that is not for #430, that would
 probably end up killing me — 3 months of rollerskate wrangling is enough for 1 go."*** The destination is
 named and wanted; its POSITION is the ruling.
@@ -105,7 +105,7 @@ AI heuristic ([superseded-ideas #1](../../architecture/superseded-ideas.md)), no
 **The store shape, pinned by rulings that already exist:**
 - ⛔ **A sibling of `ContextDict`, never `ContextDict` itself.** A score is REPLACED wholesale when its inputs
   move, so it wants assignment; the dictionary is a refcount and deliberately has no `set`
-  ([state-repositories.md](../../cascade.md) § THE AI PLANE IS NOT EXEMPT).
+  ([cascade.md](../../cascade.md) § THE AI PLANE IS NOT EXEMPT).
 - ⛔ **Never serialized, and CLEARED in `CvCity::reset()`** — a `CvCity` is recycled out of an
   `FFreeListTrashArray`, so an uncleared slot inherits the previous city's shortlist
   ([derived data is never trusted from a save](../../specs/save.md#5-derived-data-serializes-nothing-); the enabler's
@@ -115,11 +115,11 @@ AI heuristic ([superseded-ideas #1](../../architecture/superseded-ideas.md)), no
   whenever it is found empty needs neither: a load starts every city empty and the first choose that asks
   fills it. No eager load-end build is owed, and the per-turn clear needs no load special case either.
 
-⚖ **PRIORITY (owner): *"the calculation itself is now relatively minor, so it is more of a 'medium'
+⚖ **PRIORITY: *"the calculation itself is now relatively minor, so it is more of a 'medium'
 optimization step."*** ⚠ Read that as SCHEDULING WEIGHT, not as a claim about the kind of change: under the
 per-turn clock the scoring cost goes UP, so what is being weighed is a fairness gain against it (above).
 
-⚖ **THE PERF HEADROOM IN THIS PATH IS SPENT, AND THE COST IS AN ACCEPTED STATE (owner): *"we already saw the
+⚖ **THE PERF HEADROOM IN THIS PATH IS SPENT, AND THE COST IS AN ACCEPTED STATE: *"we already saw the
 cost reduction of just calculating properly over only the frontier … it's a state I can live with, knowing
 that we have identified more min/maxing improvements later."*** The large win here was structural — scoring
 the enabler's frontier instead of the database, and killing the per-candidate receiver Σ
@@ -128,15 +128,15 @@ remains in this path is a small fraction of what that took. ⛔ So do NOT re-ope
 perf item, and do not weigh the per-turn clock's increase against a target: the trade was made knowingly.
 ⚑ **And it needs no argument in advance, because it self-reports** — the `[PERF/choose]` census already
 carries chooses and ms per turn, so the increase (or its absence) is one line in the log the turn after this
-lands ([turn time is king](../../cascade.md#-the-per-scope-package-model--the-cascades-founding-design-1-stated-as-cache-architecture): the revisit trigger is
+lands ([turn time is king](../../cascade/16-package-model.md#-the-per-scope-package-model--the-cascades-founding-design-1-stated-as-cache-architecture): the revisit trigger is
 a MEASUREMENT, never an argument).
 ⛔ **No figure is recorded here deliberately** — a banked percentage becomes a target
-([a reference number is a smell test](../../specs/validation.md#-a-reference-number-is-a-smell-test-never-a-target-owner)).
+([a reference number is a smell test](../../specs/validation.md#-a-reference-number-is-a-smell-test-never-a-target)).
 
 ⛔ Its position in the sequence is unchanged either way —
-[legacy decache poisons perf measurement](../../cascade.md#-legacy-decache-poisons-perf-measurement--and-converts-an-ai-loop-into-a-hang-owner) puts "let
+[legacy decache poisons perf measurement](../../cascade/03-no-staleness-no-selfheal.md#-legacy-decache-poisons-perf-measurement--and-converts-an-ai-loop-into-a-hang) puts "let
 the AI plane cache its own scores" LAST, after the wrong-shaped reads are fixed, and a cache added over one of
-those hides it ([self-heal is not a backstop](../../cascade.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban) one plane over).
+those hides it ([self-heal is not a backstop](../../cascade/03-no-staleness-no-selfheal.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban) one plane over).
 
 **The governing principle (owner, same day):** *"we should not allow AI to calculate next build based on just
 getting a new building mid-processing, because humans do not get to do that either — they have already gotten

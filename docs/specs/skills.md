@@ -3,7 +3,7 @@
 The catalogue of a unit's **innate boolean abilities** — the `blitz`/`amphibious` vein. This is the **glossary**
 (the specific namings); the **system** is the [json spec](json.md) §8.
 
-> **Every skill key is a runtime-generated `SKILL_*` info** ([the classification-infos registry](json.md#8-classification--unit-skillstagsstate-building-attributes--empire-capabilities),
+> **Every skill key is a runtime-generated `SKILL_*` info** ([the classification-infos registry](json/09-classification-unit-skillstagsstate-building-a.md#8-classification--unit-skillstagsstate-building-attributes--empire-capabilities),
 > [json.md §8](json.md)): minted at load from the union of authored keys, resolved onto per-entity bitsets, read by
 > the getters as O(1) id bit tests — never per-call string lookups.
 >
@@ -14,7 +14,7 @@ The catalogue of a unit's **innate boolean abilities** — the `blitz`/`amphibio
 > spellings, not the output key): **every unit / promotion / unit-combat ability block is
 > `skills`** (`capabilities` is reserved for the empire block). There is no pending rename.
 
-> **⚖ REPRESENTATION — pure boolean enablers, so the shape differs by carrier (owner).** A skill is a
+> **⚖ REPRESENTATION — pure boolean enablers, so the shape differs by carrier.** A skill is a
 > **pure boolean ENABLER** ("can walk over river", "can pass peaks") — the direct mirror of empire `capabilities`,
 > carrying no value; it cannot be `false` (absent ⇒ not held). So a **UNIT authors `skills` as an ARRAY OF STRINGS**
 > (`["pillage","blitz"]`), never `{name:true}`. The **object form** (`{name:true|false}`) is used **only where
@@ -91,7 +91,7 @@ Owner-ruled or curator-grounded with a clear meaning.
 | `upgradeAnywhere` | can upgrade regardless of location |
 | `zoneOfControl` | exerts a zone of control |
 
-### The HIDE-AND-SEEK METHODS are skills (owner)
+### The HIDE-AND-SEEK METHODS are skills
 
 The way a unit hides — `camouflage` · `cloaked` · `disguised` · `navalDisguise` · `political` · `size` ·
 `submarine` · `captive` · `stealth` · `submerged` · `invisible` — is a **skill**, by the §0 test: **a promotion
@@ -104,7 +104,7 @@ question is settled by the data, not by taste: **73 promotions author a method**
 because tags are not promotion-grantable. ⚑ **`submarine` is the case that shows both planes at once** — it is a
 genuine identity TAG *and* carries the method SKILL, because a surfaced submarine is not hidden.
 
-### Per-type keyed abilities are NOT skills (owner)
+### Per-type keyed abilities are NOT skills
 
 **A skill is a pure boolean ENABLER** (§0 / json.md §8) — it carries no value. An ability **keyed by a type** carries a
 value (*which* type), so it is not a skill; it lives in a modifier family:
@@ -114,7 +114,7 @@ value (*which* type), so it is not a skill; it lives in a modifier family:
 | `targets` | combat — `strength.unit.targets.{UNITCOMBAT_*}` | preferentially targets those combat classes (this is what defines flanking — narrow per-target, "cannot be fucked with" granularity) |
 | `unitTargets` | combat — `strength.unit.unitTargets.{UNIT_*}` | targets those specific units |
 | `defenders` | combat — `strength.unit.defenders.{UNITCOMBAT_*}` | is a valid target for attackers of those combat classes |
-| `terrainDoubleMove` / `featureDoubleMove` | movement — `movement.unit.{terrain\|feature}.{TYPE}.percent` | **HALF MOVEMENT COST on that terrain/feature while the promotion is held (owner)** — so it is an ordinary keyed movement modifier (`-50`), never a boolean. ⛔ It is NOT a skill in any form: a skill is a pure boolean enabler carrying no value, and this carries both a TARGET and a MAGNITUDE |
+| `terrainDoubleMove` / `featureDoubleMove` | movement — `movement.unit.{terrain\|feature}.{TYPE}.percent` | **HALF MOVEMENT COST on that terrain/feature while the promotion is held** — so it is an ordinary keyed movement modifier (`-50`), never a boolean. ⛔ It is NOT a skill in any form: a skill is a pure boolean enabler carrying no value, and this carries both a TARGET and a MAGNITUDE |
 | `trapImmunity` / `trapTarget` / `trapSetWith` | ❌ **DEAD** (traps removed) — drop |
 
 **The one that STAYS a skill: `collateralImmune`** — its legacy per-source keying (`UNITCOMBAT_SIEGE`/`ASSAULT_MECH`/
@@ -150,7 +150,7 @@ consuming code (high confidence unless noted), not general knowledge.
 | `stampede` | can chain attacks after a kill while more defenders share the plot (grant/revoke, §4) |
 | `stateReligion` | buildable only in a city that has the player's state religion |
 | `stealthDefense` | stealth ambusher — first-strike vs attackers, suppresses their move cost (option-gated, `COMBAT_WITHOUT_WARNING`) |
-| `triggerBeforeAttack` | ❌ **DEAD** — traps are a removed mechanic (owner); drop |
+| `triggerBeforeAttack` | ❌ **DEAD** — traps are a removed mechanic; drop |
 
 > **No curator gap for `bOnslaught`/`bGatherHerd`/`bTriggerBeforeAttack`:** they appear only in the *schema* and
 > `CIV4PromotionInfos.xml` — never in a unit record — so the promotion delta variants (`curate_promotion.py`) are
@@ -207,7 +207,7 @@ engine-side oracle is gone, so confirming a composite means emitting it on the s
   `canFliesToMove()`).
 - **`kamikaze ≠ 0 ⇒ suicide`** (`isSuicide` folds `getKamikazePercent()` — a modifier-family magnitude driving a
   skill-plane composite).
-- **the `missile` [tag](tags.md) ⇒ `suicide`** (owner) — a missile is expended by being used, so kill-on-use is
+- **the `missile` [tag](tags.md) ⇒ `suicide`** — a missile is expended by being used, so kill-on-use is
   what the tag MEANS rather than a second fact to author beside it. ⚑ Like the domain tags, it reaches a unit
   through its combat classes (`UNITCOMBAT_MISSILE`/`BALLISTIC`), so a unit whose own block lists only `military`
   still holds it — read the FOLDED set, never the authored line.

@@ -8,14 +8,14 @@
    (plot danger, unit-AI counts) is separate + out of scope. **Don't revive the repository as a
    data/derived-aggregation mechanism — that is the cascade's job.**
 2. **Cross-entity inversion** *(dead)* — ~37 inversions that physically moved cross-entity modifiers onto the keyed
-   target entity. Killed by [the deliveryguy ownership rule](../cascade.md#4-ownership--the-deliveryguy-rule): the deliverer owns the modifier keyed by target, not
+   target entity. Killed by [the deliveryguy ownership rule](../cascade/18-ownership.md#4-ownership--the-deliveryguy-rule): the deliverer owns the modifier keyed by target, not
    inverted onto it ([modifier](../cascade.md) §4). **Don't reinstate inversion**,
    even for Terrain/Improvement/Bonus targets.
 3. **`loadPrune`** *(dead)* — a curator-era INVENTION: the legacy
    `OnGameOptions`/`NotOnGameOptions`/`PrereqGameOption` validity tags re-encoded as a bespoke "prune at load"
    section, named BACKWARDS (`onGameOptions` meant *keep only when on*) and spec'd wrong, while the spec already
    had the answer (`GAMEOPTION_X` as an ordinary condition). Killed whole: the payload
-   authors as the **entity-level `enabled`/`disabled` gate** ([the whole-entity applicability gate](../specs/json.md#2-anatomy-of-an-entity), json.md §2); the
+   authors as the **entity-level `enabled`/`disabled` gate** ([the whole-entity applicability gate](../specs/json/02-anatomy-of-an-entity.md#2-anatomy-of-an-entity), json.md §2); the
    complex-trait entries dropped outright (they restated the simple/complex FOLDER split, which is the selection
    mechanism). **Don't revive a bespoke game-option section.**
 4. **The offline DRY CALCULATOR — all four attempts** *(dead as an approach)* — an out-of-process reimplementation
@@ -25,7 +25,7 @@
    individual calcs from the game itself, and a dry calculator that judges the spec while drifting from it
    corrupts the loop it is meant to close. Verification is LIVE — done-is-observable endpoint polls
    ([done = observable in the running game](../specs/validation.md)) and turn time
-   ([turn time is king](../cascade.md#-the-per-scope-package-model--the-cascades-founding-design-1-stated-as-cache-architecture)), and for the cascade the THREE-LEG check — the
+   ([turn time is king](../cascade/16-package-model.md#-the-per-scope-package-model--the-cascades-founding-design-1-stated-as-cache-architecture)), and for the cascade the THREE-LEG check — the
    LOGS, the JSON INFO, and what STATE expects, all three agreeing
    ([http-endpoints.md](../specs/http-endpoints.md)); the zero-ride-in principle still
    holds ([the pollution guardrail](../specs/validation.md#the-pollution-guardrail--engine-computed-data-never-rides-in)). **Never build a fifth dry calculator** —
@@ -40,7 +40,7 @@
    (json.md §6). **No bespoke era key.**
 7. **Condition-carrying sub-scope members** (`empire.capital`, `perMilitaryUnit`, …) *(dead as a class)* — encoding
    a deposit's condition as a bespoke member instead of a predicate/`unit:` qualifier. Killed by
-   [conditions are predicates, never bespoke members](../specs/json.md#35-predicates--a-systems-runtime-state-query) (the golden-age yield-effect member-mirror is the one PERMANENT exception).
+   [conditions are predicates, never bespoke members](../specs/json/03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query) (the golden-age yield-effect member-mirror is the one PERMANENT exception).
    `perMilitaryUnit` specifically authors as the `cities.{unit: IS_MILITARY}` entry (json.md §3.7).
 8. **The "deliberately more permissive" vicinity model** *(dead)* — vicinity with no ownership filter. Killed:
    vicinity mirrors the engine's ownership tiers (owned ⊂ owned+neutral ⊂ crossBorder; json.md §3.4, enabler.md §3).
@@ -69,22 +69,22 @@
     present fact ("for each building the city has, emit built"). Killed: it FABRICATES events from populated state
     rather than the events coming from the genuine save read — a pseudo-emit that feeds the cascade reconstructed
     values and invites the next agent to reconstruct more state the same way. The reseed must be **event-sourced from
-    inside the read** ([spine.md](../spine.md) § The load reseed, [the load reseed](../spine.md#5-the-load-reseed)):
+    inside the read** ([spine.md](../spine.md) § The load reseed, [the load reseed](../spine/05-the-load-reseed.md#5-the-load-reseed)):
     reading a fact off the stream is what fires its event. **Never re-add a post-deserialization state-walking emit
     pass.**
 14. **The bespoke per-scope modifier SUBSTRATE** (`CascadeAccumulator` + `CascadeCityPackages` /
     `CascadePlayerScope` / `CascadeAreaPackages` / `CascadeTeamCaps` / `CascadeUnitPackages`, the `CPK_*`/`PSC_*`
     box slices, `CascadeRateSlots` + epochs, `playerSliceRebuild`) *(dead)* — five hand-shaped structs with
     hand-named per-channel scalar members, each carrying its own bespoke invalidation path, reached through a
-    read-side `ensure()` protocol. Killed by [every derived cache is one shape](../cascade.md#-every-derived-store-is-one-shape--a-keyed-accumulator-maintained-by-a-delta-owner): every
+    read-side `ensure()` protocol. Killed by [every derived cache is one shape](../cascade/04-derived-stores.md#-every-derived-store-is-one-shape--a-keyed-accumulator-maintained-by-a-delta): every
     derived cache is the SAME object type on every owner (one channel-indexed `CvDerivedCacheSet<TOwner>`, one mark
     derivation), so a hand-named scalar field is a DEFECT and a new scope/channel is DATA rather than a new struct.
     The whole tree is archived (`SourceArchive/Cascade/`). **Never re-add a per-scope package struct, an
     `ensure`-on-read protocol, or a `*Rebuild` blanket** — the replacement is the uniform channel-indexed cache on
-    each scope owner ([state-repositories.md](../cascade.md)).
+    each scope owner ([cascade.md](../cascade.md)).
 15. **Re-bodying the legacy getters to read the cascade (the "computed-getter flip")** *(dead)* — keeping each
     legacy getter's signature and swapping its body to a cascade read, so no call site changed. Killed by
-    [build a new getter surface, never widen a legacy one](patterns.md#-the-two-read-roles--one-grammar-two-answers-owner): a legacy getter's contract encodes legacy
+    [build a new getter surface, never widen a legacy one](patterns/05-the-two-read-roles-one-grammar-two.md#-the-two-read-roles--one-grammar-two-answers): a legacy getter's contract encodes legacy
     scale/granularity/combine, so pointing the cascade at it makes the CASCADE bend to the legacy shape — the
     mechanism that produces the half-migrated state. **A change that leaves every consumer untouched is the tell,
     not the win.** The replacement is a NEW uniform parameterized getter set over the channel index, with the old
@@ -105,7 +105,7 @@
     field.** ⚠ It does NOT follow that comparison is banned: a check whose two sides are genuinely different
     derivations — **event-built state vs a fresh recompute-from-source**, served on two endpoints and diffed
     OUTSIDE the DLL — is the missed-emit tripwire and is the sanctioned shape
-    ([state-repositories.md](../cascade.md)). What is dead is the same-derivation twin, not verification.
+    ([cascade.md](../cascade.md)). What is dead is the same-derivation twin, not verification.
 18. **The whole-domain enabler frontier + implicit "no-enabler ⇒ always-available" rules** *(dead as a class)* —
     workarounds for entities with no inbound `enables` edge (PALACE, PROCESS_IDLE, the COMBAT1-5 promotions):
     making the frontier ALL entities of the domain gated by `requires`, or hardcoded always-unlocked whitelists
@@ -118,7 +118,7 @@
     `ensure()` reincarnated as a diagnostic. Killed on both halves: it put a gate test back on a read that must be
     a bare fetch, and it made a divergence an in-DLL HAPPENING — an event is an invitation to a consumer, and the
     next agent's consumer "handles" a value known to be wrong by CORRECTING it, so the shape itself licenses
-    self-heal ([self-heal is not a backstop](../cascade.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban)). ⚠ What this entry once named as its
+    self-heal ([self-heal is not a backstop](../cascade/03-no-staleness-no-selfheal.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban)). ⚠ What this entry once named as its
     replacement — a recompute-from-source served on a second route and diffed outside the DLL — is itself dead
     (#33), so nothing here nominates one: a divergence is found by the THREE-LEG check
     ([http-endpoints.md](../specs/http-endpoints.md)). **A divergence has NO in-DLL representation — never re-add a
@@ -134,12 +134,12 @@
     by a standing measurement. **Never re-add a calculation counter, a per-turn calc budget, or a ratio derived
     from one** — the live acceptance signals are done-is-observable endpoint polls
     ([done = observable in the running game](../specs/validation.md)) and turn time
-    ([turn time is king](../cascade.md#-the-per-scope-package-model--the-cascades-founding-design-1-stated-as-cache-architecture)), and no successor metric replaces the gate.
+    ([turn time is king](../cascade/16-package-model.md#-the-per-scope-package-model--the-cascades-founding-design-1-stated-as-cache-architecture)), and no successor metric replaces the gate.
 21. **The BLANKET MODIFIER RECALCULATION** (a whole-world wipe-and-reapply pass: zero every accumulated total on
     game/team/player/city/area/plot, re-run every tech, civic, trait, building, religion, corporation and event,
     fronted by a "should the modifiers be recalculated?" popup on an asset-checksum mismatch, plus a hotkey and a
     net message to carry it) *(dead)* — the archetypal self-heal
-    ([self-heal is not a backstop](../cascade.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban)). It existed to purge derived data that had drifted **in a
+    ([self-heal is not a backstop](../cascade/03-no-staleness-no-selfheal.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban)). It existed to purge derived data that had drifted **in a
     save**, which no longer happens: no cache is serialized, so LOAD rebuilds everything from source and there is
     nothing to purge. Worse than a generic blanket, it fired precisely on the saves most likely to have drifted,
     silently papering over the missed invalidations the event spine is built to EXPOSE. The asset checksum gates
@@ -148,9 +148,9 @@
     recalculate" prompt, or an in-recalc suppression flag that makes ordinary mutators skip their work.**
 22. **MIRROR-THEN-REDESIGN** — *"the migration reproduces the engine's existing behaviour exactly; behavioural
     redesign is deferred to post-migration"* *(dead — retired as `DEC-mirror-then-redesign`)*. It was **dead by its
-    own construction (owner)**: it presupposed (a) a legacy implementation worth faithfully mirroring and (b) a LATER
+    own construction**: it presupposed (a) a legacy implementation worth faithfully mirroring and (b) a LATER
     phase in which redesign unlocks. Neither exists — the legacy surface is being **NUKED, not mirrored** (the ~622
-    channel-shaped getters are a DELETION list, [build a new getter surface, never widen a legacy one](patterns.md#-the-two-read-roles--one-grammar-two-answers-owner)),
+    channel-shaped getters are a DELETION list, [build a new getter surface, never widen a legacy one](patterns/05-the-two-read-roles-one-grammar-two.md#-the-two-read-roles--one-grammar-two-answers)),
     parity and shadow are closed, and there is no post-migration phase to hand work to
     (["deferred" is banned](../../AGENTS.md#design)). **The SPEC leads, now:** where code and spec disagree the
     spec is right and the code is the defect. ⛔ Never re-argue that a shape must be preserved because it is what
@@ -183,14 +183,14 @@
     mint kinds for the old shape ([build the proper structure once](../../AGENTS.md#design)).
     ⚠ NOT the same thing as the ordinary `bombard` FAMILY (`bombard.unit.rate` / `airBombRate`), which is live,
     authored and STAYS.
-    ⚖ **THE RULE THAT DECIDES THE BOUNDARY (owner): *"if it uses the ranged attack, and is not an airplane, it
+    ⚖ **THE RULE THAT DECIDES THE BOUNDARY: *"if it uses the ranged attack, and is not an airplane, it
     goes — vanilla airplanes have ranged attack."*** That is the whole test, and it is what makes the split
     re-derivable instead of memorized: **AIRPLANE ranged attack is vanilla and STAYS** (fighter engage — a
     first-class `MISSION_FENGAGE` with its own interface mode and pedia concept; and ACTIVE DEFENSE, which runs
     on `airStrikeTarget`/`airCombatDamage`/`MISSION_AIRSTRIKE`). **Non-airplane ranged attack GOES.**
-    ⚖ **KEPT vs DROPPED — the cut is by MECHANIC, never by name (owner).** The DEFENCE-GRINDING bombard stays
+    ⚖ **KEPT vs DROPPED — the cut is by MECHANIC, never by name.** The DEFENCE-GRINDING bombard stays
     exactly as it is: a unit adjacent to a city wearing its defences down (`MISSION_BOMBARD` → `bombardRate` →
-    `getDefenseDamage`), and **NAVAL units keep the bombards they have** (owner). ⛔ **Three naming traps sit on
+    `getDefenseDamage`), and **NAVAL units keep the bombards they have**. ⛔ **Three naming traps sit on
     this boundary, and each has already misled a sweep:** `AI_bombardCity` (defence grinder, STAYS) is ONE LETTER
     from `AI_RbombardCity` (ranged, gone) and the naval path called BOTH in sequence; **`INTERFACEMODE_BOMBARD`
     was the RANGED targeting mode despite its name**, while `INTERFACEMODE_AIRBOMB` is the vanilla one that
@@ -199,7 +199,7 @@
     ⚑ Opportunity fire went with ranged bombard because it *gated on the same `getDCMBombRange()` stat*, and its
     own author's comment records why it deserved to: *"absolutely zero resistability to this damage and no
     potential for failure to strike, making it far more powerful than any player determined action."*
-    ⚖ **WHAT THE REDESIGN OWES (owner):** *"we basically want vanilla civ bombard back"* as the baseline, and
+    ⚖ **WHAT THE REDESIGN OWES:** *"we basically want vanilla civ bombard back"* as the baseline, and
     **ranged attack has to DO SOMETHING to be worthwhile** — the retired failure is not that ranged existed, it
     is that it dealt ~nothing while still satisfying the turn, so a redesign that reintroduces a near-zero-damage
     ranged action has reproduced the bug. ⚑ Naval shore bombardment is a DELIBERATE divergence from vanilla,
@@ -218,14 +218,14 @@
     `upkeep.unit.modifier` (`iUpkeepModifier`, 119 promotions + 10 unit-combats, mostly +10% but up to +50%)
     multiplying the same upkeep the SM rank multiplier (`m_iUpkeepMultiplierSM`) already scaled *(dead —
     owner)*. Both stages are removed; unit upkeep is FLAT.
-    ⛔ **THE SM MULTIPLIER WAS NOT THE FAULT, and blaming it is the wrong lesson to take (owner).** Size Matters
+    ⛔ **THE SM MULTIPLIER WAS NOT THE FAULT, and blaming it is the wrong lesson to take.** Size Matters
     FUSES 3 equal units into 1 bigger one, so a bigger unit costing more upkeep *"makes sense"*. The arithmetic
     agrees: the multiplier is ×1.5 per rank while a rank represents 3 fused units, i.e. a fused unit paid 1.5×
     the upkeep of one unit while BEING three — a discount against fielding them separately, not a punishment.
     ⚑ **The failure was COMPOSITION:** *"the problem came from when you added the per unit scaling in the mix as
     well, then it got real out of hand"*. A defensible per-size cost and an unbounded per-unit percentage
     multiplied each other, and the product is what made armies unaffordable.
-    ⚖ **FLAT is an INTERIM, not the destination (owner): *"we want to have unit maintenance make more sense in
+    ⚖ **FLAT is an INTERIM, not the destination: *"we want to have unit maintenance make more sense in
     the future, so we leave it like this for now"*.** Unit maintenance is owed a coherent redesign; this removal
     clears the incoherent version rather than settling the model. A standing example of what that redesign must
     address: **FREE UNITS did not take Size Matters into account** — the free-unit allowance counted units
@@ -245,9 +245,9 @@
     ⚑ **Why it does not come back as a live fold, which is the tempting move:** cargo is neither a promotion nor
     a combat-class change, so the unit RESOLVED plane cannot gather it — nothing would ever dirty the slot — and
     the correct shape would therefore be a per-read walk of the transport's cargo
-    ([unit-carried modifiers apply on top, live, never cached](../cascade.md#2b-the-wellbeing-channels--health--happiness-signed-split-the-2a-sibling): a modifier that TRAVELS is folded live
+    ([unit-carried modifiers apply on top, live, never cached](../cascade/09-wellbeing-channels.md#2b-the-wellbeing-channels--health--happiness-signed-split-the-2a-sibling): a modifier that TRAVELS is folded live
     on top). That is real per-read work on the combat path for one authored entity.
-    ⚖ **It is also on the way out wholesale (owner): land units carrying other land units "and all those
+    ⚖ **It is also on the way out wholesale: land units carrying other land units "and all those
     shenanigans" go post-rework**, so the mechanic this served is itself scheduled for removal.
     ⚠ **The authored data STAYS in `specialunit_captive.json` and is now read by nothing** — do not read its
     presence as a wiring gap to close. ⛔ Never re-add `processLoadedSpecialUnit`, and do not re-home its two
@@ -280,7 +280,7 @@
     out rather than the old shape being preserved. If the mechanic is wanted it is authored fresh on the trigger
     plane (an `onCaptured` happening + the `promote` action), never by restoring a promotion-side "apply me when
     X" flag, which is the condition-as-member shape
-    ([conditions are predicates, never bespoke members](../specs/json.md#35-predicates--a-systems-runtime-state-query)) inverted onto the target.
+    ([conditions are predicates, never bespoke members](../specs/json/03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query)) inverted onto the target.
     ⚠ **The revival risk is the surviving SCHEMA tag**: it reads like an unmigrated field. The curator now DROPs
     it explicitly so the mapping cannot quietly re-emit a key nothing reads.
 30. **DIRTY-AND-RECOMPUTE FOR THE CASCADE PACKAGES** — the mark protocol (`markDirty(mask)` → `rebuildMarked` →
@@ -290,22 +290,22 @@
     time, when it is in essence just a compiled sum that is always updated, based on incoming spine events"**)*.
     A package is a MAINTAINED SUM: the fact names the source, the compiled index names that source's deposits,
     and applying them IS the maintenance — so there is nothing to mark, nothing to defer, and nothing to batch
-    ([state-repositories.md](../cascade.md) § THE MAINTAINED SUM).
+    ([cascade.md](../cascade.md) § THE MAINTAINED SUM).
     ⛔ **THIS IS A SUPERSEDED DESIGN, NOT A ROLLERSKATE — do not read it as one, and do not treat the code
     around it as suspect.** The protocol was among the FIRST things designed for this rework and was implemented
-    faithfully; what changed is the premise, *"the moment we landed on eventspine for everything"* (owner). ⚠
+    faithfully; what changed is the premise, *"the moment we landed on eventspine for everything"*. ⚠
     Contrast entry #14: the ensure-ON-READ protocol genuinely was a rollerskate. Two adjacent entries, two
     different populations — the registry holds both, and conflating them sends an agent hunting a culprit that
     does not exist.
     ⚑ **The general form, because it outlives this instance:** a dirty flag is a CLAIM THAT WE DO NOT KNOW WHAT
     CHANGED, so a complete emit surface falsifies it by construction — *"a dirty flag is the fossil of an
-    incomplete emit surface"*, the [self-heal is not a backstop](../cascade.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban) fossil rule one level up.
+    incomplete emit surface"*, the [self-heal is not a backstop](../cascade/03-no-staleness-no-selfheal.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban) fossil rule one level up.
     ⚠ It dissolved SILENTLY: a design whose premise goes away keeps returning correct numbers and merely does
     unnecessary work, so there is no symptom to notice — which is exactly why it survived.
     ⚑ **Three independent reasons it died, and the third is the deciding one:** a rebuild's cost scales with
     what a city HAS rather than with what CHANGED (so the walks do not get faster, they cease); a missed mark
     leaves a stale-but-plausible value that reads fine forever, where a missed emit leaves a loud compounding
-    one ([self-heal is not a backstop](../cascade.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban) prefers the failure that announces itself); and the
+    one ([self-heal is not a backstop](../cascade/03-no-staleness-no-selfheal.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban) prefers the failure that announces itself); and the
     mark derivation is a SECOND completeness census that — unlike the emit census — is **not answerable at any
     one site, moves with the authored data, and cannot be made safe by over-inclusion** (*"it is far easier to
     ensure we have all the events than to ensure that we have all packages correctly dirtied"*).
@@ -342,19 +342,19 @@
     (`SEVT_CITY_BUILDING_ACTIVATED`) — which together maintain the relation *(active source × unit present)*.
     The per-turn rescan it replaced measured **42,336 assign calls in ONE turn**, nearly all re-checking
     promotions the units already held: the blanket-recompute shape
-    [self-heal is not a backstop](../cascade.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban) rejects.
+    [self-heal is not a backstop](../cascade/03-no-staleness-no-selfheal.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban) rejects.
     ⚑ The token survived because the trigger plane could not name the real happening when it was written; once
     it could, the data said one thing while the engine did another. The happening is now
     `onUnitEnteredCity`, spelled once (`TRIGGER_UNIT_ENTERED_CITY`) because three sites string-match it.
     ⛔ **Never re-add an end-turn sweep, or a per-turn rescan, for free promotions.**
-    ⚠ **NOT the same thing as the `onTurn` trigger, which is LIVE and needed (owner)** — a genuine recurring
+    ⚠ **NOT the same thing as the `onTurn` trigger, which is LIVE and needed** — a genuine recurring
     roll (the property-scaled criminal spawn, [json.md §5](../specs/json.md)). Retiring one fossilised token is
     not a trim of the cadence vocabulary, and reading it that way would take a working mechanic with it.
 33. **The stored-vs-oracle ENDPOINT TRIPWIRE — all six routes** *(dead as a doorknob, and the hardest one to keep
     dead: **agent after agent refuses to let it go**, this session included)* — two routes per plane (cascade
     packages, enabler operating set, team capabilities), one serving what the events built and one claiming to
     recompute the same values FROM SOURCE, diffed by an external consumer as the missed-emit tripwire.
-    **Killed because the oracle side CANNOT WORK the way things are set up (owner): reproducing event-built
+    **Killed because the oracle side CANNOT WORK the way things are set up: reproducing event-built
     state means replaying the full event chain, and an endpoint cannot build that chain.** So the oracle does
     not answer a second derivation of the same quantity — it answers a number that was never comparable, and
     diffing it produces confident nonsense at scale.
@@ -367,7 +367,7 @@
     the live replacement for what they killed (the `*Legacy` twins, the mark-and-recompute cache), so an agent
     following any of those trails arrives here and finds a working-looking endpoint. A dead idea that other docs
     nominate as the answer is not dead.
-    **⚖ WHAT REPLACES IT (owner): READ THE LOGS, CHECK THE DATA AGAINST THE JSON INFOS, AND AGAINST WHAT STATE
+    **⚖ WHAT REPLACES IT: READ THE LOGS, CHECK THE DATA AGAINST THE JSON INFOS, AND AGAINST WHAT STATE
     EXPECTS.** THREE legs, and the third is not optional — a deposit is conditioned and scaled, so the authored
     number alone predicts nothing:
     - the **LOGS** say what actually happened — every deposit with its source, channel, scope, unit, driving
@@ -383,13 +383,13 @@
     ⚑ Worked, same session: a trait's `maintenance` deposit read `-70` against an authored `-10%` — which looks
     like a 7x over-application until the third leg answers it, the spine showing exactly 7 owners holding that
     trait and the log's own apply count saying 7. Fully attributed, without one.
-    **⛔ AND THE WORD GOES WITH THE MECHANISM — "ORACLE" IS NOT A TERM WE USE (owner).** *"Why do you insist on
+    **⛔ AND THE WORD GOES WITH THE MECHANISM — "ORACLE" IS NOT A TERM WE USE.** *"Why do you insist on
     calling it an oracle? We cannot rebuild the entire event machinery based on an endpoint call — that is a call
     that would take more than a minute to complete."* ⚑ That is a SHARPER disqualification than the one above and
     worth holding separately: even granting an endpoint could replay the chain, the replay is minutes of work, so
     it could never be an endpoint's answer. The two reasons compose — it cannot be done, and if it could it would
     not fit.
-    ⛔ **This is ["dirty" is not a term we use](../cascade.md#-a-staleness-flag-is-the-fossil-of-an-incomplete-emit-surface--the-same-rule-one-level-up) one plane over, and for
+    ⛔ **This is ["dirty" is not a term we use](../cascade/03-no-staleness-no-selfheal.md#-a-staleness-flag-is-the-fossil-of-an-incomplete-emit-surface--the-same-rule-one-level-up) one plane over, and for
     the identical reason**: a term that survives its mechanism is the evidence-of-the-abandoned-path that teaches
     the next agent to reach for it. "Dirty" was removed WITH the thing it named; so is this.
     ⚠ **It had spread into the load-bearing docs, which is HOW it kept teaching** — the decisions ledger,
@@ -454,7 +454,7 @@
     `CvSelectionGroup`, plus the commented-out `#define`; deleted whole.
     ⛔ **So do not "re-enable nomadic start."** There is no working implementation to switch on and the concept
     is not wanted. If a start-condition of this kind is ever built, it is a `GAMEOPTION_*` evaluated live
-    ([the whole-entity applicability gate](../specs/json.md#2-anatomy-of-an-entity)), never a compile switch.
+    ([the whole-entity applicability gate](../specs/json/02-anatomy-of-an-entity.md#2-anatomy-of-an-entity)), never a compile switch.
 
     ⚠ **WHY it never worked is NOT established, and the investigation is a trap worth naming.** The obvious
     reading — that the `TECH_SEDENTARY_LIFESTYLE` global-define binding is unbound, so the gate resolved to
@@ -493,11 +493,11 @@
     value" or re-invoke a per-mechanic comparison sweep.**
 41. **THE GOLD-PAID BUILDING UPGRADE** *(dead — ruled out, never built)* — giving buildings the unit-upgrade
     treatment: a player-chosen, priced "upgrade this Forge to a Foundry for N gold", mirroring
-    `CvUnit::upgrade` / `upgradePrice`. Killed outright (owner): *"we won't have a gold-paid version for
+    `CvUnit::upgrade` / `upgradePrice`. Killed outright: *"we won't have a gold-paid version for
     buildings."* A building upgrade is a **consequence of becoming obsolete, applied automatically** — authored
-    as `whenObsolete.becomes` ([json.md §4.2](../specs/json.md#42-obsoletes--replaces--disables--removal-permanent-source-side)),
+    as `whenObsolete.becomes` ([json.md §4.2](../specs/json/04-availability.md#42-obsoletes--replaces--disables--removal-permanent-source-side)),
     which declares the fate in isolation and never names what obsoleted the building.
-    **⛔ THE REASON IS TWOFOLD, AND IT IS RECORDED BECAUSE IT IS WHAT PROTECTS THE RULE (owner):**
+    **⛔ THE REASON IS TWOFOLD, AND IT IS RECORDED BECAUSE IT IS WHAT PROTECTS THE RULE:**
     (1) **It is astronomically exploitable.** Buildings sit in a priced LADDER, so a player hoards gold, builds
     the *lowest production-cost* rung in every city, and upgrades the lot in a single turn — converting gold
     straight into top-tier buildings while paying the production of the cheapest one. Units do not break this way

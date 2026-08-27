@@ -8,7 +8,7 @@ architecture.
 
 ## ⛔ THE RULING: EACH IS ITS OWN SYSTEM
 
-Everything else here is downstream of one ruling (owner). The data side is **four separate systems**, each with
+Everything else here is downstream of one ruling. The data side is **four separate systems**, each with
 exactly one job, chained in one direction:
 
 | system | its ONE job | ends at |
@@ -31,7 +31,7 @@ as unrelated bugs and get fixed one at a time:
   concretely — the enabler is load-ACTIVE while the modifier's cache build is not, and what each slot HOLDS is
   refcounted set membership versus a summed magnitude — so welding them forces one policy onto two that genuinely
   need different ones. ⚠ They no longer differ on MAINTENANCE: both are kept current in place by the fact that
-  names the source ([the maintained sum](../cascade.md#-the-maintained-sum--three-planes-one-slot-and-nothing-is-ever-recomputed)), and the older framing of the modifier
+  names the source ([the maintained sum](../cascade/05-three-planes.md#-the-maintained-sum--three-planes-one-slot-and-nothing-is-ever-recomputed)), and the older framing of the modifier
   as a mark-then-recompute value cache is exactly what let it alone keep a staleness protocol.
 - the cascade re-deriving whether a building is active = **the cascade doing the enabler's job**. It asks
   ([the pollution guardrail](../specs/validation.md#the-pollution-guardrail--engine-computed-data-never-rides-in)).
@@ -41,7 +41,7 @@ as unrelated bugs and get fixed one at a time:
 is wrong — not the implementation. This ruling is what the individual boundary rulings are instances of; state it
 once, here, rather than re-deriving a fresh prohibition at each seam.
 
-**⛔ "KEEP" means OUTSIDE the four systems — nothing else (owner).** The ONLY legacy that is legitimately kept is
+**⛔ "KEEP" means OUTSIDE the four systems — nothing else.** The ONLY legacy that is legitimately kept is
 work that is none of the four systems' job: the **trade-route network calculation** (the cascade cannot re-derive
 the network, so it folds the route yield as an INPUT — [modifier §2a `tradeYield`](../cascade.md)), the
 **property engine's internal math** (the decay / diffusion / solver, owner-locked — [property-audit](../plans/structural-cleanup/property-audit.md)),
@@ -90,9 +90,9 @@ interface-bounded machines.
 
 **Engine state** follows the same discipline: a domain object's *derived* data (yields, commerce, …) lives in a
 **never-serialized, event-MAINTAINED** store that is the single **PULL** source up the chain — the
-[state-repositories](../cascade.md) pattern. ⚑ **The unified `dataChanged` trigger this was written
+[cascade.md](../cascade.md) pattern. ⚑ **The unified `dataChanged` trigger this was written
 reaching for turned out to BE the event spine**, and once the spine covered every mutation the staleness flag it was
 paired with became obsolete: a flag only ever claimed we could not know what changed
-([a staleness flag is the fossil of a missing emit](../cascade.md#-a-staleness-flag-is-the-fossil-of-an-incomplete-emit-surface--the-same-rule-one-level-up)). So the "stale cache" bug class closes by the
+([a staleness flag is the fossil of a missing emit](../cascade/03-no-staleness-no-selfheal.md#-a-staleness-flag-is-the-fossil-of-an-incomplete-emit-surface--the-same-rule-one-level-up)). So the "stale cache" bug class closes by the
 fact naming its source, not by a better invalidation. `CvPlot`/`CvCity` stay as the domain objects; only the
 derived layer and `Cv*AI` change.

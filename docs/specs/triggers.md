@@ -4,7 +4,7 @@
 > `DOMAIN` state change, resolves the source entity's payload off its info and APPLIES it. The AUTHORING shapes are
 > [json.md §5](json.md); this doc is the **machine** that consumes them.
 >
-> **⚖ TRIGGER IS THE TOP-LEVEL CONCEPT — A GRANT IS A TRIGGER WITH A NULL CONDITION (owner).** One plane, one
+> **⚖ TRIGGER IS THE TOP-LEVEL CONCEPT — A GRANT IS A TRIGGER WITH A NULL CONDITION.** One plane, one
 > engine, one spine domain. `grants` stays a first-class AUTHORING shape (the overwhelmingly common "acquiring me
 > gives this"), but nothing about it needs its own machinery.
 
@@ -23,9 +23,9 @@ tech's research, a civic's adoption.
 ⛔ **The ODDS are data; the ROLL is not.** A trigger authors a `chance` — a plain number — and the engine compares
 its own draw against it. That draw comes off the SYNCHRONIZED stream, which is shared save state, so no JSON
 authors a seed, a stream or a draw and neither the cascade nor the curator models one
-([the synchronized RNG is shared state](../reference/engine.md#-the-synchronized-rng-is-shared-save-state--do-not-touch-the-draws-owner)).
+([the synchronized RNG is shared state](../reference/engine.md#-the-synchronized-rng-is-shared-save-state--do-not-touch-the-draws)).
 
-## ⛔ A GRANTED ENTITY IS AN ORDINARY ENTITY (owner)
+## ⛔ A GRANTED ENTITY IS AN ORDINARY ENTITY
 
 *"The only difference between a building granted and a building constructed is that we didn't use production if
 granted."* So the machine gets **no** parallel apply path, no "granted" flag, no distinct lifecycle, no ledger of
@@ -39,7 +39,7 @@ is that the production/cost step is skipped. Settled by this, not open:
   chain is intended behaviour, not re-entrancy to guard against.
 - **Nothing downstream may branch on "was this granted?"** — there is no such state to read.
 
-> **⛔ AND IT BINDS UNITS EXACTLY AS IT BINDS BUILDINGS — GRANT AND TRAIN ARE ONE PATH (owner): *"creating a unit
+> **⛔ AND IT BINDS UNITS EXACTLY AS IT BINDS BUILDINGS — GRANT AND TRAIN ARE ONE PATH: *"creating a unit
 > is creating a unit; how we got to the creation step does not matter."*** The route by which a unit was decided
 > upon — a production order, a trigger payload, a first-discoverer award, a founder package — ends at the SAME
 > creation step, and everything that step owes a new unit is owed identically. ⛔ So a payload applier does NOT
@@ -56,7 +56,7 @@ is that the production/cost step is skipped. Settled by this, not open:
 > founding and culture-flip defenders, and the great-person birth, whose CEREMONY sits on top of it.
 > ⛔ A payload applier calls it and adds only what is genuinely its own — the excile's jump, a spent movement
 > allowance — never a second creation sequence.
-> ⚖ **IT IS THE PLAYER'S, NOT THE CITY'S, AND THE TELL IS WORTH KEEPING (owner).** The player OWNS units, and
+> ⚖ **IT IS THE PLAYER'S, NOT THE CITY'S, AND THE TELL IS WORTH KEEPING.** The player OWNS units, and
 > not every creation has a city — so a city-side step forces every caller holding only COORDINATES to resolve a
 > city first, and the moment two of them did, a second entry point was about to be minted beside it. **Two entry
 > points for one concept is the signal that the step is on the wrong object.** On the player it is one total
@@ -73,21 +73,21 @@ is that the production/cost step is skipped. Settled by this, not open:
 > `addProductionExperience`, the religion founder's free units did not, and the first-discoverer leg went through
 > `createGreatPeople`. A unit's starting experience therefore depended on which payload created it, which is
 > exactly the "downstream can tell it was granted" state the ruling says must not exist.
-> ⛔ **A SCHEDULED REWORK IS NOT A REASON TO STAY OFF THE STEP (owner).** The outcome system's ground-up rework,
+> ⛔ **A SCHEDULED REWORK IS NOT A REASON TO STAY OFF THE STEP.** The outcome system's ground-up rework,
 > and the events carve-out, bound what may be REDESIGNED and what may be folded into this machine — neither
 > licenses a system keeping its own creation shape meanwhile. Re-pointing a creation call is not a redesign.
 > **⛔ A SECOND WAY TO CREATE A UNIT IS A ROLLERSKATING SURFACE — AND THE MODDER-FACING ONE MOST OF ALL
-> (owner).** *"The more unified we have createUnit the better it is; if there is 1 place that can create a unit
+>.** *"The more unified we have createUnit the better it is; if there is 1 place that can create a unit
 > in other ways, that is a rollerskating surface, particularly for modders."* ⇒ **The EDITOR goes through it
 > too** — `CyAct` / `CyPlayer` create through the step, which is why it carries a FACING DIRECTION parameter;
 > WorldBuilder is exactly where an alternate path would teach the wrong lesson, and WorldBuilder is already
 > required to travel the engine's own paths — every WB mutation emits like any other ([spine.md](../spine.md)).
-> ⚑ **"Unified" means STANDARDIZED PATHS, not merely few of them (owner)** — the point is that a reader looking
+> ⚑ **"Unified" means STANDARDIZED PATHS, not merely few of them** — the point is that a reader looking
 > for how a unit comes into being finds ONE answer and cannot invent a second.
 > ⛔ So a scope boundary is never a reason to keep a creation call off the step: an ARRIVAL created anywhere —
 > a combat CAPTURE, an espionage BRIBE, an advanced-start placement, a field spawn — goes through it.
 >
-> ⚖ **AND THE TRANSFORMATIONS GET THEIR OWN TWIN — `modifyUnit`, in the same vein (owner).** A unit that
+> ⚖ **AND THE TRANSFORMATIONS GET THEIR OWN TWIN — `modifyUnit`, in the same vein.** A unit that
 > ALREADY EXISTS changing type, owner or count is not a creation: upgrade · gift · trade · merge / split (and
 > their `CvMessageData` net twins) · `assimilatePlayer` · the map transfer. Each stands a successor up in place
 > of a predecessor, carries its state across (`CvUnit::convert`) and retires the source.
@@ -100,13 +100,13 @@ is that the production/cost step is skipped. Settled by this, not open:
 > (`m_pTempUnit`, the off-map pathing anchor, excluded from `units()` iteration and from every death sweep) and
 > a `(UnitTypes)0` probe at the origin in `CvGame`'s slot-takeover path, which passes birthmark `0` and so
 > consumes no draw; converting that one would ADD a draw to the synchronized stream
-> ([the synchronized RNG is shared state](../reference/engine.md#-the-synchronized-rng-is-shared-save-state--do-not-touch-the-draws-owner)).
+> ([the synchronized RNG is shared state](../reference/engine.md#-the-synchronized-rng-is-shared-save-state--do-not-touch-the-draws)).
 
-## ⛔ THE MACHINE REPLACES THE PER-TURN WORK — and the spine is its ONLY way in (owner)
+## ⛔ THE MACHINE REPLACES THE PER-TURN WORK — and the spine is its ONLY way in
 
 It is not a resolver running beside legacy: the per-turn work MOVES onto the machine, and the legacy call sites are
 DELETED, not re-pointed. Their ledgers become derived and are cut by
-[the uniform legacy-accumulator cut](../cascade.md#-the-legacy-accumulator-cut--every-accumulator-one-uniform-mechanism) via the `savemigration.txt`
+[the uniform legacy-accumulator cut](../cascade/03-no-staleness-no-selfheal.md#-the-legacy-accumulator-cut--every-accumulator-one-uniform-mechanism) via the `savemigration.txt`
 soft-remove ([save.md §3](save.md)) — never a `@SAVEBREAK`.
 
 ⛔ **The per-turn apply arrives as a spine EVENT, never a direct call from `doTurn`.** The machine is an
@@ -133,7 +133,7 @@ enabler's precomputed sets are the THIRD LEG of the eval state, fed in rather th
 operating-set legs sit EMPTY and any condition asking an active-building or vicinity-provides question evaluates
 against nothing and quietly answers false.
 
-> **⚖ A THRESHOLD ON A HAPPENING IS A TRIGGER, NOT A MAGNITUDE — the `techShare` worked case (owner).** Tech
+> **⚖ A THRESHOLD ON A HAPPENING IS A TRIGGER, NOT A MAGNITUDE — the `techShare` worked case.** Tech
 > sharing reads as a diplomacy number and is not one: *"if 2 civs have the tech, then whoever has the wonder also
 > gets the tech."* The `2` is not an amount anything accumulates — it is the **fire condition of an
 > `onTechResearched` trigger** whose action grants the tech. So it authors on this plane
@@ -146,13 +146,13 @@ against nothing and quietly answers false.
 > another `techShare`, which is the giveaway that no channel was ever involved.
 > **The condition form, settled:** `{type: TECH_X, scope: world, min: N}` — the world tech count
 > ([tally.md](tally.md)), evaluated on the tech-acquired happening, with the action granting that tech.
-> ⚖ **The legacy `isHasMet` filter is DROPPED (owner):** `CvTeam::updateTechShare` counted only teams you had
+> ⚖ **The legacy `isHasMet` filter is DROPPED:** `CvTeam::updateTechShare` counted only teams you had
 > MET, and the world count does not — *"it happens sufficiently late in the game that you have normally met all
 > players."* An intentional, owner-ruled divergence, stated rather than reproduced
 > ([validation.md](validation.md): the spec leads).
-> ⚑ **And it is RE-ADDABLE, not lost (owner): *"if we want the met part, we put that in after the fact."*** It
+> ⚑ **And it is RE-ADDABLE, not lost: *"if we want the met part, we put that in after the fact."*** It
 > comes back as an ordinary CONDITION on the entry — a met predicate — which *extends* the vocabulary rather than
-> reshaping anything ([conditions are predicates, never bespoke members](json.md#35-predicates--a-systems-runtime-state-query):
+> reshaping anything ([conditions are predicates, never bespoke members](json/03-the-shared-vocabulary.md#35-predicates--a-systems-runtime-state-query):
 > the predicate registry is extensible by design). ⛔ So do NOT preserve the legacy filter now "to keep the option
 > open" — the option is open by construction, and keeping it is the half-migration.
 > ⚠ Two residues of that swap, both harmless but worth knowing rather than rediscovering: the world count is over
@@ -163,7 +163,7 @@ against nothing and quietly answers false.
 
 ## ⛔ Purely-Python, never-XML effects are out of scope for this data model — but out of scope is not their destination
 
-⚖ **They move to C++ after the rework, and most of them are triggers (owner): *"all these scripts is something we
+⚖ **They move to C++ after the rework, and most of them are triggers: *"all these scripts is something we
 will port to C++ after rework is done; having scripts like this in Python is root of all evil"* — *"most of it
 can even be expressed as triggers."*** The gameplay scripts in `CvEventManager` and the contrib mods (the
 per-wonder combat and turn effects, the combat-promotion mod, the respawn and revive handouts) are
@@ -193,7 +193,7 @@ and can never double-up or be lost.
   PRE-source values ([engine.md](../reference/engine.md)) — and that engine's math is owner-LOCKED.
 - ⛔ **Do not build machinery for a hypothetical verb.** A verb with zero authorings is an EXAMPLE in the spec, not
   live data; it lands if and when its authoring direction is taken.
-  ⚑ **The worked case — building counter-damage (owner): IF WE WANT IT, IT IS A TRIGGER; UNTIL THEN IT IS
+  ⚑ **The worked case — building counter-damage: IF WE WANT IT, IT IS A TRIGGER; UNTIL THEN IT IS
   NOTHING.** A trap building damaging a unit that attacks its city is a trigger by shape — a happening, a roll,
   an effect on the attacker. Modelling it needs an **`onAttacked`** happening and a **`damage`** verb, neither of
   which exists. The ruling takes neither of the two tempting shortcuts: the verbs are NOT minted speculatively for
@@ -202,19 +202,19 @@ and can never double-up or be lost.
   something, and it is equally not a reason to preserve the old shape while waiting: a member parked on the
   `defense` family is a half-migration that reads as done. *(The UNIT-side trap subsystem is separately dead —
   [skills.md](skills.md).)*
-- ⚠ **A promotion that stops being valid is dropped by the PROMOTION SYSTEM itself** (owner). So a granted
+- ⚠ **A promotion that stops being valid is dropped by the PROMOTION SYSTEM itself**. So a granted
   promotion needs no take-away verb, and "the payload plane cannot revoke" is NOT an argument for re-homing the
   free-promotion shapes.
 
 ## ⛔ A DROPPED TRIGGER ANNOUNCES — every skip goes through the ONE census
 
-**If a trigger fails to parse or to land, say so** (owner). The plane is fail-closed in several places — the bridge
+**If a trigger fails to parse or to land, say so**. The plane is fail-closed in several places — the bridge
 refuses a source it cannot faithfully translate rather than applying it under a wrong condition, and the parser
 refuses malformed input — and being fail-closed is right. Being fail-closed *and silent* is not: authored data that
 loads, never applies, and reports nothing is invisible on both axes at once.
 
 Every drop routes through the ONE load-time census
-([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)) — the same mechanism the
+([the DRY single-implementation law](../architecture/patterns/03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)) — the same mechanism the
 parser already uses for unknown verbs and keys, surfacing on readJson's coverage counts. ⛔ Do NOT add a second
 reporting path or a bespoke spine domain for this.
 
@@ -254,20 +254,20 @@ condition that decides when it applies:
 - **The settler stops being hardcoded** — it is just a `units` entry.
 - The per-role starting counts are superseded by explicit unit entries.
 
-> **⚖ THE POINT: author the shared start ONCE, not per civilization (owner).** `grants` can already express a start,
+> **⚖ THE POINT: author the shared start ONCE, not per civilization.** `grants` can already express a start,
 > but putting it on the CIVILIZATION means repeating the same block with the same conditionals across ~50 civ files
 > that all start identically — *"kinda dumb, when it's the same package for all of them."* A package inverts that:
 > **the condition lives ON THE PACKAGE, evaluated once**, and every civ it applies to gets it without authoring
 > anything. A civilization authors something only when it DEVIATES, and that deviation is its own package stacking
 > on top of the shared default.
 
-**Packages STACK (owner).** Applicable packages sum, exactly like any other grants deposit — they are not mutually
+**Packages STACK.** Applicable packages sum, exactly like any other grants deposit — they are not mutually
 exclusive alternatives. Stacking SUBSUMES single-selection, so the modder chooses the granularity: one coherent
 package, or era + handicap + civilization composing. Single-selection could not express the second, and the engine
 already adds era + handicap counts today, so stacking is the behaviour-preserving choice as well as the flexible one.
 
 ⛔ **"Conditionally loaded" means the ENTITY GATE, never a load-time prune.** The applicability condition is the
-entity-level `enabled`/`disabled` pair evaluated LIVE ([the whole-entity applicability gate](json.md#2-anatomy-of-an-entity)).
+entity-level `enabled`/`disabled` pair evaluated LIVE ([the whole-entity applicability gate](json/02-anatomy-of-an-entity.md#2-anatomy-of-an-entity)).
 Do NOT build a "load these files, skip those" prune — that is the killed `loadPrune`
 ([superseded-ideas](../architecture/superseded-ideas.md) #3). Every package loads; the gate decides which APPLY.
 

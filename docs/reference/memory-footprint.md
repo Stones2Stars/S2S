@@ -35,7 +35,7 @@ trimming (the unitcombat purge, flattening the 2D arrays) buys single-digit MB �
 ~800 MB→2 GB is EXE scene + Python + fragmentation (§5). The one thing this audit *does* settle: the DLL is not
 where the memory goes, so the per-turn climb — whatever its exact split — is dominated by legacy turn-processing +
 EXE-side churn, which is why the memory hunt is sequenced *after* the legacy cut
-([legacy decache poisons perf measurement](../cascade.md#-legacy-decache-poisons-perf-measurement--and-converts-an-ai-loop-into-a-hang-owner)) and confirmed by a
+([legacy decache poisons perf measurement](../cascade/03-no-staleness-no-selfheal.md#-legacy-decache-poisons-perf-measurement--and-converts-an-ai-loop-into-a-hang)) and confirmed by a
 delta measurement, not static estimation.
 
 ---
@@ -86,7 +86,7 @@ and cut fragmentation. **This cluster also scales with PLAYER/TEAM count:** the 
 
 ⚑ **The accumulator cut is what shrinks this cluster, and it is the lever that actually works here** — a
 Building×Specialist array on `CvTeam` was on its own the single largest entry in this table, and cutting the
-accumulator took its ~88k tiny blocks with it ([the uniform legacy-accumulator cut](../cascade.md#-the-legacy-accumulator-cut--every-accumulator-one-uniform-mechanism)).
+accumulator took its ~88k tiny blocks with it ([the uniform legacy-accumulator cut](../cascade/03-no-staleness-no-selfheal.md#-the-legacy-accumulator-cut--every-accumulator-one-uniform-mechanism)).
 Each further accumulator dimensioned by an info count pays back the same way, which is worth knowing while
 weighing a cut — though §5 still holds: this whole cluster is not where the process memory goes.
 
@@ -126,7 +126,7 @@ the (shared) Info, and per instance an index into the shared Info array.
   active player), otherwise a shared `g_dummyEntity`; even a real entity references shared assets by path. It is
   counted + probed (`[PERF/entity]`).
 - **EXE render side** (Gamebryo): **empirical evidence points to PER-INSTANCE texture memory, NOT a path-shared store**
-  (owner observation) — graphics **PAGING** (unloading off-screen scene regions) yields **significant working-set
+ — graphics **PAGING** (unloading off-screen scene regions) yields **significant working-set
   reductions**, which a fully path-shared texture cache would *not* give (paging one instance wouldn't free a texture
   others still reference). So a spawned texture — **even a copy of the same art — appears to inhabit its own EXE-side
   memory**. This makes the EXE scene's per-instance texture/model footprint a **real memory lever** (it scales with

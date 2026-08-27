@@ -602,7 +602,7 @@ quality issue, not a recompute-cost issue); own fix, and improves AI quality too
 
 Everything above is **AI turn time** (the `doTurn`/CABV compute chain). A SEPARATE axis is **per-frame FPS
 while the human plays** — the EXE polls the DLL through the ~1,214 `DllExport` functions every frame during
-render, so any `DllExport` doing **uncached live compute** is a per-frame tax. Diagnostic tell (owner): the drop
+render, so any `DllExport` doing **uncached live compute** is a per-frame tax. Diagnostic tell: the drop
 appears **only after end-turn, never on load** — which EXONERATES EXE-intrinsic drawing (the scene draws
 identically from the first loaded frame) and points at DLL compute the EXE re-polls. Bare-map removing the
 stutter is consistent: it strips the drawn instances (unit models / city billboards / fog) the DLL is polled about.
@@ -621,7 +621,7 @@ compute concentrated in three spots, all scaling with on-screen units/cities:
    so it was a per-turn burst + wasteful I/O, not the sustained per-frame drop. Removed.
 2. **★ Combat-strength walk, cache-bypassed for the human's own units (FIXED for the common case).**
    `maxCombatStrFloat`/`currCombatStrFloat` (the unit health-bar) dispatch into `maxCombatStr` — a ~700-line
-   modifier walk — and the `CombatStrCache` was deliberately skipped for HUMAN-owned units. Reason (owner):
+   modifier walk — and the `CombatStrCache` was deliberately skipped for HUMAN-owned units. Reason:
    the cache can't keep the live **Surround-and-Destroy** surrounded-modifier fresh, and the AI never
    reads/acts on that term (it doesn't understand S&D) so a stale-surround cache is harmless for AI — but the
    human tooltip must be correct. `surroundedDefenseModifier` hard-returns 0 when
@@ -630,7 +630,7 @@ compute concentrated in three spots, all scaling with on-screen units/cities:
    on-screen units for every game without S&D. **Follow-up (S&D-ON case):** cache the pre-surround intermediate
    (base + non-surround modifiers) for everyone and fold the live `surroundedDefenseModifier` delta on top — the
    "cache the stable core, add the volatile term live" seam (the same shape as unit-happiness-on-top,
-   [unit-carried modifiers apply on top, live, never cached](../../cascade.md#2b-the-wellbeing-channels--health--happiness-signed-split-the-2a-sibling)). NOTE S&D is still
+   [unit-carried modifiers apply on top, live, never cached](../../cascade/09-wellbeing-channels.md#2b-the-wellbeing-channels--health--happiness-signed-split-the-2a-sibling)). NOTE S&D is still
    LIVE (removal is only PARKED — [surround-destroy-removal-map.md](surround-destroy-removal-map.md)); if it is
    removed, the bypass + the whole `surroundedDefenseModifier` term delete and the cache serves everyone.
 3. **Unit-stack walks per plot (OPEN — separate pass).** `CvPlot::isFighting`/`isVisibleEnemyUnit`/

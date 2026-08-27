@@ -124,7 +124,7 @@ not dogs. So the dogs are **not** remnants of this change; if anything it shifts
 *toward* mergeable military and away from cheap non-merge units.
 
 **Conclusion:** neither the merge bonus nor its recent fix explains the dogs. The spammed unit
-is the **trainable War Dog** (owner-confirmed) — see §D for what it actually is and where the
+is the **trainable War Dog** — see §D for what it actually is and where the
 spam must originate.
 
 ---
@@ -231,7 +231,7 @@ plus religion (`:10960`, `:11665`, `:11677`) and corporation (`:10973`, `:11686`
 
 - **The `isDefendAgainstUnit` / `hasDefenderUnitCombat` sweeps (`:10818`, `:11463`) are REVERSE LOOKUPS.**
   *"Does any unit in the database defend against me?"* is the own-data inversion
-  [reverse lookups are populated once, at load](../../cascade.md#1-one-step-deposit-down-accumulate-read-o1) answers: reverse edge families
+  [reverse lookups are populated once, at load](../../cascade/01-deposit-and-read.md#1-one-step-deposit-down-accumulate-read-o1) answers: reverse edge families
   populated ONCE at load on the referenced info, never a whole-database scan on a hot path. ⚠ `:11463` needs
   the COUNT rather than a boolean, so it wants the family's size, not an early-out.
 - **⛔ The bombard sweep (`:11251`) NEVER READS THE CANDIDATE — it is a per-player constant recomputed per

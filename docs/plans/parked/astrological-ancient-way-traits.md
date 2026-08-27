@@ -44,7 +44,7 @@ entities (`TECH_ASTROLOGY`, `TECH_LAW_ENFORCEMENT`, the lifestyle techs, `TECH_D
   produces a dangling FK**. A per-curator output drop would have left the granting techs pointing at deleted ids.
 - **The source XML is LEFT IN PLACE** as the reimplementation reference (`GroupWonders_CIV4BuildingInfos.xml`,
   `CIV4TraitInfos.xml`, the promotion XML). Git history + this doc are the record.
-- **Art defines are KEPT** (owner) — `ART_DEF_*` for the wonders/movies stay in the ART XML.
+- **Art defines are KEPT** — `ART_DEF_*` for the wonders/movies stay in the ART XML.
 - **GameText** for the cut ids is removed (unreferenced once the entities are gone).
 
 **To revive:** delete the entries from `store.is_dropped_type` (+ restore the GameText), then reimplement the trait/promotion

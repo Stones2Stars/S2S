@@ -13,7 +13,7 @@ next section before you change anything here.
 The route bodies were purged **wholesale**, and the reason is not that they were untidy:
 
 > *"I expected the entire http endpoint doc to be mostly empty, because keeping any endpoints would ensure legacy
-> has a potential to survive when it should not."* (owner)
+> has a potential to survive when it should not."*
 
 A legacy data member whose only remaining reader is a route is **not actually still used** — but the **compiler
 census cannot tell the difference**. The member compiles, so the delete-driven cut walks past it; it survives by
@@ -28,19 +28,19 @@ preserved by a reader).
 not "just for observability while we finish". It is the precise mechanism that would resurrect legacy, and it
 looks like helpfulness every single time. The surface is not restored until the new access/getter surface exists,
 because only then can an endpoint read what every other consumer reads
-([build a new getter surface, never widen a legacy one](../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner)) instead of reaching around it.
+([build a new getter surface, never widen a legacy one](../architecture/patterns/05-the-two-read-roles-one-grammar-two.md#-the-two-read-roles--one-grammar-two-answers)) instead of reaching around it.
 
 **When the surface returns it is re-specced here, against that access surface** — ⛔ the still-open item of
 building ONE new uniform, parameterized getter set over the channel index and disconnecting the legacy
-channel-shaped getters ([build a new getter surface, never widen a legacy one](../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner),
+channel-shaped getters ([build a new getter surface, never widen a legacy one](../architecture/patterns/05-the-two-read-roles-one-grammar-two.md#-the-two-read-roles--one-grammar-two-answers),
 [patterns.md § THE TWO READ ROLES](../architecture/patterns.md)).
 
-⚖ **WHAT IT SHOULD CARRY *IS* DECIDED, THOUGH: DECOMPOSITION CENSUSES (owner).** *"Censuses like this are the
+⚖ **WHAT IT SHOULD CARRY *IS* DECIDED, THOUGH: DECOMPOSITION CENSUSES.** *"Censuses like this are the
 exact censuses we want to have in the http endpoints, because they give us real breakdowns, that are
 observable."* A route that serves ONE number answers nothing when that number is wrong; a route that serves a
 value **term by term** — the growth threshold beside its base, its gamespeed percent and its era percent; the
 consumption beside its per-pop rate — attributes a divergence to a NAMED source without a code read. That is
-the [the Orwell observability bar](../spine.md#the-reconstruction-bar-orwell) Orwell bar as a route shape, and it is what the
+the [the Orwell observability bar](../spine/07-what-to-log-the-orwell-bar-the.md#the-reconstruction-bar-orwell) Orwell bar as a route shape, and it is what the
 no-guessing rule needs in order to be followable at all: at a gap the moves are VERIFY or ASK, and a bare total
 supports neither.
 ⛔ It does NOT reopen the route ban above — the test is unchanged: a census reads the cascade's OWN computed
@@ -61,7 +61,7 @@ stored segment goes unreported. ⚠ `plotRoute` reaches the
 16-field cap, where a seventeenth term is silently DROPPED ([spine.md](../spine.md)). One level of
 decomposition only moves the question: a short `plotBase` says the plots are short and not WHICH leg is short,
 and a dead improvement leg is the same number in the total as a dead nature leg. They come out of the SAME walk
-the total does ([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)).
+the total does ([the DRY single-implementation law](../architecture/patterns/03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)).
 
 > **⛔ Σsegments DOES NOT EQUAL `plotBase`, AND THE DIFFERENCE IS THE WHOLE §2a PLOT RESOLVE — reading a gap as
 > drift is the misreading this callout exists to stop.** The segments are the package's STORAGE; `plotBase` is
@@ -94,7 +94,7 @@ never have ridden `rateRead` inline, and `rateRead` is at the field cap besides
 term multiplies by assigned alone while [modifier.md §2a](../cascade.md) and the engine both say the count is the
 sum, so the two columns SIZE that gap without moving a value. A type held only as free-typed reports a row with
 contribution 0 rather than no row at all — an absent row would read as "no such specialist here". ⛔ Its terms come OUT of the real
-combine rather than being re-derived beside it ([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)):
+combine rather than being re-derived beside it ([the DRY single-implementation law](../architecture/patterns/03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)):
 a census that recomputed its own decomposition could disagree with the number it claims to explain, which is the
 one thing it must never do.
 
@@ -165,14 +165,14 @@ without opening the game.
 The six routes (cascade packages / enabler operating set / team capabilities, served `stored` and `oracle`) were
 the missed-emit tripwire: the same values twice, event-built and recomputed-from-source, diffed outside the DLL.
 
-**⛔ The oracle side CANNOT WORK the way things are set up (owner).** Reproducing event-built state means
+**⛔ The oracle side CANNOT WORK the way things are set up.** Reproducing event-built state means
 replaying the FULL EVENT CHAIN, and an endpoint cannot build that chain — so the oracle does not answer a second
 derivation of the same quantity. It answers a number that was never comparable, and it is **the single
 most-revived dead idea in the project** — the ban is on RUNNING it as evidence, not merely on rebuilding it: a
 number from a broken instrument is worse than no number. The tell, and the measured damage when it ran anyway:
 [superseded-ideas #33](../architecture/superseded-ideas.md).
 
-**⚖ WHAT TO DO INSTEAD (owner) — the THREE legs, and two of them is not a check:** read the **LOGS** (what
+**⚖ WHAT TO DO INSTEAD — the THREE legs, and two of them is not a check:** read the **LOGS** (what
 actually landed: source, channel, scope, unit, driving fact, apply COUNT), check them against the **JSON INFO**
 (what that source is authored to deposit), and against **WHAT STATE EXPECTS** (who holds the source, which gates
 hold, what the counts are). A deposit is conditioned and scaled, so the authored number alone predicts nothing —
@@ -182,4 +182,4 @@ correctness is all three agreeing, attributed to a named source with numbers.
 - [spine.md](../spine.md) — the event source, the SSE `[TAG]` stream, the read rules, and the operational surface
   as it stands today.
 - [validation.md](validation.md) — the live-verification discipline this surface feeds.
-- [state-repositories.md](../cascade.md) — the stored-vs-oracle tripwire's home.
+- [cascade.md](../cascade.md) — the stored-vs-oracle tripwire's home.

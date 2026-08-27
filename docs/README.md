@@ -1,8 +1,13 @@
 # Stones2Stars — docs
 
-The condensed spec surface, roughly **one file per concept** — which is a statement about how these files are
-ORGANISED (a concept split across tiers grew two accounts that disagreed), and **never a statement about how much
-you read**.
+The condensed spec surface, **one concept per home** — which is a statement about how these files are ORGANISED
+(a concept split across TIERS grew two accounts that disagreed), and **never a statement about how much you
+read**.
+
+A large concept's home is a **directory with a hub page**: `cascade.md` is a map, and the spec itself is the
+pages in `cascade/`. The concept still lives in exactly one place — it is PAGINATED for reading, never scattered,
+and no part of it is filed under another tier. ⛔ **A hub carries no ruling of its own; the parts ARE the spec**,
+so stopping at the hub is reading the table of contents and calling it the book.
 
 ⛔ **GREP THE WHOLE OF `docs/` FOR WHAT YOU ARE ABOUT TO TOUCH, AND READ EVERY FILE THAT HITS, END TO END** — the
 subsystem, the symbols, the mechanism. The number of relevant files is something you FIND, not something you
@@ -110,7 +115,7 @@ Verify against the tree before acting on any claim that something is built.
 - **[architecture/patterns.md](architecture/patterns.md)** — interface contracts in C++03 (poor-man's DI) + the DRY single-implementation law.
 
 ## `plans/` — mutable work state
-- **[plans/structural-cleanup/](plans/structural-cleanup/README.md)** — the #430 work tier: now just the
+- **[plans/structural-cleanup/](plans/structural-cleanup/README.md)** — now just the
   owner-LOCKED property audit; the migration's remaining work lives as short per-concept bullets in
   `specs/`/`reference/`, not as a standing worklist here.
 - **[plans/parked/](plans/parked/README.md)** — un-killed forward design intent (the backlog). Carried AS-IS: stale

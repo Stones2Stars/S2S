@@ -36,13 +36,13 @@
   `bUpdateGlobal=true` feeds GG points. Free promotions bypass tech prereqs (`isPromotionValid`). AI `AI_promote()`
   recurses silently. **No log anywhere in the XP/promo system** beyond `level` in `/units`.
 
-> **⚖ PROMOTION VALUE IS EVALUATED ON A REAL UNIT ONLY — THE PRODUCTION DECISION DOES NOT ASK (owner).** A city
+> **⚖ PROMOTION VALUE IS EVALUATED ON A REAL UNIT ONLY — THE PRODUCTION DECISION DOES NOT ASK.** A city
 > choosing what to build weighs the free XP AMOUNT and nothing about what those levels would buy. The unit
 > evaluates its own promotions once it EXISTS, off its resolved cache (`CvUnitAI::AI_promote`).
-> ⛔ **The cost is the reason, and a better walk does not rescue it (owner): *"even though our promotion walk
+> ⛔ **The cost is the reason, and a better walk does not rescue it: *"even though our promotion walk
 > would be significantly more efficient, it's still wildly expensive."*** The question is per
 > (city × candidate unit × promotion) on the hottest loop of the turn, so it is unaffordable however
-> efficiently it is written — this is [turn time is king](../cascade.md#-the-per-scope-package-model--the-cascades-founding-design-1-stated-as-cache-architecture)
+> efficiently it is written — this is [turn time is king](../cascade/16-package-model.md#-the-per-scope-package-model--the-cascades-founding-design-1-stated-as-cache-architecture)
 > deciding a feature, not an optimization to attempt.
 > ⛔ **Nor can it be cached around: *"caching a theoretical promotion setup for all the units is unrealistic at
 > best of times"*** — what would be cached is a hypothetical promotion set for units that do not exist, keyed by
@@ -50,7 +50,7 @@
 > ⚑ **It may return later, and there is exactly ONE shape it may return in:** the traversal `AI_promote` already
 > uses — the player's maintained unlocked-promotion set → live per-unit applicability → the ONE
 > `AI_promotionValue` ([enabler.md §7.1](../specs/enabler.md)'s promotions carve-out;
-> [the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)). ⛔ Never a second walk,
+> [the DRY single-implementation law](../architecture/patterns/03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)). ⛔ Never a second walk,
 > and never a whole-registry sweep per candidate.
 > ⚠ **The XP term itself is a cascade FLAT (`EXPERIENCE_AMOUNT` is `CASC_UNIT_FLAT` at city scope), so every
 > reader reduces at its point of use** ([the ×100 fixed-point model](../specs/curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries)).
@@ -63,7 +63,7 @@
   `…StolenVisibilityCount`, `…InvisibleVisibilityCount`. `isVisible = visibilityCount>0 || stolenVisibilityCount>0`.
 - **Sight range** = `1 + plot.getTerrainElevation() + getExtraVisibilityRange() + improvement.getVisibilityChange()`,
   cap `MAX_UNIT_VISIBILITY_RANGE` (elevation 0/1/2 = flat/hills/peak; air sees all).
-> **⚖ FOG DECAY IS A REAL, RECENT FEATURE THAT IS SWITCHED OFF — NOT DEAD CODE (owner).** `ENABLE_FOGWAR_DECAY`
+> **⚖ FOG DECAY IS A REAL, RECENT FEATURE THAT IS SWITCHED OFF — NOT DEAD CODE.** `ENABLE_FOGWAR_DECAY`
 > (the commented `#define` at `CvGameCoreDLL.h`) gates a **map that goes fully dark again where you have not
 > been for a while**: the revealed-but-unseen tier decays instead of being remembered forever, riding the
 > per-plot `…LastSeenTurn` above plus its own `m_iVisibilityDecay` / `m_iDefaultDecay` and the
@@ -83,7 +83,7 @@
 
 ## The GREAT WALL render — compiled out on purpose
 
-⛔ **`THE_GREAT_WALL` is a DELIBERATE OFF-SWITCH, not an attic (owner): rendering the great wall *"has literally
+⛔ **`THE_GREAT_WALL` is a DELIBERATE OFF-SWITCH, not an attic: rendering the great wall *"has literally
 broken the game in the past"* — it was a source of a lot of CTDs in the older days.** The guard sits on the
 viewport-transform refresh calls (`CvMap::beforeSwitch` / `afterSwitch` → `CvGame::processGreatWall`), while the
 MECHANIC itself is live and unguarded (`CvCity::processGreatWall`, called from `CvGame`), so the switch controls

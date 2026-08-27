@@ -39,7 +39,7 @@ Other failure artifacts (all under `Documents\My Games\Beyond the Sword\Logs\`):
 - Asserts on an `Assert` build → `Asserts.log` + `AssertsJson.log`.
 - Python tracebacks → `PythonErr.log`. A `RuntimeError: unidentifiable C++ exception` there is a **C++
   access violation propagated out of a boost.python-wrapped DLL call** (the boost wrapper can't name it).
-- ⛔ **BUT AN EVENT-HANDLER FAILURE DOES NOT GO THERE — IT GOES TO `PythonDbg.log` (owner).** BUG catches the
+- ⛔ **BUT AN EVENT-HANDLER FAILURE DOES NOT GO THERE — IT GOES TO `PythonDbg.log`.** BUG catches the
   exception inside its own dispatch and reports it as `TRACE: Error in <event> event handler <bound method …>`,
   so it never reaches the `stderr` redirect that feeds `PythonErr.log`. **Both files matter and neither is a
   superset**: `PythonErr` holds what escaped to stderr, `PythonDbg` holds what BUG caught.
@@ -119,6 +119,6 @@ The in-tree tooling this doc deliberately does **not** restate — go to its own
   same value-verification flow.
 - [`spine.md`](../spine.md) — **the live surveillance surface** the crash/known-
   issue debugging reads against (HTTP `127.0.0.1:7227`, `/events`, the four `/computed` censuses, and the
-  gated logs) → [the Orwell observability bar](../spine.md#the-reconstruction-bar-orwell). Delegate bulk data reads to the
+  gated logs) → [the Orwell observability bar](../spine/07-what-to-log-the-orwell-bar-the.md#the-reconstruction-bar-orwell). Delegate bulk data reads to the
   `data-reader` sub-agent rather than pulling raw dumps into context.
 - [`../README.md`](../README.md) — the comprehension map (where every subsystem doc lives).

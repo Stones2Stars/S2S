@@ -16,9 +16,9 @@
 >   runtime merges both) → the unit/unitcombat `outcomes` JSON block (`curate_unit.py`/`curate_unitcombat.py`), the
 >   **clean verb-per-payload schema** ([json.md §8](../specs/json.md)): `outcomes.kill[]` / `outcomes.actions[]`, each
 >   `{ requires:{outcome:OUTCOME_*, plot?, unit?}, chance, <reward verbs> }`.
-> - **`Adapt*` is pure engine, NOT data** (owner) — the gamespeed-scaling wrapper is unwrapped by the curator; the
+> - **`Adapt*` is pure engine, NOT data** — the gamespeed-scaling wrapper is unwrapped by the curator; the
 >   engine scales the plain value at grant time. **Conditions → cascade `requires` vocabulary**, evaluated by the ONE
->   `cascadeEvalCondition` ([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)) — **no
+>   `cascadeEvalCondition` ([the DRY single-implementation law](../architecture/patterns/03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)) — **no
 >   BoolExpr round-trip** (`m_pPlotCondition`/`m_pUnitCondition`/`toCity` are `CvCondition*`). Numerics build the
 >   existing `IntExpr` (`int`→`Constant`, `{base,random}`→`Plus(Constant,Random)`). Python-authoritative gates
 >   (`{python:fn}`) + inline `<Python>` bodies stay Python.
@@ -44,7 +44,7 @@
   plot/unit conditions collapse onto the OUTCOME's `requires` (`CvOutcome`'s `CvCondition`), so the legacy
   `iCost` (`IntExpr` gold) + `plotCondition`/`unitCondition` (`BoolExpr`) members were REMOVED (no schema verb, no
   current data — the curator flags a stray action `iCost` as an unmapped tripwire). `propertyCost`/`payerType` are
-  RETAINED inert (owner ruling); a `propertyCost` verb wires them when it lands.
+  RETAINED inert; a `propertyCost` verb wires them when it lands.
 - **`CvOutcomeList`** (`UI/CvOutcomeList`) — a `vector<CvOutcome*>` that **rolls exactly ONE** weighted outcome
   (chances summed, floored to 100 so a sub-100 sum reads as absolute %), after **recursively removing** any outcome
   listed in a surviving one's `ReplaceOutcomes` (higher tier prunes lower). `CvOutcomeListMerged` merges a unit's list

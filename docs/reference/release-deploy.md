@@ -30,7 +30,7 @@ the `release` branch (`skip_tags` plus the branch filter keep it from looping on
 
 ## Why the commit is batched
 
-⚖ **It is the BULK push that breaks SourceForge, not a routine release (owner).** A daily commit was never the
+⚖ **It is the BULK push that breaks SourceForge, not a routine release.** A daily commit was never the
 problem and still is not — it carries a modest change set and goes up in a handful of batches, or one. What
 does not survive as a single transaction is a mass regeneration of `Assets/Data`: **~15000 JSON files at once
 is guaranteed to fail.** Read the batching as insurance that only actually binds on the bulk case, never as
@@ -54,7 +54,7 @@ contending. The only lever is how much work one transaction asks the server to f
 `Tools/CI/SvnBatchCommit.ps1` sends the same payload as a sequence of **bounded transactions**, each retried
 independently.
 
-⚑ **It is the INTERACTION that kills a commit, not either dimension alone (owner).** A single file always
+⚑ **It is the INTERACTION that kills a commit, not either dimension alone.** A single file always
 succeeds however large it is, and a great many small files are survivable; what fails is **many files that are
 also large, in one transaction**. That is why a batch is bounded on **both** axes at once and closes on
 whichever cap it meets first — the caps exist to keep the payload out of the many-and-large corner, not to

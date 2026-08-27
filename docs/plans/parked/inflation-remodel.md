@@ -9,9 +9,9 @@
 ## The ruling
 
 > **⛔ INFLATION IS NOT ACTUALLY USED IN THE GAME, AND #430 DOES NOT REMODEL IT — a conscious decision to cut and
-> live with the consequences (owner).**
+> live with the consequences.**
 >
-> **⚖ WHEN IT RETURNS IT IS A CASCADE CHANNEL DRIVEN BY ACTUAL EXPENDITURE (owner):** *"we need to have a real
+> **⚖ WHEN IT RETURNS IT IS A CASCADE CHANNEL DRIVEN BY ACTUAL EXPENDITURE:** *"we need to have a real
 > plan for how it is to be modelled based on actual expenditure."*
 
 ## Why the present shape cannot be re-wired into the intended one
@@ -22,7 +22,7 @@ however much gold it moves, and one that hurried heavily in the ancient era carr
 
 ⇒ So the gap is not a missing wire. Re-pointing an inflation read onto a cascade kind would connect a live
 consumer to a mechanic that is being replaced whole — the half-migration
-([build a new getter surface, never widen a legacy one](../../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner)) — and the model it should be
+([build a new getter surface, never widen a legacy one](../../architecture/patterns/05-the-two-read-roles-one-grammar-two.md#-the-two-read-roles--one-grammar-two-answers)) — and the model it should be
 connected to has not been decided.
 
 ## What the remodel owns

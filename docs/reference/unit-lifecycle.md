@@ -22,7 +22,7 @@ that is what frees the object.
 ## Birth
 
 `CvPlayer::initUnit` → `CvUnit::init`, which emits `SEVT_UNIT_CREATED`. A LOADED unit never runs `init`, so
-`CvUnit::read` emits the same fact from inside the save read (the reseed, [the load reseed](../spine.md#5-the-load-reseed)).
+`CvUnit::read` emits the same fact from inside the save read (the reseed, [the load reseed](../spine/05-the-load-reseed.md#5-the-load-reseed)).
 
 ## The death sequence — one job per operation
 

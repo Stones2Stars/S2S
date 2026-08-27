@@ -4,8 +4,8 @@
 > Python surface, everything OUTSIDE the pedia. The pedia slice is mapped in
 > [pedia-map.md](pedia-read-map.md) and is excluded from the detailed work here (§1 reconciles the totals).
 >
-> Per [the Cy* surface is not a fixed contract](../architecture/patterns.md#-the-python-read-boundary--one-complete-data-fetching-library-owner) and
-> [build a new getter surface, never widen a legacy one](../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner) this maps **NEEDS, not getters
+> Per [the Cy* surface is not a fixed contract](../architecture/patterns/06-the-python-read-boundary-one.md#-the-python-read-boundary--one-complete-data-fetching-library) and
+> [build a new getter surface, never widen a legacy one](../architecture/patterns/05-the-two-read-roles-one-grammar-two.md#-the-two-read-roles--one-grammar-two-answers) this maps **NEEDS, not getters
 > to port**. ⛔ **THE CUT IS HALF DONE, AND READING IT AS UNIFORM IS THE TRAP.** The legacy read bindings are gone
 on **`CyCity`** (95 defs, group-shaped, zero mutations) and **`CyUnit`** (8) — and Python's channel-scalar read
 demand on `CyCity` is down to a *handful of sites*, so that half is finished rather than merely cut. They are
@@ -22,7 +22,7 @@ the `CvPlayer`/`CvTeam` side is where the work is.** The replacement surface sta
 > ⚠ **`GC.get<X>Info` is published NOWHERE**, so a surviving one is not a slow read — it is an `AttributeError`
 > at the moment its handler fires. That is the shape of what is left to wire, and it is why the counts below
 > are DEMAND rather than a surviving-call census.
-> ⛔ **REPLACE ONE THE MOMENT YOU FIND IT — never leave it for the owner to hit by hand (owner).** A found dead
+> ⛔ **REPLACE ONE THE MOMENT YOU FIND IT — never leave it for the owner to hit by hand.** A found dead
 > read is not a report, a census line, or a follow-up item: by the time you have grepped it you already know
 > what answers it, so re-point it in the same change. ⚑ **The reason is that the ERROR LOG IS NOT A WORKLIST:**
 > a traceback names only the FIRST dead read a code path reached, so fixing what threw leaves every read behind
@@ -122,7 +122,7 @@ overcounts by thousands. And the published surface no longer answers reads, so a
 
 That last row is the whole Python→C++ read surface today, and it is the size of the gap the library is built
 toward answering; **it is an END STATE, never a gate on cutting**
-([the Cy* surface is not a fixed contract](../architecture/patterns.md#-the-python-read-boundary--one-complete-data-fetching-library-owner)).
+([the Cy* surface is not a fixed contract](../architecture/patterns/06-the-python-read-boundary-one.md#-the-python-read-boundary--one-complete-data-fetching-library)).
 
 ⚠ **The unserved total FALLS as the library grows, so a shrinking number is the work landing, not the surface
 being re-measured differently.** Every read the library serves leaves the demand set, which is why this row is
@@ -383,7 +383,7 @@ that needs the **complete per-type index across every registered type**, includi
 `Upkeep`, `Victory`, `Vote`, `VoteSource`, `World`, `Denial`). Treat it as the acceptance case for
 "the library can enumerate every type", not as a long-tail screen.
 
-> **⛔ IT IS A WANTED MODDER-INFO SURFACE AND IT STAYS — do not sweep it as dead code (owner).** *"We do need to
+> **⛔ IT IS A WANTED MODDER-INFO SURFACE AND IT STAYS — do not sweep it as dead code.** *"We do need to
 > have modder info in the future, even if no one knows of it."* The screen is an XML-tag REFERENCE
 > (`TXT_KEY_XML_TAGS`): a dropdown of every info category over a table of **ID · NAME · TYPE · TEXT**, i.e. the
 > `BUILDING_FORGE`-style type key and `TXT_KEY_` for any entity — *for when you forget one*.
@@ -514,7 +514,7 @@ buckets — `getRequiresIdsInClause` is the read that keeps the AND/OR split, no
 
 This confirms independently the same conclusion as [pedia-map.md finding 3](pedia-read-map.md): *"no
 boolean-expression API belongs on the new surface."* The
-[reverse lookups are populated once, at load](../cascade.md#1-one-step-deposit-down-accumulate-read-o1) edge families answer the inverse
+[reverse lookups are populated once, at load](../cascade/01-deposit-and-read.md#1-one-step-deposit-down-accumulate-read-o1) edge families answer the inverse
 direction (what requires me), never the forward requirement tree.
 
 ### 4.3 (d) MUTATION — out of scope for the library, but still needed
@@ -593,7 +593,7 @@ reachable ONLY through this string table**:
 table is evidence that *this advisor demands this column of per-city data*, and the demand is what the coherent
 surface answers. It is not a binding to keep, re-point or widen, and "the census would have dropped it" must not
 be read as "the library must therefore carry it" — the whole map is
-**[NEEDS, not getters to port](../architecture/patterns.md#-the-two-read-roles--one-grammar-two-answers-owner)**, and a method name is the
+**[NEEDS, not getters to port](../architecture/patterns/05-the-two-read-roles-one-grammar-two.md#-the-two-read-roles--one-grammar-two-answers)**, and a method name is the
 form the demand happens to be written in, never its unit. The other 16 names in the same table
 (`getPopulation`, `getX`, `getY`, `getMaintenance`, `getCommerceRate`, `foodDifference`, `getGreatPeopleRate`,
 `getGreatPeopleProgress`, `getPlotYield`, `findBaseYieldRateRank`, `getRealPopulation`,
@@ -686,7 +686,7 @@ analysis of the Python tree can tell you the live subset. Any "these reads are d
 `Revolution/Gameready/Revolution.py:1170` reads
 `pPlayer.getRevIdxDistanceModifier() + pCity.getRevIndexDistanceMod()` — two spellings of one mechanic, consumed
 by Python-authoritative gameplay and invisible to an engine-side read census. Verified live at that line.
-Per [patterns.md](../architecture/patterns.md) **both distance kinds stay as-is, untouched by any stage (owner ruling)**;
+Per [patterns.md](../architecture/patterns.md) **both distance kinds stay as-is, untouched by any stage**;
 Revolutions owns them in its own rework. **No stage-4 investigation.** Recorded here only as the calibration
 case for §5.7.
 
@@ -771,7 +771,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
 
 ## 7. The boundary rulings — and the two questions still open
 
-1. **Map scripts keep their own CALLBACK contract — they are NOT outside the library (owner).**
+1. **Map scripts keep their own CALLBACK contract — they are NOT outside the library.**
    ⛔ **THE OLD `GC.get<X>Info` ENDPOINTS ARE NOT COMING BACK, SO A MAP SCRIPT'S READS MOVE ONTO THE NAMED
    SURFACE LIKE EVERY OTHER CONSUMER'S.** What is separate is the **contract** — the named Python callbacks
    ([engine.md](engine.md)) — never the reads made inside them.
@@ -784,7 +784,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    moves on. That has now happened; do not repeat it.
    ⚑ The shape is the ordinary one: a per-info accessor per map-gen type, the `CyWorldInfo` shape — which
    already carries map-gen reads, so nothing new is being invented for them.
-   ⚖ **WHAT IS GENUINELY DIFFERENT IS THE ENUMERATION, NOT THE SURFACE (owner): a map script is the real case
+   ⚖ **WHAT IS GENUINELY DIFFERENT IS THE ENUMERATION, NOT THE SURFACE: a map script is the real case
    that HAS to iterate every bonus, terrain and feature.** Placing resources and laying terrain is a decision
    over the whole registry, so the whole-registry loop is CORRECT here and stays — exactly as it is in the
    pedia ([patterns.md](../architecture/patterns.md): *"it is the pedia, it is where all info is stored, as an
@@ -809,7 +809,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    behaviour. Third-party map scripts therefore remain a supported surface on their own terms, unaffected by the
    `Cy*` cut. A future map-gen boundary redesign is its own work item, never a stage-4 rider.
 
-2. **`Screens/Debug/TestCode.py` is DELETED, not migrated (owner ruling)** —
+2. **`Screens/Debug/TestCode.py` is DELETED, not migrated** —
    *"nuke testcode, if we want that we do it properly"*, the Python refactor making it worthless. It was the
    largest INFO consumer after the pedia hub (1,488 INFO sites) and the sole consumer of 90 residue names /
    296 sites, all of which drop out of the library's obligations (**the appendix shrinks ~30%**). The whole
@@ -820,7 +820,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    after the thing requiring it; replacements are explicit, never implicit; a replacing entity must be better).
    Those invariants belong in the SPEC first — not a stage-4 item.
 
-3. **Global DEFINEs — the READS stay, the WRITES are OUT OF SCOPE (owner).**
+3. **Global DEFINEs — the READS stay, the WRITES are OUT OF SCOPE.**
    Reads: `getMAX_PC_PLAYERS` (176) · `getMAX_PLAYERS` (74) · `getMAX_PC_TEAMS` (44) · `getBARBARIAN_PLAYER`
    (40) · `getMAX_TEAMS` (13) — a small closed constants block, trivially served by the library.
    The **69 `setDefineINT` writes** are RULED OUT OF SCOPE: they are a MUTATION surface (not a data read), and
@@ -837,7 +837,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    and it takes effect immediately**.
 
    That is the difference in kind: a **game option** is chosen at game setup and fixed for the game (so JSON may
-   gate an entity on it, [the whole-entity applicability gate](../specs/json.md#2-anatomy-of-an-entity)); a **live option**
+   gate an entity on it, [the whole-entity applicability gate](../specs/json/02-anatomy-of-an-entity.md#2-anatomy-of-an-entity)); a **live option**
    is a user setting changeable mid-game. They are NOT to be folded into `GAMEOPTION_*` on the assumption that
    they are strays. The consequence worth knowing rather than re-deriving: **JSON cannot gate on a live option** —
    nothing static may depend on a value that moves under it.
@@ -847,7 +847,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    unchanged. The writes themselves belong to the contrib stacks' own reworks, not here.
 
 3b. **A natural-disaster mechanic whose whole effect is loss of a plot improvement is authored as a §5 TRIGGER,
-   never as a Python event — RULED (owner).** `trigger → chance → action` with the `destroy` verb
+   never as a Python event — RULED.** `trigger → chance → action` with the `destroy` verb
    ([json.md §5](../specs/json.md)) already expresses that shape exactly, so the capability belongs as DATA on
    the trigger plane. This does NOT reopen the events carve-out (#425 events stay Python) — it fixes where this
    one shape of capability lives if it is ever wanted.
@@ -857,21 +857,21 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    a localization service call). At 3,168 `getText` sites the answer materially changes the library's contract, so it
    wants an explicit ruling rather than an inherited assumption.
 
-5. **Name-based enum/type resolution is a FIRST-CLASS library operation (owner ruling).** Name→value resolution is a supported operation of the library's surface, not an
+5. **Name-based enum/type resolution is a FIRST-CLASS library operation.** Name→value resolution is a supported operation of the library's surface, not an
    accident of `getattr` on a module, and the evidence in §5.3 is why: `WidgetTypes`, `InputTypes` and
    `InterfaceDirtyBits` are reached ONLY this way, so without it those reads have no path at all. ⚠ Note the
    shape this must cover is **resolution AND extension**: `BUG/WidgetUtil.py:62-68` does `getattr(WidgetTypes,
    name)` *and* `setattr(WidgetTypes, name, widget)` — BUG MINTS new enum members at runtime from config names
    and hands them back to the engine as widget ids. A read-only lookup would not serve it. This generalizes what
    the engine already does for infotypes (`getInfoTypeForString`) and pairs naturally with the load-minted
-   classification registries ([the classification-infos registry](../specs/json.md#8-classification--unit-skillstagsstate-building-attributes--empire-capabilities)),
+   classification registries ([the classification-infos registry](../specs/json/09-classification-unit-skillstagsstate-building-a.md#8-classification--unit-skillstagsstate-building-attributes--empire-capabilities)),
    which are the same idea on the info plane: names minted to ids at load, resolved by id thereafter.
 
    And the completeness argument that makes it load-bearing: a library WITHOUT name→type resolution forces those
    consumers to keep a legacy reach-around — the second live surface the one-surface ruling forbids.
 
 6. **~~What is the MUTATION boundary's shape, and is it stage 4's job?~~ — CLOSED: THE WRITE SURFACE EXISTS
-   (owner).** *"We have a write surface."* ~144 `set*`/`change*`/`do*`/`create*` defs are published across
+.** *"We have a write surface."* ~144 `set*`/`change*`/`do*`/`create*` defs are published across
    `CvPythonPlayerLoader` / `CvPythonPlotLoader` / `CyGame` / `CyTeam` / `CyMap` / `CyArea` / `CyAct` — the cut
    was DIRECTIONAL and took the READ bindings only. ⛔ So this is not an open question and must not be cited as
    one: a mutating consumer that fails is WIRED, and a write it needs that is not published yet is ADDED to that
@@ -881,7 +881,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    read through it, and the legacy `Cy*` surface cannot be disconnected while a write path still depends on it.
    Stage 4 needs a decision on whether the write boundary is designed alongside the library or sequenced after.
 
-7. **WORLDBUILDER IS ITS OWN SURFACE — and it MUST travel the SAME engine paths (owner ruling).**
+7. **WORLDBUILDER IS ITS OWN SURFACE — and it MUST travel the SAME engine paths.**
    *"A dedicated worldbuilder surface is definitely the way to go, also when worldbuilder adds or removes, it has
    to emit events the same way as if things were normally constructed, or removed"* — *"so it should use the same
    paths."*
@@ -891,14 +891,14 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    `UnitFlagKind` for *is this unit cargo* because nothing in the game model asks it; only the editor does. So
    those reads are **not missing from the library — they are out of scope for it**, and widening `CyState`/`CyAct`
    to carry them would shoehorn unmodelled fields into the modelled surface, which is
-   [the Cy* surface is not a fixed contract](../architecture/patterns.md#-the-python-read-boundary--one-complete-data-fetching-library-owner)'s failure mode aimed at the NEW surface
+   [the Cy* surface is not a fixed contract](../architecture/patterns/06-the-python-read-boundary-one.md#-the-python-read-boundary--one-complete-data-fetching-library)'s failure mode aimed at the NEW surface
    instead of the old one. Measured: **34 cargo/transport sites and 31 unit-write sites, every one of them in
    `Screens/Worldbuilder/` or `pyWB/`** — zero in gameplay.
    ⛔ **The binding half of the ruling — the editor writes through the engine's OWN mutator, never a field poke.**
    An editor that sets a member directly leaves the cascade unaware, so the derived caches diverge SILENTLY —
    precisely what the event spine exists to prevent. ⚠ And the fix is NOT "poke the field, then also emit": that
    is two implementations of one transition and they drift
-   ([the DRY single-implementation law](../architecture/patterns.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)). Routing through the
+   ([the DRY single-implementation law](../architecture/patterns/03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)). Routing through the
    mutator makes the emit STRUCTURAL — it cannot be forgotten by a future verb, because no verb owns it.
    ⚑ The pattern already exists and is the model to copy: every `CyAct` verb resolves a handle, validates, then
    calls the real engine setter (`CyAct::setCityBuilding` → `CvCity::changeHasBuilding` → `setHasBuilding`, which
@@ -907,7 +907,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    ⇒ Consequence for a would-be editor verb with no engine mutator behind it: the missing piece is the ENGINE
    path, and that is what gets built — never a Python-side shortcut that writes the member and fakes the event.
 
-8. **REVOLUTION LIVE-STATE MIGRATES WHOLESALE TO THE PYTHON STORE (owner ruling).** *"Migrate wholesale."*
+8. **REVOLUTION LIVE-STATE MIGRATES WHOLESALE TO THE PYTHON STORE.** *"Migrate wholesale."*
    The revolution counters and timers — `getLocalRevIndex`, `getNumRevolts`, `getRevolutionCounter`,
    `getReinforcementCounter`, `getRevRequestAngerTimer`, `getRevSuccessTimer`, `getRevIndexPercentAnger`,
    `getRevIndexDistanceMod` (~120 reads and ~110 writes) — move into `RevData`'s SdToolKit store, NOT into
