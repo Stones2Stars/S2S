@@ -19,8 +19,10 @@ def main():
         return  # acknowledged this session
     reason = (
         "DOCS GATE - first Sources/ edit this session is BLOCKED. Before ANY source edit: "
-        "(1) READ the governing docs for the subsystem you are touching, END TO END "
-        "(the relevant docs/specs/*.md + docs/plans/*.md + docs/architecture/state-repositories.md); "
+        "(1) READ the governing docs for the subsystem you are touching, END TO END. "
+        "docs/README.md is the index; a large concept's home is a DIRECTORY with a hub page "
+        "(docs/cascade.md is a map -- the spec is the pages in docs/cascade/), and the hub "
+        "carries no ruling, so stopping at it is reading the contents page. "
         "(2) STATE the design back from the spec in your own words in your reply - if you cannot, you have "
         "not read it; (3) then create the marker file '.claude/docs-ack/" + sid + "' and retry the edit. "
         "READ THE DOCS, ASK WHEN YOU DO NOT KNOW, AND ABOVE ALL DO NOT ASSUME (owner, 2026-07-04)."
