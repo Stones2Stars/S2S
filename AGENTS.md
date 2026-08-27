@@ -577,12 +577,17 @@ with no worker at all can never build its first one.
 
 ### The CONTRACT BROKER — matching is THREE STAGES, and distance never scores
 
-- **⛔ THE BID DIVIDES BY BUILD TIME, AND THAT IS THE SAME BAN ON A DIFFERENT AXIS — `iValue *=
-  hammerCostPercent(); iValue /= iTurns;` (`CvContractBroker.cpp`).** A unit that finishes in one turn is not
-  divided at all, so the CHEAPEST candidate wins by construction. ⚑ **Measured live: a 1-turn scout bid
-  `value=9800100`** against useful units taking ten to twenty turns — an order of magnitude clear, which is the
-  always-wins shape (§ AI unit COUNTS). The ruling below was written about travel distance; depreciating by
-  PRODUCTION time does the identical damage and is the mechanism behind the observed scout spam.
+- **⚖ THE BID DIVIDES BY BUILD TIME, AND IN PRACTICE THAT DIVIDES BY ONE — `iValue *= hammerCostPercent();
+  iValue /= iTurns;` (`CvContractBroker.cpp`).** ⚑ **Measured live: EVERY bid recorded `turns=1`** (15 of 15),
+  because most units are one-turn builds. ⇒ So it is not a smooth depreciation that lets cheap units win — it is
+  a CLIFF that does nothing for the whole 1-turn field and penalises only the rare MULTI-turn candidate, i.e. it
+  biases against the expensive units rather than for the cheap ones.
+  ⛔ **Which means production time barely discriminates at all, and the broker is therefore choosing almost purely
+  on `AI_unitValue`** — so a bad pick here is a VALUATION question, not a broker one, and belongs to the designed
+  pass (§ AI unit COUNTS: the valuations are redesigned in one go).
+  ⚠ **The absolute magnitudes are a SPEED SCALAR, not a valuation blow-up** — `hammerCostPercent()` is the
+  gamespeed percent, so a bid of `value=9800100` is mostly that multiplier. Do not read a large bid as evidence
+  of anything on its own; compare bids against each other, on one speed.
 - **⛔ ONE UNIT DEMAND PER CITY PER TURN — `AI_chooseUnit` has TWO production paths and the counter admitted
   two passes.** It posts a broker TENDER and otherwise falls through to a direct `AI_chooseUnitImmediate`, and
   after tendering it deliberately returns false so the city keeps looking for a BUILDING of its own. ⚠ What that
