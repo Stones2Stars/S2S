@@ -1,8 +1,8 @@
-# Python read-map census (stage-4 input)
+# The Python read boundary — the hazards, the kinds, and the standing rulings
 
 > Evidence base for the stage-4 Python library ([patterns.md § THE PYTHON READ BOUNDARY](../architecture/patterns.md)) — the evidence base for the stage-4
 > Python surface, everything OUTSIDE the pedia. The pedia slice is mapped in
-> [pedia-map.md](pedia-read-map.md) and is excluded from the detailed work here (§1 reconciles the totals).
+> [pedia-map.md](pedia-read-map.md) and is excluded from the detailed work here.
 >
 > Per [the Cy* surface is not a fixed contract](../architecture/patterns/06-the-python-read-boundary-one.md#-the-python-read-boundary--one-complete-data-fetching-library) and
 > [build a new getter surface, never widen a legacy one](../architecture/patterns/05-the-two-read-roles-one-grammar-two.md#-the-two-read-roles--one-grammar-two-answers) this maps **NEEDS, not getters
@@ -66,390 +66,78 @@ the `CvPlayer`/`CvTeam` side is where the work is.** The replacement surface sta
 > that can be asked nothing. Group ACTIVITY is served by `UnitReadKind.UNIT_READ_ACTIVITY`; there is no route for
 > `setActivityType` or `readyToMove`.
 >
-> So every count below is **DEMAND** — what a consumer must be SERVED by the one data-fetching library — never
-> what call survives. Counts are script-derived from the current tree; the method is in §1 so every number can be
-> re-derived.
+> ⛔ **The COUNTED CENSUS THAT USED TO SIT HERE IS GONE, and it is not coming back.** A per-directory tally of
+unserved reads drifts the moment the library grows, so it bound every reader to a picture that was no longer
+true. The live answer is `python Tools/verify-python-bindings.py`, which recomputes it and cannot go stale; the
+runtime answer is `PythonErr.log` / `PythonDbg.log`, which name the read that actually fired. What is kept below
+is what neither of those can tell you: the hazards, the read KINDS, and the boundary rulings.
 
-## 1. The surface, counted
+## 0. Reading the live count — the two caveats it will not tell you
 
-### 1.1 Method (reproducible)
+The census that used to sit here is now `python Tools/verify-python-bindings.py`. Two things distort its total,
+and neither is visible in its output:
 
-> **Re-derive with `python Tools/census-python-boundary.py`** — it measures both directions and emits the tables
-> below ready to paste. These numbers describe a tree that is actively being cut, so they drift by nature: when
-> they matter, RE-RUN rather than trust. `--demand` adds the full per-name demand list.
->
-> ⛔ **The tool keys UNSERVED against what THIS REPO publishes, so it over-reports by exactly the EXE's surface.**
-> `CvPythonExtensions` has two producers ([python-load-sequence.md](python-load-sequence.md)); a name the closed
-> EXE publishes — `CyInterface`, `CyTranslator`, `CyPythonMgr`, `CyFractal`, `NiTextOut`, `InputTypes` and their
-> kin — is SERVED in the running game and unserved to the census. Subtract that class before reading any total as
-> a worklist. ⚠ It also counts the Python builtins `find` and `has_key` as engine-shaped, and drops every name
-> Python defines itself — `getText` above all, which is why TEXT is not sized here at all (§4.1).
+⛔ **It keys UNSERVED against what THIS REPO publishes, so it over-reports by exactly the EXE's surface.**
+`CvPythonExtensions` has two producers ([python-load-sequence.md](python-load-sequence.md)); a name the closed EXE
+publishes — `CyInterface`, `CyTranslator`, `CyPythonMgr`, `CyFractal`, `NiTextOut`, `InputTypes` and their kin —
+is SERVED in the running game and unserved to the census. Subtract that class before reading any total as a
+worklist. ⚠ It also counts the Python builtins `find` and `has_key` as engine-shaped, and drops every name Python
+defines itself — `getText` above all, which is why TEXT is not sized here at all (§1.1).
 
-Receiver-name heuristics are useless here — `CvBuildingInfo`, `CyCity` and `CyPlayer` are all used as ordinary
-*local variable names* in this tree, so "what does `GC.` call" undercounts and "what does `X.get*()` call"
-overcounts by thousands. And the published surface no longer answers reads, so a call cannot be keyed on
-"does this name resolve to a live binding". The census therefore keys on **UNSERVED DEMAND**:
+⚠ **It counts only `CyEnabler` as "the read half", which UNDER-COUNTS the library** — `CyInfo`, `CyState`, `CyAct`
+and the per-info accessors (`CyWorldInfo`) publish reads too. It does not distort the UNSERVED total, which keys on
+what is published ANYWHERE under `Sources/`.
 
-1. Parse every `.def("<name>"` under `Sources/` → the **published** surface.
-   ⚠ **The tool counts only `CyEnabler` as "the read half", and that is now an UNDER-COUNT of the library** —
-   `CyInfo`, `CyState`, `CyAct` and the per-info accessors (`CyWorldInfo`) publish reads too. It does not distort
-   the UNSERVED total, which is keyed on what is published ANYWHERE under `Sources/`, not on that label; it only
-   makes the tool's own "read half" line smaller than the library. Read the library's size off the files.
-2. Scan every `.py` under `Assets/Python`, skipping full-line comments, for `<receiver>.<method>(`; drop
-   `self.` receivers.
-3. Keep the call when the method is **engine-shaped** (`get`/`is`/`can`/`set`/`change`/`calculate`/`find`/`AI_`/
-   `do`/`create`/`init`/`has`), is **not published**, and is **not defined anywhere in Python**. That call has no
-   answer in the tree, so it is demand the library must serve.
-4. Bucket by RECEIVER into a read KIND (§4).
+⛔ **THE PREFIX PLANE HAS TWO HALVES, AND CHECKING ONLY ONE UNDER-REPORTS BADLY.** A JSON-backed registry is routed
+GENERICALLY by the `RJ_REPO_TYPES` table (`Data/CvReadJson.cpp`) that `rjInfoForTypeConst` dispatches through — it
+is never named in `CyInfo.cpp`. Only the XML-only registries are spelled out there (`cyi_xmlOnlyInfo`). ⚠ So a grep
+of `CyInfo.cpp` alone reports every JSON registry as unrouted, which is exactly wrong for the biggest ones:
+`CIVICOPTION_`, `CULTURELEVEL_`, `PROPERTY_`, `BONUSCLASS_`, `VOTE_`, `HURRY_` and `SPECIALUNIT_` are all routed and
+were all mis-reported on one such grep. **Check BOTH tables, or check behaviour.**
 
-**Two distortions to hold onto, both one-directional so the totals are a FLOOR:**
+⛔ **`Screens/Worldbuilder/` is a block awaiting its own pass, NOT a family whose breakage is accepted** —
+WorldBuilder may temporarily LAG a cut; a visible break may never stand. (The misreading this warns about has
+already cost one pass.) What holds it is a structure call: which mutators the WB write surface carries.
 
-- **A name Python also defines itself is dropped wholesale.** `getText` is the case that matters — `BugUtil.py`
-  defines one, so all **3,131** `.getText(` sites fall out of the tables below. TEXT is therefore *not* sized here;
-  it is a separate plane the library does not own (§4.1).
-- **Receiver bucketing is heuristic**, so the split between STATE/COMPUTED/INFO moves at the margin; the
-  totals do not depend on it.
+## 0b. Two things a dead-code sweep will eat if this is not written down
 
-### 1.2 Headline
+⛔ **`Forgetful` IS A WANTED MODDER-INFO SURFACE AND IT STAYS — do not sweep it as dead code.** Modder info is
+wanted in future, whether or not anyone knows of it today. The screen is an XML-tag REFERENCE
+(`TXT_KEY_XML_TAGS`): a dropdown of every info category over a table of **ID · NAME · TYPE · TEXT** — the
+`BUILDING_FORGE`-style type key and `TXT_KEY_` for any entity, *for when you forget one*.
+⚠ **It reads EXACTLY like an abandoned screen, which is the hazard:** it is reached only by an undocumented
+**Ctrl+F1** (`CvEventManager.onKbdEvent`), appears on no menu, and no XML or BUG config names it. Every mechanical
+dead-code test flags it. It is un-killed forward intent
+([the keep-unkilled-ideas policy](../plans/parked/README.md#parked--out-of-active-scope-plans-kept-for-intent)),
+and the reason it LOOKS dead is recorded here precisely so the next sweep does not eat it.
+⚑ **Its second job:** being the one file that enumerates every registry, converting it exercises `INFO.getIndex`
+across all of them at once — which is what surfaced `COMMAND_` as the single unrouted registry.
 
-| Measure | Value |
-|---|---|
-| Python files | **205** |
-| Lines | **105,512** |
-| Distinct methods called on any receiver | 3,244 |
-| Published `.def` names under `Sources/` | **1,172** |
-| **UNSERVED engine-shaped reads** | **1,292 names / 7,359 call sites** |
+⚑ **`CvEventManager.onKbdEvent` HIDES A WHOLE DEV KEYMAP, THREE OF IT UNGATED** — named once here rather than
+rediscovered:
 
-That last row is the whole Python→C++ read surface today, and it is the size of the gap the library is built
-toward answering; **it is an END STATE, never a gate on cutting**
-([the Cy* surface is not a fixed contract](../architecture/patterns/06-the-python-read-boundary-one.md#-the-python-read-boundary--one-complete-data-fetching-library)).
+| keys | screen | gated? |
+|---|---|---|
+| **Ctrl+F1** | Forgetful — the XML tag reference above | **no — ships to players** |
+| **Ctrl+F2** | `GameFontScreen` — the font-symbol sheet | **no** |
+| **Ctrl+F3** | `TimeKeeper` — the era × gamespeed pacing table | **no** |
+| Ctrl+F4…F7 | replay · `DebugInfo` · `DanQuayle` · `UnVictory` | debug mode |
+| Shift+T / W / E, Ctrl+Shift+P | techs cheat · wonder movie · effect viewer · change-player | debug mode |
+| **Ctrl+Shift+Alt+D** | toggles DEBUG MODE itself | **no — so a player can unlock the gated half** |
 
-⚠ **The unserved total FALLS as the library grows, so a shrinking number is the work landing, not the surface
-being re-measured differently.** Every read the library serves leaves the demand set, which is why this row is
-worth re-running rather than reasoning from — and why a number quoted from memory is always high.
+⚠ The three ungated ones are shipped, reachable in any game, and therefore ordinary consumers of the read surface
+rather than debug-only code a cut may ignore.
 
-### 1.3 By directory
-
-Unserved engine-shaped reads, per §1.1. This is the demand each family places on the library.
-
-| Directory | Files | Unserved sites |
-|---|--:|--:|
-| `Screens/Worldbuilder/` | 19 | 1850 |
-| `Screens/` | 23 | 1310 |
-| `Screens/Advisors/` | 10 | 708 |
-| `Revolution/Gameready/` | 3 | 543 |
-| *(repo root)* | 10 | 537 |
-| **`Screens/Pedia/`** | 21 | 534 |
-| `EntryPoints/` | 14 | 525 |
-| `Contrib/` | 23 | 399 |
-| `Revolution/` | 7 | 232 |
-| `BUG/` | 28 | 126 |
-| `Afforess/` | 3 | 122 |
-| `PitBoss/` | 2 | 112 |
-| `DancingHoskuld/` | 4 | 79 |
-| `Screens/Debug/` | 2 | 72 |
-| `Utilities/` | 4 | 58 |
-| `Screens/SimpleScreens/` | 3 | 41 |
-| `Screens/ExtensionScreens/` | 1 | 28 |
-| `Revolution/Development/` | 1 | 23 |
-| `pyWB/` | 1 | 16 |
-| `Screens/Sevopedia/` | 2 | 11 |
-| `BUG/Tabs/` | 16 | 9 |
-| `EnhancedTechConquestUtils/` | 2 | 9 |
-| `Platyping/` | 2 | 8 |
-| `Sparth/` | 1 | 6 |
-| `DataStorage/` | 3 | 5 |
-
-⚑ **`EntryPoints/` has moved from the heaviest family to seventh, and that is the library working rather than a
-measurement artefact** — the engine's call-in surface was re-pointed first because it is where a failed read
-raises. **`Screens/Worldbuilder/` is now the largest remaining block by a wide margin.**
-⛔ **That is a block awaiting its own pass, NOT a family whose breakage is accepted** — WorldBuilder may
-temporarily LAG a cut, never that a visible break may stand (the misreading it warns about has already cost one
-pass). What actually holds it is a structure call — which mutators the WB write surface carries.
-⚑ **`pyWB/` is the same shape ALREADY DONE, which is why it fell from 70 sites to 16:** the scenario
-serializer's city half reads through `CyState`/`CyInfo` and writes through `CyAct` by (owner, id). It is the
-worked precedent the screens follow, not a different problem.
-
-### 1.4 Reconciliation with the pedia slice
-
-The pedia set (`Screens/Pedia/` 21 + `Screens/Sevopedia/` 2 + `Contrib/UnitUpgradesGraph.py`) is **24 files /
-580 unserved sites** (INFO 411 · other-UI 167 · STATE 1 · COMPUTED 0 · MUTATION 0).
-
-[pedia-map.md](pedia-read-map.md) reports **~1,283 static call sites** for the same set. The two are consistent and
-measure different things: pedia-map counts *every non-UI `get*/is/has/parse*` call in the file* — including calls
-Python defines itself and `CyGInterfaceScreen` accessors like `getXResolution` — while this census counts only
-reads nothing in the tree answers. **Both stand; use pedia-map's for the pedia's own work and this one when
-reconciling against the unserved total.**
-
-**Excluding the pedia, this census covers 6,779 unserved sites.**
-
-## 2. ⚑ The hypothesis: is the pedia a completeness oracle?
-
-> Build the reader surface for the pedia and everything is covered.
-
-**VERDICT: TRUE-WITH-A-LISTED-APPENDIX — for the INFO plane only, and the appendix is not small.**
-
-The hypothesis is right about the *shapes* and wrong about the *coverage*, and it is silent about three whole
-read kinds. Both halves are load-bearing.
-
-### 2.1 Where the hypothesis holds
-
-Serving the pedia forces the library to produce exactly the structured shapes
-[pedia-map.md §5](pedia-read-map.md) specifies — the per-entity page payload, the per-type index payload, the edge
-lists, the rendered entry lines, the requires section object. **Nothing in the rest of the tree asks for a
-*shape* the pedia does not already force.** Every non-pedia INFO consumer censused here is served by some
-projection of those same five shapes. That is the real content of the owner's intuition and it survives contact
-with the data: the pedia is the **shape** oracle.
-
-It is also close to a *type* oracle for the modifier-carrying and enabler-carrying types — the critical set for a
-compiling tree. For buildings, units, techs, promotions, bonuses, improvements, civics,
-traits, terrains, features, routes, corporations, religions, projects and specialists, the pedia already reads
-the widest field set of any consumer.
-
-### 2.2 The residue — measured
-
-Set-difference of INFO-plane method names used **outside** the pedia against those used **inside** it:
-
-- INFO names used outside the pedia: **447**
-- INFO names used inside the pedia: **257**
-- **RESIDUE (outside-only): 293 names / 1,632 call sites**
-
-That residue is not homogeneous. Grouped by what it actually is:
-
-| Residue group | Names | Sites | Is it a library need? |
-|---|---|---|---|
-| Mutations on globals (`setDefineINT`, `changeDefineINT`) | 2 | 70 | **No** — a write. §4 MUTATION boundary. |
-| Engine HANDLE accessors (`getMap`, `getMapByIndex`, …) | 7 | 285 | **No** — object handles, not data. |
-| Global DEFINE / constant reads (`getMAX_PC_PLAYERS`, `getMAX_PLAYERS`, `getBARBARIAN_PLAYER`, …) | 6 | 350 | **Yes, but trivially** — a closed constants block. |
-| **Whole info TYPES with no pedia page** | **2** | **~2** | **Nearly closed — see §2.3.** ⚠ The remainder is `GRAPHICOPTION_` + `PLAYEROPTION_`; the latter carries no site count, so the sites column is a floor. |
-| **Per-field reads on types the pedia DOES page** | **219** | **599** | **Partly — see 2.4.** |
-
-### 2.3 The appendix that matters: the info types the pedia never touches
-
-These types have **no pedia page at all**, so serving the pedia yields *nothing* for them — which is the sense
-in which the pedia under-specifies the library.
-
-**What is LEFT — two registries the prefix plane does not route:** `GRAPHICOPTION_` (2) and `PLAYEROPTION_`.
-
-⛔ **THE PREFIX PLANE HAS TWO HALVES, AND CHECKING ONLY ONE UNDER-REPORTS BADLY.** A JSON-backed registry is
-routed GENERICALLY by the `RJ_REPO_TYPES` table (`Data/CvReadJson.cpp`) that `rjInfoForTypeConst` dispatches
-through — it is never named in `CyInfo.cpp`. Only the XML-only registries are spelled out there
-(`cyi_xmlOnlyInfo`). ⚠ So a grep of `CyInfo.cpp` alone reports every JSON registry as unrouted, which is
-exactly wrong for the biggest ones: `CIVICOPTION_`, `CULTURELEVEL_`, `PROPERTY_`, `BONUSCLASS_`, `VOTE_`,
-`HURRY_` and `SPECIALUNIT_` are all routed and were all mis-reported here on one such grep. **Check BOTH
-tables, or check behaviour.**
-
-⛔ **`ART_` is NOT on that list and is not a gap** — art is an untouched system boundary, JSON carries only the
-tag id and `ARTFILEMGR` keeps resolving it (the ART carve-out, [json.md](../specs/json.md)). Do not "complete"
-the appendix by routing it.
-
-The four clusters this split into, and where each now stands:
-
-1. **Map-generation types** — `WorldInfo`, `ClimateInfo`, `SeaLevelInfo`. **Routed**, and `WorldInfo` also has
-   the per-info accessor `CyWorldInfo` — the exemplar for the shape [patterns.md](../architecture/patterns.md)
-   calls the wanted one (a named accessor per info TYPE, explicitly bound, so the module's bindings list IS its
-   dependency list). ⚠ The map SCRIPTS themselves sit outside this library entirely (§7 ruling 1).
-   ⚑ **`CyGameSpeedInfo` is its sibling and shows when to mint one:** era pacing (`getTurnsInEra` /
-   `getEraStartTurn` / `getTicksPerTurnInEra` / `getTotalTurns`) belongs to ONE registry, so it is NAMED on that
-   type rather than hidden behind a generic slot read. ⛔ The bar for a new one is a live call site — all four
-   are earned by the TimeKeeper screen — never a pre-emptive mirror of the legacy field set.
-2. **Game-configuration types** — `GameOptionInfo`, `MPOptionInfo`, `ForceControlInfo`, `CalendarInfo`,
-   `GameSpeedInfo`, `HandicapInfo` routed; **`GraphicOptionsInfo` and `PlayerOptionsInfo` are the whole of
-   what is left in this appendix.** Consumed by WorldBuilder, `pyWB`, the options screen and `RevolutionInit`.
-3. **Diplomacy / victory / vote types** — **all routed** (`VictoryInfo`, `VoteInfo`, `VoteSourceInfo`,
-   `AttitudeInfo`, `MemoryInfo`, `DiplomacyInfo`, `EspionageMissionInfo`).
-4. **Command / UI-action types** — **all routed**, apart from `ArtInfo`, which is the carve-out above.
-   ⚑ `CommandInfo` was the one genuine hole in this cluster and is now routed beside its `ControlInfo` sibling
-   on the fixed-enum half.
-
-**Note the overlap with the info rebuild's own scope:** `CvVictoryInfo`, `CvVoteInfo`, `CvHurryInfo`,
-`CvWorldInfo`, `CvHandicapInfo` and `CvProcessInfo` are all rebuilt types per
-the rebuilt info surface ([patterns.md](../architecture/patterns.md)) — so the library must serve them regardless; the pedia simply never
-asks. That is the precise sense in which the pedia under-specifies.
-
-### 2.4 The per-field residue, qualified
-
-219 names / 599 sites read fields on types the pedia *does* page. **90 of those names (296 sites) had exactly
-one consumer: the deleted `Screens/Debug/TestCode.py`** — a diagnostic screen that dumped the entire legacy
-field contract of every info. Exhaustiveness was its whole purpose, so it inflated the residue with reads no
-gameplay or UI surface needs. **It is DELETED (see §7), so those 90 names carry no obligation.**
-
-**The per-field residue is therefore 129 names / 303 sites**, whose consumers are
-`Contrib/RevDCM.py` (26), `Screens/CvVictoryScreen.py` (25), `Revolution/RevUtils.py` (25),
-`RevolutionWatchAdvisor.py` (15), `Revolution/RevolutionInit.py` (13), `CvAdvisorUtils.py` (10),
-`CvDiplomacy.py` (10). **That is the genuine appendix and it is dominated by the Revolution stack** (§6).
-
-### 2.5 What the hypothesis is silent about
-
-The pedia is **almost purely a static-info reader**: of its 934 unserved sites, 742 are INFO, against
-**9 STATE, 0 COMPUTED and 0 MUTATION**. The rest of the tree is not:
-
-| Kind | Whole tree | Pedia | **Non-pedia** | Pedia's share |
-|---|--:|--:|--:|--:|
-| INFO | 1,476 | 411 | 1,065 | 27.8% |
-| STATE | 769 | 1 | 768 | **0.1%** |
-| COMPUTED | 254 | 0 | 254 | **0%** |
-| MUTATION | 395 | 0 | 395 | **0%** |
-| other / UI | 4,385 | 167 | 4,218 | 3.8% |
-
-**The pedia exercises essentially none of the LIVE-STATE, COMPUTED or MUTATION planes — 1,417 call sites the
-pedia never touches.** Building only what the pedia needs would leave the majority of Python's engine
-traffic unserved. This is not an argument against the hypothesis — those planes are not what an *info* library
-is for — but a completeness claim scoped to "the reader surface" must say so explicitly, because
-[the ONE-SURFACE ruling](../architecture/patterns.md) makes a single uncovered read a reach-around into legacy, and a
-reach-around is the second live surface the ruling forbids.
-
-### 2.6 The verdict, operationally
-
-Serving the pedia gives: **every shape, and the INFO plane for the paged types.** It does not give: **the
-unpaged info types, ~129 per-field reads concentrated in the Revolution stack, the global DEFINEs block, and
-the entire STATE / COMPUTED / MUTATION surface.** The stage-4 tick-list is therefore
-**pedia-map.md + §2.3 + §2.4 + §3 of this document**, not pedia-map.md alone.
-
-⚑ **The unpaged-types half of that verdict is now ESSENTIALLY CLOSED, and the hypothesis held where it
-mattered:** the prefix plane routes every cluster bar two config registries (§2.3), and none of what it took
-was a new SHAPE — exactly what §2.1 predicted. ⛔ What has NOT moved is the part the hypothesis was silent
-about (§2.5): STATE, COMPUTED and MUTATION are still where the bulk of the tree's traffic sits, so "the
-appendix is nearly done" must not be read as "the library is nearly done".
-
-## 3. Consumer families, ranked by weight
-
-What each family must **be served**, expressed in the structured shapes of
-[patterns.md § THE PYTHON READ BOUNDARY](../architecture/patterns.md).
-
-### 3.1 `EntryPoints/` — the engine's call-in surface
-
-Dominated by **`CvRandomEventInterface.py`**, historically the single largest engine consumer in the tree, plus
-`CvOutcomeInterface.py` and `CvCultureLinkInterface.py` (almost pure info).
-
-Needs served: **per-entity payloads** for the event/trigger types (§2.3 cluster) and for every entity an event
-names; **live-state reads** on the player/city/unit the event fires against; **availability verdicts** for the
-`canDo*` half; and a **MUTATION boundary** (§4) for the `do*`/`apply*` half. This family is the clearest proof
-that the library alone is insufficient: a single random-event handler reads static info, live state and a
-computed verdict, then writes.
-
-`CvCultureLinkInterface.py` is the cleanest case in the tree — INFO almost throughout, a little STATE, nothing
-else: a pure **per-type index payload + edge-list** consumer.
-
-### 3.2 `Screens/Worldbuilder/` + `pyWB/` — the editor
-
-`WorldBuilder.py`, `pyWB/CvWBDesc.py` (the save/load serializer), `WBUnitScreen.py`, `WBPlotScreen.py`,
-`WBCityEditScreen.py`, `WBInfoScreen.py`, `WBPlayerUnits.py`.
-
-Needs served: **per-type index payloads** (every editor drop-down is "give me [(id, name, button)] for type T"
-— 19 such scans), **live-state reads** for the current value of the field being edited, and a **write
-boundary**: this family carries the densest MUTATION concentration in the tree. `CvWBDesc.py` additionally needs
-**stable type KEYS, not ids** — it serializes scenarios to text, so it reads `getType()` strings rather than
-indices, which the identity block must keep serving.
-
-⚑ **`CvWBDesc.py`'s city half is the worked precedent for the whole family** — its write boundary is `CyAct`
-addressed by (owner, id), the reads are `CyState`/`CyInfo`, and the handle is used only to CREATE the city and
-then to name it. ⛔ The SCREENS are not the same job merely because they sit in the same folder: they still
+⚑ **`CvWBDesc.py`'s city half is the worked precedent for the WorldBuilder family** — its write boundary is
+`CyAct` addressed by (owner, id), the reads are `CyState`/`CyInfo`, and the handle is used only to CREATE the city
+and then to name it. ⛔ The SCREENS are not the same job merely because they sit in the same folder: they still
 mutate through the handle and are blocked on which mutators the WB write surface should carry, which is a
 structure call rather than a sweep.
 
-### 3.3 The Revolution stack
-
-**`Revolution.py`** is the most STATE-heavy file in the tree. Detail in §6.
-
-### 3.4 Repo-root modules — the gameplay callbacks
-
-`CvEventManager.py`, `MapScriptToolsOld.py`, `CvAdvisorUtils.py`, `CvMapGeneratorUtil.py`, `CvDiplomacy.py`,
-`CvGameUtils.py`, `OOSLogger.py`.
-
-`CvEventManager.py` is the engine's primary Python callback host and the dispatch hub (§5.4). Needs served:
-per-entity payloads on the entity an event concerns, plus heavy live-state and mutation traffic.
-`CvDiplomacy.py` is INFO-heavy — it needs the **diplomacy/attitude/memory types** from §2.3 cluster 3.
-
-### 3.5 `Screens/Debug/` — the diagnostic surface
-
-`TestCode.py` and `HelperFunctions.py` are both GONE (§7, §4.2) — this family is now the smallest rather than
-one of the largest. `TestCode.py` carried the exhaustive per-field info dump and the 90 residue names of §2.4;
-`HelperFunctions.py` hosted the GOM condition-tree walker, replaced by `INFO.getRequiresIdsInClause` (§4.2).
-
-### 3.6 `Screens/` (non-pedia) — the main UI
-
-`CvMainInterface.py`, `CvVictoryScreen.py`, `CvInfoScreen.py`, `BuildListScreen.py`, `CvSpaceShipScreen.py`,
-`CvHallOfFameScreen.py`, `CvOptionsScreen.py`, `Forgetful.py`.
-
-This family is also the heaviest in screen CHROME — much of what it does is assembling localized strings, which
-is the TEXT plane the library does not own (§4.1). `CvMainInterface.py` is the sole significant consumer of the command/UI-action types
-(`ControlInfo`, `MissionInfo`, `ActionInfo`, `AdvisorInfo`, `ArtInfo`, `PropertyInfo`) from §2.3 cluster 4.
-**`Screens/Forgetful.py` enumerates `getNum<X>Infos` for 51 distinct info types** — a whole-registry sweep, and
-the widest type coverage of any single file in the tree (wider than the pedia hub's ~20). It is the one consumer
-that needs the **complete per-type index across every registered type**, including a dozen the pedia never pages
-(`Calendar`, `Climate`, `Command`, `Control`, `Effect`, `Emphasize`, `EspionageMission`, `Event`, `EventTrigger`,
-`GameOption`, `Goody`, `Hurry`, `MPOption`, `Mission`, `SeaLevel`, `Season`, `SpecialBuilding`, `SpecialUnit`,
-`Upkeep`, `Victory`, `Vote`, `VoteSource`, `World`, `Denial`). Treat it as the acceptance case for
-"the library can enumerate every type", not as a long-tail screen.
-
-> **⛔ IT IS A WANTED MODDER-INFO SURFACE AND IT STAYS — do not sweep it as dead code.** Modder info is wanted
-> in future, whether or not anyone knows of it today. The screen is an XML-tag REFERENCE
-> (`TXT_KEY_XML_TAGS`): a dropdown of every info category over a table of **ID · NAME · TYPE · TEXT**, i.e. the
-> `BUILDING_FORGE`-style type key and `TXT_KEY_` for any entity — *for when you forget one*.
-> ⚠ **It reads EXACTLY like an abandoned screen, which is the hazard:** it is reached only by an undocumented
-> **Ctrl+F1** (`CvEventManager.onKbdEvent`), appears on no menu, and no XML or BUG config names it. Every
-> mechanical dead-code test flags it. It is un-killed forward intent
-> ([the keep-unkilled-ideas policy](../plans/parked/README.md#parked--out-of-active-scope-plans-kept-for-intent)), and the reason it looks dead
-> is recorded here precisely so the next sweep does not eat it.
->
-> **⚑ AND IT IS NOT ALONE — `CvEventManager.onKbdEvent` HIDES A WHOLE DEV KEYMAP, THREE OF IT UNGATED.** The
-> owner did not know these existed, so they are named here once rather than rediscovered:
->
-> | keys | screen | gated? |
-> |---|---|---|
-> | **Ctrl+F1** | Forgetful — the XML tag reference above | **no — ships to players** |
-> | **Ctrl+F2** | `GameFontScreen` — the font-symbol sheet | **no** |
-> | **Ctrl+F3** | `TimeKeeper` — the era x gamespeed pacing table | **no** |
-> | Ctrl+F4…F7 | replay · `DebugInfo` · `DanQuayle` · `UnVictory` | debug mode |
-> | Shift+T / W / E, Ctrl+Shift+P | techs cheat · wonder movie · effect viewer · change-player | debug mode |
-> | **Ctrl+Shift+Alt+D** | toggles DEBUG MODE itself | **no — so a player can unlock the gated half** |
->
-> ⚠ The three ungated ones are shipped, reachable in any game, and therefore ordinary consumers of the read
-> surface rather than debug-only code a cut may ignore.
-> ⚑ **Its second job is why it is worth more than its player-facing value: it is the TEST HARNESS for the prefix
-> plane.** Being the one file that enumerates every registry, converting it exercises `INFO.getIndex` across all
-> of them at once — which is what surfaced `COMMAND_` as the single unrouted registry and what falsified a
-> written claim that seven others were unrouted (§2.3). A harness that covers the whole surface is worth keeping
-> for that alone.
-
-### 3.7 `Screens/Advisors/`
-
-`RevolutionWatchAdvisor.py`, `CvDomesticAdvisor.py`, `CvForeignAdvisor.py`, `CvTechChooser.py`,
-`CvEspionageAdvisor.py`, `CvMilitaryAdvisor.py`.
-
-Needs served: **per-type index payloads + computed per-city/per-player values in table form.** Two of these
-build their columns through `eval` on data tables (§5.2) — the highest-value grep-invisible finding in the tree.
-`CvTechChooser.py` is INFO-heavy and is an **edge-list** consumer (tech prerequisite graph).
-
-### 3.8 `Contrib/`
-
-`autologEventManager.py`, `DynamicCivNames.py`, `Civ4lerts.py`, `RevDCM.py`,
-`UnitUpgradesGraph.py` (pedia, excluded), `EventSigns.py`, `UnitNameEventManager.py`, `RandomNameUtils.py`.
-
-Mixed. `DynamicCivNames.py` needs civic/civilization identity + **the civic-option index**;
-`Civ4lerts.py` is live-state polling; `autologEventManager.py` is TEXT-heavy logging.
-
-### 3.9 `BUG/` + `BUG/Tabs/` — the options framework
-
-Low direct engine weight, **high indirection weight**: this is the config-driven dispatch layer (§5.3). Its
-needs are mostly *not* data — it needs enum resolution by name (`WidgetTypes`, `InputTypes`,
-`InterfaceDirtyBits`) and the option store. See §7.
-
-### 3.10 Map scripts — `CvMapGeneratorUtil.py` + `MapScriptToolsOld.py` + `Assets/Maps`
-
-Needs served: the map-generation types (§2.3 cluster 1) + plot/terrain/feature/bonus placement, which is
-**write-heavy**. Whether these belong behind the same library is a §7 open question.
-
-### 3.11 Long tail
-
-`Afforess/` (settings screens driving `setDefineINT`), `DancingHoskuld/`, `PitBoss/`, `Utilities/`,
-`Platyping/`, `EnhancedTechConquestUtils/`, `DataStorage/`, `Sparth/`.
-
-## 4. The read-KIND split
+## 1. The read-KIND split
 
 With the bindings cut there is no owner class to key on, so the classification is derived from the **receiver**
-plus the method-name prefix (§1.1). It is mechanical and re-derivable, and heuristic at the margin — the split
+plus the method-name prefix. It is mechanical and re-derivable, and heuristic at the margin — the split
 between STATE and COMPUTED moves, the totals do not.
 
 | Kind | Sites | Distinct names | Receivers |
@@ -469,15 +157,15 @@ in both. Sites do sum.
 the library explicitly does not own (screen chrome), so the residue is increasingly *not the library's work* —
 the three planes it does own (INFO + STATE + COMPUTED) are down to 2,499 sites between them.
 
-⚠ **TEXT is absent by construction, not by being small** — `getText` is Python-defined, so §1.1's exclusion rule
+⚠ **TEXT is absent by construction, not by being small** — `getText` is Python-defined, so the read-census exclusion rule
 drops all **3,131** of its sites; the 80 above are only what other text-manager receivers leave behind. TEXT
-remains a separate plane the library does not own (§4.1).
+remains a separate plane the library does not own (§1.1).
 
-### 4.1 (e) TEXT is its own kind — and the library should not own it
+### 1.1 (e) TEXT is its own kind — and the library should not own it
 
 `.getText(` alone is **3,131 sites** — larger than MUTATION and INFO's non-registry half combined. It is not info
 data, not live state, not a computed value and not a write: it is **resolution of a localized string (or an art
-path) from a key**. (It sits outside §1.1's demand tables by construction, because Python defines a `getText` of
+path) from a key**. (It sits outside the demand tables by construction, because Python defines a `getText` of
 its own; the raw count here is the honest size of the plane.) Treating it as info data would pull the entire TXT plane into
 the library's contract; treating it as state would be simply wrong.
 
@@ -494,7 +182,7 @@ The concentration is informative: `Screens/` 655 · `Revolution/Gameready/` 329 
 `Screens/Advisors/` 292 · `EntryPoints/` 201 · `Screens/Pedia/` 190 · `PitBoss/` 153. TEXT is a **UI-layer**
 concern almost everywhere, which supports leaving it outside the data library.
 
-### 4.2 (a′) REQ — the condition trees are an INFO need, answered by `CvRequires`, not a tree-walk API
+### 1.2 (a′) REQ — the condition trees are an INFO need, answered by `CvRequires`, not a tree-walk API
 
 **⛔ THE WHOLE OLD MECHANISM IS GONE — deleted, not left dangling.** The `BoolExpr` binding file no longer
 exists in `Sources/Python/`; the `GOMTypes` / `BoolExprTypes` enums are published nowhere (`CyEnums.cpp`
@@ -517,7 +205,7 @@ boolean-expression API belongs on the new surface."* The
 [reverse lookups are populated once, at load](../cascade/01-deposit-and-read.md#1-one-step-deposit-down-accumulate-read-o1) edge families answer the inverse
 direction (what requires me), never the forward requirement tree.
 
-### 4.3 (d) MUTATION — out of scope for the library, but still needed
+### 1.3 (d) MUTATION — out of scope for the library, but still needed
 
 **987 sites / 176 distinct names** where Python tells the engine to *do* something, concentrated in the editor
 (`Screens/Worldbuilder/` + `pyWB/`), the gameplay callbacks at `<root>` and `EntryPoints/`, and Revolution.
@@ -531,10 +219,10 @@ handler that reads through the library writes through this path. Two sub-shapes:
    WorldBuilder/scenario and gameplay-callback path.
 2. **Global-define writes** — `setDefineINT` (**69 sites**: `Afforess/ANewDawnSettings.py`,
    `Afforess/DiplomacySettings.py`, `Contrib/RevDCM.py`). Options screens write engine tunables at runtime.
-   This is the one that most deserves an explicit ruling (§7) — it is a settings-persistence mechanism wearing
+   This is the one that most deserves an explicit ruling (§4) — it is a settings-persistence mechanism wearing
    an engine-write costume.
 
-### 4.4 (c) COMPUTED
+### 1.4 (c) COMPUTED
 
 1,949 sites / 245 distinct names of `can*` / `is*` / `AI_*` / `calculate*` / `find*` / `has*`, concentrated in
 `EntryPoints/`, `<root>`, Revolution, the editor and `Screens/`.
@@ -546,25 +234,25 @@ Python must read the enabler's own cached verdict, never re-derive it. The rate 
 beside the info payload, never inside it** — the same conclusion as
 [pedia-map.md finding 5](pedia-read-map.md), reached here at 800× the site count.
 
-## 5. ⚑ The grep-invisible reads
+## 2. ⚑ The grep-invisible reads
 
 A completeness claim built on static greps misses exactly this section. Every instance below is listed with
-`file:line`; §5.7 states plainly what could not be proven.
+`file:line`; §2.7 states plainly what could not be proven.
 
-### 5.1 Inventory of dynamic-access mechanisms
+### 2.1 Inventory of dynamic-access mechanisms
 
 | Mechanism | Sites | Verdict |
 |---|---|---|
-| `getattr(...)` | 8 | 3 benign, 5 load-bearing (§5.2, §5.3) |
-| `eval(...)` | 8 (+1 doc line) | **2 build engine calls from strings** (§5.2) |
-| `__import__` | 1 | the BUG module resolver (§5.3) |
-| `setattr` on an engine enum | 1 | **mints new `WidgetTypes` at runtime** (§5.3) |
-| XML-declared callbacks | **1,052 declarations / 467 names** | the engine→Python entry graph (§5.4) |
-| BUG XML handler bindings | **59 modules × 160 functions** | the config-driven dispatch graph (§5.3) |
-| Int-keyed dispatch tables | 2 (`Events`, `OverrideEventApply`) | engine popup-ID → Python function (§5.4) |
+| `getattr(...)` | 8 | 3 benign, 5 load-bearing (§2.2, §2.3) |
+| `eval(...)` | 8 (+1 doc line) | **2 build engine calls from strings** (§2.2) |
+| `__import__` | 1 | the BUG module resolver (§2.3) |
+| `setattr` on an engine enum | 1 | **mints new `WidgetTypes` at runtime** (§2.3) |
+| XML-declared callbacks | **1,052 declarations / 467 names** | the engine→Python entry graph (§2.4) |
+| BUG XML handler bindings | **59 modules × 160 functions** | the config-driven dispatch graph (§2.3) |
+| Int-keyed dispatch tables | 2 (`Events`, `OverrideEventApply`) | engine popup-ID → Python function (§2.4) |
 | `apply()` | 10 | all `CvWBDesc` scenario methods — **not** the Python built-in. Benign. |
 
-### 5.2 ⛔ The exhibit: engine method names built from strings and `eval`'d
+### 2.2 ⛔ The exhibit: engine method names built from strings and `eval`'d
 
 **`Screens/Advisors/CvDomesticAdvisor.py:1331-1337`**
 
@@ -621,7 +309,7 @@ the *map script*. Map-script-driven, so its content is not statically enumerable
 **`BUG/BugTypes.py:139-142, 187`** — `eval` used to parse option VALUES (`TUPLE`/`LIST`/`SET`/`DICT` types) from
 config strings. Not an engine read; a deserializer. Benign but worth knowing it exists.
 
-### 5.3 The BUG config-driven dispatch graph
+### 2.3 The BUG config-driven dispatch graph
 
 `Assets/Config/*.xml` binds handlers **by string**, resolved at runtime:
 
@@ -640,7 +328,7 @@ config strings. Not an engine read; a deserializer. Benign but worth knowing it 
 (`getInfoTypeForString` generalized), because three engine enums are already reached only this way. It is not an
 edge case to be tidied away — it is how the options framework is wired.
 
-### 5.4 The engine→Python entry graph (XML-declared callbacks)
+### 2.4 The engine→Python entry graph (XML-declared callbacks)
 
 The engine invokes Python functions **named in XML**. Measured over `Assets/XML/**/*.xml`:
 
@@ -671,7 +359,7 @@ inside them ARE counted by this census — but **which of them run, and when, is
 analysis of the Python tree can tell you the live subset. Any "these reads are dead" claim about
 `CvRandomEventInterface.py` is unprovable from the Python side alone.
 
-### 5.5 Structural blind spots (no dynamic trick required)
+### 2.5 Structural blind spots (no dynamic trick required)
 
 - **`inputClass.getData1()` / `getData2()` / `getButtonType()`** — 146+ sites. The popup-context object handed to
   Python by the engine is **not on the `.def` surface** this census parses, so these reads fall in the "unbound"
@@ -681,22 +369,22 @@ analysis of the Python tree can tell you the live subset. Any "these reads are d
 - **Method names colliding with bound names** — a Python-defined `def getValue(self)` is counted as the bound
   `getValue`. Small, and it inflates rather than hides.
 
-### 5.6 The `revolution.distanceMod` standing exhibit, re-verified
+### 2.6 The `revolution.distanceMod` standing exhibit, re-verified
 
 `Revolution/Gameready/Revolution.py:1170` reads
 `pPlayer.getRevIdxDistanceModifier() + pCity.getRevIndexDistanceMod()` — two spellings of one mechanic, consumed
 by Python-authoritative gameplay and invisible to an engine-side read census. Verified live at that line.
 Per [patterns.md](../architecture/patterns.md) **both distance kinds stay as-is, untouched by any stage**;
 Revolutions owns them in its own rework. **No stage-4 investigation.** Recorded here only as the calibration
-case for §5.7.
+case for §2.7.
 
-### 5.7 ⚠ How much of the surface could NOT be statically proven
+### 2.7 ⚠ How much of the surface could NOT be statically proven
 
 Stated plainly, because a completeness gate depends on it:
 
 - **The read SITES are ~99% statically enumerable.** The unserved call sites are matched by name against the
-  published surface. The known miss is bounded and named: the string-built calls in §5.2 (19 method names in
-  one table, 3 of which have zero literal sites), the unbound popup-context reads in §5.5, and whatever a map
+  published surface. The known miss is bounded and named: the string-built calls in §2.2 (19 method names in
+  one table, 3 of which have zero literal sites), the unbound popup-context reads in §2.5, and whatever a map
   script's `eval`'d expression contains.
 - **REACHABILITY is NOT provable.** 590 XML callback bindings + 163 BUG config function bindings + 2 int-keyed
   dispatch tables decide what actually executes. **I cannot certify from the Python tree which reads are live.**
@@ -707,16 +395,16 @@ Stated plainly, because a completeness gate depends on it:
   disconnected in the same work item.
 - **Adversarial check performed:** rather than assert completeness, I inverted the question — took the DLL's
   engine-shaped names and asked which are reached by *no* literal Python call, then hunted the mechanism that
-  reaches them anyway. That is what surfaced §5.2. The same inversion over the BUG config and the XML callback
-  tags produced §5.3 and §5.4. **I did not find a mechanism class beyond those listed; I cannot prove none
+  reaches them anyway. That is what surfaced §2.2. The same inversion over the BUG config and the XML callback
+  tags produced §2.3 and §2.4. **I did not find a mechanism class beyond those listed; I cannot prove none
   remains.**
 
-## 6. The Python-authoritative systems
+## 3. The Python-authoritative systems
 
 These stay Python by [owner carve-out](../../AGENTS.md#design) and become **consumers**
 of the library.
 
-### 6.1 Revolution
+### 3.1 Revolution
 
 `Revolution/Gameready/Revolution.py` · `Screens/Advisors/RevolutionWatchAdvisor.py` ·
 `Revolution/RevEvents.py` · `Revolution/RevUtils.py` · `Revolution/Gameready/BarbarianCiv.py` ·
@@ -734,42 +422,42 @@ Its INFO needs are narrow but specific — the revolution-tuning fields:
 `getRevIdxBadReligionMod` (2 each) · `getRevIdxNationalityMod` · `getRevViolentMod` · `getRevReligionVal` ·
 `getRevNationalityVal` · `getRevMaxCivs`. Plus the live pair `getRevolutionIndex` (77) /
 `setRevolutionIndex` (24) / `changeRevolutionIndex` (24) / `getRevolutionCounter` (10) and the distance pair
-of §5.6.
+of §2.6.
 
 **⚑ Flag:** these `getRev*` fields sit on civic/handicap/leaderhead infos. `getRevLaborFreedom`,
-`getRevDemocracyLevel` and `getRevIdxLocal` are in the §2.4 residue — read by the Revolution stack and by
+`getRevDemocracyLevel` and `getRevIdxLocal` are in the per-field residue — read by the Revolution stack and by
 nothing the pedia shows. **Whether the rebuilt info surface currently exposes them is UNVERIFIED here** (this is
 a Python-side census; I did not audit the rebuilt `CvJson*Info` headers for these members). Given the owner
 ruling that revolution data is untouched until the Revolution rework owns it, the actionable item is narrow:
 **stage 4 must not drop these fields while wiring the library**, and the Revolution rework — not stage 4 — decides
 their final shape.
 
-### 6.2 Random events (`CvRandomEventInterface.py` + `CvOutcomeInterface.py`)
+### 3.2 Random events (`CvRandomEventInterface.py` + `CvOutcomeInterface.py`)
 
-**466 of the 467 XML-declared callbacks live here** (§5.4). It is the most *balanced* consumer in the tree,
+**466 of the 467 XML-declared callbacks live here** (§2.4). It is the most *balanced* consumer in the tree,
 exercising all five kinds heavily.
 
 Needs served: **per-entity payloads** for the entity an event names (unit, building, bonus, improvement, tech,
 religion, corporation), the **event/trigger types** (`getEventInfo`, `getEventTriggerInfo`, `getPrereqEvent` —
-all §2.3 residue, no pedia page), live state on the target, availability verdicts for `canDo*`, and the
+no pedia page), live state on the target, availability verdicts for `canDo*`, and the
 mutation boundary for `do*`.
 
 **⚑ Flag:** `CvEventInfo` / `CvEventTriggerInfo` are bound (27 and 14 `.def`s) and read 22 times from Python,
 but have **no pedia page**, so pedia-driven work would not serve them at all. They also carry the
 `<PythonCallback>` strings themselves — i.e. the info type *contains* the dispatch graph.
 
-### 6.3 Others that are effectively Python-authoritative
+### 3.3 Others that are effectively Python-authoritative
 
 - **`Contrib/DynamicCivNames.py`** — rewrites civ names from civic/religion state. Needs the civic-option
-  index (`getNumCivicOptionInfos`, 31 sites, §2.3 residue).
+  index (`getNumCivicOptionInfos`, 31 sites, pedia-untouched residue).
 - **`Revolution/Gameready/BarbarianCiv.py`** — spawns barbarian civs; needs `getBARBARIAN_PLAYER`,
   world/handicap config, and heavy mutation.
 - **`DancingHoskuld/Partisan.py`**, **`Contrib/Civ4lerts.py`**, **`CvAdvisorUtils.py`** —
   gameplay-reactive Python reading live state each turn.
 - **`pyWB/CvWBDesc.py`** — scenario serialization; authoritative for the save/load text format and needs
-  **stable type keys** (§3.2).
+  **stable type keys**.
 
-## 7. The boundary rulings — and the two questions still open
+## 4. The boundary rulings — and the two questions still open
 
 1. **Map scripts keep their own CALLBACK contract — they are NOT outside the library.**
    ⛔ **THE OLD `GC.get<X>Info` ENDPOINTS ARE NOT COMING BACK, SO A MAP SCRIPT'S READS MOVE ONTO THE NAMED
@@ -814,7 +502,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    largest INFO consumer after the pedia hub (1,488 INFO sites) and the sole consumer of 90 residue names /
    296 sites, all of which drop out of the library's obligations (**the appendix shrinks ~30%**). The whole
    feature chain went with it (`DebugBtn` → `showDebugScreen` → `DebugScreen` → `TestCode`, plus the dead
-   `pythonDebugToggle`); `HelperFunctions.py` and its GOM walker are ALSO gone (§4.2), and the orphaned
+   `pythonDebugToggle`); `HelperFunctions.py` and its GOM walker are ALSO gone (§1.2), and the orphaned
    `INTERFACE_DEBUG_SCREEN_BUTTON` art STAYS untouched (art is hands-off — roadmap § Scope decisions).
    ⚑ Its 50 checks encoded real design invariants the JSON spec does not state (a requirement may not unlock
    after the thing requiring it; replacements are explicit, never implicit; a replacing entity must be better).
@@ -846,19 +534,19 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    reactability gap; it does not license gating authored data on a live option, which is a separate ruling and
    unchanged. The writes themselves belong to the contrib stacks' own reworks, not here.
 
-3b. **A natural-disaster mechanic whose whole effect is loss of a plot improvement is authored as a §5 TRIGGER,
+3b. **A natural-disaster mechanic whose whole effect is loss of a plot improvement is authored as a `triggers` entry,
    never as a Python event — RULED.** `trigger → chance → action` with the `destroy` verb
    ([json.md §5](../specs/json.md)) already expresses that shape exactly, so the capability belongs as DATA on
    the trigger plane. This does NOT reopen the events carve-out (#425 events stay Python) — it fixes where this
    one shape of capability lives if it is ever wanted.
 
 4. **Does the library own TEXT, or only the rendered lines it produces?**
-   §4.1 recommends the latter (library returns localized display strings for what it serves; screen chrome stays
+   §1.1 recommends the latter (library returns localized display strings for what it serves; screen chrome stays
    a localization service call). At 3,168 `getText` sites the answer materially changes the library's contract, so it
    wants an explicit ruling rather than an inherited assumption.
 
 5. **Name-based enum/type resolution is a FIRST-CLASS library operation.** Name→value resolution is a supported operation of the library's surface, not an
-   accident of `getattr` on a module, and the evidence in §5.3 is why: `WidgetTypes`, `InputTypes` and
+   accident of `getattr` on a module, and the evidence in §2.3 is why: `WidgetTypes`, `InputTypes` and
    `InterfaceDirtyBits` are reached ONLY this way, so without it those reads have no path at all. ⚠ Note the
    shape this must cover is **resolution AND extension**: `BUG/WidgetUtil.py:62-68` does `getattr(WidgetTypes,
    name)` *and* `setattr(WidgetTypes, name, widget)` — BUG MINTS new enum members at runtime from config names

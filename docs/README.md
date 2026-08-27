@@ -100,10 +100,13 @@ Verify against the tree before acting on any claim that something is built.
 - **[reference/unit-rendering.md](reference/unit-rendering.md)** — how the DLL drives unit graphics: one centre unit per plot, real vs dummy scene entities, every call that creates/sets up/places/destroys a node and when; **graphics paging ON vs OFF** as a two-column table, the ranked list of code that is not gated on paging but only behaves with it on, the load and new-game timelines, where the tree differs from the owner's working model of rendering (a lens, not a ruling), and the doc-vs-tree contradictions this census found.
 - **[reference/external-tools-and-workflows.md](reference/external-tools-and-workflows.md)** — crash-dump symbolization, FpkBuilder.
 - **[reference/release-deploy.md](reference/release-deploy.md)** — how a build reaches players: the AppVeyor → SVN → GitHub pipeline, the FPK patch step, and the **batched** SVN commit (SourceForge 504s on a whole-release transaction) incl. the ordering rules that make each batch legal and the non-atomicity that follows.
-- **The LEGACY censuses** — how the legacy behaves today, so the cascade can replace it:
-  **[triggers.md](specs/triggers.md)** (where provisions are handed
-  over) · **[pedia-read-map](reference/pedia-read-map.md)** +
-  **[python-read-map](reference/python-read-map.md)** (what the Python surface consumes).
+- **[reference/python-read-map.md](reference/python-read-map.md)** — the Python read boundary's HAZARDS, read
+  KINDS and standing rulings: the grep-invisible reads (string-built calls, the BUG dispatch graph, XML-declared
+  callbacks) that no grep of the Python can see, and the §4 boundary rulings (map scripts, global DEFINEs,
+  WorldBuilder, Revolution). ⛔ **The counted census that used to live here is GONE** — a per-directory tally of
+  unserved reads drifts the moment the library grows. `python Tools/verify-python-bindings.py` recomputes it and
+  cannot go stale; `PythonErr.log` / `PythonDbg.log` name the read that actually fired.
+- **[reference/pedia-read-map.md](reference/pedia-read-map.md)** — the pedia's own slice of that demand.
 - **[reference/python-load-sequence.md](reference/python-load-sequence.md)** — the C++/Python boundary MECHANISM
   and ORDER: the **two producers** of `CvPythonExtensions` (ours and the closed EXE's), the ordered DLL load
   (premenu → menu → postmenu → game start → the consumer-registration contract), the Python entry cascade, and
