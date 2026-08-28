@@ -51,6 +51,11 @@ public:
 	//	The VOTESOURCE_* diplomatic body this building CONVENES, NO_VOTESOURCE when it convenes none.
 	int getVoteSource(int iBuilding) const;
 
+	/// <summary>The UNIT_* great person this building generates progress toward, -1 when it generates none.
+	/// The building's own FK, so an editor listing the great people a city can accrue reads it here rather
+	/// than sweeping the unit registry asking which unit some building might produce.</summary>
+	int getGreatPeopleUnit(int iBuilding) const;
+
 	//	The authored PRODUCTION cost (`cost.production`). ⛔ It carries NO -1 sentinel: the legacy "-1 means not
 	//	player-constructible" overload is the `notConstructible` flag's job ([json.md] §7), so a consumer asking
 	//	what something COSTS never has to decode a buildability verdict out of the answer.

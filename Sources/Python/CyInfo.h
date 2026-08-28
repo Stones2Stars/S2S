@@ -8,7 +8,7 @@
 
 //
 //	CyInfo -- the Python INFO surface: the "what do I CARRY?" read role (patterns.md § THE TWO READ ROLES),
-//	exposed to script. Sibling of CyEnabler ("can I?"), CyState ("what do I HAVE?") and CyEnums (the vocabulary).
+//	exposed to script. Sibling of CyEnabler ("can I?"), the object accessors ("what do I HAVE?") and CyEnums (the vocabulary).
 //
 //	⛔ THIS IS WHERE INFOS LIVE NOW, AND THE ONLY PLACE. The global context deliberately hands out none
 //	(docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract)): its `get<X>Info(i)` accessors returned an object carrying the whole legacy getter set,
@@ -354,7 +354,7 @@ public:
 	// script with no way to ask the other five and no way to tell that it could not.
 	//
 	// ⛔ Whose question it is decides the RECEIVER, not this surface: a GATE ("does this city have power?") is
-	// the city's FOLD (CyState), while a VALUATION or a DISPLAY ("what would this building give me?") asks the
+	// the city's FOLD (CyCity), while a VALUATION or a DISPLAY ("what would this building give me?") asks the
 	// GRANTOR, which is here ([contexts.md] `CityContext.amenities`). Re-pointing a gate at `providesAmenity`
 	// would leave it doing exactly what it did before while reading as migrated.
 	bool hasSkill(const std::string& szTypePrefix, int iId, int iSkillId) const;
@@ -512,7 +512,14 @@ public:
 	// belongs to this civ is the own-data inversion the reverse-view rule names, and it is what these replace.
 	// ⚠ The city names are TXT KEYS, not resolved text: the caller resolves them, because TXT is not this
 	// surface's to own ([patterns.md] -- the library serves the raw key reference).
+	// The UNIT_* great person a SPECIALIST generates progress toward, -1 when it generates none. Named on this
+	// plane because the specialist registry has no accessor of its own; its building twin is
+	// CyBuildingInfo::getGreatPeopleUnit, and the two are separate because the receiver decides the question.
+	int getSpecialistGreatPeopleUnit(int iSpecialistId) const;
 	python::list getCivilizationLeaders(int iCivilizationId) const;
+	/// <summary>May the AI be dealt this civilization (`identity.aiPlayable`)? False when the id names no
+	/// civilization, so an unknown id is never offered as a playable choice.</summary>
+	bool isAIPlayable(int iCivilizationId) const;
 	python::list getCivilizationCityNames(int iCivilizationId) const;
 	// The buildings that are this RELIGION's shrines -- the load-populated reverse view
 	// (`CvReligionInfo::getShrineBuildings`, filled by the readJson reverse pass from each building's §9 `shrine`

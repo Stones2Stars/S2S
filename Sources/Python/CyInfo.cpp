@@ -99,7 +99,7 @@
 namespace
 {
 	// Resolve without asserting: a script may legitimately probe an id past the end of a registry, and the
-	// honest answer there is "nothing", not a crash -- the same discipline CyEnabler and CyState apply.
+	// honest answer there is "nothing", not a crash -- the same discipline CyEnabler and the object accessors apply.
 	const CvInfo* cyi_info(const std::string& szTypePrefix, int iId)
 	{
 		if (iId < 0) return NULL;
@@ -727,6 +727,22 @@ python::list CyInfo::getCivilizationLeaders(int iCivilizationId) const
 	return lIds;
 }
 
+int CyInfo::getSpecialistGreatPeopleUnit(int iSpecialistId) const
+{
+	const CvSpecialistInfo* pSpecialist =
+		static_cast<const CvSpecialistInfo*>(cyi_info("SPECIALIST_", iSpecialistId));
+	if (pSpecialist == NULL) return -1;
+	return pSpecialist->getGreatPeopleUnitType();
+}
+
+bool CyInfo::isAIPlayable(int iCivilizationId) const
+{
+	const CvCivilizationInfo* pCiv =
+		static_cast<const CvCivilizationInfo*>(cyi_info("CIVILIZATION_", iCivilizationId));
+	if (pCiv == NULL) return false;
+	return pCiv->isAIPlayable();
+}
+
 python::list CyInfo::getCivilizationCityNames(int iCivilizationId) const
 {
 	python::list lNames;
@@ -1177,7 +1193,7 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 		//	A tech's make-cost is its BEAKER cost (cost.research), the same plane-1 authored actual cost the
 		//	hammer registries carry ([json.md] the cost cluster: plane 1 is the entity's own self-data).
 		//	⚠ This is the INFO's base figure. What a team actually pays scales with gamespeed / era / handicap /
-		//	team size and is COMPUTED GAME STATE, so it is asked of CyState, never folded in here
+		//	team size and is COMPUTED GAME STATE, so it is asked of the team's own accessor, never folded in here
 		//	([pedia-read-map.md] finding 5: a context read sits BESIDE the info payload).
 		if (szTypePrefix == "TECH_" && iId < GC.getNumTechInfos())
 			return GC.getTechInfo((TechTypes)iId).getResearchCost();
@@ -1652,6 +1668,8 @@ void CyInfo::pythonPublish()
 		.def("getEventFood", &CyInfo::getEventFood)
 		.def("getFeatureDisappearanceProbability", &CyInfo::getFeatureDisappearanceProbability)
 		.def("getCivilizationLeaders", &CyInfo::getCivilizationLeaders)
+		.def("isAIPlayable", &CyInfo::isAIPlayable)
+		.def("getSpecialistGreatPeopleUnit", &CyInfo::getSpecialistGreatPeopleUnit)
 		.def("getCivilizationCityNames", &CyInfo::getCivilizationCityNames)
 		.def("getShrineBuildings", &CyInfo::getShrineBuildings)
 		.def("getDerivativeCiv", &CyInfo::getDerivativeCiv)

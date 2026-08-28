@@ -124,6 +124,7 @@ public:
 	//////////////////////
 
 	int getDefineINT( const char * szName ) const { return GC.getDefineINT( szName ); }
+	float getDefineFLOAT( const char * szName ) const { return GC.getDefineFLOAT( szName ); }
 
 	void setDefineINT( const char * szName, int iValue ) { return GC.setDefineINT( szName, iValue ); }
 

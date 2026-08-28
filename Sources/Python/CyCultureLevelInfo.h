@@ -25,6 +25,10 @@ public:
 	// so a caller can tell "no such level" from a genuinely free level.
 	int getSpeedThreshold(int iCultureLevel, int iGameSpeed) const;
 
+	/// <summary>This level's runtime TIER ORDINAL, assigned at load; -1 when the id names no level. An editor
+	/// lists only the levels a city can actually be set to, which is what the ordinal distinguishes.</summary>
+	int getLevel(int iCultureLevel) const;
+
 	static void pythonPublish();
 };
 

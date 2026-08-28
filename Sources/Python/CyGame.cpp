@@ -1,4 +1,8 @@
 #include "CvGameCoreDLL.h"
+#include "CyPyList.h"
+#include "Infos/CvBuildInfo.h"   // setBuildDisabled -- the build it toggles
+#include "Infrastructure/CvDLLInterfaceIFaceBase.h"   // the interface SELECTION reads
+#include "Engine/CvUnit.h"
 #include "Engine/CvCity.h"
 #include "AI/CvGameAI.h"
 #include "Defines/CvGlobals.h"
@@ -822,9 +826,64 @@ void CyGame::exitWorldBuilder()
 //
 //	A game-object HANDLE, not an info -- the wrappers the engine hands to Python callbacks.
 //
+python::list CyGame::getHeadSelectedCityId() const
+{
+	int values[2] = { -1, -1 };
+	const CvCity* pCity = gDLL->getInterfaceIFace()->getHeadSelectedCity();
+	if (pCity != NULL)
+	{
+		values[0] = (int)pCity->getOwner();
+		values[1] = pCity->getID();
+	}
+	return cyToList(values);
+}
+
+python::list CyGame::getHeadSelectedUnitId() const
+{
+	int values[2] = { -1, -1 };
+	const CvUnit* pUnit = gDLL->getInterfaceIFace()->getHeadSelectedUnit();
+	if (pUnit != NULL)
+	{
+		values[0] = (int)pUnit->getOwner();
+		values[1] = pUnit->getID();
+	}
+	return cyToList(values);
+}
+
+python::list CyGame::getSelectedUnitIds() const
+{
+	python::list list = python::list();
+	const int iCount = gDLL->getInterfaceIFace()->getLengthSelectionList();
+	for (int i = 0; i < iCount; ++i)
+	{
+		const CvUnit* pUnit = gDLL->getInterfaceIFace()->getSelectionUnit(i);
+		if (pUnit == NULL)
+		{
+			continue;
+		}
+		python::list pair = python::list();
+		pair.append((int)pUnit->getOwner());
+		pair.append(pUnit->getID());
+		list.append(pair);
+	}
+	return list;
+}
+
+bool CyGame::setBuildDisabled(int iBuild, bool bDisabled) const
+{
+	if (iBuild < 0 || iBuild >= GC.getNumBuildInfos()) return false;
+	GC.getBuildInfo((BuildTypes)iBuild).setDisabled(bDisabled);
+	return true;
+}
+
 void CyGame::pythonPublish()
 {
 	python::class_<CyGame>("CyGame")
+
+		.def("getHeadSelectedCityId", &CyGame::getHeadSelectedCityId)
+		.def("getHeadSelectedUnitId", &CyGame::getHeadSelectedUnitId)
+		.def("getSelectedUnitIds", &CyGame::getSelectedUnitIds)
+		.def("setBuildDisabled", &CyGame::setBuildDisabled)
 
 		.def("getCurrentMap", &CyGame::getCurrentMap)
 

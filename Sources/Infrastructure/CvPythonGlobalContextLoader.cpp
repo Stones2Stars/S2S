@@ -116,6 +116,7 @@ void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface2(boost::python:
 		.def("isSS_ASSASSINATE", &CyGlobalContext::isSS_ASSASSINATE, "bool ()")
 
 		.def("getDefineINT", &CyGlobalContext::getDefineINT, "int ( string szName )")
+		.def("getDefineFLOAT", &CyGlobalContext::getDefineFLOAT, "float ( string szName )")
 		.def("setDefineINT", &CyGlobalContext::setDefineINT, "void ( string szName, int iValue )")
 		.def("setNoUpdateDefineFLOAT", &CyGlobalContext::setNoUpdateDefineFLOAT, "void setDefineFLOAT( string szName, float fValue )")
 

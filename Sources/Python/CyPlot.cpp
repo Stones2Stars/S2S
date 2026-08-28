@@ -2,6 +2,7 @@
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
+#include "Engine/CvUnit.h"   // getUnitIds -- the units standing here
 #include "Engine/CvCity.h"
 #include "Defines/CvGlobals.h"
 #include "CvInfos.h"
@@ -291,11 +292,6 @@ CardinalDirectionTypes CyPlot::getRiverNSDirection() const
 	return m_pPlot->getRiverNSDirection();
 }
 
-bool CyPlot::isIrrigated() const
-{
-	return m_pPlot ? m_pPlot->isIrrigated() : false;
-}
-
 bool CyPlot::isPotentialCityWork() const
 {
 	return m_pPlot ? m_pPlot->isPotentialCityWork() : false;
@@ -364,21 +360,6 @@ void CyPlot::setFeatureType(int /*FeatureTypes*/ eNewValue, int iVariety)
 int CyPlot::getFeatureVariety() const
 {
 	return m_pPlot ? m_pPlot->getFeatureVariety() : -1;
-}
-
-int CyPlot::getOwnershipDuration() const
-{
-	return m_pPlot ? m_pPlot->getOwnershipDuration() : -1;
-}
-
-bool CyPlot::isOwnershipScore() const
-{
-	return m_pPlot ? m_pPlot->isOwnershipScore() : false;
-}
-
-void CyPlot::setOwnershipDuration(int iNewValue)
-{
-	if (m_pPlot) m_pPlot->setOwnershipDuration(iNewValue);
 }
 
 int /*BonusTypes*/ CyPlot::getBonusType(int /*TeamTypes*/ eTeam) const
@@ -612,6 +593,29 @@ python::list CyPlot::rect(int halfWid, int halfHgt) const
 //
 //	THE MAP-SCRIPT BOUNDARY (handles, not infos) -- see CyMap.cpp for the ruling.
 //
+python::list CyPlot::getUnitIds() const
+{
+	python::list list = python::list();
+	if (m_pPlot == NULL)
+	{
+		return list;
+	}
+	const int iNumUnits = m_pPlot->getNumUnits();
+	for (int i = 0; i < iNumUnits; ++i)
+	{
+		const CvUnit* pUnit = m_pPlot->getUnitByIndex(i);
+		if (pUnit == NULL)
+		{
+			continue;
+		}
+		python::list pair = python::list();
+		pair.append((int)pUnit->getOwner());
+		pair.append(pUnit->getID());
+		list.append(pair);
+	}
+	return list;
+}
+
 void CyPlot::pythonPublish()
 {
 	// The 3D-point VALUE TYPE the kept point surfaces traffic in: getPoint hands it out, and the graphics-side
@@ -625,5 +629,6 @@ void CyPlot::pythonPublish()
 	// A game-object HANDLE, not an info. Its def set publishes through the loader, whose split across
 	// translation units keeps any single one inside the VC7.1 compiler's limits.
 	python::class_<CyPlot> plot("CyPlot", python::no_init);
+	plot.def("getUnitIds", &CyPlot::getUnitIds);
 	CvPythonPlotLoader::CyPlotPythonInterface1(plot);
 }

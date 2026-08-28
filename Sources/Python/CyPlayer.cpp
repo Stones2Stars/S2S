@@ -1,4 +1,3 @@
-
 #include "Tools/FProfiler.h"
 
 #include "CvGameCoreDLL.h"
@@ -133,9 +132,13 @@ std::wstring CyPlayer::getNewCityName() const
 
 CyUnit* CyPlayer::createUnit(int /*UnitTypes*/ iIndex, int iX, int iY, UnitAITypes eUnitAI, DirectionTypes eFacingDirection)
 {
-	if (iIndex == -1)
+	//	⛔ The range test is STRICT and sits BEFORE the creation, because createUnit draws on the SYNCHRONIZED
+	//	stream: a path that rejects must not consume a draw, and the draw count is shared save state
+	//	(docs/reference/engine.md §THE SYNCHRONIZED RNG IS SHARED SAVE STATE). FErrorMsg compiles out of Release,
+	//	so an assert alone would let an out-of-range type reach the engine.
+	if (iIndex < 0 || iIndex >= GC.getNumUnitInfos())
 	{
-		FErrorMsg("Initiating NO_UNIT Type!");
+		FErrorMsg("Initiating an out-of-range unit type!");
 	}
 	else if (!GC.getMap().plot(iX, iY))
 	{
@@ -1896,4 +1899,21 @@ void CyPlayer::renameBLList(int iID)
 void CyPlayer::removeBLList(int iID)
 {
 	CvMessageControl::getInstance().sendBuildListEdit(iID, "", true);
+}
+
+int CyPlayer::getGreatPeopleThresholdNonMilitary() const
+{
+	return m_pPlayer ? m_pPlayer->greatPeopleThresholdNonMilitary() : 0;
+}
+
+int CyPlayer::getColorPrimary() const
+{
+	if (m_pPlayer == NULL) return -1;
+
+	const PlayerColorTypes ePlayerColor = m_pPlayer->getPlayerColor();
+	//	A player genuinely may hold no colour, so -1 is an ANSWER here rather than a failure -- every caller
+	//	already guards on it before drawing.
+	if (ePlayerColor == NO_PLAYERCOLOR || ePlayerColor >= GC.getNumPlayerColorInfos()) return -1;
+
+	return GC.getPlayerColorInfo(ePlayerColor).getColorTypePrimary();
 }

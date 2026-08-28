@@ -12,9 +12,16 @@ int CyCultureLevelInfo::getSpeedThreshold(int iCultureLevel, int iGameSpeed) con
 	return GC.getCultureLevelInfo((CultureLevelTypes)iCultureLevel).getSpeedThreshold(iGameSpeed);
 }
 
+int CyCultureLevelInfo::getLevel(int iCultureLevel) const
+{
+	if (iCultureLevel < 0 || iCultureLevel >= GC.getNumCultureLevelInfos()) return -1;
+	return GC.getCultureLevelInfo((CultureLevelTypes)iCultureLevel).getLevel();
+}
+
 void CyCultureLevelInfo::pythonPublish()
 {
 	python::class_<CyCultureLevelInfo>("CyCultureLevelInfo")
 		.def("getSpeedThreshold", &CyCultureLevelInfo::getSpeedThreshold)
+		.def("getLevel",          &CyCultureLevelInfo::getLevel)
 		;
 }

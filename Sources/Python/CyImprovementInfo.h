@@ -56,6 +56,10 @@ public:
 	bool isRequiresIrrigation(int iImprovement) const;
 	bool isNoFreshWater(int iImprovement) const;
 
+	/// <summary>Turns this improvement takes to mature into its `identity.upgradesTo` successor; 0 when it
+	/// never upgrades, which is what a caller tests to decide whether an upgrade timer exists at all.</summary>
+	int getUpgradeTime(int iImprovement) const;
+
 	static void pythonPublish();
 };
 

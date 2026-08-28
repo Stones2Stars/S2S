@@ -116,6 +116,72 @@ int CyUnitInfo::getDefaultUnitAI(int iUnit) const
 	return pUnit ? (int)pUnit->getDefaultUnitAI() : (int)NO_UNITAI;
 }
 
+namespace
+{
+	//	The two SPREAD maps are keyed (target id -> strength), and a consumer wants the ids it can actually
+	//	spread -- so a zero-strength entry is dropped here rather than at every call site.
+	python::list cyunit_spreadIds(const std::map<int, int>& kSpread)
+	{
+		python::list lIds;
+		for (std::map<int, int>::const_iterator it = kSpread.begin(); it != kSpread.end(); ++it)
+		{
+			if (it->second > 0) lIds.append(it->first);
+		}
+		return lIds;
+	}
+}
+
+python::list CyUnitInfo::getReligionSpreads(int iUnit) const
+{
+	const CvUnitInfo* pUnit = cyunit_unit(iUnit);
+	if (pUnit == NULL) return python::list();
+	return cyunit_spreadIds(pUnit->getReligionSpread());
+}
+
+python::list CyUnitInfo::getCorporationSpreads(int iUnit) const
+{
+	const CvUnitInfo* pUnit = cyunit_unit(iUnit);
+	if (pUnit == NULL) return python::list();
+	return cyunit_spreadIds(pUnit->getCorporationSpread());
+}
+
+python::list CyUnitInfo::getGrantedGreatPeople(int iUnit) const
+{
+	python::list lIds;
+	const CvUnitInfo* pUnit = cyunit_unit(iUnit);
+	if (pUnit == NULL) return lIds;
+
+	const std::vector<int>& aiSpecialists = pUnit->getGrantedGreatPeople();
+	for (size_t iSpecialist = 0; iSpecialist < aiSpecialists.size(); ++iSpecialist)
+	{
+		lIds.append(aiSpecialists[iSpecialist]);
+	}
+	return lIds;
+}
+
+python::list CyUnitInfo::getHeritage(int iUnit) const
+{
+	python::list lIds;
+	const CvUnitInfo* pUnit = cyunit_unit(iUnit);
+	if (pUnit == NULL) return lIds;
+
+	const std::vector<int>& aiHeritage = pUnit->getHeritage();
+	for (size_t iHeritage = 0; iHeritage < aiHeritage.size(); ++iHeritage)
+	{
+		lIds.append(aiHeritage[iHeritage]);
+	}
+	return lIds;
+}
+
+int CyUnitInfo::getCargoSpace(int iUnit) const
+{
+	const CvUnitInfo* pUnit = cyunit_unit(iUnit);
+	if (pUnit == NULL) return 0;
+	//	Reduced to the whole count here, which is where the boundary reduces -- CvUnit::cargoSpace performs the
+	//	same division at its own point of use.
+	return pUnit->getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100;
+}
+
 void CyUnitInfo::pythonPublish()
 {
 	python::class_<CyUnitInfo>("CyUnitInfo")
@@ -129,5 +195,10 @@ void CyUnitInfo::pythonPublish()
 		.def("getDomain",               &CyUnitInfo::getDomain)
 		.def("getCost",                 &CyUnitInfo::getCost)
 		.def("getDefaultUnitAI",        &CyUnitInfo::getDefaultUnitAI)
+		.def("getCargoSpace",           &CyUnitInfo::getCargoSpace)
+		.def("getReligionSpreads",      &CyUnitInfo::getReligionSpreads)
+		.def("getCorporationSpreads",   &CyUnitInfo::getCorporationSpreads)
+		.def("getGrantedGreatPeople",   &CyUnitInfo::getGrantedGreatPeople)
+		.def("getHeritage",             &CyUnitInfo::getHeritage)
 		;
 }

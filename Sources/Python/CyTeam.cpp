@@ -622,6 +622,22 @@ bool CyTeam::isHasEmbassy(int /*TeamTypes*/ eTeam) const
 //
 //	A game-object HANDLE, not an info -- the wrappers the engine hands to Python callbacks.
 //
+int CyTeam::getTechResearchCost(int iTech) const
+{
+	if (m_pTeam == NULL || iTech < 0 || iTech >= GC.getNumTechInfos())
+	{
+		return -1;
+	}
+	return m_pTeam->getResearchCost((TechTypes)iTech);
+}
+
+int CyTeam::getImprovementYieldChange(int iImprovement, int iYield) const
+{
+	if (m_pTeam == NULL || iImprovement < 0 || iImprovement >= GC.getNumImprovementInfos()) return 0;
+	if (iYield < 0 || iYield >= NUM_YIELD_TYPES) return 0;
+	return m_pTeam->getImprovementYieldChange((ImprovementTypes)iImprovement, (YieldTypes)iYield);
+}
+
 void CyTeam::pythonPublish()
 {
 	python::class_<CyTeam>("CyTeam", python::no_init)
@@ -732,6 +748,8 @@ void CyTeam::pythonPublish()
 		.def("changeProjectCount", &CyTeam::changeProjectCount)
 		.def("getProjectMaking", &CyTeam::getProjectMaking)
 		.def("getBuildingCount", &CyTeam::getBuildingCount)
+		.def("getTechResearchCost", &CyTeam::getTechResearchCost)
+		.def("getImprovementYieldChange", &CyTeam::getImprovementYieldChange)
 		.def("isBuildingMaxedOut", &CyTeam::isBuildingMaxedOut)
 		.def("getUnitCount", &CyTeam::getUnitCount)
 		.def("isObsoleteBuilding", &CyTeam::isObsoleteBuilding)

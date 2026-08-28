@@ -242,6 +242,14 @@ public:
 	void assignStartingPlots(bool bScenario, bool bMapScript);
 	void exitWorldBuilder();
 
+
+	//	==== THE INTERFACE SELECTION reads (moved off the flat state class) ====
+	//	Each answers an (owner, id) PAIR -- the address a caller then resolves to a handle.
+	python::list getHeadSelectedCityId() const;
+	python::list getHeadSelectedUnitId() const;
+	python::list getSelectedUnitIds() const;
+	//	Turn a BUILD off/on globally (a scenario or an option disabling a worker action).
+	bool setBuildDisabled(int iBuild, bool bDisabled) const;
 protected:
 	CvGame& m_pGame;
 };
