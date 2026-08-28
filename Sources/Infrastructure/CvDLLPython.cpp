@@ -21,6 +21,7 @@
 #include "Python/CyMapGenInfo.h"
 #include "Python/CyImprovementInfo.h"
 #include "Python/CyUnitInfo.h"
+#include "Python/CyReplayInfo.h"
 #include "Python/CyBuildInfo.h"
 #include "Python/CyGameSpeedInfo.h"
 #include "Python/CyEspionageMissionInfo.h"
@@ -139,6 +140,9 @@ DllExport void DLLPublishToPython()
 	CyEspionageMissionInfo::pythonPublish();
 	CyVictoryInfo::pythonPublish();
 	CyCultureLevelInfo::pythonPublish();
+	// The REPLAY handle. Python CONSTRUCTS this one, so an absent registration is a NameError at the call
+	// site rather than a missing method, and the EXE takes it back through setMinimapMap.
+	CyReplayInfo::pythonPublish();
 
 	// NOT the library, and not the banned surface: TXT is an UNMIGRATED SYSTEM BOUNDARY that stays, and Python
 	// screen chrome calls it directly (patterns.md § THE PYTHON READ BOUNDARY). It was collateral in the Cy

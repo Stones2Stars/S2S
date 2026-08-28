@@ -236,3 +236,44 @@ const char* CyReplayInfo::getModName() const
 {
 	return m_pHoF ? m_pHoF->getModName() : "";
 }
+
+//	⚑ The published set is what the three Python consumers actually call -- the replay screen, the
+//	hall-of-fame screen and WorldBuilder's info map -- rather than a mirror of the header. Registration is
+//	load-bearing on its own: Python constructs this type, and setMinimapMap hands it back to the EXE.
+void CyReplayInfo::pythonPublish()
+{
+	python::class_<CyReplayInfo>("CyReplayInfo")
+		.def("createInfo",              &CyReplayInfo::createInfo)
+		.def("isNone",                  &CyReplayInfo::isNone)
+		.def("getActivePlayer",         &CyReplayInfo::getActivePlayer)
+		.def("getLeader",               &CyReplayInfo::getLeader)
+		.def("getColor",                &CyReplayInfo::getColor)
+		.def("getDifficulty",           &CyReplayInfo::getDifficulty)
+		.def("getLeaderName",           &CyReplayInfo::getLeaderName)
+		.def("getShortCivDescription",  &CyReplayInfo::getShortCivDescription)
+		.def("getWorldSize",            &CyReplayInfo::getWorldSize)
+		.def("getEra",                  &CyReplayInfo::getEra)
+		.def("getGameSpeed",            &CyReplayInfo::getGameSpeed)
+		.def("getVictoryType",          &CyReplayInfo::getVictoryType)
+		.def("isMultiplayer",           &CyReplayInfo::isMultiplayer)
+		.def("getNumPlayers",           &CyReplayInfo::getNumPlayers)
+		.def("getPlayerScore",          &CyReplayInfo::getPlayerScore)
+		.def("getNormalizedScore",      &CyReplayInfo::getNormalizedScore)
+		.def("getNumReplayMessages",    &CyReplayInfo::getNumReplayMessages)
+		.def("getReplayMessageTurn",    &CyReplayInfo::getReplayMessageTurn)
+		.def("getReplayMessageType",    &CyReplayInfo::getReplayMessageType)
+		.def("getReplayMessagePlotX",   &CyReplayInfo::getReplayMessagePlotX)
+		.def("getReplayMessagePlotY",   &CyReplayInfo::getReplayMessagePlotY)
+		.def("getReplayMessagePlayer",  &CyReplayInfo::getReplayMessagePlayer)
+		.def("getReplayMessageText",    &CyReplayInfo::getReplayMessageText)
+		.def("getReplayMessageColor",   &CyReplayInfo::getReplayMessageColor)
+		.def("getInitialTurn",          &CyReplayInfo::getInitialTurn)
+		.def("getStartYear",            &CyReplayInfo::getStartYear)
+		.def("getFinalTurn",            &CyReplayInfo::getFinalTurn)
+		.def("getFinalDate",            &CyReplayInfo::getFinalDate)
+		.def("getCalendar",             &CyReplayInfo::getCalendar)
+		.def("getFinalScore",           &CyReplayInfo::getFinalScore)
+		.def("getMapWidth",             &CyReplayInfo::getMapWidth)
+		.def("getMapHeight",            &CyReplayInfo::getMapHeight)
+		;
+}

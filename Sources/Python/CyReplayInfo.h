@@ -67,6 +67,13 @@ public:
 
 	const char* getModName() const;
 
+	/// <summary>Publishes the replay handle to Python. It is REQUIRED, not optional: Python CONSTRUCTS this
+	/// type (`CyReplayInfo()` in the replay screen, the hall-of-fame screen and WorldBuilder's info map), so
+	/// without a registration the name is absent from CvPythonExtensions and the call site dies with a
+	/// NameError rather than a missing-method error. The handle is also passed BACK to the EXE by
+	/// setMinimapMap, which needs the registered converter to marshal it.</summary>
+	static void pythonPublish();
+
 private:
 	CvReplayInfo* m_pHoF;
 
