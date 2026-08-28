@@ -53,6 +53,9 @@ public:
 	// endpoints is not the target here, properly organized is").
 	bool isFound(int iUnit) const;
 	bool isIgnoreBuildingDefense(int iUnit) const;
+	/// <summary>Can this unit only ever fight DEFENSIVELY -- i.e. it may never initiate an attack? A chooser
+	/// ranking offensive roles excludes it, because it cannot perform them at all.</summary>
+	bool isOnlyDefensive(int iUnit) const;
 
 	// The unit's own intrinsic self-description.
 	int getConscription(int iUnit) const;   // identity.conscription -- 0 when it cannot be drafted
@@ -69,6 +72,20 @@ public:
 	int getCost(int iUnit) const;
 	// The `UnitAITypes` role the unit is created with (identity.defaultUnitAI).
 	int getDefaultUnitAI(int iUnit) const;
+
+	/// <summary>The RELIGION_ ids this unit can spread (`spread.religion`, strength above zero).</summary>
+	python::list getReligionSpreads(int iUnit) const;
+	/// <summary>The CORPORATION_ ids this unit can spread (`spread.corporation`, strength above zero).</summary>
+	python::list getCorporationSpreads(int iUnit) const;
+	/// <summary>The SPECIALIST_ ids this unit can be joined into as a great person (`grants.greatPeople`).</summary>
+	python::list getGrantedGreatPeople(int iUnit) const;
+	/// <summary>The HERITAGE_ ids this unit carries (`identity.heritage`).</summary>
+	python::list getHeritage(int iUnit) const;
+
+	/// <summary>How many units this unit can CARRY by its own authored capacity (`cargo.space`), as a whole
+	/// count. It is the unit's own plane only -- the empire's hold allowances and the size-matters rank
+	/// scaling are the CARRIER's runtime answer (CvUnit::cargoSpace), never an authored property.</summary>
+	int getCargoSpace(int iUnit) const;
 
 	static void pythonPublish();
 };

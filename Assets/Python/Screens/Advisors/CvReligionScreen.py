@@ -11,8 +11,9 @@ import BugCore
 AdvisorOpt = BugCore.game.Advisors
 
 # globals
-# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
 GAME = GC.getGame()
@@ -263,7 +264,7 @@ class CvReligionScreen:
 					szFounded = localText.getText("TXT_KEY_NONE", ())
 					screen.setLabelAt("", szArea, szFounded, 1<<2, xLoop, self.Y_HOLY_CITY, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 				#	The handle carries the ADDRESS (owner + id) and nothing else, so the fog verdict and the
-				#	name are both asked of CyState by that address ([patterns.md] THE IDENTITY SET).
+				#	name are both asked of the object's own accessor by that address ([patterns.md] THE IDENTITY SET).
 				elif not pHolyCity.isRevealedTo(GC.getPlayer(self.iActivePlayer).getTeam()):
 					szFounded = localText.getText("TXT_KEY_UNKNOWN", ())
 					screen.setLabelAt("", szArea, szFounded, 1<<2, xLoop, self.Y_HOLY_CITY, self.DZ, FontTypes.SMALL_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)

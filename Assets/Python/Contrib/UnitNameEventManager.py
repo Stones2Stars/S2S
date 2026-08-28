@@ -80,12 +80,11 @@ import BugData
 SD_MOD_ID = "UnitCnt"
 RENAME_EVENT_ID = CvUtil.getNewEventID()
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()   # entity data: the context serves settings, CyInfo serves entities
-STATE = CyState()
-ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -109,7 +108,7 @@ class UnitNameEventManager:
 		pUnit = argsList[1]
 		if pUnit is None: return
 		iPlayer, iUnitId = pUnit
-		aUnit = STATE.getUnitRead(iPlayer, iUnitId)
+		aUnit = GC.getPlayer(iPlayer).getUnit(iUnitId).getRead()
 		if iPlayer != GC.getGame().getActivePlayer() or not UnitNamingOpt.isEnabled():
 			# Not having the same name for a unit will cause OOS issues if unit names are considered part of the game-state.
 			# Remove "iPlayer != GC.getGame().getActivePlayer()" to fix it if that's the case.
@@ -122,7 +121,7 @@ class UnitNameEventManager:
 		zsUnitName = UnitReName().getUnitName(zsUnitNameConv, iPlayer, iUnitId, argsList[0], True)
 
 		if zsUnitName:
-			ACT.setUnitName(iPlayer, iUnitId, zsUnitName)
+			GC.getPlayer(iPlayer).getUnit(iUnitId).setName(zsUnitName)
 
 
 class UnitReName(object):
@@ -135,7 +134,7 @@ class UnitReName(object):
 		if zsName.find("^civ4^") != -1:
 			return ""
 
-		aUnit = STATE.getUnitRead(iPlayer, iUnitId)
+		aUnit = GC.getPlayer(iPlayer).getUnit(iUnitId).getRead()
 		pPlayer = GC.getPlayer(iPlayer)
 
 		zsCiv = pPlayer.getCivilizationAdjective(0)

@@ -63,11 +63,11 @@ UNHAPPY_ICON = "Art/Interface/mainscreen/cityscreen/angry_citizen.dds"
 
 ### Globals
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 GAME = GC.getGame()
-STATE = CyState()
 INFO = CyInfo()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -158,7 +158,7 @@ class AbstractStatefulAlert:
 ## City Alert Managers
 #
 #	⚑ A city is an (iOwner, iCityId) PAIR everywhere below, never a handle. That is what an engine callback
-#	hands over now (Cy::PyIdentity) and what every CyState read is addressed by, so the alert framework's
+#	hands over now (Cy::PyIdentity) and what every read is addressed by, so the alert framework's
 #	tracking key and its subject are the SAME value -- the old getCityId(city) round-trip has nothing left to do.
 
 class AbstractCityAlertManager(AbstractStatefulAlert):
@@ -180,17 +180,17 @@ class AbstractCityAlertManager(AbstractStatefulAlert):
 
 	def onCityAcquiredAndKept(self, argsList):
 		#iOwnerOld, iOwnerNew, cityId, bConquest, bTrade = argsList
-		if argsList[1] == STATE.getActivePlayer():
+		if argsList[1] == GAME.getActivePlayer():
 			self._resetCity(argsList[2])
 
 	def onCityLost(self, argsList):
 		cityId = argsList[0]
-		if cityId[0] == STATE.getActivePlayer():
+		if cityId[0] == GAME.getActivePlayer():
 			self._discardCity(cityId)
 
 	def checkAllActivePlayerCities(self):
 		"Loops over active player's cities, telling each alert to perform its check."
-		ePlayer = STATE.getActivePlayer()
+		ePlayer = GAME.getActivePlayer()
 		for iCity in GC.getPlayer(ePlayer).getCityIds():
 			for alert in self.alerts:
 				alert.checkCity((ePlayer, iCity), ePlayer)
@@ -264,7 +264,7 @@ class AbstractCityAlert:
 	def reset(self):
 		"Clears state kept for each city."
 		self._beforeReset()
-		ePlayer = STATE.getActivePlayer()
+		ePlayer = GAME.getActivePlayer()
 		for iCity in GC.getPlayer(ePlayer).getCityIds():
 			self.resetCity((ePlayer, iCity))
 
@@ -620,7 +620,7 @@ class AbstractCanHurry(AbstractCityTestAlert):
 		self._onItemStarted(argsList[0])
 
 	def _onItemStarted(self, cityId):
-		if cityId[0] == STATE.getActivePlayer():
+		if cityId[0] == GAME.getActivePlayer():
 			self.discardCity(cityId)
 
 	def _passesTest(self, cityId):
@@ -662,7 +662,7 @@ class CanHurryPopulation(AbstractCanHurry):
 		iAnger = (aCountdowns[CityCountdownKind.COUNTDOWN_HURRY_ANGER]
 		          + aCountdowns[CityCountdownKind.COUNTDOWN_HURRY_ANGER_PERIOD])
 		iMaxOverflow = aOrder[CityOrderRead.ORDER_READ_MAX_OVERFLOW]
-		iOverflowGold = max(0, iOverflow - iMaxOverflow) * STATE.getDefineINT("MAXED_UNIT_GOLD_PERCENT") / 100
+		iOverflowGold = max(0, iOverflow - iMaxOverflow) * GC.getDefineINT("MAXED_UNIT_GOLD_PERCENT") / 100
 		# The kept overflow is expressed in POST-modifier hammers; dividing by the production modifier reports
 		# it in the pre-modifier hammers the player actually sees in the build box.
 		iProductionModifier = GC.getPlayer(cityId[0]).getCity(cityId[1]).getYieldModifiers()[YieldTypes.YIELD_PRODUCTION]
@@ -800,7 +800,7 @@ class RefusesToTalk(AbstractStatefulAlert):
 
 	def onCityRazed(self, argsList):
 		cityId, iPlayer = argsList
-		self.checkIfIsAnyOrHasMetAllTeams(STATE.getPlayerTeam(cityId[0]), STATE.getPlayerTeam(iPlayer))
+		self.checkIfIsAnyOrHasMetAllTeams(GC.getPlayer(cityId[0]).getTeam(), GC.getPlayer(iPlayer).getTeam())
 
 	def onDealCanceled(self, argsList):
 		eOfferPlayer, eTargetPlayer, pTrade = argsList
@@ -882,7 +882,7 @@ class WorstEnemy(AbstractStatefulAlert):
 
 	def onCityRazed(self, argsList):
 		cityId, ePlayer = argsList
-		self.checkIfIsAnyOrHasMetAllTeams(STATE.getPlayerTeam(cityId[0]), STATE.getPlayerTeam(ePlayer))
+		self.checkIfIsAnyOrHasMetAllTeams(GC.getPlayer(cityId[0]).getTeam(), GC.getPlayer(ePlayer).getTeam())
 
 	def onVassalState(self, argsList):
 		eMaster = argsList[0]

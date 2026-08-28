@@ -11,13 +11,12 @@ from CvPythonExtensions import *
 import BugUtil
 import CvUtil
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
 GAME = GC.getGame()
-STATE = CyState()
-ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
@@ -68,9 +67,9 @@ def onCombatResult(argsList):
 	iOwnerW, iUnitW = CyUnitW
 	iOwnerL, iUnitL = CyUnitL
 
-	aW = STATE.getUnitRead(iOwnerW, iUnitW)
-	aL = STATE.getUnitRead(iOwnerL, iUnitL)
-	aFlagsW = STATE.getUnitFlags(iOwnerW, iUnitW)
+	aW = GC.getPlayer(iOwnerW).getUnit(iUnitW).getRead()
+	aL = GC.getPlayer(iOwnerL).getUnit(iUnitL).getRead()
+	aFlagsW = GC.getPlayer(iOwnerW).getUnit(iUnitW).getFlags()
 
 	# Captives
 	# Check that the losing unit is not an animal and the unit does not have a capture type defined in the XML
@@ -80,7 +79,7 @@ def onCombatResult(argsList):
 	and aW[UnitReadKind.UNIT_READ_DOMAIN] == giDomainLand
 	and aL[UnitReadKind.UNIT_READ_CAPTURE_UNIT_TYPE] == -1
 	):
-		aPosL = STATE.getUnitPosition(iOwnerL, iUnitL)
+		aPosL = GC.getPlayer(iOwnerL).getUnit(iUnitL).getPosition()
 		iCaptureProbability = (aW[UnitReadKind.UNIT_READ_CAPTURE_PROBABILITY]
 		                       + getSurroundBonus(aPosL[0], aPosL[1], GC.getPlayer(iOwnerL).getTeam()))
 		iCaptureResistance = aL[UnitReadKind.UNIT_READ_CAPTURE_RESISTANCE]
@@ -91,7 +90,7 @@ def onCombatResult(argsList):
 
 		if iChance > GAME.getSorenRandNum(100, "Slave"):  # 0-99
 
-			if STATE.hasUnitCombat(iOwnerL, iUnitL, GC.getInfoTypeForString('UNITCOMBAT_SPECIES_NEANDERTHAL')):
+			if GC.getPlayer(iOwnerL).getUnit(iUnitL).hasCombat(GC.getInfoTypeForString('UNITCOMBAT_SPECIES_NEANDERTHAL')):
 				iUnit = GC.getInfoTypeForString('UNIT_CAPTIVE_NEANDERTHAL')
 				sMessage = TRNSLTR.getText("TXT_KEY_MSG_NEANDERTHAL_CAPTIVE",())
 			else:
@@ -99,7 +98,7 @@ def onCombatResult(argsList):
 				sMessage = TRNSLTR.getText("TXT_KEY_MSG_MILITARY_CAPTIVE",())
 
 			iPlayerW = iOwnerW
-			aPosW = STATE.getUnitPosition(iOwnerW, iUnitW)
+			aPosW = GC.getPlayer(iOwnerW).getUnit(iUnitW).getPosition()
 			X = aPosW[0]
 			Y = aPosW[1]
 			CyUnit = GC.getPlayer(iPlayerW).createUnit(iUnit, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
@@ -232,21 +231,21 @@ def onCityRazed(argsList):
 
 	## Now remove those slaves
 	if iCountSettled > 0:
-		ACT.addCityFreeSpecialist(iPlayer, iCityID, iSlaveSettled, -iCountSettled)
+		GC.getPlayer(iPlayer).getCity(iCityID).addFreeSpecialist(iSlaveSettled, -iCountSettled)
 	if iCountFood > 0:
-		ACT.addCityFreeSpecialist(iPlayer, iCityID, iSlaveFood, -iCountFood)
+		GC.getPlayer(iPlayer).getCity(iCityID).addFreeSpecialist(iSlaveFood, -iCountFood)
 	if iCountCom > 0:
-		ACT.addCityFreeSpecialist(iPlayer, iCityID, iSlaveCom, -iCountCom)
+		GC.getPlayer(iPlayer).getCity(iCityID).addFreeSpecialist(iSlaveCom, -iCountCom)
 	if iCountTutor > 0:
-		ACT.addCityFreeSpecialist(iPlayer, iCityID, iSlaveTutor, -iCountTutor)
+		GC.getPlayer(iPlayer).getCity(iCityID).addFreeSpecialist(iSlaveTutor, -iCountTutor)
 	if iCountMilitary > 0:
-		ACT.addCityFreeSpecialist(iPlayer, iCityID, iSlaveMilitary, -iCountMilitary)
+		GC.getPlayer(iPlayer).getCity(iCityID).addFreeSpecialist(iSlaveMilitary, -iCountMilitary)
 
 	## Now convert the other slaves
 	if iCountProd > 0:
 		for _ in range (iCountProd):
 			CyPlayer.createUnit(iUnitMerCaravan, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-			ACT.addCityFreeSpecialist(iPlayer, iCityID, iSlaveProd, -1)
+			GC.getPlayer(iPlayer).getCity(iCityID).addFreeSpecialist(iSlaveProd, -1)
 		if bHuman:
 			sMessage = BugUtil.getText("TXT_KEY_MSG_FREED_SLAVES_AS",(sCityName, INFO.getDescription("UNIT_", iUnitMerCaravan), iCountProd))
 			CyInterface().addMessage(iPlayer,False,15, sMessage,'',0,'Art/Interface/Buttons/Civics/Serfdom.dds',ColorTypes(44), X, Y, True,True)
@@ -254,7 +253,7 @@ def onCityRazed(argsList):
 	if iCountHealth > 0:
 		for _ in range (iCountHealth):
 			CyPlayer.createUnit(iUnitHealth, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-			ACT.addCityFreeSpecialist(iPlayer, iCityID, iSlaveHealth, -1)
+			GC.getPlayer(iPlayer).getCity(iCityID).addFreeSpecialist(iSlaveHealth, -1)
 		if bHuman:
 			sMessage = BugUtil.getText("TXT_KEY_MSG_FREED_SLAVES_AS",(sCityName, INFO.getDescription("UNIT_", iUnitHealth), iCountHealth))
 			CyInterface().addMessage(iPlayer,False,15, sMessage,'',0,'Art/Interface/Buttons/Civics/Serfdom.dds',ColorTypes(44), X, Y, True,True)
@@ -262,7 +261,7 @@ def onCityRazed(argsList):
 	if iCountEntertain > 0:
 		for _ in range (iCountEntertain):
 			CyPlayer.createUnit(iUnitEntertain, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-			ACT.addCityFreeSpecialist(iPlayer, iCityID, iSlaveEntertain, -1)
+			GC.getPlayer(iPlayer).getCity(iCityID).addFreeSpecialist(iSlaveEntertain, -1)
 		if bHuman:
 			sMessage = BugUtil.getText("TXT_KEY_MSG_FREED_SLAVES_AS",(sCityName, INFO.getDescription("UNIT_", iUnitEntertain), iCountEntertain))
 			CyInterface().addMessage(iPlayer,False,15, sMessage,'',0,'Art/Interface/Buttons/Civics/Serfdom.dds',ColorTypes(44), X, Y, True,True)

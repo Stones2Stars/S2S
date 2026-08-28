@@ -8,7 +8,7 @@
 
 //
 //	CyInfo -- the Python INFO surface: the "what do I CARRY?" read role (patterns.md § THE TWO READ ROLES),
-//	exposed to script. Sibling of CyEnabler ("can I?"), CyState ("what do I HAVE?") and CyEnums (the vocabulary).
+//	exposed to script. Sibling of CyEnabler ("can I?"), the object accessors ("what do I HAVE?") and CyEnums (the vocabulary).
 //
 //	⛔ THIS IS WHERE INFOS LIVE NOW, AND THE ONLY PLACE. The global context deliberately hands out none
 //	(docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract)): its `get<X>Info(i)` accessors returned an object carrying the whole legacy getter set,
@@ -77,13 +77,6 @@ enum PyIntrinsicSlot
 	PYINT_ESPIONAGE_TARGETS_CITY,
 	PYINT_ESPIONAGE_IS_PASSIVE,
 	PYINT_ESPIONAGE_TECH_PREREQ,             // MISSION_ -- is this mission a worker BUILD (the order carries a BUILD_ id)
-	PYINT_DOMAIN,               // UNIT_ DOMAIN_* FK (identity.domain) -- WHERE the unit operates.
-	                            // ⛔ It is a genuine INTRINSIC, never a tag read ([json.md] par.7, [tags.md]): a
-	                            // tag says what a unit IS, a domain says where it OPERATES, and answering the
-	                            // second from the tag set means FILTERING EVERY TAG for what one field holds.
-	                            // The domain tags (landUnit/seaUnit/airUnit) exist and are inert by ruling --
-	                            // there is deliberately no composition over them for this, so a consumer asking
-	                            // "which domain" asks HERE.
 	PYINT_PILLAGE_GOLD,         // IMPROVEMENT_ -- the gold a pillage of this improvement rolls against
 	// The ERA start grants (`grants.*`) -- what a player beginning in this era is handed. All six are authored
 	// (startingGold by every era), so they are live data, not headroom.
@@ -354,7 +347,7 @@ public:
 	// script with no way to ask the other five and no way to tell that it could not.
 	//
 	// ⛔ Whose question it is decides the RECEIVER, not this surface: a GATE ("does this city have power?") is
-	// the city's FOLD (CyState), while a VALUATION or a DISPLAY ("what would this building give me?") asks the
+	// the city's FOLD (CyCity), while a VALUATION or a DISPLAY ("what would this building give me?") asks the
 	// GRANTOR, which is here ([contexts.md] `CityContext.amenities`). Re-pointing a gate at `providesAmenity`
 	// would leave it doing exactly what it did before while reading as migrated.
 	bool hasSkill(const std::string& szTypePrefix, int iId, int iSkillId) const;
@@ -512,7 +505,53 @@ public:
 	// belongs to this civ is the own-data inversion the reverse-view rule names, and it is what these replace.
 	// ⚠ The city names are TXT KEYS, not resolved text: the caller resolves them, because TXT is not this
 	// surface's to own ([patterns.md] -- the library serves the raw key reference).
+	// The UNIT_* great person a SPECIALIST generates progress toward, -1 when it generates none. Named on this
+	// plane because the specialist registry has no accessor of its own; its building twin is
+	// CyBuildingInfo::getGreatPeopleUnit, and the two are separate because the receiver decides the question.
+	int getSpecialistGreatPeopleUnit(int iSpecialistId) const;
+	/// <summary>Is this specialist a SLAVE (`identity.slave`) -- a seat filled by a captured population rather
+	/// than a citizen the city assigns freely?</summary>
+	bool isSpecialistSlave(int iSpecialistId) const;
+
+	//	THE VICTORY LAUNCH PARAMS. Authored on the PROJECT and the BUILDING, asked per VICTORY -- so each takes
+	//	both ids. ⛔ They are read from the entity that AUTHORS them, never by sweeping the victory registry
+	//	asking each victory what it needs; the thresholds are the builder's own data.
+	/// <summary>How many of this project a victory requires; 0 when it plays no part in that victory.</summary>
+	int getProjectVictoryThreshold(int iProjectId, int iVictoryId) const;
+	/// <summary>The MINIMUM count that victory demands, which is not always the full threshold. ⚠ Where no
+	/// explicit minimum is authored this falls back to the plain threshold, so a project with a threshold and
+	/// no minimum never reads 0 -- that fallback is the space-victory min-project gate.</summary>
+	int getProjectVictoryMinThreshold(int iProjectId, int iVictoryId) const;
+	/// <summary>The VICTORY_ this project LAUNCHES when completed (`identity.launchesVictory`), -1 for none.</summary>
+	int getProjectLaunchesVictory(int iProjectId) const;
+	/// <summary>The projects this one requires first -- its OWN list, handed over whole. Sweeping every
+	/// project asking "are you needed by this one" is the own-data inversion, and it is what this replaces.</summary>
+	python::list getProjectNeededProjects(int iProjectId) const;
+	/// <summary>How many of this building a victory requires; 0 when it plays no part in that victory.</summary>
+	int getBuildingVictoryThreshold(int iBuildingId, int iVictoryId) const;
+
+	//	THE DIPLOMATIC BODY. ⚠ VOTESOURCE_ is not a registered type prefix, so these are addressed by BARE ID
+	//	rather than through the prefix plane -- the registry has no other route.
+	/// <summary>The localized title this diplomatic body gives its leader (its "secretary general").</summary>
+	std::wstring getVoteSourceSecretaryGeneralText(int iVoteSourceId) const;
+	/// <summary>Does this VOTE belong to that diplomatic body?</summary>
+	bool hasVoteSource(int iVoteId, int iVoteSourceId) const;
+	/// <summary>Is this vote the one that ELECTS the body's leader (`role: secretaryGeneral`)?</summary>
+	bool isVoteSecretaryGeneral(int iVoteId) const;
 	python::list getCivilizationLeaders(int iCivilizationId) const;
+	/// <summary>May the AI be dealt this civilization (`identity.aiPlayable`)? False when the id names no
+	/// civilization, so an unknown id is never offered as a playable choice.</summary>
+	bool isCivilizationAIPlayable(int iCivilizationId) const;
+	/// <summary>May a HUMAN pick this civilization (`identity.playable`)? The twin of the AI test above; the
+	/// two are separate flags and a civilization may authorise either without the other.</summary>
+	bool isCivilizationPlayable(int iCivilizationId) const;
+	/// <summary>The civilization's ART STYLE id (`world.art.style`) -- what a chooser matches on to pick a
+	/// visually similar civilization. -1 when the id names no civilization.
+	/// ⚠ NOT the unit art style, which is its own authored field.</summary>
+	int getCivilizationArtStyle(int iCivilizationId) const;
+	/// <summary>How many defenders a barbarian city is founded with at this handicap
+	/// (`barbarians.defenders`, world scope), as a whole count.</summary>
+	int getHandicapBarbarianDefenders(int iHandicapId) const;
 	python::list getCivilizationCityNames(int iCivilizationId) const;
 	// The buildings that are this RELIGION's shrines -- the load-populated reverse view
 	// (`CvReligionInfo::getShrineBuildings`, filled by the readJson reverse pass from each building's §9 `shrine`

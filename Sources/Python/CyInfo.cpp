@@ -78,6 +78,7 @@
 #include "Infos/CvProjectInfo.h"   // isSpaceship -- the build-progress readout (PYINT_IS_SPACESHIP)
 #include "Infos/CvVictoryInfo.h"   // isPermanent -- the scenario victory-list filter
 #include "Infos/CvTechInfo.h"      // isRepeat -- the scenario repeat-tech loop (PYINT_IS_REPEAT)
+#include "Infos/CvVoteInfo.h"
 #include "Infos/CvVoteSourceInfo.h"
 #include "Infos/CvInvisibleInfo.h"
 #include "Infos/CvEventInfo.h"
@@ -99,7 +100,7 @@
 namespace
 {
 	// Resolve without asserting: a script may legitimately probe an id past the end of a registry, and the
-	// honest answer there is "nothing", not a crash -- the same discipline CyEnabler and CyState apply.
+	// honest answer there is "nothing", not a crash -- the same discipline CyEnabler and the object accessors apply.
 	const CvInfo* cyi_info(const std::string& szTypePrefix, int iId)
 	{
 		if (iId < 0) return NULL;
@@ -727,6 +728,125 @@ python::list CyInfo::getCivilizationLeaders(int iCivilizationId) const
 	return lIds;
 }
 
+int CyInfo::getSpecialistGreatPeopleUnit(int iSpecialistId) const
+{
+	const CvSpecialistInfo* pSpecialist =
+		static_cast<const CvSpecialistInfo*>(cyi_info("SPECIALIST_", iSpecialistId));
+	if (pSpecialist == NULL) return -1;
+	return pSpecialist->getGreatPeopleUnitType();
+}
+
+int CyInfo::getProjectVictoryThreshold(int iProjectId, int iVictoryId) const
+{
+	const CvProjectInfo* pProject =
+		static_cast<const CvProjectInfo*>(cyi_info("PROJECT_", iProjectId));
+	if (pProject == NULL || iVictoryId < 0) return 0;
+	return pProject->getVictoryThreshold(iVictoryId);
+}
+
+int CyInfo::getProjectVictoryMinThreshold(int iProjectId, int iVictoryId) const
+{
+	const CvProjectInfo* pProject =
+		static_cast<const CvProjectInfo*>(cyi_info("PROJECT_", iProjectId));
+	if (pProject == NULL || iVictoryId < 0) return 0;
+	return pProject->getVictoryMinThreshold(iVictoryId);
+}
+
+int CyInfo::getProjectLaunchesVictory(int iProjectId) const
+{
+	const CvProjectInfo* pProject =
+		static_cast<const CvProjectInfo*>(cyi_info("PROJECT_", iProjectId));
+	if (pProject == NULL) return -1;
+	return pProject->getLaunchesVictory();
+}
+
+python::list CyInfo::getProjectNeededProjects(int iProjectId) const
+{
+	python::list lIds;
+	const CvProjectInfo* pProject =
+		static_cast<const CvProjectInfo*>(cyi_info("PROJECT_", iProjectId));
+	if (pProject == NULL) return lIds;
+
+	for (int iOther = 0; iOther < GC.getNumProjectInfos(); ++iOther)
+	{
+		if (pProject->getProjectsNeeded(iOther) > 0) lIds.append(iOther);
+	}
+	return lIds;
+}
+
+int CyInfo::getBuildingVictoryThreshold(int iBuildingId, int iVictoryId) const
+{
+	const CvBuildingInfo* pBuilding =
+		static_cast<const CvBuildingInfo*>(cyi_info("BUILDING_", iBuildingId));
+	if (pBuilding == NULL || iVictoryId < 0) return 0;
+
+	const std::map<int, int>& kThresholds = pBuilding->getVictoryThresholds();
+	std::map<int, int>::const_iterator it = kThresholds.find(iVictoryId);
+	return it != kThresholds.end() ? it->second : 0;
+}
+
+std::wstring CyInfo::getVoteSourceSecretaryGeneralText(int iVoteSourceId) const
+{
+	if (iVoteSourceId < 0 || iVoteSourceId >= GC.getNumVoteSourceInfos()) return std::wstring();
+	return std::wstring(GC.getVoteSourceInfo((VoteSourceTypes)iVoteSourceId).getSecretaryGeneralText());
+}
+
+bool CyInfo::hasVoteSource(int iVoteId, int iVoteSourceId) const
+{
+	const CvVoteInfo* pVote = static_cast<const CvVoteInfo*>(cyi_info("VOTE_", iVoteId));
+	if (pVote == NULL || iVoteSourceId < 0 || iVoteSourceId >= GC.getNumVoteSourceInfos()) return false;
+	return pVote->hasVoteSource(iVoteSourceId);
+}
+
+bool CyInfo::isVoteSecretaryGeneral(int iVoteId) const
+{
+	const CvVoteInfo* pVote = static_cast<const CvVoteInfo*>(cyi_info("VOTE_", iVoteId));
+	if (pVote == NULL) return false;
+	return pVote->getRole() == VOTE_ROLE_SECRETARY_GENERAL;
+}
+
+bool CyInfo::isSpecialistSlave(int iSpecialistId) const
+{
+	const CvSpecialistInfo* pSpecialist =
+		static_cast<const CvSpecialistInfo*>(cyi_info("SPECIALIST_", iSpecialistId));
+	if (pSpecialist == NULL) return false;
+	return pSpecialist->isSlave();
+}
+
+bool CyInfo::isCivilizationAIPlayable(int iCivilizationId) const
+{
+	const CvCivilizationInfo* pCiv =
+		static_cast<const CvCivilizationInfo*>(cyi_info("CIVILIZATION_", iCivilizationId));
+	if (pCiv == NULL) return false;
+	return pCiv->isAIPlayable();
+}
+
+bool CyInfo::isCivilizationPlayable(int iCivilizationId) const
+{
+	const CvCivilizationInfo* pCiv =
+		static_cast<const CvCivilizationInfo*>(cyi_info("CIVILIZATION_", iCivilizationId));
+	if (pCiv == NULL) return false;
+	return pCiv->isPlayable();
+}
+
+int CyInfo::getCivilizationArtStyle(int iCivilizationId) const
+{
+	const CvCivilizationInfo* pCiv =
+		static_cast<const CvCivilizationInfo*>(cyi_info("CIVILIZATION_", iCivilizationId));
+	if (pCiv == NULL) return -1;
+	return pCiv->getArtStyleType();
+}
+
+int CyInfo::getHandicapBarbarianDefenders(int iHandicapId) const
+{
+	const CvHandicapInfo* pHandicap =
+		static_cast<const CvHandicapInfo*>(cyi_info("HANDICAP_", iHandicapId));
+	if (pHandicap == NULL) return 0;
+	//	Reduced to the whole count here, which is where the boundary reduces -- CvPlayer performs the same
+	//	division at its own point of use.
+	return pHandicap->getBarbarians(BARBARIANS_DEFENDERS, CASC_SCOPE_WORLD) / 100;
+}
+
 python::list CyInfo::getCivilizationCityNames(int iCivilizationId) const
 {
 	python::list lNames;
@@ -1177,7 +1297,7 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 		//	A tech's make-cost is its BEAKER cost (cost.research), the same plane-1 authored actual cost the
 		//	hammer registries carry ([json.md] the cost cluster: plane 1 is the entity's own self-data).
 		//	⚠ This is the INFO's base figure. What a team actually pays scales with gamespeed / era / handicap /
-		//	team size and is COMPUTED GAME STATE, so it is asked of CyState, never folded in here
+		//	team size and is COMPUTED GAME STATE, so it is asked of the team's own accessor, never folded in here
 		//	([pedia-read-map.md] finding 5: a context read sits BESIDE the info payload).
 		if (szTypePrefix == "TECH_" && iId < GC.getNumTechInfos())
 			return GC.getTechInfo((TechTypes)iId).getResearchCost();
@@ -1323,11 +1443,6 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 	case PYINT_IS_BUILD:
 		if (szTypePrefix == "MISSION_" && iId < GC.getNumMissionInfos())
 			return GC.getMissionInfo((MissionTypes)iId).isBuild() ? 1 : 0;
-		break;
-
-	case PYINT_DOMAIN:
-		if (szTypePrefix == "UNIT_" && iId < GC.getNumUnitInfos())
-			return GC.getUnitInfo((UnitTypes)iId).getDomain();
 		break;
 
 	case PYINT_TOTAL_TURNS:
@@ -1652,6 +1767,20 @@ void CyInfo::pythonPublish()
 		.def("getEventFood", &CyInfo::getEventFood)
 		.def("getFeatureDisappearanceProbability", &CyInfo::getFeatureDisappearanceProbability)
 		.def("getCivilizationLeaders", &CyInfo::getCivilizationLeaders)
+		.def("isCivilizationAIPlayable", &CyInfo::isCivilizationAIPlayable)
+		.def("isCivilizationPlayable", &CyInfo::isCivilizationPlayable)
+		.def("getCivilizationArtStyle", &CyInfo::getCivilizationArtStyle)
+		.def("getHandicapBarbarianDefenders", &CyInfo::getHandicapBarbarianDefenders)
+		.def("getSpecialistGreatPeopleUnit", &CyInfo::getSpecialistGreatPeopleUnit)
+		.def("isSpecialistSlave", &CyInfo::isSpecialistSlave)
+		.def("getProjectVictoryThreshold", &CyInfo::getProjectVictoryThreshold)
+		.def("getProjectVictoryMinThreshold", &CyInfo::getProjectVictoryMinThreshold)
+		.def("getProjectLaunchesVictory", &CyInfo::getProjectLaunchesVictory)
+		.def("getProjectNeededProjects", &CyInfo::getProjectNeededProjects)
+		.def("getBuildingVictoryThreshold", &CyInfo::getBuildingVictoryThreshold)
+		.def("getVoteSourceSecretaryGeneralText", &CyInfo::getVoteSourceSecretaryGeneralText)
+		.def("hasVoteSource", &CyInfo::hasVoteSource)
+		.def("isVoteSecretaryGeneral", &CyInfo::isVoteSecretaryGeneral)
 		.def("getCivilizationCityNames", &CyInfo::getCivilizationCityNames)
 		.def("getShrineBuildings", &CyInfo::getShrineBuildings)
 		.def("getDerivativeCiv", &CyInfo::getDerivativeCiv)

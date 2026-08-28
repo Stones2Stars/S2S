@@ -1,13 +1,14 @@
 from CvPythonExtensions import *
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 GAME = GC.getGame()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 INFO = CyInfo()
+UNIT = CyUnitInfo()           # the per-info UNIT accessor
 BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 TRNSLTR = CyTranslator()
 MAP = GC.getMap()
@@ -111,16 +112,16 @@ def resetNoLiberateCities():
 
 
 def unitBuiltFeats(CyCity, CyUnit):
-	#	The handle carries its ADDRESS and nothing else ([DEC-cy-not-fixed] THE IDENTITY SET), so resolve the pair
-	#	once and ask STATE for every value below.
+	#	The handle carries its ADDRESS and nothing else (THE IDENTITY SET), so resolve the pair
+	#	once and ask the object itself for every value below.
 	iPlayer, iCityID = CyCity
 	iUnitOwner, iUnitID = CyUnit
-	aUnit = STATE.getUnitRead(iUnitOwner, iUnitID)
-	szUnitName = STATE.getUnitName(iUnitOwner, iUnitID)
+	aUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID).getRead()
+	szUnitName = GC.getPlayer(iUnitOwner).getUnit(iUnitID).getName()
 	CyPlayer = GC.getPlayer(iPlayer)
 
 	for iCombat, eFeat, szTxt in unitCombatFeats:
-		if not CyPlayer.isFeatAccomplished(eFeat) and STATE.hasUnitCombat(iUnitOwner, iUnitID, iCombat):
+		if not CyPlayer.isFeatAccomplished(eFeat) and GC.getPlayer(iUnitOwner).getUnit(iUnitID).hasCombat(iCombat):
 			CyPlayer.setFeatAccomplished(eFeat, True)
 			if not GAME.isNetworkMultiPlayer() and GAME.getElapsedGameTurns() != 0 and iPlayer == GAME.getActivePlayer() and CyPlayer.isOption(PlayerOptionTypes.PLAYEROPTION_ADVISOR_POPUPS):
 				popupInfo = CyPopupInfo()
@@ -135,7 +136,7 @@ def unitBuiltFeats(CyCity, CyUnit):
 				popupInfo.addPopup(iPlayer)
 
 	if not CyPlayer.isFeatAccomplished(FeatTypes.FEAT_UNIT_PRIVATEER):
-		if (STATE.isUnitHiddenNationality(iUnitOwner, iUnitID)
+		if (GC.getPlayer(iUnitOwner).getUnit(iUnitID).isHiddenNationality()
 		and aUnit[UnitReadKind.UNIT_READ_DOMAIN] == DomainTypes.DOMAIN_SEA):
 			CyPlayer.setFeatAccomplished(FeatTypes.FEAT_UNIT_PRIVATEER, True)
 			if not GAME.isNetworkMultiPlayer() and GAME.getElapsedGameTurns() != 0 and iPlayer == GAME.getActivePlayer() and CyPlayer.isOption(PlayerOptionTypes.PLAYEROPTION_ADVISOR_POPUPS):
@@ -175,7 +176,7 @@ def endTurnFeats(iPlayer):
 	CyPlayer = GC.getPlayer(iPlayer)
 	CyCity0 = CyPlayer.getCapitalCity()
 	if CyCity0 is None: return
-	# A city handle carries its ADDRESS only ([DEC-cy-not-fixed]); every value below it is asked of STATE by that
+	# A city handle carries its ADDRESS only; every value below it is asked of the object itself by that
 	# address, so resolve the capital's id once rather than per read.
 	iCity0 = CyCity0.getID()
 
@@ -275,7 +276,7 @@ def endTurnFeats(iPlayer):
 					break
 				i += 1
 
-#	The caller hands over the city's ADDRESS, not a handle ([DEC-cy-not-fixed]) -- see CvEventManager.onCityDoTurn.
+#	The caller hands over the city's ADDRESS, not a handle -- see CvEventManager.onCityDoTurn.
 def cityAdvise(iPlayer, iCityID):
 
 	global g_iAdvisorNags
@@ -348,7 +349,7 @@ def cityAdvise(iPlayer, iCityID):
 							#	asked of the CITY, never of availability.
 							for iUnitX in ENABLER.getAvailableUnits(iPlayer, iCityID):
 
-								if INFO.getIntrinsic("UNIT_", iUnitX, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND:
+								if UNIT.getDomain(iUnitX) != DomainTypes.DOMAIN_LAND:
 									continue
 								if GC.getPlayer(iPlayer).getCity(iCityID).isUnitQueued(iUnitX):
 									continue
@@ -385,7 +386,7 @@ def cityAdvise(iPlayer, iCityID):
 							#	A queued unit stays on the frontier by design (multiple copies), so the
 							#	'already ordered' suppression is the recommender's, asked of the city.
 							for iUnit in ENABLER.getAvailableUnits(iPlayer, iCityID):
-								if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND:
+								if UNIT.getDomain(iUnit) != DomainTypes.DOMAIN_LAND:
 									continue
 								if GC.getPlayer(iPlayer).getCity(iCityID).isUnitQueued(iUnit):
 									continue
@@ -423,7 +424,7 @@ def cityAdvise(iPlayer, iCityID):
 						#	city has NO defender at all, and the legacy path did not suppress either.
 						for iUnit in ENABLER.getAvailableUnits(iPlayer, iCityID):
 
-							if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND:
+							if UNIT.getDomain(iUnit) != DomainTypes.DOMAIN_LAND:
 								continue
 							iValue = CyPlayer.AI_unitValue(iUnit, UnitAITypes.UNITAI_CITY_DEFENSE, CyArea) * 2
 							iValue += CyPlayer.AI_unitValue(iUnit, UnitAITypes.UNITAI_ATTACK, CyArea)
@@ -465,7 +466,7 @@ def cityAdvise(iPlayer, iCityID):
 								#	else's faith spreads the wrong religion.
 								for iUnitX in ENABLER.getAvailableUnits(iPlayer, iCityID):
 
-									if INFO.getIntrinsic("UNIT_", iUnitX, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND: continue
+									if UNIT.getDomain(iUnitX) != DomainTypes.DOMAIN_LAND: continue
 									if not INFO.spreadsReligion(iUnitX, eStateReligion): continue
 
 									iValue = CyPlayer.AI_unitValue(iUnitX, UnitAITypes.UNITAI_MISSIONARY, CyArea)

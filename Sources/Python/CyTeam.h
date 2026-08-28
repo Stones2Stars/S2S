@@ -169,6 +169,13 @@ public:
 
 	bool isHasEmbassy(int /*TeamTypes*/ eIndex) const;
 
+	//	What THIS TEAM actually pays for a tech, in beakers -- COMPUTED game state, not authored info data.
+	int getTechResearchCost(int iTech) const;
+
+
+	//	The team's accumulated yield change for one IMPROVEMENT -- the read the scenario editor displays.
+	//	⚠ Read only: the engine keeps no team-level setter for it, so there is nothing to write back.
+	int getImprovementYieldChange(int iImprovement, int iYield) const;
 protected:
 	CvTeam* m_pTeam;
 };

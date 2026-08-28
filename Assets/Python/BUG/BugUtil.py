@@ -117,8 +117,9 @@
 ## Author: EmperorFool
 
 from CvPythonExtensions import *
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state.
-STATE = CyState()
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 import ColorUtil
 import CvEventInterface
 import sys
@@ -252,7 +253,7 @@ def log(level, message, args=()):
 
 def logToScreen(message):
 	"""Displays the message in the on-screen message area after escaping < and >."""
-	if STATE.isFinalInitialized():
+	if GAME.isFinalInitialized():
 		CyInterface().addImmediateMessage(escapeXml(message), "")
 
 def logToFile(message):

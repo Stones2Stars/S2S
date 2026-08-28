@@ -1,12 +1,13 @@
 from CvPythonExtensions import *
 
 # globals
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
+BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 GAME = GC.getGame()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
@@ -151,7 +152,7 @@ class CvFinanceAdvisor:
 					if iPartnerOwner < 0: continue
 
 					trade = CyCity.getTradeYield(YieldTypes.YIELD_COMMERCE, iProfitTimes100)
-					if STATE.getPlayerTeam(iPartnerOwner) == iTeam:
+					if GC.getPlayer(iPartnerOwner).getTeam() == iTeam:
 						iYield1 += trade
 					else: # Foreign Trade
 						iYield2 += trade
@@ -420,9 +421,9 @@ class CvFinanceAdvisor:
 
 		multipliers = []
 		for iType in range(GC.getNumBuildingInfos()):
-			info = GC.getBuildingInfo(iType)
-			iMultiplier = info.getCommerceModifier(eComGold)
-			iGlobalMultiplier = info.getGlobalCommerceModifier(eComGold)
+			#	The legacy "global" prefix was a SCOPE fragment: one kind read, asked at two scopes.
+			iMultiplier = INFO.getPercentCommerces("BUILDING_", iType, CascScope.CASC_SCOPE_CITY)[eComGold]
+			iGlobalMultiplier = INFO.getPercentCommerces("BUILDING_", iType, CascScope.CASC_SCOPE_EMPIRE)[eComGold]
 			if iMultiplier != 0 or iGlobalMultiplier != 0:
 				multipliers.append([iType, iMultiplier, iGlobalMultiplier, 0, 0.0])
 
@@ -452,11 +453,10 @@ class CvFinanceAdvisor:
 					if CyCity.isActiveBuilding(iType):
 						iBuildingGold = CyCity.getBuildingCommerceByBuilding(eComGold, iType)
 						if iBuildingGold:
-							info = GC.getBuildingInfo(iType)
-							if info.getFoundsCorporation() > -1:
+							if BUILDING.getHeadquartersCorporation(iType) > -1:
 								fCityHeadquarters += iBuildingGold
 								iHeadquartersCount += 1
-							elif info.getGlobalReligionCommerce() > -1:
+							elif INFO.isShrine(iType):
 								fCityShrines += iBuildingGold
 								iShrinesCount += 1
 							else:

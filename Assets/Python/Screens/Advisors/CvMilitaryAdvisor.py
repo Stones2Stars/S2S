@@ -6,13 +6,13 @@ import HandleInputUtil
 import UnitGrouper
 
 # globals
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()   # entity data: the context serves settings, CyInfo serves entities
 GAME = GC.getGame()
 MAP = GC.getMap()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 AFM = CyArtFileMgr()
@@ -236,8 +236,8 @@ class CvMilitaryAdvisor:
 				if not CyPlayerX.isAlive(): continue
 
 				for CyUnit in CyPlayerX.units():
-					if not STATE.isUnitDead(iPlayerX, CyUnit.getID()) and CyUnit.getVisualOwner() in self.selectedCivs:
-						if not CyUnit.isInvisible(iTeam, False) and CyUnit.plot().isVisible(iTeam, False):
+					if not CyUnit.isDead() and CyUnit.getVisualOwner() in self.selectedCivs:
+						if not CyUnit.isInvisible(iTeam) and GC.getMap().plot(CyUnit.getX(), CyUnit.getY()).isVisible(iTeam, False):
 							self.stats.processUnit(CyPlayer, CyTeam, CyUnit)
 
 		iColCyan	= GC.getInfoTypeForString("COLOR_CYAN")
@@ -310,10 +310,10 @@ class CvMilitaryAdvisor:
 					bUnitSelected = (iPlayerX, iUnitID) in self.selectedUnits
 					if self.bUnitDetails:
 						szTxt = CyUnit.getName()
-						iMovesBase = CyUnit.baseMoves()
+						iMovesBase = CyUnit.getRead()[UnitReadKind.UNIT_READ_BASE_MOVES]
 						if iMovesBase:
 							szTxt += " "
-							iMovesLeft = CyUnit.movesLeft()
+							iMovesLeft = CyUnit.getRead()[UnitReadKind.UNIT_READ_MOVES_LEFT]
 							if iMovesLeft == iMovesBase * fMoveDenominator:
 								szTxt1 = ""
 							else:
@@ -325,10 +325,10 @@ class CvMilitaryAdvisor:
 								szTxt += szTxt1 + "/"
 							szTxt += str(iMovesBase) + iconMoves
 
-						if CyUnit.getDomainType() == DomainTypes.DOMAIN_AIR:
-							strengthBase = CyUnit.airBaseCombatStr()
+						if CyUnit.getRead()[UnitReadKind.UNIT_READ_DOMAIN] == DomainTypes.DOMAIN_AIR:
+							strengthBase = CyUnit.getAirBaseCombatStr()
 						else:
-							strengthBase = CyUnit.baseCombatStr()
+							strengthBase = CyUnit.getBaseCombatStr()
 
 						if strengthBase:
 							szTxt += " "
@@ -361,7 +361,7 @@ class CvMilitaryAdvisor:
 
 					iPlayerX = CyUnit.getVisualOwner()
 					CyPlayerX = GC.getPlayer(iPlayerX)
-					iColor = STATE.getPlayerColorPrimary(iPlayerX)
+					iColor = GC.getPlayer(iPlayerX).getColorPrimary()
 					iX = MAP.getViewportXFromMapX(CyUnit.getX())
 					iY = MAP.getViewportYFromMapY(CyUnit.getY())
 					screen.setMinimapColor(MinimapModeTypes.MINIMAPMODE_MILITARY, iX, iY, iColor, 0.6)

@@ -51,14 +51,13 @@
 from CvPythonExtensions import *
 import CvUtil
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
 GAME = GC.getGame()
-STATE = CyState()
 ENABLER = CyEnabler()
-ACT = CyAct()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
@@ -243,22 +242,22 @@ def onCityAcquired(argsList):
 		iDrillCount = drillpromotiontech
 		while iDrillCount > 0:
 			iDrillCount -= 1
-			if not pNewUnit.isHasPromotion(PROMOTION_DRILL1):
-				pNewUnit.setHasPromotion(PROMOTION_DRILL1, True)
-			elif not pNewUnit.isHasPromotion(PROMOTION_DRILL2):
-				pNewUnit.setHasPromotion(PROMOTION_DRILL2, True)
-			elif not pNewUnit.isHasPromotion(PROMOTION_DRILL3):
-				pNewUnit.setHasPromotion(PROMOTION_DRILL3, True)
-			elif not pNewUnit.isHasPromotion(PROMOTION_DRILL4):
-				pNewUnit.setHasPromotion(PROMOTION_DRILL4, True)
+			if not pNewUnit.hasPromotion(PROMOTION_DRILL1):
+				pNewUnit.setPromotion(PROMOTION_DRILL1, True)
+			elif not pNewUnit.hasPromotion(PROMOTION_DRILL2):
+				pNewUnit.setPromotion(PROMOTION_DRILL2, True)
+			elif not pNewUnit.hasPromotion(PROMOTION_DRILL3):
+				pNewUnit.setPromotion(PROMOTION_DRILL3, True)
+			elif not pNewUnit.hasPromotion(PROMOTION_DRILL4):
+				pNewUnit.setPromotion(PROMOTION_DRILL4, True)
 
 		if bHasRailroad:
-			pNewUnit.setHasPromotion(PROMOTION_FLANKING1, True)
+			pNewUnit.setPromotion(PROMOTION_FLANKING1, True)
 			if bHasCombustion:
-				pNewUnit.setHasPromotion(PROMOTION_FLANKING2, True)
+				pNewUnit.setPromotion(PROMOTION_FLANKING2, True)
 		if bHasRadio:
 			if GAME.getSorenRandNum( 2, "Random Morale"):
-				pNewUnit.setHasPromotion(PROMOTION_MORALE, True)
+				pNewUnit.setPromotion(PROMOTION_MORALE, True)
 
 		iCombatCount = combatpromotiontech
 		if bHasFascism:
@@ -267,44 +266,44 @@ def onCityAcquired(argsList):
 				iCombatCount += 1
 		while iCombatCount:
 			iCombatCount -= 1
-			if not pNewUnit.isHasPromotion(p_combat1):
-				pNewUnit.setHasPromotion(p_combat1, True)
-			elif not pNewUnit.isHasPromotion(p_combat2):
-				pNewUnit.setHasPromotion(p_combat2, True)
-			elif not pNewUnit.isHasPromotion(p_combat3):
-				pNewUnit.setHasPromotion(p_combat3, True)
-			elif not pNewUnit.isHasPromotion(p_combat4):
-				pNewUnit.setHasPromotion(p_combat4, True)
-			elif not pNewUnit.isHasPromotion(p_combat5):
-				pNewUnit.setHasPromotion(p_combat5, True)
-			elif not pNewUnit.isHasPromotion(p_combat6):
-				pNewUnit.setHasPromotion(p_combat6, True)
+			if not pNewUnit.hasPromotion(p_combat1):
+				pNewUnit.setPromotion(p_combat1, True)
+			elif not pNewUnit.hasPromotion(p_combat2):
+				pNewUnit.setPromotion(p_combat2, True)
+			elif not pNewUnit.hasPromotion(p_combat3):
+				pNewUnit.setPromotion(p_combat3, True)
+			elif not pNewUnit.hasPromotion(p_combat4):
+				pNewUnit.setPromotion(p_combat4, True)
+			elif not pNewUnit.hasPromotion(p_combat5):
+				pNewUnit.setPromotion(p_combat5, True)
+			elif not pNewUnit.hasPromotion(p_combat6):
+				pNewUnit.setPromotion(p_combat6, True)
 
 	# plot type depending promotions
 
 		# WOODSMAN promotion
 		if CyPlot.getFeatureType() in (ft_forest, ft_jungle):
-			pNewUnit.setHasPromotion(PROMOTION_WOODSMAN1, True)
+			pNewUnit.setPromotion(PROMOTION_WOODSMAN1, True)
 			if bHasAssemblyLine:
 				# 75% chance
 				if GAME.getSorenRandNum(4, "Random Woodsman2"):
-					pNewUnit.setHasPromotion(PROMOTION_WOODSMAN2, True)
+					pNewUnit.setPromotion(PROMOTION_WOODSMAN2, True)
 					if bHasIndustrialism:
 						# 75% chance, effectively 56%.
 						if GAME.getSorenRandNum(4, "Random Woodsman3"):
-							pNewUnit.setHasPromotion(PROMOTION_WOODSMAN3, True)
+							pNewUnit.setPromotion(PROMOTION_WOODSMAN3, True)
 
 		# GUERILLA promotion
 		if CyPlot.isHills():
-			pNewUnit.setHasPromotion(PROMOTION_GUERILLA1, True)
+			pNewUnit.setPromotion(PROMOTION_GUERILLA1, True)
 			if bHasAssemblyLine:
 				# 75% chance
 				if GAME.getSorenRandNum(4, "Random Guerilla2"):
-					pNewUnit.setHasPromotion(PROMOTION_GUERILLA2, True)
+					pNewUnit.setPromotion(PROMOTION_GUERILLA2, True)
 					if bHasIndustrialism:
 						# 75% chance, effectively 56%.
 						if GAME.getSorenRandNum(4, "Random Guerilla3"):
-							pNewUnit.setHasPromotion(PROMOTION_GUERILLA3, True)
+							pNewUnit.setPromotion(PROMOTION_GUERILLA3, True)
 
 ###########################################
 ### Random damage to nearby enemy units ###
@@ -368,8 +367,8 @@ def onCityAcquired(argsList):
 	if nPartisan > 1:
 		nPartisan -= 1
 		if iPop > nPartisan:
-			ACT.changeCityPopulation(CyCity.getOwner(), CyCity.getID(), -nPartisan)
-		elif iPop > 1: ACT.changeCityPopulation(CyCity.getOwner(), CyCity.getID(), 1 - iPop)
+			CyCity.changePopulation(-nPartisan)
+		elif iPop > 1: CyCity.changePopulation(1 - iPop)
 
 
 # Partisan War Prize
@@ -380,8 +379,8 @@ def onCombatResult(argsList):
 	iOwnerW, iUnitIdW = CyUnitW
 	iOwnerL, iUnitIdL = CyUnitL
 
-	aW = STATE.getUnitRead(iOwnerW, iUnitIdW)
-	aL = STATE.getUnitRead(iOwnerL, iUnitIdL)
+	aW = GC.getPlayer(iOwnerW).getUnit(iUnitIdW).getRead()
+	aL = GC.getPlayer(iOwnerL).getUnit(iUnitIdL).getRead()
 
 	if aW[UnitReadKind.UNIT_READ_TYPE] == GC.getInfoTypeForString('UNIT_PARTISAN'):
 		captureChance = None
@@ -395,14 +394,14 @@ def onCombatResult(argsList):
 			iPlayerW = iOwnerW
 
 			iUnitL = aL[UnitReadKind.UNIT_READ_TYPE]
-			aPosW = STATE.getUnitPosition(iOwnerW, iUnitIdW)
+			aPosW = GC.getPlayer(iOwnerW).getUnit(iUnitIdW).getPosition()
 			iX = aPosW[0]
 			iY = aPosW[1]
-			iNewUnit = ACT.createUnit(iPlayerW, iUnitL, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
+			pNewUnit = GC.getPlayer(iPlayerW).createUnit(iUnitL, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
 			# -1 = NO_PLAYER: the damage is not attributed to anyone. The old call passed `False`, which coerced
 			# to 0 and therefore blamed player 0 -- a latent bug this conversion drops rather than carries over.
-			ACT.setUnitDamage(iPlayerW, iNewUnit, 75, -1)
-			ACT.finishUnitMoves(iPlayerW, iNewUnit)
+			pNewUnit.setDamage(75, -1)
+			pNewUnit.finishMoves()
 
 			iPlayerAct = GAME.getActivePlayer()
 			if iPlayerAct == iPlayerW:

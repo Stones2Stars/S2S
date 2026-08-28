@@ -7,8 +7,9 @@ import CvScreensInterface
 GC = CyGlobalContext()
 GAME = GC.getGame()
 TRNSLTR = CyTranslator()
-# The one data-fetching library ([DEC-cy-not-fixed]): INFO = what an entity CARRIES,
-# ENABLER = "can I?" (its maintained verdict, never a re-derived prereq walk).
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 INFO = CyInfo()
 BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 ENABLER = CyEnabler()
@@ -214,8 +215,8 @@ class CityDemolish:
 				CyPlot = CyCity.plot()
 				for i in xrange(CyPlot.getNumUnits() - 1, -1, -1):
 					CyUnit = CyPlot.getUnit(i)
-					if CyUnit.getUnitType() == UNIT:
-						iExp = CyUnit.getExperience()
+					if CyUnit.getRead()[UnitReadKind.UNIT_READ_TYPE] == UNIT:
+						iExp = CyUnit.getRead()[UnitReadKind.UNIT_READ_EXPERIENCE] / 100
 						CyMessageControl().sendModNetMessage(902, iPlayer, CyUnit.getID(), 0, 0)
 						break
 

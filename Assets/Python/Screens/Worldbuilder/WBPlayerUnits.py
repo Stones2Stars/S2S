@@ -12,12 +12,11 @@ import WBPlotScreen
 import WBEventScreen
 import WorldBuilder
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
-STATE = CyState()
-ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TEXT = CyGameTextMgr()
@@ -142,20 +141,19 @@ class WBPlayerUnits:
 					if unitX.plot().getArea() != pUnit.plot().getArea():
 						bCopy = False
 				if iCopyType == 1:
-					if unitX.getUnitType() != pUnit.getUnitType():
+					if unitX.getRead()[UnitReadKind.UNIT_READ_TYPE] != pUnit.getRead()[UnitReadKind.UNIT_READ_TYPE]:
 						bCopy = False
 				elif iCopyType == 2:
-					if unitX.getUnitCombatType() != pUnit.getUnitCombatType():
+					if unitX.getRead()[UnitReadKind.UNIT_READ_COMBAT_CLASS] != pUnit.getRead()[UnitReadKind.UNIT_READ_COMBAT_CLASS]:
 						bCopy = False
 				elif iCopyType == 3:
-					if unitX.getDomainType() != pUnit.getDomainType():
+					if unitX.getRead()[UnitReadKind.UNIT_READ_DOMAIN] != pUnit.getRead()[UnitReadKind.UNIT_READ_DOMAIN]:
 						bCopy = False
 				elif iCopyType == 4:
-					if unitX.getGroupID() != pUnit.getGroupID() or unitX.getOwner() != pUnit.getOwner():
+					if unitX.getRead()[UnitReadKind.UNIT_READ_GROUP_ID] != pUnit.getRead()[UnitReadKind.UNIT_READ_GROUP_ID] or unitX.getOwner() != pUnit.getOwner():
 						bCopy = False
 				elif iCopyType == 5:
-					loopGroup = unitX.getGroup()
-					if loopGroup.getActivityType() != iActivityType:
+					if unitX.getRead()[UnitReadKind.UNIT_READ_ACTIVITY] != iActivityType:
 						bCopy = False
 				if bCopy:
 					lUnits.append([unitX.getOwner(), unitX.getID()])
@@ -226,9 +224,9 @@ class WBPlayerUnits:
 			iRow = screen.appendTableRow("WBUnitList")
 
 			iStatus = 0
-			if loopUnit.movesLeft() > 0:
+			if loopUnit.getRead()[UnitReadKind.UNIT_READ_MOVES_LEFT] > 0:
 				iStatus = 1
-			if loopUnit.getGroup().readyToMove(False):
+			if loopUnit.isReadyToMove(False):
 				iStatus = 2
 			sColor = CyTranslator().getText("[COLOR_NEGATIVE_TEXT]", ())
 			if iUnitID == loopUnit.getID() and iUnitOwner == loopUnit.getOwner():
@@ -238,9 +236,9 @@ class WBPlayerUnits:
 			screen.setTableText("WBUnitList", 1, iRow, str(iStatus), lStatus[iStatus], WidgetTypes.WIDGET_PYTHON, 1043, iStatus, 1<<0)
 			screen.setTableText("WBUnitList", 2, iRow, "<font=3>" + sColor + loopUnit.getName() + "</color></font>", loopUnit.getButton(), WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<0)
 			screen.setTableInt("WBUnitList", 3, iRow, "<font=3>" + str(loopUnit.getID()) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<2)
-			screen.setTableInt("WBUnitList", 4, iRow, "<font=3>" + str(loopUnit.getLevel()) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<2)
-			screen.setTableInt("WBUnitList", 5, iRow, "<font=3>" + str(loopUnit.baseCombatStr()) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<2)
-			screen.setTableInt("WBUnitList", 6, iRow, "<font=3>" + str(loopUnit.baseMoves()) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<2)
+			screen.setTableInt("WBUnitList", 4, iRow, "<font=3>" + str(loopUnit.getRead()[UnitReadKind.UNIT_READ_LEVEL]) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<2)
+			screen.setTableInt("WBUnitList", 5, iRow, "<font=3>" + str(loopUnit.getBaseCombatStr()) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<2)
+			screen.setTableInt("WBUnitList", 6, iRow, "<font=3>" + str(loopUnit.getRead()[UnitReadKind.UNIT_READ_BASE_MOVES]) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<2)
 		self.placeUnitMap()
 
 	def placeCurrentCity(self):
@@ -369,9 +367,9 @@ class WBPlayerUnits:
 
 		lTemp = []
 		for i in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
-			iAmount = pCity.getCommerceRateTimes100(i)
+			iAmount = pCity.getCommerces()[i]
 			if iAmount <= 0: continue
-			sTemp = u"%d.%02d%c" %(pCity.getCommerceRate(i), pCity.getCommerceRateTimes100(i)%100, TEXT.getSymbolChar("COMMERCE_", i))
+			sTemp = u"%d.%02d%c" %(pCity.getCommerces()[i] / 100, pCity.getCommerces()[i] % 100, TEXT.getSymbolChar("COMMERCE_", i))
 			lTemp.append(sTemp)
 		if len(lTemp) > 0:
 			sText += "\n"
@@ -393,13 +391,12 @@ class WBPlayerUnits:
 		return sText
 
 	def getUnitData(self, pUnit):
-		sText = CyGameTextMgr().getSpecificUnitHelp(pUnit, True, False)
-		pGroup = pUnit.getGroup()
-		iActivity = pGroup.getActivityType()
+		sText = CyGameTextMgr().getSpecificUnitHelp(pUnit.getOwner(), pUnit.getID(), True, False)
+		iActivity = pUnit.getRead()[UnitReadKind.UNIT_READ_ACTIVITY]
 		if iActivity > -1 and iActivity < len(WorldBuilder.Activities):
 			sText += "\n" + WorldBuilder.Activities[iActivity]
 		sText += "\n" + CyTranslator().getText("TXT_WORD_UNIT", ()) + " ID: " + str(pUnit.getID())
-		sText += "\n" + CyTranslator().getText("TXT_KEY_WB_GROUP", ()) + " ID: " + str(pUnit.getGroupID())
+		sText += "\n" + CyTranslator().getText("TXT_KEY_WB_GROUP", ()) + " ID: " + str(pUnit.getRead()[UnitReadKind.UNIT_READ_GROUP_ID])
 		sText += "\n" + "X: " + str(pUnit.getX()) + ", Y: " + str(pUnit.getY())
 		sText += "\n" + CyTranslator().getText("TXT_KEY_WB_AREA_ID", ()) + ": "  + str(pUnit.plot().getArea())
 		return sText
@@ -534,7 +531,7 @@ class WBPlayerUnits:
 			if pCityOwner:
 				pCity = pCityOwner.getCity(iCityID)
 				if pCity:
-					ACT.disbandCity(pCity.getOwner(), pCity.getID())
+					pCity.disband()
 					iCityID = -1
 					self.sortCities()
 					self.addPageSwitch()

@@ -1,10 +1,19 @@
 #include "CvGameCoreDLL.h"
+#include "CyPyList.h"
 #include "Engine/CvUnit.h"
 #include "CyArea.h"
 #include "CyPlot.h"
 #include "CySelectionGroup.h"
+#include "Infos/CvUnitInfo.h"   // canUpgradeToAny -- the type's own upgrade chain
+#include "AI/CvPlayerAI.h"   // GET_PLAYER -- convert resolves the SOURCE unit
 #include <boost/python/class.hpp>
 #include "CyUnit.h"
+#include "Engine/CvMap.h"   // a mission target is addressed by position
+#include "Engine/CvSelectionGroup.h"   // the order plane -- activity, missions, ready-to-move
+#include "Infrastructure/CvDLLInterfaceIFaceBase.h"   // selectGroup -- the engine action this relays
+
+//	The last Cy read attempted, reported in the crash line (CvGlobals.cpp).
+extern const char* g_szLastCyRead;
 
 //
 // Python wrapper class for CvUnit
@@ -15,29 +24,9 @@ CyUnit::CyUnit(CvUnit* pUnit) : m_pUnit(pUnit)
 	FAssert(m_pUnit != NULL);
 }
 
-void CyUnit::convert(const CyUnit& kUnit, bool bKillOriginal)
-{
-	m_pUnit->convert(kUnit.getUnit(), bKillOriginal);
-}
-
-void CyUnit::kill(bool bDelay, int /*PlayerTypes*/ ePlayer)
-{
-	m_pUnit->kill(bDelay, (PlayerTypes)ePlayer);
-}
-
 void CyUnit::NotifyEntity(int /*MissionTypes*/ eEvent)
 {
 	m_pUnit->NotifyEntity((MissionTypes)eEvent);
-}
-
-bool CyUnit::isActionRecommended(int i) const
-{
-	return m_pUnit->isActionRecommended(i);
-}
-
-void CyUnit::doCommand(CommandTypes eCommand, int iData1, int iData2)
-{
-	m_pUnit->doCommand(eCommand, iData1, iData2);
 }
 
 bool CyUnit::canEnterPlot(const CyPlot& kPlot, bool bAttack, bool bDeclareWar, bool bIgnoreLoad) const
@@ -48,17 +37,6 @@ bool CyUnit::canEnterPlot(const CyPlot& kPlot, bool bAttack, bool bDeclareWar, b
 		(bIgnoreLoad ? MoveCheck::IgnoreLoad : MoveCheck::None)
 	);
 }
-
-bool CyUnit::canHeal(const CyPlot& kPlot) const
-{
-	return m_pUnit->canHeal(kPlot.getPlot());
-}
-
-bool CyUnit::canFound(const CyPlot& kPlot, bool bTestVisible) const
-{
-	return m_pUnit->canFound(kPlot.getPlot(), bTestVisible);
-}
-
 
 int /*TechTypes*/ CyUnit::getDiscoveryTech() const
 {
@@ -75,11 +53,6 @@ int CyUnit::getHurryProduction(const CyPlot& kPlot) const
 	return m_pUnit->getHurryProduction(kPlot.getPlot());
 }
 
-bool CyUnit::canHurry(const CyPlot& kPlot, bool bTestVisible) const
-{
-	return m_pUnit->canHurry(kPlot.getPlot(), bTestVisible);
-}
-
 bool CyUnit::canTrade(const CyPlot& kPlot, bool bTestVisible) const
 {
 	return m_pUnit->canTrade(kPlot.getPlot(), bTestVisible);
@@ -88,16 +61,6 @@ bool CyUnit::canTrade(const CyPlot& kPlot, bool bTestVisible) const
 int CyUnit::getGreatWorkCulture(const CyPlot& kPlot) const
 {
 	return m_pUnit->getGreatWorkCulture();
-}
-
-int CyUnit::getEspionagePoints(const CyPlot& kPlot) const
-{
-	return m_pUnit->getEspionagePoints();
-}
-
-bool CyUnit::canUpgrade(int /*UnitTypes*/ eUnit, bool bTestVisible) const
-{
-	return m_pUnit->canUpgrade((UnitTypes)eUnit, bTestVisible);
 }
 
 int /*HandicapTypes*/ CyUnit::getHandicapType() const
@@ -115,11 +78,6 @@ int /*SpecialUnitTypes*/ CyUnit::getSpecialUnitType() const
 	return m_pUnit->getSpecialUnitType();
 }
 
-UnitTypes CyUnit::getCaptureUnitType() const
-{
-	return m_pUnit->getCaptureUnitType();
-}
-
 int /*UnitCombatTypes*/ CyUnit::getUnitCombatType() const
 {
 	return m_pUnit->getUnitCombatType();
@@ -135,11 +93,6 @@ bool CyUnit::isNPC() const
 	return m_pUnit->isNPC();
 }
 
-bool CyUnit::isHominid() const
-{
-	return m_pUnit->isHominid();
-}
-
 bool CyUnit::isHuman() const
 {
 	return m_pUnit->isHuman();
@@ -150,34 +103,9 @@ int CyUnit::baseMoves() const
 	return m_pUnit->baseMoves();
 }
 
-int CyUnit::maxMoves() const
-{
-	return m_pUnit->maxMoves();
-}
-
 int CyUnit::movesLeft() const
 {
 	return m_pUnit->movesLeft();
-}
-
-bool CyUnit::canMove() const
-{
-	return m_pUnit->canMove();
-}
-
-bool CyUnit::hasMoved() const
-{
-	return m_pUnit->hasMoved();
-}
-
-int CyUnit::nukeRange() const
-{
-	return m_pUnit->nukeRange();
-}
-
-bool CyUnit::isAnimal() const
-{
-	return m_pUnit->isAnimal();
 }
 
 bool CyUnit::isOnlyDefensive() const
@@ -188,16 +116,6 @@ bool CyUnit::isOnlyDefensive() const
 bool CyUnit::isFound() const
 {
 	return m_pUnit->isFound();
-}
-
-bool CyUnit::isGoldenAge() const
-{
-	return m_pUnit->isGoldenAge();
-}
-
-bool CyUnit::isInBattle() const
-{
-	return m_pUnit->isInBattle();
 }
 
 int CyUnit::getMaxHP() const
@@ -213,11 +131,6 @@ int CyUnit::getHP() const
 bool CyUnit::isHurt() const
 {
 	return m_pUnit->isHurt();
-}
-
-bool CyUnit::isDead() const
-{
-	return m_pUnit->isDead();
 }
 
 void CyUnit::setBaseCombatStr(int iCombat)
@@ -237,19 +150,9 @@ bool CyUnit::canFight() const
 }
 
 // Human at the boundary, as above.
-int CyUnit::airBaseCombatStr() const
+int CyUnit::getAirBaseCombatStr() const
 {
 	return m_pUnit->airBaseCombatStr() / 100;
-}
-
-bool CyUnit::canAirAttack() const
-{
-	return m_pUnit->canAirAttack();
-}
-
-bool CyUnit::isAutomated() const
-{
-	return m_pUnit->isAutomated();
 }
 
 bool CyUnit::isAutoPromoting() const
@@ -270,21 +173,6 @@ bool CyUnit::isWaiting() const
 bool CyUnit::isFortifyable() const
 {
 	return m_pUnit->isFortifyable();
-}
-
-int CyUnit::experienceNeeded() const
-{
-	return m_pUnit->experienceNeeded();
-}
-
-bool CyUnit::isInvisible(int /*TeamTypes*/ eTeam, bool bDebug) const
-{
-	return m_pUnit->isInvisible((TeamTypes) eTeam, bDebug);
-}
-
-bool CyUnit::isNukeImmune() const
-{
-	return m_pUnit->isNukeImmune();
 }
 
 int CyUnit::bombardRate() const
@@ -327,24 +215,9 @@ int CyUnit::getGroupID() const
 	return m_pUnit->getGroupID();
 }
 
-bool CyUnit::isInGroup() const
-{
-	return m_pUnit->isInGroup();
-}
-
-bool CyUnit::isGroupHead() const
-{
-	return m_pUnit->isGroupHead();
-}
-
 CySelectionGroup* CyUnit::getGroup() const
 {
 	return new CySelectionGroup(m_pUnit->getGroup());
-}
-
-int CyUnit::getHotKeyNumber() const
-{
-	return m_pUnit->getHotKeyNumber();
 }
 
 int CyUnit::getX() const
@@ -381,11 +254,6 @@ int CyUnit::getDamage() const
 	return m_pUnit->getDamage();
 }
 
-void CyUnit::setDamage(int iNewValue, int /*PlayerTypes*/ ePlayer)
-{
-	m_pUnit->setDamage(iNewValue, (PlayerTypes)ePlayer);
-}
-
 void CyUnit::changeDamage(int iChange, int /*PlayerTypes*/ ePlayer)
 {
 	m_pUnit->changeDamage(iChange, (PlayerTypes)ePlayer);
@@ -396,34 +264,14 @@ int CyUnit::getMoves() const
 	return m_pUnit->getMoves();
 }
 
-void CyUnit::setMoves(int iNewValue)
-{
-	m_pUnit->setMoves(iNewValue);
-}
-
 void CyUnit::changeMoves(int iChange)
 {
 	m_pUnit->changeMoves(iChange);
 }
 
-void CyUnit::finishMoves()
-{
-	m_pUnit->finishMoves();
-}
-
 int CyUnit::getExperience() const
 {
 	return m_pUnit->getExperience();
-}
-
-void CyUnit::setExperience(int iNewValue)
-{
-	m_pUnit->setExperience(iNewValue);
-}
-
-void CyUnit::changeExperience(int iChange, int iMax, bool bFromCombat, bool bInBorders, bool bUpdateGlobal)
-{
-	m_pUnit->changeExperience(iChange, iMax, bFromCombat, bInBorders, bUpdateGlobal);
 }
 
 int CyUnit::getLevel() const
@@ -471,21 +319,6 @@ bool CyUnit::isRiver() const
 	return m_pUnit->isRiver();
 }
 
-int CyUnit::getRevoltProtection() const
-{
-	return m_pUnit->revoltProtectionTotal();
-}
-
-int CyUnit::getPillageChange() const
-{
-	return m_pUnit->getPillageChange();
-}
-
-int CyUnit::getUpgradeDiscount() const
-{
-	return m_pUnit->getUpgradeDiscount();
-}
-
 bool CyUnit::isMadeAttack() const
 {
 	return m_pUnit->isMadeAttack();
@@ -521,11 +354,6 @@ int CyUnit::getOwner() const
 	return m_pUnit->getOwner();
 }
 
-int CyUnit::getVisualOwner() const
-{
-	return m_pUnit->getVisualOwner();
-}
-
 int CyUnit::getTeam() const
 {
 	return m_pUnit->getTeam();
@@ -539,11 +367,6 @@ int /*UnitTypes*/ CyUnit::getUnitType() const
 int /*UnitTypes*/ CyUnit::getLeaderUnitType() const
 {
 	return m_pUnit->getLeaderUnitType();
-}
-
-void CyUnit::setLeaderUnitType(int leaderUnitType)
-{
-	m_pUnit->setLeaderUnitType((UnitTypes) leaderUnitType);
 }
 
 CyUnit* CyUnit::getTransportUnit() const
@@ -567,49 +390,9 @@ std::wstring CyUnit::getName() const
 	return m_pUnit->getName();
 }
 
-std::wstring CyUnit::getNameForm(int iForm) const
-{
-	return m_pUnit->getName((uint)iForm);
-}
-
 std::wstring CyUnit::getNameKey() const
 {
 	return m_pUnit->getNameKey();
-}
-
-void CyUnit::setName(std::wstring szNewValue)
-{
-	m_pUnit->setName(szNewValue);
-}
-
-std::string CyUnit::getScriptData() const
-{
-	return m_pUnit->getScriptData();
-}
-
-void CyUnit::setScriptData(std::string szNewValue)
-{
-	m_pUnit->setScriptData(szNewValue.c_str());
-}
-
-bool CyUnit::canAcquirePromotion(int /*PromotionTypes*/ ePromotion) const
-{
-	return m_pUnit->canAcquirePromotion((PromotionTypes) ePromotion);
-}
-
-bool CyUnit::canAcquirePromotionAny() const
-{
-	return m_pUnit->canAcquirePromotionAny();
-}
-
-bool CyUnit::isPromotionValid(int /*PromotionTypes*/ ePromotion) const
-{
-	return m_pUnit->isPromotionValid((PromotionTypes) ePromotion);
-}
-
-bool CyUnit::isPromotionOverriden(int /*PromotionTypes*/eIndex) const
-{
-	return m_pUnit->isPromotionOverriden((PromotionTypes)eIndex);
 }
 
 bool CyUnit::isHasPromotion(int /*PromotionTypes*/eIndex) const
@@ -627,29 +410,14 @@ void CyUnit::setHasPromotion(int /*PromotionTypes*/ eIndex, bool bNewValue)
 	m_pUnit->setHasPromotion((PromotionTypes) eIndex, bNewValue);
 }
 
-int CyUnit::captureProbabilityTotal() const
-{
-	return m_pUnit->captureProbabilityTotal();
-}
-
-int CyUnit::captureResistanceTotal() const
-{
-	return m_pUnit->captureResistanceTotal();
-}
-
 int /*UnitAITypes*/ CyUnit::getUnitAIType() const
 {
 	return m_pUnit->AI_getUnitAIType();
 }
 
-void CyUnit::setUnitAIType(int /*UnitAITypes*/ iNewValue)
+void CyUnit::setAIType(int /*UnitAITypes*/ iNewValue)
 {
 	m_pUnit->AI_setUnitAIType((UnitAITypes)iNewValue);
-}
-
-bool CyUnit::IsSelected() const
-{
-	return m_pUnit->IsSelected();
 }
 
 std::string CyUnit::getButton() const
@@ -662,63 +430,448 @@ void CyUnit::setCommander(bool bNewValue)
 	m_pUnit->setCommander(bNewValue);
 }
 
-bool CyUnit::isCommander() const
-{
-	return m_pUnit->isCommander();
-}
-
 void CyUnit::setCommodore(bool bNewValue)
 {
 	m_pUnit->setCommodore(bNewValue);
 }
 
-bool CyUnit::isCommodore() const
-{
-	return m_pUnit->isCommodore();
-}
-
-int CyUnit::getControlPointsLeft() const
-{
-	return m_pUnit->getCommanderComp()->getControlPointsLeft();
-}
-
-int CyUnit::getControlPoints() const
-{
-	return m_pUnit->getCommanderComp()->getControlPoints();
-}
-
-int CyUnit::getCommodoreControlPointsLeft() const
-{
-	return m_pUnit->getCommodoreComp()->getControlPointsLeft();
-}
-
-int CyUnit::getCommodoreControlPoints() const
-{
-	return m_pUnit->getCommodoreComp()->getControlPoints();
-}
-
-float CyUnit::getRealExperience() const
-{
-	return (float)m_pUnit->getExperience100() / 100;
-}
-
-bool CyUnit::isHiddenNationality() const
-{
-	return m_pUnit->isHiddenNationality();
-}
-
 //	⚖ THE IDENTITY SET (CyUnit.h) plus the unit's OWN data, read from the unit's OWN accessor
 //	(docs/architecture/patterns.md §THE PYTHON READ BOUNDARY, accessor homing). A unit's hit points and
-//	whether it can fight are the unit's, so they are asked of the unit -- `STATE.getUnitFlags(owner, id)` is the
-//	mishomed shape that ruling names, and its tell is the NOUN in the method name: an accessor that owns its
-//	subject needs none.
-//	⛔ READS ONLY -- the cut was DIRECTIONAL. A mutation stays on the ACTION surface (`CyAct::setUnitDamage`,
-//	`killUnit`), which routes through the engine's own setter so the DOMAIN fact still fires.
+//	whether it can fight are the unit's, so they are asked of the unit -- a flat `getUnitFlags(owner, id)` is
+//	the mishomed shape that ruling names, and its tell is the NOUN in the method name: an accessor that owns
+//	its subject needs none.
+//	⚖ The WRITES live here too (`setDamage`, `kill`), each routing through the engine's own setter so the
+//	DOMAIN fact still fires -- what was cut was the legacy per-field contract, never the mutation itself.
 //	⚑ Added ON DEMAND, for call sites that want them ([patterns.md] § THE PYTHON READ BOUNDARY: endpoint COUNT is
 //	not the axis, findable homing is) -- never a pre-emptive re-publication of the legacy per-field contract.
+bool CyUnit::canAcquirePromotion(int iPromotion) const
+{
+	g_szLastCyRead = "CyUnit::canAcquirePromotion";
+	const CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL || iPromotion < 0 || iPromotion >= GC.getNumPromotionInfos())
+	{
+		return false;
+	}
+	return pUnit->canAcquirePromotion((PromotionTypes)iPromotion);
+}
+bool CyUnit::canUpgrade(int iToUnit, bool bTestVisible) const
+{
+	g_szLastCyRead = "CyUnit::canUpgrade";
+	const CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL || iToUnit < 0 || iToUnit >= GC.getNumUnitInfos())
+	{
+		return false;
+	}
+	return pUnit->canUpgrade((UnitTypes)iToUnit, bTestVisible);
+}
+bool CyUnit::canUpgradeToAny() const
+{
+	PERF_SCOPE("CyUnit::canUpgradeToAny", -1);
+	g_szLastCyRead = "CyUnit::canUpgradeToAny";
+	const CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL) return false;
+	//	⛔ ASK THE UNIT WHAT IT UPGRADES TO -- do NOT scan the registry asking every type "can I become you?".
+	const std::vector<int>& upgrades = pUnit->getUnitInfo().getUpgradesTo();
+	for (size_t i = 0; i < upgrades.size(); ++i)
+	{
+		if (pUnit->canUpgrade((UnitTypes)upgrades[i], true)) return true;
+	}
+	return false;
+}
+int CyUnit::getNumVisiblePotentialEnemyDefenders(int iX, int iY) const
+{
+	g_szLastCyRead = "CyUnit::getNumVisiblePotentialEnemyDefenders";
+	const CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL) return 0;
+	const CvPlot* pPlot = GC.getMap().plot(iX, iY);
+	return pPlot ? pPlot->getNumVisiblePotentialEnemyDefenders(pUnit) : 0;
+}
+int CyUnit::getBaseCombatStr() const
+{
+	g_szLastCyRead = "CyUnit::getBaseCombatStr";
+	const CvUnit* pUnit = m_pUnit;
+	return pUnit ? pUnit->baseCombatStrHuman() : 0;
+}
+python::list CyUnit::getFlags() const
+{
+	PERF_SCOPE("CyUnit::getFlags", -1);
+	g_szLastCyRead = "CyUnit::getFlags";
+	int values[NUM_UNIT_FLAGS] = { 0 };
+	const CvUnit* pUnit = m_pUnit;
+	if (pUnit) pUnit->getUnitFlags(values);
+	return cyToList(values);
+}
+std::wstring CyUnit::getNameNoDesc() const
+{
+	g_szLastCyRead = "CyUnit::getNameNoDesc";
+	const CvUnit* pUnit = m_pUnit;
+	return pUnit ? std::wstring(pUnit->getNameNoDesc()) : std::wstring();
+}
+python::list CyUnit::getPosition() const
+{
+	int values[2] = { -1, -1 };   // -1,-1 = no such unit, or the unit is OFF-MAP (a real state)
+	const CvUnit* pUnit = m_pUnit;
+	if (pUnit)
+	{
+		//	⛔ THE ON-MAP TEST IS THE COORDINATE RANGE, never `plot() != NULL` alone: plot() answers NULL for
+		//	exactly ONE pair (INVALID_PLOT_COORD) and resolves any OTHER out-of-range value to a WRONG plot
+		//	([unit-lifecycle.md]). A unit carrying a stored -1 would otherwise hand back a real but wrong tile,
+		//	which is worse than answering "off map" -- and saves do contain such units.
+		const int iX = pUnit->getX();
+		const int iY = pUnit->getY();
+		if (iX >= 0 && iY >= 0 && iX < GC.getMap().getGridWidth() && iY < GC.getMap().getGridHeight())
+		{
+			values[0] = iX;
+			values[1] = iY;
+		}
+	}
+	return cyToList(values);
+}
+python::list CyUnit::getPromotions() const
+{
+	PERF_SCOPE("CyUnit::getPromotions", -1);
+	g_szLastCyRead = "CyUnit::getPromotions";
+	python::list ids = python::list();
+	const CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL) return ids;
+	//	⛔ WALK WHAT THE UNIT HOLDS -- do NOT sweep the promotion registry asking "do you have this one?". The
+	//	unit keys only the promotions it actually carries, and isHasPromotion is a keyed LOOKUP, so a registry
+	//	sweep is ~1500 map searches per unit per redraw to rediscover a list the unit already has.
+	const std::map<PromotionTypes, PromotionKeyedInfo>& held = pUnit->getPromotionKeyedInfo();
+	for (std::map<PromotionTypes, PromotionKeyedInfo>::const_iterator it = held.begin(); it != held.end(); ++it)
+	{
+		if (it->second.m_bHasPromotion && !pUnit->isPromotionOverriden(it->first))
+		{
+			ids.append((int)it->first);
+		}
+	}
+	return ids;
+}
+python::list CyUnit::getRead() const
+{
+	PERF_SCOPE("CyUnit::getRead", -1);
+	g_szLastCyRead = "CyUnit::getRead";
+	int values[NUM_UNIT_READS] = { 0 };
+	values[UNIT_READ_TYPE]     = -1;
+	values[UNIT_READ_ACTIVITY] = (int)NO_ACTIVITY;
+	values[UNIT_READ_AUTOMATE] = (int)NO_AUTOMATE;
+	values[UNIT_READ_MISSION]  = (int)NO_MISSION;
+	CvUnit* pUnit = m_pUnit;
+	if (pUnit) pUnit->getUnitRead(values);
+	return cyToList(values);
+}
+std::string CyUnit::getScriptData() const
+{
+	g_szLastCyRead = "CyUnit::getScriptData";
+	const CvUnit* pUnit = m_pUnit;
+	return pUnit ? pUnit->getScriptData() : std::string();
+}
+int CyUnit::getVisualOwner() const
+{
+	g_szLastCyRead = "CyUnit::getVisualOwner";
+	const CvUnit* pUnit = m_pUnit;
+	return pUnit ? (int)pUnit->getVisualOwner() : -1;
+}
+bool CyUnit::hasCombat(int iUnitCombat) const
+{
+	g_szLastCyRead = "CyUnit::hasCombat";
+	const CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL || iUnitCombat < 0 || iUnitCombat >= GC.getNumUnitCombatInfos())
+	{
+		return false;
+	}
+	return pUnit->isHasUnitCombat((UnitCombatTypes)iUnitCombat);
+}
+bool CyUnit::hasPromotion(int iPromotion) const
+{
+	g_szLastCyRead = "CyUnit::hasPromotion";
+	const CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL || iPromotion < 0 || iPromotion >= GC.getNumPromotionInfos())
+	{
+		return false;
+	}
+	return pUnit->isHasPromotion((PromotionTypes)iPromotion);
+}
+bool CyUnit::isActionRecommended(int iAction) const
+{
+	PERF_SCOPE("CyUnit::isActionRecommended", -1);
+	g_szLastCyRead = "CyUnit::isActionRecommended";
+	const CvUnit* pUnit = m_pUnit;
+	//	BOTH bounds: the action id indexes the action registry, so an unchecked upper bound is an out-of-bounds
+	//	read rather than a wrong answer -- and FASSERT_BOUNDS is compiled out of Release, which is where it runs.
+	if (pUnit == NULL || iAction < 0 || iAction >= GC.getNumActionInfos())
+	{
+		return false;
+	}
+	return pUnit->isActionRecommended(iAction);
+}
+bool CyUnit::isDead() const
+{
+	g_szLastCyRead = "CyUnit::isDead";
+	const CvUnit* pUnit = m_pUnit;
+	return pUnit ? pUnit->isDead() : true;
+}
+bool CyUnit::isHiddenNationality() const
+{
+	g_szLastCyRead = "CyUnit::isHiddenNationality";
+	const CvUnit* pUnit = m_pUnit;
+	return pUnit ? pUnit->isHiddenNationality() : false;
+}
+bool CyUnit::isInvisible(int iTeam) const
+{
+	PERF_SCOPE("CyUnit::isInvisible", -1);
+	g_szLastCyRead = "CyUnit::isInvisible";
+	const CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL || iTeam < 0 || iTeam >= MAX_TEAMS)
+	{
+		return false;
+	}
+	return pUnit->isInvisible((TeamTypes)iTeam, false);
+}
+bool CyUnit::isPromotionOverridden(int iPromotion) const
+{
+	g_szLastCyRead = "CyUnit::isPromotionOverridden";
+	const CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL || iPromotion < 0 || iPromotion >= GC.getNumPromotionInfos())
+	{
+		return false;
+	}
+	return pUnit->isPromotionOverriden((PromotionTypes)iPromotion);
+}
+bool CyUnit::isPromotionValid(int iPromotion) const
+{
+	g_szLastCyRead = "CyUnit::isPromotionValid";
+	const CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL || iPromotion < 0 || iPromotion >= GC.getNumPromotionInfos())
+	{
+		return false;
+	}
+	return pUnit->isPromotionValid((PromotionTypes)iPromotion);
+}
+bool CyUnit::changeExperience(int iChange, int iMax,
+							  bool bFromCombat, bool bInBorders, bool bUpdateGlobal) const
+{
+	CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL) return false;
+	pUnit->changeExperience(iChange, iMax, bFromCombat, bInBorders, bUpdateGlobal);
+	return true;
+}
+bool CyUnit::doCommand(int iCommand, int iData1, int iData2) const
+{
+	if (iCommand < 0 || iCommand >= NUM_COMMAND_TYPES) return false;
+	CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL) return false;
+	pUnit->doCommand((CommandTypes)iCommand, iData1, iData2);
+	return true;
+}
+bool CyUnit::finishMoves() const
+{
+	CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL) return false;
+	pUnit->finishMoves();
+	return true;
+}
+bool CyUnit::kill(bool bDelay, int iByPlayer) const
+{
+	CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL) return false;
+	pUnit->kill(bDelay, (iByPlayer >= 0 && iByPlayer < MAX_PLAYERS) ? (PlayerTypes)iByPlayer : NO_PLAYER);
+	return true;
+}
+bool CyUnit::setDamage(int iDamage, int iByPlayer) const
+{
+	CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL) return false;
+	//	⚠ setDamage can KILL the unit (it ends in `if (isDead()) kill(...)`, [unit-lifecycle.md]), so the caller
+	//	must not assume the unit survives this call -- exactly as an engine-side caller must not.
+	pUnit->setDamage(iDamage, (iByPlayer >= 0 && iByPlayer < MAX_PLAYERS) ? (PlayerTypes)iByPlayer : NO_PLAYER);
+	return true;
+}
+bool CyUnit::setExperience(int iExperience) const
+{
+	CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL) return false;
+	pUnit->setExperience(iExperience);
+	return true;
+}
+bool CyUnit::setLeaderUnitType(int iLeaderUnitType) const
+{
+	if (iLeaderUnitType >= GC.getNumUnitInfos()) return false;
+	CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL) return false;
+	//	-1 CLEARS the attachment, which is a real call (the beastmaster link is dropped when the unit dies), so
+	//	a negative id is passed through rather than refused.
+	pUnit->setLeaderUnitType((UnitTypes)iLeaderUnitType);
+	return true;
+}
+bool CyUnit::setMoves(int iMoves) const
+{
+	//	Moves SPENT, in move points -- the partial-moves sibling of finishUnitMoves (an event spawn that
+	//	leaves its unit a point rather than the whole allowance or none).
+	CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL) return false;
+	pUnit->setMoves(iMoves);
+	return true;
+}
+bool CyUnit::setName(std::wstring szName) const
+{
+	CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL) return false;
+	pUnit->setName(CvWString(szName));
+	return true;
+}
+bool CyUnit::setPromotion(int iPromotion, bool bNewValue) const
+{
+	if (iPromotion < 0 || iPromotion >= GC.getNumPromotionInfos()) return false;
+	CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL) return false;
+	pUnit->setHasPromotion((PromotionTypes)iPromotion, bNewValue);
+	return true;
+}
+bool CyUnit::setScriptData(std::string szData) const
+{
+	CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL) return false;
+	pUnit->setScriptData(szData);
+	return true;
+}
+bool CyUnit::setStatus(int iStatus, int iTurns) const
+{
+	if (iStatus < 0 || iStatus >= (int)NUM_UNIT_STATUSES) return false;
+	CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL) return false;
+	//	The ONE write path, so the 0-crossing announces and the load lands through it too ([state.md]).
+	pUnit->setStatus((UnitStatus)iStatus, iTurns);
+	return true;
+}
+
+bool CyUnit::selectGroup(bool bShift, bool bCtrl, bool bAlt) const
+{
+	CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL) return false;
+	gDLL->getInterfaceIFace()->selectGroup(pUnit, bShift, bCtrl, bAlt);
+	return true;
+}
+
+bool CyUnit::convert(int iFromPlayer, int iFromUnit, bool bKillOriginal) const
+{
+	CvUnit* pUnit = m_pUnit;
+	if (iFromPlayer < 0 || iFromPlayer >= MAX_PLAYERS) return false;
+	CvUnit* pFrom = GET_PLAYER((PlayerTypes)iFromPlayer).getUnit(iFromUnit);
+	if (pUnit == NULL || pFrom == NULL) return false;
+	pUnit->convert(pFrom, bKillOriginal);
+	return true;
+}
+
+bool CyUnit::setActivity(int iActivityType)
+{
+	if (m_pUnit == NULL || m_pUnit->getGroup() == NULL) return false;
+	m_pUnit->getGroup()->setActivityType((ActivityTypes)iActivityType);
+	return true;
+}
+
+bool CyUnit::isReadyToMove(bool bAny)
+{
+	if (m_pUnit == NULL || m_pUnit->getGroup() == NULL) return false;
+	return m_pUnit->getGroup()->readyToMove(bAny);
+}
+
+bool CyUnit::canStartMission(int iMission, int iData1, int iData2, int iX, int iY, bool bTestVisible) const
+{
+	if (m_pUnit == NULL || m_pUnit->getGroup() == NULL) return false;
+	CvPlot* pPlot = GC.getMap().plot(iX, iY);
+	return m_pUnit->getGroup()->canStartMission(iMission, iData1, iData2, pPlot, bTestVisible);
+}
+
+bool CyUnit::pushMission(int iMission, int iData1, int iData2, int iFlags, bool bAppend, bool bManual, int iMissionAI, int iX, int iY)
+{
+	if (m_pUnit == NULL || m_pUnit->getGroup() == NULL) return false;
+	CvPlot* pPlot = GC.getMap().plot(iX, iY);
+	m_pUnit->getGroup()->pushMission((MissionTypes)iMission, iData1, iData2, iFlags, bAppend, bManual,
+		(MissionAITypes)iMissionAI, pPlot, m_pUnit);
+	return true;
+}
+
+int CyUnit::getStatus(int iStatus) const
+{
+	if (m_pUnit == NULL || iStatus < 0 || iStatus >= NUM_UNIT_STATUSES) return 0;
+	return m_pUnit->getStatus((UnitStatus)iStatus);
+}
+
 void CyUnit::pythonPublish()
 {
 	python::class_<CyUnit>("CyUnit", python::no_init)
+		//	==== THE EDITOR PLANE ====
+		//	Arbitrary engine fields a scenario editor pokes. They are deliberately NOT read KINDS: nothing
+		//	in the game model asks 'is this unit cargo', so they stay named verbs on the unit rather than
+		//	group-read slots ([python-read-map.md] par.7). Every write routes through the engine's own
+		//	setter, so the domain fact still fires.
+		.def("cargoSpace", &CyUnit::cargoSpace)
+		.def("changeCargoSpace", &CyUnit::changeCargoSpace)
+		.def("getCargo", &CyUnit::getCargo)
+		.def("isFull", &CyUnit::isFull)
+		.def("setTransportUnit", &CyUnit::setTransportUnit)
+		.def("isMadeAttack", &CyUnit::isMadeAttack)
+		.def("setMadeAttack", &CyUnit::setMadeAttack)
+		.def("isMadeInterception", &CyUnit::isMadeInterception)
+		.def("setMadeInterception", &CyUnit::setMadeInterception)
+		.def("isPromotionReady", &CyUnit::isPromotionReady)
+		.def("setPromotionReady", &CyUnit::setPromotionReady)
+		.def("setBaseCombatStr", &CyUnit::setBaseCombatStr)
+		.def("setXY", &CyUnit::setXY)
+		.def("setLevel", &CyUnit::setLevel)
+		.def("changeMoves", &CyUnit::changeMoves)
+		.def("getMoves", &CyUnit::getMoves)
+		.def("changeDamage", &CyUnit::changeDamage)
+		.def("setAIType", &CyUnit::setAIType)
+		.def("setActivity", &CyUnit::setActivity)
+		.def("isReadyToMove", &CyUnit::isReadyToMove)
+		.def("canStartMission", &CyUnit::canStartMission)
+		.def("pushMission", &CyUnit::pushMission)
+		.def("getAirBaseCombatStr", &CyUnit::getAirBaseCombatStr)
+		.def("getSpecialUnitType", &CyUnit::getSpecialUnitType)
+		.def("getDiscoveryTech", &CyUnit::getDiscoveryTech)
+		.def("getDiscoverResearch", &CyUnit::getDiscoverResearch)
+		.def("getGreatWorkCulture", &CyUnit::getGreatWorkCulture)
+		.def("getHurryProduction", &CyUnit::getHurryProduction)
+		.def("getTransportUnit", &CyUnit::getTransportUnit, python::return_value_policy<python::manage_new_object>())
+		.def("selectGroup", &CyUnit::selectGroup)
+		.def("convert", &CyUnit::convert)
+		.def("canAcquirePromotion", &CyUnit::canAcquirePromotion)
+		.def("canUpgrade", &CyUnit::canUpgrade)
+		.def("canUpgradeToAny", &CyUnit::canUpgradeToAny)
+		.def("getNumVisiblePotentialEnemyDefenders", &CyUnit::getNumVisiblePotentialEnemyDefenders)
+		.def("getBaseCombatStr", &CyUnit::getBaseCombatStr)
+		.def("getFlags", &CyUnit::getFlags)
+		.def("getNameNoDesc", &CyUnit::getNameNoDesc)
+		.def("getPosition", &CyUnit::getPosition)
+		.def("getPromotions", &CyUnit::getPromotions)
+		.def("getRead", &CyUnit::getRead)
+		.def("getScriptData", &CyUnit::getScriptData)
+		.def("getVisualOwner", &CyUnit::getVisualOwner)
+		.def("hasCombat", &CyUnit::hasCombat)
+		.def("hasPromotion", &CyUnit::hasPromotion)
+		.def("isActionRecommended", &CyUnit::isActionRecommended)
+		.def("isDead", &CyUnit::isDead)
+		.def("isHiddenNationality", &CyUnit::isHiddenNationality)
+		.def("isInvisible", &CyUnit::isInvisible)
+		.def("isPromotionOverridden", &CyUnit::isPromotionOverridden)
+		.def("isPromotionValid", &CyUnit::isPromotionValid)
+		.def("changeExperience", &CyUnit::changeExperience)
+		.def("doCommand", &CyUnit::doCommand)
+		.def("finishMoves", &CyUnit::finishMoves)
+		.def("kill", &CyUnit::kill)
+		.def("setDamage", &CyUnit::setDamage)
+		.def("setExperience", &CyUnit::setExperience)
+		.def("setLeaderUnitType", &CyUnit::setLeaderUnitType)
+		.def("setMoves", &CyUnit::setMoves)
+		.def("setName", &CyUnit::setName)
+		.def("setPromotion", &CyUnit::setPromotion)
+		.def("setScriptData", &CyUnit::setScriptData)
+		.def("setStatus", &CyUnit::setStatus)
+		.def("getStatus", &CyUnit::getStatus)
+		.def("getSpecialCargo", &CyUnit::getSpecialCargo)
+		.def("getDomainCargo", &CyUnit::getDomainCargo)
 		.def("getOwner", &CyUnit::getOwner)
 		.def("getID",    &CyUnit::getID)
 		.def("getX",     &CyUnit::getX)

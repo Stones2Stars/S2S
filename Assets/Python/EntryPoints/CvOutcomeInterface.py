@@ -1,13 +1,12 @@
 from CvPythonExtensions import *
 import CvUtil
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
 GAME = GC.getGame()
-STATE = CyState()
-ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
@@ -68,12 +67,12 @@ def doRemoveWVSlavery(argsList):
 			iCityY = city.getY()
 			# Remove the main slavery building
 			if city.hasBuilding(iWVSlavery):
-				ACT.setCityBuilding(city.getOwner(), city.getID(), iWVSlavery, False)
+				city.setBuilding(iWVSlavery, False)
 
 			# Sell the Slave market if one exists
 			if city.hasBuilding(iSlaveMarket):
 
-				ACT.setCityBuilding(city.getOwner(), city.getID(), iSlaveMarket, False)
+				city.setBuilding(iSlaveMarket, False)
 
 				iSum += iCost
 
@@ -84,11 +83,11 @@ def doRemoveWVSlavery(argsList):
 			# Remove all other Slavery Buildings if they exist
 			for ibuilding in aiSlaveBuildings:
 				if city.hasBuilding(ibuilding):
-					ACT.setCityBuilding(city.getOwner(), city.getID(), ibuilding, False)
+					city.setBuilding(ibuilding, False)
 
 			iFreeSlaves = 0
 			for i in xrange(GC.getNumSpecialistInfos()):
-				if GC.getSpecialistInfo(i).isSlave():
+				if INFO.isSpecialistSlave(i):
 
 					iCount = city.getFreeSpecialistCount(i)
 					if iCount < 1: continue
@@ -152,9 +151,9 @@ def doRemoveWVCannibalism(argsList):
 		else:
 			iType0 = GC.getInfoTypeForString("BUILDING_WORLDVIEW_CANNIBALISM_ACTIVE")
 			for CyCity in CyPlayer.cities():
-				ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iType, False)
+				CyCity.setBuilding(iType, False)
 				if iType0 > -1:
-					ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iType0, False)
+					CyCity.setBuilding(iType0, False)
 
 			if iPlayer == GC.getGame().getActivePlayer():
 				CvUtil.sendImmediateMessage(TRNSLTR.getText("TXT_KEY_MSG_NO_CANNIBALISM", ()))
@@ -175,17 +174,17 @@ def doRemoveWVHumanSacrifice(argsList):
 		for CyCity in CyPlayer.cities():
 			# Remove the main worldview building
 			if CyCity.hasBuilding(iWVSacrifice):
-				ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iWVSacrifice, False)
+				CyCity.setBuilding(iWVSacrifice, False)
 				CyAudioGame().Play2DSound("AS2D_DISCOVERBONUS")
 
 				CyInterface().addMessage(CyPlayer.getID(),False,25,TRNSLTR.getText("TXT_KEY_MSG_NO_HUMAN_SACRIFICE",(CyCity.getName(),)),"AS2D_BUILD_BANK",InterfaceMessageTypes.MESSAGE_TYPE_INFO,CyUnit.getButton(),ColorTypes(8),CyCity.getX(),CyCity.getY(),True,True)
 
 			# Remove the worldview token building
-			ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iToken, False)
+			CyCity.setBuilding(iToken, False)
 
 			# Remove the human sacrifice altar
 			if CyCity.hasBuilding(iAltar):
-				ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iAltar, False)
+				CyCity.setBuilding(iAltar, False)
 
 def getNumNonSpecialistSlaves(argsList):
 	# Returns the number of non specialist slave specialists more than the number of specialist slave specialists

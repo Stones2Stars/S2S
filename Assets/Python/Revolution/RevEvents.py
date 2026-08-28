@@ -13,14 +13,16 @@ import RevUtils
 
 
 # globals
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 GAME = GC.getGame()
 MAP = GC.getMap()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
+INFO = CyInfo()
+UNIT = CyUnitInfo()           # the per-info UNIT accessor
 TRNSLTR = CyTranslator()
 WORLD = CyWorldInfo()
 
@@ -222,7 +224,7 @@ def onSetPlayerAlive(argsList):
 						revIdxHist['Events'][0] += changeRevIdx
 						RevData.updateCityVal(pCity, 'RevIdxHistory', revIdxHist)
 						pCity.setReinforcementCounter(0)
-						pCity.setOccupationTimer(0)
+						pCity.setOccupation(0)
 						if LOG_DEBUG:
 							print "[REV] Rev index in %s decreased to %d (from %d)"%(pCity.getName(), pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX], revIdx)
 
@@ -245,7 +247,7 @@ def onSetPlayerAlive(argsList):
 						revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
 						revIdxHist['Events'][0] += changeRevIdx
 						RevData.updateCityVal(pCity, 'RevIdxHistory', revIdxHist)
-						pCity.setOccupationTimer(0)
+						pCity.setOccupation(0)
 						if LOG_DEBUG:
 							print "[REV] Rev index in %s decreased to %d (from %d)"%(pCity.getName(), pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX], revIdx)
 
@@ -333,7 +335,7 @@ def onChangeWar(argsList):
 				revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
 				revIdxHist['Events'][0] += changeRevIdx
 				RevData.updateCityVal(pCity, 'RevIdxHistory', revIdxHist)
-				pCity.setOccupationTimer(0)
+				pCity.setOccupation(0)
 				if LOG_DEBUG:
 					print "[REV] Rev index in %s decreased to %d (from %d)"%(pCity.getName(), pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX], revIdx)
 
@@ -367,7 +369,7 @@ def onChangeWar(argsList):
 				revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
 				revIdxHist['Events'][0] += changeRevIdx
 				RevData.updateCityVal(pCity, 'RevIdxHistory', revIdxHist)
-				pCity.setOccupationTimer(0)
+				pCity.setOccupation(0)
 				if LOG_DEBUG:
 					print "[REV] Rev index in %s decreased to %d (from %d)"%(pCity.getName(), pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX], revIdx)
 
@@ -510,25 +512,24 @@ def checkRebelBonuses(argsList):
 				if pCity.isCoastal(10) and pCity.area().getNumCities() < 3 and pCity.area().getNumTiles() < 25:
 					iBestCombat = -1
 					for iUnitX in xrange(GC.getNumUnitInfos()):
-						info = GC.getUnitInfo(iUnitX)
-						if (info.getDomainType() == DomainTypes.DOMAIN_SEA
-						and info.getUnitAIType(UnitAITypes.UNITAI_ASSAULT_SEA)
+						if (UNIT.getDomain(iUnitX) == DomainTypes.DOMAIN_SEA
+						and UNIT.getDefaultUnitAI(iUnitX) == UnitAITypes.UNITAI_ASSAULT_SEA
 						and ENABLER.getUnitAvailabilityAnywhere(newOwner.getID(), iUnitX) == EnablerState.ENABLER_LISTED
 						):
-							iCombat = info.getCombat()
+							iCombat = INFO.getScalar("UNIT_", iUnitX, InfoScalar.SCALAR_STRENGTH,
+							                         CascScope.CASC_SCOPE_UNIT, CascUnit.CASC_UNIT_FLAT)
 							if iBestCombat < iCombat:
-								bestUnit = info
 								iBestUnit = iUnitX
 								iBestCombat = iCombat
 
 					if iBestCombat > -1:
 						newOwner.createUnit(iBestUnit, ix, iy, UnitAITypes.UNITAI_ASSAULT_SEA, DirectionTypes.DIRECTION_SOUTH)
-						print "Rev - Rebels get a %s to raid motherland" % bestUnit.getDescription()
+						print "Rev - Rebels get a %s to raid motherland" % INFO.getDescription("UNIT_", iBestUnit)
 
 				# Change city disorder timer to favor new player
 				iTurns = pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION]
 				iTurns = iTurns/4 + 1
-				pCity.setOccupationTimer(iTurns)
+				pCity.setOccupation(iTurns)
 
 				# Temporary happiness boost
 				pCity.changeRevSuccessTimer( int(iTurns + RevUtils.getGameSpeedMod()*15) )
@@ -552,7 +553,7 @@ def checkRebelBonuses(argsList):
 				# Change city disorder timer to favor new player
 				iTurns = pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION]
 				iTurns = min([iTurns, iTurns/3 + 1])
-				pCity.setOccupationTimer(iTurns)
+				pCity.setOccupation(iTurns)
 
 				# Temporary happiness boost
 				pCity.changeRevSuccessTimer(int(iTurns + RevUtils.getGameSpeedMod()*6))
@@ -572,7 +573,7 @@ def checkRebelBonuses(argsList):
 
 			iTurns = pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION]
 			iTurns = iTurns/2 + 1
-			pCity.setOccupationTimer(iTurns)
+			pCity.setOccupation(iTurns)
 
 
 def updateRevolutionIndices(argsList):
@@ -705,11 +706,14 @@ def onBuildingBuilt(argsList):
 	(iCityOwner, iCityID), iBuildingType = argsList
 	pCity = GC.getPlayer(iCityOwner).getCity(iCityID)
 
-	buildingInfo = GC.getBuildingInfo(iBuildingType)
+	#	A wonder is an `allowed` cap of exactly one at its scope; the religion gate is the requires plane, and
+	#	a religion-gated building is excluded here whichever religion it names.
+	bReligionGated = len(INFO.getRequiresIdsInClause("BUILDING_", iBuildingType, EdgeBucket.EDGEB_RELIGIONS, RequiresClause.REQCLAUSE_ALL)) > 0
+	iBuildingCost = INFO.getIntrinsic("BUILDING_", iBuildingType, IntrinsicSlot.PYINT_COST)
 
-	if buildingInfo.getMaxGlobalInstances() == 1 and buildingInfo.getPrereqReligion() < 0 and buildingInfo.getProductionCost() > 10:
+	if INFO.getAllowedCap("BUILDING_", iBuildingType, AllowedCap.ALLOWEDCAP_WORLD) == 1 and not bReligionGated and iBuildingCost > 10:
 		if LOG_DEBUG:
-			print"[REV] World wonder %s build in %s"%(buildingInfo.getDescription(), pCity.getName())
+			print"[REV] World wonder %s build in %s"%(INFO.getDescription("BUILDING_", iBuildingType), pCity.getName())
 		curRevIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 		pCity.changeRevolutionIndex(-max([150, curRevIdx / 4]))
 
@@ -721,9 +725,9 @@ def onBuildingBuilt(argsList):
 			revIdxHist['Events'][0] += iRevIdxChange
 			RevData.updateCityVal(cityX, 'RevIdxHistory', revIdxHist)
 
-	elif buildingInfo.getMaxPlayerInstances() == 1 and buildingInfo.getPrereqReligion() < 0 and buildingInfo.getProductionCost() > 10:
+	elif INFO.getAllowedCap("BUILDING_", iBuildingType, AllowedCap.ALLOWEDCAP_EMPIRE) == 1 and not bReligionGated and iBuildingCost > 10:
 		if LOG_DEBUG:
-			print "[REV] National wonder %s build in %s"%(buildingInfo.getDescription(), pCity.getName())
+			print "[REV] National wonder %s build in %s"%(INFO.getDescription("BUILDING_", iBuildingType), pCity.getName())
 		curRevIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 		pCity.changeRevolutionIndex(-max([80, curRevIdx * 12/100]))
 
@@ -802,7 +806,7 @@ def removeFloatingRebellions():
 				bHasFounder = True
 				break
 			if bOnlySpy:
-				if unitX.getUnitAIType() != UnitAITypes.UNITAI_SPY:
+				if unitX.getRead()[UnitReadKind.UNIT_READ_UNIT_AI] != UnitAITypes.UNITAI_SPY:
 					bOnlySpy = False
 				else: spy = unitX
 			unitX, i = playerX.nextUnit(i, False)
@@ -1106,7 +1110,7 @@ def doSmallRevolts(iPlayer, CyPlayer):
 		if GAME.getSorenRandNum(100, "Rev: Small Revolt") < iOdds:
 			szName = city.getName()
 			print "[REV] Small revolt in %s with odds %d (%d idx, %d loc)" %(szName, iOdds, revIdx, localRevIdx)
-			city.setOccupationTimer(2)
+			city.setOccupation(2)
 
 			RevData.setCityVal(city, 'SmallRevoltCounter', 6)
 

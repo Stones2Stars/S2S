@@ -13,10 +13,10 @@ def init():
 init()
 
 # globals
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -47,7 +47,7 @@ def onGreatPersonBorn(argsList):
 			return
 
 		pGreatPerson = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
-		sUnitName = STATE.getUnitNameNoDesc(iUnitOwner, iUnitID)
+		sUnitName = GC.getPlayer(iUnitOwner).getUnit(iUnitID).getNameNoDesc()
 		if sUnitName == "": return
 
 		# Get screen resolution.
@@ -81,7 +81,7 @@ def onGreatPersonBorn(argsList):
 		W_TEXT_PANEL = 355
 		H_TEXT_PANEL = 250
 
-		iType = pGreatPerson.getUnitType()
+		iType = pGreatPerson.getRead()[UnitReadKind.UNIT_READ_TYPE]
 		Info = CyGlobalContext().getUnitInfo(iType)
 
 		for i in xrange(Info.getNumUnitNames()):

@@ -2,14 +2,13 @@
 from CvPythonExtensions import *
 import CvUtil#, BugUtil
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
 GAME = GC.getGame()
 MAP = GC.getMap()
-STATE = CyState()
-ACT = CyAct()   # the ACTION surface
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
@@ -152,9 +151,9 @@ class WoodlandCycle:
 						iDamage = 5 + GAME.getSorenRandNum(29, "Ouch")
 						if iHP > iDamage:
 							# the WRITE goes to the action surface, which routes through the engine's own setter
-							ACT.setUnitDamage(pUnit.getOwner(), pUnit.getID(), pUnit.getMaxHP() - (iHP - iDamage), -1)
+							pUnit.setDamage(pUnit.getMaxHP() - (iHP - iDamage), -1)
 						else:
 							if bActivePlayer:
 								CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_FOREST_FIRE_UNIT_LOST",(pUnit.getName(),)), iPlayer, 6, eColor=ColorTypes(9))
-							ACT.killUnit(pUnit.getOwner(), pUnit.getID(), False, -1)
+							pUnit.kill(False, -1)
 		#timer.log()

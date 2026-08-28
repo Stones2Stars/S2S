@@ -9,20 +9,19 @@
 #include "Python/CyInfo.h"
 #include "CvPythonPlayerLoader.h"
 #include "CvPythonPlotLoader.h"
-#include "Python/CyAct.h"
 #include "Python/CyGame.h"
 #include "Python/CyTeam.h"
 #include "Python/CyGameTextMgr.h"
 #include "Python/CyGlobalContext.h"
 #include "Python/CyMap.h"
 #include "Python/CyMessageControl.h"
-#include "Python/CyState.h"
 #include "Python/CyWorldInfo.h"
 #include "Python/CyBuildingInfo.h"
 #include "Python/CyClimateInfo.h"
 #include "Python/CyMapGenInfo.h"
 #include "Python/CyImprovementInfo.h"
 #include "Python/CyUnitInfo.h"
+#include "Python/CyReplayInfo.h"
 #include "Python/CyBuildInfo.h"
 #include "Python/CyGameSpeedInfo.h"
 #include "Python/CyEspionageMissionInfo.h"
@@ -121,7 +120,6 @@ DllExport void DLLPublishToPython()
 	// so the enum types have to exist before anything can consume a result.
 	CyEnums::pythonPublish();     // the engine enum constants + name->id resolution
 	CyEnabler::pythonPublish();   // "can I, right now?"      -- the availability half
-	CyState::pythonPublish();     // "what do I HAVE, now?"   -- the live-state half
 	CyInfo::pythonPublish();      // "what do I CARRY?"       -- the GENERIC info half: identity text,
 	                              //                            classification, edges -- what every registry shares
 	// The PER-INFO accessors, for what belongs to ONE type. A script binds these BY NAME, so its bindings list is
@@ -142,6 +140,9 @@ DllExport void DLLPublishToPython()
 	CyEspionageMissionInfo::pythonPublish();
 	CyVictoryInfo::pythonPublish();
 	CyCultureLevelInfo::pythonPublish();
+	// The REPLAY handle. Python CONSTRUCTS this one, so an absent registration is a NameError at the call
+	// site rather than a missing method, and the EXE takes it back through setMinimapMap.
+	CyReplayInfo::pythonPublish();
 
 	// NOT the library, and not the banned surface: TXT is an UNMIGRATED SYSTEM BOUNDARY that stays, and Python
 	// screen chrome calls it directly (patterns.md § THE PYTHON READ BOUNDARY). It was collateral in the Cy
@@ -173,7 +174,6 @@ DllExport void DLLPublishToPython()
 		CvPythonPlayerLoader::CyPlayerPythonInterface2(player);
 		CvPythonPlayerLoader::CyPlayerPythonInterface3(player);
 	}
-	CyAct::pythonPublish();
 	CyMap::pythonPublish();
 	CyPlot::pythonPublish();
 	CyArea::pythonPublish();
@@ -208,7 +208,7 @@ DllExport void DLLPublishToPython()
 	// planes is refactoring we are deliberately not doing: *"I only want to refactor the python I have to,
 	// otherwise we never will be done."* ⛔ The registration-is-not-binding rule still governs everything ELSE --
 	// the info/state getter contract stays cut (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract)); a consumer wanting DATA asks CyInfo /
-	// CyState / CyEnabler by that address. Each publish lives in the file named for its type, never here.
+	// the object's own accessor and CyEnabler by that address. Each publish lives in the file named for its type, never here.
 	CyCity::pythonPublish();
 	CyUnit::pythonPublish();
 	python::class_<CySelectionGroup>("CySelectionGroup", python::no_init);
@@ -239,6 +239,15 @@ DllExport void DLLPublishToPython()
 	python::class_<POINT>("POINT")
 		.def_readwrite("x", &POINT::x)
 		.def_readwrite("y", &POINT::y)
+		;
+
+	//   OrderData -- the city's build QUEUE crosses as this value, so its fields ARE the value. A struct
+	//   registered without them is useless: the accessor would resolve and then throw at conversion.
+	python::class_<OrderData>("OrderData")
+		.def_readwrite("eOrderType", &OrderData::eOrderType)
+		.def_readwrite("iData1", &OrderData::iData1)
+		.def_readwrite("iData2", &OrderData::iData2)
+		.def_readwrite("bSave", &OrderData::bSave)
 		;
 
 	//   CvRandom -- the engine HANDS ONE ACROSS (CyGame::getMapRand / getSorenRand, both published with

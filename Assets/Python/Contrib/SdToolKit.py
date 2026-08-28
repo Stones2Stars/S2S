@@ -13,8 +13,6 @@ from CvPythonExtensions import *
 import BugData
 import cPickle
 
-STATE = CyState()
-ACT = CyAct()
 
 #-=-=-=-=-=-=-=-= SD-DATA-STORAGE =-=-=-=-=-=-=-=-=-#
 # Every variable is a string, except for the actual
@@ -127,7 +125,7 @@ def sdLoad(object):
 	cyTable = {}
 	if object:
 		if sdIsUnitId(object):
-			temp = STATE.getUnitScriptData(object[0], object[1])
+			temp = GC.getPlayer(object[0]).getUnit(object[1]).getScriptData()
 		else:
 			temp = object.getScriptData()
 		if temp:
@@ -142,7 +140,7 @@ def sdStore(object, cyTable):
 		return
 	szData = cPickle.dumps(cyTable)
 	if sdIsUnitId(object):
-		ACT.setUnitScriptData(object[0], object[1], szData)
+		GC.getPlayer(object[0]).getUnit(object[1]).setScriptData(szData)
 	else:
 		object.setScriptData(szData)
 

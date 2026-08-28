@@ -7,11 +7,15 @@ import WBPlayerScreen
 import WBTeamScreen
 import WBInfoScreen
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
-STATE = CyState()
+BONUS = CyBonusInfo()             # the per-info BONUS accessor
+TERRAIN = CyTerrainInfo()         # the per-info TERRAIN accessor
+FEATURE = CyFeatureInfo()         # the per-info FEATURE accessor
+IMPROVEMENT = CyImprovementInfo() # the per-info IMPROVEMENT accessor
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -110,7 +114,7 @@ class WBPlotScreen:
 		screen.addPullDownString("BonusClass", CyTranslator().getText("TXT_KEY_WB_CITY_ALL",()), -1, -1, True)
 		screen.addPullDownString("BonusClass", CyTranslator().getText("TXT_KEY_GLOBELAYER_RESOURCES_GENERAL",()), 0, 0, 0 == iSelectedClass)
 		iBonusClass = 1
-		while not GC.getBonusClassInfo(iBonusClass) is None:
+		while INFO.exists("BONUSCLASS_", iBonusClass):
 			sText = INFO.getType("BONUSCLASS_", iBonusClass)
 			sText = sText[sText.find("_") +1:]
 			sText = sText.lower()
@@ -133,25 +137,23 @@ class WBPlotScreen:
 
 		lFeatures = []
 		for i in xrange(GC.getNumFeatureInfos()):
-			ItemInfo = GC.getFeatureInfo(i)
-			for j in xrange(ItemInfo.getNumVarieties()):
-				sText = ItemInfo.getDescription()
-				if ItemInfo.getNumVarieties() > 1:
+			iVarieties = FEATURE.getNumVarieties(i)
+			for j in xrange(iVarieties):
+				sText = INFO.getDescription("FEATURE_", i)
+				if iVarieties > 1:
 					sText += " (" + str(j) + ")"
 				lFeatures.append([sText, j * 10000 + i])
 		lFeatures.sort()
 
 		lRoutes = []
-		for i in xrange(GC.getNumRouteInfos()):
-			ItemInfo = GC.getRouteInfo(i)
-			lRoutes.append([ItemInfo.getDescription(), i])
+		for kRoute in INFO.getIndex("ROUTE_"):
+			lRoutes.append([kRoute["description"], kRoute["id"]])
 		lRoutes.sort()
 
 		lImprovements = []
-		for i in xrange(GC.getNumImprovementInfos()):
-			ItemInfo = GC.getImprovementInfo(i)
-			if ItemInfo.isGraphicalOnly(): continue
-			lImprovements.append([ItemInfo.getDescription(), i])
+		for kImprovement in INFO.getIndex("IMPROVEMENT_"):
+			if kImprovement["graphicalOnly"]: continue
+			lImprovements.append([kImprovement["description"], kImprovement["id"]])
 		lImprovements.sort()
 
 		self.createBonusList()
@@ -224,7 +226,7 @@ class WBPlotScreen:
 			iYield = pPlot.getYield(YieldTypes(i))
 			iImprovement = pPlot.getImprovementType()
 			if iImprovement > -1:
-				iYield -= pPlot.calculateImprovementYieldChange(iImprovement, YieldTypes(i), pPlot.getOwner(), False)
+				iYield -= pPlot.calculateImprovementYieldChange(iImprovement, YieldTypes(i))
 			screen.setButtonGFC("BaseYieldPlus" + str(i), "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, i, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 			screen.setButtonGFC("BaseYieldMinus" + str(i), "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, i, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
 			sText = CyTranslator().getText("TXT_KEY_WB_BASE_YIELD", (INFO.getDescription("YIELD_", i), iYield,))
@@ -356,7 +358,7 @@ class WBPlotScreen:
 		sText = CyTranslator().getText("TXT_KEY_CULTURELEVEL_NONE", ())
 		sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 		if iImprovement > -1:
-			if GC.getImprovementInfo(iImprovement).getUpgradeTime():
+			if IMPROVEMENT.getUpgradeTime(iImprovement):
 				screen.setButtonGFC("UpgradeTimePlus", "", "", iX, iUpgrade_Y, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 				screen.setButtonGFC("UpgradeTimeMinus", "", "", iX + 25, iUpgrade_Y, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
 				sText = CyTranslator().getText("TXT_KEY_WB_UPGRADE_PROGRESS", (pPlot.getUpgradeTimeLeft(iImprovement, pPlot.getOwner()),))
@@ -379,10 +381,9 @@ class WBPlotScreen:
 	def createBonusList(self):
 		global lBonus
 		lBonus = []
-		for i in xrange(GC.getNumBonusInfos()):
-			ItemInfo = GC.getBonusInfo(i)
-			if iSelectedClass != ItemInfo.getBonusClassType() and iSelectedClass > -1: continue
-			lBonus.append([ItemInfo.getDescription(), i])
+		for kBonus in INFO.getIndex("BONUS_"):
+			if iSelectedClass != BONUS.getBonusClassType(kBonus["id"]) and iSelectedClass > -1: continue
+			lBonus.append([kBonus["description"], kBonus["id"]])
 		lBonus.sort()
 		self.placeBonus()
 
@@ -405,8 +406,7 @@ class WBPlotScreen:
 		screen.setTableText("WBPlotBonus", 0, 0, "<font=3>" + sColor + CyTranslator().getText("TXT_KEY_CULTURELEVEL_NONE", ()) + "</font></color>", CyArtFileMgr().getInterfaceArtInfo("INTERFACE_BUTTONS_CANCEL").getPath(), WidgetTypes.WIDGET_PYTHON, 6788, -1, 1<<0 )
 		for item in lBonus:
 			iRow = screen.appendTableRow("WBPlotBonus")
-			ItemInfo = GC.getBonusInfo(item[1])
-			sButton = ItemInfo.getButton()
+			sButton = INFO.getButton("BONUS_", item[1])
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 			if iBonus == item[1]:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
@@ -424,16 +424,16 @@ class WBPlotScreen:
 		screen.addTableControlGFC("WBPlotTerrain", 1, iX, iY, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD)
 		screen.setTableColumnHeader("WBPlotTerrain", 0, "", iWidth)
 
-		for i in xrange(GC.getNumTerrainInfos()):
-			TerrainInfo = GC.getTerrainInfo(i)
-			if TerrainInfo.isGraphicalOnly(): continue
-			if TerrainInfo.isWaterTerrain() != pPlot.isWater(): continue
+		for kTerrain in INFO.getIndex("TERRAIN_"):
+			i = kTerrain["id"]
+			if kTerrain["graphicalOnly"]: continue
+			if TERRAIN.isWaterTerrain(i) != pPlot.isWater(): continue
 			iRow = screen.appendTableRow("WBPlotTerrain")
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 			if iTerrain == i:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-			sText = "<font=3>" + sColor + TerrainInfo.getDescription() + "</font></color>"
-			screen.setTableText("WBPlotTerrain", 0, iRow, sText, TerrainInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 7875, i, 1<<0)
+			sText = "<font=3>" + sColor + kTerrain["description"] + "</font></color>"
+			screen.setTableText("WBPlotTerrain", 0, iRow, sText, kTerrain["button"], WidgetTypes.WIDGET_PYTHON, 7875, i, 1<<0)
 
 	def placeScript(self):
 		screen = CyGInterfaceScreen("WBPlotScreen", CvScreenEnums.WB_PLOT)
@@ -457,35 +457,31 @@ class WBPlotScreen:
 
 		iTerrain = GC.getInfoTypeForString("TERRAIN_PEAK")
 		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-		TerrainInfo = GC.getTerrainInfo(iTerrain)
 		if pPlot.getPlotType() == PlotTypes.PLOT_PEAK:
 			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-		sText = "<font=3>" + sColor + TerrainInfo.getDescription() + "</font></color>"
-		screen.setTableText("WBPlotType", 0, 0, sText, TerrainInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 7875, iTerrain, 1<<0)
+		sText = "<font=3>" + sColor + INFO.getDescription("TERRAIN_", iTerrain) + "</font></color>"
+		screen.setTableText("WBPlotType", 0, 0, sText, INFO.getButton("TERRAIN_", iTerrain), WidgetTypes.WIDGET_PYTHON, 7875, iTerrain, 1<<0)
 
 		iTerrain = GC.getInfoTypeForString("TERRAIN_HILL")
 		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-		TerrainInfo = GC.getTerrainInfo(iTerrain)
 		if pPlot.getPlotType() == PlotTypes.PLOT_HILLS:
 			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-		sText = "<font=3>" + sColor + TerrainInfo.getDescription() + "</font></color>"
-		screen.setTableText("WBPlotType", 0, 1, sText, TerrainInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 7875, iTerrain, 1<<0)
+		sText = "<font=3>" + sColor + INFO.getDescription("TERRAIN_", iTerrain) + "</font></color>"
+		screen.setTableText("WBPlotType", 0, 1, sText, INFO.getButton("TERRAIN_", iTerrain), WidgetTypes.WIDGET_PYTHON, 7875, iTerrain, 1<<0)
 
 		iTerrain = GC.getInfoTypeForString("TERRAIN_GRASSLAND")
 		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-		TerrainInfo = GC.getTerrainInfo(iTerrain)
 		if pPlot.getPlotType() == PlotTypes.PLOT_LAND:
 			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-		sText = "<font=3>" + sColor + TerrainInfo.getDescription() + "</font></color>"
-		screen.setTableText("WBPlotType", 0, 2, sText, TerrainInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 7875, iTerrain, 1<<0)
+		sText = "<font=3>" + sColor + INFO.getDescription("TERRAIN_", iTerrain) + "</font></color>"
+		screen.setTableText("WBPlotType", 0, 2, sText, INFO.getButton("TERRAIN_", iTerrain), WidgetTypes.WIDGET_PYTHON, 7875, iTerrain, 1<<0)
 
 		iTerrain = GC.getInfoTypeForString("TERRAIN_OCEAN")
 		sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-		TerrainInfo = GC.getTerrainInfo(iTerrain)
 		if pPlot.getPlotType() == PlotTypes.PLOT_OCEAN:
 			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-		sText = "<font=3>" + sColor + TerrainInfo.getDescription() + "</font></color>"
-		screen.setTableText("WBPlotType", 0, 3, sText, TerrainInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 7875, iTerrain, 1<<0)
+		sText = "<font=3>" + sColor + INFO.getDescription("TERRAIN_", iTerrain) + "</font></color>"
+		screen.setTableText("WBPlotType", 0, 3, sText, INFO.getButton("TERRAIN_", iTerrain), WidgetTypes.WIDGET_PYTHON, 7875, iTerrain, 1<<0)
 
 	def handleInput(self, inputClass):
 		screen = CyGInterfaceScreen("WBPlotScreen", CvScreenEnums.WB_PLOT)
@@ -557,7 +553,7 @@ class WBPlotScreen:
 				iYield = pPlot.getYield(i)
 				iImprovement = pPlot.getImprovementType()
 				if iImprovement > -1:
-					iYield -= pPlot.calculateImprovementYieldChange(iImprovement, i, pPlot.getOwner(), False)
+					iYield -= pPlot.calculateImprovementYieldChange(iImprovement, i)
 				pPlot.setExtraYield(i, - min(iChange, iYield))
 			self.placeStats()
 

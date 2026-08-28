@@ -9,12 +9,13 @@
 from CvPythonExtensions import *
 import BugUtil
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 gc = GC   # this module spells it lowercase
 INFO = CyInfo()
-STATE = CyState()
+UNIT = CyUnitInfo()           # the per-info UNIT accessor
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -108,14 +109,14 @@ class UnitTypeGrouping(Grouping):
 	def __init__(self):
 		Grouping.__init__(self, "type", "TXT_KEY_UNITGROUPER_TYPE_GROUPING")
 
-		# Entity data comes from the INFO surface, never the global context ([DEC-cy-not-fixed]):
+		# Entity data comes from the INFO surface, never the global context:
 		# the context serves settings, CyInfo serves entities.
 		for i in range(GC.getNumUnitInfos()):
 			if INFO.exists("UNIT_", i):
 				self._addGroup(Group(self, i, INFO.getDescription("UNIT_", i)))
 
 	def calcGroupKeys(self, unit, player, team):
-		return (unit.getUnitType(),)
+		return (unit.getRead()[UnitReadKind.UNIT_READ_TYPE],)
 
 class UnitCombatGrouping(Grouping):
 	"""
@@ -132,7 +133,12 @@ class UnitCombatGrouping(Grouping):
 			self._addGroup(Group(self, entry["id"] + 1, entry["description"]))
 
 	def calcGroupKeys(self, unit, player, team):
-		return (gc.getUnitInfo(unit.getUnitType()).getUnitCombatType() + 1,)
+		#	The PRIMARY combat class is first in the unit's own list; an empty list means it has none.
+		lClasses = UNIT.getCombatClasses(unit.getRead()[UnitReadKind.UNIT_READ_TYPE])
+		iPrimary = -1
+		if lClasses:
+			iPrimary = lClasses[0]
+		return (iPrimary + 1,)
 
 class LevelGrouping(Grouping):
 	"""
@@ -148,7 +154,7 @@ class LevelGrouping(Grouping):
 		self._addGroup(Group(self, self.MAX_LEVEL, BugUtil.getText("TXT_KEY_UNITGROUPER_LEVEL_GROUP", ("%d+" % self.MAX_LEVEL,))))
 
 	def calcGroupKeys(self, unit, player, team):
-		return (max(0, min(unit.getLevel(), self.MAX_LEVEL)),)
+		return (max(0, min(unit.getRead()[UnitReadKind.UNIT_READ_LEVEL], self.MAX_LEVEL)),)
 
 class PromotionGrouping(Grouping):
 	"""
@@ -169,7 +175,7 @@ class PromotionGrouping(Grouping):
 	def calcGroupKeys(self, unit, player, team):
 		promos = []
 		for iPromo in range(gc.getNumPromotionInfos()):
-			if unit.isHasPromotion(iPromo):
+			if unit.hasPromotion(iPromo):
 				promos.append(iPromo + 1)
 		if not promos:
 			promos = self.NO_PROMOS

@@ -114,7 +114,6 @@ public:
 	int calculateUnitSupply() const;
 	int64_t calculatePreInflatedCosts() const;
 	int64_t getFinalExpense() const;
-	int64_t calculateInflatedCosts() const;
 
 	int calculateGoldRate() const;
 	int calculateTotalCommerce() const;
@@ -310,7 +309,6 @@ public:
 	int getQueuePosition(int /*TechTypes*/ eTech) const;
 	void clearResearchQueue();
 	bool pushResearch(int /*TechTypes*/ iIndex, bool bClear);
-	void popResearch(int /*TechTypes*/ eTech);
 	int getLengthResearchQueue() const;
 
 	void addCityName(const std::wstring szName);
@@ -472,6 +470,10 @@ public:
 	void addBLList();
 	void renameBLList(int iID);
 	void removeBLList(int iID);
+
+	//	==== moved off the flat state class: these are the PLAYER's own data ====
+	int getGreatPeopleThresholdNonMilitary() const;
+	int getColorPrimary() const;
 
 private:
 	CvPlayer* m_pPlayer;

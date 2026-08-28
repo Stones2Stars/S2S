@@ -85,9 +85,6 @@ public:
 	int getArea() const;
 	int getFeatureVariety() const;
 
-	int getOwnershipDuration() const;
-	bool isOwnershipScore() const;
-	void setOwnershipDuration(int iNewValue);
 
 	int getUpgradeTimeLeft(int /*ImprovementTypes*/ eImprovement, int /*PlayerTypes*/ ePlayer) const;
 	void changeImprovementUpgradeProgress(int iChange);
@@ -100,7 +97,6 @@ public:
 	void setWOfRiver(bool bNewValue, CardinalDirectionTypes eRiverDir);
 	CardinalDirectionTypes getRiverWEDirection() const;
 	CardinalDirectionTypes getRiverNSDirection() const;
-	bool isIrrigated() const;
 
 	bool isPotentialCityWork() const;
 
@@ -177,6 +173,11 @@ public:
 
 private:
 	CvPlot* m_pPlot;
+
+	//	The units standing on this plot, as [owner, id] pairs, in the engine's own plot order.
+	//	⚠ Answers EVERY unit present; the caller applies its own visibility test, because visibility is
+	//	per-OBSERVER and the list is drawn for one team.
+	python::list getUnitIds() const;
 	bool	m_bIsInViewportSpace;
 };
 

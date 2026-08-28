@@ -16,12 +16,12 @@ import TradeUtil
 OPEN_LOG_EVENT_ID = CvUtil.getNewEventID()
 CUSTOM_ENTRY_EVENT_ID = CvUtil.getNewEventID()
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
 GAME = GC.getGame()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 CyIF = CyInterface()
@@ -473,15 +473,15 @@ class AutoLogEvent(AbstractAutoLogEvent):
 		iActivePlayer = GAME.getActivePlayer()
 
 		if iActivePlayer in (iPlayerW, iPlayerL):
-			aW = STATE.getUnitRead(iPlayerW, iUnitIdW)
-			iStrW = STATE.getUnitBaseCombatStr(iPlayerW, iUnitIdW)
-			szNameW = STATE.getUnitName(iPlayerW, iUnitIdW)
-			szNameL = STATE.getUnitName(iPlayerL, iUnitIdL)
+			aW = GC.getPlayer(iPlayerW).getUnit(iUnitIdW).getRead()
+			iStrW = GC.getPlayer(iPlayerW).getUnit(iUnitIdW).getBaseCombatStr()
+			szNameW = GC.getPlayer(iPlayerW).getUnit(iUnitIdW).getName()
+			szNameL = GC.getPlayer(iPlayerL).getUnit(iUnitIdL).getName()
 			fHealthW = iStrW * aW[UnitReadKind.UNIT_READ_HP] / float(aW[UnitReadKind.UNIT_READ_MAX_HP])
 			zsBattleLocn = self.getUnitLocation(iPlayerW, iUnitIdW)
 
 			if iPlayerW == iActivePlayer:
-				szText = GC.getPlayer(STATE.getUnitVisualOwner(iPlayerL, iUnitIdL)).getCivilizationAdjective(0)
+				szText = GC.getPlayer(GC.getPlayer(iPlayerL).getUnit(iUnitIdL).getVisualOwner()).getCivilizationAdjective(0)
 				if self.bHumanPlaying:
 					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_WHILE_ATTACKING_DEFEATS", (zsBattleLocn, szNameW, BugUtil.formatFloat(fHealthW, 2), iStrW, szText, szNameL, BugUtil.formatFloat(self.fOdds, 1), "%"))
 					self.iBattleWonAttacking += 1
@@ -493,7 +493,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 				Logger.writeLog(message, vColor="DarkRed")
 
 			else:
-				szText = GC.getPlayer(STATE.getUnitVisualOwner(iPlayerW, iUnitIdW)).getCivilizationAdjective(0)
+				szText = GC.getPlayer(GC.getPlayer(iPlayerW).getUnit(iUnitIdW).getVisualOwner()).getCivilizationAdjective(0)
 				if self.bHumanPlaying:
 					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_WHILE_ATTACKING_LOSES", (zsBattleLocn, szNameL, szText, szNameW, BugUtil.formatFloat(fHealthW, 2), iStrW, BugUtil.formatFloat(self.fOdds, 1), "%"))
 					self.iBattleLostAttacking = self.iBattleLostAttacking + 1
@@ -546,7 +546,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 		self.cdDefender = None
 
 	def getUnitLocation(self, iPlayer, iUnit):
-		aPos = STATE.getUnitPosition(iPlayer, iUnit)
+		aPos = GC.getPlayer(iPlayer).getUnit(iUnit).getPosition()
 		CyPlot = GC.getMap().plot(aPos[0], aPos[1])
 		iOwner = CyPlot.getOwner()
 		if iOwner > -1:
@@ -596,7 +596,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 			iCityOwner, iCityID = pCity
 			iUnitOwner, iUnitID = unit
 			if iCityOwner == GAME.getActivePlayer():
-				aUnit = STATE.getUnitRead(iUnitOwner, iUnitID)
+				aUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID).getRead()
 				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_FINISH_UNIT", (GC.getPlayer(iCityOwner).getCity(iCityID).getName(), INFO.getDescription("UNIT_", aUnit[UnitReadKind.UNIT_READ_TYPE])))
 				Logger.writeLog(message, vColor="Purple")
 
@@ -605,7 +605,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 			CyUnit, iPromotion = argsList
 			iUnitOwner, iUnitID = CyUnit
 			if iUnitOwner == GAME.getActivePlayer():
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_PROMOTION", (STATE.getUnitName(iUnitOwner, iUnitID), INFO.getDescription("PROMOTION_", iPromotion)))
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_PROMOTION", (GC.getPlayer(iUnitOwner).getUnit(iUnitID).getName(), INFO.getDescription("PROMOTION_", iPromotion)))
 				Logger.writeLog(message, vColor="DarkOrange")
 
 	def onGoodyReceived(self, argsList):
@@ -753,7 +753,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 			# Both the unit and the city arrive as their (owner, id) IDENTITY.
 			aUnit, iPlayer, aCity = argsList
 			if iPlayer == GAME.getActivePlayer():
-				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_GP_BORN", (STATE.getUnitName(aUnit[0], aUnit[1]), GC.getPlayer(aCity[0]).getCity(aCity[1]).getName()))
+				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_GP_BORN", (GC.getPlayer(aUnit[0]).getUnit(aUnit[1]).getName(), GC.getPlayer(aCity[0]).getCity(aCity[1]).getName()))
 				Logger.writeLog(message, vColor="Brown")
 
 	def onTechAcquired(self, argsList):

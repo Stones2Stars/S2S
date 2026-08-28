@@ -238,8 +238,7 @@ class WBGameDataScreen:
 		y = -2
 		iRow = 0
 		for iOption in xrange(self.GC.getNumGameOptionInfos()):
-			info = self.GC.getGameOptionInfo(iOption)
-			if bHiddenOption or info.getVisible():
+			if bHiddenOption or INFO.getIntrinsic("GAMEOPTION_", iOption, IntrinsicSlot.PYINT_IS_VISIBLE):
 
 				CELL = CELL_0 % iOption
 				if iRow % 2:
@@ -252,8 +251,8 @@ class WBGameDataScreen:
 					szTxt = szColorYay
 				else: szTxt = szColorNay
 
-				szTxt += scaledFont3 + info.getDescription()
-				if not info.getVisible():
+				szTxt += scaledFont3 + INFO.getDescription("GAMEOPTION_", iOption)
+				if not INFO.getIntrinsic("GAMEOPTION_", iOption, IntrinsicSlot.PYINT_IS_VISIBLE):
 					szTxt += szHidden
 
 				screen.setTextAt(TXT % iOption, CELL, szTxt, 1<<0, 4, 0, 0, eFontGame, eWidGen, 1, 2)
@@ -281,9 +280,8 @@ class WBGameDataScreen:
 
 		aList = []
 		for item in xrange(self.GC.getNumCivilizationInfos()):
-			Info = self.GC.getCivilizationInfo(item)
-			if Info.isAIPlayable():
-				aList.append([Info.getShortDescription(0), item])
+			if INFO.isCivilizationAIPlayable(item):
+				aList.append([INFO.getShortDescription("CIVILIZATION_", item, 0), item])
 		aList.sort()
 		iNumRows = (len(aList) + nColumns - 1) / nColumns
 		for i in xrange(iNumRows):
@@ -291,19 +289,18 @@ class WBGameDataScreen:
 
 		for i in xrange(len(aList)):
 			item = aList[i][1]
-			Info = self.GC.getCivilizationInfo(item)
 			iColumn = i / iNumRows
 			iRow = i % iNumRows
 			if iSelectedCiv == item:
 				sColor = szColorYay
 			else: sColor = szColorNay
 			sText = "<font=3>" + sColor + aList[i][0] + "</font></color>"
-			screen.setTableText("WBNewCiv", iColumn, iRow, sText, Info.getButton(), WidgetTypes.WIDGET_PYTHON, 7872, item, 1<<0)
+			screen.setTableText("WBNewCiv", iColumn, iRow, sText, INFO.getButton("CIVILIZATION_", item), WidgetTypes.WIDGET_PYTHON, 7872, item, 1<<0)
 
 		iY = self.iNewPlayer_Y + iHeight + 10
 		if iSelectedCiv > -1:
-			civ = self.GC.getCivilizationInfo(iSelectedCiv)
-			sHeaderText = civ.getShortDescription(0)
+			lCivLeaders = INFO.getCivilizationLeaders(iSelectedCiv)
+			sHeaderText = INFO.getShortDescription("CIVILIZATION_", iSelectedCiv, 0)
 			screen.addTableControlGFC("WBNewLeader", nColumns, self.xRes/2 + 20, iY, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
 			for i in xrange(nColumns):
 				screen.setTableColumnHeader("WBNewLeader", i, "", iWidth/nColumns)
@@ -312,9 +309,8 @@ class WBGameDataScreen:
 			for i in xrange(self.GC.getNumLeaderHeadInfos()):
 				if GAME.isLeaderEverActive(i):
 					continue
-				Info = self.GC.getLeaderHeadInfo(i)
-				if bLeadAnyCiv or civ.isLeaders(i):
-					aList.append([Info.getDescription(), i])
+				if bLeadAnyCiv or i in lCivLeaders:
+					aList.append([INFO.getDescription("LEADER_", i), i])
 			aList.sort()
 			iNumRows = (len(aList) + nColumns - 1) / nColumns
 			for i in xrange(iNumRows):
@@ -322,16 +318,15 @@ class WBGameDataScreen:
 
 			for i in xrange(len(aList)):
 				item = aList[i][1]
-				Info = self.GC.getLeaderHeadInfo(item)
 				iColumn = i / iNumRows
 				iRow = i % iNumRows
 				sColor = self.TRNSLTR.getText("[COLOR_WARNING_TEXT]", ())
 				if iSelectedLeader == item:
 					sColor = self.TRNSLTR.getText("[COLOR_POSITIVE_TEXT]", ())
 				sText = "<font=3>" + sColor + aList[i][0] + "</font></color>"
-				screen.setTableText("WBNewLeader", iColumn, iRow, sText, Info.getButton(), WidgetTypes.WIDGET_PYTHON, 7876, item, 1<<0)
+				screen.setTableText("WBNewLeader", iColumn, iRow, sText, INFO.getButton("LEADER_", item), WidgetTypes.WIDGET_PYTHON, 7876, item, 1<<0)
 			if iSelectedLeader > -1:
-				sHeaderText += ", " + self.INFO.getDescription("LEADER_", iSelectedLeader)
+				sHeaderText += ", " + INFO.getDescription("LEADER_", iSelectedLeader)
 				sText = self.TRNSLTR.getText("[COLOR_SELECTED_TEXT]", ()) + "<font=4b>" + self.TRNSLTR.getText("TXT_KEY_MAIN_MENU_LOADSAVE_CREATE", ()) + "</color></font>"
 				screen.setText("CreatePlayer", "", sText, 1<<1, self.xRes - 16, 52, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, 1, 2)
 		screen.setLabel("NewPlayerHeader", "", "<font=3b>" + sHeaderText + "</font>", 1<<2, self.xRes *3/4, self.iNewPlayer_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
@@ -688,10 +683,9 @@ class WBGameDataScreen:
 					szTxt = self.szColorYay
 				else: szTxt = self.szColorNay
 
-				info = self.GC.getGameOptionInfo(iOption)
-				szTxt += self.aFontList[3] + info.getDescription()
+				szTxt += self.aFontList[3] + INFO.getDescription("GAMEOPTION_", iOption)
 
-				if not info.getVisible():
+				if not INFO.getIntrinsic("GAMEOPTION_", iOption, IntrinsicSlot.PYINT_IS_VISIBLE):
 					szTxt += self.szHidden
 
 				name = "GameOption" + str(iOption)

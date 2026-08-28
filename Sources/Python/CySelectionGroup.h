@@ -19,21 +19,14 @@ public:
 
 	//CvSelectionGroup* getSelectionGroup() const { return m_pSelectionGroup; }	// Call from C++
 
-	void pushMission(MissionTypes eMission, int iData1, int iData2, int iFlags, bool bAppend, bool bManual, MissionAITypes eMissionAI, const CyPlot& kMissionAIPlot, const CyUnit& kMissionAIUnit);
-	bool canStartMission(int iMission, int iData1, int iData2, const CyPlot& kPlot, bool bTestVisible) const;
 
 	bool isHuman() const;
-	int baseMoves() const;
-	bool isWaiting() const;
 	bool isFull() const;
-	bool hasMoved() const;
 	bool canFight() const;
-	bool isInvisible(int /*TeamTypes*/ eTeam) const;
 
 	CyPlot* plot() const;
 	CyArea* area() const;
 
-	bool readyToMove(bool bAny) const;
 
 	int getID() const;
 	int /*PlayerTypes*/ getOwner() const;
@@ -41,8 +34,6 @@ public:
 	int /*ActivityTypes*/ getActivityType() const;
 	void setActivityType(int /*ActivityTypes*/ eNewValue);
 	int /*AutomateTypes*/ getAutomateType() const;
-	bool isAutomated() const;
-	void setAutomateType(int /*AutomateTypes*/ eNewValue);
 
 	int getNumUnits() const;
 	int getLengthMissionQueue() const;

@@ -6,11 +6,11 @@ from CvPythonExtensions import *
 import CvUtil
 import TradeUtil
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 GAME = GC.getGame()
-STATE = CyState()
 ENABLER = CyEnabler()
 INFO = CyInfo()   # entity data: the context serves settings, CyInfo serves entities
 ENUMS = CyEnums()
@@ -88,18 +88,18 @@ class MoreCiv4lertsEvent(AbstractMoreCiv4lertsEvent):
 	def OnCityBuilt(self, argsList):
 		cityId = argsList[0]
 		iOwner = cityId[0]
-		iPlayer = STATE.getActivePlayer()
+		iPlayer = GAME.getActivePlayer()
 		if self.getCheckForDomVictory():
 			if iOwner == iPlayer:
 				self.CheckForAlerts(iOwner, False)
 		if self.options.isShowCityFoundedAlert():
 			if iOwner != iPlayer:
-				bRevealed = GC.getPlayer(iOwner).getCity(cityId[1]).isRevealedTo(STATE.getPlayerTeam(iPlayer))
+				bRevealed = GC.getPlayer(iOwner).getCity(cityId[1]).isRevealedTo(GC.getPlayer(iPlayer).getTeam())
 				CyPlayer = GC.getPlayer(iOwner)
 				if bRevealed or canSeeCityList(CyPlayer):
 					iColor = ENUMS.getInfoType("COLOR_MAGENTA")
 					szCity = GC.getPlayer(iOwner).getCity(cityId[1]).getName()
-					szOwner = STATE.getPlayerName(iOwner)
+					szOwner = GC.getPlayer(iOwner).getName()
 					if bRevealed:
 						msg = TRNSLTR.getText("TXT_KEY_MORECIV4LERTS_CITY_FOUNDED", (szOwner, szCity))
 						icon = "Art/Interface/Buttons/Actions/foundcity.dds"
@@ -112,12 +112,12 @@ class MoreCiv4lertsEvent(AbstractMoreCiv4lertsEvent):
 	def OnCityRazed(self, argsList):
 		cityId, iPlayer = argsList
 		if not self.getCheckForDomVictory(): return
-		if iPlayer == STATE.getActivePlayer():
+		if iPlayer == GAME.getActivePlayer():
 			self.CheckForAlerts(iPlayer, False)
 
 	def OnCityLost(self, argsList):
 		cityId = argsList[0]
-		if not self.getCheckForDomVictory() or cityId[0] != STATE.getActivePlayer():
+		if not self.getCheckForDomVictory() or cityId[0] != GAME.getActivePlayer():
 			return
 		self.CheckForAlerts(cityId[0], False)
 
@@ -134,8 +134,8 @@ class MoreCiv4lertsEvent(AbstractMoreCiv4lertsEvent):
 			icon = "Art/Interface/Buttons/General/Warning_popup.dds"
 			iActiveTeam = GAME.getActiveTeam()
 			iAvoidGrowth = ENUMS.getInfoType("EMPHASIZE_AVOID_GROWTH")
-			for iPlayerX in xrange(STATE.getMAX_PC_PLAYERS()):
-				if not STATE.isPlayerAlive(iPlayerX) or STATE.getPlayerTeam(iPlayerX) != iActiveTeam:
+			for iPlayerX in xrange(GC.getMAX_PC_PLAYERS()):
+				if not GC.getPlayer(iPlayerX).isAlive() or GC.getPlayer(iPlayerX).getTeam() != iActiveTeam:
 					continue
 				for iCityX in GC.getPlayer(iPlayerX).getCityIds():
 					aGrowth = GC.getPlayer(iPlayerX).getCity(iCityX).getGrowth()
@@ -366,7 +366,7 @@ class MoreCiv4lertsEvent(AbstractMoreCiv4lertsEvent):
 		return u", ".join(names)
 
 	# THE UNIVERSAL ENTITY-NAME SHAPE: a type PREFIX and an id, served by CyInfo. Never an accessor function
-	# and never a per-type method -- the global context hands out no info objects ([DEC-cy-not-fixed]), and
+	# and never a per-type method -- the global context hands out no info objects, and
 	# addressing by (prefix, id) is what lets ONE helper serve every registry.
 	def buildInfoString(self, items, szTypePrefix):
 		names = [INFO.getDescription(szTypePrefix, iItem) for iItem in items]

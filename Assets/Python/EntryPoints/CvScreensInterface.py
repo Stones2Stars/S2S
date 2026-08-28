@@ -666,12 +666,33 @@ class _LazyScreenMap(dict):
 	built. That matters because a screen constructor READS THE GAME, so eagerly building the tree put every
 	read it performs on the startup path.
 	"""
-	def __missing__(self, key):
+	def __getitem__(self, key):
+		#	⛔ THE BUILD HANGS OFF __getitem__ BECAUSE THE EMBEDDED INTERPRETER IS PYTHON 2.4, AND
+		#	dict.__missing__ IS 2.5+. Written as __missing__ it never fires here at all -- the lazy map
+		#	silently degrades to a plain dict, every factory-backed screen stays absent, and the fetch raises
+		#	a bare KeyError with no __missing__ frame in the traceback, which is what makes it read as a
+		#	missing registration rather than a dead hook. getScreen() carries its own _screenFactories
+		#	fallback for exactly that reason.
+		try:
+			return dict.__getitem__(self, key)
+		except KeyError:
+			pass
 		moduleName, className, args = _screenFactories[key]
 		module = __import__(moduleName)
 		screen = getattr(module, className)(*args)
 		dict.__setitem__(self, key, screen)
 		return screen
+
+	def __contains__(self, key):
+		#	⛔ MEMBERSHIP MEANS REACHABLE, NEVER ALREADY-BUILT, because every caller pairs `id in screenMap`
+		#	with a screenMap[id] that builds from the factory. `in` does NOT go through __missing__, so a bare
+		#	dict.__contains__ answers False for a screen that is merely unbuilt -- and the caller then skips
+		#	the fetch that would have built it.
+		#	⚑ The failure that shape produces is SILENT and total: handleInput returns 0 without dispatching,
+		#	so a screen opened by direct construction (the WorldBuilder sub-screens do
+		#	`WBPlotScreen(self.WB).interfaceScreen(...)`, never screenMap[WB_PLOT]) swallows every click with
+		#	no traceback. update() and onClose() were lost the same way.
+		return dict.__contains__(self, key) or key in _screenFactories
 
 screenMap = _LazyScreenMap({
 	MAIN_INTERFACE			: mainInterface,
@@ -695,6 +716,14 @@ def lateInit():
 	global worldBuilderScreen, advancedStartScreen
 	advancedStartScreen = CvAdvancedStartScreen.CvAdvancedStartScreen()
 	worldBuilderScreen = WorldBuilder.WorldBuilder(WORLDBUILDER_SCREEN)
+	#	⛔ WorldBuilder DEFINES handleInput, so it has to be REACHABLE from handleInput's screenMap dispatch --
+	#	the mouse hooks below (leftMouseDown / rightMouseDown / mouseOverPlot / update) are wired by explicit
+	#	id branches and are NOT that dispatch. Without this row every button on the WorldBuilder screen was
+	#	dropped silently while clicking the MAP still worked, because only the map path was ever wired.
+	#	⚑ It also carries the three sub-screens: WBTechScreen / WBGameDataScreen / WBUnitScreen draw ON this
+	#	screen (which is why their handleInput takes the extra `screen` argument), so their input arrives
+	#	under WORLDBUILDER_SCREEN and reaches them through WorldBuilder.handleInput's inSubScreen hand-off.
+	screenMap[WORLDBUILDER_SCREEN] = worldBuilderScreen
 
 	_screenFactories.update({
 		CORPORATION_SCREEN    : ('CvCorporationScreen', 'CvCorporationScreen', ()),

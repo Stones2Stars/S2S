@@ -4,14 +4,13 @@
 from CvPythonExtensions import *
 TRNSLTR = CyTranslator()
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
 GAME = GC.getGame()
 MAP = GC.getMap()
-STATE = CyState()
-ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -128,7 +127,7 @@ class NaturalWonders:
                 continue
             pCapital = player.getCapitalCity()
             if pCapital:
-                ACT.changeCityCulture(pCapital.getOwner(), pCapital.getID(), iP, c, True)
+                pCapital.changeCulture(iP, c, True)
             else:
                 remaining.append((iP, c))
         self.pendingCulture = remaining
@@ -198,7 +197,7 @@ class NaturalWonders:
             if bFirst:
                 pCapital = CyPlayerX.getCapitalCity()
                 if pCapital:
-                    ACT.changeCityCulture(pCapital.getOwner(), pCapital.getID(), iPlayerX, iCulture, True)
+                    pCapital.changeCulture(iPlayerX, iCulture, True)
                 else:
                     self.pendingCulture.append((iPlayerX, iCulture))
                 if iPlayerX == iPlayerAct:

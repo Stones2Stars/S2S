@@ -19,11 +19,11 @@ EventSignsOpt = BugCore.game.EventSigns
 
 
 # civ globals
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 MAP = GC.getMap()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 INFO = CyInfo()
@@ -516,11 +516,11 @@ def applySaltpeter(argsList):
 		return
 	iPlayer = kTriggeredData.ePlayer
 
-	event = GC.getEventInfo(argsList[0])
-	iFood = event.getPlotExtraYield(YieldTypes.YIELD_FOOD)
-	iProd = event.getPlotExtraYield(YieldTypes.YIELD_PRODUCTION)
-	iComm = event.getPlotExtraYield(YieldTypes.YIELD_COMMERCE)
-	sEventType = event.getType()
+	iEvent = argsList[0]
+	iFood = INFO.getEventPlotExtraYield(iEvent, YieldTypes.YIELD_FOOD)
+	iProd = INFO.getEventPlotExtraYield(iEvent, YieldTypes.YIELD_PRODUCTION)
+	iComm = INFO.getEventPlotExtraYield(iEvent, YieldTypes.YIELD_COMMERCE)
+	sEventType = INFO.getType("EVENT_", iEvent)
 
 	# Add landmark for initial plot, if there is still a yield change
 	placeLandmark(CyPlot, sEventType, iFood, iProd, iComm, True, -1)

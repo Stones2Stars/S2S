@@ -6,13 +6,13 @@
 from CvPythonExtensions import *
 import CvUtil
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
 BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 GAME = GC.getGame()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -186,7 +186,7 @@ class CvGameUtils:
 		gold = GAME.getSorenRandNum(iTemp, "Pillage Gold 1")
 		gold += GAME.getSorenRandNum(iTemp, "Pillage Gold 2")
 
-		aUnitRead = STATE.getUnitRead(iUnitOwner, iUnitId)
+		aUnitRead = GC.getPlayer(iUnitOwner).getUnit(iUnitId).getRead()
 		gold += aUnitRead[UnitReadKind.UNIT_READ_PILLAGE_CHANGE] * gold / 100.0
 
 		if GC.getPlayer(iUnitOwner).hasBuilding(self.iHimejiCastle):
@@ -516,15 +516,16 @@ class CvGameUtils:
 				sText = CyGameTextMgr().getSpecificUnitHelp(pUnit, True, False)
 				if GAME.GetWorldBuilderMode():
 					sText += "\n" + CyTranslator().getText("TXT_WORD_UNIT", ()) + " ID: " + str(iData2)
-					sText += "\n" + CyTranslator().getText("TXT_KEY_WB_GROUP", ()) + " ID: " + str(pUnit.getGroupID())
+					sText += "\n" + CyTranslator().getText("TXT_KEY_WB_GROUP", ()) + " ID: " + str(pUnit.getRead()[UnitReadKind.UNIT_READ_GROUP_ID])
 					sText += "\n" + "X: " + str(pUnit.getX()) + ", Y: " + str(pUnit.getY())
 					sText += "\n" + CyTranslator().getText("TXT_KEY_WB_AREA_ID", ()) + ": "  + str(pUnit.plot().getArea())
 				return sText
 ## Civics Screen ##
 			elif iData1 == 8205 or iData1 == 8206:
 				sText = CyGameTextMgr().parseCivicInfo(iData2, False, True, False)
-				if GC.getCivicInfo(iData2).getUpkeep() > -1:
-					sText += "\n" + INFO.getDescription("UPKEEP_", GC.getCivicInfo(iData2).getUpkeep())
+				iUpkeep = INFO.getCivicUpkeep(iData2)
+				if iUpkeep > -1:
+					sText += "\n" + INFO.getDescription("UPKEEP_", iUpkeep)
 				else:
 					sText += "\n" + CyTranslator().getText("TXT_KEY_CIVICS_SCREEN_NO_UPKEEP", ())
 				return sText

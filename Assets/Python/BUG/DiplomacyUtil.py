@@ -21,12 +21,12 @@
 from CvPythonExtensions import *
 import TradeUtil
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
 GAME = GC.getGame()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 diplo = CyDiplomacy()
@@ -305,7 +305,7 @@ def onCivicDemanded(argsList):
 	CyPlayerX = GC.getPlayer(eDemandPlayer)
 	of = CyPlayerX.getName()
 	to = GC.getPlayer(eTargetPlayer).getName()
-	iCivic = GC.getLeaderHeadInfo(CyPlayerX.getPersonalityType()).getFavoriteCivic()
+	iCivic = INFO.getIntrinsic("LEADER_", CyPlayerX.getPersonalityType(), IntrinsicSlot.PYINT_FAVORITE_CIVIC)
 	if iCivic > -1:
 		print "DiplomacyUtil - %s asks %s to switch to %s" %(of, to, INFO.getDescription("CIVIC_", iCivic))
 
@@ -314,7 +314,7 @@ def onCivicAccepted(argsList):
 	CyPlayerX = GC.getPlayer(eDemandPlayer)
 	to = GC.getPlayer(eTargetPlayer).getName()
 	of = CyPlayerX.getName()
-	iCivic = GC.getLeaderHeadInfo(CyPlayerX.getPersonalityType()).getFavoriteCivic()
+	iCivic = INFO.getIntrinsic("LEADER_", CyPlayerX.getPersonalityType(), IntrinsicSlot.PYINT_FAVORITE_CIVIC)
 	if iCivic > -1:
 		print "DiplomacyUtil - %s accepts demand from %s to switch to %s" %(to, of, INFO.getDescription("CIVIC_", iCivic))
 
@@ -323,7 +323,7 @@ def onCivicRejected(argsList):
 	CyPlayerX = GC.getPlayer(eDemandPlayer)
 	to = GC.getPlayer(eTargetPlayer).getName()
 	of = CyPlayerX.getName()
-	iCivic = GC.getLeaderHeadInfo(CyPlayerX.getPersonalityType()).getFavoriteCivic()
+	iCivic = INFO.getIntrinsic("LEADER_", CyPlayerX.getPersonalityType(), IntrinsicSlot.PYINT_FAVORITE_CIVIC)
 	if iCivic > -1:
 		print "DiplomacyUtil - %s rejects demand from %s to switch to %s" %(to, of, INFO.getDescription("CIVIC_", iCivic))
 

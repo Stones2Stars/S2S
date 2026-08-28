@@ -6,11 +6,11 @@ import WBPlayerScreen
 import WBTeamScreen
 import WBInfoScreen
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -63,14 +63,12 @@ class WBEventScreen:
 
 		lCorporations = []
 		for i in xrange(GC.getNumCorporationInfos()):
-			ItemInfo = GC.getCorporationInfo(i)
-			lCorporations.append([ItemInfo.getDescription(), i])
+			lCorporations.append([INFO.getDescription("CORPORATION_", i), i])
 		lCorporations.sort()
 
 		lBuildings = []
 		for i in xrange(GC.getNumBuildingInfos()):
-			ItemInfo = GC.getBuildingInfo(i)
-			lBuildings.append([ItemInfo.getDescription(), i])
+			lBuildings.append([INFO.getDescription("BUILDING_", i), i])
 		lBuildings.sort()
 
 		lEvents = []
@@ -84,8 +82,7 @@ class WBEventScreen:
 
 		lReligions = []
 		for i in xrange(GC.getNumReligionInfos()):
-			ItemInfo = GC.getReligionInfo(i)
-			lReligions.append([ItemInfo.getDescription(), i])
+			lReligions.append([INFO.getDescription("RELIGION_", i), i])
 		lReligions.sort()
 
 		self.placeEventPlayers()
@@ -139,8 +136,8 @@ class WBEventScreen:
 		for pUnitX in pPlot.units():
 			iRow = screen.appendTableRow("WBEventUnit")
 			sText = pUnitX.getName()
-			if len(STATE.getUnitNameNoDesc(pUnitX.getOwner(), pUnitX.getID())):
-				sText = STATE.getUnitNameNoDesc(pUnitX.getOwner(), pUnitX.getID())
+			if len(pUnitX.getNameNoDesc()):
+				sText = pUnitX.getNameNoDesc()
 			iPlayerX = pUnitX.getOwner()
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 			if pUnitX.getID() == iSelectedUnit:

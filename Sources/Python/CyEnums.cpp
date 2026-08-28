@@ -4,7 +4,7 @@
 //	⛔ THIS IS NOT THE BANNED BINDING SURFACE, and the distinction is what makes it publishable at all.
 //	docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract) bans the `Cy*` .def GETTER contract -- a surface of reads. This file contains ZERO `.def`
 //	and ZERO class_: it publishes CONSTANTS, and constants are what the new surface's own grammar is written in.
-//	`CyState::getYields()[YieldTypes.YIELD_FOOD]` is the specified shape (patterns.md § THE TWO READ ROLES: "the
+//	`CyCity::getYields()[YieldTypes.YIELD_FOOD]` is the specified shape (patterns.md § THE TWO READ ROLES: "the
 //	EXISTING ENGINE ENUM indexes the RESULT, not the call"), so without this publication the replacement surface
 //	cannot be consumed at all. It is a PREREQUISITE of the new surface, never a survival of the old one.
 //
@@ -211,7 +211,6 @@ void CyEnums::pythonPublish()
 		.value("PYINT_GRID_X",           PYINT_GRID_X)
 		.value("PYINT_GRID_Y",           PYINT_GRID_Y)
 		.value("PYINT_TRADE_ROUTE_AMOUNT", PYINT_TRADE_ROUTE_AMOUNT)
-		.value("PYINT_DOMAIN",           PYINT_DOMAIN)
 		.value("PYINT_PILLAGE_GOLD",     PYINT_PILLAGE_GOLD)
 		.value("PYINT_ERA_STARTING_GOLD",            PYINT_ERA_STARTING_GOLD)
 		.value("PYINT_ERA_STARTING_UNIT_MULTIPLIER", PYINT_ERA_STARTING_UNIT_MULTIPLIER)
@@ -625,7 +624,7 @@ void CyEnums::pythonPublish()
 		.value("NUM_DURATIONS_KINDS", NUM_DURATIONS_KINDS)
 	;
 
-	//	The kind enums that index CyState's raw-state city groups. They are the consumer's vocabulary for those
+	//	The kind enums that index the raw-state city groups. They are the consumer's vocabulary for those
 	//	reads exactly as YieldTypes is for getYields -- the enum indexes the RESULT, never the call.
 	//	The UNIT plane's two group enums -- what getUnitRead / getUnitFlags hand back.
 	python::enum_<UnitReadKind>("UnitReadKind")

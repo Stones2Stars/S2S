@@ -7,14 +7,14 @@ from CvPythonExtensions import *
 import math
 
 # globals
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
 BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 ESPIONAGEMISSION = CyEspionageMissionInfo()   # the per-info accessor: named reads for ESPIONAGEMISSION_ alone
 GAME = GC.getGame()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
@@ -547,7 +547,7 @@ class CvInfoScreen:
 				if not self.bPlayerInclude[p]:
 					continue
 
-				color = STATE.getPlayerColorPrimary(p)
+				color = GC.getPlayer(p).getColorPrimary()
 				oldX = -1
 				oldY = iH_GRAPH
 				turn = lastTurn
@@ -1211,7 +1211,7 @@ class CvInfoScreen:
 			aCity = aaWondersBeingBuilt[i][2]
 			iPlayer = aaWondersBeingBuilt[i][3]
 
-			color = STATE.getPlayerColorPrimary(iPlayer)
+			color = GC.getPlayer(iPlayer).getColorPrimary()
 
 			if self.szWonderDisplayMode == "Projects":
 				szWonderName = INFO.getDescription("PROJECT_", iWonderType)
@@ -1249,7 +1249,7 @@ class CvInfoScreen:
 			aCity = aaWondersBuilt[i][4]
 			iPlayer = aaWondersBuilt[i][5]
 
-			color = STATE.getPlayerColorPrimary(iPlayer)
+			color = GC.getPlayer(iPlayer).getColorPrimary()
 
 			if self.szWonderDisplayMode == "Projects":
 				szWonderName = INFO.getDescription("PROJECT_", iWonderType)
@@ -1349,7 +1349,7 @@ class CvInfoScreen:
 
 		player = GC.getPlayer(self.iPlayer)
 		for unitX in player.units():
-			iType = STATE.getUnitRead(self.iPlayer, unitX.getID())[UnitReadKind.UNIT_READ_TYPE]
+			iType = GC.getPlayer(self.iPlayer).getUnit(unitX.getID()).getRead()[UnitReadKind.UNIT_READ_TYPE]
 			aiUnitsCurrent[iType] += 1
 
 		aiImprovementsCurrent = []

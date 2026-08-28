@@ -8,11 +8,11 @@ import WBPlayerUnits
 import WBInfoScreen
 import WorldBuilder
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -36,7 +36,7 @@ class WBPromotionScreen:
 		global pUnit
 		global pPlot
 		pUnit = pUnitX
-		pPlot = pUnit.plot()
+		pPlot = GC.getMap().plot(pUnit.getX(), pUnit.getY())
 		iWidth = screen.getXResolution()/5 - 20
 
 		screen.setRenderInterfaceOnly(True)
@@ -45,7 +45,8 @@ class WBPromotionScreen:
 
 		screen.setText("WBPromotionExit", "Background", "<font=4>" + CyTranslator().getText("TXT_WORD_EXIT", ()).upper() + "</font>", 1<<1, screen.getXResolution() - 30, screen.getYResolution() - 42, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1 )
 		screen.setLabel("PromotionHeader", "Background", "<font=4b>" + pUnit.getName() + "</font>", 1<<2, screen.getXResolution()/2, 20, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
-		sText = u"<font=3b>%s ID: %d, %s ID: %d</font>" %(CyTranslator().getText("TXT_WORD_UNIT", ()), pUnit.getID(), CyTranslator().getText("TXT_KEY_WB_GROUP", ()), pUnit.getGroupID())
+		iGroupID = pUnit.getRead()[UnitReadKind.UNIT_READ_GROUP_ID]
+		sText = u"<font=3b>%s ID: %d, %s ID: %d</font>" %(CyTranslator().getText("TXT_WORD_UNIT", ()), pUnit.getID(), CyTranslator().getText("TXT_KEY_WB_GROUP", ()), iGroupID)
 		screen.setLabel("PromotionHeaderB", "Background", sText, 1<<2, screen.getXResolution()/2, 50, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		screen.addDropDownBoxGFC("OwnerType", 20, 20, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
@@ -99,10 +100,23 @@ class WBPromotionScreen:
 	def sortUnits(self):
 		global lUnits
 		lUnits = []
+		iOwner = pUnit.getOwner()
+		iTeam = GC.getPlayer(iOwner).getTeam()
+		# Each COPY filter compares ONE slot of the unit group read; the dropdown selects which slot.
+		mapCopyTypeToReadKind = {
+			1: UnitReadKind.UNIT_READ_TYPE,
+			2: UnitReadKind.UNIT_READ_COMBAT_CLASS,
+			3: UnitReadKind.UNIT_READ_DOMAIN,
+			4: UnitReadKind.UNIT_READ_GROUP_ID,
+		}
+		iReadKind = mapCopyTypeToReadKind.get(iCopyType, -1)
+		iCompareValue = -1
+		if iReadKind != -1:
+			iCompareValue = pUnit.getRead()[iReadKind]
 		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 			pPlayerX = GC.getPlayer(iPlayerX)
-			if iOwnerType == 1 and iPlayerX != pUnit.getOwner(): continue
-			if iOwnerType == 2 and pPlayerX.getTeam() != pUnit.getTeam(): continue
+			if iOwnerType == 1 and iPlayerX != iOwner: continue
+			if iOwnerType == 2 and pPlayerX.getTeam() != iTeam: continue
 			if pPlayerX.isAlive():
 				for loopUnit in pPlayerX.units():
 					bCopy = True
@@ -110,19 +124,10 @@ class WBPromotionScreen:
 						if loopUnit.getX() != pUnit.getX() or loopUnit.getY() != pUnit.getY():
 							bCopy = False
 					elif iPlotType == 1:
-						if loopUnit.plot().getArea() != pUnit.plot().getArea():
+						if GC.getMap().plot(loopUnit.getX(), loopUnit.getY()).getArea() != pPlot.getArea():
 							bCopy = False
-					if iCopyType == 1:
-						if loopUnit.getUnitType() != pUnit.getUnitType():
-							bCopy = False
-					elif iCopyType == 2:
-						if loopUnit.getUnitCombatType() != pUnit.getUnitCombatType():
-							bCopy = False
-					elif iCopyType == 3:
-						if loopUnit.getDomainType() != pUnit.getDomainType():
-							bCopy = False
-					elif iCopyType == 4:
-						if loopUnit.getGroupID() != pUnit.getGroupID():
+					if bCopy and iReadKind != -1:
+						if loopUnit.getRead()[iReadKind] != iCompareValue:
 							bCopy = False
 					if bCopy:
 						lUnits.append([loopUnit.getOwner(), loopUnit.getID()])
@@ -140,34 +145,41 @@ class WBPromotionScreen:
 		screen.setTableColumnHeader("WBCurrentUnit", 1, "", 24)
 		screen.setTableColumnHeader("WBCurrentUnit", 2, "", iWidth - 48)
 
+		iOwner = pUnit.getOwner()
+		iUnitID = pUnit.getID()
+		iGroupID = pUnit.getRead()[UnitReadKind.UNIT_READ_GROUP_ID]
 		for i in lUnits:
 			pPlayerX = GC.getPlayer(i[0])
 			pUnitX = pPlayerX.getUnit(i[1])
 			if pUnitX is None: continue
+			aUnitX = pUnitX.getRead()
 			iRow = screen.appendTableRow("WBCurrentUnit")
 			sText = pUnitX.getName()
-			if len(STATE.getUnitNameNoDesc(pUnitX.getOwner(), pUnitX.getID())):
-				sText = STATE.getUnitNameNoDesc(pUnitX.getOwner(), pUnitX.getID())
+			sCustomName = pUnitX.getNameNoDesc()
+			if len(sCustomName):
+				sText = sCustomName
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-			if pUnitX.getOwner() == pUnit.getOwner():
-				if pUnitX.getID() == pUnit.getID():
+			if i[0] == iOwner:
+				if i[1] == iUnitID:
 					sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-				elif pUnitX.getGroupID() == pUnit.getGroupID():
+				elif aUnitX[UnitReadKind.UNIT_READ_GROUP_ID] == iGroupID:
 					sColor = CyTranslator().getText("[COLOR_YELLOW]", ())
-			screen.setTableText("WBCurrentUnit", 2, iRow, "<font=3>" + sColor + sText + "</color></font>", pUnitX.getButton(), WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<0)
+			sButton = INFO.getButton("UNIT_", aUnitX[UnitReadKind.UNIT_READ_TYPE])
+			screen.setTableText("WBCurrentUnit", 2, iRow, "<font=3>" + sColor + sText + "</color></font>", sButton, WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<0)
 			iLeader = pPlayerX.getLeaderType()
-			iCiv = pUnitX.getCivilizationType()
+			iCiv = pPlayerX.getCivilizationType()
 			screen.setTableText("WBCurrentUnit", 0, iRow, "", INFO.getButton("CIVILIZATION_", iCiv), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<0 )
 			screen.setTableText("WBCurrentUnit", 1, iRow, "", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<0 )
 
 	def sortPromotions(self):
 		global lList
 		lList = []
+		# The GRANT gate, not the level-up gate: an editor hands a promotion out, so it must not be
+		# refused for want of the XP prereqs canAcquirePromotion enforces.
 		for i in xrange(GC.getNumPromotionInfos()):
 			if pUnit.isPromotionValid(i):
-				ItemInfo = GC.getPromotionInfo(i)
-				if iSelectedClass == -2 or ItemInfo.getUnitCombat(iSelectedClass):
-					lList.append([ItemInfo.getDescription(), i])
+				if iSelectedClass == -2 or iSelectedClass in INFO.getIdList("PROMOTION_", i, IdListSlot.PYLIST_QUALIFIED_UNITCOMBATS):
+					lList.append([INFO.getDescription("PROMOTION_", i), i])
 		lList.sort()
 		self.placePromotions()
 
@@ -189,11 +201,10 @@ class WBPromotionScreen:
 			item = lList[iCount]
 			iRow = iCount % nRows
 			iColumn = iCount / nRows
-			ItemInfo = GC.getPromotionInfo(item[1])
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-			if pUnit.isHasPromotion(item[1]):
+			if pUnit.hasPromotion(item[1]):
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-			screen.setTableText("WBPromotion", iColumn, iRow, "<font=3>" + sColor + item[0] + "</color></font>", ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 7873, item[1], 1<<0 )
+			screen.setTableText("WBPromotion", iColumn, iRow, "<font=3>" + sColor + item[0] + "</color></font>", INFO.getButton("PROMOTION_", item[1]), WidgetTypes.WIDGET_PYTHON, 7873, item[1], 1<<0 )
 
 	def handleInput (self, inputClass):
 		screen = CyGInterfaceScreen( "WBPromotionScreen", CvScreenEnums.WB_PROMOTION)
@@ -211,7 +222,7 @@ class WBPromotionScreen:
 			elif iIndex == 2:
 				WBPlayerScreen.WBPlayerScreen(self.WB).interfaceScreen(pUnit.getOwner())
 			elif iIndex == 3:
-				WBTeamScreen.WBTeamScreen(self.WB).interfaceScreen(pUnit.getTeam())
+				WBTeamScreen.WBTeamScreen(self.WB).interfaceScreen(GC.getPlayer(pUnit.getOwner()).getTeam())
 			elif iIndex == 4:
 				WBPlotScreen.WBPlotScreen(self.WB).interfaceScreen(pPlot)
 			elif iIndex == 5:
@@ -269,20 +280,21 @@ class WBPromotionScreen:
 				loopUnit = GC.getPlayer(i[0]).getUnit(i[1])
 				if loopUnit is None: continue
 				if iChangeType == 2:
-					iType = not loopUnit.isHasPromotion(item)
+					iType = not loopUnit.hasPromotion(item)
 				self.doEffects(loopUnit, item, iType)
 		else:
 			if iChangeType == 2:
-				iType = not pUnit.isHasPromotion(item)
+				iType = not pUnit.hasPromotion(item)
 			self.doEffects(pUnit, item, iType)
 
-	def doEffects(self, pUnit, item, bAdd):
+	def doEffects(self, pUnitX, item, bAdd):
 		bEffects = False
-		if bAdd and WorldBuilder.bPython and not pUnit.isHasPromotion(item):
+		if bAdd and WorldBuilder.bPython and not pUnitX.hasPromotion(item):
 			bEffects = True
-		pUnit.setHasPromotion(item, bAdd)
+		pUnitX.setPromotion(item, bAdd)
 		if bEffects:
-			self.eventManager.onUnitPromoted([pUnit, item])
+			# The migrated handler unpacks an (owner, id) IDENTITY PAIR, never a handle.
+			self.eventManager.onUnitPromoted([[pUnitX.getOwner(), pUnitX.getID()], item])
 
 	def update(self, fDelta):
 		return 1

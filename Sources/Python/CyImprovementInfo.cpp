@@ -78,6 +78,13 @@ CYIMP_FLAG(isNoFreshWater,      isNoFreshWater)
 
 #undef CYIMP_FLAG
 
+int CyImprovementInfo::getUpgradeTime(int iImprovement) const
+{
+	const CvImprovementInfo* pImprovement = cyimp_improvement(iImprovement);
+	if (pImprovement == NULL) return 0;
+	return pImprovement->getUpgradeTime();
+}
+
 void CyImprovementInfo::pythonPublish()
 {
 	python::class_<CyImprovementInfo>("CyImprovementInfo")
@@ -94,5 +101,6 @@ void CyImprovementInfo::pythonPublish()
 		.def("isRequiresFeature",    &CyImprovementInfo::isRequiresFeature)
 		.def("isRequiresIrrigation", &CyImprovementInfo::isRequiresIrrigation)
 		.def("isNoFreshWater",       &CyImprovementInfo::isNoFreshWater)
+		.def("getUpgradeTime",       &CyImprovementInfo::getUpgradeTime)
 		;
 }

@@ -11,8 +11,9 @@ from CvPythonExtensions import *
 
 ## Globals
 
-# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -20,7 +21,7 @@ ENUMS = CyEnums()
 
 ## Growth and Starvation
 ##
-## A city is an (iOwner, iCityId) PAIR, never a handle -- the identity every CyState read is addressed by and
+## A city is an (iOwner, iCityId) PAIR, never a handle -- the identity every read is addressed by and
 ## the one an engine callback hands over.
 
 # EMPHASIZE_AVOID_GROWTH. The emphasis registry is data-driven, so the id is resolved by NAME rather than

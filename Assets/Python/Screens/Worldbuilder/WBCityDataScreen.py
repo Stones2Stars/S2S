@@ -11,12 +11,13 @@ import WBReligionScreen
 import WBCorporationScreen
 import WBInfoScreen
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
 BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
-STATE = CyState()
+BONUS = CyBonusInfo()         # the per-info BONUS accessor
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -89,7 +90,7 @@ class WBCityDataScreen:
 		screen.addPullDownString("BonusClass", CyTranslator().getText("TXT_KEY_WB_CITY_ALL",()), -1, -1, True)
 		screen.addPullDownString("BonusClass", CyTranslator().getText("TXT_KEY_GLOBELAYER_RESOURCES_GENERAL",()), 0, 0, 0 == iSelectedClass)
 		iBonusClass = 1
-		while not GC.getBonusClassInfo(iBonusClass) is None:
+		while INFO.exists("BONUSCLASS_", iBonusClass):
 			sText = INFO.getType("BONUSCLASS_", iBonusClass)
 			sText = sText[sText.find("_") +1:]
 			sText = sText.lower()
@@ -103,20 +104,18 @@ class WBCityDataScreen:
 		lSpecialist = []
 		lGreatPeople = []
 		for i in xrange(GC.getNumSpecialistInfos()):
-			info = GC.getSpecialistInfo(i)
-			lSpecialist.append((info.getDescription(), i))
-			iType = info.getGreatPeopleUnitType()
+			lSpecialist.append((INFO.getDescription("SPECIALIST_", i), i))
+			iType = INFO.getSpecialistGreatPeopleUnit(i)
 			if iType > -1 and not iType in lGreatPeople:
 				lGreatPeople.append(iType)
 
 		for i in xrange(GC.getNumBuildingInfos()):
-			iType = GC.getBuildingInfo(i).getGreatPeopleUnitType()
+			iType = BUILDING.getGreatPeopleUnit(i)
 			if iType > -1 and not iType in lGreatPeople:
 				lGreatPeople.append(iType)
 
 		for i in xrange(len(lGreatPeople)):
-			GPInfo = GC.getUnitInfo(lGreatPeople[i])
-			lGreatPeople[i] = [GPInfo.getDescription(), lGreatPeople[i]]
+			lGreatPeople[i] = [INFO.getDescription("UNIT_", lGreatPeople[i]), lGreatPeople[i]]
 		lSpecialist.sort()
 		lGreatPeople.sort()
 
@@ -161,12 +160,12 @@ class WBCityDataScreen:
 	def sortBuildings(self):
 		global lBuilding
 		lBuilding = []
-		for i in xrange(GC.getNumBuildingInfos()):
+		for kBuilding in INFO.getIndex("BUILDING_"):
+			i = kBuilding["id"]
 			if bWonder and not BUILDING.isLimitedWonder(i): continue
 			if not bWonder and BUILDING.isLimitedWonder(i): continue
-			info = GC.getBuildingInfo(i)
-			if info.isGraphicalOnly(): continue
-			lBuilding.append([info.getDescription(), i])
+			if kBuilding["graphicalOnly"]: continue
+			lBuilding.append([kBuilding["description"], i])
 		lBuilding.sort()
 		self.placeModify()
 
@@ -199,9 +198,8 @@ class WBCityDataScreen:
 		for i in xrange(2):
 			screen.setTableColumnHeader("WBModifyBuilding", i, "", iTableWidth/2)
 		for item in lBuilding:
-			info = GC.getBuildingInfo(item[1])
 			iRow = screen.appendTableRow("WBModifyBuilding")
-			screen.setTableText("WBModifyBuilding", 0, iRow, "<font=3>" + item[0] + "</font>", info.getButton(), WidgetTypes.WIDGET_HELP_BUILDING, item[1], -1, 1<<0)
+			screen.setTableText("WBModifyBuilding", 0, iRow, "<font=3>" + item[0] + "</font>", INFO.getButton("BUILDING_", item[1]), WidgetTypes.WIDGET_HELP_BUILDING, item[1], -1, 1<<0)
 			sText = ""
 			iVal = pCity.getBuildingHappyChange(item[1])
 			if iVal > 0:
@@ -247,13 +245,12 @@ class WBCityDataScreen:
 		for item in lSpecialist:
 			iRow = screen.appendTableRow("WBSpecialist")
 			sItem = item[0]
-			ItemInfo = GC.getSpecialistInfo(item[1])
 			iNum = pCity.getFreeSpecialistCount(item[1])
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 			if iNum > 0:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 				sItem += " (" + str(iNum) + ")"
-			screen.setTableText("WBSpecialist", 0, iRow, "<font=3>" + sColor + sItem + "</font></color>", ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 7879, item[1], 1<<0 )
+			screen.setTableText("WBSpecialist", 0, iRow, "<font=3>" + sColor + sItem + "</font></color>", INFO.getButton("SPECIALIST_", item[1]), WidgetTypes.WIDGET_PYTHON, 7879, item[1], 1<<0 )
 
 	def placeGreatPeople(self):
 		screen = CyGInterfaceScreen( "WBCityDataScreen", CvScreenEnums.WB_CITYDATA)
@@ -277,21 +274,19 @@ class WBCityDataScreen:
 		for item in lGreatPeople:
 			iRow = screen.appendTableRow("WBGreatPeople")
 			sItem = item[0]
-			ItemInfo = GC.getUnitInfo(item[1])
 			iNum = pCity.getGreatPeopleUnitProgress(item[1])
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 			if iNum > 0:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 				sItem += " (" + str(iNum) + ")"
-			screen.setTableText("WBGreatPeople", 0, iRow, "<font=3>" + sColor + sItem + "</font></color>", ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 8202, item[1], 1<<0)
+			screen.setTableText("WBGreatPeople", 0, iRow, "<font=3>" + sColor + sItem + "</font></color>", INFO.getButton("UNIT_", item[1]), WidgetTypes.WIDGET_PYTHON, 8202, item[1], 1<<0)
 
 	def createBonusList(self):
 		global lBonus
 		lBonus = []
-		for i in xrange(GC.getNumBonusInfos()):
-			ItemInfo = GC.getBonusInfo(i)
-			if iSelectedClass != ItemInfo.getBonusClassType() and iSelectedClass > -1: continue
-			lBonus.append([ItemInfo.getDescription(), i])
+		for kBonus in INFO.getIndex("BONUS_"):
+			if iSelectedClass != BONUS.getBonusClassType(kBonus["id"]) and iSelectedClass > -1: continue
+			lBonus.append([kBonus["description"], kBonus["id"]])
 		lBonus.sort()
 
 	def placeBonus(self):
@@ -444,9 +439,9 @@ class WBCityDataScreen:
 			else:
 				iType -= CommerceTypes.NUM_COMMERCE_TYPES
 				if iType == 0:
-					pCity. setBuildingHappyChange(iBuilding, pCity.getBuildingHappyChange(iBuilding) + iCount)
+					pCity.setBuildingGrantedWellbeing(iBuilding, BuildingGrantedKind.BUILDING_GRANTED_HAPPINESS, pCity.getBuildingHappyChange(iBuilding) + iCount)
 				else:
-					pCity. setBuildingHealthChange(iBuilding, pCity.getBuildingHealthChange(iBuilding) + iCount)
+					pCity.setBuildingGrantedWellbeing(iBuilding, BuildingGrantedKind.BUILDING_GRANTED_HEALTH, pCity.getBuildingHealthChange(iBuilding) + iCount)
 
 
 	def editFreeBonus(self, item):

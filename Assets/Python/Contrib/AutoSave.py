@@ -3,10 +3,10 @@
 #from CvPythonExtensions import CyInterface
 from CvPythonExtensions import *
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 INFO = CyInfo()
@@ -88,12 +88,12 @@ def save(type, prefix, iTurn):
 	if options.isUsePlayerName():
 		dir += '-' + CyPlayer.getName()[:8]
 	else:
-		dir += '-' + GC.getLeaderHeadInfo(CyPlayer.getLeaderType()).getText()[:8]
+		dir += '-' + INFO.getDescription("LEADER_", CyPlayer.getLeaderType())[:8]
 
-	dir += '-' + GC.getEraInfo(GAME.getCurrentEra()).getText()[:8]
+	dir += '-' + INFO.getDescription("C2C_ERA_", GAME.getCurrentEra())[:8]
 	dir += '-' + INFO.getDescription("GAMESPEED_", GAME.getGameSpeedType())[:5]
-	dir += '-' + GC.getWorldInfo(MAP.getWorldSize()).getText()[:5]
-	dir += '-' + GC.getHandicapInfo(CyPlayer.getHandicapType()).getText()[:5]
+	dir += '-' + INFO.getDescription("WORLDSIZE_", MAP.getWorldSize())[:5]
+	dir += '-' + INFO.getDescription("HANDICAP_", CyPlayer.getHandicapType())[:5]
 	dir += ".CivBeyondSwordSave"
 
 	print "before AutoSave.savename : %s" % dir

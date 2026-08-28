@@ -164,7 +164,7 @@ namespace Cy
 	//
 	//	A game object's IDENTITY, crossing as the (owner, id) pair the read library is addressed by.
 	//
-	//	⛔ This is what a callback hands over instead of a Cy* HANDLE. The read surfaces (CyState / CyEnabler)
+	//	⛔ This is what a callback hands over instead of a Cy* HANDLE. The read surfaces (the object's own accessor / CyEnabler)
 	//	are deliberately ID-BASED so the legacy per-type wrappers can be cut, and the cut leaves those wrappers
 	//	carrying ZERO defs -- so a script handed one can ask it nothing, not even which object it is. Pushing the
 	//	pair directly is what makes the KEPT engine->Python direction usable at all.

@@ -19,8 +19,9 @@ import WBPlayerScreen
 import WBPlotScreen
 
 # globals
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 GAME = GC.getGame()
 MAP = GC.getMap()
@@ -28,8 +29,6 @@ INFO = CyInfo()
 BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 UNITINFO = CyUnitInfo()       # the per-info UNIT accessor
 CULTURELEVEL = CyCultureLevelInfo()   # the culture threshold a city counts toward, per (level x gamespeed)
-STATE = CyState()
-ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
@@ -575,16 +574,16 @@ class CvEventManager:
 				CyCity = CyPlayer.getCity(iData3)
 				# 903 Demolish Building || 904 Abandon City || 905/906 Abandon->Units
 				if ID == 903:
-					ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iData4, False)
+					CyCity.setBuilding(iData4, False)
 					CyPlayer.changeGold(iData5)
 					CvScreensInterface.mainInterface.buildCityListLeft()
 					CyInterface().setDirty(InterfaceDirtyBits.SelectionButtons_DIRTY_BIT, True)
 					if INFO.isReligiousBuilding(iData4):
-						ACT.changeCityHurryAngerTimer(CyCity.getOwner(), CyCity.getID(), CyCity.flatHurryAngerLength())
+						CyCity.changeHurryAngerTimer(CyCity.flatHurryAngerLength())
 				elif ID == 904:
 					CyPlayer.changeGold(iData5)
 					self.onCityRazed(((CyCity.getOwner(), CyCity.getID()), iPlayer))
-					ACT.disbandCity(CyCity.getOwner(), CyCity.getID())
+					CyCity.disband()
 				elif ID == 905 or ID == 906:
 					X = CyCity.getX()
 					Y = CyCity.getY()
@@ -593,12 +592,12 @@ class CvEventManager:
 					CyUnit = CyPlayer.createUnit(iData5, X, Y, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 					if iData4 != -1:
 						if iData4 > 0:
-							ACT.setUnitExperience(CyUnit.getOwner(), CyUnit.getID(), iData4)
+							CyUnit.setExperience(iData4)
 						if ID == 906 and self.PROMO_GUARDIAN_TRIBAL > -1:
-							ACT.setUnitPromotion(CyUnit.getOwner(), CyUnit.getID(), self.PROMO_GUARDIAN_TRIBAL, True)
+							CyUnit.setPromotion(self.PROMO_GUARDIAN_TRIBAL, True)
 					# Leave the fresh unit one move point: spent = movesLeft - 1 on a unit that has spent nothing.
-					iMovesLeft = STATE.getUnitRead(CyUnit.getOwner(), CyUnit.getID())[UnitReadKind.UNIT_READ_MOVES_LEFT]
-					ACT.setUnitMoves(CyUnit.getOwner(), CyUnit.getID(), iMovesLeft - 1)
+					iMovesLeft = CyUnit.getRead()[UnitReadKind.UNIT_READ_MOVES_LEFT]
+					CyUnit.setMoves(iMovesLeft - 1)
 
 		elif ID == 999:
 			GC.getPlayer(iData2).changeCommercePercent(CommerceTypes(iData3), iData4)
@@ -727,10 +726,10 @@ class CvEventManager:
 			if not aList: continue
 
 			for CyUnit in CyPlayer.units():
-				iUnitType = STATE.getUnitRead(iPlayer, CyUnit.getID())[UnitReadKind.UNIT_READ_TYPE]
+				iUnitType = GC.getPlayer(iPlayer).getUnit(CyUnit.getID()).getRead()[UnitReadKind.UNIT_READ_TYPE]
 				if UNITINFO.isFound(iUnitType):
 					for iPromo in aList:
-						ACT.setUnitPromotion(iPlayer, CyUnit.getID(), iPromo, True)
+						GC.getPlayer(iPlayer).getUnit(CyUnit.getID()).setPromotion(iPromo, True)
 
 	def onMapRegen(self, argsList):
 		if not CyInterface().isInAdvancedStart():
@@ -885,25 +884,25 @@ class CvEventManager:
 		iPlayerL, iUnitIdL = CyUnitL
 		CyPlayerW = GC.getPlayer(iPlayerW)
 		CyPlayerL = GC.getPlayer(iPlayerL)
-		aW = STATE.getUnitRead(iPlayerW, iUnitIdW)
-		aL = STATE.getUnitRead(iPlayerL, iUnitIdL)
+		aW = GC.getPlayer(iPlayerW).getUnit(iUnitIdW).getRead()
+		aL = GC.getPlayer(iPlayerL).getUnit(iUnitIdL).getRead()
 		CyTeamW = None
 		iPlayerAct = None
 		# WarPrizes
 		if self.iWAR_PRIZES:
 			iValid = GC.getInfoTypeForString("UNITCOMBAT_NAVAL_COMBATANT")
-			if (iValid > -1 and STATE.hasUnitCombat(iPlayerW, iUnitIdW, iValid)
-			and STATE.hasUnitCombat(iPlayerL, iUnitIdL, iValid)):
+			if (iValid > -1 and GC.getPlayer(iPlayerW).getUnit(iUnitIdW).hasCombat(iValid)
+			and GC.getPlayer(iPlayerL).getUnit(iUnitIdL).hasCombat(iValid)):
 				# 20% chance
 				if GAME.getSorenRandNum(100, "WarPrize") < 20:
 
 					iUnitL = aL[UnitReadKind.UNIT_READ_TYPE]
-					aPosW = STATE.getUnitPosition(iPlayerW, iUnitIdW)
+					aPosW = GC.getPlayer(iPlayerW).getUnit(iUnitIdW).getPosition()
 					iX = aPosW[0]
 					iY = aPosW[1]
-					iUnitWP = ACT.createUnit(iPlayerW, iUnitL, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-					ACT.finishUnitMoves(iPlayerW, iUnitWP)
-					ACT.setUnitDamage(iPlayerW, iUnitWP, GAME.getSorenRandNum(40, "XP") + 40, iPlayerW)
+					pUnitWP = GC.getPlayer(iPlayerW).createUnit(iUnitL, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+					pUnitWP.finishMoves()
+					pUnitWP.setDamage(GAME.getSorenRandNum(40, "XP") + 40, iPlayerW)
 					# Message
 					iPlayerAct = GAME.getActivePlayer()
 					if iPlayerAct in (iPlayerW, iPlayerL):
@@ -912,7 +911,7 @@ class CvEventManager:
 						eColor = ColorTypes(GC.getInfoTypeForString("COLOR_GREEN"))
 						CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_MISC_WARPRIZES_SUCCESS", (szWP,)), iPlayerW, 16, INFO.getButton("UNIT_", iUnitL), eColor, iX, iY, True, True, bForce=False)
 					elif iPlayerL == iPlayerAct:
-						aPosL = STATE.getUnitPosition(iPlayerL, iUnitIdL)
+						aPosL = GC.getPlayer(iPlayerL).getUnit(iUnitIdL).getPosition()
 						iX = aPosL[0]
 						iY = aPosL[1]
 						eColor = ColorTypes(GC.getInfoTypeForString("COLOR_RED"))
@@ -920,7 +919,7 @@ class CvEventManager:
 						CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_MISC_WARPRIZES_FAILURE", (szWP,)), iPlayerL, 16, artPath, eColor, iX, iY, True, True, bForce=False)
 					# Booty
 					iValid = GC.getInfoTypeForString("UNITCOMBAT_TRANSPORT")
-					if iValid > -1 and STATE.hasUnitCombat(iPlayerL, iUnitIdL, iValid):
+					if iValid > -1 and GC.getPlayer(iPlayerL).getUnit(iUnitIdL).hasCombat(iValid):
 						Loot = GAME.getSorenRandNum(100, "Loot") * self.iTrainPrcntGS / 100
 						if CyPlayerL.getGold() >= Loot:
 							CyPlayerW.changeGold(Loot)
@@ -936,27 +935,27 @@ class CvEventManager:
 		mapPromoType = self.mapPromoType
 		iRespawn2 = mapPromoType['PROMOTION_LIVE2']
 		iRespawn1 = mapPromoType['PROMOTION_LIVE1']
-		bRespawn2 = STATE.hasUnitPromotion(iPlayerL, iUnitIdL, iRespawn2)
+		bRespawn2 = GC.getPlayer(iPlayerL).getUnit(iUnitIdL).hasPromotion(iRespawn2)
 
 		# Messenger (Hero) promo
-		if STATE.hasUnitPromotion(iPlayerW, iUnitIdW, mapPromoType['PROMOTION_RETINUE_MESSENGER']):
+		if GC.getPlayer(iPlayerW).getUnit(iUnitIdW).hasPromotion(mapPromoType['PROMOTION_RETINUE_MESSENGER']):
 			# 10% chance
 			if not GAME.getSorenRandNum(10, "Gods"):
 
-				# SdToolKit already routes a (owner, id) identity through STATE/ACT (sdIsUnitId), so the unit
+				# SdToolKit already routes a (owner, id) identity (sdIsUnitId), so the unit
 				# tuple is passed through unchanged.
 				if not SDTK.sdObjectExists('Promo', CyUnitW):
-					ACT.setUnitDamage(iPlayerW, iUnitIdW, 0, -1)
+					GC.getPlayer(iPlayerW).getUnit(iUnitIdW).setDamage(0, -1)
 					SDTK.sdObjectInit('Promo', CyUnitW, {'HealTurn' : GAME.getGameTurn()})
 				else:
 					iHealTurn = SDTK.sdObjectGetVal('Promo', CyUnitW, 'HealTurn')
 					iTurn = GAME.getGameTurn()
 					if iHealTurn is None or iTurn > iHealTurn:
-						ACT.setUnitDamage(iPlayerW, iUnitIdW, 0, -1)
+						GC.getPlayer(iPlayerW).getUnit(iUnitIdW).setDamage(0, -1)
 						SDTK.sdObjectSetVal('Promo', CyUnitW, 'HealTurn', iTurn)
 
 		# Respawn promo
-		if STATE.hasUnitPromotion(iPlayerL, iUnitIdL, iRespawn1) or bRespawn2:
+		if GC.getPlayer(iPlayerL).getUnit(iUnitIdL).hasPromotion(iRespawn1) or bRespawn2:
 			iUnit = aL[UnitReadKind.UNIT_READ_TYPE]
 			iX = -1
 			if aL[UnitReadKind.UNIT_READ_DOMAIN] == self.mapDomain['DOMAIN_SEA']:
@@ -971,20 +970,20 @@ class CvEventManager:
 					iX = CyCity.getX()
 					iY = CyCity.getY()
 			if iX == -1:
-				aPosL = STATE.getUnitPosition(iPlayerL, iUnitIdL)
+				aPosL = GC.getPlayer(iPlayerL).getUnit(iUnitIdL).getPosition()
 				iX = aPosL[0]
 				iY = aPosL[1]
-			iNewUnit = ACT.createUnit(iPlayerL, iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
+			pNewUnit = GC.getPlayer(iPlayerL).createUnit(iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
 			# ⚠ convertUnit with bKillOriginal DELETES the loser, so nothing may read iUnitIdL after this.
-			ACT.convertUnit(iPlayerL, iNewUnit, iPlayerL, iUnitIdL, True)
-			ACT.setUnitDamage(iPlayerL, iNewUnit, GAME.getSorenRandNum(40, "Damage") + 20, -1)
+			pNewUnit.convert(iPlayerL, iUnitIdL, True)
+			pNewUnit.setDamage(GAME.getSorenRandNum(40, "Damage") + 20, -1)
 
-			ACT.finishUnitMoves(iPlayerL, iNewUnit)
+			pNewUnit.finishMoves()
 
 			if bRespawn2:
-				ACT.setUnitPromotion(iPlayerL, iNewUnit, iRespawn2, False)
+				GC.getPlayer(iPlayerL).getUnit(iNewUnit).setPromotion(iRespawn2, False)
 			else:
-				ACT.setUnitPromotion(iPlayerL, iNewUnit, iRespawn1, False)
+				GC.getPlayer(iPlayerL).getUnit(iNewUnit).setPromotion(iRespawn1, False)
 
 			if iPlayerAct is None:
 				iPlayerAct = GAME.getActivePlayer()
@@ -993,17 +992,17 @@ class CvEventManager:
 
 		if CyPlayerW.isNPC():
 			# EXP boost for NPC
-			ACT.changeUnitExperience(iPlayerW, iUnitIdW, 1, 100, False, False, False)
+			GC.getPlayer(iPlayerW).getUnit(iUnitIdW).changeExperience(1, 100, False, False, False)
 
 		elif CyPlayerL.isNPC():
 			# EXP boost for AI winning against NPC
 			if not CyPlayerW.isHuman():
-				ACT.changeUnitExperience(iPlayerW, iUnitIdW, 1, 100, False, False, False)
+				GC.getPlayer(iPlayerW).getUnit(iUnitIdW).changeExperience(1, 100, False, False, False)
 
 		else: # Special outcomes not applicable to NPC teams
-			bSneak = STATE.hasUnitPromotion(iPlayerW, iUnitIdW, mapPromoType['PROMOTION_SNEAK'])
-			bMarauder = STATE.hasUnitPromotion(iPlayerW, iUnitIdW, mapPromoType['PROMOTION_MARAUDER'])
-			bIndustrySpy = STATE.hasUnitPromotion(iPlayerW, iUnitIdW, mapPromoType['PROMOTION_INDUSTRYESPIONAGE'])
+			bSneak = GC.getPlayer(iPlayerW).getUnit(iUnitIdW).hasPromotion(mapPromoType['PROMOTION_SNEAK'])
+			bMarauder = GC.getPlayer(iPlayerW).getUnit(iUnitIdW).hasPromotion(mapPromoType['PROMOTION_MARAUDER'])
+			bIndustrySpy = GC.getPlayer(iPlayerW).getUnit(iUnitIdW).hasPromotion(mapPromoType['PROMOTION_INDUSTRYESPIONAGE'])
 			# Commerce Theft
 			if bSneak or bMarauder or bIndustrySpy:
 
@@ -1025,16 +1024,16 @@ class CvEventManager:
 				if iPlayerAct is None:
 					iPlayerAct = GAME.getActivePlayer()
 				if iPlayerAct in (iPlayerW, iPlayerL):
-					aPosW2 = STATE.getUnitPosition(iPlayerW, iUnitIdW)
+					aPosW2 = GC.getPlayer(iPlayerW).getUnit(iUnitIdW).getPosition()
 					iX = aPosW2[0]
 					iY = aPosW2[1]
 					if iPlayerW == iPlayerAct:
-						if STATE.isUnitHiddenNationality(iPlayerL, iUnitIdL):
+						if GC.getPlayer(iPlayerL).getUnit(iUnitIdL).isHiddenNationality():
 							szTxt = TRNSLTR.getText("TXT_KEY_UNKNOWN_NATION",())
 						else:
 							szTxt = CyPlayerL.getName()
 					elif iPlayerL == iPlayerAct:
-						if STATE.isUnitHiddenNationality(iPlayerW, iUnitIdW):
+						if GC.getPlayer(iPlayerW).getUnit(iUnitIdW).isHiddenNationality():
 							szTxt = TRNSLTR.getText("TXT_KEY_UNKNOWN_NATION",())
 						else:
 							szTxt = CyPlayerW.getName()
@@ -1122,7 +1121,7 @@ class CvEventManager:
 					elif KEY == "GREAT_JAGUAR_TEMPLE":
 						iChance = GAME.getSorenRandNum(5, "Jaguar")
 						if not iChance:
-							ACT.setUnitDamage(iPlayerW, iUnitIdW, 0, -1)
+							GC.getPlayer(iPlayerW).getUnit(iUnitIdW).setDamage(0, -1)
 
 		iUnitW = aW[UnitReadKind.UNIT_READ_TYPE]
 		mapUnitType = self.mapUnitType
@@ -1131,18 +1130,18 @@ class CvEventManager:
 			# Capture 25%
 			if not GAME.getSorenRandNum(4, "Gods"):
 
-				aPosL2 = STATE.getUnitPosition(iPlayerL, iUnitIdL)
+				aPosL2 = GC.getPlayer(iPlayerL).getUnit(iUnitIdL).getPosition()
 				CyPlotL = GC.getMap().plot(aPosL2[0], aPosL2[1])
 				if not CyPlotL.isVisibleEnemyUnit(iPlayerW):
 					iX = aPosL2[0]
 					iY = aPosL2[1]
 				else:
-					aPosW3 = STATE.getUnitPosition(iPlayerW, iUnitIdW)
+					aPosW3 = GC.getPlayer(iPlayerW).getUnit(iUnitIdW).getPosition()
 					iX = aPosW3[0]
 					iY = aPosW3[1]
 
-				iGladiator = ACT.createUnit(iPlayerW, mapUnitType["GLADIATOR"], iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
-				ACT.finishUnitMoves(iPlayerW, iGladiator)
+				pGladiator = GC.getPlayer(iPlayerW).createUnit(mapUnitType["GLADIATOR"], iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_NORTH)
+				pGladiator.finishMoves()
 				# Message
 				if iPlayerAct is None:
 					iPlayerAct = GAME.getActivePlayer()
@@ -1154,7 +1153,7 @@ class CvEventManager:
 					)
 		# Warriors Of God - Monk
 		elif iUnitW == mapUnitType["MONK"]:
-			aPosW4 = STATE.getUnitPosition(iPlayerW, iUnitIdW)
+			aPosW4 = GC.getPlayer(iPlayerW).getUnit(iUnitIdW).getPosition()
 			CyPlotW = GC.getMap().plot(aPosW4[0], aPosW4[1])
 			if CyPlotW.isCity():
 				CyCity = CyPlotW.getPlotCity()
@@ -1163,13 +1162,13 @@ class CvEventManager:
 					# getCityReligions gives rows of [id, bIsHolyCity], so presence is a membership test.
 					aHeld = [row[0] for row in CyCity.getReligions()]
 					if iReligion not in aHeld:
-						ACT.setCityReligion(CyCity.getOwner(), CyCity.getID(), iReligion, True)
+						CyCity.setReligion(iReligion, True)
 		# Warriors Of God - Fanatic
 		elif iUnitW == mapUnitType["FANATIC"]:
 			if not self.GO_ONE_CITY_CHALLENGE:
 				iReligion = CyPlayerW.getStateReligion()
 				if iReligion != -1:
-					aPosL3 = STATE.getUnitPosition(iPlayerL, iUnitIdL)
+					aPosL3 = GC.getPlayer(iPlayerL).getUnit(iUnitIdL).getPosition()
 					CyPlotL = GC.getMap().plot(aPosL3[0], aPosL3[1])
 					if CyPlotL.isCity():
 						CyCity = CyPlotL.getPlotCity()
@@ -1180,8 +1179,8 @@ class CvEventManager:
 							if not CyTeamW:
 								iTeamW = CyPlayerW.getTeam()
 								CyTeamW = GC.getTeam(iTeamW)
-							if CyTeamW.isAtWarWith(GC.getPlayer(iCityOwnerL).getTeam()) and not STATE.getNumVisiblePotentialEnemyDefenders(iPlayerW, iUnitIdW, aPosL3[0], aPosL3[1]):
-								ACT.setCityReligion(iCityOwnerL, iCityIdL, iReligion, True)
+							if CyTeamW.isAtWarWith(GC.getPlayer(iCityOwnerL).getTeam()) and not GC.getPlayer(iPlayerW).getUnit(iUnitIdW).getNumVisiblePotentialEnemyDefenders(aPosL3[0], aPosL3[1]):
+								GC.getPlayer(iCityOwnerL).getCity(iCityIdL).setReligion(iReligion, True)
 
 
 	def onCombatLogCalc(self, argsList):
@@ -1325,7 +1324,7 @@ class CvEventManager:
 			return
 		iX = CyPlot.getX()
 		iY = CyPlot.getY()
-		iUnit = STATE.getUnitRead(iUnitOwner, iUnitID)[UnitReadKind.UNIT_READ_TYPE]
+		iUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID).getRead()[UnitReadKind.UNIT_READ_TYPE]
 		if iUnit == ENUMS.getInfoType('UNIT_TURN'):
 			if CyPlot.isCity():
 				GC.getPlayer(iUnitOwner).acquireCity(CyPlot.getPlotCity(), False, False)
@@ -1333,7 +1332,7 @@ class CvEventManager:
 				numUnits = pNukedPlot.getNumUnits()
 				for e in xrange(numUnits - 1, -1, -1):
 					pUnit = pNukedPlot.getUnit(e)
-					ACT.killUnit(pUnit.getOwner(), pUnit.getID(), False, -1)
+					pUnit.kill(False, -1)
 				if pNukedPlot.getFeatureType() == GC.getInfoTypeForString('FEATURE_FALLOUT'):
 					pNukedPlot.setFeatureType(-1, -1)
 
@@ -1370,7 +1369,7 @@ class CvEventManager:
 
 	def onBuildingBuilt(self, argsList):
 		# The reporter pushes the city as its (owner, id) IDENTITY ([patterns.md] THE IDENTITY SET), so the city is
-		# addressed by that pair throughout and every read about it goes through STATE / ACT / INFO.
+		# addressed by that pair throughout and every read about it goes through the city's own accessor / INFO.
 		aCity, iBuilding = argsList
 		iPlayer, iCity = aCity
 		iCityX, iCityY = GC.getPlayer(iPlayer).getCity(iCity).getPosition()
@@ -1420,7 +1419,7 @@ class CvEventManager:
 				if iUnit > -1:
 					# Created ON the city, so creation settles the city's free experience -- adding it here
 					# applied it twice.
-					ACT.createUnit(iPlayer, iUnit, iCityX, iCityY, UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.NO_DIRECTION)
+					GC.getPlayer(iPlayer).createUnit(iUnit, iCityX, iCityY, UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.NO_DIRECTION)
 			elif KEY == "TAIPEI_101":
 				iTeam = CyPlayer.getTeam()
 				for iPlayerX in xrange(self.MAX_PC_PLAYERS):
@@ -1487,37 +1486,37 @@ class CvEventManager:
 					# What this pins to the building is the one-shot EVENT/VOTE grant store -- genuine
 					# non-derivable state, separately persisted outside the recompute path
 					# ([state-repositories.md]: "having events just be stored in the cache is lunacy"), read and
-					# written by (owner, city, building) through STATE / ACT like the scenario serializer does.
+					# written by (owner, city, building) through the city's own accessor like the scenario serializer does.
 					# ⚠ ONE draw per era step, in this order: the synchronized stream is shared save state
 					# ([DEC-synced-rng-is-shared-state]), so neither the count of draws nor their order may move.
 					for i in xrange(iEra):
 						iRandom = GAME.getSorenRandNum(8, "NazcaLines")
 						if not iRandom:
 							aBase = GC.getPlayer(iPlayer).getCity(iCity).getBuildingGrantedCommerces(NAZCA_LINES)
-							ACT.setBuildingGrantedCommerce(iPlayer, iCity, NAZCA_LINES, 0, aBase[0] + 4)
+							GC.getPlayer(iPlayer).getCity(iCity).setBuildingGrantedCommerce(NAZCA_LINES, 0, aBase[0] + 4)
 						elif iRandom == 1:
 							aBase = GC.getPlayer(iPlayer).getCity(iCity).getBuildingGrantedCommerces(NAZCA_LINES)
-							ACT.setBuildingGrantedCommerce(iPlayer, iCity, NAZCA_LINES, 1, aBase[1] + 4)
+							GC.getPlayer(iPlayer).getCity(iCity).setBuildingGrantedCommerce(NAZCA_LINES, 1, aBase[1] + 4)
 						elif iRandom == 2:
 							aBase = GC.getPlayer(iPlayer).getCity(iCity).getBuildingGrantedCommerces(NAZCA_LINES)
-							ACT.setBuildingGrantedCommerce(iPlayer, iCity, NAZCA_LINES, 2, aBase[2] + 4)
+							GC.getPlayer(iPlayer).getCity(iCity).setBuildingGrantedCommerce(NAZCA_LINES, 2, aBase[2] + 4)
 						elif iRandom == 3:
 							aBase = GC.getPlayer(iPlayer).getCity(iCity).getBuildingGrantedCommerces(NAZCA_LINES)
-							ACT.setBuildingGrantedCommerce(iPlayer, iCity, NAZCA_LINES, 3, aBase[3] + 4)
+							GC.getPlayer(iPlayer).getCity(iCity).setBuildingGrantedCommerce(NAZCA_LINES, 3, aBase[3] + 4)
 						elif iRandom == 4:
 							aBase = GC.getPlayer(iPlayer).getCity(iCity).getBuildingGrantedYields(NAZCA_LINES)
-							ACT.setBuildingGrantedYield(iPlayer, iCity, NAZCA_LINES, 0, aBase[0] + 4)
+							GC.getPlayer(iPlayer).getCity(iCity).setBuildingGrantedYield(NAZCA_LINES, 0, aBase[0] + 4)
 						elif iRandom == 5:
 							aBase = GC.getPlayer(iPlayer).getCity(iCity).getBuildingGrantedYields(NAZCA_LINES)
-							ACT.setBuildingGrantedYield(iPlayer, iCity, NAZCA_LINES, 1, aBase[1] + 4)
+							GC.getPlayer(iPlayer).getCity(iCity).setBuildingGrantedYield(NAZCA_LINES, 1, aBase[1] + 4)
 						elif iRandom == 6:
 							iKind = BuildingGrantedKind.BUILDING_GRANTED_HAPPINESS
 							aBase = GC.getPlayer(iPlayer).getCity(iCity).getBuildingGrantedWellbeing(NAZCA_LINES)
-							ACT.setBuildingGrantedWellbeing(iPlayer, iCity, NAZCA_LINES, iKind, aBase[iKind] + 2)
+							GC.getPlayer(iPlayer).getCity(iCity).setBuildingGrantedWellbeing(NAZCA_LINES, iKind, aBase[iKind] + 2)
 						else:
 							iKind = BuildingGrantedKind.BUILDING_GRANTED_HEALTH
 							aBase = GC.getPlayer(iPlayer).getCity(iCity).getBuildingGrantedWellbeing(NAZCA_LINES)
-							ACT.setBuildingGrantedWellbeing(iPlayer, iCity, NAZCA_LINES, iKind, aBase[iKind] + 2)
+							GC.getPlayer(iPlayer).getCity(iCity).setBuildingGrantedWellbeing(NAZCA_LINES, iKind, aBase[iKind] + 2)
 		# Ishtar or Marco Polo
 		elif iBuilding in (mapBuildingType["ISHTAR"], mapBuildingType["MARCO_POLO"]):
 			CyArea = MAP.getArea(MAP.plot(iCityX, iCityY).getArea())
@@ -1557,7 +1556,7 @@ class CvEventManager:
 				# Sort by descending culture
 				aList.sort(key=itemgetter(1), reverse=True)
 				for i, entry in enumerate(aList):
-					ACT.setCityBuilding(iPlayer, entry[0], iBuilding, True)
+					GC.getPlayer(iPlayer).getCity(entry[0]).setBuilding(iBuilding, True)
 					if i == 1: # Max. 2 other cities will get the needle for free
 						break
 		# NANITE DEFUSER - destroyes all nukes from all players
@@ -1567,11 +1566,11 @@ class CvEventManager:
 				# list while killing from it would invalidate the walk ([unit-lifecycle.md]).
 				aUnitIds = [CyUnitX.getID() for CyUnitX in GC.getPlayer(iPlayerX).units()]
 				for iUnitIdX in aUnitIds:
-					aFlags = STATE.getUnitFlags(iPlayerX, iUnitIdX)
+					aFlags = GC.getPlayer(iPlayerX).getUnit(iUnitIdX).getFlags()
 					if aFlags[UnitFlagKind.UNIT_FLAG_DEAD]:
 						continue
-					if STATE.getUnitRead(iPlayerX, iUnitIdX)[UnitReadKind.UNIT_READ_NUKE_RANGE] > -1:
-						ACT.killUnit(iPlayerX, iUnitIdX, False, -1)
+					if GC.getPlayer(iPlayerX).getUnit(iUnitIdX).getRead()[UnitReadKind.UNIT_READ_NUKE_RANGE] > -1:
+						GC.getPlayer(iPlayerX).getUnit(iUnitIdX).kill(False, -1)
 				# Global message
 				iPlayerAct = GAME.getActivePlayer()
 				if iPlayerAct > -1:
@@ -1757,7 +1756,7 @@ class CvEventManager:
 			if iThePath and MAP.generatePathForHypotheticalUnit(CyPlot, CyPlotDo, iPlayer, iUnit, PathingFlags.MOVE_SAFE_TERRITORY, 1000):
 				iBuilding = GC.getInfoTypeForString("BUILDING_ROUTE_66_TERMINUS")
 				if iBuilding > -1:
-					ACT.setCityBuilding(iPlayer, CyCityDo.getID(), iBuilding, True)
+					GC.getPlayer(iPlayer).getCity(CyCityDo.getID()).setBuilding(iBuilding, True)
 				iRoute = GC.getInfoTypeForString("ROUTE_HIGHWAY")
 				if iRoute > -1:
 					for k in xrange(MAP.getLastPathStepNum()):
@@ -1951,7 +1950,7 @@ class CvEventManager:
 		elif iBuilding == mapBuildingType["NEANDERTHAL_EMBASSY"]:
 			iLocal = GC.getInfoTypeForString("BUILDING_C_L_NEANDERTHAL")
 			for CyCityX in CyPlayer.cities():
-				ACT.setCityBuilding(iPlayer, CyCityX.getID(), iLocal, True)
+				GC.getPlayer(iPlayer).getCity(CyCityX.getID()).setBuilding(iLocal, True)
 
 
 	def onProjectBuilt(self, argsList):
@@ -2036,14 +2035,14 @@ class CvEventManager:
 		aUnitId, = argsList
 		iPlayer = aUnitId[0]
 		iUnitID = aUnitId[1]
-		iUnitType = STATE.getUnitRead(iPlayer, iUnitID)[UnitReadKind.UNIT_READ_TYPE]
+		iUnitType = GC.getPlayer(iPlayer).getUnit(iUnitID).getRead()[UnitReadKind.UNIT_READ_TYPE]
 
 		# Subdued/Tamed animal graphical attachment
 		iStoryTeller = getattr(self, "UNIT_STORY_TELLER", -1)
 		if iStoryTeller != -1:
 			KEY = INFO.getType("UNIT_", iUnitType)
 			if KEY[:13] == 'UNIT_SUBDUED_' or KEY[:11] == 'UNIT_TAMED_':
-				ACT.setUnitLeaderUnitType(iPlayer, iUnitID, iStoryTeller)
+				GC.getPlayer(iPlayer).getUnit(iUnitID).setLeaderUnitType(iStoryTeller)
 
 		# Inspired Missionary
 		# The religious test asks what the unit CAN SPREAD, not what its build gate required: the prereq is an
@@ -2054,16 +2053,16 @@ class CvEventManager:
 		and iPlayer == aWonderTuple[4][aWonderTuple[0].index("FA_MEN_SI")] \
 		and INFO.canSpreadReligion(iUnitType):
 
-			ACT.setUnitPromotion(iPlayer, iUnitID, GC.getInfoTypeForString("PROMOTION_FA_MEN_SI_INSPIRED"), True)
+			GC.getPlayer(iPlayer).getUnit(iUnitID).setPromotion(GC.getInfoTypeForString("PROMOTION_FA_MEN_SI_INSPIRED"), True)
 
 
 	def onUnitBuilt(self, argsList):
 		CyCity, CyUnit = argsList
 		iCityOwner, iCityID = CyCity
 		iPlayer, iUnitID = CyUnit
-		aUnit = STATE.getUnitRead(iPlayer, iUnitID)
+		aUnit = GC.getPlayer(iPlayer).getUnit(iUnitID).getRead()
 		if DebugUtils.bDebugMode:
-			print "%s Built %s in %s" %(GC.getPlayer(iCityOwner).getCivilizationDescription(0), STATE.getUnitName(iPlayer, iUnitID), GC.getPlayer(iCityOwner).getCity(iCityID).getName())
+			print "%s Built %s in %s" %(GC.getPlayer(iCityOwner).getCivilizationDescription(0), GC.getPlayer(iPlayer).getUnit(iUnitID).getName(), GC.getPlayer(iCityOwner).getCity(iCityID).getName())
 		CvAdvisorUtils.unitBuiltFeats(CyCity, CyUnit)
 		CyPlayer = GC.getPlayer(iPlayer)
 		iUnit = aUnit[UnitReadKind.UNIT_READ_TYPE]
@@ -2086,8 +2085,8 @@ class CvEventManager:
 				iSensors = self.PROMOTION_SENSORS
 				# The FREE-promotion gate, not canUnitAcquirePromotion: this is a GRANT, and the acquire read
 				# answers the level-up question ([special-systems.md]: a free promotion bypasses tech prereqs).
-				if STATE.isUnitPromotionValid(iPlayer, iUnitID, iSensors):
-					ACT.setUnitPromotion(iPlayer, iUnitID, iSensors, True)
+				if GC.getPlayer(iPlayer).getUnit(iUnitID).isPromotionValid(iSensors):
+					GC.getPlayer(iPlayer).getUnit(iUnitID).setPromotion(iSensors, True)
 
 		# Immigration Mod
 		if iUnit == self.UNIT_IMMIGRANT:
@@ -2095,7 +2094,7 @@ class CvEventManager:
 			if iNewPop > -1:
 				if iNewPop == 0:
 					iNewPop = 1
-				ACT.setCityPopulation(iCityOwner, iCityID, iNewPop)
+				GC.getPlayer(iCityOwner).getCity(iCityID).setPopulation(iNewPop)
 
 
 	def onUnitKilled(self, argsList):
@@ -2103,7 +2102,7 @@ class CvEventManager:
 		# Player who lost the unit
 		iPlayerL = aUnitId[0]
 		iUnitID = aUnitId[1]
-		aUnit = STATE.getUnitRead(iPlayerL, iUnitID)
+		aUnit = GC.getPlayer(iPlayerL).getUnit(iUnitID).getRead()
 
 		aWonderTuple = self.aWonderTuple
 		if iPlayerL in aWonderTuple[4]:
@@ -2116,9 +2115,9 @@ class CvEventManager:
 					# exactly as legacy did -- reducing here would change the grant under one option only.
 					iValue = aUnit[UnitReadKind.UNIT_READ_BASE_COMBAT]
 					for iCityID in GC.getPlayer(iPlayerL).getCityIds():
-						ACT.changeCityCulture(iPlayerL, iCityID, iPlayerL, iValue, False)
+						GC.getPlayer(iPlayerL).getCity(iCityID).changeCulture(iPlayerL, iValue, False)
 				elif KEY == "CYRUS_TOMB":
-					if STATE.hasUnitPromotion(iPlayerL, iUnitID, GC.getInfoTypeForString("PROMOTION_LEADER")) \
+					if GC.getPlayer(iPlayerL).getUnit(iUnitID).hasPromotion(GC.getInfoTypeForString("PROMOTION_LEADER")) \
 					or aUnit[UnitReadKind.UNIT_READ_TYPE] == GC.getInfoTypeForString("UNIT_GREAT_GENERAL"):
 						iCityID = aWonderTuple[3][i]
 						if iCityID not in GC.getPlayer(iPlayerL).getCityIds():
@@ -2126,15 +2125,15 @@ class CvEventManager:
 						aPos = GC.getPlayer(iPlayerL).getCity(iCityID).getPosition()
 						iX = aPos[0]
 						iY = aPos[1]
-						szName = STATE.getUnitNameNoDesc(iPlayerL, iUnitID)
-						iNewUnitID = ACT.createUnit(
-							iPlayerL, GC.getInfoTypeForString("UNIT_GREAT_GENERAL"), iX, iY,
+						szName = GC.getPlayer(iPlayerL).getUnit(iUnitID).getNameNoDesc()
+						pNewUnit = GC.getPlayer(iPlayerL).createUnit(
+							GC.getInfoTypeForString("UNIT_GREAT_GENERAL"), iX, iY,
 							UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION
 						)
-						if iNewUnitID > -1:
-							ACT.setUnitName(iPlayerL, iNewUnitID, szName)
+						if pNewUnit is not None:
+							pNewUnit.setName(szName)
 							# The immobile timer is a STATUS now (state.md); setImmobileTimer is gone.
-							ACT.setUnitStatus(iPlayerL, iNewUnitID, UnitStatus.STATUS_PARALYZED, 2 * (1 + GAME.getGameSpeedType()))
+							pNewUnit.setStatus(UnitStatus.STATUS_PARALYZED, 2 * (1 + GAME.getGameSpeedType()))
 						# Message
 						if iPlayerL == GAME.getActivePlayer():
 							CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_GG_REVIVE", (szName,)), iPlayerL, 16, 'Art/Interface/Buttons/Great_Wonders/cyrustomb.dds', ColorTypes(11), iX, iY, True, True, bForce=False)
@@ -2142,24 +2141,24 @@ class CvEventManager:
 		# Subdued/Tamed animal graphical attachment
 		if aUnit[UnitReadKind.UNIT_READ_LEADER_UNIT_TYPE] == self.UNIT_STORY_TELLER:
 			# This will prevent a 'beastmaster lost' message when the unit is killed.
-			ACT.setUnitLeaderUnitType(iPlayerL, iUnitID, -1)
+			GC.getPlayer(iPlayerL).getUnit(iUnitID).setLeaderUnitType(-1)
 
 
 	def onUnitPromoted(self, argsList):
 		#	The callback hands over an IDENTITY, not a handle: a cut Cy* wrapper carries zero defs, so a script
 		#	given one could not even ask which unit it is. Everything below therefore addresses the unit by its
-		#	(owner, id) pair -- reads through STATE, the promotion write through ACT.
+		#	(owner, id) pair -- reads and the promotion write both through the unit's own accessor.
 		aUnitId, iPromotion = argsList
 		iOwner, iUnitID = aUnitId
 		CyPlayer = GC.getPlayer(iOwner)
 
 		# AI promotion redirection
 		if not CyPlayer.isHuman():
-			iDomainType = STATE.getUnitRead(iOwner, iUnitID)[UnitReadKind.UNIT_READ_DOMAIN]
+			iDomainType = GC.getPlayer(iOwner).getUnit(iUnitID).getRead()[UnitReadKind.UNIT_READ_DOMAIN]
 			mapDomain = self.mapDomain
-			if iDomainType == mapDomain['DOMAIN_LAND'] and STATE.hasUnitCombat(iOwner, iUnitID, self.UNITCOMBAT_HUNTER):
+			if iDomainType == mapDomain['DOMAIN_LAND'] and GC.getPlayer(iOwner).getUnit(iUnitID).hasCombat(self.UNITCOMBAT_HUNTER):
 				aHiPriList = self.aHiPriListLandHunter
-			elif iDomainType == mapDomain['DOMAIN_SEA'] and STATE.hasUnitCombat(iOwner, iUnitID, self.UNITCOMBAT_RECON):
+			elif iDomainType == mapDomain['DOMAIN_SEA'] and GC.getPlayer(iOwner).getUnit(iUnitID).hasCombat(self.UNITCOMBAT_RECON):
 				aHiPriList = self.aHiPriListSeaHunter
 			else:
 				aHiPriList = self.aHiPriListBase
@@ -2187,10 +2186,10 @@ class CvEventManager:
 					aList += aList2
 
 			for iPromo, iChance in aList:
-				if STATE.canUnitAcquirePromotion(iOwner, iUnitID, iPromo):
+				if GC.getPlayer(iOwner).getUnit(iUnitID).canAcquirePromotion(iPromo):
 					if iChance and GAME.getSorenRandNum(iChance, "Generic"): continue
-					ACT.setUnitPromotion(iOwner, iUnitID, iPromotion, False)
-					ACT.setUnitPromotion(iOwner, iUnitID, iPromo, True)
+					GC.getPlayer(iOwner).getUnit(iUnitID).setPromotion(iPromotion, False)
+					GC.getPlayer(iOwner).getUnit(iUnitID).setPromotion(iPromo, True)
 					break
 
 	def onUnitUpgraded(self, argsList):
@@ -2224,10 +2223,10 @@ class CvEventManager:
 			iReligion = argsList[1]
 			aWonderTuple = self.aWonderTuple
 			if "FA_MEN_SI" in aWonderTuple[0] and iUnitOwner == aWonderTuple[4][aWonderTuple[0].index("FA_MEN_SI")]:
-				aPos = STATE.getUnitPosition(iUnitOwner, iUnitId)
+				aPos = GC.getPlayer(iUnitOwner).getUnit(iUnitId).getPosition()
 				CyCity = MAP.plot(aPos[0], aPos[1]).getPlotCity()
 				if CyCity and iReligion > -1:
-					ACT.setCityReligion(CyCity.getOwner(), CyCity.getID(), iReligion, True)
+					CyCity.setReligion(iReligion, True)
 
 
 	'''
@@ -2395,30 +2394,30 @@ class CvEventManager:
 					iRandom = GAME.getSorenRandNum(8, "Nazca")
 					if not iRandom:
 						aBase = GC.getPlayer(iPlayer).getCity(iNazcaCity).getBuildingGrantedCommerces(NAZCA_LINES)
-						ACT.setBuildingGrantedCommerce(iPlayer, iNazcaCity, NAZCA_LINES, 0, aBase[0] + 4)
+						GC.getPlayer(iPlayer).getCity(iNazcaCity).setBuildingGrantedCommerce(NAZCA_LINES, 0, aBase[0] + 4)
 					elif iRandom == 1:
 						aBase = GC.getPlayer(iPlayer).getCity(iNazcaCity).getBuildingGrantedCommerces(NAZCA_LINES)
-						ACT.setBuildingGrantedCommerce(iPlayer, iNazcaCity, NAZCA_LINES, 1, aBase[1] + 4)
+						GC.getPlayer(iPlayer).getCity(iNazcaCity).setBuildingGrantedCommerce(NAZCA_LINES, 1, aBase[1] + 4)
 					elif iRandom == 2:
 						aBase = GC.getPlayer(iPlayer).getCity(iNazcaCity).getBuildingGrantedCommerces(NAZCA_LINES)
-						ACT.setBuildingGrantedCommerce(iPlayer, iNazcaCity, NAZCA_LINES, 2, aBase[2] + 4)
+						GC.getPlayer(iPlayer).getCity(iNazcaCity).setBuildingGrantedCommerce(NAZCA_LINES, 2, aBase[2] + 4)
 					elif iRandom == 3:
 						aBase = GC.getPlayer(iPlayer).getCity(iNazcaCity).getBuildingGrantedCommerces(NAZCA_LINES)
-						ACT.setBuildingGrantedCommerce(iPlayer, iNazcaCity, NAZCA_LINES, 3, aBase[3] + 4)
+						GC.getPlayer(iPlayer).getCity(iNazcaCity).setBuildingGrantedCommerce(NAZCA_LINES, 3, aBase[3] + 4)
 					elif iRandom == 4:
 						aBase = GC.getPlayer(iPlayer).getCity(iNazcaCity).getBuildingGrantedYields(NAZCA_LINES)
-						ACT.setBuildingGrantedYield(iPlayer, iNazcaCity, NAZCA_LINES, 0, aBase[0] + 4)
+						GC.getPlayer(iPlayer).getCity(iNazcaCity).setBuildingGrantedYield(NAZCA_LINES, 0, aBase[0] + 4)
 					elif iRandom == 5:
 						aBase = GC.getPlayer(iPlayer).getCity(iNazcaCity).getBuildingGrantedYields(NAZCA_LINES)
-						ACT.setBuildingGrantedYield(iPlayer, iNazcaCity, NAZCA_LINES, 1, aBase[1] + 4)
+						GC.getPlayer(iPlayer).getCity(iNazcaCity).setBuildingGrantedYield(NAZCA_LINES, 1, aBase[1] + 4)
 					elif iRandom == 6:
 						iKind = BuildingGrantedKind.BUILDING_GRANTED_HAPPINESS
 						aBase = GC.getPlayer(iPlayer).getCity(iNazcaCity).getBuildingGrantedWellbeing(NAZCA_LINES)
-						ACT.setBuildingGrantedWellbeing(iPlayer, iNazcaCity, NAZCA_LINES, iKind, aBase[iKind] + 2)
+						GC.getPlayer(iPlayer).getCity(iNazcaCity).setBuildingGrantedWellbeing(NAZCA_LINES, iKind, aBase[iKind] + 2)
 					else:
 						iKind = BuildingGrantedKind.BUILDING_GRANTED_HEALTH
 						aBase = GC.getPlayer(iPlayer).getCity(iNazcaCity).getBuildingGrantedWellbeing(NAZCA_LINES)
-						ACT.setBuildingGrantedWellbeing(iPlayer, iNazcaCity, NAZCA_LINES, iKind, aBase[iKind] + 2)
+						GC.getPlayer(iPlayer).getCity(iNazcaCity).setBuildingGrantedWellbeing(NAZCA_LINES, iKind, aBase[iKind] + 2)
 					if iPlayer == GAME.getActivePlayer():
 						CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_MSG_NAZCA_LINES",()), iPlayer)
 
@@ -2454,7 +2453,7 @@ class CvEventManager:
 					continue
 				capital = CyPlayerX.getCapitalCity()
 				if capital:
-					ACT.setCityReligion(capital.getOwner(), capital.getID(), iReligion, False)
+					capital.setReligion(iReligion, False)
 					if CyPlayerX.isHuman():
 						strReligionName = INFO.getDescription("RELIGION_", iReligion)
 						popup = CyPopup(-1, EventContextTypes.NO_EVENTCONTEXT, True)
@@ -2535,22 +2534,22 @@ class CvEventManager:
 		# Give extra population to new cities
 		iPop = 0
 		if iUnitID != -1:
-			iUnit = STATE.getUnitRead(iUnitOwner, iUnitID)[UnitReadKind.UNIT_READ_TYPE]
+			iUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID).getRead()[UnitReadKind.UNIT_READ_TYPE]
 			if iUnit in self.mapSettlerPop:
 				iPop += self.mapSettlerPop[iUnit]
 
 			for iPromo, iBuilding, _ in self.aCultureList:
 				if -1 in (iPromo, iBuilding): continue
-				if STATE.hasUnitPromotion(iUnitOwner, iUnitID, iPromo):
-					ACT.setCityBuilding(iPlayer, iCityID, iBuilding, True)
+				if GC.getPlayer(iUnitOwner).getUnit(iUnitID).hasPromotion(iPromo):
+					GC.getPlayer(iPlayer).getCity(iCityID).setBuilding(iBuilding, True)
 
 		if iPop:
-			ACT.changeCityPopulation(iPlayer, iCityID, iPop)
+			GC.getPlayer(iPlayer).getCity(iCityID).changePopulation(iPop)
 			iThreshold = CyCity.getGrowth()[CityGrowthRead.GROWTH_READ_THRESHOLD]
 			if self.GO_1_CITY_TILE_FOUNDING:
-				ACT.changeCityStoredFood(iPlayer, iCityID, iThreshold/4)
+				GC.getPlayer(iPlayer).getCity(iCityID).changeStoredFood(iThreshold/4)
 			else:
-				ACT.changeCityStoredFood(iPlayer, iCityID, iThreshold/8)
+				GC.getPlayer(iPlayer).getCity(iCityID).changeStoredFood(iThreshold/8)
 		# Human player city naming
 		iActivePlayer = GAME.getActivePlayer()
 		if iPlayer == iActivePlayer and not GAME.getAIAutoPlay(iActivePlayer):
@@ -2815,7 +2814,7 @@ class CvEventManager:
 	def onCityDoTurn(self, argsList):
 		# The callback hands over an IDENTITY, not a handle: a cut Cy* wrapper carries zero defs, so a script
 		# given one could not even ask which city it is. Everything below addresses the city by its (owner, id)
-		# pair -- reads through STATE, writes through ACT ([DEC-cy-not-fixed]).
+		# pair -- reads and writes through the object's own accessor.
 		aCityId, iPlayer = argsList
 		iCityID = aCityId[1]
 
@@ -2837,7 +2836,7 @@ class CvEventManager:
 						iUnit = GC.getInfoTypeForString("UNIT_CRUSADER")
 						# Created ON the city, so creation settles the city's free experience -- adding it
 						# here applied it twice.
-						ACT.createUnit(iPlayer, iUnit, aPos[0], aPos[1], UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.NO_DIRECTION)
+						GC.getPlayer(iPlayer).createUnit(iUnit, aPos[0], aPos[1], UnitAITypes.UNITAI_ATTACK_CITY, DirectionTypes.NO_DIRECTION)
 
 				elif KEY == "GREAT_ZIMBABWE":
 					aGrowth = GC.getPlayer(iPlayer).getCity(iCityID).getGrowth()
@@ -2848,18 +2847,18 @@ class CvEventManager:
 						if iFoodSurplus > 0:  # only process if there is an actual surplus
 							iNewFood = aGrowth[CityGrowthRead.GROWTH_READ_FOOD_STORED] + iFoodSurplus
 							if iNewFood >= aGrowth[CityGrowthRead.GROWTH_READ_THRESHOLD]:
-								ACT.setCityPopulation(iPlayer, iCityID, GC.getPlayer(iPlayer).getCity(iCityID).getPopulation() + 1)
-								ACT.setCityStoredFood(iPlayer, iCityID, aGrowth[CityGrowthRead.GROWTH_READ_FOOD_KEPT])
+								GC.getPlayer(iPlayer).getCity(iCityID).setPopulation(GC.getPlayer(iPlayer).getCity(iCityID).getPopulation() + 1)
+								GC.getPlayer(iPlayer).getCity(iCityID).setStoredFood(aGrowth[CityGrowthRead.GROWTH_READ_FOOD_KEPT])
 							else:
-								ACT.setCityStoredFood(iPlayer, iCityID, iNewFood)
+								GC.getPlayer(iPlayer).getCity(iCityID).setStoredFood(iNewFood)
 
 				elif KEY == "BIODOME":
 					if not self.aBiodomeList or GAME.getGameTurn() % (4*self.iGameSpeedPercent/100 + 1):
 						continue
 					iUnit = self.aBiodomeList[GAME.getSorenRandNum(len(self.aBiodomeList), "Which Animal")]
-					iNewUnit = ACT.createUnit(iPlayer, iUnit, aPos[0], aPos[1], UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-					if iNewUnit != -1 and iPlayer == GAME.getActivePlayer():
-						CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_MSG_BIODOME",(STATE.getUnitName(iPlayer, iNewUnit),)), iPlayer, 16, INFO.getButton("UNIT_", iUnit), ColorTypes(11), aPos[0], aPos[1], True, True)
+					pNewUnit = GC.getPlayer(iPlayer).createUnit(iUnit, aPos[0], aPos[1], UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+					if pNewUnit is not None and iPlayer == GAME.getActivePlayer():
+						CvUtil.sendMessage(TRNSLTR.getText("TXT_KEY_MSG_BIODOME",(pNewUnit.getName(),)), iPlayer, 16, INFO.getButton("UNIT_", iUnit), ColorTypes(11), aPos[0], aPos[1], True, True)
 
 
 	'''
@@ -2969,7 +2968,7 @@ class CvEventManager:
 		popup = CyPopup(5006, EventContextTypes.EVENTCONTEXT_ALL, True)
 		popup.setUserData((pUnit.getOwner(), pUnit.getID()))
 		popup.setBodyString(TRNSLTR.getText("TXT_KEY_RENAME_UNIT", ()), 1<<0)
-		popup.createEditBox(STATE.getUnitNameNoDesc(pUnit.getOwner(), pUnit.getID()), 0)
+		popup.createEditBox(pUnit.getNameNoDesc(), 0)
 		popup.setEditBoxMaxCharCount(24, 0, 0)
 		popup.launch(True, PopupStates.POPUPSTATE_IMMEDIATE)
 

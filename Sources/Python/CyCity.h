@@ -163,17 +163,10 @@ public:
 	void setReinforcementCounter(int iNewValue);
 	void changeReinforcementCounter(int iChange);
 
-	CyPlot* getCityIndexPlot(int iIndex) const;
-	bool canWork(const CyPlot* pPlot) const;
 	int countNumImprovedPlots() const;
-	int countNumWaterPlots() const;
 
 	int findBaseYieldRateRank(YieldTypes eYield) const;
-	int findYieldRateRank(YieldTypes eYield) const;
-	int findCommerceRateRank(CommerceTypes eCommerce) const;
 
-	int getMaxNumWorldWonders() const;
-	int getMaxNumNationalWonders() const;
 
 
 	bool canCreate(ProjectTypes eProject, bool bContinue, bool bTestVisible) const;
@@ -194,17 +187,10 @@ public:
 	ProcessTypes getProductionProcess() const;
 	std::wstring getProductionName() const;
 	std::wstring getProductionNameKey() const;
-	int getGeneralProductionTurnsLeft() const;
-	bool isFoodProduction() const;
-	int getFirstUnitOrder(int /*UnitTypes*/ eUnit) const;
-	int getNumTrainUnitAI(int /*UnitAITypes*/ eUnitAI) const;
 	int getFirstBuildingOrder(int /*BuildingTypes*/ eBuilding) const;
 	int getProductionProgress() const;
 	int getProductionNeeded() const;
 	int getProductionTurnsLeft() const;
-	int getUnitProductionTurnsLeft(int /*UnitTypes*/ iUnit, int iNum) const;
-	int getBuildingProductionTurnsLeft(int /*BuildingTypes*/ iBuilding, int iNum) const;
-	int getProjectProductionTurnsLeft(int /*ProjectTypes*/ eProject, int iNum) const;
 	void setProductionProgress(int iNewValue);
 	void changeProduction(int iChange);
 	int getCurrentProductionDifference(bool bIgnoreFood, bool bOverflow) const;
@@ -218,9 +204,7 @@ public:
 	int /*LeaderHeadTypes*/ getPersonalityType() const;
 	int /*ArtStyleTypes*/ getArtStyleType() const;
 
-	bool hasTrait(int /*TraitTypes*/ iTrait) const;
 	bool isNPC() const;
-	bool isHominid() const;
 	bool isHuman() const;
 	bool isVisible(int /*TeamTypes*/ eTeam, bool bDebug) const;
 
@@ -230,14 +214,10 @@ public:
 	bool isHolyCityByType(int /*ReligionTypes*/ iIndex) const;
 	bool isHolyCity() const;
 	bool isHeadquartersByType(int /*CorporationTypes*/ iIndex) const;
-	int getNoMilitaryPercentAnger() const;
 	int getWarWearinessPercentAnger() const;
 
 	int getRevIndexPercentAnger() const;
 
-	int totalFreeSpecialists() const;
-	int healthRate(int iExtra) const;
-	int foodConsumption(bool bNoAngry, int iExtra) const;
 	int foodDifference(bool bBottom) const;
 	int growthThreshold() const;
 	int productionLeft() const;
@@ -246,7 +226,6 @@ public:
 	int hurryProduction(int /*HurryTypes*/ iHurry) const;
 	int flatHurryAngerLength() const;
 
-	void changeHasBuilding(int /*BuildingTypes*/ iIndex, bool bNewValue);
 	int hasBuilding(int /*BuildingTypes*/ iIndex) const;
 	bool isActiveBuilding(int /*BuildingTypes*/ iIndex) const;
 	int getID() const;
@@ -256,13 +235,9 @@ public:
 	bool isConnectedTo(const CyCity& kCity) const;
 	bool isConnectedToCapital(int /*PlayerTypes*/ ePlayer) const;
 	CyArea* area() const;
-	CyArea* waterArea() const;
 
-	int getGameTurnFounded() const;
 	int getGameDateFounded() const;
 	int getPopulation() const;
-	void setPopulation(int iNewValue);
-	void changePopulation(int iChange);
 	int64_t getRealPopulation() const;
 
 	int getHighestPopulation() const;
@@ -274,9 +249,6 @@ public:
 	int getGreatPeopleRate() const;
 	int getGreatPeopleProgress() const;
 	void changeGreatPeopleProgress(int iChange);
-	int getNumWorldWonders() const;
-	int getNumNationalWonders() const;
-	int getNumBuildings() const;
 	bool isGovernmentCenter() const;
 
 	int getMaintenance() const;
@@ -285,16 +257,13 @@ public:
 	void changeEspionageHealthCounter(int iChange);
 	void changeEspionageHappinessCounter(int iChange);
 
-	int getBuildingHealth(int iBuilding) const;
 
 	int getMilitaryHappinessUnits() const;
-	int getBuildingHappiness(int iBuilding) const;
 	int getExtraHappiness() const;
 	int getExtraHealth() const;
 	void changeExtraHappiness(int iChange);
 	void changeExtraHealth(int iChange);
 	int getHurryAngerTimer() const;
-	void changeHurryAngerTimer(int iChange);
 
 	int getRevRequestAngerTimer() const;
 	void changeRevRequestAngerTimer(int iChange);
@@ -303,14 +272,9 @@ public:
 	int getConscriptAngerTimer() const;
 	void changeConscriptAngerTimer(int iChange);
 	void changeDefyResolutionAngerTimer(int iChange);
-	int flatDefyResolutionAngerLength() const;
 	void changeHappinessTimer(int iChange);
-	bool isNoUnhappiness() const;
 
 	int getFood() const;
-	void setFood(int iNewValue);
-	void changeFood(int iChange);
-	int getFoodKept() const;
 	int getMaxProductionOverflow() const;
 	int getOverflowProduction() const;
 	void setOverflowProduction(int iNewValue);
@@ -326,8 +290,7 @@ public:
 	int getDefenseModifier(bool bIgnoreBuilding) const;
 
 	bool isOccupation() const;
-	void setOccupationTimer(int iNewValue);
-	void changeOccupationTimer(int iChange);
+	void changeOccupation(int iChange);
 	bool isNeverLost() const;
 	void setNeverLost(bool bNewValue);
 
@@ -349,12 +312,10 @@ public:
 	int /*TeamTypes*/getTeam() const;
 	int /*PlayerTypes*/getPreviousOwner() const;
 	int /*PlayerTypes*/getOriginalOwner() const;
-	void setOriginalOwner(int /*PlayerTypes*/ iPlayer);
 	int /*CultureLevelTypes*/ getCultureLevel() const;
 	int getCultureThreshold() const;
 
 	int getBaseYieldRateModifier(int /*YieldTypes*/ eIndex, int iExtra) const;
-	int getYieldRateModifier(int /*YieldTypes*/ eIndex) const;
 
 	int getProductionToCommerceModifier(int /*CommerceTypes*/ eIndex) const;
 	int getCommerceRateModifier(int /*CommerceTypes*/ eIndex) const;
@@ -362,9 +323,6 @@ public:
 
 	int getArea() const;
 
-	bool isWeLoveTheKingDay() const;
-	void setWeLoveTheKingDay(bool bWeLoveTheKingDay);
-	int64_t calcCorporateMaintenance() const;
 
 	void changeEventAnger(int iChange);
 
@@ -375,29 +333,22 @@ public:
 
 	PlayerTypes findHighestCulture() const;
 	int calculateCulturePercent(int eIndex) const;
-	void setCulture(int /*PlayerTypes*/ eIndex, int iNewValue, bool bPlots);
-	void setCultureTimes100(int /*PlayerTypes*/ eIndex, int iNewValue, bool bPlots);
-	void changeCulture(int /*PlayerTypes*/ eIndex, int iChange, bool bPlots);
 
 	int getNumRevolts(int playerIdx) const;
 	void changeNumRevolts(int playerIdx, int iChange);
 
 	bool isRevealed(int /*TeamTypes*/ eIndex, bool bDebug) const;
-	void setRevealed(int /*TeamTypes*/ eIndex, bool bNewValue);
-	bool getEspionageVisibility(int /*TeamTypes*/ eIndex) const;
 	// ⚖ THE IDENTITY SET -- the ONLY thing this handle publishes (owner). A wrapper is a marshalling handle, and
-	// the READ planes (CyInfo / CyState / CyEnabler) are where data is asked for; but a legacy consumer holding a
+	// the READ planes (CyInfo / CyEnabler / the object's own accessor) are where data is asked for; but a legacy consumer holding a
 	// handle needs to say WHICH object it holds, and re-pointing every such site is refactoring we are not doing
 	// ("I only want to refactor the python I have to, otherwise we never will be done").
 	// ⛔ SO THIS STAYS AN IDENTITY SET AND NEVER GROWS INTO THE LEGACY GETTER SURFACE: owner + id + position, the
 	// axes that ADDRESS a city (docs/architecture/patterns.md §THE PYTHON READ BOUNDARY (Cy* is not a fixed contract) still bans the info/state getter contract). A consumer wanting
-	// DATA asks CyState by that address; anything else added here is the escape hatch reopening.
+	// DATA asks the object's own accessor by that address; anything else added here is the escape hatch reopening.
 	static void pythonPublish();
 
 	std::wstring getName() const;
-	std::wstring getNameForm(int iForm) const;
 	std::wstring getNameKey() const;
-	void setName(std::wstring szNewValue, bool bFound);
 	int getFreeBonus(int /*BonusTypes*/ eIndex) const;
 	void changeFreeBonus(int /*BonusTypes*/ eIndex, int iChange);
 	int getNumBonuses(int /*BonusTypes*/ iBonus) const;
@@ -405,26 +356,15 @@ public:
 
 	int getProgressOnBuilding(int /*BuildingTypes*/ iIndex) const;
 	void setProgressOnBuilding(int /*BuildingTypes*/ iIndex, int iNewValue);
-	int getDelayOnBuilding(int /*BuildingTypes*/ eIndex) const;
-	bool isBuildingProductionDecay(int /*BuildingTypes*/ eIndex) const;
-	int getBuildingProductionDecayTurns(int /*BuildingTypes*/ eIndex) const;
 
-	int getBuildingOriginalOwner(int /*BuildingTypes*/ iIndex) const;
-	int getBuildingOriginalTime(int /*BuildingTypes*/ iIndex) const;
 
 	int getProgressOnUnit(int iIndex) const;
 	void setProgressOnUnit(int iIndex, int iNewValue);
-	int getDelayOnUnit(int /*UnitTypes*/ eIndex) const;
-	bool isUnitProductionDecay(int /*UnitTypes*/ eIndex) const;
-	int getUnitProductionDecayTurns(int /*UnitTypes*/ eIndex) const;
 
-	int getProjectProduction(int /*ProjectTypes*/ iIndex) const;
 
 	void setGreatPeopleUnitProgress(int /*UnitTypes*/ iIndex, int iNewValue);
 	void changeGreatPeopleUnitProgress(int /*UnitTypes*/ iIndex, int iChange);
 	int getSpecialistCount(int /*SpecialistTypes*/ eIndex) const;
-	int getMaxSpecialistCount(int /*SpecialistTypes*/ eIndex) const;
-	bool isSpecialistValid(int /*SpecialistTypes*/ eIndex, int iExtra) const;
 	int getForceSpecialistCount(int /*SpecialistTypes*/ eIndex) const;
 	void setForceSpecialistCount(int /*SpecialistTypes*/ eIndex, int iNewValue);
 	int getFreeSpecialistCount(int /*SpecialistTypes*/ eIndex) const;
@@ -438,7 +378,6 @@ public:
 
 	int getEspionageDefenseModifier() const;
 
-	bool isWorkingPlot(const CyPlot& kPlot) const;
 	bool isHasReligion(int /*ReligionTypes*/ iIndex) const;
 	void setHasReligion(int /*ReligionTypes*/ iIndex, bool bNewValue, bool bAnnounce, bool bArrows);
 	bool isHasCorporation(int /*CorporationTypes*/ iIndex) const;
@@ -447,7 +386,6 @@ public:
 	CyCity* getTradeCity(int iIndex) const;
 
 	void clearOrderQueue();
-	void pushOrder(OrderTypes eOrder, int iData1, int iData2, bool bSave, bool bPop, bool bAppend, bool bForce);
 	void popOrder(int iNum, bool bFinish, bool bChoose);
 	int getOrderQueueLength() const;
 	OrderData getOrderFromQueue(int iIndex) const;
@@ -455,50 +393,118 @@ public:
 	void setBuildingYieldChange(int /*BuildingTypes*/ eBuilding, int /*YieldTypes*/ eYield, int iChange);
 	void setBuildingCommerceChange(int /*BuildingTypes*/ eBuilding, int /*CommerceTypes*/ eCommerce, int iChange);
 	int getBuildingHappyChange(int /*BuildingTypes*/ eBuilding) const;
-	void setBuildingHappyChange(int /*BuildingTypes*/ eBuilding, int iChange);
 	int getBuildingHealthChange(int /*BuildingTypes*/ eBuilding) const;
-	void setBuildingHealthChange(int /*BuildingTypes*/ eBuilding, int iChange);
 
 
-	bool AI_isEmphasizeSpecialist(int /*SpecialistTypes*/ iIndex) const;
 	bool AI_isEmphasize(int iEmphasizeType) const;
-	int AI_countBestBuilds(const CyArea& kArea) const;
-	int AI_cityValue() const;
 
-	const CityOutputHistory* getCityOutputHistory() const;
 
 	bool getBuildingListFilterActive(int /*BuildingFilterTypes*/ eFilter);
-	void setBuildingListFilterActive(int /*BuildingFilterTypes*/ eFilter, bool bActive);
 	int /*BuildingGroupingTypes*/ getBuildingListGrouping();
-	void setBuildingListGrouping(int /*BuildingGroupingTypes*/ eGrouping);
-	void setBuildingListSorting(int /*BuildingSortTypes*/ eSorting);
-	int getBuildingListGroupNum();
-	int getBuildingListNumInGroup(int iGroup);
 	int /*BuildingTypes*/ getBuildingListType(int iGroup, int iPos);
 
-	void setUnitListInvalid();
 	bool getUnitListFilterActive(int /*UnitFilterTypes*/ eFilter);
-	void setUnitListFilterActive(int /*UnitFilterTypes*/ eFilter, bool bActive);
-	void setUnitListGrouping(int /*UnitGroupingTypes*/ eGrouping);
-	void setUnitListSorting(int /*UnitSortTypes*/ eSorting);
-	int getUnitListGroupNum();
-	int getUnitListNumInGroup(int iGroup);
 	int /*UnitTypes*/ getUnitListType(int iGroup, int iPos);
 
 	bool isEventOccured(int /*EventTypes*/ eEvent) const;
 
 	std::string getScriptData() const;
-	void setScriptData(std::string szNewValue);
 
-	int AI_bestUnit() const;
-	int AI_bestUnitAI(UnitAITypes eUnitAITypes) const;
+
+	//	==== THE CITY WRITE SURFACE -- the receiver IS the city ====
+	bool addFreeSpecialist(int iSpecialist, int iChange);
+	// Give a freshly-created unit the experience a unit BUILT in this city would start with. Its call site is the
+	// CRUSADE wonder's per-turn spawn, which has always handed the new crusader the city's production XP -- so
+	// this keeps existing behaviour working rather than authoring any.
+	bool addUnitProductionExperience(int iUnit, bool bConscript);
+	// ⚠ ADDITIVE, and distinct from setCityCulture above -- the Alamo grant ADDS to whatever the city holds.
+	// Culture is int64_t and ×100 on both sides ([culture-religion-research.md]: it accumulates and never decays,
+	// which is why it is 64-bit at all), so the delta is int64_t too.
+	bool changeCulture(int iForPlayer, int64_t iChange, bool bPlots);
+	// The whip-anger countdown a demolition/event charges (CvCity::changeHurryAngerTimer).
+	bool changeHurryAngerTimer(int iChange);
+	bool changePopulation(int iChange);
+	// bHandleGrowth defaults FALSE in the engine, matching every caller here: an event handing a city food is
+	// topping up the store, not resolving a growth step this instant.
+	bool changeStoredFood(int iChange);
+	// The city CEASES TO EXIST. ⛔ Routed through CvPlayer::disband -- the same path TASK_DISBAND takes -- and NOT
+	// through CvCity::kill, because disband owns bookkeeping kill() does not: it clears foundedFirstCity for a
+	// player losing their last city, and registers the name in the destroyed-city registry.
+	// ⚑ Every Python caller used to reach bare kill(), so each was silently skipping both.
+	bool disband();
+	bool invalidateBuildingList();
+	// Mark a build list stale so the next read rebuilds it. This is the screen ASKING for work, which is why it
+	// is an action and not folded into the read -- a read that rebuilt itself would be the self-healing shape
+	// the whole surface avoids (docs/cascade.md §A SELF-HEAL IS THE FOSSIL OF A MISSING EMIT).
+	bool invalidateUnitList();
+	// Push a build order. ⚠ bAppend is load-bearing rather than a detail: the scenario copier replays a
+	// city's WHOLE queue one order at a time, so appending is what makes the queue survive the copy -- a
+	// fixed replace would leave only the last order.
+	bool pushOrder(int iOrderType, int iId, int iData2, bool bSave, bool bPop, bool bAppend, bool bForce);
+	// Make this city the selected one (the city screen / camera follow it). The engine's own selectCity takes a
+	// CvCity*, which script cannot hold -- so the pair is resolved here and the engine called on its behalf.
+	// Answers whether the city resolved, so a caller can tell "did nothing" from "did it".
+	bool select(bool bTestProduction);
+	bool setBuildingGrantedCommerce(int iBuilding, int iCommerce, int iValue);
+	bool setBuildingGrantedWellbeing(int iBuilding, int iKind, int iValue);
+	bool setBuildingGrantedYield(int iBuilding, int iYield, int iValue);
+	// ---- The city screen's LIST VIEW state: which filter/sort/grouping the player left its lists on. ----
+	// ⚖ These are the one place this surface writes, and they are deliberately narrow: VIEW state, not
+	// gameplay. What the owner ruled banned is DEVELOPING game logic in Python; keeping the existing logic
+	// working is not ([roadmap] scope decision 6), and a list's sort order is not game logic by any reading --
+	// it changes what the player SEES, never what the game does. The matching READS are above, so the
+	// lists both render and respond to a click through one coherent pair.
+	bool setBuildingListFilterActive(int iFilter, bool bActive);
+	bool setBuildingListSorting(int iSorting);
+	// PRESENCE of a building in this city, both directions. ⛔ ONE bool-parameterized verb, because the ENGINE
+	// models it as one (CvCity::changeHasBuilding) -- an add-only verb with a remove twin bolted beside it would be
+	// two Python spellings of a single transition, and the two drift (docs/architecture/patterns.md §DRY (single implementation)).
+	// ⚑ The removal leg is NOT a field poke: it runs the ledger, the setup and processBuilding(-1), so the
+	// contribution is withdrawn and the domain fact fires exactly as a demolition in-game does.
+	bool setBuilding(int iBuilding, bool bNewValue);
+	bool setCorporation(int iCorporation, bool bHeadquarters);
+	// The city's culture HELD BY ONE PLAYER. ⚠ It is ×100 and 64-bit on both sides -- the exact twin of
+	// getCultureForPlayer above, so a scenario round-trips the value it was handed rather than a rescaled one
+	// ([culture-religion-research.md]: city culture accumulates the ×100 rate and never decays, which is why it
+	// is int64_t at all).
+	bool setCulture(int iForPlayer, int64_t iCulture);
+	bool setDefenseDamage(int iDamage);
+	// The one-shot EVENT/VOTE grant store -- the twin of getGrantedExtras above. A scenario that could
+	// read them and not write them back would drop them on every round trip.
+	bool setGrantedExtra(int iKind, int iValue);
+	// ---- The SCENARIO APPLY: what WorldBuilder puts back when it reads a .CivBeyondSwordWBSave ----
+	// ⚖ These earn their place the way this surface requires -- by existing call sites that need them
+	// (`CvWBDesc.CvCityDesc.apply`). They keep EXISTING behaviour working; nothing here is game logic authored
+	// in script, and the scenario format is the same one the engine has always round-tripped.
+	// ⛔ WorldBuilder is NOT a lower tier of consumer, and its breakage is not accepted (owner: "we cannot
+	// accept actually breaking worldbuilder stuff, we fix things we see" -- [roadmap] scope decision 1b).
+	// ⚠ WB mutates ARBITRARY state directly, which is exactly why it goes through the engine's own setters
+	// here: each one emits the fact the normal path emits, so no cache, context or enabler set is left
+	// describing a world that no longer exists ([roadmap] 1b: WB adding or removing anything EMITS, with no WB
+	// special case anywhere).
+	bool setName(std::wstring szName);
+	bool setOccupation(int iTurns);
+	///<summary>Re-stamps who FOUNDED the city. Used when a barbarian city becomes a real civ's, so the
+	/// emergent player reads as the founder rather than as a conqueror.</summary>
+	///<returns>false when the city handle does not resolve, or the new owner is out of range.</returns>
+	bool setOriginalOwner(int iOriginalOwner);
+	// ⛔ BOTH shapes are published for population and stored food because the ENGINE has both, and a caller that
+	// means a DELTA must be able to say so. Making it read-then-write instead would turn one atomic mutation into
+	// two steps that another consumer can interleave -- a different operation wearing the same name.
+	bool setPopulation(int iPopulation);
+	bool setReligion(int iReligion, bool bHolyCity);
+	bool setScriptData(std::string szData);
+	bool setStoredFood(int iFood);
+	bool setWeLoveTheKingDay(bool bNewValue);
+	bool setUnitListFilterActive(int iFilter, bool bActive);
+	bool setUnitListGrouping(int iGrouping);
+	bool setUnitListSorting(int iSorting);
 
 private:
 	CvCity* m_pCity;
 };
 
-// A city crosses to Python as its (owner, id) IDENTITY, not as a CyCity handle: CyCity carries zero defs, so a
-// script handed one could ask it nothing -- while every read on the library is addressed by exactly this pair.
+// A city ALSO crosses to Python as its (owner, id) identity, which is what an event payload carries.
 DECLARE_PY_IDENTITY(CvCity*, getOwner(), getID());
 
 #endif // CyCity_h__

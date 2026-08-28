@@ -13,11 +13,12 @@ import TextUtil
 import SdToolKit as SDTK
 import RevUtils
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
+INFO = CyInfo()
 GAME = GC.getGame()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
@@ -316,8 +317,7 @@ def newNameByCivics(iPlayer):
 
 	origDesc = ""
 	if pPlayer.getCivilizationType() >= 0:
-		civInfo = GC.getCivilizationInfo(pPlayer.getCivilizationType())
-		origDesc = civInfo.getDescription()
+		origDesc = INFO.getDescription("CIVILIZATION_", pPlayer.getCivilizationType())
 
 	iLanguage = GAME.getCurrentLanguage()
 	bFrench = iLanguage == 1 #0 - English, 1 - French, 2 - German, 3 - Italian, 4 - Spanish
@@ -578,10 +578,10 @@ def newNameByCivics(iPlayer):
 
 def resetName(iPlayer):
 	pPlayer = GC.getPlayer(iPlayer)
-	civInfo = GC.getCivilizationInfo(pPlayer.getCivilizationType())
-	origAdj = civInfo.getAdjective(0)
-	origDesc = civInfo.getDescription()
-	origShort = civInfo.getShortDescription(0)
+	iCiv = pPlayer.getCivilizationType()
+	origAdj = INFO.getAdjective("CIVILIZATION_", iCiv, 0)
+	origDesc = INFO.getDescription("CIVILIZATION_", iCiv)
+	origShort = INFO.getShortDescription("CIVILIZATION_", iCiv, 0)
 
 	pPlayer.setCivName(origDesc, origShort, origAdj)
 
@@ -593,7 +593,7 @@ def isCommunism(pPlayer):
 
 	for i in xrange(GC.getNumCivicInfos()):
 
-		if GC.getCivicInfo(i).isCommunism() and pPlayer.isCivic(i):
+		if INFO.providesPolicy("CIVIC_", i, PolicyId.CLS_POLICY_COMMUNISM) and pPlayer.isCivic(i):
 			return True
 
 	return False

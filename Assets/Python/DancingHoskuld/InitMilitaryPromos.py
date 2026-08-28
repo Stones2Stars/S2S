@@ -4,14 +4,13 @@
 ##=========================##
 from CvPythonExtensions import *
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 MAP = GC.getMap()
 INFO = CyInfo()
-STATE = CyState()
 ENABLER = CyEnabler()
-ACT = CyAct()
 ENUMS = CyEnums()
 
 def init():
@@ -45,7 +44,7 @@ def onUnitBuilt( argsList):
 	unit = argsList[1]
 	iCityOwner, iCityId = city
 	iOwner, iUnitId = unit
-	aUnit = STATE.getUnitRead(iOwner, iUnitId)
+	aUnit = GC.getPlayer(iOwner).getUnit(iUnitId).getRead()
 	pPlayer = GC.getPlayer(iOwner)
 
 # BEGIN MILITIA PROMOTIONS CODE - based on a prototype from FfH mod
@@ -142,5 +141,5 @@ def attemptPromotion(iPlayer, iUnit, iChance, szProposedPromotion):
 		ePromotion = GC.getInfoTypeForString(szProposedPromotion)
 		# The WHOLE verdict, not ENABLER.getPromotionUnlocked: that one answers only whether the PLAYER has the
 		# promotion available and would offer it on units it does not apply to ([enabler.md] par.8).
-		if STATE.canUnitAcquirePromotion(iPlayer, iUnit, ePromotion):
-			ACT.setUnitPromotion(iPlayer, iUnit, ePromotion, True)
+		if GC.getPlayer(iPlayer).getUnit(iUnit).canAcquirePromotion(ePromotion):
+			GC.getPlayer(iPlayer).getUnit(iUnit).setPromotion(ePromotion, True)
