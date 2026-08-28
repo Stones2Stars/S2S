@@ -87,7 +87,7 @@ def doRemoveWVSlavery(argsList):
 
 			iFreeSlaves = 0
 			for i in xrange(GC.getNumSpecialistInfos()):
-				if GC.getSpecialistInfo(i).isSlave():
+				if INFO.isSpecialistSlave(i):
 
 					iCount = city.getFreeSpecialistCount(i)
 					if iCount < 1: continue

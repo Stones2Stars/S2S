@@ -735,6 +735,14 @@ int CyInfo::getSpecialistGreatPeopleUnit(int iSpecialistId) const
 	return pSpecialist->getGreatPeopleUnitType();
 }
 
+bool CyInfo::isSpecialistSlave(int iSpecialistId) const
+{
+	const CvSpecialistInfo* pSpecialist =
+		static_cast<const CvSpecialistInfo*>(cyi_info("SPECIALIST_", iSpecialistId));
+	if (pSpecialist == NULL) return false;
+	return pSpecialist->isSlave();
+}
+
 bool CyInfo::isCivilizationAIPlayable(int iCivilizationId) const
 {
 	const CvCivilizationInfo* pCiv =
@@ -1694,6 +1702,7 @@ void CyInfo::pythonPublish()
 		.def("getCivilizationArtStyle", &CyInfo::getCivilizationArtStyle)
 		.def("getHandicapBarbarianDefenders", &CyInfo::getHandicapBarbarianDefenders)
 		.def("getSpecialistGreatPeopleUnit", &CyInfo::getSpecialistGreatPeopleUnit)
+		.def("isSpecialistSlave", &CyInfo::isSpecialistSlave)
 		.def("getCivilizationCityNames", &CyInfo::getCivilizationCityNames)
 		.def("getShrineBuildings", &CyInfo::getShrineBuildings)
 		.def("getDerivativeCiv", &CyInfo::getDerivativeCiv)

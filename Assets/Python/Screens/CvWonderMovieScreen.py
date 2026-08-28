@@ -42,22 +42,22 @@ class CvWonderMovieScreen:
 
 		# not all projects have movies
 		szMovieFile = None
+		#	All three carry the movie as an ART DEFINE TAG now and resolve the same way. Legacy handed a
+		#	building's back as a path and a project's as a tag, which is why they used to be read differently.
 		if not iMovieType:
-			CvInfo = GC.getBuildingInfo(iMovieItem)
-			if CvInfo:
-				szMovieFile = CvInfo.getMovie()
+			szArtDef = INFO.getMovieDefineTag("BUILDING_", iMovieItem)
+			if szArtDef:
+				szMovieFile = CyArtFileMgr().getMovieArtInfo(szArtDef).getPath()
 
 		elif iMovieType == 1:
-			CvInfo = GC.getReligionInfo(iMovieItem)
-			if CvInfo:
-				szMovieFile = CvInfo.getMovieFile()
+			szArtDef = INFO.getMovieDefineTag("RELIGION_", iMovieItem)
+			if szArtDef:
+				szMovieFile = CyArtFileMgr().getMovieArtInfo(szArtDef).getPath()
 
 		elif iMovieType == 2:
-			CvInfo = GC.getProjectInfo(iMovieItem)
-			if CvInfo:
-				szArtDef = CvInfo.getMovieArtDef()
-				if szArtDef:
-					szMovieFile = CyArtFileMgr().getMovieArtInfo(szArtDef).getPath()
+			szArtDef = INFO.getMovieDefineTag("PROJECT_", iMovieItem)
+			if szArtDef:
+				szMovieFile = CyArtFileMgr().getMovieArtInfo(szArtDef).getPath()
 
 		elif iMovieType == 3:
 			sType = INFO.getType("FEATURE_", iMovieItem)
@@ -101,13 +101,13 @@ class CvWonderMovieScreen:
 
 		# Header
 		if not iMovieType:
-			szHeader = CvInfo.getDescription()
+			szHeader = INFO.getDescription("BUILDING_", iMovieItem)
 
 		elif iMovieType == 1:
-			szHeader = CyTranslator().getText("TXT_KEY_MISC_REL_FOUNDED_MOVIE", (CvInfo.getTextKey(), ))
+			szHeader = CyTranslator().getText("TXT_KEY_MISC_REL_FOUNDED_MOVIE", (INFO.getTextKey("RELIGION_", iMovieItem), ))
 
 		elif iMovieType == 2:
-			szHeader = CvInfo.getDescription()
+			szHeader = INFO.getDescription("PROJECT_", iMovieItem)
 
 		elif iMovieType == 3:
 			# The FEATURE path never binds CvInfo -- it resolves its movie through the id surface, not through
@@ -135,7 +135,7 @@ class CvWonderMovieScreen:
 
 		# Sound
 		if self.iMovieType == 1:
-			szSound = CvInfo.getMovieSound()
+			szSound = INFO.getSound("RELIGION_", iMovieItem)
 			if szSound:
 				CyInterface().playGeneralSound(szSound)
 

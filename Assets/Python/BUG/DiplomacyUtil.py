@@ -305,7 +305,7 @@ def onCivicDemanded(argsList):
 	CyPlayerX = GC.getPlayer(eDemandPlayer)
 	of = CyPlayerX.getName()
 	to = GC.getPlayer(eTargetPlayer).getName()
-	iCivic = GC.getLeaderHeadInfo(CyPlayerX.getPersonalityType()).getFavoriteCivic()
+	iCivic = INFO.getIntrinsic("LEADER_", CyPlayerX.getPersonalityType(), IntrinsicSlot.PYINT_FAVORITE_CIVIC)
 	if iCivic > -1:
 		print "DiplomacyUtil - %s asks %s to switch to %s" %(of, to, INFO.getDescription("CIVIC_", iCivic))
 
@@ -314,7 +314,7 @@ def onCivicAccepted(argsList):
 	CyPlayerX = GC.getPlayer(eDemandPlayer)
 	to = GC.getPlayer(eTargetPlayer).getName()
 	of = CyPlayerX.getName()
-	iCivic = GC.getLeaderHeadInfo(CyPlayerX.getPersonalityType()).getFavoriteCivic()
+	iCivic = INFO.getIntrinsic("LEADER_", CyPlayerX.getPersonalityType(), IntrinsicSlot.PYINT_FAVORITE_CIVIC)
 	if iCivic > -1:
 		print "DiplomacyUtil - %s accepts demand from %s to switch to %s" %(to, of, INFO.getDescription("CIVIC_", iCivic))
 
@@ -323,7 +323,7 @@ def onCivicRejected(argsList):
 	CyPlayerX = GC.getPlayer(eDemandPlayer)
 	to = GC.getPlayer(eTargetPlayer).getName()
 	of = CyPlayerX.getName()
-	iCivic = GC.getLeaderHeadInfo(CyPlayerX.getPersonalityType()).getFavoriteCivic()
+	iCivic = INFO.getIntrinsic("LEADER_", CyPlayerX.getPersonalityType(), IntrinsicSlot.PYINT_FAVORITE_CIVIC)
 	if iCivic > -1:
 		print "DiplomacyUtil - %s rejects demand from %s to switch to %s" %(to, of, INFO.getDescription("CIVIC_", iCivic))
 

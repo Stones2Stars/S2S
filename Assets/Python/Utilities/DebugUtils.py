@@ -6,6 +6,7 @@ from CvPythonExtensions import *
 # GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
+UNIT = CyUnitInfo()           # the per-info UNIT accessor
 MAP = GC.getMap()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -171,12 +172,12 @@ def initWonderMovie():
 	popup.setHeaderString("Wonder Movie", 1<<2)
 	popup.createPullDown(0)
 	for i in xrange(GC.getNumBuildingInfos()):
-		szMovieFile = GC.getBuildingInfo(i).getMovie()
+		szMovieFile = INFO.getMovieDefineTag("BUILDING_", i)
 		if szMovieFile:
 			popup.addPullDownString(INFO.getDescription("BUILDING_", i), i, 0)
 
 	for i in xrange(GC.getNumProjectInfos()):
-		szArtDef = GC.getProjectInfo(i).getMovieArtDef()
+		szArtDef = INFO.getMovieDefineTag("PROJECT_", i)
 		if szArtDef:
 			szMovieFile = CyArtFileMgr().getMovieArtInfo(szArtDef).getPath()
 			if szMovieFile:
@@ -249,7 +250,7 @@ def applyTechCheat(iPlayer, userData, popupReturn):
 	era = popupReturn.getButtonClicked()
 	for iTech in xrange(GC.getNumTechInfos()):
 
-		if GC.getTechInfo(iTech).getiEra() == era:
+		if INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_ERA) == era:
 			if iPlayers:
 				for j in xrange(iPlayers):
 					player[j].setHasTech(iTech)
@@ -375,7 +376,7 @@ def putOneOfEveryUnit():
 	while iUnit < iUnits:
 		bLand = False
 		bWater = False
-		DOMAIN = GC.getUnitInfo(iUnit).getDomainType()
+		DOMAIN = UNIT.getDomain(iUnit)
 		if DOMAIN == DomainTypes.DOMAIN_AIR:
 			if iTotalWater + iLand < iTotalLand + iWater:
 				if iWater:

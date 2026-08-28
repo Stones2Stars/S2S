@@ -509,6 +509,9 @@ public:
 	// plane because the specialist registry has no accessor of its own; its building twin is
 	// CyBuildingInfo::getGreatPeopleUnit, and the two are separate because the receiver decides the question.
 	int getSpecialistGreatPeopleUnit(int iSpecialistId) const;
+	/// <summary>Is this specialist a SLAVE (`identity.slave`) -- a seat filled by a captured population rather
+	/// than a citizen the city assigns freely?</summary>
+	bool isSpecialistSlave(int iSpecialistId) const;
 	python::list getCivilizationLeaders(int iCivilizationId) const;
 	/// <summary>May the AI be dealt this civilization (`identity.aiPlayable`)? False when the id names no
 	/// civilization, so an unknown id is never offered as a playable choice.</summary>

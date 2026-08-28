@@ -15,6 +15,7 @@ import BugUtil
 GC = CyGlobalContext()
 gc = GC   # this module spells it lowercase
 INFO = CyInfo()
+UNIT = CyUnitInfo()           # the per-info UNIT accessor
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -132,7 +133,12 @@ class UnitCombatGrouping(Grouping):
 			self._addGroup(Group(self, entry["id"] + 1, entry["description"]))
 
 	def calcGroupKeys(self, unit, player, team):
-		return (gc.getUnitInfo(unit.getRead()[UnitReadKind.UNIT_READ_TYPE]).getUnitCombatType() + 1,)
+		#	The PRIMARY combat class is first in the unit's own list; an empty list means it has none.
+		lClasses = UNIT.getCombatClasses(unit.getRead()[UnitReadKind.UNIT_READ_TYPE])
+		iPrimary = -1
+		if lClasses:
+			iPrimary = lClasses[0]
+		return (iPrimary + 1,)
 
 class LevelGrouping(Grouping):
 	"""

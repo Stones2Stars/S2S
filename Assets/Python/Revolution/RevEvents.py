@@ -21,6 +21,8 @@ GAME = GC.getGame()
 MAP = GC.getMap()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
+INFO = CyInfo()
+UNIT = CyUnitInfo()           # the per-info UNIT accessor
 TRNSLTR = CyTranslator()
 WORLD = CyWorldInfo()
 
@@ -510,20 +512,19 @@ def checkRebelBonuses(argsList):
 				if pCity.isCoastal(10) and pCity.area().getNumCities() < 3 and pCity.area().getNumTiles() < 25:
 					iBestCombat = -1
 					for iUnitX in xrange(GC.getNumUnitInfos()):
-						info = GC.getUnitInfo(iUnitX)
-						if (info.getRead()[UnitReadKind.UNIT_READ_DOMAIN] == DomainTypes.DOMAIN_SEA
-						and info.getUnitAIType(UnitAITypes.UNITAI_ASSAULT_SEA)
+						if (UNIT.getDomain(iUnitX) == DomainTypes.DOMAIN_SEA
+						and UNIT.getDefaultUnitAI(iUnitX) == UnitAITypes.UNITAI_ASSAULT_SEA
 						and ENABLER.getUnitAvailabilityAnywhere(newOwner.getID(), iUnitX) == EnablerState.ENABLER_LISTED
 						):
-							iCombat = info.getCombat()
+							iCombat = INFO.getScalar("UNIT_", iUnitX, InfoScalar.SCALAR_STRENGTH,
+							                         CascScope.CASC_SCOPE_UNIT, CascUnit.CASC_UNIT_FLAT)
 							if iBestCombat < iCombat:
-								bestUnit = info
 								iBestUnit = iUnitX
 								iBestCombat = iCombat
 
 					if iBestCombat > -1:
 						newOwner.createUnit(iBestUnit, ix, iy, UnitAITypes.UNITAI_ASSAULT_SEA, DirectionTypes.DIRECTION_SOUTH)
-						print "Rev - Rebels get a %s to raid motherland" % bestUnit.getDescription()
+						print "Rev - Rebels get a %s to raid motherland" % INFO.getDescription("UNIT_", iBestUnit)
 
 				# Change city disorder timer to favor new player
 				iTurns = pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION]
@@ -705,11 +706,14 @@ def onBuildingBuilt(argsList):
 	(iCityOwner, iCityID), iBuildingType = argsList
 	pCity = GC.getPlayer(iCityOwner).getCity(iCityID)
 
-	buildingInfo = GC.getBuildingInfo(iBuildingType)
+	#	A wonder is an `allowed` cap of exactly one at its scope; the religion gate is the requires plane, and
+	#	a religion-gated building is excluded here whichever religion it names.
+	bReligionGated = len(INFO.getRequiresIdsInClause("BUILDING_", iBuildingType, EdgeBucket.EDGEB_RELIGIONS, RequiresClause.REQCLAUSE_ALL)) > 0
+	iBuildingCost = INFO.getIntrinsic("BUILDING_", iBuildingType, IntrinsicSlot.PYINT_COST)
 
-	if buildingInfo.getMaxGlobalInstances() == 1 and buildingInfo.getPrereqReligion() < 0 and buildingInfo.getProductionCost() > 10:
+	if INFO.getAllowedCap("BUILDING_", iBuildingType, AllowedCap.ALLOWEDCAP_WORLD) == 1 and not bReligionGated and iBuildingCost > 10:
 		if LOG_DEBUG:
-			print"[REV] World wonder %s build in %s"%(buildingInfo.getDescription(), pCity.getName())
+			print"[REV] World wonder %s build in %s"%(INFO.getDescription("BUILDING_", iBuildingType), pCity.getName())
 		curRevIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 		pCity.changeRevolutionIndex(-max([150, curRevIdx / 4]))
 
@@ -721,9 +725,9 @@ def onBuildingBuilt(argsList):
 			revIdxHist['Events'][0] += iRevIdxChange
 			RevData.updateCityVal(cityX, 'RevIdxHistory', revIdxHist)
 
-	elif buildingInfo.getMaxPlayerInstances() == 1 and buildingInfo.getPrereqReligion() < 0 and buildingInfo.getProductionCost() > 10:
+	elif INFO.getAllowedCap("BUILDING_", iBuildingType, AllowedCap.ALLOWEDCAP_EMPIRE) == 1 and not bReligionGated and iBuildingCost > 10:
 		if LOG_DEBUG:
-			print "[REV] National wonder %s build in %s"%(buildingInfo.getDescription(), pCity.getName())
+			print "[REV] National wonder %s build in %s"%(INFO.getDescription("BUILDING_", iBuildingType), pCity.getName())
 		curRevIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 		pCity.changeRevolutionIndex(-max([80, curRevIdx * 12/100]))
 

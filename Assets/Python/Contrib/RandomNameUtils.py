@@ -209,7 +209,7 @@ def getRandomCivilizationName(iCivilizationType):
 def generateCivilizationName(iCivilizationType):
 	strCivilizationType = "DEFAULT"
 
-	if(gc.getCivilizationInfo(iCivilizationType) != None):
+	if INFO.exists("CIVILIZATION_", iCivilizationType):
 		strCivilizationType = INFO.getType("CIVILIZATION_", iCivilizationType)
 		if not civilizationNameHash.has_key(strCivilizationType):
 			strCivilizationType = "DEFAULT"

@@ -126,10 +126,9 @@ class CvHallOfFameScreen:
 		screen.addDropDownBoxGFC(self.LEADER_DROPDOWN_ID, xDropDown, yDropDown, self.DROPDOWN_WIDTH, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		screen.addPullDownString(self.LEADER_DROPDOWN_ID, localText.getText("TXT_KEY_ALL_LEADERS", ()), -1, -1, True)
 		for iCiv in range(gc.getNumCivilizationInfos()):
-			civ = gc.getCivilizationInfo(iCiv)
-			if civ.isPlayable():
-				for iLeader in range(gc.getNumLeaderHeadInfos()):
-					if civ.isLeaders(iLeader):
+			if INFO.isCivilizationPlayable(iCiv):
+				#	The civ's own roster, rather than asking every leaderhead whether it belongs here.
+				for iLeader in INFO.getCivilizationLeaders(iCiv):
 						screen.addPullDownString(self.LEADER_DROPDOWN_ID, INFO.getDescription("LEADER_", iLeader), iCiv, iLeader, False)
 		iNumDropDowns += 1
 
@@ -273,8 +272,8 @@ class CvHallOfFameScreen:
 						replayInfo.getFinalScore(),
 						szVictory,
 						INFO.getDescription("HANDICAP_", replayInfo.getDifficulty()),
-						INFO.getDescription("WORLD_", replayInfo.getWorldSize()),
-						gc.getEraInfo(replayInfo.getEra()).getDescription(),
+						INFO.getDescription("WORLDSIZE_", replayInfo.getWorldSize()),
+						INFO.getDescription("C2C_ERA_", replayInfo.getEra()),
 						INFO.getDescription("GAMESPEED_", replayInfo.getGameSpeed()),
 						i)
 				iItem += 1

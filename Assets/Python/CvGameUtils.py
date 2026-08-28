@@ -523,8 +523,9 @@ class CvGameUtils:
 ## Civics Screen ##
 			elif iData1 == 8205 or iData1 == 8206:
 				sText = CyGameTextMgr().parseCivicInfo(iData2, False, True, False)
-				if GC.getCivicInfo(iData2).getUpkeep() > -1:
-					sText += "\n" + INFO.getDescription("UPKEEP_", GC.getCivicInfo(iData2).getUpkeep())
+				iUpkeep = INFO.getCivicUpkeep(iData2)
+				if iUpkeep > -1:
+					sText += "\n" + INFO.getDescription("UPKEEP_", iUpkeep)
 				else:
 					sText += "\n" + CyTranslator().getText("TXT_KEY_CIVICS_SCREEN_NO_UPKEEP", ())
 				return sText

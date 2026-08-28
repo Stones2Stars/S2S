@@ -516,11 +516,11 @@ def applySaltpeter(argsList):
 		return
 	iPlayer = kTriggeredData.ePlayer
 
-	event = GC.getEventInfo(argsList[0])
-	iFood = event.getPlotExtraYield(YieldTypes.YIELD_FOOD)
-	iProd = event.getPlotExtraYield(YieldTypes.YIELD_PRODUCTION)
-	iComm = event.getPlotExtraYield(YieldTypes.YIELD_COMMERCE)
-	sEventType = event.getType()
+	iEvent = argsList[0]
+	iFood = INFO.getEventPlotExtraYield(iEvent, YieldTypes.YIELD_FOOD)
+	iProd = INFO.getEventPlotExtraYield(iEvent, YieldTypes.YIELD_PRODUCTION)
+	iComm = INFO.getEventPlotExtraYield(iEvent, YieldTypes.YIELD_COMMERCE)
+	sEventType = INFO.getType("EVENT_", iEvent)
 
 	# Add landmark for initial plot, if there is still a yield change
 	placeLandmark(CyPlot, sEventType, iFood, iProd, iComm, True, -1)

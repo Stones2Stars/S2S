@@ -219,7 +219,7 @@ class CvDebugInfoScreen(CvGFCScreen.CvGFCScreen):
 			list_loopRowData.append(strName)
 
 			for j in range( self.iNumPlayers ):
-				strName = gc.getCivicInfo( int(gc.getPlayer(j).getCivics(i)) ).getDescription()
+				strName = INFO.getDescription("CIVIC_", int(gc.getPlayer(j).getCivics(i)))
 				list_loopRowData.append(strName)
 
 			d_TableData[i+1] = list_loopRowData
@@ -323,9 +323,9 @@ class CvDebugInfoScreen(CvGFCScreen.CvGFCScreen):
 		area_sizes.reverse() # biggest area first
 		areas = [area for (area_size, area) in area_sizes]
 
-		bonus_infos = [gc.getBonusInfo(i) for i in range(gc.getNumBonusInfos())]
+		iNumBonuses = gc.getNumBonusInfos()
 		title_list = [u"BonusDistro", u"Area", u"Size", u"Starting Plots", u"Unique Bonus Types", u"Total Bonuses"]
-		title_list += [bonus.getDescription() for bonus in bonus_infos]
+		title_list += [INFO.getDescription("BONUS_", i) for i in range(iNumBonuses)]
 		d_TableData[0] = title_list
 
 		total = 0
@@ -353,7 +353,7 @@ class CvDebugInfoScreen(CvGFCScreen.CvGFCScreen):
 			total += total_in_area
 			loopRowData.append("%d" % total_in_area)
 
-			for j in range(len(bonus_infos)):
+			for j in range(iNumBonuses):
 				quantity = area.getNumBonuses(j)
 				if quantity > 0:
 					loopRowData.append("%d" % quantity)
@@ -369,7 +369,7 @@ class CvDebugInfoScreen(CvGFCScreen.CvGFCScreen):
 		loopRowData.append("")
 		loopRowData.append("")
 		loopRowData.append("%d" % total)
-		for j in range(len(bonus_infos)):
+		for j in range(iNumBonuses):
 			quantity = map.getNumBonuses(j)
 			if quantity > 0:
 				loopRowData.append("%d" % quantity)
