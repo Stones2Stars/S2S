@@ -66,9 +66,8 @@ class CvSpaceShipScreen:
 		self.componentProjects = []
 		self.spaceVictory = -1
 		for i in range(GC.getNumProjectInfos()):
-			component = GC.getProjectInfo(i)
-			if (component.isSpaceship()):
-				self.spaceVictory = component.getVictoryPrereq()
+			if INFO.getIntrinsic("PROJECT_", i, IntrinsicSlot.PYINT_IS_SPACESHIP):
+				self.spaceVictory = INFO.getProjectLaunchesVictory(i)
 				self.componentProjects.append(i)
 
 		#title text
@@ -145,7 +144,6 @@ class CvSpaceShipScreen:
 			#loop through each panel
 			for i in range(self.numComponents):
 				index = self.componentProjects[i]
-				component = GC.getProjectInfo(index)
 				xPosition = self.X_SCREEN + self.componentPanelXOffset
 				yPosition = self.Y_SCREEN + self.componentPanelYOffset + i * self.componentPanelHeight
 
@@ -154,15 +152,15 @@ class CvSpaceShipScreen:
 				if(index == self.activeProject):
 					xPositionOffset = 80
 				screen.addPanel("ComponentPanel" + str(i), "", "", true, true, xPosition - xPositionOffset, yPosition, self.componentPanelWidth + xPositionOffset, self.componentPanelHeight + self.componentPanelHeightExtra, PanelStyles.PANEL_STYLE_TECH)
-				screen.setLabel("ComponentLabel" + str(i), "ComponentPanel" + str(i), "<color=255,255,0><font=3b>" + component.getDescription() + "</font></color>", 1<<0, xPosition - xPositionOffset + self.componentNameXOffset, yPosition + self.componentNameYOffset, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
+				screen.setLabel("ComponentLabel" + str(i), "ComponentPanel" + str(i), "<color=255,255,0><font=3b>" + INFO.getDescription("PROJECT_", index) + "</font></color>", 1<<0, xPosition - xPositionOffset + self.componentNameXOffset, yPosition + self.componentNameYOffset, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 				#completed
 				completed = GC.getTeam(activeTeam).getProjectCount(index)
-				totalAllowed = component.getMaxTeamInstances()
+				totalAllowed = INFO.getAllowedCap("PROJECT_", index, AllowedCap.ALLOWEDCAP_TEAM)
 				screen.setLabel("ComponentCompletedLabel" + str(i), "ComponentPanel" + str(i), localText.getText("TXT_KEY_SPACE_SHIP_SCREEN_COMPLETED_LABEL", (completed, totalAllowed)), 1<<0, xPosition + self.componentCompletedLabelXOffset, yPosition + self.componentCompletedLabelYOffset, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 				#required
-				required = component.getVictoryMinThreshold(self.spaceVictory)
+				required = INFO.getProjectVictoryMinThreshold(index, self.spaceVictory)
 				screen.setLabel("ComponentRequiredLabel" + str(i), "ComponentPanel" + str(i), localText.getText("TXT_KEY_SPACE_SHIP_SCREEN_REQUIRED_LABEL", (required,)), 1<<0, xPosition + self.componentRequiredLabelXOffset, yPosition + self.componentRequiredLabelYOffset, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 				#in production
@@ -174,12 +172,16 @@ class CvSpaceShipScreen:
 					screen.setPanelColor("ComponentPanel" + str(i), 85, 150, 87)
 				else: #check if you can build
 					canBuild = True
-					if(not GC.getTeam(activeTeam).isHasTech(component.getTechPrereq())):
-						canBuild = False
-					else:
-						for j in range(GC.getNumProjectInfos()):
-							if(GC.getTeam(activeTeam).getProjectCount(j) < component.getProjectsNeeded(j)):
+					for iTechX in INFO.getRequiresIdsInClause("PROJECT_", index, EdgeBucket.EDGEB_TECHS, RequiresClause.REQCLAUSE_ALL):
+						if not GC.getTeam(activeTeam).isHasTech(iTechX):
+							canBuild = False
+							break
+					if canBuild:
+						#	the project's OWN list of prerequisite projects, not a sweep of the registry
+						for j in INFO.getProjectNeededProjects(index):
+							if GC.getTeam(activeTeam).getProjectCount(j) < 1:
 								canBuild = False
+								break
 
 					if not canBuild: #grey
 						screen.setPanelColor("ComponentPanel" + str(i), 128, 128, 128)

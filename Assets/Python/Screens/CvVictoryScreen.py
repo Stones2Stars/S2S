@@ -33,6 +33,24 @@ class CvVictoryScreen:
 		self.ApolloTeamsChecked = set()
 		self.ApolloTeamCheckResult = {}
 
+	def hasAllTechs(self, CyTeamX, lTechs):
+		"""Does this team hold EVERY tech in the list?
+
+		A project's tech gate is a list of mandatory requirements now rather than one prereq id, so "has the
+		gate" means holding all of them. An empty list is ungated and answers True.
+		"""
+		for iTech in lTechs:
+			if not CyTeamX.isHasTech(iTech):
+				return False
+		return True
+
+	def canResearchAll(self, iPlayer, lTechs):
+		"""Is every tech in the list either held or on this player's research frontier?"""
+		for iTech in lTechs:
+			if ENABLER.getTechAvailability(iPlayer, iTech) != EnablerState.ENABLER_LISTED:
+				return False
+		return True
+
 	def getScreen(self):
 		return CyGInterfaceScreen("VictoryScreen", self.screenId)
 
@@ -517,10 +535,10 @@ class CvVictoryScreen:
 					if bNeedParts:
 						for i in xrange(GC.getNumProjectInfos()):
 							for iL in xrange(GC.getNumVictoryInfos()):
-								if GC.getProjectInfo(i).getVictoryThreshold(iL) > 0:
-									if GC.getProjectInfo(i).isSpaceship():
+								if INFO.getProjectVictoryThreshold(i, iL) > 0:
+									if INFO.getIntrinsic("PROJECT_", i, IntrinsicSlot.PYINT_IS_SPACESHIP):
 										iRow = screen.appendTableRow(szTable)
-										screen.setTableText(szTable, 0, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILDING", (GC.getProjectInfo(i).getVictoryThreshold(iL), INFO.getTextKey("PROJECT_", i))), "", eWidGen, 1, 2, 1<<1)
+										screen.setTableText(szTable, 0, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILDING", (INFO.getProjectVictoryThreshold(i, iL), INFO.getTextKey("PROJECT_", i))), "", eWidGen, 1, 2, 1<<1)
 
 										if self.teamLaunchedShip(iTeamAct) != 1:
 											screen.setTableText(szTable, 1, iRow, ufont2 + str(CyTeam.getProjectCount(i)), "", eWidGen, 1, 2, 1<<0)
@@ -679,16 +697,16 @@ class CvVictoryScreen:
 						if CyTeam.isHasMet(iTeamX) or bDebugModeDLL:
 							teamBuilding = 0
 							for i in xrange(GC.getNumBuildingInfos()):
-								if GC.getBuildingInfo(i).getVictoryThreshold(iLoopVC) > 0:
+								if INFO.getBuildingVictoryThreshold(i, iLoopVC) > 0:
 									teamBuilding += CyTeamX.getBuildingCount(i)
 							if teamBuilding > bestBuilding:
 								bestBuilding = teamBuilding
 								iBestBuildingTeam = iTeamX
 
 				for i in xrange(GC.getNumBuildingInfos()):
-					if GC.getBuildingInfo(i).getVictoryThreshold(iLoopVC) > 0:
+					if INFO.getBuildingVictoryThreshold(i, iLoopVC) > 0:
 						iRow = screen.appendTableRow(szTable)
-						szNumber = unicode(GC.getBuildingInfo(i).getVictoryThreshold(iLoopVC))
+						szNumber = unicode(INFO.getBuildingVictoryThreshold(i, iLoopVC))
 						szText = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILDING", (szNumber, INFO.getTextKey("BUILDING_", i)))
 						screen.setTableText(szTable, 0, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<1)
 						screen.setTableText(szTable, 1, iRow, ufont2 + str(CyTeam.getBuildingCount(i)), "", eWidGen, 1, 2, 1<<2)
@@ -705,7 +723,7 @@ class CvVictoryScreen:
 						if (CyTeam.isHasMet(iTeamX) or bDebugModeDLL) and self.isApolloBuiltbyTeam(CyTeamX):
 							teamProject = 0
 							for i in xrange(GC.getNumProjectInfos()):
-								if GC.getProjectInfo(i).getVictoryThreshold(iLoopVC) > 0:
+								if INFO.getProjectVictoryThreshold(i, iLoopVC) > 0:
 									teamProject += CyTeamX.getProjectCount(i)
 							if teamProject > bestProject:
 								bestProject = teamProject
@@ -713,8 +731,7 @@ class CvVictoryScreen:
 
 				bApolloShown = False
 				for i in xrange(GC.getNumProjectInfos()):
-					CvProjectInfo = GC.getProjectInfo(i)
-					iVictoryThreshold = CvProjectInfo.getVictoryThreshold(iLoopVC)
+					iVictoryThreshold = INFO.getProjectVictoryThreshold(i, iLoopVC)
 					if iVictoryThreshold > 0:
 						if not self.isApolloBuilt():
 							iRow = screen.appendTableRow(szTable)
@@ -737,20 +754,20 @@ class CvVictoryScreen:
 									screen.setTableText(szTable, 2, iRow, ufont2 + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILT", (GC.getTeam(iBestProjectTeam).getName(), )), "", eWidGen, 1, 2, 1<<0)
 
 							iRow = screen.appendTableRow(szTable)
-							iReqTech = CvProjectInfo.getTechPrereq()
+							lReqTechs = INFO.getRequiresIdsInClause("PROJECT_", i, EdgeBucket.EDGEB_TECHS, RequiresClause.REQCLAUSE_ALL)
 
-							if CvProjectInfo.getVictoryMinThreshold(iLoopVC) == iVictoryThreshold:
+							if INFO.getProjectVictoryMinThreshold(i, iLoopVC) == iVictoryThreshold:
 								szNumber = unicode(iVictoryThreshold)
 							else:
-								szNumber = unicode(CvProjectInfo.getVictoryMinThreshold(iLoopVC)) + u"-" + unicode(iVictoryThreshold)
+								szNumber = unicode(INFO.getProjectVictoryMinThreshold(i, iLoopVC)) + u"-" + unicode(iVictoryThreshold)
 
-							sSSPart = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILDING", (szNumber, CvProjectInfo.getTextKey()))
+							sSSPart = TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILDING", (szNumber, INFO.getTextKey("PROJECT_", i)))
 							screen.setTableText(szTable, 0, iRow, ufont2 + sSSPart, "", eWidGen, 1, 2, 1<<1)
 
 							if bApolloBuiltByActiveTeam:
 								bOwnProject = CyTeam.getProjectCount(i)
 
-								bHasTech = CyTeam.isHasTech(iReqTech)
+								bHasTech = self.hasAllTechs(CyTeam, lReqTechs)
 								sSSPlayer = szTeamName + ":"
 								sSSCount = "%i [+%i]" % (bOwnProject, CyTeam.getProjectMaking(i))
 
@@ -759,7 +776,7 @@ class CvVictoryScreen:
 								if bOwnProject == iVictoryThreshold:
 									sSSCount = "%i" % (bOwnProject)
 									iSSColor = self.COLOR_GREEN
-								elif bOwnProject >= CvProjectInfo.getVictoryMinThreshold(iLoopVC):
+								elif bOwnProject >= INFO.getProjectVictoryMinThreshold(i, iLoopVC):
 									iSSColor = self.COLOR_YELLOW
 
 								if iSSColor > 0:
@@ -771,7 +788,7 @@ class CvVictoryScreen:
 									szText += " - " + sSSCount
 								screen.setTableText(szTable, 1, iRow, ufont2 + szText, "", eWidGen, 1, 2, 1<<2)
 
-								if CvProjectInfo.isSpaceship():
+								if INFO.getIntrinsic("PROJECT_", i, IntrinsicSlot.PYINT_IS_SPACESHIP):
 									# Add spaceship button
 									screen.setButtonGFC("SpaceShipButton" + str(iLoopVC), TRNSLTR.getText("TXT_KEY_GLOBELAYER_STRATEGY_VIEW", ()), "", 0, 0, 15, 10, eWidGen, 1234, -1, ButtonStyles.BUTTON_STYLE_STANDARD)
 									screen.attachControlToTableCell("SpaceShipButton" + str(iLoopVC), szTable, iCategoryRow, 1)
@@ -796,9 +813,9 @@ class CvVictoryScreen:
 								iSSColor = 0
 								if bOwnProject == iVictoryThreshold:
 									iSSColor = self.COLOR_GREEN
-								elif bOwnProject >= CvProjectInfo.getVictoryMinThreshold(iLoopVC):
+								elif bOwnProject >= INFO.getProjectVictoryMinThreshold(i, iLoopVC):
 									iSSColor = self.COLOR_YELLOW
-								elif CyTeamBest.isHasTech(iReqTech) and (CyTeam.isHasTech(iReqTech) or ENABLER.getTechAvailability(CyPlayer.getID(), iReqTech) == EnablerState.ENABLER_LISTED):
+								elif self.hasAllTechs(CyTeamBest, lReqTechs) and (self.hasAllTechs(CyTeam, lReqTechs) or self.canResearchAll(CyPlayer.getID(), lReqTechs)):
 									iSSColor = GC.getInfoTypeForString("COLOR_PLAYER_ORANGE")
 
 								if iSSColor > 0:
@@ -1082,7 +1099,7 @@ class CvVictoryScreen:
 			if -1 != iTeamSG:
 				iRow = screen.appendTableRow(szTable)
 				screen.setTableText(szTable, 0, iRow, uFont + GC.getTeam(iTeamSG).getName(), "", eWidGen, 1, 2, 1<<2)
-				screen.setTableText(szTable, 1, iRow, uFont + GC.getVoteSourceInfo(i).getSecretaryGeneralText(), "", eWidGen, 1, 2, 1<<0)
+				screen.setTableText(szTable, 1, iRow, uFont + INFO.getVoteSourceSecretaryGeneralText(i), "", eWidGen, 1, 2, 1<<0)
 
 			for iLoop in xrange(iNumVoteInfos):
 				if GAME.isChooseElection(iLoop):
@@ -1125,8 +1142,8 @@ class CvVictoryScreen:
 		for i, iVoteSourceReligion in enumerate(aList):
 			if GAME.canHaveSecretaryGeneral(i) and GAME.getSecretaryGeneral(i) != -1:
 				for j in xrange(iNumVoteInfos):
-					if GC.getVoteInfo(j).isVoteSourceType(i):
-						if GC.getVoteInfo(j).isSecretaryGeneral():
+					if INFO.hasVoteSource(j, i):
+						if INFO.isVoteSecretaryGeneral(j):
 							if iVoteSourceReligion != -1:
 								iRelVoteIdx = j
 							else:
@@ -1158,8 +1175,7 @@ class CvVictoryScreen:
 		iRow = screen.appendTableRow(szHeading)
 
 		# heading
-		kVoteSource = GC.getVoteSourceInfo(iVoteBody)
-		sTableHeader = "<font=4b>" + kVoteSource.getDescription().upper() + "</font>"
+		sTableHeader = "<font=4b>" + INFO.getVoteSourceSecretaryGeneralText(iVoteBody).upper() + "</font>"
 		if GAME.getVoteSourceReligion(iVoteBody) != -1:
 			sTableHeader += " (" + INFO.getDescription("RELIGION_", GAME.getVoteSourceReligion(iVoteBody)) + ")"
 
@@ -1203,7 +1219,7 @@ class CvVictoryScreen:
 		# set up the vote selection texts
 		iYellow = self.COLOR_YELLOW
 		iX = 994
-		szTxt = GC.getVoteSourceInfo(iVoteBody).getSecretaryGeneralText()
+		szTxt = INFO.getVoteSourceSecretaryGeneralText(iVoteBody)
 		if self.VoteType == 1:
 			szTxt = TRNSLTR.changeTextColor(szTxt, iYellow)
 
@@ -1293,10 +1309,10 @@ class CvVictoryScreen:
 			# player status
 			if bKnown:
 				if GAME.canHaveSecretaryGeneral(iVoteBody) and iAPUNTeam == iTeamX and GAME.getSecretaryGeneral(iVoteBody) == -1:
-					szLabel = GC.getVoteSourceInfo(iVoteBody).getSecretaryGeneralText()
+					szLabel = INFO.getVoteSourceSecretaryGeneralText(iVoteBody)
 
 				elif GAME.canHaveSecretaryGeneral(iVoteBody) and GAME.getSecretaryGeneral(iVoteBody) == iTeamX:
-					szLabel = GC.getVoteSourceInfo(iVoteBody).getSecretaryGeneralText()
+					szLabel = INFO.getVoteSourceSecretaryGeneralText(iVoteBody)
 
 				elif CyPlayerX.isFullMember(iVoteBody):
 					szLabel = TRNSLTR.getText("TXT_KEY_VOTESOURCE_FULL_MEMBER", ())
@@ -1360,7 +1376,7 @@ class CvVictoryScreen:
 		fMargin = 100.0 * (iVoteTotal[iWinner] - iVoteTotal[iLoser]) / iMaxVotes
 
 		if self.VoteType == 1:
-			sSecGen = GC.getVoteSourceInfo(iVoteBody).getSecretaryGeneralText()
+			sSecGen = INFO.getVoteSourceSecretaryGeneralText(iVoteBody)
 		else:
 			sSecGen = TRNSLTR.getText("TXT_KEY_BUG_VICTORY_DIPLOMATIC", ())
 
@@ -1631,10 +1647,9 @@ class CvVictoryScreen:
 
 		iNumProjectInfos = GC.getNumProjectInfos()
 		for i in xrange(iNumProjectInfos):
-			CvProjectInfo = GC.getProjectInfo(i)
-			if CvProjectInfo.isSpaceship():
-				for j in xrange(iNumProjectInfos):
-					if CyTeam.getProjectCount(j) < CvProjectInfo.getProjectsNeeded(j):
+			if INFO.getIntrinsic("PROJECT_", i, IntrinsicSlot.PYINT_IS_SPACESHIP):
+				for j in INFO.getProjectNeededProjects(i):
+					if CyTeam.getProjectCount(j) < 1:
 						break
 				else:
 					self.ApolloTeamCheckResult[iTeam] = True

@@ -6,6 +6,7 @@ from CvPythonExtensions import *
 # GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
+BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 GAME = GC.getGame()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -420,9 +421,9 @@ class CvFinanceAdvisor:
 
 		multipliers = []
 		for iType in range(GC.getNumBuildingInfos()):
-			info = GC.getBuildingInfo(iType)
-			iMultiplier = info.getCommerceModifier(eComGold)
-			iGlobalMultiplier = info.getGlobalCommerceModifier(eComGold)
+			#	The legacy "global" prefix was a SCOPE fragment: one kind read, asked at two scopes.
+			iMultiplier = INFO.getPercentCommerces("BUILDING_", iType, CascScope.CASC_SCOPE_CITY)[eComGold]
+			iGlobalMultiplier = INFO.getPercentCommerces("BUILDING_", iType, CascScope.CASC_SCOPE_EMPIRE)[eComGold]
 			if iMultiplier != 0 or iGlobalMultiplier != 0:
 				multipliers.append([iType, iMultiplier, iGlobalMultiplier, 0, 0.0])
 
@@ -452,11 +453,10 @@ class CvFinanceAdvisor:
 					if CyCity.isActiveBuilding(iType):
 						iBuildingGold = CyCity.getBuildingCommerceByBuilding(eComGold, iType)
 						if iBuildingGold:
-							info = GC.getBuildingInfo(iType)
-							if info.getFoundsCorporation() > -1:
+							if BUILDING.getHeadquartersCorporation(iType) > -1:
 								fCityHeadquarters += iBuildingGold
 								iHeadquartersCount += 1
-							elif info.getGlobalReligionCommerce() > -1:
+							elif INFO.isShrine(iType):
 								fCityShrines += iBuildingGold
 								iShrinesCount += 1
 							else:

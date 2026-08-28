@@ -512,6 +512,32 @@ public:
 	/// <summary>Is this specialist a SLAVE (`identity.slave`) -- a seat filled by a captured population rather
 	/// than a citizen the city assigns freely?</summary>
 	bool isSpecialistSlave(int iSpecialistId) const;
+
+	//	THE VICTORY LAUNCH PARAMS. Authored on the PROJECT and the BUILDING, asked per VICTORY -- so each takes
+	//	both ids. ⛔ They are read from the entity that AUTHORS them, never by sweeping the victory registry
+	//	asking each victory what it needs; the thresholds are the builder's own data.
+	/// <summary>How many of this project a victory requires; 0 when it plays no part in that victory.</summary>
+	int getProjectVictoryThreshold(int iProjectId, int iVictoryId) const;
+	/// <summary>The MINIMUM count that victory demands, which is not always the full threshold. ⚠ Where no
+	/// explicit minimum is authored this falls back to the plain threshold, so a project with a threshold and
+	/// no minimum never reads 0 -- that fallback is the space-victory min-project gate.</summary>
+	int getProjectVictoryMinThreshold(int iProjectId, int iVictoryId) const;
+	/// <summary>The VICTORY_ this project LAUNCHES when completed (`identity.launchesVictory`), -1 for none.</summary>
+	int getProjectLaunchesVictory(int iProjectId) const;
+	/// <summary>The projects this one requires first -- its OWN list, handed over whole. Sweeping every
+	/// project asking "are you needed by this one" is the own-data inversion, and it is what this replaces.</summary>
+	python::list getProjectNeededProjects(int iProjectId) const;
+	/// <summary>How many of this building a victory requires; 0 when it plays no part in that victory.</summary>
+	int getBuildingVictoryThreshold(int iBuildingId, int iVictoryId) const;
+
+	//	THE DIPLOMATIC BODY. ⚠ VOTESOURCE_ is not a registered type prefix, so these are addressed by BARE ID
+	//	rather than through the prefix plane -- the registry has no other route.
+	/// <summary>The localized title this diplomatic body gives its leader (its "secretary general").</summary>
+	std::wstring getVoteSourceSecretaryGeneralText(int iVoteSourceId) const;
+	/// <summary>Does this VOTE belong to that diplomatic body?</summary>
+	bool hasVoteSource(int iVoteId, int iVoteSourceId) const;
+	/// <summary>Is this vote the one that ELECTS the body's leader (`role: secretaryGeneral`)?</summary>
+	bool isVoteSecretaryGeneral(int iVoteId) const;
 	python::list getCivilizationLeaders(int iCivilizationId) const;
 	/// <summary>May the AI be dealt this civilization (`identity.aiPlayable`)? False when the id names no
 	/// civilization, so an unknown id is never offered as a playable choice.</summary>

@@ -78,6 +78,7 @@
 #include "Infos/CvProjectInfo.h"   // isSpaceship -- the build-progress readout (PYINT_IS_SPACESHIP)
 #include "Infos/CvVictoryInfo.h"   // isPermanent -- the scenario victory-list filter
 #include "Infos/CvTechInfo.h"      // isRepeat -- the scenario repeat-tech loop (PYINT_IS_REPEAT)
+#include "Infos/CvVoteInfo.h"
 #include "Infos/CvVoteSourceInfo.h"
 #include "Infos/CvInvisibleInfo.h"
 #include "Infos/CvEventInfo.h"
@@ -733,6 +734,75 @@ int CyInfo::getSpecialistGreatPeopleUnit(int iSpecialistId) const
 		static_cast<const CvSpecialistInfo*>(cyi_info("SPECIALIST_", iSpecialistId));
 	if (pSpecialist == NULL) return -1;
 	return pSpecialist->getGreatPeopleUnitType();
+}
+
+int CyInfo::getProjectVictoryThreshold(int iProjectId, int iVictoryId) const
+{
+	const CvProjectInfo* pProject =
+		static_cast<const CvProjectInfo*>(cyi_info("PROJECT_", iProjectId));
+	if (pProject == NULL || iVictoryId < 0) return 0;
+	return pProject->getVictoryThreshold(iVictoryId);
+}
+
+int CyInfo::getProjectVictoryMinThreshold(int iProjectId, int iVictoryId) const
+{
+	const CvProjectInfo* pProject =
+		static_cast<const CvProjectInfo*>(cyi_info("PROJECT_", iProjectId));
+	if (pProject == NULL || iVictoryId < 0) return 0;
+	return pProject->getVictoryMinThreshold(iVictoryId);
+}
+
+int CyInfo::getProjectLaunchesVictory(int iProjectId) const
+{
+	const CvProjectInfo* pProject =
+		static_cast<const CvProjectInfo*>(cyi_info("PROJECT_", iProjectId));
+	if (pProject == NULL) return -1;
+	return pProject->getLaunchesVictory();
+}
+
+python::list CyInfo::getProjectNeededProjects(int iProjectId) const
+{
+	python::list lIds;
+	const CvProjectInfo* pProject =
+		static_cast<const CvProjectInfo*>(cyi_info("PROJECT_", iProjectId));
+	if (pProject == NULL) return lIds;
+
+	for (int iOther = 0; iOther < GC.getNumProjectInfos(); ++iOther)
+	{
+		if (pProject->getProjectsNeeded(iOther) > 0) lIds.append(iOther);
+	}
+	return lIds;
+}
+
+int CyInfo::getBuildingVictoryThreshold(int iBuildingId, int iVictoryId) const
+{
+	const CvBuildingInfo* pBuilding =
+		static_cast<const CvBuildingInfo*>(cyi_info("BUILDING_", iBuildingId));
+	if (pBuilding == NULL || iVictoryId < 0) return 0;
+
+	const std::map<int, int>& kThresholds = pBuilding->getVictoryThresholds();
+	std::map<int, int>::const_iterator it = kThresholds.find(iVictoryId);
+	return it != kThresholds.end() ? it->second : 0;
+}
+
+std::wstring CyInfo::getVoteSourceSecretaryGeneralText(int iVoteSourceId) const
+{
+	if (iVoteSourceId < 0 || iVoteSourceId >= GC.getNumVoteSourceInfos()) return std::wstring();
+	return std::wstring(GC.getVoteSourceInfo((VoteSourceTypes)iVoteSourceId).getSecretaryGeneralText());
+}
+
+bool CyInfo::hasVoteSource(int iVoteId, int iVoteSourceId) const
+{
+	const CvVoteInfo* pVote = static_cast<const CvVoteInfo*>(cyi_info("VOTE_", iVoteId));
+	if (pVote == NULL || iVoteSourceId < 0 || iVoteSourceId >= GC.getNumVoteSourceInfos()) return false;
+	return pVote->hasVoteSource(iVoteSourceId);
+}
+
+bool CyInfo::isVoteSecretaryGeneral(int iVoteId) const
+{
+	const CvVoteInfo* pVote = static_cast<const CvVoteInfo*>(cyi_info("VOTE_", iVoteId));
+	if (pVote == NULL) return false;
+	return pVote->getRole() == VOTE_ROLE_SECRETARY_GENERAL;
 }
 
 bool CyInfo::isSpecialistSlave(int iSpecialistId) const
@@ -1703,6 +1773,14 @@ void CyInfo::pythonPublish()
 		.def("getHandicapBarbarianDefenders", &CyInfo::getHandicapBarbarianDefenders)
 		.def("getSpecialistGreatPeopleUnit", &CyInfo::getSpecialistGreatPeopleUnit)
 		.def("isSpecialistSlave", &CyInfo::isSpecialistSlave)
+		.def("getProjectVictoryThreshold", &CyInfo::getProjectVictoryThreshold)
+		.def("getProjectVictoryMinThreshold", &CyInfo::getProjectVictoryMinThreshold)
+		.def("getProjectLaunchesVictory", &CyInfo::getProjectLaunchesVictory)
+		.def("getProjectNeededProjects", &CyInfo::getProjectNeededProjects)
+		.def("getBuildingVictoryThreshold", &CyInfo::getBuildingVictoryThreshold)
+		.def("getVoteSourceSecretaryGeneralText", &CyInfo::getVoteSourceSecretaryGeneralText)
+		.def("hasVoteSource", &CyInfo::hasVoteSource)
+		.def("isVoteSecretaryGeneral", &CyInfo::isVoteSecretaryGeneral)
 		.def("getCivilizationCityNames", &CyInfo::getCivilizationCityNames)
 		.def("getShrineBuildings", &CyInfo::getShrineBuildings)
 		.def("getDerivativeCiv", &CyInfo::getDerivativeCiv)

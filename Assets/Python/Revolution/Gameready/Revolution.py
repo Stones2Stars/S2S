@@ -1109,14 +1109,10 @@ class Revolution:
 			bCanTradeOverOcean = False
 			iTerrainCoast = GC.getInfoTypeForString(RevDefs.sXMLCoast)
 			iTerrainOcean = GC.getInfoTypeForString(RevDefs.sXMLOcean)
-			for i in xrange(GC.getNumTechInfos()):
-				tech = GC.getTechInfo(i)
-				if tech.isTerrainTrade(iTerrainCoast):
-					if pTeam.isHasTech(i):
-						bCanTradeOverCoast = True
-				if tech.isTerrainTrade(iTerrainOcean):
-					if pTeam.isHasTech(i):
-						bCanTradeOverOcean = True
+			#	The TEAM already holds this verdict, so it is asked once instead of sweeping every tech to ask
+			#	which one grants it and whether the team has that one -- the same answer, two reads.
+			bCanTradeOverCoast = pTeam.isTerrainTrade(iTerrainCoast)
+			bCanTradeOverOcean = pTeam.isTerrainTrade(iTerrainOcean)
 			if bCanTradeOverOcean :
 				cityDistCommBonus += 50
 			iCityTradeRoutes = pCity.getTradeRoutes()
@@ -3740,8 +3736,7 @@ class Revolution:
 			similarStyleCivs = []
 			similarOwnerStyleCivs = []
 			for iCivX in xrange(GC.getNumCivilizationInfos()):
-				civX = GC.getCivilizationInfo(iCivX)
-				if not civX.isPlayable(): continue
+				if not INFO.isCivilizationPlayable(iCivX): continue
 
 				for i in xrange(GC.getMAX_PC_PLAYERS()):
 					# Switch in preparation for defining regions of the world for different rebel civ types
@@ -3751,9 +3746,9 @@ class Revolution:
 				else:
 					availableCivs.append(iCivX)
 					if cultPlayer:
-						if GC.getCivilizationInfo(cultPlayer.getCivilizationType()).getArtStyleType() == civX.getArtStyleType():
+						if INFO.getCivilizationArtStyle(cultPlayer.getCivilizationType()) == INFO.getCivilizationArtStyle(iCivX):
 							similarStyleCivs.append(iCivX)
-					if GC.getCivilizationInfo(owner.getCivilizationType()).getArtStyleType() == civX.getArtStyleType():
+					if INFO.getCivilizationArtStyle(owner.getCivilizationType()) == INFO.getCivilizationArtStyle(iCivX):
 						similarOwnerStyleCivs.append(iCivX)
 
 			if not availableCivs:
@@ -3797,7 +3792,7 @@ class Revolution:
 
 			leaderList = []
 			for leaderType in xrange(GC.getNumLeaderHeadInfos()):
-				if GC.getCivilizationInfo(newCivIdx).isLeaders(leaderType) or GAME.isOption(GameOptionTypes.GAMEOPTION_LEADER_UNRESTRICTED):
+				if leaderType in INFO.getCivilizationLeaders(newCivIdx) or GAME.isOption(GameOptionTypes.GAMEOPTION_LEADER_UNRESTRICTED):
 					for jdx in xrange(GC.getMAX_PC_PLAYERS()):
 						if GC.getPlayer(jdx).getLeaderType() == leaderType and not newPlayerIdx == jdx:
 							break
@@ -3861,13 +3856,13 @@ class Revolution:
 		owner = GC.getPlayer(cityList[0].getOwner())
 		ownerCivType = owner.getCivilizationType()
 		ownerLeaderType = owner.getLeaderType()
-		ownerCivInfo = GC.getCivilizationInfo(ownerCivType)
+		ownerCivLeaders = INFO.getCivilizationLeaders(ownerCivType)
 
 		# Use new leader type
 		count = 0
 		availLeader = []
 		for i in xrange(GC.getNumLeaderHeadInfos()):
-			if ownerCivInfo.isLeaders(i) or GAME.isOption(GameOptionTypes.GAMEOPTION_LEADER_UNRESTRICTED):
+			if i in ownerCivLeaders or GAME.isOption(GameOptionTypes.GAMEOPTION_LEADER_UNRESTRICTED):
 				for j in xrange(GC.getMAX_PC_PLAYERS()):
 					if GC.getPlayer(j).getLeaderType() == i:
 						break
@@ -5253,7 +5248,7 @@ class Revolution:
 
 						# Save most buildings - should some be destroyed?
 						for buildingType in buildingList:
-							if not pCity.hasBuilding(buildingType) and not GC.getBuildingInfo(buildingType).isGovernmentCenter():
+							if not pCity.hasBuilding(buildingType) and not INFO.providesAmenity("BUILDING_", buildingType, AmenityId.CLS_AMENITY_GOVERNMENT_CENTER):
 								if self.LOG_DEBUG:
 									print "[REV] Revolt: Building %s saved" % INFO.getDescription("BUILDING_", buildingType)
 								pCity.setBuilding(buildingType, True)
@@ -6442,7 +6437,7 @@ class Revolution:
 
 				# Should buildings stay or some destroyed?
 				for buildingType in buildingList:
-					if not pCity.hasBuilding(buildingType) and not GC.getBuildingInfo(buildingType).isGovernmentCenter():
+					if not pCity.hasBuilding(buildingType) and not INFO.providesAmenity("BUILDING_", buildingType, AmenityId.CLS_AMENITY_GOVERNMENT_CENTER):
 						if self.LOG_DEBUG:
 							print "[REV] Revolt: Building %s saved" % INFO.getDescription("BUILDING_", buildingType)
 						pCity.setBuilding(buildingType, True)
