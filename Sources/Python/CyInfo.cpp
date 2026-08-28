@@ -735,12 +735,38 @@ int CyInfo::getSpecialistGreatPeopleUnit(int iSpecialistId) const
 	return pSpecialist->getGreatPeopleUnitType();
 }
 
-bool CyInfo::isAIPlayable(int iCivilizationId) const
+bool CyInfo::isCivilizationAIPlayable(int iCivilizationId) const
 {
 	const CvCivilizationInfo* pCiv =
 		static_cast<const CvCivilizationInfo*>(cyi_info("CIVILIZATION_", iCivilizationId));
 	if (pCiv == NULL) return false;
 	return pCiv->isAIPlayable();
+}
+
+bool CyInfo::isCivilizationPlayable(int iCivilizationId) const
+{
+	const CvCivilizationInfo* pCiv =
+		static_cast<const CvCivilizationInfo*>(cyi_info("CIVILIZATION_", iCivilizationId));
+	if (pCiv == NULL) return false;
+	return pCiv->isPlayable();
+}
+
+int CyInfo::getCivilizationArtStyle(int iCivilizationId) const
+{
+	const CvCivilizationInfo* pCiv =
+		static_cast<const CvCivilizationInfo*>(cyi_info("CIVILIZATION_", iCivilizationId));
+	if (pCiv == NULL) return -1;
+	return pCiv->getArtStyleType();
+}
+
+int CyInfo::getHandicapBarbarianDefenders(int iHandicapId) const
+{
+	const CvHandicapInfo* pHandicap =
+		static_cast<const CvHandicapInfo*>(cyi_info("HANDICAP_", iHandicapId));
+	if (pHandicap == NULL) return 0;
+	//	Reduced to the whole count here, which is where the boundary reduces -- CvPlayer performs the same
+	//	division at its own point of use.
+	return pHandicap->getBarbarians(BARBARIANS_DEFENDERS, CASC_SCOPE_WORLD) / 100;
 }
 
 python::list CyInfo::getCivilizationCityNames(int iCivilizationId) const
@@ -1663,7 +1689,10 @@ void CyInfo::pythonPublish()
 		.def("getEventFood", &CyInfo::getEventFood)
 		.def("getFeatureDisappearanceProbability", &CyInfo::getFeatureDisappearanceProbability)
 		.def("getCivilizationLeaders", &CyInfo::getCivilizationLeaders)
-		.def("isAIPlayable", &CyInfo::isAIPlayable)
+		.def("isCivilizationAIPlayable", &CyInfo::isCivilizationAIPlayable)
+		.def("isCivilizationPlayable", &CyInfo::isCivilizationPlayable)
+		.def("getCivilizationArtStyle", &CyInfo::getCivilizationArtStyle)
+		.def("getHandicapBarbarianDefenders", &CyInfo::getHandicapBarbarianDefenders)
 		.def("getSpecialistGreatPeopleUnit", &CyInfo::getSpecialistGreatPeopleUnit)
 		.def("getCivilizationCityNames", &CyInfo::getCivilizationCityNames)
 		.def("getShrineBuildings", &CyInfo::getShrineBuildings)

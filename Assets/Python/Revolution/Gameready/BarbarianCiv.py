@@ -20,6 +20,7 @@ from CvUtil import sendMessage
 GC = CyGlobalContext()
 INFO = CyInfo()
 UNIT = CyUnitInfo()           # the per-info UNIT accessor
+BONUS = CyBonusInfo()         # the per-info BONUS accessor
 GAME = GC.getGame()
 MAP = GC.getMap()
 ENABLER = CyEnabler()
@@ -173,17 +174,16 @@ class BarbarianCiv:
 			civs = [] # Available civs
 			for iCivType in xrange(GC.getNumCivilizationInfos()):
 				if iCivType in aList: continue
-				CvCivInfo = GC.getCivilizationInfo(iCivType)
-				if not CvCivInfo.isPlayable(): continue
+				if not INFO.isCivilizationPlayable(iCivType): continue
 				civs.append(iCivType)
 
 			if civs:
 				# Civs with similar style to CyPlayerCulture, if they exist.
 				if CyPlayerCulture:
 					aList = []
-					iArtStyle = GC.getCivilizationInfo(CyPlayerCulture.getCivilizationType()).getArtStyleType()
+					iArtStyle = INFO.getCivilizationArtStyle(CyPlayerCulture.getCivilizationType())
 					for iCivType in civs:
-						if GC.getCivilizationInfo(iCivType).getArtStyleType() == iArtStyle:
+						if INFO.getCivilizationArtStyle(iCivType) == iArtStyle:
 							aList.append(iCivType)
 					if aList:
 						civs = aList
@@ -204,8 +204,11 @@ class BarbarianCiv:
 
 		bLeadAnyCiv = GAME.isOption(GameOptionTypes.GAMEOPTION_LEADER_UNRESTRICTED)
 		leaders = []
+		#	The civ's OWN roster, fetched once. Asking every leaderhead whether it belongs to this civ is the
+		#	own-data inversion the reverse-view rule names.
+		lCivLeaders = INFO.getCivilizationLeaders(iCivType)
 		for iLeader in xrange(GC.getNumLeaderHeadInfos()):
-			if iLeader not in aList and not GC.getLeaderHeadInfo(iLeader).isNPC() and (bLeadAnyCiv or GC.getCivilizationInfo(iCivType).isLeaders(iLeader)):
+			if iLeader not in aList and not INFO.isNPCLeader(iLeader) and (bLeadAnyCiv or iLeader in lCivLeaders):
 				leaders.append(iLeader)
 
 		if not leaders:
@@ -285,7 +288,7 @@ class BarbarianCiv:
 		CyTeam.setIsMinorCiv(True)
 
 		# Units
-		iNumBarbDefenders = GC.getHandicapInfo(GAME.getHandicapType()).getBarbarianInitialDefenders()
+		iNumBarbDefenders = INFO.getHandicapBarbarianDefenders(GAME.getHandicapType())
 
 		iDefender, iCounter, iAttack, iMobile, iAttackCity, iWorker, iSettler, iExplorer, iMerchant = self.getUnitsForPlayer(iPlayer, CyTeam)
 
@@ -412,39 +415,48 @@ class BarbarianCiv:
 		iAttackStr = 0
 		iAttackCityStr = 0
 		iMobileVal = 0
+		iCultureBonusClass = GC.getInfoTypeForString("BONUSCLASS_CULTURE")
 		for iUnit in xrange(GC.getNumUnitInfos()):
 			if isLimitedUnit(iUnit): continue
 
-			CvUnitInfo = GC.getUnitInfo(iUnit)
-			if (
-				UNIT.getDomain(iUnit) != DomainTypes.DOMAIN_LAND
-			or	CvUnitInfo.getNumPrereqAndBuildings() > 0
-			or	CvUnitInfo.getPrereqAndBonus() != -1
-			and	GC.getBonusInfo(CvUnitInfo.getPrereqAndBonus()).getBonusClassType() == GC.getInfoTypeForString("BONUSCLASS_CULTURE")
-			):
+			#	Prerequisites are the REQUIRES plane now. The mandatory clause is the right one to ask: a
+			#	mention read also reports what the unit is BARRED by, which would exclude it for the opposite
+			#	reason to the one intended.
+			if UNIT.getDomain(iUnit) != DomainTypes.DOMAIN_LAND:
+				continue
+			if INFO.getRequiresIdsInClause("UNIT_", iUnit, EdgeBucket.EDGEB_BUILDINGS, RequiresClause.REQCLAUSE_ALL):
+				continue
+			bCultureGated = False
+			for iBonusX in INFO.getRequiresIdsInClause("UNIT_", iUnit, EdgeBucket.EDGEB_BONUSES, RequiresClause.REQCLAUSE_ALL):
+				if BONUS.getBonusClassType(iBonusX) == iCultureBonusClass:
+					bCultureGated = True
+					break
+			if bCultureGated:
 				continue
 
 			if ENABLER.getUnitAvailabilityAnywhere(CyPlayer.getID(), iUnit) != EnablerState.ENABLER_LISTED: continue
 
-			iStr = CvUnitInfo.getCombat()
-			if CvUnitInfo.getUnitAIType(UnitAITypes.UNITAI_CITY_DEFENSE):
+			iRole = UNIT.getDefaultUnitAI(iUnit)
+			iStr = INFO.getScalar("UNIT_", iUnit, InfoScalar.SCALAR_STRENGTH,
+			                      CascScope.CASC_SCOPE_UNIT, CascUnit.CASC_UNIT_FLAT) / 100
+			if iRole == UnitAITypes.UNITAI_CITY_DEFENSE:
 				if iStr > iDefenderStr:
 					aList[0] = iUnit
 					iDefenderStr = iStr
-			if not CvUnitInfo.isOnlyDefensive():
-				if CvUnitInfo.getUnitAIType(UnitAITypes.UNITAI_COUNTER):
+			if not UNIT.isOnlyDefensive(iUnit):
+				if iRole == UnitAITypes.UNITAI_COUNTER:
 					if iStr >= iCounterStr:
 						aList[1] = iUnit
 						iCounterStr = iStr
-				if CvUnitInfo.getUnitAIType(UnitAITypes.UNITAI_ATTACK):
+				if iRole == UnitAITypes.UNITAI_ATTACK:
 					if iStr > iAttackStr:
 						aList[2] = iUnit
 						iAttackStr = iStr
-				if CvUnitInfo.getUnitAIType(UnitAITypes.UNITAI_ATTACK_CITY):
+				if iRole == UnitAITypes.UNITAI_ATTACK_CITY:
 					if iStr > iAttackCityStr:
 						aList[3] = iUnit
 						iAttackCityStr = iStr
-				iVal = iStr * CvUnitInfo.getMoves()
+				iVal = iStr * INFO.getMovementKinds("UNIT_", iUnit, CascScope.CASC_SCOPE_UNIT)[MovementKind.MOVEMENT_MOVES] / 100
 				if iVal > iMobileVal:
 					aList[4] = iUnit
 					iMobileVal = iVal
@@ -473,12 +485,9 @@ class BarbarianCiv:
 		iStd = GC.getInfoTypeForString("UNIT_CAPTIVE_MILITARY")
 		for iUnit in aMerchantList:
 			if iUnit < 0: continue
-			CvUnitInfo = GC.getUnitInfo(iUnit)
-			# Tech Prereq
-			iTech = CvUnitInfo.getPrereqAndTech()
-			if iTech > -1 and not CyTeam.isHasTech(iTech):
-				continue
-			for iTech in CvUnitInfo.getPrereqAndTechs():
+			#	One list now: the legacy single prereq and the additional-prereq list were two spellings of the
+			#	same question, and the requires plane answers it once.
+			for iTech in INFO.getRequiresIdsInClause("UNIT_", iUnit, EdgeBucket.EDGEB_TECHS, RequiresClause.REQCLAUSE_ALL):
 				if not CyTeam.isHasTech(iTech):
 					break
 			else:
@@ -672,7 +681,7 @@ class BarbarianCiv:
 			iHighestEra = GAME.getHighestEra()
 
 			iPlayerBarb = self.BARBARIAN_PLAYER
-			iNumBarbDefenders = GC.getHandicapInfo(GAME.getHandicapType()).getBarbarianInitialDefenders()
+			iNumBarbDefenders = INFO.getHandicapBarbarianDefenders(GAME.getHandicapType())
 			fMilitaryMod = self.RevOpt.getMilitaryStrength()
 
 			# Pickup nearby barb cities, search a 4x area if in new world.

@@ -660,3 +660,20 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    ⚠ **What this ruling does NOT cover:** Revolution's ~16 UNIT writes (`setUnitAIType`, `setXY`, `setMoves`,
    `setPromotionReady`). Setting a unit's AI type is an ENGINE mutation, not revolution state — SdToolKit cannot
    hold it, so those still need real write verbs on `CyUnit` and are unaffected by the wholesale move.
+
+9. **⛔ PYTHON READS A UNIT'S *DEFAULT* UNITAI AND NOTHING ELSE — the multi-role membership test does not come
+   back on this boundary.** `CyUnitInfo::getDefaultUnitAI(iUnit)` is the whole surface: it answers the ONE role
+   a unit is created with. The legacy `getUnitAIType(UNITAI_X)` membership predicate — *may this unit also act
+   as X?* — is gone, and a consumer that wants it is asking for the plane this ruling closes.
+   ⚑ **The narrowing is the POINT, not a gap.** UnitAI has been one of the largest single bug sources in this
+   codebase, and the mechanism is permissiveness: a role a unit was never designed for is reachable simply
+   because nothing hard-DISALLOWED it. The worked case is a TANK acquiring `UNITAI_PROPERTY_CONTROL` — nothing
+   about the unit invited it; the membership plane merely failed to refuse. A single authored default cannot
+   fail that way, because there is no set to leak into.
+   ⇒ So a Python consumer testing *"is this unit a counter/attack/defence unit?"* asks
+   `getDefaultUnitAI(iUnit) == UNITAI_X`. ⚠ That is deliberately NARROWER than the legacy predicate and will
+   classify fewer units; where it changes a list, the list was previously admitting units on a role they only
+   incidentally carried.
+   ⛔ It binds the PYTHON boundary only — the engine keeps its own UnitAI machinery, and this neither simplifies
+   nor re-opens that. ⚠ Nor does it reach the WRITE side: ruling 8's `setUnitAIType` carve-out is a mutation on
+   a different axis and stands as written.

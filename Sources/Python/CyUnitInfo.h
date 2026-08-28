@@ -53,6 +53,9 @@ public:
 	// endpoints is not the target here, properly organized is").
 	bool isFound(int iUnit) const;
 	bool isIgnoreBuildingDefense(int iUnit) const;
+	/// <summary>Can this unit only ever fight DEFENSIVELY -- i.e. it may never initiate an attack? A chooser
+	/// ranking offensive roles excludes it, because it cannot perform them at all.</summary>
+	bool isOnlyDefensive(int iUnit) const;
 
 	// The unit's own intrinsic self-description.
 	int getConscription(int iUnit) const;   // identity.conscription -- 0 when it cannot be drafted

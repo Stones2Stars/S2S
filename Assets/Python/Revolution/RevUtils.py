@@ -28,6 +28,16 @@ RevDCMOpt = BugCore.game.RevDCM
 gameSpeedMod = None
 
 revInstigatorThreshold = 1000
+
+
+def getUnitStrength(iUnit):
+	"""A unit type's authored base strength, as a whole number.
+
+	One place rather than at each ranking site: the value is x100 native and only the comparisons here need it
+	reduced, so a stray raw read beside a reduced one would rank two units on different scales.
+	"""
+	return INFO.getScalar("UNIT_", iUnit, InfoScalar.SCALAR_STRENGTH,
+	                      CascScope.CASC_SCOPE_UNIT, CascUnit.CASC_UNIT_FLAT) / 100
 deniedTurns = 5
 
 ########################## Initialization ###############################
@@ -327,28 +337,35 @@ def getHandoverUnitTypes(CyCity):
 	iAttack = UnitTypes.NO_UNIT
 
 	for iUnit in xrange(GC.getNumUnitInfos()):
-		CvUnitInfo = GC.getUnitInfo(iUnit)
-
-		if UNIT.getDomain(iUnit) != DomainTypes.DOMAIN_LAND or CvUnitInfo.getPrereqAndTech() == TechTypes.NO_TECH:
+		#	A unit's prerequisites are the REQUIRES plane now, not a field on the unit -- "needs a tech at all"
+		#	is asked of the mandatory clause, because a mention read would also count a tech the unit is BARRED
+		#	by and answer yes for the opposite reason.
+		if UNIT.getDomain(iUnit) != DomainTypes.DOMAIN_LAND:
 			continue
-		if CvUnitInfo.getMaxGlobalInstances() > 0 or CvUnitInfo.getMaxPlayerInstances() > 0:
+		if not INFO.getRequiresIdsInClause("UNIT_", iUnit, EdgeBucket.EDGEB_TECHS, RequiresClause.REQCLAUSE_ALL):
 			continue
+		#	A cap is AUTHORED, so ">= 0" is the capped test; -1 means uncapped.
+		if INFO.getAllowedCap("UNIT_", iUnit, AllowedCap.ALLOWEDCAP_WORLD) >= 0: continue
+		if INFO.getAllowedCap("UNIT_", iUnit, AllowedCap.ALLOWEDCAP_EMPIRE) >= 0: continue
 
 		if not ENABLER.getUnitAvailability(CyCity.getOwner(), CyCity.getID(), iUnit) == EnablerState.ENABLER_LISTED: continue
 
+		iRole = UNIT.getDefaultUnitAI(iUnit)
+		iCombat = getUnitStrength(iUnit)
+
 		# Defender (Archer,Longbow)
-		if CvUnitInfo.getDefaultUnitAIType() == UnitAITypes.UNITAI_CITY_DEFENSE:
-			if iBestDefender == UnitTypes.NO_UNIT or CvUnitInfo.getCombat() >= GC.getUnitInfo(iBestDefender).getCombat():
+		if iRole == UnitAITypes.UNITAI_CITY_DEFENSE:
+			if iBestDefender == UnitTypes.NO_UNIT or iCombat >= getUnitStrength(iBestDefender):
 				iBestDefender = iUnit
 
 		# Counter (Axemen,Phalanx)
-		if CvUnitInfo.getUnitAIType(UnitAITypes.UNITAI_COUNTER):
-			if iCounter == UnitTypes.NO_UNIT or CvUnitInfo.getCombat() >= GC.getUnitInfo(iCounter).getCombat():
+		if iRole == UnitAITypes.UNITAI_COUNTER:
+			if iCounter == UnitTypes.NO_UNIT or iCombat >= getUnitStrength(iCounter):
 				iCounter = iUnit
 
 		# Assault units
-		if CvUnitInfo.getUnitAIType(UnitAITypes.UNITAI_ATTACK):
-			if iAttack == UnitTypes.NO_UNIT or CvUnitInfo.getCombat() > GC.getUnitInfo(iAttack).getCombat():
+		if iRole == UnitAITypes.UNITAI_ATTACK:
+			if iAttack == UnitTypes.NO_UNIT or iCombat > getUnitStrength(iAttack):
 				iAttack = iUnit
 
 	if iBestDefender == UnitTypes.NO_UNIT:
@@ -364,19 +381,20 @@ def getHandoverUnitTypes(CyCity):
 def getUprisingUnitTypes(CyCity):
 	# Returns list of units that can be given to violent rebel uprisings, odds of giving are set by the relative number of times a unit type appears in list
 	aList = []
+	iCombatant = GC.getInfoTypeForString("UNITCOMBAT_COMBATANT")
 	for iUnit in xrange(GC.getNumUnitInfos()):
-		CvUnitInfo = GC.getUnitInfo(iUnit)
-
 		if UNIT.getDomain(iUnit) != DomainTypes.DOMAIN_LAND:
 			continue
 
-		if CvUnitInfo.getMaxGlobalInstances() > 0 or CvUnitInfo.getMaxPlayerInstances() > 0:
-			continue
+		if INFO.getAllowedCap("UNIT_", iUnit, AllowedCap.ALLOWEDCAP_WORLD) >= 0: continue
+		if INFO.getAllowedCap("UNIT_", iUnit, AllowedCap.ALLOWEDCAP_EMPIRE) >= 0: continue
 
-		iCombat = CvUnitInfo.getCombat()
+		iCombat = getUnitStrength(iUnit)
 		if iCombat < 1: continue
 
-		if not CvUnitInfo.hasUnitCombat(UnitCombatTypes(GC.getInfoTypeForString("UNITCOMBAT_COMBATANT"))):
+		#	The unit's own combat classes, primary first -- reading only the subs is the historic
+		#	sniper-immunity miss, which is why the accessor hands both over together.
+		if iCombatant not in UNIT.getCombatClasses(iUnit):
 			continue
 
 		if ENABLER.getUnitAvailability(CyCity.getOwner(), CyCity.getID(), iUnit) == EnablerState.ENABLER_LISTED:
@@ -506,7 +524,7 @@ def giveTechs(toPlayer, fromPlayer):
 
 		if fromPlayerTeam.isHasTech(iTech):
 			knownTechs += (iTech,)
-			iCost = GC.getTechInfo(iTech).getResearchCost()
+			iCost = fromPlayerTeam.getResearchCost(iTech)
 			if iCost > iMinCostly:
 				for i in xrange(iNumCostly):
 					iTechX, iCostX = costlyTechs[i]

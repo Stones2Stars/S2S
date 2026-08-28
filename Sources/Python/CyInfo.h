@@ -512,7 +512,17 @@ public:
 	python::list getCivilizationLeaders(int iCivilizationId) const;
 	/// <summary>May the AI be dealt this civilization (`identity.aiPlayable`)? False when the id names no
 	/// civilization, so an unknown id is never offered as a playable choice.</summary>
-	bool isAIPlayable(int iCivilizationId) const;
+	bool isCivilizationAIPlayable(int iCivilizationId) const;
+	/// <summary>May a HUMAN pick this civilization (`identity.playable`)? The twin of the AI test above; the
+	/// two are separate flags and a civilization may authorise either without the other.</summary>
+	bool isCivilizationPlayable(int iCivilizationId) const;
+	/// <summary>The civilization's ART STYLE id (`world.art.style`) -- what a chooser matches on to pick a
+	/// visually similar civilization. -1 when the id names no civilization.
+	/// ⚠ NOT the unit art style, which is its own authored field.</summary>
+	int getCivilizationArtStyle(int iCivilizationId) const;
+	/// <summary>How many defenders a barbarian city is founded with at this handicap
+	/// (`barbarians.defenders`, world scope), as a whole count.</summary>
+	int getHandicapBarbarianDefenders(int iHandicapId) const;
 	python::list getCivilizationCityNames(int iCivilizationId) const;
 	// The buildings that are this RELIGION's shrines -- the load-populated reverse view
 	// (`CvReligionInfo::getShrineBuildings`, filled by the readJson reverse pass from each building's §9 `shrine`

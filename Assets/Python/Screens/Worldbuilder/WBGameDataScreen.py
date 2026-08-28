@@ -280,7 +280,7 @@ class WBGameDataScreen:
 
 		aList = []
 		for item in xrange(self.GC.getNumCivilizationInfos()):
-			if INFO.isAIPlayable(item):
+			if INFO.isCivilizationAIPlayable(item):
 				aList.append([INFO.getShortDescription("CIVILIZATION_", item, 0), item])
 		aList.sort()
 		iNumRows = (len(aList) + nColumns - 1) / nColumns

@@ -80,6 +80,12 @@ bool CyUnitInfo::isFound(int iUnit) const
 	return pUnit ? pUnit->hasSkill(CLS_SKILL_FOUND) : false;
 }
 
+bool CyUnitInfo::isOnlyDefensive(int iUnit) const
+{
+	const CvUnitInfo* pUnit = cyunit_unit(iUnit);
+	return pUnit ? pUnit->hasSkill(CLS_SKILL_ONLY_DEFENSIVE) : false;
+}
+
 bool CyUnitInfo::isIgnoreBuildingDefense(int iUnit) const
 {
 	const CvUnitInfo* pUnit = cyunit_unit(iUnit);
@@ -190,6 +196,7 @@ void CyUnitInfo::pythonPublish()
 		.def("getGrantedPromotions",    &CyUnitInfo::getGrantedPromotions)
 		.def("isFound",                 &CyUnitInfo::isFound)
 		.def("isIgnoreBuildingDefense", &CyUnitInfo::isIgnoreBuildingDefense)
+		.def("isOnlyDefensive",         &CyUnitInfo::isOnlyDefensive)
 		.def("getConscription",         &CyUnitInfo::getConscription)
 		.def("getCaptureUnit",          &CyUnitInfo::getCaptureUnit)
 		.def("getDomain",               &CyUnitInfo::getDomain)
