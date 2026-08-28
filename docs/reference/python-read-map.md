@@ -16,7 +16,7 @@ the `CvPlayer`/`CvTeam` side is where the work is.** The replacement surface sta
 > the composition root (`DLLPublishToPython`, `Infrastructure/CvDLLPython.cpp`) publishes the enum
 > int-conversions, the vector + `IDValueMap` container interfaces, the debug/Win32 helpers, and the four
 > planes of the read library — **`CyEnums`** (the vocabulary, published FIRST because a group read is indexed
-> by it), **`CyEnabler`** ("can I?"), **`CyState`** ("what do I HAVE?") and **`CyInfo`** ("what do I CARRY?",
+> by it), **`CyEnabler`** ("can I?"), each game object's OWN accessor ("what do I HAVE?") and **`CyInfo`** ("what do I CARRY?",
 > the ONLY home for infos). Beside them stand the kept boundaries that were never the cut's target — TXT, ART,
 > the command/net layer, and the CONFIG half of the global context.
 > ⚠ **`GC.get<X>Info` is published NOWHERE**, so a surviving one is not a slow read — it is an `AttributeError`
@@ -84,7 +84,7 @@ is SERVED in the running game and unserved to the census. Subtract that class be
 worklist. ⚠ It also counts the Python builtins `find` and `has_key` as engine-shaped, and drops every name Python
 defines itself — `getText` above all, which is why TEXT is not sized here at all (§1.1).
 
-⚠ **It counts only `CyEnabler` as "the read half", which UNDER-COUNTS the library** — `CyInfo`, `CyState`, `CyAct`
+⚠ **It counts only `CyEnabler` as "the read half", which UNDER-COUNTS the library** — `CyInfo` and the per-type accessors
 and the per-info accessors (`CyWorldInfo`) publish reads too. It does not distort the UNSERVED total, which keys on
 what is published ANYWHERE under `Sources/`.
 
@@ -108,7 +108,27 @@ were all mis-reported on one such grep. **Check BOTH tables, or check behaviour.
 
 ⛔ **`Screens/Worldbuilder/` is a block awaiting its own pass, NOT a family whose breakage is accepted** —
 WorldBuilder may temporarily LAG a cut; a visible break may never stand. (The misreading this warns about has
-already cost one pass.) What holds it is a structure call: which mutators the WB write surface carries.
+already cost one pass.) ⛔ **NOTHING HOLDS IT — it is work, not a decision.** The shape is ruled in §7 (the
+`Cy*` wrapper IS the surface; writes route through the engine's own mutator), and the membership is measured
+rather than chosen: of the methods Python still calls unpublished, **97 are touched by WorldBuilder and 75 are
+WB-ONLY** — `CyCity` 51 (the scenario state: wall-override, plundered, never-lost, bombarded, airlift-targeted,
+drafted, the progress and anger counters, the order queue), `CyUnit` 22 (§7's own examples: cargo, transport,
+made-attack, made-interception, promotion-ready, base combat strength, level, facing), `CySelectionGroup` 2.
+⚑ **The other 22 are NOT WB-surface members** — `baseCombatStr`, `getDamage`, `getUnitType`, `getLevel`,
+`setXY`, `isHasPromotion` and kin are called from gameplay and other screens too, so they are ordinary reads on
+the object and serving them fixes the advisors in the same stroke. Recount with
+`python Tools/verify-python-bindings.py --list`; never carry these numbers as fact.
+
+⛔ **DO NOT SIZE THAT PASS FROM THE BURNDOWN CENSUS — IT UNDER-REPORTS THIS FAMILY BY DESIGN.**
+`verify-python-bindings.py` takes the UNION of every `.def` and deliberately does not attribute a name to a
+class ([AGENTS.md](../../AGENTS.md)), so a name published on ANOTHER class reads as
+registered while being DEAD on the receiver actually used. `CyUnit` publishes only its 8-method identity set
+(`getOwner`/`getID`/`getX`/`getY`/`canFight`/`getHP`/`getMaxHP`/`getName`), so `plot()`, `getButton()`,
+`getCivilizationType()`, `getTeam()`, `getScriptData()`, `setScriptData()`, `setName()`, `kill()`, `convert()`
+and `getUnit()` are all dead on a unit handle and NONE of them appear in the census.
+⚑ **Measured on `Screens/Worldbuilder/`: 73 dead unit-handle sites, of which the census names 45 and MISSES 28.**
+⇒ Size a WorldBuilder screen by diffing its calls against what the RECEIVER's class actually publishes; the
+census is a floor, never the worklist.
 
 ## 0b. Two things a dead-code sweep will eat if this is not written down
 
@@ -140,10 +160,22 @@ rediscovered:
 rather than debug-only code a cut may ignore.
 
 ⚑ **`CvWBDesc.py`'s city half is the worked precedent for the WorldBuilder family** — its write boundary is
-`CyAct` addressed by (owner, id), the reads are `CyState`/`CyInfo`, and the handle is used only to CREATE the city
-and then to name it. ⛔ The SCREENS are not the same job merely because they sit in the same folder: they still
-mutate through the handle and are blocked on which mutators the WB write surface should carry, which is a
-structure call rather than a sweep.
+the city's own accessor, the reads are `CyCity`/`CyInfo`, and the handle is used only to CREATE the city
+and then to name it. ⚑ The SCREENS are the same job, and the only difference is VOLUME: they mutate through the
+handle too, and the verbs they need are the enumerated WB-only set above rather than an open question.
+
+⚑ **`WBPromotionScreen.py` is the worked precedent for a SCREEN** — it converted end to end with NO new
+binding, because every field it touches was already served on the unit itself: the four copy-filter dropdowns
+are one slot each of `pUnit.getRead()` (`UNIT_READ_TYPE`/`_COMBAT_CLASS`/`_DOMAIN`/`_GROUP_ID`), the promotion
+list is `pUnit.isPromotionValid(i)` (the GRANT gate — an editor hands promotions out, so gating on
+`canAcquirePromotion` would refuse every event-granted one), the held test is `pUnit.hasPromotion(i)`, and the
+write is `pUnit.setPromotion(i, bAdd)`.
+⇒ **So triage a WB screen by whether its fields are MODELLED, not by the folder.** The editor-only plane §7
+names — cargo/transport, made-attack, facing direction, base-combat override, unit-AI type — is not blocked on
+anything; it is added to the object's own wrapper as ordinary editor verbs, routed through the engine mutator.
+⚠ **And check the CALLBACKS it fires, which no binding census sees:** the migrated event handlers take an
+IDENTITY PAIR, so `onUnitPromoted([[iOwner, iUnitID], iPromotion])` is correct and the inherited
+`onUnitPromoted([pUnit, item])` fails on unpacking — a silently dead button that no `.def` scan reports.
 
 ## 1. The read-KIND split
 
@@ -571,7 +603,7 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
 
 6. **~~What is the MUTATION boundary's shape, and is it stage 4's job?~~ — CLOSED: THE WRITE SURFACE EXISTS
 .** ~144 `set*`/`change*`/`do*`/`create*` defs are published across
-   `CvPythonPlayerLoader` / `CvPythonPlotLoader` / `CyGame` / `CyTeam` / `CyMap` / `CyArea` / `CyAct` — the cut
+   `CvPythonPlayerLoader` / `CvPythonPlotLoader` / `CyGame` / `CyTeam` / `CyMap` / `CyArea` / `CyCity` / `CyUnit` — the cut
    was DIRECTIONAL and took the READ bindings only. ⛔ So this is not an open question and must not be cited as
    one: a mutating consumer that fails is WIRED, and a write it needs that is not published yet is ADDED to that
    surface ([patterns.md](../architecture/patterns.md)). The paragraph below is the
@@ -584,23 +616,33 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    *"A dedicated worldbuilder surface is definitely the way to go, also when worldbuilder adds or removes, it has
    to emit events the same way as if things were normally constructed, or removed"* — *"so it should use the same
    paths."*
-   ⚑ **Why a separate surface at all:** a scenario editor's job is to poke ARBITRARY engine fields — cargo,
-   facing direction, base combat strength, made-attack flags. That is the opposite of what the read library
-   models, which is a bounded set of QUESTIONS ("what do I carry", "what do I have", "can I"). There is no
-   `UnitFlagKind` for *is this unit cargo* because nothing in the game model asks it; only the editor does. So
-   those reads are **not missing from the library — they are out of scope for it**, and widening `CyState`/`CyAct`
-   to carry them would shoehorn unmodelled fields into the modelled surface, which is
-   [the Cy* surface is not a fixed contract](../architecture/patterns/06-the-python-read-boundary-one.md#-the-python-read-boundary--one-complete-data-fetching-library)'s failure mode aimed at the NEW surface
-   instead of the old one. Measured: **34 cargo/transport sites and 31 unit-write sites, every one of them in
+   ⛔ **"ITS OWN SURFACE" MEANS THE `Cy*` WRAPPER LAYER, NEVER A SEPARATE WORLDBUILDER CLASS.** The wrapper IS
+   the surface: it is the CONTROLLER of the engine-model / `Cy*`-controller / Python-view split, and therefore
+   the one place human-readable form becomes engine data
+   ([the Cy* layer is the controller](../architecture/patterns/06-the-python-read-boundary-one.md#-the-python-read-boundary--one-complete-data-fetching-library)).
+   So an editor write is homed on the object it addresses — `CyUnit`, `CyCity` — exactly like every other write,
+   and there is no `CyWB`. ⚠ A separate editor class would have to be keyed by `(owner, id)` to avoid wrapping
+   the same object twice, which rebuilds the flat address-keyed shape that page calls the mishomed failure.
+   ⚑ **What IS out of scope is the modelled READ vocabulary, not the wrapper.** A scenario editor pokes
+   ARBITRARY engine fields — cargo, facing direction, base combat strength, made-attack flags — where the read
+   library models a bounded set of QUESTIONS ("what do I carry", "what do I have", "can I"). There is no
+   `UnitFlagKind` for *is this unit cargo* because nothing in the game model asks it; only the editor does — so
+   it stays a field asked of the unit, and never becomes a new read KIND or a group-read slot.
+   Measured: **34 cargo/transport sites and 31 unit-write sites, every one of them in
    `Screens/Worldbuilder/` or `pyWB/`** — zero in gameplay.
+   ⚑ **A `Times100` in a verb name is the boundary declining to do its job.** The wrapper is where the ×100
+   fixed point reduces ([the ×100 fixed-point model](../specs/curators/fixed-point-and-scales.md#1-the-model--integer-100-for-amounts-human-only-at-the-in-and-out-boundaries)),
+   so a scale belongs INSIDE the verb, not in its name. ⚖ The one legitimate exception is a scenario ROUND-TRIP,
+   where the editor writes back the exact value it was handed and rescaling either side would corrupt it — and
+   that is stated at the verb, never assumed.
    ⛔ **The binding half of the ruling — the editor writes through the engine's OWN mutator, never a field poke.**
    An editor that sets a member directly leaves the cascade unaware, so the derived caches diverge SILENTLY —
    precisely what the event spine exists to prevent. ⚠ And the fix is NOT "poke the field, then also emit": that
    is two implementations of one transition and they drift
    ([the DRY single-implementation law](../architecture/patterns/03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)). Routing through the
    mutator makes the emit STRUCTURAL — it cannot be forgotten by a future verb, because no verb owns it.
-   ⚑ The pattern already exists and is the model to copy: every `CyAct` verb resolves a handle, validates, then
-   calls the real engine setter (`CyAct::setCityBuilding` → `CvCity::changeHasBuilding` → `setHasBuilding`, which
+   ⚑ The pattern already exists and is the model to copy: every write verb resolves its handle, validates, then
+   calls the real engine setter (`CyCity::setBuilding` → `CvCity::changeHasBuilding` → `setHasBuilding`, which
    runs the ledger, `setupBuilding` and `processBuilding(±1)`). Its neighbour's comment states the rule outright:
    *"The DOMAIN fact still fires -- that is the setter's job and is exactly what must not be skipped."*
    ⇒ Consequence for a would-be editor verb with no engine mutator behind it: the missing piece is the ENGINE
@@ -610,11 +652,11 @@ but have **no pedia page**, so pedia-driven work would not serve them at all. Th
    The revolution counters and timers — `getLocalRevIndex`, `getNumRevolts`, `getRevolutionCounter`,
    `getReinforcementCounter`, `getRevRequestAngerTimer`, `getRevSuccessTimer`, `getRevIndexPercentAnger`,
    `getRevIndexDistanceMod` (~120 reads and ~110 writes) — move into `RevData`'s SdToolKit store, NOT into
-   `CityCountRead` + new `CyAct` verbs. Revolution is Python-authoritative, so its own state belongs on the
+   `CityCountRead` + new engine write verbs. Revolution is Python-authoritative, so its own state belongs on the
    Python side of the boundary.
    ⛔ **Wholesale means the engine's two surviving slots come OUT too** (`CITY_COUNT_REVOLUTION_INDEX`,
    `CITY_COUNT_REVOLUTION_AVERAGE`). Leaving them is the half-migration the drift detectors name: engine-persisted
    revolution state beside a Python store for the rest is two homes for one fact, and the save carries both.
    ⚠ **What this ruling does NOT cover:** Revolution's ~16 UNIT writes (`setUnitAIType`, `setXY`, `setMoves`,
    `setPromotionReady`). Setting a unit's AI type is an ENGINE mutation, not revolution state — SdToolKit cannot
-   hold it, so those still need real `CyAct` verbs and are unaffected by the wholesale move.
+   hold it, so those still need real write verbs on `CyUnit` and are unaffected by the wholesale move.

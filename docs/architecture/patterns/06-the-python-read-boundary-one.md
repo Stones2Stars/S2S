@@ -12,7 +12,7 @@ pass, taken when the demand map is known — never as a rider on a repair.
 
 ⛔ **It is NOT licence to skip a fix.** The mutation surface is published and live
 (`set*`/`change*`/`do*`/`create*`/`push*` across `CvPythonPlayerLoader`/`CvPythonPlotLoader`/`CyGame`/`CyTeam`/
-`CyMap`/`CyArea`/`CyAct`) — the cut was directional and took READS only. "Not organized yet" never justifies
+`CyMap`/`CyArea`, and each game object's own accessor) — the cut was directional and took READS only. "Not organized yet" never justifies
 leaving a broken handler broken. ⛔ Equally it is not licence to call the current shape correct or to ADD to the
 disorder: the point of groundwork is that the later pass stays MECHANICAL, and every unnamed read added meanwhile
 is what stops it being mechanical.
@@ -46,9 +46,9 @@ protect a binding, and do not build a resolver to prove one safe first.
 
   ⛔ **"ONE SURFACE" MEANS ONE LIBRARY, NOT ONE CLASS.** The word bans a SECOND live answer for one read; it says
   nothing about how many accessors the library is composed of. A flat class accumulating every type's reads behind
-  an `(owner, id)` address satisfies the word and violates the design — which is how the mishomed `CyState` got
-  built. ⚠ Read it as ONE LIBRARY, COHERENTLY HOMED: a game object's data lives on that object's accessor, and the
-  library is one because there is no second place to ask.
+  an `(owner, id)` address satisfies the word and violates the design. That mishomed shape was built once and has
+  been dissolved back onto the per-type accessors. ⚠ Read it as ONE LIBRARY, COHERENTLY HOMED: a game object's data
+  lives on that object's accessor, and the library is one because there is no second place to ask.
 
   ⛔ **THE FLAT STATE CLASS IS BEING DISSOLVED, NOT TRIMMED.** An address-keyed flat class makes every call site say
   WHICH object it means and never WHAT KIND of thing it asks, so it reproduces both failures this boundary exists to
@@ -151,7 +151,7 @@ failures wearing one symptom, and only the first is the star import:
   [python-read-map.md](../../reference/python-read-map.md) §5.3/§5.4), which no grep of the Python can see.
 ⚑ That second one is why *"just read the code"* fails here: a read found is a read to SERVE, and a read not found is
 never evidence of absence.
-⚑ **The standard is the ordinary one** — `from CvPythonExtensions import CyInfo, CyState, CyVictoryInfo` — so the
+⚑ **The standard is the ordinary one** — `from CvPythonExtensions import CyInfo, CyEnabler, CyVictoryInfo` — so the
 import block IS the dependency list.
 
 **⚖ BUT THE SEQUENCING IS DISCOVERY-FIRST.** The expensive work is finding every read and homing it on the right
@@ -231,7 +231,7 @@ per-field surface restored wholesale.
 **⛔ BUT A GAME OBJECT'S OWN DATA IS READ FROM ITS OWN ACCESSOR — `CyCity`, NEVER A STATE CLASS KEYED BY ADDRESS.** A
 city's population, name, maintenance and food are the CITY's data, so they are asked of the city.
 ⛔ **THE TEST IS THE METHOD NAME, and it is mechanical: the moment you have `getAnotherObjectSomething`, we have
-failed.** `CyState::getCityPopulation(owner, id)` is `get<ANOTHER OBJECT><Something>`; `CyCity::getPopulation()`
+failed.** A flat `getCityPopulation(owner, id)` is `get<ANOTHER OBJECT><Something>`; `CyCity::getPopulation()`
 names only what the receiver already is. ⚑ The prefix is the tell precisely because it exists to disambiguate a
 receiver that should never have held the read: an accessor that owns its subject needs no noun in its verbs.
 ⇒ So the per-type accessor ruling is the SAME rule stated from the naming side, and the two are checkable against

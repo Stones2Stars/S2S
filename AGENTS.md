@@ -248,6 +248,36 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   session**, which is why this is a check and not a rule ("a rule has to be remembered; a check does not").
   Also catches `with`, `except X as e`, `"...".format()`, and dict/set comprehensions. ⛔ If it fires, rewrite the
   line for 2.4 — never widen the tool.
+  ⚠ **IT IS A REGEX PASS, SO IT CANNOT SEE STRUCTURE — "clean" from it is NOT "this file parses".** Pair it with
+  the structural check below after ANY bulk text edit.
+- **Python structure: `python Tools/verify-python-syntax.py`** — every `def`/`class` is well formed and every
+  bracket balances. ⚑ **The gap it closes is the one that took the game down:** a whole-file substitution meant
+  for comment text (`re.sub(r"\(\s*\)", "", source)` — tidying an empty `()` left by deleting a citation) was
+  applied to the WHOLE FILE and stripped **every** `()` in the tree, turning 185 `def foo():` into `def foo:`.
+  `verify-python24` reported **clean**, because none of the damage is post-2.4 syntax. The game then failed at
+  startup with `SyntaxError` in `CvAppInterface` — a module nobody had edited, because
+  [the traceback points AWAY from the cause](#build-and-test).
+  ⛔ **So a text pass over `Assets/Python` is not finished until this passes.** It cannot use `compile()`: the
+  host is Python 3 and the scripts are 2.4 (a bare `print x` alone would fail), which is exactly why it checks
+  STRUCTURE rather than parsing. ⚖ It deliberately does NOT flag `CyPlayer = CyPlayerX`-style assignments — the
+  tree uses `CyCity`/`CyUnit`/`CyPlayer` as ordinary VARIABLE names, so that heuristic is unsound here.
+  ⛔ **And the wider rule the incident actually teaches: a substitution intended for COMMENTS is applied to
+  comment LINES, never to the file** — filter to lines whose first non-space character is `#`, or the edit
+  silently rewrites code that merely resembles the pattern.
+- **Python call arity: `python Tools/verify-python-arity.py`** — every Python call into the published `Cy*`
+  surface must supply the number of arguments that surface declares. ⚑ **The hole it closes:** when a read is
+  re-homed onto its object the signature usually changes with it, and a dropped parameter is invisible to every
+  other check — the C++ compiles (the call site is Python), `verify-python-bindings` only asks whether the NAME
+  is registered, and the structure check sees a well-formed call. *(Worked: `CyUnit::isInvisible` went from the
+  legacy `(team, bDebug)` to `(team)`; the military advisor still passed two and died at runtime with
+  `ArgumentError: ... did not match C++ signature`, taking the whole screen with it.)*
+  ⚖ **ADVISORY — it is a TRIAGE LIST, not a defect count.** Python is untyped and this tree names ordinary
+  locals `tab`, `scores`, `city`, even `CyPlayer`, so `tab.setStatus(x)` cannot be told from `CyUnit.setStatus`.
+  It already skips names declared in more than one `Cy` header and the prefix-addressed `CyInfo` plane; what is
+  left still needs a human to ask what the receiver actually is.
+  ⛔ When an entry is real, fix the CALL SITE — never widen the C++ signature just to silence it. ⚖ Widening is
+  right only where a consumer genuinely NEEDS the parameter: `CyCity::pushOrder` carries `bAppend` because the
+  scenario copier replays a whole build queue and a fixed replace would keep only the last order.
 - **Spine field types: `python Tools/verify-spine-fields.py`** — a `CvSpineEvent` field is declared once in the
   field-info switch (`*peType = SFT_X`) and filled at each emit by an adder (`addI`/`addStr`/`addW`/`addF`/`addB`);
   the two must agree, because **the RENDERER switches on the DECLARED type**. A field declared `SFT_STR` but filled

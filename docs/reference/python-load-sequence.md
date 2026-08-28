@@ -72,7 +72,7 @@ comment that states the dependency.
    options/replay/overlay screens, the advisor and utility modules, and — via `CvEventManager`'s own
    module-scope `import WBPlayerScreen` / `import WBPlotScreen` — **the entire WorldBuilder screen tree**.
    ⚑ Most modules on that closure construct their engine globals at MODULE SCOPE
-   (`GC = CyGlobalContext()`, `STATE = CyState()`, `ENABLER = CyEnabler()`, `ENUMS = CyEnums()`, and the
+   (`GC = CyGlobalContext()`, `ENABLER = CyEnabler()`, `ENUMS = CyEnums()`, and the
    EXE-side `CyTranslator()` / `CyInterface()`), so **every name they construct must be published before the
    first import**, and any module-scope engine CALL must already be served.
 3. **`Init`** — the DLL's first event. Every event, without exception, is delivered as

@@ -221,7 +221,7 @@ is that the production/cost step is skipped. Settled by this, not open:
 > **⛔ A SECOND WAY TO CREATE A UNIT IS A ROLLERSKATING SURFACE — AND THE MODDER-FACING ONE MOST OF ALL
 >.** The more unified `createUnit` is, the better: a single place that can create a unit by some other route
 > is a rollerskating surface, and a modder-facing one most of all. ⇒ **The EDITOR goes through it
-> too** — `CyAct` / `CyPlayer` create through the step, which is why it carries a FACING DIRECTION parameter;
+> too** — `CyPlayer::createUnit` creates through the step, which is why it carries a FACING DIRECTION parameter;
 > WorldBuilder is exactly where an alternate path would teach the wrong lesson, and WorldBuilder is already
 > required to travel the engine's own paths — every WB mutation emits like any other ([spine.md](../spine.md)).
 > ⚑ **"Unified" means STANDARDIZED PATHS, not merely few of them** — the point is that a reader looking
