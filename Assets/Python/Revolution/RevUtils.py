@@ -19,6 +19,7 @@ GAME = GC.getGame()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 INFO = CyInfo()
+UNIT = CyUnitInfo()           # the per-info UNIT accessor
 TRNSLTR = CyTranslator()
 WORLD = CyWorldInfo()
 RevOpt = BugCore.game.Revolution
@@ -328,7 +329,7 @@ def getHandoverUnitTypes(CyCity):
 	for iUnit in xrange(GC.getNumUnitInfos()):
 		CvUnitInfo = GC.getUnitInfo(iUnit)
 
-		if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND or CvUnitInfo.getPrereqAndTech() == TechTypes.NO_TECH:
+		if UNIT.getDomain(iUnit) != DomainTypes.DOMAIN_LAND or CvUnitInfo.getPrereqAndTech() == TechTypes.NO_TECH:
 			continue
 		if CvUnitInfo.getMaxGlobalInstances() > 0 or CvUnitInfo.getMaxPlayerInstances() > 0:
 			continue
@@ -366,7 +367,7 @@ def getUprisingUnitTypes(CyCity):
 	for iUnit in xrange(GC.getNumUnitInfos()):
 		CvUnitInfo = GC.getUnitInfo(iUnit)
 
-		if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND:
+		if UNIT.getDomain(iUnit) != DomainTypes.DOMAIN_LAND:
 			continue
 
 		if CvUnitInfo.getMaxGlobalInstances() > 0 or CvUnitInfo.getMaxPlayerInstances() > 0:

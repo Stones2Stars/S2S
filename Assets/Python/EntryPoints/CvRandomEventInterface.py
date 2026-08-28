@@ -2490,7 +2490,7 @@ def getGreedUnit(CyPlayer, CyPlot):
 		iUnit = kEntry["id"]
 		if INFO.hasUnitInstanceCap(iUnit):
 			continue
-		if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN) == DomainTypes.DOMAIN_LAND and ENABLER.getUnitAvailabilityAnywhere(CyPlayer.getID(), iUnit) == EnablerState.ENABLER_LISTED:
+		if UNIT.getDomain(iUnit) == DomainTypes.DOMAIN_LAND and ENABLER.getUnitAvailabilityAnywhere(CyPlayer.getID(), iUnit) == EnablerState.ENABLER_LISTED:
 			#  The unit's own bonus references. EDGEF_RELATED is a MERGED bucket ([enabler.md] §2), so this
 			#  reads as ANY referenced bonus -- safe for picking a flavourful reward, never as a gate.
 			if iBonus in INFO.getEdgeIds("UNIT_", iUnit, EdgeFamily.EDGEF_RELATED, EdgeBucket.EDGEB_BONUSES):

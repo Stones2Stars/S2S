@@ -77,13 +77,6 @@ enum PyIntrinsicSlot
 	PYINT_ESPIONAGE_TARGETS_CITY,
 	PYINT_ESPIONAGE_IS_PASSIVE,
 	PYINT_ESPIONAGE_TECH_PREREQ,             // MISSION_ -- is this mission a worker BUILD (the order carries a BUILD_ id)
-	PYINT_DOMAIN,               // UNIT_ DOMAIN_* FK (identity.domain) -- WHERE the unit operates.
-	                            // ⛔ It is a genuine INTRINSIC, never a tag read ([json.md] par.7, [tags.md]): a
-	                            // tag says what a unit IS, a domain says where it OPERATES, and answering the
-	                            // second from the tag set means FILTERING EVERY TAG for what one field holds.
-	                            // The domain tags (landUnit/seaUnit/airUnit) exist and are inert by ruling --
-	                            // there is deliberately no composition over them for this, so a consumer asking
-	                            // "which domain" asks HERE.
 	PYINT_PILLAGE_GOLD,         // IMPROVEMENT_ -- the gold a pillage of this improvement rolls against
 	// The ERA start grants (`grants.*`) -- what a player beginning in this era is handed. All six are authored
 	// (startingGold by every era), so they are live data, not headroom.

@@ -8,6 +8,7 @@ GAME = GC.getGame()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 INFO = CyInfo()
+UNIT = CyUnitInfo()           # the per-info UNIT accessor
 BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 TRNSLTR = CyTranslator()
 MAP = GC.getMap()
@@ -348,7 +349,7 @@ def cityAdvise(iPlayer, iCityID):
 							#	asked of the CITY, never of availability.
 							for iUnitX in ENABLER.getAvailableUnits(iPlayer, iCityID):
 
-								if INFO.getIntrinsic("UNIT_", iUnitX, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND:
+								if UNIT.getDomain(iUnitX) != DomainTypes.DOMAIN_LAND:
 									continue
 								if GC.getPlayer(iPlayer).getCity(iCityID).isUnitQueued(iUnitX):
 									continue
@@ -385,7 +386,7 @@ def cityAdvise(iPlayer, iCityID):
 							#	A queued unit stays on the frontier by design (multiple copies), so the
 							#	'already ordered' suppression is the recommender's, asked of the city.
 							for iUnit in ENABLER.getAvailableUnits(iPlayer, iCityID):
-								if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND:
+								if UNIT.getDomain(iUnit) != DomainTypes.DOMAIN_LAND:
 									continue
 								if GC.getPlayer(iPlayer).getCity(iCityID).isUnitQueued(iUnit):
 									continue
@@ -423,7 +424,7 @@ def cityAdvise(iPlayer, iCityID):
 						#	city has NO defender at all, and the legacy path did not suppress either.
 						for iUnit in ENABLER.getAvailableUnits(iPlayer, iCityID):
 
-							if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND:
+							if UNIT.getDomain(iUnit) != DomainTypes.DOMAIN_LAND:
 								continue
 							iValue = CyPlayer.AI_unitValue(iUnit, UnitAITypes.UNITAI_CITY_DEFENSE, CyArea) * 2
 							iValue += CyPlayer.AI_unitValue(iUnit, UnitAITypes.UNITAI_ATTACK, CyArea)
@@ -465,7 +466,7 @@ def cityAdvise(iPlayer, iCityID):
 								#	else's faith spreads the wrong religion.
 								for iUnitX in ENABLER.getAvailableUnits(iPlayer, iCityID):
 
-									if INFO.getIntrinsic("UNIT_", iUnitX, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND: continue
+									if UNIT.getDomain(iUnitX) != DomainTypes.DOMAIN_LAND: continue
 									if not INFO.spreadsReligion(iUnitX, eStateReligion): continue
 
 									iValue = CyPlayer.AI_unitValue(iUnitX, UnitAITypes.UNITAI_MISSIONARY, CyArea)

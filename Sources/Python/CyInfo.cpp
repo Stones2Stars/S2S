@@ -1341,11 +1341,6 @@ int CyInfo::getIntrinsic(const std::string& szTypePrefix, int iId, int iSlot) co
 			return GC.getMissionInfo((MissionTypes)iId).isBuild() ? 1 : 0;
 		break;
 
-	case PYINT_DOMAIN:
-		if (szTypePrefix == "UNIT_" && iId < GC.getNumUnitInfos())
-			return GC.getUnitInfo((UnitTypes)iId).getDomain();
-		break;
-
 	case PYINT_TOTAL_TURNS:
 		if (szTypePrefix == "GAMESPEED_" && iId < GC.getNumGameSpeedInfos())
 			return GC.getGameSpeedInfo((GameSpeedTypes)iId).getTotalTurns();

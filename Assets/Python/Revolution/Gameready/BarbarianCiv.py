@@ -19,6 +19,7 @@ from CvUtil import sendMessage
 # GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
+UNIT = CyUnitInfo()           # the per-info UNIT accessor
 GAME = GC.getGame()
 MAP = GC.getMap()
 ENABLER = CyEnabler()
@@ -416,7 +417,7 @@ class BarbarianCiv:
 
 			CvUnitInfo = GC.getUnitInfo(iUnit)
 			if (
-				INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND
+				UNIT.getDomain(iUnit) != DomainTypes.DOMAIN_LAND
 			or	CvUnitInfo.getNumPrereqAndBuildings() > 0
 			or	CvUnitInfo.getPrereqAndBonus() != -1
 			and	GC.getBonusInfo(CvUnitInfo.getPrereqAndBonus()).getBonusClassType() == GC.getInfoTypeForString("BONUSCLASS_CULTURE")

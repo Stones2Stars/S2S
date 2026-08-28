@@ -9,6 +9,7 @@ import sys
 # GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
+UNIT = CyUnitInfo()           # the per-info UNIT accessor
 BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -664,7 +665,7 @@ class CvDomesticAdvisor:
 				elif city.isProductionUnit():
 					szColorKey = "UNIT"
 					iUnit = city.getProductionUnit()
-					iType = INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN)
+					iType = UNIT.getDomain(iUnit)
 					if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_UNIT_COMBAT) != UnitCombatTypes.NO_UNITCOMBAT:
 						szIcon = unichr(8855)
 				else:
