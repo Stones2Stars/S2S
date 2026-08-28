@@ -284,12 +284,12 @@ void CyPlot::setWOfRiver(bool bNewValue, CardinalDirectionTypes eRiverDir)
 
 CardinalDirectionTypes CyPlot::getRiverWEDirection() const
 {
-	return m_pPlot->getRiverWEDirection();
+	return m_pPlot ? m_pPlot->getRiverWEDirection() : NO_CARDINALDIRECTION;
 }
 
 CardinalDirectionTypes CyPlot::getRiverNSDirection() const
 {
-	return m_pPlot->getRiverNSDirection();
+	return m_pPlot ? m_pPlot->getRiverNSDirection() : NO_CARDINALDIRECTION;
 }
 
 bool CyPlot::isPotentialCityWork() const
@@ -422,7 +422,7 @@ int CyPlot::getYield(YieldTypes eIndex) const
 
 void CyPlot::setExtraYield(YieldTypes eYield, short iExtraYield)
 {
-	m_pPlot->setExtraYield(eYield, iExtraYield);
+	if (m_pPlot) m_pPlot->setExtraYield(eYield, iExtraYield);
 }
 
 int CyPlot::calculateBestNatureYield(YieldTypes eIndex, TeamTypes eTeam) const
