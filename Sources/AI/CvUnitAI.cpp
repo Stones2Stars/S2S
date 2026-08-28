@@ -13255,7 +13255,8 @@ bool CvUnitAI::AI_heal(int iDamagePercent, int iMaxPath)
 
 	if (pGroup->getNumUnits() == 1)
 	{
-		if (getDamage() < 1)
+		//	the lone-unit path answers the same question as the stack path below, so it applies the same bar
+		if (getDamagePercent() <= iDamagePercent)
 		{
 			return false;
 		}
@@ -26777,8 +26778,11 @@ bool CvUnitAI::AI_huntRange(int iRange, int iOddsThreshold, bool bStayInBorders,
 				const char* szDef = (pDef != NULL && pDef->getUnitType() != NO_UNIT) ? pDef->getUnitInfo().getType() : "?";
 				const int iDefBase = (pDef != NULL) ? pDef->baseCombatStr() : -1;
 				const int iDefCur  = (pDef != NULL) ? pDef->currCombatStr(plotX, this) : -1;
-				logHunterAI(3, "[HAI/target/skip] unit=%d plot=(%d,%d) reason=odds odds=%d threshold=%d def=%s defBase=%d defCur=%d atkBase=%d atkCur=%d",
-					getID(), plotX->getX(), plotX->getY(), attackOdds, iThreshold,
+				//	This arm is reached by TWO different verdicts and they must not share a name: the target was
+				//	too dangerous, or it was simply not better than one already found. Only the first is a refusal.
+				const char* szReason = (attackOdds < iThreshold) ? "odds" : "notbest";
+				logHunterAI(3, "[HAI/target/skip] unit=%d plot=(%d,%d) reason=%s odds=%d threshold=%d best=%d def=%s defBase=%d defCur=%d atkBase=%d atkCur=%d",
+					getID(), plotX->getX(), plotX->getY(), szReason, attackOdds, iThreshold, bestScore,
 					szDef, iDefBase, iDefCur, baseCombatStr(), currCombatStr(plot(), NULL));
 			}
 		}
