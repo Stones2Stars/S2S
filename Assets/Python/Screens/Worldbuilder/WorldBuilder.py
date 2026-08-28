@@ -16,15 +16,17 @@ import WBPlayerUnits
 import WBInfoScreen
 import WBTradeScreen
 
-# The one data-fetching library: STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
 BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
+UNITINFO = CyUnitInfo()       # the per-info UNIT accessor
+TERRAIN = CyTerrainInfo()     # the per-info TERRAIN accessor
+FEATURE = CyFeatureInfo()     # the per-info FEATURE accessor
 GAME = GC.getGame()
 MAP = GC.getMap()
-ACT = CyAct()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 bPython = True
@@ -289,14 +291,15 @@ class WorldBuilder:
 				bEffects = False
 				if bPython and not pCity.hasBuilding(self.iSelection):
 					bEffects = True
-				ACT.setCityBuilding(pCity.getOwner(), pCity.getID(), self.iSelection, True)
+				pCity.setBuilding(self.iSelection, True)
 				if bEffects:
-					self.eventManager.onBuildingBuilt([pCity, self.iSelection])
+					self.eventManager.onBuildingBuilt([[pCity.getOwner(), pCity.getID()], self.iSelection])
 		elif self.iPlayerAddMode == "City":
 			if self.m_pCurrentPlot.isCity(): return
 			pCity = GC.getPlayer(self.iCurrentPlayer).initCity(self.m_pCurrentPlot.getX(), self.m_pCurrentPlot.getY())
 			if bPython:
-				self.eventManager.onCityBuilt([pCity, None])
+				# No founding SETTLER in the editor, which the handler reads as (-1, -1) and skips.
+				self.eventManager.onCityBuilt([[pCity.getOwner(), pCity.getID()], [-1, -1]])
 	## Python Effects ##
 		elif self.iPlayerAddMode == "Improvements":
 			self.m_pCurrentPlot.setImprovementType(self.iSelection)
@@ -367,7 +370,7 @@ class WorldBuilder:
 			self.m_pCurrentPlot.setOwner(-1)
 		elif self.iPlayerAddMode == "Units":
 			for pUnit in self.m_pCurrentPlot.units():
-				if pUnit.getUnitType() == self.iSelection:
+				if pUnit.getRead()[UnitReadKind.UNIT_READ_TYPE] == self.iSelection:
 					pUnit.kill(False, PlayerTypes.NO_PLAYER)
 					return 1
 			if self.m_pCurrentPlot.getNumUnits() > 0:
@@ -377,11 +380,11 @@ class WorldBuilder:
 		elif self.iPlayerAddMode == "Buildings":
 			if self.m_pCurrentPlot.isCity():
 				pRemoveCity = self.m_pCurrentPlot.getPlotCity()
-				ACT.setCityBuilding(pRemoveCity.getOwner(), pRemoveCity.getID(), self.iSelection, False)
+				pRemoveCity.setBuilding(self.iSelection, False)
 		elif self.iPlayerAddMode == "City":
 			if self.m_pCurrentPlot.isCity():
 				pCity = self.m_pCurrentPlot.getPlotCity()
-				ACT.disbandCity(pCity.getOwner(), pCity.getID())
+				pCity.disband()
 		elif self.iPlayerAddMode == "Improvements":
 			self.m_pCurrentPlot.setImprovementType(-1)
 			return 1
@@ -567,7 +570,7 @@ class WorldBuilder:
 						if not self.m_pCurrentPlot.isImpassable() and not self.m_pCurrentPlot.isWater():
 							self.placeObject()
 					elif self.iPlayerAddMode == "Terrain":
-						if self.m_pCurrentPlot.isWater() == GC.getTerrainInfo(self.iSelection).isWaterTerrain():
+						if self.m_pCurrentPlot.isWater() == TERRAIN.isWaterTerrain(self.iSelection):
 							self.placeObject()
 					else:
 						self.placeObject()
@@ -885,14 +888,16 @@ class WorldBuilder:
 				screen.addPullDownString("WBSelectClass", INFO.getDescription("DOMAIN_", iDomain), iDomain, iDomain, iDomain == self.iSelectClass)
 
 			lItems = []
-			for i in xrange(GC.getNumUnitInfos()):
-				CvUnitInfo = GC.getUnitInfo(i)
+			for kUnit in INFO.getIndex("UNIT_"):
+				iUnit = kUnit["id"]
 				if self.iSelectClass == -1:
-					if CvUnitInfo.getCombat() > 0 or CvUnitInfo.getAirCombat() > 0:
+					iStrength = INFO.getScalar("UNIT_", iUnit, InfoScalar.SCALAR_STRENGTH,
+					                           CascScope.CASC_SCOPE_UNIT, CascUnit.CASC_UNIT_FLAT)
+					if iStrength > 0 or INFO.getUnitAirCombat(iUnit) > 0:
 						continue
-				elif self.iSelectClass > -1 and CvUnitInfo.getDomainType() != self.iSelectClass:
+				elif self.iSelectClass > -1 and UNITINFO.getDomain(iUnit) != self.iSelectClass:
 					continue
-				lItems.append([CvUnitInfo.getDescription(), i])
+				lItems.append([kUnit["description"], iUnit])
 			lItems.sort()
 
 			iY += 30
@@ -958,9 +963,8 @@ class WorldBuilder:
 		elif self.iPlayerAddMode == "Features":
 			iY = 55
 			lItems = []
-			for i in xrange(GC.getNumFeatureInfos()):
-				ItemInfo = GC.getFeatureInfo(i)
-				lItems.append([ItemInfo.getDescription(), i])
+			for kFeature in INFO.getIndex("FEATURE_"):
+				lItems.append([kFeature["description"], kFeature["id"]])
 			lItems.sort()
 
 			iHeight = min(len(lItems) * 24 + 2, self.yRes - iY)
@@ -977,10 +981,9 @@ class WorldBuilder:
 		elif self.iPlayerAddMode == "Improvements":
 			iY = 25
 			lItems = []
-			for i in xrange(GC.getNumImprovementInfos()):
-				ItemInfo = GC.getImprovementInfo(i)
-				if ItemInfo.isGraphicalOnly(): continue
-				lItems.append([ItemInfo.getDescription(), i])
+			for kImprovement in INFO.getIndex("IMPROVEMENT_"):
+				if kImprovement["graphicalOnly"]: continue
+				lItems.append([kImprovement["description"], kImprovement["id"]])
 			lItems.sort()
 
 			iHeight = min(len(lItems) * 24 + 2, self.yRes - iY)
@@ -1015,9 +1018,8 @@ class WorldBuilder:
 		elif self.iPlayerAddMode == "Routes":
 			iY = 25
 			lItems = []
-			for i in xrange(GC.getNumRouteInfos()):
-				ItemInfo = GC.getRouteInfo(i)
-				lItems.append([ItemInfo.getDescription(), i])
+			for kRoute in INFO.getIndex("ROUTE_"):
+				lItems.append([kRoute["description"], kRoute["id"]])
 			lItems.sort()
 
 			iHeight = min(len(lItems) * 24 + 2, self.yRes - iY)
@@ -1034,10 +1036,9 @@ class WorldBuilder:
 		elif self.iPlayerAddMode == "Terrain":
 			iY = 25
 			lItems = []
-			for i in xrange(GC.getNumTerrainInfos()):
-				ItemInfo = GC.getTerrainInfo(i)
-				if ItemInfo.isGraphicalOnly(): continue
-				lItems.append([ItemInfo.getDescription(), i])
+			for kTerrain in INFO.getIndex("TERRAIN_"):
+				if kTerrain["graphicalOnly"]: continue
+				lItems.append([kTerrain["description"], kTerrain["id"]])
 			lItems.sort()
 
 			iHeight = min(len(lItems) * 24 + 2, self.yRes - iY)
@@ -1079,40 +1080,33 @@ class WorldBuilder:
 		screen.setTableColumnHeader("WBCurrentItem", 0, "", iWidth)
 		screen.appendTableRow("WBCurrentItem")
 		if self.iPlayerAddMode == "Units":
-			ItemInfo = GC.getUnitInfo(self.iSelection)
-			sText = "<font=3>" + CyTranslator().getText("[COLOR_HIGHLIGHT_TEXT]", ()) + ItemInfo.getDescription() + "</color></font>"
-			screen.setTableText("WBCurrentItem", 0, 0 , sText, ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 8202, self.iSelection, 1<<0)
+			sText = "<font=3>" + CyTranslator().getText("[COLOR_HIGHLIGHT_TEXT]", ()) + INFO.getDescription("UNIT_", self.iSelection) + "</color></font>"
+			screen.setTableText("WBCurrentItem", 0, 0 , sText, INFO.getButton("UNIT_", self.iSelection), WidgetTypes.WIDGET_PYTHON, 8202, self.iSelection, 1<<0)
 		elif self.iPlayerAddMode == "Buildings":
-			ItemInfo = GC.getBuildingInfo(self.iSelection)
-			sText = "<font=3>" + CyTranslator().getText("[COLOR_HIGHLIGHT_TEXT]", ()) + ItemInfo.getDescription() + "</color></font>"
-			screen.setTableText("WBCurrentItem", 0, 0 , sText, ItemInfo.getButton(), WidgetTypes.WIDGET_HELP_BUILDING, self.iSelection, 1, 1<<0)
+			sText = "<font=3>" + CyTranslator().getText("[COLOR_HIGHLIGHT_TEXT]", ()) + INFO.getDescription("BUILDING_", self.iSelection) + "</color></font>"
+			screen.setTableText("WBCurrentItem", 0, 0 , sText, INFO.getButton("BUILDING_", self.iSelection), WidgetTypes.WIDGET_HELP_BUILDING, self.iSelection, 1, 1<<0)
 		elif self.iPlayerAddMode == "Features":
-			ItemInfo = GC.getFeatureInfo(self.iSelection)
-			sText = "<font=3>" + CyTranslator().getText("[COLOR_HIGHLIGHT_TEXT]", ()) + ItemInfo.getDescription() + "</color></font>"
-			screen.setTableText("WBCurrentItem", 0, 0 , sText, ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 7874, self.iSelection, 1<<0)
-			if ItemInfo.getNumVarieties() > 1:
+			sText = "<font=3>" + CyTranslator().getText("[COLOR_HIGHLIGHT_TEXT]", ()) + INFO.getDescription("FEATURE_", self.iSelection) + "</color></font>"
+			screen.setTableText("WBCurrentItem", 0, 0 , sText, INFO.getButton("FEATURE_", self.iSelection), WidgetTypes.WIDGET_PYTHON, 7874, self.iSelection, 1<<0)
+			if FEATURE.getNumVarieties(self.iSelection) > 1:
 				screen.addDropDownBoxGFC("WBSelectClass", 0, 25, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-				for i in xrange(ItemInfo.getNumVarieties()):
+				for i in xrange(FEATURE.getNumVarieties(self.iSelection)):
 					screen.addPullDownString("WBSelectClass", CyTranslator().getText("TXT_KEY_WB_FEATURE_VARIETY", (i,)), i, i, i == self.iSelectClass)
 			else:
 				self.iSelectClass = 0
 				screen.hide("WBSelectClass")
 		elif self.iPlayerAddMode == "Improvements":
-			ItemInfo = GC.getImprovementInfo(self.iSelection)
-			sText = "<font=3>" + CyTranslator().getText("[COLOR_HIGHLIGHT_TEXT]", ()) + ItemInfo.getDescription() + "</color></font>"
-			screen.setTableText("WBCurrentItem", 0, 0 , sText, ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 7877, self.iSelection, 1<<0)
+			sText = "<font=3>" + CyTranslator().getText("[COLOR_HIGHLIGHT_TEXT]", ()) + INFO.getDescription("IMPROVEMENT_", self.iSelection) + "</color></font>"
+			screen.setTableText("WBCurrentItem", 0, 0 , sText, INFO.getButton("IMPROVEMENT_", self.iSelection), WidgetTypes.WIDGET_PYTHON, 7877, self.iSelection, 1<<0)
 		elif self.iPlayerAddMode == "Bonus":
-			ItemInfo = GC.getBonusInfo(self.iSelection)
-			sText = "<font=3>" + CyTranslator().getText("[COLOR_HIGHLIGHT_TEXT]", ()) + ItemInfo.getDescription() + "</color></font>"
-			screen.setTableText("WBCurrentItem", 0, 0 , sText, ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 7878, self.iSelection, 1<<0)
+			sText = "<font=3>" + CyTranslator().getText("[COLOR_HIGHLIGHT_TEXT]", ()) + INFO.getDescription("BONUS_", self.iSelection) + "</color></font>"
+			screen.setTableText("WBCurrentItem", 0, 0 , sText, INFO.getButton("BONUS_", self.iSelection), WidgetTypes.WIDGET_PYTHON, 7878, self.iSelection, 1<<0)
 		elif self.iPlayerAddMode == "Routes":
-			ItemInfo = GC.getRouteInfo(self.iSelection)
-			sText = "<font=3>" + CyTranslator().getText("[COLOR_HIGHLIGHT_TEXT]", ()) + ItemInfo.getDescription() + "</color></font>"
-			screen.setTableText("WBCurrentItem", 0, 0 , sText, ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 6788, self.iSelection, 1<<0)
+			sText = "<font=3>" + CyTranslator().getText("[COLOR_HIGHLIGHT_TEXT]", ()) + INFO.getDescription("ROUTE_", self.iSelection) + "</color></font>"
+			screen.setTableText("WBCurrentItem", 0, 0 , sText, INFO.getButton("ROUTE_", self.iSelection), WidgetTypes.WIDGET_PYTHON, 6788, self.iSelection, 1<<0)
 		elif self.iPlayerAddMode == "Terrain" or self.iPlayerAddMode == "PlotType":
-			ItemInfo = GC.getTerrainInfo(self.iSelection)
-			sText = "<font=3>" + CyTranslator().getText("[COLOR_HIGHLIGHT_TEXT]", ()) + ItemInfo.getDescription() + "</color></font>"
-			screen.setTableText("WBCurrentItem", 0, 0 , sText, ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 7875, self.iSelection, 1<<0)
+			sText = "<font=3>" + CyTranslator().getText("[COLOR_HIGHLIGHT_TEXT]", ()) + INFO.getDescription("TERRAIN_", self.iSelection) + "</color></font>"
+			screen.setTableText("WBCurrentItem", 0, 0 , sText, INFO.getButton("TERRAIN_", self.iSelection), WidgetTypes.WIDGET_PYTHON, 7875, self.iSelection, 1<<0)
 		else:
 			screen.hide("WBCurrentItem")
 
@@ -1221,7 +1215,7 @@ class WorldBuilder:
 				pNewCity.setName(sName, True)
 				self.copyCityStats(pOldCity, pNewCity, True)
 				pOldPlot = pOldCity.plot()
-				ACT.disbandCity(pOldCity.getOwner(), pOldCity.getID())
+				pOldCity.disband()
 				pOldPlot.setImprovementType(-1)
 				if self.iPlayerAddMode == "MoveCityPlus":
 					for item in self.lMoveUnit:
@@ -1241,18 +1235,18 @@ class WorldBuilder:
 					for item in self.lMoveUnit:
 						loopUnit = GC.getPlayer(item[0]).getUnit(item[1])
 						if loopUnit is None: continue
-						pNewUnit = pPlayer.createUnit(loopUnit.getUnitType(), self.m_pCurrentPlot.getX(), self.m_pCurrentPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-						pNewUnit.setName(STATE.getUnitNameNoDesc(loopUnit.getOwner(), loopUnit.getID()))
-						pNewUnit.setLevel(loopUnit.getLevel())
-						pNewUnit.setExperience(loopUnit.getExperience())
-						pNewUnit.setBaseCombatStr(loopUnit.baseCombatStr())
+						pNewUnit = pPlayer.createUnit(loopUnit.getRead()[UnitReadKind.UNIT_READ_TYPE], self.m_pCurrentPlot.getX(), self.m_pCurrentPlot.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+						pNewUnit.setName(loopUnit.getNameNoDesc())
+						pNewUnit.setLevel(loopUnit.getRead()[UnitReadKind.UNIT_READ_LEVEL])
+						pNewUnit.setExperience(loopUnit.getRead()[UnitReadKind.UNIT_READ_EXPERIENCE] / 100)
+						pNewUnit.setBaseCombatStr(loopUnit.getBaseCombatStr())
 						for iPromotion in xrange(GC.getNumPromotionInfos()):
-							pNewUnit.setHasPromotion(iPromotion, loopUnit.isHasPromotion(iPromotion))
-						pNewUnit.setDamage(loopUnit.getDamage(), -1)
+							pNewUnit.setPromotion(iPromotion, loopUnit.hasPromotion(iPromotion))
+						pNewUnit.setDamage(loopUnit.getRead()[UnitReadKind.UNIT_READ_DAMAGE], -1)
 						pNewUnit.setMoves(loopUnit.getMoves())
-						pNewUnit.setLeaderUnitType(loopUnit.getLeaderUnitType())
+						pNewUnit.setLeaderUnitType(loopUnit.getRead()[UnitReadKind.UNIT_READ_LEADER_UNIT_TYPE])
 						pNewUnit.changeCargoSpace(loopUnit.cargoSpace() - pNewUnit.cargoSpace())
-						pNewUnit.setImmobileTimer(loopUnit.getImmobileTimer())
+						pNewUnit.setStatus(UnitStatus.STATUS_PARALYZED, loopUnit.getStatus(UnitStatus.STATUS_PARALYZED))
 						pNewUnit.setScriptData(loopUnit.getScriptData())
 					self.lMoveUnit = []
 			self.iPlayerAddMode = "CityDataI"
@@ -1277,13 +1271,13 @@ class WorldBuilder:
 			for iYield in xrange(YieldTypes.NUM_YIELD_TYPES):
 				pNewCity.setBuildingYieldChange(iBuilding, iYield, aOldYields[iYield])
 
-			if GC.getBuildingInfo(iBuilding).isCapital() and not bMove:
+			if INFO.providesCapitalStatus(iBuilding) and not bMove:
 				continue
 			bHadBuilding = pOldCity.getBuildingReads(iBuilding)[CityBuildingRead.CITY_BUILDING_HAS]
-			ACT.setCityBuilding(pNewCity.getOwner(), pNewCity.getID(), iBuilding, bHadBuilding)
+			pNewCity.setBuilding(iBuilding, bHadBuilding)
 
 		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
-			pNewCity.setCultureTimes100(iPlayerX, pOldCity.getCultureTimes100(iPlayerX), False)
+			pNewCity.setCulture(iPlayerX, pOldCity.getCultureForPlayer(iPlayerX))
 		for iReligion in xrange(GC.getNumReligionInfos()):
 			pNewCity.setHasReligion(iReligion, pOldCity.isHasReligion(iReligion), False, False)
 			if bMove and pOldCity.isHolyCityByType(iReligion):
@@ -1298,7 +1292,7 @@ class WorldBuilder:
 		for iImprovement in xrange(GC.getNumImprovementInfos()):
 			pNewCity.changeImprovementFreeSpecialists(iImprovement, pOldCity.getImprovementFreeSpecialists(iImprovement) - pNewCity.getImprovementFreeSpecialists(iImprovement))
 		for iSpecialist in xrange(GC.getNumSpecialistInfos()):
-			pNewCity.setFreeSpecialistCount(iSpecialist, pOldCity.getFreeSpecialistCount(iSpecialist))
+			pNewCity.changeFreeSpecialistCount(iSpecialist, pOldCity.getFreeSpecialistCount(iSpecialist) - pNewCity.getFreeSpecialistCount(iSpecialist))
 			pNewCity.setForceSpecialistCount(iSpecialist, pOldCity.getForceSpecialistCount(iSpecialist))
 		for iUnit in xrange(GC.getNumUnitInfos()):
 			pNewCity.setProgressOnUnit(iUnit, pOldCity.getProgressOnUnit(iUnit))
@@ -1326,10 +1320,10 @@ class WorldBuilder:
 		pNewCity.setCitizensAutomated(pOldCity.isCitizensAutomated())
 		pNewCity.setDrafted(pOldCity.isDrafted())
 		pNewCity.setFeatureProduction(pOldCity.getFeatureProduction())
-		pNewCity.setFood(pOldCity.getFood())
+		pNewCity.setStoredFood(pOldCity.getFood())
 		pNewCity.setHighestPopulation(pOldCity.getHighestPopulation())
 		pNewCity.setNeverLost(pOldCity.isNeverLost())
-		pNewCity.setOccupationTimer(pOldCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION])
+		pNewCity.setOccupation(pOldCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION])
 		pNewCity.setOverflowProduction(pOldCity.getOverflowProduction())
 		pNewCity.setPlundered(pOldCity.isPlundered())
 		pNewCity.setProductionProgress(pOldCity.getProductionProgress())

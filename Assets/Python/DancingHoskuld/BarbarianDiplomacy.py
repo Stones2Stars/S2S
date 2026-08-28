@@ -5,11 +5,11 @@ from CvPythonExtensions import *
 import BugUtil
 
 # globals
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 gc = GC   # this module spells it lowercase
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 #~ localText = CyTranslator()

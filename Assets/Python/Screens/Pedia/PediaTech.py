@@ -2,7 +2,7 @@
 
 from CvPythonExtensions import *
 INFO = CyInfo()
-STATE = CyState()
+GAME = CyGame()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 TEXT = CyGameTextMgr()
@@ -102,11 +102,11 @@ class PediaTech:
 		# era, handicap and team size -- so it is asked of the STATE plane. Out of game there is no team, and
 		# the authored base cost on the info is the honest answer.
 		iCost = -1
-		iPlayer = STATE.getActivePlayer()
+		iPlayer = GAME.getActivePlayer()
 		if iPlayer >= 0:
-			iTeam = STATE.getPlayerTeam(iPlayer)
+			iTeam = GC.getPlayer(iPlayer).getTeam()
 			if iTeam >= 0:
-				iCost = STATE.getTechResearchCost(iTeam, iTheTech)
+				iCost = GC.getTeam(iTeam).getTechResearchCost(iTheTech)
 		if iCost < 0:
 			iCost = INFO.getIntrinsic("TECH_", iTheTech, IntrinsicSlot.PYINT_COST)
 		szCostText = TRNSLTR.getText("%d1_Num", (iCost,)) + u"%c" % (TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH))

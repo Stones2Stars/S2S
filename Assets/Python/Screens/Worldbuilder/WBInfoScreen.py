@@ -6,12 +6,12 @@ import WBPromotionScreen
 import WBPlayerScreen
 import WBProjectScreen
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
 MAP = GC.getMap()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -29,20 +29,22 @@ class WBInfoScreen:
 		self.iMinColWidth = 120
 		self.iColorA = "COLOR_YELLOW"
 		self.iColorB = "COLOR_BLACK"
-		self.Mode = [	GC.getUnitInfo,
-				GC.getPromotionInfo,
-				GC.getBuildingInfo,
-				GC.getSpecialistInfo,
-				GC.getReligionInfo,
-				GC.getCorporationInfo,
-				GC.getTerrainInfo,
-				GC.getFeatureInfo,
-				GC.getBonusInfo,
-				GC.getImprovementInfo,
-				GC.getRouteInfo,
-				GC.getCivicInfo,
-				GC.getTechInfo,
-				GC.getProjectInfo,
+		#	The info plane is PREFIX-addressed, so the mode table carries the prefix rather than a bound
+		#	per-info accessor -- GC.get<X>Info is published nowhere.
+		self.Mode = [	"UNIT_",
+				"PROMOTION_",
+				"BUILDING_",
+				"SPECIALIST_",
+				"RELIGION_",
+				"CORPORATION_",
+				"TERRAIN_",
+				"FEATURE_",
+				"BONUS_",
+				"IMPROVEMENT_",
+				"ROUTE_",
+				"CIVIC_",
+				"TECH_",
+				"PROJECT_",
 				]
 
 	def interfaceScreen(self, iPlayerX):
@@ -180,7 +182,7 @@ class WBInfoScreen:
 				lSelectedItem = lTemp[0]
 			else:
 				lSelectedItem = [-1, -1]
-		sHeader = self.Mode[iMode](iItem).getDescription()
+		sHeader = INFO.getDescription(self.Mode[iMode], iItem)
 		screen.setLabel("InfoHeader", "Background", "<font=4b>" + sHeader + "</font>", 1<<2, screen.getXResolution()/2, 20, -0.1, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		screen.bringMinimapToFront()
 
@@ -299,13 +301,12 @@ class WBInfoScreen:
 		if iMode == 0:
 			iData1 = 8202
 			for i in xrange(GC.getNumUnitInfos()):
-				Info = GC.getUnitInfo(i)
-				lItems.append([Info.getDescription(), 0, 0, i, Info.getButton(), []])
+				lItems.append([INFO.getDescription("UNIT_", i), 0, 0, i, INFO.getButton("UNIT_", i), []])
 			for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 				pPlayerX = GC.getPlayer(iPlayerX)
 				if pPlayerX.isAlive():
 					for loopUnit in pPlayerX.units():
-						iItemX = loopUnit.getUnitType()
+						iItemX = loopUnit.getRead()[UnitReadKind.UNIT_READ_TYPE]
 						if iPlayerX == iSelectedPlayer:
 							lItems[iItemX][1] += 1
 						lItems[iItemX][2] += 1
@@ -313,14 +314,13 @@ class WBInfoScreen:
 		elif iMode == 1:
 			iData1 = 7873
 			for i in xrange(GC.getNumPromotionInfos()):
-				Info = GC.getPromotionInfo(i)
-				lItems.append([Info.getDescription(), 0, 0, i, Info.getButton(), []])
+				lItems.append([INFO.getDescription("PROMOTION_", i), 0, 0, i, INFO.getButton("PROMOTION_", i), []])
 			for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 				pPlayerX = GC.getPlayer(iPlayerX)
 				if pPlayerX.isAlive():
 					for loopUnit in pPlayerX.units():
 						for iItemX in xrange(GC.getNumPromotionInfos()):
-							if loopUnit.isHasPromotion(iItemX):
+							if loopUnit.hasPromotion(iItemX):
 								if iPlayerX == iSelectedPlayer:
 									lItems[iItemX][1] += 1
 								lItems[iItemX][2] += 1
@@ -329,8 +329,7 @@ class WBInfoScreen:
 		elif iMode == 2:
 			iData1 = 7870
 			for i in xrange(GC.getNumBuildingInfos()):
-				Info = GC.getBuildingInfo(i)
-				lItems.append([Info.getDescription(), 0, 0, i, Info.getButton(), []])
+				lItems.append([INFO.getDescription("BUILDING_", i), 0, 0, i, INFO.getButton("BUILDING_", i), []])
 			for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 				pPlayerX = GC.getPlayer(iPlayerX)
 				if pPlayerX.isAlive():
@@ -345,8 +344,7 @@ class WBInfoScreen:
 		elif iMode == 3:
 			iData1 = 7879
 			for i in xrange(GC.getNumSpecialistInfos()):
-				Info = GC.getSpecialistInfo(i)
-				lItems.append([Info.getDescription(), 0, 0, i, Info.getButton(), []])
+				lItems.append([INFO.getDescription("SPECIALIST_", i), 0, 0, i, INFO.getButton("SPECIALIST_", i), []])
 			for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 				pPlayerX = GC.getPlayer(iPlayerX)
 				if pPlayerX.isAlive():
@@ -363,8 +361,7 @@ class WBInfoScreen:
 			iData1 = 7869
 			pPlayer = GC.getPlayer(iSelectedPlayer)
 			for i in xrange(GC.getNumReligionInfos()):
-				Info = GC.getReligionInfo(i)
-				lItems.append([Info.getDescription(), pPlayer.getHasReligionCount(i), CyGame().countReligionLevels(i), i, Info.getButton(), []])
+				lItems.append([INFO.getDescription("RELIGION_", i), pPlayer.getHasReligionCount(i), CyGame().countReligionLevels(i), i, INFO.getButton("RELIGION_", i), []])
 			for pPlot in GC.getMap().plots():
 				if pPlot.isCity():
 					pCity = pPlot.getPlotCity()
@@ -376,8 +373,7 @@ class WBInfoScreen:
 			iData1 = 8201
 			pPlayer = GC.getPlayer(iSelectedPlayer)
 			for i in xrange(GC.getNumCorporationInfos()):
-				Info = GC.getCorporationInfo(i)
-				lItems.append([Info.getDescription(), pPlayer.getHasCorporationCount(i), CyGame().countCorporationLevels(i), i, Info.getButton(), []])
+				lItems.append([INFO.getDescription("CORPORATION_", i), pPlayer.getHasCorporationCount(i), CyGame().countCorporationLevels(i), i, INFO.getButton("CORPORATION_", i), []])
 			for pPlot in GC.getMap().plots():
 				if pPlot.isCity():
 					pCity = pPlot.getPlotCity()
@@ -388,8 +384,7 @@ class WBInfoScreen:
 		elif iMode == 6:
 			iData1 = 7875
 			for i in xrange(GC.getNumTerrainInfos()):
-				Info = GC.getTerrainInfo(i)
-				lItems.append([Info.getDescription(), 0, 0, i, Info.getButton(), []])
+				lItems.append([INFO.getDescription("TERRAIN_", i), 0, 0, i, INFO.getButton("TERRAIN_", i), []])
 			for pPlot in GC.getMap().plots():
 				iItemX = pPlot.getTerrainType()
 				if iItemX == -1: continue
@@ -402,8 +397,7 @@ class WBInfoScreen:
 		elif iMode == 7:
 			iData1 = 7874
 			for i in xrange(GC.getNumFeatureInfos()):
-				Info = GC.getFeatureInfo(i)
-				lItems.append([Info.getDescription(), 0, 0, i, Info.getButton(), []])
+				lItems.append([INFO.getDescription("FEATURE_", i), 0, 0, i, INFO.getButton("FEATURE_", i), []])
 			for pPlot in GC.getMap().plots():
 				iItemX = pPlot.getFeatureType()
 				if iItemX == -1: continue
@@ -416,8 +410,7 @@ class WBInfoScreen:
 		elif iMode == 8:
 			iData1 = 7878
 			for i in xrange(GC.getNumBonusInfos()):
-				Info = GC.getBonusInfo(i)
-				lItems.append([Info.getDescription(), 0, 0, i, Info.getButton(), []])
+				lItems.append([INFO.getDescription("BONUS_", i), 0, 0, i, INFO.getButton("BONUS_", i), []])
 			for pPlot in GC.getMap().plots():
 				iItemX = pPlot.getBonusType(-1)
 				if iItemX == -1: continue
@@ -430,8 +423,7 @@ class WBInfoScreen:
 		elif iMode == 9:
 			iData1 = 7877
 			for i in xrange(GC.getNumImprovementInfos()):
-				Info = GC.getImprovementInfo(i)
-				lItems.append([Info.getDescription(), 0, 0, i, Info.getButton(), []])
+				lItems.append([INFO.getDescription("IMPROVEMENT_", i), 0, 0, i, INFO.getButton("IMPROVEMENT_", i), []])
 			for pPlot in GC.getMap().plots():
 				iItemX = pPlot.getImprovementType()
 				if iItemX == -1: continue
@@ -444,8 +436,7 @@ class WBInfoScreen:
 		elif iMode == 10:
 			iData1 = 6788
 			for i in xrange(GC.getNumRouteInfos()):
-				Info = GC.getRouteInfo(i)
-				lItems.append([Info.getDescription(), 0, 0, i, Info.getButton(), []])
+				lItems.append([INFO.getDescription("ROUTE_", i), 0, 0, i, INFO.getButton("ROUTE_", i), []])
 			for pPlot in GC.getMap().plots():
 				iItemX = pPlot.getRouteType()
 				if iItemX == -1: continue
@@ -458,8 +449,7 @@ class WBInfoScreen:
 		elif iMode == 11:
 			iData1 = 8205
 			for i in xrange(GC.getNumCivicInfos()):
-				Info = GC.getCivicInfo(i)
-				lItems.append([Info.getDescription(), 0, 0, i, Info.getButton(), []])
+				lItems.append([INFO.getDescription("CIVIC_", i), 0, 0, i, INFO.getButton("CIVIC_", i), []])
 			for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 				pPlayerX = GC.getPlayer(iPlayerX)
 				if pPlayerX.isAlive():
@@ -472,14 +462,13 @@ class WBInfoScreen:
 		elif iMode == 12:
 			iData1 = 7871
 			for i in xrange(GC.getNumTechInfos()):
-				Info = GC.getTechInfo(i)
-				lItems.append([Info.getDescription(), 0, 0, i, Info.getButton(), []])
+				lItems.append([INFO.getDescription("TECH_", i), 0, 0, i, INFO.getButton("TECH_", i), []])
 			for iTeamX in xrange(GC.getMAX_TEAMS()):
 				pTeamX = GC.getTeam(iTeamX)
 				if pTeamX.isAlive():
 					for iItemX in xrange(GC.getNumTechInfos()):
 						iCount = pTeamX.isHasTech(iItemX)
-						if GC.getTechInfo(iItemX).isRepeat():
+						if INFO.getIntrinsic("TECH_", iItemX, IntrinsicSlot.PYINT_IS_REPEAT):
 							iCount = pTeamX.getTechCount(iItemX)
 						if iCount > 0:
 							if iTeamX == GC.getPlayer(iSelectedPlayer).getTeam():
@@ -489,8 +478,7 @@ class WBInfoScreen:
 		elif iMode == 13:
 			iData1 = 6785
 			for i in xrange(GC.getNumProjectInfos()):
-				Info = GC.getProjectInfo(i)
-				lItems.append([Info.getDescription(), 0, 0, i, Info.getButton(), []])
+				lItems.append([INFO.getDescription("PROJECT_", i), 0, 0, i, INFO.getButton("PROJECT_", i), []])
 			for iTeamX in xrange(GC.getMAX_TEAMS()):
 				pTeamX = GC.getTeam(iTeamX)
 				if pTeamX.isAlive():

@@ -10,12 +10,12 @@ import WBPlayerUnits
 import WBReligionScreen
 import WBCorporationScreen
 import WBInfoScreen
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
-STATE = CyState()
-ACT = CyAct()
+CULTURELEVEL = CyCultureLevelInfo()   # the per-info CULTURELEVEL accessor
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -164,7 +164,7 @@ class WBCityEditScreen:
 		iY = 140
 		screen.addDropDownBoxGFC("CityCultureLevel", iX, iY, screen.getXResolution()/4 - 40, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
 		for i in xrange(GC.getNumCultureLevelInfos()):
-			if GC.getCultureLevelInfo(i).getLevel() > -1:
+			if CULTURELEVEL.getLevel(i) > -1:
 				screen.addPullDownString("CityCultureLevel", INFO.getDescription("CULTURELEVEL_", i), i, i, pCity.getCultureLevel() == i)
 
 		iY += 30
@@ -297,16 +297,15 @@ class WBCityEditScreen:
 				if iRow > iMaxRow:
 					screen.appendTableRow("WBCityProduction")
 					iMaxRow = iRow
-				ItemInfo = GC.getUnitInfo(i)
 				sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 				if pCity.getProductionUnit() == i:
 					sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-				screen.setTableText("WBCityProduction", 0, iRow, "<font=3>" + sColor + ItemInfo.getDescription() + "</font></color>", ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 8202, i, 1<<0)
+				screen.setTableText("WBCityProduction", 0, iRow, "<font=3>" + sColor + INFO.getDescription("UNIT_", i) + "</font></color>", INFO.getButton("UNIT_", i), WidgetTypes.WIDGET_PYTHON, 8202, i, 1<<0)
 				iRow += 1
 		iRow = 0
 		for i in xrange(GC.getNumBuildingInfos()):
 			bEligible = False
-			if pCity.canConstruct(i, True, False, False):
+			if ENABLER.getBuildingAvailability(pCity.getOwner(), pCity.getID(), i) == EnablerState.ENABLER_LISTED:
 				bEligible = True
 			if not bEligible:
 				for j in xrange(pCity.getOrderQueueLength()):
@@ -317,11 +316,10 @@ class WBCityEditScreen:
 				if iRow > iMaxRow:
 					screen.appendTableRow("WBCityProduction")
 					iMaxRow = iRow
-				ItemInfo = GC.getBuildingInfo(i)
 				sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 				if pCity.getProductionBuilding() == i:
 					sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-				screen.setTableText("WBCityProduction", 1, iRow, "<font=3>" + sColor + ItemInfo.getDescription() + "</font></color>", ItemInfo.getButton(), WidgetTypes.WIDGET_HELP_BUILDING, i, -1, 1<<0)
+				screen.setTableText("WBCityProduction", 1, iRow, "<font=3>" + sColor + INFO.getDescription("BUILDING_", i) + "</font></color>", INFO.getButton("BUILDING_", i), WidgetTypes.WIDGET_HELP_BUILDING, i, -1, 1<<0)
 				iRow += 1
 		sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 		if pCity.isProduction():
@@ -341,11 +339,10 @@ class WBCityEditScreen:
 				if iRow > iMaxRow:
 					screen.appendTableRow("WBCityProduction")
 					iMaxRow = iRow
-				ItemInfo = GC.getProjectInfo(i)
 				sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 				if pCity.getProductionProject() == i:
 					sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-				screen.setTableText("WBCityProduction", 2, iRow, "<font=3>" + sColor + ItemInfo.getDescription() + "</font></color>", ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 6785, i, 1<<0)
+				screen.setTableText("WBCityProduction", 2, iRow, "<font=3>" + sColor + INFO.getDescription("PROJECT_", i) + "</font></color>", INFO.getButton("PROJECT_", i), WidgetTypes.WIDGET_PYTHON, 6785, i, 1<<0)
 				iRow += 1
 
 		for i in xrange(GC.getNumProcessInfos()):
@@ -353,11 +350,10 @@ class WBCityEditScreen:
 				if iRow > iMaxRow:
 					screen.appendTableRow("WBCityProduction")
 					iMaxRow = iRow
-				ItemInfo = GC.getProcessInfo(i)
 				sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 				if pCity.getProductionProcess() == i:
 					sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-				screen.setTableText("WBCityProduction", 2, iRow, "<font=3>" + sColor + ItemInfo.getDescription() + "</font></color>", ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 6787, i, 1<<0)
+				screen.setTableText("WBCityProduction", 2, iRow, "<font=3>" + sColor + INFO.getDescription("PROCESS_", i) + "</font></color>", INFO.getButton("PROCESS_", i), WidgetTypes.WIDGET_PYTHON, 6787, i, 1<<0)
 				iRow += 1
 
 	def handleInput (self, inputClass):
@@ -417,16 +413,16 @@ class WBCityEditScreen:
 
 		elif inputClass.getFunctionName().find("CityPopulation") > -1:
 			if inputClass.getData1() == 1030:
-				ACT.changeCityPopulation(pCity.getOwner(), pCity.getID(), iChange)
+				pCity.changePopulation(iChange)
 			elif inputClass.getData1() == 1031:
-				ACT.changeCityPopulation(pCity.getOwner(), pCity.getID(), - min(iChange, pCity.getPopulation()))
+				pCity.changePopulation(- min(iChange, pCity.getPopulation()))
 			self.placeStats()
 
 		elif inputClass.getFunctionName().find("CityFood") > -1:
 			if inputClass.getData1() == 1030:
-				pCity.changeFood(min(iChange, pCity.growthThreshold() - pCity.getFood()))
+				pCity.changeStoredFood(min(iChange, pCity.growthThreshold() - pCity.getFood()))
 			elif inputClass.getData1() == 1031:
-				pCity.changeFood(- min(iChange, pCity.getFood()))
+				pCity.changeStoredFood(- min(iChange, pCity.getFood()))
 			self.placeStats()
 
 		elif inputClass.getFunctionName() in ("CityDefensePlus", "CityDefenseMinus"):
@@ -452,7 +448,7 @@ class WBCityEditScreen:
 
 		elif inputClass.getFunctionName() == "CityCultureLevel":
 			iIndex = screen.getSelectedPullDownID("CityCultureLevel")
-			pCity.setCulture(iPlayer, GC.getCultureLevelInfo(iIndex).getSpeedThreshold(CyGame().getGameSpeedType()), True)
+			pCity.setCulture(iPlayer, CULTURELEVEL.getSpeedThreshold(iIndex, CyGame().getGameSpeedType()), True)
 			self.placeStats()
 
 		elif inputClass.getFunctionName().find("CityChangeHappy") > -1:
@@ -471,9 +467,9 @@ class WBCityEditScreen:
 
 		elif inputClass.getFunctionName().find("CityOccupationTurn") > -1:
 			if inputClass.getData1() == 1030:
-				pCity.changeOccupationTimer(iChange)
+				pCity.changeOccupation(iChange)
 			elif inputClass.getData1() == 1031:
-				pCity.changeOccupationTimer(- min(iChange, pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION]))
+				pCity.changeOccupation(- min(iChange, pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION]))
 			self.placeStats()
 
 		elif inputClass.getFunctionName().find("CityDraftAnger") > -1:
@@ -539,7 +535,7 @@ class WBCityEditScreen:
 		elif inputClass.getFunctionName() == "Commands":
 			iIndex = screen.getPullDownData("Commands", screen.getSelectedPullDownID("Commands"))
 			if iIndex == 5:
-				ACT.disbandCity(pCity.getOwner(), pCity.getID())
+				pCity.disband()
 			else:
 				self.WB.iMoveCity = pCity.getID()
 				self.WB.iCurrentPlayer = iPlayer

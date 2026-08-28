@@ -5,10 +5,11 @@ import WBPlayerScreen
 import WBPlayerUnits
 import WBInfoScreen
 import WorldBuilder
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
-STATE = CyState()
+INFO = CyInfo()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -95,16 +96,18 @@ class WBProjectScreen:
 	def sortProjects(self):
 		global lProject
 		lProject = []
-		for i in xrange(GC.getNumProjectInfos()):
-			Info = GC.getProjectInfo(i)
-			if iProjectType == 1 and not isTeamProject(i): continue
-			if iProjectType == 2 and not isWorldProject(i): continue
-			iTeam = Info.getMaxTeamInstances()
-			iWorld = Info.getMaxGlobalInstances()
+		#	A project is TEAM- or WORLD-scoped by whichever `allowed` cap it authors -- one read over the cap
+		#	axis, which is what the two undefined isTeamProject/isWorldProject helpers used to stand for.
+		for kProject in INFO.getIndex("PROJECT_"):
+			i = kProject["id"]
+			iTeam = INFO.getAllowedCap("PROJECT_", i, AllowedCap.ALLOWEDCAP_TEAM)
+			iWorld = INFO.getAllowedCap("PROJECT_", i, AllowedCap.ALLOWEDCAP_WORLD)
+			if iProjectType == 1 and iTeam < 0: continue
+			if iProjectType == 2 and iWorld < 0: continue
 			iMax = max(iTeam, iWorld)
 			if iTeam > -1 and iWorld > -1:
 				iMax = min(iTeam, iWorld)
-			lProject.append([Info.getDescription(), i, iMax])
+			lProject.append([kProject["description"], i, iMax])
 		lProject.sort()
 		self.placeProjects()
 
@@ -129,7 +132,6 @@ class WBProjectScreen:
 			item = lProject[iCount]
 			iRow = iCount % nRows
 			iColumn = iCount / nRows
-			Info = GC.getProjectInfo(item[1])
 			iCount = pTeam.getProjectCount(item[1])
 			sText = item[0]
 			sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
@@ -142,7 +144,7 @@ class WBProjectScreen:
 					sText = u"%s (%d)" %(sText, iCount)
 			if iCount == 0:
 				sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-			screen.setTableText("WBProject", iColumn, iRow, "<font=3>" + sColor + sText + "</font></color>", Info.getButton(), WidgetTypes.WIDGET_PYTHON, 6785, item[1], 1<<0 )
+			screen.setTableText("WBProject", iColumn, iRow, "<font=3>" + sColor + sText + "</font></color>", INFO.getButton("PROJECT_", item[1]), WidgetTypes.WIDGET_PYTHON, 6785, item[1], 1<<0 )
 
 	def handleInput (self, inputClass):
 		screen = CyGInterfaceScreen( "WBProjectScreen", CvScreenEnums.WB_PROJECT)
@@ -214,8 +216,9 @@ class WBProjectScreen:
 					self.modifyCount(item, pTeamX)
 		else:
 			self.modifyCount(item, pTeam)
-		if GC.getProjectInfo(item).isAllowsNukes() and CyGame().getProjectCreatedCount(item) == 0:
-			CyGame().makeNukesValid(False)
+		#	No nuke re-validation here: enabling nukes is a BUILDING amenity (CvBuildingInfo::isAllowsNukes,
+		#	applied by CvCity) and makeNukesValid is a PLAYER verb, so a project never gated it. The branch read
+		#	two members that do not exist on either side.
 
 	def modifyCount(self, item, pTeamX):
 		iCount = iChange
@@ -223,9 +226,8 @@ class WBProjectScreen:
 			iCount = -iCount
 			iCount = max(iCount, - pTeamX.getProjectCount(item))
 		else:
-			Info = GC.getProjectInfo(item)
-			iTeamMax = Info.getMaxTeamInstances()
-			iWorld = Info.getMaxGlobalInstances()
+			iTeamMax = INFO.getAllowedCap("PROJECT_", item, AllowedCap.ALLOWEDCAP_TEAM)
+			iWorld = INFO.getAllowedCap("PROJECT_", item, AllowedCap.ALLOWEDCAP_WORLD)
 			iMax = max(iTeamMax, iWorld)
 			if iTeamMax > -1 and iWorld > -1:
 				iMax = min(iTeamMax, iWorld)
@@ -237,8 +239,9 @@ class WBProjectScreen:
 		if WorldBuilder.bPython and iCount > 0:
 			pCapital = GC.getPlayer(pTeamX.getLeaderID()).getCapitalCity()
 			if pCapital:
+				aCapital = [pCapital.getOwner(), pCapital.getID()]
 				for i in xrange(iCount):
-					self.eventManager.onProjectBuilt([pCapital, item])
+					self.eventManager.onProjectBuilt([aCapital, item])
 
 	def update(self, fDelta):
 		return 1

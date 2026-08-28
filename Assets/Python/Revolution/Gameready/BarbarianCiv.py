@@ -14,14 +14,13 @@ import SdToolKit as SDTK
 from CvUtil import sendMessage
 
 # globals
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
 GAME = GC.getGame()
 MAP = GC.getMap()
-STATE = CyState()
-ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
@@ -238,7 +237,7 @@ class BarbarianCiv:
 
 		# Using following method to acquire city produces 'revolted and joined' replay messages
 		if CyCity.getOriginalOwner() == iPlayerBarb:
-			ACT.setCityOriginalOwner(iPlayer, CyCity.getID(), iPlayer)
+			GC.getPlayer(iPlayer).getCity(CyCity.getID()).setOriginalOwner(iPlayer)
 		CyPlot.setOwner(iPlayer)
 
 		# Note: city owner change (CyPlot.setOwner(iPlayer)) invalidate previous city pointer.
@@ -330,7 +329,7 @@ class BarbarianCiv:
 					iUnit = aList[GAME.getSorenRandNum(4, 'BC give offensive')]
 					if iUnit == -1: continue
 					CyUnit = CyPlayer.createUnit(iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
-					ACT.changeUnitExperience(CyUnit.getOwner(), CyUnit.getID(), iEra + GAME.getSorenRandNum(2*(iEra+1), 'Experience'), -1, False, False, False)
+					CyUnit.changeExperience(iEra + GAME.getSorenRandNum(2*(iEra+1), 'Experience'), -1, False, False, False)
 					iCount += 1
 					#print "Free Combatant: " + CyUnit.getName()
 				break
@@ -417,7 +416,7 @@ class BarbarianCiv:
 
 			CvUnitInfo = GC.getUnitInfo(iUnit)
 			if (
-				CvUnitInfo.getDomainType() != DomainTypes.DOMAIN_LAND
+				INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND
 			or	CvUnitInfo.getNumPrereqAndBuildings() > 0
 			or	CvUnitInfo.getPrereqAndBonus() != -1
 			and	GC.getBonusInfo(CvUnitInfo.getPrereqAndBonus()).getBonusClassType() == GC.getInfoTypeForString("BONUSCLASS_CULTURE")
@@ -558,14 +557,14 @@ class BarbarianCiv:
 					CyUnit.getOwner() == iPlayerBarb
 				and (CyPlotX.getOwner() == iPlayer or not GAME.getSorenRandNum(iRadius + 1, 'Convert Barbarian'))
 				):
-					iUnit = STATE.getUnitRead(CyUnit.getOwner(), CyUnit.getID())[UnitReadKind.UNIT_READ_TYPE]
+					iUnit = CyUnit.getRead()[UnitReadKind.UNIT_READ_TYPE]
 					CyUnit.kill(False, -1)
 					CyPlayer.createUnit(iUnit, CyPlotX.getX(), CyPlotX.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 
 		# City Culture
 		# Transfer barbarian culture to the new player (becomes "accepted" culture)
-		ACT.setCityCulture(iPlayer, CyCity.getID(), iPlayer, CyCity.getCultureForPlayer(iPlayerBarb))
-		ACT.setCityCulture(iPlayer, CyCity.getID(), iPlayerBarb, 0)
+		GC.getPlayer(iPlayer).getCity(CyCity.getID()).setCulture(iPlayer, CyCity.getCultureForPlayer(iPlayerBarb))
+		GC.getPlayer(iPlayer).getCity(CyCity.getID()).setCulture(iPlayerBarb, 0)
 
 		# Ensure the emergent civ gets its matching local culture building (C.L).
 		# onCityBuilt() normally handles this via settler promotions, but this code path
@@ -584,7 +583,7 @@ class BarbarianCiv:
 			iNational = GC.getInfoTypeForString(szNational)
 			iLocal = GC.getInfoTypeForString(szLocal)
 			if iNational > -1 and iLocal > -1 and CyCity.hasBuilding(iNational) and not CyCity.hasBuilding(iLocal):
-				ACT.setCityBuilding(CyCity.getOwner(), CyCity.getID(), iLocal, True)
+				CyCity.setBuilding(iLocal, True)
 				break
 
 		# Free city defenders
@@ -690,14 +689,14 @@ class BarbarianCiv:
 					if iDist <= iMaxDistance and GAME.getSorenRandNum(2, "fifty fifty"):
 						iCities += 1
 						if cityX.getOriginalOwner() == iPlayerBarb:
-							ACT.setCityOriginalOwner(cityX.getOwner(), cityX.getID(), iPlayer)
+							cityX.setOriginalOwner(iPlayer)
 						aList += ((plotX, x, y),) # No point in including the cityX pointer...
 
 			for plotX, x, y in aList:
 				plotX.setOwner(iPlayer) # ...because this invalidates the cityX pointer.
 				cityX = plotX.getPlotCity()
 				self.setupFormerBarbCity(cityX, iPlayer, iDefender, int(iNumBarbDefenders*fMilitaryMod + 1))
-				ACT.changeCityPopulation(cityX.getOwner(), cityX.getID(), 1)
+				cityX.changePopulation(1)
 				if iWorker > -1:
 					CyPlayer.createUnit(iWorker, x, y, UnitAITypes.UNITAI_WORKER, DirectionTypes.DIRECTION_SOUTH)
 				if iExplorer > -1:
@@ -731,7 +730,7 @@ class BarbarianCiv:
 				while iCount < amount:
 					iUnit = aList[GAME.getSorenRandNum(iLen, 'Military')]
 					CyUnit = CyPlayer.createUnit(iUnit, iX, iY, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH)
-					ACT.changeUnitExperience(CyUnit.getOwner(), CyUnit.getID(), iEra + GAME.getSorenRandNum(2*(iEra+1), 'Experience'), -1, False, False, False)
+					CyUnit.changeExperience(iEra + GAME.getSorenRandNum(2*(iEra+1), 'Experience'), -1, False, False, False)
 					iCount += 1
 
 			# Great persons

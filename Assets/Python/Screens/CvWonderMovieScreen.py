@@ -1,10 +1,10 @@
 from CvPythonExtensions import *
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()   # entity data: the context serves settings, CyInfo serves entities
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -111,7 +111,7 @@ class CvWonderMovieScreen:
 
 		elif iMovieType == 3:
 			# The FEATURE path never binds CvInfo -- it resolves its movie through the id surface, not through
-			# a legacy info handle -- so the header reads the same way ([DEC-cy-not-fixed]: the id surface IS
+			# a legacy info handle -- so the header reads the same way (: the id surface IS
 			# the read). Falling through to CvInfo here raised UnboundLocalError AFTER showScreen and BEFORE
 			# the exit button was added, which is what left an undismissable empty window.
 			szHeader = INFO.getDescription("FEATURE_", iMovieItem)

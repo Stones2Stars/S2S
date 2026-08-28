@@ -8,11 +8,12 @@ import WBEventScreen
 import WBPlayerUnits
 import HandleInputUtil
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
-STATE = CyState()
+UNITINFO = CyUnitInfo()   # the per-info UNIT accessor
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
@@ -32,17 +33,17 @@ class WBUnitScreen:
 	def __init__(self, WB):
 		self.WB = WB
 		self.lSelectableMissions = {
-			"MISSION_SPREAD":				[GC.getReligionInfo, 7869],
-			"MISSION_SPREAD_CORPORATION":	[GC.getCorporationInfo, 6782],
-			"MISSION_JOIN":					[GC.getSpecialistInfo, 7879],
-			"MISSION_CONSTRUCT":			[GC.getBuildingInfo, 7870],
-			"MISSION_BUILD":				[GC.getBuildInfo, 7882]
+			"MISSION_SPREAD":				["RELIGION_", 7869],
+			"MISSION_SPREAD_CORPORATION":	["CORPORATION_", 6782],
+			"MISSION_JOIN":					["SPECIALIST_", 7879],
+			"MISSION_CONSTRUCT":			["BUILDING_", 7870],
+			"MISSION_BUILD":				["BUILD_", 7882]
 		}
 
 	def interfaceScreen(self, args = []):
 		self.currentUnit = currentUnit = args[0]
-		self.currentPlot = currentPlot = currentUnit.plot()
-		self.unitType = currentUnit.getUnitType()
+		self.currentPlot = currentPlot = GC.getMap().plot(currentUnit.getX(), currentUnit.getY())
+		self.unitType = currentUnit.getRead()[UnitReadKind.UNIT_READ_TYPE]
 
 		self.xRes = xRes = self.WB.xRes
 		self.yRes = yRes = self.WB.yRes
@@ -228,40 +229,32 @@ class WBUnitScreen:
 
 		iY += 30
 		screen.addDropDownBoxGFC("Missions", iX, iY, iWidth, WidgetTypes.WIDGET_GENERAL, -1, -1, FontTypes.GAME_FONT)
-		UnitInfo = GC.getUnitInfo(self.unitType)
 		lMissionData = []
 		iFirstMission = -1
 		bResetMission = False
 		for i in xrange(GC.getNumMissionInfos()):
-			MissionInfo = GC.getMissionInfo(i)
-			sType = MissionInfo.getType()
+			sType = INFO.getType("MISSION_", i)
 			lData1 = []
 			iData2 = -1
 
 			if sType in ("MISSION_MOVE_TO_UNIT", "MISSION_SHADOW"):
 				continue
+			#	Each of these is the unit's OWN list, handed over whole. Sweeping a registry to ask every id
+			#	whether this unit applies to it is the own-data inversion; the unit already carries the answer.
 			elif sType == "MISSION_BUILD":
-				for j in xrange(GC.getNumBuildInfos()):
-					if UnitInfo.hasBuild(BuildTypes(j)):
-						lData1.append(j)
+				lData1 = list(UNITINFO.getBuilds(self.unitType))
 			elif sType == "MISSION_SPREAD":
-				for j in xrange(GC.getNumReligionInfos()):
-					if UnitInfo.getReligionSpreads(j) > 0:
-						lData1.append(j)
+				lData1 = list(UNITINFO.getReligionSpreads(self.unitType))
 			elif sType == "MISSION_SPREAD_CORPORATION":
-				for j in xrange(GC.getNumCorporationInfos()):
-					if UnitInfo.getCorporationSpreads(j) > 0:
-						lData1.append(j)
+				lData1 = list(UNITINFO.getCorporationSpreads(self.unitType))
 			elif sType == "MISSION_JOIN":
-				for j in xrange(GC.getNumSpecialistInfos()):
-					if UnitInfo.getGreatPeoples(j):
-						lData1.append(j)
+				lData1 = list(UNITINFO.getGrantedGreatPeople(self.unitType))
 			elif sType == "MISSION_CONSTRUCT":
-				for j in xrange(UnitInfo.getNumBuildings()):
-					lData1.append(UnitInfo.getBuildings(j))
+				#	UNSERVED: the unit no longer carries a constructable-building list -- that relationship is
+				#	authored on the BUILDING side now. Left empty rather than approximated from another plane.
+				lData1 = []
 			elif sType == "MISSION_HERITAGE":
-				for j in xrange(UnitInfo.getNumHeritage()):
-					lData1.append(UnitInfo.getHeritage(j))
+				lData1 = list(UNITINFO.getHeritage(self.unitType))
 			elif sType == "MISSION_GOLDEN_AGE":
 				lData1 = [-1]
 			else:
@@ -273,8 +266,8 @@ class WBUnitScreen:
 					iData2 = self.iPlotY
 			bCanDoMission = False
 			for iData1 in lData1:
-				if self.currentUnit.getGroup().canStartMission(i, iData1, iData2, self.currentPlot, True):
-					screen.addPullDownString("Missions", MissionInfo.getDescription(), i, i, i == iMissionType)
+				if self.currentUnit.canStartMission(i, iData1, iData2, self.currentPlot.getX(), self.currentPlot.getY(), True):
+					screen.addPullDownString("Missions", INFO.getDescription("MISSION_", i), i, i, i == iMissionType)
 					bCanDoMission = True
 					if iFirstMission == -1:
 						iFirstMission = i
@@ -299,11 +292,11 @@ class WBUnitScreen:
 				iData1 = lMissionData[i]
 				if iMissionData1 not in lMissionData:
 					iMissionData1 = iData1
-				if self.currentUnit.getGroup().canStartMission(iMissionType, iData1, -1, self.currentPlot, True):
-					ItemInfo = self.lSelectableMissions[sMissionType][0](iData1)
-					sDescription = ItemInfo.getDescription()
+				if self.currentUnit.canStartMission(iMissionType, iData1, -1, self.currentPlot.getX(), self.currentPlot.getY(), True):
+					sPrefix = self.lSelectableMissions[sMissionType][0]
+					sDescription = INFO.getDescription(sPrefix, iData1)
 					if sMissionType == "MISSION_BUILD":
-						sText = ItemInfo.getType()
+						sText = INFO.getType(sPrefix, iData1)
 						sDescription = ""
 						while len(sText):
 							sText = sText[sText.find("_") +1:]
@@ -319,7 +312,7 @@ class WBUnitScreen:
 					sColor = "<color=255,80,80>"
 					if iData1 == iMissionData1:
 						sColor = "<color=128,255,28>"
-					screen.setTableText("MissionInput", 0, iRow, "<font=3>" + sColor + sDescription + "</font></color>", ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, self.lSelectableMissions[sMissionType][1], iData1, 1<<0)
+					screen.setTableText("MissionInput", 0, iRow, "<font=3>" + sColor + sDescription + "</font></color>", INFO.getButton(sPrefix, iData1), WidgetTypes.WIDGET_PYTHON, self.lSelectableMissions[sMissionType][1], iData1, 1<<0)
 
 		elif sMissionType == "MISSION_DISCOVER":
 			screen.show("MissionInput")
@@ -395,30 +388,30 @@ class WBUnitScreen:
 
 		unit = self.currentUnit
 
-		if unit.getFacingDirection() == DirectionTypes.DIRECTION_NORTH:
+		if unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_NORTH:
 			screen.setTableText(TBL, 1,0 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 0, 1<<2)
-		elif unit.getFacingDirection() == DirectionTypes.DIRECTION_NORTHEAST:
+		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_NORTHEAST:
 			screen.setTableText(TBL, 2,0 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 1, 1<<2)
-		elif unit.getFacingDirection() == DirectionTypes.DIRECTION_EAST:
+		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_EAST:
 			screen.setTableText(TBL, 2,1 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 2, 1<<2)
-		elif unit.getFacingDirection() == DirectionTypes.DIRECTION_SOUTHEAST:
+		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_SOUTHEAST:
 			screen.setTableText(TBL, 2,2 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 3, 1<<2)
-		elif unit.getFacingDirection() == DirectionTypes.DIRECTION_SOUTH:
+		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_SOUTH:
 			screen.setTableText(TBL, 1,2 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 4, 1<<2)
-		elif unit.getFacingDirection() == DirectionTypes.DIRECTION_SOUTHWEST:
+		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_SOUTHWEST:
 			screen.setTableText(TBL, 0,2 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 5, 1<<2)
-		elif unit.getFacingDirection() == DirectionTypes.DIRECTION_WEST:
+		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_WEST:
 			screen.setTableText(TBL, 0,1 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 6, 1<<2)
-		elif unit.getFacingDirection() == DirectionTypes.DIRECTION_NORTHWEST:
+		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_NORTHWEST:
 			screen.setTableText(TBL, 0,0 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 7, 1<<2)
-		elif unit.getFacingDirection() == DirectionTypes.NO_DIRECTION:
+		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.NO_DIRECTION:
 			screen.setTableText(TBL, 1,1 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, -1, 1<<2)
 
 		iWidth = xRes/5 - 40
 		iY += iHeight
 		screen.addDropDownBoxGFC("UnitAIType", xRes/2 - iWidth/2, iY, iWidth, eWidGen, 1, 2, eFontGame)
 		for item in self.listUnitAI:
-			screen.addPullDownString("UnitAIType", item[0], item[1], item[1], item[1] == unit.getUnitAIType())
+			screen.addPullDownString("UnitAIType", item[0], item[1], item[1], item[1] == unit.getRead()[UnitReadKind.UNIT_READ_UNIT_AI])
 
 		iY += 30
 		if unit.isPromotionReady():
@@ -441,7 +434,7 @@ class WBUnitScreen:
 		sText = TRNSLTR.getText("TXT_KEY_WB_MADE_INTERCEPT", ())
 		screen.setText("MadeInterceptionText", "", "<font=3>" + sColor + sText + "</color></font>", 1<<2, xRes/2, iY + 1, 0, eFontGame, eWidGen, 1, 2)
 
-		iActivity = unit.getGroup().getActivityType()
+		iActivity = unit.getRead()[UnitReadKind.UNIT_READ_ACTIVITY]
 		if iActivity > -1:
 			import WorldBuilder
 			if iActivity < len(WorldBuilder.Activities):
@@ -454,7 +447,7 @@ class WBUnitScreen:
 		screen = self.WB.getScreen()
 		sText = TRNSLTR.getText("[COLOR_SELECTED_TEXT]", ()) + "<font=4b>" + self.currentUnit.getName()
 		screen.setText("UnitScreenHeader", "", sText, 1<<2, xRes/2, 20, 0, FontTypes.GAME_FONT, WidgetTypes.WIDGET_UNIT_NAME, -1, -1)
-		sText = "<font=3b>%s ID: %d, %s ID: %d" %(TRNSLTR.getText("TXT_WORD_UNIT", ()), self.currentUnit.getID(), TRNSLTR.getText("TXT_KEY_WB_GROUP", ()), self.currentUnit.getGroupID())
+		sText = "<font=3b>%s ID: %d, %s ID: %d" %(TRNSLTR.getText("TXT_WORD_UNIT", ()), self.currentUnit.getID(), TRNSLTR.getText("TXT_KEY_WB_GROUP", ()), self.currentUnit.getRead()[UnitReadKind.UNIT_READ_GROUP_ID])
 		screen.setLabel("UnitScreenHeaderB", "", sText, 1<<2, xRes/2, 50, 0, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		sText = "<font=3b>%s, X: %d, Y: %d" %(TRNSLTR.getText("TXT_KEY_WB_LATITUDE",(self.currentPlot.getLatitude(),)), self.iPlotX, self.iPlotY)
 		screen.setLabel("UnitLocation", "", sText, 1<<2, xRes/2, 70, 0, FontTypes.GAME_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
@@ -506,41 +499,41 @@ class WBUnitScreen:
 		iY += 30
 		screen.setButtonGFC("UnitLevelPlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("UnitLevelMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = TRNSLTR.getText("TXT_KEY_WB_XLEVEL", ()) + ": " + str(self.currentUnit.getLevel())
+		sText = TRNSLTR.getText("TXT_KEY_WB_XLEVEL", ()) + ": " + str(self.currentUnit.getRead()[UnitReadKind.UNIT_READ_LEVEL])
 		screen.setLabel("UnitLevelText", "", "<font=3>" + sText, 1<<0, iX + 55, iY + 1, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
 		screen.setButtonGFC("UnitExperiencePlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("UnitExperienceMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = TRNSLTR.getText("INTERFACE_PANE_EXPERIENCE", ()) + ": " + str(self.currentUnit.getExperience())
+		sText = TRNSLTR.getText("INTERFACE_PANE_EXPERIENCE", ()) + ": " + str(self.currentUnit.getRead()[UnitReadKind.UNIT_READ_EXPERIENCE] / 100)
 		screen.setLabel("UnitExperienceText", "", "<font=3>" + sText, 1<<0, iX + 55, iY + 1, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
 		screen.setButtonGFC("UnitBaseStrPlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("UnitBaseStrMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = TRNSLTR.getText("INTERFACE_PANE_STRENGTH", ()) + " " + str(self.currentUnit.baseCombatStr()) + TRNSLTR.getText("[ICON_STRENGTH]", ())
+		sText = TRNSLTR.getText("INTERFACE_PANE_STRENGTH", ()) + " " + str(self.currentUnit.getBaseCombatStr()) + TRNSLTR.getText("[ICON_STRENGTH]", ())
 		screen.setLabel("UnitBaseStrText", "", "<font=3>" + sText, 1<<0, iX + 55, iY + 1, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
-		sText = TRNSLTR.getText("INTERFACE_PANE_AIR_STRENGTH", ()) + " " + str(self.currentUnit.airBaseCombatStr())
+		sText = TRNSLTR.getText("INTERFACE_PANE_AIR_STRENGTH", ()) + " " + str(self.currentUnit.getAirBaseCombatStr())
 		screen.setLabel("UnitAirStrText", "", "<font=3>" + sText, 1<<0, iX + 55, iY + 1, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
 		screen.setButtonGFC("UnitDamagePlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("UnitDamageMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = TRNSLTR.getText("TXT_KEY_WB_DAMAGE", ()) + ": " + str(self.currentUnit.getDamage())
+		sText = TRNSLTR.getText("TXT_KEY_WB_DAMAGE", ()) + ": " + str(self.currentUnit.getRead()[UnitReadKind.UNIT_READ_DAMAGE])
 		screen.setLabel("UnitDamageText", "", "<font=3>" + sText, 1<<0, iX + 55, iY + 1, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
 		screen.setButtonGFC("UnitMovesLeftPlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("UnitMovesLeftMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = u"%s: %.2f" %(TRNSLTR.getText("TXT_KEY_WB_MOVES", ()), float(self.currentUnit.movesLeft()) / GC.getDefineINT("MOVE_DENOMINATOR")) + TRNSLTR.getText("[ICON_MOVES]", ())
+		sText = u"%s: %.2f" %(TRNSLTR.getText("TXT_KEY_WB_MOVES", ()), float(self.currentUnit.getRead()[UnitReadKind.UNIT_READ_MOVES_LEFT]) / GC.getDefineINT("MOVE_DENOMINATOR")) + TRNSLTR.getText("[ICON_MOVES]", ())
 		screen.setLabel("UnitMovesLeftText", "", "<font=3>" + sText, 1<<0, iX + 55, iY + 1, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		iY += 30
 		screen.setButtonGFC("UnitImmobilePlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("UnitImmobileMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-		sText = TRNSLTR.getText("TXT_KEY_WB_IMMOBILE_TIMER", ()) + ": " + str(self.currentUnit.getImmobileTimer())
+		sText = TRNSLTR.getText("TXT_KEY_WB_IMMOBILE_TIMER", ()) + ": " + str(self.currentUnit.getStatus(UnitStatus.STATUS_PARALYZED))
 		screen.setLabel("UnitImmobileText", "", "<font=3>" + sText, 1<<0, iX + 55, iY + 1, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		self.placeMissions()
@@ -571,16 +564,16 @@ class WBUnitScreen:
 						continue
 
 				if iCopyType == 1:
-					if unitX.getUnitType() != self.unitType:
+					if unitX.getRead()[UnitReadKind.UNIT_READ_TYPE] != self.unitType:
 						continue
 				elif iCopyType == 2:
-					if unitX.getUnitCombatType() != self.currentUnit.getUnitCombatType():
+					if unitX.getRead()[UnitReadKind.UNIT_READ_COMBAT_CLASS] != self.currentUnit.getRead()[UnitReadKind.UNIT_READ_COMBAT_CLASS]:
 						continue
 				elif iCopyType == 3:
-					if unitX.getDomainType() != self.currentUnit.getDomainType():
+					if unitX.getRead()[UnitReadKind.UNIT_READ_DOMAIN] != self.currentUnit.getRead()[UnitReadKind.UNIT_READ_DOMAIN]:
 						continue
 				elif iCopyType == 4:
-					if unitX.getGroupID() != self.currentUnit.getGroupID():
+					if unitX.getRead()[UnitReadKind.UNIT_READ_GROUP_ID] != self.currentUnit.getRead()[UnitReadKind.UNIT_READ_GROUP_ID]:
 						continue
 
 				lUnits.append([unitX.getOwner(), unitX.getID()])
@@ -603,13 +596,13 @@ class WBUnitScreen:
 			if unitX is None: continue
 			iRow = screen.appendTableRow(ID)
 			sText = unitX.getName()
-			if len(STATE.getUnitNameNoDesc(unitX.getOwner(), unitX.getID())):
-				sText = STATE.getUnitNameNoDesc(unitX.getOwner(), unitX.getID())
+			if len(unitX.getNameNoDesc()):
+				sText = unitX.getNameNoDesc()
 			sColor = "<color=255,80,80>"
 			if unitX.getOwner() == self.currentUnit.getOwner():
 				if unitX.getID() == self.currentUnit.getID():
 					sColor = "<color=128,255,28>"
-				elif unitX.getGroupID() == self.currentUnit.getGroupID():
+				elif unitX.getRead()[UnitReadKind.UNIT_READ_GROUP_ID] == self.currentUnit.getRead()[UnitReadKind.UNIT_READ_GROUP_ID]:
 					sColor = TRNSLTR.getText("[COLOR_YELLOW]", ())
 			screen.setTableText(ID, 2, iRow, "<font=3>" + sColor + sText + "</font></color>", unitX.getButton(), WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<0)
 			iLeader = pPlayerX.getLeaderType()
@@ -656,15 +649,15 @@ class WBUnitScreen:
 			screen.setLabel("CargoSpaceHeader", "", "<font=3b>" + sText, 1<<0, iX + 50, yRes - 41, 0, eFontGame, eWidGen, 1, 2)
 
 			if iSpace > 0:
-				iCargoDomain = self.currentUnit.domainCargo()
-				iSpecialCargo = self.currentUnit.specialCargo()
+				iCargoDomain = self.currentUnit.getDomainCargo()
+				iSpecialCargo = self.currentUnit.getSpecialCargo()
 				iUnitID = self.currentUnit.getID()
 				iOwner = self.currentUnit.getOwner()
 
 				for unitX in self.currentPlot.units():
 
 					if (unitX.getOwner() != iOwner
-					or iCargoDomain > -1 and unitX.getDomainType() != iCargoDomain
+					or iCargoDomain > -1 and unitX.getRead()[UnitReadKind.UNIT_READ_DOMAIN] != iCargoDomain
 					or iSpecialCargo > -1 and unitX.getSpecialUnitType() != iSpecialCargo
 					): continue
 
@@ -672,8 +665,8 @@ class WBUnitScreen:
 					if iOtherID == iUnitID:
 						continue
 
-					if STATE.getUnitNameNoDesc(unitX.getOwner(), unitX.getID()):
-						sText = STATE.getUnitNameNoDesc(unitX.getOwner(), unitX.getID())
+					if unitX.getNameNoDesc():
+						sText = unitX.getNameNoDesc()
 					else:
 						sText = unitX.getName()
 
@@ -700,7 +693,7 @@ class WBUnitScreen:
 			screen.hide("UnitCargoSpaceChange0")
 			screen.hide("UnitCargoSpaceChange1")
 			screen.hide("CargoSpaceHeader")
-			iDomain = self.currentUnit.getDomainType()
+			iDomain = self.currentUnit.getRead()[UnitReadKind.UNIT_READ_DOMAIN]
 			iSpecialUnit = self.currentUnit.getSpecialUnitType()
 			iUnitID = self.currentUnit.getID()
 			iOwner = self.currentUnit.getOwner()
@@ -709,16 +702,16 @@ class WBUnitScreen:
 
 				if (unitX.getOwner() != iOwner
 				or unitX.cargoSpace() < 1
-				or unitX.domainCargo() > -1 and iDomain != unitX.domainCargo()
-				or unitX.specialCargo() > -1 and iSpecialUnit != unitX.specialCargo()
+				or unitX.getDomainCargo() > -1 and iDomain != unitX.getDomainCargo()
+				or unitX.getSpecialCargo() > -1 and iSpecialUnit != unitX.getSpecialCargo()
 				): continue
 
 				iOtherID = unitX.getID()
 				if iOtherID == iUnitID:
 					continue
 
-				if STATE.getUnitNameNoDesc(unitX.getOwner(), unitX.getID()):
-					sText = STATE.getUnitNameNoDesc(unitX.getOwner(), unitX.getID())
+				if unitX.getNameNoDesc():
+					sText = unitX.getNameNoDesc()
 				else: sText = unitX.getName()
 
 				sText += " (" + str(unitX.getCargo()) + "/" + str(unitX.cargoSpace()) + ")"
@@ -747,17 +740,17 @@ class WBUnitScreen:
 
 	def doAllCommands(self, unitX, iIndex):
 		if iIndex == 1:
-			Info = GC.getUnitInfo(self.unitType)
-			unitX.setBaseCombatStr(Info.getCombat())
+			unitX.setBaseCombatStr(INFO.getScalar("UNIT_", self.unitType, InfoScalar.SCALAR_STRENGTH,
+			                                      CascScope.CASC_SCOPE_UNIT, CascUnit.CASC_UNIT_FLAT) / 100)
 			unitX.setDamage(0, -1)
 			unitX.setMoves(0)
-			unitX.setImmobileTimer(0)
+			unitX.setStatus(UnitStatus.STATUS_PARALYZED, 0)
 			unitX.setPromotionReady(False)
 			unitX.setMadeAttack(False)
 			unitX.setMadeInterception(False)
 			self.changeDirection(DirectionTypes.DIRECTION_SOUTH, unitX)
-			unitX.setUnitAIType(Info.getDefaultUnitAIType())
-			iCargoNeeded = Info.getCargoSpace() - unitX.cargoSpace()
+			unitX.setAIType(UNITINFO.getDefaultUnitAI(self.unitType))
+			iCargoNeeded = UNITINFO.getCargoSpace(self.unitType) - unitX.cargoSpace()
 			if iCargoNeeded != 0:
 				unitX.changeCargoSpace(iCargoNeeded)
 			unitX.setScriptData("")
@@ -770,11 +763,11 @@ class WBUnitScreen:
 			iRange = iChange
 			if iRange > 10: iRange = 10 # sanity control
 			for i in xrange(iRange):
-				pNewUnit = GC.getPlayer(unitX.getOwner()).createUnit(unitX.getUnitType(), unitX.getX(), unitX.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
+				pNewUnit = GC.getPlayer(unitX.getOwner()).createUnit(unitX.getRead()[UnitReadKind.UNIT_READ_TYPE], unitX.getX(), unitX.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 				pNewUnit.convert(unitX, False)
-				pNewUnit.setBaseCombatStr(unitX.baseCombatStr())
+				pNewUnit.setBaseCombatStr(unitX.getBaseCombatStr())
 				pNewUnit.changeCargoSpace(unitX.cargoSpace() - pNewUnit.cargoSpace())
-				pNewUnit.setImmobileTimer(unitX.getImmobileTimer())
+				pNewUnit.setStatus(UnitStatus.STATUS_PARALYZED, unitX.getStatus(UnitStatus.STATUS_PARALYZED))
 				pNewUnit.setScriptData(unitX.getScriptData())
 			return 1
 		if iIndex == 4:
@@ -798,14 +791,14 @@ class WBUnitScreen:
 			iData2 = self.iPlotY
 		pTargetPlot = GC.getMap().plot(self.iPlotX, self.iPlotY)
 		if pTargetPlot:
-			self.currentUnit.getGroup().pushMission(MissionTypes(iMissionType), iData1, iData2, 0, False, True, MissionAITypes.NO_MISSIONAI, pTargetPlot, self.currentUnit)
+			self.currentUnit.pushMission(iMissionType, iData1, iData2, 0, False, True, MissionAITypes.NO_MISSIONAI, pTargetPlot.getX(), pTargetPlot.getY())
 			self.interfaceScreen([self.currentUnit])
 		else:
 			return 2
 
 	def changeDirection(self, iNewDirection, unitX):
 		if iNewDirection == -1: return
-		iOldDirection = unitX.getFacingDirection()
+		iOldDirection = unitX.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION]
 		if iNewDirection == iOldDirection: return
 		if iOldDirection > iNewDirection:
 			for _ in xrange(iOldDirection - iNewDirection):
@@ -817,9 +810,9 @@ class WBUnitScreen:
 	def changeOwner(self, iPlayer):
 		pNewUnit = GC.getPlayer(iPlayer).createUnit(self.unitType, self.iPlotX, self.iPlotY, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
 		pNewUnit.convert(self.currentUnit, True)
-		pNewUnit.setBaseCombatStr(self.currentUnit.baseCombatStr())
+		pNewUnit.setBaseCombatStr(self.currentUnit.getBaseCombatStr())
 		pNewUnit.changeCargoSpace(self.currentUnit.cargoSpace() - pNewUnit.cargoSpace())
-		pNewUnit.setImmobileTimer(self.currentUnit.getImmobileTimer())
+		pNewUnit.setStatus(UnitStatus.STATUS_PARALYZED, self.currentUnit.getStatus(UnitStatus.STATUS_PARALYZED))
 		pNewUnit.setScriptData(self.currentUnit.getScriptData())
 		self.currentUnit.kill(False, -1)
 		self.interfaceScreen([pNewUnit])
@@ -829,17 +822,17 @@ class WBUnitScreen:
 			unitX = GC.getPlayer(i[0]).getUnit(i[1])
 			if unitX is None: continue
 			if iChangeType == 0:
-				unitX.setLevel(self.currentUnit.getLevel())
+				unitX.setLevel(self.currentUnit.getRead()[UnitReadKind.UNIT_READ_LEVEL])
 			elif iChangeType == 1:
-				unitX.setExperience(self.currentUnit.getExperience())
+				unitX.setExperience(self.currentUnit.getRead()[UnitReadKind.UNIT_READ_EXPERIENCE] / 100)
 			elif iChangeType == 2:
-				unitX.setBaseCombatStr(self.currentUnit.baseCombatStr())
+				unitX.setBaseCombatStr(self.currentUnit.getBaseCombatStr())
 			elif iChangeType == 3:
-				unitX.setDamage(self.currentUnit.getDamage(), -1)
+				unitX.setDamage(self.currentUnit.getRead()[UnitReadKind.UNIT_READ_DAMAGE], -1)
 			elif iChangeType == 4:
 				unitX.setMoves(self.currentUnit.getMoves())
 			elif iChangeType == 5:
-				unitX.setImmobileTimer(self.currentUnit.getImmobileTimer())
+				unitX.setStatus(UnitStatus.STATUS_PARALYZED, self.currentUnit.getStatus(UnitStatus.STATUS_PARALYZED))
 			elif iChangeType == 6:
 				unitX.setPromotionReady(self.currentUnit.isPromotionReady())
 			elif iChangeType == 7:
@@ -847,9 +840,9 @@ class WBUnitScreen:
 			elif iChangeType == 8:
 				unitX.setMadeInterception(self.currentUnit.isMadeInterception())
 			elif iChangeType == 9:
-				self.changeDirection(self.currentUnit.getFacingDirection(), unitX)
+				self.changeDirection(self.currentUnit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION], unitX)
 			elif iChangeType == 10:
-				unitX.setUnitAIType(self.currentUnit.getUnitAIType())
+				unitX.setAIType(self.currentUnit.getRead()[UnitReadKind.UNIT_READ_UNIT_AI])
 			elif iChangeType == 11:
 				unitX.changeCargoSpace(self.currentUnit.cargoSpace() - unitX.cargoSpace())
 			elif iChangeType == 12:
@@ -894,9 +887,9 @@ class WBUnitScreen:
 			if TYPE == "WBCargoUnits":
 				iPlayer = self.currentUnit.getOwner()
 				unitX = GC.getPlayer(iPlayer).getUnit(ID)
-				sText = CyGameTextMgr().getSpecificUnitHelp(unitX, True, False)
+				sText = CyGameTextMgr().getSpecificUnitHelp(unitX.getOwner(), unitX.getID(), True, False)
 				sText += "\n" + TRNSLTR.getText("TXT_WORD_UNIT", ()) + " ID: " + str(ID)
-				sText += "\n" + TRNSLTR.getText("TXT_KEY_WB_GROUP", ()) + " ID: " + str(unitX.getGroupID())
+				sText += "\n" + TRNSLTR.getText("TXT_KEY_WB_GROUP", ()) + " ID: " + str(unitX.getRead()[UnitReadKind.UNIT_READ_GROUP_ID])
 				sText += "\n" + "X: " + str(unitX.getX()) + ", Y: " + str(unitX.getY())
 				sText += "\n" + TRNSLTR.getText("TXT_KEY_WB_AREA_ID", ()) + ": "  + str(unitX.plot().getArea())
 				self.WB.tooltip.handle(screen, sText)
@@ -930,50 +923,50 @@ class WBUnitScreen:
 				popup = CyPopup(5006, EventContextTypes.EVENTCONTEXT_ALL, True)
 				popup.setUserData((self.currentUnit.getOwner(), self.currentUnit.getID()))
 				popup.setBodyString(TRNSLTR.getText("TXT_KEY_RENAME_UNIT", ()), 1<<0)
-				popup.createEditBox(STATE.getUnitNameNoDesc(self.currentUnit.getOwner(), self.currentUnit.getID()), 0)
+				popup.createEditBox(self.currentUnit.getNameNoDesc(), 0)
 				popup.setEditBoxMaxCharCount(25, 32, 0)
 				popup.launch(True, PopupStates.POPUPSTATE_IMMEDIATE)
 
 			elif NAME.find("UnitLevel") > -1:
 				if iData1 == 1030:
-					self.currentUnit.setLevel(self.currentUnit.getLevel() + iChange)
+					self.currentUnit.setLevel(self.currentUnit.getRead()[UnitReadKind.UNIT_READ_LEVEL] + iChange)
 				elif iData1 == 1031:
-					self.currentUnit.setLevel(max(0, self.currentUnit.getLevel() - iChange))
+					self.currentUnit.setLevel(max(0, self.currentUnit.getRead()[UnitReadKind.UNIT_READ_LEVEL] - iChange))
 				self.placeStats()
 
 			elif NAME.find("UnitExperience") > -1:
 				if iData1 == 1030:
 					self.currentUnit.changeExperience(iChange, -1, False, False, False)
 				elif iData1 == 1031:
-					self.currentUnit.changeExperience(- min(iChange, self.currentUnit.getExperience()), -1, False, False, False)
+					self.currentUnit.changeExperience(- min(iChange, self.currentUnit.getRead()[UnitReadKind.UNIT_READ_EXPERIENCE] / 100), -1, False, False, False)
 				self.placeStats()
 
 			elif NAME.find("UnitBaseStr") > -1:
 				if iData1 == 1030:
-					self.currentUnit.setBaseCombatStr(self.currentUnit.baseCombatStr() + iChange)
+					self.currentUnit.setBaseCombatStr(self.currentUnit.getBaseCombatStr() + iChange)
 				elif iData1 == 1031:
-					self.currentUnit.setBaseCombatStr(max(0, self.currentUnit.baseCombatStr() - iChange))
+					self.currentUnit.setBaseCombatStr(max(0, self.currentUnit.getBaseCombatStr() - iChange))
 				self.placeStats()
 
 			elif NAME.find("UnitDamage") > -1:
 				if iData1 == 1030:
 					self.currentUnit.changeDamage(iChange, -1)
 				elif iData1 == 1031:
-					self.currentUnit.changeDamage(- min(iChange, self.currentUnit.getDamage()), -1)
+					self.currentUnit.changeDamage(- min(iChange, self.currentUnit.getRead()[UnitReadKind.UNIT_READ_DAMAGE]), -1)
 				self.placeStats()
 
 			elif NAME.find("UnitMovesLeft") > -1:
 				if iData1 == 1030:
 					self.currentUnit.changeMoves(- iChange * GC.getDefineINT("MOVE_DENOMINATOR"))
 				elif iData1 == 1031:
-					self.currentUnit.changeMoves(min(iChange * GC.getDefineINT("MOVE_DENOMINATOR"), self.currentUnit.movesLeft()))
+					self.currentUnit.changeMoves(min(iChange * GC.getDefineINT("MOVE_DENOMINATOR"), self.currentUnit.getRead()[UnitReadKind.UNIT_READ_MOVES_LEFT]))
 				self.placeStats()
 
 			elif NAME.find("UnitImmobile") > -1:
 				if iData1 == 1030:
-					self.currentUnit.setImmobileTimer(self.currentUnit.getImmobileTimer() + iChange)
+					self.currentUnit.setStatus(UnitStatus.STATUS_PARALYZED, self.currentUnit.getStatus(UnitStatus.STATUS_PARALYZED) + iChange)
 				elif iData1 == 1031:
-					self.currentUnit.setImmobileTimer(max(0, self.currentUnit.getImmobileTimer() - iChange))
+					self.currentUnit.setStatus(UnitStatus.STATUS_PARALYZED, max(0, self.currentUnit.getStatus(UnitStatus.STATUS_PARALYZED) - iChange))
 				self.placeStats()
 
 			elif NAME == "PromotionReadyText":
@@ -1070,7 +1063,7 @@ class WBUnitScreen:
 				self.changeOwner(screen.getPullDownData("UnitOwner", screen.getSelectedPullDownID("UnitOwner")))
 
 			elif NAME == "UnitAIType":
-				self.currentUnit.setUnitAIType(screen.getPullDownData("UnitAIType", screen.getSelectedPullDownID("UnitAIType")))
+				self.currentUnit.setAIType(screen.getPullDownData("UnitAIType", screen.getSelectedPullDownID("UnitAIType")))
 
 			elif NAME == "CommandUnits":
 				iCommandUnitType = screen.getPullDownData("CommandUnits", screen.getSelectedPullDownID("CommandUnits"))
@@ -1085,13 +1078,13 @@ class WBUnitScreen:
 					for self.currentUnitX in self.currentPlot.units():
 						if self.currentUnitX.getOwner() != self.currentUnit.getOwner(): continue
 						if iCommandUnitType == 1:
-							if self.currentUnitX.getUnitType() != self.unitType: continue
+							if self.currentUnitX.getRead()[UnitReadKind.UNIT_READ_TYPE] != self.unitType: continue
 						elif iCommandUnitType == 2:
-							if self.currentUnitX.getUnitCombatType() != self.currentUnit.getUnitCombatType(): continue
+							if self.currentUnitX.getRead()[UnitReadKind.UNIT_READ_COMBAT_CLASS] != self.currentUnit.getRead()[UnitReadKind.UNIT_READ_COMBAT_CLASS]: continue
 						elif iCommandUnitType == 3:
-							if self.currentUnitX.getDomainType() != self.currentUnit.getDomainType(): continue
+							if self.currentUnitX.getRead()[UnitReadKind.UNIT_READ_DOMAIN] != self.currentUnit.getRead()[UnitReadKind.UNIT_READ_DOMAIN]: continue
 						elif iCommandUnitType == 4:
-							if self.currentUnitX.getGroupID() != self.currentUnit.getGroupID(): continue
+							if self.currentUnitX.getRead()[UnitReadKind.UNIT_READ_GROUP_ID] != self.currentUnit.getRead()[UnitReadKind.UNIT_READ_GROUP_ID]: continue
 						aList.append(self.currentUnitX)
 				iRefresh = 0
 				for unitX in aList:
@@ -1146,8 +1139,8 @@ class WBUnitScreen:
 	def modifyCargoEntry(self, screen, unitX, ID, color):
 		NAME = "WID|WBCargoUnits" + str(ID)
 		screen.hide(NAME)
-		if STATE.getUnitNameNoDesc(unitX.getOwner(), unitX.getID()):
-			sText = STATE.getUnitNameNoDesc(unitX.getOwner(), unitX.getID())
+		if unitX.getNameNoDesc():
+			sText = unitX.getNameNoDesc()
 		else: sText = unitX.getName()
 
 		if self.bCargo:

@@ -5,8 +5,9 @@ from CvPythonExtensions import *
 import CvScreenEnums
 
 # globals
-# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()   # entity data: the context serves settings, CyInfo serves entities
 # The per-info accessor for this registry. Named reads, because these values belong to ESPIONAGEMISSION_ alone

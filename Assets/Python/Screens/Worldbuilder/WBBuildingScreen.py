@@ -12,13 +12,12 @@ import WBCorporationScreen
 import WBInfoScreen
 import WorldBuilder
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
 BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
-STATE = CyState()
-ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -353,43 +352,39 @@ class WBBuildingScreen:
 		return 1
 
 	def editBuilding(self, item, pPlayerX, bAvailable, bWonder):
-		info = GC.getBuildingInfo(item)
 		iType = iChangeType or bAvailable
 		if bApplyAll and not bWonder:
 			for cityX in pPlayerX.cities():
 				bModify = True
-				if info.isWater() and not cityX.isCoastal(info.getMinAreaSize()): bModify = False
-				if info.isRiver() and not cityX.plot().isRiver(): bModify = False
+				#	The coastal / river / holy-city placement gates are the ENABLER's answer now -- they were
+				#	hand-rolled here against building members that no longer exist, and getBuildingAvailability
+				#	below is the one machine that decides whether a city may hold this building.
 				if bAvailable:
-					if info.isCapital(): bModify = False
-					iHolyReligion = info.getHolyCity()
-					if iHolyReligion > -1 and not cityX.isHolyCityByType(iHolyReligion): bModify = False
-					if not cityX.canConstruct(item, True, False, True): bModify = False
+					if INFO.providesCapitalStatus(item): bModify = False
+					if ENABLER.getBuildingAvailability(cityX.getOwner(), cityX.getID(), item) != EnablerState.ENABLER_LISTED: bModify = False
 				if bModify:
 					if iChangeType == 2 and not bAvailable:
 						iType = not cityX.hasBuilding(item)
 					self.doEffects(cityX, item, iType)
 		else:
 			if bAvailable:
-				if info.isCapital(): return
-				iHolyReligion = info.getHolyCity()
-				if iHolyReligion > -1 and not pCity.isHolyCityByType(iHolyReligion): return
-				if not pCity.canConstruct(item, True, False, True): return
+				if INFO.providesCapitalStatus(item): return
+				#	The holy-city gate is the ENABLER's answer now, exactly as in the apply-all branch above.
+				if ENABLER.getBuildingAvailability(pCity.getOwner(), pCity.getID(), item) != EnablerState.ENABLER_LISTED: return
 			if iChangeType == 2 and not bAvailable:
 				iType = not pCity.hasBuilding(item)
 			self.doEffects(pCity, item, iType)
-		iFreeBuilding = info.getFreeBuilding()
-		if iFreeBuilding > -1 and bWonder != BUILDING.isLimitedWonder(iFreeBuilding):
-			return True
+		#	A building no longer carries a `freeBuilding` FK, so there is no second building whose wonder class
+		#	could disagree with this one -- the caller's re-sort is never needed on that account.
 		return False
 
 	def doEffects(self, pCity, item, bAdd):
 		bEffects = False
 		if bAdd and WorldBuilder.bPython and not pCity.hasBuilding(item):
 			bEffects = True
-		ACT.setCityBuilding(pCity.getOwner(), pCity.getID(), item, bAdd)
+		pCity.setBuilding(item, bAdd)
 		if bEffects:
-			self.eventManager.onBuildingBuilt([pCity, item])
+			self.eventManager.onBuildingBuilt([[pCity.getOwner(), pCity.getID()], item])
 
 	def update(self, fDelta):
 		return 1

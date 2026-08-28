@@ -22,11 +22,11 @@
 
 from CvPythonExtensions import *
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
-STATE = CyState()
 GAME = CyGame()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
@@ -66,8 +66,8 @@ def getUnitIcon(iUnit):
 
 def getDisplayCity():
 	# Returns (owner, cityId, turns) for the progress bar. The selection is asked of the library rather than of
-	# the EXE's CyInterface, which hands back a handle carrying zero defs -- see CyState::getHeadSelectedCityId.
-	aSelected = STATE.getHeadSelectedCityId()
+	# the EXE's CyInterface, which hands back a handle carrying zero defs -- see CyGame::getHeadSelectedCityId.
+	aSelected = GAME.getHeadSelectedCityId()
 	iPlayer = aSelected[0]
 	if aSelected[1] >= 0 and GC.getPlayer(iPlayer).getTeam() == GAME.getActiveTeam():
 		iCityId = aSelected[1]
@@ -86,7 +86,7 @@ def findNextCity():
 	iCityId = -1
 	iTurns = 0
 	iPlayer = GAME.getActivePlayer()
-	iThreshold = STATE.getGreatPeopleThresholdNonMilitary(iPlayer)
+	iThreshold = GC.getPlayer(iPlayer).getGreatPeopleThresholdNonMilitary()
 
 	for iCityX in GC.getPlayer(iPlayer).getCityIds():
 		iRate = GC.getPlayer(iPlayer).getCity(iCityX).getGreatPeopleRate()
@@ -114,7 +114,7 @@ def findMaxCity():
 
 def getCityTurns(iPlayer, iCityId):
 	if iCityId >= 0:
-		iThreshold = STATE.getGreatPeopleThresholdNonMilitary(iPlayer)
+		iThreshold = GC.getPlayer(iPlayer).getGreatPeopleThresholdNonMilitary()
 		iRate = GC.getPlayer(iPlayer).getCity(iCityId).getGreatPeopleRate()
 		if iRate > 0:
 			iProgress = GC.getPlayer(iPlayer).getCity(iCityId).getGreatPeopleProgress()

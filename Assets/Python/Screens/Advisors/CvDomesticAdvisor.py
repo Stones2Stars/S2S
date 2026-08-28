@@ -4,8 +4,9 @@ import cPickle
 import sys
 
 # globals
-# The one data-fetching library ([DEC-cy-not-fixed]): ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
 BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
@@ -834,7 +835,7 @@ class CvDomesticAdvisor:
 
 		if iCultureRateTimes100 > 0 and city.getCultureThreshold() > 0:
 
-			return (100*city.getCultureThreshold() - city.getCultureTimes100(self.iPlayer) + iCultureRateTimes100 - 1) / iCultureRateTimes100
+			return (100*city.getCultureThreshold() - city.getCultureForPlayer(self.iPlayer) + iCultureRateTimes100 - 1) / iCultureRateTimes100
 
 		return u"-"
 
@@ -852,7 +853,7 @@ class CvDomesticAdvisor:
 		return self.objectNotPossible
 
 	def canLiberate(self, city, szKey, arg):
-		if city.getLiberationPlayer(False) != -1:
+		if city.getLiberationPlayer() != -1:
 			return self.objectHave
 		return self.objectNotPossible
 

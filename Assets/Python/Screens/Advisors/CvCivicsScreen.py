@@ -5,11 +5,11 @@ import HandleInputUtil
 import CivicData
 
 # globals
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 GAME = GC.getGame()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 AFM = CyArtFileMgr()
@@ -321,7 +321,7 @@ class CvCivicsScreen:
 
 	def setCivicText(self, screen, iCivic):
 		# The info plane is reached through the ONE data-fetching library, addressed by infotype prefix -- the
-		# global context hands out no info objects by design ([DEC-cy-not-fixed]).
+		# global context hands out no info objects by design.
 		szTxt = self.aFontList[1] + INFO.getDescription("CIVIC_", iCivic) + "\n"
 		szTxt += self.aFontList[4] + INFO.getStrategy("CIVIC_", iCivic) + GTM.parseCivicInfo(iCivic, False, True, True) + "\n\n"
 

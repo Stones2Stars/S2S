@@ -7,11 +7,11 @@ import WBReligionScreen
 import WBCorporationScreen
 import WBInfoScreen
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TEXT = CyGameTextMgr()
@@ -80,8 +80,7 @@ class WBPlayerScreen:
 
 		lReligions = []
 		for i in xrange(GC.getNumReligionInfos()):
-			ItemInfo = GC.getReligionInfo(i)
-			lReligions.append([ItemInfo.getDescription() + " (" + str(pPlayer.getHasReligionCount(i)) + ")", i])
+			lReligions.append([INFO.getDescription("RELIGION_", i) + " (" + str(pPlayer.getHasReligionCount(i)) + ")", i])
 		lReligions.sort()
 
 		self.placeStats()
@@ -196,13 +195,12 @@ class WBPlayerScreen:
 				screen.appendTableRow("WBPlayerResearch")
 				iMaxRows = iRow
 			iCount += 1
-			ItemInfo = GC.getTechInfo(iTechX)
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
-			sText = u"%s (%d/%d)%c" %(ItemInfo.getDescription(), pTeam.getResearchProgress(iTechX), pTeam.getResearchCost(iTechX), TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH))
+			sText = u"%s (%d/%d)%c" %(INFO.getDescription("TECH_", iTechX), pTeam.getResearchProgress(iTechX), pTeam.getResearchCost(iTechX), TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH))
 			if iCurrentTech == iTechX:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 				sCurrentTech = sText
-			screen.setTableText("WBPlayerResearch", iColumn, iRow, "<font=3>" + sColor + sText + "</color></font>", ItemInfo.getButton(), WidgetTypes.WIDGET_PYTHON, 7871, iTechX, 1<<0)
+			screen.setTableText("WBPlayerResearch", iColumn, iRow, "<font=3>" + sColor + sText + "</color></font>", INFO.getButton("TECH_", iTechX), WidgetTypes.WIDGET_PYTHON, 7871, iTechX, 1<<0)
 
 		if iCurrentTech > -1:
 			screen.setButtonGFC("CurrentResearchPlus", "", "", iX + iWidth - 50, iY - 30, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)

@@ -4,11 +4,12 @@ import WBProjectScreen
 import WBPlayerScreen
 import WBPlayerUnits
 import WBInfoScreen
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
-STATE = CyState()
+BUILDING = CyBuildingInfo()   # the per-info BUILDING accessor
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -85,23 +86,21 @@ class WBTeamScreen:
 				screen.addPullDownString("MergeTeam", sName, i, i, False)
 
 		self.lImprovements = []
-		for i in xrange(GC.getNumImprovementInfos()):
-			ItemInfo = GC.getImprovementInfo(i)
-			if ItemInfo.isGraphicalOnly(): continue
-			self.lImprovements.append([ItemInfo.getDescription(), i])
+		for kImprovement in INFO.getIndex("IMPROVEMENT_"):
+			if kImprovement["graphicalOnly"]: continue
+			self.lImprovements.append([kImprovement["description"], kImprovement["id"]])
 		self.lImprovements.sort()
 
 		self.lRoutes = []
-		for i in xrange(GC.getNumRouteInfos()):
-			ItemInfo = GC.getRouteInfo(i)
-			self.lRoutes.append([ItemInfo.getDescription(), i])
+		for kRoute in INFO.getIndex("ROUTE_"):
+			self.lRoutes.append([kRoute["description"], kRoute["id"]])
 		self.lRoutes.sort()
 
 		self.lVoteBuildings = []
 		for i in xrange(GC.getNumVoteSourceInfos()):
 			iVoteBuilding = -1
 			for j in xrange(GC.getNumBuildingInfos()):
-				if GC.getBuildingInfo(j).getVoteSourceType() == i:
+				if BUILDING.getVoteSource(j) == i:
 					iVoteBuilding = j
 					break
 			if iVoteBuilding == -1: continue
@@ -111,44 +110,9 @@ class WBTeamScreen:
 		self.lAbilities = []
 		for _ in xrange(12):
 			self.lAbilities.append([WidgetTypes.WIDGET_GENERAL, -1])
-		for i in xrange(GC.getNumTechInfos()):
-			ItemInfo = GC.getTechInfo(i)
-			if ItemInfo.isMapCentering():
-				self.lAbilities[0][0] = WidgetTypes.WIDGET_HELP_MAP_CENTER
-				self.lAbilities[0][1] = i
-			if ItemInfo.isMapTrading():
-				self.lAbilities[1][0] = WidgetTypes.WIDGET_HELP_MAP_TRADE
-				self.lAbilities[1][1] = i
-			if ItemInfo.isTechTrading():
-				self.lAbilities[2][0] = WidgetTypes.WIDGET_HELP_TECH_TRADE
-				self.lAbilities[2][1] = i
-			if ItemInfo.isGoldTrading():
-				self.lAbilities[3][0] = WidgetTypes.WIDGET_HELP_GOLD_TRADE
-				self.lAbilities[3][1] = i
-			if ItemInfo.isOpenBordersTrading():
-				self.lAbilities[4][0] = WidgetTypes.WIDGET_HELP_OPEN_BORDERS
-				self.lAbilities[4][1] = i
-			if ItemInfo.isDefensivePactTrading():
-				self.lAbilities[5][0] = WidgetTypes.WIDGET_HELP_DEFENSIVE_PACT
-				self.lAbilities[5][1] = i
-			if ItemInfo.isPermanentAllianceTrading():
-				self.lAbilities[6][0] = WidgetTypes.WIDGET_HELP_PERMANENT_ALLIANCE
-				self.lAbilities[6][1] = i
-			if ItemInfo.isVassalStateTrading():
-				self.lAbilities[7][0] = WidgetTypes.WIDGET_HELP_VASSAL_STATE
-				self.lAbilities[7][1] = i
-			if ItemInfo.isBridgeBuilding():
-				self.lAbilities[8][0] = WidgetTypes.WIDGET_HELP_BUILD_BRIDGE
-				self.lAbilities[8][1] = i
-			if ItemInfo.isIrrigation():
-				self.lAbilities[9][0] = WidgetTypes.WIDGET_HELP_IRRIGATION
-				self.lAbilities[9][1] = i
-			if ItemInfo.isIgnoreIrrigation():
-				self.lAbilities[10][0]= WidgetTypes.WIDGET_HELP_IGNORE_IRRIGATION
-				self.lAbilities[10][1]= i
-			if ItemInfo.isWaterWork():
-				self.lAbilities[11][0] = WidgetTypes.WIDGET_HELP_WATER_WORK
-				self.lAbilities[11][1] = i
+		#	The rows keep the generic widget above: each ability is TEAM state (CyTeam.isMapCentering and its
+		#	kin) and still toggles, but no tech DECLARES which one grants it any more, so there is no tech to
+		#	point a per-ability help widget at.
 
 		self.placeStats()
 		self.placeMembers()
@@ -202,7 +166,7 @@ class WBTeamScreen:
 		screen.addTableControlGFC("WBTeamVotes", 1, iX, iY, iWidth, iHeight, False, False, 24, 24, TableStyles.TABLE_STYLE_STANDARD )
 		screen.setTableColumnHeader( "WBTeamVotes", 0, "", iWidth)
 		for item in self.lVoteBuildings:
-			iVoteSource = GC.getBuildingInfo(item[1]).getVoteSourceType()
+			iVoteSource = BUILDING.getVoteSource(item[1])
 			iRow = screen.appendTableRow("WBTeamVotes")
 			sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
 			if self.pTeam.isForceTeamVoteEligible(iVoteSource):
@@ -224,8 +188,7 @@ class WBTeamScreen:
 
 		for item in self.lRoutes:
 			iRow = screen.appendTableRow("WBTeamRoutes")
-			Info = GC.getRouteInfo(item[1])
-			screen.setTableText("WBTeamRoutes", 0, iRow, "<font=3>" + item[0] + "</font>", Info.getButton(), WidgetTypes.WIDGET_PYTHON, 6788, item[1], 1<<0)
+			screen.setTableText("WBTeamRoutes", 0, iRow, "<font=3>" + item[0] + "</font>", INFO.getButton("ROUTE_", item[1]), WidgetTypes.WIDGET_PYTHON, 6788, item[1], 1<<0)
 			iRouteChange  = self.pTeam.getRouteChange(item[1])
 			if iRouteChange  != 0:
 				sText = u"%+d%s %s" %(iRouteChange , CyTranslator().getText("[ICON_MOVES]", ()), CyTranslator().getText("TXT_KEY_ESPIONAGE_SCREEN_COST", ()))
@@ -243,9 +206,8 @@ class WBTeamScreen:
 		screen.setTableColumnHeader("WBTeamDomainMoves", 0, "", iWidth/2)
 		screen.setTableColumnHeader("WBTeamDomainMoves", 1, "", iWidth/2)
 		for i in xrange(DomainTypes.NUM_DOMAIN_TYPES):
-			Info = GC.getDomainInfo(i)
 			screen.appendTableRow("WBTeamDomainMoves")
-			screen.setTableText("WBTeamDomainMoves", 0, i, "<font=3>" + Info.getDescription() + "</font>", "", WidgetTypes.WIDGET_PYTHON, 1030, i, 1<<0 )
+			screen.setTableText("WBTeamDomainMoves", 0, i, "<font=3>" + INFO.getDescription("DOMAIN_", i) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 1030, i, 1<<0 )
 			iDomainChange = self.pTeam.getExtraMoves(i)
 			if iDomainChange != 0:
 				sText = u"%+d%s" %(iDomainChange, CyTranslator().getText("[ICON_MOVES]", ()))
@@ -270,9 +232,8 @@ class WBTeamScreen:
 		screen.setTableColumnHeader("WBTeamYield", 1, "", iWidth/2)
 
 		for item in self.lImprovements:
-			Info = GC.getImprovementInfo(item[1])
 			iRow = screen.appendTableRow("WBTeamYield")
-			screen.setTableText("WBTeamYield", 0, iRow, "<font=3>" + item[0] + "</font>", Info.getButton(), WidgetTypes.WIDGET_PYTHON, 7877, item[1], 1<<0 )
+			screen.setTableText("WBTeamYield", 0, iRow, "<font=3>" + item[0] + "</font>", INFO.getButton("IMPROVEMENT_", item[1]), WidgetTypes.WIDGET_PYTHON, 7877, item[1], 1<<0 )
 			sText = ""
 			for j in xrange(YieldTypes.NUM_YIELD_TYPES):
 				iYieldChange = self.pTeam.getImprovementYieldChange(item[1], j)
@@ -494,7 +455,7 @@ class WBTeamScreen:
 			self.placeImprovements()
 
 		elif inputClass.getFunctionName() == "WBTeamVotes":
-			iVote = GC.getBuildingInfo(inputClass.getData2()).getVoteSourceType()
+			iVote = BUILDING.getVoteSource(inputClass.getData2())
 			if self.pTeam.isForceTeamVoteEligible(iVote):
 				self.pTeam.changeForceTeamVoteEligibilityCount(iVote, - self.pTeam.getForceTeamVoteEligibilityCount(iVote))
 			else:

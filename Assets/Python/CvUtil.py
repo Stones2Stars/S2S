@@ -8,10 +8,10 @@ from CvPythonExtensions import *
 import ScreenResolution as SR
 
 # globals
-# STATE is the live-state half of the one data-fetching library (CyState, beside CyEnabler). CyInterface and
+# Live state is asked of each game object's own accessor (beside CyEnabler). CyInterface and
 # CyTranslator are the UI and localization services, which the library deliberately does not own.
 GC = CyGlobalContext()
-STATE = CyState()
+GAME = CyGame()
 CyIF = CyInterface()
 TRNSLTR = CyTranslator()
 
@@ -257,11 +257,11 @@ def combatDetailMessageBuilder(cdUnit, ePlayer, iChange):
 def combatMessageBuilder(cdAttacker, cdDefender, iCombatOdds):
 	combatMessage = ""
 	if cdAttacker.eOwner == cdAttacker.eVisualOwner:
-		combatMessage += "%s's " %(STATE.getPlayerName(cdAttacker.eOwner),)
+		combatMessage += "%s's " %(GC.getPlayer(cdAttacker.eOwner).getName(),)
 	combatMessage += "%s (%.2f)" %(cdAttacker.sUnitName,cdAttacker.iCurrCombatStr/100.0,)
 	combatMessage += " " + TRNSLTR.getText("TXT_KEY_COMBAT_MESSAGE_VS", ()) + " "
 	if cdDefender.eOwner == cdDefender.eVisualOwner:
-		combatMessage += "%s's " %(STATE.getPlayerName(cdDefender.eOwner),)
+		combatMessage += "%s's " %(GC.getPlayer(cdDefender.eOwner).getName(),)
 	combatMessage += "%s (%.2f)" %(cdDefender.sUnitName,cdDefender.iCurrCombatStr/100.0,)
 	CyIF.addCombatMessage(cdAttacker.eOwner,combatMessage)
 	CyIF.addCombatMessage(cdDefender.eOwner,combatMessage)
@@ -278,10 +278,10 @@ def combatMessageBuilder(cdAttacker, cdDefender, iCombatOdds):
 def sendMessage(szTxt, iPlayer=None, iTime=16, szIcon=None, eColor=-1, iMapX=-1, iMapY=-1, bOffArrow=False, bOnArrow=False, eMsgType=0, szSound=None, bForce=True):
 	if szTxt:
 		if iPlayer is None:
-			iPlayer = STATE.getActivePlayer()
+			iPlayer = GAME.getActivePlayer()
 		if iPlayer == -1: return
 
-		if STATE.getAIAutoPlay(iPlayer):
+		if GAME.getAIAutoPlay(iPlayer):
 			szIcon = None
 			iMapX = iMapY = iTime = -1
 			bForce = bOffArrow = bOnArrow = False

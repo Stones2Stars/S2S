@@ -13,12 +13,12 @@ import RevUtils
 
 
 # globals
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 GAME = GC.getGame()
 MAP = GC.getMap()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
@@ -222,7 +222,7 @@ def onSetPlayerAlive(argsList):
 						revIdxHist['Events'][0] += changeRevIdx
 						RevData.updateCityVal(pCity, 'RevIdxHistory', revIdxHist)
 						pCity.setReinforcementCounter(0)
-						pCity.setOccupationTimer(0)
+						pCity.setOccupation(0)
 						if LOG_DEBUG:
 							print "[REV] Rev index in %s decreased to %d (from %d)"%(pCity.getName(), pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX], revIdx)
 
@@ -245,7 +245,7 @@ def onSetPlayerAlive(argsList):
 						revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
 						revIdxHist['Events'][0] += changeRevIdx
 						RevData.updateCityVal(pCity, 'RevIdxHistory', revIdxHist)
-						pCity.setOccupationTimer(0)
+						pCity.setOccupation(0)
 						if LOG_DEBUG:
 							print "[REV] Rev index in %s decreased to %d (from %d)"%(pCity.getName(), pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX], revIdx)
 
@@ -333,7 +333,7 @@ def onChangeWar(argsList):
 				revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
 				revIdxHist['Events'][0] += changeRevIdx
 				RevData.updateCityVal(pCity, 'RevIdxHistory', revIdxHist)
-				pCity.setOccupationTimer(0)
+				pCity.setOccupation(0)
 				if LOG_DEBUG:
 					print "[REV] Rev index in %s decreased to %d (from %d)"%(pCity.getName(), pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX], revIdx)
 
@@ -367,7 +367,7 @@ def onChangeWar(argsList):
 				revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
 				revIdxHist['Events'][0] += changeRevIdx
 				RevData.updateCityVal(pCity, 'RevIdxHistory', revIdxHist)
-				pCity.setOccupationTimer(0)
+				pCity.setOccupation(0)
 				if LOG_DEBUG:
 					print "[REV] Rev index in %s decreased to %d (from %d)"%(pCity.getName(), pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX], revIdx)
 
@@ -511,7 +511,7 @@ def checkRebelBonuses(argsList):
 					iBestCombat = -1
 					for iUnitX in xrange(GC.getNumUnitInfos()):
 						info = GC.getUnitInfo(iUnitX)
-						if (info.getDomainType() == DomainTypes.DOMAIN_SEA
+						if (info.getRead()[UnitReadKind.UNIT_READ_DOMAIN] == DomainTypes.DOMAIN_SEA
 						and info.getUnitAIType(UnitAITypes.UNITAI_ASSAULT_SEA)
 						and ENABLER.getUnitAvailabilityAnywhere(newOwner.getID(), iUnitX) == EnablerState.ENABLER_LISTED
 						):
@@ -528,7 +528,7 @@ def checkRebelBonuses(argsList):
 				# Change city disorder timer to favor new player
 				iTurns = pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION]
 				iTurns = iTurns/4 + 1
-				pCity.setOccupationTimer(iTurns)
+				pCity.setOccupation(iTurns)
 
 				# Temporary happiness boost
 				pCity.changeRevSuccessTimer( int(iTurns + RevUtils.getGameSpeedMod()*15) )
@@ -552,7 +552,7 @@ def checkRebelBonuses(argsList):
 				# Change city disorder timer to favor new player
 				iTurns = pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION]
 				iTurns = min([iTurns, iTurns/3 + 1])
-				pCity.setOccupationTimer(iTurns)
+				pCity.setOccupation(iTurns)
 
 				# Temporary happiness boost
 				pCity.changeRevSuccessTimer(int(iTurns + RevUtils.getGameSpeedMod()*6))
@@ -572,7 +572,7 @@ def checkRebelBonuses(argsList):
 
 			iTurns = pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION]
 			iTurns = iTurns/2 + 1
-			pCity.setOccupationTimer(iTurns)
+			pCity.setOccupation(iTurns)
 
 
 def updateRevolutionIndices(argsList):
@@ -802,7 +802,7 @@ def removeFloatingRebellions():
 				bHasFounder = True
 				break
 			if bOnlySpy:
-				if unitX.getUnitAIType() != UnitAITypes.UNITAI_SPY:
+				if unitX.getRead()[UnitReadKind.UNIT_READ_UNIT_AI] != UnitAITypes.UNITAI_SPY:
 					bOnlySpy = False
 				else: spy = unitX
 			unitX, i = playerX.nextUnit(i, False)
@@ -1106,7 +1106,7 @@ def doSmallRevolts(iPlayer, CyPlayer):
 		if GAME.getSorenRandNum(100, "Rev: Small Revolt") < iOdds:
 			szName = city.getName()
 			print "[REV] Small revolt in %s with odds %d (%d idx, %d loc)" %(szName, iOdds, revIdx, localRevIdx)
-			city.setOccupationTimer(2)
+			city.setOccupation(2)
 
 			RevData.setCityVal(city, 'SmallRevoltCounter', 6)
 

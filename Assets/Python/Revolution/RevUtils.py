@@ -11,11 +11,11 @@ import BugCore
 import DynamicCivNames
 
 # globals
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 GAME = GC.getGame()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 INFO = CyInfo()
@@ -212,7 +212,7 @@ def getEnemyUnits( iPlotX, iPlotY, iEnemyOfPlayer, domain = -1, bOnlyMilitary = 
 	for pUnit in GC.getMap().plot(iPlotX,iPlotY).units():
 		pUnitTeam = GC.getTeam( pUnit.getTeam() )
 		if( pEnemyOfTeam.isAtWarWith(pUnit.getTeam()) ) :
-			if( domain < 0 or pUnit.getDomainType() == domain ) :
+			if( domain < 0 or pUnit.getRead()[UnitReadKind.UNIT_READ_DOMAIN] == domain ) :
 				if( not bOnlyMilitary or pUnit.canFight() ) :
 					enemyUnits.append( pUnit )
 
@@ -224,7 +224,7 @@ def getPlayerUnits( iPlotX, iPlotY, iPlayer, domain = -1 ) :
 
 	for pUnit in GC.getMap().plot(iPlotX,iPlotY).units():
 		if( pUnit.getOwner() == iPlayer ) :
-			if( domain < 0 or pUnit.getDomainType() == domain ) :
+			if( domain < 0 or pUnit.getRead()[UnitReadKind.UNIT_READ_DOMAIN] == domain ) :
 				playerUnits.append( pUnit )
 
 	return playerUnits
@@ -237,7 +237,7 @@ def moveEnemyUnits( iPlotX, iPlotY, iEnemyOfPlayer, iMoveToX, iMoveToY, iInjureM
 	if( iInjureMax > 0 ) :
 		for pUnit in unitList :
 			if( pUnit.canFight() ) :
-				iPreDamage = pUnit.getDamage()
+				iPreDamage = pUnit.getRead()[UnitReadKind.UNIT_READ_DAMAGE]
 				iInjure = iPreDamage/3 + iInjureMax/2 + GAME.getSorenRandNum(iInjureMax/2,'Rev: Wound retreating units')
 				iInjure = min([iInjure,90])
 				iInjure = max([iInjure,iPreDamage])
@@ -247,7 +247,7 @@ def moveEnemyUnits( iPlotX, iPlotY, iEnemyOfPlayer, iMoveToX, iMoveToY, iInjureM
 
 	toKillList = []
 	for pUnit in unitList :
-		if not pUnit.getDomainType() == DomainTypes.DOMAIN_LAND or not pUnit.canEnterPlot(pPlot,False,False,True):
+		if not pUnit.getRead()[UnitReadKind.UNIT_READ_DOMAIN] == DomainTypes.DOMAIN_LAND or not pUnit.canEnterPlot(pPlot,False,False,True):
 			if bDestroyNonLand:
 				toKillList.append(pUnit)
 
@@ -266,7 +266,7 @@ def moveEnemyUnits2( iPlotX, iPlotY, iEnemyOfPlayer, iMoveToX, iMoveToY, iInjure
 	if( iInjureMax > 0 ) :
 		for pUnit in unitList :
 			if( pUnit.canFight() ) :
-				iPreDamage = pUnit.getDamage()
+				iPreDamage = pUnit.getRead()[UnitReadKind.UNIT_READ_DAMAGE]
 				iInjure = iPreDamage/3 + iInjureMax/2 + GAME.getSorenRandNum(iInjureMax/2,'Rev: Wound retreating units')
 				iInjure = min([iInjure,90])
 				iInjure = max([iInjure,iPreDamage])
@@ -275,11 +275,11 @@ def moveEnemyUnits2( iPlotX, iPlotY, iEnemyOfPlayer, iMoveToX, iMoveToY, iInjure
 	pPlot = GC.getMap().plot(iMoveToX,iMoveToY)
 
 	for pUnit in unitList :
-		if pUnit.getDomainType() == DomainTypes.DOMAIN_LAND or (bMoveAir and pUnit.getDomainType() == DomainTypes.DOMAIN_AIR):
+		if pUnit.getRead()[UnitReadKind.UNIT_READ_DOMAIN] == DomainTypes.DOMAIN_LAND or (bMoveAir and pUnit.getRead()[UnitReadKind.UNIT_READ_DOMAIN] == DomainTypes.DOMAIN_AIR):
 
-			if bLeaveSiege and pUnit.getDomainType() == DomainTypes.DOMAIN_LAND and pUnit.bombardRate() > 0: continue
+			if bLeaveSiege and pUnit.getRead()[UnitReadKind.UNIT_READ_DOMAIN] == DomainTypes.DOMAIN_LAND and pUnit.bombardRate() > 0: continue
 
-			if pUnit.getDomainType() == DomainTypes.DOMAIN_AIR:
+			if pUnit.getRead()[UnitReadKind.UNIT_READ_DOMAIN] == DomainTypes.DOMAIN_AIR:
 				if pPlot.isCity() or pUnit.canEnterPlot(pPlot,False,False,True):
 					pUnit.setXY( iMoveToX, iMoveToY, False, False, False )
 
@@ -328,7 +328,7 @@ def getHandoverUnitTypes(CyCity):
 	for iUnit in xrange(GC.getNumUnitInfos()):
 		CvUnitInfo = GC.getUnitInfo(iUnit)
 
-		if CvUnitInfo.getDomainType() != DomainTypes.DOMAIN_LAND or CvUnitInfo.getPrereqAndTech() == TechTypes.NO_TECH:
+		if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND or CvUnitInfo.getPrereqAndTech() == TechTypes.NO_TECH:
 			continue
 		if CvUnitInfo.getMaxGlobalInstances() > 0 or CvUnitInfo.getMaxPlayerInstances() > 0:
 			continue
@@ -366,7 +366,7 @@ def getUprisingUnitTypes(CyCity):
 	for iUnit in xrange(GC.getNumUnitInfos()):
 		CvUnitInfo = GC.getUnitInfo(iUnit)
 
-		if CvUnitInfo.getDomainType() != DomainTypes.DOMAIN_LAND:
+		if INFO.getIntrinsic("UNIT_", iUnit, IntrinsicSlot.PYINT_DOMAIN) != DomainTypes.DOMAIN_LAND:
 			continue
 
 		if CvUnitInfo.getMaxGlobalInstances() > 0 or CvUnitInfo.getMaxPlayerInstances() > 0:

@@ -1,18 +1,15 @@
 from CvPythonExtensions import *
 import os
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution. ACT is the WRITE side -- the scenario APPLY asks the
-# engine to do things, which is not a read, so it addresses each subject by its (owner, id) pair like every other
-# surface here ([roadmap] scope decision 6).
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
 GAME = GC.getGame()
 MAP = GC.getMap()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
-ACT = CyAct()
 VERSION = "C2C_2"
 fEncode = "utf-8"
 
@@ -830,16 +827,16 @@ class CvUnitDesc:
 	def write(self, f, unitId, plot):
 		# A unit is an (owner, id) PAIR here like everywhere else; the whole unit crosses in two reads.
 		iOwner, iUnitID = unitId
-		aUnit  = STATE.getUnitRead(iOwner, iUnitID)
-		aFlags = STATE.getUnitFlags(iOwner, iUnitID)
+		aUnit  = GC.getPlayer(iOwner).getUnit(iUnitID).getRead()
+		aFlags = GC.getPlayer(iOwner).getUnit(iUnitID).getFlags()
 		f.write("\tBeginUnit\n\t\tUnitType=%s, UnitOwner=%d, (%s)\n"
-			%(INFO.getType("UNIT_", aUnit[UnitReadKind.UNIT_READ_TYPE]), iOwner, STATE.getPlayerName(iOwner).encode(fEncode))
+			%(INFO.getType("UNIT_", aUnit[UnitReadKind.UNIT_READ_TYPE]), iOwner, GC.getPlayer(iOwner).getName().encode(fEncode))
 		)
 		if aFlags[UnitFlagKind.UNIT_FLAG_COMMANDER]:
 			f.write("\t\tCommander=1\n")
 		if aFlags[UnitFlagKind.UNIT_FLAG_COMMODORE]:
 			f.write("\t\tCommodore=1\n")
-		szNameNoDesc = STATE.getUnitNameNoDesc(iOwner, iUnitID)
+		szNameNoDesc = GC.getPlayer(iOwner).getUnit(iUnitID).getNameNoDesc()
 		if szNameNoDesc:
 			f.write("\t\tUnitName=%s\n" % szNameNoDesc.encode(fEncode))
 		if aUnit[UnitReadKind.UNIT_READ_LEADER_UNIT_TYPE] != -1:
@@ -850,7 +847,7 @@ class CvUnitDesc:
 		f.write("\t\tLevel=%d, Experience=%d\n" %(aUnit[UnitReadKind.UNIT_READ_LEVEL], aUnit[UnitReadKind.UNIT_READ_EXPERIENCE] / 100))
 
 		for i in xrange(GC.getNumPromotionInfos()):
-			if STATE.hasUnitPromotion(iOwner, iUnitID, i):
+			if GC.getPlayer(iOwner).getUnit(iUnitID).hasPromotion(i):
 				f.write("\t\tPromotionType=%s\n" % INFO.getType("PROMOTION_", i))
 
 		f.write("\t\tFacingDirection=%d\n" % aUnit[UnitReadKind.UNIT_READ_FACING_DIRECTION])
@@ -867,7 +864,7 @@ class CvUnitDesc:
 
 		f.write("\t\tUnitAIType=%s\n" % INFO.getType("UNITAI_", aUnit[UnitReadKind.UNIT_READ_UNIT_AI]))
 
-		szScriptData = STATE.getUnitScriptData(iOwner, iUnitID)
+		szScriptData = GC.getPlayer(iOwner).getUnit(iUnitID).getScriptData()
 		if szScriptData:
 			f.write("\t\tScriptData=%s\n\t\t!ScriptData\n" % szScriptData)
 		# ImmobileTimer is gone from the engine, and the CombatStr line compared against an `info` this
@@ -1040,17 +1037,17 @@ class CvUnitDesc:
 		for promo in self.promotionType:
 			iPromo = GC.getInfoTypeForString(promo)
 			if iPromo > -1:
-				unit.setHasPromotion(iPromo, True)
+				unit.setPromotion(iPromo, True)
 		if self.isSleep:
-			unit.getGroup().setActivityType(ActivityTypes.ACTIVITY_SLEEP)
+			unit.setActivity(ActivityTypes.ACTIVITY_SLEEP)
 		elif self.isIntercept:
-			unit.getGroup().setActivityType(ActivityTypes.ACTIVITY_INTERCEPT)
+			unit.setActivity(ActivityTypes.ACTIVITY_INTERCEPT)
 		elif self.isPatrol:
-			unit.getGroup().setActivityType(ActivityTypes.ACTIVITY_PATROL)
+			unit.setActivity(ActivityTypes.ACTIVITY_PATROL)
 		elif self.isPlunder:
-			unit.getGroup().setActivityType(ActivityTypes.ACTIVITY_PLUNDER)
+			unit.setActivity(ActivityTypes.ACTIVITY_PLUNDER)
 		if self.iImmobile:
-			unit.setImmobileTimer(self.iImmobile)
+			unit.setStatus(UnitStatus.STATUS_PARALYZED, self.iImmobile)
 		if self.iBaseCombatStr > -1:
 			unit.setBaseCombatStr(self.iBaseCombatStr)
 		if self.sScriptData:
@@ -1069,12 +1066,12 @@ class CvCityDesc:
 			return
 
 		#	The handle carries the ADDRESS and nothing else ([patterns.md] THE IDENTITY SET), so every read
-		#	below asks CyState by (owner, id). Resolved once here rather than at each call.
+		#	below asks the city's own accessor. Resolved once here rather than at each call.
 		iOwner = city.getOwner()
 		iCity = city.getID()
 
 		f.write("\tBeginCity\n\t\tCityOwner=%d, (%s)\n\t\tCityName=%s\n\t\tCityPopulation=%d\n\t\tStoredFood=%d\n"
-			%(iOwner, STATE.getPlayerName(iOwner).encode(fEncode), GC.getPlayer(iOwner).getCity(iCity).getName().encode(fEncode),
+			%(iOwner, GC.getPlayer(iOwner).getName().encode(fEncode), GC.getPlayer(iOwner).getCity(iCity).getName().encode(fEncode),
 			  GC.getPlayer(iOwner).getCity(iCity).getPopulation(),
 			  GC.getPlayer(iOwner).getCity(iCity).getGrowth()[CityGrowthRead.GROWTH_READ_FOOD_STORED])
 		)
@@ -1121,8 +1118,8 @@ class CvCityDesc:
 		# Player culture
 		bFound = False
 		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
-			if STATE.isPlayerAlive(iPlayerX):
-				name = STATE.getPlayerName(iPlayerX).encode(fEncode)
+			if GC.getPlayer(iPlayerX).isAlive():
+				name = GC.getPlayer(iPlayerX).getName().encode(fEncode)
 			else: name = "Error"
 			iPlayerCulture = GC.getPlayer(iOwner).getCity(iCity).getCultureForPlayer(iPlayerX)
 			if iPlayerCulture > 0:
@@ -1375,66 +1372,66 @@ class CvCityDesc:
 		iCity = city.getID()
 
 		if self.name != None:
-			ACT.setCityName(iOwner, iCity, self.name)
+			GC.getPlayer(iOwner).getCity(iCity).setName(self.name)
 
 		if self.iPopulation:
-			ACT.setCityPopulation(iOwner, iCity, self.iPopulation)
+			GC.getPlayer(iOwner).getCity(iCity).setPopulation(self.iPopulation)
 		if self.iFood:
-			ACT.setCityStoredFood(iOwner, iCity, self.iFood)
+			GC.getPlayer(iOwner).getCity(iCity).setStoredFood(self.iFood)
 
 		for item in self.lCulture:
-			ACT.setCityCulture(iOwner, iCity, item[0], item[1])
+			GC.getPlayer(iOwner).getCity(iCity).setCulture(item[0], item[1])
 
 		for key, date in self.bldgType:
 			iBuilding = GC.getInfoTypeForString(key)
 			if iBuilding > -1:
-				ACT.setCityBuilding(iOwner, iCity, iBuilding, True)
+				GC.getPlayer(iOwner).getCity(iCity).setBuilding(iBuilding, True)
 
 		#	The holy-city / headquarters designation rides the SAME verb as the presence, so the two lists fold
 		#	into one pass instead of a second one re-resolving the same ids.
 		for key in self.religions:
 			iReligion = GC.getInfoTypeForString(key)
 			if iReligion > -1:
-				ACT.setCityReligion(iOwner, iCity, iReligion, key in self.holyCityReligions)
+				GC.getPlayer(iOwner).getCity(iCity).setReligion(iReligion, key in self.holyCityReligions)
 
 		for key in self.corporations:
 			iCorporation = GC.getInfoTypeForString(key)
 			if iCorporation > -1:
-				ACT.setCityCorporation(iOwner, iCity, iCorporation, key in self.headquarterCorporations)
+				GC.getPlayer(iOwner).getCity(iCity).setCorporation(iCorporation, key in self.headquarterCorporations)
 
 		for key in self.freeSpecialists:
 			iSpecialist = GC.getInfoTypeForString(key)
 			if iSpecialist > -1:
-				ACT.addCityFreeSpecialist(iOwner, iCity, iSpecialist, 1)
+				GC.getPlayer(iOwner).getCity(iCity).addFreeSpecialist(iSpecialist, 1)
 
 		iProd = -1
 		if self.productionUnit != "NONE":
 			iProd = GC.getInfoTypeForString(self.productionUnit)
 			if iProd > -1:
-				ACT.pushCityOrder(iOwner, iCity, OrderTypes.ORDER_TRAIN, iProd)
+				GC.getPlayer(iOwner).getCity(iCity).pushOrder(OrderTypes.ORDER_TRAIN, iProd, -1, False, False, False, True)
 
 		if iProd == -1 and self.productionBuilding != "NONE":
 			iProd = GC.getInfoTypeForString(self.productionBuilding)
 			if iProd > -1:
-				ACT.pushCityOrder(iOwner, iCity, OrderTypes.ORDER_CONSTRUCT, iProd)
+				GC.getPlayer(iOwner).getCity(iCity).pushOrder(OrderTypes.ORDER_CONSTRUCT, iProd, -1, False, False, False, True)
 
 		if iProd == -1 and self.productionProject != "NONE":
 			iProd = GC.getInfoTypeForString(self.productionProject)
 			if iProd > -1:
-				ACT.pushCityOrder(iOwner, iCity, OrderTypes.ORDER_CREATE, iProd)
+				GC.getPlayer(iOwner).getCity(iCity).pushOrder(OrderTypes.ORDER_CREATE, iProd, -1, False, False, False, True)
 
 		if iProd == -1 and self.productionProcess != "NONE":
 			iProd = GC.getInfoTypeForString(self.productionProcess)
 			if iProd > -1:
-				ACT.pushCityOrder(iOwner, iCity, OrderTypes.ORDER_MAINTAIN, iProd)
+				GC.getPlayer(iOwner).getCity(iCity).pushOrder(OrderTypes.ORDER_MAINTAIN, iProd, -1, False, False, False, True)
 
 		if self.sScriptData:
-			ACT.setCityScriptData(iOwner, iCity, self.sScriptData)
+			GC.getPlayer(iOwner).getCity(iCity).setScriptData(self.sScriptData)
 
 		if self.iDamage > 0:
-			ACT.setCityDefenseDamage(iOwner, iCity, self.iDamage)
+			GC.getPlayer(iOwner).getCity(iCity).setDefenseDamage(self.iDamage)
 		if self.iOccupation > 0:
-			ACT.setCityOccupation(iOwner, iCity, self.iOccupation)
+			GC.getPlayer(iOwner).getCity(iCity).setOccupation(self.iOccupation)
 
 	def postApply(self):
 		print "CvCityDesc.postApply"
@@ -1443,16 +1440,16 @@ class CvCityDesc:
 		#	Each verb SETS the stored grant, so the legacy zero-it-then-add-it dance is gone: it existed only
 		#	because the old bindings could do nothing but CHANGE by a delta, which forced a read of the current
 		#	value purely to cancel it out first.
-		ACT.setCityGrantedExtra(iOwner, iCity, CityGrantedExtra.GRANTED_EXTRA_HAPPINESS, self.iExtraHappiness)
-		ACT.setCityGrantedExtra(iOwner, iCity, CityGrantedExtra.GRANTED_EXTRA_HEALTH, self.iExtraHealth)
+		GC.getPlayer(iOwner).getCity(iCity).setGrantedExtra(CityGrantedExtra.GRANTED_EXTRA_HAPPINESS, self.iExtraHappiness)
+		GC.getPlayer(iOwner).getCity(iCity).setGrantedExtra(CityGrantedExtra.GRANTED_EXTRA_HEALTH, self.iExtraHealth)
 		for item in self.lBuildingYield:
-			ACT.setBuildingGrantedYield(iOwner, iCity, item[0], item[1], item[2])
+			GC.getPlayer(iOwner).getCity(iCity).setBuildingGrantedYield(item[0], item[1], item[2])
 		for item in self.lBuildingCommerce:
-			ACT.setBuildingGrantedCommerce(iOwner, iCity, item[0], item[1], item[2])
+			GC.getPlayer(iOwner).getCity(iCity).setBuildingGrantedCommerce(item[0], item[1], item[2])
 		for item in self.lBuildingHappy:
-			ACT.setBuildingGrantedWellbeing(iOwner, iCity, item[0], BuildingGrantedKind.BUILDING_GRANTED_HAPPINESS, item[1])
+			GC.getPlayer(iOwner).getCity(iCity).setBuildingGrantedWellbeing(item[0], BuildingGrantedKind.BUILDING_GRANTED_HAPPINESS, item[1])
 		for item in self.lBuildingHealth:
-			ACT.setBuildingGrantedWellbeing(iOwner, iCity, item[0], BuildingGrantedKind.BUILDING_GRANTED_HEALTH, item[1])
+			GC.getPlayer(iOwner).getCity(iCity).setBuildingGrantedWellbeing(item[0], BuildingGrantedKind.BUILDING_GRANTED_HEALTH, item[1])
 
 
 ##########
@@ -1493,7 +1490,7 @@ class CvPlotDesc:
 			f.write("\tPlotType=%d\n" % int(plot.getPlotType()))
 
 		# units
-		for aUnitId in STATE.getPlotUnitIds(plot.getX(), plot.getY()):
+		for aUnitId in plot.getUnitIds():
 			CvUnitDesc().write(f, aUnitId, plot)
 		# city
 		if plot.isCity():

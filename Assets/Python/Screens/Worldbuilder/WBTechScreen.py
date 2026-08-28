@@ -3,11 +3,11 @@ from CvScreensInterface import pediaJumpToTech
 import HandleInputUtil
 TRNSLTR = CyTranslator()
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
-STATE = CyState()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -116,9 +116,9 @@ class WBTechScreen:
 
 		if self.techs is None:
 			self.techs = techs = [[] for i in xrange(iNumEras)]
-			for i in xrange(GC.getNumTechInfos()):
-				info = GC.getTechInfo(i)
-				techs[info.getEra()].append((info, i))
+			for kTech in INFO.getIndex("TECH_"):
+				iEra = INFO.getIntrinsic("TECH_", kTech["id"], IntrinsicSlot.PYINT_ERA)
+				techs[iEra].append((kTech["button"], kTech["id"]))
 
 		self.placeTechs(screen)
 
@@ -164,9 +164,9 @@ class WBTechScreen:
 		y = 0
 		iRow = 0
 		iCol = 0
-		for info, iTech in aList:
+		for sButton, iTech in aList:
 
-			name = font + self.getTechListName(iTech, info)
+			name = font + self.getTechListName(iTech)
 
 			CELL = CELL_0 + str(iTech)
 			if (iRow * nCol + iCol) % 2:
@@ -175,7 +175,7 @@ class WBTechScreen:
 			else:
 				screen.attachPanelAt(ScPnl, CELL, "", "", True, False, ePanelBlack, x, y-4, wCol, h1, eWidGen, 999, iTech)
 
-			screen.setImageButtonAt(IMG + str(iTech), CELL, info.getButton(), 0, 0, iconSize, iconSize, eWidGen, 0, 0)
+			screen.setImageButtonAt(IMG + str(iTech), CELL, sButton, 0, 0, iconSize, iconSize, eWidGen, 0, 0)
 			screen.setTextAt(TXT + str(iTech), CELL, name, 1<<0, iconSize, 0, 3, eFontGame, eWidGen, 999, iTech)
 			if iRow + 1 == iMaxRows:
 				iCol += 1
@@ -187,11 +187,9 @@ class WBTechScreen:
 				y += iconSize
 
 
-	def getTechListName(self, iTech, info=None):
-		if info is None:
-			info = GC.getTechInfo(iTech)
-		name = info.getDescription()
-		if info.isRepeat():
+	def getTechListName(self, iTech):
+		name = INFO.getDescription("TECH_", iTech)
+		if INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_IS_REPEAT):
 			iCount = self.pTeam.getTechCount(iTech)
 			if iCount:
 				name += " (" + str(iCount) +")"
@@ -206,10 +204,8 @@ class WBTechScreen:
 
 
 	def editTech(self, screen, iTech, bValue):
-		info = GC.getTechInfo(iTech)
-
 		if bValue != self.pTeam.isHasTech(iTech) \
-		or info.isRepeat() and (bValue or self.pTeam.getTechCount(iTech)):
+		or INFO.getIntrinsic("TECH_", iTech, IntrinsicSlot.PYINT_IS_REPEAT) and (bValue or self.pTeam.getTechCount(iTech)):
 			self.pTeam.setHasTech(iTech, bValue, -1, False, False)
 			ID = "TECH|TXT" + str(iTech)
 			screen.hide(ID)
@@ -264,7 +260,7 @@ class WBTechScreen:
 			if BASE == "BTN":
 				if TYPE == "AllTechs":
 					bValue = CASE[0] == "Plus"
-					for info, iTech in self.listedTechs:
+					for sButton, iTech in self.listedTechs:
 						self.editTech(screen, iTech, bValue)
 
 				elif TYPE == "AllPlayers":

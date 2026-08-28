@@ -1,13 +1,12 @@
 
 from CvPythonExtensions import *
 
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
 MAP = GC.getMap()
-STATE = CyState()
-ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 bDebugMode = False
@@ -317,7 +316,7 @@ def applyEditCity(iPlayer, userData, popupReturn):
 	except ValueError:
 		iPopChange = 0
 	if iPopChange:
-		ACT.changeCityPopulation(city.getOwner(), city.getID(), iPopChange)
+		city.changePopulation(iPopChange)
 
 	try:
 		iCultureChange = int(popupReturn.getEditBoxString(2))
@@ -335,9 +334,9 @@ def applyEditCity(iPlayer, userData, popupReturn):
 		bAdd = popupReturn.getSelectedPullDownValue(0) == 1
 		if iBuilding == iNumBuildings:  # "All buildings" sentinel
 			for i in range(iNumBuildings):
-				ACT.setCityBuilding(city.getOwner(), city.getID(), i, bAdd)
+				city.setBuilding(i, bAdd)
 		elif iBuilding < iNumBuildings:  # valid single building
-			ACT.setCityBuilding(city.getOwner(), city.getID(), iBuilding, bAdd)
+			city.setBuilding(iBuilding, bAdd)
 
 
 def putOneOfEveryUnit():

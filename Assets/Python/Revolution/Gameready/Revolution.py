@@ -23,14 +23,13 @@ import RevInstances
 import BugCore
 
 # globals
-# The one data-fetching library ([DEC-cy-not-fixed]): STATE = live state, ENABLER = availability,
-# ENUMS = the engine enum vocabulary + name->id resolution.
+# The one data-fetching library: INFO = what an entity CARRIES, ENABLER = can I?, ENUMS = the engine
+# enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
+# GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
 INFO = CyInfo()
 GAME = GC.getGame()
 MAP = GC.getMap()
-STATE = CyState()
-ACT = CyAct()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
@@ -804,21 +803,21 @@ class Revolution:
 
 			# Check AI settings
 			if bBarbarian:
-				if iNumUnits > 2 and pRevPlayer.AI_unitValue(newUnit.getUnitType(),UnitAITypes.UNITAI_ATTACK_CITY_LEMMING,newUnit.area()) > 0:
-					newUnit.setUnitAIType(UnitAITypes.UNITAI_ATTACK_CITY_LEMMING)
+				if iNumUnits > 2 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY_LEMMING,newUnit.area()) > 0:
+					newUnit.setAIType(UnitAITypes.UNITAI_ATTACK_CITY_LEMMING)
 				elif newUnit.canFight():
-					newUnit.setUnitAIType(UnitAITypes.UNITAI_ATTACK)
+					newUnit.setAIType(UnitAITypes.UNITAI_ATTACK)
 
-			elif iNum < 2 and iNumUnits + iRebelsIn3 > 2 and pRevPlayer.AI_unitValue(newUnit.getUnitType(),UnitAITypes.UNITAI_ATTACK_CITY,newUnit.area()) > 0:
-				newUnit.setUnitAIType( UnitAITypes.UNITAI_ATTACK_CITY )
+			elif iNum < 2 and iNumUnits + iRebelsIn3 > 2 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY,newUnit.area()) > 0:
+				newUnit.setAIType( UnitAITypes.UNITAI_ATTACK_CITY )
 
-			elif iNumUnits == 1 and iRebelsIn6 < 3 and pRevPlayer.AI_unitValue(newUnit.getUnitType(),UnitAITypes.UNITAI_PILLAGE,newUnit.area()) > 0:
-				newUnit.setUnitAIType( UnitAITypes.UNITAI_PILLAGE )
+			elif iNumUnits == 1 and iRebelsIn6 < 3 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_PILLAGE,newUnit.area()) > 0:
+				newUnit.setAIType( UnitAITypes.UNITAI_PILLAGE )
 			else:
-				iniAI = newUnit.getUnitAIType()
+				iniAI = newUnit.getRead()[UnitReadKind.UNIT_READ_UNIT_AI]
 				if iniAI != UnitAITypes.UNITAI_COUNTER and iniAI != UnitAITypes.UNITAI_ATTACK_CITY:
-					newUnit.setUnitAIType(UnitAITypes.UNITAI_ATTACK)
-				if self.LOG_DEBUG: print "[REV] Revolt: %s starting with AI type: %d (ini %d)" % (newUnit.getName(), newUnit.getUnitAIType(), iniAI)
+					newUnit.setAIType(UnitAITypes.UNITAI_ATTACK)
+				if self.LOG_DEBUG: print "[REV] Revolt: %s starting with AI type: %d (ini %d)" % (newUnit.getName(), newUnit.getRead()[UnitReadKind.UNIT_READ_UNIT_AI], iniAI)
 
 			if( revStrength > 1.5 and pRevPlayer.isRebel() ) :
 				newUnit.setPromotionReady(True)
@@ -5241,7 +5240,7 @@ class Revolution:
 							#RevData.initCity(pCity)
 							# City has become invalid, will cause game to crash if left
 							print "Destroying city so game can continue"
-							ACT.disbandCity(pCity.getOwner(), pCity.getID())
+							pCity.disband()
 							continue
 
 
@@ -5257,7 +5256,7 @@ class Revolution:
 							if not pCity.hasBuilding(buildingType) and not GC.getBuildingInfo(buildingType).isGovernmentCenter():
 								if self.LOG_DEBUG:
 									print "[REV] Revolt: Building %s saved" % INFO.getDescription("BUILDING_", buildingType)
-								ACT.setCityBuilding(pCity.getOwner(), pCity.getID(), buildingType, True)
+								pCity.setBuilding(buildingType, True)
 
 						#if self.LOG_DEBUG: print "[REV] Revolt: %s at %d, %d"%(pCity.getName(),pCity.getX(),pCity.getY())
 
@@ -5299,7 +5298,7 @@ class Revolution:
 						if( not bIsBarbRev ) : RevData.updateCityVal(pCity, 'RevolutionCiv', pRevPlayer.getCivilizationType() )
 
 						# City starts in disorder
-						pCity.setOccupationTimer( 2 )
+						pCity.setOccupation( 2 )
 
 					vassalStyle = revData.dict.get('vassalStyle',None)
 					if( not bIsBarbRev and not vassalStyle == None ) :
@@ -5422,7 +5421,7 @@ class Revolution:
 								#RevData.initCity(pCity)
 								# City has become invalid, will cause game to crash if left
 								print "Destroying city so game can continue"
-								ACT.disbandCity(pCity.getOwner(), pCity.getID())
+								pCity.disband()
 								continue
 
 
@@ -5465,7 +5464,7 @@ class Revolution:
 							if( not bIsBarbRev ) : RevData.updateCityVal(pCity, 'RevolutionCiv', joinPlayer.getCivilizationType() )
 
 							# City starts in disorder
-							pCity.setOccupationTimer( 2 )
+							pCity.setOccupation( 2 )
 
 				# Update score to show new agreements, especially Vassal
 				CyInterface().setDirty( InterfaceDirtyBits.Score_DIRTY_BIT, True )
@@ -5736,7 +5735,7 @@ class Revolution:
 				except:
 					print "[ERROR] Failed to set owner of city, %s at plot %d, %d" % (pCity.getName(), cityPlot.getX(), cityPlot.getY())
 					print "\tDestroying city so game can continue"
-					ACT.disbandCity(pCity.getOwner(), pCity.getID())
+					pCity.disband()
 					continue
 
 				pCity = cityPlot.getPlotCity()
@@ -5810,7 +5809,7 @@ class Revolution:
 
 		# Cause disorder in rebelling cities, injure units now
 		for pCity in cityList :
-			pCity.setOccupationTimer( 2 )
+			pCity.setOccupation( 2 )
 			pCity.setRevolutionCounter( 2 )
 
 			mess = TRNSLTR.getText("TXT_KEY_REV_MESS_BREWING",())%(pCity.getName())
@@ -5819,7 +5818,7 @@ class Revolution:
 			unitList = RevUtils.getPlayerUnits( pCity.getX(), pCity.getY(), pPlayer.getID() )
 			for unit in unitList :
 				if( unit.canFight() ) :
-					iPreDamage = unit.getDamage()
+					iPreDamage = unit.getRead()[UnitReadKind.UNIT_READ_DAMAGE]
 					iDamage = iPreDamage/3 + 20 + GAME.getSorenRandNum(15,'Rev - Injure unit')
 					iDamage = min([iDamage,90])
 					iDamage = max([iDamage,iPreDamage])
@@ -6127,7 +6126,7 @@ class Revolution:
 				print "[ERROR] No rev units possible in " + pCity.getName()
 				continue
 
-			pCity.setOccupationTimer(1)
+			pCity.setOccupation(1)
 
 			# First look just for rebel, homeland, or unowned territory to spawn in
 			spawnablePlots = RevUtils.getSpawnablePlots( ix, iy, pRevPlayer, bLand = True, bIncludePlot = False, bIncludeCities = False, bSameArea = True, iRange = 1, iSpawnPlotOwner = pRevPlayer.getID(), bCheckForEnemy = True, bAtWarPlots = False, bOpenBordersPlots = False )
@@ -6144,7 +6143,7 @@ class Revolution:
 				# Put them anywhere nearby, this will only fail on single plot islands
 				spawnablePlots = RevUtils.getSpawnablePlots( ix, iy, pRevPlayer, bLand = True, bIncludePlot = False, bIncludeCities = False, bSameArea = True, iRange = 3, iSpawnPlotOwner = -1, bCheckForEnemy = False )
 
-			pCity.setOccupationTimer(0)
+			pCity.setOccupation(0)
 
 			revSpawnLoc = None
 			if spawnablePlots:
@@ -6312,7 +6311,7 @@ class Revolution:
 						if 35 > GAME.getSorenRandNum(100,'Revolution: give rebels equipment'):
 							if self.LOG_DEBUG:
 								print "[REV] Revolt: Will be giving rebels " + unit.getName()
-							toRebelList.append(unit.getUnitType())
+							toRebelList.append(unit.getRead()[UnitReadKind.UNIT_READ_TYPE])
 						else:
 							if self.LOG_DEBUG:
 								print "[REV] Revolt: Destroying " + unit.getName()
@@ -6351,7 +6350,7 @@ class Revolution:
 					#RevData.initCity(pCity)
 					# City has become invalid, will cause game to crash if left
 					print "Destroying city so game can continue"
-					ACT.disbandCity(pCity.getOwner(), pCity.getID())
+					pCity.disband()
 					continue
 
 
@@ -6368,9 +6367,9 @@ class Revolution:
 #****************************************************************
 
 				if pCity.getPopulation() > 3 + pPlayer.getCurrentEra():
-					pCity.setOccupationTimer(3)
+					pCity.setOccupation(3)
 				else:
-					pCity.setOccupationTimer(2)
+					pCity.setOccupation(2)
 
 				newCulVal = int( self.revCultureModifier*max([pCity.getCulture(pPlayer.getID()),pCity.countTotalCultureTimes100()/200]) )
 				newPlotVal = int( self.revCultureModifier*max([pCity.plot().getCulture(pPlayer.getID()),pCity.plot().countTotalCulture()/2]) )
@@ -6421,7 +6420,7 @@ class Revolution:
 
 				if pCity.getPopulation() > 4 and len(newUnitList) >= 4:
 					deltaPop = int((len(newUnitList)-1)/3.0)
-					ACT.changeCityPopulation(pCity.getOwner(), pCity.getID(), -deltaPop)
+					pCity.changePopulation(-deltaPop)
 					if self.LOG_DEBUG:
 						print "[REV] Revolt: City population decreased by %d for %d rebel units spawned" % (deltaPop, len(newUnitList))
 
@@ -6446,7 +6445,7 @@ class Revolution:
 					if not pCity.hasBuilding(buildingType) and not GC.getBuildingInfo(buildingType).isGovernmentCenter():
 						if self.LOG_DEBUG:
 							print "[REV] Revolt: Building %s saved" % INFO.getDescription("BUILDING_", buildingType)
-						ACT.setCityBuilding(pCity.getOwner(), pCity.getID(), buildingType, True)
+						pCity.setBuilding(buildingType, True)
 
 				# Reveal surrounding countryside
 				if not bGaveMap:
@@ -6473,7 +6472,7 @@ class Revolution:
 				else:
 					iTurns = int(min([iTurns,1 + self.turnsBetweenRevs/2]))
 
-				pCity.setOccupationTimer( max([iTurns,1]) )
+				pCity.setOccupation( max([iTurns,1]) )
 				if self.LOG_DEBUG:
 					print "[REV] Revolt: City occupation timer set to " + str(pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION])
 
@@ -6502,7 +6501,7 @@ class Revolution:
 				unitList = RevUtils.getEnemyUnits( ix, iy, pRevPlayer.getID(), bOnlyMilitary = True )
 				for pUnit in unitList:
 					if pUnit.canFight():
-						iPreDamage = pUnit.getDamage()
+						iPreDamage = pUnit.getRead()[UnitReadKind.UNIT_READ_DAMAGE]
 						if revIdx > self.revInstigatorThreshold:
 							iDamage = iPreDamage/5 + 20 + GAME.getSorenRandNum(35,'Revolution: Wound units')
 						else:
@@ -6530,21 +6529,21 @@ class Revolution:
 
 						# Check AI settings
 						if newUnit.isNPC():
-							if pRevPlayer.AI_unitValue(newUnit.getUnitType(),UnitAITypes.UNITAI_ATTACK_CITY_LEMMING,newUnit.area()) > 0:
-								newUnit.setUnitAIType(UnitAITypes.UNITAI_ATTACK_CITY_LEMMING)
+							if pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY_LEMMING,newUnit.area()) > 0:
+								newUnit.setAIType(UnitAITypes.UNITAI_ATTACK_CITY_LEMMING)
 							else:
-								newUnit.setUnitAIType(UnitAITypes.UNITAI_ATTACK)
+								newUnit.setAIType(UnitAITypes.UNITAI_ATTACK)
 						else:
-							if iNum < 2 and iNumUnits > 2 and pRevPlayer.AI_unitValue(newUnit.getUnitType(),UnitAITypes.UNITAI_ATTACK_CITY,newUnit.area()) > 0:
-								newUnit.setUnitAIType( UnitAITypes.UNITAI_ATTACK_CITY )
-							elif iNumUnits == 1 and GAME.getSorenRandNum(2,'Rev - Pillage') == 0 and pRevPlayer.AI_unitValue(newUnit.getUnitType(),UnitAITypes.UNITAI_PILLAGE,newUnit.area()) > 0:
-								newUnit.setUnitAIType( UnitAITypes.UNITAI_PILLAGE )
+							if iNum < 2 and iNumUnits > 2 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY,newUnit.area()) > 0:
+								newUnit.setAIType( UnitAITypes.UNITAI_ATTACK_CITY )
+							elif iNumUnits == 1 and GAME.getSorenRandNum(2,'Rev - Pillage') == 0 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_PILLAGE,newUnit.area()) > 0:
+								newUnit.setAIType( UnitAITypes.UNITAI_PILLAGE )
 							else:
-								iniAI = newUnit.getUnitAIType()
+								iniAI = newUnit.getRead()[UnitReadKind.UNIT_READ_UNIT_AI]
 								if not (iniAI == UnitAITypes.UNITAI_COUNTER or iniAI == UnitAITypes.UNITAI_ATTACK_CITY):
-									newUnit.setUnitAIType(UnitAITypes.UNITAI_ATTACK)
+									newUnit.setAIType(UnitAITypes.UNITAI_ATTACK)
 								if self.LOG_DEBUG:
-									print "[REV] Revolt: %s starting with AI type: %d (ini %d)" % (newUnit.getName(), newUnit.getUnitAIType(), iniAI)
+									print "[REV] Revolt: %s starting with AI type: %d (ini %d)" % (newUnit.getName(), newUnit.getRead()[UnitReadKind.UNIT_READ_UNIT_AI], iniAI)
 
 						if not bIsBarbRev and pRevPlayer.isRebel() and revIdx > self.revInstigatorThreshold:
 							# Give a free promotion to help rebel cause
@@ -6554,7 +6553,7 @@ class Revolution:
 					deltaPop = int((len(newUnitList)-1)/2.5)
 					if deltaPop >= pCity.getPopulation():
 						deltaPop = pCity.getPopulation() - 1
-					ACT.changeCityPopulation(pCity.getOwner(), pCity.getID(), -deltaPop)
+					pCity.changePopulation(-deltaPop)
 
 				# Extra stuff for instigator city
 				if cityIdx == 0 and len(cityList) > 1 and iNumUnits > 0 and not bIsBarbRev:

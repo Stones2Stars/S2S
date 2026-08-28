@@ -168,11 +168,11 @@ def writeLog():
 			if pPlayer.getNumUnits():
 				for pUnit in pPlayer.units():
 					pFile.write("Player %d, Unit ID: %d, %s\n" % (iPlayer, pUnit.getID(), TextUtil.convertToStr(pUnit.getName())))
-					pFile.write("X: %d, Y: %d\nDamage: %d\n" % (pUnit.getX(), pUnit.getY(), pUnit.getDamage()))
-					pFile.write("Experience: %d\nLevel: %d\n" % (pUnit.getExperience(), pUnit.getLevel()))
+					pFile.write("X: %d, Y: %d\nDamage: %d\n" % (pUnit.getX(), pUnit.getY(), pUnit.getRead()[UnitReadKind.UNIT_READ_DAMAGE]))
+					pFile.write("Experience: %d\nLevel: %d\n" % (pUnit.getRead()[UnitReadKind.UNIT_READ_EXPERIENCE] / 100, pUnit.getRead()[UnitReadKind.UNIT_READ_LEVEL]))
 					bFirst = True
 					for j in xrange(GC.getNumPromotionInfos()):
-						if pUnit.isHasPromotion(j):
+						if pUnit.hasPromotion(j):
 							if bFirst:
 								pFile.write("Promotions:\n")
 								bFirst = False
