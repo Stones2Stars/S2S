@@ -22504,6 +22504,7 @@
             <iMaxPlayerInstances>1</iMaxPlayerInstances>
             <bUnlimitedException>1</bUnlimitedException>
             <Special>SPECIALUNIT_PEOPLE</Special>
+			<DefaultUnitAI>UNITAI_CITY_DEFENSE</DefaultUnitAI>
 			<Description>TXT_KEY_UNIT_TRIBAL_GUARDIAN</Description>
 			<Civilopedia>TXT_KEY_UNIT_TRIBAL_GUARDIAN_PEDIA</Civilopedia>
 			<Advisor>ADVISOR_MILITARY</Advisor>
