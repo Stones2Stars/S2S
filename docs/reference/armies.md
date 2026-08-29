@@ -50,15 +50,38 @@ back either. The failure mode is amnesia, not a dangling reference.
 observation of "the AI does not campaign with armies" across a reload is explained by this before anything
 else is suspected.
 
-## ⛔ What was never built
+## ⛔ What is not built — two unfinished halves and one DECISION
 
-- **Persistence** — the above. This is what `CVARMY_BREAKSAVE` names.
+⚖ **The three are not the same kind of gap, and treating them alike is the mistake to avoid.** Two are
+mechanics that were started and left incomplete; the third is a deliberate not-yet.
+
+**Unfinished — these are genuine holes:**
+
+- **Persistence.** The above. This is what `CVARMY_BREAKSAVE` names.
 - **The leader is not a member of its own army.** `AI_formArmies` calls `setLeader(pBestLeader)` and the
   line that would add that group to `m_groupIDs` is commented out beside it. So `getLeader()` answers, while
   the leader does not appear in the army's own group list.
-- **`ARMYAI_` does not exist.** An AI-type axis for armies — the counterpart of `UNITAI_*` — was intended and
-  never landed; the identifier appears nowhere in the tree. What an army is *for* is therefore carried only
-  by `ARMY_MISSION_*`.
+
+**⛔ Deliberately NOT built — `ARMYAI_`, and the reason is what protects the decision:**
+
+An AI-type axis for armies — the counterpart of `UNITAI_*` — was intended and never landed; the identifier
+appears nowhere in the tree. **It stays that way for now, because minting it means writing the AI LOOPS that
+would consume it**, and that work is not being taken on yet.
+
+⇒ So the absence is a SCOPE decision, not an omission to close. ⛔ Do not add an `ARMYAI_` enum, and do not
+read the missing axis as an unfinished half of the two above: an enum with no decision loops behind it is a
+vocabulary nothing consumes. What an army is *for* is carried by `ARMY_MISSION_*` meanwhile, which is
+sufficient for the coordination the layer actually performs today.
+
+⚑ **The prize is recorded WITH the deferral, because it is what makes this worth returning to: an army-level
+AI would likely be a significant PERFORMANCE win, since one decision taken for an army replaces the many
+individual per-unit calculations it stands in for.** That is a direct claim on the objective every perf
+decision answers to ([turn time is king](../cascade/16-package-model.md#-the-per-scope-package-model--the-cascades-founding-design-1-stated-as-cache-architecture)) —
+the cost sits in the AI's per-unit loops, and coordinating N units as one is exactly the shape that removes
+it rather than making it faster.
+⚠ So this is a SEQUENCING decision with a named prize, not a judgement that the axis is unwanted. It is not
+reopened by noticing the performance argument again — the argument is already here, and the blocker is the
+loops.
 
 ⚠ **This is not the Thunderbrd work.** The code is a later, separate contribution (its comments are French,
 and the sentinel removed in #364 was attributed to another modder). Do not read `CvArmy` as the realization
