@@ -505,7 +505,11 @@ void CvCity::getBuildingInCity(BuildingTypes eBuilding, int (&read)[NUM_CITY_BUI
 	read[CITY_BUILDING_PRODUCTION_DECAY] = isBuildingProductionDecay(eBuilding) ? 1 : 0;
 	//	WHO BUILT IT -- the ledger's own record, which is the only home this fact has ever had; there is no
 	//	`getBuildingOriginalOwner` on the city and never was, so a caller that wants it asks the ledger.
-	read[CITY_BUILDING_ORIGINAL_OWNER]   = (int)getBuildingData(eBuilding).eBuiltBy;
+	//	⚠ Only when the city HOLDS it: this read is asked about EVERY building (that is what CITY_BUILDING_HAS is
+	//	for), and the ledger has no entry for one the city never built.
+	read[CITY_BUILDING_ORIGINAL_OWNER]   = read[CITY_BUILDING_HAS] != 0
+		? (int)getBuildingData(eBuilding).eBuiltBy
+		: (int)NO_PLAYER;
 }
 
 
@@ -16444,10 +16448,15 @@ bool CvCity::hasBuilding(const BuildingTypes eType) const
 	return m_bHasBuildings[eType];
 }
 
+//	⚖ ABSENCE IS PART OF THE CONTRACT, NOT A MISUSE -- the answer for a building the city does not hold is the
+//	sentinel pair below, and two callers depend on exactly that: the group read (which reports CITY_BUILDING_HAS
+//	and must therefore be askable about any building) and CyCity::getBuildingBuiltTime, which Python calls for
+//	arbitrary ids. CityContext::buildingBuildYear documents the same sentinel.
+//	⛔ So this carried no assert on m_bHasBuildings: it fired on the ordinary total query -- 103k times in one
+//	save load -- claiming a defect where the function was answering exactly as specified.
 BuiltBuildingData CvCity::getBuildingData(const BuildingTypes eType) const
 {
 	FASSERT_BOUNDS(0, GC.getNumBuildingInfos(), eType);
-	FAssert(m_bHasBuildings[eType]);
 	if (m_bHasBuildings[eType])
 	{
 		return m_buildingLedger.find(eType)->second;

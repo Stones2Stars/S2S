@@ -884,7 +884,9 @@ public:
 	int cargoSpace() const;
 	void changeCargoSpace(int iChange);
 	bool isFull() const;
-	int cargoSpaceAvailable(SpecialUnitTypes eSpecialCargo = NO_SPECIALUNIT, DomainTypes eDomainCargo = NO_DOMAIN) const;
+	///<summary>Free room in this carrier's hold FOR THAT CANDIDATE -- 0 when the carrier's authored `cargo.space`
+	/// restriction does not admit it. NO_UNIT asks the unrestricted "how much room at all".</summary>
+	int cargoSpaceAvailable(UnitTypes eCargoUnit = NO_UNIT) const;
 	bool hasCargo() const;
 	bool canCargoAllMove() const;
 	bool canCargoEnterArea(TeamTypes eTeam, const CvArea* pArea, bool bIgnoreRightOfPassage) const;

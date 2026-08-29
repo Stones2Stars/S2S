@@ -28,6 +28,17 @@ The qualifier generalizes by counted kind — the field NAMES what is counted an
 `happiness.empire.cities.{religion: "!IS_STATE_RELIGION", flat: N}` = "N happiness per city religion matching"
 (here: per non-state religion present in the city).
 
+> ⛔ **THE QUALIFIER MAY BE A CONDITION OBJECT, NOT ONLY A BARE STRING — `{unit: {all: [IS_LAND, !IS_VTOL]}}` is
+> the ordinary compound form, and it is the MAJORITY form in the cargo data.** ⚠ `unit` and `religion` are also
+> SCOPE / keyed-map segment names, so shape alone cannot say which one an object-valued key is. What settles it
+> is that **a qualifier is a SIBLING OF A MAGNITUDE LEAF** (`flat`/`percent`/…) and a scope hop never has one —
+> which is exactly how `CvModifiers::walk` discriminates them.
+> ⚑ Getting that wrong is SILENT and total: a compound qualifier read as an address segment turns the entry into
+> the unkinded member `cargo.space.unit.all` and **drops it**, so the deposit simply does not exist. It cost 56
+> of the 90 authored carriers their entire hold — every aircraft carrier among them — while the data read as
+> perfectly well authored. The `[READJSON] unkinded-member` census names it on every load
+> ([validation](../../validation.md)); a non-zero count is dropped authored data, never cosmetic.
+
 > **Predicates vs tags.** `IS_*` predicates are **independent queries**, *not* tag-membership: `IS_LAND`
 > (used by cargo above) matches an intrinsic *domain*, not a `tag`. But a predicate **may be defined to encompass
 > tags** (e.g. `IS_MILITARY` set up to match the `military` tag + similar) — predicates have **definitions**.

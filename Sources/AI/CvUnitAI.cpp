@@ -10156,7 +10156,7 @@ void CvUnitAI::AI_attackAirMove()
 			kPlayer.AI_bestAreaUnitAIValue(UNITAI_CARRIER_SEA, NULL, &eBestCarrierUnit);
 			if (eBestCarrierUnit != NO_UNIT)
 			{
-				int iCarrierAirNeeded = iCarriers * GC.getUnitInfo(eBestCarrierUnit).getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100;
+				int iCarrierAirNeeded = iCarriers * GC.getUnitInfo(eBestCarrierUnit).getCargoSpaceTotal() / 100;
 				if (kPlayer.AI_totalUnitAIs(UNITAI_CARRIER_AIR) < iCarrierAirNeeded)
 				{
 					AI_setUnitAIType(UNITAI_CARRIER_AIR);
@@ -11965,7 +11965,7 @@ bool CvUnitAI::AI_load(UnitAITypes eUnitAI, MissionAITypes eMissionAI, UnitAITyp
 				// if the unit under evaluation is the type we were wanting to get loaded through this command
 				if (eLoopUnitAI == eUnitAI)// || (eUnitAI == UNITAI_ASSAULT_SEA && eLoopUnitAI == UNITAI_ESCORT_SEA))
 				{
-					int iCargoSpaceAvailable = pLoopUnit->cargoSpaceAvailable(getSpecialUnitType(), getDomainType());
+					int iCargoSpaceAvailable = pLoopUnit->cargoSpaceAvailable(getUnitType());
 
 					// iCargoSpaceAvailable refers to the space (in unit counts here) available to load units on the transport under eval
 					if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
@@ -12102,7 +12102,7 @@ bool CvUnitAI::AI_load(UnitAITypes eUnitAI, MissionAITypes eMissionAI, UnitAITyp
 		{
 			// BBAI TODO: To split or not to split?
 			//Here is where it gets complicated again...
-			const int iCargoSpaceAvailable = bestTransportUnit->cargoSpaceAvailable(getSpecialUnitType(), getDomainType());
+			const int iCargoSpaceAvailable = bestTransportUnit->cargoSpaceAvailable(getUnitType());
 
 			FAssertMsg(iCargoSpaceAvailable > 0, "best unit has no space");
 
@@ -22856,9 +22856,7 @@ bool CvUnitAI::AI_pickupStranded(UnitAITypes eUnitAI, int iMaxPath)
 
 					const int iMaxValuePath = (iBestValue == 0 ? MAX_INT : iValue / iBestValue);
 
-					SpecialUnitTypes eSpecialCargo = (SpecialUnitTypes)pHeadUnit->getSpecialUnitType();
-					DomainTypes eDomainCargo = (DomainTypes)pHeadUnit->getDomainType();
-					if (!bSM || getGroup()->getCargoSpaceAvailable(eSpecialCargo, eDomainCargo) >= groupX->getNumUnitCargoVolumeTotal())
+					if (!bSM || getGroup()->getCargoSpaceAvailable(pHeadUnit->getUnitType()) >= groupX->getNumUnitCargoVolumeTotal())
 					{
 						int iPathTurns = 0;
 						if (generatePath(pPickupPlot, 0, true, &iPathTurns, std::min(iMaxPath, iMaxValuePath)))

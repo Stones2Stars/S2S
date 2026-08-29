@@ -2315,3 +2315,14 @@ CvCity::m_iWorkableRadiusOverride
 | COMMERCE_TERM_PROCESS_CONVERSION through CvCity::getCommerceTerms -> CyCity::getCommerceTerms. The Finance
 | Advisor reads that term instead of multiplying two raw members.
 CvCity::m_aiProductionToCommerceModifier  (int array, NUM_COMMERCE_TYPES)
+
+| The player's military-unit count -- a COUNT OVER THE PLAYER'S OWN UNITS, so it is derived and derived data
+| serializes nothing (save.md par.5). Being serialized is what let a maintenance drift SURVIVE a save: the
+| stored number arrived stale, disagreed with the units, and CvPlayer::read carried a recount that corrected
+| it and logged "count of military unit out of sync!" on every load -- a self-heal, and the fossil of the hole
+| it was compensating for (the scratch temp unit was tallied at init and then re-typed in place by
+| changeIdentity, which adjusts no counter). The hole is fixed at its source; with the value no longer read
+| from a save there is no stale copy left for a recompute to purge.
+| REPLACEMENT: rebuilt in CvPlayer::read from the unit list, after the units have streamed -- the definition
+| of the count rather than a correction of it. Maintained incrementally in play by CvUnit init/kill as before.
+CvPlayer::m_iNumMilitaryUnits             (int)

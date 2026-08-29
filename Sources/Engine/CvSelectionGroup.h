@@ -351,7 +351,7 @@ public:
 	bool findNewLeader(UnitAITypes eAIType);
 	bool doMergeCheck() /* not const - does merge */;
 	int getCargoSpace() const;
-	int getCargoSpaceAvailable(SpecialUnitTypes eSpecialCargo, DomainTypes eDomainCargo) const;
+	int getCargoSpaceAvailable(UnitTypes eCargoUnit = NO_UNIT) const;
 	int countSeeInvisibleActive(UnitAITypes eUnitAI, InvisibleTypes eInvisibleType) const;
 	void releaseUnitAIs(UnitAITypes eUnitAI);
 

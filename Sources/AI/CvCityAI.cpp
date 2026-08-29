@@ -1796,7 +1796,7 @@ void CvCityAI::AI_chooseProduction()
 						int iBestSeaAssaultCapacity = 0;
 						if (eBestAssaultUnit != NO_UNIT)
 						{
-							iBestSeaAssaultCapacity = GC.getUnitInfo(eBestAssaultUnit).getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100;
+							iBestSeaAssaultCapacity = GC.getUnitInfo(eBestAssaultUnit).getCargoSpaceTotal() / 100;
 						}
 
 						if (iBestSeaAssaultCapacity > 0)
@@ -3340,7 +3340,7 @@ void CvCityAI::AI_chooseProduction()
 			int iBestSeaAssaultCapacity = 0;
 			if (eBestAssaultUnit != NO_UNIT)
 			{
-				iBestSeaAssaultCapacity = GC.getUnitInfo(eBestAssaultUnit).getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100;
+				iBestSeaAssaultCapacity = GC.getUnitInfo(eBestAssaultUnit).getCargoSpaceTotal() / 100;
 			}
 
 			int iAreaAttackCityUnits = player.AI_totalAreaUnitAIs(pArea, UNITAI_ATTACK_CITY);
@@ -3526,10 +3526,10 @@ void CvCityAI::AI_chooseProduction()
 						if (eBestMissileCarrierUnit != NO_UNIT)
 						{
 
-							int iMissileCarrierAirNeeded = iMissileCarriers * GC.getUnitInfo(eBestMissileCarrierUnit).getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100;
+							int iMissileCarrierAirNeeded = iMissileCarriers * GC.getUnitInfo(eBestMissileCarrierUnit).getCargoSpaceTotal() / 100;
 
 							if ((player.AI_totalUnitAIs(UNITAI_MISSILE_AIR) < iMissileCarrierAirNeeded) ||
-								(bPrimaryArea && (player.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_CARRIER_SEA) * GC.getUnitInfo(eBestMissileCarrierUnit).getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 < player.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_AIR))))
+								(bPrimaryArea && (player.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_CARRIER_SEA) * GC.getUnitInfo(eBestMissileCarrierUnit).getCargoSpaceTotal() / 100 < player.AI_totalAreaUnitAIs(pArea, UNITAI_MISSILE_AIR))))
 							{
 								// Don't always build missiles, more likely if really low
 								if (AI_chooseUnit("need missiles", UNITAI_MISSILE_AIR, (player.AI_totalUnitAIs(UNITAI_MISSILE_AIR) < iMissileCarrierAirNeeded / 2) ? 50 : 20))
@@ -3556,7 +3556,7 @@ void CvCityAI::AI_chooseProduction()
 			if (eBestCarrierUnit != NO_UNIT)
 			{
 
-				const int iCarrierAirNeeded = iCarriers * GC.getUnitInfo(eBestCarrierUnit).getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100;
+				const int iCarrierAirNeeded = iCarriers * GC.getUnitInfo(eBestCarrierUnit).getCargoSpaceTotal() / 100;
 
 				// Reduce chances if city gives no air experience
 				if (player.AI_totalUnitAIs(UNITAI_CARRIER_AIR) < iCarrierAirNeeded

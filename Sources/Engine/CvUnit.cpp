@@ -457,7 +457,14 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 			GET_PLAYER(eOwner).changeNumNukeUnits(1);
 		}
 
-		if (isMilitaryBranch())
+		//	⛔ THE SCRATCH UNIT IS NOT AN ARMY MEMBER, so it must not enter a player-level tally (the same
+		//	exclusion the birthmark test above makes for the rest of this unit's bookkeeping). It is created ONCE
+		//	and then re-typed in place by changeIdentity, which resets the unit without touching any counter --
+		//	so a counted temp unit contributes its FIRST type's verdict forever, and no later re-type corrects it.
+		//	⚑ That is what put every player's m_iNumMilitaryUnits permanently out of step with its own units and
+		//	left a recount-and-correct self-heal in CvPlayer::read to paper over it on every load.
+		//	⚠ isTempUnit() is answerable HERE because AI_init has already stamped the birthmark.
+		if (isMilitaryBranch() && !isTempUnit())
 		{
 			GET_PLAYER(eOwner).changeNumMilitaryUnits(1);
 		}
@@ -1254,7 +1261,7 @@ void CvUnit::convert(CvUnit* pUnit, const bool bKillOriginal)
 		// Check cargo types and capacity when upgrading transports
 		if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
 		{
-			if (cargoSpaceAvailable(pCargo->getSpecialUnitType(), pCargo->getDomainType()) > pCargo->getCargoVolume())
+			if (cargoSpaceAvailable(pCargo->getUnitType()) > pCargo->getCargoVolume())
 			{
 				pCargo->setTransportUnit(NULL);
 				pCargo->setTransportUnit(this);
@@ -1265,7 +1272,7 @@ void CvUnit::convert(CvUnit* pUnit, const bool bKillOriginal)
 				pCargo->jumpToNearestValidPlot();
 			}
 		}
-		else if (cargoSpaceAvailable(pCargo->getSpecialUnitType(), pCargo->getDomainType()) > 0)
+		else if (cargoSpaceAvailable(pCargo->getUnitType()) > 0)
 		{
 			pCargo->setTransportUnit(NULL);
 			pCargo->setTransportUnit(this);
@@ -1599,7 +1606,8 @@ void CvUnit::die()
 		owner.changeNumNukeUnits(-1);
 	}
 
-	if (isMilitaryBranch())
+	//	The withdrawal side of the same exclusion -- one predicate at both ends, or the count drifts the other way.
+	if (isMilitaryBranch() && !isTempUnit())
 	{
 		owner.changeNumMilitaryUnits(-1);
 	}
@@ -5659,7 +5667,7 @@ bool CvUnit::canLoadOntoUnit(const CvUnit* pUnit, const CvPlot* pPlot) const
 	}
 
 	{
-		const int iCargoSpace = pUnit->cargoSpaceAvailable(getSpecialUnitType(), getDomainType());
+		const int iCargoSpace = pUnit->cargoSpaceAvailable(getUnitType());
 
 		if (iCargoSpace < 1 || GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS) && iCargoSpace < SMCargoVolume())
 		{
@@ -10343,7 +10351,7 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 			return NULL;
 		}
 	}
-	else if (kUnitInfo.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 < getCargo())
+	else if (kUnitInfo.getCargoSpaceTotal() / 100 < getCargo())
 	{
 		return NULL;
 	}
@@ -10352,13 +10360,12 @@ CvCity* CvUnit::getUpgradeCity(UnitTypes eUnit, bool bSearch, int* iSearchValue)
 	{
 		if (pLoopUnit->getTransportUnit() == this)
 		{
-			if (kUnitInfo.getSpecialCargo() != NO_SPECIALUNIT)
+			// The upgrade must not strand what is already aboard: the restriction is the `unit:` qualifier on
+			// the CANDIDATE's own cargo.space entries, evaluated against this cargo unit.
+			if (!kUnitInfo.admitsCargo(pLoopUnit->getUnitInfo()))
 			{
 				return NULL;
 			}
-			// The DOMAIN restriction is the `unit:` predicate qualifier on the candidate's own cargo.space
-			// entries ([modifier.md] par.6), so answering it needs the QUALIFIED entry read evaluated against
-			// this cargo unit -- the point sum is the unqualified capacity plane by construction and cannot.
 		}
 	}
 
@@ -13097,7 +13104,9 @@ int CvUnit::cargoSpace() const
 		}
 		return iCargoCapacity;
 	}
-	int iCargoCapacity = m_pUnitInfo->getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 + m_iCargoCapacity;
+	//	getCargoSpaceTotal, never getCargo(CARGO_SPACE): the point sum folds only UNCONDITIONED entries and every
+	//	authored carrier qualifies its hold, so the point read answers 0 for all of them.
+	int iCargoCapacity = m_pUnitInfo->getCargoSpaceTotal() / 100 + m_iCargoCapacity;
 
 	int aiCargo[NUM_CARGO_KINDS];
 	GET_PLAYER(getOwner()).getCargoKinds(aiCargo);
@@ -13132,23 +13141,40 @@ bool CvUnit::isFull() const
 }
 
 
-int CvUnit::cargoSpaceAvailable(SpecialUnitTypes eSpecialCargo, DomainTypes eDomainCargo) const
+//	The free room this carrier has FOR THAT CANDIDATE -- so the carrier's restriction is answered here, which is
+//	where getCargo() says a `unit:` qualifier is evaluated: at the consumer, against each cargo candidate.
+//	⚖ It takes the candidate's UNIT TYPE and nothing else, because the restriction is answerable from the
+//	candidate's own info (domain + tag bitset). That serves the live-unit callers and the one info-only caller
+//	(the barbarian ship spawn, which has no unit yet) through a single read.
+//	⚠ NO_UNIT asks the unrestricted question -- "how much room at all" -- for the callers that only want the count.
+int CvUnit::cargoSpaceAvailable(UnitTypes eCargoUnit) const
 {
-	if (getSpecialCargo() != NO_SPECIALUNIT && getSpecialCargo() != eSpecialCargo)
+	if (eCargoUnit != NO_UNIT)
 	{
-		return 0;
-	}
-	if (getDomainCargo() != NO_DOMAIN && getDomainCargo() != eDomainCargo)
-	{
-		return 0;
-	}
-
-	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
-	{
-		if  (eSpecialCargo != NO_SPECIALUNIT && getSMNotSpecialCargo() == eSpecialCargo)
+		const CvUnitInfo& kCargo = GC.getUnitInfo(eCargoUnit);
+		if (!m_pUnitInfo->admitsCargo(kCargo))
 		{
 			return 0;
 		}
+		//	The promotion-set overrides, the surviving half of the legacy scalars: a hold a promotion RETYPED
+		//	(PROMOTION_TRANSPORT_PEOPLE and its five siblings) still binds on top of the authored qualifier.
+		const SpecialUnitTypes eCargoSpecial = (SpecialUnitTypes)kCargo.getSpecialUnitType();
+		if (getDomainCargo() != NO_DOMAIN && getDomainCargo() != kCargo.getDomain())
+		{
+			return 0;
+		}
+		if (getSpecialCargo() != NO_SPECIALUNIT && getSpecialCargo() != eCargoSpecial)
+		{
+			return 0;
+		}
+		if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS)
+		&& eCargoSpecial != NO_SPECIALUNIT && getSMNotSpecialCargo() == eCargoSpecial)
+		{
+			return 0;
+		}
+	}
+	if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
+	{
 		return std::max(0, cargoSpace() - SMgetCargo());
 	}
 	return std::max(0, cargoSpace() - getCargo());
@@ -16029,7 +16055,7 @@ void CvUnit::setTransportUnit(CvUnit* pTransportUnit)
 		if (pTransportUnit != NULL)
 		{
 			//Can Happen without it being a bug if the unit was forced reloaded by means of an adjustment when already loaded that allowed the unit to overload the transport.
-			FAssertMsg(pTransportUnit->cargoSpaceAvailable(getSpecialUnitType(), getDomainType()) > 0, "Cargo space is expected to be available");
+			FAssertMsg(pTransportUnit->cargoSpaceAvailable(getUnitType()) > 0, "Cargo space is expected to be available");
 
 			joinGroup(NULL, true); // Because what if a group of 3 tries to get in a transport which can hold 2...
 
@@ -24055,13 +24081,18 @@ int CvUnit::SMcargoSpaceFilter() const
 	return getSMCargoCapacity();
 }
 
+//	⚖ CAPACITY HAS ONE HOME AND SIZE MATTERS DERIVES FROM IT ([cascade/20-unit-plane.md]) -- smSpace follows from
+//	how many units the carrier holds, so it is never a second authored number. The authored hold is read in whole
+//	units and re-expressed as VOLUME (one nominal unit at its own type profile occupies 100), which is what makes
+//	the same authored 3 mean three hunters whether or not the option is on.
 int CvUnit::SMcargoCapacityPreCheck() const
 {
-	if (isCarrier())
+	if (!isCarrier())
 	{
-		return std::max(1, 100 + getCargoCapacitybyType(100));
+		return 0;
 	}
-	return 0;
+	const int iHold = m_pUnitInfo->getCargoSpaceTotal() / 100 + m_iCargoCapacity;
+	return std::max(1, getCargoCapacitybyType(std::max(1, iHold) * 100));
 }
 
 int CvUnit::getSMCargoCapacity() const
@@ -24270,9 +24301,17 @@ int CvUnit::getSizeMattersOffsetValue() const
 	return qualityRank() + groupRank() + sizeRank() - iTypePivot;
 }
 
+//	The VOLUMETRIC axis of the same rule, and it is the same pivot: the unit type's OWN group+size sum, so a unit
+//	at its type's profile is offset 0 and gets exactly the volume, hold and work rate the data authored.
+//	⚠ The retired form subtracted a flat 10. Only 252 of 2044 units with an authored profile sum to 10, so the
+//	other 88% had every value on this axis multiplied or divided by a power of the VOLUMETRIC multiplier -- 3 per
+//	rank, not the military plane's 1.5 -- reaching /2187 at the low end. It silently scaled cargo volume, cargo
+//	capacity AND setSMBaseWorkRate, which is why an authored work rate did not survive turning the option on.
 int CvUnit::getSizeMattersSpacialOffsetValue() const
 {
-	return groupRank() + sizeRank() - 10;
+	const int iTypePivot = m_pUnitInfo->getBaseGroupRank() + m_pUnitInfo->getBaseSizeRank();
+
+	return groupRank() + sizeRank() - iTypePivot;
 }
 
 int CvUnit::getCargoCapacitybyType(int iValue) const
@@ -24295,9 +24334,16 @@ int CvUnit::getCargoCapacitybyType(int iValue) const
 	return applySMRank(iValue, rankChange, GC.getSIZE_MATTERS_MOST_VOLUMETRIC_MULTIPLIER());
 }
 
+//	A carrier is a unit that HAS A HOLD, and the hold is the authored `cargo.space` plane -- its capacity, and on
+//	its `unit:` qualifier what it may take ([cascade/20-unit-plane.md]). The two legacy scalars survive only as the
+//	PROMOTION-set overrides (getDomainCargo), which just 6 promotions author, so neither can be the test.
+//	⛔ NEVER ask cargoSpace() here: the Size Matters branch resolves its capacity THROUGH this predicate
+//	(SMcargoSpaceFilter -> SMcargoCapacityPreCheck), so doing so recurses without end.
 bool CvUnit::isCarrier() const
 {
-	return getSpecialCargo() != NO_SPECIALUNIT || getDomainCargo() != NO_DOMAIN;
+	return m_pUnitInfo->getCargoSpaceTotal() + m_iCargoCapacity * 100 > 0
+		|| getSpecialCargo() != NO_SPECIALUNIT
+		|| getDomainCargo() != NO_DOMAIN;
 }
 
 bool CvUnit::isUnitAtBaseGroup() const

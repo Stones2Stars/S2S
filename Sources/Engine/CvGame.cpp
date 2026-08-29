@@ -7190,7 +7190,7 @@ void CvGame::createBarbarianUnits()
 					{
 						iValue += 200;
 					}
-					iValue += kUnit.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 * (25 + getSorenRandNum(25, "Cargo Space Value"));
+					iValue += kUnit.getCargoSpaceTotal() / 100 * (25 + getSorenRandNum(25, "Cargo Space Value"));
 
 					if (iValue > iBestValue)
 					{
@@ -8438,6 +8438,25 @@ void CvGame::read(FDataStreamBase* pStream)
 	// the bracket. GAME_LOAD_FINISHED closes it at the end of onFinalInitialized. The spine consumers are registered
 	// at the postmenu data load (CvXMLLoadUtilitySet -> spineRegisterConsumers), which always precedes a save read.
 	emitGameLoadStarted();
+
+	//	⛔ EVERY TEAM IS BROUGHT TO A FULLY CONSTRUCTED STATE BEFORE ANYTHING STREAMS. A team's info-sized arrays
+	//	are allocated by reset(), and on a load the only reset() a team ever gets is the one inside its OWN read --
+	//	which the EXE runs AFTER the map. So through the whole of CvMap::read the teams stood half-constructed with
+	//	null arrays, and the map's in-read facts drive the cascade straight into them: every improvement fact
+	//	resolves its deposits' conditions, a tech-gated one asks EmpireContext::teamHasTech, and that read hit a
+	//	null m_pabHasTech 15852 times in one load.
+	//	⚑ The reads were TOLERANT, which is why this surfaced as assert noise rather than a crash -- and is exactly
+	//	why it survived: a half-constructed object answering plausibly is the shape that never gets found.
+	//	⚖ It is idempotent by construction: CvTeam::read opens with its own reset(), so this only moves the FIRST
+	//	one earlier. It changes no answer either -- an unallocated tech array already read as "no techs", which is
+	//	what a freshly reset one says -- and the tech facts that arrive later from CvPlayer::read re-book every
+	//	deposit they gate through the banked atom fans ([the load reseed](docs/spine/05-the-load-reseed.md)).
+	//	⛔ Do NOT reach for a guard at the read instead: a guard makes each reader responsible for a state that
+	//	should not exist, and there is no bottom to that list -- the object being whole is the invariant.
+	for (int iTeam = 0; iTeam < MAX_TEAMS; iTeam++)
+	{
+		GET_TEAM((TeamTypes)iTeam).reset((TeamTypes)iTeam);
+	}
 
 	WRAPPER_READ_STRING(wrapper, "CvGame", m_gameId);	// flags for expansion
 
@@ -11477,7 +11496,7 @@ void CvGame::loadPirateShip(CvUnit* pUnit)
 		{
 			const CvUnitInfo& unitInfo = GC.getUnitInfo((UnitTypes) iJ);
 
-			if (validBarbarianShipUnit(unitInfo, (UnitTypes) iJ) && (!bSM || pUnit->cargoSpaceAvailable((SpecialUnitTypes)unitInfo.getSpecialUnitType(), unitInfo.getDomain()) > 0))
+			if (validBarbarianShipUnit(unitInfo, (UnitTypes) iJ) && (!bSM || pUnit->cargoSpaceAvailable((UnitTypes) iJ) > 0))
 			{
 				int iValue = 1 + getSorenRandNum(1000, "Barb Unit Selection");
 
@@ -11497,7 +11516,7 @@ void CvGame::loadPirateShip(CvUnit* pUnit)
 		{
 			CvUnit* pPirate = GET_PLAYER(BARBARIAN_PLAYER).createUnit((UnitTypes)iBestUnit, pUnit->getX(), pUnit->getY(), UNITAI_ATTACK);
 			if (pPirate != NULL
-			&& pUnit->cargoSpaceAvailable(pPirate->getSpecialUnitType(), pPirate->getDomainType()) >= pPirate->SMCargoVolume())
+			&& pUnit->cargoSpaceAvailable(pPirate->getUnitType()) >= pPirate->SMCargoVolume())
 			{
 				pPirate->setTransportUnit(pUnit);
 				pUnit->AI_setUnitAIType(UNITAI_ASSAULT_SEA);
