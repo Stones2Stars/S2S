@@ -130,11 +130,21 @@ routes, all live:
 - `scheduleDeath`'s cargo loop → `unitX->kill(bDelay, …)` — a nested full death sequence per cargo unit.
 - `die()`'s capture block → `pkCapturedUnit->kill(false, …)` and the Python `unitCaptured` handler.
 
-⚠ **The cargo loop iterates `pPlot->units()` — the unmutated view — while its nested kills can delete units
-from that very list** when `bDelay` is false (which is every Python kill, `doDelayedDeath`'s reap, and the
-flanking kill). `units_safe()` is the snapshot variant used elsewhere for exactly this
-(`CvUnit::setXY`, `CvSelectionGroup::doDelayedDeath`). This is a known hazard in the cargo path, not a
-statement that it is safe.
+⛔ **The cargo loop walks a MANIFEST taken before it starts, never the live plot list — and the reason is that
+resolving a cargo unit's fate mutates that list by TWO independent routes.** An **escaping** unit leaves the
+plot through `setXY`, and a **drowning** one is deleted outright whenever `bDelay` is false (every Python kill,
+`doDelayedDeath`'s reap, the flanking kill). ⚠ So the escape route mutates the container *whatever* `bDelay`
+says: forcing the recursive kill to delay would not have made the live walk safe.
+
+⚑ **The manifest holds IDENTITIES (`IDInfo`), not pointers, and that is the half a snapshot alone does not
+buy.** `units_safe()` copies raw `CvUnit*` (`copy_iterator`), which survives container mutation but not
+DELETION — and a nested cargo cascade (a transport carrying a transport) frees units that are themselves on
+this plot, so a pointer snapshot can be left holding freed memory that the loop's own transport guard then
+dereferences. Each entry is re-resolved through `getUnit(IDInfo)` instead, so a unit that died meanwhile
+resolves to NULL and is skipped — which is correct, it is already dead.
+
+⚖ The set walked is therefore the cargo manifest **at the moment of the killing blow**, which is the thing
+being resolved; the draws are unchanged, in the same order, over the same units.
 
 ## See also
 - [spine.md](../spine.md) — `SEVT_UNIT_KILLED` / `SEVT_UNIT_DEATH_SCHEDULE_ADDED / _REMOVED` and the reseed.

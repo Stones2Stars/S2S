@@ -1337,9 +1337,30 @@ bool CvUnit::scheduleDeath(bool bDelay, PlayerTypes ePlayer, bool bMessaged)
 	{
 		if (hasCargo())
 		{
+			// The cargo MANIFEST is taken before the walk, because resolving a cargo unit's fate mutates
+			// the plot's unit list in two independent ways: an ESCAPING unit leaves the plot through
+			// setXY, and a DROWNING one is deleted outright whenever bDelay is false (every Python kill,
+			// the delayed-death reap, the flanking kill). Iterating the live view across either is
+			// undefined, so neither a snapshot nor forcing bDelay would be sufficient on its own.
+			// It records IDENTITIES rather than pointers: a nested cargo cascade -- a transport carrying
+			// a transport -- can free a unit that a pointer snapshot would still be holding, so each
+			// entry is re-resolved and one that died meanwhile simply resolves to NULL.
+			std::vector<IDInfo> cargoManifest;
+
 			foreach_(CvUnit* unitX, pPlot->units())
 			{
-				if (unitX == this || unitX->getTransportUnit() != this)
+				if (unitX != this && unitX->getTransportUnit() == this)
+				{
+					cargoManifest.push_back(unitX->getIDInfo());
+				}
+			}
+
+			foreach_(const IDInfo& cargoUnitId, cargoManifest)
+			{
+				CvUnit* unitX = getUnit(cargoUnitId);
+
+				// Gone, or no longer ours, since the manifest was taken.
+				if (unitX == NULL || unitX->getTransportUnit() != this)
 				{
 					continue;
 				}
