@@ -147,11 +147,11 @@ Settings
     Using(.ConfigNonDebugCommon)
     .ConfigName     = 'Release'
 
-    // ⛔ NEVER compile the internal profiler into Release, doing so made the 3
-    // ungated PROFILE_BEGIN sites (CvGame::update per-FRAME, doTurn, CvPlotGroup) run IFPBeginSample +
+    // ⛔ NEVER compile the internal profiler into ANY config. Doing so made the 3 ungated
+    // PROFILE_BEGIN sites (CvGame::update per-FRAME, doTurn, CvPlotGroup) run IFPBeginSample +
     // a critical-section per call -> a memory-allocation-failure crash on end-turn. The census /
-    // [MODIFIER/perf] gated logging IS the perf surface; the PROFILE_* system is kraken bait, ticketed for
-    // removal in #449. Release stays profiler-free.
+    // [MODIFIER/perf] gated logging IS the perf surface. USE_INTERNAL_PROFILER is now defined
+    // nowhere, so no config can select it; the inert PROFILE_* scopes compile to nothing.
 ]
 
 .ConfigAssert =
@@ -163,25 +163,7 @@ Settings
                     + ' /DFASSERT_LOGGING'
 ]
 
-.ConfigProfile = 
-[
-    Using(.ConfigNonDebugCommon)
-    .ConfigName     = 'Profile'
-
-    .CLOptions      + ' /DFP_PROFILE_ENABLE' 
-                    + ' /DUSE_INTERNAL_PROFILER'
-]
-
-.ConfigProfileExtra = 
-[
-    Using(.ConfigNonDebugCommon)
-    .ConfigName     = 'ProfileExtra'
-
-    .CLOptions      + ' /DFP_PROFILE_EXTRA_ENABLE' 
-                    + ' /DUSE_INTERNAL_PROFILER'
-]
-
-.ConfigTesting = 
+.ConfigTesting =
 [
     Using(.ConfigNonDebugCommon)
     .ConfigName     = 'Testing'
@@ -199,7 +181,7 @@ Settings
                     + ' /DFINAL_RELEASE'
 ]
 
-.Configs = { .ConfigDebug, .ConfigRelease, .ConfigAssert, .ConfigProfile, .ConfigProfileExtra, .ConfigTesting, 
+.Configs = { .ConfigDebug, .ConfigRelease, .ConfigAssert, .ConfigTesting,
 	.ConfigFinalRelease }
 
 .AllTargets = {}

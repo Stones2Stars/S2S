@@ -48,7 +48,7 @@ root `AGENTS.md`.
 
 - Build entry point is `Tools/_Build.ps1`, run **from `Sources/`**:
   `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <Config> <verb...>`.
-  Configs: `Assert`/`Debug`/`Release`/`FinalRelease`/`Profile`/`ProfileExtra`; verbs: `clean`/`build`/`rebuild`/`deploy`.
+  Configs: `Assert`/`Debug`/`Release`/`FinalRelease`/`Testing`; verbs: `clean`/`build`/`rebuild`/`deploy`.
 - Quick compile check after editing: `Assert build` (~30s incremental). `MakeDLL*.bat` always rebuild+deploy.
 - **`FASSERT`/`FAssertMsg` compile out of `Release` and `FinalRelease`** (only `Assert`/`Debug`/`Testing`
   define `FASSERT_ENABLE`, per `fbuild.bff` — *not* the `.vcxproj`). FinalRelease is the build players
