@@ -1488,6 +1488,18 @@ bool CvPlot::updateSymbolsInternal()
 		return false;
 	}
 
+	//	A plot the viewer cannot work yet shows no yields. The predicate is the CAPABILITY the city itself
+	//	applies (CvCity::canWork's water gate), read at the ACTIVE team so it matches the isRevealed test
+	//	directly above -- never CvCity::canWork, which answers a per-CITY question (radius, blockade, siege,
+	//	already worked elsewhere) that a plot symbol has no city to ask.
+	//	⛔ WATER ONLY, and that is not an omission: canWork carries NO peak gate, so a peak is workable
+	//	regardless of mountaineering -- canPassPeaks gates REACH, not work. Widening this to the whole
+	//	canWorkOn block would blank yields on plots that really are workable.
+	if (isWater() && !GET_TEAM(GC.getGame().getActiveTeam()).isWaterWork())
+	{
+		return false;
+	}
+
 	if (isShowCitySymbols() || gDLL->getInterfaceIFace()->isShowYields() && !gDLL->getInterfaceIFace()->isCityScreenUp())
 	{
 		// The plot's own package, in one group read; the symbol stack draws WHOLE yields, so the single reduce
