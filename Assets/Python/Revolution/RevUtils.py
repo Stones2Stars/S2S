@@ -221,8 +221,8 @@ def getEnemyUnits( iPlotX, iPlotY, iEnemyOfPlayer, domain = -1, bOnlyMilitary = 
 	enemyUnits = []
 
 	for pUnit in GC.getMap().plot(iPlotX,iPlotY).units():
-		pUnitTeam = GC.getTeam( pUnit.getTeam() )
-		if( pEnemyOfTeam.isAtWarWith(pUnit.getTeam()) ) :
+		pUnitTeam = GC.getTeam( GC.getPlayer(pUnit.getOwner()).getTeam() )
+		if( pEnemyOfTeam.isAtWarWith(GC.getPlayer(pUnit.getOwner()).getTeam()) ) :
 			if( domain < 0 or pUnit.getRead()[UnitReadKind.UNIT_READ_DOMAIN] == domain ) :
 				if( not bOnlyMilitary or pUnit.canFight() ) :
 					enemyUnits.append( pUnit )

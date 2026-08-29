@@ -2879,7 +2879,7 @@ class Revolution:
 						if (stateHolyCityOwner is not None
 						and instigator.isHasReligion(stateRel)
 						and not stateHolyCityOwner.getID() == iPlayer
-						and pTeam.canDeclareWar(stateHolyCityOwner.getTeam())
+						and pTeam.canDeclareWar(GC.getPlayer(stateHolyCityOwner.getOwner()).getTeam())
 						and not pTeam.isAVassal()
 						):
 							if self.LOG_DEBUG:

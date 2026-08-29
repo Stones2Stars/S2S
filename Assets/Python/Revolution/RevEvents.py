@@ -201,7 +201,7 @@ def onSetPlayerAlive(argsList):
 				if LOG_DEBUG:
 					print "[REV] The dying %s are the rebel type for %s"%(pPlayer.getCivilizationDescription(0), pCity.getName())
 
-				if GC.getTeam(pPlayer.getTeam()).isAtWarWith(pCity.getTeam()):
+				if GC.getTeam(pPlayer.getTeam()).isAtWarWith(GC.getPlayer(pCity.getOwner()).getTeam()):
 					revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 					localIdx = pCity.getLocalRevIndex()
 					revCnt = pCity.getNumRevolts(iPlayerX)
