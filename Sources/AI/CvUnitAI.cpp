@@ -17132,15 +17132,18 @@ bool CvUnitAI::AI_refreshExploreRange(int iRange, bool bIncludeVisibilityRefresh
 		}
 	}
 
-	if (pBestPlot && pBestExplorePlot)
+	//	⛔ COMMIT ONLY A MOVE THAT ACTUALLY ADVANCES THIS TURN. For a land unit pBestPlot IS
+	//	getPathEndTurnPlot() -- where this turn's movement ends -- so atPlot(pBestPlot) means the pathfinder
+	//	has already said the unit finishes the turn where it stands. Pushing toward the far explore plot in
+	//	that state cannot advance it, yet returns TRUE, so the caller reads a no-op as progress and asks
+	//	again at the same plot every slice until the engine's own re-decide backstop trips.
+	//	Answering FALSE hands the caller its terminating fallbacks (borders / patrol / safety / SKIP), which
+	//	is what actually ends the unit's turn.
+	if (pBestPlot && pBestExplorePlot && !atPlot(pBestPlot))
 	{
 		PROFILE("AI_exploreRange 4");
 
-		FAssert(!atPlot(pBestPlot));
-		if (!atPlot(pBestPlot))
-			return getGroup()->pushMissionInternal(MISSION_MOVE_TO, pBestPlot->getX(), pBestPlot->getY(), MOVE_NO_ENEMY_TERRITORY | MOVE_HEAL_AS_NEEDED25, false, false, MISSIONAI_EXPLORE, pPreviouslySelectedPlot != NULL ? pPreviouslySelectedPlot : pBestExplorePlot);
-		else if (!atPlot(pBestExplorePlot))
-			return getGroup()->pushMissionInternal(MISSION_MOVE_TO, pBestExplorePlot->getX(), pBestExplorePlot->getY(), MOVE_NO_ENEMY_TERRITORY | MOVE_HEAL_AS_NEEDED25, false, false, MISSIONAI_EXPLORE, pPreviouslySelectedPlot != NULL ? pPreviouslySelectedPlot : pBestExplorePlot);
+		return getGroup()->pushMissionInternal(MISSION_MOVE_TO, pBestPlot->getX(), pBestPlot->getY(), MOVE_NO_ENEMY_TERRITORY | MOVE_HEAL_AS_NEEDED25, false, false, MISSIONAI_EXPLORE, pPreviouslySelectedPlot != NULL ? pPreviouslySelectedPlot : pBestExplorePlot);
 	}
 	if (candidatesRejectedForMoveSafety)
 	{
