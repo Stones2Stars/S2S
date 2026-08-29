@@ -143,6 +143,22 @@ the synchronized stream. Authoring the threshold is data; performing the draw is
   unit finder is compiled out). Fully pluggable via 5 typed callbacks (heuristic / cost / valid / terminus /
   turn-end); `generatePathForHypotheticalUnit` does distance probes with no live `CvUnit`. Shared via
   `CvSelectionGroup::getPathGenerator()`.
+- **⚖ THE NODE TREE SURVIVES BETWEEN CALLS, AND THE RESET CONDITION IS NARROW: `!bSameGroup || pFrom != m_pFrom`.**
+  Re-pathing the SAME group from the SAME origin to a different destination keeps every allocated node, its
+  `m_iCostTo`, and its flags; only a different group or a different origin resets the pool and the plot info.
+  This is the [spatial carve-out](../cascade/06-spatial-and-contextdict.md) working as designed — but it means a
+  node's recorded cost may belong to an EARLIER generation, which is why `m_iPathSeq` is compared against
+  `m_iSeq` wherever freshness actually matters.
+- **⛔ `m_bIsKnownRoute` MARKS A NODE OF A PREVIOUS WINNING PATH, AND IT IS CLEARED ONLY AT ALLOCATION — never at
+  the start of a generation.** It is set on every node of the finalized path when a generation succeeds, so it
+  survives into subsequent generations over the retained tree.
+  ⛔ **So a node being a known route says NOTHING about its cost being current, and a cost-equality invariant
+  keyed on the flag is not merely fragile — it is unsatisfiable.** The visited-previously branch reaches its
+  relink two ways: the IMPROVEMENT test (`newNode->m_iCostTo > node->m_iCostTo + iEdgeCost`) is entered exactly
+  when the two sides are UNEQUAL, and the `isBetterPath` path can only fall through when they are exactly EQUAL.
+  An assert demanding equality after the two merge is therefore definitionally false on the first and a
+  tautology on the second — it can never hold and can never catch anything. ⚑ The sibling loop in
+  `generatePathForHypotheticalUnit` is the same code without it, which is the shape to match.
 - **`FAStar`** still drives the **non-movement** queries: **step** (tile-hop distance), **route**, **border**,
   **area** (flood-fill), **plot-group** (trade net). Finders are **stateful + shared** — call `GetLastNode` on the
   *same* finder that ran `GeneratePath` (bug #73 read a stale global → wrong distance). `stepCost = 1` (a hop count,

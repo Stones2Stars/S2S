@@ -1533,7 +1533,6 @@ bool CvPathGenerator::generatePath(const CvPlot* pFrom, const CvPlot* pTo, CvSel
 												{
 													// For now just trim the old tree rooted here and recalculate it,
 													// but (TODO) adjust the existing tree nodes if end turn boundaries align
-													newNode = pAdjacentPlotInfo->pNode;
 												}
 												// Equal cost is considered in precisely one case -
 												// retracing the (best) steps taken by a previous path
@@ -1559,7 +1558,6 @@ bool CvPathGenerator::generatePath(const CvPlot* pFrom, const CvPlot* pTo, CvSel
 													continue;
 												}
 
-												FAssert(!newNode->m_bIsKnownRoute || node->m_iCostTo + iEdgeCost == newNode->m_iCostTo);
 												RelinkNode(newNode, node);
 
 												if (newNode->m_iMovementRemaining != iMovementRemaining
