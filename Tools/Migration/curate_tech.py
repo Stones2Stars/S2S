@@ -119,7 +119,11 @@ def allowed_fn(rec, store):
 
 
 CFG = cc.EntityConfig("TechInfo", cost_rename={"iCost": "research"}, grants=GRANTS, era_fn=era_fn,
-                      requires_fn=requires_fn, allowed_fn=allowed_fn, extra_drop={"bGlobal"},
+                      # bDCMAirBombTech1/2 gated DCM air bombing, a subsystem that is gone from the engine.
+                      # DROPPED explicitly rather than merely unmapped: an unmapped bool falls through to
+                      # identity, and identity carries no effects.
+                      requires_fn=requires_fn, allowed_fn=allowed_fn,
+                      extra_drop={"bGlobal", "bDCMAirBombTech1", "bDCMAirBombTech2"},
                       enabler_block="capabilities")   # tech enabler channels are empire CAPABILITIES (owner 2026-06-29)
 
 

@@ -43,9 +43,6 @@
    ]
   }
  },
- "capabilities": {
-  "dcmAirBomb1": true
- },
  "cost": {
   "research": 7718
  },

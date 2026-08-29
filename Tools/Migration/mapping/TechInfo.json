@@ -39,9 +39,7 @@
     "bMapCentering": {"scope": "team", "channel": "hasCenteredMap", "kind": "enabler"},
     "bMapVisible": {"scope": "team", "channel": "hasWholeMapRevealed", "kind": "enabler"},
     "bRebaseAnywhere": {"scope": "player", "channel": "canRebaseAnywhere", "kind": "enabler"},
-    "bLanguage": {"scope": "team", "channel": "hasLanguage", "kind": "enabler"},
-    "bDCMAirBombTech1": {"scope": "team", "channel": "dcmAirBomb1", "kind": "enabler"},
-    "bDCMAirBombTech2": {"scope": "team", "channel": "dcmAirBomb2", "kind": "enabler"}
+    "bLanguage": {"scope": "team", "channel": "hasLanguage", "kind": "enabler"}
   },
   "inversionsOut": {},
   "enablerEdges": {},
