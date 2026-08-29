@@ -14,7 +14,7 @@ The build is driven by `Tools/_Build.ps1` (a FastBuild wrapper). Always run it
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <Config> <verb> [<verb> ...]
 ```
 
-- **Configs:** `Assert`, `Debug`, `Release`, `FinalRelease`, `Profile`, `ProfileExtra`.
+- **Configs:** `Assert`, `Debug`, `Release`, `FinalRelease`, `Testing`.
   Output → `Build/<Config>/CvGameCoreDLL.dll` (+ `.pdb`).
 - **Verbs (composable, in order):** `clean`, `build` (incremental), `rebuild` (clean+build), `deploy` (xcopy DLL/PDB into `Assets/`).
 - **Modifier — `nostop` (opt-in):** passes FastBuild's `-nostoponerror` so the build keeps going after a failed

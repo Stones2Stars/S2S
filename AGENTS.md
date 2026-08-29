@@ -102,12 +102,16 @@ The build is driven by **`Tools/_Build.ps1`** (a FastBuild wrapper). Invoke it
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <Config> <verb> [<verb> ...]
 ```
 
-- **Configs:** `Assert`, `Debug`, `Release`, `FinalRelease`, `Profile`, `ProfileExtra`.
+- **Configs:** `Assert`, `Debug`, `Release`, `FinalRelease`, `Testing`.
   Output lands in `Build/<Config>/CvGameCoreDLL.dll` (+ `.pdb`).
-  - **⛔ The `Profile`/`ProfileExtra` configs are BROKEN and purposeless: never use them, and never
-    add `PROFILE()`/FProfiler scopes as instrumentation — they report to nothing.** The ONE instrument is the
+  - **⛔ THE INTERNAL PROFILER CANNOT BE SELECTED, AND THAT IS STRUCTURAL — never
+    add `PROFILE()`/FProfiler scopes as instrumentation, because they report to nothing.** `USE_INTERNAL_PROFILER`
+    is defined NOWHERE, so no config compiles the profiler in; the `Profile`/`ProfileExtra` configs that once did
+    are deleted. ⚠ `_Build.ps1` passes its config argument straight to FastBuild with no whitelist, so a
+    config that EXISTS is a config anyone can select — which is why the fix was removing them rather than
+    discouraging them. The ONE instrument is the
     gated `[PERF]` logging (`logPerf`/`gPerfLogLevel`, `Autolog__LogLevelPerf`), which ships in every build.
-    **The macros compile to NOTHING outside those configs, so the scopes already in the tree are INERT** — not a
+    **The macros now compile to NOTHING in every config, so the scopes already in the tree are INERT** — not a
     defect, not a purge backlog. What binds is the DIRECTION: **we never build TOWARD using the profiler.** So a
     broken/stale FProfiler include or reference is **DELETED as irrelevant code, never repaired** — "the build
     can't find `FProfiler.h`" is never a reason to restore it
