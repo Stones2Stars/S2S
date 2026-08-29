@@ -630,6 +630,19 @@ with no worker at all can never build its first one.
   call sites never checked the counter at all. ⇒ Gate it centrally, in `AI_chooseUnit`, never per call site.
   ⚑ `[CIT/order] action=tenderUnit` records the demand: before it, the order log carried construct and
   maintainProcess only, so unit production was invisible in the one place a reader looks for what a city decided.
+- **⚖ A WORK REQUEST NAMES EITHER A UNIT TO JOIN OR A PLACE TO GO, AND THE PLACE IS THE COMMON CASE — so a
+  NULL `pJoinUnit` is the CONTRACT, never a failure.** `advertiseWork` stores `iUnitId = -1` whenever it is
+  handed no join unit, and `findUnit(-1)` answers NULL by an explicit early return; the two `CvCityAI` requests
+  (the floating-defender ask and the city's own unit demand) are exactly that shape, and they are the highest-
+  volume requests in the game. Every consumer is written for it — `finalizeTenderContracts` falls back to the
+  recorded plot, `processContracts` branches on NULL at each step and picks `MISSIONAI_CONTRACT` over
+  `MISSIONAI_CONTRACT_UNIT`.
+  ⛔ **So do NOT read a NULL join unit as a dead-unit symptom, and never assert against it** — an
+  `FAssert(NULL != pJoinUnit)` fires on the ordinary majority path and buries the one case that IS a defect.
+  ⚖ **THAT case is a request whose `iUnitId` is NOT -1 and no longer resolves:** it named a unit and lost it, so
+  the rendezvous is stale and the contract is RELEASED (`[CTB/contract/lost] action=joinGone`), returning the
+  unit to the market rather than walking it to an empty plot. ⚑ The discriminator is `iUnitId != -1`, never
+  the NULLness of the resolved pointer — those are two different questions and only the first one separates them.
 - **⛔ DISTANCE IS A GATE AND A TIE-BREAK, NEVER A TERM IN THE SCORE.** Path distance does not belong in scoring
   at all: over-relying on travel speed is how the AI ends up spamming fast cheap units. A bid that depreciates by
   its own haul rewards a unit for being FAST on top of already rewarding it for being CHEAP — cheap-and-fast wins

@@ -90,6 +90,7 @@ namespace
 
 		// [CTB/contract/lost]
 		CTB_CONTRACT_LOST,             // [CTB/contract/lost] unit= workRequest=
+		CTB_CONTRACT_JOIN_GONE,        // [CTB/contract/lost] action=joinGone unit= workRequest= joinUnit=
 
 		// [CTB/contract]
 		CTB_CONTRACT_DISPATCHED,       // [CTB/contract] unit= atX= atY= priority= aiType= joinUnit= workRequest=
@@ -149,6 +150,7 @@ namespace
 		case CTB_MATCH_SATISFIED:       return "[CTB/match] action=satisfied";
 		case CTB_MATCH_PARTIAL:         return "[CTB/match/partial]";
 		case CTB_CONTRACT_LOST:         return "[CTB/contract/lost]";
+		case CTB_CONTRACT_JOIN_GONE:    return "[CTB/contract/lost] action=joinGone";
 		case CTB_CONTRACT_DISPATCHED:   return "[CTB/contract] action=dispatched";
 		case CTB_CONTRACT_NOMATCH:      return "[CTB/contract] action=noMatch";
 		case CTB_CONTRACT_NOTLISTED:    return "[CTB/contract] action=notListed";
@@ -1372,13 +1374,30 @@ bool CvContractBroker::makeContract(CvUnit* pUnit, int& iAtX, int& iAtY, CvUnit*
 					m_advertisingUnits[iI].iContractedWorkRequest = -1;
 					return false;
 				}
-				FAssert(NULL != contractedRequest);
 
 				iAtX = contractedRequest->iAtX;
 				iAtY = contractedRequest->iAtY;
 
 				pJoinUnit = findUnit(contractedRequest->iUnitId);
-				FAssert(NULL != pJoinUnit);
+
+				//	A NULL join unit has two causes and only one of them is a defect. A request whose
+				//	iUnitId is -1 never named a unit at all -- the work is a PLACE (the city requests
+				//	above), and the whole consumer side is written for it. But a request that DID name a
+				//	unit and no longer resolves has lost the thing being joined, so the rendezvous is
+				//	stale: releasing it here is the same answer the lost-request branch gives above, and
+				//	it puts the unit back on the market instead of walking it to an empty plot.
+				if (contractedRequest->iUnitId != -1 && pJoinUnit == NULL)
+				{
+					log(1, "[CTB/contract/lost] unit=%d contracted workRequest=%d joinUnit=%d no longer exists, releasing",
+						pUnit->getID(), iWorkRequest, contractedRequest->iUnitId);
+					eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_CONTRACT, CTB_CONTRACT_JOIN_GONE, 1)
+						.addI(CTBF_unit, pUnit->getID())
+						.addI(CTBF_workRequest, iWorkRequest)
+						.addI(CTBF_joinUnit, contractedRequest->iUnitId));
+					m_advertisingUnits[iI].iContractedWorkRequest = -1;
+					return false;
+				}
+
 				// [CTB/contract] -- the broker matches a unit to a work request (the
 				// key decision: this unit is dispatched to satisfy that need).
 				log(1, "[CTB/contract] unit=%d -> work at (%d,%d) priority=%d aiType=%d joinUnit=%d (workRequest=%d)",
