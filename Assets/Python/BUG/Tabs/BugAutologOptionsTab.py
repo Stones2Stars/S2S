@@ -18,17 +18,24 @@ class BugAutologOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.createTab(screen)
 		column = self.addOneColumnLayout(screen, self.createMainPanel(screen))
 
-		self.addCheckbox(screen, column, "Autolog__MiscLogging")
+		# DEVELOPER / BUG-REPORT CONTROLS -- first, and kept apart from the autolog event toggles further
+		# down. This is the block a reporter gets talked through, and it used to sit behind ~35 checkboxes
+		# belonging to a different mod's feature and a different audience.
+		# The log level is ONE control because there is one number: the DLL reads LogLevelPlayerBBAI and
+		# drives every scope global from it, so the legacy BBAI call sites mimic the universal level.
+		# The Team/City/Unit dropdowns that used to stand here were read by NOTHING -- do not re-add them.
+		devLeft, devCenter, devRight = self.addThreeColumnLayout(screen, column, "AutologDev")
+		self.addIntDropdown(screen, devLeft, devLeft, "Autolog__LogLevelPlayerBBAI")
+		self.addIntDropdown(screen, devCenter, devCenter, "Autolog__LogLevelStream")
+		self.addIntDropdown(screen, devRight, devRight, "Autolog__LogLevelPerf")
+		self.addCheckbox(screen, devLeft, "Autolog__MiscLogging")
+		self.addCheckbox(screen, devCenter, "Autolog__HttpServer")
+
+		# THE LEGACY AUTOLOG (a different mod's player-facing feature) starts here.
 		screen.attachHSeparator(column, column + "Sep0")
 		left, center, right = self.addThreeColumnLayout(screen, column, "Autolog0")
 		self.addCheckbox(screen, left, "Autolog__Enabled")
 		self.addCheckbox(screen, left, "Autolog__Silent")
-		self.addCheckbox(screen, left, "Autolog__HttpServer")
-		self.addIntDropdown(screen, center, center, "Autolog__LogLevelTeamBBAI")
-		self.addIntDropdown(screen, center, center, "Autolog__LogLevelPlayerBBAI")
-		self.addIntDropdown(screen, right, right, "Autolog__LogLevelUnitBBAI")
-		self.addIntDropdown(screen, right, right, "Autolog__LogLevelCityBBAI")
-		self.addIntDropdown(screen, center, center, "Autolog__LogLevelPerf")
 
 		# File and Format
 		screen.attachHSeparator(column, column + "Sep1")
