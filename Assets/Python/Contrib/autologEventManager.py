@@ -403,7 +403,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 				if (self.CityConscriptCounter[i] != 0
 				and iCurrentConstrictCounter < self.CityConscriptCounter[i]
-				and iCurrentConstrictCounter % iCity.flatConscriptAngerLength() == 0):
+				and iCurrentConstrictCounter % iCity.getCountdowns()[CityCountdownKind.COUNTDOWN_CONSCRIPT_ANGER_PERIOD] == 0):
 					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_DRAFT_ANGER_DECREASED", (iCity.getName(), ))
 					Logger.writeLog(message, vColor="DarkRed")
 

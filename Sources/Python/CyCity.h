@@ -94,6 +94,7 @@ public:
 	int getAiBestBuildCount() const;
 
 	python::list getCountdowns() const;
+	python::list getRevolutionState() const;
 	python::list getGrowth() const;
 	python::list getCounts() const;
 	python::list getGrantedExtras() const;

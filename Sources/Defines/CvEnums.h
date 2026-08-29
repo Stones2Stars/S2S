@@ -1232,8 +1232,28 @@ enum CityCountdownKind
 	COUNTDOWN_OCCUPATION,
 	COUNTDOWN_ESPIONAGE_HAPPINESS,
 	COUNTDOWN_ESPIONAGE_HEALTH,
+	//	The revolution timers are countdowns like the anger ones above, so they live here rather than in a
+	//	family of their own. APPENDED, never inserted -- the ordinal indexes the list Python reads.
+	COUNTDOWN_REV_REQUEST_ANGER,
+	COUNTDOWN_REV_SUCCESS,
 
 	NUM_CITY_COUNTDOWN_KINDS
+};
+
+//	THE PER-CITY REVOLUTION STATE, as ONE read. The engine has carried this state on CvCity all along and
+//	CyCity already wrapped it -- the wrappers were simply registered nowhere, so every Python caller raised
+//	AttributeError and the whole Revolution mechanic's Python half was inert (#503).
+//	⚖ This is the STATE, not the modifier plane: getRevolutionKinds() is the cascade MODFAM_REVOLUTION read
+//	(what buildings and civics contribute to the index), which is a different question and not a substitute.
+enum CityRevolutionRead
+{
+	CITY_REV_LOCAL_INDEX = 0,
+	CITY_REV_INDEX_DISTANCE_MOD,
+	CITY_REV_COUNTER,
+	CITY_REV_REINFORCEMENT_COUNTER,
+	CITY_REV_INDEX_PERCENT_ANGER,
+
+	NUM_CITY_REV_READS
 };
 
 //	What the city is BUILDING right now, as one group: which order, of what, and the production arithmetic

@@ -579,7 +579,7 @@ def isCanBribeCity(CyCity):
 	if iRevIdx > 1700:
 		return [False, 'Violent']
 
-	if iRevIdx < 450 and CyCity.getLocalRevIndex() < 8:
+	if iRevIdx < 450 and CyCity.getRevolutionState()[CityRevolutionRead.CITY_REV_LOCAL_INDEX] < 8:
 		return [False, 'No Need']
 
 	return [True, None]
@@ -597,7 +597,7 @@ def computeBribeCosts(CyCity):
 	CyPlayer = GC.getPlayer(iPlayer)
 
 	iRevIdx = CyCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
-	localRevIdx = CyCity.getLocalRevIndex()
+	localRevIdx = CyCity.getRevolutionState()[CityRevolutionRead.CITY_REV_LOCAL_INDEX]
 
 	iPop = CyCity.getPopulation()
 	fBaseCost = (iRevIdx + 16*localRevIdx + 3*CyCity.getNumRevolts(iPlayer)) * (iPop**1.1)/8.0
@@ -659,7 +659,7 @@ def getModNumUnhappy(CyCity, fWarWearinessMod):
 
 def doRevRequestDeniedPenalty(CyCity, iHomeArea, iRevIdxInc=100, bExtraHomeland=False, bExtraColony=False):
 
-	iLocalRevIdx = CyCity.getLocalRevIndex()
+	iLocalRevIdx = CyCity.getRevolutionState()[CityRevolutionRead.CITY_REV_LOCAL_INDEX]
 	if iLocalRevIdx > 20:
 		iLocalRevIdx = 20
 	bHome = CyCity.area().getID() == iHomeArea
@@ -677,7 +677,7 @@ def doRevRequestDeniedPenalty(CyCity, iHomeArea, iRevIdxInc=100, bExtraHomeland=
 			iChange = iMin
 	CyCity.changeRevolutionIndex(iChange)
 
-	iAngerTimer = CyCity.getRevRequestAngerTimer()
+	iAngerTimer = CyCity.getCountdowns()[CityCountdownKind.COUNTDOWN_REV_REQUEST_ANGER]
 	iMax = 3*deniedTurns
 	if iAngerTimer < iMax:
 		iChange = iMax - iAngerTimer
