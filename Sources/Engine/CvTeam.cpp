@@ -5411,6 +5411,15 @@ void CvTeam::processTech(TechTypes eTech, int iChange, bool bAnnounce)
 	{
 		AI_makeAssignWorkDirty();
 		setLastRoundOfValidImprovementCacheUpdate();
+
+		//	The plot yield symbols hide water the viewer cannot work yet, so this capability MOVING has to
+		//	repaint them. ⚠ A tech does NOT only land on a turn boundary -- a great person's free tech and a
+		//	diplomacy trade both land mid-turn -- and the map-wide refresh otherwise waits for the next
+		//	setActivePlayer, leaving every water plot blank for the rest of the turn.
+		if (getID() == GC.getGame().getActiveTeam())
+		{
+			GC.getMap().updateSymbols();
+		}
 	}
 
 	// domainMoves is authored KEYED (domainMoves.empire.domains.{DOMAIN}), so it reads as the entry list over

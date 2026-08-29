@@ -102,14 +102,24 @@ trade-network recompute `updatePlotGroups` + `MarkBridgesDirty`, the improvement
 > **`water` · `ocean` · `peaks` · `space`**. The `CvCity::canWork` gate queries the block generically (derived
 > union over live sources). Grounded legacy sources:
 >
-> - **water/ocean** — `bWaterWork` (`TECH_TRAP_FISHING` → `CvTeam::isWaterWork`, the `canWork` `isWater()` gate,
->   `CvCity.cpp:1753`) is the ONE direct work gate found. The owner half-remembers a separate ocean (and
->   deepOcean) tech requirement — NOT found in `canWork` (all water terrains carry positive base yield,
->   so it is not the `hasYield` gate either); **trace the actual ocean-working realization at port time**, do not
->   assume the single-flag model.
-> - **peaks** — need **`TECH_MOUNTAINEERING`** (grounded: `bCanPassPeaks` → `CvTeam::isCanPassPeaks`). The
->   legacy realization is INDIRECT — peaks are impassable without it (`CvPlot::isImpassable`, `CvPlot.cpp:5785`);
->   there is no direct `canWork` peak test — trace the exact hop at port time.
+> - **water/ocean** — `bWaterWork` (`TECH_TRAP_FISHING` → `CvTeam::isWaterWork`) is the ONE direct work gate,
+>   and it is the ONLY class gate `CvCity::canWork` carries.
+>   ⚖ **TRACED: the single-flag model IS what exists, and there is no separate ocean/deepOcean requirement
+>   anywhere** — not in the data, not in the engine. `TECH_TRAP_FISHING` is the ONLY entity in the whole
+>   dataset that authors a `canWorkOn` block, and it authors `{water, ocean}` because the curator fans the one
+>   legacy `bWaterWork` flag across both channels. Every engine read is `CLS_CANWORKON_WATER`.
+>   ⚠ **So `ocean` is authored, granted, and read by NOTHING — and that makes it a TRAP, not merely inert:**
+>   because trap fishing already grants it, a future deep-ocean gate that starts reading
+>   `CLS_CANWORKON_OCEAN` would find it already true and silently never fire. If a real deep-ocean
+>   requirement is ever wanted, author it deliberately rather than inheriting this fan-out.
+> - **peaks** — ⛔ **TRACED, and the answer INVERTS the assumption: there is no peak WORK gate, and there must
+>   not be one.** `CvCity::canWork` carries no peak test at all, so **a peak is workable regardless of
+>   `TECH_MOUNTAINEERING`**. What `canPassPeaks` gates is REACH: `CvPlot::isImpassable` answers true for a
+>   peak unless the team holds it, which is a MOVEMENT question. ⚑ That is why an improved peak works before
+>   mountaineering — a unit carrying the ability on the UNIT plane (`promotion_mountaineer`,
+>   `promotion_mountain_leader`) reaches the peak and builds there while the empire plane is still absent, and
+>   the city then works the tile because nothing in `canWork` asks about peaks.
+>   ⇒ **Do NOT add a peak clause to a work path**, and do not read the `peaks` class as one.
 > - **space** — **semi-modelled today / to be modelled in the future**; the block is its ready home.
 > Same magically-free modularity as `canTrade`/`canTradeOn`: a new workable plot class is data, not a new
 > hardcoded gate. **If terrain-level explicitness is ever needed here, rework it THEN** — the
@@ -167,7 +177,6 @@ the block by this string and nothing translates.
 
 ## Open
 
-- **Ocean-working trace** — the half-remembered ocean/deepOcean requirement (see the `canWorkOn` ruling).
 - **Grantor-kind comments to revisit when data widens** — `Sources/Engine/CapabilityContext.h` (`foldTech`'s
   comment), `Sources/Data/CvReadJson.cpp` (the §8 read-back survey), and `Sources/Python/CyInfo.cpp`
   (`canTradeItem`) each note that techs are the only grantor kind the *data* authors today — accurate now, but

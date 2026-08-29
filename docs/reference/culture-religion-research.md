@@ -77,6 +77,17 @@ refcounted; an intentional divergence from the legacy autobuild tear-out, stated
   > ⚑ `calculateResearchModifier` emits **no logging** (an old map wrongly claimed it logged to `C2C.log`).
 - **Tech cost** (per team) = XML base × `TECH_COST_MODIFIER` × speed × era-research% × team-member modifier ×
   AI-handicap reduction. Barbarian free-tech is a separate `CvTeam::doTurn` path (bypasses `doResearch`).
+- **⛔ A TECH DOES NOT ONLY LAND ON A TURN BOUNDARY — a great person's free tech, a diplomacy trade, an event
+  and the barbarian free-tech path all land MID-TURN.** `doResearch` is one route among several; the choke
+  point every route funnels through is **`CvTeam::processTech`**, which is therefore the only correct place to
+  hang anything that must react to a tech arriving or leaving.
+  ⚑ **The consequence is for anything that CACHES or DISPLAYS a tech-gated fact:** a repaint hung on the turn
+  rotation looks correct in testing — research completes at a boundary, so the two coincide — and then goes
+  stale for the rest of a turn the moment the tech arrives by any other route. *(Worked: the plot yield symbols
+  hide water the viewer cannot work yet ([capabilities.md](../specs/capabilities.md)); the map-wide symbol
+  refresh runs from `CvGame::setActivePlayer`, so a mid-turn `TECH_TRAP_FISHING` left every water plot blank
+  until the next rotation. The repaint is hooked in `processTech` instead, guarded on the ACTIVE team like the
+  commerce-slider block beside it.)*
 
 ## Heritage & score
 
