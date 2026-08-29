@@ -321,7 +321,7 @@ class WBUnitScreen:
 				iRow = screen.appendTableRow("MissionInput")
 				screen.setTableText("MissionInput", 0, iRow, "<font=3>" + INFO.getDescription("TECH_", iTech), INFO.getButton("TECH_", iTech), WidgetTypes.WIDGET_PYTHON, 7871, iTech, 1<<0)
 				iRow = screen.appendTableRow("MissionInput")
-				sText = u"%c %d / %d" %(TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH), GC.getTeam(self.currentUnit.getTeam()).getResearchProgress(iTech), GC.getTeam(self.currentUnit.getTeam()).getResearchCost(iTech))
+				sText = u"%c %d / %d" %(TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH), GC.getTeam(self.GC.getPlayer(currentUnit.getOwner()).getTeam()).getResearchProgress(iTech), GC.getTeam(self.GC.getPlayer(currentUnit.getOwner()).getTeam()).getResearchCost(iTech))
 				screen.setTableText("MissionInput", 0, iRow, "<font=3>" + sText, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 				iRow = screen.appendTableRow("MissionInput")
 				sText = u"%c <color=128,255,28>%+d" %(TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH), self.currentUnit.getDiscoverResearch(iTech))
@@ -544,7 +544,7 @@ class WBUnitScreen:
 		iX = self.iPlotX
 		iY = self.iPlotY
 		iOwner = self.currentUnit.getOwner()
-		iTeam = self.currentUnit.getTeam()
+		iTeam = self.GC.getPlayer(currentUnit.getOwner()).getTeam()
 
 		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 
@@ -606,7 +606,7 @@ class WBUnitScreen:
 					sColor = TRNSLTR.getText("[COLOR_YELLOW]", ())
 			screen.setTableText(ID, 2, iRow, "<font=3>" + sColor + sText + "</font></color>", unitX.getButton(), WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<0)
 			iLeader = pPlayerX.getLeaderType()
-			iCiv = unitX.getCivilizationType()
+			iCiv = GC.getPlayer(unitX.getOwner()).getCivilizationType()
 			screen.setTableText(ID, 0, iRow, "", INFO.getButton("CIVILIZATION_", iCiv), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<0 )
 			screen.setTableText(ID, 1, iRow, "", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<0 )
 
@@ -671,7 +671,7 @@ class WBUnitScreen:
 						sText = unitX.getName()
 
 					sColor = "<color=255,80,80>"
-					if unitX.isCargo():
+					if unitX.getTransportUnit():
 						sColor = TRNSLTR.getText("[COLOR_YELLOW]", ())
 
 					transportUnit = unitX.getTransportUnit()
@@ -1024,7 +1024,7 @@ class WBUnitScreen:
 				elif iIndex == 2:
 					WBPlayerScreen.WBPlayerScreen(self.WB).interfaceScreen(self.currentUnit.getOwner())
 				elif iIndex == 3:
-					WBTeamScreen.WBTeamScreen(self.WB).interfaceScreen(self.currentUnit.getTeam())
+					WBTeamScreen.WBTeamScreen(self.WB).interfaceScreen(self.GC.getPlayer(currentUnit.getOwner()).getTeam())
 				elif iIndex == 4:
 					WBPlotScreen.WBPlotScreen(self.WB).interfaceScreen(self.currentPlot)
 				elif iIndex == 5:

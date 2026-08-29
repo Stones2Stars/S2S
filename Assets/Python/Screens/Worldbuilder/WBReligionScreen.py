@@ -155,7 +155,7 @@ class WBReligionScreen:
 				sColor = u"<color=%d,%d,%d,%d>" %(pPlayerX.getPlayerTextColorR(), pPlayerX.getPlayerTextColorG(), pPlayerX.getPlayerTextColorB(), pPlayerX.getPlayerTextColorA())
 				iLeader = pPlayerX.getLeaderType()
 				screen.setTableText("WBHolyCity", 1, iRow, "", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iPlayerX * 10000 + iLeader, 1<<0)
-				screen.setTableText("WBHolyCity", 2, iRow, "<font=3>" + sColor + pHolyCity.getName() + "</color></font>", INFO.getButton("CIVILIZATION_", pHolyCity.getCivilizationType()), WidgetTypes.WIDGET_PYTHON, 7200 + iPlayerX, pHolyCity.getID(), 1<<0)
+				screen.setTableText("WBHolyCity", 2, iRow, "<font=3>" + sColor + pHolyCity.getName() + "</color></font>", INFO.getButton("CIVILIZATION_", GC.getPlayer(pHolyCity.getOwner()).getCivilizationType()), WidgetTypes.WIDGET_PYTHON, 7200 + iPlayerX, pHolyCity.getID(), 1<<0)
 
 	def placeStateReligion(self):
 		screen = CyGInterfaceScreen("WBReligionScreen", CvScreenEnums.WB_RELIGION)

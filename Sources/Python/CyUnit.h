@@ -181,6 +181,7 @@ public:
 	// ⛔ Addressed by the same (owner, id) pair as everything else. CyUnit carries ZERO defs, so a script handed
 	// one -- by a callback or by CyPlot::getUnit -- can ask it nothing; the ids are the only way a unit is
 	// reachable at all, which is why the plot enumeration below is a prerequisite rather than a convenience.
+	python::list getMissionQueue() const;
 	python::list getRead() const;
 	std::string getScriptData() const;
 	// The owner a VIEWER sees -- which differs from the real owner for a hidden-nationality unit. A log or a

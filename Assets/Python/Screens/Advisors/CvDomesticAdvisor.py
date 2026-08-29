@@ -1082,7 +1082,7 @@ class CvDomesticAdvisor:
 					iBuildCost = float(INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_COST)) or 1.0
 
 					if type == "Culture":
-						if CyCity.findBaseYieldRateRank(YieldTypes.YIELD_COMMERCE) < 6:
+						if CyCity.getBaseYieldRateRanks()[YieldTypes.YIELD_COMMERCE] < 6:
 							value = 1.0 / iBuildCost
 							if value > bestData:
 								bestOrder = iType
@@ -1112,13 +1112,13 @@ class CvDomesticAdvisor:
 									bestOrder = iType
 									bestData = value
 
-						if CyCity.findBaseYieldRateRank(YieldTypes.YIELD_PRODUCTION) < 12:
+						if CyCity.getBaseYieldRateRanks()[YieldTypes.YIELD_PRODUCTION] < 12:
 							value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 							if value > bestData:
 								bestOrder = iType
 								bestData = value
 
-						if CyCity.findBaseYieldRateRank(YieldTypes.YIELD_COMMERCE) < CyPlayer.getNumCities() / 2:
+						if CyCity.getBaseYieldRateRanks()[YieldTypes.YIELD_COMMERCE] < CyPlayer.getNumCities() / 2:
 							value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 							if value > bestData:
 								bestOrder = iType
@@ -1134,7 +1134,7 @@ class CvDomesticAdvisor:
 					iBuildCost = float(INFO.getIntrinsic("BUILDING_", iType, IntrinsicSlot.PYINT_COST)) or 1.0
 
 					if type == "Culture":
-						if CyCity.findBaseYieldRateRank(YieldTypes.YIELD_COMMERCE) < 6:
+						if CyCity.getBaseYieldRateRanks()[YieldTypes.YIELD_COMMERCE] < 6:
 							value = 1.0 / iBuildCost
 							if value > bestData:
 								bestOrder = iType
@@ -1142,7 +1142,7 @@ class CvDomesticAdvisor:
 						else: # In a cultural game, build units in the culturally weak cities
 							bestOrder = -1
 					elif type == "Military":
-						if CyCity.findBaseYieldRateRank(YieldTypes.YIELD_PRODUCTION) <= 3:
+						if CyCity.getBaseYieldRateRanks()[YieldTypes.YIELD_PRODUCTION] <= 3:
 							value = 1.0 / iBuildCost   # ⚠ ranks on cost alone: the numerator has no published read yet
 							if value > bestData:
 								bestOrder = iType

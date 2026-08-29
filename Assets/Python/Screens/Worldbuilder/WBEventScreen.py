@@ -146,7 +146,7 @@ class WBEventScreen:
 			screen.setTableText("WBEventUnit", 2, iRow, "<font=3>" + sColor + sText + "</font></color>", pUnitX.getButton(), WidgetTypes.WIDGET_PYTHON, 8300 + iPlayerX, pUnitX.getID(), 1<<0)
 			pPlayerX = GC.getPlayer(iPlayerX)
 			iLeader = pPlayerX.getLeaderType()
-			iCiv = pUnitX.getCivilizationType()
+			iCiv = GC.getPlayer(pUnitX.getOwner()).getCivilizationType()
 			screen.setTableText("WBEventUnit", 0, iRow, "", INFO.getButton("CIVILIZATION_", iCiv), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<0 )
 			screen.setTableText("WBEventUnit", 1, iRow, "", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<0 )
 		screen.setLabel("EventUnitText", "Background", "<font=3b>" + sHeader + "</font>", 1<<2, screen.getXResolution() *9/10, self.iTable_Y - 30, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1 )

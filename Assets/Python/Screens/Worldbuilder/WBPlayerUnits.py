@@ -231,7 +231,7 @@ class WBPlayerUnits:
 			sColor = CyTranslator().getText("[COLOR_NEGATIVE_TEXT]", ())
 			if iUnitID == loopUnit.getID() and iUnitOwner == loopUnit.getOwner():
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-			iCivilization = loopUnit.getCivilizationType()
+			iCivilization = GC.getPlayer(loopUnit.getOwner()).getCivilizationType()
 			screen.setTableText("WBUnitList", 0, iRow, "", INFO.getButton("CIVILIZATION_", iCivilization), WidgetTypes.WIDGET_PYTHON, 7872, i[0] * 10000 + iCivilization, 1<<2)
 			screen.setTableText("WBUnitList", 1, iRow, str(iStatus), lStatus[iStatus], WidgetTypes.WIDGET_PYTHON, 1043, iStatus, 1<<0)
 			screen.setTableText("WBUnitList", 2, iRow, "<font=3>" + sColor + loopUnit.getName() + "</color></font>", loopUnit.getButton(), WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<0)
@@ -266,7 +266,7 @@ class WBPlayerUnits:
 			sColor = CyTranslator().getText("[COLOR_NEGATIVE_TEXT]", ())
 			if iCityID == loopCity.getID() and iCityOwner == loopCity.getOwner():
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
-			iCivilization = loopCity.getCivilizationType()
+			iCivilization = GC.getPlayer(loopCity.getOwner()).getCivilizationType()
 			screen.setTableText("WBCityList", 0, iRow, "", INFO.getButton("CIVILIZATION_", iCivilization), WidgetTypes.WIDGET_PYTHON, 7872, i[0] * 10000 + iCivilization, 1<<2)
 			screen.setTableText("WBCityList", 1, iRow, "<font=3>" + sColor + loopCity.getName() + "</color></font>", "", WidgetTypes.WIDGET_PYTHON, 7200 + i[0], i[1], 1<<0)
 			screen.setTableInt("WBCityList", 2, iRow, "<font=3>" + str(loopCity.getID()) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 7200 + i[0], i[1], 1<<2)

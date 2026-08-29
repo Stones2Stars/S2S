@@ -4260,22 +4260,30 @@ class CvMainInterface:
 						screen.appendTableRow(unitTable)
 						screen.setTableText(unitTable, 1, iRow, "<font=1>" + szTxt2, "", eWidGen, 0, 0, 1<<0)
 						iRow += 1
-			if CySelectionGroup:
-				if iMissionCount > 1:
-					for i in xrange(iMissionCount):
-						szTxt2 = ""
-						if INFO.getIntrinsic("MISSION_", CySelectionGroup.getMissionType(i), IntrinsicSlot.PYINT_IS_BUILD) > 0:
-							if not i:
-								szTxt1 = INFO.getDescription("BUILD_", CySelectionGroup.getMissionData1(i))
-								szTxt2 = TRNSLTR.getText("INTERFACE_CITY_TURNS", (CySelectionGroup.plot().getBuildTurnsLeft(CySelectionGroup.getMissionData1(i), 0, 0), ))
-							else:
-								szTxt1 = u"%s..." %(INFO.getDescription("BUILD_", CySelectionGroup.getMissionData1(i)))
+			if iMissionCount > 1:
+				#	The whole queue in ONE crossing -- [missionType, data1] per entry. This block used to address
+				#	`CySelectionGroup`, which is not a variable anywhere in this file: it resolved to the imported
+				#	CLASS, so `if CySelectionGroup:` was always true and every call below was an unbound call that
+				#	raised. A unit answers for its own orders, and CySelectionGroup publishes no methods by design.
+				pSelUnit = GC.getPlayer(aSelUnit[0]).getUnit(aSelUnit[1])
+				pSelPlot = GC.getMap().plot(pSelUnit.getX(), pSelUnit.getY())
+				aQueue = pSelUnit.getMissionQueue()
+				for i in xrange(len(aQueue)):
+					eMission = aQueue[i][0]
+					iData1 = aQueue[i][1]
+					szTxt2 = ""
+					if INFO.getIntrinsic("MISSION_", eMission, IntrinsicSlot.PYINT_IS_BUILD) > 0:
+						if not i:
+							szTxt1 = INFO.getDescription("BUILD_", iData1)
+							szTxt2 = TRNSLTR.getText("INTERFACE_CITY_TURNS", (pSelPlot.getBuildTurnsLeft(iData1, 0, 0), ))
 						else:
-							szTxt1 = u"%s..." %(INFO.getDescription("MISSION_", CySelectionGroup.getMissionType(i)))
-						screen.appendTableRow(unitTable)
-						screen.setTableText(unitTable, 0, iRow, "<font=1>" + szTxt1, "", eWidGen, 0, 0, 1<<0)
-						screen.setTableText(unitTable, 1, iRow, "<font=1>" + szTxt2, "", eWidGen, 0, 0, 1<<0)
-						iRow += 1
+							szTxt1 = u"%s..." %(INFO.getDescription("BUILD_", iData1))
+					else:
+						szTxt1 = u"%s..." %(INFO.getDescription("MISSION_", eMission))
+					screen.appendTableRow(unitTable)
+					screen.setTableText(unitTable, 0, iRow, "<font=1>" + szTxt1, "", eWidGen, 0, 0, 1<<0)
+					screen.setTableText(unitTable, 1, iRow, "<font=1>" + szTxt2, "", eWidGen, 0, 0, 1<<0)
+					iRow += 1
 			# Display Promotions
 			screen.show(promoPanel)
 			if aPromoList != self.aSelUnitPromoList:
