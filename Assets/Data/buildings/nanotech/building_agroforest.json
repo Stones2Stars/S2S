@@ -60,6 +60,9 @@
    "improvements": {
     "IMPROVEMENT_LUMBERMILL": {
      "flat": 3
+    },
+    "IMPROVEMENT_LUMBERJACK": {
+     "flat": 3
     }
    }
   }

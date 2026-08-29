@@ -31,6 +31,9 @@
     },
     "IMPROVEMENT_HYBRID_FOREST": {
      "flat": 1
+    },
+    "IMPROVEMENT_LUMBERJACK": {
+     "flat": 1
     }
    }
   }

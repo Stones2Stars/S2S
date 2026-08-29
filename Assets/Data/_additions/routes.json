@@ -1,0 +1,17 @@
+{
+ "ROUTE_ROAD":              { "production": { "plot": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } } },
+ "ROUTE_PAVED_ROAD":        { "production": { "plot": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } } },
+ "ROUTE_HIGHWAY":           { "commerce":   { "plot": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } } },
+ "ROUTE_RAILROAD":          { "production": { "plot": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } },
+                              "commerce":   { "plot": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } } },
+ "ROUTE_ELECTRIC_RAILROAD": { "production": { "plot": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } },
+                              "commerce":   { "plot": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } } },
+ "ROUTE_MAGLEV":            { "production": { "plot": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } },
+                              "commerce":   { "plot": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } } },
+ "ROUTE_VACTRAIN":          { "production": { "plot": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } },
+                              "commerce":   { "plot": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } } },
+ "ROUTE_GRAVITY_TRAIN":     { "production": { "plot": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } },
+                              "commerce":   { "plot": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } } },
+ "ROUTE_JUMPLANE":          { "production": { "plot": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } },
+                              "commerce":   { "plot": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } } }
+}

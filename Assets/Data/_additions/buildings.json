@@ -87,5 +87,14 @@
    { "any": [ "BUILDING_DANCE_HUT", "BUILDING_DANCE_HALL", "BUILDING_NIGHT_CLUB", "BUILDING_FIRE_PIT", "BUILDING_BONFIRE", "BUILDING_IMU", "BUILDING_CHARCOAL_BURNER" ] },
    { "type": "MAPCATEGORY_EARTH", "scope": "plot" }
   ] } }
- }
+ },
+
+ "BUILDING_CARPENTER":       { "production": { "city": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } } },
+ "BUILDING_CHARCOAL_BURNER": { "production": { "city": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } } },
+ "BUILDING_COOPER":          { "production": { "city": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } } },
+ "BUILDING_FURNITURE_MAKER": { "production": { "city": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } } },
+ "BUILDING_LUMBER_CAMP":     { "production": { "city": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } } },
+ "BUILDING_LUMBER_MILL":     { "production": { "city": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } } },
+ "BUILDING_SHIPWRIGHT":      { "production": { "city": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } } },
+ "BUILDING_AGROFOREST":      { "production": { "city": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 3 } } } } }
 }
