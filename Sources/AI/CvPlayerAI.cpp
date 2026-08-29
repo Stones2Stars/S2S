@@ -32725,11 +32725,6 @@ void CvPlayerAI::AI_formArmies()
 			CvArmy* pArmy = NULL;
 			if (m_armies.getCount() == 0 || bArmyGrouped)
 			{
-				if (m_armies.getCurrentID() == 8192) //Cavltix - if not init
-				{
-					m_armies.init();
-					m_armies.setCurrentID(1);
-				}
 				// Create the army
 				bArmyGrouped = false;
 				pArmy = m_armies.add();
