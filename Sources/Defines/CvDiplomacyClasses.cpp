@@ -402,17 +402,21 @@ bool CvDiplomacyInfo::FindResponseIndex(const CvDiplomacyResponse* pNewResponse,
 
 	if ( getNumResponses() == 1 )
 	{
-		iIndex = 0;
+		*iIndex = 0;
 		return true;
 	}
 
 	// Text
 	if ( iCase == 1 )
 	{
-		bool bOnlyText = true;
-
 		for ( int i = 0; i < getNumResponses(); ++i )
 		{
+			// Per RESPONSE, never once for the whole vector: this flag starts TRUE and is only ever
+			// cleared, so hoisting it out of the loop let one selector-bearing response poison every
+			// later one and made a text-only response unmatchable (it appended as a duplicate instead
+			// of merging).
+			bool bOnlyText = true;
+
 			for ( int iElement = 0; iElement < GC.getNumLeaderHeadInfos(); ++iElement )
 			{
 				if ( getLeaderHeadTypes(i, iElement) ) bOnlyText = false;

@@ -235,10 +235,7 @@ void CvWorldPickerInfo::copyNonDefaults(CvWorldPickerInfo* pClassInfo)
 	{
 		for ( int i = 0; i < pClassInfo->getNumWaterLevelGloss(); i++ )
 		{
-			// XXX pre-existing copy-paste bug: gloss paths are merged into the DECALS
-			// vector, so m_aWaterLevelGloss never receives merged entries. Preserved
-			// as-is by the #196 loader migration (pure-loader change, no semantics).
-			m_aWaterLevelDecals.push_back(pClassInfo->getWaterLevelGlossPath(i));
+			m_aWaterLevelGloss.push_back(pClassInfo->getWaterLevelGlossPath(i));
 		}
 	}
 }

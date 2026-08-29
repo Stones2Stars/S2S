@@ -881,11 +881,19 @@ void CvEventTriggerInfo::copyNonDefaults(const CvEventTriggerInfo* pClassInfo)
 
 	CvInfoUtil(this).copyNonDefaults(pClassInfo);
 
-	// Pre-existing quirk kept as-is (pure loader migration): these are parallel-by-index
-	// (text, era) lists, but CopyNonDefaultsFromVector dedups and sorts each list
-	// independently, so a modular override that adds texts can scramble the pairing.
-	CvXMLLoadUtility::CopyNonDefaultsFromVector(m_aiTextEra, pClassInfo->m_aiTextEra);
-	CvXMLLoadUtility::CopyNonDefaultsFromVector(m_aszText, pClassInfo->m_aszText);
+	// (text, era) are PARALLEL BY INDEX -- getNumTexts asserts the two sizes match, and the consumer
+	// reads getText(i) against getTextEra(i) to pick era-appropriate event text. So they merge as PAIRS:
+	// the generic CopyNonDefaultsFromVector dedups and sorts each vector independently, which reorders
+	// one list against the other and can leave the two different lengths.
+	for (size_t i = 0; i < pClassInfo->m_aszText.size(); ++i)
+	{
+		if (algo::none_of_equal(m_aszText, pClassInfo->m_aszText[i]))
+		{
+			m_aszText.push_back(pClassInfo->m_aszText[i]);
+			m_aiTextEra.push_back(i < pClassInfo->m_aiTextEra.size() ? pClassInfo->m_aiTextEra[i] : NO_ERA);
+		}
+	}
+
 	CvXMLLoadUtility::CopyNonDefaultsFromVector(m_aszWorldNews, pClassInfo->m_aszWorldNews);
 
 	m_PrereqMinProperties.copyNonDefaults(pClassInfo->getPrereqMinProperties());
