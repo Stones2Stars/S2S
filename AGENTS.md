@@ -334,6 +334,24 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   game mechanics are not, and the preprocessor cannot tell you which. The check REPORTS those three classes for
   a human verdict and never fails on them. ⛔ It also flags TU-LOCAL guards (`#define`d in a `Sources/` file, so
   ON in some translation units and OFF in others) as never-collapse-mechanically.
+- **BUG options + the logging surface: `python Tools/verify-bug-options.py`** — a BUG option is addressed by
+  STRING from C++ (`getBugOptionINT("Autolog__LogLevelStream", 1)`) and declared in XML far away
+  (`Assets/Config/*.xml`), and **nothing connects the two** — no compiler, no loader, no assert. So a knob can be
+  half-wired in EITHER direction and the game runs, saying nothing. Three checks:
+  - **READ BUT NOT DECLARED (fails)** — the lookup then always answers the call-site DEFAULT, so the option is
+    pinned and unreachable from the options screen AND the `.ini`, while looking exactly like a working knob.
+    *(Worked: `Autolog__LogLevelStream` drove `gStreamLogLevel` and was declared nowhere, welding the `/events`
+    verbosity to 1 — un-raisable precisely when someone went looking for it.)*
+  - **A DECLARED `LogLevel*` NOBODY CONSUMES (fails)** — the mirror: a dropdown promising control that does not
+    exist. ⚠ A reference from an options TAB does not count as consumption, which is the whole point — the three
+    dead dropdowns were all rendered and all read by nothing. Consumption is a DLL read, a Python getter
+    (explicit `get=` or the auto-derived `get<Id>`), or a `<change>` handler.
+  - **THE LEGACY LOGGING SURFACE IS A RATCHET (fails only on a RISE)** — direct `gDLL->logMsg` sites, the
+    scope-named globals and the BBAI helpers are legacy that **cannot be removed yet**, so the check never
+    demands their removal; it refuses GROWTH only. ⛔ That is the anti-rollerskate mechanism, because the pull is
+    never *"revive the legacy logger"* — it is *"add one more line beside the twenty already here"*. A new gate
+    reads the UNIVERSAL level and a new emit goes through the event spine; **never raise a ceiling to pass**, and
+    lower it in the same commit when the surface shrinks.
 - **Python migration burndown: `python Tools/verify-python-bindings.py [--list]`** — counts the methods still
   DECLARED on a `Cy*` wrapper, registered nowhere, and still CALLED from Python: i.e. consumers not yet
   re-pointed onto the coherent reads. ⛔ **NOT a bug count, and NOT a re-registration list.** The `Cy*` bindings

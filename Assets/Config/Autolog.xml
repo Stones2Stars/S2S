@@ -10,13 +10,28 @@
 			<option id="Enabled" key="Enabled" type="boolean" default="True" get="isEnabled"/>
 			<option id="Silent" key="Silent" type="boolean" default="False" get="isSilent"/>
 
-			<list id="LogLevelPlayerBBAI" key="LogLevelPlayerBBAI" type="int" default="0" listType="int" values="0,1,2,3,4" get="getLogLevelPlayerBBAI"/>
-			<list id="LogLevelTeamBBAI" key="LogLevelTeamBBAI" type="int" default="0" listType="int" values="0,1,2,3,4" get="getLogLevelTeamBBAI"/>
-			<list id="LogLevelCityBBAI" key="LogLevelCityBBAI" type="int" default="0" listType="int" values="0,1,2,3,4" get="getLogLevelCityBBAI"/>
-			<list id="LogLevelUnitBBAI" key="LogLevelUnitBBAI" type="int" default="0" listType="int" values="0,1,2,3,4" get="getLogLevelUnitBBAI"/>
+			<!-- THE UNIVERSAL LOG LEVEL. One number gates every log FILE. The DLL reads this single option and
+			     drives gPlayerLogLevel/gTeamLogLevel/gCityLogLevel/gUnitLogLevel from it (CvGlobals.cpp), so the
+			     legacy BBAI call sites MIMIC the universal level rather than carrying knobs of their own. There
+			     were once three more dropdowns here (Team/City/Unit); the DLL never read them, so they promised
+			     per-scope control that does not exist. Do not re-add one: a new gate reads the universal level.
+			     Levels: 1 headline - 2 per-decision - 3 per-candidate - 4 inner-loop firehose. -->
+			<list id="LogLevelPlayerBBAI" key="LogLevelPlayerBBAI" type="int" default="0" listType="int" values="0,1,2,3,4" get="getLogLevelPlayerBBAI"
+				label="Log level (universal)"
+				help="Detail level for the game's log files in Documents/My Games/Beyond The Sword/Logs. One number gates them all. 0 off, 1 headline, 2 per-decision, 3 per-candidate, 4 inner-loop firehose (very large files)."/>
 
-			<!-- Wall-clock turn-phase timing -> Performance.log; read in the DLL as gPerfLogLevel. Independent of the BBAI levels above. -->
-			<list id="LogLevelPerf" key="LogLevelPerf" type="int" default="0" listType="int" values="0,1,2,3,4"/>
+			<!-- The /events stream consumer's OWN gate, deliberately decoupled from the file level above: a domain
+			     can stream at full volume while the files stay quiet, and vice versa. Read in the DLL as
+			     gStreamLogLevel. Was READ but never DECLARED here, so it sat pinned at its default and could not
+			     be changed from the menu or from Autolog.ini. -->
+			<list id="LogLevelStream" key="LogLevelStream" type="int" default="1" listType="int" values="0,1,2,3,4"
+				label="Event stream level"
+				help="Detail level for the live /events HTTP stream. Independent of the log-file level. 0 off, 1 domain facts only, 2-4 add diagnostic and trace detail."/>
+
+			<!-- Wall-clock turn-phase timing -> Performance.log; read in the DLL as gPerfLogLevel. Independent of the universal level above. -->
+			<list id="LogLevelPerf" key="LogLevelPerf" type="int" default="0" listType="int" values="0,1,2,3,4"
+				label="Performance census level"
+				help="Detail level for the per-turn timing census written to Performance.log. Independent of the universal log level."/>
 
 			<!-- Dev live-state HTTP endpoint PoC (#387); read in the DLL (CvHttpServer), takes effect on closing the options screen. -->
 			<option id="HttpServer" key="HttpServer" type="boolean" default="False" label="HTTP Server (dev)"

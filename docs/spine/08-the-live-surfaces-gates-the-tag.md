@@ -23,6 +23,23 @@
   being tidied first. ⛔ **So do NOT "fix" this by collapsing the three names onto `gPlayerLogLevel`** — that is a
   sweep across a surface scheduled for deletion, and the ["deferred" is banned](../../AGENTS.md#design) reflex ("slated and never done ⇒ failure
   to fix") MISREADS it. The work is MIGRATING DOMAINS ONTO THE SPINE; the gates then disappear on their own.
+- **⚖ THE ONE NUMBER IS THE *UNIVERSAL* LOG LEVEL, AND THE LEGACY SITES MIMIC IT.** The single-value assignment
+  is not a shortcut that lost three knobs — it is what makes the legacy BBAI logging FOLLOW the universal level
+  instead of drifting on gates of its own. ⇒ The scope names are the accident; the universal level is the thing.
+  ⚑ **And the end state is not "rename it to something better" — it is that the level belongs to the CONSUMER.**
+  A gate global lives at the CALL SITE, which is the legacy shape; once a domain emits, what remains is the file
+  consumer's level and `gStreamLogLevel`, one per consumer. So the two live knobs are already consumer-shaped
+  (file, stream) and the four globals are the residue.
+- **⚖ THE OPTIONS SCREEN SHOWS ONE LEVEL PER CONSUMER — never one per scope.** `Autolog.xml` declares exactly
+  three: the **universal** level (`LogLevelPlayerBBAI`, gating every log FILE), the **stream** level
+  (`LogLevelStream`), and the independent **perf census** level (`LogLevelPerf`). ⛔ Do NOT add a per-scope
+  dropdown back: there is one number behind it, so a scope knob renders a control that silently does nothing.
+  *(Three of them stood there for years — Team/City/Unit — all settable, all read by nothing, with `Player`
+  rendered second so the only live one was not even the obvious one.)*
+  ⚠ **A knob is wired in TWO places that nothing connects** — the C++ `getBugOption*` string and the
+  `Assets/Config` declaration — so either half can go missing silently: `LogLevelStream` was read and never
+  declared, pinning the stream at 1. `python Tools/verify-bug-options.py` is the check for both directions, and
+  it carries the ratchet that keeps the legacy `logMsg` surface from growing.
 - **Level semantics:** 1 = headline (`begin`/`best`/`decision`), 2 = per-decision (`score`/`order`/`act`), 3 =
   per-candidate (`cand`/`skip`), 4 = inner-loop (a genuine fire hazard — CTB emits 10k+ lines/turn at 4). Owner plays
   at 3.
