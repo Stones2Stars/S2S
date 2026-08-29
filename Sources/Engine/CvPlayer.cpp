@@ -16380,7 +16380,8 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iRevIdxDistanceModifier);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNumNukeUnits);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iNumOutsideUnits);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iNumMilitaryUnits);
+		//	⛔ m_iNumMilitaryUnits is NOT read: it is a COUNT OVER THIS PLAYER'S OWN UNITS, so it is derived, and
+		//	derived data serializes nothing ([save.md] par.5). It is rebuilt from the units further down.
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iConscriptCount);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iMaxConscript);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iHighestUnitLevel);
@@ -17539,21 +17540,27 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 		}
+		//	The military count REBUILT from the units, which are the thing it counts -- not compared against a
+		//	stored copy, because none is stored ([save.md] par.5: derived data serializes nothing, and with
+		//	nothing derived read from a save there is no stale value for a recompute to purge).
+		//	⛔ This was a recount that compared against the serialized value and CORRECTED it, announcing
+		//	"count of military unit out of sync!" -- a self-heal, and the fossil of the maintenance hole it was
+		//	compensating for ([no-staleness-no-selfheal.md]). The hole is fixed at its source (CvUnit::init and
+		//	the kill path no longer tally the scratch temp unit, which changeIdentity re-types without ever
+		//	adjusting a counter); the serialization is gone, so the comparison has nothing left to compare and
+		//	the reconstruction is all that remains.
+		//	⚠ It runs AFTER the unit list has streamed, which is what makes it the definition rather than a guess.
 		{
-			int iMilitary = 0;
+			int iMilitaryUnits = 0;
 
 			foreach_(const CvUnit* unitX, units())
 			{
 				if (!unitX->isTempUnit() && GC.getUnitInfo(unitX->getUnitType()).hasTag(CLS_TAG_MILITARY))
 				{
-					iMilitary++;
+					iMilitaryUnits++;
 				}
 			}
-			if (iMilitary != m_iNumMilitaryUnits)
-			{
-				FErrorMsg("count of military unit out of sync! Correcting");
-				m_iNumMilitaryUnits = iMilitary;
-			}
+			m_iNumMilitaryUnits = iMilitaryUnits;
 		}
 
 		{
@@ -17699,7 +17706,7 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iRevIdxDistanceModifier);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNumNukeUnits);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNumOutsideUnits);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iNumMilitaryUnits);
+		//	m_iNumMilitaryUnits is derived from the unit set and is rebuilt on load -- it is not written.
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iConscriptCount);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iMaxConscript);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iHighestUnitLevel);
