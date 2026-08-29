@@ -98,6 +98,7 @@
   "xpValueAttack": 1,
   "xpValueDefense": 2,
   "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_CITY_DEFENSE",
   "formationType": "FORMATION_TYPE_DEFAULT",
   "advisor": "ADVISOR_MILITARY",
   "unitAIs": [
