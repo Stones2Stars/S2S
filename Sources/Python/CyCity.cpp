@@ -1343,6 +1343,16 @@ int CyCity::getAiBestBuildCount() const
 	return m_pCity ? m_pCity->AI_countBestBuilds(m_pCity->area()) : 0;
 }
 
+python::list CyCity::getRevolutionState() const
+{
+	PERF_SCOPE("CyCity::getRevolutionState", -1);
+	//	The per-city revolution STATE in one crossing. ⛔ Not getRevolutionKinds(), which is the cascade
+	//	MODFAM_REVOLUTION read -- what buildings and civics CONTRIBUTE to the index, a different plane.
+	int values[NUM_CITY_REV_READS] = { 0 };
+	if (m_pCity) m_pCity->getRevolutionState(values);
+	return cyToList(values);
+}
+
 python::list CyCity::getCountdowns() const
 {
 	PERF_SCOPE("CyCity::getCountdowns", -1);
@@ -2155,6 +2165,57 @@ void CyCity::pythonPublish()
 		.def("getAiBestBuildCount",   &CyCity::getAiBestBuildCount)
 
 		.def("getCountdowns",         &CyCity::getCountdowns)
+		//	THE REST OF THE CITY CONTROLLER SURFACE. Every one of these was already declared on CyCity AND
+		//	defined in this file -- only the registration was missing, so each raised AttributeError the moment
+		//	Python called it. The engine data was always fetchable; the controller simply did not serve it.
+		//	⚖ Registered rather than folded into a group read because each is a DISTINCT question (or a PUT),
+		//	not a slot in one state block -- the group reads above cover the state that does group.
+		.def("isVisible", &CyCity::isVisible)
+		.def("isHolyCity", &CyCity::isHolyCity)
+		.def("getFeatureProduction", &CyCity::getFeatureProduction)
+		.def("getBuildingDefense", &CyCity::getBuildingDefense)
+		.def("getCommerceRateModifier", &CyCity::getCommerceRateModifier)
+		.def("getNumGreatPeople", &CyCity::getNumGreatPeople)
+		.def("getSpecialistPopulation", &CyCity::getSpecialistPopulation)
+		.def("getWorkingPopulation", &CyCity::getWorkingPopulation)
+		.def("countNumImprovedPlots", &CyCity::countNumImprovedPlots)
+		.def("isEventOccured", &CyCity::isEventOccured)
+		.def("addProductionExperience", &CyCity::addProductionExperience)
+		.def("getPreviousOwner", &CyCity::getPreviousOwner)
+		.def("getMaxAirlift", &CyCity::getMaxAirlift)
+		.def("getGameDateFounded", &CyCity::getGameDateFounded)
+		.def("getFoodTurnsLeft", &CyCity::getFoodTurnsLeft)
+		.def("getFirstBuildingOrder", &CyCity::getFirstBuildingOrder)
+		.def("canCreate", &CyCity::canCreate)
+		.def("getExtraHappiness", &CyCity::getExtraHappiness)
+		.def("getExtraHealth", &CyCity::getExtraHealth)
+		.def("changeExtraHappiness", &CyCity::changeExtraHappiness)
+		.def("changeExtraHealth", &CyCity::changeExtraHealth)
+		.def("getWarWearinessPercentAnger", &CyCity::getWarWearinessPercentAnger)
+		.def("isAutomatedCanBuild", &CyCity::isAutomatedCanBuild)
+		.def("setAutomatedCanBuild", &CyCity::setAutomatedCanBuild)
+		.def("isConnectedTo", &CyCity::isConnectedTo)
+		//	WorldBuilder razes a city outright when a game option turns its owner off.
+		.def("kill", &CyCity::kill)
+		//	THE REVOLUTION CONTROLLER SURFACE. The engine has carried this state on CvCity all along and CyCity
+		//	already wrapped every piece of it -- the wrappers were registered NOWHERE, so all 173 Python call
+		//	sites raised AttributeError and the mechanic's Python half was inert (#503).
+		//	The reads are ONE group read; the timers ride getCountdowns (they are countdowns); the PUTs stay
+		//	named verbs, because a mutation is individual by nature and does not group.
+		.def("getRevolutionState",    &CyCity::getRevolutionState)
+		.def("getNumRevolts",         &CyCity::getNumRevolts)
+		.def("changeNumRevolts",      &CyCity::changeNumRevolts)
+		.def("setRevolutionIndex",    &CyCity::setRevolutionIndex)
+		.def("changeRevolutionIndex", &CyCity::changeRevolutionIndex)
+		.def("setLocalRevIndex",      &CyCity::setLocalRevIndex)
+		.def("setRevIndexAverage",    &CyCity::setRevIndexAverage)
+		.def("updateRevIndexAverage", &CyCity::updateRevIndexAverage)
+		.def("setRevolutionCounter",  &CyCity::setRevolutionCounter)
+		.def("changeRevolutionCounter", &CyCity::changeRevolutionCounter)
+		.def("setReinforcementCounter", &CyCity::setReinforcementCounter)
+		.def("changeReinforcementCounter", &CyCity::changeReinforcementCounter)
+		.def("changeRevRequestAngerTimer", &CyCity::changeRevRequestAngerTimer)
+		.def("changeRevSuccessTimer", &CyCity::changeRevSuccessTimer)
 		.def("getGrowth",             &CyCity::getGrowth)
 		.def("getCounts",             &CyCity::getCounts)
 		.def("getGrantedExtras",      &CyCity::getGrantedExtras)

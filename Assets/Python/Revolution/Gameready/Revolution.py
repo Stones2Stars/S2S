@@ -240,7 +240,7 @@ class Revolution:
 
 			for revIdx, CyCityX in revIdxCityList:
 
-				localRevIdx = CyCityX.getLocalRevIndex()
+				localRevIdx = CyCityX.getRevolutionState()[CityRevolutionRead.CITY_REV_LOCAL_INDEX]
 				deltaTrend = deltaTrend = revIdx - CyCityX.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_AVERAGE]
 
 				if revIdx >= self.revInstigatorThreshold:
@@ -529,7 +529,7 @@ class Revolution:
 			if player.isAlive():
 				# Checks iPlayer's cities for any rebel reinforcement units that should be spawned
 				for city in player.cities():
-					if city.getReinforcementCounter() == 1:
+					if city.getRevolutionState()[CityRevolutionRead.CITY_REV_REINFORCEMENT_COUNTER] == 1:
 						self.doRevReinforcement(city)
 				self.checkCivics(iPlayer, player)
 				break
@@ -607,7 +607,7 @@ class Revolution:
 
 		# City must still be rebellious
 		revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
-		localRevIdx = pCity.getLocalRevIndex()
+		localRevIdx = pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_LOCAL_INDEX]
 		localRevEffect = 0
 		revIdxHist = RevData.getCityVal( pCity, 'RevIdxHistory' )
 
@@ -741,7 +741,7 @@ class Revolution:
 		else :
 			revStrength *= 1/(2-localRevIdx/3.0)
 
-		if( pCity.getRevolutionCounter() == 0 ) :
+		if( pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_COUNTER] == 0 ) :
 			# Rebellion decreases in fervor after counter expires
 			revStrength /= 2.0
 		elif( GAME.getGameTurn() - RevData.getCityVal(pCity, 'RevolutionTurn') < 3 ) :
@@ -803,15 +803,15 @@ class Revolution:
 
 			# Check AI settings
 			if bBarbarian:
-				if iNumUnits > 2 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY_LEMMING,newUnit.area()) > 0:
+				if iNumUnits > 2 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY_LEMMING,GC.getMap().plot(newUnit.getX(), newUnit.getY()).area()) > 0:
 					newUnit.setAIType(UnitAITypes.UNITAI_ATTACK_CITY_LEMMING)
 				elif newUnit.canFight():
 					newUnit.setAIType(UnitAITypes.UNITAI_ATTACK)
 
-			elif iNum < 2 and iNumUnits + iRebelsIn3 > 2 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY,newUnit.area()) > 0:
+			elif iNum < 2 and iNumUnits + iRebelsIn3 > 2 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY,GC.getMap().plot(newUnit.getX(), newUnit.getY()).area()) > 0:
 				newUnit.setAIType( UnitAITypes.UNITAI_ATTACK_CITY )
 
-			elif iNumUnits == 1 and iRebelsIn6 < 3 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_PILLAGE,newUnit.area()) > 0:
+			elif iNumUnits == 1 and iRebelsIn6 < 3 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_PILLAGE,GC.getMap().plot(newUnit.getX(), newUnit.getY()).area()) > 0:
 				newUnit.setAIType( UnitAITypes.UNITAI_PILLAGE )
 			else:
 				iniAI = newUnit.getRead()[UnitReadKind.UNIT_READ_UNIT_AI]
@@ -844,7 +844,7 @@ class Revolution:
 			if iCityRevData_DH == None:
 				iCityRevData_DH = 0
 
-			if pCity.getRevolutionCounter() == 0:
+			if pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_COUNTER] == 0:
 				iReinforceTurns += 2
 
 			elif GAME.getGameTurn() - iCityRevData_DH > 3:
@@ -954,7 +954,7 @@ class Revolution:
 				RevData.initCity(city)
 				continue
 
-			if city.getRevolutionCounter() > 0:
+			if city.getRevolutionState()[CityRevolutionRead.CITY_REV_COUNTER] > 0:
 				city.changeRevolutionCounter(-1)
 
 			if RevData.getCityVal(city, 'SmallRevoltCounter') > 0:
@@ -963,7 +963,7 @@ class Revolution:
 			if RevData.getCityVal(city, 'WarningCounter') > 0:
 				RevData.changeCityVal(city, 'WarningCounter', -1)
 
-			if city.getReinforcementCounter() > 0:
+			if city.getRevolutionState()[CityRevolutionRead.CITY_REV_REINFORCEMENT_COUNTER] > 0:
 				city.changeReinforcementCounter(-1)
 
 
@@ -1057,7 +1057,7 @@ class Revolution:
 			happyIdx = 0
 			if( numUnhappy > 0 ) :
 
-				numUnhappy = max([numUnhappy - (pCity.getRevIndexPercentAnger()*pCity.getPopulation())/1000, 0])
+				numUnhappy = max([numUnhappy - (pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_INDEX_PERCENT_ANGER]*pCity.getPopulation())/1000, 0])
 
 				if( pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION] > 0 ) :
 					# Resistance is counted below ...
@@ -1133,7 +1133,7 @@ class Revolution:
 				else:
 					cityDistCommBonus += 150 - ( GC.getRouteInfo(pCity.plot().getRouteType()).getFlatMovementCost() )*1.25
 
-				if( pCity.isCoastal(-1) ) :
+				if( pCity.isCoastalTo(-1) ) :
 					if bCanTradeOverOcean :
 						cityDistCommBonus += 50
 					elif bCanTradeOverCoast :
@@ -1157,7 +1157,7 @@ class Revolution:
 			cityDistModifier = ( 307.0*cityDistRaw / cityDistMapModifier ) / ( 1.0 + ( cityDistCommBonus / 100.0 ) )
 			cityDistModifier -= int(666 / cityDistMapModifier)
 
-			DistModifier = (pPlayer.getRevIdxDistanceModifier() + pCity.getRevIndexDistanceMod()) / 100.0
+			DistModifier = (pPlayer.getRevIdxDistanceModifier() + pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_INDEX_DISTANCE_MOD]) / 100.0
 			distMod = 1.0
 			if DistModifier < 0:
 				distMod /= (1.0 - DistModifier)
@@ -1469,7 +1469,7 @@ class Revolution:
 				if recentlyAcquired or pPlayer.isRebel():
 					# Give recently acquired cities a break
 					disorderIdx = 10
-				elif pCity.getRevolutionCounter() > 0:
+				elif pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_COUNTER] > 0:
 					disorderIdx = 15
 				else:
 					disorderIdx = 75
@@ -1584,7 +1584,7 @@ class Revolution:
 			else :
 				cityString += TRNSLTR.getText("TXT_KEY_REV_WATCH_FLAT",())
 			if( self.showRevIndexInPopup or GAME.isDebugMode() ) :
-				cityString += "  %d, %d"%(pCity.getRevolutionCounter(),RevData.getCityVal(pCity,'WarningCounter'))
+				cityString += "  %d, %d"%(pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_COUNTER],RevData.getCityVal(pCity,'WarningCounter'))
 
 			# Enable only for debugging rev index histories
 			if( False ) :
@@ -1960,7 +1960,7 @@ class Revolution:
 				continue
 
 			revIdx = cityX.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
-			localRevIdx = cityX.getLocalRevIndex()
+			localRevIdx = cityX.getRevolutionState()[CityRevolutionRead.CITY_REV_LOCAL_INDEX]
 
 			if localRevIdx > 2*self.badLocalThreshold:
 				# Consider small bribe to buy time
@@ -2015,7 +2015,7 @@ class Revolution:
 
 			revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 			prevRevIdx = RevData.getCityVal(pCity, 'PrevRevIndex')
-			localRevIdx = pCity.getLocalRevIndex()
+			localRevIdx = pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_LOCAL_INDEX]
 
 			numUnhappy = RevUtils.getModNumUnhappy( pCity, self.warWearinessMod )
 			if numUnhappy > 0:
@@ -2025,7 +2025,7 @@ class Revolution:
 			else:
 				cityThreshold = self.revInstigatorThreshold
 
-			if revIdx >= int(self.warnFrac * cityThreshold) and pCity.getRevolutionCounter() == 0:
+			if revIdx >= int(self.warnFrac * cityThreshold) and pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_COUNTER] == 0:
 				if  RevData.getCityVal(pCity, 'WarningCounter') == 0:
 					# Warn human of impending revolution (note can't instigate on warning turn)
 					if self.LOG_DEBUG:
@@ -2035,7 +2035,7 @@ class Revolution:
 					# City meets instigator criteria
 					revInstigatorCities.append(pCity)
 
-			if (pCity.getRevolutionCounter() == 0
+			if (pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_COUNTER] == 0
 			and revIdx > cityThreshold * self.revReadyDividend / self.revReadyDivisor
 			and prevRevIdx > cityThreshold * self.revReadyDividend / self.revReadyDivisor
 			):
@@ -2049,7 +2049,7 @@ class Revolution:
 		if( len(revInstigatorCities) > 0 ) :
 			for pCity in revInstigatorCities :
 				revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
-				localRevIdx = pCity.getLocalRevIndex()
+				localRevIdx = pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_LOCAL_INDEX]
 				revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
 
 				gsm = RevUtils.getGameSpeedMod()
@@ -2211,7 +2211,7 @@ class Revolution:
 		# Who will join them?  City must be either in area with instigator, or close to instigator but not in homeland
 		# City must also be able to revolt now (not recently revolted)
 		for pCity in revReadyCities :
-			if( pCity.getRevolutionCounter() == 0 and not pCity.getID() == instigator.getID() ) :
+			if( pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_COUNTER] == 0 and not pCity.getID() == instigator.getID() ) :
 
 				if( pCity.area().getID() == instigator.area().getID() ) :
 					if self.LOG_DEBUG: print "[REV] Revolt: %s is in the area, joining revolution" % pCity.getName()
@@ -2227,7 +2227,7 @@ class Revolution:
 		# Peaceful or violent?
 		bPeaceful = True
 		instRevIdx = instigator.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
-		instLocalIdx = instigator.getLocalRevIndex()
+		instLocalIdx = instigator.getRevolutionState()[CityRevolutionRead.CITY_REV_LOCAL_INDEX]
 
 		if instRevIdx > self.alwaysViolentThreshold:
 			# Situation really bad
@@ -2310,8 +2310,8 @@ class Revolution:
 					for pCity in pPlayer.cities():
 
 						if (RevData.getCityVal(pCity, 'RevolutionCiv') == revCivType
-						and pCity.getReinforcementCounter() > 0
-						and pCity.getReinforcementCounter() < 9 - pRevPlayer.getCurrentEra() / 2
+						and pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_REINFORCEMENT_COUNTER] > 0
+						and pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_REINFORCEMENT_COUNTER] < 9 - pRevPlayer.getCurrentEra() / 2
 						):
 							if self.LOG_DEBUG:
 								bInRev = False
@@ -2356,11 +2356,11 @@ class Revolution:
 							for pCity in citiesInRevolt :
 								revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 								if( pCity.isCapital() ) :
-									if( revIdx > self.alwaysViolentThreshold and pCity.getLocalRevIndex() > 0 ) :
+									if( revIdx > self.alwaysViolentThreshold and pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_LOCAL_INDEX] > 0 ) :
 										if self.LOG_DEBUG: print "[REV] Revolt: %s (capital), %d qualifies as revolting city" % (pCity.getName(), revIdx)
 										handoverCities.append( pCity )
 										toSort.append(pCity)
-								elif revIdx > self.alwaysViolentThreshold or revIdx > self.revInstigatorThreshold and pCity.getLocalRevIndex() > -self.badLocalThreshold/2:
+								elif revIdx > self.alwaysViolentThreshold or revIdx > self.revInstigatorThreshold and pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_LOCAL_INDEX] > -self.badLocalThreshold/2:
 									if self.LOG_DEBUG: print "[REV] Revolt: %s, %d qualifies as revolting city" % (pCity.getName(), revIdx)
 									handoverCities.append( pCity )
 									toSort.append(pCity)
@@ -2375,11 +2375,11 @@ class Revolution:
 								if not bInList:
 									revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 									if pCity.isCapital():
-										if( revIdx > self.alwaysViolentThreshold and pCity.getLocalRevIndex() > 0 ) :
+										if( revIdx > self.alwaysViolentThreshold and pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_LOCAL_INDEX] > 0 ) :
 											if self.LOG_DEBUG: print "[REV] Revolt: %s (capital), %d qualifies as joining city" % (pCity.getName(), revIdx)
 											handoverCities.append( pCity )
 											toSort.append(pCity)
-									elif revIdx > self.alwaysViolentThreshold or revIdx > self.revInstigatorThreshold and pCity.getLocalRevIndex() > -self.badLocalThreshold/2:
+									elif revIdx > self.alwaysViolentThreshold or revIdx > self.revInstigatorThreshold and pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_LOCAL_INDEX] > -self.badLocalThreshold/2:
 										if self.LOG_DEBUG: print "[REV] Revolt: %s, %d qualifies as joining city" % (pCity.getName(), revIdx)
 										handoverCities.append( pCity )
 										toSort.append(pCity)
@@ -2460,14 +2460,14 @@ class Revolution:
 
 		# All of these have violent and peaceful paths
 #-------- Check if instigator influence by other culture -> try to join
-		if( self.culturalRevolution and instigator.plot().calculateCulturePercent(iPlayer) <= self.maxNationalityThreshold ) :
-			#cultOwnerID = instigator.plot().calculateCulturalOwner()
+		if( self.culturalRevolution and GC.getMap().plot(instigator.getX(), instigator.getY()).calculateCulturePercent(iPlayer) <= self.maxNationalityThreshold ) :
+			#cultOwnerID = GC.getMap().plot(instigator.getX(), instigator.getY()).calculateCulturalOwner()
 			# calculateCulturalOwner rules out dead civs ...
 			maxCulture = 30
 			cultOwnerID = -1
 			for idx in xrange(GC.getMAX_PC_PLAYERS()) :
-				if( instigator.plot().getCulture( idx ) > maxCulture ) :
-					maxCulture = instigator.plot().getCulture( idx )
+				if( GC.getMap().plot(instigator.getX(), instigator.getY()).getCulture( idx ) > maxCulture ) :
+					maxCulture = GC.getMap().plot(instigator.getX(), instigator.getY()).getCulture( idx )
 					cultOwnerID = idx
 
 			if( cultOwnerID >= 0 and cultOwnerID < GC.getMAX_PC_PLAYERS() and not GC.getPlayer(cultOwnerID).getTeam() == pPlayer.getTeam() ) :
@@ -2879,7 +2879,7 @@ class Revolution:
 						if (stateHolyCityOwner is not None
 						and instigator.isHasReligion(stateRel)
 						and not stateHolyCityOwner.getID() == iPlayer
-						and pTeam.canDeclareWar(stateHolyCityOwner.getTeam())
+						and pTeam.canDeclareWar(GC.getPlayer(stateHolyCityOwner.getOwner()).getTeam())
 						and not pTeam.isAVassal()
 						):
 							if self.LOG_DEBUG:
@@ -5556,8 +5556,8 @@ class Revolution:
 									if self.LOG_DEBUG: print "[REV] Revolt: Bolstering rebellious spirit in %s (handover city only)" % pCity.getName()
 
 									revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
-									localRevIdx = pCity.getLocalRevIndex()
-									reinfTurns = pCity.getReinforcementCounter()
+									localRevIdx = pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_LOCAL_INDEX]
+									reinfTurns = pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_REINFORCEMENT_COUNTER]
 
 									pCity.setRevolutionIndex( max([revIdx+50,revIdx+10*min([localRevIdx,15])]) )
 									if( reinfTurns > 2 ) :
@@ -6107,7 +6107,7 @@ class Revolution:
 		for [cityIdx, pCity] in enumerate(cityList):
 
 			revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
-			localRevIdx = pCity.getLocalRevIndex()
+			localRevIdx = pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_LOCAL_INDEX]
 			ix = pCity.getX()
 			iy = pCity.getY()
 
@@ -6471,8 +6471,8 @@ class Revolution:
 				if self.LOG_DEBUG:
 					print "[REV] Revolt: City occupation timer set to " + str(pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION])
 
-				if pCity.getRevRequestAngerTimer() < 3*self.turnsBetweenRevs:
-					pCity.changeRevRequestAngerTimer( min([2*self.turnsBetweenRevs, 3*self.turnsBetweenRevs - pCity.getRevRequestAngerTimer()]) )
+				if pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_REV_REQUEST_ANGER] < 3*self.turnsBetweenRevs:
+					pCity.changeRevRequestAngerTimer( min([2*self.turnsBetweenRevs, 3*self.turnsBetweenRevs - pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_REV_REQUEST_ANGER]]) )
 
 				if iNumUnits > 0:
 					# Move any units that may be on the spawn plot
@@ -6523,15 +6523,15 @@ class Revolution:
 						newUnit.setDamage(iDamage, pPlayer.getID())
 
 						# Check AI settings
-						if newUnit.isNPC():
-							if pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY_LEMMING,newUnit.area()) > 0:
+						if GC.getPlayer(newUnit.getOwner()).isNPC():
+							if pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY_LEMMING,GC.getMap().plot(newUnit.getX(), newUnit.getY()).area()) > 0:
 								newUnit.setAIType(UnitAITypes.UNITAI_ATTACK_CITY_LEMMING)
 							else:
 								newUnit.setAIType(UnitAITypes.UNITAI_ATTACK)
 						else:
-							if iNum < 2 and iNumUnits > 2 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY,newUnit.area()) > 0:
+							if iNum < 2 and iNumUnits > 2 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY,GC.getMap().plot(newUnit.getX(), newUnit.getY()).area()) > 0:
 								newUnit.setAIType( UnitAITypes.UNITAI_ATTACK_CITY )
-							elif iNumUnits == 1 and GAME.getSorenRandNum(2,'Rev - Pillage') == 0 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_PILLAGE,newUnit.area()) > 0:
+							elif iNumUnits == 1 and GAME.getSorenRandNum(2,'Rev - Pillage') == 0 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_PILLAGE,GC.getMap().plot(newUnit.getX(), newUnit.getY()).area()) > 0:
 								newUnit.setAIType( UnitAITypes.UNITAI_PILLAGE )
 							else:
 								iniAI = newUnit.getRead()[UnitReadKind.UNIT_READ_UNIT_AI]

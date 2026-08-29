@@ -250,7 +250,7 @@ def canTriggerMarathon(argsList):
 
 	if GC.getTeam(player.getTeam()).AI_getAtWarCounter(otherPlayer.getTeam()) == 1:
 		for loopUnit in otherPlayer.units():
-			plot = loopUnit.plot()
+			plot = GC.getMap().plot(loopUnit.getX(), loopUnit.getY())
 			if plot and plot.getOwner() == data.ePlayer:
 				return True
 
@@ -6854,7 +6854,7 @@ def doEventLawyer(argsList):
 
 	pPlayer = GC.getPlayer(pUnit.getOwner())
 	iPlayer = pPlayer.getID()
-	pCity = pUnit.plot().getPlotCity()
+	pCity = GC.getMap().plot(pUnit.getX(), pUnit.getY()).getPlotCity()
 
 	if pCity is None:
 		return # False call
@@ -6885,11 +6885,11 @@ def doEventLawyer(argsList):
 			pCity.setHasCorporation(iCorpLoop, 0, 0, 0)
 
 		# Litigation succeeds
-		CyInterface().addMessage(iPlayer,False,25,CyTranslator().getText("TXT_KEY_MSG_LITIGATION",(pCity.getName(),)),"AS2D_BUILD_BANK",InterfaceMessageTypes.MESSAGE_TYPE_INFO,pUnit.getButton(),ColorTypes(8),pCity.getX(),pCity.getY(),True,True)
+		CyInterface().addMessage(iPlayer,False,25,CyTranslator().getText("TXT_KEY_MSG_LITIGATION",(pCity.getName(),)),"AS2D_BUILD_BANK",InterfaceMessageTypes.MESSAGE_TYPE_INFO,INFO.getButton("UNIT_", pUnit.getRead()[UnitReadKind.UNIT_READ_TYPE]),ColorTypes(8),pCity.getX(),pCity.getY(),True,True)
 
 	# Litigation fails
 	else:
-		CyInterface().addMessage(iPlayer,False,25,CyTranslator().getText("TXT_KEY_MSG_LITIGATION_FAIL",(pCity.getName(),)),"AS2D_SABOTAGE",InterfaceMessageTypes.MESSAGE_TYPE_INFO,pUnit.getButton(),ColorTypes(7),pCity.getX(),pCity.getY(),True,True)
+		CyInterface().addMessage(iPlayer,False,25,CyTranslator().getText("TXT_KEY_MSG_LITIGATION_FAIL",(pCity.getName(),)),"AS2D_SABOTAGE",InterfaceMessageTypes.MESSAGE_TYPE_INFO,INFO.getButton("UNIT_", pUnit.getRead()[UnitReadKind.UNIT_READ_TYPE]),ColorTypes(7),pCity.getX(),pCity.getY(),True,True)
 
 ######## Civil War ########
 

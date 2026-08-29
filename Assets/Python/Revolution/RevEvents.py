@@ -201,11 +201,11 @@ def onSetPlayerAlive(argsList):
 				if LOG_DEBUG:
 					print "[REV] The dying %s are the rebel type for %s"%(pPlayer.getCivilizationDescription(0), pCity.getName())
 
-				if GC.getTeam(pPlayer.getTeam()).isAtWarWith(pCity.getTeam()):
+				if GC.getTeam(pPlayer.getTeam()).isAtWarWith(GC.getPlayer(pCity.getOwner()).getTeam()):
 					revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
-					localIdx = pCity.getLocalRevIndex()
+					localIdx = pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_LOCAL_INDEX]
 					revCnt = pCity.getNumRevolts(iPlayerX)
-					if pCity.getReinforcementCounter() > 0:
+					if pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_REINFORCEMENT_COUNTER] > 0:
 						# Put down while still fresh
 						print "Rev - Revolution put down while still actively revolting"
 						iDividend = 30
@@ -218,7 +218,7 @@ def onSetPlayerAlive(argsList):
 
 						changeRevIdx = -revIdx * iDividend // 100
 						pCity.changeRevolutionIndex(changeRevIdx)
-						pCity.changeRevRequestAngerTimer(-pCity.getRevRequestAngerTimer())
+						pCity.changeRevRequestAngerTimer(-pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_REV_REQUEST_ANGER])
 						pCity.setRevolutionIndex(min([pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX], RevOpt.getAlwaysViolentThreshold()]))
 						revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
 						revIdxHist['Events'][0] += changeRevIdx
@@ -242,7 +242,7 @@ def onSetPlayerAlive(argsList):
 
 						changeRevIdx = -revIdx * iDividend // 100
 						pCity.changeRevolutionIndex(changeRevIdx)
-						pCity.changeRevRequestAngerTimer(-pCity.getRevRequestAngerTimer())
+						pCity.changeRevRequestAngerTimer(-pCity.getCountdowns()[CityCountdownKind.COUNTDOWN_REV_REQUEST_ANGER])
 						pCity.setRevolutionIndex(min([pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX],RevOpt.getAlwaysViolentThreshold()]))
 						revIdxHist = RevData.getCityVal(pCity,'RevIdxHistory')
 						revIdxHist['Events'][0] += changeRevIdx
@@ -316,7 +316,7 @@ def onChangeWar(argsList):
 			and GAME.getGameTurn() - RevData.getCityVal(pCity, "RevolutionTurn") < 30
 			):
 				# City recently rebelled for civ now at peace
-				localIdx = pCity.getLocalRevIndex()
+				localIdx = pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_LOCAL_INDEX]
 				revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 				revCnt = pCity.getNumRevolts(pCity.getOwner())
 				if LOG_DEBUG:
@@ -350,7 +350,7 @@ def onChangeWar(argsList):
 			and GAME.getGameTurn() - RevData.getCityVal(pCity, "RevolutionTurn") < 30
 			):
 				# City recently rebelled for civ now at peace
-				localIdx = pCity.getLocalRevIndex()
+				localIdx = pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_LOCAL_INDEX]
 				revIdx = pCity.getCounts()[CityCountRead.CITY_COUNT_REVOLUTION_INDEX]
 				revCnt = pCity.getNumRevolts(pCity.getOwner())
 				if LOG_DEBUG:
@@ -429,7 +429,7 @@ def checkRebelBonuses(argsList):
 	orgOwnerID = pCity.getOriginalOwner()
 
 	# TODO: Handle case where city is acquired by disorganized rebels
-	if iOwnerNew == GC.getBARBARIAN_PLAYER() and pCity.getRevolutionCounter() > 0:
+	if iOwnerNew == GC.getBARBARIAN_PLAYER() and pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_COUNTER] > 0:
 		print "[REV] City %s captured by barb rebels!" % pCity.getName()
 		'''
 		oldOwner = GC.getPlayer(iOwnerOld)
@@ -445,7 +445,7 @@ def checkRebelBonuses(argsList):
 
 		# TODO: Check whether revolt is active in RevoltData
 		aWellbeing = pCity.getRealizedWellbeing(0)
-		if pCity.getReinforcementCounter() > 0 or (aWellbeing[WellbeingChannel.WELLBEING_ANGER] - aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS]) > 0:
+		if pCity.getRevolutionState()[CityRevolutionRead.CITY_REV_REINFORCEMENT_COUNTER] > 0 or (aWellbeing[WellbeingChannel.WELLBEING_ANGER] - aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS]) > 0:
 			print "[REV] Rebellious pCity %s is captured by rebel identity %s (%d)!!!" %(pCity.getName(), newOwner.getCivilizationDescription(0), newOwnerCiv)
 
 			newOwnerTeam = GC.getTeam(newOwner.getTeam())
@@ -509,7 +509,7 @@ def checkRebelBonuses(argsList):
 						newUnitList.append(newOwner.createUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
 
 				# Give a boat to island rebels
-				if pCity.isCoastal(10) and pCity.area().getNumCities() < 3 and pCity.area().getNumTiles() < 25:
+				if pCity.isCoastalTo(10) and pCity.area().getNumCities() < 3 and pCity.area().getNumTiles() < 25:
 					iBestCombat = -1
 					for iUnitX in xrange(GC.getNumUnitInfos()):
 						if (UNIT.getDomain(iUnitX) == DomainTypes.DOMAIN_SEA
@@ -649,7 +649,7 @@ def updateRevolutionIndices(argsList):
 
 		# Ripple effects through other rebellious cities
 		for cityX in GC.getPlayer(iOwnerOld).cities():
-			reinfCount = cityX.getReinforcementCounter()
+			reinfCount = cityX.getRevolutionState()[CityRevolutionRead.CITY_REV_REINFORCEMENT_COUNTER]
 			if reinfCount > 2 and RevData.getCityVal(cityX, 'RevolutionCiv') == newOwner.getCivilizationType():
 				if reinfCount < 5:
 					reinfCount = 2
@@ -802,7 +802,7 @@ def removeFloatingRebellions():
 		bHasFounder = False
 		unitX, i = playerX.firstUnit(False)
 		while unitX:
-			if unitX.isFound():
+			if UNIT.isFound(unitX.getRead()[UnitReadKind.UNIT_READ_TYPE]):
 				bHasFounder = True
 				break
 			if bOnlySpy:
@@ -1090,10 +1090,10 @@ def doSmallRevolts(iPlayer, CyPlayer):
 		if revIdx <= 5 * RevDefs.revReadyDividend * RevDefs.revInstigatorThreshold / (4 * RevDefs.revReadyDivisor):
 			continue
 
-		if city.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION] > 0 or city.getRevolutionCounter() > 0 or RevData.getCityVal(city, 'SmallRevoltCounter') > 0:
+		if city.getCountdowns()[CityCountdownKind.COUNTDOWN_OCCUPATION] > 0 or city.getRevolutionState()[CityRevolutionRead.CITY_REV_COUNTER] > 0 or RevData.getCityVal(city, 'SmallRevoltCounter') > 0:
 			continue # Already in a revolt
 
-		localRevIdx = city.getLocalRevIndex()
+		localRevIdx = city.getRevolutionState()[CityRevolutionRead.CITY_REV_LOCAL_INDEX]
 		if localRevIdx > 0:
 			localFactor = 1 + localRevIdx / 3
 			if localFactor > 10:

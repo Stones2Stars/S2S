@@ -376,8 +376,18 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   without a registered converter), the identity set, and anything the ENGINE calls on the wrapper.
   ⛔ **Registration lives in TWO styles and scanning one under-reports badly**: inline `class_<CyX>("CyX").def(…)`
   under `Sources/Python/`, and loader functions taking `class_<CyX>& inst` under
-  `Sources/Infrastructure/CvPython*Loader.cpp` — so the tool takes the UNION of every `.def("name")` and
-  deliberately does NOT attribute a name to a class. It also requires the call's RECEIVER to denote a Cy handle,
+  `Sources/Infrastructure/CvPython*Loader.cpp` — both spell the type inside `class_< >`, so the tool carries the
+  most recent one forward and **ATTRIBUTES each `.def` to its class**.
+  ⛔ **THAT ATTRIBUTION IS LOAD-BEARING, AND THE NAME-LEVEL TEST IT REPLACED HID THE WORST INSTANCE OF THIS
+  DEFECT FOR YEARS.** Asking merely *"is this name registered anywhere?"* passes a method registered on a
+  DIFFERENT wrapper: `plot` is declared on `CyUnit`, `CyCity`, `CyMap` AND `CySelectionGroup` and registered on
+  only two of them, so `unit.plot()` — which raises `AttributeError` every time it runs — was invisible to the
+  check built to find it. ⚑ **And a dead read does not present as a dead read:** a screen that throws while
+  CONSTRUCTING never becomes an active screen, so it surfaced as *"ESC does not close the military advisor"* —
+  a keyboard bug that was never a keyboard bug, chased down three wrong leads.
+  ⚠ **The count JUMPED when the attribution landed (44→80 methods, 197→1467 sites) — that is the tool becoming
+  correct, NOT the tree regressing.** The ratchet runs from the new figure; do not read the step as a rise to
+  investigate. It also requires the call's RECEIVER to denote a Cy handle,
   which is what makes it precise — `add` is both a `CyArgsList` member and Python's own `set.add`, so a
   receiver-blind scan reports 40 phantom sites for it and buries the real findings under ~200 like it.
   ⚖ It also reports UNRESOLVED CALLS — names registered nowhere, declared on no `Cy*` class, and not a Python

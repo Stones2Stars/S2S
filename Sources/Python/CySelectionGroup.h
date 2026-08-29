@@ -25,7 +25,6 @@ public:
 	bool canFight() const;
 
 	CyPlot* plot() const;
-	CyArea* area() const;
 
 
 	int getID() const;

@@ -321,7 +321,7 @@ class WBUnitScreen:
 				iRow = screen.appendTableRow("MissionInput")
 				screen.setTableText("MissionInput", 0, iRow, "<font=3>" + INFO.getDescription("TECH_", iTech), INFO.getButton("TECH_", iTech), WidgetTypes.WIDGET_PYTHON, 7871, iTech, 1<<0)
 				iRow = screen.appendTableRow("MissionInput")
-				sText = u"%c %d / %d" %(TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH), GC.getTeam(self.currentUnit.getTeam()).getResearchProgress(iTech), GC.getTeam(self.currentUnit.getTeam()).getResearchCost(iTech))
+				sText = u"%c %d / %d" %(TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH), GC.getTeam(self.GC.getPlayer(currentUnit.getOwner()).getTeam()).getResearchProgress(iTech), GC.getTeam(self.GC.getPlayer(currentUnit.getOwner()).getTeam()).getResearchCost(iTech))
 				screen.setTableText("MissionInput", 0, iRow, "<font=3>" + sText, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 				iRow = screen.appendTableRow("MissionInput")
 				sText = u"%c <color=128,255,28>%+d" %(TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH), self.currentUnit.getDiscoverResearch(iTech))
@@ -389,23 +389,23 @@ class WBUnitScreen:
 		unit = self.currentUnit
 
 		if unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_NORTH:
-			screen.setTableText(TBL, 1,0 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 0, 1<<2)
+			screen.setTableText(TBL, 1,0 , "", INFO.getButton("UNIT_", unit.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 1030, 0, 1<<2)
 		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_NORTHEAST:
-			screen.setTableText(TBL, 2,0 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 1, 1<<2)
+			screen.setTableText(TBL, 2,0 , "", INFO.getButton("UNIT_", unit.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 1030, 1, 1<<2)
 		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_EAST:
-			screen.setTableText(TBL, 2,1 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 2, 1<<2)
+			screen.setTableText(TBL, 2,1 , "", INFO.getButton("UNIT_", unit.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 1030, 2, 1<<2)
 		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_SOUTHEAST:
-			screen.setTableText(TBL, 2,2 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 3, 1<<2)
+			screen.setTableText(TBL, 2,2 , "", INFO.getButton("UNIT_", unit.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 1030, 3, 1<<2)
 		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_SOUTH:
-			screen.setTableText(TBL, 1,2 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 4, 1<<2)
+			screen.setTableText(TBL, 1,2 , "", INFO.getButton("UNIT_", unit.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 1030, 4, 1<<2)
 		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_SOUTHWEST:
-			screen.setTableText(TBL, 0,2 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 5, 1<<2)
+			screen.setTableText(TBL, 0,2 , "", INFO.getButton("UNIT_", unit.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 1030, 5, 1<<2)
 		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_WEST:
-			screen.setTableText(TBL, 0,1 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 6, 1<<2)
+			screen.setTableText(TBL, 0,1 , "", INFO.getButton("UNIT_", unit.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 1030, 6, 1<<2)
 		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_NORTHWEST:
-			screen.setTableText(TBL, 0,0 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 7, 1<<2)
+			screen.setTableText(TBL, 0,0 , "", INFO.getButton("UNIT_", unit.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 1030, 7, 1<<2)
 		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.NO_DIRECTION:
-			screen.setTableText(TBL, 1,1 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, -1, 1<<2)
+			screen.setTableText(TBL, 1,1 , "", INFO.getButton("UNIT_", unit.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 1030, -1, 1<<2)
 
 		iWidth = xRes/5 - 40
 		iY += iHeight
@@ -544,7 +544,7 @@ class WBUnitScreen:
 		iX = self.iPlotX
 		iY = self.iPlotY
 		iOwner = self.currentUnit.getOwner()
-		iTeam = self.currentUnit.getTeam()
+		iTeam = self.GC.getPlayer(currentUnit.getOwner()).getTeam()
 
 		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 
@@ -560,7 +560,7 @@ class WBUnitScreen:
 					if unitX.getX() != iX or unitX.getY() != iY:
 						continue
 				elif iPlotType == 1:
-					if unitX.plot().getArea() != self.currentPlot.getArea():
+					if GC.getMap().plot(unitX.getX(), unitX.getY()).getArea() != self.currentPlot.getArea():
 						continue
 
 				if iCopyType == 1:
@@ -604,9 +604,9 @@ class WBUnitScreen:
 					sColor = "<color=128,255,28>"
 				elif unitX.getRead()[UnitReadKind.UNIT_READ_GROUP_ID] == self.currentUnit.getRead()[UnitReadKind.UNIT_READ_GROUP_ID]:
 					sColor = TRNSLTR.getText("[COLOR_YELLOW]", ())
-			screen.setTableText(ID, 2, iRow, "<font=3>" + sColor + sText + "</font></color>", unitX.getButton(), WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<0)
+			screen.setTableText(ID, 2, iRow, "<font=3>" + sColor + sText + "</font></color>", INFO.getButton("UNIT_", unitX.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<0)
 			iLeader = pPlayerX.getLeaderType()
-			iCiv = unitX.getCivilizationType()
+			iCiv = GC.getPlayer(unitX.getOwner()).getCivilizationType()
 			screen.setTableText(ID, 0, iRow, "", INFO.getButton("CIVILIZATION_", iCiv), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<0 )
 			screen.setTableText(ID, 1, iRow, "", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<0 )
 
@@ -671,7 +671,7 @@ class WBUnitScreen:
 						sText = unitX.getName()
 
 					sColor = "<color=255,80,80>"
-					if unitX.isCargo():
+					if unitX.getTransportUnit():
 						sColor = TRNSLTR.getText("[COLOR_YELLOW]", ())
 
 					transportUnit = unitX.getTransportUnit()
@@ -685,7 +685,7 @@ class WBUnitScreen:
 					else:
 						screen.attachPanelAt(ScPnl, ROW, "", "", True, False, ePanelBlack, 0, y-4, w, h1, eWidGen, 1, 1)
 
-					screen.setImageButtonAt(BTN + str(iOtherID), ROW, unitX.getButton(), 0, 0, dy, dy, eWidGen, 0, 0)
+					screen.setImageButtonAt(BTN + str(iOtherID), ROW, INFO.getButton("UNIT_", unitX.getRead()[UnitReadKind.UNIT_READ_TYPE]), 0, 0, dy, dy, eWidGen, 0, 0)
 					screen.setTextAt(entry + str(iOtherID), ROW, "<font=3>" + sColor + sText, 1<<0, dy + 4, 0, 0, eFontGame, eWidGen, 0, 0)
 					iRow += 1
 					y += dy
@@ -732,7 +732,7 @@ class WBUnitScreen:
 				else:
 					screen.attachPanelAt(ScPnl, ROW, "", "", True, False, ePanelBlack, 0, y-4, w, h1, eWidGen, 1, 1)
 
-				screen.setImageButtonAt(BTN + str(iOtherID), ROW, unitX.getButton(), 0, 0, dy, dy, eWidGen, unitX.getOwner(), iOtherID)
+				screen.setImageButtonAt(BTN + str(iOtherID), ROW, INFO.getButton("UNIT_", unitX.getRead()[UnitReadKind.UNIT_READ_TYPE]), 0, 0, dy, dy, eWidGen, unitX.getOwner(), iOtherID)
 				screen.setTextAt(entry + str(iOtherID), ROW, "<font=3>" + sColor + sText, 1<<0, dy + 4, 0, 0, eFontGame, eWidGen, unitX.getOwner(), iOtherID)
 				iRow += 1
 				y += dy
@@ -891,7 +891,7 @@ class WBUnitScreen:
 				sText += "\n" + TRNSLTR.getText("TXT_WORD_UNIT", ()) + " ID: " + str(ID)
 				sText += "\n" + TRNSLTR.getText("TXT_KEY_WB_GROUP", ()) + " ID: " + str(unitX.getRead()[UnitReadKind.UNIT_READ_GROUP_ID])
 				sText += "\n" + "X: " + str(unitX.getX()) + ", Y: " + str(unitX.getY())
-				sText += "\n" + TRNSLTR.getText("TXT_KEY_WB_AREA_ID", ()) + ": "  + str(unitX.plot().getArea())
+				sText += "\n" + TRNSLTR.getText("TXT_KEY_WB_AREA_ID", ()) + ": "  + str(GC.getMap().plot(unitX.getX(), unitX.getY()).getArea())
 				self.WB.tooltip.handle(screen, sText)
 
 		elif not iCode: # click
@@ -1024,7 +1024,7 @@ class WBUnitScreen:
 				elif iIndex == 2:
 					WBPlayerScreen.WBPlayerScreen(self.WB).interfaceScreen(self.currentUnit.getOwner())
 				elif iIndex == 3:
-					WBTeamScreen.WBTeamScreen(self.WB).interfaceScreen(self.currentUnit.getTeam())
+					WBTeamScreen.WBTeamScreen(self.WB).interfaceScreen(self.GC.getPlayer(currentUnit.getOwner()).getTeam())
 				elif iIndex == 4:
 					WBPlotScreen.WBPlotScreen(self.WB).interfaceScreen(self.currentPlot)
 				elif iIndex == 5:

@@ -131,7 +131,7 @@ class WBCityDataScreen:
 		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
 			pPlayerX = GC.getPlayer(iPlayerX)
 			if iOwnerType == 1 and iPlayerX != iPlayer: continue
-			if iOwnerType == 2 and pPlayerX.getTeam() != pCity.getTeam(): continue
+			if iOwnerType == 2 and pPlayerX.getTeam() != GC.getPlayer(pCity.getOwner()).getTeam(): continue
 			for loopCity in pPlayerX.cities():
 				if iPlotType == 2 or (iPlotType == 1 and loopCity.plot().getArea() == pCity.plot().getArea()):
 					sColor = CyTranslator().getText("[COLOR_WARNING_TEXT]", ())
@@ -151,7 +151,7 @@ class WBCityDataScreen:
 
 		for (loopCity, iPlayerX, sColor) in self.lCities:
 			iRow = screen.appendTableRow("CurrentCity")
-			iCiv = loopCity.getCivilizationType()
+			iCiv = GC.getPlayer(loopCity.getOwner()).getCivilizationType()
 			screen.setTableText("CurrentCity", 0, iRow, "", INFO.getButton("CIVILIZATION_", iCiv), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<0)
 			iLeader = GC.getPlayer(iPlayerX).getLeaderType()
 			screen.setTableText("CurrentCity", 1, iRow, "", INFO.getButton("LEADER_", iLeader), WidgetTypes.WIDGET_PYTHON, 7876, iLeader, 1<<0)
@@ -344,7 +344,7 @@ class WBCityDataScreen:
 			elif iIndex == 3:
 				WBPlayerScreen.WBPlayerScreen(self.WB).interfaceScreen(iPlayer)
 			elif iIndex == 4:
-				WBTeamScreen.WBTeamScreen(self.WB).interfaceScreen(pCity.getTeam())
+				WBTeamScreen.WBTeamScreen(self.WB).interfaceScreen(GC.getPlayer(pCity.getOwner()).getTeam())
 			elif iIndex == 5:
 				WBPlayerUnits.WBPlayerUnits(self.WB).interfaceScreen(iPlayer)
 			elif iIndex == 6:

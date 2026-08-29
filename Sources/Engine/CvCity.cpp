@@ -399,6 +399,17 @@ void CvCity::getCountdowns(int (&countdowns)[NUM_CITY_COUNTDOWN_KINDS]) const
 	countdowns[COUNTDOWN_OCCUPATION]                    = getOccupationTimer();
 	countdowns[COUNTDOWN_ESPIONAGE_HAPPINESS]           = getEspionageHappinessCounter();
 	countdowns[COUNTDOWN_ESPIONAGE_HEALTH]              = getEspionageHealthCounter();
+	countdowns[COUNTDOWN_REV_REQUEST_ANGER]             = getRevRequestAngerTimer();
+	countdowns[COUNTDOWN_REV_SUCCESS]                   = getRevSuccessTimer();
+}
+
+void CvCity::getRevolutionState(int (&reads)[NUM_CITY_REV_READS]) const
+{
+	reads[CITY_REV_LOCAL_INDEX]            = getLocalRevIndex();
+	reads[CITY_REV_INDEX_DISTANCE_MOD]     = getRevIndexDistanceMod();
+	reads[CITY_REV_COUNTER]                = getRevolutionCounter();
+	reads[CITY_REV_REINFORCEMENT_COUNTER]  = getReinforcementCounter();
+	reads[CITY_REV_INDEX_PERCENT_ANGER]    = getRevIndexPercentAnger();
 }
 
 

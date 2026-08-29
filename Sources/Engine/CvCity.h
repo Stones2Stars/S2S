@@ -859,6 +859,7 @@ public:
 	// grouped for the same reason the deposit families are -- one read per group, indexed by the group's own
 	// kind enum -- so the surface grows by groups rather than by a getter per counter.
 	void getCountdowns(int (&countdowns)[NUM_CITY_COUNTDOWN_KINDS]) const;
+	void getRevolutionState(int (&reads)[NUM_CITY_REV_READS]) const;
 	void getOrderRead(int (&order)[NUM_CITY_ORDER_READS]) const;
 	void getGrowthRead(int (&growth)[NUM_CITY_GROWTH_READS]) const;
 	void getCultureRead(int (&culture)[NUM_CITY_CULTURE_READS]) const;

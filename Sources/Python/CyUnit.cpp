@@ -235,20 +235,6 @@ void CyUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow)
 	m_pUnit->setXY(iX, iY, bGroup, bUpdate, bShow);
 }
 
-CyPlot* CyUnit::plot() const
-{
-	if (m_pUnit->plot())
-	{
-		return new CyPlot(m_pUnit->plot());
-	}
-	return NULL;
-}
-
-CyArea* CyUnit::area() const
-{
-	return new CyArea(m_pUnit->area());
-}
-
 int CyUnit::getDamage() const
 {
 	return m_pUnit->getDamage();
@@ -547,6 +533,31 @@ python::list CyUnit::getPromotions() const
 	}
 	return ids;
 }
+python::list CyUnit::getMissionQueue() const
+{
+	PERF_SCOPE("CyUnit::getMissionQueue", -1);
+	g_szLastCyRead = "CyUnit::getMissionQueue";
+	//	One crossing for the WHOLE queue, as a list of [missionType, data1] pairs. getRead() carries the HEAD
+	//	mission only, which is all a one-line summary needs; the interface's queue panel renders every entry,
+	//	so it needs the list. ⛔ The answer is NOT to publish CySelectionGroup: that type's registration is the
+	//	bare identity the marshaller needs and it publishes no methods at all, so a group handle in Python is a
+	//	dead end by design -- a unit answers for its own orders.
+	python::list queue = python::list();
+	const CvUnit* pUnit = m_pUnit;
+	if (pUnit == NULL) return queue;
+	const CvSelectionGroup* pGroup = pUnit->getGroup();
+	if (pGroup == NULL) return queue;
+	const int iLength = pGroup->getLengthMissionQueue();
+	for (int iNode = 0; iNode < iLength; ++iNode)
+	{
+		python::list entry = python::list();
+		entry.append(pGroup->getMissionType(iNode));
+		entry.append(pGroup->getMissionData1(iNode));
+		queue.append(entry);
+	}
+	return queue;
+}
+
 python::list CyUnit::getRead() const
 {
 	PERF_SCOPE("CyUnit::getRead", -1);
@@ -846,6 +857,20 @@ void CyUnit::pythonPublish()
 		.def("getNameNoDesc", &CyUnit::getNameNoDesc)
 		.def("getPosition", &CyUnit::getPosition)
 		.def("getPromotions", &CyUnit::getPromotions)
+		.def("getMissionQueue", &CyUnit::getMissionQueue)
+		//	The same for the unit: declared, defined, registered nowhere. These are distinct questions and
+		//	ACTIONS (a facing rotation, a commander promotion, an entity notify), so they are named verbs --
+		//	the group reads getFlags()/getRead() carry the state that groups.
+		.def("canEnterPlot", &CyUnit::canEnterPlot)
+		.def("bombardRate", &CyUnit::bombardRate)
+		.def("isHasUnitCombat", &CyUnit::isHasUnitCombat)
+		.def("setCommander", &CyUnit::setCommander)
+		.def("setCommodore", &CyUnit::setCommodore)
+		.def("getFortifyTurns", &CyUnit::getFortifyTurns)
+		.def("NotifyEntity", &CyUnit::NotifyEntity)
+		.def("rotateFacingDirectionClockwise", &CyUnit::rotateFacingDirectionClockwise)
+		.def("rotateFacingDirectionCounterClockwise", &CyUnit::rotateFacingDirectionCounterClockwise)
+		.def("getNameKey", &CyUnit::getNameKey)
 		.def("getRead", &CyUnit::getRead)
 		.def("getScriptData", &CyUnit::getScriptData)
 		.def("getVisualOwner", &CyUnit::getVisualOwner)

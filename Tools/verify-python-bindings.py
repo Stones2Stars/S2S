@@ -101,6 +101,18 @@ PYTHON_ROOT = os.path.join(REPO, "Assets", "Python")
 # `.def("name"` in any registration style -- inline class_<> chains and loader `inst.def(...)` alike.
 RE_REGISTERED = re.compile(r'\.def\(\s*"([A-Za-z_][A-Za-z0-9_]*)"')
 
+# The class a registration block is FOR: `class_<CyFoo>(...)` inline, or a loader function
+# taking `class_<CyFoo>& inst`. Both spell the type inside `class_< >`, so one pattern serves.
+#
+# ⛔ REGISTRATION MUST BE ATTRIBUTED PER CLASS, and testing the NAME alone is what let the
+# worst instance of this defect hide for years. `plot` is declared on CyUnit, CyCity, CyMap
+# AND CySelectionGroup but registered on only CyCity and CyMap -- so a name-level "is it
+# registered anywhere" test passes `unit.plot()`, which raises AttributeError every time it
+# runs. That one call broke the military advisor's construction, and because a screen that
+# throws while building never becomes an active screen, it surfaced as "ESC does not close
+# the military advisor" -- a keyboard bug that was never a keyboard bug.
+RE_CLASS_BLOCK = re.compile(r'class_<\s*(Cy[A-Za-z0-9_]+)\s*>')
+
 # A method DEFINED on a Cy class: `<return type> CyFoo::bar(`. The return type is skipped
 # rather than enumerated -- the `CyFoo::` qualifier is what identifies it.
 RE_CY_DEFINITION = re.compile(r'\b(Cy[A-Za-z0-9_]+)::([A-Za-z_][A-Za-z0-9_]*)\s*\(')
@@ -151,12 +163,21 @@ def main():
     want_list = "--list" in sys.argv
 
     registered = set()
+    cy_registered = {}       # method name -> set of Cy classes REGISTERING it
     cy_defined = {}          # method name -> set of Cy classes defining it
     for path in walk(SOURCES, ".cpp") + walk(SOURCES, ".h"):
         text = read(path)
         registered.update(RE_REGISTERED.findall(text))
         for cls, method in RE_CY_DEFINITION.findall(text):
             cy_defined.setdefault(method, set()).add(cls)
+        #	Attribute each `.def` to the class whose registration block encloses it: walk the
+        #	file in order and carry the most recent `class_<CyFoo>` forward.
+        current_class = None
+        for match in re.finditer(r'class_<\s*(Cy[A-Za-z0-9_]+)\s*>|\.def\(\s*"([A-Za-z_][A-Za-z0-9_]*)"', text):
+            if match.group(1):
+                current_class = match.group(1)
+            elif current_class:
+                cy_registered.setdefault(match.group(2), set()).add(current_class)
 
     py_calls = {}            # method name -> [ "file:line", ... ]  (Cy-receiver calls ONLY)
     py_defs = set()
@@ -174,9 +195,14 @@ def main():
 
     dead = []
     for method in sorted(py_calls):
-        if method in registered or method not in cy_defined:
+        if method not in cy_defined:
             continue
-        dead.append((method, sorted(cy_defined[method]), py_calls[method]))
+        #	PER CLASS, never per name: the classes that DECLARE it and do not REGISTER it.
+        #	A name registered on some other wrapper says nothing about this one.
+        orphan_classes = cy_defined[method] - cy_registered.get(method, set())
+        if not orphan_classes:
+            continue
+        dead.append((method, sorted(orphan_classes), py_calls[method]))
 
     unresolved = []
     for method in sorted(py_calls):
@@ -190,6 +216,9 @@ def main():
 
     if dead:
         print("UNMIGRATED CONSUMERS -- declared on a Cy class, registered nowhere, called from Python:")
+        print("  NOTE: the site count is for the NAME, not for the orphan class -- the receiver is not typed.")
+        print("    `area` is unregistered on CyUnit and CySelectionGroup but REGISTERED on CyPlot and CyCity,")
+        print("    so most of its sites are valid plot.area() calls. Check the receiver before counting.")
         for method, classes, sites in dead:
             print("  %s   (%s)  -- %d call site(s)" % (method, ", ".join(classes), len(sites)))
             shown = sites if want_list else sites[:3]
