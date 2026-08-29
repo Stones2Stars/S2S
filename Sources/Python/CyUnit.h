@@ -86,7 +86,6 @@ public:
 	//	enumerating them. It is also a circular reference waiting to happen, since each hop mints a new wrapper.
 	//	The declaration existed for years, was registered nowhere, and every Python caller of it raised
 	//	AttributeError on execution -- which is how the military advisor came to be unopenable.
-	CyArea* area() const;
 
 	int getDamage() const;
 	void changeDamage(int iChange, int /*PlayerTypes*/ ePlayer);

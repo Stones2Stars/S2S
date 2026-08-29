@@ -235,11 +235,6 @@ void CyUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow)
 	m_pUnit->setXY(iX, iY, bGroup, bUpdate, bShow);
 }
 
-CyArea* CyUnit::area() const
-{
-	return new CyArea(m_pUnit->area());
-}
-
 int CyUnit::getDamage() const
 {
 	return m_pUnit->getDamage();

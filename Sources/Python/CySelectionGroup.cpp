@@ -38,11 +38,6 @@ CyPlot* CySelectionGroup::plot() const
 	return NULL;
 }
 
-CyArea* CySelectionGroup::area() const
-{
-	return new CyArea(m_pSelectionGroup->area());
-}
-
 int CySelectionGroup::getID() const
 {
 	return m_pSelectionGroup->getID();

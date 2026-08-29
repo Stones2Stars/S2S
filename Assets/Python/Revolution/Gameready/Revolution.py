@@ -803,15 +803,15 @@ class Revolution:
 
 			# Check AI settings
 			if bBarbarian:
-				if iNumUnits > 2 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY_LEMMING,newUnit.area()) > 0:
+				if iNumUnits > 2 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY_LEMMING,GC.getMap().plot(newUnit.getX(), newUnit.getY()).area()) > 0:
 					newUnit.setAIType(UnitAITypes.UNITAI_ATTACK_CITY_LEMMING)
 				elif newUnit.canFight():
 					newUnit.setAIType(UnitAITypes.UNITAI_ATTACK)
 
-			elif iNum < 2 and iNumUnits + iRebelsIn3 > 2 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY,newUnit.area()) > 0:
+			elif iNum < 2 and iNumUnits + iRebelsIn3 > 2 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY,GC.getMap().plot(newUnit.getX(), newUnit.getY()).area()) > 0:
 				newUnit.setAIType( UnitAITypes.UNITAI_ATTACK_CITY )
 
-			elif iNumUnits == 1 and iRebelsIn6 < 3 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_PILLAGE,newUnit.area()) > 0:
+			elif iNumUnits == 1 and iRebelsIn6 < 3 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_PILLAGE,GC.getMap().plot(newUnit.getX(), newUnit.getY()).area()) > 0:
 				newUnit.setAIType( UnitAITypes.UNITAI_PILLAGE )
 			else:
 				iniAI = newUnit.getRead()[UnitReadKind.UNIT_READ_UNIT_AI]
@@ -6524,14 +6524,14 @@ class Revolution:
 
 						# Check AI settings
 						if newUnit.isNPC():
-							if pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY_LEMMING,newUnit.area()) > 0:
+							if pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY_LEMMING,GC.getMap().plot(newUnit.getX(), newUnit.getY()).area()) > 0:
 								newUnit.setAIType(UnitAITypes.UNITAI_ATTACK_CITY_LEMMING)
 							else:
 								newUnit.setAIType(UnitAITypes.UNITAI_ATTACK)
 						else:
-							if iNum < 2 and iNumUnits > 2 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY,newUnit.area()) > 0:
+							if iNum < 2 and iNumUnits > 2 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY,GC.getMap().plot(newUnit.getX(), newUnit.getY()).area()) > 0:
 								newUnit.setAIType( UnitAITypes.UNITAI_ATTACK_CITY )
-							elif iNumUnits == 1 and GAME.getSorenRandNum(2,'Rev - Pillage') == 0 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_PILLAGE,newUnit.area()) > 0:
+							elif iNumUnits == 1 and GAME.getSorenRandNum(2,'Rev - Pillage') == 0 and pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_PILLAGE,GC.getMap().plot(newUnit.getX(), newUnit.getY()).area()) > 0:
 								newUnit.setAIType( UnitAITypes.UNITAI_PILLAGE )
 							else:
 								iniAI = newUnit.getRead()[UnitReadKind.UNIT_READ_UNIT_AI]

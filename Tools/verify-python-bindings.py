@@ -216,6 +216,9 @@ def main():
 
     if dead:
         print("UNMIGRATED CONSUMERS -- declared on a Cy class, registered nowhere, called from Python:")
+        print("  NOTE: the site count is for the NAME, not for the orphan class -- the receiver is not typed.")
+        print("    `area` is unregistered on CyUnit and CySelectionGroup but REGISTERED on CyPlot and CyCity,")
+        print("    so most of its sites are valid plot.area() calls. Check the receiver before counting.")
         for method, classes, sites in dead:
             print("  %s   (%s)  -- %d call site(s)" % (method, ", ".join(classes), len(sites)))
             shown = sites if want_list else sites[:3]
