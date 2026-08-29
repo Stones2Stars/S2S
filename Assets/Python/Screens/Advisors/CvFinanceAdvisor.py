@@ -473,9 +473,14 @@ class CvFinanceAdvisor:
 
 				fSpecialists += (CyCity.getSpecialistPopulation() + CyCity.getNumGreatPeople()) * CyPlayer.getSpecialistExtraCommerce(eComGold)
 
+				#  The process conversion is read as the ANSWER, from the same commerce census the split itself
+				#  produces, rather than re-derived here by multiplying a modifier by a production rate. A view
+				#  that recomputes a term is a second implementation of it, free to disagree with the number the
+				#  engine actually used. x100 like every amount; the reduce happens once, here at the display.
 				fCityWealth = 0.0
 				if CyCity.isProductionProcess() and CyCity.getProductionProcess() == eWealth:
-					fCityWealth = CyCity.getProductionToCommerceModifier(eComGold) * CyCity.getYields()[YieldTypes.YIELD_PRODUCTION] / 100.0
+					aCommerceTerms = CyCity.getCommerceTerms(eComGold)
+					fCityWealth = aCommerceTerms[CityCommerceTerm.COMMERCE_TERM_PROCESS_CONVERSION] / 100.0
 					fWealth += fCityWealth
 					iWealthCount += 1
 

@@ -327,7 +327,6 @@ public:
 	void processBonus(BonusTypes eBonus, int iChange);
 
 	void processBuilding(const BuildingTypes eType, const int iChange, const bool bReligiously = false, const bool bAlphaOmega = false);
-	void processProcess(ProcessTypes eProcess, int iChange);
 	void processSpecialist(SpecialistTypes eSpecialist, int iChange);
 
 	HandicapTypes getHandicapType() const;
@@ -984,9 +983,6 @@ public:
 
 
 	int getTotalCommerceRateModifier(CommerceTypes eIndex) const;
-
-	int getProductionToCommerceModifier(CommerceTypes eIndex) const;
-	void changeProductionToCommerceModifier(CommerceTypes eIndex, int iChange);
 
 	int getAdditionalCommerceByBuilding(CommerceTypes eIndex, BuildingTypes eType) const;
 
@@ -1646,7 +1642,6 @@ protected:
 
 	int* m_aiYieldRateModifier;
 	int* m_aiTradeYield;
-	int* m_aiProductionToCommerceModifier;
 	int64_t* m_aiCulture;   // per-player culture, x100 and NEVER decaying -- an AMOUNT, so 64-bit
 	int* m_aiNumRevolts;
 

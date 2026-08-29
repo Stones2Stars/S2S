@@ -1467,6 +1467,23 @@ enum CityYieldTerm
 	NUM_CITY_YIELD_TERMS
 };
 
+//	The COMMERCE half of the same census: a channel's realized value is five independent quantities collapsed
+//	into one int, so "research is too low" is unanswerable against the total and immediately answerable against
+//	the terms. Mirrors CvCommerceSplitTerms field for field -- the census comes OUT of the real split rather
+//	than being re-derived beside it, so it can never describe arithmetic the split does not do.
+enum CityCommerceTerm
+{
+	COMMERCE_TERM_COMMERCE_YIELD = 0,
+	COMMERCE_TERM_SLIDER_PERCENT,
+	COMMERCE_TERM_SHARE,
+	COMMERCE_TERM_PERCENT_SUM,
+	COMMERCE_TERM_DEPOSITS,
+	COMMERCE_TERM_PROCESS_CONVERSION,
+	COMMERCE_TERM_RATE,
+
+	NUM_CITY_COMMERCE_TERMS
+};
+
 //	The city's FOOD/GROWTH state: what is in the store, what this turn adds, what the next citizen costs, and
 //	how far off it is. One group, because every consumer that asks one of these asks three of them.
 //	⚠ GROWTH_READ_FOOD_PER_TURN is the BOTTOMED difference (the engine's own default) -- a starving city

@@ -2303,3 +2303,15 @@ CvPlayer::iBonusImportCount
 | REPLACEMENT: CvCity::hasThirdRing -- the ONE getter owning both sources, the refcounted amenity
 | (CityContext::hasAmenity(CLS_AMENITY_ADDS_3RD_RING)) and the culture level under EXP_LARGER_CITIES.
 CvCity::m_iWorkableRadiusOverride
+
+| The city's process->commerce accumulator -- an UNREACHABLE serialized value, cut whole. It was written
+| by processProcess as a MAINTAIN order started and stopped, and read by exactly ONE C++ getter whose only
+| caller was a CyCity binding registered NOWHERE -- so no C++ consumer could reach it, and the single Python
+| consumer (CvFinanceAdvisor) raised AttributeError rather than reading it. It was also a SECOND
+| implementation of a live value, which is why it drifted unnoticed: the engine already computes exactly this
+| as the commerceSplit processConversion term (CvCommerceSplitTerms), and Python was handed two raw members
+| and asked to re-derive an answer the engine had.
+| REPLACEMENT: the commerceSplit processConversion term, served to readers as CityCommerceTerm's
+| COMMERCE_TERM_PROCESS_CONVERSION through CvCity::getCommerceTerms -> CyCity::getCommerceTerms. The Finance
+| Advisor reads that term instead of multiplying two raw members.
+CvCity::m_aiProductionToCommerceModifier  (int array, NUM_COMMERCE_TYPES)

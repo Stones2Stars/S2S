@@ -71,6 +71,9 @@ public:
 	//	THE CITY YIELD CENSUS for ONE channel -- the same decomposition the /computed census renders, so a tooltip
 	//	reads the SAME DOCUMENT rather than recomputing its own breakdown. Indexed by CityYieldTerm.
 	python::list getYieldTerms(int iYield) const;
+	//	The COMMERCE half of that census, indexed by CityCommerceTerm. Same document the yield tooltip and the
+	//	commerce split itself read -- a view that re-derived a term from raw members would be a second answer.
+	python::list getCommerceTerms(int iCommerce) const;
 	int getSight() const;
 	int getLiberationPlayer() const;
 	int64_t getRealizedMaintenance() const;
@@ -317,7 +320,6 @@ public:
 
 	int getBaseYieldRateModifier(int /*YieldTypes*/ eIndex, int iExtra) const;
 
-	int getProductionToCommerceModifier(int /*CommerceTypes*/ eIndex) const;
 	int getCommerceRateModifier(int /*CommerceTypes*/ eIndex) const;
 
 

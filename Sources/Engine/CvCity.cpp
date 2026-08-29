@@ -549,7 +549,6 @@ CvCity::CvCity()
 {
 	m_aiYieldRateModifier = new int[NUM_YIELD_TYPES];
 	m_aiTradeYield = new int[NUM_YIELD_TYPES];
-	m_aiProductionToCommerceModifier = new int[NUM_COMMERCE_TYPES];
 
 	m_aiCulture = new int64_t[MAX_PLAYERS];
 	m_aiNumRevolts = new int[MAX_PLAYERS];
@@ -624,7 +623,6 @@ CvCity::~CvCity()
 	SAFE_DELETE_ARRAY(m_aiYieldRateModifier);
 	SAFE_DELETE_ARRAY(m_aiTradeYield);
 
-	SAFE_DELETE_ARRAY(m_aiProductionToCommerceModifier);
 	SAFE_DELETE_ARRAY(m_aiCulture);
 	SAFE_DELETE_ARRAY(m_aiNumRevolts);
 	SAFE_DELETE_ARRAY(m_abEverOwned);
@@ -981,7 +979,6 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
 	{
-		m_aiProductionToCommerceModifier[iI] = 0;
 		m_abCommerceRankValid[iI] = false;
 		m_aiCommerceRank[iI] = -1;
 	}
@@ -3801,16 +3798,6 @@ void CvCity::processBuilding(const BuildingTypes eBuilding, const int iChange, c
 	// processing leg AND on dormancy disable/enable. NOT a presence fact (those are setHasBuilding's ADDED /
 	// REMOVED pair): a disable flip processed through here must never read as the building leaving the city.
 	emitCityBuildingProcessed(getID(), getOwner(), (int)eBuilding, (iChange > 0) ? iChange : -iChange);
-}
-
-
-void CvCity::processProcess(ProcessTypes eProcess, int iChange)
-{
-	PROFILE_EXTRA_FUNC();
-	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
-	{
-		changeProductionToCommerceModifier(((CommerceTypes)iI), (GC.getProcessInfo(eProcess).getProductionToCommerce((CommerceTypes)iI, CASC_SCOPE_CITY) * iChange));
-	}
 }
 
 
@@ -8272,29 +8259,6 @@ int CvCity::getTotalCommerceRateModifier(CommerceTypes eIndex) const
 }
 
 
-// The modifier's own dirty flag is gone with the hand-rolled cache above; what remains is the ordinary
-// commerce-dirty signal the rate read still uses.
-
-int CvCity::getProductionToCommerceModifier(CommerceTypes eIndex) const
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-	return m_aiProductionToCommerceModifier[eIndex];
-}
-
-
-void CvCity::changeProductionToCommerceModifier(CommerceTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, NUM_COMMERCE_TYPES, eIndex);
-
-	if (iChange != 0)
-	{
-		m_aiProductionToCommerceModifier[eIndex] += iChange;
-
-		gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
-	}
-}
-
-
 /*
  * Returns the total additional commerce times 100 that adding one of the given buildings will provide.
  *
@@ -11657,7 +11621,9 @@ void CvCity::startHeadOrder()
 
 	if (order && order->eOrderType == ORDER_MAINTAIN)
 	{
-		processProcess(((ProcessTypes)(order->iData1)), 1);
+		// A process starting changes the city's realized commerce (the commerceSplit
+		// processConversion term), so the game-data display has to repaint.
+		gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
 		AI_setAssignWorkDirty(true);
 	}
 }
@@ -11669,7 +11635,7 @@ void CvCity::stopHeadOrder()
 
 	if (order && order->eOrderType == ORDER_MAINTAIN)
 	{
-		processProcess(((ProcessTypes)(order->iData1)), -1);
+		gDLL->getInterfaceIFace()->setDirty(GameData_DIRTY_BIT, true);
 	}
 }
 
@@ -12457,7 +12423,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvCity", &m_iReinforcementCounter);
 
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiYieldRateModifier);
-	WRAPPER_READ_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 	// Widening a member is SOFT: the reader absorbs the narrower stored form (save.md §8), so this keeps
 	// its own tag and an old save's 32-bit culture is read and widened in place.
 	WRAPPER_READ_ARRAY(wrapper, "CvCity", MAX_PLAYERS, m_aiCulture);
@@ -13082,7 +13047,6 @@ void CvCity::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvCity", m_iReinforcementCounter);
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_YIELD_TYPES, m_aiYieldRateModifier);
-	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", NUM_COMMERCE_TYPES, m_aiProductionToCommerceModifier);
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", MAX_PLAYERS, m_aiCulture);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvCity", MAX_PLAYERS, m_aiNumRevolts);
