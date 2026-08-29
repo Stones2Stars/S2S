@@ -15,7 +15,7 @@
 #include "Infos/CvInfoKinds.h"   // the NUM_<FAMILY>_KINDS the group reads are sized by
 #include "AI/BetterBTSAI.h"      // PERF_SCOPE -- the ONE instrument, gated by gPerfLogLevel
 #include "Engine/CvPlot.h"          // the ring-ordered work-area read
-#include "Data/CvInfoValuation.h"   // CityRateTerms -- the ONE city-yield decomposition
+#include "Data/CvInfoValuation.h"   // CityRateTerms / CvCommerceSplitTerms -- the ONE yield + commerce decomposition
 #include "Engine/CvUnit.h"                           // addUnitProductionExperience -- the unit it credits
 #include "AI/CvPlayerAI.h"                           // GET_PLAYER
 #include "Infrastructure/CvDLLInterfaceIFaceBase.h"  // select -- the engine action this relays
@@ -1222,6 +1222,24 @@ python::list CyCity::getYieldTerms(int iYield) const
 	return terms;
 }
 
+python::list CyCity::getCommerceTerms(int iCommerce) const
+{
+	PERF_SCOPE("CyCity::getCommerceTerms", -1);
+	python::list terms = python::list();
+	if (m_pCity == NULL || iCommerce < 0 || iCommerce >= NUM_COMMERCE_TYPES) return terms;
+
+	CvCommerceSplitTerms t;
+	m_pCity->getCommerceTerms((CommerceTypes)iCommerce, t);
+	terms.append((double)t.commerceYield);
+	terms.append(t.sliderPercent);
+	terms.append((double)t.share);
+	terms.append(t.percentSum);
+	terms.append((double)t.deposits);
+	terms.append((double)t.processConversion);
+	terms.append((double)t.rate);
+	return terms;
+}
+
 int CyCity::getSight() const
 {
 	return m_pCity ? m_pCity->sight() : 0;
@@ -2120,6 +2138,7 @@ void CyCity::pythonPublish()
 		.def("getAngryPopulation",   &CyCity::getAngryPopulation)
 		.def("getYieldModifiers",    &CyCity::getYieldModifiers)
 		.def("getYieldTerms",        &CyCity::getYieldTerms)
+		.def("getCommerceTerms",     &CyCity::getCommerceTerms)
 		.def("getSight",             &CyCity::getSight)
 		.def("getLiberationPlayer",  &CyCity::getLiberationPlayer)
 		.def("getRealizedMaintenance", &CyCity::getRealizedMaintenance)
