@@ -317,7 +317,6 @@ public:
 
 	int getBaseYieldRateModifier(int /*YieldTypes*/ eIndex, int iExtra) const;
 
-	int getProductionToCommerceModifier(int /*CommerceTypes*/ eIndex) const;
 	int getCommerceRateModifier(int /*CommerceTypes*/ eIndex) const;
 
 

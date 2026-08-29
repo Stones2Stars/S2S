@@ -473,11 +473,11 @@ class CvFinanceAdvisor:
 
 				fSpecialists += (CyCity.getSpecialistPopulation() + CyCity.getNumGreatPeople()) * CyPlayer.getSpecialistExtraCommerce(eComGold)
 
+				# #491 STOPGAP: CyCity.getProductionToCommerceModifier was removed (an unreachable accumulator,
+				# and a second implementation of a live value). The engine computes this as the commerceSplit
+				# processConversion term; this breakdown row is dropped until that term is served on the reader
+				# surface -- DISPLAY-only, actual gold unaffected. (fWealth stays 0.0.)
 				fCityWealth = 0.0
-				if CyCity.isProductionProcess() and CyCity.getProductionProcess() == eWealth:
-					fCityWealth = CyCity.getProductionToCommerceModifier(eComGold) * CyCity.getYields()[YieldTypes.YIELD_PRODUCTION] / 100.0
-					fWealth += fCityWealth
-					iWealthCount += 1
 
 				# modifiers don't multiply wealth
 				fCityTotal = fCityTaxes + fCityBuildings + fCityHeadquarters + fCityShrines + iCityCorporations + fCitySpecialists

@@ -758,12 +758,6 @@ int CyCity::getBaseYieldRateModifier(int /*YieldTypes*/ eIndex, int iExtra) cons
 	return m_pCity->getBaseYieldRateModifier((YieldTypes)eIndex, iExtra);
 }
 
-int CyCity::getProductionToCommerceModifier(int /*CommerceTypes*/ eIndex) const
-{
-	return m_pCity->getProductionToCommerceModifier((CommerceTypes)eIndex);
-}
-
-
 int CyCity::getCommerceRateModifier(int /*CommerceTypes*/ eIndex) const
 {
 	return m_pCity->getTotalCommerceRateModifier((CommerceTypes)eIndex);
