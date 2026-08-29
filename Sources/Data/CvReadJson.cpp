@@ -71,7 +71,10 @@ enum RjEvt
 	RJE_KEY_UNKNOWN,   // a non-reserved object key outside the closed family vocabulary ("<type>:<key>")
 	RJE_REMAPPED,      // one aliased entity's full-registry section re-map: what it maps (type + edge/family counts)
 	RJE_MAP_DONE,      // the initial JSON map (PASS 1+2) is DONE -- entities/resolved/remapped/ms
-	RJE_REVERSE_DONE   // the general reverse pass (RELATED + REQUIRED_BY + own-output landing) is DONE -- add counts/ms
+	RJE_REVERSE_DONE,  // the general reverse pass (RELATED + REQUIRED_BY + own-output landing) is DONE -- add counts/ms
+	//	⚠ APPENDED, never inserted: the numeric event id rides the /events stream, so renumbering an existing one
+	//	silently re-labels every line a reader has already captured (engine.md -- prefer adding at the END).
+	RJE_KEY_MISSING    // a REQUIRED key the entity did not author ("<type>:<key>=<fallback>") -- the silent default
 };
 
 // DOMAIN-LOCAL field tags, shared by name across lines where a field recurs.
@@ -104,6 +107,7 @@ static const char* rj_prefix(int evt)
 	case RJE_EDGE_UNRES:   return "[READJSON/unresolved-fk]";
 	case RJE_SECTION_UNCONSUMED: return "[READJSON/unconsumed-section]";
 	case RJE_KEY_UNKNOWN:  return "[READJSON/unknown-key]";
+	case RJE_KEY_MISSING:  return "[READJSON/missing-key]";
 	case RJE_GRANT_SURVEY: return "[READJSON/grant-survey]";
 	case RJE_GRANT_UNRES:  return "[READJSON/grant-unresolved]";
 	case RJE_KEY:          return "[READJSON/key]";
@@ -672,6 +676,14 @@ void loadJson(JsonLoadPhase eLoadPhase)
 	for (std::set<std::string>::const_iterator it = unknownKeys.begin(); it != unknownKeys.end(); ++it)
 		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_KEY_UNKNOWN, 1).addStr(RJF_ID, it->c_str()));
 
+	// MISSING REQUIRED keys, per authoring entity ("<type>:<key>=<fallback>", recorded by the reading info at the
+	// site that substitutes the default). The mirror of the unknown-key census and the quietest of the four: an
+	// unknown key is data the reader cannot place, this is data that was never there at all, so nothing about the
+	// parse looks wrong and the substituted value is indistinguishable from an authored one.
+	const std::set<std::string>& missingKeys = jsonMissingKeys();
+	for (std::set<std::string>::const_iterator it = missingKeys.begin(); it != missingKeys.end(); ++it)
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_KEY_MISSING, 1).addStr(RJF_ID, it->c_str()));
+
 	gDLL->logMsg("Loading.log", CvString::format("[READJSON] step spine-emits-done ms=%u", (unsigned)(GetTickCount() - s2sT0)).c_str(), true, false);
 	// READ-BACK survey: reconstruct the modifier stats + per-entity structure counts from the MAPPED data (the
 	// home) -- the compiled §6 entries on getModifiers(), the spec model (docs/architecture/patterns.md §The INFO DATA-OUT contract (info-side, never cascade-side)) -- proving the
@@ -814,8 +826,15 @@ void loadJson(JsonLoadPhase eLoadPhase)
 	const std::set<std::string>& unconsumedSections = jsonUnconsumedSections();
 	for (std::set<std::string>::const_iterator it = unconsumedSections.begin(); it != unconsumedSections.end(); ++it)
 		gDLL->logMsg("Loading.log", CvString::format("[READJSON] unconsumed-section %s", it->c_str()).c_str(), true, false);
-	gDLL->logMsg("Loading.log", CvString::format("[READJSON] coverage unresolvedFk=%d unconsumedSections=%d unknownKeys=%d",
-		(int)unresolvedFks.size(), (int)unconsumedSections.size(), iUnknownKeyKinds).c_str(), true, false);
+	// Each missing REQUIRED key gets its own LOUD ERROR line, for the same reason an unknown key does: a value
+	// nobody authored is running the game, and it is the only one of the four misses that leaves no trace in the
+	// data itself. The line carries the substituted fallback so the report names what is actually in effect.
+	const std::set<std::string>& missingRequiredKeys = jsonMissingKeys();
+	for (std::set<std::string>::const_iterator it = missingRequiredKeys.begin(); it != missingRequiredKeys.end(); ++it)
+		gDLL->logMsg("Loading.log", CvString::format("[READJSON] ERROR missing-key %s", it->c_str()).c_str(), true, false);
+	gDLL->logMsg("Loading.log", CvString::format("[READJSON] coverage unresolvedFk=%d unconsumedSections=%d unknownKeys=%d missingKeys=%d",
+		(int)unresolvedFks.size(), (int)unconsumedSections.size(), iUnknownKeyKinds,
+		(int)missingRequiredKeys.size()).c_str(), true, false);
 
 	// The kind-coverage half of the same bar (CvInfoKinds): every authored member the vocabulary does not carry
 	// flowed through the compile pass as an interned segment -- surfaced per distinct family.member so a
