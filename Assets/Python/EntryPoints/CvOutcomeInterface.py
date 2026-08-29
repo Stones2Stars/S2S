@@ -56,7 +56,7 @@ def doRemoveWVSlavery(argsList):
 		bMessage = iPlayer == GAME.getActivePlayer()
 		if bMessage:
 			msg = "Slavery worldview eradicated"
-			CvUtil.sendMessage(msg, iPlayer, 16, unit.getButton(), ColorTypes(8), unit.getX(), unit.getY(), True, True, 0, "AS2D_DISCOVERBONUS")
+			CvUtil.sendMessage(msg, iPlayer, 16, INFO.getButton("UNIT_", unit.getRead()[UnitReadKind.UNIT_READ_TYPE]), ColorTypes(8), unit.getX(), unit.getY(), True, True, 0, "AS2D_DISCOVERBONUS")
 
 		iCost = player.getBuildingProductionNeeded(iSlaveMarket)
 		iSum = 0
@@ -177,7 +177,7 @@ def doRemoveWVHumanSacrifice(argsList):
 				CyCity.setBuilding(iWVSacrifice, False)
 				CyAudioGame().Play2DSound("AS2D_DISCOVERBONUS")
 
-				CyInterface().addMessage(CyPlayer.getID(),False,25,TRNSLTR.getText("TXT_KEY_MSG_NO_HUMAN_SACRIFICE",(CyCity.getName(),)),"AS2D_BUILD_BANK",InterfaceMessageTypes.MESSAGE_TYPE_INFO,CyUnit.getButton(),ColorTypes(8),CyCity.getX(),CyCity.getY(),True,True)
+				CyInterface().addMessage(CyPlayer.getID(),False,25,TRNSLTR.getText("TXT_KEY_MSG_NO_HUMAN_SACRIFICE",(CyCity.getName(),)),"AS2D_BUILD_BANK",InterfaceMessageTypes.MESSAGE_TYPE_INFO,INFO.getButton("UNIT_", CyUnit.getRead()[UnitReadKind.UNIT_READ_TYPE]),ColorTypes(8),CyCity.getX(),CyCity.getY(),True,True)
 
 			# Remove the worldview token building
 			CyCity.setBuilding(iToken, False)

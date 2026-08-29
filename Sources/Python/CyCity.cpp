@@ -2165,6 +2165,38 @@ void CyCity::pythonPublish()
 		.def("getAiBestBuildCount",   &CyCity::getAiBestBuildCount)
 
 		.def("getCountdowns",         &CyCity::getCountdowns)
+		//	THE REST OF THE CITY CONTROLLER SURFACE. Every one of these was already declared on CyCity AND
+		//	defined in this file -- only the registration was missing, so each raised AttributeError the moment
+		//	Python called it. The engine data was always fetchable; the controller simply did not serve it.
+		//	⚖ Registered rather than folded into a group read because each is a DISTINCT question (or a PUT),
+		//	not a slot in one state block -- the group reads above cover the state that does group.
+		.def("isVisible", &CyCity::isVisible)
+		.def("isHolyCity", &CyCity::isHolyCity)
+		.def("getFeatureProduction", &CyCity::getFeatureProduction)
+		.def("getBuildingDefense", &CyCity::getBuildingDefense)
+		.def("getCommerceRateModifier", &CyCity::getCommerceRateModifier)
+		.def("getNumGreatPeople", &CyCity::getNumGreatPeople)
+		.def("getSpecialistPopulation", &CyCity::getSpecialistPopulation)
+		.def("getWorkingPopulation", &CyCity::getWorkingPopulation)
+		.def("countNumImprovedPlots", &CyCity::countNumImprovedPlots)
+		.def("isEventOccured", &CyCity::isEventOccured)
+		.def("addProductionExperience", &CyCity::addProductionExperience)
+		.def("getPreviousOwner", &CyCity::getPreviousOwner)
+		.def("getMaxAirlift", &CyCity::getMaxAirlift)
+		.def("getGameDateFounded", &CyCity::getGameDateFounded)
+		.def("getFoodTurnsLeft", &CyCity::getFoodTurnsLeft)
+		.def("getFirstBuildingOrder", &CyCity::getFirstBuildingOrder)
+		.def("canCreate", &CyCity::canCreate)
+		.def("getExtraHappiness", &CyCity::getExtraHappiness)
+		.def("getExtraHealth", &CyCity::getExtraHealth)
+		.def("changeExtraHappiness", &CyCity::changeExtraHappiness)
+		.def("changeExtraHealth", &CyCity::changeExtraHealth)
+		.def("getWarWearinessPercentAnger", &CyCity::getWarWearinessPercentAnger)
+		.def("isAutomatedCanBuild", &CyCity::isAutomatedCanBuild)
+		.def("setAutomatedCanBuild", &CyCity::setAutomatedCanBuild)
+		.def("isConnectedTo", &CyCity::isConnectedTo)
+		//	WorldBuilder razes a city outright when a game option turns its owner off.
+		.def("kill", &CyCity::kill)
 		//	THE REVOLUTION CONTROLLER SURFACE. The engine has carried this state on CvCity all along and CyCity
 		//	already wrapped every piece of it -- the wrappers were registered NOWHERE, so all 173 Python call
 		//	sites raised AttributeError and the mechanic's Python half was inert (#503).

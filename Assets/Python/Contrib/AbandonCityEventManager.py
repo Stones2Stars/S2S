@@ -198,7 +198,7 @@ class CityDemolish:
 			X = CyCity.getX()
 			Y = CyCity.getY()
 
-			iCulturePercent = CyCity.calculateCulturePercent(iPlayer)
+			iCulturePercent = GC.getMap().plot(CyCity.getX(), CyCity.getY()).calculateCulturePercent(iPlayer)
 			iPopulation = CyCity.getPopulation()
 			iOwnCulturePop = iPopulation * iCulturePercent / 100
 			iForeignPop = iPopulation - iOwnCulturePop

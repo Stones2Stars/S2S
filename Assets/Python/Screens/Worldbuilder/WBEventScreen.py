@@ -143,7 +143,7 @@ class WBEventScreen:
 			if pUnitX.getID() == iSelectedUnit:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 				sHeader = sText
-			screen.setTableText("WBEventUnit", 2, iRow, "<font=3>" + sColor + sText + "</font></color>", pUnitX.getButton(), WidgetTypes.WIDGET_PYTHON, 8300 + iPlayerX, pUnitX.getID(), 1<<0)
+			screen.setTableText("WBEventUnit", 2, iRow, "<font=3>" + sColor + sText + "</font></color>", INFO.getButton("UNIT_", pUnitX.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 8300 + iPlayerX, pUnitX.getID(), 1<<0)
 			pPlayerX = GC.getPlayer(iPlayerX)
 			iLeader = pPlayerX.getLeaderType()
 			iCiv = GC.getPlayer(pUnitX.getOwner()).getCivilizationType()

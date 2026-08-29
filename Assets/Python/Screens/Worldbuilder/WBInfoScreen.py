@@ -209,7 +209,7 @@ class WBInfoScreen:
 				iCount += 1
 				sColor = u"<color=%d,%d,%d,%d>" %(pPlayer.getPlayerTextColorR(), pPlayer.getPlayerTextColorG(), pPlayer.getPlayerTextColorB(), pPlayer.getPlayerTextColorA())
 				sText = sColor + pUnit.getName()
-				screen.setTableText("PlotTable", iColumn, iRow, "<font=3>" + sText + "</color></font>", pUnit.getButton(), WidgetTypes.WIDGET_PYTHON, 8300 + iPlayer, iUnit, 1<<0)
+				screen.setTableText("PlotTable", iColumn, iRow, "<font=3>" + sText + "</color></font>", INFO.getButton("UNIT_", pUnit.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 8300 + iPlayer, iUnit, 1<<0)
 				screen.minimapFlashPlot(iX, iY, iColorB, -1)
 			if lSelectedItem[0] > -1 and lSelectedItem[1] > -1:
 				pUnit = GC.getPlayer(lSelectedItem[0]).getUnit(lSelectedItem[1])

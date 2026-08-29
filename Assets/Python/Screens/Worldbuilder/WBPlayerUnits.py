@@ -234,7 +234,7 @@ class WBPlayerUnits:
 			iCivilization = GC.getPlayer(loopUnit.getOwner()).getCivilizationType()
 			screen.setTableText("WBUnitList", 0, iRow, "", INFO.getButton("CIVILIZATION_", iCivilization), WidgetTypes.WIDGET_PYTHON, 7872, i[0] * 10000 + iCivilization, 1<<2)
 			screen.setTableText("WBUnitList", 1, iRow, str(iStatus), lStatus[iStatus], WidgetTypes.WIDGET_PYTHON, 1043, iStatus, 1<<0)
-			screen.setTableText("WBUnitList", 2, iRow, "<font=3>" + sColor + loopUnit.getName() + "</color></font>", loopUnit.getButton(), WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<0)
+			screen.setTableText("WBUnitList", 2, iRow, "<font=3>" + sColor + loopUnit.getName() + "</color></font>", INFO.getButton("UNIT_", loopUnit.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<0)
 			screen.setTableInt("WBUnitList", 3, iRow, "<font=3>" + str(loopUnit.getID()) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<2)
 			screen.setTableInt("WBUnitList", 4, iRow, "<font=3>" + str(loopUnit.getRead()[UnitReadKind.UNIT_READ_LEVEL]) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<2)
 			screen.setTableInt("WBUnitList", 5, iRow, "<font=3>" + str(loopUnit.getBaseCombatStr()) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<2)

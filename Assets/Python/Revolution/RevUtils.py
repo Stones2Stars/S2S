@@ -63,12 +63,15 @@ def getGameSpeedMod():
 
 
 def doRefortify(iPlayer):
-	for pGroup in GC.getPlayer(iPlayer).groups():
-		if pGroup.getNumUnits() > 0:
-			headUnit = pGroup.getHeadUnit()
-			if headUnit.getFortifyTurns() > 0:
-				pGroup.setActivityType(ActivityTypes.ACTIVITY_SLEEP)
-				headUnit.NotifyEntity(MissionTypes.MISSION_FORTIFY)
+	# Asked of the UNIT, not of a group handle: CySelectionGroup publishes no methods at all -- its
+	# registration is the bare type identity the marshaller needs -- so every getNumUnits/getHeadUnit/
+	# setActivityType call here raised AttributeError and this function has never done anything.
+	# CyUnit::setActivity IS the group operation (it calls getGroup()->setActivityType), so the effect is
+	# unchanged; a multi-unit group simply gets its own notify per member rather than only for the head.
+	for pUnit in GC.getPlayer(iPlayer).units():
+		if pUnit.getFortifyTurns() > 0:
+			pUnit.setActivity(ActivityTypes.ACTIVITY_SLEEP)
+			pUnit.NotifyEntity(MissionTypes.MISSION_FORTIFY)
 
 
 def plotGenerator(startPlot, maxRadius):

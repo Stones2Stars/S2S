@@ -1133,7 +1133,7 @@ class Revolution:
 				else:
 					cityDistCommBonus += 150 - ( GC.getRouteInfo(pCity.plot().getRouteType()).getFlatMovementCost() )*1.25
 
-				if( pCity.isCoastal(-1) ) :
+				if( pCity.isCoastalTo(-1) ) :
 					if bCanTradeOverOcean :
 						cityDistCommBonus += 50
 					elif bCanTradeOverCoast :
@@ -6523,7 +6523,7 @@ class Revolution:
 						newUnit.setDamage(iDamage, pPlayer.getID())
 
 						# Check AI settings
-						if newUnit.isNPC():
+						if GC.getPlayer(newUnit.getOwner()).isNPC():
 							if pRevPlayer.AI_unitValue(newUnit.getRead()[UnitReadKind.UNIT_READ_TYPE],UnitAITypes.UNITAI_ATTACK_CITY_LEMMING,GC.getMap().plot(newUnit.getX(), newUnit.getY()).area()) > 0:
 								newUnit.setAIType(UnitAITypes.UNITAI_ATTACK_CITY_LEMMING)
 							else:

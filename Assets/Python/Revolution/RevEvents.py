@@ -509,7 +509,7 @@ def checkRebelBonuses(argsList):
 						newUnitList.append(newOwner.createUnit(iAttack, ix, iy, UnitAITypes.NO_UNITAI, DirectionTypes.DIRECTION_SOUTH))
 
 				# Give a boat to island rebels
-				if pCity.isCoastal(10) and pCity.area().getNumCities() < 3 and pCity.area().getNumTiles() < 25:
+				if pCity.isCoastalTo(10) and pCity.area().getNumCities() < 3 and pCity.area().getNumTiles() < 25:
 					iBestCombat = -1
 					for iUnitX in xrange(GC.getNumUnitInfos()):
 						if (UNIT.getDomain(iUnitX) == DomainTypes.DOMAIN_SEA
@@ -802,7 +802,7 @@ def removeFloatingRebellions():
 		bHasFounder = False
 		unitX, i = playerX.firstUnit(False)
 		while unitX:
-			if unitX.isFound():
+			if UNIT.isFound(unitX.getRead()[UnitReadKind.UNIT_READ_TYPE]):
 				bHasFounder = True
 				break
 			if bOnlySpy:

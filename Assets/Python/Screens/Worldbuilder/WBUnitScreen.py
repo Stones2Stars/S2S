@@ -389,23 +389,23 @@ class WBUnitScreen:
 		unit = self.currentUnit
 
 		if unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_NORTH:
-			screen.setTableText(TBL, 1,0 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 0, 1<<2)
+			screen.setTableText(TBL, 1,0 , "", INFO.getButton("UNIT_", unit.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 1030, 0, 1<<2)
 		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_NORTHEAST:
-			screen.setTableText(TBL, 2,0 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 1, 1<<2)
+			screen.setTableText(TBL, 2,0 , "", INFO.getButton("UNIT_", unit.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 1030, 1, 1<<2)
 		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_EAST:
-			screen.setTableText(TBL, 2,1 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 2, 1<<2)
+			screen.setTableText(TBL, 2,1 , "", INFO.getButton("UNIT_", unit.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 1030, 2, 1<<2)
 		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_SOUTHEAST:
-			screen.setTableText(TBL, 2,2 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 3, 1<<2)
+			screen.setTableText(TBL, 2,2 , "", INFO.getButton("UNIT_", unit.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 1030, 3, 1<<2)
 		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_SOUTH:
-			screen.setTableText(TBL, 1,2 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 4, 1<<2)
+			screen.setTableText(TBL, 1,2 , "", INFO.getButton("UNIT_", unit.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 1030, 4, 1<<2)
 		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_SOUTHWEST:
-			screen.setTableText(TBL, 0,2 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 5, 1<<2)
+			screen.setTableText(TBL, 0,2 , "", INFO.getButton("UNIT_", unit.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 1030, 5, 1<<2)
 		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_WEST:
-			screen.setTableText(TBL, 0,1 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 6, 1<<2)
+			screen.setTableText(TBL, 0,1 , "", INFO.getButton("UNIT_", unit.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 1030, 6, 1<<2)
 		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.DIRECTION_NORTHWEST:
-			screen.setTableText(TBL, 0,0 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, 7, 1<<2)
+			screen.setTableText(TBL, 0,0 , "", INFO.getButton("UNIT_", unit.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 1030, 7, 1<<2)
 		elif unit.getRead()[UnitReadKind.UNIT_READ_FACING_DIRECTION] == DirectionTypes.NO_DIRECTION:
-			screen.setTableText(TBL, 1,1 , "", unit.getButton(), WidgetTypes.WIDGET_PYTHON, 1030, -1, 1<<2)
+			screen.setTableText(TBL, 1,1 , "", INFO.getButton("UNIT_", unit.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 1030, -1, 1<<2)
 
 		iWidth = xRes/5 - 40
 		iY += iHeight
@@ -604,7 +604,7 @@ class WBUnitScreen:
 					sColor = "<color=128,255,28>"
 				elif unitX.getRead()[UnitReadKind.UNIT_READ_GROUP_ID] == self.currentUnit.getRead()[UnitReadKind.UNIT_READ_GROUP_ID]:
 					sColor = TRNSLTR.getText("[COLOR_YELLOW]", ())
-			screen.setTableText(ID, 2, iRow, "<font=3>" + sColor + sText + "</font></color>", unitX.getButton(), WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<0)
+			screen.setTableText(ID, 2, iRow, "<font=3>" + sColor + sText + "</font></color>", INFO.getButton("UNIT_", unitX.getRead()[UnitReadKind.UNIT_READ_TYPE]), WidgetTypes.WIDGET_PYTHON, 8300 + i[0], i[1], 1<<0)
 			iLeader = pPlayerX.getLeaderType()
 			iCiv = GC.getPlayer(unitX.getOwner()).getCivilizationType()
 			screen.setTableText(ID, 0, iRow, "", INFO.getButton("CIVILIZATION_", iCiv), WidgetTypes.WIDGET_PYTHON, 7872, iCiv, 1<<0 )
@@ -685,7 +685,7 @@ class WBUnitScreen:
 					else:
 						screen.attachPanelAt(ScPnl, ROW, "", "", True, False, ePanelBlack, 0, y-4, w, h1, eWidGen, 1, 1)
 
-					screen.setImageButtonAt(BTN + str(iOtherID), ROW, unitX.getButton(), 0, 0, dy, dy, eWidGen, 0, 0)
+					screen.setImageButtonAt(BTN + str(iOtherID), ROW, INFO.getButton("UNIT_", unitX.getRead()[UnitReadKind.UNIT_READ_TYPE]), 0, 0, dy, dy, eWidGen, 0, 0)
 					screen.setTextAt(entry + str(iOtherID), ROW, "<font=3>" + sColor + sText, 1<<0, dy + 4, 0, 0, eFontGame, eWidGen, 0, 0)
 					iRow += 1
 					y += dy
@@ -732,7 +732,7 @@ class WBUnitScreen:
 				else:
 					screen.attachPanelAt(ScPnl, ROW, "", "", True, False, ePanelBlack, 0, y-4, w, h1, eWidGen, 1, 1)
 
-				screen.setImageButtonAt(BTN + str(iOtherID), ROW, unitX.getButton(), 0, 0, dy, dy, eWidGen, unitX.getOwner(), iOtherID)
+				screen.setImageButtonAt(BTN + str(iOtherID), ROW, INFO.getButton("UNIT_", unitX.getRead()[UnitReadKind.UNIT_READ_TYPE]), 0, 0, dy, dy, eWidGen, unitX.getOwner(), iOtherID)
 				screen.setTextAt(entry + str(iOtherID), ROW, "<font=3>" + sColor + sText, 1<<0, dy + 4, 0, 0, eFontGame, eWidGen, unitX.getOwner(), iOtherID)
 				iRow += 1
 				y += dy
