@@ -218,7 +218,7 @@ enum CharacteristicClsTypes
 	NUM_CLS_CHARACTERISTIC_TYPES = 9
 };
 
-// CLSD_CAPABILITY -- the `capabilities` block (17 authored keys)
+// CLSD_CAPABILITY -- the `capabilities` block (15 authored keys)
 enum CapabilityClsTypes
 {
 	CLS_CAPABILITY_CAN_BUILD_BRIDGES = 0,
@@ -232,13 +232,11 @@ enum CapabilityClsTypes
 	CLS_CAPABILITY_CAN_SET_ESPIONAGE_RATE = 8,
 	CLS_CAPABILITY_CAN_SET_SCIENCE_RATE = 9,
 	CLS_CAPABILITY_CAN_SPREAD_IRRIGATION = 10,
-	CLS_CAPABILITY_DCM_AIR_BOMB_1 = 11,
-	CLS_CAPABILITY_DCM_AIR_BOMB_2 = 12,
-	CLS_CAPABILITY_HAS_CENTERED_MAP = 13,
-	CLS_CAPABILITY_HAS_LANGUAGE = 14,
-	CLS_CAPABILITY_HAS_RIVER_TRADE = 15,
-	CLS_CAPABILITY_HAS_WHOLE_MAP_REVEALED = 16,
-	NUM_CLS_CAPABILITY_TYPES = 17
+	CLS_CAPABILITY_HAS_CENTERED_MAP = 11,
+	CLS_CAPABILITY_HAS_LANGUAGE = 12,
+	CLS_CAPABILITY_HAS_RIVER_TRADE = 13,
+	CLS_CAPABILITY_HAS_WHOLE_MAP_REVEALED = 14,
+	NUM_CLS_CAPABILITY_TYPES = 15
 };
 
 // CLSD_POLICY -- the `policies` block (20 authored keys)
@@ -496,8 +494,6 @@ static const char* const CLS_SEED_CLSD_CAPABILITY[] =
 	"canSetEspionageRate",
 	"canSetScienceRate",
 	"canSpreadIrrigation",
-	"dcmAirBomb1",
-	"dcmAirBomb2",
 	"hasCenteredMap",
 	"hasLanguage",
 	"hasRiverTrade",

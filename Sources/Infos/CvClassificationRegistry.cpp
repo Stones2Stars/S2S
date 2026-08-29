@@ -27,7 +27,7 @@ namespace
 
 	// camelCase / snake_case key -> UPPER_SNAKE: '_' before an upper that starts a word (prev lower, or next
 	// lower after an acronym run) and before a digit run following a letter. "setScienceRate" -> SET_SCIENCE_RATE,
-	// "maxHP" -> MAX_HP, "dcmAirBomb" -> DCM_AIR_BOMB, "is_cargo_vessel" -> IS_CARGO_VESSEL.
+	// "maxHP" -> MAX_HP, "adds3rdRing" -> ADDS_3RD_RING, "is_cargo_vessel" -> IS_CARGO_VESSEL.
 	std::string clsUpperSnake(const std::string& key)
 	{
 		std::string out;
