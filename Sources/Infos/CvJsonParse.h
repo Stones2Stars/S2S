@@ -162,5 +162,14 @@ const std::set<std::string>& jsonUnconsumedSections();
 // "<typeId>:<key>" -- the reader prints each as an unconditional [READJSON] ERROR unknown-key line.
 void jsonNoteUnknownKey(const std::string& szType, const std::string& szKey);
 const std::set<std::string>& jsonUnknownKeys();
+// A key the reading info REQUIRES that the entity did not author, recorded AT THE SITE that substitutes a
+// fallback: "<typeId>:<key>=<fallback>". ⛔ This is the one miss the other three censuses structurally CANNOT
+// see -- the file parses, every key present is known, every section is consumed, and the value is simply a
+// default nobody chose. It is therefore the quietest failure the reader has, and the only evidence is a
+// substituted value that looks exactly like an authored one.
+// ⚖ Record ONLY where the fallback is a SEMANTIC choice that can be wrong (a role, a domain, a category) --
+// never for a numeric zero or an empty list, where absence and the default mean the same thing.
+void jsonNoteMissingKey(const std::string& szType, const std::string& szKey, const std::string& szFallback);
+const std::set<std::string>& jsonMissingKeys();
 
 #endif // CV_JSON_PARSE_H

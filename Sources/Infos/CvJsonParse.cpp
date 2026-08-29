@@ -21,11 +21,13 @@ int jsonX100(double h)
 static std::set<std::string> s_unresolved;
 static std::set<std::string> s_unconsumed;
 static std::set<std::string> s_unknownKeys;
+static std::set<std::string> s_missingKeys;
 
-void jsonResetDiag()                                    { s_unresolved.clear(); s_unconsumed.clear(); s_unknownKeys.clear(); }
+void jsonResetDiag()                                    { s_unresolved.clear(); s_unconsumed.clear(); s_unknownKeys.clear(); s_missingKeys.clear(); }
 const std::set<std::string>& jsonUnresolvedIds()        { return s_unresolved; }
 const std::set<std::string>& jsonUnconsumedSections()   { return s_unconsumed; }
 const std::set<std::string>& jsonUnknownKeys()          { return s_unknownKeys; }
+const std::set<std::string>& jsonMissingKeys()          { return s_missingKeys; }
 
 // The bound is a runaway guard, not a display cap: at 64 a single flooding class (every CIVILIZATION_ dropping
 // `grants`) filled the census by itself and HID every other miss behind it -- the diagnostic silently truncated
@@ -41,6 +43,11 @@ void jsonNoteUnconsumed(const std::string& szType, const std::string& szSection)
 void jsonNoteUnknownKey(const std::string& szType, const std::string& szKey)
 {
 	if (s_unknownKeys.size() < JSON_DIAG_MAX) s_unknownKeys.insert(szType + ":" + szKey);
+}
+
+void jsonNoteMissingKey(const std::string& szType, const std::string& szKey, const std::string& szFallback)
+{
+	if (s_missingKeys.size() < JSON_DIAG_MAX) s_missingKeys.insert(szType + ":" + szKey + "=" + szFallback);
 }
 
 int jsonResolveId(const std::string& id)

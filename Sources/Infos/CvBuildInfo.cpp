@@ -198,12 +198,17 @@ void CvBuildInfo::mapFrom(const picojson::value& entity)
 			{
 				if (!featureRows[iRow].is<picojson::object>())
 				{
+					jsonNoteUnconsumed(getType(), "produces.features/rowNotAnObject");
 					continue;
 				}
 				const picojson::object& featureRow = featureRows[iRow].get<picojson::object>();
 				const int iFeature = jsonIdFk(featureRow, "feature");
 				if (iFeature < 0)
 				{
+					//	The row is DROPPED WHOLE, so say so. jsonIdFk answers -1 for two different failures and the
+					//	call site cannot tell them apart: an id that did not RESOLVE is already on the unresolved-fk
+					//	census, but an ABSENT key is on no census at all -- which is the half that was silent.
+					jsonNoteUnconsumed(getType(), "produces.features/rowHasNoFeature");
 					continue;
 				}
 				FeatureStruct featureStruct;
@@ -225,12 +230,14 @@ void CvBuildInfo::mapFrom(const picojson::value& entity)
 			{
 				if (!terrainRows[iRow].is<picojson::object>())
 				{
+					jsonNoteUnconsumed(getType(), "produces.terraform/rowNotAnObject");
 					continue;
 				}
 				const picojson::object& terrainRow = terrainRows[iRow].get<picojson::object>();
 				const int iTerrain = jsonIdFk(terrainRow, "terrain");
 				if (iTerrain < 0)
 				{
+					jsonNoteUnconsumed(getType(), "produces.terraform/rowHasNoTerrain");
 					continue;
 				}
 				TerrainStructs terrainStruct;

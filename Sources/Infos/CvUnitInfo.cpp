@@ -502,6 +502,7 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 		{
 			// legacy load default: -1 negative-indexes the AI count arrays
 			m_iDefaultUnitAI = GC.getInfoTypeForString("UNITAI_UNKNOWN");
+			jsonNoteMissingKey(getType(), "identity.defaultUnitAI", "UNITAI_UNKNOWN");
 		}
 		m_iSpecialUnitType = jsonIdFk(*pIdentity, "special");
 		m_iAdvisor = jsonIdFk(*pIdentity, "advisor");
