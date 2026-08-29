@@ -13516,6 +13516,8 @@ void CvUnit::getUnitFlags(int (&flags)[NUM_UNIT_FLAGS]) const
 	flags[UNIT_FLAG_CAN_AIR_ATTACK]  = canAirAttack() ? 1 : 0;
 	flags[UNIT_FLAG_MADE_ATTACK]     = isMadeAttack() ? 1 : 0;
 	flags[UNIT_FLAG_DEAD]            = isDead() ? 1 : 0;
+	flags[UNIT_FLAG_AUTO_PROMOTING]  = isAutoPromoting() ? 1 : 0;
+	flags[UNIT_FLAG_AUTO_UPGRADING]  = isAutoUpgrading() ? 1 : 0;
 }
 
 

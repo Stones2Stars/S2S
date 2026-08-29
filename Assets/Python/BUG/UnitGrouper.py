@@ -318,24 +318,29 @@ class OrderGrouping(Grouping):
 		return (self._getOrder(unit),)
 
 	def _getOrder(self, unit):
-		group = unit.getGroup()
+		# The unit's own group read carries the whole order picture -- activity, automation, mission and queue
+		# length -- so nothing here goes through a CySelectionGroup handle. That type publishes no methods at
+		# all (its registration is the bare type identity the marshaller needs), so every group.getXxx() call
+		# this replaced raised AttributeError the moment it ran.
+		aRead = unit.getRead()
+		aFlags = unit.getFlags()
 
-		iAutomation = group.getAutomateType()
+		iAutomation = aRead[UnitReadKind.UNIT_READ_AUTOMATE]
 		if iAutomation in self._AutomationMap:
 			return self._AutomationMap[iAutomation]
 
-		eActivityType = group.getActivityType()
+		eActivityType = aRead[UnitReadKind.UNIT_READ_ACTIVITY]
 		if eActivityType in self._ActivityMap:
 			return self._ActivityMap[eActivityType]
 
-		if group.getLengthMissionQueue() > 0:
-			eMissionType = group.getMissionType(0)
+		if aRead[UnitReadKind.UNIT_READ_MISSION_QUEUE_LENGTH] > 0:
+			eMissionType = aRead[UnitReadKind.UNIT_READ_MISSION]
 			if eMissionType == MissionTypes.MISSION_BUILD:
 				return 9 # Build
 			if eMissionType in (MissionTypes.MISSION_MOVE_TO, MissionTypes.MISSION_MOVE_TO_UNIT, MissionTypes.MISSION_MOVE_TO_SENTRY):
 				return 11 # GoTo
-		elif unit.isWaiting():
-			if unit.isFortifyable():
+		elif aFlags[UnitFlagKind.UNIT_FLAG_WAITING]:
+			if aFlags[UnitFlagKind.UNIT_FLAG_FORTIFYABLE]:
 				return 3 # Fortify
 			return 2 # Sleep
 		return 26 # Other
@@ -356,7 +361,7 @@ class AutoUpgradeGrouping(Grouping):
 		self._addGroup(Group(self, self.ORDER_NONE, "TXT_KEY_UNITGROUPER_ORDER_GROUP_NONE"))
 
 	def calcGroupKeys(self, unit, player, team):
-		if unit.isAutoUpgrading():
+		if unit.getFlags()[UnitFlagKind.UNIT_FLAG_AUTO_UPGRADING]:
 			return (self.ORDER_AUTO_UPGRADING,)
 		return (self.ORDER_NONE,)
 
@@ -375,7 +380,7 @@ class AutoPromoteGrouping(Grouping):
 		self._addGroup(Group(self, self.ORDER_NONE, "TXT_KEY_UNITGROUPER_ORDER_GROUP_NONE"))
 
 	def calcGroupKeys(self, unit, player, team):
-		if unit.isAutoPromoting():
+		if unit.getFlags()[UnitFlagKind.UNIT_FLAG_AUTO_PROMOTING]:
 			return (self.ORDER_AUTO_PROMOTIONS,)
 		return (self.ORDER_NONE,)
 

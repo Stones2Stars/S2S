@@ -1328,6 +1328,10 @@ enum UnitFlagKind
 	//	⚠ DEAD here is the engine's isDead(): a unit whose death is merely SCHEDULED already reads true while
 	//	still being a live object ([unit-lifecycle.md]), so a sweep must skip one rather than act on it.
 	UNIT_FLAG_DEAD,
+	//	The two standing-order toggles. APPENDED, never inserted -- the ordinal indexes the getFlags() list a
+	//	Python consumer reads, so moving one silently re-labels every earlier flag.
+	UNIT_FLAG_AUTO_PROMOTING,
+	UNIT_FLAG_AUTO_UPGRADING,
 
 	NUM_UNIT_FLAGS
 };
