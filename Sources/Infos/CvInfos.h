@@ -88,7 +88,6 @@
 #include "CvPlayerColorInfo.h"
 #include "CvLandscapeInfo.h"
 #include "CvGameText.h"
-#include "CvDiplomacyTextInfo.h"
 #include "CvEffectInfo.h"
 #include "CvAttachableInfo.h"
 #include "CvGameOptionInfo.h"

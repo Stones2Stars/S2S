@@ -26,8 +26,7 @@
 //	CvAttachableInfo			Misc\CIV4AttachableInfos.xml
 //
 //
-CvAttachableInfo::CvAttachableInfo() :
-m_fUpdateRate(0.0f) // never read from XML (dead member, no getter); not declared to CvInfoUtil
+CvAttachableInfo::CvAttachableInfo()
 {
 	CvInfoUtil(this).initDataMembers();
 }

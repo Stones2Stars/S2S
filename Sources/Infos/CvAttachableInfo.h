@@ -30,7 +30,6 @@ public:
 
 private:
 	CvString m_szPath;
-	float m_fUpdateRate;
 };
 
 #endif // CV_ATTACHABLE_INFO_H

@@ -225,7 +225,6 @@ private:
 	int m_iRevoltTurns;
 	int m_iMinPillage;
 	int m_iMaxPillage;
-	int m_iUnitPromotion;
 	int m_iFreeUnitSupport;
 	int m_iInflationModifier;
 	int m_iAIValue;
