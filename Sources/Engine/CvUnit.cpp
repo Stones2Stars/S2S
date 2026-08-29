@@ -457,7 +457,14 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 			GET_PLAYER(eOwner).changeNumNukeUnits(1);
 		}
 
-		if (isMilitaryBranch())
+		//	⛔ THE SCRATCH UNIT IS NOT AN ARMY MEMBER, so it must not enter a player-level tally (the same
+		//	exclusion the birthmark test above makes for the rest of this unit's bookkeeping). It is created ONCE
+		//	and then re-typed in place by changeIdentity, which resets the unit without touching any counter --
+		//	so a counted temp unit contributes its FIRST type's verdict forever, and no later re-type corrects it.
+		//	⚑ That is what put every player's m_iNumMilitaryUnits permanently out of step with its own units and
+		//	left a recount-and-correct self-heal in CvPlayer::read to paper over it on every load.
+		//	⚠ isTempUnit() is answerable HERE because AI_init has already stamped the birthmark.
+		if (isMilitaryBranch() && !isTempUnit())
 		{
 			GET_PLAYER(eOwner).changeNumMilitaryUnits(1);
 		}
@@ -1599,7 +1606,8 @@ void CvUnit::die()
 		owner.changeNumNukeUnits(-1);
 	}
 
-	if (isMilitaryBranch())
+	//	The withdrawal side of the same exclusion -- one predicate at both ends, or the count drifts the other way.
+	if (isMilitaryBranch() && !isTempUnit())
 	{
 		owner.changeNumMilitaryUnits(-1);
 	}

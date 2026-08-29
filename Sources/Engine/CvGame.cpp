@@ -8439,6 +8439,25 @@ void CvGame::read(FDataStreamBase* pStream)
 	// at the postmenu data load (CvXMLLoadUtilitySet -> spineRegisterConsumers), which always precedes a save read.
 	emitGameLoadStarted();
 
+	//	⛔ EVERY TEAM IS BROUGHT TO A FULLY CONSTRUCTED STATE BEFORE ANYTHING STREAMS. A team's info-sized arrays
+	//	are allocated by reset(), and on a load the only reset() a team ever gets is the one inside its OWN read --
+	//	which the EXE runs AFTER the map. So through the whole of CvMap::read the teams stood half-constructed with
+	//	null arrays, and the map's in-read facts drive the cascade straight into them: every improvement fact
+	//	resolves its deposits' conditions, a tech-gated one asks EmpireContext::teamHasTech, and that read hit a
+	//	null m_pabHasTech 15852 times in one load.
+	//	⚑ The reads were TOLERANT, which is why this surfaced as assert noise rather than a crash -- and is exactly
+	//	why it survived: a half-constructed object answering plausibly is the shape that never gets found.
+	//	⚖ It is idempotent by construction: CvTeam::read opens with its own reset(), so this only moves the FIRST
+	//	one earlier. It changes no answer either -- an unallocated tech array already read as "no techs", which is
+	//	what a freshly reset one says -- and the tech facts that arrive later from CvPlayer::read re-book every
+	//	deposit they gate through the banked atom fans ([the load reseed](docs/spine/05-the-load-reseed.md)).
+	//	⛔ Do NOT reach for a guard at the read instead: a guard makes each reader responsible for a state that
+	//	should not exist, and there is no bottom to that list -- the object being whole is the invariant.
+	for (int iTeam = 0; iTeam < MAX_TEAMS; iTeam++)
+	{
+		GET_TEAM((TeamTypes)iTeam).reset((TeamTypes)iTeam);
+	}
+
 	WRAPPER_READ_STRING(wrapper, "CvGame", m_gameId);	// flags for expansion
 
 	uint uiFlag=0;
