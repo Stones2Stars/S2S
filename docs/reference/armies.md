@@ -73,12 +73,25 @@ read the missing axis as an unfinished half of the two above: an enum with no de
 vocabulary nothing consumes. What an army is *for* is carried by `ARMY_MISSION_*` meanwhile, which is
 sufficient for the coordination the layer actually performs today.
 
-⚑ **The prize is recorded WITH the deferral, because it is what makes this worth returning to: an army-level
-AI would likely be a significant PERFORMANCE win, since one decision taken for an army replaces the many
-individual per-unit calculations it stands in for.** That is a direct claim on the objective every perf
-decision answers to ([turn time is king](../cascade/16-package-model.md#-the-per-scope-package-model--the-cascades-founding-design-1-stated-as-cache-architecture)) —
-the cost sits in the AI's per-unit loops, and coordinating N units as one is exactly the shape that removes
-it rather than making it faster.
+### ⚖ What the axis is FOR — the ARMY holds the authority, not the unit
+
+**The intended model inverts who decides: the ARMY decides whether a unit may LEAVE, where today the unit
+decides for itself — and currently a unit can jog off for any reason at all.** That is the mechanic the axis
+exists to carry, and it is why the layer needs decision loops rather than just an enum: something has to be
+the authority the individual unit answers to.
+
+⚑ **The performance win and the behaviour win are THE SAME CHANGE, which is what makes the prize worth
+recording.** One decision taken for an army replaces the many individual per-unit calculations it stands in
+for — a direct claim on the objective every perf decision answers to
+([turn time is king](../cascade/16-package-model.md#-the-per-scope-package-model--the-cascades-founding-design-1-stated-as-cache-architecture)),
+since the cost sits in the AI's per-unit loops and coordinating N units as one REMOVES that work rather than
+making it faster. The same inversion is what stops the units dispersing.
+
+⚠ **The per-unit departure is the "lost contact with the mothership" shape**
+([AGENTS.md](../../AGENTS.md) § Unit AI fallback terminals): a unit that re-decides on its own each turn
+wanders off, and no amount of tuning the individual decision produces a formation, because nothing owns the
+question of whether leaving is allowed.
+
 ⚠ So this is a SEQUENCING decision with a named prize, not a judgement that the axis is unwanted. It is not
 reopened by noticing the performance argument again — the argument is already here, and the blocker is the
 loops.
