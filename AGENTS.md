@@ -478,6 +478,12 @@ not findings to re-discover.
   violation that belongs to the §4c-ter cluster pass, NOT today's balance defect. ⛔ Do not "fix" it by converting
   `getBestLandUnitCombat()` alone: two sites already lift it back with `100 *`, and the air sites read the genuinely
   human `getAirCombat()`, so a lone conversion manufactures fresh fudge factors and fails the cluster gate.
+  ⚠ **It carries a SECOND defect on a different axis, and it belongs to the SAME pass:** `getBestLandUnit` SELECTS
+  the winner on the live unit's resolved `baseCombatStrHuman()`, while `getBestLandUnitCombat` returns the
+  **INFO's authored** strength (`getScalar(SCALAR_STRENGTH, …)`). Selection and denominator therefore read
+  different quantities, so the number does not describe the unit that won the selection. ⛔ Do not repair that
+  alone either — it is the SAME nine AI call sites (`AI_combatValue` among them), so a lone change re-scales
+  every combat valuation in the tree.
   (2) **`CvCityAI::AI_bestUnit` has NO cost term** — it takes the highest `AI_unitValue` outright — so unit spam
   can never originate in a value-per-hammer ratio there; it originates in value failing to DISCRIMINATE, or in the
   needed-counts ([parked/unit-ai-valuation.md](docs/plans/parked/unit-ai-valuation.md)).
