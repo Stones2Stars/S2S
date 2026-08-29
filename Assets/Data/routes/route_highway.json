@@ -65,6 +65,9 @@
     },
     "IMPROVEMENT_FOREST_PRESERVE": {
      "flat": 1
+    },
+    "IMPROVEMENT_LUMBERJACK": {
+     "flat": 1
     }
    }
   }

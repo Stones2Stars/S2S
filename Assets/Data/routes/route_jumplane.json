@@ -49,6 +49,9 @@
     },
     "IMPROVEMENT_WORKSHOP": {
      "flat": 1
+    },
+    "IMPROVEMENT_LUMBERJACK": {
+     "flat": 1
     }
    }
   }
@@ -97,6 +100,9 @@
      "flat": 1
     },
     "IMPROVEMENT_FOREST_PRESERVE": {
+     "flat": 1
+    },
+    "IMPROVEMENT_LUMBERJACK": {
      "flat": 1
     }
    }

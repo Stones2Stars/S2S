@@ -1,0 +1,5 @@
+{
+ "CIVIC_BIOLOGICAL_CASTES": { "production": { "empire": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } } },
+ "CIVIC_CASTE_SYSTEM":      { "production": { "empire": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } } },
+ "CIVIC_PROLETARIAT":       { "production": { "empire": { "improvements": { "IMPROVEMENT_LUMBERJACK": { "flat": 1 } } } } }
+}
