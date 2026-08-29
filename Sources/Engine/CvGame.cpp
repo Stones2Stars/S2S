@@ -7190,7 +7190,7 @@ void CvGame::createBarbarianUnits()
 					{
 						iValue += 200;
 					}
-					iValue += kUnit.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 * (25 + getSorenRandNum(25, "Cargo Space Value"));
+					iValue += kUnit.getCargoSpaceTotal() / 100 * (25 + getSorenRandNum(25, "Cargo Space Value"));
 
 					if (iValue > iBestValue)
 					{
@@ -11477,7 +11477,7 @@ void CvGame::loadPirateShip(CvUnit* pUnit)
 		{
 			const CvUnitInfo& unitInfo = GC.getUnitInfo((UnitTypes) iJ);
 
-			if (validBarbarianShipUnit(unitInfo, (UnitTypes) iJ) && (!bSM || pUnit->cargoSpaceAvailable((SpecialUnitTypes)unitInfo.getSpecialUnitType(), unitInfo.getDomain()) > 0))
+			if (validBarbarianShipUnit(unitInfo, (UnitTypes) iJ) && (!bSM || pUnit->cargoSpaceAvailable((UnitTypes) iJ) > 0))
 			{
 				int iValue = 1 + getSorenRandNum(1000, "Barb Unit Selection");
 
@@ -11497,7 +11497,7 @@ void CvGame::loadPirateShip(CvUnit* pUnit)
 		{
 			CvUnit* pPirate = GET_PLAYER(BARBARIAN_PLAYER).createUnit((UnitTypes)iBestUnit, pUnit->getX(), pUnit->getY(), UNITAI_ATTACK);
 			if (pPirate != NULL
-			&& pUnit->cargoSpaceAvailable(pPirate->getSpecialUnitType(), pPirate->getDomainType()) >= pPirate->SMCargoVolume())
+			&& pUnit->cargoSpaceAvailable(pPirate->getUnitType()) >= pPirate->SMCargoVolume())
 			{
 				pPirate->setTransportUnit(pUnit);
 				pUnit->AI_setUnitAIType(UNITAI_ASSAULT_SEA);

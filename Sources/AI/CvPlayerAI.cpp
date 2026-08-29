@@ -6361,9 +6361,9 @@ int CvPlayerAI::AI_techUnitValue(TechTypes eTech, int iPathLength, bool& bEnable
 					{
 						iAssaultValue += 1000 * std::max(0, AI_unitImpassableCount(eUnitX) - AI_unitImpassableCount(eExistingUnit));
 
-						const int iOld = (GC.getUnitInfo(eExistingUnit).getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) * GC.getUnitInfo(eExistingUnit).getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100;
+						const int iOld = (GC.getUnitInfo(eExistingUnit).getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) * GC.getUnitInfo(eExistingUnit).getCargoSpaceTotal() / 100;
 
-						iAssaultValue += 800 * ((unitX.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) * unitX.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 - iOld) / std::max(1, iOld);
+						iAssaultValue += 800 * ((unitX.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) * unitX.getCargoSpaceTotal() / 100 - iOld) / std::max(1, iOld);
 					}
 
 					if (iAssaultValue > 0)
@@ -10881,7 +10881,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		case UNITAI_ASSAULT_SEA:
 		case UNITAI_SETTLER_SEA:
 		{
-			if (kUnitInfo.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 > 0 && kUnitInfo.getSpecialCargo() == NO_SPECIALUNIT)
+			if (kUnitInfo.getCargoSpaceTotal() / 100 > 0 && kUnitInfo.admitsCargoDomain(DOMAIN_LAND))
 			{
 				bValid = true;
 			}
@@ -10892,11 +10892,12 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 		case UNITAI_CARRIER_SEA:
 		case UNITAI_MISSILE_CARRIER_SEA:
 		{
-			// A special-cargo transport is valid for these carrier roles (mirrors the general-cargo
-			// ASSAULT_SEA/SETTLER_SEA case above). This previously gated on CvSpecialUnitInfo's
-			// CarrierUnitAITypes, but that data never loaded (loader/XML tag mismatch) and the loop
-			// passed eUnitAI instead of its own counter — so it was always false (dead). See #194.
-			if (kUnitInfo.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 > 0 && kUnitInfo.getSpecialCargo() != NO_SPECIALUNIT)
+			// An AIR-carrying hold is what these roles are: the carrier flies its cargo, where the
+			// ASSAULT_SEA/SETTLER_SEA case above ferries LAND units. This gated on the info's SpecialCargo
+			// scalar, which the JSON model authors on NO unit -- so it was false for every candidate and
+			// AI_unitValue returned 0 across the whole role (the second dead gate here; the first read
+			// CvSpecialUnitInfo's CarrierUnitAITypes, data that never loaded). See #194, #524.
+			if (kUnitInfo.getCargoSpaceTotal() / 100 > 0 && kUnitInfo.admitsCargoDomain(DOMAIN_AIR))
 			{
 				bValid = true;
 			}
@@ -11621,7 +11622,7 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			{
 				iValue += (iCombatValue / 2);
 				iValue += ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) * 200);
-				iValue += (kUnitInfo.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 * 300);
+				iValue += (kUnitInfo.getCargoSpaceTotal() / 100 * 300);
 				// Never build galley transports when ocean faring ones exist (issue mainly for Carracks)
 				iValue /= (1 + AI_unitImpassableCount(eUnit));
 				break;
@@ -11630,14 +11631,14 @@ int CvPlayerAI::AI_unitValue(UnitTypes eUnit, UnitAITypes eUnitAI, const CvArea*
 			{
 				iValue += iCombatValue;
 				iValue += ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) * 50);
-				iValue += (kUnitInfo.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 * 400);
+				iValue += (kUnitInfo.getCargoSpaceTotal() / 100 * 400);
 				break;
 			}
 			case UNITAI_MISSILE_CARRIER_SEA:
 			{
 				iValue += iCombatValue;
 				iValue += iCombatValue * ((kUnitInfo.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100) - 1) /4 ;
-				iValue += (25 + iCombatValue) * (3 + (kUnitInfo.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100));
+				iValue += (25 + iCombatValue) * (3 + (kUnitInfo.getCargoSpaceTotal() / 100));
 				break;
 			}
 			case UNITAI_PIRATE_SEA:

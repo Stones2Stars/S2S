@@ -3924,7 +3924,7 @@ void CvSelectionGroup::setTransportUnit(CvUnit* pTransportUnit, CvSelectionGroup
 			return;
 		}
 
-		const int iCargoSpaceAvailable = pTransportUnit->cargoSpaceAvailable(pHeadUnit->getSpecialUnitType(), pHeadUnit->getDomainType());
+		const int iCargoSpaceAvailable = pTransportUnit->cargoSpaceAvailable(pHeadUnit->getUnitType());
 
 		// if no space at all, give up
 		if (iCargoSpaceAvailable < 1)
@@ -3948,9 +3948,7 @@ void CvSelectionGroup::setTransportUnit(CvUnit* pTransportUnit, CvSelectionGroup
 
 			FAssertMsg(iCargoSpaceAvailable >= getNumUnits(), "cargo size too small");
 		}
-		else if (iCargoSpaceAvailable < getNumUnitCargoVolumeTotal()
-			/*pTransportUnit->cargoSpaceAvailable(pHeadUnit->getSpecialUnitType(), pHeadUnit->getDomainType())*/
-			)
+		else if (iCargoSpaceAvailable < getNumUnitCargoVolumeTotal())
 		{
 			// If we can't fit the whole group but we can fit the first unit then split it off and load it on its own.
 			if (getNumUnits() > 1 && iCargoSpaceAvailable >= getHeadUnit()->SMCargoVolume())
@@ -3984,14 +3982,14 @@ void CvSelectionGroup::setTransportUnit(CvUnit* pTransportUnit, CvSelectionGroup
 			// if there is room, load the unit
 			if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
 			{
-				if (pTransportUnit->cargoSpaceAvailable(pLoopUnit->getSpecialUnitType(), pLoopUnit->getDomainType()) >= pLoopUnit->SMCargoVolume())
+				if (pTransportUnit->cargoSpaceAvailable(pLoopUnit->getUnitType()) >= pLoopUnit->SMCargoVolume())
 				{
 					pLoopUnit->setTransportUnit(pTransportUnit);
 				}
 				// We should continue on the loop because another unit might be able to fit
 				// todo: Should we perhaps consider all unit volumes before we start the loop? Perhaps do a packing algorithm to get the most in?
 			}
-			else if (pTransportUnit->cargoSpaceAvailable(pLoopUnit->getSpecialUnitType(), pLoopUnit->getDomainType()) > 0)
+			else if (pTransportUnit->cargoSpaceAvailable(pLoopUnit->getUnitType()) > 0)
 			{
 				pLoopUnit->setTransportUnit(pTransportUnit);
 			}
@@ -4030,7 +4028,7 @@ void CvSelectionGroup::setRemoteTransportUnit(CvUnit* pTransportUnit)
 		}
 		FAssertMsg(pHeadUnit != NULL, "non-zero group without head unit");
 
-		const int iCargoSpaceAvailable = pTransportUnit->cargoSpaceAvailable(pHeadUnit->getSpecialUnitType(), pHeadUnit->getDomainType());
+		const int iCargoSpaceAvailable = pTransportUnit->cargoSpaceAvailable(pHeadUnit->getUnitType());
 
 		// if no space at all, give up
 		if (iCargoSpaceAvailable < 1)
@@ -4086,11 +4084,11 @@ void CvSelectionGroup::setRemoteTransportUnit(CvUnit* pTransportUnit)
 					bool bSpaceAvailable = false;
 					if (GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS))
 					{
-						bSpaceAvailable = pTransportUnit->cargoSpaceAvailable(pLoopUnit->getSpecialUnitType(), pLoopUnit->getDomainType()) > pLoopUnit->SMCargoVolume();
+						bSpaceAvailable = pTransportUnit->cargoSpaceAvailable(pLoopUnit->getUnitType()) > pLoopUnit->SMCargoVolume();
 					}
 					else
 					{
-						bSpaceAvailable = pTransportUnit->cargoSpaceAvailable(pLoopUnit->getSpecialUnitType(), pLoopUnit->getDomainType()) > 0;
+						bSpaceAvailable = pTransportUnit->cargoSpaceAvailable(pLoopUnit->getUnitType()) > 0;
 					}
 					if (bSpaceAvailable)
 					{
@@ -5828,7 +5826,7 @@ int CvSelectionGroup::getCargoSpace() const
 	return iCargoCount;
 }
 
-int CvSelectionGroup::getCargoSpaceAvailable(SpecialUnitTypes eSpecialCargo, DomainTypes eDomainCargo) const
+int CvSelectionGroup::getCargoSpaceAvailable(UnitTypes eCargoUnit) const
 {
 	PROFILE_EXTRA_FUNC();
 	FAssert(getNumUnits() > 0);
@@ -5840,7 +5838,7 @@ int CvSelectionGroup::getCargoSpaceAvailable(SpecialUnitTypes eSpecialCargo, Dom
 	{
 		if (unitX->AI_getUnitAIType() == eUnitAI)
 		{
-			iCargoCount += unitX->cargoSpaceAvailable(eSpecialCargo, eDomainCargo);
+			iCargoCount += unitX->cargoSpaceAvailable(eCargoUnit);
 		}
 	}
 	return iCargoCount;

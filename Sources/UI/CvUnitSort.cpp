@@ -90,7 +90,7 @@ int UnitSortCargo::getUnitValue(const CvPlayer *pPlayer, const CvCity *pCity, Un
 {
 	// cargo.unit.space.flat -- the unqualified capacity plane (a hold restricted to a cargo class carries a
 	// `unit:` predicate on its entries, which is a CONSUMER-side test against a candidate, not a capacity).
-	return GC.getUnitInfo(eUnit).getCargo(CARGO_SPACE, CASC_SCOPE_UNIT);
+	return GC.getUnitInfo(eUnit).getCargoSpaceTotal();
 }
 
 int UnitSortWithdrawal::getUnitValue(const CvPlayer *pPlayer, const CvCity *pCity, UnitTypes eUnit) const

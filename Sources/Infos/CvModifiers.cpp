@@ -689,13 +689,32 @@ void CvModifiers::walk(std::vector<std::string>& segments, const picojson::value
 	// qualifiers, never address segments / count-by-type leaves. Shape-discriminated: an OBJECT-valued `max`
 	// stays a member segment (tradeRoutes.<scope>.max.{unit}); string-valued unit/religion/orderedBy* only.
 	ModNodeQuals nodeQuals;
+	//	⛔ `unit` IS BOTH A SCOPE SEGMENT AND A QUALIFIER KEY, so the shape alone cannot tell them apart: a
+	//	COMPOUND qualifier (`{unit: {all: [IS_LAND, !IS_VTOL]}, flat: 1}`) is object-valued exactly like the
+	//	`cargo.unit.{...}` scope hop. What separates them is the sentence above -- a qualifier is a SIBLING OF A
+	//	MAGNITUDE LEAF, and a scope hop never has one. (Census: of 10641 object-valued `unit` nodes in the data,
+	//	every scope hop has no magnitude sibling and every one of the 56 compound qualifiers has one.)
+	//	⚠ Accepting only STRING-valued qualifiers silently walked a compound one INTO the address, so the entry
+	//	compiled as the unkinded member `cargo.space.unit.all` and was DROPPED -- 56 of the 90 carriers, every
+	//	aircraft carrier among them, left with no hold at all.
+	bool bHasMagnitudeLeaf = false;
+	for (picojson::object::const_iterator magIt = o.begin(); magIt != o.end(); ++magIt)
+	{
+		if (cascadeUnitFromString(magIt->first) != CASC_UNIT_UNKNOWN)
+		{
+			bHasMagnitudeLeaf = true;
+			break;
+		}
+	}
 	for (picojson::object::const_iterator qualIt = o.begin(); qualIt != o.end(); ++qualIt)
 	{
-		if (qualIt->first == "unit" && qualIt->second.is<std::string>())
+		if (qualIt->first == "unit"
+		&& (qualIt->second.is<std::string>() || (bHasMagnitudeLeaf && qualIt->second.is<picojson::object>())))
 		{
 			nodeQuals.unitQual = &qualIt->second;
 		}
-		else if (qualIt->first == "religion" && qualIt->second.is<std::string>())
+		else if (qualIt->first == "religion"
+		&& (qualIt->second.is<std::string>() || (bHasMagnitudeLeaf && qualIt->second.is<picojson::object>())))
 		{
 			nodeQuals.religionQual = &qualIt->second;
 		}

@@ -108,6 +108,25 @@ public:
 	// against each cargo candidate -- the point sum here is the unqualified capacity plane.
 	int getCargo(CargoKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_CARGO, eKind, eScope, CASC_UNIT_FLAT); }
+	///<summary>The carrier's TOTAL authored `cargo.space` -- the QUALIFIED entries included. A restriction says
+	/// WHAT the hold takes, never how much, so every entry counts toward capacity whatever it is qualified on
+	/// ([cascade/20-unit-plane.md] THE RESTRICTION IS THE CARRIER'S).</summary>
+	//	⛔ getCargo(CARGO_SPACE) can NEVER answer this: sum() folds only UNCONDITIONED entries, and all 90
+	//	authored carriers qualify their hold -- so the point read is 0 for every transport in the game.
+	int getCargoSpaceTotal() const;
+	///<summary>Does this carrier's authored restriction admit that cargo candidate? A hold with no qualified
+	/// entry is unrestricted and admits everything.</summary>
+	//	⚑ The candidate answers off its OWN info -- domain for the IS_LAND/IS_AIR/IS_WATER predicates, tag bitset
+	//	for the IS_<TAG> ones -- so no live CvUnit and no eval ctx is involved, exactly as the sibling candidate
+	//	read (CvInfoValuation::candidateTaggedTargetSum) resolves its filter.
+	bool admitsCargo(const CvUnitInfo& kCandidate) const;
+	///<summary>Could a unit of that DOMAIN fit this hold at all -- the candidate-free half of admitsCargo, for
+	/// the callers classifying a carrier rather than testing one cargo unit (an assault transport takes LAND, an
+	/// aircraft carrier AIR).</summary>
+	//	⚠ It reads the DOMAIN predicates only and ignores the tag ones: a hold restricted to `IS_AIR + IS_FIGHTER`
+	//	is still an AIR hold, and which air units it takes is admitsCargo's question, not this one. A hold naming
+	//	no domain at all is domain-unrestricted and admits any.
+	bool admitsCargoDomain(DomainTypes eDomain) const;
 	int getCapture(CaptureKind eKind, CvCascScope eScope) const
 	{ return m_modifiers.sum(MODFAM_CAPTURE, eKind, eScope, CASC_UNIT_FLAT); }
 	int getFlatHeal(HealKind eKind, CvCascScope eScope) const

@@ -17,6 +17,7 @@
 #include "AI/CvGameAI.h"            // complete CvGameAI -- GC.getGame().getSorenRand() (zobrist draw, archive mirror)
 #include "CvUnitCombatInfo.h"       // the combat classes' sizeMatters bases + flat-combat sums (derived ranks)
 #include "CvModifiers.h"            // getModifiers() walk -> the unit's PROPERTY_* emission sources
+#include "CvCondition.h"            // the cargo.space `unit:` qualifier tree (admitsCargo evaluates it)
 #include "Property/CvPropertyBridge.h" // the JSON->manipulator translator (the ONE shared walk)
 
 namespace
@@ -664,4 +665,203 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 			m_iAIWeight = jsonIdInt(*pBehaviour, "weight");
 		}
 	}
+}
+
+namespace
+{
+	//	One node of a carrier's `unit:` cargo qualifier, answered against the CANDIDATE'S OWN INFO. The
+	//	qualifier rides the compiled entry (CvModEntry::unitQual) and is evaluated HERE, at the consumer,
+	//	against each cargo candidate -- which is the contract getCargo() states and the reason the point sum
+	//	deliberately excludes qualified entries.
+	//	⚠ In a `unit:` qualifier IS_LAND/IS_AIR/IS_WATER are the candidate's DOMAIN, not a plot's substrate:
+	//	`cargo.space.{unit: IS_AIR}` is the aircraft carrier, and it is the direct heir of legacy DomainCargo
+	//	([cascade/20-unit-plane.md]). Everything else authored on this plane is an IS_<TAG> membership test.
+	bool un_cargoQualifierHolds(const CvCondition* pNode, const CvUnitInfo& kCandidate)
+	{
+		if (pNode == NULL)
+		{
+			return true;   // an unqualified hold admits everything
+		}
+		if (pNode->kind == CASC_COND_GROUP)
+		{
+			for (size_t iChild = 0; iChild < pNode->all.size(); ++iChild)
+			{
+				if (!un_cargoQualifierHolds(pNode->all[iChild], kCandidate))
+				{
+					return false;
+				}
+			}
+			//	A bare `!IS_X` parses to a GROUP carrying it in noneOf, so negation arrives here and nowhere else.
+			for (size_t iChild = 0; iChild < pNode->noneOf.size(); ++iChild)
+			{
+				if (un_cargoQualifierHolds(pNode->noneOf[iChild], kCandidate))
+				{
+					return false;
+				}
+			}
+			if (!pNode->anyOf.empty())
+			{
+				bool bAnyHolds = false;
+				for (size_t iChild = 0; iChild < pNode->anyOf.size() && !bAnyHolds; ++iChild)
+				{
+					bAnyHolds = un_cargoQualifierHolds(pNode->anyOf[iChild], kCandidate);
+				}
+				if (!bAnyHolds)
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+		if (pNode->kind != CASC_COND_PREDICATE)
+		{
+			//	A PRESENCE atom asks about world state a candidate-only read has none of. json par.3.5's rule for
+			//	anything this evaluator cannot answer is IGNORED (true) -- not second-guessed here.
+			return true;
+		}
+		switch (pNode->predKind)
+		{
+		case CASC_PRED_IS_LAND:
+			return kCandidate.getDomain() == DOMAIN_LAND;
+		case CASC_PRED_IS_AIR:
+			return kCandidate.getDomain() == DOMAIN_AIR;
+		case CASC_PRED_IS_WATER:
+			return kCandidate.getDomain() == DOMAIN_SEA;
+		case CASC_PRED_IS_TAG:
+			{
+				//	The tag id resolves LAZILY: the TAG_* infotypes mint AFTER condition parse, so the node's own
+				//	id is -1 and `param` carries the TAG_<SUFFIX> name.
+				const int iTagId = pNode->id >= 0
+					? pNode->id
+					: GC.getInfoTypeForString(pNode->param.c_str(), /*bHideAssert*/ true);
+				//	An UNMINTED tag is an unknown predicate and is IGNORED -- true, json par.3.5.
+				return iTagId < 0 || kCandidate.hasTag(iTagId);
+			}
+		default:
+			return true;   // json par.3.5: an unknown predicate is IGNORED
+		}
+	}
+
+	//	Is this entry the carrier's own authored hold? The cargo capacity plane is CARGO_SPACE at unit scope on
+	//	the flat side; anything else in the family (cargo.size, the SM members) is a different question.
+	bool un_isCargoSpaceEntry(const CvModEntry* pEntry)
+	{
+		return pEntry->kind == CARGO_SPACE
+			&& pEntry->scope == CASC_SCOPE_UNIT
+			&& pEntry->unit == CASC_UNIT_FLAT;
+	}
+
+	//	Collect the DOMAIN predicates a qualifier names, walking the AND/OR spine only.
+	//	⚖ `noneOf` is deliberately not walked: a negated atom on this plane is always a TAG exclusion
+	//	(`!IS_VTOL`, `!IS_MISSILE`), never a domain, and answering a tag for a domain question would invert the
+	//	whole clause -- `{all: [IS_AIR, IS_FIGHTER, !IS_MISSILE]}` would stop being an AIR hold.
+	void un_collectCargoDomains(const CvCondition* pNode, std::vector<DomainTypes>& kDomains)
+	{
+		if (pNode == NULL)
+		{
+			return;
+		}
+		if (pNode->kind == CASC_COND_GROUP)
+		{
+			for (size_t iChild = 0; iChild < pNode->all.size(); ++iChild)
+			{
+				un_collectCargoDomains(pNode->all[iChild], kDomains);
+			}
+			for (size_t iChild = 0; iChild < pNode->anyOf.size(); ++iChild)
+			{
+				un_collectCargoDomains(pNode->anyOf[iChild], kDomains);
+			}
+			return;
+		}
+		if (pNode->kind != CASC_COND_PREDICATE)
+		{
+			return;
+		}
+		switch (pNode->predKind)
+		{
+		case CASC_PRED_IS_LAND:  kDomains.push_back(DOMAIN_LAND); break;
+		case CASC_PRED_IS_AIR:   kDomains.push_back(DOMAIN_AIR);  break;
+		case CASC_PRED_IS_WATER: kDomains.push_back(DOMAIN_SEA);  break;
+		default: break;   // a tag says nothing about domain
+		}
+	}
+}
+
+int CvUnitInfo::getCargoSpaceTotal() const
+{
+	//	(1) the UNCONDITIONED half, through the ordinary point read -- what a promotion's unqualified
+	//	`cargo.space.flat` lands in, and the only half getCargo() has ever been able to see.
+	int iTotal = m_modifiers.sum(MODFAM_CARGO, CARGO_SPACE, CASC_SCOPE_UNIT, CASC_UNIT_FLAT);
+	//	(2) the QUALIFIED half the fold excludes -- which is where EVERY authored carrier's capacity lives,
+	//	because a restricted hold is the normal shape and an unrestricted one the exception.
+	size_t iBegin = 0;
+	size_t iEnd = 0;
+	m_modifiers.conditionedRange(MODFAM_CARGO, iBegin, iEnd);
+	const std::vector<const CvModEntry*>& conditioned = m_modifiers.conditioned();
+	for (size_t iEntry = iBegin; iEntry < iEnd; ++iEntry)
+	{
+		const CvModEntry* pEntry = conditioned[iEntry];
+		if (pEntry->unitQual == NULL || !un_isCargoSpaceEntry(pEntry))
+		{
+			continue;
+		}
+		iTotal += pEntry->value;
+	}
+	return iTotal;
+}
+
+bool CvUnitInfo::admitsCargo(const CvUnitInfo& kCandidate) const
+{
+	size_t iBegin = 0;
+	size_t iEnd = 0;
+	m_modifiers.conditionedRange(MODFAM_CARGO, iBegin, iEnd);
+	const std::vector<const CvModEntry*>& conditioned = m_modifiers.conditioned();
+	bool bHasRestriction = false;
+	for (size_t iEntry = iBegin; iEntry < iEnd; ++iEntry)
+	{
+		const CvModEntry* pEntry = conditioned[iEntry];
+		if (pEntry->unitQual == NULL || !un_isCargoSpaceEntry(pEntry))
+		{
+			continue;
+		}
+		bHasRestriction = true;
+		if (un_cargoQualifierHolds(pEntry->unitQual, kCandidate))
+		{
+			return true;
+		}
+	}
+	//	⚖ No qualified entry at all is an UNRESTRICTED hold (`cargo.space.flat` standing alone), and that admits
+	//	everything. It is NOT the same as a restriction that happens to reject: the first has nothing to say
+	//	about the candidate, the second has said no.
+	return !bHasRestriction;
+}
+
+bool CvUnitInfo::admitsCargoDomain(DomainTypes eDomain) const
+{
+	size_t iBegin = 0;
+	size_t iEnd = 0;
+	m_modifiers.conditionedRange(MODFAM_CARGO, iBegin, iEnd);
+	const std::vector<const CvModEntry*>& conditioned = m_modifiers.conditioned();
+	std::vector<DomainTypes> kDomains;
+	for (size_t iEntry = iBegin; iEntry < iEnd; ++iEntry)
+	{
+		const CvModEntry* pEntry = conditioned[iEntry];
+		if (pEntry->unitQual == NULL || !un_isCargoSpaceEntry(pEntry))
+		{
+			continue;
+		}
+		un_collectCargoDomains(pEntry->unitQual, kDomains);
+	}
+	if (kDomains.empty())
+	{
+		return true;   // the hold names no domain -- it is unrestricted on this axis
+	}
+	for (size_t iDomain = 0; iDomain < kDomains.size(); ++iDomain)
+	{
+		if (kDomains[iDomain] == eDomain)
+		{
+			return true;
+		}
+	}
+	return false;
 }

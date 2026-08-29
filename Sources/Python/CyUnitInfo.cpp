@@ -185,7 +185,7 @@ int CyUnitInfo::getCargoSpace(int iUnit) const
 	if (pUnit == NULL) return 0;
 	//	Reduced to the whole count here, which is where the boundary reduces -- CvUnit::cargoSpace performs the
 	//	same division at its own point of use.
-	return pUnit->getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100;
+	return pUnit->getCargoSpaceTotal() / 100;
 }
 
 void CyUnitInfo::pythonPublish()

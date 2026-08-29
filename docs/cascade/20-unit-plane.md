@@ -9,10 +9,15 @@ concatenation as each promotion is added — not a downward cascade.
 **Host-from-occupants** effects — what a city gets *per unit stationed in it* (military happiness/anger) — are
 **not** a bespoke host-family: they're an ordinary deposit on the source (the civic/trait), scaled by a
 predicate-filtered unit count and targeting `cities`: `happiness.empire.cities.{unit: IS_MILITARY, flat: N}`
-([json](../specs/json.md) §3.7). The **carrier↔cargo** behaviour splits across the two systems. The carry *ability* is a unit **skill** — whether
-the unit may use the **load/unload** action is `is_cargo_vessel`, and the attack restriction it brings is
-`defend_only` (both skills, [json](../specs/json.md) §8). The *amounts* live in the **`cargo`** modifier family (a unit
+([json](../specs/json.md) §3.7). The **carrier↔cargo** behaviour lives entirely in the **`cargo`** modifier family (a unit
 self-accumulator, set on the unit or a promotion), with two complementary members:
+
+> ⛔ **HAVING A HOLD *IS* THE CARRY ABILITY — there is no separate carrier flag, skill or info scalar.** A unit
+> is a carrier iff `cargo.space` gives it capacity, so `CvUnit::isCarrier` asks exactly that and nothing else.
+> ⚠ The legacy `SpecialCargo`/`DomainCargo` scalars survive ONLY as the promotion-set overrides
+> (`PROMOTION_TRANSPORT_PEOPLE` and its five siblings). **No unit authors them**, so a carrier test written on
+> either one answers false for every transport in the game — which is precisely how the whole transport system
+> came to be dead while reading as implemented.
 
 - **`cargo.space`** — how much the unit **carries** *and what*: `cargo.space.{unit: IS_<domain>, flat: N}` — a
   carrier is `cargo.space.{unit: IS_AIR, flat: N}` (*you can't transport a plane on a landing craft*); an
@@ -34,7 +39,16 @@ self-accumulator, set on the unit or a promotion), with two complementary member
   > ([validation.md](../specs/validation.md) intentional-model-change class; the spec leads, legacy behaviour is not
   > preserved for its own sake).
   > ⚠ Consequence: a carrier whose base capacity is 0 still has a restriction to state, and the §3.9 entry
-  > grammar has no payload-less form for it — an open item for the json spec.
+  > grammar has no payload-less form for it — an open item for the json spec. Until it exists such a hold is
+  > **unrestricted**: with no qualified entry there is no restriction to read, so the promotion-granted space
+  > takes anything (`CvUnitInfo::admitsCargo` answers true when the carrier authored no qualifier at all).
+  ⚖ **THE CAPACITY AND THE RESTRICTION ARE READ BY TWO DIFFERENT CALLS, AND NEITHER IS `getCargo(CARGO_SPACE)`.**
+  The point sum folds only UNCONDITIONED entries, so a qualified hold — which is every authored carrier — is
+  invisible to it. `CvUnitInfo::getCargoSpaceTotal()` is the capacity (qualified entries included, because a
+  restriction says what a hold takes and never how much); `CvUnitInfo::admitsCargo(candidate)` is the
+  restriction, evaluated against the candidate's own info — domain for `IS_LAND`/`IS_AIR`/`IS_WATER`, tag
+  bitset for the rest. ⛔ A new consumer asking "how much cargo does this unit type carry?" uses the former;
+  reaching for the point read reintroduces the silent zero.
   ⚖ **The "what" is ALWAYS a TAG predicate — that is what tags are for.** The legacy restriction by
   `SPECIALUNIT_*` group (`SpecialCargo` / `SMNotSpecialCargo`) brings no new qualifier form with it: it authors as
   the same `{unit: IS_<TAG>}` shape as the domain case. ⚠ It does require the tag to exist AND to be
