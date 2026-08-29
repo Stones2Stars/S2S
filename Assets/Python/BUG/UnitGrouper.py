@@ -211,7 +211,11 @@ class LocationGrouping(Grouping):
 		self._addGroup(Group(self, self.BARBARIAN_TERRITORY, "TXT_KEY_UNITGROUPER_LOCATION_GROUP_BARBARIAN_TERRITORY"))
 
 	def calcGroupKeys(self, unit, player, team):
-		plot = unit.plot()
+		# A unit is addressed by POSITION, never by a plot handle: publishing unit.plot() would hand every
+		# caller the unit -> plot -> units chain, and a plot is the grouping FOR units, never something a
+		# unit is the entry point to. Resolve through the map instead -- CyMap::plot answers None for a
+		# missing plot exactly as the old call did, so the guard below is unchanged.
+		plot = GC.getMap().plot(unit.getX(), unit.getY())
 		if not plot:
 			return None
 		if plot.isNPC():

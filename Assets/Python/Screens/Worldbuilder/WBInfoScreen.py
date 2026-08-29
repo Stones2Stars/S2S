@@ -198,7 +198,7 @@ class WBInfoScreen:
 				pPlayer = GC.getPlayer(iPlayer)
 				pUnit = pPlayer.getUnit(iUnit)
 				if pUnit is None: continue
-				pPlot = pUnit.plot()
+				pPlot = GC.getMap().plot(pUnit.getX(), pUnit.getY())
 				iX = pPlot.getX()
 				iY = pPlot.getY()
 				iColumn = iCount % nColumns

@@ -250,7 +250,7 @@ def canTriggerMarathon(argsList):
 
 	if GC.getTeam(player.getTeam()).AI_getAtWarCounter(otherPlayer.getTeam()) == 1:
 		for loopUnit in otherPlayer.units():
-			plot = loopUnit.plot()
+			plot = GC.getMap().plot(loopUnit.getX(), loopUnit.getY())
 			if plot and plot.getOwner() == data.ePlayer:
 				return True
 
@@ -6854,7 +6854,7 @@ def doEventLawyer(argsList):
 
 	pPlayer = GC.getPlayer(pUnit.getOwner())
 	iPlayer = pPlayer.getID()
-	pCity = pUnit.plot().getPlotCity()
+	pCity = GC.getMap().plot(pUnit.getX(), pUnit.getY()).getPlotCity()
 
 	if pCity is None:
 		return # False call

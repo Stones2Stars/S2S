@@ -363,7 +363,7 @@ def doAddSettledSlave(argsList):
 		print "caveman2Cosmos - doAddSettledSlave called - not a valid unit."
 		return # False call
 
-	pCity = pUnit.plot().getPlotCity()
+	pCity = GC.getMap().plot(pUnit.getX(), pUnit.getY()).getPlotCity()
 
 	if pCity == None:
 		print "caveman2Cosmos - doAddSettledSlave called - not a valid city."
@@ -377,7 +377,7 @@ def doAddSettledSlaveFood(argsList):
 	if pUnit == None:
 		return # False call
 
-	pCity = pUnit.plot().getPlotCity()
+	pCity = GC.getMap().plot(pUnit.getX(), pUnit.getY()).getPlotCity()
 
 	if pCity == None:
 		return # False call
@@ -390,7 +390,7 @@ def doAddSettledSlaveProduction(argsList):
 	if pUnit == None:
 		return # False call
 
-	pCity = pUnit.plot().getPlotCity()
+	pCity = GC.getMap().plot(pUnit.getX(), pUnit.getY()).getPlotCity()
 
 	if pCity == None:
 		return # False call
@@ -403,7 +403,7 @@ def doAddSettledSlaveCommerce(argsList):
 	if pUnit == None:
 		return # False call
 
-	pCity = pUnit.plot().getPlotCity()
+	pCity = GC.getMap().plot(pUnit.getX(), pUnit.getY()).getPlotCity()
 
 	if pCity == None:
 		return # False call
@@ -416,7 +416,7 @@ def doAddSettledSlaveHealth(argsList):
 	if pUnit == None:
 		return # False call
 
-	pCity = pUnit.plot().getPlotCity()
+	pCity = GC.getMap().plot(pUnit.getX(), pUnit.getY()).getPlotCity()
 
 	if pCity == None:
 		return # False call
@@ -429,7 +429,7 @@ def doAddSettledSlaveEntertainment(argsList):
 	if pUnit == None:
 		return # False call
 
-	pCity = pUnit.plot().getPlotCity()
+	pCity = GC.getMap().plot(pUnit.getX(), pUnit.getY()).getPlotCity()
 
 	if pCity == None:
 		return # False call
@@ -442,7 +442,7 @@ def doAddSettledSlaveTutor(argsList):
 	if pUnit == None:
 		return # False call
 
-	pCity = pUnit.plot().getPlotCity()
+	pCity = GC.getMap().plot(pUnit.getX(), pUnit.getY()).getPlotCity()
 
 	if pCity == None:
 		return # False call
@@ -455,7 +455,7 @@ def doAddSettledSlaveMilitary(argsList):
 	if pUnit == None:
 		return # False call
 
-	pCity = pUnit.plot().getPlotCity()
+	pCity = GC.getMap().plot(pUnit.getX(), pUnit.getY()).getPlotCity()
 
 	if pCity == None:
 		return # False call

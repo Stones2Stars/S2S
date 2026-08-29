@@ -339,7 +339,7 @@ def onCityAcquired(argsList):
 						iRand = iMaxDamage
 
 					ppUnit.changeDamage(iRand, 0)
-					CyEngine().triggerEffect(GC.getInfoTypeForString("EFFECT_EXPLOSION_CITY"), ppUnit.plot().getPoint())
+					CyEngine().triggerEffect(GC.getInfoTypeForString("EFFECT_EXPLOSION_CITY"), GC.getMap().plot(ppUnit.getX(), ppUnit.getY()).getPoint())
 					iDamage += iRand
 
 					if iPlayerAct == iOwnerNew:

@@ -138,7 +138,7 @@ class WBPlayerUnits:
 					if unitX.getX() != pUnit.getX() or unitX.getY() != pUnit.getY():
 						bCopy = False
 				elif iPlotType == 1:
-					if unitX.plot().getArea() != pUnit.plot().getArea():
+					if GC.getMap().plot(unitX.getX(), unitX.getY()).getArea() != GC.getMap().plot(pUnit.getX(), pUnit.getY()).getArea():
 						bCopy = False
 				if iCopyType == 1:
 					if unitX.getRead()[UnitReadKind.UNIT_READ_TYPE] != pUnit.getRead()[UnitReadKind.UNIT_READ_TYPE]:
@@ -306,7 +306,7 @@ class WBPlayerUnits:
 		sText = CyTranslator().getText("[COLOR_SELECTED_TEXT]", ()) + "<font=4b>" + pUnit.getName() + "</color></font>"
 		screen.setText("GoToUnit", "Background", sText, 1<<2, screen.getXResolution()*3/4, self.iTable_Y - 60, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		iXMap = screen.getXResolution() * 3/4 - 20
-		screen.addPlotGraphicGFC("UnitView", iXMap, self.iTable_Y, iMapWidth, iMapHeight, pUnit.plot(), 350, True, WidgetTypes.WIDGET_GENERAL, -1, -1)
+		screen.addPlotGraphicGFC("UnitView", iXMap, self.iTable_Y, iMapWidth, iMapHeight, GC.getMap().plot(pUnit.getX(), pUnit.getY()), 350, True, WidgetTypes.WIDGET_GENERAL, -1, -1)
 		iX = screen.getXResolution()/2 + 10
 		screen.addPanel("UnitPanel", "", "", False, False, iX, self.iTable_Y, iXMap - iX, iMapHeight, PanelStyles.PANEL_STYLE_IN)
 		screen.addMultilineText("UnitDescription", self.getUnitData(pUnit), iX, self.iTable_Y, iXMap - iX, iMapHeight, WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
@@ -398,7 +398,7 @@ class WBPlayerUnits:
 		sText += "\n" + CyTranslator().getText("TXT_WORD_UNIT", ()) + " ID: " + str(pUnit.getID())
 		sText += "\n" + CyTranslator().getText("TXT_KEY_WB_GROUP", ()) + " ID: " + str(pUnit.getRead()[UnitReadKind.UNIT_READ_GROUP_ID])
 		sText += "\n" + "X: " + str(pUnit.getX()) + ", Y: " + str(pUnit.getY())
-		sText += "\n" + CyTranslator().getText("TXT_KEY_WB_AREA_ID", ()) + ": "  + str(pUnit.plot().getArea())
+		sText += "\n" + CyTranslator().getText("TXT_KEY_WB_AREA_ID", ()) + ": "  + str(GC.getMap().plot(pUnit.getX(), pUnit.getY()).getArea())
 		return sText
 
 	def addPageSwitch(self):

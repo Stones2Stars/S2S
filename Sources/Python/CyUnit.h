@@ -80,7 +80,12 @@ public:
 	int getX() const;
 	int getY() const;
 	void setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow);
-	CyPlot* plot() const;
+	//	⛔ NO plot() HERE, AND IT IS NOT AN OVERSIGHT. A unit is addressed by POSITION (getX/getY above); a
+	//	consumer wanting the plot resolves it through the map. Publishing a handle would hand every caller the
+	//	unit -> plot -> units chain, and a PLOT is the grouping FOR units -- a unit is never the entry point for
+	//	enumerating them. It is also a circular reference waiting to happen, since each hop mints a new wrapper.
+	//	The declaration existed for years, was registered nowhere, and every Python caller of it raised
+	//	AttributeError on execution -- which is how the military advisor came to be unopenable.
 	CyArea* area() const;
 
 	int getDamage() const;

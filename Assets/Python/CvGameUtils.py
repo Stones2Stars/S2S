@@ -518,7 +518,7 @@ class CvGameUtils:
 					sText += "\n" + CyTranslator().getText("TXT_WORD_UNIT", ()) + " ID: " + str(iData2)
 					sText += "\n" + CyTranslator().getText("TXT_KEY_WB_GROUP", ()) + " ID: " + str(pUnit.getRead()[UnitReadKind.UNIT_READ_GROUP_ID])
 					sText += "\n" + "X: " + str(pUnit.getX()) + ", Y: " + str(pUnit.getY())
-					sText += "\n" + CyTranslator().getText("TXT_KEY_WB_AREA_ID", ()) + ": "  + str(pUnit.plot().getArea())
+					sText += "\n" + CyTranslator().getText("TXT_KEY_WB_AREA_ID", ()) + ": "  + str(GC.getMap().plot(pUnit.getX(), pUnit.getY()).getArea())
 				return sText
 ## Civics Screen ##
 			elif iData1 == 8205 or iData1 == 8206:

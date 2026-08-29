@@ -1033,7 +1033,7 @@ class AutoLogEvent(AbstractAutoLogEvent):
 		# A game-object event arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
 		(iUnitOwner, iUnitID), iImprovement, iRoute, iPlayer = argsList
 		CyUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
-		CyPlot = CyUnit.plot()
+		CyPlot = GC.getMap().plot(CyUnit.getX(), CyUnit.getY())
 		iActivePlayer = GAME.getActivePlayer()
 
 		if CyPlot.getOwner() == iActivePlayer or CyUnit.getOwner() == iActivePlayer:

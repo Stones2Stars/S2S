@@ -2460,14 +2460,14 @@ class Revolution:
 
 		# All of these have violent and peaceful paths
 #-------- Check if instigator influence by other culture -> try to join
-		if( self.culturalRevolution and instigator.plot().calculateCulturePercent(iPlayer) <= self.maxNationalityThreshold ) :
-			#cultOwnerID = instigator.plot().calculateCulturalOwner()
+		if( self.culturalRevolution and GC.getMap().plot(instigator.getX(), instigator.getY()).calculateCulturePercent(iPlayer) <= self.maxNationalityThreshold ) :
+			#cultOwnerID = GC.getMap().plot(instigator.getX(), instigator.getY()).calculateCulturalOwner()
 			# calculateCulturalOwner rules out dead civs ...
 			maxCulture = 30
 			cultOwnerID = -1
 			for idx in xrange(GC.getMAX_PC_PLAYERS()) :
-				if( instigator.plot().getCulture( idx ) > maxCulture ) :
-					maxCulture = instigator.plot().getCulture( idx )
+				if( GC.getMap().plot(instigator.getX(), instigator.getY()).getCulture( idx ) > maxCulture ) :
+					maxCulture = GC.getMap().plot(instigator.getX(), instigator.getY()).getCulture( idx )
 					cultOwnerID = idx
 
 			if( cultOwnerID >= 0 and cultOwnerID < GC.getMAX_PC_PLAYERS() and not GC.getPlayer(cultOwnerID).getTeam() == pPlayer.getTeam() ) :

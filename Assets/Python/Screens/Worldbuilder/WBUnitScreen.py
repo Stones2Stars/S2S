@@ -560,7 +560,7 @@ class WBUnitScreen:
 					if unitX.getX() != iX or unitX.getY() != iY:
 						continue
 				elif iPlotType == 1:
-					if unitX.plot().getArea() != self.currentPlot.getArea():
+					if GC.getMap().plot(unitX.getX(), unitX.getY()).getArea() != self.currentPlot.getArea():
 						continue
 
 				if iCopyType == 1:
@@ -891,7 +891,7 @@ class WBUnitScreen:
 				sText += "\n" + TRNSLTR.getText("TXT_WORD_UNIT", ()) + " ID: " + str(ID)
 				sText += "\n" + TRNSLTR.getText("TXT_KEY_WB_GROUP", ()) + " ID: " + str(unitX.getRead()[UnitReadKind.UNIT_READ_GROUP_ID])
 				sText += "\n" + "X: " + str(unitX.getX()) + ", Y: " + str(unitX.getY())
-				sText += "\n" + TRNSLTR.getText("TXT_KEY_WB_AREA_ID", ()) + ": "  + str(unitX.plot().getArea())
+				sText += "\n" + TRNSLTR.getText("TXT_KEY_WB_AREA_ID", ()) + ": "  + str(GC.getMap().plot(unitX.getX(), unitX.getY()).getArea())
 				self.WB.tooltip.handle(screen, sText)
 
 		elif not iCode: # click

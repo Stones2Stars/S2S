@@ -235,15 +235,6 @@ void CyUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow)
 	m_pUnit->setXY(iX, iY, bGroup, bUpdate, bShow);
 }
 
-CyPlot* CyUnit::plot() const
-{
-	if (m_pUnit->plot())
-	{
-		return new CyPlot(m_pUnit->plot());
-	}
-	return NULL;
-}
-
 CyArea* CyUnit::area() const
 {
 	return new CyArea(m_pUnit->area());
