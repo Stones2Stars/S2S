@@ -319,8 +319,11 @@ void CvPlayer::baseInit(PlayerTypes eID)
 
 	}
 #ifdef CVARMY_BREAKSAVE
+	// init() already seeds m_iCurrentID with FLTA_MAX_BUCKETS, which IS the valid initial id for this
+	// container. Overwriting it with 0 broke the format invariant setCurrentID itself asserts (the id bits
+	// may not be zero) and left the counter one add() away from the value a caller was reading as
+	// "uninitialised".
 	m_armies.init(1);
-	m_armies.setCurrentID(0);
 #endif // CVARMY_BREAKSAVE
 
 	m_eventsTriggered.init();
