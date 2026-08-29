@@ -194,6 +194,37 @@ via `enables` (the space line), doctrine bans via `disables` + empire modifiers.
 > [triggers.md](../../specs/triggers.md), unchanged. The line is
 > EMPIRE-UNIFORMITY: presence that cannot vary per city moves up; presence that can stays down.
 
+> **⚖ A GRANTOR→MARKER PAIR IS ONE BUILDING — the split is legacy grant machinery, not a design.** Many
+> empire-level effects are authored as TWO ids: a `notConstructible` **vehicle** whose only job is to deliver a
+> `grants.buildings` marker, and the `identity.empireLevel` **marker** carrying the effect. That is one concept
+> wearing two ids because of how the legacy grant machine worked. The correct shape is a single empire-level
+> building the award path grants directly — no vehicle, no grant hop — and the survivor carries the UNION of
+> the pair (the vehicle's award-path identity, the marker's effects/amenities/requires/triggers).
+> - **⛔ THE MEMBERSHIP TEST IS "DOES THE SOURCE HAVE ANY OTHER JOB?", AND IT IS NOT THE MECHANICAL SCAN.** A
+>   scan for *"single-grant vehicle whose target is `empireLevel`"* finds the CANDIDATES; a scan for *"and the
+>   vehicle carries no modifier family of its own"* is a **narrower and WRONG** worklist, because the survivor
+>   absorbs those families anyway. ⚑ Worked: `BUILDING_TRADITION_WORK_ETHIC` carries its own `culture` deposit
+>   and still collapses — the culture rides onto the survivor. Read the family list as information about what
+>   the union must carry, never as an exclusion.
+> - **⛔ WHAT DOES NOT COLLAPSE — three kinds, each for a different reason:**
+>   - **Worldviews.** The repeal outcomes remove the ACTIVE marker while the vehicle stands, so the pair
+>     expresses two genuinely distinct states. The split is load-bearing.
+>   - **The culture chain (`C_N`/`C_L`/`C_AD` → `C_AC`).** Base culture is CITY-PLANE information — an African
+>     culture city does not become European base culture — so those stay per-city, and the `C_AC` ACCESS marker
+>     stays a separate empire-level building fed by per-city bases acquired through conquest
+>     ([culture-religion-research.md](../../reference/culture-religion-research.md)).
+>   - **A real wonder that grants a marker.** The source has an in-city job of its own, so it is not a vehicle
+>     at all; the pair stays split.
+> - **⚖ COLLAPSING IS AN ID REKEY ON THE STORE, NEVER A PER-CURATOR MERGE.** A collapse-candidate marker is
+>   referenced from far outside its own record — other buildings' `disabled` clauses, repeal outcomes, requires
+>   atoms, triggers and text — and a reference the merge misses becomes an id no record defines, silently. So
+>   the rename is declared ONCE where the inverted edges are handed out (`Tools/Migration/store.py`, the
+>   `trait_rekey` shape) and every referencing curator picks it up
+>   ([the DRY single-implementation law](../../architecture/patterns/03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)).
+> - **⚠ A COLLAPSED ID IS RENAMED, NOT REMOVED**, so each dead id takes a bare `INFOTYPE` entry in
+>   [`Assets/savemigration.txt`](../save.md) — the saveload mechanism translates it at the one stored-Type
+>   resolution point, and a save holding either half then loads holding the survivor, once, empire-level.
+
 > **The two fates are two mechanisms — nothing to declare.** `disables` = **destroy** (a law/ban
 > removes it; rebuilt on repeal); the target's `requires.operate.dormant` = **dormant** (it stays put,
 > inactive while the condition holds — §3). There is no flag on `disables`: the choice of *mechanism* IS the fate.
