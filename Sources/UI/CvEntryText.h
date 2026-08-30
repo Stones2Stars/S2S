@@ -26,6 +26,18 @@ class CvCondition;
 // ONE compiled entry -> one localized detail line (see the grammar above).
 CvWString entryDetailLine(const CvModEntry& entry);
 
+// Is this a PLAIN FLAT CHANNEL deposit -- a yield or commerce AMOUNT with nothing qualifying it: no condition,
+// no target, no member, no per-scaler, no unit/religion/rank qualifier, not AI-only?
+// ⚖ Those group onto ONE line ("+2<food> +1<hammer>") because that is what a player reads at a glance and what
+// legacy showed; anything CARRYING something keeps its own line, since the thing it carries is the half worth
+// reading ("+25%<hammer> -- while Coal connected"). The two renderings are the same grammar at two densities,
+// so the test that sorts them lives HERE beside both rather than in each composer.
+bool entryIsPlainFlatChannel(const CvModEntry& entry);
+
+// The COMPACT rendering of one of those: magnitude then glyph, no separating space and no trailing clause
+// ("+2<food>") -- the same idiom the wellbeing pair already renders in.
+CvWString entryFlatSummary(const CvModEntry& entry);
+
 // The minimal condition-to-text renderer (no other condition renderer exists in the tree -- census 2026-07):
 // a prebuilt CvCondition tree -> one phrase ("Coal connected", "IS_WATER and not HAS_HILLS", "3+ Grassland").
 // Shared by the detail line's enabled/disabled/qualifier clauses; future requires/gate renders reuse it.

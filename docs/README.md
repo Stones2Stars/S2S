@@ -112,6 +112,10 @@ Verify against the tree before acting on any claim that something is built.
   unserved reads drifts the moment the library grows. `python Tools/verify-python-bindings.py` recomputes it and
   cannot go stale; `PythonErr.log` / `PythonDbg.log` name the read that actually fired.
 - **[reference/pedia-read-map.md](reference/pedia-read-map.md)** — the pedia's own slice of that demand.
+- **[reference/tooltip-look.md](reference/tooltip-look.md)** — every legacy tooltip written out in free text with
+  standardized icon placeholders: the LOOK target (the look is mimicked, the MECHANISM never is), and the surface a
+  new tooltip is DESIGNED on before a composer is written. Its companion `Tools/verify-tooltip-composers.py`
+  censuses the live composers and answers the mechanism half.
 - **[reference/python-load-sequence.md](reference/python-load-sequence.md)** — the C++/Python boundary MECHANISM
   and ORDER: the **two producers** of `CvPythonExtensions` (ours and the closed EXE's), the ordered DLL load
   (premenu → menu → postmenu → game start → the consumer-registration contract), the Python entry cascade, and

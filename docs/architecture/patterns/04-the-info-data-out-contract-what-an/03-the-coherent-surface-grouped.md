@@ -121,13 +121,29 @@ group's natural index** — never N individual getters for a groupable set. This
      > `CvInfoBase`) are FIXED BY ABI and are not renameable — check `DllExport` before proposing any text
      > rename ([engine.md § Is a symbol really EXE-bound?](../../../reference/engine.md)).
   5. **The per-entry TEXT render (so that tooltips work properly)** — every compiled entry renders
-     itself as ONE localized detail line (`+25% Production — while Coal connected`), the `detailLines` pattern
+     itself as ONE localized detail line (`+25%<hammer> — while Coal connected`), the `detailLines` pattern
      of the combat calculator (`CvCombatModel::computeCombatPreview`'s itemised per-modifier breakdown),
      through ONE shared renderer ([the DRY single-implementation law](../03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)) — the
      tooltip/pedia composers consume rendered entry lines, never hand-assemble from getters. Cold path:
      spell-back segments + TXT keys are the honest cost there. **Structural consequence: the compiled entry
      list is COMPLETE — unconditioned entries are RETAINED as entries** (the folded sums are the derived fast
      plane beside them, never a replacement) — per-entry text and per-entry attribution both require the list.
+
+     > **⛔ THE FLAT YIELDS ARE ONE LINE; THE CONDITIONALS COME SEPARATELY.** "One line per entry" is the
+     > grammar, not the DENSITY: a PLAIN flat channel amount says everything it has to say in a glyph and a
+     > number, so the whole set is gathered onto a single line — `+2<food> +1<hammer> +3<commerce>` — which is
+     > what a player scans for and what legacy showed. An entry that CARRIES something keeps its own line,
+     > because the carried half is the part worth reading (`+25%<hammer> — while Coal connected`).
+     > ⚑ **PLAIN means nothing qualifies it**: no condition, no target, no member, no `per` scaler, no
+     > unit/religion/rank qualifier, not AI-only, and the flat unit at the scope-wide kind. Anything else has
+     > somewhere the grouped line cannot put it, so the test is a property of the ENTRY and lives beside the
+     > renderer (`entryIsPlainFlatChannel`), never as a judgement in each composer.
+     > ⚠ **The grouped line SPANS FAMILIES, which is why it cannot live inside the per-family walk** — food,
+     > production and commerce are three families and one line. It is issued once per block
+     > (`appendFlatChannelLine`) and the per-family pass then renders only what is left, so the two passes
+     > PARTITION the family rather than both rendering the same deposit.
+     > ⚖ This does not soften § A run-on comma-separated line is NOT a block structure: that bans a whole
+     > TOOLTIP flattened into prose, not the compact rendering of one homogeneous set inside a block.
 
      > **⚖ THE DIVISION OF LABOUR — `CvGameTextMgr` KEEPS THE BLOCKS AND LOSES THE SUB-BLOCKS.** The
      > renderer removes *"the vast majority of bespoke work GameTextMgr used to do"*: the text manager
@@ -182,6 +198,19 @@ group's natural index** — never N individual getters for a groupable set. This
      > requests and playtests, so a legacy line a cut removed is
      > not a regression. Completeness is measured against what the ENTITY CARRIES, never what the legacy
      > composer used to print.
+     >
+     > **⛔ MIMIC HOW TOOLTIPS *LOOKED*; NEVER COMPROMISE HOW THEY ARE *RENDERED*.** The two are separate axes
+     > and only one of them is up for imitation. The legacy LOOK is the target — the compact glyph line, the
+     > familiar ordering, the density a player already reads at a glance — because that is what makes a tooltip
+     > usable and it was got right. The legacy MECHANISM is not: hand-assembled strings, per-composer
+     > conversions and legacy getter reads stay cut, whatever the output is supposed to resemble.
+     > ⇒ **So "it looked like this before" is a valid argument about APPEARANCE and never a licence to reach for
+     > a legacy accessor, re-hand-build a sub-block, or bend the entry renderer around one screen.** When the
+     > wanted look does not fall out of the shared renderer, the renderer gains the capability (§ THE FLAT
+     > YIELDS ARE ONE LINE, above, is exactly that: a DENSITY the grammar had not stated, added once, centrally)
+     > — never the composer a special case.
+     > ⚑ The pairing is what makes both testable: the acceptance test on the MECHANISM is *does it still read a
+     > legacy getter*, and the acceptance test on the LOOK is *would a returning player recognise it*.
      >
      > **⚖ THE DEMAND ORDER, MEASURED BY USE — worker · combat · plot · building · unit.** That is the
      > order they are hovered in, so it is the order they are worked in; COMBAT is the standardized exemplar, so

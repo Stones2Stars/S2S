@@ -142,8 +142,15 @@ public:
 	// GATE: what the entry's condition NAMES, which is how a CROSS-ENTITY question is asked -- a tech carries no
 	// movement family, so "which routes does this tech speed up" is the ROUTE's movement entry gated on the tech
 	// ([modifier.md] par.6). Pass -1 / NO_EDGEB to disable a filter; appendEntryLines is this with both off.
+	// bSkipPlainFlats leaves out the entries the FLAT LINE below already gathered, so the two passes partition
+	// the family rather than both rendering the same deposit.
 	void appendEntryLinesFiltered(CvWStringBuffer& szBuffer, const CvInfo& info, ModifierFamily eFamily,
-		int iTargetFk, EnEdgeBucket eGateBucket, int iGateId) const;
+		int iTargetFk, EnEdgeBucket eGateBucket, int iGateId, bool bSkipPlainFlats = false) const;
+	// The PLAIN FLAT channel amounts across the given families, on ONE line ("+2<food> +1<hammer>"). Spans
+	// families by design -- food, production and commerce are three families and one line -- which is why it
+	// cannot live inside the per-family walk above.
+	void appendFlatChannelLine(CvWStringBuffer& szBuffer, const CvInfo& info,
+		const ModifierFamily* aeFamilies, int iFamilyCount) const;
 	void appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& info, const ModifierFamily* aeFamilies, int iFamilyCount) const;
 	// ONE `enables`-family EDGE list -> one "Unlocks: A, B, C" line. The info already CARRIES its edge lists (the
 	// readJson reverse pass lands them at load, docs/cascade.md §1 (reverse lookups are populated once, at load)), so this is a forward list read of the

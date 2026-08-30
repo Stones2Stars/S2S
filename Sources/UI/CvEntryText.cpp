@@ -512,6 +512,38 @@ CvWString entryConditionText(const CvCondition* condition)
 	}
 }
 
+bool entryIsPlainFlatChannel(const CvModEntry& entry)
+{
+	if (infoFamilyYield(entry.family) < 0 && infoFamilyCommerce(entry.family) < 0)
+	{
+		return false;
+	}
+	if (entry.unit != CASC_UNIT_FLAT || entry.kind != 0)
+	{
+		return false;
+	}
+	//	Anything the entry CARRIES disqualifies it: the carried half is the part worth reading, and a grouped
+	//	line has nowhere to put it.
+	if (entry.enabled != NULL || entry.disabled != NULL)
+	{
+		return false;
+	}
+	if (entry.unitQual != NULL || entry.religionQual != NULL)
+	{
+		return false;
+	}
+	if (entry.hasPer || entry.hasRankQual || entry.aiOnly)
+	{
+		return false;
+	}
+	return entry.targetFk < 0 && entry.targetSeg < 0 && entry.memberSeg < 0;
+}
+
+CvWString entryFlatSummary(const CvModEntry& entry)
+{
+	return etx_signedMagnitude(entry) + etx_entryName(entry);
+}
+
 CvWString entryDetailLine(const CvModEntry& entry)
 {
 	CvWString szLine;
