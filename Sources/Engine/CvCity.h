@@ -1122,9 +1122,10 @@ public:
 	void setProjectProduction(ProjectTypes eIndex, int iNewValue);
 	void changeProjectProduction(ProjectTypes eIndex, int iChange);
 
-	int getGreatPeopleUnitRate(UnitTypes eIndex) const;
-	void setGreatPeopleUnitRate(UnitTypes eIndex, int iNewValue);
-	void changeGreatPeopleUnitRate(UnitTypes eIndex, int iChange);
+	//	The per-GREAT-PERSON-TYPE rates this city generates, keyed by unit id -- the weights the spawn draws
+	//	against, derived in ONE pass from the sources the city holds. ×100 native; the caller reduces at the
+	//	warehouse edge.
+	void greatPeopleUnitRates(std::map<short, int>& greatPeopleUnitRates) const;
 
 	int getGreatPeopleUnitProgress(UnitTypes eIndex) const;
 	void setGreatPeopleUnitProgress(UnitTypes eIndex, int iNewValue);
@@ -1670,7 +1671,6 @@ protected:
 
 	int* m_paiProjectProduction;
 	int* m_paiUnitProduction;
-	int* m_paiGreatPeopleUnitRate;
 	int* m_paiGreatPeopleUnitProgress;
 	// Citizen-juggle bracket state -- purely transient run state: NEVER serialized, cleared by reset().
 	int m_iCitizenJugglingCount;
