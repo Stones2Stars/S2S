@@ -1192,9 +1192,30 @@ the total-observability bar below.)
   branch-coupled doc (e.g. cascade specs on `json-data-migration`) belongs with that work and commits on the branch.
   The canonical straight-to-`main` docs are the INDEXES (`indexes/DESPAIR_INDEX.*`, `REALISM_INDEX.*`, the
   COMPLEXITY catalog) — they pertain to no single branch. Nothing gameplay-affecting ever rides in a docs commit.
-- **Verify the current branch immediately before every commit** — run `git branch --show-current` in
-  the same command as the commit. The working copy is shared with the owner, who may check out another branch at any
-  moment. If HEAD is not where you expect, stop and repair before pushing.
+- **⛔ COMMIT IS NOT PUSH, AND THE HARD GATE IS THE *PUSH*.** A commit on the wrong branch is a local mistake that
+  costs a `git reset`; a PUSH is PUBLISHED, and undoing one means rewriting history other people may already
+  hold. So the branch is verified before a commit as the cheap early catch, and verified again as a HARD GATE
+  before anything leaves the machine — they are two checks, not one, and the second is the one that matters.
+  ⚠ The working copy is shared with the owner, who may check out another branch at any moment — merging your own
+  PR is one of the ways it happens — so time passes between your commit and your push, and *"I created this
+  branch myself"* is not knowledge of where HEAD is NOW.
+  ⛔ **AND THE CHECK MUST *GATE* THE COMMAND, NEVER MERELY ACCOMPANY IT.
+  `git branch --show-current && git push …` IS THEATRE AND SATISFIES NOTHING** — the bare command always exits 0,
+  so the `&&` proceeds whatever it printed: the branch name scrolls past in the output, unread, and the push goes
+  wherever HEAD happened to be. A check whose result nothing TESTS is not a check. Write a guard that cannot
+  continue:
+  ```sh
+  [ "$(git branch --show-current)" = "fix/my-branch" ] || { echo "WRONG BRANCH"; exit 1; }
+  ```
+  ⚑ *(Measured: the owner merged the PR, which left the shared copy on `main`; the guard-less form printed `main`,
+  amended the MERGE COMMIT, and the push that followed rewrote `origin/main`.)*
+- **⛔ `--amend` ONLY A COMMIT YOU JUST MADE AND HAVE NOT PUSHED.** Amending is indistinguishable from committing
+  until you look at WHAT is at HEAD, and at HEAD there may be someone else's merge. Confirm the target is yours
+  and unpushed (`git log -1 --format='%H %an %s'`, and that the SHA is absent from `origin`) before amending.
+- **⛔ A FORCE-PUSH IS A DESTRUCTIVE OPERATION AND NEEDS EXPLICIT OWNER APPROVAL, EVERY TIME —
+  `--force-with-lease` INCLUDED.** The lease protects against clobbering a fetch you have not seen; it does not
+  make rewriting a shared branch your call. ⛔ And a force-push is never the repair for a message you want to
+  improve: a wrong or clumsy commit message is not worth rewriting published history for.
 - **`release` is a strict follower of `main`: it must NEVER contain a commit `main` does not have.** Never commit,
   cherry-pick, or merge directly to `release`. Sync: `git checkout main && git pull`, then `git checkout release &&
   git rebase main` (a pure fast-forward when the rule holds — replayed commits mean the rule was violated upstream;
