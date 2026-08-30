@@ -22,18 +22,14 @@
   "operate": {
    "all": [
     {
-     "any": [
-      {
-       "type": "BONUS_BAUXITE_ORE",
-       "scope": "city",
-       "connection": "onSite"
-      },
-      {
-       "type": "BONUS_SAPPHIRES",
-       "scope": "city",
-       "connection": "onSite"
-      }
-     ]
+     "type": "BONUS_BAUXITE_ORE",
+     "scope": "city",
+     "connection": "onSite"
+    },
+    {
+     "type": "BONUS_SAPPHIRES",
+     "scope": "city",
+     "connection": "onSite"
     }
    ],
    "dormant": [

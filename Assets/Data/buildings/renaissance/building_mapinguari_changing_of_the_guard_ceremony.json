@@ -13,6 +13,7 @@
   "operate": {
    "all": [
     "TECH_GUNPOWDER",
+    "HERITAGE_FOLKLORE_ANTEATER",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"

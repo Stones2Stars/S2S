@@ -22,18 +22,14 @@
   "operate": {
    "all": [
     {
-     "any": [
-      {
-       "type": "BONUS_LEAD_ORE",
-       "scope": "city",
-       "connection": "onSite"
-      },
-      {
-       "type": "BONUS_SILVER_ORE",
-       "scope": "city",
-       "connection": "onSite"
-      }
-     ]
+     "type": "BONUS_LEAD_ORE",
+     "scope": "city",
+     "connection": "onSite"
+    },
+    {
+     "type": "BONUS_SILVER_ORE",
+     "scope": "city",
+     "connection": "onSite"
     }
    ],
    "dormant": [
