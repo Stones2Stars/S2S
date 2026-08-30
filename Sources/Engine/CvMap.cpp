@@ -1320,7 +1320,8 @@ void CvMap::read(FDataStreamBase* pStream)
 
 	getCurrentViewport()->resizeForMap();
 
-	WRAPPER_READ(wrapper, "CvMap", &m_iLandPlots);
+	//	⛔ m_iLandPlots is NOT read: it is a COUNT OVER THIS MAP'S OWN PLOTS, so it is derived, and derived data
+	//	serializes nothing ([save.md] par.5). It is rebuilt from the plots further down.
 	WRAPPER_READ(wrapper, "CvMap", &m_iOwnedPlots);
 	WRAPPER_READ(wrapper, "CvMap", &m_iTopLatitude);
 	WRAPPER_READ(wrapper, "CvMap", &m_iBottomLatitude);
@@ -1360,6 +1361,25 @@ void CvMap::read(FDataStreamBase* pStream)
 	// Derived, not serialized: recompute the Earth band now that plot terrain is loaded.
 	updateLatitudeGridHeight();
 
+	//	The land-plot count REBUILT from the plots, which are the thing it counts -- not compared against a
+	//	stored copy, because none is stored ([save.md] par.5). ⚠ It runs AFTER the plots have streamed, which is
+	//	what makes it the DEFINITION of the count rather than a correction of it.
+	//	In play it is maintained incrementally by CvPlot::setPlotType, which is what the value is.
+	{
+		int iLandPlots = 0;
+
+		for (int iI = 0; iI < numPlots(); iI++)
+		{
+			const PlotTypes ePlotType = m_pMapPlots[iI].getPlotType();
+
+			if (ePlotType != NO_PLOT && ePlotType != PLOT_OCEAN)
+			{
+				iLandPlots++;
+			}
+		}
+		m_iLandPlots = iLandPlots;
+	}
+
 	WRAPPER_READ_OBJECT_END(wrapper);
 
 	OutputDebugString("Reading Map: End\n");
@@ -1384,7 +1404,6 @@ void CvMap::write(FDataStreamBase* pStream)
 
 	WRAPPER_WRITE(wrapper, "CvMap", m_iGridWidth);
 	WRAPPER_WRITE(wrapper, "CvMap", m_iGridHeight);
-	WRAPPER_WRITE(wrapper, "CvMap", m_iLandPlots);
 	WRAPPER_WRITE(wrapper, "CvMap", m_iOwnedPlots);
 	WRAPPER_WRITE(wrapper, "CvMap", m_iTopLatitude);
 	WRAPPER_WRITE(wrapper, "CvMap", m_iBottomLatitude);

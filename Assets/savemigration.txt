@@ -2326,3 +2326,16 @@ CvCity::m_aiProductionToCommerceModifier  (int array, NUM_COMMERCE_TYPES)
 | REPLACEMENT: rebuilt in CvPlayer::read from the unit list, after the units have streamed -- the definition
 | of the count rather than a correction of it. Maintained incrementally in play by CvUnit init/kill as before.
 CvPlayer::m_iNumMilitaryUnits             (int)
+
+| The map's land-plot count -- a COUNT OVER THE MAP'S OWN PLOTS, so it is derived and derived data serializes
+| nothing (save.md par.5). Being serialized is what let a SEEDING hole outlive the game that generated the map:
+| the counter is seeded exclusively by CvPlot::setPlotType, whose delta was guarded on the water TRANSITION
+| (bWasWater || bIsWater) while reset leaves a plot NO_PLOT -- so at generation NO_PLOT -> land was no
+| transition at all and counted nothing, while NO_PLOT -> ocean counted -1 apiece, and every generated map
+| stored MINUS its water-plot count. Negative land then reached Python through CyMap::getLandPlots and
+| CvGame::m_iMaxLand, where a fractional power over it raised ValueError and killed BarbarianCiv's
+| onBeginGameTurn (no barbarians spawn at all) and CvGameUtils.calculateScore.
+| REPLACEMENT: rebuilt in CvMap::read from the plots, after they have streamed -- the definition of the count
+| rather than a correction of it. Maintained incrementally in play by CvPlot::setPlotType, whose delta now
+| keys off LAND-ness instead of the water-transition guard.
+CvMap::m_iLandPlots                       (int)
