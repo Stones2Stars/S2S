@@ -4164,9 +4164,18 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 //	misreport both), while rendering each tree is the condition renderer's.
 void CvGameTextMgr::appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& info, const ModifierFamily* aeFamilies, int iFamilyCount) const
 {
+	//	THE FLAT YIELDS ARE ONE LINE; THE CONDITIONALS COME SEPARATELY. A plain amount says everything it has to
+	//	say in a glyph and a number, so the whole set reads at a glance as "+2<food> +1<hammer> +3<commerce>" --
+	//	which is what legacy showed and what a player scans for. An entry that CARRIES something (a condition, a
+	//	target, a per-scaler) keeps its own line below, because the thing it carries is the half worth reading.
+	//	⚠ It spans FAMILIES, so it cannot live inside the per-family pass: food, production and commerce are
+	//	three families and one line.
+	appendFlatChannelLine(szBuffer, info, aeFamilies, iFamilyCount);
+
 	for (int iFamily = 0; iFamily < iFamilyCount; ++iFamily)
 	{
-		appendEntryLines(szBuffer, info, aeFamilies[iFamily]);
+		//	The plain flats are already on the line above; this pass is what is left.
+		appendEntryLinesFiltered(szBuffer, info, aeFamilies[iFamily], -1, NO_EDGEB, -1, true);
 	}
 
 	//	WHAT IT LEADS TO. Reading order is what it DOES (the families above), then what it GIVES YOU (here), then
@@ -4569,8 +4578,47 @@ void CvGameTextMgr::appendEntryLines(CvWStringBuffer& szBuffer, const CvInfo& in
 	appendEntryLinesFiltered(szBuffer, info, eFamily, -1, NO_EDGEB, -1);
 }
 
+//	The PLAIN FLAT channel amounts, gathered onto ONE line across the families asked for -- see the ruling at
+//	appendEntityBlocks. Emits nothing when the entity has none, so an entity with only conditioned deposits
+//	gains no empty line.
+void CvGameTextMgr::appendFlatChannelLine(CvWStringBuffer& szBuffer, const CvInfo& info,
+	const ModifierFamily* aeFamilies, int iFamilyCount) const
+{
+	const CvModifiers* pModifiers = info.getModifiers();
+	if (pModifiers == NULL)
+	{
+		return;
+	}
+	CvWString szLine;
+	//	Walked per FAMILY rather than per entry, so the glyphs come out in the caller's family order (food,
+	//	production, commerce, ...) instead of whatever order the entries happen to be compiled in.
+	for (int iFamily = 0; iFamily < iFamilyCount; ++iFamily)
+	{
+		const std::vector<CvModEntry*>& aEntries = pModifiers->entries();
+		for (std::vector<CvModEntry*>::const_iterator it = aEntries.begin(); it != aEntries.end(); ++it)
+		{
+			const CvModEntry* pEntry = *it;
+
+			if (pEntry == NULL || pEntry->family != aeFamilies[iFamily] || !entryIsPlainFlatChannel(*pEntry))
+			{
+				continue;
+			}
+			if (!szLine.empty())
+			{
+				szLine += L" ";
+			}
+			szLine += entryFlatSummary(*pEntry);
+		}
+	}
+	if (!szLine.empty())
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(szLine);
+	}
+}
+
 void CvGameTextMgr::appendEntryLinesFiltered(CvWStringBuffer& szBuffer, const CvInfo& info, ModifierFamily eFamily,
-	int iTargetFk, EnEdgeBucket eGateBucket, int iGateId) const
+	int iTargetFk, EnEdgeBucket eGateBucket, int iGateId, bool bSkipPlainFlats) const
 {
 	const CvModifiers* pModifiers = info.getModifiers();
 	if (pModifiers == NULL)
@@ -4582,6 +4630,11 @@ void CvGameTextMgr::appendEntryLinesFiltered(CvWStringBuffer& szBuffer, const Cv
 	{
 		const CvModEntry* pEntry = *it;
 		if (pEntry == NULL || pEntry->family != eFamily)
+		{
+			continue;
+		}
+		//	Already gathered onto the flat line above; a second rendering here would state it twice.
+		if (bSkipPlainFlats && entryIsPlainFlatChannel(*pEntry))
 		{
 			continue;
 		}
