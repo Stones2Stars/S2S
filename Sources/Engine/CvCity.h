@@ -836,6 +836,10 @@ public:
 	// The four wellbeing channels (modifier.md §2b): happiness/anger/health/unhealth as four ORDINARY channels,
 	// each a positive magnitude -- the opposing pairs are summed at the verdict, which is not a read.
 	void getWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
+	//	The share of getWellbeing this city's OWN BUILDINGS deposited -- the ordinary origin-package read at the
+	//	channel, since these are four channels like any other. FLAT leg only (a percent stack cannot be split
+	//	across the sources that fed it).
+	void getBuildingWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
 	void getDefenseKinds(int (&defenses)[NUM_DEFENSE_KINDS]) const;
 	void getMaintenanceKinds(int (&maintenances)[NUM_MAINTENANCE_KINDS]) const;
 	void getBuildRateKinds(int (&buildRates)[NUM_BUILD_RATE_KINDS]) const;

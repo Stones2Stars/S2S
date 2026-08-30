@@ -3140,9 +3140,14 @@ void CvGameTextMgr::setAngerHelp(CvWStringBuffer &szBuffer, CvCity& city)
 	const int iDivisor = GC.getPERCENT_ANGER_DIVISOR();
 	int iTotal = 0;
 
-	int aDeposits[NUM_WELLBEING_CHANNELS];
-	city.getWellbeing(aDeposits);
-	int iAnger = aDeposits[WELLBEING_ANGER] / 100;
+	//	⚠ The BUILDINGS line reports what the city's own buildings actually deposited, not the whole deposit
+	//	plane. It used to print getWellbeing outright -- every source in the cascade (civics, traits, bonuses,
+	//	specialists, corporations, techs, ...) under the buildings label -- so the figure disagreed with the
+	//	city screen's building tab, which sums the per-building contributions. Whatever the named lines below do
+	//	not account for lands in the MISC residual, which is what that line is for.
+	int aBuildingDeposits[NUM_WELLBEING_CHANNELS];
+	city.getBuildingWellbeing(aBuildingDeposits);
+	int iAnger = aBuildingDeposits[WELLBEING_ANGER] / 100;
 	if (iAnger > 0)
 	{
 		iTotal += iAnger;
@@ -3232,11 +3237,13 @@ void CvGameTextMgr::setHappyHelp(CvWStringBuffer &szBuffer, CvCity& city)
 		return;
 	}
 	CvPlayer& kPlayer = GET_PLAYER(city.getOwner());
-	int aDeposits[NUM_WELLBEING_CHANNELS];
-	city.getWellbeing(aDeposits);
+	//	⚠ The BUILDINGS line reports what the city's own buildings actually deposited -- see setAngerHelp above
+	//	for why it is not the whole deposit plane. The MISC residual carries what the named lines miss.
+	int aBuildingDeposits[NUM_WELLBEING_CHANNELS];
+	city.getBuildingWellbeing(aBuildingDeposits);
 	int iSum = 0;
 
-	int iHappy = aDeposits[WELLBEING_HAPPINESS] / 100;
+	int iHappy = aBuildingDeposits[WELLBEING_HAPPINESS] / 100;
 	if (iHappy > 0)
 	{
 		iSum += iHappy;
