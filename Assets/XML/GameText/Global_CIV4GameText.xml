@@ -3950,7 +3950,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVICHELP_MILITARY_PRODUCTION</Tag>
-		<English>[ICON_BULLET]%D1_Mod%% Military Unit Production</English>
+		<English>[ICON_BULLET]%D1_Mod%% Military Unit [ICON_PRODUCTION]</English>
 		<French>[ICON_BULLET]%D1_Mod%% de production d'unités militaires</French>
 		<German>[ICON_BULLET]%D1_Mod%% Produktion von Militäreinheiten</German>
 		<Italian>[ICON_BULLET]%D1_Mod%% di produzione nelle unità militari</Italian>
@@ -6705,7 +6705,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_ESPIONAGE_CULTURE_MOD</Tag>
-		<English>%D1%%: for City Culture</English>
+		<English>%D1%%: for City [ICON_CULTURE]</English>
 		<French>%D1%% : pour la culture de la ville</French>
 		<German>%D1%%: für städtische Kultur</German>
 		<Italian>%D1%%: per la cultura della città</Italian>
@@ -6713,7 +6713,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_ESPIONAGE_DEFENSE_MOD</Tag>
-		<English>%D1%%: for City Espionage Defense</English>
+		<English>%D1%%: for City [ICON_ESPIONAGE] Defense</English>
 		<French>%D1%% : pour la défense de la ville contre l'espionnage</French>
 		<German>%D1%%: für städtische Spionageabwehr</German>
 		<Italian>%D1%%: per la difesa cittadina dallo spionaggio</Italian>
@@ -6737,7 +6737,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_ESPIONAGE_EP_RATIO_MOD</Tag>
-		<English>%D1%%: for Espionage Point Spending</English>
+		<English>%D1%%: for [ICON_ESPIONAGE] Point Spending</English>
 		<French>%D1%% : pour les points d'espionnage dépensés</French>
 		<German>%D1%%: für Spionagepunkt-Aufwendung</German>
 		<Italian>%D1%%: per la spesa dei punti spionaggio</Italian>
@@ -8367,7 +8367,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_FOREIGN_ADVISOR_GOLD_PER_TURN_FOR_TRADE</Tag>
-		<English>%d1 Gold Per Turn Available For Trade</English>
+		<English>%d1[ICON_GOLD] Per Turn Available For Trade</English>
 		<French>%d1 or par tour disponible pour le commerce</French>
 		<German>%d1 Gold pro Runde zum Handel verfübar</German>
 		<Italian>%d1 Oro a turno disponibile per il commercio</Italian>

@@ -10866,7 +10866,7 @@
     </TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_EVENT_SPACE_PRODUCTION_CITY</Tag>
-		<English>[ICON_BULLET][ICON_BULLET]%D1_Mod%% Spaceship Production in %s2_city</English>
+		<English>[ICON_BULLET][ICON_BULLET]%D1_Mod%% Spaceship [ICON_PRODUCTION] in %s2_city</English>
 		<French>[ICON_BULLET][ICON_BULLET]Production du vaisseau spatial à %s2_city %D1_Mod%%</French>
 		<German>[ICON_BULLET][ICON_BULLET]%D1_Mod%% Raumschiffproduktion in %s2_city</German>
 		<Italian>[ICON_BULLET][ICON_BULLET]%D1_Mod%% sulla produzione dell'astronave a %s2_city</Italian>

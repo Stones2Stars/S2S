@@ -374,7 +374,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILDINGHELP_ESPIONAGE_DEFENSE_MOD</Tag>
-		<English>[ICON_BULLET]%D1_Mod%% Defense against Espionage</English>
+		<English>[ICON_BULLET]%D1_Mod%% Defense against [ICON_ESPIONAGE]</English>
 		<French>[ICON_BULLET]Protection contre l'espionnage %D1_Mod%%</French>
 		<German>[ICON_BULLET]%D1_Mod%% Verteidigung gegen Spionage</German>
 		<Italian>[ICON_BULLET]%D1_Mod%% in difesa contro lo spionaggio</Italian>
@@ -774,7 +774,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILDINGHELP_HURRY_MOD</Tag>
-		<English>[ICON_BULLET]%D1_Mod%% Hurry Production Cost</English>
+		<English>[ICON_BULLET]%D1_Mod%% Hurry [ICON_PRODUCTION] Cost</English>
 		<French>[ICON_BULLET]Coût de l'accélération de la production %D1_Mod%%</French>
 		<German>[ICON_BULLET]%D1_Mod%% Kosten für beschleunigte Produktion</German>
 		<Italian>[ICON_BULLET]%D1_Mod%% costo per accelerare la produzione</Italian>
@@ -894,7 +894,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILDINGHELP_MILITARY_MOD</Tag>
-		<English>[ICON_BULLET]%D1_Mod%% Military Unit Production</English>
+		<English>[ICON_BULLET]%D1_Mod%% Military Unit [ICON_PRODUCTION]</English>
 		<French>[ICON_BULLET]Production d'unités militaires %D1_Mod%%</French>
 		<German>[ICON_BULLET]%D1_Mod%% Produktion von Militäreinheiten</German>
 		<Italian>[ICON_BULLET]%D1_Mod%% di produzione nelle unità militari</Italian>
@@ -1110,7 +1110,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILDINGHELP_PROTECTS_CULTURE</Tag>
-		<English>[ICON_BULLET]Nearby Battles will not affect Culture</English>
+		<English>[ICON_BULLET]Nearby Battles will not affect [ICON_CULTURE]</English>
 		<French>[ICON_BULLET]Les Batailles aux alentours n'affecteront pas la culture</French>
 		<German>[ICON_BULLET]Nahe Schlachten beeinflussen die Kultur nicht</German>
 		<Italian>[ICON_BULLET]Le battaglie vicine non influenzeranno la cultura</Italian>
@@ -1404,7 +1404,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILDINGHELP_SPACESHIP_MOD</Tag>
-		<English>[ICON_BULLET]%D1_Mod%% Spaceship Production</English>
+		<English>[ICON_BULLET]%D1_Mod%% Spaceship [ICON_PRODUCTION]</English>
 		<French>[ICON_BULLET]Production de vaisseau spatial %D1_Mod%%</French>
 		<German>[ICON_BULLET]%D1_Mod%% Raumschiffproduktion</German>
 		<Italian>[ICON_BULLET]%D1_Mod%% sulla produzione dell'astronave</Italian>
@@ -1413,7 +1413,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUILDINGHELP_SPACESHIP_MOD_ALL_CITIES</Tag>
-		<English>[ICON_BULLET]%D1_Mod%% Spaceship Production in All Cities</English>
+		<English>[ICON_BULLET]%D1_Mod%% Spaceship [ICON_PRODUCTION] in All Cities</English>
 		<French>[ICON_BULLET]Production de vaisseau spatial dans toutes les villes %D1_Mod%%</French>
 		<German>[ICON_BULLET]%D1_Mod%% Raumschiffproduktion in allen Städten</German>
 		<Italian>[ICON_BULLET]%D1_Mod%% sulla produzione dell'astronave in tutte le città</Italian>
