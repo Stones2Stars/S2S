@@ -137,7 +137,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_FINANCIAL_ADVISOR_COMMERCE</Tag>
-		<English>Total Commerce</English>
+		<English>Total [ICON_COMMERCE]</English>
 		<French>Commerce total</French>
 		<German>Handel insgesamt</German>
 		<Italian>Commercio totale</Italian>
@@ -147,7 +147,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_FINANCIAL_ADVISOR_DOMESTIC_TRADE</Tag>
-		<English>The Total Commerce from Domestic Trade Routes</English>
+		<English>The Total [ICON_COMMERCE] from Domestic Trade Routes</English>
 		<French>Commerce Total provenant des Routes d'échange</French>
 		<German>Gesamteinkommen durch inländische Handelsverbindungen</German>
 		<Italian>Commercio totale dalle rotte commerciali interne</Italian>
@@ -157,7 +157,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_FINANCIAL_ADVISOR_FOREIGN_TRADE</Tag>
-		<English>The Total Commerce from Foreign Trade Routes</English>
+		<English>The Total [ICON_COMMERCE] from Foreign Trade Routes</English>
 		<French>Commerce Total provenant des Routes d'échange étrangères</French>
 		<German>Gesamteinkommen durch ausländische Handelsverbindungen</German>
 		<Italian>Commercio totale dalle rotte commerciali estere</Italian>
@@ -167,7 +167,7 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_FINANCIAL_ADVISOR_SPECIALISTS</Tag>
-		<English>The Total Gold from Specialists</English>
+		<English>The Total [ICON_GOLD] from Specialists</English>
 		<French>Revenus Totaux provenant des Spécialistes</French>
 		<German>Gesamteinkommen durch Spezialisten</German>
 		<Italian>Oro totale ottenuto dagli specialisti</Italian>
