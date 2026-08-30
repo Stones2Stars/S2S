@@ -510,6 +510,43 @@ void CvCity::getBuildingInCity(BuildingTypes eBuilding, int (&read)[NUM_CITY_BUI
 	read[CITY_BUILDING_ORIGINAL_OWNER]   = read[CITY_BUILDING_HAS] != 0
 		? (int)getBuildingData(eBuilding).eBuiltBy
 		: (int)NO_PLAYER;
+
+	//	This building's OWN yield / commerce contribution here, through the same what-if driver the wellbeing
+	//	channels above already use -- the building's authored deposits resolved against the live contexts.
+	//	⚠ THE READ EDGE: the what-if answers ×100 like every authored amount, and the city screen renders whole
+	//	numbers, so the reduction happens HERE and the consumer gets a human figure.
+	//	⚠ Only for a building the city HOLDS and that is ACTIVE: a dormant building deposits nothing, so
+	//	reporting its authored figure would tell the player it is working when it is not.
+	int aiFlatYields[NUM_YIELD_TYPES];
+	int aiFlatCommerce[NUM_COMMERCE_TYPES];
+
+	if (read[CITY_BUILDING_ACTIVE] != 0)
+	{
+		const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+		const EmpireContext& empireContext = GET_PLAYER(getOwner()).getEmpireContext();
+
+		kBuilding.expectedFlatYields(getCityContext(), empireContext, plotGroup(getOwner()), aiFlatYields);
+		kBuilding.expectedFlatCommerce(getCityContext(), empireContext, plotGroup(getOwner()), aiFlatCommerce);
+	}
+	else
+	{
+		for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
+		{
+			aiFlatYields[iI] = 0;
+		}
+		for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
+		{
+			aiFlatCommerce[iI] = 0;
+		}
+	}
+	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
+	{
+		read[CITY_BUILDING_YIELD_FIRST + iI] = aiFlatYields[iI] / 100;
+	}
+	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
+	{
+		read[CITY_BUILDING_COMMERCE_FIRST + iI] = aiFlatCommerce[iI] / 100;
+	}
 }
 
 

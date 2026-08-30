@@ -3061,45 +3061,76 @@ class CvMainInterface:
 		bActiveOnly = self.iShowBuildings == 2
 		ID = "WID|BUILDING|BldgList%d"
 		ROW_0 = "BldgListRow%d"
+		szDormantColor = "<color=140,140,140,255>"
+
+		# ACTIVE buildings first, DORMANT ones last and greyed. A dormant building deposits NOTHING, so it
+		# reports no figures at all -- rendering its authored numbers would tell the player it is working when
+		# it is not -- and interleaving it with the ones that ARE working is what made the list unreadable.
+		# Both halves keep the incoming name order.
+		CyCityHere = GC.getPlayer(iCityOwner).getCity(iCityID)
+		aActiveList = []
+		aDormantList = []
+		for szName, i in aBuildingList:
+			aBuilding = CyCityHere.getBuildingReads(i)
+			if not aBuilding[CityBuildingRead.CITY_BUILDING_HAS]:
+				continue
+			if aBuilding[CityBuildingRead.CITY_BUILDING_ACTIVE]:
+				aActiveList.append((szName, i, aBuilding))
+			elif not bActiveOnly:
+				aDormantList.append((szName, i, aBuilding))
+
+		iYieldFirst = int(CityBuildingRead.CITY_BUILDING_YIELD_FIRST)
+		iCommerceFirst = int(CityBuildingRead.CITY_BUILDING_COMMERCE_FIRST)
 		iRow = 0
 		y = -2
-		for szName, i in aBuildingList:
+		for szName, i, aBuilding in aActiveList + aDormantList:
+			bActive = aBuilding[CityBuildingRead.CITY_BUILDING_ACTIVE]
+			szStat = ""
 
-			aBuilding = GC.getPlayer(iCityOwner).getCity(iCityID).getBuildingReads(i)
-			if aBuilding[CityBuildingRead.CITY_BUILDING_HAS]:
-				if bActiveOnly and not aBuilding[CityBuildingRead.CITY_BUILDING_ACTIVE]:
-					continue
-				szStat = ""
+			if bActive:
+				# What this ONE building contributes to THIS city -- one icon per non-zero channel, so the row
+				# says what the building is actually doing rather than only how it makes people feel.
+				for j in xrange(YieldTypes.NUM_YIELD_TYPES):
+					iYield = aBuilding[iYieldFirst + j]
+					if iYield:
+						szStat += str(iYield) + iconYieldList[j]
 
-				if aBuilding[CityBuildingRead.CITY_BUILDING_ACTIVE]:
-					iHealth = aBuilding[CityBuildingRead.CITY_BUILDING_HEALTH]
-					if iHealth:
-						if iHealth > 0:
-							szStat += str(iHealth) + iconHealthy
-						else:
-							szStat += str(-iHealth) + iconUnhealthy
+				for j in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
+					iCommerce = aBuilding[iCommerceFirst + j]
+					if iCommerce:
+						szStat += str(iCommerce) + iconCommerceList[j]
 
-					iHappiness = aBuilding[CityBuildingRead.CITY_BUILDING_HAPPINESS]
-					if iHappiness:
-						if iHappiness > 0:
-							szStat += str(iHappiness) + iconHappy
-						else:
-							szStat += str(-iHappiness) + iconUnhappy
+				iHappiness = aBuilding[CityBuildingRead.CITY_BUILDING_HAPPINESS]
+				if iHappiness:
+					if iHappiness > 0:
+						szStat += str(iHappiness) + iconHappy
+					else:
+						szStat += str(-iHappiness) + iconUnhappy
 
-				ROW = ROW_0 % iRow
+				iHealth = aBuilding[CityBuildingRead.CITY_BUILDING_HEALTH]
+				if iHealth:
+					if iHealth > 0:
+						szStat += str(iHealth) + iconHealthy
+					else:
+						szStat += str(-iHealth) + iconUnhealthy
 
-				if iRow % 2:
-					screen.attachPanelAt(ScPnl, ROW, "", "", True, False, ePanelBlack, 0, y, w, h2, eWidGen, 1, 1)
-					screen.setStyle(ROW, "Panel_Tan15_Style")
-				else:
-					screen.attachPanelAt(ScPnl, ROW, "", "", True, False, ePanelBlack, 0, y-4, w, h1, eWidGen, 1, 1)
+			ROW = ROW_0 % iRow
 
-				szName = TextUtil.evalTextWidth(wName, uFont2, szName)
-				screen.setTextAt(ID % i, ROW, szName, 1<<0, 4, 0, 0, eFontGame, eWidGen, 1, 1)
-				if szStat:
-					screen.setLabelAt("", ROW, uFont2+szStat, 1<<1, w-6, 2, 0, eFontGame, eWidGen, 1, 1)
-				iRow += 1
-				y += dy
+			if iRow % 2:
+				screen.attachPanelAt(ScPnl, ROW, "", "", True, False, ePanelBlack, 0, y, w, h2, eWidGen, 1, 1)
+				screen.setStyle(ROW, "Panel_Tan15_Style")
+			else:
+				screen.attachPanelAt(ScPnl, ROW, "", "", True, False, ePanelBlack, 0, y-4, w, h1, eWidGen, 1, 1)
+
+			szRowName = TextUtil.evalTextWidth(wName, uFont2, szName)
+			if not bActive:
+				# The colour goes on AFTER the width fit, or the markup is measured as though it were text.
+				szRowName = szDormantColor + szRowName + "</color>"
+			screen.setTextAt(ID % i, ROW, szRowName, 1<<0, 4, 0, 0, eFontGame, eWidGen, 1, 1)
+			if szStat:
+				screen.setLabelAt("", ROW, uFont2+szStat, 1<<1, w-6, 2, 0, eFontGame, eWidGen, 1, 1)
+			iRow += 1
+			y += dy
 
 
 	def buildCityListRight(self, screen, InCity):

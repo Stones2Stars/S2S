@@ -1396,8 +1396,16 @@ enum CityBuildingRead
 	CITY_BUILDING_DELAY,
 	CITY_BUILDING_PRODUCTION_DECAY,
 	CITY_BUILDING_ORIGINAL_OWNER,
+	//	What this ONE building contributes to THIS city, per channel -- the city screen's building list renders an
+	//	icon per non-zero entry, so a player can see what each building is actually doing for them.
+	//	⚠ These are the building's OWN deposits resolved against the live contexts (the expected* what-if), which
+	//	is the only way to name a SOURCE: the modifier package sums the whole origin and deliberately cannot say
+	//	which building a yield came from.
+	//	Contiguous per group, so a reader walks `CITY_BUILDING_YIELD_FIRST + (int)eYield`.
+	CITY_BUILDING_YIELD_FIRST,
+	CITY_BUILDING_COMMERCE_FIRST = CITY_BUILDING_YIELD_FIRST + NUM_YIELD_TYPES,
 
-	NUM_CITY_BUILDING_READS
+	NUM_CITY_BUILDING_READS = CITY_BUILDING_COMMERCE_FIRST + NUM_COMMERCE_TYPES
 };
 
 //	The same, for ONE unit type this city could build.
