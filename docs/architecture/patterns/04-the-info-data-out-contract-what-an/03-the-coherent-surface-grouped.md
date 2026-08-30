@@ -199,6 +199,19 @@ group's natural index** — never N individual getters for a groupable set. This
      > not a regression. Completeness is measured against what the ENTITY CARRIES, never what the legacy
      > composer used to print.
      >
+     > **⛔ MIMIC HOW TOOLTIPS *LOOKED*; NEVER COMPROMISE HOW THEY ARE *RENDERED*.** The two are separate axes
+     > and only one of them is up for imitation. The legacy LOOK is the target — the compact glyph line, the
+     > familiar ordering, the density a player already reads at a glance — because that is what makes a tooltip
+     > usable and it was got right. The legacy MECHANISM is not: hand-assembled strings, per-composer
+     > conversions and legacy getter reads stay cut, whatever the output is supposed to resemble.
+     > ⇒ **So "it looked like this before" is a valid argument about APPEARANCE and never a licence to reach for
+     > a legacy accessor, re-hand-build a sub-block, or bend the entry renderer around one screen.** When the
+     > wanted look does not fall out of the shared renderer, the renderer gains the capability (§ THE FLAT
+     > YIELDS ARE ONE LINE, above, is exactly that: a DENSITY the grammar had not stated, added once, centrally)
+     > — never the composer a special case.
+     > ⚑ The pairing is what makes both testable: the acceptance test on the MECHANISM is *does it still read a
+     > legacy getter*, and the acceptance test on the LOOK is *would a returning player recognise it*.
+     >
      > **⚖ THE DEMAND ORDER, MEASURED BY USE — worker · combat · plot · building · unit.** That is the
      > order they are hovered in, so it is the order they are worked in; COMBAT is the standardized exemplar, so
      > live work is worker → plot → building → unit. ⚑ WORKER is two composers, not one: what a worker CAN do
