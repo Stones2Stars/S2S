@@ -6761,6 +6761,22 @@ void CvPlot::setPlotType(PlotTypes eNewValue, bool bRecalculate, bool bRebuildGr
 	// The commit, the hash and the facts; then this setter's own EFFECTS below.
 	setPlotTypeInternal(eNewValue);
 
+	//	The map's land-plot count is a FACT of the type, so it settles here with the commit rather than among the
+	//	water-transition EFFECTS below -- and it keys off LAND-ness, never the bWasWater/bIsWater pair.
+	//	⚠ reset() leaves a plot NO_PLOT and generation announces every plot through this setter exactly once,
+	//	which is the ONLY seeding this counter ever gets (setOwner and setBonusType seed their own siblings).
+	//	Under the effects guard, NO_PLOT -> land is not a water transition and so counted NOTHING, while
+	//	NO_PLOT -> ocean counted -1 apiece: a generated map held MINUS its water-plot count.
+	{
+		const bool bWasLand = eOldPlotType != NO_PLOT && eOldPlotType != PLOT_OCEAN;
+		const bool bIsLand = eNewValue != NO_PLOT && eNewValue != PLOT_OCEAN;
+
+		if (bWasLand != bIsLand)
+		{
+			GC.getMap().changeLandPlots(bIsLand ? 1 : -1);
+		}
+	}
+
 	updateSeeFromSight(true, true);
 
 
@@ -6885,8 +6901,6 @@ void CvPlot::setPlotType(PlotTypes eNewValue, bool bRecalculate, bool bRebuildGr
 				plotX->updatePotentialCityWork();
 			}
 		}
-
-		GC.getMap().changeLandPlots(bIsWater ? -1 : 1);
 
 		if (getBonusType() != NO_BONUS)
 		{
