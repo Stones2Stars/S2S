@@ -831,6 +831,18 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 	{
 		return;
 	}
+	//	⛔ THE PLOT'S OWN VISIBILITY GATES THE WHOLE LIST, AND IT IS THE FIRST QUESTION -- the per-unit check
+	//	below answers a DIFFERENT one and cannot stand in for it. `isInvisible` asks whether THIS UNIT conceals
+	//	itself from the viewer (a submarine, a hidden hunter); it says nothing about whether the viewer can see
+	//	the TILE. Without this gate the plot's live unit list renders through the fog, so hovering an enemy CITY
+	//	listed its whole garrison -- handing the player exactly the information the fog exists to withhold, on
+	//	the one tile where it matters most.
+	//	⚠ bDebug so debug mode still sees everything, the same convention CvPlot::updateCenterUnit's own
+	//	isActiveVisible(true) uses -- the two answer the same fog question and must not disagree.
+	if (!pPlot->isActiveVisible(true))
+	{
+		return;
+	}
 	const TeamTypes eActiveTeam = GC.getGame().getActiveTeam();
 	bool bFirst = true;
 	//	The plot's OWN unit list -- what it holds, never a sweep of anything.
