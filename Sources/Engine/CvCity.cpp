@@ -242,21 +242,66 @@ void CvCity::getCommerceTerms(CommerceTypes eCommerce, CvCommerceSplitTerms& kTe
 	kTerms = aTerms[eCommerce];
 }
 
+//	The channel a wellbeing side's deposits land on.
+//	The opposing channels share ONE authored family and are minted as SIGN TWINS beside it (modifier.md §2b: a
+//	negative deposit routes to the opposing channel at fill), so anger/unhealth are looked up as the twin of
+//	their authored channel rather than as families of their own.
+static int cty_wellbeingChannel(WellbeingChannel eWellbeing)
+{
+	const int iAuthoredChannel = CascadeChannelRegistry::channelLookup(infoWellbeingFamily(eWellbeing), (int)CHANNEL_AMOUNT, -1);
+
+	if (eWellbeing == WELLBEING_ANGER || eWellbeing == WELLBEING_UNHEALTH)
+	{
+		return CascadeChannelRegistry::wellbeingTwin(iAuthoredChannel);
+	}
+	return iAuthoredChannel;
+}
+
 void CvCity::getWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const
 {
 	for (int iChannelIndex = 0; iChannelIndex < NUM_WELLBEING_CHANNELS; ++iChannelIndex)
 	{
-		const WellbeingChannel eWellbeing = (WellbeingChannel)iChannelIndex;
-		// The opposing channels share ONE authored family and are minted as SIGN TWINS beside it (modifier.md
-		// §2b: a negative deposit routes to the opposing channel at fill), so anger/unhealth are looked up as
-		// the twin of their authored channel rather than as families of their own.
-		const int iAuthoredChannel = CascadeChannelRegistry::channelLookup(infoWellbeingFamily(eWellbeing), (int)CHANNEL_AMOUNT, -1);
-		int iChannel = iAuthoredChannel;
-		if (eWellbeing == WELLBEING_ANGER || eWellbeing == WELLBEING_UNHEALTH)
+		wellbeing[iChannelIndex] = InfoValuation::realizedAtCity(*this, cty_wellbeingChannel((WellbeingChannel)iChannelIndex));
+	}
+}
+
+//	The share of the deposits above that ONE leg put there.
+//	⚠ These are four channels like any other, on the one uniform package with no special storage, so a leg's
+//	share is the ordinary package read at the channel -- exactly how a food or a hammer is attributed. There is
+//	no wellbeing-specific store to consult.
+//	⚠ The FLAT leg only: a percent stack applies to the channel as a whole and cannot be split across the
+//	sources that fed it, so a consumer reports the named legs and lets its own residual carry the rest.
+void CvCity::getWellbeingFrom(WellbeingLeg eLeg, int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const
+{
+	for (int iChannelIndex = 0; iChannelIndex < NUM_WELLBEING_CHANNELS; ++iChannelIndex)
+	{
+		const int iChannel = cty_wellbeingChannel((WellbeingChannel)iChannelIndex);
+		int64_t iFlat = 0;
+
+		switch (eLeg)
 		{
-			iChannel = CascadeChannelRegistry::wellbeingTwin(iAuthoredChannel);
+		case WELLBEING_LEG_BUILDINGS:
+			iFlat = getBuildingYields().readFlat(iChannel);
+			break;
+
+		case WELLBEING_LEG_SPECIALISTS:
+			iFlat = getSpecialistYields().readFlat(iChannel);
+			break;
+
+		case WELLBEING_LEG_EMPIRE:
+			//	The upper scopes roll DOWN into every city, so an empire or team deposit is experienced here
+			//	even though it was never authored here -- which is exactly why it must not keep reading as a
+			//	building of this city's.
+			if (getOwner() != NO_PLAYER)
+			{
+				const CvPlayer& owner = GET_PLAYER(getOwner());
+
+				iFlat = owner.getCascadePackage().readFlat(iChannel);
+				iFlat += GET_TEAM(owner.getTeam()).getCascadePackage().readFlat(iChannel);
+			}
+			break;
 		}
-		wellbeing[iChannelIndex] = InfoValuation::realizedAtCity(*this, iChannel);
+		wellbeing[iChannelIndex] = (int)iFlat;
 	}
 }
 

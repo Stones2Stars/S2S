@@ -28504,6 +28504,22 @@ feindliche Einheit scrollen[COLOR_REVERT][\BOLD]Anzeige der Siegchance
 		<Italian>[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]+%d1[COLOR_REVERT] [ICON_UNHAPPY]: Gli edifici e gli effetti che influenzano la città mi irritano!</Italian> <!-- city screen hover happiness panel upper right -->
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_UNHAPPY_CITY_SPECIALISTS</Tag>
+		<English>+%d1[ICON_UNHAPPY] "The people we have set to work here are a burden on us!"</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNHAPPY_EMPIRE_SOURCES</Tag>
+		<English>+%d1[ICON_UNHAPPY] "The way our nation is run weighs on this city!"</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HAPPY_CITY_SPECIALISTS</Tag>
+		<English>+%d1[ICON_HAPPY] "The people we have set to work here please us!"</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_HAPPY_EMPIRE_SOURCES</Tag>
+		<English>+%d1[ICON_HAPPY] "The way our nation is run pleases this city!"</English>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_UNHAPPY_CIVIC</Tag>
 		<English>+%d1_Change[ICON_UNHAPPY]: "We hate our government!"</English>
 		<French>+%d1_Change[ICON_UNHAPPY]: "Nous détestons notre gouvernement!"</French>
