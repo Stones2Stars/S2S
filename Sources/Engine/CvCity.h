@@ -836,10 +836,20 @@ public:
 	// The four wellbeing channels (modifier.md §2b): happiness/anger/health/unhealth as four ORDINARY channels,
 	// each a positive magnitude -- the opposing pairs are summed at the verdict, which is not a read.
 	void getWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
-	//	The share of getWellbeing this city's OWN BUILDINGS deposited -- the ordinary origin-package read at the
-	//	channel, since these are four channels like any other. FLAT leg only (a percent stack cannot be split
-	//	across the sources that fed it).
-	void getBuildingWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
+	//	Which LEG of the deposit roll-up a share of getWellbeing came from. These name the packages
+	//	rolledLegsAtCity sums, which is as fine as attribution gets today: a package aggregates every source
+	//	that deposited into it, so EMPIRE covers civics, traits, techs, bonuses and the rest as one figure.
+	//	Naming those individually is the per-term decomposition census (cascade/09-wellbeing-channels.md).
+	enum WellbeingLeg
+	{
+		WELLBEING_LEG_BUILDINGS = 0,   // this city's own tier-2 flats -- buildings and the city-scope sources with them
+		WELLBEING_LEG_SPECIALISTS,     // this city's tier-1 specialist plane
+		WELLBEING_LEG_EMPIRE           // the upper scopes rolling down: the owner's package plus the team's
+	};
+	//	The share of getWellbeing one leg deposited -- the ordinary origin-package read at the channel, since
+	//	these are four channels like any other. FLAT leg only: a percent stack applies to the channel as a whole
+	//	and cannot be split across the sources that fed it.
+	void getWellbeingFrom(WellbeingLeg eLeg, int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
 	void getDefenseKinds(int (&defenses)[NUM_DEFENSE_KINDS]) const;
 	void getMaintenanceKinds(int (&maintenances)[NUM_MAINTENANCE_KINDS]) const;
 	void getBuildRateKinds(int (&buildRates)[NUM_BUILD_RATE_KINDS]) const;

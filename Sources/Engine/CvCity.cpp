@@ -265,17 +265,43 @@ void CvCity::getWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const
 	}
 }
 
-//	The share of the deposits above that this city's OWN BUILDINGS put there.
-//	⚠ These are four channels like any other, on the one uniform package with no special storage, so the
-//	building-origin share is the ordinary origin package read at the channel -- exactly how a food or a hammer
-//	would be attributed to buildings. There is no wellbeing-specific store to consult.
+//	The share of the deposits above that ONE leg put there.
+//	⚠ These are four channels like any other, on the one uniform package with no special storage, so a leg's
+//	share is the ordinary package read at the channel -- exactly how a food or a hammer is attributed. There is
+//	no wellbeing-specific store to consult.
 //	⚠ The FLAT leg only: a percent stack applies to the channel as a whole and cannot be split across the
 //	sources that fed it, so a consumer reports the named legs and lets its own residual carry the rest.
-void CvCity::getBuildingWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const
+void CvCity::getWellbeingFrom(WellbeingLeg eLeg, int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const
 {
 	for (int iChannelIndex = 0; iChannelIndex < NUM_WELLBEING_CHANNELS; ++iChannelIndex)
 	{
-		wellbeing[iChannelIndex] = (int)getBuildingYields().readFlat(cty_wellbeingChannel((WellbeingChannel)iChannelIndex));
+		const int iChannel = cty_wellbeingChannel((WellbeingChannel)iChannelIndex);
+		int64_t iFlat = 0;
+
+		switch (eLeg)
+		{
+		case WELLBEING_LEG_BUILDINGS:
+			iFlat = getBuildingYields().readFlat(iChannel);
+			break;
+
+		case WELLBEING_LEG_SPECIALISTS:
+			iFlat = getSpecialistYields().readFlat(iChannel);
+			break;
+
+		case WELLBEING_LEG_EMPIRE:
+			//	The upper scopes roll DOWN into every city, so an empire or team deposit is experienced here
+			//	even though it was never authored here -- which is exactly why it must not keep reading as a
+			//	building of this city's.
+			if (getOwner() != NO_PLAYER)
+			{
+				const CvPlayer& owner = GET_PLAYER(getOwner());
+
+				iFlat = owner.getCascadePackage().readFlat(iChannel);
+				iFlat += GET_TEAM(owner.getTeam()).getCascadePackage().readFlat(iChannel);
+			}
+			break;
+		}
+		wellbeing[iChannelIndex] = (int)iFlat;
 	}
 }
 

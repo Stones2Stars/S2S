@@ -3145,14 +3145,30 @@ void CvGameTextMgr::setAngerHelp(CvWStringBuffer &szBuffer, CvCity& city)
 	//	specialists, corporations, techs, ...) under the buildings label -- so the figure disagreed with the
 	//	city screen's building tab, which sums the per-building contributions. Whatever the named lines below do
 	//	not account for lands in the MISC residual, which is what that line is for.
-	int aBuildingDeposits[NUM_WELLBEING_CHANNELS];
-	city.getBuildingWellbeing(aBuildingDeposits);
-	int iAnger = aBuildingDeposits[WELLBEING_ANGER] / 100;
-	if (iAnger > 0)
+	//	⚠ The DEPOSIT lines are reported per LEG. This was one line printing getWellbeing outright -- every
+	//	source in the cascade (civics, traits, bonuses, specialists, corporations, techs, ...) under the
+	//	BUILDINGS label -- so the figure disagreed with the city screen's building tab, which sums the
+	//	per-building contributions, and the gap between them was every non-building source in the game.
+	//	Whatever the named lines do not account for lands in the MISC residual, which is what it is for.
+	const CvCity::WellbeingLeg aeLegs[3] = {
+		CvCity::WELLBEING_LEG_BUILDINGS, CvCity::WELLBEING_LEG_SPECIALISTS, CvCity::WELLBEING_LEG_EMPIRE
+	};
+	const char* aszAngerLegKey[3] = {
+		"TXT_KEY_UNHAPPY_CITY_BUILDINGS", "TXT_KEY_UNHAPPY_CITY_SPECIALISTS", "TXT_KEY_UNHAPPY_EMPIRE_SOURCES"
+	};
+	int iAnger = 0;
+	for (int iLeg = 0; iLeg < 3; ++iLeg)
 	{
-		iTotal += iAnger;
-		szBuffer.append(gDLL->getText("TXT_KEY_UNHAPPY_CITY_BUILDINGS", iAnger));
-		szBuffer.append(NEWLINE);
+		int aLegDeposits[NUM_WELLBEING_CHANNELS];
+		city.getWellbeingFrom(aeLegs[iLeg], aLegDeposits);
+
+		iAnger = aLegDeposits[WELLBEING_ANGER] / 100;
+		if (iAnger > 0)
+		{
+			iTotal += iAnger;
+			szBuffer.append(gDLL->getText(aszAngerLegKey[iLeg], iAnger));
+			szBuffer.append(NEWLINE);
+		}
 	}
 
 	// The anger PERCENTS are raw runtime state with no entry list to render from, so each keeps its own line.
@@ -3237,18 +3253,28 @@ void CvGameTextMgr::setHappyHelp(CvWStringBuffer &szBuffer, CvCity& city)
 		return;
 	}
 	CvPlayer& kPlayer = GET_PLAYER(city.getOwner());
-	//	⚠ The BUILDINGS line reports what the city's own buildings actually deposited -- see setAngerHelp above
-	//	for why it is not the whole deposit plane. The MISC residual carries what the named lines miss.
-	int aBuildingDeposits[NUM_WELLBEING_CHANNELS];
-	city.getBuildingWellbeing(aBuildingDeposits);
+	//	⚠ The DEPOSIT lines are reported per LEG -- see setAngerHelp above for why one line for all of them was
+	//	wrong. The MISC residual carries what the named lines miss.
+	const CvCity::WellbeingLeg aeLegs[3] = {
+		CvCity::WELLBEING_LEG_BUILDINGS, CvCity::WELLBEING_LEG_SPECIALISTS, CvCity::WELLBEING_LEG_EMPIRE
+	};
+	const char* aszHappyLegKey[3] = {
+		"TXT_KEY_HAPPY_BUILDINGS", "TXT_KEY_HAPPY_CITY_SPECIALISTS", "TXT_KEY_HAPPY_EMPIRE_SOURCES"
+	};
 	int iSum = 0;
-
-	int iHappy = aBuildingDeposits[WELLBEING_HAPPINESS] / 100;
-	if (iHappy > 0)
+	int iHappy = 0;
+	for (int iLeg = 0; iLeg < 3; ++iLeg)
 	{
-		iSum += iHappy;
-		szBuffer.append(gDLL->getText("TXT_KEY_HAPPY_BUILDINGS", iHappy));
-		szBuffer.append(NEWLINE);
+		int aLegDeposits[NUM_WELLBEING_CHANNELS];
+		city.getWellbeingFrom(aeLegs[iLeg], aLegDeposits);
+
+		iHappy = aLegDeposits[WELLBEING_HAPPINESS] / 100;
+		if (iHappy > 0)
+		{
+			iSum += iHappy;
+			szBuffer.append(gDLL->getText(aszHappyLegKey[iLeg], iHappy));
+			szBuffer.append(NEWLINE);
+		}
 	}
 	iHappy = city.getMilitaryHappiness();
 	if (iHappy > 0)
