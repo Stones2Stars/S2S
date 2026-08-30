@@ -850,6 +850,18 @@ void InfoValuation::rolledLegsAtCity(const CvCity& city, int iChannel, int64_t& 
 		percentSum += owner.getCascadePackage().readPercent(iChannel);
 	}
 	flatSum += city.getBuildingYields().readFlat(iChannel);
+	//	⛔ THE SPECIALIST PLANE IS PART OF THIS SUM, AND OMITTING IT DROPPED EVERY DEPOSIT ON IT.
+	//	§2 is ONE formula with ONE Σflat -- `(base + Σflat) × (100 + Σpercent)/100` -- so every flat on the
+	//	channel sums here, whichever plane holds it. A specialist's flats live on their own plane only because
+	//	their COMBINE POSITION differs in the two-tier RATE (§2a: BASE × modifier + EXTRA), which is the
+	//	yield/commerce rate cityReceiverRate computes and which takes the planes as separate arguments.
+	//	⚠ THIS leg serves the channels that have no such rate, where §2 applies unreduced and there is one flat
+	//	sum with no tier to keep apart -- so leaving the plane out preserved no distinction, it simply discarded
+	//	the deposits. A yield is one channel and they combine where needed; a specialist is not excluded from
+	//	the combine.
+	//	⚑ Measured: 26 specialists author a wellbeing channel alone (SPECIALIST_CELEBRITY +2 happiness,
+	//	SPECIALIST_DOCTOR +1.5 health, the settled citizen/slave penalties), and not one reached a city.
+	flatSum += city.getSpecialistYields().readFlat(iChannel);
 	percentSum += city.getCityPercents().readPercent(iChannel);
 }
 
