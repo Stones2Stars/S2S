@@ -26,18 +26,14 @@
   "operate": {
    "all": [
     {
-     "any": [
-      {
-       "type": "BONUS_WHALE",
-       "scope": "city",
-       "connection": "onSite"
-      },
-      {
-       "type": "BONUS_FOSSIL_BEDS",
-       "scope": "city",
-       "connection": "onSite"
-      }
-     ]
+     "type": "BONUS_WHALE",
+     "scope": "city",
+     "connection": "onSite"
+    },
+    {
+     "type": "BONUS_FOSSIL_BEDS",
+     "scope": "city",
+     "connection": "onSite"
     }
    ],
    "dormant": [

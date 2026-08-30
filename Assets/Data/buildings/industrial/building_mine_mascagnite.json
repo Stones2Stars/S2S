@@ -22,18 +22,14 @@
   "operate": {
    "all": [
     {
-     "any": [
-      {
-       "type": "BONUS_SULPHUR",
-       "scope": "city",
-       "connection": "onSite"
-      },
-      {
-       "type": "BONUS_COAL",
-       "scope": "city",
-       "connection": "onSite"
-      }
-     ]
+     "type": "BONUS_SULPHUR",
+     "scope": "city",
+     "connection": "onSite"
+    },
+    {
+     "type": "BONUS_COAL",
+     "scope": "city",
+     "connection": "onSite"
     }
    ],
    "dormant": [

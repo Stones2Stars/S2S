@@ -1167,12 +1167,27 @@ the total-observability bar below.)
   edit the working tree only — no commits, branch switches, pushes, or PRs unless explicitly asked. The owner builds
   the DLL from the current working tree; committing to a new branch or checking out away silently removes the
   changes from their build. **Never switch branches while the owner may be mid-build.** (Read-only git is always fine.)
-- **The info JSONs (`Assets/Data/**`) are a DERIVED artifact — regenerate and commit them FREELY, never ask.** They
-  are curator OUTPUT, never hand-edited; right-or-wrong lives in the CURATOR. Regeneration is idempotent and cheap:
-  fix curator → `--sample` verify → `--write` → commit the regenerated data alongside the curator, so the two never
-  dangle apart. This does NOT loosen commit-on-explicit-ask for gameplay CODE.
-- **ALWAYS RECURATE WHEN A DECISION LANDS** —
-  any ruling that changes what the data model carries triggers the curator update + regen in the SAME work item.
+- **⛔ THE INFO JSONs (`Assets/Data/**`) ARE THE AUTHORED SOURCE — EDIT THEM DIRECTLY, and do NOT route a data fix
+  through the curator.** The data is SET and the game is LIVE on it, so the JSON is what the game is: a data change
+  lands there, only. It takes a **VERY** special case to be a curator problem at this stage — reach for the curator
+  only where the defect is genuinely a whole-corpus CONVERSION RULE, never to correct what one entry says.
+  ⛔ **AND THE LEGACY XML IS OBSOLETE AS A SOURCE OF TRUTH — it CANNOT be relied on unless specifically stated.**
+  It is a pre-migration snapshot that the authored JSON has since moved away from, so *"the XML says X"* settles
+  NOTHING about what the game does; where the two disagree the JSON is simply right. ⚠ Do not read it to
+  reconstruct intent, and do not "restore" the JSON toward it.
+  ⛔ **So a REGEN is no longer free, and the retired rule said the exact opposite** — it read *"regenerate and commit
+  FREELY, never ask; right-or-wrong lives in the CURATOR"*, which is now backwards and destructive: a blanket regen
+  OVERWRITES the authored data with conversion output and silently discards every fix made since. Do not run one as
+  a matter of course, and never to "tidy" a hand edit.
+  ⚑ **A MIGRATION-ERA SHAPE THEREFORE CARRIES NO AUTHORITY.** What the curator produced is an artifact of the
+  conversion, not authored intent — so *"the curator did this deliberately"* is never on its own a reason to keep a
+  gate, a fold or a value that is wrong in the game. ⚠ The curator's own comments read as rulings and are the trap
+  here: they record why a CONVERSION chose a shape, which is not the same claim as that shape being right.
+  ⚖ **And the data is now GAMEPLAY, so it follows the ordinary review rule** (the owner sees the diff / an active
+  issue) — the old free-to-commit exemption existed only because the JSON was derived, and that premise is gone.
+- **⛔ THE RUNTIME BAN ON THE LEGACY XML IS UNCHANGED AND IS NOT WEAKENED BY ANY OF THE ABOVE** — "obsolete as a
+  data source" is not "gone", and a replaced info's XML must still never be read INTO THE GAME
+  ([the hard rule](#build-and-test)).
 - **Docs-only changes go to `main` ONLY when the owner explicitly authorizes it**; default is the working branch. A
   branch-coupled doc (e.g. cascade specs on `json-data-migration`) belongs with that work and commits on the branch.
   The canonical straight-to-`main` docs are the INDEXES (`indexes/DESPAIR_INDEX.*`, `REALISM_INDEX.*`, the

@@ -27,18 +27,14 @@
   "operate": {
    "all": [
     {
-     "any": [
-      {
-       "type": "BONUS_SAPPHIRES",
-       "scope": "city",
-       "connection": "onSite"
-      },
-      {
-       "type": "BONUS_STONE",
-       "scope": "city",
-       "connection": "onSite"
-      }
-     ]
+     "type": "BONUS_SAPPHIRES",
+     "scope": "city",
+     "connection": "onSite"
+    },
+    {
+     "type": "BONUS_STONE",
+     "scope": "city",
+     "connection": "onSite"
     }
    ],
    "dormant": [

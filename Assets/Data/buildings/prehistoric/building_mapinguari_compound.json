@@ -16,6 +16,7 @@
    ],
    "all": [
     "TECH_SIMPLE_WOOD_WORKING",
+    "HERITAGE_FOLKLORE_ANTEATER",
     {
      "type": "MAPCATEGORY_EARTH",
      "scope": "plot"
