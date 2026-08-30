@@ -1870,8 +1870,6 @@ public:
 	void clearLeaderTraits();
 
 
-	int getNationalGreatPeopleUnitRate(const UnitTypes eIndex) const;
-	void changeNationalGreatPeopleUnitRate(const UnitTypes eIndex, const int iChange);
 
 
 
@@ -1992,7 +1990,6 @@ private:
 	std::map<short, int> m_bonusMintedPercent;
 	std::map<short, int> m_extraBuildingHappiness;
 	std::map<short, int> m_extraBuildingHealth;
-	std::map<short, int> m_greatPeopleRateforUnit;
 	std::map<short, char> m_goldenAgeOnBirthOfGreatPersonCount;
 
 	int m_iNumAnarchyTurns;

@@ -628,7 +628,6 @@ void CvPlayer::uninit()
 	m_unitMaking.clear();
 	m_greatGeneralPointsType.clear();
 	m_goldenAgeOnBirthOfGreatPersonCount.clear();
-	m_greatPeopleRateforUnit.clear();
 	m_buildingMaking.clear();
 	m_extraBuildingHappiness.clear();
 	m_extraBuildingHealth.clear();
@@ -17511,20 +17510,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 				}
 			}
 
-			iSize = 0;
-			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "iGreatPeopleRateforUnitSize");
-			while (iSize-- > 0)
-			{
-				WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iType, "iGreatPeopleRateforUnitType");
-				WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iCount, "iGreatPeopleRateforUnitCount");
-				iType = static_cast<short>(wrapper.getNewClassEnumValue(REMAPPED_CLASS_TYPE_UNITS, iType, true));
-
-				if (iType > -1)
-				{
-					m_greatPeopleRateforUnit.insert(std::make_pair(iType, iCount));
-				}
-			}
-
 			// Unit counters
 			iSize = 0;
 			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "UnitCountSMSize");
@@ -18178,12 +18163,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 			{
 				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->first, "iGoldenAgeOnBirthOfGreatPersonCountType");
 				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->second, "iGoldenAgeOnBirthOfGreatPersonCountCount");
-			}
-			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", (short)m_greatPeopleRateforUnit.size(), "iGreatPeopleRateforUnitSize");
-			for (std::map<short, int>::const_iterator it = m_greatPeopleRateforUnit.begin(), itEnd = m_greatPeopleRateforUnit.end(); it != itEnd; ++it)
-			{
-				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->first, "iGreatPeopleRateforUnitType");
-				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", it->second, "iGreatPeopleRateforUnitCount");
 			}
 			// Unit counters
 			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", (short)m_unitCountSM.size(), "UnitCountSMSize");
@@ -25562,43 +25541,6 @@ void CvPlayer::clearLeaderTraits()
 		}
 	}
 	setLeaderHeadLevel(0);
-}
-
-
-void CvPlayer::changeNationalGreatPeopleUnitRate(const UnitTypes eUnit, const int iChange)
-{
-	FASSERT_BOUNDS(-1, GC.getNumUnitInfos(), eUnit);
-
-	if (iChange == 0)
-	{
-		FErrorMsg("This is not a change!");
-		return;
-	}
-	if (eUnit == NO_UNIT)
-	{
-		return;
-	}
-	std::map<short, int>::const_iterator itr = m_greatPeopleRateforUnit.find((short)eUnit);
-
-	if (itr == m_greatPeopleRateforUnit.end())
-	{
-		m_greatPeopleRateforUnit.insert(std::make_pair((short)eUnit, iChange));
-	}
-	else if (itr->second == -iChange)
-	{
-		m_greatPeopleRateforUnit.erase(itr->first);
-	}
-	else // change unit count
-	{
-		m_greatPeopleRateforUnit[itr->first] += iChange;
-	}
-}
-
-int CvPlayer::getNationalGreatPeopleUnitRate(const UnitTypes eUnit) const
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitInfos(), eUnit);
-	std::map<short, int>::const_iterator itr = m_greatPeopleRateforUnit.find((short)eUnit);
-	return itr != m_greatPeopleRateforUnit.end() ? itr->second : 0;
 }
 
 

@@ -659,7 +659,6 @@ CvCity::CvCity()
 
 	m_paiProjectProduction = NULL;
 	m_paiUnitProduction = NULL;
-	m_paiGreatPeopleUnitRate = NULL;
 	m_paiGreatPeopleUnitProgress = NULL;
 	m_paiSpecialistCount = NULL;
 	m_paiForceSpecialistCount = NULL;
@@ -917,7 +916,6 @@ void CvCity::uninit()
 {
 	SAFE_DELETE_ARRAY(m_paiProjectProduction);
 	SAFE_DELETE_ARRAY(m_paiUnitProduction);
-	SAFE_DELETE_ARRAY(m_paiGreatPeopleUnitRate);
 	SAFE_DELETE_ARRAY(m_paiGreatPeopleUnitProgress);
 	SAFE_DELETE_ARRAY(m_paiSpecialistCount);
 	SAFE_DELETE_ARRAY(m_paiForceSpecialistCount);
@@ -1158,12 +1156,10 @@ void CvCity::reset(int iID, PlayerTypes eOwner, int iX, int iY, bool bConstructo
 		}
 
 		m_paiUnitProduction = new int[GC.getNumUnitInfos()];
-		m_paiGreatPeopleUnitRate = new int[GC.getNumUnitInfos()];
 		m_paiGreatPeopleUnitProgress = new int[GC.getNumUnitInfos()];
 		for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
 		{
 			m_paiUnitProduction[iI] = 0;
-			m_paiGreatPeopleUnitRate[iI] = 0;
 			m_paiGreatPeopleUnitProgress[iI] = 0;
 		}
 
@@ -9537,25 +9533,76 @@ int CvCity::getUnitProductionDecayTurns(UnitTypes eIndex) const
 }
 
 
-int CvCity::getGreatPeopleUnitRate(UnitTypes eIndex) const
+//	WHICH GREAT PERSON this city is generating, and how fast -- the per-type weights the spawn draws against.
+//	A source contributes its greatPeopleRate to the city TOTAL through the ordinary channel, and separately
+//	NAMES the great person its contribution weights toward (`identity.greatPeopleUnitType`, authored by 488
+//	buildings and by the specialists). The type is never a target on the channel, so the split cannot come out
+//	of the package: it is the source's own rate read against its own designation, which is what this does.
+//	⚠ ONE PASS over the city's sources, never a per-type answer. doGreatPeople asks about EVERY unit in the
+//	game, so a per-type scan of the building registry would be O(units × buildings) per city per turn.
+//	⚠ ×100 native like every authored amount -- the caller reduces at the warehouse edge, exactly as the city
+//	total does ([north-star.md] the warehouse carve-out).
+void CvCity::greatPeopleUnitRates(std::map<short, int>& greatPeopleUnitRates) const
 {
-	FASSERT_BOUNDS(0, GC.getNumUnitInfos(), eIndex);
-	int iTotalGreatPeopleUnitRate = 0;
-	iTotalGreatPeopleUnitRate += m_paiGreatPeopleUnitRate[eIndex];
-	iTotalGreatPeopleUnitRate += GET_PLAYER(getOwner()).getNationalGreatPeopleUnitRate(eIndex);
-	return std::max(0, iTotalGreatPeopleUnitRate);
-}
+	greatPeopleUnitRates.clear();
 
-void CvCity::setGreatPeopleUnitRate(UnitTypes eIndex, int iNewValue)
-{
-	FASSERT_BOUNDS(0, GC.getNumUnitInfos(), eIndex);
-	m_paiGreatPeopleUnitRate[eIndex] = iNewValue;
-}
+	if (isDisorder())
+	{
+		return;
+	}
+	const CityContext& cityContext = getCityContext();
+	const EmpireContext& empireContext = GET_PLAYER(getOwner()).getEmpireContext();
+	const CvPlotGroup* pPlotGroup = plotGroup(getOwner());
 
+	for (int iI = 0; iI < GC.getNumBuildingInfos(); iI++)
+	{
+		const BuildingTypes eBuilding = static_cast<BuildingTypes>(iI);
 
-void CvCity::changeGreatPeopleUnitRate(UnitTypes eIndex, int iChange)
-{
-	setGreatPeopleUnitRate(eIndex, (m_paiGreatPeopleUnitRate[eIndex] + iChange));
+		//	A dormant building generates nothing, exactly as it deposits nothing.
+		if (!isActiveBuilding(eBuilding))
+		{
+			continue;
+		}
+		const CvBuildingInfo& kBuilding = GC.getBuildingInfo(eBuilding);
+		const int iGreatPersonUnit = kBuilding.getGreatPeopleUnitType();
+
+		if (iGreatPersonUnit < 0)
+		{
+			continue;
+		}
+		const int iRate = kBuilding.expectedModifier(MODFAM_GREAT_PEOPLE_RATE, (int)CHANNEL_AMOUNT,
+			CASC_UNIT_FLAT, cityContext, empireContext, pPlotGroup);
+
+		if (iRate > 0)
+		{
+			greatPeopleUnitRates[static_cast<short>(iGreatPersonUnit)] += iRate;
+		}
+	}
+
+	for (int iI = 0; iI < GC.getNumSpecialistInfos(); iI++)
+	{
+		const SpecialistTypes eSpecialist = static_cast<SpecialistTypes>(iI);
+		const int iSpecialists = getSpecialistCount(eSpecialist) + getFreeSpecialistCount(eSpecialist);
+
+		if (iSpecialists < 1)
+		{
+			continue;
+		}
+		const CvSpecialistInfo& kSpecialist = GC.getSpecialistInfo(eSpecialist);
+		const int iGreatPersonUnit = kSpecialist.getGreatPeopleUnitType();
+
+		if (iGreatPersonUnit < 0)
+		{
+			continue;
+		}
+		const int iRate = kSpecialist.expectedModifier(MODFAM_GREAT_PEOPLE_RATE, (int)CHANNEL_AMOUNT,
+			CASC_UNIT_FLAT, cityContext, empireContext, pPlotGroup);
+
+		if (iRate > 0)
+		{
+			greatPeopleUnitRates[static_cast<short>(iGreatPersonUnit)] += iSpecialists * iRate;
+		}
+	}
 }
 
 
@@ -12368,9 +12415,14 @@ void CvCity::doGreatPeople()
 	// serialized progress (and its threshold) keep their meaning ([north-star.md] warehouse carve-out).
 	changeGreatPeopleProgress(getGreatPeopleRate() / 100);
 
-	for (int iI = 0; iI < GC.getNumUnitInfos(); iI++)
+	//	The per-type weights advance from what the city is actually generating. Same warehouse edge as the total
+	//	above, so the two ledgers stay in one scale.
+	std::map<short, int> greatPeopleRatesByUnit;
+	greatPeopleUnitRates(greatPeopleRatesByUnit);
+
+	for (std::map<short, int>::const_iterator it = greatPeopleRatesByUnit.begin(); it != greatPeopleRatesByUnit.end(); ++it)
 	{
-		changeGreatPeopleUnitProgress(((UnitTypes)iI), getGreatPeopleUnitRate((UnitTypes)iI));
+		changeGreatPeopleUnitProgress(static_cast<UnitTypes>(it->first), it->second / 100);
 	}
 
 	if (getGreatPeopleProgress() >= GET_PLAYER(getOwner()).greatPeopleThresholdNonMilitary())
@@ -12535,7 +12587,6 @@ void CvCity::readBody(FDataStreamBase* pStream)
 
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_PROJECTS, GC.getNumProjectInfos(), m_paiProjectProduction);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_paiUnitProduction);
-	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_paiGreatPeopleUnitRate);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_paiGreatPeopleUnitProgress);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiSpecialistCount);
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiForceSpecialistCount);
@@ -13158,7 +13209,6 @@ void CvCity::write(FDataStreamBase* pStream)
 
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_PROJECTS, GC.getNumProjectInfos(), m_paiProjectProduction);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_paiUnitProduction);
-	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_paiGreatPeopleUnitRate);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_UNITS, GC.getNumUnitInfos(), m_paiGreatPeopleUnitProgress);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiSpecialistCount);
 	WRAPPER_WRITE_CLASS_ARRAY(wrapper, "CvCity", REMAPPED_CLASS_TYPE_SPECIALISTS, GC.getNumSpecialistInfos(), m_paiForceSpecialistCount);

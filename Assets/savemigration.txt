@@ -2339,3 +2339,18 @@ CvPlayer::m_iNumMilitaryUnits             (int)
 | rather than a correction of it. Maintained incrementally in play by CvPlot::setPlotType, whose delta now
 | keys off LAND-ness instead of the water-transition guard.
 CvMap::m_iLandPlots                       (int)
+| The city's per-great-person-type RATE, and the player's national twin of it. Both were DEAD ACCUMULATORS in
+| the exact shape AGENTS.md names -- a mutator with no remaining call site, a member still serialized, and a
+| getter still read -- and the consequence was total: getGreatPeopleUnitRate summed only these two, so it
+| answered 0 for every unit forever, the per-type PROGRESS never grew, and CvCity::doGreatPeople could never
+| select a type. The threshold deduction sits inside that selection, so progress also never spent: a city sat
+| at "882 of 880" climbing forever and NO GREAT PERSON WAS EVER BORN (#539).
+| REPLACEMENT: CvCity::greatPeopleUnitRates derives the weights in one pass from what the city HOLDS -- each
+| active building and assigned specialist contributing its own greatPeopleRate under the great person its
+| `identity.greatPeopleUnitType` names. Nothing is stored, so there is no accumulator left to go dead again.
+| ⚠ The per-type PROGRESS (CvCity::m_paiGreatPeopleUnitProgress) is NOT cut -- it is genuine accumulated
+| history and stays serialized.
+CvCity::m_paiGreatPeopleUnitRate          (int array, GC.getNumUnitInfos())
+CvPlayer::iGreatPeopleRateforUnitSize     (short)
+CvPlayer::iGreatPeopleRateforUnitType     (short, variable-length)
+CvPlayer::iGreatPeopleRateforUnitCount    (int, variable-length)
