@@ -505,7 +505,7 @@ score, a name, and the respect it does not deserve. These entries double as an h
 summary of the state of the inherited codebase, which is part of why the rework exists.*
 
 *Fresh despair may be reported, contested, or savored on the
-[S2S Discord](https://discord.gg/R8Uejx6uaK).*
+[S2S Discord](https://discord.gg/YkFKJGK8R).*
 
 *Sibling publications: the [Realism Index](REALISM_INDEX.md) (mechanics working exactly as
 designed, which is somehow worse) and the [Complexity Index](COMPLEXITY_INDEX.md) (one entry,

@@ -61,6 +61,6 @@ triggers the AppVeyor build that publishes to both channels above.
 
 ## Community
 
-- Discord: [discord.gg/R8Uejx6uaK](https://discord.gg/R8Uejx6uaK)
+- Discord: [discord.gg/R8Uejx6uaK](https://discord.gg/YkFKJGK8R)
 - [The Despair Index](docs/indexes/DESPAIR_INDEX.md) — a rigorously unscientific
   ranking of bugs unearthed by the rework

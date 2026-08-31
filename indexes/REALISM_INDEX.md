@@ -260,7 +260,7 @@ working exactly as designed and the design describes a physically impossible wor
 to whichever issue is trying to make it less realistic in the productive direction.*
 
 *Fresh realism may be reported, contested, or savored on the
-[S2S Discord](https://discord.gg/R8Uejx6uaK).*
+[S2S Discord](https://discord.gg/YkFKJGK8R).*
 
 *Sibling publications: the [Despair Index](DESPAIR_INDEX.md) (things the code does wrong) and
 the [Complexity Index](COMPLEXITY_INDEX.md) (one entry, and it is everything).*
