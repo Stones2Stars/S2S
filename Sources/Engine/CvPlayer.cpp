@@ -2346,6 +2346,7 @@ CvCity* CvPlayer::initCity(int iX, int iY, bool bBumpUnits, bool bUpdatePlotGrou
 void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool bUpdatePlotGroups)
 {
 	PROFILE_FUNC();
+	PERF_SCOPE("player.acquireCity", getID());
 	if (pOldCity->isMarkedForDestruction()) return;
 	pOldCity->markForDestruction();
 
@@ -2381,7 +2382,10 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 	// We can skip a lot if city is just to be razed right away.
 	const bool bAutoRaze = GC.getGame().isAutoRaze(const_cast<CvCity*>(pOldCity), eNewOwner, bConquest, bTrade, bRecapture);
 
-	CvEventReporter::getInstance().cityAcquired(eOldOwner, eNewOwner, pOldCity, bConquest, bTrade, bAutoRaze);
+	{
+		PERF_SCOPE("player.acquireCity.python.cityAcquired", getID());
+		CvEventReporter::getInstance().cityAcquired(eOldOwner, eNewOwner, pOldCity, bConquest, bTrade, bAutoRaze);
+	}
 
 	if (bAutoRaze)
 	{
@@ -2474,6 +2478,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 			// If civ has fixed borders, they'll retain more due to the lower threshold for maintaining ownership.
 			pOldCity->clearCultureDistanceCache();
 			const int iCultureLevel = pOldCity->getCultureLevel();
+			PERF_SCOPE("player.acquireCity.flipPlots", getID());
 			foreach_(CvPlot* pLoopPlot, pOldCity->plots(true))
 			{
 				const int iCultureDist = pOldCity->cultureDistance(*pLoopPlot);
@@ -2621,13 +2626,19 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 				aBuildingHealthChange.push_back(std::make_pair((BuildingTypes)iI, iChange));
 			}
 		}
-		pOldCity->kill(false, false); // Invalidates pOldCity pointer.
+		{
+			PERF_SCOPE("player.acquireCity.killOldCity", getID());
+			pOldCity->kill(false, false); // Invalidates pOldCity pointer.
+		}
 
 		if (bTrade)
 		{
 			algo::for_each(pCityPlot->rect(1, 1), bind(&CvPlot::setCulture, _1, eOldOwner, 0, false, false, false));
 		}
-		pNewCity = initCity(pCityPlot->getX(), pCityPlot->getY(), !bConquest, false);
+		{
+			PERF_SCOPE("player.acquireCity.initCity", getID());
+			pNewCity = initCity(pCityPlot->getX(), pCityPlot->getY(), !bConquest, false);
+		}
 
 		FAssertMsg(pNewCity, "NewCity is not assigned a valid value");
 
@@ -2661,17 +2672,20 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 		// [enabler.md §3.2]). ⛔ No successor is placed either way -- what the legacy culture-shell chain used to
 		// put here is what the curator now reads to emit that tree on the building itself.
 		const CvTeam& newTeam = GET_TEAM(getTeam());
-		for (std::map<BuildingTypes, BuiltBuildingData>::const_iterator itr = buildingLedger.begin(); itr != buildingLedger.end(); ++itr)
 		{
-			if (newTeam.isObsoleteBuilding(itr->first))
+			PERF_SCOPE("player.acquireCity.setHasBuilding.all", getID());
+			for (std::map<BuildingTypes, BuiltBuildingData>::const_iterator itr = buildingLedger.begin(); itr != buildingLedger.end(); ++itr)
 			{
-				const CvModifiers* pWhenObsolete = GC.getBuildingInfo(itr->first).getWhenObsolete();
-				if (pWhenObsolete == NULL || pWhenObsolete->empty())
+				if (newTeam.isObsoleteBuilding(itr->first))
 				{
-					continue;
+					const CvModifiers* pWhenObsolete = GC.getBuildingInfo(itr->first).getWhenObsolete();
+					if (pWhenObsolete == NULL || pWhenObsolete->empty())
+					{
+						continue;
+					}
 				}
+				pNewCity->setHasBuilding(itr->first, true, itr->second.eBuiltBy, itr->second.iTimeBuilt, false);
 			}
-			pNewCity->setHasBuilding(itr->first, true, itr->second.eBuiltBy, itr->second.iTimeBuilt, false);
 		}
 
 		for (BuildingChangeArray::iterator it = aBuildingHappyChange.begin(); it != aBuildingHappyChange.end(); ++it)
@@ -2776,7 +2790,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 	{
 		emitCityOwnerRemoved(pNewCity->getID(), (int)eOldOwner);
 	}
-	emitCityOwnerAdded(pNewCity->getID(), (int)eNewOwner);
+	emitCityOwnerAdded(pNewCity->getID(), (int)eNewOwner, GC.getMap().plotNum(pNewCity->getX(), pNewCity->getY()));
 
 		// Don't bother with plot group calculations if they are immediately to be superseded by an auto raze
 		if (bUpdatePlotGroups)
@@ -2826,7 +2840,11 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 					pInfo->setData1(pNewCity->getID());
 					gDLL->getInterfaceIFace()->addPopup(pInfo, eNewOwner);
 				}
-				else CvEventReporter::getInstance().cityAcquiredAndKept(eOldOwner, eNewOwner, pNewCity, bConquest, bTrade);
+				else
+				{
+					PERF_SCOPE("player.acquireCity.python.cityAcquiredAndKept", getID());
+					CvEventReporter::getInstance().cityAcquiredAndKept(eOldOwner, eNewOwner, pNewCity, bConquest, bTrade);
+				}
 			}
 		}
 		else if (bHuman)
@@ -2856,6 +2874,7 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 			}
 			else
 			{
+				PERF_SCOPE("player.acquireCity.python.cityAcquiredAndKept", getID());
 				CvEventReporter::getInstance().cityAcquiredAndKept(eOldOwner, eNewOwner, pNewCity, bConquest, bTrade);
 			}
 		}
@@ -6248,7 +6267,7 @@ void CvPlayer::found(int iX, int iY, CvUnit *pUnit)
 		// reseed uses at CvCity::read, which establishes that the city belongs to its owner before its contents.
 		// Without this a FOUNDED city never announces ownership in live play at all: the only other owner emits are
 		// dispose and acquire, so the load path and the play path would disagree about the same fact.
-		emitCityOwnerAdded(pCity->getID(), (int)getID());
+		emitCityOwnerAdded(pCity->getID(), (int)getID(), GC.getMap().plotNum(pCity->getX(), pCity->getY()));
 		emitCityFounded((int)getID(), pCity->getID(),
 			(pUnit != NULL) ? (int)pUnit->getUnitType() : -1, (pUnit != NULL) ? pUnit->getID() : -1);
 	}

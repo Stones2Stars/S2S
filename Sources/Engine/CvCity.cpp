@@ -1381,6 +1381,17 @@ void CvCity::changeReinforcementCounter(int iChange)
 }
 
 
+namespace
+{
+	// [PERF] accumulators for the steps of one building flip, summed over a whole removal sweep and logged
+	// once by CvCity::kill (per-flip lines would be spam; the sweep is the unit that is slow).
+	double s_dBuildingFlipInvalidateMs = 0.0;
+	double s_dBuildingFlipLedgerMs = 0.0;
+	double s_dBuildingFlipSetupMs = 0.0;
+	double s_dBuildingFlipProcessMs = 0.0;
+	double s_dBuildingFlipEmitMs = 0.0;
+}
+
 void CvCity::kill(bool bUpdatePlotGroups, bool bUpdateCulture)
 {
 	PROFILE_FUNC();
@@ -1418,11 +1429,28 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bUpdateCulture)
 	setCultureLevel(NO_CULTURELEVEL, false);
 	clearCultureDistanceCache();
 
-	for (int iI = 0, iNum = GC.getNumBuildingInfos(); iI < iNum; iI++)
 	{
-		changeHasBuilding((BuildingTypes)iI, false);
+		PERF_SCOPE("city.kill.removeBuildings", eOwner);
+		s_dBuildingFlipInvalidateMs = 0.0;
+		s_dBuildingFlipLedgerMs = 0.0;
+		s_dBuildingFlipSetupMs = 0.0;
+		s_dBuildingFlipProcessMs = 0.0;
+		s_dBuildingFlipEmitMs = 0.0;
+		const int iRemoved = (int)getHasBuildings().size();
+		spinePerfConsumerAccumReset();
+		BuildingEnabler::perfAccumReset();
+		foreach_(const BuildingTypes eType, getHasBuildings())
+		{
+			changeHasBuilding(eType, false);
+		}
+		BuildingEnabler::perfAccumLog("city.kill.removeBuildings.enablerLegs", (int)eOwner);
+		logPerf(1, "[PERF/phase] turn=%d owner=%d phase=city.kill.removeBuildings.split count=%d invalidate=%.3f ledger=%.3f setup=%.3f process=%.3f emit=%.3f",
+			GC.getGame().getGameTurn(), (int)eOwner, iRemoved, s_dBuildingFlipInvalidateMs, s_dBuildingFlipLedgerMs,
+			s_dBuildingFlipSetupMs, s_dBuildingFlipProcessMs, s_dBuildingFlipEmitMs);
+		spinePerfConsumerAccumLog("city.kill.removeBuildings.consumers", (int)eOwner);
 	}
 
+	PERF_SCOPE("city.kill.afterBuildings", eOwner);
 	for (int iI = 0; iI < GC.getNumReligionInfos(); iI++)
 	{
 		setHasReligion((ReligionTypes)iI, false, false, true);
@@ -1443,7 +1471,10 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bUpdateCulture)
 		}
 	}
 
-	setPopulation(0);
+	{
+		PERF_SCOPE("city.kill.setPopulationZero", eOwner);
+		setPopulation(0);
+	}
 	//AI_assignWorkingPlots();
 	clearOrderQueue();
 
@@ -1474,16 +1505,22 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bUpdateCulture)
 
 	// The city is going: withdraw its membership from every plot of its work area, so no store keeps folding a
 	// city that no longer exists.
-	changeWorkableArea(getNumCityPlots(), 0);
+	{
+		PERF_SCOPE("city.kill.detachPlot", eOwner);
+		changeWorkableArea(getNumCityPlots(), 0);
+		pPlot->setPlotCity(NULL);
+		pPlot->setImprovementType(GC.getIMPROVEMENT_CITY_RUINS());
+	}
 
-	pPlot->setPlotCity(NULL);
+	{
+		PERF_SCOPE("city.kill.python.cityLost", eOwner);
+		CvEventReporter::getInstance().cityLost(this);
+	}
 
-	pPlot->setImprovementType(GC.getIMPROVEMENT_CITY_RUINS());
-
-
-	CvEventReporter::getInstance().cityLost(this);
-
-	kOwner.deleteCity(getID());
+	{
+		PERF_SCOPE("city.kill.deleteCity", eOwner);
+		kOwner.deleteCity(getID());
+	}
 
 	if (bUpdateCulture)
 	{
@@ -1509,7 +1546,10 @@ void CvCity::kill(bool bUpdatePlotGroups, bool bUpdateCulture)
 	}
 
 
-	GC.getMap().updateWorkingCity();
+	{
+		PERF_SCOPE("city.kill.updateWorkingCity", eOwner);
+		GC.getMap().updateWorkingCity();
+	}
 
 	kOwner.AI_makeAssignWorkDirty();
 
@@ -10222,7 +10262,11 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 	// placing systems never learn the tag exists. The city stores nothing.
 	if (GC.getBuildingInfo(eType).isEmpireLevel())
 	{
-		GET_PLAYER(getOwner()).setHasEmpireBuilding(eType, bNewValue, bFirst);
+		// Only PLACEMENT routes to the holder; a city change never removes what the empire holds.
+		if (bNewValue)
+		{
+			GET_PLAYER(getOwner()).setHasEmpireBuilding(eType, true, bFirst);
+		}
 		return;
 	}
 
@@ -10233,24 +10277,34 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 #ifdef YIELD_VALUE_CACHING
 		ClearYieldValueCache(); // A new building can change yield rates
 #endif
-		invalidateCachedCanTrainForUnit(NO_UNIT);
-
-		alterBuildingLedger(eType, bNewValue, eOriginalOwner, iOriginalTime);
-
-		setupBuilding(kBuilding, eType, bNewValue, bFirst);
-
-		if (bNewValue) // Building addition
 		{
-			processBuilding(eType, 1, false, true);
+			PerfAccumTimer timer(s_dBuildingFlipInvalidateMs);
+			invalidateCachedCanTrainForUnit(NO_UNIT);
 		}
-		else // Building removal
 		{
-			// A DORMANT building contributed nothing, so there is nothing to un-process -- only an ACTIVE one
-			// needs its contribution removed. The verdict is the ENABLER's operating set (enabler.md §3.2), never
-			// a legacy disabled-flag (docs/specs/validation.md §pollution guardrail (zero legacy ride-in)).
-			if (m_operatingBuildings.active.count((int)eType) != 0)
+			PerfAccumTimer timer(s_dBuildingFlipLedgerMs);
+			alterBuildingLedger(eType, bNewValue, eOriginalOwner, iOriginalTime);
+		}
+		{
+			PerfAccumTimer timer(s_dBuildingFlipSetupMs);
+			setupBuilding(kBuilding, eType, bNewValue, bFirst);
+		}
+
+		{
+			PerfAccumTimer timer(s_dBuildingFlipProcessMs);
+			if (bNewValue) // Building addition
 			{
-				processBuilding(eType, -1, false, true);
+				processBuilding(eType, 1, false, true);
+			}
+			else // Building removal
+			{
+				// A DORMANT building contributed nothing, so there is nothing to un-process -- only an ACTIVE one
+				// needs its contribution removed. The verdict is the ENABLER's operating set (enabler.md §3.2), never
+				// a legacy disabled-flag (docs/specs/validation.md §pollution guardrail (zero legacy ride-in)).
+				if (m_operatingBuildings.active.count((int)eType) != 0)
+				{
+					processBuilding(eType, -1, false, true);
+				}
 			}
 		}
 
@@ -10259,13 +10313,16 @@ void CvCity::setHasBuilding(const BuildingTypes eType, const bool bNewValue, con
 		// (operating) crossing is the enabler's separate SEVT_BUILDING_ACTIVATED / _DORMANTED.
 		// The two directions are two FACTS, so the branch is here ONCE rather than in every consumer's body
 		// (docs/spine.md §A FACT NAMES THE HAPPENING).
-		if (bNewValue)
 		{
-			emitCityBuildingAdded(getID(), getOwner(), (int)eType, bFirst);
-		}
-		else
-		{
-			emitCityBuildingRemoved(getID(), getOwner(), (int)eType);
+			PerfAccumTimer timer(s_dBuildingFlipEmitMs);
+			if (bNewValue)
+			{
+				emitCityBuildingAdded(getID(), getOwner(), (int)eType, bFirst);
+			}
+			else
+			{
+				emitCityBuildingRemoved(getID(), getOwner(), (int)eType);
+			}
 		}
 
 		// (Buildings REPLACED by this one are not disabled here: a predecessor standing under its successor is
@@ -12621,7 +12678,7 @@ void CvCity::readBody(FDataStreamBase* pStream)
 		// carries its loaded value is reset to unset and handed straight back to its setter. That keeps the
 		// setter the sole author of both the committed value and the fact, which a "commit here, announce
 		// there" split cannot: the two drift, and that is exactly what this pass is removing.
-		emitCityOwnerAdded(iCityId, iCityOwner);
+		emitCityOwnerAdded(iCityId, iCityOwner, GC.getMap().plotNum(m_iX, m_iY));
 		setPopulationInternal(iLoadedPopulation);
 		for (iI = 0; iI < GC.getNumReligionInfos(); ++iI)
 		{

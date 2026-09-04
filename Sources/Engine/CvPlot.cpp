@@ -12376,7 +12376,7 @@ bool CvPlot::hasDefender(
 				&&
 				pAttacker->isEnemy(GET_PLAYER(unitX->getOwner()).getTeam(), this, unitX)
 			)
-		&& (!pAttacker || !unitX->canUnitCoexistWithArrivingUnit(*pAttacker))
+		&& (!pAttacker || !unitX->canCoexistWithAttacker(*pAttacker, false, false))
 		&& (
 				!bTestPotentialEnemy
 				||

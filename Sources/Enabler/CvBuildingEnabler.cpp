@@ -13,6 +13,7 @@
 #include "CvInfo.h"
 #include "CvBuildingInfo.h"       // notConstructible (the enabler's own never-buildable flag; self-containment)
 #include "Repos/InfoRepo.h"
+#include "AI/BetterBTSAI.h"           // PerfAccumTimer / logPerf -- the [PERF] instrument
 #include "AI/CvPlayerAI.h"            // GET_PLAYER
 #include "AI/CvTeamAI.h"             // GET_TEAM
 #include "Defines/CvGlobals.h"
@@ -577,6 +578,33 @@ void BuildingEnabler::onCityTechChanged(TeamTypes eTeam, TechTypes eTech, bool b
 	}
 }
 
+namespace
+{
+	// [PERF] accumulators for the three re-gate legs of one building flip, summed over a sweep and logged once
+	// by the sweep's owner (CvCity::kill) -- per-flip lines would be spam; the sweep is what is slow.
+	double s_dBuildingChangedSelfGateMs = 0.0;
+	double s_dBuildingChangedCapFanMs = 0.0;
+	double s_dBuildingChangedCategoryMs = 0.0;
+
+	bool bd_capAuthored(const CvAllowed* pAllowed, EnAllowedCap eKind)
+	{
+		return pAllowed != NULL && pAllowed->cap(eKind) != -1;
+	}
+}
+
+void BuildingEnabler::perfAccumReset()
+{
+	s_dBuildingChangedSelfGateMs = 0.0;
+	s_dBuildingChangedCapFanMs = 0.0;
+	s_dBuildingChangedCategoryMs = 0.0;
+}
+
+void BuildingEnabler::perfAccumLog(const char* szPhase, int iOwner)
+{
+	logPerf(1, "[PERF/phase] turn=%d owner=%d phase=%s selfGate=%.3f capFan=%.3f category=%.3f",
+		GC.getGame().getGameTurn(), iOwner, szPhase, s_dBuildingChangedSelfGateMs, s_dBuildingChangedCapFanMs, s_dBuildingChangedCategoryMs);
+}
+
 void BuildingEnabler::onCityBuildingChanged(const CvCity& kCity, int iBuilding, bool bPresent)
 {
 	EnablerDomain& d = kCity.m_enabler.buildings;
@@ -592,34 +620,52 @@ void BuildingEnabler::onCityBuildingChanged(const CvCity& kCity, int iBuilding, 
 		// gate-on-entry + the step-2 re-gates in THIS city (building prereq atoms reference iBuilding)
 		std::set<int> touched;
 		bd_touched(jb, touched);
-		bd_gateSet(kCity, touched);
+		{
+			PerfAccumTimer timer(s_dBuildingChangedSelfGateMs);
+			bd_gateSet(kCity, touched);
+		}
 		// the CAP CROSSING (par.7.1 step 3): a capped building's count changed -- re-gate IT on every seeded
 		// city its cap scope reaches (a completed world wonder vanishes from every rival's list; the tally's
 		// buildings domain carries the counts). A GROUP-capped member's crossing re-gates ALL its group
-		// siblings (the grouped wonders: one member built consumes the shared slot). world/team caps reach ALL
-		// players; empire reaches the owner's -- the widest reach is used (idempotent gate evals).
+		// siblings (the grouped wonders: one member built consumes the shared slot). The reach IS the cap's
+		// scope (json.md par.4.4): world -> every player, team -> the owner's team, empire -> the owner alone.
 		const SpecialBuildingTypes eSb = (SpecialBuildingTypes)GC.getBuildingInfo((BuildingTypes)iBuilding).getSpecialBuildingType();
 		const CvInfo* jg = (eSb != NO_SPECIALBUILDING) ? InfoRepo<CvSpecialBuildingInfo>::get().get((int)eSb) : NULL;
-		const bool bGroupCapped = (jg != NULL && jg->getAllowed() != NULL);
-		if ((jb != NULL && jb->getAllowed() != NULL) || bGroupCapped)
+		const CvAllowed* pOwnCap = (jb != NULL) ? jb->getAllowed() : NULL;
+		const CvAllowed* pGroupCap = (jg != NULL) ? jg->getAllowed() : NULL;
+		if (pOwnCap != NULL || pGroupCap != NULL)
 		{
 			std::set<int> capSet;
 			capSet.insert(iBuilding);
-			if (bGroupCapped)
+			if (pGroupCap != NULL)
 			{
 				const std::vector<int>& mem = bd_sbMembers((int)eSb);
 				capSet.insert(mem.begin(), mem.end());
 			}
-			for (int iP = 0; iP < MAX_PLAYERS; iP++)
+			const bool bWorldReach = bd_capAuthored(pOwnCap, ALLOWEDCAP_WORLD) || bd_capAuthored(pGroupCap, ALLOWEDCAP_WORLD);
+			const bool bTeamReach = bWorldReach || bd_capAuthored(pOwnCap, ALLOWEDCAP_TEAM) || bd_capAuthored(pGroupCap, ALLOWEDCAP_TEAM);
 			{
-				CvPlayer& kP = GET_PLAYER((PlayerTypes)iP);
-				foreach_(const CvCity* pCity, kP.cities())
-					bd_gateSet(*pCity, capSet);
+				PerfAccumTimer timer(s_dBuildingChangedCapFanMs);
+				for (int iP = 0; iP < MAX_PLAYERS; iP++)
+				{
+					CvPlayer& kP = GET_PLAYER((PlayerTypes)iP);
+					if (!bWorldReach)
+					{
+						const bool bInReach = bTeamReach ? (kP.getTeam() == kPlayer.getTeam()) : (iP == (int)kCity.getOwner());
+						if (!bInReach)
+						{
+							continue;
+						}
+					}
+					foreach_(const CvCity* pCity, kP.cities())
+						bd_gateSet(*pCity, capSet);
+				}
 			}
 			// THIS CITY additionally re-gates every capped building: the per-city CATEGORY cap counts the city's
 			// wonders of a category, so one arriving can cap out every OTHER candidate of that category here --
 			// candidates the cap-scope fan above never names, because it re-gates the building whose own COUNT
 			// moved, not its category siblings.
+			PerfAccumTimer timer(s_dBuildingChangedCategoryMs);
 			const std::vector<int>& categoryCapped = bd_cappedBuildings();
 			std::set<int> categorySet(categoryCapped.begin(), categoryCapped.end());
 			bd_gateSet(kCity, categorySet);

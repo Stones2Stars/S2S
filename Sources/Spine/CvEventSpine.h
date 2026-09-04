@@ -914,7 +914,7 @@ void emitCityHeadquartersRemoved(int iCity, int iOwner, int iCorporation);
 void emitCityCultureLevelAdded(int iCity, int iOwner, int iLevel);
 void emitCityCultureLevelRemoved(int iCity, int iOwner, int iLevel);
 // The city's owner slot moved. REMOVED names the losing owner, ADDED the gaining one.
-void emitCityOwnerAdded(int iCity, int iOwner);
+void emitCityOwnerAdded(int iCity, int iOwner, int iPlot);
 void emitCityOwnerRemoved(int iCity, int iOwner);
 // Network MEMBERSHIP: the city's centre plot left one plot-group and joined another.
 void emitCityNetworkAdded(int iOwner, int iCity, int iPlotGroup);
@@ -1014,7 +1014,7 @@ void emitTeamMemberRemoved(int iTeam, int iCount);
 // ===== UNIT =====
 // A unit INSTANCE was created / died. Call KILLED from CvUnit::die and nowhere else: that function is the only
 // unconditional end of a unit's life. iPlot = -1 where the unit held none.
-void emitUnitCreated(int iUnitType, int iUnitId, int iOwner);
+void emitUnitCreated(int iUnitType, int iUnitId, int iOwner, int iPlot);
 void emitUnitKilled(int iUnitType, int iUnitId, int iOwner, int iPlot);
 // A resolved combat. Called from CvEventReporter::combatResult, BESIDE its Python callback -- the reporter's
 // arguments verbatim, so the spine sees exactly what Python sees and a later migration is a swap.
@@ -1132,6 +1132,7 @@ public:
 	void emit(const CvSpineEvent& kEvent);
 
 	bool anyInterest(EventKind eKind) const { return (m_iInterestMask & (1 << eKind)) != 0; }
+	const std::vector<IEventConsumer*>& consumers() const { return m_consumers; }
 
 private:
 	std::vector<IEventConsumer*> m_consumers;
@@ -1145,5 +1146,11 @@ CvEventSpine& eventSpine();
 //	is NOT a consumer (it reads the object-owned counts on demand, tally.md). Idempotent; call once
 //	(CvGame::doTurn guards it).
 void spineRegisterConsumers();
+
+// [PERF] per-consumer dispatch time, accumulated across every emit between a reset and a log. The log line names
+// each consumer by its type and its summed milliseconds, so a slow sweep is attributed to the consumer that
+// spent it rather than to the emit as a whole.
+void spinePerfConsumerAccumReset();
+void spinePerfConsumerAccumLog(const char* szPhase, int iOwner);
 
 #endif // CV_EVENT_SPINE_H

@@ -155,23 +155,23 @@ existed would have silently WIDENED every people-only transport into a troop car
 
 ### Criminal-type — `outlaw`
 
-Derived from the **criminal combat CLASS**, not a `DefaultUnitAI` role. A unit is criminal-type →
-tag **`outlaw`** iff its **primary `<Combat>` is `UNITCOMBAT_CRIMINAL`** *or* `UNITCOMBAT_CRIMINAL` appears in its
-**`<SubCombatTypes>`**. ⚑ That rule needs no special case: it is exactly "primary ∪ subs", which IS the union
-above, so `outlaw` is simply `UNITCOMBAT_CRIMINAL`'s authored tag like any other.
-
-This combat-class signal is **broader** than the old `UNITAI_INFILTRATOR` gate (which caught only **13**): it now
-covers **22** units, adding the ones INFILTRATOR missed — `OUTLAW` (primary `RUFFIAN` + subcombat `CRIMINAL`),
-`ASSASSIN`/`HASHISHIN` (primary `STRIKE_TEAM` + subcombat `CRIMINAL`), `CUTTHROAT`, `BEGGAR`, `BOSNEGERS`, `HAJDUK`,
-`HEZBOLLAH`, `KARAI_PYHARE` — alongside the original INFILTRATOR set (`biker_gang` · `burglar` · `exile` ·
-`gunfighter` · `hacker` · `mobster_car` · `robber` · `rogue` · `scoundrel` · `street_gang` · `technarchist` ·
-`thief` · `thug`). The full current set (22): `assassin` · `beggar` · `biker_gang` · `bosnegers` · `burglar` ·
-`cutthroat` · `exile` · `gunfighter` · `hacker` · `hajduk` · `hashishin` · `hezbollah` · `karai_pyhare` ·
-`mobster_car` · `outlaw` · `robber` · `rogue` · `scoundrel` · `street_gang` · `technarchist` · `thief` · `thug`.
+Derived from the **criminal combat CLASSES**, not a `DefaultUnitAI` role. The tag is authored on
+`UNITCOMBAT_CRIMINAL`, `UNITCOMBAT_EXILE`, `UNITCOMBAT_PIRATE` and `UNITCOMBAT_RUFFIAN`, and a unit is
+criminal-type iff one of those is its **primary `<Combat>`** or appears in its **`<SubCombatTypes>`**. ⚑ That
+rule needs no special case: it is exactly "primary ∪ subs", which IS the union above, so `outlaw` is simply
+those classes' authored tag like any other — the criminals proper, the exiles, the pirates and the ruffians
+(bandits, highwaymen, partisans, rebels) all read as one identity.
 
 > `hiddenNationality` is **not** the gate — it is a **skill** (mutable, promotion-grantable; e.g.
 > `PROMOTION_PROUD_PIRATE` grants it), see [skills.md](skills.md) §1. The criminal-type `outlaw` tag and the
 > hidden-nationality skill are independent: most outlaws carry the skill, but the tag is defined by the combat class.
+
+> **⛔ A CRIMINAL NEVER CAPTURES AN NPC CITY.** The capture gate in `CvUnit::setXY` refuses an `outlaw`-tagged
+> unit against a city owned by an NPC player, beside the hidden-nationality refusal that already stood there.
+> ⚑ The two tests are kept SEPARATE because they answer different questions: a hidden-nationality unit
+> captures FOR the barbarians, so taking a barbarian city for them is a no-op; an outlaw is refused on its
+> IDENTITY, whether or not it hides its nationality. An undefended barbarian city is therefore simply entered,
+> never taken.
 
 ## Open
 

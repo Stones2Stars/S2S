@@ -52,6 +52,11 @@ public:
 	// The city's own facts arrive as events.
 	static void onCityCreated(const CvCity& kCity);
 
+	// [PERF] the three re-gate legs of onCityBuildingChanged, accumulated across a sweep; the sweep's owner
+	// resets before and logs once after.
+	static void perfAccumReset();
+	static void perfAccumLog(const char* szPhase, int iOwner);
+
 	// ==== THE REQUIRES GATE (enabler.md par.7.1 steps 2+3): requiresMet (build ∧ operate) + the allowed
 	// self-caps, through the ONE evaluator/cap check; a failed gate flips a tree member LISTED -> GREYED. ====
 	// LOAD follows the par.7.1 order rule's "gate once after the stream ends" option: NO gate evaluations

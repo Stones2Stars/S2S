@@ -480,7 +480,8 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 		//   BEFORE doSetDefaultStatuses -- that calls statusUpdate(), establishing the unit's status/animation
 		//     state. Emitting after it left promotions landing on an already-computed visual state (units drawn
 		//     only after re-selection; a fortified unit stuck in its run animation).
-		emitUnitCreated((int)getUnitType(), getID(), (int)getOwner());
+		emitUnitCreated((int)getUnitType(), getID(), (int)getOwner(),
+			(plot() != NULL) ? GC.getMap().plotNum(getX(), getY()) : -1);
 		doSetDefaultStatuses();
 
 		// Cache initial healer values
@@ -13874,6 +13875,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 			&& isEnemy(pNewCity->getTeam())
 			&& (!isBarbCoExist() || !pNewPlot->isHominid())
 			&& (!isHiddenNationality() || !pNewCity->isNPC())
+			&& (!getUnitInfo().hasTag(CLS_TAG_OUTLAW) || !pNewCity->isNPC())
 			&& !canCoexistAlwaysOnPlot(*pNewPlot)
 			&& !pNewPlot->hasDefender(false, NO_PLAYER, getOwner(), this, true, false, false, true))
 			{
@@ -18336,7 +18338,8 @@ void CvUnit::read(FDataStreamBase* pStream)
 	// the stream shows an empire whose units all predate the save. Emitted HERE, the first point m_iID / m_eOwner /
 	// m_eUnitType have all deserialized. Result-producers suppress inside the load bracket, so this restores the
 	// instance without re-granting anything -- the emitCityBuildingAdded(bFirst = false) contract.
-	emitUnitCreated((int)m_eUnitType, m_iID, (int)m_eOwner);
+	emitUnitCreated((int)m_eUnitType, m_iID, (int)m_eOwner,
+		GC.getMap().isPlot(m_iX, m_iY) ? GC.getMap().plotNum(m_iX, m_iY) : -1);
 	// The death SCHEDULE lands through its setter: a save can be taken with a kill already deferred. It
 	// deserialized earlier, so it is taken off the member, cleared, and handed back -- a cleared schedule is
 	// the reset() default and correctly announces nothing. The unit's coordinates arrive later, so the setter
