@@ -187,6 +187,11 @@ via `enables` (the space line), doctrine bans via `disables` + empire modifiers.
 >   gate; the per-city half lives on the per-city consumers' own gates).
 > - ⚠ **An old save's per-city copies NORMALIZE at load:** the city read routes an `empireLevel` id to the
 >   owner — idempotent, so N city copies fold to held-once — and the city keeps nothing.
+> - ⛔ **A CHANGE IN A CITY HAS ZERO EFFECT ON THE EMPIRE'S HOLDINGS.** The city-side placement choke point
+>   routes only a PLACEMENT to the holder; a city-side REMOVAL of an empire-level id is a no-op, never a
+>   withdrawal at the player. ⚑ The failure this closes: a city's death swept every building info through its
+>   own removal path, so one barbarian city dying stripped the barbarian empire of its 268 empire-level holdings
+>   (and paid seven seconds of enabler fan doing it). A city tears down what IT holds, and it holds none of these.
 >
 > ⛔ **The per-city GRANT stays the model for everything else.** A wonder granting an ordinary constructible
 > building to every city (a Granary, Irrigation Canals) grants real per-city copies whose presence genuinely

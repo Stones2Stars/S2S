@@ -18,6 +18,7 @@
 #include "Spine/CvEventSpine.h"
 #include "Tools/CvHttpServer.h"   // the /events STREAM consumer (isEnabled + publishEvent)
 #include "Infrastructure/CvLogWriter.h"   // the off-thread log file writer (the FILE consumer's sink)
+#include <typeinfo>
 #include "AI/BetterBTSAI.h"   // gPlayerLogLevel (reused as the slice-1 gate; dedicated gate/BUG option + the live
                            // CvHttpServer feed come next)
 #include "Defines/CvGlobals.h"        // GC -- resolve raw Type indices to readable names in the (gated) consumer
@@ -60,6 +61,12 @@ void CvEventSpine::registerConsumer(IEventConsumer* pConsumer)
 	m_iInterestMask |= pConsumer->wantedKinds();
 }
 
+namespace
+{
+	const int SPINE_PERF_MAX_CONSUMERS = 32;
+	double s_adConsumerAccumMs[SPINE_PERF_MAX_CONSUMERS] = { 0.0 };
+}
+
 void CvEventSpine::emit(const CvSpineEvent& kEvent)
 {
 	const int iBit = 1 << kEvent.eKind;
@@ -67,10 +74,12 @@ void CvEventSpine::emit(const CvSpineEvent& kEvent)
 	{
 		return; // interest-guard: no registered consumer wants this kind -> skip entirely (the cheap path)
 	}
-	for (std::vector<IEventConsumer*>::const_iterator it = m_consumers.begin(); it != m_consumers.end(); ++it)
+	int iConsumerIndex = 0;
+	for (std::vector<IEventConsumer*>::const_iterator it = m_consumers.begin(); it != m_consumers.end(); ++it, ++iConsumerIndex)
 	{
 		if (((*it)->wantedKinds() & iBit) != 0)
 		{
+			PerfAccumTimer timer(s_adConsumerAccumMs[iConsumerIndex < SPINE_PERF_MAX_CONSUMERS ? iConsumerIndex : SPINE_PERF_MAX_CONSUMERS - 1]);
 			(*it)->onEvent(kEvent);
 		}
 	}
@@ -80,6 +89,24 @@ CvEventSpine& eventSpine()
 {
 	static CvEventSpine s_spine;
 	return s_spine;
+}
+
+void spinePerfConsumerAccumReset()
+{
+	for (int iI = 0; iI < SPINE_PERF_MAX_CONSUMERS; iI++)
+	{
+		s_adConsumerAccumMs[iI] = 0.0;
+	}
+}
+
+void spinePerfConsumerAccumLog(const char* szPhase, int iOwner)
+{
+	const std::vector<IEventConsumer*>& consumers = eventSpine().consumers();
+	for (int iI = 0; iI < (int)consumers.size() && iI < SPINE_PERF_MAX_CONSUMERS; iI++)
+	{
+		logPerf(1, "[PERF/phase] turn=%d owner=%d phase=%s consumer=%s ms=%.3f",
+			GC.getGame().getGameTurn(), iOwner, szPhase, typeid(*consumers[iI]).name(), s_adConsumerAccumMs[iI]);
+	}
 }
 
 // ===================== slice-1 first consumer: the BROAD logging consumer =====================
@@ -1093,11 +1120,11 @@ void emitCityCultureLevelRemoved(int iCity, int iOwner, int iLevel)
 	eventSpine().emit(e);
 }
 
-void emitCityOwnerAdded(int iCity, int iOwner)
+void emitCityOwnerAdded(int iCity, int iOwner, int iPlot)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_CITY_OWNER_ADDED, -1, 0, 0, iOwner, iCity);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity);
+	e.addI(SPF_OWNER, iOwner).addI(SPF_CITY, iCity).addI(SPF_PLOT, iPlot);
 	eventSpine().emit(e);
 }
 
@@ -2034,11 +2061,11 @@ void emitUnitEnteredCity(int iUnitType, int iUnitId, int iOwner, int iCity)
 	eventSpine().emit(e);   // synchronous render -> szTags still in scope
 }
 
-void emitUnitCreated(int iUnitType, int iUnitId, int iOwner)
+void emitUnitCreated(int iUnitType, int iUnitId, int iOwner, int iPlot)
 {
-	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_CREATED, iUnitType, iUnitId, 0, iOwner, -1);
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_UNIT_CREATED, iUnitType, iUnitId, 0, iOwner, iPlot);
 	e.iDomainTag = SD_SPINE;
-	e.addI(SPF_UNIT, iUnitType).addI(SPF_OWNER, iOwner);
+	e.addI(SPF_UNIT, iUnitType).addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot);
 	eventSpine().emit(e);
 }
 
