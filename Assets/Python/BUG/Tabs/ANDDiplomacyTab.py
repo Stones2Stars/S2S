@@ -43,9 +43,6 @@ class ANDDiplomacyTab(BugOptionsTab.BugOptionsTab):
 		screen.setEnabled(control, bCanAdjustSettings)
 		control = self.addCheckbox(screen, left, "DiplomacySettings__CanTradeVassals")
 		screen.setEnabled(control, bCanAdjustSettings)
-		# It's merged with can trade vassals this is just an artifact left for remembrance
-		# control = self.addCheckbox(screen, left, "DiplomacySettings__CanCapitulate")
-		# screen.setEnabled(control, bCanAdjustSettings)
 
 
 		self.addSpacer(screen, center, "General1")

@@ -81,6 +81,7 @@ class BugCityScreenOptionsTab(BugOptionsTab.BugOptionsTab):
 		#Miscellaneous
 		self.addLabel(screen, RIGHT, "Misc", "Miscellaneous:")
 		self.addCheckbox(screen, RIGHT, "MiscHover__BaseCommerce")
+		self.addCheckbox(screen, RIGHT, "MiscHover__RemoveSpecialist")
 		self.addCheckbox(screen, RIGHT, "CityScreen__Anger_Counter")
 		self.addCheckbox(screen, RIGHT, "CityScreen__OnlyPresentReligions")
 		self.addCheckbox(screen, RIGHT, "CityScreen__OnlyPresentCorporations")

@@ -25,10 +25,6 @@ void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface1(boost::python:
 {
 	OutputDebugString("Python Extension Module - CyGlobalContextPythonInterface1\n");
 	inst
-		.def("getPlayerOptionDescription", &CyGlobalContext::getPlayerOptionDescription, "wstring (int iOption) - the option's label")
-		.def("getPlayerOptionHelp", &CyGlobalContext::getPlayerOptionHelp, "wstring (int iOption) - the option's hover text")
-		.def("getGraphicOptionDescription", &CyGlobalContext::getGraphicOptionDescription, "wstring (int iOption) - the option's label")
-		.def("getGraphicOptionHelp", &CyGlobalContext::getGraphicOptionHelp, "wstring (int iOption) - the option's hover text")
 
 		.def("getGame", &CyGlobalContext::getCyGame, boost::python::return_value_policy<boost::python::reference_existing_object>(), "() - CyGame()")
 		.def("getMap", &CyGlobalContext::getCyMap, boost::python::return_value_policy<boost::python::reference_existing_object>(), "() - CyMap()")
@@ -211,7 +207,6 @@ void CvPythonGlobalContextLoader::CyGlobalContextPythonInterface4(boost::python:
 		.def("getNumEspionageMissionInfos", &CyGlobalContext::getNumEspionageMissionInfos, "int () - Returns number of EspionageMissionInfos")
 
 		.def("getNumMainMenus", &CyGlobalContext::getNumMainMenus, "int () - Returns number")
-		.def("getMainMenus", &CyGlobalContext::getMainMenus, boost::python::return_value_policy<boost::python::reference_existing_object>(), "MainMenus () - Returns info object")
 
 		.def("getNumVoteSourceInfos", &CyGlobalContext::getNumVoteSourceInfos, "int ()")
 

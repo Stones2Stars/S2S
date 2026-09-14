@@ -98,12 +98,14 @@ than split per domain, and it is where the option read lives for every entity-ga
   for every player and city, i.e. what "ever" means.
 - ⚑ **The verdict is STABLE for the game, and that is load-bearing: nothing the enabler gates rides a
   BUG/live option.** A game option is fixed at setup, whereas a live option (`setDefineINT`) is changeable
-  mid-game and its flip carries **no DOMAIN event** — so a maintained verdict gating on one would go permanently
-  stale with nothing to re-derive it ([self-heal is not a backstop](../../../cascade/03-no-staleness-no-selfheal.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban)). The last
+  mid-game, and its flip announces only as the string-keyed `SEVT_GAME_GLOBAL_DEFINE_ADDED / _REMOVED`
+  ([the named fact families](../../../spine/03-the-domain-emit-surface-every-fact/02-the-named-fact-families.md)),
+  which no enabler route consumes — so a maintained verdict gating on one would go permanently stale with nothing
+  to re-derive it ([self-heal is not a backstop](../../../cascade/03-no-staleness-no-selfheal.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban)). The last
   enabler-facing live options went with the ranged-bombard removal
   ([superseded-ideas #24](../../../architecture/superseded-ideas.md)), so the hazard is absent from this surface rather
-  than merely avoided. ⛔ Do not gate an enabler entity on a live option; if one is ever wanted, it needs its emit
-  first.
+  than merely avoided. ⛔ Do not gate an enabler entity on a live option — authored data may not gate on one at all
+  ([python-read-map.md](../../../reference/python-read-map.md) ruling 3).
 
 > **⛔ A TRANSFORMATION ASKS `everAvailable` + THE TARGET'S `requires` — NEVER THE QUEUE-OFFER VERDICT.**
 > `STATE_LISTED` means *"offered in the production queue, in this city, right now"*. That is the right question

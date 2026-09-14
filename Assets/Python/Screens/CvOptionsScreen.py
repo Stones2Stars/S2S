@@ -471,9 +471,9 @@ class CvOptionsScreen:
 		szDropdownDesc = "MainMenuDropdownBox"
 		aszDropdownElements = ()
 		for iMainMenuLoop in range(gc.getNumMainMenus()):
-			aszDropdownElements = aszDropdownElements + (gc.getMainMenus(iMainMenuLoop).getDescription(),)
+			aszDropdownElements = aszDropdownElements + (INFO.getDescription("MAIN_MENU_", iMainMenuLoop),)
 		szCallbackFunction = "handleMainMenuDropdownBoxInput"
-		szWidgetName = self.szMainMenuDropdownBoxName = "DropdownBox"
+		szWidgetName = self.szMainMenuDropdownBoxName = "MainMenuDropdownBox"
 		iInitialSelection = UserProfile.getMainMenu()
 		tab.attachDropDown(vbox2, szWidgetName, szDropdownDesc, aszDropdownElements, self.callbackIFace, szCallbackFunction, szWidgetName, iInitialSelection)
 

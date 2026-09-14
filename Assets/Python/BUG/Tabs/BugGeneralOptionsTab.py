@@ -47,6 +47,8 @@ class BugGeneralOptionsTab(BugOptionsTab.BugOptionsTab):
 		self.addCheckbox(screen, center, "Actions__AskDeclareWarUnits")
 		self.addCheckbox(screen, center, "Actions__PreChopForests")
 		self.addCheckbox(screen, center, "Actions__PreChopImprovements")
+		self.addCheckbox(screen, center, "Actions__SentryHealing")
+		self.addCheckbox(screen, center, "Actions__SentryHealingOnlyNeutral", True)
 
 		self.addLabel(screen, right, "Units", "Units:")
 		self.addTextDropdown(screen, right, right, "MainInterface__UnitIconSize", True)
