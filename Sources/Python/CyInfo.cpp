@@ -63,6 +63,7 @@
 #include "Infos/CvColorInfo.h"
 #include "Infos/CvPlayerOptionInfo.h"    // the options screen's PLAYEROPTION_ description/help
 #include "Infos/CvGraphicOptionInfo.h"   // the options screen's GRAPHICOPTION_ description/help
+#include "Infos/CvMainMenuInfo.h"        // the options screen's MAIN_MENU_ dropdown labels
 #include "Infos/CvMissionInfo.h"
 #include "Infos/CvProcessInfo.h"   // getProductionToCommerce -- the process conversion group
 #include "Infos/CvActionInfo.h"
@@ -137,11 +138,12 @@ namespace
 		if (szTypePrefix == "UNITAI_")      return iId < NUM_UNITAI_TYPES    ? &GC.getUnitAIInfo((UnitAITypes)iId) : NULL;
 		if (szTypePrefix == "ATTITUDE_")    return iId < NUM_ATTITUDE_TYPES  ? &GC.getAttitudeInfo((AttitudeTypes)iId) : NULL;
 		if (szTypePrefix == "MEMORY_")      return iId < NUM_MEMORY_TYPES    ? &GC.getMemoryInfo((MemoryTypes)iId) : NULL;
-		//	The two option registries the options screen reads. Unrouted, its per-option description/help raised
-		//	AttributeError mid-draw -- and because interfaceScreen draws the four tabs in sequence, that took the
-		//	Graphics, Audio and Other tabs with it, Exit buttons included, before they ever ran.
+		//	The registries the options screen reads. Unrouted, any one of them raised mid-draw -- and because
+		//	interfaceScreen draws the four tabs in sequence, that took every LATER tab with it, Exit buttons
+		//	included, before they ever ran.
 		if (szTypePrefix == "PLAYEROPTION_")  return iId < NUM_PLAYEROPTION_TYPES  ? &GC.getPlayerOptionInfo((PlayerOptionTypes)iId) : NULL;
 		if (szTypePrefix == "GRAPHICOPTION_") return iId < NUM_GRAPHICOPTION_TYPES ? &GC.getGraphicOptionInfo((GraphicOptionTypes)iId) : NULL;
+		if (szTypePrefix == "MAIN_MENU_")     return iId < GC.getNumMainMenus()    ? &GC.getMainMenus(iId) : NULL;
 
 		// Counted registries.
 		if (szTypePrefix == "DENIAL_")           return iId < GC.getNumDenialInfos()           ? &GC.getDenialInfo((DenialTypes)iId) : NULL;

@@ -661,6 +661,22 @@
 		<Polish>wst&#234;pnie karczuj przed ulepszeniem</Polish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_ACTIONS__SENTRYHEALING_HOVER</Tag>
+		<English>When checked, an automated exploring unit wakes up as soon as an enemy unit comes into its sight.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_ACTIONS__SENTRYHEALING_TEXT</Tag>
+		<English>Wake Explorers on Danger</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_ACTIONS__SENTRYHEALINGONLYNEUTRAL_HOVER</Tag>
+		<English>When checked, an automated explorer is only woken while it stands on a tile no civilization owns.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_ACTIONS__SENTRYHEALINGONLYNEUTRAL_TEXT</Tag>
+		<English>Only on Unowned Tiles</English>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_ADVISORS__BUGGRAPHSLOGSCALE_HOVER</Tag>
 		<English>When checked, displays graphs are displayed in Log(10) scale.</English>
 		<French>Lorsque activé, affiche les échelles des graphiques sous forme Logarithmique.</French>
@@ -5002,6 +5018,14 @@
 		<Polish>Uwzgl&#234;dnij Obecne</Polish>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MISCHOVER__REMOVESPECIALIST_HOVER</Tag>
+		<English>When checked, the hover on a specialist's remove button lists what that specialist currently provides in the city.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_MISCHOVER__REMOVESPECIALIST_TEXT</Tag>
+		<English>Remove Specialist Effects</English>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_MISCHOVER__HURRYOVERFLOW_HOVER</Tag>
 		<English>When checked, the Whip Button hover includes the overflow ([ICON_PRODUCTION] and [ICON_GOLD]) created by applying the whip.</English>
 		<French>Lorsque activé, Les infobulles du bouton d'accélération de la production par le Fouet incluent le surplus ([ICON_PRODUCTION] et [ICON_GOLD]) généré en appliquant cette méthode.</French>
@@ -8613,6 +8637,14 @@
 		<Spanish>Color de puntuación inferior</Spanish>
 		<Russian>Öâåò ïîíèæåíèÿ</Russian>
 		<Polish>Niski kolor</Polish>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_SCORES__RANKCOLOR_HOVER</Tag>
+		<English>Color used for each civilization's rank number on the scoreboard.</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_BUG_OPT_SCORES__RANKCOLOR_TEXT</Tag>
+		<English>Rank Color</English>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_BUG_OPT_SCORES__POWERLOWRATIO_HOVER</Tag>

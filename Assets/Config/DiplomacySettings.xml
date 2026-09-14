@@ -51,10 +51,6 @@
 				<change module="DiplomacySettings" function="changedCanTradeVassals"/>
 			</option>
 
-			<option id="CanCapitulate" key="CanCapitulate" type="boolean" default="True" get="isCanCapitulate" set="setCanCapitulate">
-				<change module="DiplomacySettings" function="changedCanTradeVassals"/>
-			</option>
-
 			<option id="CanTradeEmbassies" key="CanTradeEmbassies" type="boolean" default="True" get="isCanTradeEmbassies" set="setCanTradeEmbassies">
 				<change module="DiplomacySettings" function="changedCanTradeEmbassies"/>
 			</option>

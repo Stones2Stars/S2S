@@ -14,7 +14,6 @@
 #include "CvInfos.h"
 #include "Defines/CvDiplomacyClasses.h"
 #include "CvUnitCombatInfo.h"
-#include "CvPlayerOptionInfo.h"
 #include "Engine/CvMap.h"
 #include "AI/CvPlayerAI.h"
 #include "AI/CvTeamAI.h"
@@ -59,26 +58,6 @@ int CyGlobalContext::getInfoTypeForString(const char* szInfoType, bool bHideAsse
 // data rather than a new method.
 
 
-std::wstring CyGlobalContext::getPlayerOptionDescription(int iOption) const
-{
-	return GC.getPlayerOptionInfo((PlayerOptionTypes)iOption).getDescription();
-}
-
-std::wstring CyGlobalContext::getPlayerOptionHelp(int iOption) const
-{
-	return GC.getPlayerOptionInfo((PlayerOptionTypes)iOption).getHelp();
-}
-
-std::wstring CyGlobalContext::getGraphicOptionDescription(int iOption) const
-{
-	return GC.getGraphicOptionInfo((GraphicOptionTypes)iOption).getDescription();
-}
-
-std::wstring CyGlobalContext::getGraphicOptionHelp(int iOption) const
-{
-	return GC.getGraphicOptionInfo((GraphicOptionTypes)iOption).getHelp();
-}
-
 
 CyGame* CyGlobalContext::getCyGame() const
 {
@@ -119,11 +98,6 @@ CyTeam* CyGlobalContext::getCyTeam(TeamTypes eTeam) const
 {
 	FASSERT_BOUNDS(0, MAX_TEAMS, eTeam);
 	return eTeam < MAX_TEAMS ? &g_cyTeams[eTeam] : NULL;
-}
-
-const CvMainMenuInfo* CyGlobalContext::getMainMenus(int i) const
-{
-	return ((i >= 0 && i < GC.getNumMainMenus()) ? &GC.getMainMenus(i) : NULL);
 }
 
 void CyGlobalContext::pythonPublish()
