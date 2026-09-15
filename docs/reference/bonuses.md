@@ -150,9 +150,15 @@ applied on** — this is bonuses' own worked instance of the general fact-vs-cou
 has-verdict (`SEVT_CITY_BONUS_ADDED`/`_REMOVED`, 0 ⇄ non-zero only) is the one a value may ride; the vicinity and
 plot-group facts carry a count and must never drive a deposit — only a gate re-check, which is idempotent.
 
-Beside those three, the plot substrate announces `SEVT_PLOT_BONUS_ADDED` / `_REMOVED` (what the TILE carries) and
+Beside those three, the plot substrate announces `SEVT_PLOT_BONUS_ADDED` / `_REMOVED` (what the TILE carries),
 `SEVT_PLOT_SERVED_BONUS_ADDED` / `_REMOVED` (the plot's own served-resource verdict, which the city's on-site
-store folds) — neither appears in the event-spine table, since neither is a city-scope fact.
+store folds) and `SEVT_PLOT_BONUS_REVEALED_ADDED` / `_REMOVED` (which TEAMS see the tile's bonus) — none appears in
+the event-spine table, since none is a city-scope fact.
+
+⚖ **A TILE'S BONUS COUNTS ONLY FOR AN OBSERVER THAT SEES IT — reveal belongs to whoever sees the plot, never to its
+owner.** The tile's own yield and its `HAS_BONUS` deposits count it for the OWNER, who always sees their own plot
+([combine arithmetic](../cascade/07-combine-arithmetic.md)); a city's vicinity and on-site bands count it for that
+CITY's team ([contexts](../cascade/13-context-maintained-events.md#maintained-event-driven--never-a-per-turn-recompute)).
 
 ---
 

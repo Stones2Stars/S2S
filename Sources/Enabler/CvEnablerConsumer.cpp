@@ -723,6 +723,9 @@ private:
 		case SEVT_PLOT_BONUS_REMOVED:
 		case SEVT_PLOT_SERVED_BONUS_ADDED:
 		case SEVT_PLOT_SERVED_BONUS_REMOVED:
+		// A city counts a tile's bonus only once its own team SEES it, so a reveal crossing re-gates that team's cities.
+		case SEVT_PLOT_BONUS_REVEALED_ADDED:
+		case SEVT_PLOT_BONUS_REVEALED_REMOVED:
 		{
 			// ⛔ NO LOAD GUARD, deliberately. `spineGameLoadInProgress` is the RESULT-PRODUCER suppression -- it
 			// stops the trigger/grant machinery handing things out for a load that is not an acquisition
@@ -736,10 +739,13 @@ private:
 			if (pPlot == NULL || kEvent.iType < 0) break;
 			// The CITIES come from the plot's own workableBy list, so a tile no city can work re-gates nobody.
 			const std::vector<IDInfo>& kWorkableBy = pPlot->workableByCities();
+			const bool bRevealFact = (kEvent.iEventId == SEVT_PLOT_BONUS_REVEALED_ADDED
+				|| kEvent.iEventId == SEVT_PLOT_BONUS_REVEALED_REMOVED);
 			for (size_t iCity = 0; iCity < kWorkableBy.size(); ++iCity)
 			{
 				const CvCity* pCity = ::getCity(kWorkableBy[iCity]);
 				if (pCity == NULL) continue;
+				if (bRevealFact && (int)pCity->getTeam() != kEvent.iA) continue;
 				BuildingEnabler::onCityVicinityBonusChanged(*pCity, kEvent.iType);
 				UnitEnabler::onCityVicinityBonusChanged(*pCity, kEvent.iType);
 				// The OPERATE half of the same supply -- the provides-ripple inside is what lets a manufactured

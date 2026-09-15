@@ -109,6 +109,13 @@ AREA_SIZE + max-adjacent-water read), and **`SEVT_WORLD_UNIT_CREATED_COUNT_ADDED
 cumulative counter — distinct from `SEVT_EMPIRE_UNIT_COUNT_ADDED / _REMOVED`, the player's LIVE per-type tally, and
 from `SEVT_UNIT_CREATED`, the instance; all three fire at one birth and none duplicates another).
 
+**`SEVT_PLOT_BONUS_REVEALED_ADDED / _REMOVED`** is the plot's per-TEAM reveal verdict, announced by `PlotContext` at
+the crossing and nowhere else — the served-resource shape, keyed by team because reveal belongs to whoever SEES the
+plot. ⛔ It is not a duplicate of `SEVT_PLOT_BONUS_*`: that says what the tile CARRIES, this says who can see it.
+Its non-tech leg is **`SEVT_TEAM_BONUS_REVEALED_ADDED / _REMOVED`** (`CvTeam::setForceRevealedBonus`, with the
+in-read half in `CvTeam::read`) — the force-reveal list is serialized team state, so it announces like any other
+slot.
+
 **THE UNIT PLANE has its mark triggers** — [cascade.md](../../cascade.md) specifies a
 unit's resolved values move on a promotion or combat-class change plus one seeding gather at birth:
 `SEVT_UNIT_PROMOTION_ADDED / _REMOVED` (`CvUnit::processPromotion`, the ONE funnel both `setHasPromotion`

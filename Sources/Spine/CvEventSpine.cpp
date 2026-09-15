@@ -439,6 +439,8 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_AREAS_RECALCULATED:               return "[SPINE/WORLD] areasRecalculated";
 	case SEVT_TEAM_MEMBER_ADDED:                return "[SPINE/TEAM] teamMemberAdded";
 	case SEVT_TEAM_MEMBER_REMOVED:              return "[SPINE/TEAM] teamMemberRemoved";
+	case SEVT_TEAM_BONUS_REVEALED_ADDED:        return "[SPINE/TEAM] teamBonusRevealedAdded";
+	case SEVT_TEAM_BONUS_REVEALED_REMOVED:      return "[SPINE/TEAM] teamBonusRevealedRemoved";
 	case SEVT_EMPIRE_TECH_ADDED:                return "[SPINE/EMPIRE] empireTechAdded";
 	case SEVT_EMPIRE_TECH_REMOVED:              return "[SPINE/EMPIRE] empireTechRemoved";
 	case SEVT_EMPIRE_TRAIT_ADDED:               return "[SPINE/EMPIRE] empireTraitAdded";
@@ -544,6 +546,8 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_PLOT_PREDICATE_REMOVED:           return "[SPINE/PLOT] plotPredicateRemoved";
 	case SEVT_PLOT_SERVED_BONUS_ADDED:          return "[SPINE/PLOT] plotServedBonusAdded";
 	case SEVT_PLOT_SERVED_BONUS_REMOVED:        return "[SPINE/PLOT] plotServedBonusRemoved";
+	case SEVT_PLOT_BONUS_REVEALED_ADDED:        return "[SPINE/PLOT] plotBonusRevealedAdded";
+	case SEVT_PLOT_BONUS_REVEALED_REMOVED:      return "[SPINE/PLOT] plotBonusRevealedRemoved";
 	case SEVT_PLOT_WORKABLE_BY_ADDED:           return "[SPINE/PLOT] plotWorkableByAdded";
 	case SEVT_PLOT_WORKABLE_BY_REMOVED:         return "[SPINE/PLOT] plotWorkableByRemoved";
 	case SEVT_PLOTGROUP_BONUS_ADDED:            return "[SPINE/PLOTGROUP] plotgroupBonusAdded";
@@ -1412,6 +1416,22 @@ void emitPlotServedBonusRemoved(int iPlot, int iOwner, int iBonus)
 	eventSpine().emit(e);
 }
 
+void emitPlotBonusRevealedAdded(int iPlot, int iOwner, int iTeam, int iBonus)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_BONUS_REVEALED_ADDED, iBonus, iTeam, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_TEAM, iTeam).addI(SPF_BONUS, iBonus);
+	eventSpine().emit(e);
+}
+
+void emitPlotBonusRevealedRemoved(int iPlot, int iOwner, int iTeam, int iBonus)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_BONUS_REVEALED_REMOVED, iBonus, iTeam, 0, iOwner, iPlot);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iOwner).addI(SPF_PLOT, iPlot).addI(SPF_TEAM, iTeam).addI(SPF_BONUS, iBonus);
+	eventSpine().emit(e);
+}
+
 void emitPlotWorkableByAdded(int iPlot, int iOwner, int iCity)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOT_WORKABLE_BY_ADDED, -1, iCity, 0, iOwner, iPlot);
@@ -1715,6 +1735,22 @@ void emitTeamMemberRemoved(int iTeam, int iCount)
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_TEAM_MEMBER_REMOVED, -1, iCount, 0, -1, iTeam);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_TEAM, iTeam).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitTeamBonusRevealedAdded(int iTeam, int iBonus)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_TEAM_BONUS_REVEALED_ADDED, iBonus, 0, 0, -1, iTeam);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_TEAM, iTeam).addI(SPF_BONUS, iBonus);
+	eventSpine().emit(e);
+}
+
+void emitTeamBonusRevealedRemoved(int iTeam, int iBonus)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_TEAM_BONUS_REVEALED_REMOVED, iBonus, 0, 0, -1, iTeam);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_TEAM, iTeam).addI(SPF_BONUS, iBonus);
 	eventSpine().emit(e);
 }
 

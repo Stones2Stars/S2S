@@ -87,11 +87,9 @@ static bool evp_workedFeature(const PlotContext& plotContext, const CvCondition*
 { return plotContext.isWorked() && plotContext.hasFeature(a->id); }
 static bool evp_workedImprovement(const PlotContext& plotContext, const CvCondition* a, const CityContext&)
 { return plotContext.isWorked() && plotContext.hasImprovement(a->id); }
-// ⚠ NO_TEAM -- the tile's bonus UNFILTERED BY REVEAL. A plot resolves in ISOLATION ([modifier.md] par.2: its
-// substrate carries ONE value), so what a tile yields is not a per-observer question; the vicinity store beside
-// this reads the same way and for the same reason.
+// The tile's bonus as its OWNER sees it: a worked tile is owned, and its yield is the owner's.
 static bool evp_workedBonus(const PlotContext& plotContext, const CvCondition* a, const CityContext&)
-{ return plotContext.isWorked() && plotContext.hasBonus(a->id, (int)NO_TEAM); }
+{ return plotContext.isWorked() && plotContext.bonusVisibleToOwner() == a->id; }
 
 // ---- BonusPresent / VicinityHas (StoneBase) ---------------------------------------------------------------------
 
@@ -509,7 +507,7 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 	// improvement stood on -- a silent, plausible over-yield rather than a visible failure, which is why it
 	// survived: the predicate was parsed and even indexed for re-gating, and only the EVALUATION was missing.
 	case CASC_PRED_HAS_BONUS:       return plotContext != NULL
-	                                     ? (pr->id >= 0 && plotContext->hasBonus(pr->id, (int)NO_TEAM))
+	                                     ? (pr->id >= 0 && plotContext->bonusVisibleToOwner() == pr->id)
 	                                     : ev_cityPlotHas(cityContext, evp_workedBonus, pr);
 	case CASC_PRED_IS_CAPITAL:            return cityContext != NULL && cityContext->isCapital();
 	// Both predicates below read the CITY's own verdict through the context's forwards, and neither is a

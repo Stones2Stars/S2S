@@ -5737,6 +5737,7 @@ void CvTeam::setForceRevealedBonus(BonusTypes eBonus, bool bRevealed)
 	if (bRevealed)
 	{
 		m_aeRevealedBonuses.push_back(eBonus);
+		emitTeamBonusRevealedAdded((int)getID(), (int)eBonus);
 	}
 	else
 	{
@@ -5748,6 +5749,7 @@ void CvTeam::setForceRevealedBonus(BonusTypes eBonus, bool bRevealed)
 				break;
 			}
 		}
+		emitTeamBonusRevealedRemoved((int)getID(), (int)eBonus);
 	}
 
 	for (int iI = 0; iI < GC.getMap().numPlots(); ++iI)
@@ -6014,6 +6016,7 @@ void CvTeam::read(FDataStreamBase* pStream)
 		if (eBonus != NO_BONUS)
 		{
 			m_aeRevealedBonuses.push_back(eBonus);
+			emitTeamBonusRevealedAdded((int)m_eID, (int)eBonus);
 		}
 	}
 

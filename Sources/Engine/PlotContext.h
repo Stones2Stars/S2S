@@ -67,6 +67,8 @@
 
 #include "CvCondition.h"   // CASC_PRED_* -- the ONE predicate vocabulary the stored bitset keys on
 #include "Defines/CvEnums.h"   // NUM_YIELD_TYPES -- the realized-yield group forward's out-array extent
+#include "Defines/CvDefines.h" // MAX_TEAMS -- the reveal verdict's width
+#include <bitset>
 
 class CvPlot;
 struct CvSpineEvent;
@@ -99,7 +101,7 @@ public:
 	// reused across a regen/load, and a bit no later fact happens to touch would otherwise survive from the last world.
 	// ⚠ The served bonus resets to -1, NOT 0: 0 is a REAL bonus id, so zeroing it would hand a recycled plot the
 	// first resource in the registry.
-	void clear() { m_attributeBits = 0; m_servedBonus = -1; }
+	void clear() { m_attributeBits = 0; m_servedBonus = -1; m_bonusRevealedToTeams.reset(); }
 
 	// --- STORED: the CASC_PRED_* verdict bitset (both blocks) ---------------------------------------------------
 	// The raw mask, for a reader that folds every set bit at once (CityContext::onPlotChanged is the one such
@@ -119,6 +121,19 @@ public:
 	// owner's, which no per-plot verdict can answer for every asker.
 	int servedBonus() const { return m_servedBonus; }
 
+	///<summary>
+	/// Whether this plot's bonus is REVEALED to the team: its reveal tech is held or the team force-revealed it.
+	/// Reveal belongs to whoever SEES the plot, never to its owner, so this is one stored bit per team.
+	///</summary>
+	bool isBonusRevealedTo(int eTeam) const;
+	///<summary>
+	/// The plot's bonus as its OWNER sees it -- the bonus the tile's own yield and its HAS_BONUS gates use. An
+	/// owned plot answers NO_BONUS while the owner cannot see it; an unowned plot answers the raw bonus.
+	///</summary>
+	int bonusVisibleToOwner() const;
+	///<summary>Empty the bonus -> plots index; called when the map is reset, before a new world streams in.</summary>
+	static void clearBonusPlotIndex();
+
 	// --- THE MAINTENANCE: reached ONLY through this store's own spine consumer -----------------------------------
 	// ⚖ THE DECLARED INTEREST SET -- the facts that maintain this store, stated at the store. A fact absent from
 	// this list does not reach it, and that is READABLE HERE rather than inferable from a router.
@@ -133,6 +148,12 @@ public:
 	// Re-derive the ADJACENCY block alone: this plot's own neighbour-reading verdicts. Driven by a NEIGHBOUR's
 	// land/water crossing or terrain move, which is the only thing that can change it without touching this plot.
 	void applyAdjacency() const;
+	///<summary>The tile's bonus LEFT: drop the plot from the index and withdraw every team's reveal of it.</summary>
+	void applyBonusLeft(int iBonus) const;
+	///<summary>The tile's bonus ARRIVED: index the plot and, outside a load, derive every team's reveal of it.</summary>
+	void applyBonusArrived(int iBonus) const;
+	///<summary>Re-derive ONE team's reveal of this plot's bonus from the engine's own reveal read.</summary>
+	void applyRevealForTeam(int eTeam) const;
 
 	// The axes whose movement a NEIGHBOUR's adjacency verdict can read -- the one-hop fan-out gate. Exact: a
 	// neighbour's HAS_COAST reads my IS_WATER, and its HAS_FRESHWATER reads my water+fresh-terrain state, so TYPE
@@ -206,10 +227,14 @@ private:
 	// only. A tile MOVING from one served resource to another announces both halves (the old at REMOVED, the new at
 	// ADDED), so a counting consumer's withdrawal is exact rather than something it has to reconstruct.
 	void setServedBonus(int iBonus) const;
+	// The reveal twin of setPredicate: commits one team's bit and announces the CROSSING only
+	// (SEVT_PLOT_BONUS_REVEALED_ADDED / _REMOVED, naming the bonus so a withdrawal never re-reads the tile).
+	void setBonusRevealedTo(int eTeam, bool bRevealed, int iBonus) const;
 
 	const CvPlot* m_plot;              // the bound game object; the derivation reads it -- never a value copy
 	mutable unsigned int m_attributeBits;   // the stored verdicts; derived state, so NEVER serialized
 	mutable int m_servedBonus;              // the resource this tile serves on site, or -1; derived, never serialized
+	mutable std::bitset<MAX_TEAMS> m_bonusRevealedToTeams;   // which teams see this tile's bonus; derived, never serialized
 };
 
 void plotContextRegisterConsumer();   // register on the event spine (from spineRegisterConsumers; idempotent)

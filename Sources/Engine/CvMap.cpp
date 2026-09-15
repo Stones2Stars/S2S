@@ -23,6 +23,7 @@
 #include "AI/CvPlayerAI.h"
 #include "CvPlot.h"
 #include "CvPlotGroup.h"
+#include "PlotContext.h"          // clearBonusPlotIndex -- the derived bonus -> plots index dies with the map
 #include "Infrastructure/CvPython.h"
 #include "CvSelectionGroup.h"
 #include "AI/CvUnitAI.h"
@@ -157,6 +158,7 @@ void CvMap::reset(CvMapInitData* pInitInfo)
 	//--------------------------------
 	// Uninit class
 	uninit();
+	PlotContext::clearBonusPlotIndex();
 
 	//
 	// set grid size

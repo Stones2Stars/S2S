@@ -591,21 +591,42 @@ namespace
 		}
 	}
 
-	// A radius tile's BONUS arrived or left: it moves `all` for every city that can see it, plus whichever
-	// ownership band that tile currently falls in for that city, plus the worked band if that city works it.
+	// ⚖ A CITY COUNTS A TILE'S BONUS ONLY ONCE ITS OWN TEAM SEES IT. Reveal belongs to whoever SEES the plot, never
+	// to its owner, so every band -- on site included -- is booked against the asking city's team.
+	int cc_plotBonusSeenBy(const CvPlot* pPlot, const CvCity* pCity)
+	{
+		if (pPlot == NULL || pCity == NULL || !pPlot->getPlotContext().isBonusRevealedTo((int)pCity->getTeam()))
+		{
+			return (int)NO_BONUS;
+		}
+		return (int)pPlot->getBonusType(NO_TEAM);
+	}
+
+	// A radius tile's bonus became visible or invisible to one TEAM: for every city of that team that can work the
+	// tile it moves `all`, the ownership band the tile falls in for that city, on site where the tile serves that
+	// bonus to its owner's city, and the worked band if that city works it.
 	struct ApplyVicinityBonusFromPlot
 	{
 		const CvPlot* pPlot;
 		int iBonus;
+		int iTeam;
 		int iSign;
 		void operator()(const CvCity* pCity) const
 		{
+			if ((int)pCity->getTeam() != iTeam)
+			{
+				return;
+			}
 			const CityContext& kContext = pCity->getCityContext();
 			kContext.applyVicinityBonus(iBonus, CITYVIC_ALL, iSign);
 			CityVicinityPartition eBand;
 			if (cc_ownershipBand((int)pPlot->getOwner(), (int)pCity->getOwner(), eBand))
 			{
 				kContext.applyVicinityBonus(iBonus, eBand, iSign);
+				if (eBand == CITYVIC_OWNED && pPlot->getPlotContext().servedBonus() == iBonus)
+				{
+					kContext.applyVicinityBonus(iBonus, CITYVIC_ONSITE, iSign);
+				}
 			}
 			if (pPlot->getWorkingCity() == pCity && pPlot->isBeingWorked())
 			{
@@ -623,8 +644,7 @@ namespace
 	// one and serves none.
 	struct ApplyVicinityOwnerBand
 	{
-		int iBonus;
-		int iServedBonus;
+		const CvPlot* pPlot;
 		int iPlotOwner;
 		int iSign;
 		void operator()(const CvCity* pCity) const
@@ -634,10 +654,15 @@ namespace
 			{
 				return;
 			}
-			pCity->getCityContext().applyVicinityBonus(iBonus, eBand, iSign);
-			if (eBand == CITYVIC_OWNED && iServedBonus >= 0)
+			const int iBonus = cc_plotBonusSeenBy(pPlot, pCity);
+			if (iBonus < 0)
 			{
-				pCity->getCityContext().applyVicinityBonus(iServedBonus, CITYVIC_ONSITE, iSign);
+				return;
+			}
+			pCity->getCityContext().applyVicinityBonus(iBonus, eBand, iSign);
+			if (eBand == CITYVIC_OWNED && pPlot->getPlotContext().servedBonus() == iBonus)
+			{
+				pCity->getCityContext().applyVicinityBonus(iBonus, CITYVIC_ONSITE, iSign);
 			}
 		}
 	};
@@ -647,24 +672,19 @@ namespace
 	// owner's -- the ownership half no per-plot verdict can answer, applied where the asker's own owner is known.
 	struct ApplyOnSiteFromPlot
 	{
-		int iPlotOwner;
+		const CvPlot* pPlot;
 		int iBonus;
 		int iSign;
 		void operator()(const CvCity* pCity) const
 		{
 			CityVicinityPartition eBand;
-			if (cc_ownershipBand(iPlotOwner, (int)pCity->getOwner(), eBand) && eBand == CITYVIC_OWNED)
+			if (cc_ownershipBand((int)pPlot->getOwner(), (int)pCity->getOwner(), eBand) && eBand == CITYVIC_OWNED
+				&& pPlot->getPlotContext().isBonusRevealedTo((int)pCity->getTeam()))
 			{
 				pCity->getCityContext().applyVicinityBonus(iBonus, CITYVIC_ONSITE, iSign);
 			}
 		}
 	};
-
-	// The plot's bonus, unfiltered by reveal: the vicinity store is per-CITY live state, not a per-team view.
-	int cc_plotBonus(const CvPlot* pPlot)
-	{
-		return (pPlot != NULL) ? (int)pPlot->getBonusType(NO_TEAM) : (int)NO_BONUS;
-	}
 
 	// A plot ENTERED / LEFT ONE city's work area -- the membership fact's whole job. Folds that plot's bonus into
 	// that city alone: no radius walk, no re-derivation, and the direction comes from the fact's own id.
@@ -688,12 +708,13 @@ namespace
 		// that did not exist, and re-establishing the work area folds each tile's CURRENT verdict through exactly
 		// the route that maintains it (docs/spine.md §5 (the load reseed): no second build mechanism beside the event stream).
 		const int iServedBonus = pPlot->getPlotContext().servedBonus();
-		if (iServedBonus >= 0 && bOwnershipBand && eBand == CITYVIC_OWNED)
+		if (iServedBonus >= 0 && bOwnershipBand && eBand == CITYVIC_OWNED
+			&& pPlot->getPlotContext().isBonusRevealedTo((int)pCity->getTeam()))
 		{
 			kContext.applyVicinityBonus(iServedBonus, CITYVIC_ONSITE, iSign);
 		}
 
-		const int iBonus = cc_plotBonus(pPlot);
+		const int iBonus = cc_plotBonusSeenBy(pPlot, pCity);
 		if (iBonus < 0)
 		{
 			return;
@@ -847,9 +868,10 @@ bool CityContext::wantsEvent(int iEventId)
 	case SEVT_CITY_VICINITY_BONUS_ADDED:
 	case SEVT_CITY_VICINITY_BONUS_REMOVED:
 	// THE VICINITY STORE -- the MAP half of the json §5a supply, fed ±1 per fact and never by a radius walk.
-	// (The BUILDING half stays the enabler's operate/provides fixpoint; the reader unions the two.)
-	case SEVT_PLOT_BONUS_ADDED:
-	case SEVT_PLOT_BONUS_REMOVED:
+	// (The BUILDING half stays the enabler's operate/provides fixpoint; the reader unions the two.) A tile's bonus
+	// reaches a city on its REVEAL fact, because a city counts it only once its own team sees it.
+	case SEVT_PLOT_BONUS_REVEALED_ADDED:
+	case SEVT_PLOT_BONUS_REVEALED_REMOVED:
 	case SEVT_PLOT_OWNER_ADDED:
 	case SEVT_PLOT_OWNER_REMOVED:
 	case SEVT_PLOT_WORKED_ADDED:
@@ -964,11 +986,10 @@ void CityContext::onSpineEvent(const CvSpineEvent& kEvent)
 		cc_refreshAreaFactsAroundPlot(kEvent.iSrcLoc);
 		break;
 
-	// The bonus itself arrived / left. ⚠ The REMOVED fact is emitted while the OLD state still holds, so the
-	// tile's ownership and worked state are exactly what the contribution was booked against
-	// ([state-repositories.md] § THE INVARIANT) -- the withdrawal resolves against what it deposited.
-	case SEVT_PLOT_BONUS_ADDED:
-	case SEVT_PLOT_BONUS_REMOVED:
+	// A tile's bonus became visible / invisible to one TEAM. The fact names the bonus and the team, and reveal does
+	// not depend on ownership, so a withdrawal resolves against exactly what each city booked.
+	case SEVT_PLOT_BONUS_REVEALED_ADDED:
+	case SEVT_PLOT_BONUS_REVEALED_REMOVED:
 	{
 		const CvPlot* pPlot = (kEvent.iSrcLoc >= 0) ? GC.getMap().plotByIndex(kEvent.iSrcLoc) : NULL;
 		if (pPlot != NULL && kEvent.iType >= 0)
@@ -976,7 +997,8 @@ void CityContext::onSpineEvent(const CvSpineEvent& kEvent)
 			ApplyVicinityBonusFromPlot kApply;
 			kApply.pPlot = pPlot;
 			kApply.iBonus = kEvent.iType;
-			kApply.iSign = (kEvent.iEventId == SEVT_PLOT_BONUS_ADDED) ? +1 : -1;
+			kApply.iTeam = kEvent.iA;
+			kApply.iSign = (kEvent.iEventId == SEVT_PLOT_BONUS_REVEALED_ADDED) ? +1 : -1;
 			cc_forEachWorkableCity(pPlot, kApply);
 		}
 		break;
@@ -987,15 +1009,11 @@ void CityContext::onSpineEvent(const CvSpineEvent& kEvent)
 	case SEVT_PLOT_OWNER_REMOVED:
 	{
 		const CvPlot* pPlot = (kEvent.iSrcLoc >= 0) ? GC.getMap().plotByIndex(kEvent.iSrcLoc) : NULL;
-		const int iBonus = cc_plotBonus(pPlot);
-		const int iServedBonus = (pPlot != NULL) ? pPlot->getPlotContext().servedBonus() : -1;
-		// ⚠ Either half can be present alone: an unimproved tile carries a resource and serves none, and the
-		// served id is what the ON-SITE store counts. Entered whenever EITHER has something to move.
-		if (pPlot != NULL && (iBonus >= 0 || iServedBonus >= 0))
+		// Each city counts the tile's bonus as its own team sees it, so the bonus resolves per city inside the apply.
+		if (pPlot != NULL && pPlot->getBonusType(NO_TEAM) != NO_BONUS)
 		{
 			ApplyVicinityOwnerBand kApply;
-			kApply.iBonus = iBonus;
-			kApply.iServedBonus = iServedBonus;
+			kApply.pPlot = pPlot;
 			kApply.iPlotOwner = kEvent.iC;   // the owner THIS half of the pair is about
 			kApply.iSign = (kEvent.iEventId == SEVT_PLOT_OWNER_ADDED) ? +1 : -1;
 			cc_forEachWorkableCity(pPlot, kApply);
@@ -1037,7 +1055,7 @@ void CityContext::onSpineEvent(const CvSpineEvent& kEvent)
 		if (pPlot != NULL && kEvent.iType >= 0)
 		{
 			ApplyOnSiteFromPlot kApply;
-			kApply.iPlotOwner = (int)pPlot->getOwner();
+			kApply.pPlot = pPlot;
 			kApply.iBonus = kEvent.iType;
 			kApply.iSign = (kEvent.iEventId == SEVT_PLOT_SERVED_BONUS_ADDED) ? +1 : -1;
 			cc_forEachWorkableCity(pPlot, kApply);
@@ -1051,8 +1069,8 @@ void CityContext::onSpineEvent(const CvSpineEvent& kEvent)
 	case SEVT_PLOT_WORKED_REMOVED:
 	{
 		const CvPlot* pPlot = (kEvent.iSrcLoc >= 0) ? GC.getMap().plotByIndex(kEvent.iSrcLoc) : NULL;
-		const int iBonus = cc_plotBonus(pPlot);
 		const CvCity* pCity = cc_cityFor(kEvent.iC, kEvent.iB);
+		const int iBonus = cc_plotBonusSeenBy(pPlot, pCity);
 		if (pCity != NULL && iBonus >= 0)
 		{
 			pCity->getCityContext().applyVicinityBonus(iBonus, CITYVIC_WORKED,

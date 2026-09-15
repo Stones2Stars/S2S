@@ -2154,6 +2154,38 @@ namespace
 		std::set<BankedAtomCrossing>().swap(s_bankedAtomCrossings);   // load-time scratch, not resident state
 	}
 
+	// ⚖ A TILE'S BONUS DEPOSITS AS ITS OBSERVER SEES IT (docs/cascade/07-combine-arithmetic.md): an owned tile as its
+	// owner sees it, an unowned tile raw. Plot-scope entries ONLY -- no player and no city is passed, because the
+	// bonus's city and empire deposits ride SEVT_CITY_BONUS_*, their sole carrier.
+	void mc_applyPlotBonusSource(int iBonus, int iMultiplicity, const CvPlot& kPlot, int iEventId)
+	{
+		if (iBonus < 0 || iBonus >= GC.getNumBonusInfos())
+		{
+			return;
+		}
+		mc_applySourceDeposits(&GC.getBonusInfo((BonusTypes)iBonus), iMultiplicity, NULL, NULL, &kPlot,
+			CvCascadePackage<CvPlot>::PLOTSEG_NATURE, spineEventName(iEventId), CASC_ORIGIN_BUILDING);
+	}
+
+	// The deposits gated {HAS_BONUS: X} on this tile re-book against the bonus its owner now sees. The value
+	// DIFFERENCE makes it idempotent against whatever is already booked, so an extra call costs a resolve and
+	// changes nothing.
+	void mc_rebookBonusGatedPlot(const CvPlot& kPlot)
+	{
+		const std::vector<DepositIndex::GatedDeposit>* pBonusGated = DepositIndex::gatedByPredicate(CASC_PRED_HAS_BONUS);
+		if (pBonusGated == NULL || pBonusGated->empty())
+		{
+			return;
+		}
+		std::vector<CvCascadePackage<CvPlot>::PlotSegment> kSegments;
+		kSegments.reserve(pBonusGated->size());
+		for (size_t iGated = 0; iGated < pBonusGated->size(); ++iGated)
+		{
+			kSegments.push_back(mc_segmentForSource((*pBonusGated)[iGated].source));
+		}
+		mc_bookGatedPlot(pBonusGated, kSegments, kPlot, NULL);
+	}
+
 	const CvPlayer* mc_player(int iPlayer)
 	{
 		return (iPlayer >= 0 && iPlayer < MAX_PLAYERS) ? &GET_PLAYER((PlayerTypes)iPlayer) : NULL;
@@ -2503,7 +2535,18 @@ namespace
 					// source per fact with the direction in its id needs neither: _ADDED applies +1, _REMOVED applies
 					// -1, and a swap is just the two facts the emitter already sends.
 					const CvInfo* pSubstrate = mc_substrateInfo(kEvent.iEventId, kEvent.iType);
-					if (pSubstrate != NULL)
+					// ⚖ A TILE'S BONUS DEPOSITS AS ITS OBSERVER SEES IT: an owned tile's rides the owner's REVEAL and
+					// OWNER facts below, so only an unowned tile's raw bonus books on the bonus fact itself.
+					const bool bBonusFact =
+						(kEvent.iEventId == SEVT_PLOT_BONUS_ADDED || kEvent.iEventId == SEVT_PLOT_BONUS_REMOVED);
+					if (bBonusFact)
+					{
+						if (pPlot->getOwner() == NO_PLAYER)
+						{
+							mc_applyPlotBonusSource(kEvent.iType, mc_sourceDirection(kEvent), *pPlot, kEvent.iEventId);
+						}
+					}
+					else if (pSubstrate != NULL)
 					{
 						// mc_plotSegmentFor routes it to the right SEGMENT of the plot package (nature / improvement /
 						// rest), which is what keeps the §2a floors derivable from three plain sums.
@@ -2538,22 +2581,9 @@ namespace
 					// resource (the deliveryguy shape). At LOAD the ordering already works (CvPlot::read emits the
 					// bonus BEFORE the improvement, so the improvement's plane-A apply sees it), but a resource
 					// DISCOVERED on an already-improved tile moves the predicate with nothing to re-resolve it.
-					if (kEvent.iEventId == SEVT_PLOT_BONUS_ADDED || kEvent.iEventId == SEVT_PLOT_BONUS_REMOVED)
+					if (bBonusFact)
 					{
-						const std::vector<DepositIndex::GatedDeposit>* pBonusGated =
-							DepositIndex::gatedByPredicate(CASC_PRED_HAS_BONUS);
-						if (pBonusGated != NULL && !pBonusGated->empty())
-						{
-							std::vector<CvCascadePackage<CvPlot>::PlotSegment> kSegments;
-							kSegments.reserve(pBonusGated->size());
-							for (size_t iSeg = 0; iSeg < pBonusGated->size(); ++iSeg)
-							{
-								kSegments.push_back(mc_segmentForSource((*pBonusGated)[iSeg].source));
-							}
-							// The value DIFFERENCE makes this idempotent against whatever plane A already booked, so
-							// running it on the load path as well costs a resolve and changes nothing.
-							mc_bookGatedPlot(pBonusGated, kSegments, *pPlot, NULL);
-						}
+						mc_rebookBonusGatedPlot(*pPlot);
 					}
 					// ⚑ THE COUNT INDEX IS A SECOND KEY SPACE, and the type-atom measurement above does not reach
 					// it. That census counted deposits CONDITIONED on HOLDING a substrate (the atom index,
@@ -2595,6 +2625,20 @@ namespace
 								(pPlayer != NULL) ? (int)pPlayer->getID() : -1, -1);
 						}
 					}
+				}
+				break;
+			}
+			// ⚖ A TILE'S BONUS BECAME VISIBLE / INVISIBLE TO ONE TEAM. Only the OWNER's team moves the tile's own
+			// deposits: the owner receives the tile's yield, and owning a plot means seeing it.
+			case SEVT_PLOT_BONUS_REVEALED_ADDED:
+			case SEVT_PLOT_BONUS_REVEALED_REMOVED:
+			{
+				const CvPlot* pPlot = mc_plot(kEvent.iSrcLoc);
+				if (pPlot != NULL && pPlot->getOwner() != NO_PLAYER && (int)pPlot->getTeam() == kEvent.iA)
+				{
+					mc_applyPlotBonusSource(kEvent.iType, (kEvent.iEventId == SEVT_PLOT_BONUS_REVEALED_ADDED) ? 1 : -1,
+						*pPlot, kEvent.iEventId);
+					mc_rebookBonusGatedPlot(*pPlot);
 				}
 				break;
 			}
@@ -3085,18 +3129,34 @@ namespace
 					pPlayer, NULL, NULL);
 				break;
 			}
-			// ⚖ NOTHING FOR THE MODIFIER, AND THAT IS THE ONE-FACT RULE RATHER THAN A HOLE. CvPlot::setOwner
-			// CALLS updateWorkingCity ([contexts.md]: a city cannot work a plot it does not own, so the two
-			// facts cannot come apart), and every modifier consequence of an ownership flip rides those facts:
-			// the WORKING-CITY pair moves the plots-fan deposits of the departing and arriving owners, and the
-			// WORKED pair moves the city's worked-plot Σ. Routing any of it here as well would apply one
-			// happening twice. The IS_OWNED verdict is PlotContext's -- it derives the bit off this fact and
-			// announces the crossing, and the predicate route serves the deposits gated on it. Cross-scope
-			// receiver totals store nothing (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE), so there is no empire-side slot to
-			// move for either owner.
+			// ⚖ OWNERSHIP MOVES WHO SEES THE TILE'S BONUS, AND NOTHING ELSE HERE. CvPlot::setOwner CALLS
+			// updateWorkingCity ([contexts.md]: a city cannot work a plot it does not own, so the two facts cannot
+			// come apart), and every other modifier consequence of an ownership flip rides those facts: the
+			// WORKING-CITY pair moves the plots-fan deposits, the WORKED pair the city's worked-plot Σ, and the
+			// IS_OWNED predicate route the deposits gated on ownership. Routing any of that here would apply one
+			// happening twice. The tile's BONUS is the exception because its deposit depends on the OBSERVER: the
+			// owner's view on an owned tile, the raw bonus on an unowned one.
+			// ⚑ Balanced like the vicinity store's neutral residual: REMOVED withdraws the departing owner's view and
+			// books the raw bonus, ADDED withdraws the raw bonus and books the arriving owner's view, so unowned->A,
+			// A->unowned and A->B all net exactly. The reveal verdict does not depend on ownership, so the departing
+			// owner's view is still readable after m_eOwner has moved.
 			case SEVT_PLOT_OWNER_ADDED:
 			case SEVT_PLOT_OWNER_REMOVED:
+			{
+				const CvPlot* pPlot = mc_plot(kEvent.iSrcLoc);
+				const int iBonus = (pPlot != NULL) ? (int)pPlot->getBonusType(NO_TEAM) : -1;
+				if (iBonus >= 0 && pPlayer != NULL)
+				{
+					const int iOwnerSign = (kEvent.iEventId == SEVT_PLOT_OWNER_ADDED) ? 1 : -1;
+					if (pPlot->getPlotContext().isBonusRevealedTo((int)pPlayer->getTeam()))
+					{
+						mc_applyPlotBonusSource(iBonus, iOwnerSign, *pPlot, kEvent.iEventId);
+					}
+					mc_applyPlotBonusSource(iBonus, -iOwnerSign, *pPlot, kEvent.iEventId);
+					mc_rebookBonusGatedPlot(*pPlot);
+				}
 				break;
+			}
 			// ⚖ THE TURN IS A FACT LIKE ANY OTHER, AND IT CARRIES WHAT THE AGE GATE NEEDS (owner).
 			// `existedFor` is the one condition class whose dependency is ELAPSED TIME: no source moves, no count
 			// moves, no atom crosses -- the deposit simply becomes due. Nothing else in the engine can announce

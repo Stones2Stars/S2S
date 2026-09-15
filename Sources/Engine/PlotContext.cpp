@@ -22,6 +22,7 @@
 #include "AI/CvPlayerAI.h"          // GET_PLAYER -- a city fact names its owner, never a map index
 #include "CvGameCoreUtils.h"        // plotDirection -- the one-hop neighbour fan-out
 #include "CvImprovementInfo.h"      // isImprovementBonusTrade -- the SERVED-RESOURCE verdict's second leg
+#include "CvBonusInfo.h"            // getTechReveal -- which bonuses a tech fact reveals
 #include "Defines/CvGlobals.h"      // GC
 #include "Spine/CvEventSpine.h"     // IEventConsumer / SEVT_* / the crossing emit
 #include "Infos/CvClassificationIds.h"  // CLS_AMENITY_PROVIDES_FRESH_WATER -- which amenity crossing this reads
@@ -88,8 +89,8 @@ namespace
 	// precisely how a resource gets served (owner); and ownership is a per-ASKER question -- "is this tile MY
 	// owner's" has a different answer for each city that can work it, so no single per-plot verdict can hold it.
 	// The CITY applies that half where it knows its own owner.
-	// ⛔ The bonus is read UNFILTERED BY REVEAL (NO_TEAM), matching the vicinity store this feeds: these are
-	// per-CITY live state, not a per-team view.
+	// ⚠ The bonus is read UNFILTERED BY REVEAL, because reveal belongs to whoever SEES the plot: the asking CITY
+	// applies its own team's reveal where it books on site.
 	int pc_deriveServedBonus(const CvPlot* pPlot)
 	{
 		const int iBonus = (int)pPlot->getBonusType(NO_TEAM);
@@ -108,6 +109,52 @@ namespace
 	// The axes the served-resource verdict reads -- stated once, beside the derivation, exactly as a bit row states
 	// its own ([contexts.md]: the dependency lives next to the derivation, never in a switch somewhere else).
 	const int PLOT_SERVED_BONUS_AXES = PLOTAXIS_BONUS | PLOTAXIS_IMPROVEMENT;
+
+	// ⚖ THE BONUS -> PLOTS INDEX: which plots carry each bonus, maintained off the plot's own bonus facts. A tech or
+	// force-reveal fact names a BONUS, never a plot, so this turns it into the plots whose reveal can move -- never a
+	// map walk. Derived, so it is emptied when the map resets.
+	std::vector< std::vector<int> > s_plotsByBonus;
+
+	void pc_indexPlot(int iBonus, int iPlotIndex, bool bAdd)
+	{
+		if (iBonus < 0 || iPlotIndex < 0)
+		{
+			return;
+		}
+		if ((int)s_plotsByBonus.size() <= iBonus)
+		{
+			s_plotsByBonus.resize(iBonus + 1);
+		}
+		std::vector<int>& kPlots = s_plotsByBonus[iBonus];
+		if (bAdd)
+		{
+			kPlots.push_back(iPlotIndex);
+			return;
+		}
+		for (size_t iEntry = 0; iEntry < kPlots.size(); ++iEntry)
+		{
+			if (kPlots[iEntry] == iPlotIndex)
+			{
+				kPlots[iEntry] = kPlots.back();
+				kPlots.pop_back();
+				return;
+			}
+		}
+	}
+
+	// Re-derive ONE team's reveal on every plot carrying the bonus.
+	void pc_applyRevealForBonus(int iBonus, int eTeam)
+	{
+		if (iBonus < 0 || iBonus >= (int)s_plotsByBonus.size())
+		{
+			return;
+		}
+		const std::vector<int>& kPlots = s_plotsByBonus[iBonus];
+		for (size_t iEntry = 0; iEntry < kPlots.size(); ++iEntry)
+		{
+			GC.getMap().plotByIndex(kPlots[iEntry])->getPlotContext().applyRevealForTeam(eTeam);
+		}
+	}
 
 	typedef bool (*PlotBitDerive)(const CvPlot*);
 
@@ -214,11 +261,62 @@ namespace
 // (pc_cityAxisFor). Scope is a property of how the fact RESOLVES its plot, never of whether it belongs.
 bool PlotContext::wantsEvent(int iEventId)
 {
-	return pc_axisFor(iEventId) != 0 || pc_cityAxisFor(iEventId) != 0;
+	switch (iEventId)
+	{
+	// the REVEAL legs of the per-team bonus verdict, and the load-end pass that derives it
+	case SEVT_EMPIRE_TECH_ADDED:
+	case SEVT_EMPIRE_TECH_REMOVED:
+	case SEVT_TEAM_BONUS_REVEALED_ADDED:
+	case SEVT_TEAM_BONUS_REVEALED_REMOVED:
+	case SEVT_GAME_LOAD_FINISHED:
+		return true;
+	default:
+		return pc_axisFor(iEventId) != 0 || pc_cityAxisFor(iEventId) != 0;
+	}
 }
 
 void PlotContext::onSpineEvent(const CvSpineEvent& kEvent)
 {
+	// ⚖ THE REVEAL LEGS. Reveal reads TEAM state, and at load the map streams BEFORE the teams, so while the save is
+	// streaming a reveal is not derived: the index keeps every bonus plot, and GAME_LOAD_FINISHED derives every team's
+	// reveal once from final state -- the buffer-with-a-load-end-drain shape of docs/spine/05-the-load-reseed.md,
+	// never a dropped fact.
+	switch (kEvent.iEventId)
+	{
+	case SEVT_EMPIRE_TECH_ADDED:
+	case SEVT_EMPIRE_TECH_REMOVED:
+		if (!spineGameLoadInProgress() && kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS && kEvent.iType >= 0)
+		{
+			const int eTeam = (int)GET_PLAYER((PlayerTypes)kEvent.iC).getTeam();
+			for (int iBonus = 0; iBonus < GC.getNumBonusInfos(); ++iBonus)
+			{
+				if (GC.getBonusInfo((BonusTypes)iBonus).getTechReveal() == kEvent.iType)
+				{
+					pc_applyRevealForBonus(iBonus, eTeam);
+				}
+			}
+		}
+		return;
+	case SEVT_TEAM_BONUS_REVEALED_ADDED:
+	case SEVT_TEAM_BONUS_REVEALED_REMOVED:
+		if (!spineGameLoadInProgress())
+		{
+			pc_applyRevealForBonus(kEvent.iType, kEvent.iSrcLoc);
+		}
+		return;
+	case SEVT_GAME_LOAD_FINISHED:
+		for (int iBonus = 0; iBonus < (int)s_plotsByBonus.size(); ++iBonus)
+		{
+			for (int eTeam = 0; eTeam < MAX_TEAMS; ++eTeam)
+			{
+				pc_applyRevealForBonus(iBonus, eTeam);
+			}
+		}
+		return;
+	default:
+		break;
+	}
+
 	if (kEvent.iSrcLoc < 0)
 	{
 		return;
@@ -245,6 +343,16 @@ void PlotContext::onSpineEvent(const CvSpineEvent& kEvent)
 	if (pPlot == NULL)
 	{
 		return;
+	}
+	// The tile's bonus moved: the reveal verdict follows it BEFORE the axes re-derive the served resource, so a
+	// consumer booking on site against the served id reads a reveal that already describes the same bonus.
+	if (kEvent.iEventId == SEVT_PLOT_BONUS_REMOVED)
+	{
+		pPlot->getPlotContext().applyBonusLeft(kEvent.iType);
+	}
+	else if (kEvent.iEventId == SEVT_PLOT_BONUS_ADDED)
+	{
+		pPlot->getPlotContext().applyBonusArrived(kEvent.iType);
 	}
 	pPlot->getPlotContext().applyAxes(iAxis);
 
@@ -359,6 +467,98 @@ void PlotContext::setServedBonus(int iBonus) const
 	{
 		emitPlotServedBonusAdded(iPlotIndex, iOwner, iBonus);
 	}
+}
+
+// THE REVEAL WRITE POINT, and the same contract as setPredicate: commit one team's bit, then announce the CROSSING
+// alone, naming the bonus so a withdrawal never has to re-read a tile that may already carry another one.
+void PlotContext::setBonusRevealedTo(int eTeam, bool bRevealed, int iBonus) const
+{
+	if (m_plot == NULL || eTeam < 0 || eTeam >= MAX_TEAMS || m_bonusRevealedToTeams.test(eTeam) == bRevealed)
+	{
+		return;
+	}
+	m_bonusRevealedToTeams.set(eTeam, bRevealed);
+
+	const int iPlotIndex = GC.getMap().plotNum(m_plot->getX(), m_plot->getY());
+	const int iOwner = (int)m_plot->getOwner();
+	if (bRevealed)
+	{
+		emitPlotBonusRevealedAdded(iPlotIndex, iOwner, eTeam, iBonus);
+	}
+	else
+	{
+		emitPlotBonusRevealedRemoved(iPlotIndex, iOwner, eTeam, iBonus);
+	}
+}
+
+void PlotContext::applyBonusLeft(int iBonus) const
+{
+	if (m_plot == NULL)
+	{
+		return;
+	}
+	pc_indexPlot(iBonus, GC.getMap().plotNum(m_plot->getX(), m_plot->getY()), false);
+	for (int eTeam = 0; eTeam < MAX_TEAMS; ++eTeam)
+	{
+		setBonusRevealedTo(eTeam, false, iBonus);
+	}
+}
+
+void PlotContext::applyBonusArrived(int iBonus) const
+{
+	if (m_plot == NULL)
+	{
+		return;
+	}
+	pc_indexPlot(iBonus, GC.getMap().plotNum(m_plot->getX(), m_plot->getY()), true);
+	// While the save streams the teams are not read yet; the GAME_LOAD_FINISHED pass derives this plot's reveal.
+	if (spineGameLoadInProgress())
+	{
+		return;
+	}
+	for (int eTeam = 0; eTeam < MAX_TEAMS; ++eTeam)
+	{
+		applyRevealForTeam(eTeam);
+	}
+}
+
+void PlotContext::applyRevealForTeam(int eTeam) const
+{
+	if (m_plot == NULL)
+	{
+		return;
+	}
+	const BonusTypes eBonus = m_plot->getBonusType(NO_TEAM);
+	if (eBonus == NO_BONUS)
+	{
+		return;
+	}
+	// The engine's own reveal read (the reveal tech held, or a force-reveal) -- never a second implementation of it.
+	setBonusRevealedTo(eTeam, m_plot->getBonusType((TeamTypes)eTeam) != NO_BONUS, (int)eBonus);
+}
+
+bool PlotContext::isBonusRevealedTo(int eTeam) const
+{
+	return eTeam >= 0 && eTeam < MAX_TEAMS && m_bonusRevealedToTeams.test(eTeam);
+}
+
+int PlotContext::bonusVisibleToOwner() const
+{
+	if (m_plot == NULL)
+	{
+		return (int)NO_BONUS;
+	}
+	const int iBonus = (int)m_plot->getBonusType(NO_TEAM);
+	if (iBonus < 0 || m_plot->getOwner() == NO_PLAYER)
+	{
+		return iBonus;
+	}
+	return isBonusRevealedTo((int)m_plot->getTeam()) ? iBonus : (int)NO_BONUS;
+}
+
+void PlotContext::clearBonusPlotIndex()
+{
+	s_plotsByBonus.clear();
 }
 
 // --- forwarded: the raw substrate CvPlot already holds O(1); a parameterized predicate keys on the id, and the one
