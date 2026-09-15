@@ -191,6 +191,21 @@ public:
 	// Prefer to use plots() range instead of this for loops, searching etc.
 	CvPlot* getCityIndexPlot(int iIndex) const;
 
+	///<summary>The first rule refusing this city work on a plot, in the order getWorkRefusal tests them.</summary>
+	enum WorkRefusal
+	{
+		WORK_ALLOWED,
+		WORK_REFUSED_NOT_WORKING_CITY,
+		WORK_REFUSED_OUTSIDE_RADIUS,
+		WORK_REFUSED_SIEGE,
+		WORK_REFUSED_NO_WATER_WORK,
+		WORK_REFUSED_BLOCKADED,
+		WORK_REFUSED_NO_YIELD
+	};
+	///<summary>Whether this city may work the plot, as the first refusing rule or WORK_ALLOWED. canWork answers from it.</summary>
+	WorkRefusal getWorkRefusal(const CvPlot* pPlot) const;
+	///<summary>The diagnostic spelling of a refusal, served beside the verdict.</summary>
+	static const char* workRefusalName(WorkRefusal eRefusal);
 	bool canWork(const CvPlot* pPlot) const;
 	void verifyWorkingPlot(int iIndex);
 	void verifyWorkingPlots();
@@ -376,7 +391,41 @@ public:
 	// CANDIDATE also answers in, so the two compose; this one is the city's own level and composes with nothing.
 	// A consumer wanting ONE side of a pair reads the array -- there is no per-side getter, and the four legacy
 	// level getters it replaces are deleted, not renamed (docs/architecture/patterns.md §THE TWO READ ROLES (new getter surface, never widen legacy)).
-	void realizedWellbeing(int iExtraPopulation, int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
+	///<summary>
+	/// Every raw-state term realizedWellbeing folds on top of the deposits, recorded by the walk that folds it -- the
+	/// §2b decomposition census. Faces are ×100 as folded; the anger PERCENTS are the percents before population scaling.
+	///</summary>
+	struct WellbeingTerms
+	{
+		int revSuccessHappiness;
+		int vassalHappiness;
+		int militaryHappiness;
+		int celebrityHappiness;
+		int happinessTimer;
+		int eventGrantedHappiness;
+		bool noUnhappiness;
+		int overcrowdingPercentAnger;
+		int noMilitaryPercentAnger;
+		int culturePercentAnger;
+		int religionPercentAnger;
+		int hurryPercentAnger;
+		int conscriptPercentAnger;
+		int defyResolutionPercentAnger;
+		int warWearinessPercentAnger;
+		int revRequestPercentAnger;
+		int revIndexPercentAnger;
+		int angerFromPercents;
+		int vassalUnhappiness;
+		int espionageHappinessCounter;
+		int eventAnger;
+		int eventGrantedAnger;
+		int landmarkAnger;
+		int eventGrantedHealth;
+		int eventGrantedUnhealth;
+		int espionageHealthCounter;
+		int populationUnhealth;
+	};
+	void realizedWellbeing(int iExtraPopulation, int (&wellbeing)[NUM_WELLBEING_CHANNELS], WellbeingTerms* pTermsOut = NULL) const;
 	// The opposing-pair NETS, in WHOLE faces / health points (signed -- a surplus is as meaningful as a
 	// deficit). The pairing itself lives once on the calc surface (InfoValuation::netHappiness/netHealth).
 	int netHappiness(int iExtraPopulation = 0) const;

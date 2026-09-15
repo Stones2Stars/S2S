@@ -50,6 +50,15 @@ math and never sees the human boundary.
 > per plot (nature = terrain+feature+river+hills/peak + bonus; + improvement, floored at `-nature`; + route + the
 > keyed/plots flats, `max(0,·)`) — and that result is passed **up the chain**: the city SUMS its worked-plot
 > packages into the §1 `base`.
+> ⚖ **A MAP BONUS YIELDS ONLY FOR AN OWNER WHO SEES IT — you do not get yields from a resource you cannot see.**
+> Reveal belongs to whoever SEES the plot, never to its owner ([the reveal set](13-context-maintained-events.md#maintained-event-driven--never-a-per-turn-recompute)),
+> and it is answered through the team-held tech and force-reveal ([§ team is the tech bridge](14-context-scope-set.md)).
+> The tile's yield goes to its owner, and owning a plot means seeing it, so the nature package's bonus term is the
+> bonus AS THE OWNER SEES IT; an unowned tile, which no city works, carries its raw bonus.
+> ⛔ So every read of the plot's base yield — the maintained package and every what-if beside it
+> (`getBonusType(getTeam())`) — takes that same view, or the valuation and the stored yield answer different numbers
+> for the same tile. The maintained package books the bonus on every move of that view: the tile's bonus, the
+> plot's owner, and the owner team's reveal — never only on the tile's bonus fact.
 > **The plot yields ARE "the base the rest is calculated from."** So anything that scales a *specific improvement or
 > plot component* resolves **inside** this per-plot package, **before** the city-level `(100+Σpercent)` stack ever runs.
 > ⚖ **The CITY-CENTRE constant is the legacy `calculateYield` city block, inside this same isolated resolve,

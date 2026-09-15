@@ -8008,7 +8008,6 @@ int CvPlot::calculateNatureYield(YieldTypes eYield, bool bIgnoreFeature) const
 	// rebuild runs, handed no improvement and no route (docs/architecture/patterns.md §DRY (single implementation)). bIgnoreFeature is the
 	// CHOP what-if: it answers as though the feature were already cleared, which no stored segment can serve
 	// because it describes a plot that does not exist.
-	// ⚠ Carries no team: a plot resolves in ISOLATION (modifier.md §2), so its substrate has ONE value.
 	const BonusTypes eBonus = getBonusType(getTeam());
 	CvCascadeEvalCtx evalCtx;
 	InfoValuation::fillEvalCtxAtPlot(*this, evalCtx);

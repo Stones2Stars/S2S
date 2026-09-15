@@ -768,6 +768,9 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 		if (kPlayer.isAlive())
 		{
 			kPlayer.updateTradeRoutes();
+			// War-weariness anger is derived the same way (the per-enemy weariness x the enemy's cascade modifier)
+			// and no longer saved, so it is rebuilt here, before the citizen re-decide below reads it.
+			kPlayer.updateWarWearinessPercentAnger();
 		}
 	}
 

@@ -42,6 +42,10 @@ CvUnit::m_iImmobileTimer
 | (CITYSTATUS_WE_LOVE_THE_KING_DAY). WLTKD is a ONE-TURN status re-applied each turn while its conditions
 | hold, so the bool was its legacy shape. REPLACEMENT: CvCity::m_aiStatusTurns, serialized in its place.
 CvCity::m_bWeLoveTheKingDay
+| CvPlayer war-weariness percent anger -- DERIVED (save.md §5): the per-enemy weariness and modifiers it sums are
+| saved or rebuilt elsewhere, so a saved copy only carried a stale number past every change to its inputs. The member
+| stays as an unsaved cache. REPLACEMENT: CvPlayer::updateWarWearinessPercentAnger, run for every player at load end.
+CvPlayer::m_iWarWearinessPercentAnger
 ========================
 | ⚖ RE-HOMED OBLIGATIONS: every `CascadeWellbeing::*` a wellbeing note below names as the replacement is
 | ARCHIVED with the shadow substrate (SourceArchive/Cascade/), and the intermediate per-term getters those

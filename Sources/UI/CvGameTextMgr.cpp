@@ -4930,11 +4930,11 @@ void CvGameTextMgr::getAttitudeString(CvWStringBuffer& szBuffer, PlayerTypes ePl
 	//	WAR WEARINESS the target is carrying from fighting US -- their population's patience, which is a
 	//	diplomatic fact about this pair and belongs beside the attitude that reads it.
 	const int iWarWeariness = GET_PLAYER(eTargetPlayer).getModifiedWarWearinessPercentAnger(
-		kTargetTeam.getWarWeariness(kPlayer.getTeam()) * std::max(0, 100 + kTeam.getEnemyWarWearinessModifier()));
-	if (iWarWeariness / 10000 > 0)
+		kTargetTeam.getWarWearinessPercentAnger(kPlayer.getTeam()));
+	if (iWarWeariness > 0)
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_WAR_WEAR_HELP", iWarWeariness / 10000));
+		szBuffer.append(gDLL->getText("TXT_KEY_WAR_WEAR_HELP", iWarWeariness));
 	}
 
 	//	The unattributed residual — whatever the leader carries that no named component above accounts for.

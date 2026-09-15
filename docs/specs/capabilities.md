@@ -165,7 +165,7 @@ the block by this string and nothing translates.
 ## Grounded meanings
 
 - **`canWorkOn.water`** (was `waterWork`) — cities may WORK water tiles at all (`CvCity::canWork` gate,
-  `CvCity.cpp:1753`); granted by `TECH_TRAP_FISHING`.
+  `CvCity::getWorkRefusal`); granted by `TECH_TRAP_FISHING`.
 - **`hasCenteredMap`** — *"when it arrives, map gets centered, and stays centered"* — an arrive-and-stay latch in
   practice, equivalent to the derived union because the sole grantor is a tech and techs are never lost. It *could*
   technically behave as a grant (a one-shot pulse), but no special grant type is minted for a thing like this — do

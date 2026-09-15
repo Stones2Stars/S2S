@@ -2413,13 +2413,7 @@ bool CvTeamAI::AI_acceptSurrender(TeamTypes eSurrenderTeam) const
 		{
 			const int iWarWearinessPercentAnger =
 			(
-				GET_PLAYER((PlayerTypes)iI).getModifiedWarWearinessPercentAnger(
-					// ×100 weariness × a (100 + percent) factor, reduced once -- same shape as the engine twin.
-					getWarWearinessTimes100(eSurrenderTeam)
-					*
-					std::max(0, 100 + GET_TEAM(eSurrenderTeam).getEnemyWarWearinessModifier())
-					/ 10000
-				)
+				GET_PLAYER((PlayerTypes)iI).getModifiedWarWearinessPercentAnger(getWarWearinessPercentAnger(eSurrenderTeam))
 			);
 			// Significant war weariness from eSurrenderTeam
 			if (iWarWearinessPercentAnger > 50

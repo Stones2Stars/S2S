@@ -76,6 +76,17 @@ FOSSIL OF A MISSING EMIT, above ([self-heal is not a backstop](03-no-staleness-n
   bonus / owner / **plot type / river / irrigation / landmark / worked** — consumed by `PlotContext` ITSELF
   ([a context dictionary is a spine consumer](11-context-stores-vs-forwards.md#what-a-context-stores-vs-forwards---a-context-is-an-event-built-store-not-a-forwarding-facade)), which sets the bits the announcing fact FEEDS
   and nothing else.
+  > **⚖ THE BONUS REVEAL SET IS KEYED BY TEAM, NEVER BY OWNER.** Reveal belongs to whoever SEES the plot, so
+  > `PlotContext` stores which teams see the tile's bonus and announces each crossing as
+  > `SEVT_PLOT_BONUS_REVEALED_ADDED / _REMOVED`. It moves on the tile's bonus facts (every team), on a team's tech
+  > facts and on its force-reveal facts (`SEVT_TEAM_BONUS_REVEALED_ADDED / _REMOVED`). The last two name a BONUS,
+  > not a plot, so a bonus → plots index kept off the bonus facts turns them into plots without a map walk.
+  > ⚠ **At load it is derived ONCE, at `GAME_LOAD_FINISHED`:** the map streams before the teams, so a reveal
+  > derived while the save streams would read no techs.
+  > ⚑ Because the set does not depend on ownership, an owner change never moves it — so a consumer can still read
+  > what the DEPARTING owner saw after `m_eOwner` has moved, which is what keeps the withdrawal exact. Each consumer
+  > asks it for its own observer: the tile's yield and its `HAS_BONUS` deposits for the OWNER (an unowned tile
+  > reads its raw bonus), a city's vicinity and on-site bands for that city's team.
   > **⚖ THE ROUTING IS DERIVED FROM A PER-BIT TABLE, never hand-written per event.** Each bit declares its own
   > derivation AND the substrate AXES it reads, side by side; a fact re-derives exactly the rows whose axes it
   > moved. That is what answers the hazard the retired whole-block derivation was right about — a hand-written

@@ -627,8 +627,9 @@ public:
 		const CvCondition* pCondition;   // the gate -- BORROWED; NULL = unconditioned
 		bool bApplied;                   // did it land? false = the gate refused it
 	};
-	// EVERY city-scope entry of iChannel that an ACTIVE building authors -- conditioned or not, applied or
-	// refused. Sorted by |value| descending.
+	// EVERY city-scope entry of iChannel that a LIVE source of this city authors -- its active buildings, the owner's
+	// civics / traits / techs / heritages / projects, and its held bonuses, religions and corporations --
+	// conditioned or not, applied or refused. Sorted by |value| descending.
 	// ⚖ BOTH SIDES OR IT ANSWERS NOTHING. A refusal list alone shows what is missing and hides what is wrong: a
 	// percent that should not be applying is exactly as invisible in a total as one that should be and is not.
 	// Listing the APPLIED entries makes the total checkable -- their Σ is what the package's own city-scope slot

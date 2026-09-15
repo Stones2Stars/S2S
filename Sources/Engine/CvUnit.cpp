@@ -2894,11 +2894,11 @@ void CvUnit::updateCombat(CvUnit* pSelectedDefender, bool bSamePlot, bool bSteal
 
 			if (!isHiddenNationality() && !pDefender->isHiddenNationality())
 			{
-				const int attackerWarWearinessChangeTimes100 = std::max(1, 100 * GC.getDefineINT("WW_UNIT_KILLED_ATTACKING") * (getMaxHP() - getPreCombatDamage()) / getMaxHP());
-				GET_TEAM(getTeam()).changeWarWearinessTimes100(pDefender->getTeam(), *pPlot, attackerWarWearinessChangeTimes100);
+				const int iAttackerHitPointPercent = std::max(1, 100 * (getMaxHP() - getPreCombatDamage()) / getMaxHP());
+				GET_TEAM(getTeam()).changeWarWeariness(pDefender->getTeam(), *pPlot, GC.getDefineINT("WW_UNIT_KILLED_ATTACKING"), iAttackerHitPointPercent);
 
-				const int defenderWarWearinessChangeTimes100 = 100*GC.getDefineINT("WW_KILLED_UNIT_DEFENDING")*(pDefender->getDamage() - pDefender->getPreCombatDamage())/pDefender->getMaxHP();
-				GET_TEAM(pDefender->getTeam()).changeWarWearinessTimes100(getTeam(), *pPlot, defenderWarWearinessChangeTimes100);
+				const int iDefenderDamagePercent = 100 * (pDefender->getDamage() - pDefender->getPreCombatDamage()) / pDefender->getMaxHP();
+				GET_TEAM(pDefender->getTeam()).changeWarWeariness(getTeam(), *pPlot, GC.getDefineINT("WW_KILLED_UNIT_DEFENDING"), iDefenderDamagePercent);
 
 				GET_TEAM(pDefender->getTeam()).AI_changeWarSuccess(getTeam(), GC.getDefineINT("WAR_SUCCESS_DEFENDING"));
 			}
@@ -3377,26 +3377,11 @@ void CvUnit::updateCombat(CvUnit* pSelectedDefender, bool bSamePlot, bool bSteal
 
 			if (!isHiddenNationality() && !pDefender->isHiddenNationality())
 			{
-				const int defenderWarWearinessChangeTimes100 =
-				(
-					std::max(
-						1,
-						100 * GC.getDefineINT("WW_UNIT_KILLED_DEFENDING")
-						* (pDefender->getMaxHP() - pDefender->getPreCombatDamage())
-						/
-						pDefender->getMaxHP()
-					)
-				);
-				GET_TEAM(pDefender->getTeam()).changeWarWearinessTimes100(getTeam(), *pPlot, defenderWarWearinessChangeTimes100);
+				const int iDefenderHitPointPercent = std::max(1, 100 * (pDefender->getMaxHP() - pDefender->getPreCombatDamage()) / pDefender->getMaxHP());
+				GET_TEAM(pDefender->getTeam()).changeWarWeariness(getTeam(), *pPlot, GC.getDefineINT("WW_UNIT_KILLED_DEFENDING"), iDefenderHitPointPercent);
 
-				const int attackerWarWearinessChangeTimes100 =
-				(
-					100 * GC.getDefineINT("WW_KILLED_UNIT_ATTACKING")
-					* (getDamage() - getPreCombatDamage())
-					/
-					getMaxHP()
-				);
-				GET_TEAM(getTeam()).changeWarWearinessTimes100(pDefender->getTeam(), *pPlot, attackerWarWearinessChangeTimes100);
+				const int iAttackerDamagePercent = 100 * (getDamage() - getPreCombatDamage()) / getMaxHP();
+				GET_TEAM(getTeam()).changeWarWeariness(pDefender->getTeam(), *pPlot, GC.getDefineINT("WW_KILLED_UNIT_ATTACKING"), iAttackerDamagePercent);
 
 				GET_TEAM(getTeam()).AI_changeWarSuccess(pDefender->getTeam(), GC.getWAR_SUCCESS_ATTACKING());
 			}

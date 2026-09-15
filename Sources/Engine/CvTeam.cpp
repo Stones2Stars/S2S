@@ -104,7 +104,7 @@ CvTeam::CvTeam() : m_GameObject(this),
 m_Properties(this)
 {
 	m_aiStolenVisibilityTimer = new int[MAX_TEAMS];
-	m_aiWarWearinessTimes100 = new int[MAX_TEAMS];
+	m_aiWarWeariness = new int[MAX_TEAMS];
 	m_aiExtraMoves = new int[NUM_DOMAIN_TYPES];
 
 	m_aiEspionagePointsAgainstTeam = new int[MAX_TEAMS];
@@ -149,7 +149,7 @@ CvTeam::~CvTeam()
 	uninit();
 
 	SAFE_DELETE_ARRAY(m_aiStolenVisibilityTimer);
-	SAFE_DELETE_ARRAY(m_aiWarWearinessTimes100);
+	SAFE_DELETE_ARRAY(m_aiWarWeariness);
 	SAFE_DELETE_ARRAY(m_aiExtraMoves);
 	SAFE_DELETE_ARRAY(m_aiEspionagePointsAgainstTeam);
 	SAFE_DELETE_ARRAY(m_aiCounterespionageTurnsLeftAgainstTeam);
@@ -269,7 +269,7 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 	for (iI = 0; iI < MAX_TEAMS; iI++)
 	{
 		m_aiStolenVisibilityTimer[iI] = 0;
-		m_aiWarWearinessTimes100[iI] = 0;
+		m_aiWarWeariness[iI] = 0;
 		m_aiEspionagePointsAgainstTeam[iI] = 0;
 		m_aiCounterespionageTurnsLeftAgainstTeam[iI] = 0;
 		m_aiCounterespionageModAgainstTeam[iI] = 0;
@@ -289,7 +289,7 @@ void CvTeam::reset(TeamTypes eID, bool bConstructorCall)
 		{
 			CvTeam& kLoopTeam = GET_TEAM((TeamTypes)iI);
 			kLoopTeam.m_aiStolenVisibilityTimer[getID()] = 0;
-			kLoopTeam.m_aiWarWearinessTimes100[getID()] = 0;
+			kLoopTeam.m_aiWarWeariness[getID()] = 0;
 			kLoopTeam.m_aiEspionagePointsAgainstTeam[getID()] = 0;
 			kLoopTeam.m_aiCounterespionageTurnsLeftAgainstTeam[getID()] = 0;
 			kLoopTeam.m_aiCounterespionageModAgainstTeam[getID()] = 0;
@@ -3297,43 +3297,29 @@ void CvTeam::changeStolenVisibilityTimer(TeamTypes eIndex, int iChange)
 
 int CvTeam::getWarWeariness(TeamTypes eIndex) const
 {
-	return getWarWearinessTimes100(eIndex) / 100;
+	FASSERT_BOUNDS(0, MAX_TEAMS, eIndex);
+	return m_aiWarWeariness[eIndex];
 }
 
-int CvTeam::getWarWearinessTimes100(TeamTypes eIndex) const
+int CvTeam::getWarWearinessPercentAnger(TeamTypes eEnemyTeam) const
 {
-	FASSERT_BOUNDS(0, MAX_TEAMS, eIndex);
-	return m_aiWarWearinessTimes100[eIndex];
+	// 64-bit: the weariness times the (100 + modifier) factor passes the 32-bit limit in a long war.
+	const int64_t iScaled = static_cast<int64_t>(getWarWeariness(eEnemyTeam)) * std::max(0, 100 + GET_TEAM(eEnemyTeam).getEnemyWarWearinessModifier());
+	return static_cast<int>(iScaled / GC.getDefineINT("WAR_WEARINESS_ANGER_DIVISOR"));
 }
 
 void CvTeam::setWarWeariness(TeamTypes eIndex, int iNewValue)
 {
-	setWarWearinessTimes100(eIndex, 100 * iNewValue);
-}
-
-void CvTeam::setWarWearinessTimes100(TeamTypes eIndex, int iNewValue)
-{
 	FASSERT_BOUNDS(0, MAX_TEAMS, eIndex);
-	m_aiWarWearinessTimes100[eIndex] = std::max(0, iNewValue);
+	m_aiWarWeariness[eIndex] = std::max(0, iNewValue);
 }
 
 void CvTeam::changeWarWeariness(TeamTypes eIndex, int iChange)
 {
-	changeWarWearinessTimes100(eIndex, 100 * iChange);
+	setWarWeariness(eIndex, getWarWeariness(eIndex) + iChange);
 }
 
-void CvTeam::changeWarWearinessTimes100(TeamTypes eIndex, int iChange)
-{
-	FASSERT_BOUNDS(0, MAX_TEAMS, eIndex);
-	setWarWearinessTimes100(eIndex, getWarWearinessTimes100(eIndex) + iChange);
-}
-
-void CvTeam::changeWarWeariness(TeamTypes eOtherTeam, const CvPlot& kPlot, int iFactor)
-{
-	changeWarWearinessTimes100(eOtherTeam, kPlot, iFactor * 100);
-}
-
-void CvTeam::changeWarWearinessTimes100(TeamTypes eOtherTeam, const CvPlot& kPlot, int iFactor)
+void CvTeam::changeWarWeariness(TeamTypes eOtherTeam, const CvPlot& kPlot, int iFactor, int iSharePercent)
 {
 	PROFILE_FUNC();
 
@@ -3355,7 +3341,7 @@ void CvTeam::changeWarWearinessTimes100(TeamTypes eOtherTeam, const CvPlot& kPlo
 	{
 		iRatio = std::min(60, iRatio);
 	}
-	changeWarWearinessTimes100(eOtherTeam, iRatio * iFactor);
+	changeWarWeariness(eOtherTeam, iRatio * iFactor * iSharePercent / 100);
 }
 
 
@@ -5737,6 +5723,7 @@ void CvTeam::setForceRevealedBonus(BonusTypes eBonus, bool bRevealed)
 	if (bRevealed)
 	{
 		m_aeRevealedBonuses.push_back(eBonus);
+		emitTeamBonusRevealedAdded((int)getID(), (int)eBonus);
 	}
 	else
 	{
@@ -5748,6 +5735,7 @@ void CvTeam::setForceRevealedBonus(BonusTypes eBonus, bool bRevealed)
 				break;
 			}
 		}
+		emitTeamBonusRevealedRemoved((int)getID(), (int)eBonus);
 	}
 
 	for (int iI = 0; iI < GC.getMap().numPlots(); ++iI)
@@ -5880,14 +5868,7 @@ void CvTeam::read(FDataStreamBase* pStream)
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiStolenVisibilityTimer);
 	EVENT_GRANTS_READ(wrapper, "CvTeam", m_eventGrants);
 
-	//	Format change - we now store 100 times the actual value, but no need to change the save format - just
-	//	convert on load and save
-	WRAPPER_READ_ARRAY_DECORATED(wrapper, "CvTeam", MAX_TEAMS, m_aiWarWearinessTimes100, "m_aiWarWeariness");
-
-	for (int iI = 0; iI < MAX_TEAMS; iI++)
-	{
-		m_aiWarWearinessTimes100[iI] *= 100;
-	}
+	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiWarWeariness);
 
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiEspionagePointsAgainstTeam);
 	WRAPPER_READ_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiCounterespionageTurnsLeftAgainstTeam);
@@ -6014,6 +5995,7 @@ void CvTeam::read(FDataStreamBase* pStream)
 		if (eBonus != NO_BONUS)
 		{
 			m_aeRevealedBonuses.push_back(eBonus);
+			emitTeamBonusRevealedAdded((int)m_eID, (int)eBonus);
 		}
 	}
 
@@ -6076,18 +6058,7 @@ void CvTeam::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiStolenVisibilityTimer);
 	EVENT_GRANTS_WRITE(wrapper, "CvTeam", m_eventGrants);
 
-	//	Format change - we now store 100 times the actual value, but no need to change the save format - just
-	//	convert on load and save
-	for (int iI = 0; iI < MAX_TEAMS; iI++)
-	{
-		m_aiWarWearinessTimes100[iI] /= 100;
-	}
-
-	WRAPPER_WRITE_ARRAY_DECORATED(wrapper, "CvTeam", MAX_TEAMS, m_aiWarWearinessTimes100, "m_aiWarWeariness");
-	for (int iI = 0; iI < MAX_TEAMS; iI++)
-	{
-		m_aiWarWearinessTimes100[iI] *= 100;
-	}
+	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiWarWeariness);
 
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiEspionagePointsAgainstTeam);
 	WRAPPER_WRITE_ARRAY(wrapper, "CvTeam", MAX_TEAMS, m_aiCounterespionageTurnsLeftAgainstTeam);

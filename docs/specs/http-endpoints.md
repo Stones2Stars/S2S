@@ -145,6 +145,43 @@ byte the enabler stored with no translation in between.
 should HIDE appearing in the greyed set is a defect in the reason SELECTION, which is how hide-vs-grey is checked
 without opening the game.
 
+### ⚖ THE PLOT CENSUS SERVES THE WORK VERDICT WITH ITS REASON
+
+`/computed/city/yield` lists, per city, **every tile of the ring table** (`plots[]` over all `NUM_CITY_PLOTS`
+indices, with the city's `numCityPlots` beside them), so a tile the radius does not reach is served with its
+refusal rather than missing.
+
+- **`yields.<YIELD>.total` is the tile's RESOLVED value** — the plot package's own slot, the number
+  `CvPlot::hasYield` and every city read take. `nature` / `improvement` / `rest` are its STORAGE segments; the gap
+  between their sum and `total` is the resolve (§ above), never drift.
+- **`canWork` + `workRefusal`** — the city's verdict on working the tile and the FIRST rule refusing it
+  (`allowed` · `notWorkingCity` · `outsideRadius` · `siege` · `noWaterWork` · `blockaded` · `noYield`), served from
+  `CvCity::getWorkRefusal`, the one implementation `canWork` answers from. `workingCity` and `cityPlotIndex` sit on
+  the same row, so the first two rules are checkable against their inputs.
+
+- **`citizens`** (on the city) — the accounting a placement tests once a tile may be worked: `visiblePopulation`,
+  `angryPopulation`, `workingPopulation`, `specialistPopulation`, `totalFreeSpecialists`, `extraFreeSpecialists`,
+  `extraPopulation`, `maxSpecialistCount`, `automated`, and one row per held specialist type with its `assigned` /
+  `forced` / `free` counts. Beside them, **`citizens.freeSpecialists`** decomposes the untyped free-slot count:
+  `realized` (`CvCity::getFreeSpecialist`), the two roll-up legs `upperFlat` / `cityFlat` (+ `percent`), and every
+  CITY-scope deposit of the channel with its `source`, `value` and gating `condition`, split into `applied` /
+  `refused` with the `appliedFlatSum` that reconciles against `cityFlat`. ⚠ Entries authored at EMPIRE/TEAM scope
+  are bounded by `upperFlat`, not listed.
+
+- **`wellbeing`** (on the city) — the [§2b wellbeing census](../cascade/09-wellbeing-channels.md): the `realized`
+  four channels, `netHappiness` / `netHealth` / `angryPopulation`, the `depositLegs` (buildings · specialists ·
+  empire), every raw-state `terms` field the realized read folds (the anger PERCENTS before population scaling,
+  the faces ×100), and the `warWeariness` inputs (`playerPercentAnger` · `cityScalar` · `cityTimer`) with one
+  `enemies` row per team the owner carries weariness against (`team` · `atWar` · `warWeariness` ·
+  `enemyModifier` · `percentAnger`, the unmultiplied contribution from `CvTeam::getWarWearinessPercentAnger`). The
+  terms are recorded by `CvCity::realizedWellbeing`'s own walk, so they cannot disagree with the level they
+  explain.
+
+⛔ **`canWork: allowed` says the tile MAY be worked, never that a citizen can be put on it.** `alterWorkingPlot`
+also needs a free citizen (`extraPopulation > 0`) or one `AI_removeWorstCitizen` can take off something else — an
+unforced specialist or another worked tile — so a tile that reads `allowed` yet takes nobody is answered by
+`citizens`, not by the tile row.
+
 ## The two standing invariants
 
 - ⛔ **The server thread NEVER touches live game objects.** That is why data routes go through the mailbox at all:

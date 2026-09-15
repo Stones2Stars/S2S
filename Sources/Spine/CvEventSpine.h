@@ -294,6 +294,10 @@ enum SpineDomainEvent
 	// iSrcLoc = teamId. DOMAIN.
 	SEVT_TEAM_MEMBER_ADDED          = 20,
 	SEVT_TEAM_MEMBER_REMOVED        = 21,
+	// The team was FORCE-REVEALED a bonus / lost that reveal (CvTeam::setForceRevealedBonus, and CvTeam::read for
+	// a saved one) -- the reveal leg that is not a tech. iType = Bonus, iC = -1, iSrcLoc = teamId. DOMAIN.
+	SEVT_TEAM_BONUS_REVEALED_ADDED   = 22,
+	SEVT_TEAM_BONUS_REVEALED_REMOVED = 23,
 
 	// ===== EMPIRE (player) =====
 	// The team GAINED / LOST a tech (CvTeam::setHasTech). Tech is TEAM-held but the fact is emitted per-self from
@@ -660,6 +664,14 @@ enum SpineDomainEvent
 	SEVT_AREA_TILE_ADDED            = 142,
 	SEVT_AREA_TILE_REMOVED          = 143,
 
+	// ⚖ THE PLOT'S BONUS BECAME VISIBLE / INVISIBLE TO ONE TEAM -- PlotContext's per-team reveal verdict crossed.
+	// Reveal belongs to whoever SEES the plot, never to its owner, so this is keyed by TEAM and is independent of
+	// ownership; a consumer asks it for its own observer (the owner for the tile's yield, the asking city's team
+	// for the vicinity bands). ⛔ NOT a duplicate of the PLOT_BONUS pair: that says what the tile CARRIES, this
+	// says who can see it. iType = Bonus, iA = team, iC = owner, iSrcLoc = plotId. DOMAIN.
+	SEVT_PLOT_BONUS_REVEALED_ADDED   = 144,
+	SEVT_PLOT_BONUS_REVEALED_REMOVED = 145,
+
 	// ⚖ THE PLOT SERVES A RESOURCE ON SITE -- the plot's own derived verdict that this tile makes bonus B AVAILABLE
 	// to a city that can work it: the tile CARRIES B *and* its improvement TRADES it
 	// (CvImprovementInfo::isImprovementBonusTrade). ⛔ NOT a duplicate of the PLOT_BONUS pair and it never replaces
@@ -959,6 +971,12 @@ void emitPlotPredicateAdded(int iPlot, int iOwner, int iPredicate);
 void emitPlotPredicateRemoved(int iPlot, int iOwner, int iPredicate);
 void emitPlotServedBonusAdded(int iPlot, int iOwner, int iBonus);
 void emitPlotServedBonusRemoved(int iPlot, int iOwner, int iBonus);
+// The plot's bonus became visible / invisible to one team. Emitted by PlotContext's reveal write point only.
+void emitPlotBonusRevealedAdded(int iPlot, int iOwner, int iTeam, int iBonus);
+void emitPlotBonusRevealedRemoved(int iPlot, int iOwner, int iTeam, int iBonus);
+// A team's force-reveal of a bonus arrived / left. Emitted by CvTeam::setForceRevealedBonus and CvTeam::read only.
+void emitTeamBonusRevealedAdded(int iTeam, int iBonus);
+void emitTeamBonusRevealedRemoved(int iTeam, int iBonus);
 // The plot entered / left a city's potential work area. Emitted by CvPlot::setWorkableBy only.
 void emitPlotWorkableByAdded(int iPlot, int iOwner, int iCity);
 void emitPlotWorkableByRemoved(int iPlot, int iOwner, int iCity);
