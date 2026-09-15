@@ -287,8 +287,9 @@ public:
 
 	int getEnemyWarWearinessModifier() const;
 	void changeEnemyWarWearinessModifier(int iChange);
-	void changeWarWeariness(TeamTypes eOtherTeam, const CvPlot& kPlot, int iFactor);
-	void changeWarWearinessTimes100(TeamTypes eOtherTeam, const CvPlot& kPlot, int iFactor);
+	///<summary>Adds weariness against eOtherTeam for an event on kPlot: the event factor, scaled by the other team's
+	/// share of the plot's culture and by iSharePercent (the share of the event that happened, e.g. hit points).</summary>
+	void changeWarWeariness(TeamTypes eOtherTeam, const CvPlot& kPlot, int iFactor, int iSharePercent = 100);
 
 	bool isMapCentering() const;
 	void setMapCentering(bool bNewValue);
@@ -301,15 +302,12 @@ public:
 	void changeStolenVisibilityTimer(TeamTypes eIndex, int iChange);
 
 	int getWarWeariness(TeamTypes eIndex) const;
-	int getWarWearinessTimes100(TeamTypes eIndex) const;
 	///<summary>The war-weariness anger percent this team's weariness against eEnemyTeam contributes, scaled by the
 	/// enemy's enemy-war-weariness modifier and before the player-level multipliers
 	/// (CvPlayer::getModifiedWarWearinessPercentAnger).</summary>
 	int getWarWearinessPercentAnger(TeamTypes eEnemyTeam) const;
 	void setWarWeariness(TeamTypes eIndex, int iNewValue);
-	void setWarWearinessTimes100(TeamTypes eIndex, int iNewValue);
 	void changeWarWeariness(TeamTypes eIndex, int iChange);
-	void changeWarWearinessTimes100(TeamTypes eIndex, int iChange);
 
 
 	bool isCommerceFlexible(CommerceTypes eIndex) const;
@@ -512,7 +510,7 @@ protected:
 	int** m_ppiBuildingYieldModifier;
 
 	int* m_aiStolenVisibilityTimer;
-	int* m_aiWarWearinessTimes100;
+	int* m_aiWarWeariness;
 	int* m_aiExtraMoves;
 	int* m_aiForceTeamVoteEligibilityCount;
 	int* m_paiProjectCount;

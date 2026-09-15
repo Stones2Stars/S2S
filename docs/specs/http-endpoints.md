@@ -171,7 +171,9 @@ refusal rather than missing.
 - **`wellbeing`** (on the city) — the [§2b wellbeing census](../cascade/09-wellbeing-channels.md): the `realized`
   four channels, `netHappiness` / `netHealth` / `angryPopulation`, the `depositLegs` (buildings · specialists ·
   empire), every raw-state `terms` field the realized read folds (the anger PERCENTS before population scaling,
-  the faces ×100), and the three `warWeariness` inputs (`playerPercentAnger` · `cityScalar` · `cityTimer`). The
+  the faces ×100), and the `warWeariness` inputs (`playerPercentAnger` · `cityScalar` · `cityTimer`) with one
+  `enemies` row per team the owner carries weariness against (`team` · `atWar` · `warWeariness` ·
+  `enemyModifier` · `percentAnger`, the unmultiplied contribution from `CvTeam::getWarWearinessPercentAnger`). The
   terms are recorded by `CvCity::realizedWellbeing`'s own walk, so they cannot disagree with the level they
   explain.
 

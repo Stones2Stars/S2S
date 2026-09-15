@@ -933,6 +933,10 @@
 		<iDefineIntVal>1000</iDefineIntVal>
 	</Define>
 	<Define>
+		<DefineName>WAR_WEARINESS_ANGER_DIVISOR</DefineName>
+		<iDefineIntVal>1000000</iDefineIntVal>
+	</Define>
+	<Define>
 		<DefineName>BASE_FEATURE_PRODUCTION_PERCENT</DefineName>
 		<iDefineIntVal>100</iDefineIntVal>
 	</Define>

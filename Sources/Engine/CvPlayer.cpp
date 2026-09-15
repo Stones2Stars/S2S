@@ -16404,7 +16404,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHealth);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHappiness);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iExtraHappinessUnattributed);
-		WRAPPER_READ(wrapper, "CvPlayer", &m_iWarWearinessPercentAnger);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iRevolutionTimer);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iConversionTimer);
 		WRAPPER_READ(wrapper, "CvPlayer", &m_iStateReligionUnitProductionModifier);
@@ -17715,7 +17714,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHealth);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappiness);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iExtraHappinessUnattributed);
-		WRAPPER_WRITE(wrapper, "CvPlayer", m_iWarWearinessPercentAnger);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iRevolutionTimer);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iConversionTimer);
 		WRAPPER_WRITE(wrapper, "CvPlayer", m_iStateReligionUnitProductionModifier);

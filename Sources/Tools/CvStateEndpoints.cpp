@@ -810,6 +810,24 @@ CvString StateEndpoints::cityYield(int iPlayer, int iCity)
 		kWarWearinessOut["playerPercentAnger"] = picojson::value((double)GET_PLAYER(pLoopCity->getOwner()).getWarWearinessPercentAnger());
 		kWarWearinessOut["cityScalar"] = picojson::value((double)aCityScalars[SCALAR_WAR_WEARINESS]);
 		kWarWearinessOut["cityTimer"] = picojson::value((double)pLoopCity->getWarWearinessTimer());
+		picojson::value::array kWarWearinessEnemies;
+		const CvTeam& kOwnerTeam = GET_TEAM(pLoopCity->getTeam());
+		for (int iEnemyTeam = 0; iEnemyTeam < MAX_PC_TEAMS; ++iEnemyTeam)
+		{
+			const TeamTypes eEnemyTeam = (TeamTypes)iEnemyTeam;
+			if (kOwnerTeam.getWarWeariness(eEnemyTeam) == 0)
+			{
+				continue;
+			}
+			picojson::value::object kEnemyOut;
+			kEnemyOut["team"] = picojson::value((double)iEnemyTeam);
+			kEnemyOut["atWar"] = picojson::value(GET_TEAM(eEnemyTeam).isAtWar(kOwnerTeam.getID()));
+			kEnemyOut["warWeariness"] = picojson::value((double)kOwnerTeam.getWarWeariness(eEnemyTeam));
+			kEnemyOut["enemyModifier"] = picojson::value((double)GET_TEAM(eEnemyTeam).getEnemyWarWearinessModifier());
+			kEnemyOut["percentAnger"] = picojson::value((double)kOwnerTeam.getWarWearinessPercentAnger(eEnemyTeam));
+			kWarWearinessEnemies.push_back(picojson::value(kEnemyOut));
+		}
+		kWarWearinessOut["enemies"] = picojson::value(kWarWearinessEnemies);
 		kWellbeing["warWeariness"] = picojson::value(kWarWearinessOut);
 		kCity["wellbeing"] = picojson::value(kWellbeing);
 
