@@ -57,6 +57,14 @@ buys. Four consequences:
   ([a fact names the happening](../spine/03-the-domain-emit-surface-every-fact/01-a-fact-names-the-happening.md#-a-fact-names-the-happening--something-changed-is-not-a-fact)), each applying its own — never one fact
   applying both.
 
+- **⛔ THE SOURCE APPLY BOOKS EVERY ENTRY A RE-BOOK ROUTE CAN REACH — CONDITIONED *OR* `per`-SCALED.** The
+  count and threshold routes that RE-BOOK (owed − booked: the wonder-category, POPULATION, rate, improvement,
+  property and ERA-condition routes) move only a difference, so they are exact only if the source apply recorded
+  what it deposited. Booking the CONDITIONED entries alone leaves a scaled, unconditioned deposit at booked = 0,
+  and its first count move re-applies the whole `value × count`. ⚑ Measured: two per-national-wonder
+  free-specialist traits in a 37-wonder capital each landed twice, +74 phantom slots. ⚠ The DELTA routes
+  (`PER_SCALE_SUPPRESSED`: `per: ERA`, `CITY`, the religion counts) apply `value × Δcount` from their own index and
+  never read the book, so booking a scaled entry cannot disturb them.
 - **⛔ NO PLANE HAS AN EVALUATION MOMENT TO DEFER, WHICH IS WHY NONE OF THEM CARRIES A STALENESS FLAG.** There is
   nothing to be stale ABOUT: every operand is compiled or maintained, so a slot is either current or was never
   told — and "never told" is a MISSING EMIT that must stay visible, not a state to schedule work against.

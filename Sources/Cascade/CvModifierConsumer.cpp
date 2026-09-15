@@ -506,9 +506,11 @@ namespace
 	void mc_bookCityEntry(const CvCity& city, const CvModEntry* pEntry, int iChannel, bool bPercentSide,
 		int64_t iValue, int iMultiplicity)
 	{
-		if (pEntry->enabled == NULL && pEntry->disabled == NULL)
+		// Booked whenever a RE-BOOK route can reach the entry: a condition's crossing (plane C) or a count's move
+		// (plane B, `per`). An unbooked scaled entry reads booked=0 on its first count move and re-applies whole.
+		if (pEntry->enabled == NULL && pEntry->disabled == NULL && !pEntry->hasPer)
 		{
-			return;   // unconditioned: plane C never asks about it
+			return;
 		}
 		const CvCascadePackage<CvCity, CASC_ORIGIN_BUILDING>::BookedDeposit kPrev =
 			city.getBuildingYields().bookedDeposit(pEntry);
@@ -912,8 +914,9 @@ namespace
 					// DIFFERENCE between what is booked and what the gate now owes, so an entry plane A applied
 					// while leaving the book at zero would be re-applied in full by the next crossing (a double) and
 					// never withdrawn when its gate later turns off (a miss). Booking every conditioned entry the
-					// moment it is applied is what makes that difference exact (docs/cascade.md §THE MAINTAINED SUM).
-					if (pEntry->enabled != NULL || pEntry->disabled != NULL)
+					// moment it is applied is what makes that difference exact (docs/cascade.md §THE MAINTAINED SUM) --
+					// and a `per`-scaled entry is reached by its count's re-book exactly as a conditioned one is by its atom.
+					if (pEntry->enabled != NULL || pEntry->disabled != NULL || pEntry->hasPer)
 					{
 						const CvCascadePackage<CvPlot>::BookedDeposit kPrev =
 							pPlot->getCascadePackage().bookedDeposit(pEntry);
@@ -1032,8 +1035,9 @@ namespace
 					}
 					// THE BOOK, on the empire plane -- for the same reason as the city and plot planes above. It is
 					// what the ERA route reads: an era atom is a THRESHOLD, not a presence crossing, so its deposits
-					// cannot be applied by a ±1 on a pinned verdict and are re-booked against the new era instead.
-					if (pEntry->enabled != NULL || pEntry->disabled != NULL)
+					// cannot be applied by a ±1 on a pinned verdict and are re-booked against the new era instead. A
+					// `per`-scaled entry is booked too: the POPULATION and rate count routes re-book it at this scope.
+					if (pEntry->enabled != NULL || pEntry->disabled != NULL || pEntry->hasPer)
 					{
 						const CvCascadePackage<CvPlayer>::BookedDeposit kPrev =
 							pPlayer->getCascadePackage().bookedDeposit(pEntry);

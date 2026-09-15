@@ -2004,61 +2004,65 @@ CvPlot* CvCity::getCityIndexPlot(int iIndex) const
 }
 
 
-bool CvCity::canWork(const CvPlot* pPlot) const
+// THE ONE IMPLEMENTATION of whether this city may work a plot. It answers the FIRST rule that refuses, so canWork
+// asks it for a yes/no and the plot census serves the refusal itself (docs/specs/http-endpoints.md).
+CvCity::WorkRefusal CvCity::getWorkRefusal(const CvPlot* pPlot) const
 {
 	if (pPlot->getWorkingCity() != this)
 	{
-		return false;
+		return WORK_REFUSED_NOT_WORKING_CITY;
 	}
 
 	FAssertMsg(getCityPlotIndex(pPlot) != -1, "getCityPlotIndex(pPlot) is expected to be assigned (not -1)");
 
-	if (getCityPlotIndex(pPlot) >= getNumCityPlots()) return false; // Just in case FAssertMsg doesn't end the function.
+	if (getCityPlotIndex(pPlot) >= getNumCityPlots())
+	{
+		return WORK_REFUSED_OUTSIDE_RADIUS;
+	}
 
 	//	the centre plot is always worked, so nothing standing on it may take it away
-	if (pPlot != plot())
+	if (pPlot != plot() && pPlot->plotCheck(PUF_canSiege, getOwner()) != NULL)
 	{
-		if (pPlot->plotCheck(PUF_canSiege, getOwner()) != NULL)
-		{
-			return false;
-		}
+		return WORK_REFUSED_SIEGE;
 	}
 
 	if (pPlot->isWater())
 	{
-		if (!(GET_TEAM(getTeam()).isWaterWork()))
+		if (!GET_TEAM(getTeam()).isWaterWork())
 		{
-			return false;
+			return WORK_REFUSED_NO_WATER_WORK;
 		}
-
 		if (pPlot->getBlockadedCount(getTeam()) > 0)
 		{
-			return false;
+			return WORK_REFUSED_BLOCKADED;
 		}
-
-		/* Replaced by blockade mission, above
-		if (!(pPlot->plotCheck(PUF_canDefend, -1, -1, NO_PLAYER, getTeam())))
-		{
-			foreach_(const CvPlot* pLoopPlot, pPlot->adjacent())
-			{
-				if (pLoopPlot->isWater())
-				{
-					if (pLoopPlot->plotCheck(PUF_canSiege, getOwner()) != NULL)
-					{
-						return false;
-					}
-				}
-			}
-		}
-		*/
 	}
 
-	if (!(pPlot->hasYield()))
+	if (!pPlot->hasYield())
 	{
-		return false;
+		return WORK_REFUSED_NO_YIELD;
 	}
+	return WORK_ALLOWED;
+}
 
-	return true;
+bool CvCity::canWork(const CvPlot* pPlot) const
+{
+	return getWorkRefusal(pPlot) == WORK_ALLOWED;
+}
+
+const char* CvCity::workRefusalName(WorkRefusal eRefusal)
+{
+	switch (eRefusal)
+	{
+	case WORK_ALLOWED:                  return "allowed";
+	case WORK_REFUSED_NOT_WORKING_CITY: return "notWorkingCity";
+	case WORK_REFUSED_OUTSIDE_RADIUS:   return "outsideRadius";
+	case WORK_REFUSED_SIEGE:            return "siege";
+	case WORK_REFUSED_NO_WATER_WORK:    return "noWaterWork";
+	case WORK_REFUSED_BLOCKADED:        return "blockaded";
+	case WORK_REFUSED_NO_YIELD:         return "noYield";
+	}
+	return "unknown";
 }
 
 
@@ -4332,10 +4336,13 @@ int CvCity::getCelebrityHappiness() const
 //
 // The ORDER is load-bearing: §2b states the unhealth population term as max(0, pop − angryPop), so the
 // happiness pair must be complete before the health pair can be folded.
-void CvCity::realizedWellbeing(int iExtraPopulation, int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const
+void CvCity::realizedWellbeing(int iExtraPopulation, int (&wellbeing)[NUM_WELLBEING_CHANNELS], WellbeingTerms* pTermsOut) const
 {
 	PROFILE_FUNC();
 	const CvPlayer& owner = GET_PLAYER(getOwner());
+	// Each term is computed ONCE into the record and folded from it, so the census is the walk itself and can
+	// never disagree with the level it explains.
+	WellbeingTerms kTerms = WellbeingTerms();
 
 	// (1) The deposits. A negative deposit was routed to the opposing channel AT FILL, so the good/bad split the
 	// per-source terms used to perform is the CHANNEL's now; re-applying it would be a second implementation.
@@ -4343,69 +4350,93 @@ void CvCity::realizedWellbeing(int iExtraPopulation, int (&wellbeing)[NUM_WELLBE
 
 	// (2) The HAPPINESS pair's raw-state inputs. Every one is a whole-citizen count, so each is lifted ×100 to
 	// meet the channels -- never the channels reduced to meet them (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): no getter reduces).
-	wellbeing[WELLBEING_HAPPINESS] += 100 * std::max(0, getRevSuccessHappiness());
-	wellbeing[WELLBEING_HAPPINESS] += 100 * std::max(0, getVassalHappiness());
+	kTerms.revSuccessHappiness = 100 * std::max(0, getRevSuccessHappiness());
+	kTerms.vassalHappiness = 100 * std::max(0, getVassalHappiness());
 	// ⚖ Unit-carried happiness is computed LIVE and added ON TOP, outside every cached sum and every percentage
 	// (docs/cascade.md §2b (unit-carried modifiers apply on top, live)) -- which is exactly why unit movement dirties no wellbeing cache.
-	wellbeing[WELLBEING_HAPPINESS] += 100 * std::max(0, getMilitaryHappiness());
-	wellbeing[WELLBEING_HAPPINESS] += 100 * std::max(0, getCelebrityHappiness());
+	kTerms.militaryHappiness = 100 * std::max(0, getMilitaryHappiness());
+	kTerms.celebrityHappiness = 100 * std::max(0, getCelebrityHappiness());
 	if (getHappinessTimer() > 0)
 	{
-		wellbeing[WELLBEING_HAPPINESS] += 100 * GC.getTEMP_HAPPY();
+		kTerms.happinessTimer = 100 * GC.getTEMP_HAPPY();
 	}
 	// The event-granted accumulators are one signed quantity that splits across the pair by SIGN (§2b: a
 	// sanctioned read of genuine one-shot event state, not a ride-in).
 	const int iEventGranted = getExtraHappiness() + owner.getExtraHappiness();
-	wellbeing[WELLBEING_HAPPINESS] += 100 * std::max(0, iEventGranted);
+	kTerms.eventGrantedHappiness = 100 * std::max(0, iEventGranted);
+	wellbeing[WELLBEING_HAPPINESS] += kTerms.revSuccessHappiness;
+	wellbeing[WELLBEING_HAPPINESS] += kTerms.vassalHappiness;
+	wellbeing[WELLBEING_HAPPINESS] += kTerms.militaryHappiness;
+	wellbeing[WELLBEING_HAPPINESS] += kTerms.celebrityHappiness;
+	wellbeing[WELLBEING_HAPPINESS] += kTerms.happinessTimer;
+	wellbeing[WELLBEING_HAPPINESS] += kTerms.eventGrantedHappiness;
 
 	// (3) The ANGER side. The abolish gates zero it WHOLESALE -- they are hard off-switches, not modifiers
 	// (§2b), so the side ceases to exist rather than being reduced.
-	if (isNoUnhappiness())
+	kTerms.noUnhappiness = isNoUnhappiness();
+	if (kTerms.noUnhappiness)
 	{
 		wellbeing[WELLBEING_ANGER] = 0;
 	}
 	else
 	{
-		int iAngerPercent = 0;
-		iAngerPercent += getOvercrowdingPercentAnger(iExtraPopulation);
-		iAngerPercent += getNoMilitaryPercentAnger();
-		iAngerPercent += getCulturePercentAnger();
-		iAngerPercent += getReligionPercentAnger();
-		iAngerPercent += getHurryPercentAnger(iExtraPopulation);
-		iAngerPercent += getConscriptPercentAnger(iExtraPopulation);
-		iAngerPercent += getDefyResolutionPercentAnger(iExtraPopulation);
-		iAngerPercent += getWarWearinessPercentAnger();
-		iAngerPercent += getRevRequestPercentAnger(iExtraPopulation);
-		iAngerPercent += getRevIndexPercentAnger();
+		kTerms.overcrowdingPercentAnger = getOvercrowdingPercentAnger(iExtraPopulation);
+		kTerms.noMilitaryPercentAnger = getNoMilitaryPercentAnger();
+		kTerms.culturePercentAnger = getCulturePercentAnger();
+		kTerms.religionPercentAnger = getReligionPercentAnger();
+		kTerms.hurryPercentAnger = getHurryPercentAnger(iExtraPopulation);
+		kTerms.conscriptPercentAnger = getConscriptPercentAnger(iExtraPopulation);
+		kTerms.defyResolutionPercentAnger = getDefyResolutionPercentAnger(iExtraPopulation);
+		kTerms.warWearinessPercentAnger = getWarWearinessPercentAnger();
+		kTerms.revRequestPercentAnger = getRevRequestPercentAnger(iExtraPopulation);
+		kTerms.revIndexPercentAnger = getRevIndexPercentAnger();
+		const int iAngerPercent = kTerms.overcrowdingPercentAnger + kTerms.noMilitaryPercentAnger
+			+ kTerms.culturePercentAnger + kTerms.religionPercentAnger + kTerms.hurryPercentAnger
+			+ kTerms.conscriptPercentAnger + kTerms.defyResolutionPercentAnger + kTerms.warWearinessPercentAnger
+			+ kTerms.revRequestPercentAnger + kTerms.revIndexPercentAnger;
 		// The truncating integer division is the engine quirk §2b says to reproduce VERBATIM, so it truncates to
 		// whole citizens FIRST and the result is lifted after -- scaling first would silently smooth it away.
-		wellbeing[WELLBEING_ANGER] += 100 * ((iAngerPercent * (getPopulation() + iExtraPopulation)) / GC.getPERCENT_ANGER_DIVISOR());
-
-		wellbeing[WELLBEING_ANGER] += 100 * std::max(0, getVassalUnhappiness());
-		wellbeing[WELLBEING_ANGER] += 100 * std::max(0, getEspionageHappinessCounter());
-		wellbeing[WELLBEING_ANGER] += 100 * std::max(0, getEventAnger());
-		wellbeing[WELLBEING_ANGER] -= 100 * std::min(0, iEventGranted);
+		kTerms.angerFromPercents = 100 * ((iAngerPercent * (getPopulation() + iExtraPopulation)) / GC.getPERCENT_ANGER_DIVISOR());
+		kTerms.vassalUnhappiness = 100 * std::max(0, getVassalUnhappiness());
+		kTerms.espionageHappinessCounter = 100 * std::max(0, getEspionageHappinessCounter());
+		kTerms.eventAnger = 100 * std::max(0, getEventAnger());
+		kTerms.eventGrantedAnger = -100 * std::min(0, iEventGranted);
+		wellbeing[WELLBEING_ANGER] += kTerms.angerFromPercents;
+		wellbeing[WELLBEING_ANGER] += kTerms.vassalUnhappiness;
+		wellbeing[WELLBEING_ANGER] += kTerms.espionageHappinessCounter;
+		wellbeing[WELLBEING_ANGER] += kTerms.eventAnger;
+		wellbeing[WELLBEING_ANGER] += kTerms.eventGrantedAnger;
 	}
 	if (GC.getGame().isOption(GAMEOPTION_MAP_PERSONALIZED)
 	&& (wellbeing[WELLBEING_ANGER] != 0 || !isNoUnhappiness())
 	&& !owner.isNoLandmarkAnger())
 	{
-		wellbeing[WELLBEING_ANGER] += 100 * std::max(0, getLandmarkAnger());
+		kTerms.landmarkAnger = 100 * std::max(0, getLandmarkAnger());
+		wellbeing[WELLBEING_ANGER] += kTerms.landmarkAnger;
 	}
 
 	// (4) The HEALTH pair's raw-state inputs -- the event-granted accumulator splitting by sign as above, the
 	// espionage counter, and the POPULATION term, which §2b states as max(0, pop − angryPop). That term is why
 	// this pair is folded second: it reads the happiness pair's completed verdict.
 	const int iEventGrantedHealth = getExtraHealth() + GET_PLAYER(getOwner()).getExtraHealth();
-	wellbeing[WELLBEING_HEALTH] += 100 * std::max(0, iEventGrantedHealth);
-	wellbeing[WELLBEING_UNHEALTH] -= 100 * std::min(0, iEventGrantedHealth);
-	wellbeing[WELLBEING_UNHEALTH] += 100 * std::max(0, getEspionageHealthCounter());
+	kTerms.eventGrantedHealth = 100 * std::max(0, iEventGrantedHealth);
+	kTerms.eventGrantedUnhealth = -100 * std::min(0, iEventGrantedHealth);
+	kTerms.espionageHealthCounter = 100 * std::max(0, getEspionageHealthCounter());
+	wellbeing[WELLBEING_HEALTH] += kTerms.eventGrantedHealth;
+	wellbeing[WELLBEING_UNHEALTH] += kTerms.eventGrantedUnhealth;
+	wellbeing[WELLBEING_UNHEALTH] += kTerms.espionageHealthCounter;
 
 	if (!isNoUnhealthyPopulation())
 	{
 		const int iAngry = range((wellbeing[WELLBEING_ANGER] - wellbeing[WELLBEING_HAPPINESS]) / 100,
 			0, getPopulation() + iExtraPopulation);
-		wellbeing[WELLBEING_UNHEALTH] += 100 * std::max(0, getPopulation() + iExtraPopulation - iAngry);
+		kTerms.populationUnhealth = 100 * std::max(0, getPopulation() + iExtraPopulation - iAngry);
+		wellbeing[WELLBEING_UNHEALTH] += kTerms.populationUnhealth;
+	}
+
+	if (pTermsOut != NULL)
+	{
+		*pTermsOut = kTerms;
 	}
 }
 

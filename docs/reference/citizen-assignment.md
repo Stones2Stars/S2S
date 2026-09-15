@@ -135,6 +135,16 @@ being ranked against.
   getMaxSpecialistCount()`), not only the per-type one — so taking ANY specialist can close EVERY specialist
   option. That is an O(1) re-check per assignment; it is never a reason to re-score.
 
+## ⚖ ANGER NEVER REMOVES A FREE SPECIALIST
+
+`angryPopulation` takes POPULATION out of work (`visiblePopulation = population − angry`), and that is its whole
+reach. A free-specialist slot is not population — it is a deposit (`freeSpecialists`,
+[the output seam](../cascade/01-deposit-and-read.md)) — so a city whose every citizen is angry keeps working its
+free specialists while it can put nobody on a tile. ⛔ Do not gate free specialists on anger.
+⚑ **The consequence reads like a bug and is not one:** a fully angry city works only its centre tile, and a
+tile that reads `canWork: allowed` still takes nobody, because there is no visible citizen to put on it
+([the citizen accounting](../specs/http-endpoints.md#-the-plot-census-serves-the-work-verdict-with-its-reason)).
+
 ## ⛔ A NON-POSITIVE OPTION IS NOT TAKEABLE — a rule, not a tie-break
 
 The valuation seeds both bests at `0` and compares with `>`, so an option scoring **`≤ 0` can never win** and the
@@ -303,6 +313,8 @@ value actually CHANGED, so an ungated stand-in adds to the very churn the instru
   term** and the **final** value. `final − yieldPart` is that kind's non-yield contribution, which is the axis
   the two sides differ on.
 - **`[CIT/assign/run]`** — one completed run (runs per city per turn is the churn shape).
+- **`/computed/city/yield` `plots[]`** — every ring tile's `canWork` verdict with the rule that refused it
+  ([the plot census](../specs/http-endpoints.md#-the-plot-census-serves-the-work-verdict-with-its-reason)).
 
 All are level 3 (the per-candidate tier, [spine.md](../spine.md)), so they cost nothing until asked
 for.

@@ -26,8 +26,11 @@ end-state values are the clamps over them, and are a final-state CALCULATION, ne
 ([patterns.md](../architecture/patterns.md) rule 6): `healthRate = min(0, health − unhealth)`;
 `angryPopulation = clamp(anger − happiness, 0, pop)`.
 
-⚠ The wellbeing channel has no decomposition census yet ([http-endpoints](../specs/http-endpoints.md)); when the route
-table is rebuilt it wants one field per named engine term, so a divergence localises to a single source.
+⚑ **The decomposition census is served per city on `/computed/city/yield`** ([the plot census](../specs/http-endpoints.md#-the-plot-census-serves-the-work-verdict-with-its-reason)):
+one field per raw-state term the realized read folds, beside the deposit legs, so a divergence localises to a
+single source. The terms are recorded by the realized read's own walk (`CvCity::WellbeingTerms`), never
+re-derived beside it. ⚠ The DEPOSIT side still reports per leg (buildings · specialists · empire), not per
+source: a package aggregates every source that deposited into it.
 
 **The TARGET/INPUT split (the tradeYield precedent, [validation](../specs/validation.md) input rules):**
 

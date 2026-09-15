@@ -30,6 +30,7 @@
 #include "CvRouteInfo.h"
 #include "CvImprovementInfo.h"
 #include "CvFeatureInfo.h"
+#include "CvSpecialistInfo.h"               // the served specialist key
 #include <set>
 #include <vector>
 
@@ -658,6 +659,160 @@ CvString StateEndpoints::cityYield(int iPlayer, int iCity)
 		kCity["name"] = picojson::value(std::string(CvString(pLoopCity->getName()).c_str()));
 		kCity["population"] = picojson::value((double)pLoopCity->getPopulation());
 
+		// ⚖ THE CITIZEN ACCOUNTING -- what alterWorkingPlot and AI_removeWorstCitizen test once a tile may be worked:
+		// a free citizen (extraPopulation) or a citizen to take off something else. A tile can read canWork=allowed
+		// while nobody can be put on it, and these are the numbers that say why.
+		picojson::value::object kCitizens;
+		kCitizens["visiblePopulation"] = picojson::value((double)pLoopCity->visiblePopulation());
+		kCitizens["angryPopulation"] = picojson::value((double)pLoopCity->angryPopulation());
+		kCitizens["workingPopulation"] = picojson::value((double)pLoopCity->getWorkingPopulation());
+		kCitizens["specialistPopulation"] = picojson::value((double)pLoopCity->getSpecialistPopulation());
+		kCitizens["totalFreeSpecialists"] = picojson::value((double)pLoopCity->totalFreeSpecialists());
+		kCitizens["extraFreeSpecialists"] = picojson::value((double)pLoopCity->extraFreeSpecialists());
+		kCitizens["extraPopulation"] = picojson::value((double)pLoopCity->extraPopulation());
+		kCitizens["maxSpecialistCount"] = picojson::value((double)pLoopCity->getMaxSpecialistCount());
+		kCitizens["automated"] = picojson::value(pLoopCity->isCitizensAutomated());
+		picojson::value::array kSpecialistsOut;
+		for (int iSpecialist = 0; iSpecialist < GC.getNumSpecialistInfos(); ++iSpecialist)
+		{
+			const SpecialistTypes eSpecialist = (SpecialistTypes)iSpecialist;
+			const int iAssigned = pLoopCity->getSpecialistCount(eSpecialist);
+			const int iForced = pLoopCity->getForceSpecialistCount(eSpecialist);
+			const int iFree = pLoopCity->getFreeSpecialistCount(eSpecialist);
+			if (iAssigned == 0 && iForced == 0 && iFree == 0)
+			{
+				continue;
+			}
+			picojson::value::object kSpecialistOut;
+			kSpecialistOut["type"] = picojson::value(std::string(GC.getSpecialistInfo(eSpecialist).getType()));
+			kSpecialistOut["assigned"] = picojson::value((double)iAssigned);
+			kSpecialistOut["forced"] = picojson::value((double)iForced);
+			kSpecialistOut["free"] = picojson::value((double)iFree);
+			kSpecialistsOut.push_back(picojson::value(kSpecialistOut));
+		}
+		kCitizens["specialists"] = picojson::value(kSpecialistsOut);
+
+		// ⚖ THE FREE-SPECIALIST CENSUS -- the realized untyped slot count beside the two legs it rolls up and every
+		// city-scope deposit of the channel, applied or refused, from the same audit the yield census reads. The
+		// empire/team-SCOPE entries are bounded by upperFlat rather than listed (the audit walks city scope only).
+		const int iFreeSpecialistChannel = CascadeChannelRegistry::channelLookup(MODFAM_FREE_SPECIALISTS, CHANNEL_AMOUNT, -1);
+		picojson::value::object kFreeSpecialistsOut;
+		kFreeSpecialistsOut["realized"] = picojson::value((double)pLoopCity->getFreeSpecialist());
+		int64_t iFreeUpperFlat = 0;
+		int64_t iFreeCityFlat = 0;
+		int64_t iFreePercent = 0;
+		InfoValuation::rolledLegsAtCity(*pLoopCity, iFreeSpecialistChannel, iFreeUpperFlat, iFreeCityFlat, iFreePercent);
+		kFreeSpecialistsOut["upperFlat"] = picojson::value((double)iFreeUpperFlat);
+		kFreeSpecialistsOut["cityFlat"] = picojson::value((double)iFreeCityFlat);
+		kFreeSpecialistsOut["percent"] = picojson::value((double)iFreePercent);
+		std::vector<InfoValuation::RefusedDeposit> kFreeSpecialistAudit;
+		InfoValuation::cityRefusedDeposits(*pLoopCity, iFreeSpecialistChannel, kFreeSpecialistAudit);
+		picojson::value::array kFreeAppliedOut;
+		picojson::value::array kFreeRefusedOut;
+		int64_t iFreeAppliedFlat = 0;
+		for (size_t iDeposit = 0; iDeposit < kFreeSpecialistAudit.size(); ++iDeposit)
+		{
+			const InfoValuation::RefusedDeposit& kDeposit = kFreeSpecialistAudit[iDeposit];
+			picojson::value::object kDepositOut;
+			kDepositOut["source"] = picojson::value(std::string(kDeposit.szSource != NULL ? kDeposit.szSource : "?"));
+			kDepositOut["value"] = picojson::value((double)kDeposit.iValue);
+			kDepositOut["percentSide"] = picojson::value(kDeposit.bPercentSide);
+			kDepositOut["condition"] = picojson::value(std::string(
+				(kDeposit.pCondition != NULL && !kDeposit.pCondition->type.empty())
+				? kDeposit.pCondition->type.c_str() : (kDeposit.pCondition != NULL ? "<predicate>" : "")));
+			if (kDeposit.bApplied)
+			{
+				if (!kDeposit.bPercentSide)
+				{
+					iFreeAppliedFlat += kDeposit.iValue;
+				}
+				kFreeAppliedOut.push_back(picojson::value(kDepositOut));
+			}
+			else
+			{
+				kFreeRefusedOut.push_back(picojson::value(kDepositOut));
+			}
+		}
+		kFreeSpecialistsOut["appliedFlatSum"] = picojson::value((double)iFreeAppliedFlat);
+		kFreeSpecialistsOut["applied"] = picojson::value(kFreeAppliedOut);
+		kFreeSpecialistsOut["refused"] = picojson::value(kFreeRefusedOut);
+		kCitizens["freeSpecialists"] = picojson::value(kFreeSpecialistsOut);
+		kCity["citizens"] = picojson::value(kCitizens);
+
+		// ⚖ THE WELLBEING CENSUS (cascade/09-wellbeing-channels.md) -- the realized channels, the verdicts over them,
+		// the deposit legs, and every raw-state term the realized read folds, taken from that read's own walk.
+		static const char* const aszWellbeingChannel[NUM_WELLBEING_CHANNELS] = { "happiness", "anger", "health", "unhealth" };
+		int aRealizedWellbeing[NUM_WELLBEING_CHANNELS];
+		CvCity::WellbeingTerms kWellbeingTerms;
+		pLoopCity->realizedWellbeing(0, aRealizedWellbeing, &kWellbeingTerms);
+		picojson::value::object kWellbeing;
+		picojson::value::object kRealizedOut;
+		for (int iChannel = 0; iChannel < NUM_WELLBEING_CHANNELS; ++iChannel)
+		{
+			kRealizedOut[aszWellbeingChannel[iChannel]] = picojson::value((double)aRealizedWellbeing[iChannel]);
+		}
+		kWellbeing["realized"] = picojson::value(kRealizedOut);
+		kWellbeing["netHappiness"] = picojson::value((double)InfoValuation::netHappiness(aRealizedWellbeing));
+		kWellbeing["netHealth"] = picojson::value((double)InfoValuation::netHealth(aRealizedWellbeing));
+		kWellbeing["angryPopulation"] = picojson::value((double)pLoopCity->angryPopulation());
+
+		static const char* const aszWellbeingLeg[] = { "buildings", "specialists", "empire" };
+		const CvCity::WellbeingLeg aeWellbeingLeg[] = { CvCity::WELLBEING_LEG_BUILDINGS, CvCity::WELLBEING_LEG_SPECIALISTS, CvCity::WELLBEING_LEG_EMPIRE };
+		picojson::value::object kDepositLegsOut;
+		for (int iLeg = 0; iLeg < 3; ++iLeg)
+		{
+			int aLegWellbeing[NUM_WELLBEING_CHANNELS];
+			pLoopCity->getWellbeingFrom(aeWellbeingLeg[iLeg], aLegWellbeing);
+			picojson::value::object kLegOut;
+			for (int iChannel = 0; iChannel < NUM_WELLBEING_CHANNELS; ++iChannel)
+			{
+				kLegOut[aszWellbeingChannel[iChannel]] = picojson::value((double)aLegWellbeing[iChannel]);
+			}
+			kDepositLegsOut[aszWellbeingLeg[iLeg]] = picojson::value(kLegOut);
+		}
+		kWellbeing["depositLegs"] = picojson::value(kDepositLegsOut);
+
+		picojson::value::object kTermsOut;
+		kTermsOut["revSuccessHappiness"] = picojson::value((double)kWellbeingTerms.revSuccessHappiness);
+		kTermsOut["vassalHappiness"] = picojson::value((double)kWellbeingTerms.vassalHappiness);
+		kTermsOut["militaryHappiness"] = picojson::value((double)kWellbeingTerms.militaryHappiness);
+		kTermsOut["celebrityHappiness"] = picojson::value((double)kWellbeingTerms.celebrityHappiness);
+		kTermsOut["happinessTimer"] = picojson::value((double)kWellbeingTerms.happinessTimer);
+		kTermsOut["eventGrantedHappiness"] = picojson::value((double)kWellbeingTerms.eventGrantedHappiness);
+		kTermsOut["noUnhappiness"] = picojson::value(kWellbeingTerms.noUnhappiness);
+		kTermsOut["overcrowdingPercentAnger"] = picojson::value((double)kWellbeingTerms.overcrowdingPercentAnger);
+		kTermsOut["noMilitaryPercentAnger"] = picojson::value((double)kWellbeingTerms.noMilitaryPercentAnger);
+		kTermsOut["culturePercentAnger"] = picojson::value((double)kWellbeingTerms.culturePercentAnger);
+		kTermsOut["religionPercentAnger"] = picojson::value((double)kWellbeingTerms.religionPercentAnger);
+		kTermsOut["hurryPercentAnger"] = picojson::value((double)kWellbeingTerms.hurryPercentAnger);
+		kTermsOut["conscriptPercentAnger"] = picojson::value((double)kWellbeingTerms.conscriptPercentAnger);
+		kTermsOut["defyResolutionPercentAnger"] = picojson::value((double)kWellbeingTerms.defyResolutionPercentAnger);
+		kTermsOut["warWearinessPercentAnger"] = picojson::value((double)kWellbeingTerms.warWearinessPercentAnger);
+		kTermsOut["revRequestPercentAnger"] = picojson::value((double)kWellbeingTerms.revRequestPercentAnger);
+		kTermsOut["revIndexPercentAnger"] = picojson::value((double)kWellbeingTerms.revIndexPercentAnger);
+		kTermsOut["angerFromPercents"] = picojson::value((double)kWellbeingTerms.angerFromPercents);
+		kTermsOut["vassalUnhappiness"] = picojson::value((double)kWellbeingTerms.vassalUnhappiness);
+		kTermsOut["espionageHappinessCounter"] = picojson::value((double)kWellbeingTerms.espionageHappinessCounter);
+		kTermsOut["eventAnger"] = picojson::value((double)kWellbeingTerms.eventAnger);
+		kTermsOut["eventGrantedAnger"] = picojson::value((double)kWellbeingTerms.eventGrantedAnger);
+		kTermsOut["landmarkAnger"] = picojson::value((double)kWellbeingTerms.landmarkAnger);
+		kTermsOut["eventGrantedHealth"] = picojson::value((double)kWellbeingTerms.eventGrantedHealth);
+		kTermsOut["eventGrantedUnhealth"] = picojson::value((double)kWellbeingTerms.eventGrantedUnhealth);
+		kTermsOut["espionageHealthCounter"] = picojson::value((double)kWellbeingTerms.espionageHealthCounter);
+		kTermsOut["populationUnhealth"] = picojson::value((double)kWellbeingTerms.populationUnhealth);
+		kWellbeing["terms"] = picojson::value(kTermsOut);
+
+		// The war-weariness percent's three inputs: the player's percent, this city's rolled scalar and its timer
+		// (CvCity::getWarWearinessPercentAnger) -- raw reads, served so a city-specific weariness names its leg.
+		int aCityScalars[NUM_INFO_SCALARS];
+		pLoopCity->getScalars(aCityScalars);
+		picojson::value::object kWarWearinessOut;
+		kWarWearinessOut["playerPercentAnger"] = picojson::value((double)GET_PLAYER(pLoopCity->getOwner()).getWarWearinessPercentAnger());
+		kWarWearinessOut["cityScalar"] = picojson::value((double)aCityScalars[SCALAR_WAR_WEARINESS]);
+		kWarWearinessOut["cityTimer"] = picojson::value((double)pLoopCity->getWarWearinessTimer());
+		kWellbeing["warWeariness"] = picojson::value(kWarWearinessOut);
+		kCity["wellbeing"] = picojson::value(kWellbeing);
+
 		// THE TWO BONUS LISTS, LIVE. Read here rather than trusted from the load-end census, because that is
 		// exactly the difference that has been invisible: full at load, empty in play, and only the second one
 		// is what a deposit gate actually asks.
@@ -772,9 +927,11 @@ CvString StateEndpoints::cityYield(int iPlayer, int iCity)
 		// answer the only question that matters here ("is 5.9 food a correct number for THIS tile?"), because a
 		// yield is only checkable against its substrate. The plot plane has no served surface of its own, so this
 		// is the one place a tile's stored package can be read at all.
+		// ⚖ The WHOLE ring table, not only the current radius: a tile the radius does not reach is served with its
+		// refusal instead of vanishing, so "why can this tile not be worked" is answered on the row.
 		picojson::value::array kPlotsOut;
-		const int iNumCityPlots = pLoopCity->getNumCityPlots();
-		for (int iPlotIndex = 0; iPlotIndex < iNumCityPlots; ++iPlotIndex)
+		kCity["numCityPlots"] = picojson::value((double)pLoopCity->getNumCityPlots());
+		for (int iPlotIndex = 0; iPlotIndex < NUM_CITY_PLOTS; ++iPlotIndex)
 		{
 			const CvPlot* pPlot = pLoopCity->getCityIndexPlot(iPlotIndex);
 			if (pPlot == NULL)
@@ -795,6 +952,13 @@ CvString StateEndpoints::cityYield(int iPlayer, int iCity)
 				? GC.getImprovementInfo(pPlot->getImprovementType()).getType() : ""));
 			kPlotOut["route"] = picojson::value(std::string(pPlot->getRouteType() != NO_ROUTE
 				? GC.getRouteInfo(pPlot->getRouteType()).getType() : ""));
+			// The WORK verdict with the rule that refused it, beside the two inputs the first two rules read.
+			const CvCity* pWorkingCity = pPlot->getWorkingCity();
+			const CvCity::WorkRefusal eWorkRefusal = pLoopCity->getWorkRefusal(pPlot);
+			kPlotOut["cityPlotIndex"] = picojson::value((double)iPlotIndex);
+			kPlotOut["workingCity"] = picojson::value((double)((pWorkingCity != NULL) ? pWorkingCity->getID() : -1));
+			kPlotOut["canWork"] = picojson::value(eWorkRefusal == CvCity::WORK_ALLOWED);
+			kPlotOut["workRefusal"] = picojson::value(std::string(CvCity::workRefusalName(eWorkRefusal)));
 			picojson::value::object kPlotYields;
 			for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 			{
