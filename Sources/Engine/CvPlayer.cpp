@@ -9776,10 +9776,7 @@ void CvPlayer::updateWarWearinessPercentAnger()
 			const CvTeam& kTeam = GET_TEAM((TeamTypes)iI);
 			if (kTeam.isAlive() && !kTeam.isMinorCiv() && kTeam.isAtWar(getTeam()))
 			{
-				// ×100 weariness × a (100 + percent) factor, reduced ONCE by 10000. ⛔ This read used the HUMAN
-				// getWarWeariness against a /1000000, which truncated the whole term to nothing; its twin in
-				// CvTeamAI used a third divisor for the identical product (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
-				iNewWarWearinessPercentAnger += GET_TEAM(getTeam()).getWarWearinessTimes100((TeamTypes)iI) * std::max(0, 100 + kTeam.getEnemyWarWearinessModifier()) / 10000;
+				iNewWarWearinessPercentAnger += GET_TEAM(getTeam()).getWarWearinessPercentAnger((TeamTypes)iI);
 			}
 		}
 	}

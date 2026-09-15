@@ -3306,6 +3306,13 @@ int CvTeam::getWarWearinessTimes100(TeamTypes eIndex) const
 	return m_aiWarWearinessTimes100[eIndex];
 }
 
+int CvTeam::getWarWearinessPercentAnger(TeamTypes eEnemyTeam) const
+{
+	// 64-bit: the weariness times the (100 + modifier) factor passes the 32-bit limit in a long war.
+	const int64_t iScaled = static_cast<int64_t>(getWarWearinessTimes100(eEnemyTeam)) * std::max(0, 100 + GET_TEAM(eEnemyTeam).getEnemyWarWearinessModifier());
+	return static_cast<int>(iScaled / 1000000);
+}
+
 void CvTeam::setWarWeariness(TeamTypes eIndex, int iNewValue)
 {
 	setWarWearinessTimes100(eIndex, 100 * iNewValue);

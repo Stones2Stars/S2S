@@ -302,6 +302,10 @@ public:
 
 	int getWarWeariness(TeamTypes eIndex) const;
 	int getWarWearinessTimes100(TeamTypes eIndex) const;
+	///<summary>The war-weariness anger percent this team's weariness against eEnemyTeam contributes, scaled by the
+	/// enemy's enemy-war-weariness modifier and before the player-level multipliers
+	/// (CvPlayer::getModifiedWarWearinessPercentAnger).</summary>
+	int getWarWearinessPercentAnger(TeamTypes eEnemyTeam) const;
 	void setWarWeariness(TeamTypes eIndex, int iNewValue);
 	void setWarWearinessTimes100(TeamTypes eIndex, int iNewValue);
 	void changeWarWeariness(TeamTypes eIndex, int iChange);

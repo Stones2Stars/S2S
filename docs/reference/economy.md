@@ -140,8 +140,11 @@ supply + corporate maintenance.
 - Stored `m_aiWarWearinessTimes100[MAX_TEAMS]` on `CvTeam` (per-enemy, ×100). Accrual `iRatio = 100·theirCulture /
   (ours+theirs)` × factor (event constants: attacker-killed 3, defender-killed 5, city-captured 6 *no ratio*,
   nuke-hit 20, nuke-use 10, …). Caps: rebel-vs-parent ≤ 40, raw rebel ≤ 60.
-- Decay −1/turn always; at peace / dead-enemy additionally × `WW_DECAY_PEACE_PERCENT(99)/100` (fast melt).
-- Player anger = `Σ getWarWeariness(e)·(100+mod)/1e6 × BASE_WAR_WEARINESS_MULTIPLIER(5)` × world-size × AI-handicap.
+- Decay −1/turn always; at peace / dead-enemy the stored value is additionally multiplied by
+  `WW_DECAY_PEACE_PERCENT(99)/100` — it KEEPS 99% per turn, a half-life of ~69 turns.
+- Player anger = `Σ over teams at war: getWarWearinessTimes100(e)·(100+mod)/1e6 × BASE_WAR_WEARINESS_MULTIPLIER(5)`
+  × world-size × AI-handicap. Weariness against a team at peace stays stored and re-enters the sum when war is
+  declared again (`declareWar`/`makePeace` recompute the player percent immediately).
   City final = `player.WWanger × max(0,cityMod+playerMod+100)/100 × max(0,cityTimer+100)/100`.
 - Espionage WW is a separate channel (city timer only, −20/turn). Alliance averages WW; vassal max-propagates.
 
