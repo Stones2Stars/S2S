@@ -595,13 +595,8 @@
 		<Russian>[ICON_BULLET]%D1 îäíîðàçîâîé íåñòàáèëüíîñòè â ñëó÷àå ïðèíÿòèÿ èíñòèòóòà âëàñòè</Russian>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_CIVICHELP_SOFT_CITY_LIMIT</Tag>
-		<English>[ICON_BULLET]Settling more than %d1 cities will cause %d2 Unhappiness in every city for each one over that limit.</English>
-		<French>[ICON_BULLET]La fondation de plus de %d1 villes causera %d2 de mécontentement dans chaque ville, et ce pour chaque dépassement</French>
-		<Italian>[ICON_BULLET]Fondare più di %d1 città causerà %d2 di infelicità in tutte le città, per ogni città sopra il limite</Italian>
-		<Spanish>[ICON_BULLET]Fundar más de %d1 [NUM1:ciudad:ciudades] causará %d2[ICON_UNHAPPY] en todas las ciudades por cada ciudad sobre dicho límite</Spanish>
-		<Polish>[ICON_BULLET]Zbudowanie wi&#234;cej ni&#191; %d1 miast wywo&#179;a %d2 niezadowolenia dla ka&#191;dego miasta powy&#191;ej limitu</Polish>
-		<Russian>[ICON_BULLET]Ïðåâûøåíèå ëèìèòà áîëåå ÷åì íà %d1 ãîðîäîâ äàñò %d2 íåñ÷àñòíûõ ãðàæäàí </Russian>
+		<Tag>TXT_KEY_CIVICHELP_CITY_LIMIT_THRESHOLD</Tag>
+		<English>[ICON_BULLET]City limit: %d1 cities.</English>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_CIVICHELP_SPECIALIST_COMMERCE_CHANGE</Tag>
