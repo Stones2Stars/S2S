@@ -2631,12 +2631,36 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 	{
 		return;
 	}
-	const CvInfo& kInfo = GC.getCivicInfo(eCivic);
+	const CvCivicInfo& kCivic = GC.getCivicInfo(eCivic);
 	if (!bCivilopediaText && !bSkipName)
 	{
-		szHelpText.append(kInfo.getDescription());
+		szHelpText.append(kCivic.getDescription());
 	}
-	appendEntityBlocks(szHelpText, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
+	//	⚖ THE CITY LIMIT IS THE CIVIC'S OWN INTRINSIC, so the composer states it: no modifier entry carries the
+	//	number, and the entry renderer deliberately spells the over-limit anger as "per city over the city limit"
+	//	WITHOUT one, because an entry cannot resolve it -- the world-size scale lives on the SOURCE civic.
+	//	⛔ The MAGNITUDE stays the renderer's. The anger deposit renders itself out of the happiness family below,
+	//	so this line states the THRESHOLD and nothing else ([patterns.md] THE DIVISION OF LABOUR: a getText around
+	//	a magnitude is a hand-built sub-block).
+	//	⚑ `resolvedCityLimit` answers 0 whenever GAMEOPTION_EXP_OVEREXPANSION_PENALTIES is off, and returns BEFORE
+	//	it reads the world size -- so this is silent when the mechanic is off, and safe from the main-menu pedia
+	//	where there is no map to size.
+	const int iCityLimit = InfoValuation::resolvedCityLimit(kCivic.getCityLimit());
+	if (iCityLimit > 0)
+	{
+		szHelpText.append(NEWLINE);
+		//	A limit WITHOUT the over-limit anger deposit is a HARD cap -- the engine refuses the settle outright
+		//	(`CvPlayer::canFound`). WITH it, settling past the limit is allowed and the anger is what it costs.
+		if (kCivic.hasCityOverLimitAnger())
+		{
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVICHELP_CITY_LIMIT_THRESHOLD", iCityLimit));
+		}
+		else
+		{
+			szHelpText.append(gDLL->getText("TXT_KEY_CIVICHELP_CITY_LIMIT", iCityLimit));
+		}
+	}
+	appendEntityBlocks(szHelpText, kCivic, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
 }
 void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool bCivilopediaText, bool bPlayerContext, bool bStrategyText, bool bTreeInfo, TechTypes eFromTech)
 {
