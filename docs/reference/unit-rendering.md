@@ -1,12 +1,14 @@
 # Unit rendering — the pipeline, and graphics paging ON vs OFF
 
-> **⚠ TREE-STATE NOTE:** `Sources/` was reverted to HEAD after the run-from-origin hunt, and **HEAD is
-> verified clean — units render in place**. The run-from-origin regression lived entirely in the uncommitted
-> experimental tree, which is preserved in a git stash (`run-from-origin hunt: full session source
-> experiments`); any piece reintroduced from it is validated against the render-in-place check and against
-> the §9 contract before it stays. Sections 2–6 below carry line cites and a few behavioural claims from that
-> experimental tree and are being re-aligned to HEAD. §7b (measured engine behaviour of out-of-contract node
-> introduction) and §9 (the Firaxis reference contract) are tree-state-independent and authoritative.
+> **⛔ SETUP IS PLACEMENT, MOVEMENT IS MOVEMENT, AND CONFLATING THEM IS THE RUN-FROM-MID-MAP BUG.** The EXE
+> spawns a fresh node at the SCENE ORIGIN — the map centre — so a move-family call issued on a node that has not
+> been presented yet tells the engine to reconcile origin→plot as a walk the player watches, on a unit that never
+> moved. The whole census is therefore a rule: `SetPosition` at the two placement moments
+> ([§9](unit-rendering/10-the-firaxis-reference-contract.md)), `QueueMove`/`ExecuteMove` **only** for real
+> movement — `CvSelectionGroup::groupMove` and `CvUnit::updateCombat`, and nowhere else.
+> ⚠ A REFRESH symptom (one figure of a stack showing, the rest arriving seconds later) is a different question
+> from placement and is never answered by putting a move call back; it needs a non-movement mechanism
+> ([§8](unit-rendering/09-open-questions-not-decidable-from.md)).
 
 > **Reference — how the DLL drives unit graphics today.** The renderer is the closed EXE; the DLL reaches it only
 > through the 26 virtuals of `CvDLLEntityIFaceBase` (`Sources/Infrastructure/CvDLLEntityIFaceBase.h:20-48`) and

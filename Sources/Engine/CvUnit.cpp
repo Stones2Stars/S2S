@@ -1072,50 +1072,24 @@ void CvUnit::setupGraphical()
 	}
 	else
 	{
-		/* billw - This forces multi-unit graphics to update.
-			If it isn't done then only 1 unit shows up, then the rest appear 10s or more later.
-			I tried every other command on the CvDLLEntityIFaceBase to trigger update
-			of these graphics (I didn't test every animation and mission type though),
-			but only found this one that actually works.
-		*/
-		ExecuteMove(0, false);
+		//	⛔ SETUP IS PLACEMENT, NEVER MOVEMENT -- this is the run-from-the-middle-of-the-map bug, and the call
+		//	below is the whole of it (docs/reference/unit-rendering/02-the-entity-lifecycle.md).
+		//	The EXE spawns a fresh node at the SCENE ORIGIN, which is the map centre (`plotXToPointX`'s -fWidth/2
+		//	term). The move family carries SHOWN-MOVEMENT semantics -- `groupMove`'s own use is the contract:
+		//	`QueueMove` stages the stepped plots, `ExecuteMove` shows the walk -- so issuing one HERE tells the
+		//	engine to reconcile origin→plot as a move the player must watch, on a unit that never moved. That is
+		//	why it fires on a newly created unit, and again when a unit that held the shared dummy first needs a
+		//	real node (a fortified stack member becoming the centre/selected unit as it starts to move).
+		//	⚖ `SetPosition` states where the node IS and animates nothing, which is what this path wants
+		//	(docs/reference/unit-rendering/10-the-firaxis-reference-contract.md §9: vanilla positions a node
+		//	exactly twice -- birth `setXY`, then real `QueueMove`/`ExecuteMove` pairs -- and its `setupGraphical`
+		//	is `setup()` plus the intercept `airCircle` and nothing else).
+		//	⚠ The 2019 billw hack this replaces existed for a REFRESH symptom (only one figure of a stack showing,
+		//	the rest appearing ~10s later), observed under graphics paging ON against nodes that had no placement
+		//	call at all in this path. Refresh and placement are different questions. If late figures reappear, the
+		//	answer is a NON-MOVEMENT refresh mechanism -- never this call back.
+		SetPosition(plot());
 
-		/* TEST CODE (billw 21/9/2019) >>>>>>
-		// Anyone can remove this later if no problems show up with using ExecuteMode(0, false) above
-
-		static int mode = 1;
-		switch (mode)
-		{
-			case 0: ExecuteMove(0, false); break;
-			case 1: SetPosition(plot()); break;
-			case 2: {
-				static AnimationTypes eAnim = NONE_ANIMATION;
-				static float fSpeed = 1.0f;
-				static bool bQueue = false;
-				static int iLayer = 0;
-				static float fStartPct = 0.0f;
-				static float fEndPct = 1.0f;
-				PlayAnimation(eAnim, fSpeed, bQueue, iLayer, fStartPct, fEndPct);
-				break;
-			};
-			case 3: setVisible(true); break;
-			case 4: setVisible(false); setVisible(true); break;
-			case 5: gDLL->getEntityIFace()->updatePosition(getEntity()); break;
-			case 6: MoveTo(plot()); break;
-			case 7: QueueMove(plot()); break;
-			case 8: {
-				static MissionTypes eMission = NO_MISSION;
-				NotifyEntity(eMission);
-				break;
-			}
-			case 9: gDLL->getEntityIFace()->updateGraphicEra(getUnitEntity()); break;
-			case 10: gDLL->getEntityIFace()->showPromotionGlow(getUnitEntity(), true); break;
-			case 11: gDLL->getEntityIFace()->updateEnemyGlow(getUnitEntity()); break;
-			case 12: gDLL->getEntityIFace()->updatePromotionLayers(getUnitEntity()); break;
-			case 13: gDLL->getEntityIFace()->StopAnimation(getEntity()); break;
-			default: break;
-		};
-		<<<<< TEST CODE */
 	}
 }
 
