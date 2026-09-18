@@ -1919,7 +1919,9 @@ void CvGame::normalizeAddFoodBonuses()
 		const int iX = pStartingPlot->getX();
 		const int iY = pStartingPlot->getY();
 
-		const TeamTypes eTeam = GET_PLAYER((PlayerTypes)iI).getTeam();
+		// The observer is the PLAYER whose start this is; the team is the bridge the reveal tech arrives over and
+		// is hopped inside the plot read, never held here (docs/cascade/14-context-scope-set.md).
+		const PlayerTypes eObserver = (PlayerTypes)iI;
 		int iGoodNatureTileCount = 0;
 		int iFoodBonus = 0;
 		for (int iJ = 0; iJ < NUM_CITY_PLOTS; iJ++)
@@ -1928,7 +1930,7 @@ void CvGame::normalizeAddFoodBonuses()
 
 			if (plotX != NULL)
 			{
-				const BonusTypes eBonus = plotX->getBonusType(eTeam);
+				const BonusTypes eBonus = plotX->getBonusRevealedTo(eObserver);
 
 				if (eBonus != NO_BONUS)
 				{
@@ -1941,12 +1943,12 @@ void CvGame::normalizeAddFoodBonuses()
 							else iFoodBonus += 3;
 						}
 					}
-					else if (plotX->calculateBestNatureYield(YIELD_FOOD, eTeam) >= 2)
+					else if (plotX->calculateBestNatureYield(YIELD_FOOD, eObserver) >= 2)
 					{
 						iGoodNatureTileCount++;
 					}
 				}
-				else if (plotX->calculateBestNatureYield(YIELD_FOOD, eTeam) >= 3)
+				else if (plotX->calculateBestNatureYield(YIELD_FOOD, eObserver) >= 3)
 				{
 					iGoodNatureTileCount++;
 				}
@@ -4118,7 +4120,7 @@ void CvGame::initScoreCalculation()
 		const CvPlot* pPlot = GC.getMap().plotByIndex(i);
 		if (!pPlot->isWater() || pPlot->isAdjacentToLand())
 		{
-			iMaxFood += pPlot->calculateBestNatureYield(YIELD_FOOD, NO_TEAM);
+			iMaxFood += pPlot->calculateBestNatureYield(YIELD_FOOD, NO_PLAYER);
 		}
 	}
 	m_iMaxPopulation = iMaxFood / std::max(1, GC.getFOOD_CONSUMPTION_PER_POPULATION());

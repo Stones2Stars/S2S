@@ -425,14 +425,14 @@ void CyPlot::setExtraYield(YieldTypes eYield, short iExtraYield)
 	if (m_pPlot) m_pPlot->setExtraYield(eYield, iExtraYield);
 }
 
-int CyPlot::calculateBestNatureYield(YieldTypes eIndex, TeamTypes eTeam) const
+int CyPlot::calculateBestNatureYield(YieldTypes eIndex, PlayerTypes eObserver) const
 {
-	return m_pPlot ? m_pPlot->calculateBestNatureYield(eIndex, eTeam) : -1;
+	return m_pPlot ? m_pPlot->calculateBestNatureYield(eIndex, eObserver) : -1;
 }
 
-int CyPlot::calculateTotalBestNatureYield(TeamTypes eTeam) const
+int CyPlot::calculateTotalBestNatureYield(PlayerTypes eObserver) const
 {
-	return m_pPlot ? m_pPlot->calculateTotalBestNatureYield(eTeam) : -1;
+	return m_pPlot ? m_pPlot->calculateTotalBestNatureYield(eObserver) : -1;
 }
 
 int CyPlot::calculateImprovementYieldChange(int /*ImprovementTypes*/ eImprovement, YieldTypes eYield) const

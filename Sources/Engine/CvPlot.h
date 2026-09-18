@@ -779,9 +779,21 @@ public:
 
 	void setExtraYield(YieldTypes eYield, short iExtraYield);
 	DllExport int getYield(YieldTypes eIndex) const;
+	/// <summary>The bonus this plot shows to an observing PLAYER — NO_BONUS while that player has not revealed it,
+	/// and NO_BONUS for NO_PLAYER, because nobody sees nothing. Reveal is tech, so the team is hopped exactly here
+	/// and nowhere else (docs/cascade/14-context-scope-set.md).</summary>
+	/// <remarks>⛔ NOT interchangeable with getBonusType(NO_TEAM), which answers the RAW bonus. This one is the
+	/// observer-keyed read and fails CLOSED; that one is the omniscient read and fails OPEN.</remarks>
+	BonusTypes getBonusRevealedTo(PlayerTypes eObserver) const;
 	int calculateNatureYield(YieldTypes eIndex, bool bIgnoreFeature = false) const;
-	int calculateBestNatureYield(YieldTypes eIndex, TeamTypes eTeam) const;
-	int calculateTotalBestNatureYield(TeamTypes eTeam) const;
+	/// <summary>This plot's ground yield as an observing player sees it — the tile's bonus counted only once that
+	/// player has revealed it.</summary>
+	int calculateNatureYieldFor(PlayerTypes eObserver, YieldTypes eIndex, bool bIgnoreFeature = false) const;
+	/// <summary>What to add to this plot's stored yield package so it reads as eObserver sees the tile — signed,
+	/// and zero unless that player's view of the tile's bonus differs from the owner's.</summary>
+	void getObserverBonusYieldDelta(PlayerTypes eObserver, int (&aiDelta)[NUM_YIELD_TYPES]) const;
+	int calculateBestNatureYield(YieldTypes eIndex, PlayerTypes eObserver) const;
+	int calculateTotalBestNatureYield(PlayerTypes eObserver) const;
 	int calculateImprovementYieldChange(ImprovementTypes eImprovement, YieldTypes eYield) const;
 	// What laying this BUILD here would change this plot's yield by -- the improvement it creates, the one it
 	// replaces, and any feature or terrain it changes, composed into one answer.
@@ -965,6 +977,10 @@ public:
 	void write(FDataStreamBase* pStream);
 
 protected:
+	/// <summary>This plot's ground yields with a named bonus standing on it — the one body the plot's own nature
+	/// yield and an observer's view of it both resolve through.</summary>
+	void natureYieldsWithBonus(BonusTypes eBonus, bool bIgnoreFeature, int (&aiYields)[NUM_YIELD_TYPES]) const;
+
 /*********************************/
 /***** Parallel Maps - Begin *****/
 /*********************************/
