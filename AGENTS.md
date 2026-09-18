@@ -756,6 +756,24 @@ with no worker at all can never build its first one.
   OR ENTITY PATH.** The entity lifecycle (create · setup · place · destroy), how a plot chooses the one unit it
   draws (`m_pCenterUnit`), graphics paging ON vs OFF, and the load / new-game timelines all live there against
   `Sources/` line cites. What stays here is only the HARD RULES; the knowledge is the reference's.
+- **⛔ A UNIT IS *PLACED* WHEN IT IS CREATED — IT DOES NOT *MOVE*. `ExecuteMove` / `QueueMove` ARE SHOWN
+  MOVEMENT AND ARE NEVER A GRAPHICS-REFRESH INSTRUMENT.** The EXE spawns a scene node at the WORLD ORIGIN — the
+  map centre — and a node believes it is there until told otherwise, so a move-family call on a node that has
+  not been presented yet makes the engine reconcile origin → plot as **a walk the player watches, on a unit that
+  never moved**. ⚑ **The signature is unmistakable: units run in from the middle of the map** — every newly
+  created unit, and any unit holding the shared dummy the first time it needs a real node (a fortified stack
+  member becoming centre/selected as it starts to move).
+  ⛔ **THE WHOLE PERMITTED CENSUS, and it is a census rather than a guideline because agents keep reaching for
+  `ExecuteMove` to "force the graphics to update":** `SetPosition` at the placement moments (`setupGraphical`,
+  the `setXY` teleport arm); `QueueMove`/`ExecuteMove` ONLY for real movement — `CvSelectionGroup::groupMove`
+  and `CvUnit::updateCombat` — **and nowhere else**. Adding a site to that list is the rollerskate, whatever
+  symptom prompted it.
+  ⚠ **A REFRESH symptom is a DIFFERENT QUESTION from placement** (late-appearing stack figures were the 2019
+  excuse for an `ExecuteMove(0,false)` at setup, which cost days of re-diagnosis). If one appears, the answer is
+  a non-movement mechanism; putting a move call back reinstates the run-in.
+  Full mechanism + the vanilla contract it restores:
+  [unit-rendering §7b](docs/reference/unit-rendering/08-the-run-from-origin-reconciliation.md),
+  [§9](docs/reference/unit-rendering/10-the-firaxis-reference-contract.md).
 - **⛔ NEVER DESTROY A REAL SCENE NODE OUT FROM UNDER A SELECTED UNIT.** The engine's move queue lives ON the
   scene node, so a needless destroy between a `QueueMove` and its `ExecuteMove` strands the walk animation.
   `reloadEntity` therefore KEEPS an entity already of the wanted kind; only a genuine MODEL change (a warlord
