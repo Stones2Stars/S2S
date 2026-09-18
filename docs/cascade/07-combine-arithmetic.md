@@ -59,6 +59,23 @@ math and never sees the human boundary.
 > (`getBonusType(getTeam())`) — takes that same view, or the valuation and the stored yield answer different numbers
 > for the same tile. The maintained package books the bonus on every move of that view: the tile's bonus, the
 > plot's owner, and the owner team's reveal — never only on the tile's bonus fact.
+> ⚖ **A READ EITHER AGREES WITH THE PACKAGE OR NAMES AN OBSERVER, AND THOSE ARE TWO DIFFERENT QUESTIONS.**
+> A package-agreeing what-if (`calculateNatureYield`) takes the stored view, which is what keeps the valuation and
+> the stored yield answering one number for one tile. A read that NAMES an observer answers for that observer
+> instead — `getBonusRevealedTo`, `calculateNatureYieldFor`, `calculateBestNatureYield` — and
+> `getObserverBonusYieldDelta` carries a stored package onto an observer's view for a consumer that must start
+> from the cache ([whose view](../reference/tooltip-look.md#whose-view)).
+> ⛔ **The observer is a PLAYER, never a team** ([team is the bridge](14-context-scope-set.md)): reveal is tech, so
+> the team is hopped exactly once inside the plot read and no consumer holds one.
+> ⚠ **`NO_PLAYER` SEES NOTHING — the exact opposite of `getBonusType(NO_TEAM)`, which answers the RAW bonus.** The
+> observer reads fail CLOSED, the omniscient read fails OPEN, and that asymmetry is deliberate: map generation and
+> the score normaliser judge the GROUND and must see every tile, while anything answering FOR somebody must not
+> show a resource they have not revealed.
+> ⛔ **The stored package is NOT re-keyed per observer.** The owner's view stays the stored truth and the city Σ
+> stays its consumer; a per-team copy of the tile is the duplication the model bans.
+> ⚠ **"An unowned tile, which no city works" bounds who RECEIVES the yield, never who READS it** — a hover and a
+> founding valuation both read an unowned tile, and there the raw fallback showed every asker a resource none of
+> them had revealed.
 > **The plot yields ARE "the base the rest is calculated from."** So anything that scales a *specific improvement or
 > plot component* resolves **inside** this per-plot package, **before** the city-level `(100+Σpercent)` stack ever runs.
 > ⚖ **The CITY-CENTRE constant is the legacy `calculateYield` city block, inside this same isolated resolve,

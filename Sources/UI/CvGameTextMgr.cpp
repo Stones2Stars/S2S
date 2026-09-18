@@ -1531,6 +1531,10 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 	{
 		return;
 	}
+	// ⛔ THE TEXT MANAGER ANSWERS FOR ITS OBSERVER, ALWAYS -- it is display only, so the team whose screen this is
+	// IS the question being asked (docs/reference/tooltip-look.md § WHOSE VIEW). The stored plot package holds one
+	// owner-side truth and cannot also be every other team's, so the viewer's view is composed here, at the read.
+	const PlayerTypes eObserver = GC.getGame().getActivePlayer();
 	// ---- WHAT THE TILE IS: the four substrate facts a plot-scope deposit can key on ----
 	// Spelled out even when empty, because "this plot has no bonus" is the answer to a question a player is
 	// actually asking when a yield looks wrong -- an omitted line reads as "not checked", not as "none".
@@ -1545,10 +1549,15 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 		szString.append(NEWLINE);
 		szString.append(CvWString(GC.getFeatureInfo(pPlot->getFeatureType()).getDescription()));
 	}
-	if (pPlot->getBonusType() != NO_BONUS)
+	// ⚖ THE TILE AS ITS VIEWER SEES IT, never as its owner does and never raw (docs/reference/tooltip-look.md
+	// § WHOSE VIEW). A resource this team has not revealed is not on this tile as far as the player is concerned
+	// -- the map icon is already withheld, so naming it here is the tooltip handing over the one thing the game
+	// is deliberately keeping back.
+	const BonusTypes eObservedBonus = pPlot->getBonusRevealedTo(eObserver);
+	if (eObservedBonus != NO_BONUS)
 	{
 		szString.append(NEWLINE);
-		szString.append(CvWString(GC.getBonusInfo(pPlot->getBonusType()).getDescription()));
+		szString.append(CvWString(GC.getBonusInfo(eObservedBonus).getDescription()));
 	}
 	if (pPlot->getImprovementType() != NO_IMPROVEMENT)
 	{
@@ -1585,6 +1594,12 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 	// ⛔ Read from the plot's OWN package, never recomputed here: this is the very number the city's Σ walks
 	// (docs/architecture/patterns.md §DRY (single implementation)), so a tile that reads wrong here is wrong in the city total too, and the
 	// two can be reconciled by eye. A recomputed tooltip could agree with the data while the cache disagreed.
+	// The one term of the package whose answer depends on who is asking: the tile's BONUS is booked as its OWNER
+	// sees it, so a viewer who has not revealed it -- or who HAS, on a tile whose owner has not -- is owed the
+	// difference. It is a NATURE term (docs/cascade/07-combine-arithmetic.md §48), so it lands on nature and on
+	// the total, and on nothing else.
+	int aiObserverBonusDelta[NUM_YIELD_TYPES];
+	pPlot->getObserverBonusYieldDelta(eObserver, aiObserverBonusDelta);
 	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 	{
 		const int iChannel = CascadeChannelRegistry::channelLookup(
@@ -1593,8 +1608,11 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 		{
 			continue;
 		}
-		const int64_t iTotal = pPlot->getCascadePackage().readFlat(iChannel);
-		const int64_t iNature = pPlot->getCascadePackage().readSubstrateFlat(iChannel);
+		const int64_t iObserverDelta = (int64_t)aiObserverBonusDelta[iYield];
+		// Floored like the package's own max(0,·) -- withdrawing a hidden bonus from an already-floored tile is
+		// the one way this arithmetic can go under zero, and a negative yield is not a thing to show a player.
+		const int64_t iTotal = std::max<int64_t>(0, pPlot->getCascadePackage().readFlat(iChannel) + iObserverDelta);
+		const int64_t iNature = std::max<int64_t>(0, pPlot->getCascadePackage().readSubstrateFlat(iChannel) + iObserverDelta);
 		const int64_t iImprovement = pPlot->getCascadePackage().readImprovementFlat(iChannel);
 		const int64_t iRest = pPlot->getCascadePackage().readRestFlat(iChannel);
 		if (iTotal == 0 && iNature == 0 && iImprovement == 0 && iRest == 0)
@@ -7073,10 +7091,14 @@ void CvGameTextMgr::setEventHelp(CvWStringBuffer& szBuffer, EventTypes eEvent, i
 	}
 	else if (kEvent.getBonusChange() < 0)
 	{
-		if (pPlot && NO_BONUS != pPlot->getBonusType())
+		// The event is being read BY kActivePlayer, so the tile is described as THEY see it
+		// (docs/reference/tooltip-look.md § WHOSE VIEW) -- an unrevealed resource is not named to them here any
+		// more than it is on the map.
+		const BonusTypes eObservedBonus = (pPlot != NULL) ? pPlot->getBonusRevealedTo(ePlayer) : NO_BONUS;
+		if (NO_BONUS != eObservedBonus)
 		{
 			szBuffer.append(NEWLINE);
-			szBuffer.append(gDLL->getText("TXT_KEY_EVENT_BONUS_REMOVE", GC.getBonusInfo(pPlot->getBonusType()).getTextKeyWide()));
+			szBuffer.append(gDLL->getText("TXT_KEY_EVENT_BONUS_REMOVE", GC.getBonusInfo(eObservedBonus).getTextKeyWide()));
 		}
 	}
 

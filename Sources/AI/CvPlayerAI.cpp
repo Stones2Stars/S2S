@@ -2406,11 +2406,11 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 		}
 		else if (!pLoopPlot->isFreshWater() && !pLoopPlot->isHills())
 		{
-			if (pLoopPlot->isWater() && (!bIsCoastal || pLoopPlot->calculateBestNatureYield(YIELD_FOOD, getTeam()) < 2))
+			if (pLoopPlot->isWater() && (!bIsCoastal || pLoopPlot->calculateBestNatureYield(YIELD_FOOD, getID()) < 2))
 			{
 				iBadTile++;
 			}
-			else if (pLoopPlot->calculateBestNatureYield(YIELD_FOOD, getTeam()) < 2 || pLoopPlot->calculateTotalBestNatureYield(getTeam()) < 3)
+			else if (pLoopPlot->calculateBestNatureYield(YIELD_FOOD, getID()) < 2 || pLoopPlot->calculateTotalBestNatureYield(getID()) < 3)
 			{
 				iBadTile += 2;
 			}
@@ -2655,10 +2655,16 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 
 			int aiPlotYields100[NUM_YIELD_TYPES];
 			pLoopPlot->getYields(aiPlotYields100);   // ×100 group read (getYield is the EXE edge)
+			// ⛔ THE STORED PACKAGE IS THE TILE OWNER'S VIEW, NEVER THE ASKER'S -- raw on an unowned tile, which is
+			// every tile a founding search looks at. Reading it straight hands this AI the yield of resources its
+			// own team has not revealed, which it never had in legacy. The observer is the SAME one the bonus
+			// identity above already uses, so the two legs cannot disagree about what this player can see.
+			int aiObserverDelta[NUM_YIELD_TYPES];
+			pLoopPlot->getObserverBonusYieldDelta(bStartingLoc ? NO_PLAYER : getID(), aiObserverDelta);
 			for (int iYieldType = 0; iYieldType < NUM_YIELD_TYPES; ++iYieldType)
 			{
 				const YieldTypes eYield = (YieldTypes)iYieldType;
-				aiYield[eYield] = aiPlotYields100[eYield];
+				aiYield[eYield] = std::max(0, aiPlotYields100[eYield] + aiObserverDelta[eYield]);
 
 				if (iI == CITY_HOME_PLOT)
 				{
@@ -2900,17 +2906,22 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 			{
 				int aiRangeYields100[NUM_YIELD_TYPES];
 				pLoopPlot->getYields(aiRangeYields100);   // ×100 group read (getYield is the EXE edge)
+				// As this observer sees the tile, never as its owner does (the block above). This whole branch is
+				// the bStartingLoc one, so the observer is NO_PLAYER -- map normalization judges the GROUND, and
+				// the legacy read it replaces resolved to NO_TEAM here for the same reason.
+				int aiRangeObserverDelta[NUM_YIELD_TYPES];
+				pLoopPlot->getObserverBonusYieldDelta(NO_PLAYER, aiRangeObserverDelta);
 				const int iTempValue =
 					(
-						13 * aiRangeYields100[YIELD_FOOD] +
-						11 * aiRangeYields100[YIELD_PRODUCTION] +
-						 7 * aiRangeYields100[YIELD_COMMERCE]
+						13 * std::max(0, aiRangeYields100[YIELD_FOOD] + aiRangeObserverDelta[YIELD_FOOD]) +
+						11 * std::max(0, aiRangeYields100[YIELD_PRODUCTION] + aiRangeObserverDelta[YIELD_PRODUCTION]) +
+						 7 * std::max(0, aiRangeYields100[YIELD_COMMERCE] + aiRangeObserverDelta[YIELD_COMMERCE])
 					);
 				if (iTempValue < 28)
 				{
 					iGreaterBadTile += 2;
 					if (pLoopPlot->getFeatureType() != NO_FEATURE
-					&& pLoopPlot->calculateBestNatureYield(YIELD_FOOD, getTeam()) > 1)
+					&& pLoopPlot->calculateBestNatureYield(YIELD_FOOD, getID()) > 1)
 					{
 						iGreaterBadTile--;
 					}
@@ -2936,7 +2947,9 @@ int CvPlayerAI::AI_foundValue(int iX, int iY, int iMinRivalRange, bool bStarting
 				iWaterCount++;
 				int aiWaterYields100[NUM_YIELD_TYPES];
 				pLoopPlot->getYields(aiWaterYields100);   // ×100 group read (getYield is the EXE edge)
-				if (aiWaterYields100[YIELD_FOOD] <= 100)
+				int aiWaterObserverDelta[NUM_YIELD_TYPES];
+				pLoopPlot->getObserverBonusYieldDelta(NO_PLAYER, aiWaterObserverDelta);   // bStartingLoc: the GROUND
+				if (std::max(0, aiWaterYields100[YIELD_FOOD] + aiWaterObserverDelta[YIELD_FOOD]) <= 100)
 				{
 					iWaterCount++;
 				}

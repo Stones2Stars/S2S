@@ -9,6 +9,34 @@ tooltip SET stays demand-driven, and completeness is measured against what the E
 what the legacy composer used to print (same page). A line here is evidence of how something READ, not an
 obligation to print it again.
 
+## WHOSE VIEW
+
+⛔ **`CvGameTextMgr` ALWAYS SHOWS WHAT THE OBSERVER SEES.** It is display only, so the team whose screen this is
+IS the question being asked — never the tile's owner, never the entity's owner, and never the raw stored value.
+
+⚑ **The trap is that a stored value looks neutral and is not.** A maintained package holds ONE truth, booked for
+one observer: a plot's bonus term is booked as its OWNER sees it, raw on an unowned tile
+([combine arithmetic §48](../cascade/07-combine-arithmetic.md)). Reading that straight into a tooltip renders
+the OWNER's tile to whoever happens to be hovering — which on unowned land is everybody, and on a rival's land is
+the rival. *(Worked: a resource yielded into the hover before its revealing tech, while the map icon correctly
+stayed hidden — the icon asked `getBonusType(activeTeam)`, the tooltip read the package.)*
+
+⇒ **So a composer reading a per-observer quantity closes the difference AT THE READ**, and the store keeps its
+single owner-side truth. `CvPlot::getBonusRevealedTo` answers the tile's resource for the viewer, and
+`CvPlot::getObserverBonusYieldDelta` adjusts a stored package onto that view — signed, because a viewer can
+equally have revealed a bonus the tile's owner has not.
+
+⛔ **THE OBSERVER IS A PLAYER.** A composer names the player whose screen it is — `getActivePlayer()`, or the
+recipient a composer was handed — and never a team ([team is the bridge](../cascade/14-context-scope-set.md): reveal
+is tech, and the team hop belongs inside the read).
+
+⛔ **Never "fix" this in the store.** A second per-team copy of the tile is the duplication the cascade bans, and
+the stored view is correct for the consumer it exists for: the owner's city Σ.
+
+⚠ **A raw read is silent when it is wrong.** `getBonusType()` with no argument compiles, reads naturally, and
+leaks; the observer-keyed call differs by one argument. Treat an un-parameterized read of anything an observer can
+fail to see as a defect on sight.
+
 ## How to use it
 
 **To design a tooltip, write it here in free text.** That is the whole point of the file: the hard part of a

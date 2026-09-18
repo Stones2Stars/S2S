@@ -8002,36 +8002,106 @@ int CvPlot::getYield(YieldTypes eIndex) const
 }
 
 
-int CvPlot::calculateNatureYield(YieldTypes eYield, bool bIgnoreFeature) const
+void CvPlot::natureYieldsWithBonus(BonusTypes eBonus, bool bIgnoreFeature, int (&aiYields)[NUM_YIELD_TYPES]) const
 {
-	// The GROUND's yield: this plot's base package with nothing BUILT on it -- the same one calc the package
-	// rebuild runs, handed no improvement and no route (docs/architecture/patterns.md §DRY (single implementation)). bIgnoreFeature is the
-	// CHOP what-if: it answers as though the feature were already cleared, which no stored segment can serve
-	// because it describes a plot that does not exist.
-	const BonusTypes eBonus = getBonusType(getTeam());
+	// The GROUND's yield with a NAMED bonus standing on it: this plot's base package with nothing BUILT on it --
+	// the same one calc the package rebuild runs, handed no improvement and no route
+	// (docs/architecture/patterns.md §DRY (single implementation)). bIgnoreFeature is the CHOP what-if: it answers
+	// as though the feature were already cleared, which no stored segment can serve because it describes a plot
+	// that does not exist.
+	// ⚑ The bonus is a PARAMETER rather than read off the plot, because that is the one term of the tile whose
+	// answer depends on WHO IS ASKING. Everything else about the ground is the same for everybody, so both askers
+	// go through this one body and can never come to disagree about the rest of it.
 	CvCascadeEvalCtx evalCtx;
 	InfoValuation::fillEvalCtxAtPlot(*this, evalCtx);
-	int aiYields[NUM_YIELD_TYPES];
 	InfoValuation::plotBaseYields(
 		getTerrainType() != NO_TERRAIN ? GC.getTerrainInfo(getTerrainType()).getModifiers() : NULL,
 		(!bIgnoreFeature && getFeatureType() != NO_FEATURE) ? GC.getFeatureInfo(getFeatureType()).getModifiers() : NULL,
 		eBonus != NO_BONUS ? GC.getBonusInfo(eBonus).getModifiers() : NULL,
 		NULL, NULL, evalCtx, aiYields);
+}
+
+
+BonusTypes CvPlot::getBonusRevealedTo(PlayerTypes eObserver) const
+{
+	// ⚖ THE OBSERVER IS A PLAYER; THE TEAM IS ONLY THE BRIDGE THE TECH ARRIVES OVER
+	// (docs/cascade/14-context-scope-set.md). So this is the one hop, and no consumer of this read holds a team.
+	// ⛔ NO_PLAYER answers NO_BONUS -- nobody is looking, so nothing is revealed. That is the opposite of
+	// getBonusType(NO_TEAM), which answers the RAW bonus for the omniscient callers (map generation, the score
+	// normaliser). The two fallbacks differ on purpose: this read fails CLOSED and that one fails OPEN.
+	if (eObserver == NO_PLAYER)
+	{
+		return NO_BONUS;
+	}
+	return getBonusType(GET_PLAYER(eObserver).getTeam());
+}
+
+
+int CvPlot::calculateNatureYield(YieldTypes eYield, bool bIgnoreFeature) const
+{
+	// The view the STORED package books -- the tile's owner's, raw on an unowned tile
+	// (docs/cascade/07-combine-arithmetic.md §48), so this what-if and the package agree by construction.
+	int aiYields[NUM_YIELD_TYPES];
+	natureYieldsWithBonus(getBonusType(getTeam()), bIgnoreFeature, aiYields);
 	// ×100 NATIVE -- a getter never reduces (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); the READ EDGE reduces.
 	return aiYields[eYield];
 }
 
 
-int CvPlot::calculateBestNatureYield(YieldTypes eIndex, TeamTypes eTeam) const
+int CvPlot::calculateNatureYieldFor(PlayerTypes eObserver, YieldTypes eYield, bool bIgnoreFeature) const
 {
-	// the better of standing and cleared -- the chop what-if beside the ground as it is
-	return std::max(calculateNatureYield(eIndex, false), calculateNatureYield(eIndex, true));
+	int aiYields[NUM_YIELD_TYPES];
+	natureYieldsWithBonus(getBonusRevealedTo(eObserver), bIgnoreFeature, aiYields);
+	// ×100 NATIVE -- a getter never reduces (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)); the READ EDGE reduces.
+	return aiYields[eYield];
 }
 
 
-int CvPlot::calculateTotalBestNatureYield(TeamTypes eTeam) const
+void CvPlot::getObserverBonusYieldDelta(PlayerTypes eObserver, int (&aiDelta)[NUM_YIELD_TYPES]) const
 {
-	return (calculateBestNatureYield(YIELD_FOOD, eTeam) + calculateBestNatureYield(YIELD_PRODUCTION, eTeam) + calculateBestNatureYield(YIELD_COMMERCE, eTeam));
+	// What to ADD to this plot's STORED package so it reads as eObserverTeam sees the tile.
+	// ⚖ The package books the bonus as the plot's OWNER sees it, raw on an unowned tile
+	// (docs/cascade/07-combine-arithmetic.md §48). That is ONE stored number, so it cannot also be every other
+	// team's answer -- and a DISPLAY answers for its viewer (docs/reference/tooltip-look.md § WHOSE VIEW). So the
+	// difference is closed HERE, at the read, and the store keeps its single owner-side truth.
+	// ⚑ Signed deliberately, because both directions occur: the observer has not revealed a bonus the package
+	// counted (an unowned tile, or a rival's whose team holds the tech) -- negative; or the observer HAS revealed
+	// one the package did not count (a rival's tile whose owner lacks the tech) -- positive.
+	// ⚠ NO_PLAYER sees NOTHING, exactly as the legacy calculateNatureYield(eYield, NO_TEAM, ...) did -- so an
+	// omniscient caller withdraws the tile's bonus rather than keeping it. Do not "helpfully" special-case it
+	// back to the stored view; a caller that wants the raw tile does not ask an OBSERVER read at all.
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	{
+		aiDelta[iYield] = 0;
+	}
+	const BonusTypes eStored = getBonusType(getTeam());
+	const BonusTypes eObserved = getBonusRevealedTo(eObserver);
+	if (eStored == eObserved)
+	{
+		return;
+	}
+	int aiStored[NUM_YIELD_TYPES];
+	int aiObserved[NUM_YIELD_TYPES];
+	natureYieldsWithBonus(eStored, false, aiStored);
+	natureYieldsWithBonus(eObserved, false, aiObserved);
+	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
+	{
+		aiDelta[iYield] = aiObserved[iYield] - aiStored[iYield];
+	}
+}
+
+
+int CvPlot::calculateBestNatureYield(YieldTypes eIndex, PlayerTypes eObserver) const
+{
+	// the better of standing and cleared -- the chop what-if beside the ground as it is, AS THE OBSERVER SEES IT:
+	// a resource this player has not revealed contributes nothing, and NO_PLAYER sees no resource at all.
+	return std::max(calculateNatureYieldFor(eObserver, eIndex, false), calculateNatureYieldFor(eObserver, eIndex, true));
+}
+
+
+int CvPlot::calculateTotalBestNatureYield(PlayerTypes eObserver) const
+{
+	return (calculateBestNatureYield(YIELD_FOOD, eObserver) + calculateBestNatureYield(YIELD_PRODUCTION, eObserver) + calculateBestNatureYield(YIELD_COMMERCE, eObserver));
 }
 
 

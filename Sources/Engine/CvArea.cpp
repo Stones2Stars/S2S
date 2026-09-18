@@ -355,7 +355,7 @@ int CvArea::calculateTotalBestNatureYield() const
 		const CvPlot* pLoopPlot = GC.getMap().plotByIndex(iI);
 		if (pLoopPlot->getArea() == getID())
 		{
-			iCount += pLoopPlot->calculateTotalBestNatureYield(NO_TEAM);
+			iCount += pLoopPlot->calculateTotalBestNatureYield(NO_PLAYER);
 		}
 	}
 	return iCount;
