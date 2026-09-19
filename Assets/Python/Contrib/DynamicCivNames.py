@@ -146,7 +146,8 @@ def onCityAcquiredAndKept(argsList):
 
 
 def onCityBuilt(argsList):
-	owner = GC.getPlayer(argsList[0].getOwner())
+	# A game-object event arg is the (owner, id) IDENTITY TUPLE -- the owner is its first element.
+	owner = GC.getPlayer(argsList[0][0])
 	if owner.isAlive() and not owner.isNPC() and owner.getNumCities() < 5 and owner.getNumMilitaryUnits() > 0:
 		setNewNameByCivics(owner.getID())
 

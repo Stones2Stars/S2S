@@ -128,7 +128,8 @@ class EnhancedTechConquest:
 		fBasePercent += iTechsBehind * g_iTechBehindPercent / 100.0
 		if fBasePercent < 1: return
 
-		city = argsList[2]
+		# The city arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it.
+		city = GC.getPlayer(argsList[2][0]).getCity(argsList[2][1])
 		charBeaker = TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_RESEARCH)
 		if iPopPercent:
 			iPopulation = city.getPopulation() + 1

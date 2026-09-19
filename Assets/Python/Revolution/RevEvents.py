@@ -379,7 +379,9 @@ def onChangeWar(argsList):
 ########################## City-based events ###############################
 
 def onCityBuilt( argsList ):
-	city = argsList[0]
+	# A game-object event arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+	(iCityOwner, iCityID), = argsList
+	city = GC.getPlayer(iCityOwner).getCity(iCityID)
 
 	RevData.initCity( city )
 
