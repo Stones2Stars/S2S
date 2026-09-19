@@ -944,9 +944,10 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 	def onCityAcquired(self, argsList):
 		if AutologOpt.isLogCityOwner():
-			iOwnerOld, iOwnerNew, CyCity, bConquest, bTrade, bAutoRaze = argsList
+			# The city arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+			iOwnerOld, iOwnerNew, (iCityOwner, iCityID), bConquest, bTrade, bAutoRaze = argsList
 			if iOwnerNew == GAME.getActivePlayer():
-				szCity = CyCity.getName()
+				szCity = GC.getPlayer(iCityOwner).getCity(iCityID).getName()
 				szCiv = GC.getPlayer(iOwnerOld).getName()
 				if bConquest:
 					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CITY_CAPTURED", (szCity, szCiv))

@@ -62,7 +62,9 @@ ENUMS = CyEnums()
 TRNSLTR = CyTranslator()
 
 def onCityAcquired(argsList):
-	iOwnerOld, iOwnerNew, CyCity, bConquest, bTrade, bAutoRaze = argsList
+	# The city arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+	iOwnerOld, iOwnerNew, (iCityOwner, iCityID), bConquest, bTrade, bAutoRaze = argsList
+	CyCity = GC.getPlayer(iCityOwner).getCity(iCityID)
 
 	# Partizans doesn't make sense if this is reconquest (liberation) or not conquest at all.
 	if not bConquest or not CyCity.isOccupation():

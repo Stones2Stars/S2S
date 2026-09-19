@@ -569,7 +569,9 @@ class Revolution:
 
 	def onCityAcquiredAndKept(self, argsList):
 		#iOwnerOld, iOwnerNew, city, bConquest, bTrade = argsList
-		self.updateLocalRevIndices(GAME.getGameTurn(), argsList[1], subCityList = [argsList[2]], bIsRevWatch = True)
+		# The city arg is the (owner, id) IDENTITY TUPLE; subCityList is iterated as HANDLES, so resolve it.
+		city = GC.getPlayer(argsList[2][0]).getCity(argsList[2][1])
+		self.updateLocalRevIndices(GAME.getGameTurn(), argsList[1], subCityList = [city], bIsRevWatch = True)
 
 ##--- Player turn functions ---------------------------------------
 
