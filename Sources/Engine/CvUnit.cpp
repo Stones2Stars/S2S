@@ -359,6 +359,35 @@ void CvUnit::reloadEntity(bool bForceLoad)
 	ensureGraphicalPlacement();
 }
 
+void CvUnit::placeForPresentation()
+{
+	//	⛔ BECOMING THE PLOT'S CENTRE UNIT IS THE MOMENT THE NODE IS FIRST PRESENTED, AND PLACING IT AT CREATION
+	//	IS NOT ENOUGH TO SURVIVE THAT. A plot draws exactly ONE unit (docs/reference/unit-rendering/01-the-model.md),
+	//	so a unit standing under another one holds a node that was built and placed but NEVER SHOWN -- and the
+	//	engine presents a node from where it believes the node stands, which is the world origin unless the
+	//	placement is re-stated now. ⚑ This is why the symptom singles out units that are not the best defender on
+	//	their tile: a military unit becomes the centre unit at birth and is presented while its placement is
+	//	fresh, while a WORKER stacked under a defender is presented for the first time only when the player
+	//	selects it -- and again every time selection hands the centre back
+	//	(docs/reference/unit-rendering/08-the-run-from-origin-reconciliation.md).
+	if (!GC.IsGraphicsInitialized() || !isInViewport() || plot() == NULL || !isRealEntity(getEntity()))
+	{
+		return;
+	}
+
+	//	⛔ NEVER RE-STATE A POSITION INSIDE A MOVEMENT WINDOW. groupMove lifts its centre-unit inhibit between
+	//	QUEUEING the walk and EXECUTING it (CvSelectionGroup.cpp:3668), so a centre change lands here mid-walk --
+	//	and a SetPosition there puts the node on the DESTINATION before the walk plays, turning a move the player
+	//	should watch into a teleport.
+	const CvSelectionGroup* pGroup = getGroup();
+
+	if (pGroup != NULL && pGroup->isMidMove())
+	{
+		return;
+	}
+	SetPosition(plot());
+}
+
 void CvUnit::ensureGraphicalPlacement()
 {
 	//	setupGraphical owns the latch and sets it only when its gate passes -- so an attempt made while graphics

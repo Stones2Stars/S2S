@@ -74,11 +74,13 @@ Ranked by confidence. "Re-runs ON" = what re-executes it under paging; "Re-runs 
    (11531-11540), so with paging ON a `setLayoutDirty(true)` on a plot whose FEATURE bit is out of
    `PAGE_IN_DIST_FEATURES` (XML 15) resets `m_bPlotLayoutDirty=false`. The reverse case of this list (works OFF,
    drops ON). ⚑ Confidence: HIGH.
-9. **No path re-places an already-set-up node in either mode.** `updateCenterUnit` re-runs only on the page-in
-   DELTA under paging (490-491) and each frame until convergence with paging off (items 1-2); either way
-   `reloadEntity(true)` on a unit whose latch is set is a `kept` that positions nothing (`Engine/CvUnit.cpp:362-372`).
-   A node's position is established once at setup (`SetPosition(plot())`) and thereafter by the ordinary
-   move path — never re-placed by paging. ⚑ Confidence: HIGH.
+9. **Paging never re-places a node; a CHANGED CENTRE VERDICT does.** `updateCenterUnit` re-runs only on the
+   page-in DELTA under paging (490-491) and each frame until convergence with paging off (items 1-2), and
+   `reloadEntity(true)` on a unit whose latch is set is a `kept` that positions nothing
+   (`Engine/CvUnit.cpp:362-372`) — so a re-RUN of the pass changes nothing. But a pass that changes the VERDICT
+   calls `placeForPresentation()` on the incoming centre unit (`Engine/CvPlot.cpp:10093-10099`), because that
+   assignment is the moment the node is presented and a node is presented from where the engine believes it
+   stands ([§7b](08-the-run-from-origin-reconciliation.md)). ⚑ Confidence: HIGH.
 10. **Define-name mismatch:** the code reads `PAGING_FRAME_TIME_MS` (`UI/CvPlotPaging.cpp:242`); the XML authors
     `MAX_PAGING_FRAME_TIME_MS` (`Assets/XML/GlobalDefines.xml:67-68`, itself commented "unused"). The code default
     (100) is what runs. ⚑ Confidence: HIGH.

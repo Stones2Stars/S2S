@@ -775,6 +775,14 @@ with no worker at all can never build its first one.
   merging, upgrading, fortifying and awakening are all performed ON the selected unit, so all four ran in from
   mid-map while unit CREATION looked fixed. ⇒ When a graphics symptom hits "only some" operations, check what
   those operations have in COMMON about the unit's state before hunting the verbs.
+  ⛔ **AND PLACING A NODE AT CREATION IS STILL NOT ENOUGH, BECAUSE A NODE IS PRESENTED FROM WHERE THE ENGINE
+  BELIEVES IT STANDS.** A plot draws exactly ONE unit, so a unit standing UNDER another holds a correctly-placed
+  node that has never been drawn; the centre-unit assignment is its first presentation, and it reconciles from
+  the origin unless the position is re-stated there (`CvUnit::placeForPresentation`, called from
+  `CvPlot::updateCenterUnit`). ⚖ **That one reads as a UNIT-TYPE bug and is not one — it is STACK POSITION.**
+  WORKERS showed it and military units did not, purely because the centre unit is chosen by `getBestDefender`:
+  a soldier is centre from birth, a worker under a defender is presented only when the player selects it. ⇒ Read
+  *"only unit type X does it"* as a question about X's place in the STACK, never about X.
   ⛔ **THE WHOLE PERMITTED CENSUS, and it is a census rather than a guideline because agents keep reaching for
   `ExecuteMove` to "force the graphics to update":** `SetPosition` at the placement moments (`setupGraphical`,
   the `setXY` teleport arm); `QueueMove`/`ExecuteMove` ONLY for real movement — `CvSelectionGroup::groupMove`

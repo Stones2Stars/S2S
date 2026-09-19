@@ -34,9 +34,11 @@ Where the tree differs, DLL-side (whether the EXE draws a non-centre real node i
    DLL never calls `setVisible` on a unit entity. A real node is downgraded only by `setXY`'s fog-edge test
    (14054-14061), a group head swap (`Engine/CvSelectionGroup.cpp:4826-4833, 4866-4877`), or a bulk
    `reloadEntity()` sweep.
-4. **A required unit that already holds a node is never (re)positioned.** `reloadEntity` → `kept` skips
-   `setupGraphical` when the latch is set (`Engine/CvUnit.cpp:362-372`); a fog→visible flip of such a
-   unit issues no positioning call at all.
+4. **A required unit that already holds a node is repositioned ONLY when it becomes the centre unit.**
+   `reloadEntity` → `kept` skips `setupGraphical` when the latch is set (`Engine/CvUnit.cpp:362-372`), so a
+   fog→visible flip of such a unit issues no positioning call at all. A CHANGED centre verdict does, via
+   `placeForPresentation()` (`Engine/CvPlot.cpp:10093-10099`) — the node is about to be shown, and a node is
+   shown from where the engine believes it stands ([§7b](08-the-run-from-origin-reconciliation.md)).
 5. **With `ENABLE_DYNAMIC_UNIT_ENTITIES=0` every unit holds a real node unconditionally** — fog, viewport and
    stack position ignored (`Engine/CvUnit.cpp:208-210, 321`).
 6. **The ctor builds a node before the unit has a plot** — every unit in non-dummy mode, and the two bootstrap

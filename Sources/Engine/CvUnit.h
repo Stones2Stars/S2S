@@ -402,6 +402,11 @@ public:
 	/// otherwise. A node the engine has never been told a location for believes it stands at the world origin,
 	/// so anything we go on to say about the unit is reconciled as a walk in from the map centre.</summary>
 	void ensureGraphicalPlacement();
+	///<summary>Re-states where this unit's node stands, for a node about to be PRESENTED — it has just become
+	/// its plot's centre unit. A node placed while another unit held the centre was never shown, and the engine
+	/// presents it from where it believes it stands, so the placement must be repeated here. Refused inside a
+	/// movement window, where it would replace the walk with a teleport.</summary>
+	void placeForPresentation();
 	void init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOwner, int iX, int iY, DirectionTypes eFacingDirection, int iBirthmark);
 	void changeIdentity(UnitTypes eUnit);
 	void reset(int iID = 0, UnitTypes eUnit = NO_UNIT, PlayerTypes eOwner = NO_PLAYER, bool bConstructorCall = false, bool bIdentityChange = false);
