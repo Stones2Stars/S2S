@@ -135,6 +135,63 @@ namespace
 			.addI(XPF_borders, bInBorders ? 1 : 0)
 			.addI(XPF_callerRva, iCallerRva));
 	}
+
+	// [MOV/budget] -- a unit's move allowance, DECOMPOSED into the two legs that built it.
+	// ⚑ The legs are the whole point. A move budget is the sum of a UNIT-plane value (its own type plus every
+	// held promotion and combat class, resolved) and an EMPIRE-plane one (the domainMoves tech deposit plus the
+	// circumnavigation award), and the two live on different planes -- so a wrong total says nothing about which
+	// side carries it. Emitting only the total would answer "is it wrong" and never "why".
+	// ⚠ Both legs are ×100 on the wire, exactly as the engine holds them (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model));
+	// `points` is what the unit actually spends and `tiles` the whole-tile read. A leg reading 100× its
+	// neighbour is the defect this line exists to make visible at a glance.
+	enum MovEvent
+	{
+		MOV_BUDGET = 1
+	};
+	enum MovField
+	{
+		MOVF_unit = 1, MOVF_owner, MOVF_unitType, MOVF_domain,
+		MOVF_unitLeg, MOVF_empireLeg, MOVF_points, MOVF_tiles
+	};
+	const char* movLinePrefix(int iEventId)
+	{
+		switch (iEventId)
+		{
+		case MOV_BUDGET: return "[MOV/budget]";
+		default:         return NULL;
+		}
+	}
+	const char* movFieldInfo(int iFieldTag, SpineFieldType* peType)
+	{
+		*peType = SFT_INT;
+		switch (iFieldTag)
+		{
+		case MOVF_unit:      return "unit";
+		case MOVF_owner:     return "owner";
+		case MOVF_unitType:  *peType = SFT_UNIT; return "unitType";
+		case MOVF_domain:    return "domain";
+		case MOVF_unitLeg:   return "unitLeg";
+		case MOVF_empireLeg: return "empireLeg";
+		case MOVF_points:    return "points";
+		case MOVF_tiles:     return "tiles";
+		default:             return NULL;
+		}
+	}
+	struct MovLogRegistrar { MovLogRegistrar() { spineRegisterDomain(SD_MOVEMENT, &movLinePrefix, "Movement.log", &movFieldInfo); } };
+	MovLogRegistrar s_movLogRegistrar; // static-init registration
+
+	void mov_emitBudget(const CvUnit* pUnit, int iUnitLeg, int iEmpireLeg, int iPoints, int iTiles)
+	{
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_MOVEMENT, MOV_BUDGET, 3)
+			.addI(MOVF_unit, pUnit->getID())
+			.addI(MOVF_owner, (int)pUnit->getOwner())
+			.addI(MOVF_unitType, (int)pUnit->getUnitType())
+			.addI(MOVF_domain, (int)pUnit->getDomainType())
+			.addI(MOVF_unitLeg, iUnitLeg)
+			.addI(MOVF_empireLeg, iEmpireLeg)
+			.addI(MOVF_points, iPoints)
+			.addI(MOVF_tiles, iTiles));
+	}
 }
 
 // The [XP/production] decomposition. Emitted from CvCity::addProductionExperience -- a different translation unit --
@@ -10666,12 +10723,17 @@ int CvUnit::maxMoves() const
 		// ⚖ URS_MOVES is the unit's WHOLE allowance -- its own type plus every held promotion and combat
 		// class, resolved when the promotion landed. The team leg stays separate because it is the empire's,
 		// not the unit's: a tech deposit and the circumnavigation award, neither of which the unit carries.
-		const int iMoves =
-			resolvedValue(URS_MOVES)
-			+ (getDomainType() != DOMAIN_AIR ? GET_TEAM(getTeam()).getExtraMoves(getDomainType()) : 0);
+		const int iUnitLeg = resolvedValue(URS_MOVES);
+		const int iEmpireLeg = (getDomainType() != DOMAIN_AIR ? GET_TEAM(getTeam()).getExtraMoves(getDomainType()) : 0);
+		const int iMoves = iUnitLeg + iEmpireLeg;
 
 		m_maxMoveCache = iMoves * GC.getMOVE_DENOMINATOR() / 100;
 		m_iMaxMoveCacheTurn = GC.getGame().getGameTurn();
+
+		// The budget is announced where it is BUILT, so the line carries the legs rather than a bare total
+		// ([spine.md] §7: a hook exposes the decomposition behind a number). The cache keys on the turn, so
+		// this is at most one line per unit per turn rather than one per movement query.
+		mov_emitBudget(this, iUnitLeg, iEmpireLeg, m_maxMoveCache, m_maxMoveCache / GC.getMOVE_DENOMINATOR());
 	}
 	return m_maxMoveCache;
 }
