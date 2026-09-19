@@ -6847,13 +6847,22 @@ def ApplyNativegood4(argsList):
 ### Missions ####
 
 def doEventLawyer(argsList):
-	pUnit = argsList[0]
+	# A Civ4 event callback is handed (eEvent, EventTriggeredData) -- it is never passed a unit, which is what
+	# the old argsList[0] read assumed. The player is the event's own, and the unit is resolved from the id the
+	# trigger picked: EVENTTRIGGER_LAWYER_LITIGATION requires one UNIT_LAWYER, so iUnitId names it.
+	data = argsList[1]
+
+	iPlayer = data.ePlayer
+
+	if data.iUnitId == -1:
+		return # False call
+
+	pUnit = GC.getPlayer(iPlayer).getUnit(data.iUnitId)
 
 	if pUnit is None:
 		return # False call
 
-	pPlayer = GC.getPlayer(pUnit.getOwner())
-	iPlayer = pPlayer.getID()
+	# The event does not bPickCity, so iCityId is unset -- the city is the one the lawyer stands in.
 	pCity = GC.getMap().plot(pUnit.getX(), pUnit.getY()).getPlotCity()
 
 	if pCity is None:

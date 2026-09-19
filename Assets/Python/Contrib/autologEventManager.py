@@ -810,7 +810,9 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 	def onReligionSpread(self, argsList):
 		if AutologOpt.isLogReligion():
-			iReligion, iOwner, CyCity = argsList
+			# The city arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+			iReligion, iOwner, (iCityOwner, iCityID) = argsList
+			CyCity = GC.getPlayer(iCityOwner).getCity(iCityID)
 			iActivePlayer = GAME.getActivePlayer()
 
 			if iOwner == iActivePlayer or GAME.getHolyCity(iReligion).getOwner() == iActivePlayer:
@@ -823,7 +825,9 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 	def onReligionRemove(self, argsList):
 		if AutologOpt.isLogReligion():
-			iReligion, iOwner, CyCity = argsList
+			# The city arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+			iReligion, iOwner, (iCityOwner, iCityID) = argsList
+			CyCity = GC.getPlayer(iCityOwner).getCity(iCityID)
 			iActivePlayer = GAME.getActivePlayer()
 
 			if iOwner == iActivePlayer or GAME.getHolyCity(iReligion).getOwner() == iActivePlayer:
@@ -847,7 +851,9 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 	def onCorporationSpread(self, argsList):
 		if AutologOpt.isLogCorporation():
-			iCorporation, iOwner, CyCity = argsList
+			# The city arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+			iCorporation, iOwner, (iCityOwner, iCityID) = argsList
+			CyCity = GC.getPlayer(iCityOwner).getCity(iCityID)
 			iActivePlayer = GAME.getActivePlayer()
 
 			if iOwner == iActivePlayer or GAME.getHeadquarters(iCorporation).getOwner() == iActivePlayer:
@@ -860,7 +866,9 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 	def onCorporationRemove(self, argsList):
 		if (AutologOpt.isLogCorporation()):
-			iCorporation, iOwner, CyCity = argsList
+			# The city arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+			iCorporation, iOwner, (iCityOwner, iCityID) = argsList
+			CyCity = GC.getPlayer(iCityOwner).getCity(iCityID)
 			iActivePlayer = GAME.getActivePlayer()
 
 			if iOwner == iActivePlayer or GAME.getHeadquarters(iCorporation).getOwner() == iActivePlayer:
@@ -922,8 +930,10 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 	def onCityBuilt(self, argsList):
 		if AutologOpt.isLogCityFounded():
-			CyCity = argsList[0]
-			if CyCity.getOwner() == GAME.getActivePlayer():
+			# The city arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+			(iCityOwner, iCityID) = argsList[0]
+			CyCity = GC.getPlayer(iCityOwner).getCity(iCityID)
+			if iCityOwner == GAME.getActivePlayer():
 				message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CITY_FOUNDED", (CyCity.getName(),))
 				Logger.writeLog(message, vColor="RoyalBlue")
 
@@ -944,9 +954,10 @@ class AutoLogEvent(AbstractAutoLogEvent):
 
 	def onCityAcquired(self, argsList):
 		if AutologOpt.isLogCityOwner():
-			iOwnerOld, iOwnerNew, CyCity, bConquest, bTrade, bAutoRaze = argsList
+			# The city arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+			iOwnerOld, iOwnerNew, (iCityOwner, iCityID), bConquest, bTrade, bAutoRaze = argsList
 			if iOwnerNew == GAME.getActivePlayer():
-				szCity = CyCity.getName()
+				szCity = GC.getPlayer(iCityOwner).getCity(iCityID).getName()
 				szCiv = GC.getPlayer(iOwnerOld).getName()
 				if bConquest:
 					message = TRNSLTR.getText("TXT_KEY_AUTOLOG_CITY_CAPTURED", (szCity, szCiv))

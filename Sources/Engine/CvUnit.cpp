@@ -347,16 +347,63 @@ void CvUnit::reloadEntity(bool bForceLoad)
 				bGraphicsSetup = false;
 			}
 		}
-
-		//	setupGraphical owns the latch and sets it only when its gate passes -- so an attempt made while
-		//	graphics are down (or the unit is off-viewport) stays retryable, and the next reloadEntity after
-		//	graphics come up performs the setup the first attempt could not.
-		if (!bGraphicsSetup && bNeedsRealEntity && plot())
-		{
-			setupGraphical();
-		}
 	}
-	else OutputDebugString("Reload of selected unit\n");
+
+	//	⛔ PLACEMENT IS NOT PART OF THE SELECTED-UNIT EXCLUSION ABOVE, AND FOLDING IT IN IS THE
+	//	RUN-FROM-MID-MAP BUG'S SECOND HALF. That exclusion protects a selected unit's node from being destroyed
+	//	and rebuilt under it; telling a node where it already stands does neither, so it was never covered by
+	//	the reason. Excluded, a selected unit's node could never be placed -- and merging, upgrading, fortifying
+	//	and awakening are all performed ON the selected unit, so each of them went on to tell the engine about a
+	//	node that still believed it stood at the world origin, and was answered with a walk in from the map
+	//	centre (docs/reference/unit-rendering/08-the-run-from-origin-reconciliation.md).
+	ensureGraphicalPlacement();
+}
+
+CvUnitEntity* CvUnit::getUnitEntityPlaced()
+{
+	ensureGraphicalPlacement();
+	return getUnitEntity();
+}
+
+void CvUnit::placeForPresentation()
+{
+	//	⛔ BECOMING THE PLOT'S CENTRE UNIT IS THE MOMENT THE NODE IS FIRST PRESENTED, AND PLACING IT AT CREATION
+	//	IS NOT ENOUGH TO SURVIVE THAT. A plot draws exactly ONE unit (docs/reference/unit-rendering/01-the-model.md),
+	//	so a unit standing under another one holds a node that was built and placed but NEVER SHOWN -- and the
+	//	engine presents a node from where it believes the node stands, which is the world origin unless the
+	//	placement is re-stated now. ⚑ This is why the symptom singles out units that are not the best defender on
+	//	their tile: a military unit becomes the centre unit at birth and is presented while its placement is
+	//	fresh, while a WORKER stacked under a defender is presented for the first time only when the player
+	//	selects it -- and again every time selection hands the centre back
+	//	(docs/reference/unit-rendering/08-the-run-from-origin-reconciliation.md).
+	if (!GC.IsGraphicsInitialized() || !isInViewport() || plot() == NULL || !isRealEntity(getEntity()))
+	{
+		return;
+	}
+
+	//	⛔ NEVER RE-STATE A POSITION INSIDE A MOVEMENT WINDOW. groupMove lifts its centre-unit inhibit between
+	//	QUEUEING the walk and EXECUTING it (CvSelectionGroup.cpp:3668), so a centre change lands here mid-walk --
+	//	and a SetPosition there puts the node on the DESTINATION before the walk plays, turning a move the player
+	//	should watch into a teleport.
+	const CvSelectionGroup* pGroup = getGroup();
+
+	if (pGroup != NULL && pGroup->isMidMove())
+	{
+		return;
+	}
+	SetPosition(plot());
+}
+
+void CvUnit::ensureGraphicalPlacement()
+{
+	//	setupGraphical owns the latch and sets it only when its gate passes -- so an attempt made while graphics
+	//	are down (or the unit is off-viewport) stays retryable, and the next call after graphics come up performs
+	//	the setup the first attempt could not. A node that already carries its location is left alone: re-running
+	//	setup on it would rebuild the model, which is a destroy this must never perform.
+	if (!bGraphicsSetup && isRealEntity(getEntity()) && plot() != NULL)
+	{
+		setupGraphical();
+	}
 }
 
 void CvUnit::changeIdentity(UnitTypes eUnit)
@@ -1654,7 +1701,13 @@ void CvUnit::NotifyEntity(MissionTypes eMission)
 {
 	if ( !isUsingDummyEntities() && isInViewport() )
 	{
-		gDLL->getEntityIFace()->NotifyEntity(getUnitEntity(), eMission);
+		//	⛔ NEVER TELL THE ENGINE ABOUT A NODE THAT HAS NEVER BEEN GIVEN A LOCATION. A fresh node believes it
+		//	stands at the world origin, so ANY notification -- not just the move family -- is reconciled against
+		//	that belief and rendered as a walk in from the map centre. This is the door a STANCE CHANGE comes
+		//	through: fortify and awaken both reach setActivityType, which notifies every unit in the group and
+		//	passes no plot, and nothing on that path ever calls reloadEntity
+		//	(docs/reference/unit-rendering/08-the-run-from-origin-reconciliation.md).
+		gDLL->getEntityIFace()->NotifyEntity(getUnitEntityPlaced(), eMission);
 	}
 }
 
@@ -14110,7 +14163,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 	//update glow
 	if (pNewPlot && !isUsingDummyEntities() && isInViewport())
 	{
-		gDLL->getEntityIFace()->updateEnemyGlow(getUnitEntity());
+		gDLL->getEntityIFace()->updateEnemyGlow(getUnitEntityPlaced());
 	}
 	/*GC.getGame().logOOSSpecial(5, getID(), iX, iY);*/
 }
@@ -15662,7 +15715,7 @@ void CvUnit::setPromotionReady(bool bNewValue)
 /************************************************************************************************/
 		if ( !isUsingDummyEntities() && isInViewport())
 		{
-			gDLL->getEntityIFace()->showPromotionGlow(getUnitEntity(), bNewValue);
+			gDLL->getEntityIFace()->showPromotionGlow(getUnitEntityPlaced(), bNewValue);
 		}
 
 		if (m_bPromotionReady)
@@ -15908,6 +15961,7 @@ void CvUnit::setCombatUnit(CvUnit* pCombatUnit, bool bAttacking, bool bQuick, bo
 
 			if (showSeigeTower(pCombatUnit) && !isUsingDummyEntities()  && isInViewport())
 			{
+				ensureGraphicalPlacement();
 				CvDLLEntity::SetSiegeTower(true);
 			}
 			if (!bStealthAttack && !bStealthDefense)
@@ -15965,6 +16019,7 @@ void CvUnit::setCombatUnit(CvUnit* pCombatUnit, bool bAttacking, bool bQuick, bo
 
 		if (!isUsingDummyEntities() && isInViewport())
 		{
+			ensureGraphicalPlacement();
 			CvDLLEntity::SetSiegeTower(false);
 		}
 	}
@@ -17480,7 +17535,7 @@ void CvUnit::setHasUnitCombat(UnitCombatTypes eIndex, bool bNewValue, bool bByPr
 			//update graphics
 			if (!isUsingDummyEntities() && isInViewport())
 			{
-				gDLL->getEntityIFace()->updatePromotionLayers(getUnitEntity());
+				gDLL->getEntityIFace()->updatePromotionLayers(getUnitEntityPlaced());
 			}
 		}
 	}
@@ -18058,7 +18113,7 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue, bool bFree, 
 			//update graphics
 			if (!isUsingDummyEntities() && isInViewport())
 			{
-				gDLL->getEntityIFace()->updatePromotionLayers(getUnitEntity());
+				gDLL->getEntityIFace()->updatePromotionLayers(getUnitEntityPlaced());
 			}
 		}
 	}

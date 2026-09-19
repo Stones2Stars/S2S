@@ -296,6 +296,17 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   object-kind value itself.)* ⛔ If it fires, fix the side that is WRONG — and prefer the raw int, since a payload
   carries typed fields and never a pre-resolved string ([spine.md](docs/spine.md)); never widen
   the tool.
+- **Entity placement: `python Tools/verify-entity-placement.py`** — ⛔ **every EXE entity call on a unit hands
+  over a node that has been given a LOCATION**, i.e. `getUnitEntityPlaced()` and never the bare
+  `getUnitEntity()`, outside the `CvDLLEntity` wrapper layer that is the guarded boundary itself. ⚑ It is a check
+  because the compiler CANNOT see it — the two accessors have the same type, both compile, and **the wrong one is
+  the shorter name** — and because the consequence belongs to a different subject than the call: a node the engine
+  was never told a location for believes it stands at the world ORIGIN, so a call about a promotion layer, an era,
+  a glow or a siege tower walks the unit in from the map centre exactly as a move call would. What decides it is
+  never WHAT is said, only whether the node was placed first. *(Worked: eight raw sites across four files, each
+  reachable with an unplaced node; the rule had already been broken three times, every time by reaching for the
+  nearest accessor.)* ⛔ If it fires, use the placed accessor — never widen the exemption list, which names the
+  wrapper layer and nothing else.
 - **Varargs text widths: `python Tools/verify-gettext-widths.py`** — ⛔ **a 64-bit value must NEVER be passed to
   the EXE's `gDLL->getText`.** It is VARARGS, so arguments match the TXT_KEY's placeholders positionally **by
   4-byte slot**: an 8-byte argument occupies TWO slots and every LATER placeholder reads one slot early, until a
@@ -763,6 +774,26 @@ with no worker at all can never build its first one.
   never moved**. ⚑ **The signature is unmistakable: units run in from the middle of the map** — every newly
   created unit, and any unit holding the shared dummy the first time it needs a real node (a fortified stack
   member becoming centre/selected as it starts to move).
+  ⛔ **AND THE MOVE FAMILY IS ONLY THE LOUDEST CASE — *ANY* STATEMENT TO THE ENGINE ABOUT A UNIT WHOSE NODE WAS
+  NEVER GIVEN A LOCATION IS RECONCILED FROM THE ORIGIN.** A bare `NotifyEntity` passes no plot at all and still
+  produces the walk, because the engine animates the unit into the state it was told about FROM where it thinks
+  the unit stands. ⇒ The rule is therefore **place the node before you speak about it**, not merely "do not call
+  `ExecuteMove`": `CvUnit::ensureGraphicalPlacement` is that guarantee, and a new path that reaches the entity
+  interface uses it rather than assuming some earlier call placed the node.
+  ⚑ **The hole this closed is worth remembering because it explains a whole CLASS of report: `reloadEntity`
+  excludes a SELECTED unit** — correctly, since its node must never be rebuilt underneath it — **and that
+  exclusion used to swallow the placement call too.** A selected unit's node could then never be placed, and
+  merging, upgrading, fortifying and awakening are all performed ON the selected unit, so all four ran in from
+  mid-map while unit CREATION looked fixed. ⇒ When a graphics symptom hits "only some" operations, check what
+  those operations have in COMMON about the unit's state before hunting the verbs.
+  ⛔ **AND PLACING A NODE AT CREATION IS STILL NOT ENOUGH, BECAUSE A NODE IS PRESENTED FROM WHERE THE ENGINE
+  BELIEVES IT STANDS.** A plot draws exactly ONE unit, so a unit standing UNDER another holds a correctly-placed
+  node that has never been drawn; the centre-unit assignment is its first presentation, and it reconciles from
+  the origin unless the position is re-stated there (`CvUnit::placeForPresentation`, called from
+  `CvPlot::updateCenterUnit`). ⚖ **That one reads as a UNIT-TYPE bug and is not one — it is STACK POSITION.**
+  WORKERS showed it and military units did not, purely because the centre unit is chosen by `getBestDefender`:
+  a soldier is centre from birth, a worker under a defender is presented only when the player selects it. ⇒ Read
+  *"only unit type X does it"* as a question about X's place in the STACK, never about X.
   ⛔ **THE WHOLE PERMITTED CENSUS, and it is a census rather than a guideline because agents keep reaching for
   `ExecuteMove` to "force the graphics to update":** `SetPosition` at the placement moments (`setupGraphical`,
   the `setXY` teleport arm); `QueueMove`/`ExecuteMove` ONLY for real movement — `CvSelectionGroup::groupMove`

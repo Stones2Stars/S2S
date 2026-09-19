@@ -15,11 +15,13 @@ TRNSLTR = CyTranslator()
 ################ CAPTIVES AND SLAVERY ###################
 
 def doRemoveWVSlavery(argsList):
-	unit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- a NULL unit arrives as (-1, -1).
+	iUnitOwner, iUnitID = argsList[0]
 
-	if not unit: return # False call
+	if iUnitID == -1: return # False call
 
-	iPlayer = unit.getOwner()
+	unit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
+	iPlayer = iUnitOwner
 	player = GC.getPlayer(iPlayer)
 
 	if not player.isAlive():
@@ -135,11 +137,14 @@ def doRemoveWVSlavery(argsList):
 			player.changeGold(int(iSum * 0.2))
 
 def doRemoveWVCannibalism(argsList):
-	CyUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- a NULL unit arrives as (-1, -1).
+	iUnitOwner, iUnitID = argsList[0]
 
-	if CyUnit == None:
+	if iUnitID == -1:
 		print "[INFO] doRemoveWVCannibalism(CyUnit) where CyUnit is None"
 		return # False call
+
+	CyUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 
 	iType = GC.getInfoTypeForString("BUILDING_WORLDVIEW_CANNIBALISM")
 	if iType > -1:
@@ -160,10 +165,13 @@ def doRemoveWVCannibalism(argsList):
 				CyAudioGame().Play2DSound("AS2D_DISCOVERBONUS")
 
 def doRemoveWVHumanSacrifice(argsList):
-	CyUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- a NULL unit arrives as (-1, -1).
+	iUnitOwner, iUnitID = argsList[0]
 
-	if CyUnit == None:
+	if iUnitID == -1:
 		return # False call
+
+	CyUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 
 	iWVSacrifice = GC.getInfoTypeForString("BUILDING_WORLDVIEW_HUMAN_SACRIFICE")
 	if iWVSacrifice > -1:
@@ -356,12 +364,16 @@ def hasSufficientPopulation(argsList):
 	return (iNumSlaves < (10 * iPopulation))
 
 def doAddSettledSlave(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+	# A NULL unit arrives as (-1, -1), so the id is what says "false call", not a None handle.
+	iUnitOwner, iUnitID = argsList[0]
 	print "caveman2Cosmos - doAddSettledSlave called."
 
-	if pUnit == None:
+	if iUnitID == -1:
 		print "caveman2Cosmos - doAddSettledSlave called - not a valid unit."
 		return # False call
+
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 
 	pCity = GC.getMap().plot(pUnit.getX(), pUnit.getY()).getPlotCity()
 
@@ -372,10 +384,14 @@ def doAddSettledSlave(argsList):
 	pCity.changeFreeSpecialistCount(GC.getInfoTypeForString("SPECIALIST_SETTLED_SLAVE"),1)
 
 def doAddSettledSlaveFood(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+	# A NULL unit arrives as (-1, -1), so the id is what says "false call", not a None handle.
+	iUnitOwner, iUnitID = argsList[0]
 
-	if pUnit == None:
+	if iUnitID == -1:
 		return # False call
+
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 
 	pCity = GC.getMap().plot(pUnit.getX(), pUnit.getY()).getPlotCity()
 
@@ -385,10 +401,14 @@ def doAddSettledSlaveFood(argsList):
 	pCity.changeFreeSpecialistCount(GC.getInfoTypeForString("SPECIALIST_SETTLED_SLAVE_FOOD"),1)
 
 def doAddSettledSlaveProduction(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+	# A NULL unit arrives as (-1, -1), so the id is what says "false call", not a None handle.
+	iUnitOwner, iUnitID = argsList[0]
 
-	if pUnit == None:
+	if iUnitID == -1:
 		return # False call
+
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 
 	pCity = GC.getMap().plot(pUnit.getX(), pUnit.getY()).getPlotCity()
 
@@ -398,10 +418,14 @@ def doAddSettledSlaveProduction(argsList):
 	pCity.changeFreeSpecialistCount(GC.getInfoTypeForString("SPECIALIST_SETTLED_SLAVE_PRODUCTION"),1)
 
 def doAddSettledSlaveCommerce(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+	# A NULL unit arrives as (-1, -1), so the id is what says "false call", not a None handle.
+	iUnitOwner, iUnitID = argsList[0]
 
-	if pUnit == None:
+	if iUnitID == -1:
 		return # False call
+
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 
 	pCity = GC.getMap().plot(pUnit.getX(), pUnit.getY()).getPlotCity()
 
@@ -411,10 +435,14 @@ def doAddSettledSlaveCommerce(argsList):
 	pCity.changeFreeSpecialistCount(GC.getInfoTypeForString("SPECIALIST_SETTLED_SLAVE_COMMERCE"),1)
 
 def doAddSettledSlaveHealth(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+	# A NULL unit arrives as (-1, -1), so the id is what says "false call", not a None handle.
+	iUnitOwner, iUnitID = argsList[0]
 
-	if pUnit == None:
+	if iUnitID == -1:
 		return # False call
+
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 
 	pCity = GC.getMap().plot(pUnit.getX(), pUnit.getY()).getPlotCity()
 
@@ -424,10 +452,14 @@ def doAddSettledSlaveHealth(argsList):
 	pCity.changeFreeSpecialistCount(GC.getInfoTypeForString("SPECIALIST_SETTLED_SLAVE_HEALTH"),1)
 
 def doAddSettledSlaveEntertainment(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+	# A NULL unit arrives as (-1, -1), so the id is what says "false call", not a None handle.
+	iUnitOwner, iUnitID = argsList[0]
 
-	if pUnit == None:
+	if iUnitID == -1:
 		return # False call
+
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 
 	pCity = GC.getMap().plot(pUnit.getX(), pUnit.getY()).getPlotCity()
 
@@ -437,10 +469,14 @@ def doAddSettledSlaveEntertainment(argsList):
 	pCity.changeFreeSpecialistCount(GC.getInfoTypeForString("SPECIALIST_SETTLED_SLAVE_ENTERTAINMENT"),1)
 
 def doAddSettledSlaveTutor(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+	# A NULL unit arrives as (-1, -1), so the id is what says "false call", not a None handle.
+	iUnitOwner, iUnitID = argsList[0]
 
-	if pUnit == None:
+	if iUnitID == -1:
 		return # False call
+
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 
 	pCity = GC.getMap().plot(pUnit.getX(), pUnit.getY()).getPlotCity()
 
@@ -450,10 +486,14 @@ def doAddSettledSlaveTutor(argsList):
 	pCity.changeFreeSpecialistCount(GC.getInfoTypeForString("SPECIALIST_SETTLED_SLAVE_TUTOR"),1)
 
 def doAddSettledSlaveMilitary(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+	# A NULL unit arrives as (-1, -1), so the id is what says "false call", not a None handle.
+	iUnitOwner, iUnitID = argsList[0]
 
-	if pUnit == None:
+	if iUnitID == -1:
 		return # False call
+
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 
 	pCity = GC.getMap().plot(pUnit.getX(), pUnit.getY()).getPlotCity()
 
@@ -479,7 +519,12 @@ def canBuildCowBonus(argsList):
 	return 1
 
 def doBuildCowBonus(argsList):
-	pPlot = argsList[0].plot()
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before asking for its plot.
+	iUnitOwner, iUnitID = argsList[0]
+
+	if iUnitID == -1: return # False call
+
+	pPlot = GC.getPlayer(iUnitOwner).getUnit(iUnitID).plot()
 
 	if not pPlot: return
 
@@ -506,7 +551,12 @@ def canBuildCowBonusAndPasture(argsList):
 	return 1
 
 def doBuildCowBonusAndPasture(argsList):
-	pPlot = argsList[0].plot()
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before asking for its plot.
+	iUnitOwner, iUnitID = argsList[0]
+
+	if iUnitID == -1: return # False call
+
+	pPlot = GC.getPlayer(iUnitOwner).getUnit(iUnitID).plot()
 
 	if not pPlot: return
 	pPlot.setImprovementType(GC.getInfoTypeForString("IMPROVEMENT_PASTURE"))
@@ -527,7 +577,12 @@ def canBuildHorseBonus(argsList):
 	return 1
 
 def doBuildHorseBonus(argsList):
-	pPlot = argsList[0].plot()
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before asking for its plot.
+	iUnitOwner, iUnitID = argsList[0]
+
+	if iUnitID == -1: return # False call
+
+	pPlot = GC.getPlayer(iUnitOwner).getUnit(iUnitID).plot()
 
 	if not pPlot: return
 
@@ -554,7 +609,12 @@ def canBuildHorseBonusAndPasture(argsList):
 	return 1
 
 def doBuildHorseBonusAndPasture(argsList):
-	pPlot = argsList[0].plot()
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before asking for its plot.
+	iUnitOwner, iUnitID = argsList[0]
+
+	if iUnitID == -1: return # False call
+
+	pPlot = GC.getPlayer(iUnitOwner).getUnit(iUnitID).plot()
 
 	if not pPlot: return
 
@@ -576,7 +636,12 @@ def canBuildDonkeyBonus(argsList):
 	return 1
 
 def doBuildDonkeyBonus(argsList):
-	pPlot = argsList[0].plot()
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before asking for its plot.
+	iUnitOwner, iUnitID = argsList[0]
+
+	if iUnitID == -1: return # False call
+
+	pPlot = GC.getPlayer(iUnitOwner).getUnit(iUnitID).plot()
 
 	if not pPlot: return
 
@@ -603,7 +668,12 @@ def canBuildDonkeyBonusAndPasture(argsList):
 	return 1
 
 def doBuildDonkeyBonusAndPasture(argsList):
-	pPlot = argsList[0].plot()
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before asking for its plot.
+	iUnitOwner, iUnitID = argsList[0]
+
+	if iUnitID == -1: return # False call
+
+	pPlot = GC.getPlayer(iUnitOwner).getUnit(iUnitID).plot()
 
 	if not pPlot: return
 
@@ -625,7 +695,12 @@ def canBuildSheepBonus(argsList):
 	return 1
 
 def doBuildSheepBonus(argsList):
-	pPlot = argsList[0].plot()
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before asking for its plot.
+	iUnitOwner, iUnitID = argsList[0]
+
+	if iUnitID == -1: return # False call
+
+	pPlot = GC.getPlayer(iUnitOwner).getUnit(iUnitID).plot()
 
 	if not pPlot: return
 
@@ -652,7 +727,12 @@ def canBuildSheepBonusAndPasture(argsList):
 	return 1
 
 def doBuildSheepBonusAndPasture(argsList):
-	pPlot = argsList[0].plot()
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before asking for its plot.
+	iUnitOwner, iUnitID = argsList[0]
+
+	if iUnitID == -1: return # False call
+
+	pPlot = GC.getPlayer(iUnitOwner).getUnit(iUnitID).plot()
 
 	if not pPlot: return
 
@@ -673,7 +753,12 @@ def canBuildCamelBonus(argsList):
 	return 1
 
 def doBuildCamelBonus(argsList):
-	pPlot = argsList[0].plot()
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before asking for its plot.
+	iUnitOwner, iUnitID = argsList[0]
+
+	if iUnitID == -1: return # False call
+
+	pPlot = GC.getPlayer(iUnitOwner).getUnit(iUnitID).plot()
 
 	if not pPlot: return
 
@@ -694,7 +779,12 @@ def canBuildCamelBonusAndPasture(argsList):
 	return 1
 
 def doBuildCamelBonusAndPasture(argsList):
-	pPlot = argsList[0].plot()
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before asking for its plot.
+	iUnitOwner, iUnitID = argsList[0]
+
+	if iUnitID == -1: return # False call
+
+	pPlot = GC.getPlayer(iUnitOwner).getUnit(iUnitID).plot()
 
 	if not pPlot: return
 
@@ -718,7 +808,12 @@ def canBuildLlamaBonus(argsList):
 	return 1
 
 def doBuildLlamaBonus(argsList):
-	pPlot = argsList[0].plot()
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before asking for its plot.
+	iUnitOwner, iUnitID = argsList[0]
+
+	if iUnitID == -1: return # False call
+
+	pPlot = GC.getPlayer(iUnitOwner).getUnit(iUnitID).plot()
 
 	if not pPlot: return
 
@@ -742,7 +837,12 @@ def canBuildLlamaBonusAndPasture(argsList):
 	return 1
 
 def doBuildLlamaBonusAndPasture(argsList):
-	pPlot = argsList[0].plot()
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before asking for its plot.
+	iUnitOwner, iUnitID = argsList[0]
+
+	if iUnitID == -1: return # False call
+
+	pPlot = GC.getPlayer(iUnitOwner).getUnit(iUnitID).plot()
 
 	if not pPlot: return
 
@@ -770,7 +870,12 @@ def canBuildPigBonus(argsList):
 	return 1
 
 def doBuildPigBonus(argsList):
-	pPlot = argsList[0].plot()
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before asking for its plot.
+	iUnitOwner, iUnitID = argsList[0]
+
+	if iUnitID == -1: return # False call
+
+	pPlot = GC.getPlayer(iUnitOwner).getUnit(iUnitID).plot()
 
 	if not pPlot: return
 
@@ -795,7 +900,12 @@ def canBuildPigBonusAndPasture(argsList):
 	return 1
 
 def doBuildPigBonusAndPasture(argsList):
-	pPlot = argsList[0].plot()
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before asking for its plot.
+	iUnitOwner, iUnitID = argsList[0]
+
+	if iUnitID == -1: return # False call
+
+	pPlot = GC.getPlayer(iUnitOwner).getUnit(iUnitID).plot()
 
 	if not pPlot: return
 
@@ -809,117 +919,151 @@ def canGoToEarth(argsList):
 	return GAME.getCurrentMap() != MapTypes.MAP_EARTH
 
 def goToEarth(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before handing it to the map.
+	iUnitOwner, iUnitID = argsList[0]
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 	GC.getMapByIndex(MapTypes.MAP_EARTH).moveUnitToMap(pUnit, 1)
 
 def canGoToSubterrain(argsList):
 	return GAME.getCurrentMap() != MapTypes.MAP_SUBTERRAIN
 
 def goToSubterrain(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before handing it to the map.
+	iUnitOwner, iUnitID = argsList[0]
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 	GC.getMapByIndex(MapTypes.MAP_SUBTERRAIN).moveUnitToMap(pUnit, 1)
 
 def canGoToCislunarSpace(argsList):
 	return GAME.getCurrentMap() != MapTypes.MAP_CISLUNAR
 
 def goToCislunarSpace(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before handing it to the map.
+	iUnitOwner, iUnitID = argsList[0]
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 	GC.getMapByIndex(MapTypes.MAP_CISLUNAR).moveUnitToMap(pUnit, 1)
 
 def canGoToMoon(argsList):
 	return GAME.getCurrentMap() != MapTypes.MAP_MOON
 
 def goToMoon(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before handing it to the map.
+	iUnitOwner, iUnitID = argsList[0]
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 	GC.getMapByIndex(MapTypes.MAP_MOON).moveUnitToMap(pUnit, 1)
 
 def canGoToMars(argsList):
 	return GAME.getCurrentMap() != MapTypes.MAP_MARS
 
 def goToMars(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before handing it to the map.
+	iUnitOwner, iUnitID = argsList[0]
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 	GC.getMapByIndex(MapTypes.MAP_MARS).moveUnitToMap(pUnit, 1)
 
 def canGoToVenus(argsList):
 	return GAME.getCurrentMap() != MapTypes.MAP_VENUS
 
 def goToVenus(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before handing it to the map.
+	iUnitOwner, iUnitID = argsList[0]
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 	GC.getMapByIndex(MapTypes.MAP_VENUS).moveUnitToMap(pUnit, 1)
 
 def canGoToInnerSolarSystem(argsList):
 	return GAME.getCurrentMap() != MapTypes.MAP_INNER_SOLAR_SYSTEM
 
 def goToInnerSolarSystem(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before handing it to the map.
+	iUnitOwner, iUnitID = argsList[0]
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 	GC.getMapByIndex(MapTypes.MAP_INNER_SOLAR_SYSTEM).moveUnitToMap(pUnit, 1)
 
 def canGoToOuterSolarSystem(argsList):
 	return GAME.getCurrentMap() != MapTypes.MAP_OUTER_SOLAR_SYSTEM
 
 def goToOuterSolarSystem(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before handing it to the map.
+	iUnitOwner, iUnitID = argsList[0]
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 	GC.getMapByIndex(MapTypes.MAP_OUTER_SOLAR_SYSTEM).moveUnitToMap(pUnit, 1)
 
 def canGoToTitan(argsList):
 	return GAME.getCurrentMap() != MapTypes.MAP_TITAN
 
 def goToTitan(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before handing it to the map.
+	iUnitOwner, iUnitID = argsList[0]
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 	GC.getMapByIndex(MapTypes.MAP_TITAN).moveUnitToMap(pUnit, 1)
 
 def canGoToTransneptunianSpace(argsList):
 	return GAME.getCurrentMap() != MapTypes.MAP_TRANSNEPTUNIAN
 
 def goToTransneptunianSpace(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before handing it to the map.
+	iUnitOwner, iUnitID = argsList[0]
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 	GC.getMapByIndex(MapTypes.MAP_TRANSNEPTUNIAN).moveUnitToMap(pUnit, 1)
 
 def canGoToNearbyStars(argsList):
 	return GAME.getCurrentMap() != MapTypes.MAP_NEARBY_STARS
 
 def goToNearbyStars(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before handing it to the map.
+	iUnitOwner, iUnitID = argsList[0]
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 	GC.getMapByIndex(MapTypes.MAP_NEARBY_STARS).moveUnitToMap(pUnit, 1)
 
 def canGoToOrionArm(argsList):
 	return GAME.getCurrentMap() != MapTypes.MAP_ORION_ARM
 
 def goToOrionArm(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before handing it to the map.
+	iUnitOwner, iUnitID = argsList[0]
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 	GC.getMapByIndex(MapTypes.MAP_ORION_ARM).moveUnitToMap(pUnit, 1)
 
 def canGoToMilkyWay(argsList):
 	return GAME.getCurrentMap() != MapTypes.MAP_MILKY_WAY
 
 def goToMilkyWay(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before handing it to the map.
+	iUnitOwner, iUnitID = argsList[0]
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 	GC.getMapByIndex(MapTypes.MAP_MILKY_WAY).moveUnitToMap(pUnit, 1)
 
 def canGoToLocalGroup(argsList):
 	return GAME.getCurrentMap() != MapTypes.MAP_LOCAL_GROUP
 
 def goToLocalGroup(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before handing it to the map.
+	iUnitOwner, iUnitID = argsList[0]
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 	GC.getMapByIndex(MapTypes.MAP_LOCAL_GROUP).moveUnitToMap(pUnit, 1)
 
 def canGoToVirgoSupercluster(argsList):
 	return GAME.getCurrentMap() != MapTypes.MAP_VIRGO_SUPERCLUSTER
 
 def goToVirgoSupercluster(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before handing it to the map.
+	iUnitOwner, iUnitID = argsList[0]
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 	GC.getMapByIndex(MapTypes.MAP_VIRGO_SUPERCLUSTER).moveUnitToMap(pUnit, 1)
 
 def canGoToUniverse(argsList):
 	return GAME.getCurrentMap() != MapTypes.MAP_UNIVERSE
 
 def goToUniverse(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before handing it to the map.
+	iUnitOwner, iUnitID = argsList[0]
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 	GC.getMapByIndex(MapTypes.MAP_UNIVERSE).moveUnitToMap(pUnit, 1)
 
 def canGoToDistantCosmos(argsList):
 	return GAME.getCurrentMap() != MapTypes.MAP_DISTANT_COSMOS
 
 def goToDistantCosmos(argsList):
-	pUnit = argsList[0]
+	# The unit arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it before handing it to the map.
+	iUnitOwner, iUnitID = argsList[0]
+	pUnit = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
 	GC.getMapByIndex(MapTypes.MAP_DISTANT_COSMOS).moveUnitToMap(pUnit, 1)

@@ -10093,6 +10093,10 @@ void CvPlot::updateCenterUnit()
 		if (newCenterUnit)
 		{
 			newCenterUnit->reloadEntity(true);
+			//	The plot is about to PRESENT this node — it draws exactly one unit, and this is now that unit.
+			//	reloadEntity guarantees the node exists and has been placed once; this states where it stands for
+			//	the presentation itself, which a node placed under a different centre unit never received.
+			newCenterUnit->placeForPresentation();
 		}
 		m_pCenterUnit = newCenterUnit;
 

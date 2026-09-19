@@ -379,7 +379,9 @@ def onChangeWar(argsList):
 ########################## City-based events ###############################
 
 def onCityBuilt( argsList ):
-	city = argsList[0]
+	# A game-object event arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+	(iCityOwner, iCityID), = argsList
+	city = GC.getPlayer(iCityOwner).getCity(iCityID)
 
 	RevData.initCity( city )
 
@@ -411,7 +413,8 @@ def onCityAcquired(argsList):
 	updateRevolutionIndices( argsList )
 
 	# Init city script data (unit spawn counter, rebel player)
-	city = argsList[2]
+	# The city arg is the (owner, id) IDENTITY TUPLE, never a handle -- resolve it.
+	city = GC.getPlayer(argsList[2][0]).getCity(argsList[2][1])
 	iRevCiv = RevData.getCityVal(city, 'RevolutionCiv')
 	RevData.initCity(city)
 	RevData.setCityVal(city, 'RevolutionCiv', iRevCiv)
@@ -422,7 +425,9 @@ def onCityAcquired(argsList):
 
 def checkRebelBonuses(argsList):
 	# Give bonuses to a rebel player who successfully captures one of their rebellious cities
-	iOwnerOld, iOwnerNew, pCity, bConquest, bTrade, bAutoRaze = argsList
+	# The city arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+	iOwnerOld, iOwnerNew, (iCityOwner, iCityID), bConquest, bTrade, bAutoRaze = argsList
+	pCity = GC.getPlayer(iCityOwner).getCity(iCityID)
 
 	newOwner = GC.getPlayer(iOwnerNew)
 	newOwnerCiv = newOwner.getCivilizationType()
@@ -577,7 +582,9 @@ def checkRebelBonuses(argsList):
 
 
 def updateRevolutionIndices(argsList):
-	iOwnerOld, iOwnerNew, pCity, bConquest, bTrade, bAutoRaze = argsList
+	# The city arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+	iOwnerOld, iOwnerNew, (iCityOwner, iCityID), bConquest, bTrade, bAutoRaze = argsList
+	pCity = GC.getPlayer(iCityOwner).getCity(iCityID)
 
 	newOwner = GC.getPlayer(iOwnerNew)
 
