@@ -366,14 +366,16 @@ bool CyTeam::isCommerceFlexible(int /*CommerceTypes*/ eIndex) const
 	return m_pTeam->isCommerceFlexible((CommerceTypes)eIndex);
 }
 
+// WorldBuilder reads and edits this in whole moves, so the binding is the boundary that converts -- the
+// counter itself is x100 like every other movement leg.
 int CyTeam::getExtraMoves(int /*DomainTypes*/ eIndex) const
 {
-	return m_pTeam->getExtraMoves((DomainTypes)eIndex);
+	return m_pTeam->getExtraMoves((DomainTypes)eIndex) / 100;
 }
 
 void CyTeam::changeExtraMoves(int /*DomainTypes*/ eIndex, int iChange)
 {
-	m_pTeam->changeExtraMoves((DomainTypes)eIndex, iChange);
+	m_pTeam->changeExtraMoves((DomainTypes)eIndex, iChange * 100);
 }
 
 bool CyTeam::isHasMet(int /*TeamTypes*/ eIndex) const

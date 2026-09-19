@@ -65,6 +65,22 @@ multiply.
 > of resolving it. What has to be decided FIRST is which single denominator movement speaks in, and that is a
 > CURATOR question (does terrain author denominator units too?), never a consumer sweep.
 >
+> ⚖ **THAT IS THE PLOT-COST HALF. THE OTHER HALF — A UNIT'S OWN MOVE BUDGET — IS SETTLED: ×100 ON EVERY LEG,
+> REDUCED EXACTLY ONCE, WHERE THE BUDGET IS SPENT.** The three legs are the info's own `movement.unit.flat`
+> and the two `extraMoves` counters (`CvUnit::m_iExtraMoves` from promotions and unit-combat classes,
+> `CvTeam::m_aiExtraMoves` from the `domainMoves` tech deposit and the circumnavigation award). All three are
+> ×100, so they add directly; `CvUnit::maxMoves` spends the sum through `MOVE_DENOMINATOR` and that is the ONE
+> reduce, with `baseMoves` the whole-tiles read derived from it. ⛔ **No leg reduces on the way in** — a
+> `/100` at a deposit is the banned move, because it puts one counter on the human plane while its siblings
+> stay ×100 and the engine then mixes the two.
+> ⚑ **Each leg that reaches the counter from OUTSIDE the cascade converts at its own IN boundary**, exactly as
+> readJson does: `CIRCUMNAVIGATE_FREE_MOVES` is authored in GlobalDefines as whole moves, and the `CyTeam`
+> binding converts both ways because WorldBuilder edits in whole moves.
+> ⚠ **The failure this prevents is not a mis-tune.** A tech depositing a ×100 `flat: 1` straight into the
+> counter grants **+100 moves**, and the same raw value multiplied by a human AI weight makes that tech
+> outweigh a hundred of its siblings — the [surviving fudge factor](#4d--the-edge--where-a-scale-error-can-occur-at-all-and-therefore-what-an-audit-checks)
+> shape, on a counter rather than a formula.
+>
 > ⚑ **The worked case, both ways round, on ONE family (handicap).** `DIPLOMACY_DECLARE_WAR` is a percent, so a
 > blanket `÷100` would have turned a 90% AI war probability into **0** — the difficulty setting silently
 > switched off. `BARBARIANS_DEFENDERS` is a flat, and reading it raw returned the authored **8 as 800**: a loop

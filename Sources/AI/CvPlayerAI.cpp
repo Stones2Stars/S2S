@@ -4927,7 +4927,9 @@ int CvPlayerAI::AI_techValue(TechTypes eTech, int iPathLength, bool bIgnoreCost,
 		InfoValuation::keyedTargetSegment("domains"), kDomainMoves, CASC_SCOPE_EMPIRE);
 	for (size_t iD = 0; iD < kDomainMoves.size(); ++iD)
 	{
-		iValue += kDomainMoves[iD].second * 200;
+		// The weight is per WHOLE extra move, so the x100 deposit reduces at this point of use -- mixing it
+		// raw with a human weight is what makes one tech outweigh a hundred of its siblings.
+		iValue += kDomainMoves[iD].second / 100 * 200;
 	}
 
 	for (int iI = 0; iI < NUM_COMMERCE_TYPES; iI++)
@@ -26994,7 +26996,9 @@ int CvPlayerAI::AI_promotionValue(PromotionTypes ePromotion, UnitTypes eUnit, co
 	const CvPromotionInfo& kPromotion = GC.getPromotionInfo(ePromotion);
 	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 	const CvPlot* pPlot = pUnit ? pUnit->plot() : NULL;
-	const int iMoves = pUnit ? pUnit->maxMoves() : (kUnit.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100);
+	// Both branches answer in WHOLE moves -- maxMoves() is the move-POINT budget and would read a hundred
+	// times the fallback, so which branch ran would decide the promotion's value.
+	const int iMoves = pUnit ? pUnit->baseMoves() : (kUnit.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100);
 	const bool bNoDefensiveBonus = !pUnit && kUnit.hasSkill(CLS_SKILL_NO_DEFENSIVE_BONUS) || pUnit && pUnit->noDefensiveBonus();
 
 	if (eUnitAI == NO_UNITAI)
@@ -29978,7 +29982,8 @@ int CvPlayerAI::AI_unitCombatValue(UnitCombatTypes eUnitCombat, UnitTypes eUnit,
 	const CvUnitCombatInfo& kUnitCombat = GC.getUnitCombatInfo(eUnitCombat);
 	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
 
-	const int iMoves = pUnit ? pUnit->maxMoves() : (kUnit.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100);
+	// Whole moves on both branches -- maxMoves() is the move-POINT budget (see AI_promotionValue).
+	const int iMoves = pUnit ? pUnit->baseMoves() : (kUnit.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100);
 
 	if (eUnitAI == NO_UNITAI)
 	{

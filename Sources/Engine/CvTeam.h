@@ -511,6 +511,8 @@ protected:
 
 	int* m_aiStolenVisibilityTimer;
 	int* m_aiWarWeariness;
+	//@SAVEBREAK - x100 like every other movement leg. The tech deposit already wrote this counter x100, so
+	// a save from that era loads correctly; only the circumnavigation award is a scale behind in one.
 	int* m_aiExtraMoves;
 	int* m_aiForceTeamVoteEligibilityCount;
 	int* m_paiProjectCount;

@@ -1502,6 +1502,9 @@ protected:
 
 	int m_iSurvivorChance;
 
+	//@SAVEBREAK - x100 like every other movement leg. A save written before that carries whole moves, which
+	// now read as a fraction of one and contribute nothing, so a unit restored from one loses the move its
+	// movement promotion granted. Nothing is corrupted; the value is simply a scale behind.
 	int m_iExtraMoves;
 	// The unit's stored per-turn upkeep (x100). DERIVED -- recomputed by calcUpkeep from the flat model
 	// (base + the resolved flat extra) and NEVER serialized (docs/specs/save.md §5 (derived data serializes NOTHING)); the player
