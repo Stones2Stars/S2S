@@ -5326,11 +5326,15 @@ void CvTeam::testCircumnavigated()
 
 void CvTeam::setCircumnavigated(bool bNewValue)
 {
+	// The award is authored in GlobalDefines as whole moves, so it converts here -- the extraMoves counter
+	// is x100 like every other movement leg, and a GlobalDefine is an IN boundary the same way readJson is.
+	const int iAward = GC.getCIRCUMNAVIGATE_FREE_MOVES() * 100;
+
 	if (bNewValue)
 	{
-		changeExtraMoves(DOMAIN_SEA, GC.getCIRCUMNAVIGATE_FREE_MOVES());
+		changeExtraMoves(DOMAIN_SEA, iAward);
 	}
-	else changeExtraMoves(DOMAIN_SEA, -GC.getCIRCUMNAVIGATE_FREE_MOVES());
+	else changeExtraMoves(DOMAIN_SEA, -iAward);
 }
 
 

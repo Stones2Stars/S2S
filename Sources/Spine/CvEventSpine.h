@@ -131,6 +131,11 @@ enum SpineDomainTag
 	               // XP had NO surface at all -- a unit's `level` was the only thing on the wire -- so a grant could not
 	               // be attributed to its source without reading code (observability.md: a fact that is on neither
 	               // surface is EMITTED, never given a side-counter behind a route).
+	SD_MOVEMENT,   // [MOV] a unit's move BUDGET, decomposed into the legs that built it (CvUnit::maxMoves).
+	               // Movement was invisible on every surface -- no endpoint, no log, no spine line -- so "this unit
+	               // has the wrong number of moves" could not be attributed to a leg, or even confirmed, without
+	               // reading the screen. The legs are what make it a census rather than a number: the unit's own
+	               // resolved allowance and the empire's stand on different planes and only one of them is ever wrong.
 	NUM_SPINE_DOMAINS
 };
 

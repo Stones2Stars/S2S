@@ -177,6 +177,12 @@ enum UnitResolvedSlot
 	URS_DAMAGE_MODIFIER,          // combat.unit.damageModifier
 	URS_STEALTH,                  // combat.unit.stealth
 	URS_STEALTH_STRIKES,          // combat.unit.stealthStrikes
+	URS_MOVES,                    // movement.unit.flat -- the memberless deposit, which IS the unit's whole
+	                              // move allowance: its own type's plus every held promotion's and combat
+	                              // class's. ⚖ NOT delta-only like URS_STRENGTH_FLAT -- that slot carves out
+	                              // because strength has a per-unit editable base that WorldBuilder persists,
+	                              // and movement has none (WB edits moves LEFT, the spent counter), so there is
+	                              // no second home for the type's contribution to double-count against.
 	NUM_UNIT_RESOLVED_SLOTS
 };
 

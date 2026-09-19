@@ -45,6 +45,26 @@ FROM, never whether it dies.
 ⛔ **A new outcome that leaves a unit alive is a branch in `resolveScheduledDeath`, never an early return in
 `die()`.** That is the whole point of the split: a function named for killing only ever kills.
 
+### `canDefend` — the predicate that decides whether a plot is HELD at all
+
+A unit defends a plot when it has combat strength of its own and is not riding in a transport
+(`CvUnit::canDefend` — `canFight()` is `m_iBaseCombat100 > 0`). ⛔ **It is not a combat-strength lookup with a
+convenient name: it is the question "is anything here holding this plot", and two mechanics resolve entirely
+through it.**
+
+- **Capture instead of combat.** `CvUnit::setXY` walks the plot it is entering and, for each enemy unit that
+  cannot defend, takes it (`setCapturingPlayer` → `kill`) rather than fighting it. That is the whole of how a
+  worker or a settler changes hands.
+- **Walking into an undefended city.** `CvCity::isDirectAttackable` lets a city be entered past its minimum
+  defense floor exactly when `getNumDefenders(getOwner())` is zero, so an empty city is taken whatever its
+  defenses have recovered to. That count is `PUF_canDefend`.
+
+⚠ **So a permissive answer here does not merely mis-rank something — it switches both mechanics off**: every
+non-combat unit becomes a garrison, defenceless units stop being capturable, and a city holding one worker
+cannot be entered or attacked until its defenses are bombarded to nothing. The AI reads it the same way
+(`!getGroup()->canDefend()` is how an unescorted worker decides to retreat), so a unit that wrongly "defends"
+also stops asking for an escort.
+
 ### What `scheduleDeath` runs — and for units that survive
 
 `scheduleDeath` runs before the outcome is decided, so its effects land on units that go on to live:

@@ -135,6 +135,63 @@ namespace
 			.addI(XPF_borders, bInBorders ? 1 : 0)
 			.addI(XPF_callerRva, iCallerRva));
 	}
+
+	// [MOV/budget] -- a unit's move allowance, DECOMPOSED into the two legs that built it.
+	// ⚑ The legs are the whole point. A move budget is the sum of a UNIT-plane value (its own type plus every
+	// held promotion and combat class, resolved) and an EMPIRE-plane one (the domainMoves tech deposit plus the
+	// circumnavigation award), and the two live on different planes -- so a wrong total says nothing about which
+	// side carries it. Emitting only the total would answer "is it wrong" and never "why".
+	// ⚠ Both legs are ×100 on the wire, exactly as the engine holds them (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model));
+	// `points` is what the unit actually spends and `tiles` the whole-tile read. A leg reading 100× its
+	// neighbour is the defect this line exists to make visible at a glance.
+	enum MovEvent
+	{
+		MOV_BUDGET = 1
+	};
+	enum MovField
+	{
+		MOVF_unit = 1, MOVF_owner, MOVF_unitType, MOVF_domain,
+		MOVF_unitLeg, MOVF_empireLeg, MOVF_points, MOVF_tiles
+	};
+	const char* movLinePrefix(int iEventId)
+	{
+		switch (iEventId)
+		{
+		case MOV_BUDGET: return "[MOV/budget]";
+		default:         return NULL;
+		}
+	}
+	const char* movFieldInfo(int iFieldTag, SpineFieldType* peType)
+	{
+		*peType = SFT_INT;
+		switch (iFieldTag)
+		{
+		case MOVF_unit:      return "unit";
+		case MOVF_owner:     return "owner";
+		case MOVF_unitType:  *peType = SFT_UNIT; return "unitType";
+		case MOVF_domain:    return "domain";
+		case MOVF_unitLeg:   return "unitLeg";
+		case MOVF_empireLeg: return "empireLeg";
+		case MOVF_points:    return "points";
+		case MOVF_tiles:     return "tiles";
+		default:             return NULL;
+		}
+	}
+	struct MovLogRegistrar { MovLogRegistrar() { spineRegisterDomain(SD_MOVEMENT, &movLinePrefix, "Movement.log", &movFieldInfo); } };
+	MovLogRegistrar s_movLogRegistrar; // static-init registration
+
+	void mov_emitBudget(const CvUnit* pUnit, int iUnitLeg, int iEmpireLeg, int iPoints, int iTiles)
+	{
+		eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_MOVEMENT, MOV_BUDGET, 3)
+			.addI(MOVF_unit, pUnit->getID())
+			.addI(MOVF_owner, (int)pUnit->getOwner())
+			.addI(MOVF_unitType, (int)pUnit->getUnitType())
+			.addI(MOVF_domain, (int)pUnit->getDomainType())
+			.addI(MOVF_unitLeg, iUnitLeg)
+			.addI(MOVF_empireLeg, iEmpireLeg)
+			.addI(MOVF_points, iPoints)
+			.addI(MOVF_tiles, iTiles));
+	}
 }
 
 // The [XP/production] decomposition. Emitted from CvCity::addProductionExperience -- a different translation unit --
@@ -688,7 +745,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 
 	m_iSurvivorChance = 0;
 
-	m_iExtraMoves = 0;
 	m_iUpkeep100 = 0;
 	m_iExtraMoveDiscount = 0;
 	//TB Combat Mods Begin
@@ -928,7 +984,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iCombatLimitChange = other.m_iCombatLimitChange;
 	m_iExtraDropRange = other.m_iExtraDropRange;
 	m_iSurvivorChance = other.m_iSurvivorChance;
-	m_iExtraMoves = other.m_iExtraMoves;
 	m_iExtraMoveDiscount = other.m_iExtraMoveDiscount;
 	m_iStampedeCount = other.m_iStampedeCount;
 	m_iAttackOnlyCitiesCount = other.m_iAttackOnlyCitiesCount;
@@ -10648,13 +10703,12 @@ int CvUnit::sight(const CvPlot* pPlot) const
 }
 
 
+// The whole tiles-per-turn a unit gets, for the consumers that reason in tiles -- AI search ranges, the
+// selection group's slowest-member read, the movement figure on the unit bar. It is the HUMAN read of the
+// budget maxMoves() holds, and it is the only place the budget is reduced to whole tiles.
 int CvUnit::baseMoves() const
 {
-	return (
-		(m_pUnitInfo->getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100)
-		+ getExtraMoves()
-		+ (getDomainType() != DOMAIN_AIR ? GET_TEAM(getTeam()).getExtraMoves(getDomainType()) : 0)
-	);
+	return maxMoves() / GC.getMOVE_DENOMINATOR();
 }
 
 int CvUnit::maxMoves() const
@@ -10663,8 +10717,23 @@ int CvUnit::maxMoves() const
 
 	if (m_iMaxMoveCacheTurn != GC.getGame().getGameTurn())
 	{
-		m_maxMoveCache = (baseMoves() * GC.getMOVE_DENOMINATOR());
+		// Both legs are x100, so they add directly and the reduce happens once, here, as the sum is spent
+		// into movement points. MOVE_DENOMINATOR is movement's own fixed point, which is what lets a
+		// fractional move survive the hand-off instead of being truncated away a leg at a time.
+		// ⚖ URS_MOVES is the unit's WHOLE allowance -- its own type plus every held promotion and combat
+		// class, resolved when the promotion landed. The team leg stays separate because it is the empire's,
+		// not the unit's: a tech deposit and the circumnavigation award, neither of which the unit carries.
+		const int iUnitLeg = resolvedValue(URS_MOVES);
+		const int iEmpireLeg = (getDomainType() != DOMAIN_AIR ? GET_TEAM(getTeam()).getExtraMoves(getDomainType()) : 0);
+		const int iMoves = iUnitLeg + iEmpireLeg;
+
+		m_maxMoveCache = iMoves * GC.getMOVE_DENOMINATOR() / 100;
 		m_iMaxMoveCacheTurn = GC.getGame().getGameTurn();
+
+		// The budget is announced where it is BUILT, so the line carries the legs rather than a bare total
+		// ([spine.md] §7: a hook exposes the decomposition behind a number). The cache keys on the turn, so
+		// this is at most one line per unit per turn rather than one per movement query.
+		mov_emitBudget(this, iUnitLeg, iEmpireLeg, m_maxMoveCache, m_maxMoveCache / GC.getMOVE_DENOMINATOR());
 	}
 	return m_maxMoveCache;
 }
@@ -10701,7 +10770,7 @@ int CvUnit::airRange() const
 	{
 		int aiAir[NUM_AIR_KINDS];
 		GET_PLAYER(getOwner()).getAirKinds(aiAir);
-		return (resolvedValue(URS_AIR_RANGE) / 100 + GET_TEAM(getTeam()).getExtraMoves(DOMAIN_AIR) + aiAir[AIR_RANGE] / 100);
+		return (resolvedValue(URS_AIR_RANGE) / 100 + GET_TEAM(getTeam()).getExtraMoves(DOMAIN_AIR) / 100 + aiAir[AIR_RANGE] / 100);
 	}
 	return (resolvedValue(URS_AIR_RANGE) / 100);
 }
@@ -12135,6 +12204,14 @@ bool CvUnit::canAmbush(const CvUnit& defender, const bool bAssassinate) const
 
 bool CvUnit::canDefend(const CvPlot* pPlot) const
 {
+	// A unit with no combat strength defends nothing, and neither does one riding in a transport. Both
+	// consumers that decide whether a plot is HELD spell the question this way -- setXY auto-captures a
+	// stack where nothing canDefend, and CvCity::isDirectAttackable lets an undefended city be walked into
+	// past its minimum-defense floor -- so a permissive answer here garrisons a city with a worker.
+	if (!canFight() || isCargo())
+	{
+		return false;
+	}
 	if (!pPlot) pPlot = plot();
 
 	if (!pPlot->isValidDomainForAction(*this) && !GC.getLAND_UNITS_CAN_ATTACK_WATER_CITIES())
@@ -15246,19 +15323,6 @@ int CvUnit::getVictoryStackHeal() const
 }
 
 
-int CvUnit::getExtraMoves() const
-{
-	return m_iExtraMoves;
-}
-
-void CvUnit::changeExtraMoves(int iChange)
-{
-	m_iExtraMoves += iChange;
-	m_iMaxMoveCacheTurn--;
-
-	FASSERT_NOT_NEGATIVE(m_iExtraMoves);
-}
-
 int CvUnit::getExtraMoveDiscount() const
 {
 	return m_iExtraMoveDiscount;
@@ -17286,7 +17350,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 		}
 	}
 
-	changeExtraMoves(kUnitCombat.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split diff
 	changeExtraMoveDiscount(kUnitCombat.getMovement(MOVEMENT_MOVE_DISCOUNT, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split diff
 	changeCargoSpace(kUnitCombat.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split diff (since this mechanism is either a base setter or is for non-SM or non-player on SM.
 
@@ -17707,7 +17770,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeSurvivorChance((kPromotion.getScalar(SCALAR_SURVIVOR, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT)) * iChange);
 	//	the heal accumulators carry whole hit points; the deposits are ×100 flats (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model))
 
-	changeExtraMoves(kPromotion.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * iChange);
 	changeExtraMoveDiscount(kPromotion.getMovement(MOVEMENT_MOVE_DISCOUNT, CASC_SCOPE_UNIT) / 100 * iChange);
 	//TB Combat Mods Begin
 
@@ -18296,7 +18358,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_shadowUnit.iID);
 
 	WRAPPER_READ(wrapper, "CvUnit", &m_iImmuneToFirstStrikesCount);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraMoves);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraMoveDiscount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraBombardRate);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iRevoltProtection);
@@ -18415,7 +18476,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 		{
 			// Lands through the internal setter: the commit, the movement hash and the fact, from the one body
 			// that owns them. ⛔ NOT processPromotion -- the stats it applies are serialized on this unit in
-			// their own right (m_iExtraMoves, m_iBlitzCount, ... are read straight off the stream above), so
+			// their own right (m_iBlitzCount, ... are read straight off the stream above), so
 			// running it here would double every one.
 			// ⚠ An isRemoveAfterSet promotion is the one the stream carries that is NOT restored as held: it
 			// removes itself once applied, so its effect is already in the unit's serialized totals and the
@@ -19023,7 +19084,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_shadowUnit.iID);
 
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iImmuneToFirstStrikesCount);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraMoves);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraMoveDiscount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraBombardRate);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iRevoltProtection);
