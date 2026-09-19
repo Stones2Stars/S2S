@@ -10648,13 +10648,12 @@ int CvUnit::sight(const CvPlot* pPlot) const
 }
 
 
+// The whole tiles-per-turn a unit gets, for the consumers that reason in tiles -- AI search ranges, the
+// selection group's slowest-member read, the movement figure on the unit bar. It is the HUMAN read of the
+// budget maxMoves() holds, and it is the only place the budget is reduced to whole tiles.
 int CvUnit::baseMoves() const
 {
-	return (
-		(m_pUnitInfo->getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100)
-		+ getExtraMoves()
-		+ (getDomainType() != DOMAIN_AIR ? GET_TEAM(getTeam()).getExtraMoves(getDomainType()) : 0)
-	);
+	return maxMoves() / GC.getMOVE_DENOMINATOR();
 }
 
 int CvUnit::maxMoves() const
@@ -10663,7 +10662,16 @@ int CvUnit::maxMoves() const
 
 	if (m_iMaxMoveCacheTurn != GC.getGame().getGameTurn())
 	{
-		m_maxMoveCache = (baseMoves() * GC.getMOVE_DENOMINATOR());
+		// Every leg is x100 -- the info's own moves and both extraMoves counters -- so the three add
+		// directly and the reduce happens once, here, as the sum is spent into movement points.
+		// MOVE_DENOMINATOR is movement's own fixed point, which is what lets a fractional move survive
+		// the hand-off instead of being truncated away a leg at a time.
+		const int iMoves =
+			m_pUnitInfo->getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT)
+			+ getExtraMoves()
+			+ (getDomainType() != DOMAIN_AIR ? GET_TEAM(getTeam()).getExtraMoves(getDomainType()) : 0);
+
+		m_maxMoveCache = iMoves * GC.getMOVE_DENOMINATOR() / 100;
 		m_iMaxMoveCacheTurn = GC.getGame().getGameTurn();
 	}
 	return m_maxMoveCache;
@@ -10701,7 +10709,7 @@ int CvUnit::airRange() const
 	{
 		int aiAir[NUM_AIR_KINDS];
 		GET_PLAYER(getOwner()).getAirKinds(aiAir);
-		return (resolvedValue(URS_AIR_RANGE) / 100 + GET_TEAM(getTeam()).getExtraMoves(DOMAIN_AIR) + aiAir[AIR_RANGE] / 100);
+		return (resolvedValue(URS_AIR_RANGE) / 100 + GET_TEAM(getTeam()).getExtraMoves(DOMAIN_AIR) / 100 + aiAir[AIR_RANGE] / 100);
 	}
 	return (resolvedValue(URS_AIR_RANGE) / 100);
 }
@@ -12135,6 +12143,14 @@ bool CvUnit::canAmbush(const CvUnit& defender, const bool bAssassinate) const
 
 bool CvUnit::canDefend(const CvPlot* pPlot) const
 {
+	// A unit with no combat strength defends nothing, and neither does one riding in a transport. Both
+	// consumers that decide whether a plot is HELD spell the question this way -- setXY auto-captures a
+	// stack where nothing canDefend, and CvCity::isDirectAttackable lets an undefended city be walked into
+	// past its minimum-defense floor -- so a permissive answer here garrisons a city with a worker.
+	if (!canFight() || isCargo())
+	{
+		return false;
+	}
 	if (!pPlot) pPlot = plot();
 
 	if (!pPlot->isValidDomainForAction(*this) && !GC.getLAND_UNITS_CAN_ATTACK_WATER_CITIES())
@@ -17286,7 +17302,7 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 		}
 	}
 
-	changeExtraMoves(kUnitCombat.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split diff
+	changeExtraMoves(kUnitCombat.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) * iChange);//no merge/split diff
 	changeExtraMoveDiscount(kUnitCombat.getMovement(MOVEMENT_MOVE_DISCOUNT, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split diff
 	changeCargoSpace(kUnitCombat.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split diff (since this mechanism is either a base setter or is for non-SM or non-player on SM.
 
@@ -17707,7 +17723,7 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeSurvivorChance((kPromotion.getScalar(SCALAR_SURVIVOR, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT)) * iChange);
 	//	the heal accumulators carry whole hit points; the deposits are ×100 flats (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model))
 
-	changeExtraMoves(kPromotion.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) / 100 * iChange);
+	changeExtraMoves(kPromotion.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) * iChange);
 	changeExtraMoveDiscount(kPromotion.getMovement(MOVEMENT_MOVE_DISCOUNT, CASC_SCOPE_UNIT) / 100 * iChange);
 	//TB Combat Mods Begin
 
