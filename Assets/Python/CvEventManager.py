@@ -2194,14 +2194,18 @@ class CvEventManager:
 
 	def onUnitUpgraded(self, argsList):
 		if DebugUtils.bDebugMode:
-			CyUnitOld, CyUnitNew, iPrice = argsList
-			print "%s Upgraded %s to %s" %(GC.getPlayer(CyUnitOld.getOwner()).getCivilizationDescription(0), CyUnitOld.getName(), CyUnitNew.getName())
+			# A game-object event arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+			(iOldOwner, iOldUnitID), (iNewOwner, iNewUnitID), iPrice = argsList
+			CyUnitOld = GC.getPlayer(iOldOwner).getUnit(iOldUnitID)
+			CyUnitNew = GC.getPlayer(iNewOwner).getUnit(iNewUnitID)
+			print "%s Upgraded %s to %s" %(GC.getPlayer(iOldOwner).getCivilizationDescription(0), CyUnitOld.getName(), CyUnitNew.getName())
 
 
 	def onUnitRename(self, argsList):
-		CyUnit, = argsList
-		if CyUnit.getOwner() == GAME.getActivePlayer():
-			self.__eventEditUnitNameBegin(CyUnit)
+		# A game-object event arg is the (owner, id) IDENTITY TUPLE, never a handle -- unpack and resolve.
+		(iUnitOwner, iUnitID), = argsList
+		if iUnitOwner == GAME.getActivePlayer():
+			self.__eventEditUnitNameBegin(GC.getPlayer(iUnitOwner).getUnit(iUnitID))
 
 
 	'''
