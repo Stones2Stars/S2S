@@ -763,6 +763,18 @@ with no worker at all can never build its first one.
   never moved**. ⚑ **The signature is unmistakable: units run in from the middle of the map** — every newly
   created unit, and any unit holding the shared dummy the first time it needs a real node (a fortified stack
   member becoming centre/selected as it starts to move).
+  ⛔ **AND THE MOVE FAMILY IS ONLY THE LOUDEST CASE — *ANY* STATEMENT TO THE ENGINE ABOUT A UNIT WHOSE NODE WAS
+  NEVER GIVEN A LOCATION IS RECONCILED FROM THE ORIGIN.** A bare `NotifyEntity` passes no plot at all and still
+  produces the walk, because the engine animates the unit into the state it was told about FROM where it thinks
+  the unit stands. ⇒ The rule is therefore **place the node before you speak about it**, not merely "do not call
+  `ExecuteMove`": `CvUnit::ensureGraphicalPlacement` is that guarantee, and a new path that reaches the entity
+  interface uses it rather than assuming some earlier call placed the node.
+  ⚑ **The hole this closed is worth remembering because it explains a whole CLASS of report: `reloadEntity`
+  excludes a SELECTED unit** — correctly, since its node must never be rebuilt underneath it — **and that
+  exclusion used to swallow the placement call too.** A selected unit's node could then never be placed, and
+  merging, upgrading, fortifying and awakening are all performed ON the selected unit, so all four ran in from
+  mid-map while unit CREATION looked fixed. ⇒ When a graphics symptom hits "only some" operations, check what
+  those operations have in COMMON about the unit's state before hunting the verbs.
   ⛔ **THE WHOLE PERMITTED CENSUS, and it is a census rather than a guideline because agents keep reaching for
   `ExecuteMove` to "force the graphics to update":** `SetPosition` at the placement moments (`setupGraphical`,
   the `setXY` teleport arm); `QueueMove`/`ExecuteMove` ONLY for real movement — `CvSelectionGroup::groupMove`

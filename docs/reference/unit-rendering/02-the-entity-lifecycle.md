@@ -5,8 +5,9 @@
 | Call | When | Guard | Effect | Cite |
 |---|---|---|---|---|
 | ctor: `createUnitEntity(this)` / `setEntity(g_dummyEntity)` | every `CvUnit` construction, BEFORE `reset()` — the ctor pre-assigns `m_iX/m_iY = INVALID_PLOT_COORD` first, so the EXE receives a unit whose `plot()` is deterministically NULL rather than garbage that can alias an in-bounds plot | none | non-dummy mode: a real node per unit; dummy mode: the FIRST unit's real node becomes `g_dummyEntity`, every later unit attaches the shared dummy. `bGraphicsSetup=false`. | `Engine/CvUnit.cpp:48-52, 182-240` |
-| `reloadEntity(bForceLoad)` | see caller census below | keeps an entity already of the wanted kind; destroys a mismatched one unless `bHoldsRealEntity && IsSelected()` (364); creates real (`g_numEntities++`, latch cleared) or attaches dummy when NULL | the ONE decision of real vs dummy; calls `setupGraphical()` iff `!bGraphicsSetup && bNeedsRealEntity && plot()` (417-420) | `Engine/CvUnit.cpp:317-422` |
-| `setupGraphical()` | from `reloadEntity` (372) and `CvMap::afterSwitch` (1538) ONLY | returns WITHOUT latching if `!IsGraphicsInitialized \|\| !isInViewport()` (1061-1069); else latches `bGraphicsSetup=true` (1070), then `CvDLLEntity::setup()` if `!isUsingDummyEntities()` (1072-1075; the wrapper itself now guards `isRealEntity`) | then, unless `ACTIVITY_INTERCEPT` (→ `airCircle(true)`): `SetPosition(plot())` and NOTHING else — setup is placement, not movement. The EXE spawns a fresh node at the scene origin, and the move-family calls carry SHOWN-MOVEMENT semantics (`groupMove`'s own usage is the contract: `QueueMove` stages the stepped plots, `ExecuteMove` shows the movement), so either one issued here manufactures a visible run from mid-map to the plot on a unit that never moved. The 2019 billw `ExecuteMove(0,false)` multi-unit refresh hack is removed for that reason; if stacks regress to late-appearing figures, the refresh needs a non-movement replacement | `Engine/CvUnit.cpp:1057-1100`; `Engine/CvMap.cpp:1538` |
+| `reloadEntity(bForceLoad)` | see caller census below | the destroy/create half is skipped entirely for a SELECTED unit (314) — its node must never be rebuilt under it; otherwise keeps an entity already of the wanted kind, destroys a mismatched one, creates real (`g_numEntities++`, latch cleared) or attaches dummy when NULL | the ONE decision of real vs dummy; then `ensureGraphicalPlacement()` (359) — ⛔ OUTSIDE the selected-unit exclusion, because placing a node destroys nothing and a selected unit whose node was never placed is the run-from-mid-map bug ([§7b](08-the-run-from-origin-reconciliation.md)) | `Engine/CvUnit.cpp:303-360` |
+| `ensureGraphicalPlacement()` | end of `reloadEntity` (359); before every `CvUnit::NotifyEntity` (1675) | `!bGraphicsSetup && isRealEntity(getEntity()) && plot()` | calls `setupGraphical()` on a node that has never been given a location, and does nothing to one that has — so it is safe on any path and cannot disturb a placed node or an animation in flight | `Engine/CvUnit.cpp:362-372` |
+| `setupGraphical()` | from `ensureGraphicalPlacement` (365) and `CvMap::afterSwitch` (1559) ONLY | returns WITHOUT latching if `!IsGraphicsInitialized \|\| !isInViewport()` (1061-1069); else latches `bGraphicsSetup=true` (1070), then `CvDLLEntity::setup()` if `!isUsingDummyEntities()` (1072-1075; the wrapper itself now guards `isRealEntity`) | then, unless `ACTIVITY_INTERCEPT` (→ `airCircle(true)`): `SetPosition(plot())` and NOTHING else — setup is placement, not movement. The EXE spawns a fresh node at the scene origin, and the move-family calls carry SHOWN-MOVEMENT semantics (`groupMove`'s own usage is the contract: `QueueMove` stages the stepped plots, `ExecuteMove` shows the movement), so either one issued here manufactures a visible run from mid-map to the plot on a unit that never moved. The 2019 billw `ExecuteMove(0,false)` multi-unit refresh hack is removed for that reason; if stacks regress to late-appearing figures, the refresh needs a non-movement replacement | `Engine/CvUnit.cpp:1061-1106`; `Engine/CvMap.cpp:1559` |
 | `init(...)`: `setXY(bInit=true)` → `setupGraphical()` → `updateCenterUnit()` → `setFlagDirty(true)` | unit birth | the baseline birth order (`setXY` at 416, then `setupGraphical`/`updateCenterUnit`/`setFlagDirty` at 525/529/531); no `SetPosition` on the unit | ⚠ `reloadEntity` already fires INSIDE `setXY` (416), before `init`'s own tail: `joinGroup(NULL,true)` (13624, reached under `!bGroup && (!getGroup() \|\| getGroup()->getNumUnits() > 1)`, 13616 — which `init`'s call satisfies, passing `bGroup=false`) → `CvSelectionGroup::addUnit` head-swap `reloadEntity()` (4826-4833), and `setXY`'s own `updateCenterUnit` (14031, 14036) | `Engine/CvUnit.cpp:416, 525-531, 13616-13624, 14031-14039`; `Engine/CvSelectionGroup.cpp:4826-4833` |
 | `setXY` graphics block: `QueueMove(pNewPlot)` else `SetPosition(pNewPlot)` | every coordinate change | `IsGraphicsInitialized && isInViewport()`; `QueueMove` iff `bShow \|\| bCheckPlotVisible && pNewPlot->isVisibleToWatchingHuman()` | the ordinary move; both arms reduce to "DESTINATION visible" — the origin plot is never consulted (`CvUnit::move` passes `bShow && pPlot->isVisibleToWatchingHuman()`, 5158-5171). Both no-op on the dummy. | `Engine/CvUnit.cpp:14146-14171, 5158-5171` |
 | `setXY` tail `reloadEntity()` | after the move | iff viewport membership of old/new plot differs, OR (dummy mode) `isActiveVisible(false)` of old/new differs | the fog-edge real↔dummy transition; a fresh real node is then set up and placed by `setupGraphical`'s `SetPosition(plot())` (the earlier `QueueMove` no-op'd on the dummy) | `Engine/CvUnit.cpp:14054-14061` |
@@ -24,12 +25,17 @@
 **Which calls move or refresh a node.** `setupGraphical` places a freshly built node once, with
 `SetPosition(plot())`; thereafter a scene node follows the unit only through the ordinary `setXY` graphics block
 (below) and the `ExecuteMove` animations. The sites that touch a node's position/animation OUTSIDE a `setXY`
-coordinate change: `setupGraphical`'s `SetPosition` (`Engine/CvUnit.cpp:1089-1098`); `groupMove`'s
+coordinate change: `setupGraphical`'s `SetPosition` (`Engine/CvUnit.cpp:1101-1104`); `groupMove`'s
 timed `ExecuteMove` on a member that could NOT move after `joinGroup(NULL,true)` splits it off
 (`Engine/CvSelectionGroup.cpp:3638-3639`) and on EVERY member at the end of the move (3677); and `updateCombat`'s
-`ExecuteMove(0.5f,true)` on the attacker (`Engine/CvUnit.cpp:2784`). A unit holding an already-set-up real node
-that does not move is never repositioned: `reloadEntity` → `kept` skips `setupGraphical` while the latch is up
-(`Engine/CvUnit.cpp:370-373`).
+`ExecuteMove(0.5f,true)` on the attacker (`Engine/CvUnit.cpp:2784`). A unit holding an already-placed real node
+is never repositioned: `ensureGraphicalPlacement` skips `setupGraphical` while the latch is up
+(`Engine/CvUnit.cpp:362-372`).
+
+⚠ **A node that was never placed is a different case, and it is not only the move family that exposes it.** The
+engine reconciles ANY statement about a unit against the origin its node still believes in, so a bare
+`NotifyEntity` walks an unplaced node in from mid-map exactly as an `ExecuteMove` would
+([§7b](08-the-run-from-origin-reconciliation.md)). That is why `NotifyEntity` places first.
 
 **Raw EXE calls that BYPASS the `CvDLLEntity` guards** (no wrapper exists), with the guard each site carries:
 
@@ -50,8 +56,10 @@ that does not move is never repositioned: `reloadEntity` → `kept` skips `setup
 - `showPromotionGlow` — `CvUnit::setPromotionReady` (`Engine/CvUnit.cpp:15825-15828`); `updatePromotionLayers` —
   `setHasUnitCombat` (17643-17646) and `setHasPromotion` (18215-18218); all three under
   `!isUsingDummyEntities() && isInViewport()`.
-- `CvUnit::NotifyEntity` — `DllExport`, hides the wrapper, `!isUsingDummyEntities() && isInViewport()`
-  (`Engine/CvUnit.cpp:1821-1827`).
+- `CvUnit::NotifyEntity` — `DllExport`, hides the wrapper, `!isUsingDummyEntities() && isInViewport()`, and
+  `ensureGraphicalPlacement()` before the notify, because this is the door a STANCE CHANGE arrives through
+  (`CvSelectionGroup::setActivityType` notifies every unit in the group and passes no plot) and nothing on that
+  path calls `reloadEntity` (`Engine/CvUnit.cpp:1665-1679`).
 - The PLOT symbols: `updatePosition` on the feature/route/river symbols inside `updateFeatureSymbol` (9686),
   `updateRouteSymbol` (9731) and `updateRiverSymbol` (9792, 9801) — so under those functions' own
   `isGraphicsVisible` gates (9655, 9702, 9746); `setupFloodPlains` in `updateRiverSymbolArt` (9820, 9829) under

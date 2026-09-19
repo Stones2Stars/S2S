@@ -76,7 +76,7 @@ Ranked by confidence. "Re-runs ON" = what re-executes it under paging; "Re-runs 
    drops ON). ⚑ Confidence: HIGH.
 9. **No path re-places an already-set-up node in either mode.** `updateCenterUnit` re-runs only on the page-in
    DELTA under paging (490-491) and each frame until convergence with paging off (items 1-2); either way
-   `reloadEntity(true)` on a unit whose latch is set is a `kept` that positions nothing (`Engine/CvUnit.cpp:370-373`).
+   `reloadEntity(true)` on a unit whose latch is set is a `kept` that positions nothing (`Engine/CvUnit.cpp:362-372`).
    A node's position is established once at setup (`SetPosition(plot())`) and thereafter by the ordinary
    move path — never re-placed by paging. ⚑ Confidence: HIGH.
 10. **Define-name mismatch:** the code reads `PAGING_FRAME_TIME_MS` (`UI/CvPlotPaging.cpp:242`); the XML authors

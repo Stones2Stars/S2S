@@ -347,16 +347,28 @@ void CvUnit::reloadEntity(bool bForceLoad)
 				bGraphicsSetup = false;
 			}
 		}
-
-		//	setupGraphical owns the latch and sets it only when its gate passes -- so an attempt made while
-		//	graphics are down (or the unit is off-viewport) stays retryable, and the next reloadEntity after
-		//	graphics come up performs the setup the first attempt could not.
-		if (!bGraphicsSetup && bNeedsRealEntity && plot())
-		{
-			setupGraphical();
-		}
 	}
-	else OutputDebugString("Reload of selected unit\n");
+
+	//	⛔ PLACEMENT IS NOT PART OF THE SELECTED-UNIT EXCLUSION ABOVE, AND FOLDING IT IN IS THE
+	//	RUN-FROM-MID-MAP BUG'S SECOND HALF. That exclusion protects a selected unit's node from being destroyed
+	//	and rebuilt under it; telling a node where it already stands does neither, so it was never covered by
+	//	the reason. Excluded, a selected unit's node could never be placed -- and merging, upgrading, fortifying
+	//	and awakening are all performed ON the selected unit, so each of them went on to tell the engine about a
+	//	node that still believed it stood at the world origin, and was answered with a walk in from the map
+	//	centre (docs/reference/unit-rendering/08-the-run-from-origin-reconciliation.md).
+	ensureGraphicalPlacement();
+}
+
+void CvUnit::ensureGraphicalPlacement()
+{
+	//	setupGraphical owns the latch and sets it only when its gate passes -- so an attempt made while graphics
+	//	are down (or the unit is off-viewport) stays retryable, and the next call after graphics come up performs
+	//	the setup the first attempt could not. A node that already carries its location is left alone: re-running
+	//	setup on it would rebuild the model, which is a destroy this must never perform.
+	if (!bGraphicsSetup && isRealEntity(getEntity()) && plot() != NULL)
+	{
+		setupGraphical();
+	}
 }
 
 void CvUnit::changeIdentity(UnitTypes eUnit)
@@ -1654,6 +1666,14 @@ void CvUnit::NotifyEntity(MissionTypes eMission)
 {
 	if ( !isUsingDummyEntities() && isInViewport() )
 	{
+		//	⛔ NEVER TELL THE ENGINE ABOUT A NODE THAT HAS NEVER BEEN GIVEN A LOCATION. A fresh node believes it
+		//	stands at the world origin, so ANY notification -- not just the move family -- is reconciled against
+		//	that belief and rendered as a walk in from the map centre. This is the door a STANCE CHANGE comes
+		//	through: fortify and awaken both reach setActivityType, which notifies every unit in the group and
+		//	passes no plot, and nothing on that path ever calls reloadEntity
+		//	(docs/reference/unit-rendering/08-the-run-from-origin-reconciliation.md).
+		ensureGraphicalPlacement();
+
 		gDLL->getEntityIFace()->NotifyEntity(getUnitEntity(), eMission);
 	}
 }

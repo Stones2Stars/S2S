@@ -24,7 +24,7 @@ Where the tree differs, DLL-side (whether the EXE draws a non-centre real node i
 2. **Nodes are built against a laid-out plot, not flown in.** Paging-off now runs `updateGraphics` per plot each
    frame — the same path as paging-on (§4) — and `showRequiredGraphics` defers any pre-init pass (488), so a
    unit's scene node is created and set up against a plot the landscape has already built. `setupGraphical`
-   places the node with `SetPosition(plot())` and nothing else (`Engine/CvUnit.cpp:1089-1098`) — never
+   places the node with `SetPosition(plot())` and nothing else (`Engine/CvUnit.cpp:1101-1104`) — never
    `QueueMove`/`ExecuteMove`, whose shown-movement semantics manufacture the run-from-mid-map-to-plot the model
    forbids — and ordinary movement is the `setXY` graphics block. `groupMove` additionally issues a timed
    `ExecuteMove` to a member that could not move (`Engine/CvSelectionGroup.cpp:3638-3639`) and to every member at
@@ -35,7 +35,7 @@ Where the tree differs, DLL-side (whether the EXE draws a non-centre real node i
    (14054-14061), a group head swap (`Engine/CvSelectionGroup.cpp:4826-4833, 4866-4877`), or a bulk
    `reloadEntity()` sweep.
 4. **A required unit that already holds a node is never (re)positioned.** `reloadEntity` → `kept` skips
-   `setupGraphical` when the latch is set (`Engine/CvUnit.cpp:370-373`); a fog→visible flip of such a
+   `setupGraphical` when the latch is set (`Engine/CvUnit.cpp:362-372`); a fog→visible flip of such a
    unit issues no positioning call at all.
 5. **With `ENABLE_DYNAMIC_UNIT_ENTITIES=0` every unit holds a real node unconditionally** — fog, viewport and
    stack position ignored (`Engine/CvUnit.cpp:208-210, 321`).
@@ -52,7 +52,7 @@ Where the tree differs, DLL-side (whether the EXE draws a non-centre real node i
 8. **A centre-unit change mid-`groupMove` runs `setupGraphical` inside the walk window.**
    `enableCenterUnitRecalc(true)` (3668-3669) runs `updateCenterUnit` → `reloadEntity(true)` → `setupGraphical`'s
    `SetPosition(plot())` before the group's `ExecuteMove` loop, and `setupGraphical` has no `isMidMove()`
-   guard (`Engine/CvUnit.cpp:1089-1098`).
+   guard (`Engine/CvUnit.cpp:1101-1104`).
 9. **Rendering-when-required is event-driven once a plot has converged** (§4 item 1): after the live paging-off
    loop has fully shown a plot, a stack change without a `setXY`/`addUnit`/`removeUnit`/fog flip on it — e.g. the
    centre unit dies via a path that does not `removeUnit(bUpdate)`, or a `toggleDebugMode` that changes

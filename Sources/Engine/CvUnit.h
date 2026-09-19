@@ -398,6 +398,10 @@ public:
 	//	serve, because it keeps an entity that is already the kind the unit wants.
 	void rebuildEntityArt();
 	void destroyCurrentEntity();
+	///<summary>Gives this unit's scene node its location if it has never been given one, and does nothing
+	/// otherwise. A node the engine has never been told a location for believes it stands at the world origin,
+	/// so anything we go on to say about the unit is reconciled as a walk in from the map centre.</summary>
+	void ensureGraphicalPlacement();
 	void init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOwner, int iX, int iY, DirectionTypes eFacingDirection, int iBirthmark);
 	void changeIdentity(UnitTypes eUnit);
 	void reset(int iID = 0, UnitTypes eUnit = NO_UNIT, PlayerTypes eOwner = NO_PLAYER, bool bConstructorCall = false, bool bIdentityChange = false);
