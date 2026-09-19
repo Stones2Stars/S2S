@@ -11095,7 +11095,7 @@ void CvPlayer::setCurrentEra(EraTypes eNewValue)
 		{
 			if (!unit->isUsingDummyEntities())
 			{
-				gDLL->getEntityIFace()->updateGraphicEra(unit->getUnitEntity(), eOldEra);
+				gDLL->getEntityIFace()->updateGraphicEra(unit->getUnitEntityPlaced(), eOldEra);
 			}
 		}
 
@@ -16154,7 +16154,7 @@ void CvPlayer::doWarnings()
 		//update glow
 		if ( !pLoopUnit->isUsingDummyEntities() )
 		{
-			gDLL->getEntityIFace()->updateEnemyGlow(pLoopUnit->getUnitEntity());
+			gDLL->getEntityIFace()->updateEnemyGlow(pLoopUnit->getUnitEntityPlaced());
 		}
 	}
 

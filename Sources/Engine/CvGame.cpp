@@ -4895,7 +4895,7 @@ void CvGame::updateUnitEnemyGlow()
 		foreach_(CvUnit* pLoopUnit, GET_PLAYER((PlayerTypes)iI).units()
 		| filtered(!bind(CvUnit::isUsingDummyEntities, _1)))
 		{
-			gDLL->getEntityIFace()->updateEnemyGlow(pLoopUnit->getUnitEntity());
+			gDLL->getEntityIFace()->updateEnemyGlow(pLoopUnit->getUnitEntityPlaced());
 		}
 	}
 }

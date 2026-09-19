@@ -38,7 +38,13 @@ engine reconciles ANY statement about a unit against the origin its node still b
 `NotifyEntity` walks an unplaced node in from mid-map exactly as an `ExecuteMove` would
 ([§7b](08-the-run-from-origin-reconciliation.md)). That is why `NotifyEntity` places first.
 
-**Raw EXE calls that BYPASS the `CvDLLEntity` guards** (no wrapper exists), with the guard each site carries:
+**Raw EXE calls that BYPASS the `CvDLLEntity` guards** (no wrapper exists), with the guard each site carries.
+⛔ **Every one of them passes `getUnitEntityPlaced()`, never the bare `getUnitEntity()`** — the accessor places a
+node that was never given a location before handing it over, because the engine reconciles ANY statement against
+where it believes the node stands ([§7b](08-the-run-from-origin-reconciliation.md)). The compiler cannot see the
+difference, so `python Tools/verify-entity-placement.py` is what keeps it true.
+⚠ These guards are `!isUsingDummyEntities()`, which admits NULL — a separate standing defect against the
+[isRealEntity rule](../../../AGENTS.md), not fixed by the placed accessor.
 
 - `AddMission` — `Engine/CvUnit.cpp:22541-22547`, gated on `CvMissionDefinition::isValid()` ONLY, which is what
   makes it dummy-safe: the plot must be `isActiveVisible(false)`, the attacker must be

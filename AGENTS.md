@@ -296,6 +296,17 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   object-kind value itself.)* ⛔ If it fires, fix the side that is WRONG — and prefer the raw int, since a payload
   carries typed fields and never a pre-resolved string ([spine.md](docs/spine.md)); never widen
   the tool.
+- **Entity placement: `python Tools/verify-entity-placement.py`** — ⛔ **every EXE entity call on a unit hands
+  over a node that has been given a LOCATION**, i.e. `getUnitEntityPlaced()` and never the bare
+  `getUnitEntity()`, outside the `CvDLLEntity` wrapper layer that is the guarded boundary itself. ⚑ It is a check
+  because the compiler CANNOT see it — the two accessors have the same type, both compile, and **the wrong one is
+  the shorter name** — and because the consequence belongs to a different subject than the call: a node the engine
+  was never told a location for believes it stands at the world ORIGIN, so a call about a promotion layer, an era,
+  a glow or a siege tower walks the unit in from the map centre exactly as a move call would. What decides it is
+  never WHAT is said, only whether the node was placed first. *(Worked: eight raw sites across four files, each
+  reachable with an unplaced node; the rule had already been broken three times, every time by reaching for the
+  nearest accessor.)* ⛔ If it fires, use the placed accessor — never widen the exemption list, which names the
+  wrapper layer and nothing else.
 - **Varargs text widths: `python Tools/verify-gettext-widths.py`** — ⛔ **a 64-bit value must NEVER be passed to
   the EXE's `gDLL->getText`.** It is VARARGS, so arguments match the TXT_KEY's placeholders positionally **by
   4-byte slot**: an 8-byte argument occupies TWO slots and every LATER placeholder reads one slot early, until a

@@ -359,6 +359,12 @@ void CvUnit::reloadEntity(bool bForceLoad)
 	ensureGraphicalPlacement();
 }
 
+CvUnitEntity* CvUnit::getUnitEntityPlaced()
+{
+	ensureGraphicalPlacement();
+	return getUnitEntity();
+}
+
 void CvUnit::placeForPresentation()
 {
 	//	⛔ BECOMING THE PLOT'S CENTRE UNIT IS THE MOMENT THE NODE IS FIRST PRESENTED, AND PLACING IT AT CREATION
@@ -1701,9 +1707,7 @@ void CvUnit::NotifyEntity(MissionTypes eMission)
 		//	through: fortify and awaken both reach setActivityType, which notifies every unit in the group and
 		//	passes no plot, and nothing on that path ever calls reloadEntity
 		//	(docs/reference/unit-rendering/08-the-run-from-origin-reconciliation.md).
-		ensureGraphicalPlacement();
-
-		gDLL->getEntityIFace()->NotifyEntity(getUnitEntity(), eMission);
+		gDLL->getEntityIFace()->NotifyEntity(getUnitEntityPlaced(), eMission);
 	}
 }
 
@@ -14159,7 +14163,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 	//update glow
 	if (pNewPlot && !isUsingDummyEntities() && isInViewport())
 	{
-		gDLL->getEntityIFace()->updateEnemyGlow(getUnitEntity());
+		gDLL->getEntityIFace()->updateEnemyGlow(getUnitEntityPlaced());
 	}
 	/*GC.getGame().logOOSSpecial(5, getID(), iX, iY);*/
 }
@@ -15711,7 +15715,7 @@ void CvUnit::setPromotionReady(bool bNewValue)
 /************************************************************************************************/
 		if ( !isUsingDummyEntities() && isInViewport())
 		{
-			gDLL->getEntityIFace()->showPromotionGlow(getUnitEntity(), bNewValue);
+			gDLL->getEntityIFace()->showPromotionGlow(getUnitEntityPlaced(), bNewValue);
 		}
 
 		if (m_bPromotionReady)
@@ -15957,6 +15961,7 @@ void CvUnit::setCombatUnit(CvUnit* pCombatUnit, bool bAttacking, bool bQuick, bo
 
 			if (showSeigeTower(pCombatUnit) && !isUsingDummyEntities()  && isInViewport())
 			{
+				ensureGraphicalPlacement();
 				CvDLLEntity::SetSiegeTower(true);
 			}
 			if (!bStealthAttack && !bStealthDefense)
@@ -16014,6 +16019,7 @@ void CvUnit::setCombatUnit(CvUnit* pCombatUnit, bool bAttacking, bool bQuick, bo
 
 		if (!isUsingDummyEntities() && isInViewport())
 		{
+			ensureGraphicalPlacement();
 			CvDLLEntity::SetSiegeTower(false);
 		}
 	}
@@ -17529,7 +17535,7 @@ void CvUnit::setHasUnitCombat(UnitCombatTypes eIndex, bool bNewValue, bool bByPr
 			//update graphics
 			if (!isUsingDummyEntities() && isInViewport())
 			{
-				gDLL->getEntityIFace()->updatePromotionLayers(getUnitEntity());
+				gDLL->getEntityIFace()->updatePromotionLayers(getUnitEntityPlaced());
 			}
 		}
 	}
@@ -18107,7 +18113,7 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue, bool bFree, 
 			//update graphics
 			if (!isUsingDummyEntities() && isInViewport())
 			{
-				gDLL->getEntityIFace()->updatePromotionLayers(getUnitEntity());
+				gDLL->getEntityIFace()->updatePromotionLayers(getUnitEntityPlaced());
 			}
 		}
 	}

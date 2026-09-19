@@ -402,6 +402,11 @@ public:
 	/// otherwise. A node the engine has never been told a location for believes it stands at the world origin,
 	/// so anything we go on to say about the unit is reconciled as a walk in from the map centre.</summary>
 	void ensureGraphicalPlacement();
+	///<summary>The unit's scene node, guaranteed to have been given a location before the caller hands it to the
+	/// EXE. ⛔ Every raw `getEntityIFace()` call on a unit uses THIS rather than the bare `getUnitEntity()`: the
+	/// engine reconciles anything it is told against where it believes the node stands, so speaking about a node
+	/// that was never placed walks the unit in from the map centre whatever the call was about.</summary>
+	CvUnitEntity* getUnitEntityPlaced();
 	///<summary>Re-states where this unit's node stands, for a node about to be PRESENTED — it has just become
 	/// its plot's centre unit. A node placed while another unit held the centre was never shown, and the engine
 	/// presents it from where it believes it stands, so the placement must be repeated here. Refused inside a
