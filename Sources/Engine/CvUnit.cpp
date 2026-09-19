@@ -688,7 +688,6 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 
 	m_iSurvivorChance = 0;
 
-	m_iExtraMoves = 0;
 	m_iUpkeep100 = 0;
 	m_iExtraMoveDiscount = 0;
 	//TB Combat Mods Begin
@@ -928,7 +927,6 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_iCombatLimitChange = other.m_iCombatLimitChange;
 	m_iExtraDropRange = other.m_iExtraDropRange;
 	m_iSurvivorChance = other.m_iSurvivorChance;
-	m_iExtraMoves = other.m_iExtraMoves;
 	m_iExtraMoveDiscount = other.m_iExtraMoveDiscount;
 	m_iStampedeCount = other.m_iStampedeCount;
 	m_iAttackOnlyCitiesCount = other.m_iAttackOnlyCitiesCount;
@@ -10662,13 +10660,14 @@ int CvUnit::maxMoves() const
 
 	if (m_iMaxMoveCacheTurn != GC.getGame().getGameTurn())
 	{
-		// Every leg is x100 -- the info's own moves and both extraMoves counters -- so the three add
-		// directly and the reduce happens once, here, as the sum is spent into movement points.
-		// MOVE_DENOMINATOR is movement's own fixed point, which is what lets a fractional move survive
-		// the hand-off instead of being truncated away a leg at a time.
+		// Both legs are x100, so they add directly and the reduce happens once, here, as the sum is spent
+		// into movement points. MOVE_DENOMINATOR is movement's own fixed point, which is what lets a
+		// fractional move survive the hand-off instead of being truncated away a leg at a time.
+		// ⚖ URS_MOVES is the unit's WHOLE allowance -- its own type plus every held promotion and combat
+		// class, resolved when the promotion landed. The team leg stays separate because it is the empire's,
+		// not the unit's: a tech deposit and the circumnavigation award, neither of which the unit carries.
 		const int iMoves =
-			m_pUnitInfo->getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT)
-			+ getExtraMoves()
+			resolvedValue(URS_MOVES)
 			+ (getDomainType() != DOMAIN_AIR ? GET_TEAM(getTeam()).getExtraMoves(getDomainType()) : 0);
 
 		m_maxMoveCache = iMoves * GC.getMOVE_DENOMINATOR() / 100;
@@ -15262,19 +15261,6 @@ int CvUnit::getVictoryStackHeal() const
 }
 
 
-int CvUnit::getExtraMoves() const
-{
-	return m_iExtraMoves;
-}
-
-void CvUnit::changeExtraMoves(int iChange)
-{
-	m_iExtraMoves += iChange;
-	m_iMaxMoveCacheTurn--;
-
-	FASSERT_NOT_NEGATIVE(m_iExtraMoves);
-}
-
 int CvUnit::getExtraMoveDiscount() const
 {
 	return m_iExtraMoveDiscount;
@@ -17302,7 +17288,6 @@ void CvUnit::processUnitCombat(UnitCombatTypes eIndex, bool bAdding, bool bByPro
 		}
 	}
 
-	changeExtraMoves(kUnitCombat.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) * iChange);//no merge/split diff
 	changeExtraMoveDiscount(kUnitCombat.getMovement(MOVEMENT_MOVE_DISCOUNT, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split diff
 	changeCargoSpace(kUnitCombat.getCargo(CARGO_SPACE, CASC_SCOPE_UNIT) / 100 * iChange);//no merge/split diff (since this mechanism is either a base setter or is for non-SM or non-player on SM.
 
@@ -17723,7 +17708,6 @@ void CvUnit::processPromotion(PromotionTypes eIndex, bool bAdding, bool bInitial
 	changeSurvivorChance((kPromotion.getScalar(SCALAR_SURVIVOR, CASC_SCOPE_UNIT, CASC_UNIT_PERCENT)) * iChange);
 	//	the heal accumulators carry whole hit points; the deposits are ×100 flats (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model))
 
-	changeExtraMoves(kPromotion.getMovement(MOVEMENT_MOVES, CASC_SCOPE_UNIT) * iChange);
 	changeExtraMoveDiscount(kPromotion.getMovement(MOVEMENT_MOVE_DISCOUNT, CASC_SCOPE_UNIT) / 100 * iChange);
 	//TB Combat Mods Begin
 
@@ -18312,7 +18296,6 @@ void CvUnit::read(FDataStreamBase* pStream)
 	WRAPPER_READ(wrapper, "CvUnit", &m_shadowUnit.iID);
 
 	WRAPPER_READ(wrapper, "CvUnit", &m_iImmuneToFirstStrikesCount);
-	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraMoves);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraMoveDiscount);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iExtraBombardRate);
 	WRAPPER_READ(wrapper, "CvUnit", &m_iRevoltProtection);
@@ -18431,7 +18414,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 		{
 			// Lands through the internal setter: the commit, the movement hash and the fact, from the one body
 			// that owns them. ⛔ NOT processPromotion -- the stats it applies are serialized on this unit in
-			// their own right (m_iExtraMoves, m_iBlitzCount, ... are read straight off the stream above), so
+			// their own right (m_iBlitzCount, ... are read straight off the stream above), so
 			// running it here would double every one.
 			// ⚠ An isRemoveAfterSet promotion is the one the stream carries that is NOT restored as held: it
 			// removes itself once applied, so its effect is already in the unit's serialized totals and the
@@ -19039,7 +19022,6 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE(wrapper, "CvUnit", m_shadowUnit.iID);
 
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iImmuneToFirstStrikesCount);
-	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraMoves);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraMoveDiscount);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iExtraBombardRate);
 	WRAPPER_WRITE(wrapper, "CvUnit", m_iRevoltProtection);

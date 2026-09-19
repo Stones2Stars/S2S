@@ -66,13 +66,19 @@ multiply.
 > CURATOR question (does terrain author denominator units too?), never a consumer sweep.
 >
 > ⚖ **THAT IS THE PLOT-COST HALF. THE OTHER HALF — A UNIT'S OWN MOVE BUDGET — IS SETTLED: ×100 ON EVERY LEG,
-> REDUCED EXACTLY ONCE, WHERE THE BUDGET IS SPENT.** The three legs are the info's own `movement.unit.flat`
-> and the two `extraMoves` counters (`CvUnit::m_iExtraMoves` from promotions and unit-combat classes,
-> `CvTeam::m_aiExtraMoves` from the `domainMoves` tech deposit and the circumnavigation award). All three are
+> REDUCED EXACTLY ONCE, WHERE THE BUDGET IS SPENT.** Two legs: the unit's whole allowance, resolved over its
+> own info ∪ held promotions ∪ held unit-combat classes (`URS_MOVES` on the unit RESOLVED plane), and the
+> EMPIRE's `CvTeam::m_aiExtraMoves` — the `domainMoves` tech deposit plus the circumnavigation award. Both are
 > ×100, so they add directly; `CvUnit::maxMoves` spends the sum through `MOVE_DENOMINATOR` and that is the ONE
 > reduce, with `baseMoves` the whole-tiles read derived from it. ⛔ **No leg reduces on the way in** — a
 > `/100` at a deposit is the banned move, because it puts one counter on the human plane while its siblings
 > stay ×100 and the engine then mixes the two.
+> ⚑ **The unit leg is RESOLVED rather than accumulated, and that is what makes the scale question local.** A
+> pushed accumulator has to be serialized, so changing its scale changes what every existing save MEANS
+> ([save.md](../../save.md) break #1); a resolved slot is derived, serializes nothing, and re-gathers at load
+> from a held set the save already restores — so the scale lives in exactly one place and old saves simply
+> come out right. ⛔ A per-unit stat that is a pure function of the held set is a ROW in that slot table,
+> never a member with a `change*` maintainer.
 > ⚑ **Each leg that reaches the counter from OUTSIDE the cascade converts at its own IN boundary**, exactly as
 > readJson does: `CIRCUMNAVIGATE_FREE_MOVES` is authored in GlobalDefines as whole moves, and the `CyTeam`
 > binding converts both ways because WorldBuilder edits in whole moves.

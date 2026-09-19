@@ -2358,3 +2358,15 @@ CvCity::m_paiGreatPeopleUnitRate          (int array, GC.getNumUnitInfos())
 CvPlayer::iGreatPeopleRateforUnitSize     (short)
 CvPlayer::iGreatPeopleRateforUnitType     (short, variable-length)
 CvPlayer::iGreatPeopleRateforUnitCount    (int, variable-length)
+
+========================
+#554 unit-plane (movement): the stored per-unit extra-move accumulator is removed. A unit's move allowance is
+a pure function of its held set -- its own type, its held promotions, its held unit-combat classes -- so it is
+derived data and serializes nothing (save.md §5); the held set is itself restored by the save read. It now
+reads the unit RESOLVED plane (Cascade/CvUnitResolved.h) -- URS_MOVES, "movement.unit"."flat" -- gathered
+on-dirty from those three carriers, and NOT delta-only: movement has no per-unit editable base for the type's
+contribution to double-count against (WorldBuilder edits moves LEFT, the spent counter). CvUnit::getExtraMoves
+and changeExtraMoves are gone with it, and their processPromotion / processUnitCombat folds with them.
+| ⚠ The TEAM counter (CvTeam::m_aiExtraMoves) is NOT cut and stays serialized: it carries the circumnavigation
+| award, which is a genuine event grant belonging to no held set.
+CvUnit::m_iExtraMoves                     (int)

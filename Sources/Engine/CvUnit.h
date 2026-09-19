@@ -1074,10 +1074,6 @@ public:
 
 	int getVictoryStackHeal() const;
 
-
-	int getExtraMoves() const;
-	void changeExtraMoves(int iChange);
-
 	int getExtraMoveDiscount() const;
 	void changeExtraMoveDiscount(int iChange);
 
@@ -1210,7 +1206,11 @@ public:
 	// The HEAL block's verdict -- a bare fetch, folded when the promotion landed (Cascade/CvUnitResolved.h).
 	bool healsOutsideFriendlyTerritory() const { return m_resolvedValues.healsOutsideFriendlyTerritory(); }
 	// The dirty entry point: the two spine facts that can move a unit's resolved values.
-	void markResolvedValuesDirty() const { m_resolvedValues.markDirty(*this); }
+	// The move allowance is resolved on this plane (URS_MOVES), so the turn-keyed maxMoves cache dies with
+	// it. ⚠ The move-through-plots resets beside the two process* emits do NOT cover this: they are gated on
+	// changesMoveThroughPlots(), which is the terrain-COST question, and a promotion granting a plain extra
+	// move answers it false.
+	void markResolvedValuesDirty() const { m_resolvedValues.markDirty(*this); m_iMaxMoveCacheTurn = -1; }
 
 	void setLeaderUnitType(UnitTypes leaderUnitType);
 
@@ -1502,10 +1502,6 @@ protected:
 
 	int m_iSurvivorChance;
 
-	//@SAVEBREAK - x100 like every other movement leg. A save written before that carries whole moves, which
-	// now read as a fraction of one and contribute nothing, so a unit restored from one loses the move its
-	// movement promotion granted. Nothing is corrupted; the value is simply a scale behind.
-	int m_iExtraMoves;
 	// The unit's stored per-turn upkeep (x100). DERIVED -- recomputed by calcUpkeep from the flat model
 	// (base + the resolved flat extra) and NEVER serialized (docs/specs/save.md §5 (derived data serializes NOTHING)); the player
 	// total tracks its delta. Its declaration was lost to a half-cut while the body kept using it, which
