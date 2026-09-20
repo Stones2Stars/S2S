@@ -76,7 +76,13 @@ void CvPlot::getYields(int (&yields)[NUM_YIELD_TYPES]) const
 	for (int iYield = 0; iYield < NUM_YIELD_TYPES; ++iYield)
 	{
 		const int iChannel = CascadeChannelRegistry::channelLookup(infoYieldFamily(iYield), (int)CHANNEL_AMOUNT, -1);
-		yields[iYield] = InfoValuation::realizedAtPlot(*this, iChannel);
+		// ⛔ THE READER SUMS DERIVABLE + PERSISTED ([three-planes.md] § WHY DELTA-DERIVING FAILED BEFORE). A
+		// random event's plot yield has no live source to re-derive it from, so it is NOT a deposit and is never
+		// folded into the accumulator -- it is its own persisted store, and this read is where the two meet.
+		// ⚠ That store holds WHOLE yields: the event infos are XML and pass through no readJson conversion, so
+		// the authored `<iExtraYield>2</iExtraYield>` arrives unscaled and is lifted onto the ×100 plane here,
+		// at the boundary it crosses (docs/specs/curators/fixed-point-and-scales.md §4d).
+		yields[iYield] = InfoValuation::realizedAtPlot(*this, iChannel) + m_aExtraYield[iYield] * 100;
 	}
 }
 
@@ -7980,6 +7986,12 @@ void CvPlot::setExtraYield(YieldTypes eYield, short iExtraYield)
 
 	m_aExtraYield[eYield] += iExtraYield;
 
+}
+
+int CvPlot::getEventYield(YieldTypes eYield) const
+{
+	FASSERT_BOUNDS(0, NUM_YIELD_TYPES, eYield);
+	return m_aExtraYield[eYield];
 }
 
 

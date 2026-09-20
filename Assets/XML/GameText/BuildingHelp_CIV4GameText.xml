@@ -1439,12 +1439,22 @@
 		<Tag>TXT_KEY_PLOTHELP_YIELD</Tag>
 		<English>%s1: %s2 (nature %s3 [ICON_BULLET] improvement %s4 [ICON_BULLET] route/other %s5)</English>
 	</TEXT>
-	<!-- Shown only while the tile is actually being WORKED: an unworked tile says nothing, which keeps an
-	     empty-tile hover short. It answers why a tile's yield is or is not reaching anyone, since a plot
-	     produces its package either way but only a worked tile joins a city's plot sum. -->
+	<!-- The event-granted share of the line above. Its own line because it belongs to none of that line's three
+	     segments: those decompose the cascade package, and an event grant is a persisted store beside it. -->
+	<TEXT>
+		<Tag>TXT_KEY_PLOTHELP_YIELD_EVENT</Tag>
+		<English> [ICON_BULLET] of which %s1 from a past event</English>
+	</TEXT>
+	<!-- The pair a tile's hover picks between when it falls inside a city's workable set: WORKED_BY when a
+	     citizen is on it, IN_RANGE_OF when the city could work it but currently does not. A tile no city can
+	     reach gets neither, so open land stays short. -->
 	<TEXT>
 		<Tag>TXT_KEY_PLOTHELP_WORKED_BY</Tag>
 		<English>Worked by %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PLOTHELP_IN_RANGE_OF</Tag>
+		<English>In range of %s1 [ICON_BULLET] not currently worked</English>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_YIELDHELP_BASE</Tag>

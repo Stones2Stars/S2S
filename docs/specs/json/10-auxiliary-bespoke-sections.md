@@ -216,6 +216,18 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   > ⚑ The rest of the merged object needs no faking: a merge averages its three sources' XP and keeps the
   > promotions all three shared, and three FRESH units average to fresh XP and share only their free promotions
   > — so a newly-built ranked unit already equals "three fresh units merged" without inventing any history.
+  >
+  > **⛔ A RANK PROMOTION IS OUTSIDE THE PROMOTION PATH ENTIRELY, SO THE PROMOTION TESTS LEAVE IT ALONE.** It is
+  > never offered, never chosen and never earned — the merge/split application injects it — so it carries no
+  > combat-class prereq BY CONSTRUCTION. ⇒ Every test that asks *may this unit ACQUIRE or KEEP this promotion*
+  > exempts it (`CvUnit::isSizeMattersPromotion`), because demanding an acquisition credential of an injected
+  > rank rejects one the engine itself just applied, and the unit silently loses its rank on the next promotion
+  > it takes.
+  > ⚖ **It is recognised by the `sizeMatters` DELTA it carries** — a non-zero `group` or `quality` is what makes
+  > a promotion a rank promotion. ⛔ Do NOT identify it by the legacy `forOffset` / `zeroesXP` flags: those were
+  > the old tell, **no promotion in the data authors either**, and an exemption keyed on them does not fire at
+  > all. ⚠ This exempts only the acquisition question. Rank's OWN rules still bind and are not part of it — a
+  > commander and a commodore hold no rank, and a quality rung is not offered to a unit already owed a level.
 - **bespoke** object-sections, each read by its own system: `promotionLine` · `buildUp` · `shrine` · `headquarters` ·
   `spread` · `properties` · `voteSource` · `threshold` · `role` · `victory` · `targetLevel` · `conversion` ·
   `unitCapability` · `sizeMatters` · `hideAndSeek`.

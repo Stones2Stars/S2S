@@ -194,7 +194,7 @@ def applyLandmarkFromEvent(argsList):
 	if iFood != 0 or iProd != 0 or iComm != 0:
 		pPlot = MAP.plot(kTriggeredData.iPlotX, kTriggeredData.iPlotY)
 		if pPlot:
-			placeLandmark(pPlot, event.getType(), iFood, iProd, iComm, True, -1)
+			placeLandmark(pPlot, INFO.getType("EVENT_", iEvent), iFood, iProd, iComm, True, -1)
 
 	return True
 

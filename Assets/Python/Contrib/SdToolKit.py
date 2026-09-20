@@ -13,6 +13,8 @@ from CvPythonExtensions import *
 import BugData
 import cPickle
 
+GC = CyGlobalContext()
+
 
 #-=-=-=-=-=-=-=-= SD-DATA-STORAGE =-=-=-=-=-=-=-=-=-#
 # Every variable is a string, except for the actual

@@ -1570,21 +1570,17 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 		szString.append(CvWString(GC.getRouteInfo(pPlot->getRouteType()).getDescription()));
 	}
 
-	// ---- WHO WORKS IT ----
-	// ⚖ ONLY WHILE IT IS ACTUALLY WORKED (owner): an unworked tile says nothing, which keeps the hover on an
-	// empty tile short. It answers a question the yields below cannot -- a plot produces its package either way,
-	// but only a WORKED tile joins its city's plot Σ ([modifier.md] §2a), so this is the difference between a
-	// yield that reaches someone and one that reaches nobody.
-	// ⚑ `isBeingWorked` asks the CITY whether it is working this plot, so it is the working-city relation AND the
-	// citizen assignment in one read -- a tile can have a working city and still be unworked.
-	if (pPlot->isBeingWorked())
+	// ---- WHO WORKS IT ---- (the line pair is designed in [tooltip-look.md] setPlotHelp)
+	// ⚑ The two reads are NOT the same question: `getWorkingCity` asks whether the tile falls in a city's
+	// workable set, `isBeingWorked` whether a citizen is actually on it. A tile can have the first without the
+	// second, which is why the null check selects the line and the assignment check only picks which one.
+	const CvCity* pWorkingCity = pPlot->getWorkingCity();
+	if (pWorkingCity != NULL)
 	{
-		const CvCity* pWorkingCity = pPlot->getWorkingCity();
-		if (pWorkingCity != NULL)
-		{
-			szString.append(NEWLINE);
-			szString.append(gDLL->getText("TXT_KEY_PLOTHELP_WORKED_BY", pWorkingCity->getNameKey()));
-		}
+		szString.append(NEWLINE);
+		szString.append(gDLL->getText(
+			pPlot->isBeingWorked() ? "TXT_KEY_PLOTHELP_WORKED_BY" : "TXT_KEY_PLOTHELP_IN_RANGE_OF",
+			pWorkingCity->getNameKey()));
 	}
 
 	// ---- WHOSE TILE IT IS, AND WHO IS TAKING IT ----
@@ -1611,11 +1607,17 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 		const int64_t iObserverDelta = (int64_t)aiObserverBonusDelta[iYield];
 		// Floored like the package's own max(0,·) -- withdrawing a hidden bonus from an already-floored tile is
 		// the one way this arithmetic can go under zero, and a negative yield is not a thing to show a player.
-		const int64_t iTotal = std::max<int64_t>(0, pPlot->getCascadePackage().readFlat(iChannel) + iObserverDelta);
+		// A random event's grant is a PERSISTED store beside the cascade, never a deposit in it, so it appears
+		// in neither the substrate nor the improvement nor the rest -- it is summed by the reader
+		// ([three-planes.md] § WHY DELTA-DERIVING FAILED BEFORE, which is also what CvPlot::getYields does).
+		// ⚠ It has to be in the TOTAL here or the hover and the tile disagree about the same number, and it is
+		// stored in whole yields, so it lifts onto this ×100 plane.
+		const int64_t iEvent = (int64_t)pPlot->getEventYield((YieldTypes)iYield) * 100;
+		const int64_t iTotal = std::max<int64_t>(0, pPlot->getCascadePackage().readFlat(iChannel) + iObserverDelta + iEvent);
 		const int64_t iNature = std::max<int64_t>(0, pPlot->getCascadePackage().readSubstrateFlat(iChannel) + iObserverDelta);
 		const int64_t iImprovement = pPlot->getCascadePackage().readImprovementFlat(iChannel);
 		const int64_t iRest = pPlot->getCascadePackage().readRestFlat(iChannel);
-		if (iTotal == 0 && iNature == 0 && iImprovement == 0 && iRest == 0)
+		if (iTotal == 0 && iNature == 0 && iImprovement == 0 && iRest == 0 && iEvent == 0)
 		{
 			continue;   // a channel this tile has never carried says nothing worth a line
 		}
@@ -1628,6 +1630,15 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 				gt_scaled100(iNature).GetCString(),
 				gt_scaled100(iImprovement).GetCString(),
 				gt_scaled100(iRest).GetCString()));
+
+			// Named separately because it belongs to no segment above: the three the breakdown names are the
+			// package's, and this one is the persisted store. Shown only when a tile actually carries one, so
+			// an ordinary tile's breakdown is unchanged.
+			if (iEvent != 0)
+			{
+				szString.append(gDLL->getText("TXT_KEY_PLOTHELP_YIELD_EVENT",
+					gt_scaled100(iEvent).GetCString()));
+			}
 		}
 		else
 		{

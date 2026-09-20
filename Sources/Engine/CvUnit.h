@@ -1271,6 +1271,13 @@ public:
 	bool canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas = false, bool bEquip = false, bool bForLeader = false, bool bForOffset = false, bool bForFree = false, bool bForBuildUp = false, bool bForStatus = false) const;
 	//TB Combat Mods end
 	bool canAcquirePromotionAny() const;
+	///<summary>
+	/// Is this promotion one the Size-Matters system owns -- a rank delta, rather than anything a unit can be
+	/// offered or choose? Rank is carried by promotions ([json.md] §10 sizeMatters) and applied by the merge /
+	/// split normalization, so these arrive by injection and must not be judged against the acquisition rules.
+	///</summary>
+	static bool isSizeMattersPromotion(const CvPromotionInfo& kPromotion);
+
 	bool isPromotionValid(PromotionTypes ePromotion, bool bFree = false, bool bKeepCheck = false) const;
 	bool isHealsUnitCombat(UnitCombatTypes eIndex) const;
 	bool isHasUnitCombat(UnitCombatTypes eIndex) const;
