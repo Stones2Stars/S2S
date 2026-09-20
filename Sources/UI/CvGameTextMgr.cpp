@@ -1570,21 +1570,17 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 		szString.append(CvWString(GC.getRouteInfo(pPlot->getRouteType()).getDescription()));
 	}
 
-	// ---- WHO WORKS IT ----
-	// ⚖ ONLY WHILE IT IS ACTUALLY WORKED (owner): an unworked tile says nothing, which keeps the hover on an
-	// empty tile short. It answers a question the yields below cannot -- a plot produces its package either way,
-	// but only a WORKED tile joins its city's plot Σ ([modifier.md] §2a), so this is the difference between a
-	// yield that reaches someone and one that reaches nobody.
-	// ⚑ `isBeingWorked` asks the CITY whether it is working this plot, so it is the working-city relation AND the
-	// citizen assignment in one read -- a tile can have a working city and still be unworked.
-	if (pPlot->isBeingWorked())
+	// ---- WHO WORKS IT ---- (the line pair is designed in [tooltip-look.md] setPlotHelp)
+	// ⚑ The two reads are NOT the same question: `getWorkingCity` asks whether the tile falls in a city's
+	// workable set, `isBeingWorked` whether a citizen is actually on it. A tile can have the first without the
+	// second, which is why the null check selects the line and the assignment check only picks which one.
+	const CvCity* pWorkingCity = pPlot->getWorkingCity();
+	if (pWorkingCity != NULL)
 	{
-		const CvCity* pWorkingCity = pPlot->getWorkingCity();
-		if (pWorkingCity != NULL)
-		{
-			szString.append(NEWLINE);
-			szString.append(gDLL->getText("TXT_KEY_PLOTHELP_WORKED_BY", pWorkingCity->getNameKey()));
-		}
+		szString.append(NEWLINE);
+		szString.append(gDLL->getText(
+			pPlot->isBeingWorked() ? "TXT_KEY_PLOTHELP_WORKED_BY" : "TXT_KEY_PLOTHELP_IN_RANGE_OF",
+			pWorkingCity->getNameKey()));
 	}
 
 	// ---- WHOSE TILE IT IS, AND WHO IS TAKING IT ----
