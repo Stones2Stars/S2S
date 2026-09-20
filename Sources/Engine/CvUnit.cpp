@@ -16881,6 +16881,11 @@ bool CvUnit::canAcquirePromotion(PromotionTypes ePromotion, bool bIgnoreHas, boo
 	return true;
 }
 
+bool CvUnit::isSizeMattersPromotion(const CvPromotionInfo& kPromotion)
+{
+	return kPromotion.getSizeMatters().group != 0 || kPromotion.getSizeMatters().quality != 0;
+}
+
 bool CvUnit::isPromotionValid(PromotionTypes ePromotion, bool bFree, bool bKeepCheck) const
 {
 	PROFILE_EXTRA_FUNC();
@@ -16948,12 +16953,19 @@ bool CvUnit::isPromotionValid(PromotionTypes ePromotion, bool bFree, bool bKeepC
 			return false;
 		}
 	}
-	// TB SubCombat Mod Begin
-	// The two solid ways to identify a Size Matters promotion that would not normally have a CC prereq.
-	// Note: Apparently having no CC prereq is a clear way to isolate promotions to only being assigned directly by event or other special injection.
-	// Thus it was necessary to pass the Size Matters promos despite having no particular CC prereq.
-	if (!promo.isForOffset() && !promo.isZeroesXP())
+	// ⛔ A SIZE-MATTERS promotion is not on the promotion path at all, so the combat-class requirement below
+	// does not describe it. A RANK IS CARRIED BY PROMOTIONS ([json.md] §10 sizeMatters) and applied by the
+	// merge/split normalization, never chosen from a level-up and never acquired -- so it carries no
+	// combat-class prereq BY CONSTRUCTION, and demanding one rejects a rank the engine itself just applied.
+	// ⚑ It is identified by the DELTA that makes it one. The legacy tell was the isForOffset/isZeroesXP pair
+	// and NO promotion in the data authors either flag, so that exemption had silently stopped firing.
+	// ⚠ This exempts only the ACQUISITION test. The rules about who may hold a rank -- the commander and
+	// commodore exclusions below, and the quality-vs-experience gate -- are SM's own and still bind.
+	if (!isSizeMattersPromotion(promo))
 	{
+		// ⚠ `bFree` only seeds the EMPTY case -- the per-iteration reset below means a non-empty qualified set
+		// judges a free promotion exactly as a chosen one. That is longstanding and is left alone here: it
+		// governs ordinary promotions, and changing it would move every free grant in the game.
 		bool bValid = bFree;
 
 		for (int iI = (int)promo.getQualifiedUnitCombats().size() - 1; iI > -1; iI--)
