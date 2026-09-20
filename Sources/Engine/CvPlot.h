@@ -778,6 +778,13 @@ public:
 
 
 	void setExtraYield(YieldTypes eYield, short iExtraYield);
+
+	///<summary>
+	/// The plot's EVENT-GRANTED yield, in whole yields. A random event's plot bonus has no live source to
+	/// re-derive it from, so it is a persisted store beside the cascade rather than a deposit in it, and every
+	/// reader of the tile's yield sums the two ([three-planes.md] § WHY DELTA-DERIVING FAILED BEFORE).
+	///</summary>
+	int getEventYield(YieldTypes eYield) const;
 	DllExport int getYield(YieldTypes eIndex) const;
 	/// <summary>The bonus this plot shows to an observing PLAYER — NO_BONUS while that player has not revealed it,
 	/// and NO_BONUS for NO_PLAYER, because nobody sees nothing. Reveal is tech, so the team is hopped exactly here

@@ -2495,6 +2495,14 @@ improvement there is waiting for a citizen rather than wasted.
 - Worked by %s1  <!-- TXT_KEY_PLOTHELP_WORKED_BY -->
 - In range of %s1 [ICON_BULLET] not currently worked  <!-- TXT_KEY_PLOTHELP_IN_RANGE_OF -->
 
+⚑ **The yield breakdown's three segments decompose the PACKAGE, so a persisted store needs its own term.** An
+event-granted plot yield is not a deposit and appears in none of nature / improvement / route-other, but it IS
+in the total — so without a line of its own the breakdown reads as an unexplained residual. It shows only on a
+tile that carries one.
+
+- %s1: %s2 (nature %s3 [ICON_BULLET] improvement %s4 [ICON_BULLET] route/other %s5)  <!-- TXT_KEY_PLOTHELP_YIELD -->
+- [ICON_BULLET] of which %s1 from a past event  <!-- TXT_KEY_PLOTHELP_YIELD_EVENT -->
+
 - <name of the thing>
 - Owner  <!-- TXT_KEY_MISC_OWNER -->
 - *  <!-- TXT_KEY_BULLET -->
