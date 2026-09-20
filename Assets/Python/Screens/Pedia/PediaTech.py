@@ -1,6 +1,7 @@
 # Pedia overhaul by Toffer for Caveman2Cosmos.
 
 from CvPythonExtensions import *
+GC = CyGlobalContext()
 INFO = CyInfo()
 GAME = CyGame()
 ENUMS = CyEnums()

@@ -139,7 +139,7 @@ class CvOptionsScreen:
 
 			# Volume Slider
 			szWidgetName = "VolumeSlider_" + str(iWidgetNum)
-   			self.getTabControl().setValue(szWidgetName, iInitialVal)
+			self.getTabControl().setValue(szWidgetName, iInitialVal)
 
 			# Volume Checkbox
 			szWidgetName = "VolumeNoSoundCheckbox_" + str(iWidgetNum)
@@ -148,12 +148,12 @@ class CvOptionsScreen:
 		# Voice Capture Dropdown
 		self.getTabControl().setValue("CaptureDeviceDropdownBox", UserProfile.getCaptureDeviceIndex() )
 		# Voice Capture Slider
-   		self.getTabControl().setValue("CaptureVolumeSlider", UserProfile.getCaptureVolume())
+		self.getTabControl().setValue("CaptureVolumeSlider", UserProfile.getCaptureVolume())
 
 		# Voice Playback Dropdown
 		self.getTabControl().setValue("PlaybackDeviceDropdownBox", UserProfile.getPlaybackDeviceIndex() )
 		# Voice Playback Slider
-   		self.getTabControl().setValue("PlaybackVolumeSlider", UserProfile.getPlaybackVolume())
+		self.getTabControl().setValue("PlaybackVolumeSlider", UserProfile.getPlaybackVolume())
 
 		# Voice Chatting Checkbox
 		self.getTabControl().setValue("VoiceChatCheckbox", UserProfile.useVoice())
@@ -217,10 +217,10 @@ class CvOptionsScreen:
 		#################### PROFILE ####################
 
 		# Broadband Radio Button
-   		self.getTabControl().setValue("BroadbandSelection", not gc.getGame().isModem())
+		self.getTabControl().setValue("BroadbandSelection", not gc.getGame().isModem())
 
 		# Modem Checkbox
-   		self.getTabControl().setValue("ModemSelection", gc.getGame().isModem())
+		self.getTabControl().setValue("ModemSelection", gc.getGame().isModem())
 
 	def interfaceScreen (self):
 		"Initial creation of the screen"
