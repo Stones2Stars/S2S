@@ -71,10 +71,15 @@ composer rather than text of its own.
 
 ## Provenance and maintenance
 
-Seeded mechanically from the legacy `Sources/CvGameTextMgr.cpp` at the initial commit (`bb5cb972e`), resolving
-each `TXT_KEY` against the current `Assets/XML/GameText` and normalising icons to the vocabulary above. **It is
-hand-maintained from here** — there is no regenerator, deliberately: a regenerator would overwrite the design
-work this file exists to hold.
+Seeded mechanically from the legacy `Sources/CvGameTextMgr.cpp` **and `Sources/CvDLLWidgetData.cpp`** at the
+initial commit (`bb5cb972e`), resolving each `TXT_KEY` against the current `Assets/XML/GameText`, normalising
+icons to the vocabulary above and dropping `[COLOR_*]` markers. **It is hand-maintained from here** — there is no
+regenerator, deliberately: a regenerator would overwrite the design work this file exists to hold.
+
+⚠ **BOTH composer families are here because covering only one hid an entire class of gap.** `CvGameTextMgr` holds
+the entity help; `CvDLLWidgetData` holds the WIDGET help — the hover on a button, an action, a plot-list entry.
+While only the first was written down, the second had no design target at all, so a widget tooltip could be
+missing its whole header and nothing measured it as missing.
 
 ⚠ Entries are the composer's emissions **in source order, de-duplicated** — a composer's branches are all listed,
 so a single run showed some subset of its lines, never all of them at once. Read it as the vocabulary a tooltip
@@ -2481,6 +2486,15 @@ finished.
 
 ## `setPlotHelp`
 
+⚑ **The working-city pair is DESIGN, not legacy** — the lines below it are the pre-rework record, and neither of
+these two appears in it. A tile inside a city's workable set names that city, and WHICH of the two it picks is the
+tile's live state: a citizen is on it, or the city could work it and does not. A tile no city can reach gets
+neither line, so open land stays short. The second is the one a player wants before improving a tile — it says an
+improvement there is waiting for a citizen rather than wasted.
+
+- Worked by %s1  <!-- TXT_KEY_PLOTHELP_WORKED_BY -->
+- In range of %s1 [ICON_BULLET] not currently worked  <!-- TXT_KEY_PLOTHELP_IN_RANGE_OF -->
+
 - <name of the thing>
 - Owner  <!-- TXT_KEY_MISC_OWNER -->
 - *  <!-- TXT_KEY_BULLET -->
@@ -3310,3 +3324,813 @@ finished.
 ## `setYieldPerPopChangeHelp`
 
 - → `setResumableYieldChangeHelp`
+
+---
+
+# The WIDGET help composers (`CvDLLWidgetData`)
+
+The hover on a **control** rather than on an entity: a unit action, a build button, a plot-list entry, a
+city-screen widget. Same rules as the entity half above — the LOOK is the target, the MECHANISM is not, and a
+line here is evidence of how something read, never an obligation to print it again.
+
+⚡ **The action family is where an outcome mission shows itself.** `parseActionHelp` opens with the action's
+own name, then whatever the plot has to say about it, then the mission's authored help prose, and closes with
+the outcome list (`CvOutcomeMission::buildDisplayString` → per-outcome `NN%: <text> ( effects )`). A mission
+that authors no help prose therefore renders as a name followed directly by percentages, with nothing saying
+what the action IS -- which is a DATA gap in that mission, not a composer that forgot a heading.
+
+## `parseActionHelp`
+
+- %d1_Num [NUM1:Turn:Turns]  <!-- TXT_KEY_MISC_TURN_OR_TURNS -->
+- [ICON_BULLET]Destroys %s1_ImpName  <!-- TXT_KEY_ACTION_DESTROY_IMP -->
+- Must be outside Cultural Borders.  <!-- TXT_KEY_ACTION_PLUNDER_IN_BORDERS -->
+- Probability of Success: %d1_Prob%%  <!-- TXT_KEY_ACTION_PROBABILITY -->
+- Probability of Success: %d1_Prob - %d2_Prob%%  <!-- TXT_KEY_ACTION_PROBABILITY_RANGE -->
+- Cannot found within %d1_Num plots of city.  <!-- TXT_KEY_ACTION_CANNOT_FOUND -->
+- Cannot found more than %d1 cities because of %s2  <!-- TXT_KEY_ACTION_CANNOT_FOUND_CITY_LIMIT -->
+- Cannot spread Non-State <religion icon> in this city.  <!-- TXT_KEY_ACTION_CANNOT_SPREAD_NON_STATE_RELIGION -->
+- → `setReligionHelpCity`
+- Improves the %s1_Affliction condition of one unit on the same plot.  <!-- TXT_KEY_CURE_AFFLICTION_LINE -->
+- → `setCorporationHelpCity`
+- [ICON_BULLET]Buy out %s1_corporation in this city  <!-- TXT_KEY_ACTION_WILL_ELIMINATE_CORPORATION -->
+- Cannot expand %s1_corporation within %s2_civ_adjective borders  <!-- TXT_KEY_ACTION_CORPORATION_NOT_ACTIVE -->
+- Cannot expand %s1_corporation into %s2_corporation Headquarters  <!-- TXT_KEY_ACTION_CORPORATION_COMPETING_HEADQUARTERS -->
+- %s1_city has no access to %s2_bonus_list  <!-- TXT_KEY_ACTION_CORPORATION_NO_RESOURCES -->
+- Requires [LINK=%s1]%s2[\LINK] (%d3 Total) in any city  <!-- TXT_KEY_HELPTEXT_REQUIRES_NUM_BUILDINGS_0 -->
+- → `parseSpecialistHelpActual`
+- → `setBuildingHelp`
+- → `buildBuildingRequiresString`
+- → `setHeritageHelp`
+- %D1_NumResearch<beaker> for Research of %s2_TechName.  <!-- TXT_KEY_ACTION_EXTRA_RESEARCH -->
+- Can only Hurry Production of a Building.  <!-- TXT_KEY_ACTION_BUILDING_HURRY -->
+- Finish Construction of %s1_BuildName.  <!-- TXT_KEY_ACTION_FINISH_CONSTRUCTION -->
+- %D1_Change<hammer> for Construction of %s2_BuildName.  <!-- TXT_KEY_ACTION_EXTRA_CONSTRUCTION -->
+- Fully stock the food supply of %s1.  <!-- TXT_KEY_ACTION_FINISH_FOOD -->
+- %D1_Change<food> in the city of %s2.  <!-- TXT_KEY_ACTION_EXTRA_FOOD -->
+- This unit will gather intelligence and not awaken until it reaches the maximum Espionage bonus  <!-- TXT_KEY_MISSION_ESPIONAGE_SLEEP_HELP -->
+- Can only Conduct a Trade Mission in a Foreign City.  <!-- TXT_KEY_ACTION_TRADE_MISSION_FOREIGN -->
+- Can only Conduct an Infiltrate Mission in a Foreign City.  <!-- TXT_KEY_ACTION_INFILTRATE_MISSION_FOREIGN -->
+- Requires %d1_Num More <greatperson> Type(s)  <!-- TXT_KEY_ACTION_MORE_GREAT_PEOPLE -->
+- Will consume %d1_Num <greatperson>  <!-- TXT_KEY_ACTION_CONSUME_GREAT_PEOPLE -->
+- Gives a Total of %d1_Num Experience to Units in the Same Tile  <!-- TXT_KEY_ACTION_LEAD_TROOPS -->
+- When attached to a unit:  <!-- TXT_KEY_PROMOTIONHELP_WHEN_LEADING -->
+- → `parsePromotionHelp`
+- Unit can perform Espionage Missions when in a valid location and if the player has sufficient Espionage Points to execute them.  <!-- TXT_KEY_ACTION_ESPIONAGE_MISSION -->
+- → `setEspionageMissionHelp`
+- Eliminate %s1_unit for %d2<spy> %d3_percent%% chance of success.  <!-- TXT_KEY_ACTION_ASSASSIN_MISSION -->
+- Yield changes:  <!-- TXT_KEY_YIELD_CHANGE_DESCRIP -->
+- Must be outside rival Cultural Borders.  <!-- TXT_KEY_ACTION_NEEDS_OUT_RIVAL_CULTURE_BORDER -->
+- Must be within Cultural Borders owned by of one of our cities.  <!-- TXT_KEY_ACTION_NEEDS_CULTURE_BORDER -->
+- [ICON_BULLET]Requires [LINK=%s1]%s2[\LINK]  <!-- TXT_KEY_REQUIRES_LINK -->
+- Obsolete with [LINK=%s1_TechType]%s2_TechName[\LINK]  <!-- TXT_KEY_BUILDINGHELP_OBSOLETE_WITH -->
+- Requires  <!-- TXT_KEY_BUILDINGHELP_REQUIRES_LIST -->
+- or  <!-- TXT_KEY_OR -->
+- Cannot be constructed on a %s1_Name!  <!-- TXT_KEY_BUILDHELP_PLOT_BLOCKED -->
+- Will destroy the %s1_ImpName  <!-- TXT_KEY_ACTION_WILL_DESTROY_IMP -->
+- Will consume the unit  <!-- TXT_KEY_ACTION_CONSUME_UNIT -->
+- → `setResumableGoodBadChangeHelp`
+- → `setResumableValueChangeHelp`
+- [ICON_BULLET]%s1 in %s2_CityName  <!-- TXT_KEY_ACTION_CHANGE_IN_CITY -->
+- [ICON_BULLET]%D1_Change <hammer> in %s2_CityName  <!-- TXT_KEY_ACTION_CHANGE_PRODUCTION -->
+- Will remove the %s1_FeatName  <!-- TXT_KEY_ACTION_REMOVE_FEATURE -->
+- Will not receive any <hammer>  <!-- TXT_KEY_ACTION_NO_PRODUCTION -->
+- Will replace the %s1_Name with %s2_Name  <!-- TXT_KEY_ACTION_CHANGE_FEATURE -->
+- [ICON_BULLET]Provides %s1_BonusName  <!-- TXT_KEY_ACTION_PROVIDES_BONUS -->
+- [ICON_BULLET]Small chance of discovering  <!-- TXT_KEY_ACTION_CHANCE_DISCOVER -->
+- → `setYieldChangeHelp`
+- Irrigated  <!-- TXT_KEY_ACTION_IRRIGATED -->
+- [ICON_BULLET]%D1%% Tile Defense  <!-- TXT_KEY_ACTION_DEFENSE_MODIFIER -->
+- [ICON_BULLET]Becomes a [LINK=%s1_ImpType]%s2_ImpName[\LINK] in %d3_Num [NUM2:Turn:Turns]  <!-- TXT_KEY_ACTION_BECOMES_IMP -->
+- [ICON_BULLET]Travel Costs 1/%d1 Movement Point  <!-- TXT_KEY_ACTION_MOVEMENT_COST -->
+- [ICON_BULLET]All Units Can Move %d1 Tiles/Turn  <!-- TXT_KEY_ACTION_FLAT_MOVEMENT_COST -->
+- [ICON_BULLET]Connects Improved Resources with your Cities  <!-- TXT_KEY_ACTION_CONNECTS_RESOURCES -->
+- Cost: %d1_cost <gold>  <!-- TXT_KEY_BUILDHELP_COST -->
+- %d1_Num [NUM1:Turn:Turns]  <!-- TXT_KEY_ACTION_NUM_TURNS -->
+- (&lt;ALT&gt; for All Units of the active unit's type)  <!-- TXT_KEY_SAME_UNITS_TYPE -->
+- → `setCombatPlotHelp`
+- → `parsePromotionHelpInternal`
+- → `setBasicUnitHelp`
+- [ICON_BULLET]Goes To  <!-- TXT_KEY_ACTION_GOES_TO_CIV -->
+- %s1_Leader will not accept the gift.  <!-- TXT_KEY_REFUSE_GIFT -->
+- You will receive %d1_Num <gold>  <!-- TXT_KEY_MISC_GOLD_FOR_DISBANDING -->
+- (&lt;ALT&gt; for All Units)  <!-- TXT_KEY_ACTION_ALL_UNITS -->
+
+## `parseAdjustHelp`
+
+- → `buildAdjustString`
+
+## `parseAngryCitizenHelp`
+
+- Angry Citizen (Refuses to work...)  <!-- TXT_KEY_MISC_ANGRY_CITIZEN -->
+- → `setAngerHelp`
+
+## `parseAutomateCitizensHelp`
+
+- Turn Off Citizen Automation  <!-- TXT_KEY_MISC_OFF_CITIZEN_AUTO -->
+- Turn On Citizen Automation  <!-- TXT_KEY_MISC_ON_CITIZEN_AUTO -->
+
+## `parseBonusHelp`
+
+- → `setBonusHelp`
+
+## `parseBonusRevealHelp`
+
+- → `buildBonusRevealString`
+
+## `parseBuildBridgeHelp`
+
+- → `buildBridgeString`
+
+## `parseBuildHelp`
+
+- → `buildImprovementString`
+
+## `parseBuildListQueueHelp`
+
+- → `setUnitHelp`
+- → `setBuildingHelp`
+- → `setProjectHelp`
+
+## `parseBuildUpHelp`
+
+- → `setBuildUpHelp`
+
+## `parseBuildingFilterHelp`
+
+- Turn Off  <!-- TXT_KEY_MISC_TURN_OFF -->
+- Turn On  <!-- TXT_KEY_MISC_TURN_ON -->
+- Show constructable buildings only  <!-- TXT_KEY_LIST_BUILDING_FILTER_SHOW_BUILDABLE -->
+- Show only buildings that provide research  <!-- TXT_KEY_LIST_BUILDING_FILTER_SHOW_SCIENCE -->
+- Show only buildings that provide espionage  <!-- TXT_KEY_LIST_BUILDING_FILTER_SHOW_ESPIONAGE -->
+- Show only buildings that provide culture  <!-- TXT_KEY_LIST_BUILDING_FILTER_SHOW_CULTURE -->
+- Show only buildings that provide gold  <!-- TXT_KEY_LIST_BUILDING_FILTER_SHOW_GOLD -->
+- Show only buildings that provide food  <!-- TXT_KEY_LIST_BUILDING_FILTER_SHOW_FOOD -->
+- Show only buildings that provide production  <!-- TXT_KEY_LIST_BUILDING_FILTER_SHOW_PRODUCTION -->
+- Show only buildings that provide happiness  <!-- TXT_KEY_LIST_BUILDING_FILTER_SHOW_HAPPINESS -->
+- Show only buildings that provide health  <!-- TXT_KEY_LIST_BUILDING_FILTER_SHOW_HEALTH -->
+- Show only buildings that provide a military advantage  <!-- TXT_KEY_LIST_BUILDING_FILTER_SHOW_MILITARY -->
+- Show only buildings that provide city defense  <!-- TXT_KEY_LIST_BUILDING_FILTER_SHOW_CITY_DEFENSE -->
+- Hide any buildings that cause unhappiness  <!-- TXT_KEY_LIST_BUILDING_FILTER_HIDE_UNHAPPINESS -->
+- Hide any buildings that cause unhealthiness  <!-- TXT_KEY_LIST_BUILDING_FILTER_HIDE_UNHEALTHINESS -->
+- Hide world wonders  <!-- TXT_KEY_LIST_BUILDING_FILTER_HIDE_GREAT_WONDER -->
+- Hide national wonders  <!-- TXT_KEY_LIST_BUILDING_FILTER_HIDE_NATIONAL_WONDER -->
+- Hide normal buildings  <!-- TXT_KEY_LIST_BUILDING_FILTER_HIDE_NORMAL -->
+- Show only buildings that influence crime  <!-- TXT_KEY_LIST_BUILDING_FILTER_SHOW_CRIME -->
+- Show only buildings that influence flammability  <!-- TXT_KEY_LIST_BUILDING_FILTER_SHOW_FLAMMABILITY -->
+- Show only buildings that influence education  <!-- TXT_KEY_LIST_BUILDING_FILTER_SHOW_EDUCATION -->
+- Show only buildings that influence disease  <!-- TXT_KEY_LIST_BUILDING_FILTER_SHOW_DISEASE -->
+- Show only buildings that influence air pollution  <!-- TXT_KEY_LIST_BUILDING_FILTER_SHOW_AIR_POLLUTION -->
+- Show only buildings that influence water pollution  <!-- TXT_KEY_LIST_BUILDING_FILTER_SHOW_WATER_POLLUTION -->
+- Show only buildings that influence Tourism  <!-- TXT_KEY_LIST_BUILDING_FILTER_SHOW_TOURISM -->
+
+## `parseBuildingGroupingHelp`
+
+- Groups buildings according to selected categories  <!-- TXT_KEY_LIST_BUILDING_GROUPING -->
+
+## `parseBuildingHelp`
+
+- → `setBuildingHelp`
+
+## `parseBuildingSortHelp`
+
+- Sorts buildings according to selected categories  <!-- TXT_KEY_LIST_BUILDING_SORTING -->
+
+## `parseChangePercentHelp`
+
+- Increase %s1_CmrcType Rate by %d2_Mod%%  <!-- TXT_KEY_MISC_INCREASE_RATE -->
+- Decrease %s1_CmrcType Rate by %d2_Mod%%  <!-- TXT_KEY_MISC_DECREASE_RATE -->
+
+## `parseChangeSpecialistHelp`
+
+- → `parseSpecialistHelpActual`
+- Max: %d1_Num  <!-- TXT_KEY_MISC_MAX_SPECIALISTS -->
+- Remove a %s1_SpclstName  <!-- TXT_KEY_MISC_REMOVE_SPECIALIST -->
+- (%d1_Num Forced)  <!-- TXT_KEY_MISC_FORCED_SPECIALIST -->
+
+## `parseCitizenHelp`
+
+- → `parseSpecialistHelp`
+- (Free Specialist)  <!-- TXT_KEY_MISC_FREE_SPECIALIST -->
+
+## `parseCityNameHelp`
+
+- Population: %s1  <!-- TXT_KEY_CITY_POPULATION -->
+- → `setTimeStr`
+- Founded: %s1  <!-- TXT_KEY_CITY_FOUNDED -->
+- Click to Change the Name  <!-- TXT_KEY_CHANGE_NAME -->
+
+## `parseCivicHelp`
+
+- → `parseCivicInfo`
+
+## `parseCivicRevealHelp`
+
+- → `buildCivicRevealString`
+
+## `parseCivilizationHelp`
+
+- → `parseCivInfos`
+
+## `parseCommerceModHelp`
+
+- → `setCommerceHelp`
+
+## `parseConscriptHelp`
+
+- → `setBasicUnitHelpWithCity`
+- [ICON_BULLET]Costs %d1_Num Population  <!-- TXT_KEY_MISC_HURRY_POP -->
+- [ICON_BULLET]%D1_Change<unhappy> for %d2_Num Turns  <!-- TXT_KEY_MISC_ANGER_TURNS -->
+- Requires a Population of %d1  <!-- TXT_KEY_MISC_MIN_CITY_POP -->
+- Requires Culture of at least %d1%% Own Nationality  <!-- TXT_KEY_MISC_MIN_CULTURE_PERCENT -->
+- Requires  <!-- TXT_KEY_REQUIRES -->
+- or  <!-- TXT_KEY_OR -->
+- City cannot draft another unit this turn  <!-- TXT_KEY_MISC_CITY_HAS_CONSCRIPTED -->
+- You cannot draft any more units this turn  <!-- TXT_KEY_MISC_NO_CONSCRIPT_UNITS_LEFT -->
+- You can draft %d1 [NUM1:unit:units] this turn  <!-- TXT_KEY_MISC_CONSCRIPT_UNITS_LEFT -->
+
+## `parseConstructHelp`
+
+- → `setBuildingHelp`
+
+## `parseContactCivHelp`
+
+- Player difficulty: %s1  <!-- TXT_KEY_SETTINGS_DIFFICULTY_PLAYER -->
+- Diplomacy is not possible with the minor %s1_CivName  <!-- TXT_KEY_REV_CONTACT_MINOR -->
+- → `getWarplanString`
+- → `parseScoreHelp`
+- Contact %s1_PlyrName of %s2_CivName  <!-- TXT_KEY_MISC_CONTACT_LEADER -->
+- → `parsePlayerTraits`
+- We have not yet met this Civilization!!!  <!-- TXT_KEY_MISC_HAVENT_MET_CIV -->
+- Has fixed borders!  <!-- TXT_KEY_PLAYER_HAS_FIXED_BORDERS -->
+- Doesn't have fixed borders!  <!-- TXT_KEY_PLAYER_HAS_NOT_FIXED_BORDERS -->
+- → `getActiveDealsString`
+- → `getAllRelationsString`
+- (&lt;CTRL&gt; for Trade Table)  <!-- TXT_KEY_MISC_CTRL_TRADE -->
+- Refuses to Talk!!!  <!-- TXT_KEY_MISC_REFUSES_TO_TALK -->
+- → `getEspionageString`
+- → `getAttitudeString`
+- (&lt;ALT&gt; to Declare War)  <!-- TXT_KEY_MISC_ALT_DECLARE_WAR -->
+- Cannot declare war!!!  <!-- TXT_KEY_MISC_CANNOT_DECLARE_WAR -->
+- (&lt;SHIFT+ALT&gt; to Prepare for War)  <!-- TXT_KEY_MISC_SHIFT_ALT_PREPARE_WAR -->
+- (&lt;SHIFT&gt; to Send Chat Message)  <!-- TXT_KEY_MISC_SHIFT_SEND_CHAT -->
+
+## `parseCorporationHelp`
+
+- → `setCorporationHelp`
+
+## `parseCorporationHelpCity`
+
+- → `setCorporationHelpCity`
+
+## `parseCreateHelp`
+
+- → `setProjectHelp`
+
+## `parseCultureHelp`
+
+- Culture: %d1_Curr/%d2_Need <culture>  <!-- TXT_KEY_MISC_CULTURE -->
+- Culture: %s1_Curr/%d2_Need <culture>  <!-- TXT_KEY_MISC_CULTURE_FLOAT -->
+- Culture: %d1 <culture>  <!-- TXT_KEY_MISC_CULTURE_MAX -->
+- → `setCommerceHelp`
+
+## `parseDefensivePactHelp`
+
+- → `buildDefensivePactString`
+
+## `parseDescriptionHelp`
+
+- Get Historical Information for %s1_Name  <!-- TXT_KEY_MISC_HISTORICAL_INFO -->
+
+## `parseDisabledCitizenHelp`
+
+- → `parseSpecialistHelpActual`
+- Requires  <!-- TXT_KEY_REQUIRES -->
+- or  <!-- TXT_KEY_OR -->
+
+## `parseDomainExtraMovesHelp`
+
+- → `buildDomainExtraMovesString`
+
+## `parseEmphasizeHelp`
+
+- Turn Off  <!-- TXT_KEY_MISC_TURN_OFF -->
+- Turn On  <!-- TXT_KEY_MISC_TURN_ON -->
+
+## `parseEspionageCostHelp`
+
+- → `setEspionageCostHelp`
+
+## `parseEventHelp`
+
+- → `setEventHelp`
+
+## `parseFeatureHelp`
+
+- → `setFeatureHelp`
+
+## `parseFeatureProductionHelp`
+
+- → `buildFeatureProductionString`
+
+## `parseFinanceAwaySupply`
+
+- The Amount of Money Spent on Units in Enemy Territory  <!-- TXT_KEY_ECON_AMOUNT_MONEY_UNITS_ENEMY_TERRITORY -->
+- → `buildFinanceAwaySupplyString`
+
+## `parseFinanceCityMaint`
+
+- The Amount of Money Spent on City Maintenance  <!-- TXT_KEY_ECON_AMOUNT_MONEY_CITY_MAINT -->
+- → `buildFinanceCityMaintString`
+
+## `parseFinanceCivicUpkeep`
+
+- The Amount of Money Spent on Civics  <!-- TXT_KEY_ECON_AMOUNT_MONEY_CIVIC_UPKEEP -->
+- → `buildFinanceCivicUpkeepString`
+
+## `parseFinanceDomesticTrade`
+
+- The Total <commerce> from Domestic Trade Routes  <!-- TXT_KEY_BUG_FINANCIAL_ADVISOR_DOMESTIC_TRADE -->
+- → `buildDomesticTradeString`
+
+## `parseFinanceForeignIncome`
+
+- Income collected from other civilizations  <!-- TXT_KEY_ECON_AMOUNT_MONEY_FOREIGN -->
+- → `buildFinanceForeignIncomeString`
+
+## `parseFinanceForeignTrade`
+
+- The Total <commerce> from Foreign Trade Routes  <!-- TXT_KEY_BUG_FINANCIAL_ADVISOR_FOREIGN_TRADE -->
+- → `buildForeignTradeString`
+
+## `parseFinanceGrossIncome`
+
+- Your Gross Income  <!-- TXT_KEY_ECON_GROSS_INCOME -->
+
+## `parseFinanceInflatedCosts`
+
+- Increase of Expenses due to Inflation  <!-- TXT_KEY_ECON_AMOUNT_MONEY_AFTER_INFLATION -->
+- → `buildFinanceInflationString`
+
+## `parseFinanceNetGold`
+
+- Net Gold Per Turn  <!-- TXT_KEY_ECON_NET_GOLD -->
+
+## `parseFinanceNumUnits`
+
+- Number of Units You Are Currently Supporting  <!-- TXT_KEY_ECON_NUM_UNITS_SUPPORTING -->
+
+## `parseFinanceSpecialistGold`
+
+- The Total <gold> from Specialists  <!-- TXT_KEY_BUG_FINANCIAL_ADVISOR_SPECIALISTS -->
+- → `buildFinanceSpecialistGoldString`
+
+## `parseFoodModHelp`
+
+- → `setFoodHelp`
+
+## `parseFoundCorporationHelp`
+
+- → `buildFoundCorporationString`
+
+## `parseFoundReligionHelp`
+
+- → `buildFoundReligionString`
+
+## `parseFreeCitizenHelp`
+
+- → `parseSpecialistHelp`
+- → `parseFreeSpecialistHelp`
+
+## `parseFreeTechHelp`
+
+- → `buildFreeTechString`
+
+## `parseFreeUnitHelp`
+
+- → `buildFreeUnitString`
+
+## `parseGoldTradeHelp`
+
+- → `buildGoldTradeString`
+
+## `parseHappinessRateHelp`
+
+- → `buildHappinessRateString`
+
+## `parseHealthHelp`
+
+- → `setBadHealthHelp`
+- → `setGoodHealthHelp`
+- → `setBuildingAdditionalHealthHelp`
+
+## `parseHealthRateHelp`
+
+- → `buildHealthRateString`
+
+## `parseHelp`
+
+- → `parseLiberateCityHelp`
+- → `parseCityNameHelp`
+- Click to Change the Name  <!-- TXT_KEY_CHANGE_NAME -->
+- Creates a Group  <!-- TXT_KEY_WIDGET_CREATE_GROUP -->
+- Separates the Group  <!-- TXT_KEY_WIDGET_DELETE_GROUP -->
+- → `parseTrainHelp`
+- → `parseConstructHelp`
+- → `parseCreateHelp`
+- → `parseMaintainHelp`
+- → `setUnitHelp`
+- → `setBuildingHelp`
+- → `setProjectHelp`
+- → `parseBuildListQueueHelp`
+- → `parseBuildListHelp`
+- → `parseHurryHelp`
+- Open Main Menu  <!-- TXT_KEY_MAIN_MENU -->
+- → `parseConscriptHelp`
+- → `parseActionHelp`
+- → `parseCitizenHelp`
+- → `parseFreeCitizenHelp`
+- → `parseDisabledCitizenHelp`
+- → `parseAngryCitizenHelp`
+- → `parseChangeSpecialistHelp`
+- → `parseResearchHelp`
+- → `parseTechTreeHelp`
+- → `parseChangePercentHelp`
+- → `parseSetPercentHelp`
+- → `parseContactCivHelp`
+- → `parseScoreHelp`
+- Enter the city screen for this City  <!-- TXT_KEY_ZOOM_CITY_HELP -->
+- → `setCityBarHelp`
+- End Turn &lt;SHIFT-ENTER&gt;  <!-- TXT_KEY_WIDGET_END_TURN -->
+- Launch Spaceship  <!-- TXT_KEY_WIDGET_LAUNCH_VICTORY -->
+- → `parseAutomateCitizensHelp`
+- → `parseEmphasizeHelp`
+- → `parseBuildingFilterHelp`
+- → `parseBuildingGroupingHelp`
+- → `parseBuildingSortHelp`
+- → `parseUnitFilterHelp`
+- → `parseUnitGroupingHelp`
+- → `parseUnitSortHelp`
+- → `parseUnitModelHelp`
+- → `parseMaintenanceHelp`
+- → `parseReligionHelp`
+- → `parseNationalityHelp`
+- → `parseHealthHelp`
+- → `parsePopulationHelp`
+- → `parseProductionHelp`
+- → `parseCultureHelp`
+- → `parseGreatPeopleHelp`
+- → `parseGreatGeneralHelp`
+- → `parseSelectedHelp`
+- → `parseBuildingHelp`
+- → `parseTradeRouteCityHelp`
+- → `parseEspionageCostHelp`
+- → `parseObsoleteHelp`
+- → `parseObsoleteSpecialHelp`
+- → `parseMoveHelp`
+- → `parseFreeUnitHelp`
+- → `parseFeatureProductionHelp`
+- → `parseWorkerRateHelp`
+- → `parseTradeRouteHelp`
+- → `parseHealthRateHelp`
+- → `parseHappinessRateHelp`
+- → `parseFreeTechHelp`
+- → `parseLOSHelp`
+- → `parseMapCenterHelp`
+- → `parseMapRevealHelp`
+- → `parseMapTradeHelp`
+- → `parseTechTradeHelp`
+- → `parseGoldTradeHelp`
+- → `parseOpenBordersHelp`
+- → `parseDefensivePactHelp`
+- → `parsePermanentAllianceHelp`
+- → `parseVassalStateHelp`
+- → `parseBuildBridgeHelp`
+- → `parseIrrigationHelp`
+- → `parseIgnoreIrrigationHelp`
+- → `parseWaterWorkHelp`
+- → `parseBuildHelp`
+- → `parseDomainExtraMovesHelp`
+- → `parseAdjustHelp`
+- → `parseTerrainTradeHelp`
+- → `parseSpecialBuildingHelp`
+- → `parseYieldChangeHelp`
+- → `parseBonusRevealHelp`
+- → `parseCivicRevealHelp`
+- → `parseProcessInfoHelp`
+- → `parseFoundReligionHelp`
+- → `parseFoundCorporationHelp`
+- → `parseTechEntryHelp`
+- → `parseUnitHelp`
+- → `parseTraitHelp`
+- → `parseBonusHelp`
+- → `parsePromotionHelp`
+- → `parseBuildUpHelp`
+- → `parseEventHelp`
+- → `parseImprovementHelp`
+- → `parseRouteHelp`
+- → `parseCivicHelp`
+- → `parseCivilizationHelp`
+- → `parseLeaderHelp`
+- → `parseProjectHelp`
+- → `parseCorporationHelp`
+- → `parseTerrainHelp`
+- → `parseFeatureHelp`
+- → `parseDescriptionHelp`
+- → `parseKillDealHelp`
+- → `parseFoodModHelp`
+- → `parseLeaderheadHelp`
+- → `parseCommerceModHelp`
+- → `setEmploymentHelp`
+- Constant building sources: %D1 / Turn  <!-- TXT_KEY_PROPERTY_SOURCED_CONSTANT -->
+- General property sources (population, decay): %D1 / Turn  <!-- TXT_KEY_PROPERTY_GLOBAL_SOURCED -->
+- [ICON_BULLET]Allows %s1 to upgrade to %s2.  <!-- TXT_KEY_TECHHELP_ALLOWS_IMPROVEMENT_UPGRADE -->
+- You have already chosen your free tech(s)  <!-- TXT_KEY_CHEATERS_NEVER_PROSPER -->
+
+## `parseHurryHelp`
+
+- Hurry %s1_ProdName  <!-- TXT_KEY_MISC_HURRY_PROD -->
+- [ICON_BULLET]Costs %d1_Num Gold  <!-- TXT_KEY_MISC_HURRY_GOLD -->
+- [ICON_BULLET]Costs %d1_Num Population  <!-- TXT_KEY_MISC_HURRY_POP -->
+- (Max Avail: %d1_Num)  <!-- TXT_KEY_MISC_MAX_POP_HURRY -->
+- [ICON_BULLET]%s1 Overflow  <!-- TXT_KEY_MISC_HURRY_OVERFLOW -->
+- [ICON_BULLET]%D1_Change<unhappy> for %d2_Num Turns  <!-- TXT_KEY_MISC_ANGER_TURNS -->
+- Can only Hurry Production of a Unit or a Building.  <!-- TXT_KEY_MISC_UNIT_BUILDING_HURRY -->
+- Requires  <!-- TXT_KEY_REQUIRES -->
+- or  <!-- TXT_KEY_OR -->
+
+## `parseIgnoreIrrigationHelp`
+
+- → `buildIgnoreIrrigationString`
+
+## `parseImprovementHelp`
+
+- → `setImprovementHelp`
+
+## `parseIrrigationHelp`
+
+- → `buildIrrigationString`
+
+## `parseKillDealHelp`
+
+- Click to Cancel  <!-- TXT_KEY_MISC_CLICK_TO_CANCEL -->
+- → `getDealString`
+- → `setBonusHelp`
+- This deal cannot currently be canceled.  <!-- TXT_KEY_POPUP_CANNOT_CANCEL_DEAL -->
+
+## `parseLOSHelp`
+
+- → `buildLOSString`
+
+## `parseLeaderHelp`
+
+- → `parseLeaderTraits`
+
+## `parseLeaderheadHelp`
+
+- → `parseLeaderHeadHelp`
+
+## `parseLiberateCityHelp`
+
+- Gift the city of %s1_city to %s2_player  <!-- TXT_KEY_LIBERATE_CITY_HELP -->
+
+## `parseMaintainHelp`
+
+- → `setProcessHelp`
+
+## `parseMaintenanceHelp`
+
+- No Maintenance costs while city is celebrating!  <!-- TXT_KEY_MISC_WE_LOVE_KING_MAINT -->
+- Maintenance Represents the Total Cost of Governening this City.  <!-- TXT_KEY_MISC_MAINT_INFO -->
+- %s1_MaintNum <gold>: Base Maintenance  <!-- TXT_KEY_MISC_BASE_MAINTENANCE -->
+- %s1_NumMaint <gold>:  <!-- TXT_KEY_MISC_NUM_MAINT_FLOAT -->
+- Distance from Palace  <!-- TXT_KEY_MISC_DISTANCE_FROM_PALACE -->
+- No Palace Penalty  <!-- TXT_KEY_MISC_NO_PALACE_PENALTY -->
+- %s1_MaintNum <gold>: Number of Cities  <!-- TXT_KEY_MISC_NUM_CITIES_FLOAT -->
+- %s1_MaintNum <gold>: Colonial expenses  <!-- TXT_KEY_MISC_COLONY_MAINT_FLOAT -->
+- %s1_MaintNum <gold>: Corporation payments  <!-- TXT_KEY_MISC_CORPORATION_MAINT_FLOAT -->
+- %s1_MaintNum <gold>: Building maintenance  <!-- TXT_KEY_MISC_BUILDING_MAINT_FLOAT -->
+- %s1_Num <gold> Total Maintenance  <!-- TXT_KEY_MISC_TOTAL_MAINT_FLOAT -->
+- → `setBuildingSavedMaintenanceHelp`
+
+## `parseMapCenterHelp`
+
+- → `buildMapCenterString`
+
+## `parseMapRevealHelp`
+
+- → `buildMapRevealString`
+
+## `parseMapTradeHelp`
+
+- → `buildMapTradeString`
+
+## `parseMoveHelp`
+
+- → `buildMoveString`
+
+## `parseNationalityHelp`
+
+- City Nationality:  <!-- TXT_KEY_MISC_CITY_NATIONALITY -->
+- Revolt %%/Turn: %s1_Chance (%s2_CityStrength base: x%s3_SpeedAdjustment gamespeed, x%s4_Garrison units)  <!-- TXT_KEY_MISC_CHANCE_OF_REVOLT -->
+
+## `parseObsoleteBonusString`
+
+- → `buildObsoleteBonusString`
+
+## `parseObsoleteHelp`
+
+- → `buildObsoleteString`
+
+## `parseObsoleteSpecialHelp`
+
+- → `buildObsoleteSpecialString`
+
+## `parseOpenBordersHelp`
+
+- → `buildOpenBordersString`
+
+## `parsePermanentAllianceHelp`
+
+- → `buildPermanentAllianceString`
+
+## `parsePlotListHelp`
+
+- → `setUnitHelp`
+- (&lt;CTRL&gt; to select All %s1 Units)  <!-- TXT_KEY_MISC_CTRL_SELECT -->
+- (&lt;ALT&gt; to select All Units)  <!-- TXT_KEY_MISC_ALT_SELECT -->
+
+## `parsePopulationHelp`
+
+- Food: %d1/%d2 <food> * %d3 <food> stored for the next growth cycle.  <!-- TXT_KEY_MISC_FOOD_THRESHOLD -->
+
+## `parseProcessInfoHelp`
+
+- → `buildProcessInfoString`
+
+## `parseProjectHelp`
+
+- → `setProjectHelp`
+
+## `parsePromotionHelp`
+
+- → `setPromotionHelp`
+
+## `parseReligionHelp`
+
+- → `setReligionHelp`
+
+## `parseReligionHelpCity`
+
+- → `setReligionHelpCity`
+
+## `parseResearchHelp`
+
+- Click to change research...  <!-- TXT_KEY_MISC_CHANGE_RESEARCH -->
+- → `setTechHelp`
+
+## `parseRouteHelp`
+
+- → `setRouteHelp`
+
+## `parseScoreHelp`
+
+- → `setScoreHelp`
+
+## `parseSelectedHelp`
+
+- → `setUnitHelp`
+- → `setBuildingHelp`
+- → `setProjectHelp`
+- → `setProcessHelp`
+
+## `parseSetPercentHelp`
+
+- Set %s1_CmrcType Rate to %d2_Value%%  <!-- TXT_KEY_MISC_SET_RATE -->
+
+## `parseSpecialBuildingHelp`
+
+- → `buildSpecialBuildingString`
+
+## `parseTechEntryHelp`
+
+- → `setTechHelp`
+
+## `parseTechTradeHelp`
+
+- → `buildTechTradeString`
+
+## `parseTechTreeHelp`
+
+- → `setTechHelp`
+
+## `parseTechTreePrereq`
+
+- → `setTechHelp`
+
+## `parseTerrainHelp`
+
+- → `setTerrainHelp`
+
+## `parseTerrainTradeHelp`
+
+- → `buildTerrainTradeString`
+- → `buildRiverTradeString`
+
+## `parseTradeItem`
+
+- → `setTechHelp`
+- → `setBonusHelp`
+- Cities  <!-- TXT_KEY_TRADE_CITIES -->
+- Will cause %s1_You to Make Peace with %s2_Them.  <!-- TXT_KEY_TRADE_MAKE_PEACE -->
+- Will cause %s1_You to Declare War on %s2_Them.  <!-- TXT_KEY_TRADE_MAKE_WAR -->
+- Will cause %s1_You to Stop Trading with %s2_Them.  <!-- TXT_KEY_TRADE_STOP_TRADING -->
+- Would adopt the %s1_CvcOptionName Civic %s2_CvcName.  <!-- TXT_KEY_TRADE_ADOPT_CIVIC -->
+- Would convert to %s1_Religion.  <!-- TXT_KEY_TRADE_CONVERT_RELIGION -->
+- Lump Sum of Gold to be Specified.  <!-- TXT_KEY_TRADE_GOLD -->
+- A Specified Amount of Gold Per Turn will be Deducted from the one Civ and Given to the Other.  <!-- TXT_KEY_TRADE_GOLD_PER_TURN -->
+- Will Reveal the Map to the Recipient.  <!-- TXT_KEY_TRADE_MAPS -->
+- Surrender and become other civ's Vassal State  <!-- TXT_KEY_TRADE_CAPITULATE -->
+- Become other civ's Vassal State  <!-- TXT_KEY_TRADE_VASSAL -->
+- Opens the Borders of the Two Civilizations, Generating Commerce from Trade Routes and Allowing Right-of-Passage for Units.  <!-- TXT_KEY_TRADE_OPEN_BORDERS -->
+- A Mutual Protection Pact - Each Party Agrees to Automatically Declare War if the Other Party is Attacked (Note: This Agreement is Automatically Canceled if Either Civilization Declares War on a Third Party.)  <!-- TXT_KEY_TRADE_DEFENSIVE_PACT -->
+- This Permanent Agreement Joins your Civilizations for the Rest of the Game.  <!-- TXT_KEY_TRADE_PERMANENT_ALLIANCE -->
+- Establishes an Unbreakable Peace Treaty for %d1_Num [NUM1:Turn:Turns]  <!-- TXT_KEY_TRADE_PEACE_TREATY -->
+- A Right of Passage Agreement allows only non-aggressive units to pass through your civilizations, including trade. Useful for when players want to continue trade but stop enemy troop movements.  <!-- TXT_KEY_TRADE_LIMITED_BORDERS -->
+- Free Trade Agreement: [ICON_BULLET]Increases Trade Revenue [ICON_BULLET]Lowers the cost of espionage in member nations [ICON_BULLET]Increases the Spread of Corporations between member nations [ICON_BULLET]May anger rivals  <!-- TXT_KEY_TRADE_FREE_TRADE_ZONE -->
+- Workers  <!-- TXT_KEY_TRADE_WORKER -->
+- → `setUnitHelp`
+- Embassies allow more advanced form of diplomacy. [ICON_BULLET]Can Sign Open Borders Agreements. [ICON_BULLET]Can Sign Defensive Pacts. [ICON_BULLET]Improves Diplomatic Relations Between Countries. [ICON_BULLET]Allows For the Trade of Workers Between Countries. [ICON_BULLET]Allows For the Trade of Certain Military Units Between Countries. [ICON_BULLET]Allows players to see inside the other nation's capital city. [ICON_BULLET]If Recalled, Players Will Sour Diplomatic Relations Between Countries. [ICON_BULLET]Enemy Spy Missions are More Likely to Succeed, Due to the Increased Familiarity Between Your Countries. [ICON_BULLET]Allows the other player to see into your capital city!  <!-- TXT_KEY_TRADE_EMBASSY -->
+- %s1_CivName establishes contact with %s2_CivName  <!-- TXT_KEY_TRADE_CONTACT -->
+- → `setCorporationHelp`
+- %s1_CivName pledges to vote for %s2_CivName as Secretary General of %s3_VoteSource  <!-- TXT_KEY_TRADE_SECRETARY_GENERAL -->
+
+## `parseTradeRouteCityHelp`
+
+- → `setTradeRouteHelp`
+
+## `parseTradeRouteHelp`
+
+- → `buildTradeRouteString`
+
+## `parseTradeRoutes`
+
+- → `buildTradeString`
+- → `getActiveDealsString`
+
+## `parseTrainHelp`
+
+- → `setUnitHelp`
+
+## `parseTraitHelp`
+
+- → `setTraitHelp`
+
+## `parseUnitFilterHelp`
+
+- Turn Off  <!-- TXT_KEY_MISC_TURN_OFF -->
+- Turn On  <!-- TXT_KEY_MISC_TURN_ON -->
+- Show trainable units only  <!-- TXT_KEY_LIST_UNIT_FILTER_SHOW_BUILDABLE -->
+- Show only units that are unlimited  <!-- TXT_KEY_LIST_UNIT_FILTER_HIDE_LIMITED -->
+- Show only land units  <!-- TXT_KEY_LIST_UNIT_FILTER_SHOW_LAND -->
+- Show only air units  <!-- TXT_KEY_LIST_UNIT_FILTER_SHOW_AIR -->
+- Show only water units  <!-- TXT_KEY_LIST_UNIT_FILTER_SHOW_WATER -->
+- Show only worker units  <!-- TXT_KEY_LIST_UNIT_FILTER_SHOW_WORKERS -->
+- Show only civilian units  <!-- TXT_KEY_LIST_UNIT_FILTER_SHOW_CIVILIAN -->
+- Show only siege units  <!-- TXT_KEY_LIST_UNIT_FILTER_SHOW_SIEGE -->
+- Show only mounted units  <!-- TXT_KEY_LIST_UNIT_FILTER_SHOW_MOUNTED -->
+- Show only hero units  <!-- TXT_KEY_LIST_UNIT_FILTER_SHOW_HEROES -->
+- Show only military units  <!-- TXT_KEY_LIST_UNIT_FILTER_SHOW_MILITARY -->
+- Show only defense units  <!-- TXT_KEY_LIST_UNIT_FILTER_SHOW_DEFENSE -->
+- Show only missionary units  <!-- TXT_KEY_LIST_UNIT_FILTER_SHOW_MISSIONARY -->
+
+## `parseUnitGroupingHelp`
+
+- Groups units according to selected categories  <!-- TXT_KEY_LIST_UNIT_GROUPING -->
+
+## `parseUnitHelp`
+
+- → `setUnitHelp`
+
+## `parseUnitModelHelp`
+
+- → `setUnitHelp`
+
+## `parseUnitSortHelp`
+
+- Sorts units according to selected categories  <!-- TXT_KEY_LIST_UNIT_SORTING -->
+
+## `parseVassalStateHelp`
+
+- → `buildVassalStateString`
+
+## `parseWaterWorkHelp`
+
+- → `buildWaterWorkString`
+
+## `parseWorkerRateHelp`
+
+- → `buildWorkerRateString`
+
+## `parseYieldChangeHelp`
+
+- → `buildYieldChangeString`
