@@ -2,8 +2,7 @@
  "type": "BUILDING_DEEP_SPACE_SPACECRAFT_FACTORY",
  "enables": {
   "units": [
-   "UNIT_ATTACKSHIP",
-   "UNIT_WORLDSHIP"
+   "UNIT_ATTACKSHIP"
   ]
  },
  "requires": {

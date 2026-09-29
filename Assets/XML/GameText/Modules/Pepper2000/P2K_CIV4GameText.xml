@@ -2753,20 +2753,12 @@
 		<Polish>Statek chronoformuj&#185;vy jest w stanie manipulowa&#230; przestrzeni&#185; i czasem, tworz&#185;c portale poza zwyk&#179;&#185; czasoprzestrzeni&#185;.</Polish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_UNIT_CISLUNARSETTLER</Tag>
-		<English>Cislunar Settler</English>
-		<French>Colon Cislunaire</French>
-		<Russian>Ëóííûé ïîñåëåíåö</Russian>
-		<Italian>Colonizzatore cislunare</Italian>
-		<Polish>Osadnik Cislunarny</Polish>
+		<Tag>TXT_KEY_UNIT_SPACE_SETTLER</Tag>
+		<English>Space Settler</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_UNIT_CISLUNARSETTLER_HELP</Tag>
-		<English>[ICON_BULLET]Can build cities in Cislunar Space</English>
-		<French>[ICON_BULLET]Peut construire les Villes de l'espace cislunaire</French>
-		<Russian>[ICON_BULLET][COLOR_YELLOW]Ïîäñêàçêà: [COLOR_REVERT]Ìîæåò ñòðîèòü ãîðîäà è êîëîíèè â îêîëîëóííîì ïðîñòðàíñòâå</Russian>
-		<Italian>[ICON_BULLET]L'unità può [COLOR_HIGHLIGHT_TEXT]fondare città[COLOR_REVERT]  nello spazio cislunare</Italian>
-		<Polish>[ICON_BULLET]Mo&#191;e budowa&#230; miasta w przestrzeni Cislunarnej</Polish>
+		<Tag>TXT_KEY_UNIT_SPACE_SETTLER_HELP</Tag>
+		<English>[ICON_BULLET]Can build cities in space. Each colonization technology opens another region: Cislunar Space, the Moon, Mars and Venus, deep-space habitats, interstellar space, the galaxy, the intergalactic void and hyperspace.</English>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_UNIT_CISLUNAR_INFANTRY</Tag>
@@ -3013,22 +3005,6 @@
 		<Polish>Ci odwa&#191;ni pracownicy wyruszaj&#185; w kosmos.</Polish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_UNIT_HYPERSHIP</Tag>
-		<English>Hyperseedship</English>
-		<French>HyperVaisseau-Colonisateur</French>
-		<Russian>Ãèïåðêîðàáëü-ìàòêà</Russian>
-		<Italian>Ipernave colonizzatrice</Italian>
-		<Polish>Staket Zasiewowy</Polish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_UNIT_HYPERSHIP_HELP</Tag>
-		<English>[ICON_BULLET]Can build cities in extragalactic space, Distant Cosmos and Hyperspace. Upon settling transforms terrain into Hyperspace</English>
-		<French>[ICON_BULLET]Peut construire les Villes dans l'espace extragalactique, le Cosmos lointain et l'Hyperespace. Lors de la colonisation, le terrain se transforme en hyperespace</French>
-		<Russian>[ICON_BULLET][COLOR_YELLOW]Ïîäñêàçêà: [COLOR_REVERT]Ìîæåò ñòðîèòü ãîðîäà âî âíåãàëàêòè÷åñêîì êîñìîñå, äàëüíåì êîñìîñå è ãèïåðïðîñòðàíñòâå[NEWLINE][ICON_BULLET]Ïîñëå çàñåëåíèÿ ïðåâðàùàåò ìåñòíîñòü â ãèïåðïðîñòðàíñòâî</Russian>
-		<Italian>[ICON_BULLET]L'unità può [COLOR_HIGHLIGHT_TEXT]fondare città[COLOR_REVERT] nello spazio extragalattico, nel cosmo distante e nell'iperspazio.[NEWLINE][ICON_BULLET]Al momento dell'insediamento [COLOR_HIGHLIGHT_TEXT]trasforma[COLOR_REVERT] la casella in [COLOR_HIGHLIGHT_TEXT]iperspazio[COLOR_REVERT]</Italian>
-		<Polish>[ICON_BULLET]Mo&#191;e budowa&#230; miasta w przestrzeni pozagalaktycznej, odleg&#179;ym kosmosie i hiperprzestrzeni. Po osiedleniu przekszta&#179;ca teren w nadprzestrze&#241;</Polish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_UNIT_HYPERSPACE_DEFENDER</Tag>
 		<English>Hyperspace Defender</English>
 		<French>Défenseur de l'Hyperespace</French>
@@ -3267,21 +3243,6 @@
 		<Polish>Nagroda za uko&#241;czenie eksploracji orbity</Polish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_UNIT_LUNARSETTLER</Tag>
-		<English>Lunar Settler</English>
-		<French>Colon Lunaire</French>
-		<Russian>Ëóííûé êîëîíèñò</Russian>
-		<Italian>Colonizzatore lunare</Italian>
-		<Polish>Ksi&#234;&#191;ycowy Osadnik</Polish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_UNIT_LUNARSETTLER_HELP</Tag>
-		<English>[ICON_BULLET]Can build cities on the Moon.</English>
-		<Russian>[ICON_BULLET][COLOR_YELLOW]Ïîäñêàçêà: [COLOR_REVERT]Ìîæåò ñòðîèòü ãîðîäà íà ëóííîé ïîâåðõíîñòè</Russian>
-		<Italian>[ICON_BULLET]L'unità può [COLOR_HIGHLIGHT_TEXT]fondare città[COLOR_REVERT] sulla luna</Italian>
-		<Polish>[ICON_BULLET]Potrafi budowa&#230; miasta na Ksi&#234;&#191;ycu.</Polish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_UNIT_LUNAR_BULLDOZER</Tag>
 		<English>Lunar Bulldozer</English>
 		<French>Bulldozer lunaire</French>
@@ -3469,22 +3430,6 @@
 		<Polish>Nagroda za uko&#241;czenie eksploracji planet</Polish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_UNIT_ONEILLSETTLER</Tag>
-		<English>Deep Space Settler</English>
-		<French>Colon Espace lointain</French>
-		<Russian>Êîñìè÷åñêèé êîëîíèñò</Russian>
-		<Italian>Colonizzatore dello spazio profondo</Italian>
-		<Polish>Osadnik g&#179;&#234;bokiego kosmosu</Polish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_UNIT_ONEILLSETTLER_HELP</Tag>
-		<English>[ICON_BULLET]Can build cities in the solar system</English>
-		<French>[ICON_BULLET]Peut construire les Villes dans le système solaire</French>
-		<Russian>[ICON_BULLET][COLOR_YELLOW]Ïîäñêàçêà: [COLOR_REVERT]Ìîæåò îñíîâàòü ãîðîä â ïðåäåëàõ Ñîëíå÷íîé ñèñòåìû</Russian>
-		<Italian>[ICON_BULLET]L'unità può [COLOR_HIGHLIGHT_TEXT]fondare città[COLOR_REVERT] nel sistema solare</Italian>
-		<Polish>[ICON_BULLET]Potrafi budowa&#230; miasta w Uk&#179;adzie S&#179;onecznym</Polish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_UNIT_OORT_CLOUD_REWARD</Tag>
 		<English>Mission Reward (Oort Cloud)</English>
 		<French>Retour de Mission (Oort Cloud)</French>
@@ -3513,22 +3458,6 @@
 		<French>Une récompense de l'exploration deouter Solar System</French>
 		<Russian>Íàãðàäà îò èññëåäîâàíèÿ îêðàèí Ñîëíå÷íîé ñèñòåìû</Russian>
 		<Polish>Nagroda za eksploracj&#234; zewn&#234;trznego Uk&#179;adu S&#179;onecznego</Polish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_UNIT_PLANETARYSETTLER</Tag>
-		<English>Planetary Settler</English>
-		<French>Colon Planétaire</French>
-		<Russian>Ïëàíåòàðíûé êîëîíèñò</Russian>
-		<Italian>Colonizzatore planetario</Italian>
-		<Polish>Osadnik planetarny</Polish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_UNIT_PLANETARYSETTLER_HELP</Tag>
-		<English>[ICON_BULLET]Can build cities on Mars and Venus</English>
-		<French>[ICON_BULLET]Peut construire les Villes sur Mars et Vénus</French>
-		<Russian>[ICON_BULLET][COLOR_YELLOW]Ïîäñêàçêà: [COLOR_REVERT]Ìîæåò îñíîâàòü ãîðîä íà ìàðñèàíñêîé èëè âåíåðèàíñêîé ïîâåðõíîñòè</Russian>
-		<Italian>[ICON_BULLET]L'unità può [COLOR_HIGHLIGHT_TEXT]fondare città[COLOR_REVERT] su Marte e Venere</Italian>
-		<Polish>[ICON_BULLET]Potrafi budowa&#230; miasta na Marsie i Wenus</Polish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_UNIT_PLANETARY_INFANTRY</Tag>
@@ -3940,62 +3869,6 @@
 		<Polish>Schwytany genera&#179;</Polish>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_UNIT_WORLDSHIP</Tag>
-		<English>Worldship</English>
-		<French>Vaisseau-monde</French>
-		<Russian>Ïåðåñåëåí÷. çâåçäîëåò</Russian>
-		<Italian>Astronave mondo</Italian>
-		<Polish>Statek-&#156;wiat</Polish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_UNIT_WORLDSHIP2</Tag>
-		<English>Genetic Seedship</English>
-		<French>Vaisseau-Colonisateur Génétique</French>
-		<Russian>Êîðàáëü Ïîêîëåíèé</Russian>
-		<Italian>Astronave madre genetica</Italian>
-		<Polish>Statek zasiewu genetycznego</Polish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_UNIT_WORLDSHIP2_HELP</Tag>
-		<English>[ICON_BULLET]Can build cities in the Orion Arm and Milky Way</English>
-		<French>[ICON_BULLET]Peut construire les Villes dans le bras d'Orion et la Voie lactée</French>
-		<Russian>[ICON_BULLET][COLOR_YELLOW]Ïîäñêàçêà: [COLOR_REVERT]Ìîæåò ñòðîèòü ãîðîäà â ðóêàâå Îðèîíà â ãàëàêòèêå Ìëå÷íûé Ïóòü</Russian>
-		<Italian>[ICON_BULLET]L'unità può [COLOR_HIGHLIGHT_TEXT]fondare città[COLOR_REVERT] sul braccio di Orione e nella via lattea</Italian>
-		<Polish>[ICON_BULLET]Mo&#191;e budowa&#230; miasta w Ramieniu Oriona i Drodze Mlecznej</Polish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_UNIT_WORLDSHIP3</Tag>
-		<English>Alcubierre Seedship</English>
-		<French>Vaisseau-Colonisateur Alcubierre</French>
-		<Russian>Çâåçäîëåò Àëüêóáüåððå</Russian>
-		<Italian>Astronave madre di Alcubierre</Italian>
-		<Polish>Statek siewny Alcubierre</Polish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_UNIT_WORLDSHIP3_HELP</Tag>
-		<English>[ICON_BULLET]Can build cities in the Milky Way and Universe</English>
-		<French>[ICON_BULLET]Peut construire les Villes dans la Voie lactée, et tout l'Univers</French>
-		<Russian>[ICON_BULLET][COLOR_YELLOW]Ïîäñêàçêà: [COLOR_REVERT]Ìîæåò ñòðîèòü ãîðîäà â îñòàëüíîé ÷àñòè Ìëå÷íîãî Ïóòè è ïðî÷èõ ãàëàêòèêàõ</Russian>
-		<Italian>[ICON_BULLET]L'unità può [COLOR_HIGHLIGHT_TEXT]fondare città[COLOR_REVERT] nella via lattea e nell'universo</Italian>
-		<Polish>[ICON_BULLET]Mo&#191;e budowa&#230; miasta w Drodze Mlecznej i Wszech&#156;wiecie</Polish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_UNIT_WORLDSHIP4</Tag>
-		<English>Quantum Seedship</English>
-		<French>Vaisseau-Colonisateur Quantique</French>
-		<Russian>Êâàíòîâûé êîðàáëü</Russian>
-		<Italian>Astronave madre quantistica</Italian>
-		<Polish>Kwantowy statek siewny</Polish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_UNIT_WORLDSHIP4_HELP</Tag>
-		<English>[ICON_BULLET]Can build cities in the Universe and beyond</English>
-		<French>[ICON_BULLET]Peut construire les Villes dans l'Univers, et plus loin</French>
-		<Russian>[ICON_BULLET][COLOR_YELLOW]Ïîäñêàçêà: [COLOR_REVERT]Ìîæíî ñòðîèòü ãîðîäà â ëþáîì ñåêòîðå Âñåëåííîé è çà åå ïðåäåëàìè</Russian>
-		<Italian>[ICON_BULLET]L'unità può [COLOR_HIGHLIGHT_TEXT]fondare città[COLOR_REVERT] nell'universo e oltre</Italian>
-		<Polish>[ICON_BULLET]Mo&#191;e budowa&#230; miasta we wszech&#156;wiecie i poza nim</Polish>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_UNIT_WORLDSHIP_DEFENDER</Tag>
 		<English>Worldship Defender</English>
 		<French>Vaisseau-monde de Défense</French>
@@ -4009,13 +3882,5 @@
 		<French>Défenseur de base pour les colonies du Vaisseau-Monde.</French>
 		<Russian>Îñíîâíîé çàùèòíûé îòðÿä äàëüíèõ êîëîíèé.</Russian>
 		<Polish>Podstawowy obro&#241;ca kolonii &#156;wiatowych.</Polish>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_UNIT_WORLDSHIP_HELP</Tag>
-		<English>[ICON_BULLET]Can build cities in the Transtellar space and Star terrains.[NEWLINE]Interstellar and Stellar colonies are completely different.</English>
-		<French>[ICON_BULLET]Peut construire les Villes dans le nuage d'Oort, et l'espace transtellaire</French>
-		<Russian>[ICON_BULLET][COLOR_YELLOW]Ïîäñêàçêà: [COLOR_REVERT]Ìîæåò ñòðîèòü ãîðîäà â Îáëàêå Îîðòà è ìåæçâåçäíîì ïðîñòðàíñòâå</Russian>
-		<Italian>[ICON_BULLET]L'unità può [COLOR_HIGHLIGHT_TEXT]fondare città[COLOR_REVERT] nello spazio transtellare e sulle caselle delle stelle</Italian>
-		<Polish>[ICON_BULLET]Mo&#191;e budowa&#230; miasta w przestrzeni mi&#234;dzygwiezdnej i na terenach gwiezdnych.[NEWLINE] Kolonie mi&#234;dzygwiezdne i gwiezdne s&#185; zupe&#179;nie inne.</Polish>
 	</TEXT>
 </Civ4GameText>

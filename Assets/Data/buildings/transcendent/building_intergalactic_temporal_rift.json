@@ -3,9 +3,6 @@
  "enables": {
   "buildings": [
    "BUILDING_ZETTAVERSE_PORTAL"
-  ],
-  "units": [
-   "UNIT_HYPERSHIP"
   ]
  },
  "requires": {

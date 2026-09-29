@@ -11,8 +11,7 @@
   ],
   "units": [
    "UNIT_COSMIC_WORKER",
-   "UNIT_INTERDIMENSIONAL_PROBE",
-   "UNIT_WORLDSHIP4"
+   "UNIT_INTERDIMENSIONAL_PROBE"
   ]
  },
  "requires": {

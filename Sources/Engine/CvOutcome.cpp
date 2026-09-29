@@ -44,7 +44,9 @@ namespace
 		{
 			InfoValuation::fillEvalCtxAtPlot(*pPlot, ctx);
 		}
-		else if (kUnit.getOwner() != NO_PLAYER)
+		//	The ACTOR is the unit, so an empire atom (a tech, anarchy) asks about the unit's owner -- never the
+		//	plot's, which is nobody on an unowned tile and a rival on a foreign one.
+		if (kUnit.getOwner() != NO_PLAYER)
 		{
 			ctx.empireContext = &GET_PLAYER(kUnit.getOwner()).getEmpireContext();
 		}

@@ -90,7 +90,10 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
     a gov-center test, not an `IS_CAPITAL` one).
   - **outcome gates** (evaluated for a UNIT acting on a plot — an outcome's `requires.plot`): `IS_OWNED` (the plot lies
     in owned territory) · `IS_ANARCHY` (the unit's owner is in anarchy) · `CAN_FOUND` (the unit's owner may found a
-    city on the plot — `CvPlayer::canFound`, the same verdict the found mission asks).
+    city on the plot — `CvPlayer::canFound`, the same verdict the found mission asks). The ACTOR is the unit, so
+    every empire atom in an outcome gate (`TECH_X`, `IS_ANARCHY`) asks about the **unit's owner**, never the plot's —
+    which is nobody on an unowned tile. That is how one unit carries a region per tech (the space settler's
+    `{all: ["TECH_LUNAR_COLONIZATION", {terrain: [...]}]}` rows).
   - **trade route** (evaluated against the ROUTE/its partner city): **`IS_FOREIGN`** (the route's partner belongs to
     another team — the engine's foreign-trade gate, `CvCity::totalTradeModifier`; domestic routes are the plain
     negation `"!IS_FOREIGN"`, never a second predicate) · **`SHARES_CIVIC`** (the route partner's owner runs the

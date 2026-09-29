@@ -1,10 +1,5 @@
 {
  "type": "BUILDING_DISTANT_HYPERPORT",
- "enables": {
-  "units": [
-   "UNIT_HYPERSHIP"
-  ]
- },
  "requires": {
   "build": {
    "all": [

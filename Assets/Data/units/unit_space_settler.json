@@ -1,0 +1,311 @@
+{
+ "type": "UNIT_SPACE_SETTLER",
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+    {
+     "any": [
+      "BUILDING_CISLUNAR_FACTORY",
+      "BUILDING_SPACE_STATION"
+     ]
+    }
+   ]
+  }
+ },
+ "movement": {
+  "unit": {
+   "flat": 24
+  }
+ },
+ "capture": {
+  "unit": {
+   "becomes": "UNIT_CAPTIVE_CIVILIAN"
+  }
+ },
+ "skills": [
+  "canMoveAllTerrain",
+  "canMoveImpassable",
+  "food"
+ ],
+ "tags": [
+  "settler",
+  "civilian",
+  "landUnit"
+ ],
+ "combatClass": "UNITCOMBAT_SETTLER",
+ "combatClasses": [
+  "UNITCOMBAT_EARLY_SPACESHIP",
+  "UNITCOMBAT_CIVILIAN",
+  "UNITCOMBAT_PACIFIST",
+  "UNITCOMBAT_SPECIES_HUMAN",
+  "UNITCOMBAT_MOTILITY_PILOTING",
+  "UNITCOMBAT_QUALITY_INFERIOR",
+  "UNITCOMBAT_GROUP_SOLO",
+  "UNITCOMBAT_SIZE_HUGE",
+  "UNITCOMBAT_HEALS_AS_PEOPLE",
+  "UNITCOMBAT_HEALS_AS_SPACECRAFT"
+ ],
+ "vision": {
+  "unit": {
+   "flat": 100
+  }
+ },
+ "outcomes": {
+  "actions": [
+   {
+    "mission": "MISSION_PLANET_LAND",
+    "outcomes": [
+     {
+      "requires": {
+       "outcome": "OUTCOME_UPGRADE_TO_PLANET_SETTLER",
+       "plot": {
+        "all": [
+         "CAN_FOUND",
+         {
+          "any": [
+           {
+            "all": [
+             "TECH_ADVANCED_ENVIRONMENTAL_SYSTEMS",
+             {
+              "terrain": [
+               "TERRAIN_CISLUNAR_SPACE"
+              ]
+             }
+            ]
+           },
+           {
+            "all": [
+             "TECH_LUNAR_COLONIZATION",
+             {
+              "terrain": [
+               "TERRAIN_LUNAR_DOME",
+               "TERRAIN_LUNAR_MARE",
+               "TERRAIN_LUNAR_HIGHLAND",
+               "TERRAIN_LUNAR_REGOLITH",
+               "TERRAIN_LUNAR_RILLE",
+               "TERRAIN_GREEN_MOON"
+              ]
+             }
+            ]
+           },
+           {
+            "all": [
+             "TECH_PLANETARY_COLONIZATION",
+             {
+              "terrain": [
+               "TERRAIN_VENUS",
+               "TERRAIN_VENUS_HIGHLANDS",
+               "TERRAIN_VENUS_LOWLANDS",
+               "TERRAIN_MARTIAN_ICE",
+               "TERRAIN_MARTIAN_PERMAFROST",
+               "TERRAIN_MARTIAN_DUNES",
+               "TERRAIN_MARTIAN_BARREN",
+               "TERRAIN_MARTIAN_PLAINS",
+               "TERRAIN_MARTIAN_ROCKY",
+               "TERRAIN_MARTIAN_DESERT",
+               "TERRAIN_GREEN_MARS"
+              ]
+             }
+            ]
+           },
+           "TECH_DEEP_SPACE_COLONIES",
+           {
+            "all": [
+             "TECH_INTERSTELLAR_TRAVEL",
+             {
+              "terrain": [
+               "TERRAIN_TRANSTELLAR_SPACE",
+               "TERRAIN_RED_DWARF",
+               "TERRAIN_SUN_LIKE_STAR",
+               "TERRAIN_RED_GIANT"
+              ]
+             }
+            ]
+           },
+           {
+            "all": [
+             "TECH_ADVANCED_SEEDSHIPS",
+             {
+              "terrain": [
+               "TERRAIN_ORION_ARM",
+               "TERRAIN_NEUTRON_STAR",
+               "TERRAIN_NEBULA",
+               "TERRAIN_STAR_CLUSTER",
+               "TERRAIN_MILKY_WAY",
+               "TERRAIN_GALACTIC_CORE"
+              ]
+             }
+            ]
+           },
+           {
+            "all": [
+             "TECH_SPACE_CREASING",
+             {
+              "terrain": [
+               "TERRAIN_MILKY_WAY",
+               "TERRAIN_NEUTRON_STAR",
+               "TERRAIN_NEBULA",
+               "TERRAIN_STAR_CLUSTER",
+               "TERRAIN_ORION_ARM",
+               "TERRAIN_GALACTIC_CORE",
+               "TERRAIN_LOCAL_GROUP",
+               "TERRAIN_VIRGO_SUPERCLUSTER",
+               "TERRAIN_INTERGALACTIC_VOID",
+               "TERRAIN_OBSERVABLE_UNIVERSE"
+              ]
+             }
+            ]
+           },
+           {
+            "all": [
+             "TECH_HORIZON_BREAKING",
+             {
+              "terrain": [
+               "TERRAIN_LOCAL_GROUP",
+               "TERRAIN_VIRGO_SUPERCLUSTER",
+               "TERRAIN_INTERGALACTIC_VOID",
+               "TERRAIN_OBSERVABLE_UNIVERSE",
+               "TERRAIN_DISTANT_COSMOS"
+              ]
+             }
+            ]
+           }
+          ]
+         }
+        ]
+       }
+      },
+      "chance": 100,
+      "found": true
+     },
+     {
+      "requires": {
+       "outcome": "OUTCOME_SETTLE_HYPERSPACE",
+       "plot": {
+        "all": [
+         "CAN_FOUND",
+         {
+          "terrain": [
+           "TERRAIN_LOCAL_GROUP",
+           "TERRAIN_VIRGO_SUPERCLUSTER",
+           "TERRAIN_INTERGALACTIC_VOID",
+           "TERRAIN_OBSERVABLE_UNIVERSE",
+           "TERRAIN_DISTANT_COSMOS",
+           "TERRAIN_HYPERSPACE"
+          ]
+         }
+        ]
+       }
+      },
+      "chance": 100,
+      "terraform": {
+       "terrain": "TERRAIN_HYPERSPACE"
+      },
+      "found": true
+     }
+    ]
+   }
+  ]
+ },
+ "cost": {
+  "production": 2435,
+  "upkeep": 11,
+  "hurryCostModifier": 10000
+ },
+ "world": {
+  "art": {
+   "define": "ART_DEF_UNIT_SPACECRAFT_SETTLER",
+   "meshGroups": {
+    "groupSize": 1,
+    "meleeWaveSize": 1,
+    "maxSpeed": 1.75,
+    "padTime": 1,
+    "groups": [
+     {
+      "required": 1,
+      "define": {
+       "early": "ART_DEF_UNIT_SPACECRAFT_SETTLER"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "identity": {
+  "description": "TXT_KEY_UNIT_SPACE_SETTLER",
+  "civilopedia": "TXT_KEY_UNIT_SETTLER_PEDIA",
+  "help": "TXT_KEY_UNIT_SPACE_SETTLER_HELP",
+  "worth": 1,
+  "domain": "DOMAIN_LAND",
+  "defaultUnitAI": "UNITAI_SETTLE",
+  "formationType": "FORMATION_TYPE_DEFAULT",
+  "advisor": "ADVISOR_GROWTH",
+  "unitAIs": [
+   "UNITAI_SETTLE"
+  ],
+  "terrainImpassable": [
+   "TERRAIN_OUTER_SOLAR_SYSTEM",
+   "TERRAIN_SUN",
+   "TERRAIN_TITAN",
+   "TERRAIN_TRANSNEPTUNIAN_SPACE",
+   "TERRAIN_MILKY_WAY",
+   "TERRAIN_GALACTIC_CORE",
+   "TERRAIN_VIRGO_SUPERCLUSTER",
+   "TERRAIN_INTERGALACTIC_VOID",
+   "TERRAIN_OBSERVABLE_UNIVERSE",
+   "TERRAIN_DISTANT_COSMOS"
+  ],
+  "terrainPassableTechs": [
+   {
+    "TERRAIN_OUTER_SOLAR_SYSTEM": "TECH_DEEP_SPACE_COLONIES"
+   },
+   {
+    "TERRAIN_SUN": "TECH_PLANETARY_COLONIZATION"
+   },
+   {
+    "TERRAIN_TITAN": "TECH_ABYSS_COLONIZATION"
+   },
+   {
+    "TERRAIN_TRANSNEPTUNIAN_SPACE": "TECH_PLANETARY_COLONIZATION"
+   },
+   {
+    "TERRAIN_MILKY_WAY": "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS"
+   },
+   {
+    "TERRAIN_GALACTIC_CORE": "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS"
+   },
+   {
+    "TERRAIN_VIRGO_SUPERCLUSTER": "TECH_INTERGROUP_TRAVEL"
+   },
+   {
+    "TERRAIN_INTERGALACTIC_VOID": "TECH_INTERCLUSTER_TRAVEL"
+   },
+   {
+    "TERRAIN_OBSERVABLE_UNIVERSE": "TECH_INTERCLUSTER_TRAVEL"
+   },
+   {
+    "TERRAIN_DISTANT_COSMOS": "TECH_HORIZON_BREAKING"
+   }
+  ],
+  "mapCategories": [
+   "MAPCATEGORY_EARTH",
+   "MAPCATEGORY_CISLUNAR",
+   "MAPCATEGORY_LUNAR",
+   "MAPCATEGORY_SOLAR_SYSTEM",
+   "MAPCATEGORY_MARTIAN",
+   "MAPCATEGORY_VENUSIAN",
+   "MAPCATEGORY_JOVIAN",
+   "MAPCATEGORY_TITANIC",
+   "MAPCATEGORY_INTERSTELLAR",
+   "MAPCATEGORY_PLASMA",
+   "MAPCATEGORY_GALACTIC",
+   "MAPCATEGORY_UNIVERSAL",
+   "MAPCATEGORY_DISTANT",
+   "MAPCATEGORY_HYPERSPACE"
+  ],
+  "advancedStart": {
+   "cost": 100
+  }
+ }
+}
