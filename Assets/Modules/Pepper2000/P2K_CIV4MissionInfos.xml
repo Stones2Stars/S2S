@@ -110,6 +110,7 @@
 			<Help>TXT_KEY_MISSION_PLANET_LAND_HELP</Help>
 			<Waypoint>NONE</Waypoint>
 			<HotKey>KB_B</HotKey>
+			<iHotKeyPriority>1</iHotKeyPriority>
 			<EntityEventType>NONE</EntityEventType>
 			<iTime>0</iTime>
 			<bTarget>0</bTarget>

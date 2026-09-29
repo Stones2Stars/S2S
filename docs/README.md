@@ -136,4 +136,4 @@ Verify against the tree before acting on any claim that something is built.
 ## Also at this level
 - **[MOD-README.md](MOD-README.md)** — the mod's front-door / build-pipeline readme (the code repo's mirror).
 - **[CHANGELOG.md](CHANGELOG.md)** — the mod changelog.
-- The hosted catalogs (DESPAIR / REALISM / COMPLEXITY) → **[`/indexes/`](../indexes/)** (repo root, served via Pages).
+- The hosted catalogs (DESPAIR / REALISM / COMPLEXITY) → **[`indexes/`](indexes/)** (served via Pages, which publishes `docs/`).
