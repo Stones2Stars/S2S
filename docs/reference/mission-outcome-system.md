@@ -20,8 +20,14 @@
 >   engine scales the plain value at grant time. **Conditions → cascade `requires` vocabulary**, evaluated by the ONE
 >   `cascadeEvalCondition` ([the DRY single-implementation law](../architecture/patterns/03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)) — **no
 >   BoolExpr round-trip** (`m_pPlotCondition`/`m_pUnitCondition`/`toCity` are `CvCondition*`). Numerics build the
->   existing `IntExpr` (`int`→`Constant`, `{base,random}`→`Plus(Constant,Random)`). Python-authoritative gates
->   (`{python:fn}`) + inline `<Python>` bodies stay Python.
+>   existing `IntExpr` (`int`→`Constant`, `{base,random}`→`Plus(Constant,Random)`). A named
+>   `python.callback` into `CvOutcomeInterface` stays Python.
+> - **⛔ JSON CARRIES NO UNIQUE LOGIC — so inline Python in data (`python.code`) does not exist.** A code string
+>   compiled out of an info file is the "Python in XML" hack: invisible to every checker, compiled into a throwaway
+>   module at load, and able to fail silently. What such a body did is expressed as DATA — a verb plus the ordinary
+>   `requires` vocabulary — and where the vocabulary lacks a word, the ENGINE gains the word (a predicate, a verb),
+>   never the data a script. ⛔ The reader refuses a `code` key: it never runs, and it surfaces on the load census as
+>   `OUTCOME_X:python.code`.
 >
 > The **hardcoded mission-abilities** (`MISSION_CONSTRUCT`/`DISCOVER`/`GOLDEN_AGE`…) are still the four `grants` keys
 > (`buildings`/`greatPersonAction`/`goldenAge`/`greatPeople`) — a PERMANENT carve-out until the mission-concept rework
@@ -66,9 +72,11 @@ Both `CvUnitInfo` **and** `CvUnitCombatInfo` expose both surfaces (runtime merge
 
 Promotion · spawn-unit (at plot, or `bUnitToCity`→nearest/coastal city; subdued animals auto-join a hunter group) ·
 city yields (production/food) · culture · GPP · **`CvProperties` deltas** (crime/disease/…) · temp-happiness timer ·
-population boost · reduce anarchy/occupation timer · gold/research/espionage · **place a bonus on the plot** · fire an
-**EventTrigger** · **embedded/compiled Python** callbacks · kill the acting unit. **All magnitudes are `IntExpr`
-trees** (Constant/Random/Plus/Mult/AdaptUnitYield/Property/Python), conditions are `BoolExpr` trees — **not scalars**.
+population boost · reduce anarchy/occupation timer · gold/research/espionage · **place a bonus on the plot** ·
+**terraform** the plot · **found a city** on it (`CvPlayer::found` — the space settlers) · spawn in the **capital** or
+on a random plot where a condition holds (`spawns.toCapital` / `spawns.anywhere` — the space rewards and the Moon
+launch) · fire an **EventTrigger** · a **named** Python callback · kill the acting unit. **All magnitudes are `IntExpr`
+trees** (Constant/Random/Plus/Mult/AdaptUnitYield/Property/Python), conditions are `CvCondition` trees — **not scalars**.
 
 ## The PARALLEL hardcoded mission-abilities (a separate, non-data-driven system)
 
@@ -110,12 +118,13 @@ discover/hurry/trade/greatWork/hurryFood, `goldenAge`→golden age (and `greatPe
 - **Curator: `curate_unit.py` + `curate_unitcombat.py` (shared `emit_outcomes`) + `curate_outcome.py`.** The
   `<KillOutcomes>`/`<Actions>` blocks convert to the clean verb-per-payload `outcomes` JSON (zero `{expr}`: `Adapt*`
   unwrapped, plot/unit `BoolExpr` → cascade `requires` vocab incl. `IS_OWNED`/`IS_ANARCHY`, `iHappinessTimer` →
-  `happiness:{duration}`, inline `<Python>` dedented to compilable code). The `OUTCOME_*` infos convert via the new
+  `happiness:{duration}`; an inline `<Python>` body is refused into `_unmapped` for hand conversion). The
+  `OUTCOME_*` infos convert via the new
   `curate_outcome.py` → `Assets/Data/outcomes/`. The engine reads it all through `mapFrom`.
 
 ## Why a full `CvOutcome` port is a PERMANENT carve-out — the seven things it would have to solve
 
-> Per the owner ruling up top, that port is NOT happening: the outcomes stay in XML, and the future `missions` block
+> Per the owner ruling up top, that port is NOT happening: the outcomes stay on the `CvOutcome` engine, and the future `missions` block
 > just LISTS which missions a unit can use. This list is the standing JUSTIFICATION for that carve-out — read it
 > before proposing a port, because each item is a distinct machine the `grants` shape does not have.
 
@@ -127,7 +136,7 @@ discover/hurry/trade/greatWork/hurryFood, `goldenAge`→golden age (and `greatPe
 3. **Expression-valued fields** — `iChance`, yields, commerce, cost, conditions are `IntExpr`/`BoolExpr` trees + a
    `CvProperties` delta; the schema must carry expressions, not ints.
 4. **Non-grant-shaped payloads** — event-trigger firing, place-bonus-on-plot, reduce-anarchy, property deltas,
-   spawn-to-nearest-city (coastal/teleport variants), embedded Python — these don't fit a pure resource-grant shape.
+   spawn-to-nearest-city (coastal/teleport variants), named Python callbacks — these don't fit a pure resource-grant shape.
 5. **Kill flag in two places** (per-`CvOutcome` and per-`CvOutcomeMission`, default TRUE) + the KillOutcomes **subject
    asymmetry** (victor gets the grant, gated by the defeated's def) must be modeled explicitly.
 6. **Carriers include `CvUnitCombatInfo`**, and the runtime merges unit + all combat-class lists — the block can't

@@ -572,6 +572,8 @@ bool PlotContext::hasBonus(int eBonus, int eTeam) const  { return m_plot != NULL
 bool PlotContext::isCity() const         { return m_plot != NULL && m_plot->isCity(); }
 int  PlotContext::owner() const          { return m_plot != NULL ? (int)m_plot->getOwner() : (int)NO_PLAYER; }
 int  PlotContext::latitude() const       { return m_plot != NULL ? m_plot->getLatitude() : 0; }
+int  PlotContext::x() const              { return m_plot != NULL ? m_plot->getX() : INVALID_PLOT_COORD; }
+int  PlotContext::y() const              { return m_plot != NULL ? m_plot->getY() : INVALID_PLOT_COORD; }
 int  PlotContext::natureYield(int eYield) const
 {
 	if (m_plot == NULL || eYield < 0 || eYield >= NUM_YIELD_TYPES)

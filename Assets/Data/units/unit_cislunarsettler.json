@@ -56,13 +56,20 @@
    {
     "mission": "MISSION_PLANET_LAND",
     "requires": {
-     "outcome": "OUTCOME_UPGRADE_TO_PLANET_SETTLER"
+     "outcome": "OUTCOME_UPGRADE_TO_PLANET_SETTLER",
+     "plot": {
+      "all": [
+       "CAN_FOUND",
+       {
+        "terrain": [
+         "TERRAIN_CISLUNAR_SPACE"
+        ]
+       }
+      ]
+     }
     },
     "chance": 100,
-    "python": {
-     "module": "BuildCityCislunar",
-     "code": "from CvPythonExtensions import CyGlobalContext\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tif not gc.getPlayer(unit.getOwner()).canFound(plot.getX(),plot.getY()):\n\t\treturn False\n\tvalid_terrain_strings = ['CISLUNAR_SPACE']\n\tvalid_terrains = [gc.getInfoTypeForString('TERRAIN_'+t) for t in valid_terrain_strings]\n\treturn plot.getTerrainType() in valid_terrains\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tgc.getPlayer(unit.getOwner()).found(plot.getX(),plot.getY())\ndef getDisplay(unit,plot):\n\treturn u\"Build a city on this plot.\"\ndef getAIValue(unit, plot):\n\treturn 1"
-    }
+    "found": true
    }
   ]
  },

@@ -55,7 +55,7 @@ namespace
 			return CASC_PRED_UNKNOWN;
 		}
 		// UNKNOWN is 0 (the enum's FIRST value), so the walk runs from the first real kind to the last one.
-		for (int iKind = (int)CASC_PRED_UNKNOWN + 1; iKind <= (int)CASC_PRED_IS_TAG; ++iKind)
+		for (int iKind = (int)CASC_PRED_UNKNOWN + 1; iKind < (int)NUM_CASC_PRED_KINDS; ++iKind)
 		{
 			const char* szKind = cascadeSpellPredKind((CvCascPredKind)iKind);
 			if (szKind != NULL && szSpelling == szKind)

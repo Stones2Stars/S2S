@@ -30,6 +30,7 @@ static CvCascPredKind cp_predKind(const std::string& s)
 	if (s == "STATE_RELIGION_IN_CITY") return CASC_PRED_STATE_RELIGION_IN_CITY; if (s == "IS_GOLDEN_AGE") return CASC_PRED_IS_GOLDEN_AGE;
 	if (s == "IS_REBEL") return CASC_PRED_IS_REBEL;
 	if (s == "IS_ANARCHY") return CASC_PRED_IS_ANARCHY;   if (s == "IS_OWNED") return CASC_PRED_IS_OWNED;
+	if (s == "CAN_FOUND") return CASC_PRED_CAN_FOUND;
 	if (s == "IS_HOLY_CITY") return CASC_PRED_IS_HOLY_CITY; if (s == "IS_STATE_RELIGION_HOLY_CITY") return CASC_PRED_IS_STATE_RELIGION_HOLY_CITY;
 	if (s == "CIVIC_CATEGORY") return CASC_PRED_CIVIC_CATEGORY;   // {CIVIC_CATEGORY: CIVICOPTION_X}, the civic-category gate
 	if (s == "IS_STATE_RELIGION") return CASC_PRED_IS_STATE_RELIGION;   // the counted-religion test (ruling 23)
@@ -68,6 +69,7 @@ const char* cascadeSpellPredKind(CvCascPredKind ePredKind)
 	case CASC_PRED_IS_REBEL:                   return "IS_REBEL";
 	case CASC_PRED_IS_ANARCHY:                 return "IS_ANARCHY";
 	case CASC_PRED_IS_OWNED:                   return "IS_OWNED";
+	case CASC_PRED_CAN_FOUND:                  return "CAN_FOUND";
 	case CASC_PRED_IS_HOLY_CITY:               return "IS_HOLY_CITY";
 	case CASC_PRED_IS_STATE_RELIGION_HOLY_CITY: return "IS_STATE_RELIGION_HOLY_CITY";
 	case CASC_PRED_IS_STATE_RELIGION:          return "IS_STATE_RELIGION";

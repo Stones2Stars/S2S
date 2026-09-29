@@ -196,6 +196,8 @@ public:
 	bool isCity() const;                         // the plot holds a city
 	int  owner() const;                          // CvPlot::getOwner (the vicinity scans' owned-plot test; NO_PLAYER = unowned)
 	int  latitude() const;                       // CvPlot::getLatitude (the latitude band predicate)
+	int  x() const;                              // CvPlot::getX (CAN_FOUND asks the player about this plot)
+	int  y() const;                              // CvPlot::getY
 	// The plot's own PRE-improvement (substrate) yield, read as a SEGMENT of its package -- terrain + feature +
 	// bonus, before the route, the improvement or the owner's sources. ⚠ Takes no team: a plot resolves in
 	// isolation (modifier.md §2), so its substrate carries ONE value.

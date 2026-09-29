@@ -494,10 +494,19 @@ static bool ev_evalPredicate(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFla
 	// every city fed by a provider building (the AQUEDUCT/WATER_TOWER chain -- the worked-plot yield collapse).
 	case CASC_PRED_HAS_FRESHWATER:  return (plotContext != NULL && plotContext->hasFreshWater())
 	                                     || (cityContext != NULL && cityContext->hasFreshWaterAccess());
-	case CASC_PRED_HAS_TERRAIN:     return ev_cityPlotHas(cityContext, evp_workedTerrain, pr);
-	case CASC_PRED_HAS_FEATURE:     return pr->id < 0 ? ev_cityPlotHas(cityContext, evp_workedFeatureAny, pr)
+	// ⚖ TARGET-RELATIVE (json §3.5): a UNIT target asks about the tile it stands on -- an outcome gate, a
+	// promotion gate -- while a city target keeps the worked-radius reading. City evaluations bind their own tile
+	// as plotContext, so the bound plot alone cannot tell the two apart; the unit slot does.
+	case CASC_PRED_HAS_TERRAIN:     if (ctx.unit != NULL && plotContext != NULL) return plotContext->hasTerrain(pr->id);
+	                                return ev_cityPlotHas(cityContext, evp_workedTerrain, pr);
+	case CASC_PRED_HAS_FEATURE:     if (ctx.unit != NULL && plotContext != NULL)
+	                                    return pr->id < 0 ? plotContext->hasFeatureAny() : plotContext->hasFeature(pr->id);
+	                                return pr->id < 0 ? ev_cityPlotHas(cityContext, evp_workedFeatureAny, pr)
 	                                                   : ev_cityPlotHas(cityContext, evp_workedFeature, pr);
-	case CASC_PRED_HAS_IMPROVEMENT: return ev_cityPlotHas(cityContext, evp_workedImprovement, pr);
+	case CASC_PRED_HAS_IMPROVEMENT: if (ctx.unit != NULL && plotContext != NULL) return plotContext->hasImprovement(pr->id);
+	                                return ev_cityPlotHas(cityContext, evp_workedImprovement, pr);
+	case CASC_PRED_CAN_FOUND:       return ctx.unit != NULL && plotContext != NULL
+	                                     && GET_PLAYER(ctx.unit->getOwner()).canFound(plotContext->x(), plotContext->y());
 	// ⚖ TARGET-RELATIVE, like HAS_COAST and HAS_FRESHWATER above -- a predicate is evaluated against the DEPOSIT'S
 	// TARGET (json par.3.5), and this one is authored overwhelmingly on PLOT-scope improvement yields ("+N food, but
 	// only on a tile carrying salt"), which is the deliveryguy shape: the improvement owns its own output and the

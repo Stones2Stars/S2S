@@ -188,10 +188,13 @@ restricts nothing and is one. The question is whose property it is, never who is
   > `outcomes.kill[]` (combat-kill) / `outcomes.actions[]` (missions), each entry
   > `{ requires:{outcome:OUTCOME_*, plot?, unit?}, chance, <reward verbs> }`. Each effect is a verb, collision-checked
   > against the reserved words (avoiding `builds`/`provides`/`grants`/`construct`):
-  > **`spawns`** `{unit,toCity?}` · **`places`** a bonus · **`promotes`** · **`triggers`** an event ·
-  > **`consumes`** the unit · reused families for one-shot yields (`food`/`production`/`commerce`/`gold`/…),
-  > `greatPeople`/`population`/`revolution`, `happiness:{duration}`, `PROPERTY_*`; `{python}` for Python-authoritative
-  > outcomes. **The engine CONSUMES this** — the `CvOutcome` classes are fed from it via `mapFrom` (the CvOutcome
+  > **`spawns`** `{unit, toCity? | toCapital? | anywhere?}` — on the acting unit's plot by default, in the nearest
+  > city, in the capital, or on a random map plot where the `anywhere` condition holds · **`places`** a bonus ·
+  > **`found`** a city on the plot (`CvPlayer::found`) · **`terraform`** `{terrain}` the plot · **`promotes`** ·
+  > **`triggers`** an event · **`consumes`** the unit · reused families for one-shot yields
+  > (`food`/`production`/`commerce`/`gold`/…), `greatPeople`/`population`/`revolution`, `happiness:{duration}`,
+  > `PROPERTY_*`; `{python: {callback}}` names a function in `CvOutcomeInterface` — an inline `code` body is refused,
+  > because JSON carries no logic. **The engine CONSUMES this** — the `CvOutcome` classes are fed from it via `mapFrom` (the CvOutcome
   > engine/dispatch is unchanged, just JSON-loaded; conditions eval through `cascadeEvalCondition`, no BoolExpr
   > round-trip). `Adapt*` gamespeed scaling is pure-engine, applied at grant time — never in the data. See
   > [mission-outcome-system.md](../../reference/mission-outcome-system.md).
