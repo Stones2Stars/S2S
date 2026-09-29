@@ -33,7 +33,7 @@ environment:
     secure: trN7d/FWgBATcyR/BWbF313Avez3hsRfOq4PdxNcll0=
   git_user: flabbert
   git_access_token:
-    secure: l8Yo3AXBjR0Z/hxaaQlvcHwdbcnUKMbpOYI0YQWon/PJcOUkC4YCZoSB6kQY1tSs
+    secure: UBopdQoRRCKoWxP/IEtK/SdGq9eOp/4Z9FbIyajFtzaNecsX7xhslErdWzT92yqq
 
 build_script:
   - cmd: >-
