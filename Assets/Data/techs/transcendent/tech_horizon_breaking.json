@@ -16,9 +16,6 @@
    "TECH_ENDLESS_EXPLORATION",
    "TECH_EUCLIDEAN_5D_SPACE_GEOMETRY",
    "TECH_MATERIALIZATION"
-  ],
-  "units": [
-   "UNIT_WORLDSHIP4"
   ]
  },
  "requires": {

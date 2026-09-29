@@ -14,6 +14,7 @@
 #include "AI/CvCityAI.h"
 #include "Defines/CvGlobals.h"
 #include "CvBonusInfo.h"
+#include "CvTerrainInfo.h"
 #include "CvInfos.h"
 #include "CvMap.h"
 #include "CvOutcome.h"
@@ -24,8 +25,6 @@
 #include "AI/CvTeamAI.h"
 #include "CvUnit.h"
 #include "Infrastructure/CvXMLLoadUtility.h"
-#include "Python/CyUnit.h"
-#include "Python/CyPlot.h"
 #include "Tools/CheckSum.h"
 #include "AI/CvGameAI.h"
 #include "Infrastructure/IntExpr.h"
@@ -45,7 +44,9 @@ namespace
 		{
 			InfoValuation::fillEvalCtxAtPlot(*pPlot, ctx);
 		}
-		else if (kUnit.getOwner() != NO_PLAYER)
+		//	The ACTOR is the unit, so an empire atom (a tech, anarchy) asks about the unit's owner -- never the
+		//	plot's, which is nobody on an unowned tile and a rival on a foreign one.
+		if (kUnit.getOwner() != NO_PLAYER)
 		{
 			ctx.empireContext = &GET_PLAYER(kUnit.getOwner()).getEmpireContext();
 		}
@@ -62,6 +63,41 @@ namespace
 		oc_fillCtx(kUnit, pPlot, ctx);
 		static const CvCascadeEvalFlags kFlags;
 		return cascadeEvalCondition(pCondition, ctx, kFlags);
+	}
+
+	///<summary>
+	/// A uniformly random map plot on which the condition holds for this unit, or NULL when none does. One draw on
+	/// the synchronized stream, taken only when there is a choice to make.
+	///</summary>
+	const CvPlot* oc_randomPlotWhere(const CvCondition* pCondition, const CvUnit& kUnit)
+	{
+		const CvMap& kMap = GC.getMap();
+		int iMatching = 0;
+		for (int iPlot = 0; iPlot < kMap.numPlots(); iPlot++)
+		{
+			if (oc_gateHolds(pCondition, kUnit, kMap.plotByIndex(iPlot)))
+			{
+				iMatching++;
+			}
+		}
+		if (iMatching == 0)
+		{
+			return NULL;
+		}
+		int iChosen = iMatching > 1 ? GC.getGame().getSorenRandNum(iMatching, "Outcome spawn anywhere") : 0;
+		for (int iPlot = 0; iPlot < kMap.numPlots(); iPlot++)
+		{
+			const CvPlot* pPlot = kMap.plotByIndex(iPlot);
+			if (oc_gateHolds(pCondition, kUnit, pPlot))
+			{
+				if (iChosen == 0)
+				{
+					return pPlot;
+				}
+				iChosen--;
+			}
+		}
+		return NULL;
 	}
 
 	//	A numeric outcome payload: a plain int, or the {base, random} pair the curator emits for a rolled
@@ -108,10 +144,10 @@ CvOutcome::CvOutcome(): m_eUnitType(NO_UNIT),
 						m_iHappinessTimer(0),
 						m_iPopulationBoost(0),
 						m_iReduceAnarchyLength(NULL),
-						m_pPythonAIFunc(NULL),
-						m_pPythonDisplayFunc(NULL),
-						m_pPythonExecFunc(NULL),
-						m_pPythonPossibleFunc(NULL)
+						m_pSpawnAnywhere(NULL),
+						m_eTerraformTerrain(NO_TERRAIN),
+						m_bUnitToCapital(false),
+						m_bFound(false)
 {
 	PROFILE_EXTRA_FUNC();
 	for (int i=0; i<NUM_YIELD_TYPES; i++)
@@ -139,6 +175,7 @@ CvOutcome::~CvOutcome()
 	SAFE_DELETE(m_iReduceAnarchyLength);
 	SAFE_DELETE(m_pPlotCondition);
 	SAFE_DELETE(m_pUnitCondition);
+	SAFE_DELETE(m_pSpawnAnywhere);
 
 	for (int i=0; i<NUM_YIELD_TYPES; i++)
 	{
@@ -148,11 +185,6 @@ CvOutcome::~CvOutcome()
 	{
 		SAFE_DELETE(m_aiCommerce[i]);
 	}
-
-	Py_XDECREF(m_pPythonAIFunc);
-	Py_XDECREF(m_pPythonDisplayFunc);
-	Py_XDECREF(m_pPythonExecFunc);
-	Py_XDECREF(m_pPythonPossibleFunc);
 }
 
 int CvOutcome::getYield(YieldTypes eYield, const CvUnit& kUnit) const
@@ -259,139 +291,6 @@ int CvOutcome::getChancePerPop() const
 bool CvOutcome::isKill() const
 {
 	return m_bKill;
-}
-
-void preparePython(CvString& szCode)
-{
-	PROFILE_EXTRA_FUNC();
-	//bst::replace_all(szCode, "\r\n", "\n");
-	//bst::replace_all(szCode, "\n", "\r\n");
-	//bst::replace_all(szCode, "\t", "  ");
-	/*size_t firstNL = szCode.find_first_of('\n');
-	if (firstNL != CvString::npos)
-	{
-		szCode.erase(0, firstNL + 1);
-	}*/
-
-	// remove the last line so the closing tag can be separate without caring for whitespace
-	size_t lastNL = szCode.find_last_of('\n');
-	if (lastNL != CvString::npos)
-	{
-		szCode.erase(lastNL, szCode.length() - lastNL);
-	}
-
-	// we want to remove the amount of space at the start of first code line from all code lines as there might be arbitrary indentation from the XML
-	CvString szXMLSpace;
-	bool bFinished = false;
-
-	// read the string line by line
-	while (!bFinished)
-	{
-		int iPos = 0;
-		bool bComment = false;
-		bool bLineFinished = false;
-		szXMLSpace.clear();
-		while (!bFinished && !bLineFinished)
-		{
-			if (iPos >= (int)szCode.length())
-			{
-				// this only happens if there is only whitespace and no code
-				bFinished = true;
-				szXMLSpace.clear();
-				break;
-			}
-			char c = szCode[iPos];
-			switch (c)
-			{
-				case ' ':
-				case '\t':
-					if (!bComment)
-					{
-						szXMLSpace.append(1, c);
-					}
-					break;
-
-				case '\r':
-					break;
-
-				case '\n':
-					// end of line, erase it from the string
-					szCode.erase(0, iPos + 1);
-					bLineFinished = true;
-					break;
-
-				case '#':
-					// comment
-					bComment = true;
-					break;
-
-				default:
-					// something else, assume actual code, remove line until this char without itself
-					szCode.erase(0, iPos);
-					bFinished = true;
-					break;
-			}
-			iPos++;
-		}
-	}
-
-	// now remove this amount of white space from every line
-	bst::replace_all(szCode, CvString("\n"+szXMLSpace), CvString("\n"));
-}
-
-void CvOutcome::compilePython()
-{
-	if (m_szPythonCode.empty())
-	{
-		return;
-	}
-
-	// compile the code and add it as a new module
-	PyObject* pCode = Py_CompileString(m_szPythonCode.c_str(), m_szPythonModuleName.c_str(), Py_file_input);
-	if (!pCode)
-	{
-		return;
-	}
-
-	PyObject* pModule = PyImport_ExecCodeModule((char*)m_szPythonModuleName.c_str(), pCode);
-	Py_XDECREF(pCode);
-	if (!pModule)
-	{
-		return;
-	}
-
-	PyObject* pDictionary = PyModule_GetDict(pModule);   // borrowed reference
-
-	PyObject* pFunc = PyDict_GetItemString(pDictionary, "isPossible");     // borrowed reference
-	if (pFunc)
-	{
-		Py_INCREF(pFunc);
-		m_pPythonPossibleFunc = pFunc;
-	}
-
-	pFunc = PyDict_GetItemString(pDictionary, "doOutcome");     // borrowed reference
-	if (pFunc)
-	{
-		Py_INCREF(pFunc);
-		m_pPythonExecFunc = pFunc;
-	}
-
-	pFunc = PyDict_GetItemString(pDictionary, "getDisplay");     // borrowed reference
-	if (pFunc)
-	{
-		Py_INCREF(pFunc);
-		m_pPythonDisplayFunc = pFunc;
-	}
-
-	pFunc = PyDict_GetItemString(pDictionary, "getAIValue");     // borrowed reference
-	if (pFunc)
-	{
-		Py_INCREF(pFunc);
-		m_pPythonAIFunc = pFunc;
-	}
-
-	Py_XDECREF(pModule);
-
 }
 
 int CvOutcome::getChance(const CvUnit &kUnit) const
@@ -628,26 +527,6 @@ bool CvOutcome::isPossible(const CvUnit& kUnit) const
 	if (!oc_gateHolds(m_pUnitCondition, kUnit, kUnit.plot()))
 	{
 		return false;
-	}
-
-	if (m_pPythonPossibleFunc)
-	{
-		CyUnit cyUnit(const_cast<CvUnit*>(&kUnit));
-		PyObject* pyUnit = gDLL->getPythonIFace()->makePythonObject(&cyUnit);
-		CyPlot cyPlot(const_cast<CvPlot*>(kUnit.plot()));
-		PyObject* pyPlot = gDLL->getPythonIFace()->makePythonObject(&cyPlot);
-
-		PyObject* pyResult = PyObject_CallFunctionObjArgs(m_pPythonPossibleFunc, pyUnit, pyPlot, NULL);
-		bool bResult = boost::python::extract<bool>(pyResult);
-
-		Py_XDECREF(pyResult);
-		Py_DECREF(pyUnit);
-		Py_DECREF(pyPlot);
-
-		if (!bResult)
-		{
-			return false;
-		}
 	}
 
 	return getChance(kUnit) > 0;
@@ -941,26 +820,6 @@ bool CvOutcome::isPossibleInPlot(const CvUnit& kUnit, const CvPlot& kPlot, bool 
 		return false;
 	}
 
-	if (m_pPythonPossibleFunc)
-	{
-		CyUnit cyUnit(const_cast<CvUnit*>(&kUnit));
-		PyObject* pyUnit = gDLL->getPythonIFace()->makePythonObject(&cyUnit);
-		CyPlot cyPlot(const_cast<CvPlot*>(&kPlot));
-		PyObject* pyPlot = gDLL->getPythonIFace()->makePythonObject(&cyPlot);
-
-		PyObject* pyResult = PyObject_CallFunctionObjArgs(m_pPythonPossibleFunc, pyUnit, pyPlot, NULL);
-		bool bResult = boost::python::extract<bool>(pyResult);
-
-		Py_XDECREF(pyResult);
-		Py_DECREF(pyUnit);
-		Py_DECREF(pyPlot);
-
-		if (!bResult)
-		{
-			return false;
-		}
-	}
-
 	return getChance(kUnit) > 0;
 }
 
@@ -1088,9 +947,18 @@ bool CvOutcome::execute(CvUnit &kUnit, PlayerTypes eDefeatedUnitPlayer, UnitType
 		)
 	);
 
-	if (m_eUnitType > NO_UNIT && !bUnitToCity)
+	const CvPlot* pSpawnPlot = kUnit.plot();
+	if (m_bUnitToCapital && kPlayer.getCapitalCity() != NULL)
 	{
-		CvUnit* pUnit = kPlayer.createUnit(m_eUnitType, kUnit.getX(), kUnit.getY(), GC.getUnitInfo(m_eUnitType).getDefaultUnitAI());
+		pSpawnPlot = kPlayer.getCapitalCity()->plot();
+	}
+	else if (m_pSpawnAnywhere != NULL)
+	{
+		pSpawnPlot = oc_randomPlotWhere(m_pSpawnAnywhere, kUnit);
+	}
+	if (m_eUnitType > NO_UNIT && !bUnitToCity && pSpawnPlot != NULL)
+	{
+		CvUnit* pUnit = kPlayer.createUnit(m_eUnitType, pSpawnPlot->getX(), pSpawnPlot->getY(), GC.getUnitInfo(m_eUnitType).getDefaultUnitAI());
 
 		if (pUnit)
 		{
@@ -1353,23 +1221,14 @@ bool CvOutcome::execute(CvUnit &kUnit, PlayerTypes eDefeatedUnitPlayer, UnitType
 		Cy::call("CvOutcomeInterface", m_szPythonCallback, Cy::Args() << &kUnit << eDefeatedUnitPlayer << eDefeatedUnitType);
 	}
 
-	if (m_pPythonExecFunc)
+	if (m_eTerraformTerrain != NO_TERRAIN)
 	{
-		CyUnit cyUnit(&kUnit);
-		PyObject* pyUnit = gDLL->getPythonIFace()->makePythonObject(&cyUnit);
-		CyPlot cyPlot(kUnit.plot());
-		PyObject* pyPlot = gDLL->getPythonIFace()->makePythonObject(&cyPlot);
-		PyObject* pyDefeatedPlayer = gDLL->getPythonIFace()->makePythonObject(&eDefeatedUnitPlayer);
-		PyObject* pyDefeatedUnitType = gDLL->getPythonIFace()->makePythonObject(&eDefeatedUnitType);
+		kUnit.plot()->setTerrainType(m_eTerraformTerrain, true, true);
+	}
 
-		PyObject* pyResult = PyObject_CallFunctionObjArgs(m_pPythonExecFunc, pyUnit, pyPlot, pyDefeatedPlayer, pyDefeatedUnitType, NULL);
-		//bool bResult = boost::python::extract<bool>(pyResult);
-
-		Py_XDECREF(pyResult);
-		Py_DECREF(pyUnit);
-		Py_DECREF(pyPlot);
-		Py_DECREF(pyDefeatedPlayer);
-		Py_DECREF(pyDefeatedUnitType);
+	if (m_bFound)
+	{
+		kPlayer.found(kUnit.getX(), kUnit.getY(), &kUnit);
 	}
 
 	if (m_bKill)
@@ -1494,21 +1353,6 @@ int CvOutcome::AI_getValueInPlot(const CvUnit &kUnit, const CvPlot &kPlot, bool 
 
 	}
 
-	if (m_pPythonAIFunc)
-	{
-		CyUnit cyUnit(const_cast<CvUnit*>(&kUnit));
-		PyObject* pyUnit = gDLL->getPythonIFace()->makePythonObject(&cyUnit);
-		CyPlot cyPlot(const_cast<CvPlot*>(&kPlot));
-		PyObject* pyPlot = gDLL->getPythonIFace()->makePythonObject(&cyPlot);
-
-		PyObject* pyResult = PyObject_CallFunctionObjArgs(m_pPythonAIFunc, pyUnit, pyPlot, NULL);
-		iValue += boost::python::extract<int>(pyResult);
-
-		Py_XDECREF(pyResult);
-		Py_DECREF(pyUnit);
-		Py_DECREF(pyPlot);
-	}
-
 	return iValue;
 }
 
@@ -1523,6 +1367,7 @@ void CvOutcome::mapFrom(const picojson::value& v)
 	SAFE_DELETE(m_iReduceAnarchyLength);
 	SAFE_DELETE(m_pPlotCondition);
 	SAFE_DELETE(m_pUnitCondition);
+	SAFE_DELETE(m_pSpawnAnywhere);
 	for (int i = 0; i < NUM_YIELD_TYPES; i++)
 	{
 		SAFE_DELETE(m_aiYield[i]);
@@ -1532,6 +1377,9 @@ void CvOutcome::mapFrom(const picojson::value& v)
 		SAFE_DELETE(m_aiCommerce[i]);
 	}
 	m_eType = NO_OUTCOME;
+	m_eTerraformTerrain = NO_TERRAIN;
+	m_bUnitToCapital = false;
+	m_bFound = false;
 	m_eUnitType = NO_UNIT;
 	m_ePromotionType = NO_PROMOTION;
 	m_eBonusType = NO_BONUS;
@@ -1543,8 +1391,6 @@ void CvOutcome::mapFrom(const picojson::value& v)
 	m_iPopulationBoost = 0;
 	m_bKill = false;
 	m_szPythonCallback.clear();
-	m_szPythonModuleName.clear();
-	m_szPythonCode.clear();
 
 	if (!v.is<picojson::object>())
 	{
@@ -1579,13 +1425,28 @@ void CvOutcome::mapFrom(const picojson::value& v)
 	m_ePromotionType = static_cast<PromotionTypes>(jsonIdFk(o, "promotes"));
 	m_eBonusType = static_cast<BonusTypes>(jsonIdFk(o, "places"));
 	m_eEventTrigger = static_cast<EventTriggerTypes>(jsonIdFk(o, "triggers"));
+	m_bFound = jsonIdBool(o, "found");
 
-	//	`spawns` -- the unit, and whether it arrives in a CITY rather than on the plot. `toCity` is authored
-	//	either as a bare true or as a condition (a tech requirement), so it parses as a condition either way.
+	const picojson::object* pTerraform = jsonChildObj(o, "terraform");
+	if (pTerraform != NULL)
+	{
+		m_eTerraformTerrain = static_cast<TerrainTypes>(jsonIdFk(*pTerraform, "terrain"));
+	}
+
+	//	`spawns` -- the unit, and WHERE it arrives: on the acting unit's plot by default; in a CITY (`toCity`,
+	//	a bare true or a condition such as a tech requirement); in the CAPITAL (`toCapital`); or on a random
+	//	map plot where a condition holds (`anywhere`).
 	const picojson::object* pSpawns = jsonChildObj(o, "spawns");
 	if (pSpawns != NULL)
 	{
 		m_eUnitType = static_cast<UnitTypes>(jsonIdFk(*pSpawns, "unit"));
+		m_bUnitToCapital = jsonIdBool(*pSpawns, "toCapital");
+
+		picojson::object::const_iterator itAnywhere = pSpawns->find("anywhere");
+		if (itAnywhere != pSpawns->end())
+		{
+			m_pSpawnAnywhere = cascadeParseCondition(itAnywhere->second);
+		}
 
 		picojson::object::const_iterator itToCity = pSpawns->find("toCity");
 		if (itToCity != pSpawns->end())
@@ -1629,8 +1490,8 @@ void CvOutcome::mapFrom(const picojson::value& v)
 		m_aiCommerce[iCommerce] = oc_intExpr(o, kCommerceKeys[iCommerce]);
 	}
 
-	//	The Python escape hatch stays Python (mission-outcome-system.md): a named callback, or an inline body
-	//	compiled under its module name. compilePython() binds them once the whole registry is mapped.
+	//	A named callback into CvOutcomeInterface. JSON carries no logic, so an inline `code` body is refused
+	//	(mission-outcome-system.md) and surfaces on the load census rather than running.
 	const picojson::object* pPython = jsonChildObj(o, "python");
 	if (pPython != NULL)
 	{
@@ -1639,13 +1500,14 @@ void CvOutcome::mapFrom(const picojson::value& v)
 		{
 			m_szPythonCallback = szValue.c_str();
 		}
-		if (jsonIdStr(*pPython, "module", szValue))
+		if (pPython->find("code") != pPython->end())
 		{
-			m_szPythonModuleName = szValue.c_str();
-		}
-		if (jsonIdStr(*pPython, "code", szValue))
-		{
-			m_szPythonCode = szValue.c_str();
+			std::string szOutcome;
+			if (pRequires == NULL || !jsonIdStr(*pRequires, "outcome", szOutcome))
+			{
+				szOutcome = "outcome";
+			}
+			jsonNoteUnconsumed(szOutcome, "python.code");
 		}
 	}
 }
@@ -1748,30 +1610,17 @@ void CvOutcome::copyNonDefaults(CvOutcome* pOutcome)
 		pOutcome->m_pUnitCondition = NULL;
 	}
 
+	if (!m_pSpawnAnywhere)
+	{
+		m_pSpawnAnywhere = pOutcome->m_pSpawnAnywhere;
+		pOutcome->m_pSpawnAnywhere = NULL;
+	}
+
 	if (m_szPythonCallback.empty()) m_szPythonCallback = pOutcome->m_szPythonCallback;
 	if (!m_bKill) m_bKill = pOutcome->m_bKill;
-	if (m_szPythonModuleName.empty()) m_szPythonModuleName = pOutcome->m_szPythonModuleName;
-	if (m_szPythonCode.empty()) m_szPythonCode = pOutcome->m_szPythonCode;
-	if (!m_pPythonAIFunc)
-	{
-		m_pPythonAIFunc = pOutcome->m_pPythonAIFunc;
-		pOutcome->m_pPythonAIFunc = NULL;
-	}
-	if (!m_pPythonDisplayFunc)
-	{
-		m_pPythonDisplayFunc = pOutcome->m_pPythonDisplayFunc;
-		pOutcome->m_pPythonDisplayFunc = NULL;
-	}
-	if (!m_pPythonExecFunc)
-	{
-		m_pPythonExecFunc = pOutcome->m_pPythonExecFunc;
-		pOutcome->m_pPythonExecFunc = NULL;
-	}
-	if (!m_pPythonPossibleFunc)
-	{
-		m_pPythonPossibleFunc = pOutcome->m_pPythonPossibleFunc;
-		pOutcome->m_pPythonPossibleFunc = NULL;
-	}
+	if (!m_bFound) m_bFound = pOutcome->m_bFound;
+	if (!m_bUnitToCapital) m_bUnitToCapital = pOutcome->m_bUnitToCapital;
+	if (m_eTerraformTerrain == NO_TERRAIN) m_eTerraformTerrain = pOutcome->m_eTerraformTerrain;
 }
 
 void CvOutcome::buildDisplayString(CvWStringBuffer &szBuffer, const CvUnit& kUnit) const
@@ -2013,7 +1862,7 @@ void CvOutcome::buildDisplayString(CvWStringBuffer &szBuffer, const CvUnit& kUni
 		szBuffer.append(gDLL->getText("TXT_KEY_OUTCOME_KILLS_UNIT"));
 	}
 
-	if (m_pPythonDisplayFunc)
+	if (m_eTerraformTerrain != NO_TERRAIN)
 	{
 		if (!bFirst)
 		{
@@ -2023,18 +1872,20 @@ void CvOutcome::buildDisplayString(CvWStringBuffer &szBuffer, const CvUnit& kUni
 		{
 			bFirst = false;
 		}
+		szBuffer.append(GC.getTerrainInfo(m_eTerraformTerrain).getDescription());
+	}
 
-		CyUnit cyUnit(const_cast<CvUnit*>(&kUnit));
-		PyObject* pyUnit = gDLL->getPythonIFace()->makePythonObject(&cyUnit);
-		CyPlot cyPlot(const_cast<CvPlot*>(kUnit.plot()));
-		PyObject* pyPlot = gDLL->getPythonIFace()->makePythonObject(&cyPlot);
-
-		PyObject* pyResult = PyObject_CallFunctionObjArgs(m_pPythonDisplayFunc, pyUnit, pyPlot, NULL);
-		szBuffer.append(CvWString(boost::python::extract<std::wstring>(pyResult)));
-
-		Py_XDECREF(pyResult);
-		Py_DECREF(pyUnit);
-		Py_DECREF(pyPlot);
+	if (m_bFound)
+	{
+		if (!bFirst)
+		{
+			szBuffer.append(L", ");
+		}
+		else
+		{
+			bFirst = false;
+		}
+		szBuffer.append(gDLL->getText("TXT_KEY_MISSION_BUILD_CITY"));
 	}
 
 	szBuffer.append(L" )");
@@ -2067,6 +1918,7 @@ void CvOutcome::getCheckSum(uint32_t& iSum) const
 	m_Properties.getCheckSum(iSum);
 	CheckSumC(iSum, m_szPythonCallback);
 	CheckSum(iSum, m_bKill);
-	CheckSum(iSum, m_szPythonCode);
-	CheckSum(iSum, m_szPythonModuleName);
+	CheckSum(iSum, m_bFound);
+	CheckSum(iSum, m_bUnitToCapital);
+	CheckSum(iSum, m_eTerraformTerrain);
 }

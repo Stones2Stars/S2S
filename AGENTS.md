@@ -1239,7 +1239,7 @@ the total-observability bar below.)
   ([the hard rule](#build-and-test)).
 - **Docs-only changes go to `main` ONLY when the owner explicitly authorizes it**; default is the working branch. A
   branch-coupled doc (e.g. cascade specs on `json-data-migration`) belongs with that work and commits on the branch.
-  The canonical straight-to-`main` docs are the INDEXES (`indexes/DESPAIR_INDEX.*`, `REALISM_INDEX.*`, the
+  The canonical straight-to-`main` docs are the INDEXES (`docs/indexes/DESPAIR_INDEX.*`, `REALISM_INDEX.*`, the
   COMPLEXITY catalog) — they pertain to no single branch. Nothing gameplay-affecting ever rides in a docs commit.
 - **⛔ COMMIT IS NOT PUSH, AND THE HARD GATE IS THE *PUSH*.** A commit on the wrong branch is a local mistake that
   costs a `git reset`; a PUSH is PUBLISHED, and undoing one means rewriting history other people may already
@@ -1362,7 +1362,7 @@ All documentation lives under **`docs/`** (map: [`docs/README.md`](docs/README.m
 data-model + the cascade/system specs, plus the transient `curators/`), **`docs/reference/`** (how the engine +
 subsystems behave today), **`docs/architecture/`** (`north-star`, `patterns`,
 `superseded-ideas`), **`docs/plans/`** (`structural-cleanup/` the cutover bulldozer + `parked/` un-killed intent).
-The hosted DESPAIR/REALISM/COMPLEXITY catalogs live at **`indexes/`** (repo root, served via Pages).
+The hosted DESPAIR/REALISM/COMPLEXITY catalogs live at **`docs/indexes/`** (served via Pages, which publishes `docs/`).
 
 - How existing code behaves → `docs/reference/`.
 - A change or initiative you intend to make (plan, scope, rollout, removal) → `docs/plans/`.
@@ -1371,9 +1371,9 @@ The hosted DESPAIR/REALISM/COMPLEXITY catalogs live at **`indexes/`** (repo root
 - Cross-cutting, must-not-rediscover facts → "Key Subsystem Knowledge" above (or the nearest `AGENTS.md`).
 - The mod's front-door / build-pipeline readme (the code repo's mirror) → `docs/MOD-README.md`.
 - A newly-found bug of exceptional absurdity may *additionally* earn an entry in
-  [`indexes/DESPAIR_INDEX.md`](indexes/DESPAIR_INDEX.md) (sanctioned, lighthearted,
+  [`docs/indexes/DESPAIR_INDEX.md`](docs/indexes/DESPAIR_INDEX.md) (sanctioned, lighthearted,
   optional — never a substitute for the real fix/issue/doc). Its sibling
-  [`indexes/REALISM_INDEX.md`](indexes/REALISM_INDEX.md) catalogues "super realistic" *mechanics*
+  [`docs/indexes/REALISM_INDEX.md`](docs/indexes/REALISM_INDEX.md) catalogues "super realistic" *mechanics*
   — absurdities working exactly as designed (same policy).
 - **Rules and conventions for agents/contributors → THIS file (`AGENTS.md`), always.**
   The root `CLAUDE.md` exists only as a session-bootstrap shim that imports this file — never add rules or content

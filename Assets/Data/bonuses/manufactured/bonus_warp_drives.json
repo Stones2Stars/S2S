@@ -3,9 +3,6 @@
  "enables": {
   "buildings": [
    "BUILDING_MILKY_WAY_CORE_TERAEARTH"
-  ],
-  "units": [
-   "UNIT_WORLDSHIP3"
   ]
  },
  "world": {

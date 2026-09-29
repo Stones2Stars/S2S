@@ -1,0 +1,21 @@
+{
+ "type": "OUTCOME_SETTLE_HYPERSPACE",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_UPGRADE_TO_PLANET_SETTLER",
+  "message": "TXT_KEY_OUTCOME_UPGRADE_TO_PLANET_SETTLER_MESSAGE"
+ },
+ "requires": {
+  "build": {
+   "all": [
+    "TECH_DUALFLUX_QUANTUM_TEMPORAL_RIFT"
+   ]
+  }
+ },
+ "territory": [
+  "friendly",
+  "neutral"
+ ],
+ "replaces": [
+  "OUTCOME_UPGRADE_TO_PLANET_SETTLER"
+ ]
+}

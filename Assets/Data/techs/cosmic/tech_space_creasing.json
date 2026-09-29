@@ -17,9 +17,6 @@
   ],
   "techs": [
    "TECH_INTERGALACTIC_COLONIZATION"
-  ],
-  "units": [
-   "UNIT_WORLDSHIP3"
   ]
  },
  "requires": {

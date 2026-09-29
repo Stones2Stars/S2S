@@ -19,9 +19,6 @@
   ],
   "techs": [
    "TECH_KUIPER_BELT_EXPLORATION"
-  ],
-  "units": [
-   "UNIT_ONEILLSETTLER"
   ]
  },
  "requires": {

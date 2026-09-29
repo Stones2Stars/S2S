@@ -92,7 +92,11 @@ enum CvCascPredKind
 	CASC_PRED_NATURE_YIELD,
 	// classification-TAG membership: IS_<TAG> against a UNIT target (json §8/§3.5). `param` holds the full
 	// TAG_<SUFFIX> type name; the id is resolved lazily at eval (the TAG_* infotypes are minted AFTER condition parse).
-	CASC_PRED_IS_TAG
+	CASC_PRED_IS_TAG,
+	// outcome gate: the unit's owner may found a city on the plot (CvPlayer::canFound)
+	CASC_PRED_CAN_FOUND,
+
+	NUM_CASC_PRED_KINDS
 };
 
 // The node discriminator (StoneBase's three Condition subtypes).

@@ -16,9 +16,6 @@
   "techs": [
    "TECH_PLANETARY_EXTRACTION",
    "TECH_PLANETARY_TRADE"
-  ],
-  "units": [
-   "UNIT_PLANETARYSETTLER"
   ]
  },
  "requires": {

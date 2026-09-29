@@ -3,9 +3,6 @@
  "enables": {
   "buildings": [
    "BUILDING_FEYMARCH"
-  ],
-  "units": [
-   "UNIT_WORLDSHIP4"
   ]
  },
  "world": {

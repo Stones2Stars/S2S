@@ -16,9 +16,6 @@
   "techs": [
    "TECH_LAUNCH_ARCOLOGY",
    "TECH_SPACEPUNK"
-  ],
-  "units": [
-   "UNIT_WORLDSHIP"
   ]
  },
  "requires": {

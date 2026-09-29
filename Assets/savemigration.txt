@@ -1395,6 +1395,17 @@ CvCity::m_aiTradeYield
 | point (sm_resolveStoredType). The key is namespaced `TYPE::<INFOTYPE_NAME>` -- the entry reader takes the
 | first ::-bearing token (that is what stops a wrapped prose line registering as an entry), so a bare id
 | would parse to nothing; the TYPE:: namespace satisfies that guard AND cannot collide with Class::field.
+| The nine space settlers merged into ONE unit whose found gate opens each region by tech, so every settler a
+| save holds is that unit.
+TYPE::UNIT_CISLUNARSETTLER -> TYPE::UNIT_SPACE_SETTLER
+TYPE::UNIT_LUNARSETTLER -> TYPE::UNIT_SPACE_SETTLER
+TYPE::UNIT_PLANETARYSETTLER -> TYPE::UNIT_SPACE_SETTLER
+TYPE::UNIT_ONEILLSETTLER -> TYPE::UNIT_SPACE_SETTLER
+TYPE::UNIT_WORLDSHIP -> TYPE::UNIT_SPACE_SETTLER
+TYPE::UNIT_WORLDSHIP2 -> TYPE::UNIT_SPACE_SETTLER
+TYPE::UNIT_WORLDSHIP3 -> TYPE::UNIT_SPACE_SETTLER
+TYPE::UNIT_WORLDSHIP4 -> TYPE::UNIT_SPACE_SETTLER
+TYPE::UNIT_HYPERSHIP -> TYPE::UNIT_SPACE_SETTLER
 TYPE::TRAIT_AERIAL -> TYPE::TRAIT_COMPLEX_AERIAL1
 TYPE::TRAIT_AERIAL1 -> TYPE::TRAIT_COMPLEX_AERIAL1
 TYPE::TRAIT_AERIAL2 -> TYPE::TRAIT_COMPLEX_AERIAL2

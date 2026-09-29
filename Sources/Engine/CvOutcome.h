@@ -43,7 +43,6 @@ public:
 	EventTriggerTypes getEventTrigger() const;
 	int getChancePerPop() const;
 	bool isKill() const;
-	void compilePython();
 
 	bool isPossible(const CvUnit& kUnit) const;
 	bool isPossibleSomewhere(const CvUnit& kUnit) const;
@@ -85,12 +84,10 @@ protected:
 	const CvCondition* m_pUnitCondition;
 	CvString m_szPythonCallback;
 	bool m_bKill;
-	CvString m_szPythonCode;
-	CvString m_szPythonModuleName;
-	PyObject* m_pPythonPossibleFunc;
-	PyObject* m_pPythonExecFunc;
-	PyObject* m_pPythonDisplayFunc;
-	PyObject* m_pPythonAIFunc;
+	const CvCondition* m_pSpawnAnywhere;
+	TerrainTypes m_eTerraformTerrain;
+	bool m_bUnitToCapital;
+	bool m_bFound;
 };
 
 #endif

@@ -9,8 +9,7 @@
   ],
   "units": [
    "UNIT_COSMIC_WORKER",
-   "UNIT_VON_NEUMANN_PROBE",
-   "UNIT_WORLDSHIP2"
+   "UNIT_VON_NEUMANN_PROBE"
   ]
  },
  "requires": {

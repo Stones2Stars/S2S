@@ -38,7 +38,6 @@
    "TECH_PLANETARY_COLONIZATION"
   ],
   "units": [
-   "UNIT_LUNARSETTLER",
    "UNIT_LUNAR_BULLDOZER"
   ]
  },

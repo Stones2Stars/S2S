@@ -17,9 +17,6 @@
   "techs": [
    "TECH_ASTROIMPERIALISM",
    "TECH_TRANSTANGIBLE_NEUTRINO_ACCELERATORS"
-  ],
-  "units": [
-   "UNIT_WORLDSHIP2"
   ]
  },
  "requires": {

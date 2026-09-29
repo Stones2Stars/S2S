@@ -88,6 +88,12 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
     holds a government-center building (Palace or a pseudo-palace), runtime-evaluated. Government-center buildings gate
     on `requires.build.disabled: "IS_GOVERNMENT_CENTER"` (one can't be built where a government center already exists —
     a gov-center test, not an `IS_CAPITAL` one).
+  - **outcome gates** (evaluated for a UNIT acting on a plot — an outcome's `requires.plot`): `IS_OWNED` (the plot lies
+    in owned territory) · `IS_ANARCHY` (the unit's owner is in anarchy) · `CAN_FOUND` (the unit's owner may found a
+    city on the plot — `CvPlayer::canFound`, the same verdict the found mission asks). The ACTOR is the unit, so
+    every empire atom in an outcome gate (`TECH_X`, `IS_ANARCHY`) asks about the **unit's owner**, never the plot's —
+    which is nobody on an unowned tile. That is how one unit carries a region per tech (the space settler's
+    `{all: ["TECH_LUNAR_COLONIZATION", {terrain: [...]}]}` rows).
   - **trade route** (evaluated against the ROUTE/its partner city): **`IS_FOREIGN`** (the route's partner belongs to
     another team — the engine's foreign-trade gate, `CvCity::totalTradeModifier`; domestic routes are the plain
     negation `"!IS_FOREIGN"`, never a second predicate) · **`SHARES_CIVIC`** (the route partner's owner runs the
@@ -110,8 +116,14 @@ IGNORED**, never treated as false — retiring a system never spuriously disable
   `{latitude:{min,max}}` · `{existedFor:{min:N}}` (GAME YEARS since built -- what the player has always been told: *"doubles in 1000 years"*. The city stores the build YEAR (`getGameTurnYear`) and every authored threshold is a year count; a turn's year is derived, never stored ([engine.md](../../../reference/engine.md)), so nothing needs converting) ·
   `{HAS_COAST:{minArea:N}}` (the city is adjacent to a water body of **≥ N tiles**; a bare `HAS_COAST` is coastal at
   the default threshold, so an entity needing a *larger* sea body carries the size here).
-- **membership sugar** `{ terrain|feature|bonus: [TYPE,…] }` = "the plot's terrain/feature/bonus is one of these";
-  equivalent to an `any` of the matching `HAS_*` predicate.
+- **⚖ `HAS_TERRAIN` / `HAS_FEATURE` / `HAS_IMPROVEMENT` ARE TARGET-RELATIVE.** A **unit** target (an outcome or
+  promotion gate) asks about the **tile the unit stands on**; a **city** target asks about its worked radius. The unit
+  is what separates the two — a city evaluation binds its own tile as the plot, so the bound plot alone cannot.
+  `{HAS_BONUS: B}` is always the plot's own bonus.
+- **membership sugar** `{ terrain|feature|improvement: [TYPE,…] }` = an `any` of the matching `HAS_*` predicate, so
+  it is target-relative exactly as above. ⚠ `{ bonus: [TYPE,…] }` is **not** the plot's bonus: it is the city
+  PRESENCE test (an `any` of bare `BONUS_X` atoms, honouring `connection`/`vicinity`). A plot's own bonus is
+  `{HAS_BONUS: B}`, composed with `any` for a set.
 - **composition is the win:** a Martian peak is `{all:["IS_MARS","HAS_PEAK"]}`; coastal land
   `{all:["IS_LAND","HAS_COAST"]}`; flat land = `{all:["IS_LAND","IS_FLATLANDS"]}` (domain + relief). No bespoke
   "mars-peak"/"coastal-land" type.

@@ -12,8 +12,7 @@
   ],
   "units": [
    "UNIT_MAGSAIL_WORKER",
-   "UNIT_NANOWORKER",
-   "UNIT_ONEILLSETTLER"
+   "UNIT_NANOWORKER"
   ]
  },
  "requires": {

@@ -55,23 +55,32 @@
    {
     "mission": "MISSION_EXPLORE_VON_NEUMANN",
     "requires": {
-     "outcome": "OUTCOME_EXPLORE_VON_NEUMANN"
+     "outcome": "OUTCOME_EXPLORE_VON_NEUMANN",
+     "plot": {
+      "feature": [
+       "FEATURE_DWARF_GALAXY",
+       "FEATURE_GALAXY"
+      ]
+     }
     },
     "chance": 100,
-    "python": {
-     "module": "ExploreVonNeumann",
-     "code": "from CvPythonExtensions import *\nimport random\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tvalid_feature_strings = ['DWARF_GALAXY','GALAXY']\n\tvalid_features = [gc.getInfoTypeForString('FEATURE_'+t) for t in valid_feature_strings]\n\treturn plot.getFeatureType() in valid_features\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_INTERGALACTIC_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Explore a distant galaxy\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    "spawns": {
+     "unit": "UNIT_INTERGALACTIC_REWARD",
+     "toCapital": true
     }
    },
    {
     "mission": "MISSION_EXPLORE_ANCIENT_CIVILIZATION",
     "requires": {
-     "outcome": "OUTCOME_EXPLORE_ANCIENT_CIVILIZATION"
+     "outcome": "OUTCOME_EXPLORE_ANCIENT_CIVILIZATION",
+     "plot": {
+      "HAS_BONUS": "BONUS_ABANDONED_CIVILIZATION"
+     }
     },
     "chance": 100,
-    "python": {
-     "module": "ExploreAncientCivilization",
-     "code": "from CvPythonExtensions import *\nimport random\ndef isPossible(unit,plot):\n\tgc = CyGlobalContext()\n\tvalid_bonus_strings = ['ABANDONED_CIVILIZATION']\n\tvalid_bonuses = [gc.getInfoTypeForString('BONUS_'+t) for t in valid_bonus_strings]\n\treturn plot.getBonusType(-1) in valid_bonuses\ndef doOutcome(unit,plot,eDefPlayer, eDefUnitType):\n\tgc = CyGlobalContext()\n\tcapital = gc.getPlayer(unit.getOwner()).getCapitalCity()\n\tgc.getPlayer(unit.getOwner()).createUnit(gc.getInfoTypeForString('UNIT_ANCIENT_CIVILIZATION_REWARD'),capital.getX(),capital.getY(),UnitAITypes.NO_UNITAI,DirectionTypes.DIRECTION_SOUTH)\ndef getDisplay(unit,plot):\n\treturn u\"Excavate an ancient civilization\"\ndef getAIValue(unit, plot):\n\treturn 1"
+    "spawns": {
+     "unit": "UNIT_ANCIENT_CIVILIZATION_REWARD",
+     "toCapital": true
     }
    }
   ]
