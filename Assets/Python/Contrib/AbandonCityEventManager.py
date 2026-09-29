@@ -121,7 +121,7 @@ class CityDemolish:
 		aList = []
 		iSum = 0
 		for iType in xrange(GC.getNumBuildingInfos()):
-			if CyCity.hasBuilding(iType) and not CyCity.isFreeBuilding(iType):
+			if CyCity.hasBuilding(iType):
 				# A wonder's CATEGORY is WHICH self-cap scope it authors ([json.md] 4.4): WORLD and TEAM are the
 				# world and team wonders. There is no isWorldWonder mirror to ask, and never was one.
 				eScope = BUILDING.getWonderScope(iType)
