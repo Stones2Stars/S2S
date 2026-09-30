@@ -23,12 +23,14 @@ client you prefer. Either way, the mod must end up in your Beyond the Sword
 
 ```bat
 cd /d "<Beyond the Sword install>\Mods"
-git clone --depth 1 https://github.com/Stones2Stars/Stones2Stars.git
+git clone https://github.com/Stones2Stars/Stones2Stars.git
+
+(`--depth 1` skips old release history and makes the
+initial download much smaller; a plain `git clone` works too.)
 ```
 
 Update to the latest release later by running `git pull` inside the
-`Stones2Stars` folder. (`--depth 1` skips old release history and makes the
-initial download much smaller; a plain `git clone` works too.)
+`Stones2Stars` folder.
 
 ### Option B — SVN (SourceForge)
 
