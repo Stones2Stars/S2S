@@ -28508,16 +28508,16 @@ feindliche Einheit scrollen[COLOR_REVERT][\BOLD]Anzeige der Siegchance
 		<English>+%d1[ICON_UNHAPPY] "The people we have set to work here are a burden on us!"</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_UNHAPPY_EMPIRE_SOURCES</Tag>
-		<English>+%d1[ICON_UNHAPPY] "The way our nation is run weighs on this city!"</English>
+		<Tag>TXT_KEY_UNHAPPY_FROM_SOURCE</Tag>
+		<English>+%d1[ICON_UNHAPPY]: %s2</English>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_HAPPY_CITY_SPECIALISTS</Tag>
 		<English>+%d1[ICON_HAPPY] "The people we have set to work here please us!"</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_HAPPY_EMPIRE_SOURCES</Tag>
-		<English>+%d1[ICON_HAPPY] "The way our nation is run pleases this city!"</English>
+		<Tag>TXT_KEY_HAPPY_FROM_SOURCE</Tag>
+		<English>+%d1[ICON_HAPPY]: %s2</English>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_UNHAPPY_CIVIC</Tag>

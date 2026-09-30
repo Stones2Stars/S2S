@@ -167,6 +167,10 @@ public:
 	// that building", which is NOT the same as "did that building's deposits land here" -- a PRESENT but DORMANT
 	// building deposits nothing ([enabler.md] §3.2). The apply's own record cannot disagree with what it applied.
 	static int sourceIndexOf(const CvInfo* j);
+	/// <summary>The source a dense index names -- the inverse of sourceIndexOf, so an owner's record of which
+	/// sources deposited into it (CvCascadePackage::appliedSources) can be read back as the sources themselves.
+	/// NULL for an index this load never assigned.</summary>
+	static const CvInfo* sourceAt(int iSourceIndex);
 
 	static const std::vector<GatedDeposit>* gatedByType(const std::string& szType);
 	static const std::vector<GatedDeposit>* gatedByToken(const char* szToken);

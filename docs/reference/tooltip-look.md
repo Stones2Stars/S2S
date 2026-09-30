@@ -1381,6 +1381,30 @@ finished.
 - +%d1_Change<unhappy>: "Misc."  <!-- TXT_KEY_ANGER_MISC -->
 - Total Unhappiness: %d1_Num<unhappy>  <!-- TXT_KEY_ANGER_TOTAL_UNHAPPY -->
 
+### Design — the city screen's wellbeing hover (`setAngerHelp` / `setHappyHelp`)
+
+The deposit side is itemised **by source**, the raw-state side keeps one line per term. Both sides read the same
+way; the anger side is shown:
+
+- **Buildings** — one line per building when **five or fewer** deposit, otherwise one line for all of them:
+  - +%d1<unhappy>: <name of the thing>
+  - +%d1<unhappy> "Buildings and Effects in this city are directly irritating us!"  <!-- TXT_KEY_UNHAPPY_CITY_BUILDINGS -->
+- **One line per civic, trait, tech, project, heritage and difficulty level** that deposits:
+  - +%d1<unhappy>: <name of the thing>
+- **Resources**, **corporations** — one line each for the class:
+  - +%d1_Change<unhappy>: "Some goods are making us unhappy!"  <!-- TXT_KEY_ANGER_BONUS -->
+  - +%d1_Change<unhappy>: "Corporations are Harming our City!"  <!-- TXT_KEY_UNHAPPY_CORPORATIONS -->
+- **Specialists** — one line, as before.
+- **The raw-state terms** (overcrowding, war weariness, hurry anger, …) — one line each, as before.
+- **Misc** — whatever the named lines do not account for, so the lines always add up to the total.
+
+⚖ **A source is shown once, summed over every scope it reached.** A civic depositing both an empire-wide flat and
+a per-city `cities` entry is one line, because the player asked *"what is this civic doing to me"*, not which
+package it landed in. The attribution is the per-source audit (`InfoValuation::cityRefusedDeposits` for the
+city's own package, `InfoValuation::upperScopeDeposits` for the empire and team packages it rolls down from) —
+a read-time walk of what each live source authored, never a stored per-source plane
+([cascade/16](../cascade/16-package-model.md)).
+
 ## `setBadHealthHelp`
 
 - %D1_Change<unhealth> from %s2_FeatName  <!-- TXT_KEY_MISC_FEAT_HEALTH -->

@@ -1299,6 +1299,60 @@ namespace
 		const int64_t iRight = kRight.iValue < 0 ? -kRight.iValue : kRight.iValue;
 		return iLeft > iRight;
 	}
+
+	// ONE source's entries of (eFamily, iKind) at eScope, applied or refused -- the per-entry half both audits share,
+	// so the city walk and the upper-scope walk cannot disagree about what counts as a refusal.
+	void val_auditSourceEntries(const CvInfo* pSourceInfo, int iMultiplicity, CvCascScope eScope,
+		const CvCascadeEvalCtx& evalCtx, ModifierFamily eFamily, int iKind,
+		std::vector<InfoValuation::RefusedDeposit>& auditOut)
+	{
+		const CvModifiers* pModifiers = (pSourceInfo != NULL) ? pSourceInfo->getModifiers() : NULL;
+		if (pModifiers == NULL || pModifiers->empty())
+		{
+			return;
+		}
+		const std::vector<CvModEntry*>& entries = pModifiers->entries();
+		for (size_t iEntry = 0; iEntry < entries.size(); ++iEntry)
+		{
+			const CvModEntry* pEntry = entries[iEntry];
+			// ⛔ THE SCOPE TEST IS resolveEntry's, NEVER A HAND-ROLLED `entry->scope == CITY`. A civic's per-city
+			// buff is authored at EMPIRE scope with a `cities` TARGET (json §3.3) and only RESOLVES at city scope,
+			// so a raw scope comparison drops every rolled-down source -- which is precisely what the cascade is
+			// for. Measured: the hand-rolled test admitted 190 entries and explained 82 of a 155-point stack; the
+			// rolled-down half was invisible to it (docs/architecture/patterns.md §DRY (single implementation)).
+			if (pEntry == NULL || pEntry->family != eFamily || pEntry->kind != iKind)
+			{
+				continue;
+			}
+			// THE ONE RESOLVE decides whether this entry lands here and as what -- scope, target fan, audience,
+			// unit side and the §3.9 gate, all of it. A census that re-implemented any of that could disagree
+			// with the apply it claims to explain (docs/architecture/patterns.md §DRY (single implementation)).
+			int iEntryChannel = -1;
+			bool bEntryPercent = false;
+			int64_t iEntryValue = 0;
+			const bool bResolved = MMKernel::resolveEntry(*pEntry, iMultiplicity, eScope, evalCtx, NULL, false,
+				iEntryChannel, bEntryPercent, iEntryValue);
+			const bool bConditioned = (pEntry->enabled != NULL || pEntry->disabled != NULL);
+			if (!bResolved)
+			{
+				// It declined. Only a §3.9 gate makes that a REFUSAL worth reporting -- every other decline
+				// (wrong scope, wrong audience, no target here) means the entry was never this scope's to take.
+				if (!bConditioned || MMKernel::applies(pEntry->enabled, pEntry->disabled, evalCtx))
+				{
+					continue;
+				}
+			}
+			InfoValuation::RefusedDeposit kAudit;
+			kAudit.szSource = pSourceInfo->getType();
+			kAudit.pSource = pSourceInfo;
+			kAudit.iChannel = bResolved ? iEntryChannel : -1;
+			kAudit.iValue = bResolved ? iEntryValue : pEntry->value;
+			kAudit.bPercentSide = bResolved ? bEntryPercent : MMKernel::unitIsPercentSide(pEntry->unit);
+			kAudit.pCondition = (pEntry->enabled != NULL) ? pEntry->enabled : pEntry->disabled;
+			kAudit.bApplied = bResolved;
+			auditOut.push_back(kAudit);
+		}
+	}
 }
 
 void InfoValuation::cityRefusedDeposits(const CvCity& city, int iChannel,
@@ -1383,53 +1437,45 @@ void InfoValuation::cityRefusedDeposits(const CvCity& city, int iChannel,
 
 	for (size_t iSource = 0; iSource < kSources.size(); ++iSource)
 	{
-		const CvInfo* pSourceInfo = kSources[iSource];
-		const CvModifiers* pModifiers = (pSourceInfo != NULL) ? pSourceInfo->getModifiers() : NULL;
-		if (pModifiers == NULL || pModifiers->empty())
-		{
-			continue;
-		}
-		const std::vector<CvModEntry*>& entries = pModifiers->entries();
-		for (size_t iEntry = 0; iEntry < entries.size(); ++iEntry)
-		{
-			const CvModEntry* pEntry = entries[iEntry];
-			// ⛔ THE SCOPE TEST IS resolveEntry's, NEVER A HAND-ROLLED `entry->scope == CITY`. A civic's per-city
-			// buff is authored at EMPIRE scope with a `cities` TARGET (json §3.3) and only RESOLVES at city scope,
-			// so a raw scope comparison drops every rolled-down source -- which is precisely what the cascade is
-			// for. Measured: the hand-rolled test admitted 190 entries and explained 82 of a 155-point stack; the
-			// rolled-down half was invisible to it (docs/architecture/patterns.md §DRY (single implementation)).
-			if (pEntry == NULL || pEntry->family != eFamily || pEntry->kind != iKind)
-			{
-				continue;
-			}
-			// THE ONE RESOLVE decides whether this entry lands here and as what -- scope, target fan, audience,
-			// unit side and the §3.9 gate, all of it. A census that re-implemented any of that could disagree
-			// with the apply it claims to explain (docs/architecture/patterns.md §DRY (single implementation)).
-			int iEntryChannel = -1;
-			bool bEntryPercent = false;
-			int64_t iEntryValue = 0;
-			const bool bResolved = MMKernel::resolveEntry(*pEntry, 1, CASC_SCOPE_CITY, evalCtx, NULL, false,
-				iEntryChannel, bEntryPercent, iEntryValue);
-			const bool bConditioned = (pEntry->enabled != NULL || pEntry->disabled != NULL);
-			if (!bResolved)
-			{
-				// It declined. Only a §3.9 gate makes that a REFUSAL worth reporting -- every other decline
-				// (wrong scope, wrong audience, no target here) means the entry was never this city's to take.
-				if (!bConditioned || MMKernel::applies(pEntry->enabled, pEntry->disabled, evalCtx))
-				{
-					continue;
-				}
-			}
-			RefusedDeposit kAudit;
-			kAudit.szSource = pSourceInfo->getType();
-			kAudit.iValue = bResolved ? iEntryValue : pEntry->value;
-			kAudit.bPercentSide = bResolved ? bEntryPercent : MMKernel::unitIsPercentSide(pEntry->unit);
-			kAudit.pCondition = (pEntry->enabled != NULL) ? pEntry->enabled : pEntry->disabled;
-			kAudit.bApplied = bResolved;
-			refusedOut.push_back(kAudit);
-		}
+		val_auditSourceEntries(kSources[iSource], 1, CASC_SCOPE_CITY, evalCtx, eFamily, iKind, refusedOut);
 	}
 	std::sort(refusedOut.begin(), refusedOut.end(), val_refusedBigger);
+}
+
+void InfoValuation::upperScopeDeposits(const CvPlayer& owner, int iChannel,
+	std::vector<RefusedDeposit>& depositsOut)
+{
+	depositsOut.clear();
+	if (iChannel < 0)
+	{
+		return;
+	}
+	const ModifierFamily eFamily = CascadeChannelRegistry::channelFamily(iChannel);
+	const int iKind = CascadeChannelRegistry::channelKind(iChannel);
+	// the ctx the apply path builds for EMPIRE and TEAM alike -- team is the tech bridge and holds no context
+	CvCascadeEvalCtx evalCtx;
+	owner.getEmpireContext().fillEvalCtx(evalCtx);
+
+	const CvCascScope aeScopes[2] = { CASC_SCOPE_EMPIRE, CASC_SCOPE_TEAM };
+	const ContextDict* apRecords[2] = {
+		&owner.getCascadePackage().appliedSources,
+		&GET_TEAM(owner.getTeam()).getCascadePackage().appliedSources
+	};
+	for (int iScope = 0; iScope < 2; ++iScope)
+	{
+		// The package's own record of what deposited into it, at the multiplicity it applied -- a wonder once, a
+		// religion once per city holding it. A source held but dormant never applied, so it is correctly absent.
+		for (std::map<int, int>::const_iterator itSource = apRecords[iScope]->m.begin();
+			itSource != apRecords[iScope]->m.end(); ++itSource)
+		{
+			if (itSource->second > 0)
+			{
+				val_auditSourceEntries(DepositIndex::sourceAt(itSource->first), itSource->second, aeScopes[iScope],
+					evalCtx, eFamily, iKind, depositsOut);
+			}
+		}
+	}
+	std::sort(depositsOut.begin(), depositsOut.end(), val_refusedBigger);
 }
 
 int InfoValuation::realizedAtCity(const CvCity& city, int iChannel)
