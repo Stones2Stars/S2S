@@ -36,6 +36,7 @@ static bool s_bDepsCompiled = false;
 // compiled registry. Append-only within a load, so an index handed to an owner's live-source record stays
 // valid for as long as that record does.
 static std::map<const CvInfo*, int> s_sourceIndex;
+static std::vector<const CvInfo*> s_sourcesByIndex;
 
 
 // The CONDITION-DEPENDENCY routes, carrying the DEPOSITS themselves -- what the apply path consumes: one
@@ -219,6 +220,7 @@ void DepositIndex::pushInfo(const CvInfo* j)
 	{
 		const int iNext = (int)s_sourceIndex.size();
 		s_sourceIndex[j] = iNext;
+		s_sourcesByIndex.push_back(j);
 	}
 	DiCompiledSet& set = s_compiled[j];
 	set.main.clear();          // re-push-safe: a re-mapped info compiles fresh, never doubles
@@ -231,6 +233,7 @@ void DepositIndex::clearCompiled()
 {
 	s_compiled.clear();
 	s_sourceIndex.clear();
+	s_sourcesByIndex.clear();
 	s_gatedByType.clear();
 	s_gatedByToken.clear();
 	s_gatedByPredicate.clear();
@@ -365,6 +368,11 @@ int DepositIndex::sourceIndexOf(const CvInfo* j)
 	}
 	const std::map<const CvInfo*, int>::const_iterator it = s_sourceIndex.find(j);
 	return (it == s_sourceIndex.end()) ? -1 : it->second;
+}
+
+const CvInfo* DepositIndex::sourceAt(int iSourceIndex)
+{
+	return (iSourceIndex >= 0 && iSourceIndex < (int)s_sourcesByIndex.size()) ? s_sourcesByIndex[iSourceIndex] : NULL;
 }
 
 const std::vector<DepositIndex::GatedDeposit>* DepositIndex::gatedByType(const std::string& szType)

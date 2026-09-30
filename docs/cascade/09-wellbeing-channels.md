@@ -29,8 +29,12 @@ end-state values are the clamps over them, and are a final-state CALCULATION, ne
 ⚑ **The decomposition census is served per city on `/computed/city/yield`** ([the plot census](../specs/http-endpoints.md#-the-plot-census-serves-the-work-verdict-with-its-reason)):
 one field per raw-state term the realized read folds, beside the deposit legs, so a divergence localises to a
 single source. The terms are recorded by the realized read's own walk (`CvCity::WellbeingTerms`), never
-re-derived beside it. ⚠ The DEPOSIT side still reports per leg (buildings · specialists · empire), not per
-source: a package aggregates every source that deposited into it.
+re-derived beside it. The DEPOSIT side is attributed per SOURCE at read time, never stored: a package
+aggregates every source that deposited into it, so the per-source answer is the audit walk over what each live
+source authored — `InfoValuation::cityRefusedDeposits` for the city's own package, `InfoValuation::upperScopeDeposits`
+for the empire and team packages, whose source set is each package's own `appliedSources` record
+([no per-source plane](16-package-model.md)). The city screen's wellbeing hover is its reader
+([tooltip-look.md](../reference/tooltip-look.md)).
 
 **The TARGET/INPUT split (the tradeYield precedent, [validation](../specs/validation.md) input rules):**
 

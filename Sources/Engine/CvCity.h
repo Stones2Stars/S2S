@@ -885,10 +885,8 @@ public:
 	// The four wellbeing channels (modifier.md §2b): happiness/anger/health/unhealth as four ORDINARY channels,
 	// each a positive magnitude -- the opposing pairs are summed at the verdict, which is not a read.
 	void getWellbeing(int (&wellbeing)[NUM_WELLBEING_CHANNELS]) const;
-	//	Which LEG of the deposit roll-up a share of getWellbeing came from. These name the packages
-	//	rolledLegsAtCity sums, which is as fine as attribution gets today: a package aggregates every source
-	//	that deposited into it, so EMPIRE covers civics, traits, techs, bonuses and the rest as one figure.
-	//	Naming those individually is the per-term decomposition census (cascade/09-wellbeing-channels.md).
+	//	Which LEG of the deposit roll-up a share of getWellbeing came from -- the packages rolledLegsAtCity sums.
+	//	A package aggregates its sources, so naming them is the per-source audit (cascade/09-wellbeing-channels.md).
 	enum WellbeingLeg
 	{
 		WELLBEING_LEG_BUILDINGS = 0,   // this city's own tier-2 flats -- buildings and the city-scope sources with them

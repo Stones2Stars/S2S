@@ -622,6 +622,8 @@ public:
 	struct RefusedDeposit
 	{
 		const char* szSource;            // the source's type string -- BORROWED from the info, which outlives the read
+		const CvInfo* pSource;           // the source itself -- BORROWED, for a reader that names or classifies it
+		int iChannel;                    // the channel it RESOLVED to (a negative wellbeing amount lands on the twin); -1 when refused
 		int64_t iValue;                  // what it deposits (×100 flat side; unscaled percent side)
 		bool bPercentSide;
 		const CvCondition* pCondition;   // the gate -- BORROWED; NULL = unconditioned
@@ -635,12 +637,16 @@ public:
 	// Listing the APPLIED entries makes the total checkable -- their Σ is what the package's own city-scope slot
 	// should hold, so the census can be reconciled against the number it explains rather than merely narrating
 	// beside it.
-	// ⚠ CITY SCOPE ONLY, deliberately and statedly: the empire and team legs of the percent stack are NOT walked
-	// here (their sources are the player's civics/traits/techs, not this city's buildings), so a per-source
-	// attribution of those is still missing. The scope SPLIT is served beside this so the unattributed remainder
-	// is at least bounded and named.
+	// ⚠ CITY SCOPE ONLY: the empire and team packages the city reads on top are upperScopeDeposits'.
 	static void cityRefusedDeposits(const CvCity& city, int iChannel,
 		std::vector<RefusedDeposit>& refusedOut);
+	/// <summary>Every EMPIRE- and TEAM-scope entry of iChannel's family and kind that the sources recorded in the
+	/// owner's and the team's packages author -- applied or refused, sorted by |value| descending. The source set is
+	/// each package's own appliedSources record, read at the multiplicity it applied, and each entry resolves at
+	/// its scope against the owner's context: exactly what the apply path did, so the applied Σ is what those
+	/// packages hold.</summary>
+	static void upperScopeDeposits(const CvPlayer& owner, int iChannel,
+		std::vector<RefusedDeposit>& depositsOut);
 
 	static int realizedAtCity(const CvCity& city, int iChannel);
 	// The CITY chain's two LEGS, before the combine -- the ONE description of what a city sits under (team +
