@@ -277,8 +277,11 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File "../Tools/_Build.ps1" <C
   `ArgumentError: ... did not match C++ signature`, taking the whole screen with it.)*
   ⚖ **ADVISORY — it is a TRIAGE LIST, not a defect count.** Python is untyped and this tree names ordinary
   locals `tab`, `scores`, `city`, even `CyPlayer`, so `tab.setStatus(x)` cannot be told from `CyUnit.setStatus`.
-  It already skips names declared in more than one `Cy` header and the prefix-addressed `CyInfo` plane; what is
-  left still needs a human to ask what the receiver actually is.
+  A name declared in more than one `Cy` header is judged through its RECEIVER — a `Cy*`-spelled or engine-noun
+  name (`pCity`, `pLoopUnit`) or a getter call (`GC.getPlayer(i).getCity(j).`) — and skipped when that resolves
+  to nothing; the prefix-addressed `CyInfo` plane is skipped. ⚑ Skipping shared names outright is what hid
+  `CyCity.setName` losing its `bFound` parameter, which broke city renaming. What is left still needs a human
+  to ask what the receiver actually is.
   ⛔ When an entry is real, fix the CALL SITE — never widen the C++ signature just to silence it. ⚖ Widening is
   right only where a consumer genuinely NEEDS the parameter: `CyCity::pushOrder` carries `bAppend` because the
   scenario copier replays a whole build queue and a fixed replace would keep only the last order.
