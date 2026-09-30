@@ -335,7 +335,7 @@ class WBUnitScreen:
 				sText = u"%c %s" %(TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_CULTURE), INFO.getDescription("CULTURELEVEL_", pCity.getCultureLevel()))
 				screen.setTableText("MissionInput", 0, iRow, "<font=3>" + sText, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 				iRow = screen.appendTableRow("MissionInput")
-				sText = u"%c %d / %d" %(TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_CULTURE), pCity.getCulture(pCity.getOwner()), pCity.getCultureThreshold())
+				sText = u"%c %d / %d" %(TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_CULTURE), (pCity.getCultureForPlayer(pCity.getOwner()) / 100), pCity.getCultureThreshold())
 				screen.setTableText("MissionInput", 0, iRow, "<font=3>" + sText, "", WidgetTypes.WIDGET_GENERAL, -1, -1, 1<<0)
 				iRow = screen.appendTableRow("MissionInput")
 				sText = u"%c <color=128,255,28>%+d" %(TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_CULTURE), self.currentUnit.getGreatWorkCulture(self.currentPlot))
@@ -764,7 +764,7 @@ class WBUnitScreen:
 			if iRange > 10: iRange = 10 # sanity control
 			for i in xrange(iRange):
 				pNewUnit = GC.getPlayer(unitX.getOwner()).createUnit(unitX.getRead()[UnitReadKind.UNIT_READ_TYPE], unitX.getX(), unitX.getY(), UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-				pNewUnit.convert(unitX, False)
+				pNewUnit.convert(unitX.getOwner(), unitX.getID(), False)
 				pNewUnit.setBaseCombatStr(unitX.getBaseCombatStr())
 				pNewUnit.changeCargoSpace(unitX.cargoSpace() - pNewUnit.cargoSpace())
 				pNewUnit.setStatus(UnitStatus.STATUS_PARALYZED, unitX.getStatus(UnitStatus.STATUS_PARALYZED))
@@ -809,7 +809,7 @@ class WBUnitScreen:
 
 	def changeOwner(self, iPlayer):
 		pNewUnit = GC.getPlayer(iPlayer).createUnit(self.unitType, self.iPlotX, self.iPlotY, UnitAITypes.NO_UNITAI, DirectionTypes.NO_DIRECTION)
-		pNewUnit.convert(self.currentUnit, True)
+		pNewUnit.convert(self.currentUnit.getOwner(), self.currentUnit.getID(), True)
 		pNewUnit.setBaseCombatStr(self.currentUnit.getBaseCombatStr())
 		pNewUnit.changeCargoSpace(self.currentUnit.cargoSpace() - pNewUnit.cargoSpace())
 		pNewUnit.setStatus(UnitStatus.STATUS_PARALYZED, self.currentUnit.getStatus(UnitStatus.STATUS_PARALYZED))

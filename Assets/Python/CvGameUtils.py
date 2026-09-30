@@ -401,8 +401,8 @@ class CvGameUtils:
 						sText += u"\n%s: %d/%d %+d" %(CyTranslator().getText("[ICON_GREATPEOPLE]", ()), iProgress, pPlayer.greatPeopleThresholdNonMilitary(), iGPRate)
 
 					if pCity.getCultureThreshold() > 0:
-						sText += u"\n%s: %d/%d (%s)" %(CyTranslator().getText("[ICON_CULTURE]", ()), pCity.getCulture(iPlayer), pCity.getCultureThreshold(), INFO.getDescription("CULTURELEVEL_", pCity.getCultureLevel()))
-					else: sText += u"\n%s: %d (%s)" %(CyTranslator().getText("[ICON_CULTURE]", ()), pCity.getCulture(iPlayer), INFO.getDescription("CULTURELEVEL_", pCity.getCultureLevel()))
+						sText += u"\n%s: %d/%d (%s)" %(CyTranslator().getText("[ICON_CULTURE]", ()), (pCity.getCultureForPlayer(iPlayer) / 100), pCity.getCultureThreshold(), INFO.getDescription("CULTURELEVEL_", pCity.getCultureLevel()))
+					else: sText += u"\n%s: %d (%s)" %(CyTranslator().getText("[ICON_CULTURE]", ()), (pCity.getCultureForPlayer(iPlayer) / 100), INFO.getDescription("CULTURELEVEL_", pCity.getCultureLevel()))
 
 
 					lTemp = []

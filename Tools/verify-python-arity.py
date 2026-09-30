@@ -17,8 +17,13 @@ match C++ signature`. That is a broken advisor for the player and a silent one f
 
 HOW IT DECIDES. A name published on exactly ONE Cy class is unambiguous: any Python call of
 that name must supply between (required) and (total) arguments, where `required` discounts
-C++ default arguments. A name published on SEVERAL classes is skipped -- the receiver's type
-is not knowable from the text, and guessing produces noise rather than findings.
+C++ default arguments. A name declared on SEVERAL classes is judged against the class its
+RECEIVER resolves to -- a receiver spelled `Cy*` or named after an engine noun (`pCity`,
+`pLoopUnit`), or one that is a getter call (`GC.getPlayer(i).getCity(j).`) -- and skipped when
+the receiver resolves to nothing.
+⚑ Skipping every shared name outright hid the worst instance of the defect: `setName` is on
+four Cy headers, so `CyCity.setName` losing its bFound parameter broke city renaming and this
+check stayed silent.
 
 ⚖ ADVISORY, and it must stay that way until receiver types can be inferred. Python is untyped and
 this repo names ordinary locals `CyPlayer`, `tab`, `scores`, `city` -- so a call like
@@ -125,17 +130,60 @@ def count_call_args(text, open_index):
     return None, None
 
 
+# A receiver NAMED after an engine noun, matched on its suffix (`pCity`, `pLoopUnit`, `CyCity`, `city`).
+# Longest nouns first, so `...SelectionGroup` is not read as a bare `...Group`.
+RECEIVER_NOUNS = [("selectiongroup", "CySelectionGroup"), ("selection", "CySelectionGroup"),
+                  ("group", "CySelectionGroup"), ("player", "CyPlayer"), ("team", "CyTeam"),
+                  ("city", "CyCity"), ("unit", "CyUnit"), ("plot", "CyPlot"), ("area", "CyArea"),
+                  ("deal", "CyDeal"), ("map", "CyMap")]
+# A receiver that is a GETTER CALL, by what the getter returns (`GC.getPlayer(i).getCity(j).setName`).
+RECEIVER_GETTERS = {"getCity": "CyCity", "getUnit": "CyUnit", "getPlayer": "CyPlayer", "getTeam": "CyTeam",
+                    "plot": "CyPlot", "getPlot": "CyPlot", "plotByIndex": "CyPlot", "area": "CyArea",
+                    "getArea": "CyArea", "getMap": "CyMap", "getGroup": "CySelectionGroup",
+                    "getSelectionGroup": "CySelectionGroup"}
+RE_TRAILING_NAME = re.compile(r"([A-Za-z_]\w*)\s*$")
+
+
+def receiver_class(line, dot_index):
+    """The Cy class the receiver left of `line[dot_index]` resolves to, or None when it does not."""
+    index = dot_index - 1
+    while index >= 0 and line[index].isspace():
+        index -= 1
+    if index >= 0 and line[index] == ")":
+        depth = 0
+        while index >= 0:
+            if line[index] == ")":
+                depth += 1
+            elif line[index] == "(":
+                depth -= 1
+                if depth == 0:
+                    break
+            index -= 1
+        getter = RE_TRAILING_NAME.search(line[:max(index, 0)])
+        return RECEIVER_GETTERS.get(getter.group(1)) if getter else None
+    token = RE_TRAILING_NAME.search(line[:index + 1])
+    # An ALL-CAPS name is a module-level PLANE (`UNIT.isFound(iUnit)` addresses a unit INFO by id), never a handle.
+    if not token or token.group(1).isupper():
+        return None
+    lowered = token.group(1).lower()
+    for noun, class_name in RECEIVER_NOUNS:
+        if lowered.endswith(noun):
+            return class_name
+    return None
+
+
 def main():
     owners = published_names()
-    # A name DECLARED in more than one Cy header is ambiguous: the receiver's type is not
-    # knowable from the text, so judging its arity would be guesswork. Skip those outright --
-    # this is what keeps `getButton` / `getDescription` (on every info header) out of the report.
+    # A name DECLARED in more than one Cy header is judged only through its RECEIVER (receiver_class);
+    # a receiver that resolves to nothing -- `info.getButton()`, an untyped local -- is skipped.
     declared_in = collections.defaultdict(set)
+    header_arities = {}
     for header in sorted(os.listdir("Sources/Python")):
         if not header.endswith(".h"):
             continue
         class_name = header[:-2]
-        for method in declared_arity(class_name):
+        header_arities[class_name] = declared_arity(class_name)
+        for method in header_arities[class_name]:
             declared_in[method].add(class_name)
     # CyInfo is the PREFIX-ADDRESSED plane: its getDescription(prefix, id) shares a name with the
     # zero-argument getDescription() on every info HANDLE (GC.getPromotionInfo(i) and its kin), and the
@@ -172,10 +220,16 @@ def main():
                         continue
                     for call in re.finditer(r"\.([A-Za-z_]\w*)\s*\(", line):
                         method = call.group(1)
-                        if method not in unique:
+                        if method in unique:
+                            class_name = unique[method]
+                            bounds = arities.get(class_name, {}).get(method)
+                        elif len(declared_in.get(method, ())) > 1:
+                            class_name = receiver_class(line, call.start())
+                            if class_name not in declared_in[method]:
+                                continue
+                            bounds = header_arities[class_name].get(method)
+                        else:
                             continue
-                        class_name = unique[method]
-                        bounds = arities.get(class_name, {}).get(method)
                         if bounds is None:
                             continue
                         required, total = bounds

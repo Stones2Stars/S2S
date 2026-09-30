@@ -3567,7 +3567,7 @@ class Revolution:
 			if self.LOG_DEBUG: print "[REV] Revolt: Looking for revolution worthy civ in " + pCity.getName()
 
 			cultPlayer = None
-			if pCity.countTotalCultureTimes100() > 5000:
+			if pCity.countTotalCulture() > 5000:
 				cultPlayer = GC.getPlayer(pCity.findHighestCulture())
 				if cultPlayer.getID() == iParentPlayer or cultPlayer.isNPC() or cultPlayer.isMinorCiv():
 					cultPlayer = None
@@ -3600,7 +3600,7 @@ class Revolution:
 			if bReincarnate:
 				# Check for civ that can rise from the ashes
 				for i in xrange(GC.getMAX_PC_PLAYERS()):
-					if not i == iParentPlayer and pCity.getCulture(i) > 50:
+					if not i == iParentPlayer and (pCity.getCultureForPlayer(i) / 100) > 50:
 						playerI = GC.getPlayer(i)
 						if not playerI.isAlive():
 							pRevPlayer = playerI
@@ -3725,7 +3725,7 @@ class Revolution:
 
 			# Create list of available civs and similar civ types
 			cultPlayer = None
-			if pCity.countTotalCultureTimes100() > 5000:
+			if pCity.countTotalCulture() > 5000:
 				iHighestCulturePlayer = pCity.findHighestCulture()
 				if iHighestCulturePlayer != owner.getID():
 					cultPlayer = GC.getPlayer(iHighestCulturePlayer)
@@ -5218,11 +5218,11 @@ class Revolution:
 						# Acquire city
 
 						if self.LOG_DEBUG: print "[REV] Revolt: Population of %s before is %d"%(pCity.getName(),pCity.getPopulation())
-						if self.LOG_DEBUG: print "[REV] Revolt: Check city culture is %d, at %d, %d"%(pCity.getCulture(pPlayer.getID()), pCity.getX(),pCity.getY())
+						if self.LOG_DEBUG: print "[REV] Revolt: Check city culture is %d, at %d, %d"%((pCity.getCultureForPlayer(pPlayer.getID()) / 100), pCity.getX(),pCity.getY())
 						cityPlot = pCity.plot()
-						if( pCity.getCulture( pPlayer.getID() ) == 0 ) :
+						if( (pCity.getCultureForPlayer( pPlayer.getID() ) / 100) == 0 ) :
 							if self.LOG_DEBUG: print "[REV] Revolt: Forcing culture > 0"
-							pCity.setCulture( pPlayer.getID(), 1, True )
+							pCity.setCulture( pPlayer.getID(), 100, True )
 
 						try :
 							pCity.plot().setOwner( pRevPlayer.getID() )
@@ -5257,9 +5257,9 @@ class Revolution:
 
 						#if self.LOG_DEBUG: print "[REV] Revolt: %s at %d, %d"%(pCity.getName(),pCity.getX(),pCity.getY())
 
-						if self.LOG_DEBUG: print "[REV] Revolt: Culture in %s: %d, plot %d"%(pCity.getName(),pCity.getCulture(pPlayer.getID()),pCity.plot().getCulture(pPlayer.getID()))
+						if self.LOG_DEBUG: print "[REV] Revolt: Culture in %s: %d, plot %d"%(pCity.getName(),(pCity.getCultureForPlayer(pPlayer.getID()) / 100),pCity.plot().getCulture(pPlayer.getID()))
 
-						newCulVal = int( self.revCultureModifier*max([1.0*pCity.getCulture(pPlayer.getID()),pCity.countTotalCultureTimes100()/200]) )
+						newCulVal = int( self.revCultureModifier*max([1.0*(pCity.getCultureForPlayer(pPlayer.getID()) / 100),pCity.countTotalCulture()/200]) )
 						newPlotVal = int( self.revCultureModifier*max([1.2*pCity.plot().getCulture(pPlayer.getID()),pCity.plot().countTotalCulture()/2]) )
 						RevUtils.giveCityCulture( pCity, pRevPlayer.getID(), newCulVal, newPlotVal)
 
@@ -5399,11 +5399,11 @@ class Revolution:
 							# Acquire city
 
 							if self.LOG_DEBUG: print "[REV] Revolt: Population of %s before is %d"%(pCity.getName(),pCity.getPopulation())
-							if self.LOG_DEBUG: print "[REV] Revolt: Check city culture is %d, at %d, %d"%(pCity.getCulture(pPlayer.getID()), pCity.getX(),pCity.getY())
+							if self.LOG_DEBUG: print "[REV] Revolt: Check city culture is %d, at %d, %d"%((pCity.getCultureForPlayer(pPlayer.getID()) / 100), pCity.getX(),pCity.getY())
 							cityPlot = pCity.plot()
-							if( pCity.getCulture( pPlayer.getID() ) == 0 ) :
+							if( (pCity.getCultureForPlayer( pPlayer.getID() ) / 100) == 0 ) :
 								if self.LOG_DEBUG: print "[REV] Revolt: Forcing culture > 0"
-								pCity.setCulture( pPlayer.getID(), 1, True )
+								pCity.setCulture( pPlayer.getID(), 100, True )
 
 							try :
 								pCity.plot().setOwner( joinPlayer.getID() )
@@ -5719,13 +5719,13 @@ class Revolution:
 				# Acquire city
 				if self.LOG_DEBUG:
 					print "[REV] Revolt: Population of %s before is %d" % (pCity.getName(), pCity.getPopulation())
-					print "[REV] Revolt: Check city culture is %d, at %d, %d" % (pCity.getCulture(iPlayer), pCity.getX(), pCity.getY())
+					print "[REV] Revolt: Check city culture is %d, at %d, %d" % ((pCity.getCultureForPlayer(iPlayer) / 100), pCity.getX(), pCity.getY())
 
 				cityPlot = pCity.plot()
-				if pCity.getCulture(iPlayer) == 0:
+				if (pCity.getCultureForPlayer(iPlayer) / 100) == 0:
 					if self.LOG_DEBUG:
 						print "[REV] Revolt: Forcing culture > 0"
-					pCity.setCulture(iPlayer, 1, True)
+					pCity.setCulture(iPlayer, 100, True)
 
 				try:
 					pCity.plot().setOwner(joinPlayer.getID())
@@ -6325,13 +6325,13 @@ class Revolution:
 				#pRevPlayer.acquireCity( pCity, False, False )
 				if self.LOG_DEBUG:
 					print "[REV] Revolt: Population of %s before is %d" % (pCity.getName(), pCity.getPopulation())
-					print "[REV] Revolt: Check city culture is %d, at %d, %d" % (pCity.getCulture(pPlayer.getID()), pCity.getX(), pCity.getY())
+					print "[REV] Revolt: Check city culture is %d, at %d, %d" % ((pCity.getCultureForPlayer(pPlayer.getID()) / 100), pCity.getX(), pCity.getY())
 
 				cityPlot = pCity.plot()
-				if pCity.getCulture(pPlayer.getID()) == 0:
+				if (pCity.getCultureForPlayer(pPlayer.getID()) / 100) == 0:
 					if self.LOG_DEBUG:
 						print "[REV] Revolt: Forcing culture > 0"
-					pCity.setCulture(pPlayer.getID(), 1, True)
+					pCity.setCulture(pPlayer.getID(), 100, True)
 
 				try:
 					pCity.plot().setOwner(pRevPlayer.getID())
@@ -6368,7 +6368,7 @@ class Revolution:
 				else:
 					pCity.setOccupation(2)
 
-				newCulVal = int( self.revCultureModifier*max([pCity.getCulture(pPlayer.getID()),pCity.countTotalCultureTimes100()/200]) )
+				newCulVal = int( self.revCultureModifier*max([(pCity.getCultureForPlayer(pPlayer.getID()) / 100),pCity.countTotalCulture()/200]) )
 				newPlotVal = int( self.revCultureModifier*max([pCity.plot().getCulture(pPlayer.getID()),pCity.plot().countTotalCulture()/2]) )
 				RevUtils.giveCityCulture( pCity, pRevPlayer.getID(), newCulVal, newPlotVal)
 

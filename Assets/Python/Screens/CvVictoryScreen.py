@@ -1063,7 +1063,7 @@ class CvVictoryScreen:
 								bUnknown = False
 							break
 
-					aiVoteBuilding.append((CvBuildingInfo.getTextKey(), iUNTeam, bUnknown))
+					aiVoteBuilding.append((INFO.getDescription("BUILDING_", i), iUNTeam, bUnknown))
 
 		if not aiVoteBuilding:
 			return
@@ -1078,7 +1078,7 @@ class CvVictoryScreen:
 
 		szUnknown = TRNSLTR.getText("TXT_KEY_TOPCIVS_UNKNOWN", ())
 		szTxt = uFont + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_NOT_BUILT", ())
-		for TEXT_KEY, iUNTeam, bUnknown in aiVoteBuilding:
+		for szBuilding, iUNTeam, bUnknown in aiVoteBuilding:
 			iRow = screen.appendTableRow(szTable)
 			if iUNTeam != -1:
 				if bUnknown:
@@ -1088,7 +1088,7 @@ class CvVictoryScreen:
 				screen.setTableText(szTable, 0, iRow, uFont + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_BUILT", (szName, )), "", eWidGen, 1, 2, 1<<2)
 			else:
 				screen.setTableText(szTable, 0, iRow, szTxt, "", eWidGen, 1, 2, 1<<2)
-			screen.setTableText(szTable, 1, iRow, uFont + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_ELECTION", (TEXT_KEY,)), "", eWidGen, 1, 2, 1<<0)
+			screen.setTableText(szTable, 1, iRow, uFont + TRNSLTR.getText("TXT_KEY_VICTORY_SCREEN_ELECTION", (szBuilding,)), "", eWidGen, 1, 2, 1<<0)
 
 		iNumVoteInfos = GC.getNumVoteInfos()
 		szPassed = uFont + TRNSLTR.getText("TXT_KEY_POPUP_PASSED", ())
@@ -1466,7 +1466,7 @@ class CvVictoryScreen:
 					else:
 						iCultureLeftTimes100 = 100 * iThreshold - CyCity.getCultureForPlayer(iPlayer)
 						iTurns = int((iCultureLeftTimes100 + iRate - 1) / iRate)
-					aList.append((CyCity.getCulture(iPlayer), CyCity, iTurns))
+					aList.append(((CyCity.getCultureForPlayer(iPlayer) / 100), CyCity, iTurns))
 
 				aList.sort()
 				aList.reverse()
@@ -1481,7 +1481,7 @@ class CvVictoryScreen:
 			CyPlayerX = GC.getPlayer(iPlayerX)
 			if CyPlayerX.isAlive() and CyPlayerX.getTeam() == iTeam:
 				for CyCity in CyPlayerX.cities():
-					aList.append((CyCity.getCulture(iPlayerX), CyCity))
+					aList.append(((CyCity.getCultureForPlayer(iPlayerX) / 100), CyCity))
 
 		if aList:
 			aList.sort()
@@ -1504,7 +1504,7 @@ class CvVictoryScreen:
 				else:
 					bTeam = False
 				for CyCity in CyPlayerX.cities():
-					if CyCity.getCulture(iPlayerX) > iThreshold:
+					if (CyCity.getCultureForPlayer(iPlayerX) / 100) > iThreshold:
 						iMonumentalCities += 1
 						if bTeam:
 							iTeamCities += 1
@@ -1697,11 +1697,9 @@ class CvVictoryScreen:
 				self.iTab = 0
 				self.showVictoryConditionScreen(screen)
 		elif iCode == NotifyCode.NOTIFY_CLICKED:
-			#	Parse the WHOLE suffix, and only when it is one: the widgets are VS_Tab0..VS_Tab3, so a name
-			#	with no numeric tail is not a tab and must not be parsed as one (a bare "VS_Tab" raised
-			#	ValueError on int('b')). Reading NAME[-1] was also wrong for any tab index above 9.
-			if NAME.startswith("VS_Tab") and NAME[6:].isdigit():
-				ID = int(NAME[6:])
+			#	The engine splits a widget name's numeric tail off: a click on VS_Tab2 arrives as NAME "VS_Tab" with
+			#	the 2 in iItemID (CvInfoScreen reads its identically built tabs the same way).
+			if NAME == "VS_Tab":
 				screen.hide("VS_Col_Tab" + str(self.iTab))
 				screen.show("VS_Tab" + str(self.iTab))
 				screen.hide("VS_Tab" + str(ID))

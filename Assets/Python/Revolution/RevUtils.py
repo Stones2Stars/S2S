@@ -560,8 +560,8 @@ def giveCityCulture(CyCity, iPlayer, newCityVal, newPlotVal):
 		return
 	CyPlot = CyCity.plot()
 
-	if newCityVal > CyCity.getCulture(iPlayer):
-		CyCity.setCulture(iPlayer, newCityVal, True)
+	if newCityVal > (CyCity.getCultureForPlayer(iPlayer) / 100):
+		CyCity.setCulture(iPlayer, newCityVal * 100, True)
 
 	if CyCity.getCultureLevel() > 2:
 		culRadius = 3

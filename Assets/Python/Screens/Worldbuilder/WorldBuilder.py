@@ -1277,7 +1277,7 @@ class WorldBuilder:
 			pNewCity.setBuilding(iBuilding, bHadBuilding)
 
 		for iPlayerX in xrange(GC.getMAX_PLAYERS()):
-			pNewCity.setCulture(iPlayerX, pOldCity.getCultureForPlayer(iPlayerX))
+			pNewCity.setCulture(iPlayerX, pOldCity.getCultureForPlayer(iPlayerX), False)
 		for iReligion in xrange(GC.getNumReligionInfos()):
 			pNewCity.setHasReligion(iReligion, pOldCity.isHasReligion(iReligion), False, False)
 			if bMove and pOldCity.isHolyCityByType(iReligion):

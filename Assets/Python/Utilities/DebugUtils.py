@@ -276,7 +276,7 @@ def initEditCity(px, py):
 	popup.setBodyString(local.getText("TXT_KEY_WB_CITY_EDIT_POP", ()), 1<<0)
 	# Culture - Editbox Group 2
 	popup.createEditBox('0', 2)
-	popup.setBodyString(local.getText("TXT_KEY_WB_CITY_EDIT_CULTURE", (city.getCulture(iOwner),)), 1<<0)
+	popup.setBodyString(local.getText("TXT_KEY_WB_CITY_EDIT_CULTURE", ((city.getCultureForPlayer(iOwner) / 100),)), 1<<0)
 	# Buildings - Listboxes Group 0
 	popup.createListBox(0)
 	iNumBuildings = GC.getNumBuildingInfos()
@@ -324,7 +324,7 @@ def applyEditCity(iPlayer, userData, popupReturn):
 	except ValueError:
 		iCultureChange = 0
 	if iCultureChange:
-		city.setCulture(iOwner, iCultureChange, True)
+		city.setCulture(iOwner, iCultureChange * 100, True)
 
 	# Buildings
 	iNumBuildings = GC.getNumBuildingInfos()

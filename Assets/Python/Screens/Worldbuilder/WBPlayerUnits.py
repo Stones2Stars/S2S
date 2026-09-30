@@ -270,7 +270,7 @@ class WBPlayerUnits:
 			screen.setTableText("WBCityList", 0, iRow, "", INFO.getButton("CIVILIZATION_", iCivilization), WidgetTypes.WIDGET_PYTHON, 7872, i[0] * 10000 + iCivilization, 1<<2)
 			screen.setTableText("WBCityList", 1, iRow, "<font=3>" + sColor + loopCity.getName() + "</color></font>", "", WidgetTypes.WIDGET_PYTHON, 7200 + i[0], i[1], 1<<0)
 			screen.setTableInt("WBCityList", 2, iRow, "<font=3>" + str(loopCity.getID()) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 7200 + i[0], i[1], 1<<2)
-			screen.setTableInt("WBCityList", 3, iRow, "<font=3>" + self.WB.addComma(loopCity.getCulture(i[0])) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 7200 + i[0], i[1], 1<<2)
+			screen.setTableInt("WBCityList", 3, iRow, "<font=3>" + self.WB.addComma((loopCity.getCultureForPlayer(i[0]) / 100)) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 7200 + i[0], i[1], 1<<2)
 			screen.setTableInt("WBCityList", 4, iRow, "<font=3>" + str(loopCity.getPopulation()) + "</font>", "", WidgetTypes.WIDGET_PYTHON, 7200 + i[0], i[1], 1<<2)
 			aWellbeing = loopCity.getRealizedWellbeing(0)
 			screen.setTableInt("WBCityList", 5, iRow, "<font=3>%d</font>" % (aWellbeing[WellbeingChannel.WELLBEING_HAPPINESS] - aWellbeing[WellbeingChannel.WELLBEING_ANGER]), "", WidgetTypes.WIDGET_PYTHON, 7200 + i[0], i[1], 1<<2)
@@ -363,7 +363,7 @@ class WBPlayerUnits:
 		if iGPRate > 0 or iProgress > 0:
 			sText += u"\n%s: %d/%d %+d" %(CyTranslator().getText("[ICON_GREATPEOPLE]", ()), iProgress, pPlayer.greatPeopleThresholdNonMilitary(), iGPRate)
 
-		sText += u"\n%s: %d/%d (%s)" %(CyTranslator().getText("[ICON_CULTURE]", ()), pCity.getCulture(iCityOwner), pCity.getCultureThreshold(), INFO.getDescription("CULTURELEVEL_", pCity.getCultureLevel()))
+		sText += u"\n%s: %d/%d (%s)" %(CyTranslator().getText("[ICON_CULTURE]", ()), (pCity.getCultureForPlayer(iCityOwner) / 100), pCity.getCultureThreshold(), INFO.getDescription("CULTURELEVEL_", pCity.getCultureLevel()))
 
 		lTemp = []
 		for i in xrange(CommerceTypes.NUM_COMMERCE_TYPES):

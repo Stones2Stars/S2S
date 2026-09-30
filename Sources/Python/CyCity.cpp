@@ -1691,6 +1691,11 @@ int64_t CyCity::getCultureForPlayer(int iForPlayer) const
 	return m_pCity->getCultureTimes100((PlayerTypes)iForPlayer);
 }
 
+int64_t CyCity::countTotalCulture() const
+{
+	return m_pCity != NULL ? m_pCity->countTotalCultureTimes100() : 0;
+}
+
 int CyCity::getCulturePercent(int iForPlayer) const
 {
 	if (m_pCity == NULL || iForPlayer < 0 || iForPlayer >= MAX_PLAYERS) return 0;
@@ -1919,11 +1924,11 @@ bool CyCity::setCorporation(int iCorporation, bool bHeadquarters)
 	if (bHeadquarters) GC.getGame().setHeadquarters((CorporationTypes)iCorporation, pCity, false);
 	return true;
 }
-bool CyCity::setCulture(int iForPlayer, int64_t iCulture)
+bool CyCity::setCulture(int iForPlayer, int64_t iCulture, bool bPlots)
 {
 	CvCity* pCity = m_pCity;
 	if (pCity == NULL || iForPlayer < 0 || iForPlayer >= MAX_PLAYERS) return false;
-	pCity->setCultureTimes100((PlayerTypes)iForPlayer, iCulture, false, false);
+	pCity->setCultureTimes100((PlayerTypes)iForPlayer, iCulture, bPlots, true);
 	return true;
 }
 bool CyCity::setDefenseDamage(int iDamage)
@@ -1944,11 +1949,11 @@ bool CyCity::setGrantedExtra(int iKind, int iValue)
 	}
 	return false;
 }
-bool CyCity::setName(std::wstring szName)
+bool CyCity::setName(std::wstring szName, bool bFound)
 {
 	CvCity* pCity = m_pCity;
 	if (pCity == NULL) return false;
-	pCity->setName(szName.c_str(), false);
+	pCity->setName(szName.c_str(), bFound);
 	return true;
 }
 bool CyCity::setOccupation(int iTurns)
@@ -2257,6 +2262,7 @@ void CyCity::pythonPublish()
 		.def("flatHurryAngerLength",  &CyCity::flatHurryAngerLength)
 		.def("getDateFounded",        &CyCity::getDateFounded)
 		.def("getCultureForPlayer",   &CyCity::getCultureForPlayer)
+		.def("countTotalCulture",     &CyCity::countTotalCulture)
 		.def("getCulturePercent",     &CyCity::getCulturePercent)
 		.def("findHighestCulture",    &CyCity::findHighestCulture)
 		.def("getConscriptUnit",      &CyCity::getConscriptUnit)
