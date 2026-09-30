@@ -1944,11 +1944,11 @@ bool CyCity::setGrantedExtra(int iKind, int iValue)
 	}
 	return false;
 }
-bool CyCity::setName(std::wstring szName)
+bool CyCity::setName(std::wstring szName, bool bFound)
 {
 	CvCity* pCity = m_pCity;
 	if (pCity == NULL) return false;
-	pCity->setName(szName.c_str(), false);
+	pCity->setName(szName.c_str(), bFound);
 	return true;
 }
 bool CyCity::setOccupation(int iTurns)

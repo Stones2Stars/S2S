@@ -1372,7 +1372,7 @@ class CvCityDesc:
 		iCity = city.getID()
 
 		if self.name != None:
-			GC.getPlayer(iOwner).getCity(iCity).setName(self.name)
+			GC.getPlayer(iOwner).getCity(iCity).setName(self.name, False)
 
 		if self.iPopulation:
 			GC.getPlayer(iOwner).getCity(iCity).setPopulation(self.iPopulation)

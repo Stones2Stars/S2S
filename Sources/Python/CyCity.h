@@ -485,7 +485,7 @@ public:
 	// here: each one emits the fact the normal path emits, so no cache, context or enabler set is left
 	// describing a world that no longer exists ([roadmap] 1b: WB adding or removing anything EMITS, with no WB
 	// special case anywhere).
-	bool setName(std::wstring szName);
+	bool setName(std::wstring szName, bool bFound);
 	bool setOccupation(int iTurns);
 	///<summary>Re-stamps who FOUNDED the city. Used when a barbarian city becomes a real civ's, so the
 	/// emergent player reads as the founder rather than as a conqueror.</summary>
