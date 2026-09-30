@@ -442,7 +442,7 @@ def checkRebelBonuses(argsList):
 		if iOwnerOld != orgOwnerID:
 			orgOwner = GC.getPlayer(orgOwnerID)
 
-		if pCity.countTotalCultureTimes100() > 10000 and iOwnerOld != pCity.findHighestCulture():
+		if pCity.countTotalCulture() > 10000 and iOwnerOld != pCity.findHighestCulture():
 			cultOwner = GC.getPlayer(pCity.findHighestCulture())
 		'''
 
@@ -492,7 +492,7 @@ def checkRebelBonuses(argsList):
 				newOwner.changeGold(iGold)
 
 				# Culture
-				newCulVal = int( revCultureModifier*max([pCity.getCulture(iOwnerOld),pCity.countTotalCultureTimes100()/200]) )
+				newCulVal = int( revCultureModifier*max([(pCity.getCultureForPlayer(iOwnerOld) / 100),pCity.countTotalCulture()/200]) )
 				newPlotVal = int( revCultureModifier*max([pCity.plot().getCulture(iOwnerOld),pCity.plot().countTotalCulture()/2]) )
 				RevUtils.giveCityCulture( pCity, iOwnerNew, newCulVal, newPlotVal)
 
@@ -551,7 +551,7 @@ def checkRebelBonuses(argsList):
 
 			else: # Conqueror not considered a rebel, fewer benefits
 				# Culture
-				newCulVal = int(revCultureModifier*max([pCity.getCulture(iOwnerOld)/2,pCity.countTotalCultureTimes100()/400]))
+				newCulVal = int(revCultureModifier*max([(pCity.getCultureForPlayer(iOwnerOld) / 100)/2,pCity.countTotalCulture()/400]))
 				newPlotVal = int(revCultureModifier*max([pCity.plot().getCulture(iOwnerOld)/2,pCity.plot().countTotalCulture()/4]))
 				RevUtils.giveCityCulture(pCity, iOwnerNew, newCulVal, newPlotVal)
 
@@ -572,7 +572,7 @@ def checkRebelBonuses(argsList):
 		else: # City once rebelled as this civ type, but not currently rebellious
 			if LOG_DEBUG:
 				print "[REV] %s, captured by former rebel identity: %s (%d)!"%(pCity.getName(),newOwner.getCivilizationDescription(0),newOwnerCiv)
-			newCulVal = int( revCultureModifier*max([pCity.getCulture(iOwnerOld)/2,pCity.countTotalCultureTimes100()/400]) )
+			newCulVal = int( revCultureModifier*max([(pCity.getCultureForPlayer(iOwnerOld) / 100)/2,pCity.countTotalCulture()/400]) )
 			newPlotVal = int( revCultureModifier*max([pCity.plot().getCulture(iOwnerOld)/2,pCity.plot().countTotalCulture()/4]) )
 			RevUtils.giveCityCulture( pCity, iOwnerNew, newCulVal, newPlotVal)
 

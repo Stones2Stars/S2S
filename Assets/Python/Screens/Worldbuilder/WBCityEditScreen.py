@@ -171,8 +171,8 @@ class WBCityEditScreen:
 		screen.setButtonGFC("CityChangeCulturePlus", "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, -1, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 		screen.setButtonGFC("CityChangeCultureMinus", "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, -1, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
 		if pCity.getCultureThreshold() > 0:
-			sText = u"<font=3>%s %s/%s%c</font>" %(CyTranslator().getText("TXT_KEY_WB_CULTURE",()), self.WB.addComma(pCity.getCulture(iPlayer)), self.WB.addComma(pCity.getCultureThreshold()), TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_CULTURE))
-		else: sText = u"<font=3>%s %s%c</font>" %(CyTranslator().getText("TXT_KEY_WB_CULTURE",()), self.WB.addComma(pCity.getCulture(iPlayer)), TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_CULTURE))
+			sText = u"<font=3>%s %s/%s%c</font>" %(CyTranslator().getText("TXT_KEY_WB_CULTURE",()), self.WB.addComma((pCity.getCultureForPlayer(iPlayer) / 100)), self.WB.addComma(pCity.getCultureThreshold()), TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_CULTURE))
+		else: sText = u"<font=3>%s %s%c</font>" %(CyTranslator().getText("TXT_KEY_WB_CULTURE",()), self.WB.addComma((pCity.getCultureForPlayer(iPlayer) / 100)), TEXT.getSymbolChar("COMMERCE_", CommerceTypes.COMMERCE_CULTURE))
 
 		screen.setLabel("CityChangeCultureText", "Background", sText, 1<<0, iX + 50, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
@@ -443,12 +443,12 @@ class WBCityEditScreen:
 			if inputClass.getData1() == 1030:
 				pCity.changeCulture(iPlayer, iChange, True)
 			elif inputClass.getData1() == 1031:
-				pCity.changeCulture(iPlayer, - min(iChange, pCity.getCulture(iPlayer)), True)
+				pCity.changeCulture(iPlayer, - min(iChange, (pCity.getCultureForPlayer(iPlayer) / 100)), True)
 			self.placeStats()
 
 		elif inputClass.getFunctionName() == "CityCultureLevel":
 			iIndex = screen.getSelectedPullDownID("CityCultureLevel")
-			pCity.setCulture(iPlayer, CULTURELEVEL.getSpeedThreshold(iIndex, CyGame().getGameSpeedType()), True)
+			pCity.setCulture(iPlayer, 100 * CULTURELEVEL.getSpeedThreshold(iIndex, CyGame().getGameSpeedType()), True)
 			self.placeStats()
 
 		elif inputClass.getFunctionName().find("CityChangeHappy") > -1:

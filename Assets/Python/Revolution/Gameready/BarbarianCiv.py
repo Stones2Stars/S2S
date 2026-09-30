@@ -133,7 +133,7 @@ class BarbarianCiv:
 		for iPlayerX in xrange(MAX_PC_PLAYERS):
 			CyPlayerX = GC.getPlayer(iPlayerX)
 			# Find player with highest culture.
-			iCult = CyCity.getCulture(iPlayerX)
+			iCult = (CyCity.getCultureForPlayer(iPlayerX) / 100)
 			if iCult > iCulture:
 				iCulture = iCult
 				CyPlayerCulture = CyPlayerX
@@ -573,8 +573,8 @@ class BarbarianCiv:
 
 		# City Culture
 		# Transfer barbarian culture to the new player (becomes "accepted" culture)
-		GC.getPlayer(iPlayer).getCity(CyCity.getID()).setCulture(iPlayer, CyCity.getCultureForPlayer(iPlayerBarb))
-		GC.getPlayer(iPlayer).getCity(CyCity.getID()).setCulture(iPlayerBarb, 0)
+		GC.getPlayer(iPlayer).getCity(CyCity.getID()).setCulture(iPlayer, CyCity.getCultureForPlayer(iPlayerBarb), False)
+		GC.getPlayer(iPlayer).getCity(CyCity.getID()).setCulture(iPlayerBarb, 0, False)
 
 		# Ensure the emergent civ gets its matching local culture building (C.L).
 		# onCityBuilt() normally handles this via settler promotions, but this code path

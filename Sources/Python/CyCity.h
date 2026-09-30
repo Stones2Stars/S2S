@@ -134,6 +134,7 @@ public:
 	python::list getHurryQuote(int iHurry) const;
 	int getDateFounded(bool bHistoricalCalendar) const;
 	int64_t getCultureForPlayer(int iForPlayer) const;
+	int64_t countTotalCulture() const;
 	int getCulturePercent(int iForPlayer) const;
 	int getTradeYield(int iYield, int iProfitTimes100) const;
 	//	The MAINTAINED traded count, not the engine relay -- a reader answering from a different source than the
@@ -470,7 +471,7 @@ public:
 	// getCultureForPlayer above, so a scenario round-trips the value it was handed rather than a rescaled one
 	// ([culture-religion-research.md]: city culture accumulates the ×100 rate and never decays, which is why it
 	// is int64_t at all).
-	bool setCulture(int iForPlayer, int64_t iCulture);
+	bool setCulture(int iForPlayer, int64_t iCulture, bool bPlots);
 	bool setDefenseDamage(int iDamage);
 	// The one-shot EVENT/VOTE grant store -- the twin of getGrantedExtras above. A scenario that could
 	// read them and not write them back would drop them on every round trip.

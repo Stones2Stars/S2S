@@ -828,7 +828,7 @@ class CvDomesticAdvisor:
 		return szReturn
 
 	def calculateTotalCulture(self, CyCity, szKey, arg):
-		return CyCity.getCulture(self.iPlayer)
+		return (CyCity.getCultureForPlayer(self.iPlayer) / 100)
 
 	def calculateCultureTurns(self, city, szKey, arg):
 

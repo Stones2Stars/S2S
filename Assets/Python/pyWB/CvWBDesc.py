@@ -1380,7 +1380,7 @@ class CvCityDesc:
 			GC.getPlayer(iOwner).getCity(iCity).setStoredFood(self.iFood)
 
 		for item in self.lCulture:
-			GC.getPlayer(iOwner).getCity(iCity).setCulture(item[0], item[1])
+			GC.getPlayer(iOwner).getCity(iCity).setCulture(item[0], item[1], False)
 
 		for key, date in self.bldgType:
 			iBuilding = GC.getInfoTypeForString(key)
