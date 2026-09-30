@@ -463,6 +463,12 @@ not findings to re-discover.
   `bEnablesWonder` bonus beside it — were added to a tech's value undecayed: a building unlocked five techs away
   scored identically to one unlocked next turn. Both now divide by the path length. ⚠ If you add a new
   enablement-derived term, it decays too; an undecayed one silently rebuilds the beeline.
+- **⛔ A CACHED BEELINE TARGET THAT YIELDS NO RESEARCHABLE START TECH IS DROPPED, NEVER RETURNED.**
+  `CvPlayerAI::m_eBestResearchTarget` is serialized and outlives the turn it was chosen on, so the "stick with the
+  beeline" branch of `AI_bestTech` must test that the target still produces a LISTED start tech — a target already
+  HELD (the AI reached it) or one whose path is no longer researchable returns `NO_TECH`, and returning that is an
+  eternal trap: `AI_chooseResearch` pushes nothing, the target never clears, and the AI never researches again.
+  ⚠ `canEverResearch` is an EVER predicate and does not exclude a held tech, so it is not that test.
 - **"What does this tech enable?" is a FORWARD EDGE FETCH, never a database scan.** The tech's own compiled
   `enables.buildings` IS the answer ([patterns.md § THE WHAT-IF DRIVER](docs/architecture/patterns.md)). Asking it
   backwards — scanning every building and testing `isTechRequiredForBuilding` — is both the whole-database scan
