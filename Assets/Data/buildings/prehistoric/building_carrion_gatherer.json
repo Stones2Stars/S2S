@@ -26,97 +26,97 @@
       {
        "type": "BONUS_CAMEL",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_COW",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_DONKEY",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_HORSE",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_LLAMA",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_PIG",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_SHEEP",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_BEAVER",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_BISON",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_DEER",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_ELEPHANT",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_GUINEA_PIG",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_KANGAROO",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_MAMMOTH",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_PARROT",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_POULTRY",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_RABBIT",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_WALRUS",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_SEA_LION_AND_SEAL",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       }
      ]
     }

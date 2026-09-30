@@ -17,7 +17,7 @@
     {
      "type": "BONUS_BANANA",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

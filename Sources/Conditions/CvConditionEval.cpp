@@ -91,25 +91,17 @@ static bool evp_workedImprovement(const PlotContext& plotContext, const CvCondit
 static bool evp_workedBonus(const PlotContext& plotContext, const CvCondition* a, const CityContext&)
 { return plotContext.isWorked() && plotContext.bonusVisibleToOwner() == a->id; }
 
-// ---- BonusPresent / VicinityHas (StoneBase) ---------------------------------------------------------------------
+// ---- BonusPresent -----------------------------------------------------------------------------------------------
 
-static bool ev_vicinityHas(const CvCascadeEvalCtx& ctx, int eBonus, CvCascVicinity disc)
+// A bonus this city holds LOCALLY -- never the network -- at the named tier: a vicinity band (which radius plots
+// count) or on site (improved here, or supplied by an active building). The building supply is the enabler's half
+// of the union, the tier stores the context's map half.
+static bool ev_cityLocalBonus(const CvCascadeEvalCtx& ctx, int eBonus, CvCascVicinity eTier)
 {
 	const CityContext* cityContext = ctx.cityContext;
 	if (cityContext == NULL) return false;
-	// An ACTIVE building in this city that `provides` eBonus supplies it IN-VICINITY (json §5a) -- computed from JSON
-	// (the enabler's vicinityProvidedBonuses set), NEVER read from the engine's hasVicinityBonus (docs/specs/validation.md §pollution guardrail (zero legacy ride-in)).
 	if (ctx.vicinityProvidedBonuses != NULL && ctx.vicinityProvidedBonuses->count(eBonus) != 0) return true;
-	// CONNECTED = the engine's OBTAINED-in-vicinity (json §3.4: owned+valid+connected). CvCity::hasVicinityBonus
-	// (read through the city context) encodes EXACTLY that -- hasBonus-gated, then centre OR an
-	// owned+valid+`isConnectedTo(this)` radius plot OR a building-provided supply -- so defer to it wholesale
-	// (StoneBase's per-plot `BonusConnected` scan + VicinityBonuses fallback collapses to this one read;
-	// `isConnectedToCapital` was the WRONG read).
-	// Every tier is a stored, event-maintained set on the city context -- one O(1) read, never a radius scan
-	// (contexts.md: a predicate that walks plots per call is the efficiency defect this design removes).
-	// The building-provided supply is handled up-front from vicinityProvidedBonuses (json par.5a) -- the enabler
-	// owns that half of the union, the context owns the MAP half.
-	return cityContext->hasVicinityBonusAt(eBonus, disc);
+	return cityContext->hasVicinityBonusAt(eBonus, eTier);
 }
 
 // The TRADED leg (contexts.md: CvPlotGroup is the reserved explicit traded-bonus source; traded state is NEVER
@@ -123,7 +115,7 @@ static bool ev_tradedBonus(const CvCascadeEvalCtx& ctx, int eBonus)
 	return ctx.plotGroup != NULL && eBonus >= 0 && ctx.plotGroup->hasBonus((BonusTypes)eBonus);
 }
 
-static bool ev_bonusPresent(const CvCascadeEvalCtx& ctx, int eBonus, CvCascConnection conn, CvCascVicinity vic)
+static bool ev_bonusPresent(const CvCascadeEvalCtx& ctx, int eBonus, CvCascConnection conn)
 {
 	switch (conn)
 	{
@@ -131,7 +123,7 @@ static bool ev_bonusPresent(const CvCascadeEvalCtx& ctx, int eBonus, CvCascConne
 	// no union to be found: an active building's `provides.bonuses` (json §5a) is pushed into the PLOT GROUP
 	// through the operate/provides fixpoint (EnablerKernel's supply crossings), so the network answer already
 	// covers it and a trade-only check misses nothing.
-	case CASC_CONN_ONSITE:            return ev_vicinityHas(ctx, eBonus, vic);
+	case CASC_CONN_ONSITE:            return ev_cityLocalBonus(ctx, eBonus, CASC_VIC_ONSITE);
 	case CASC_CONN_TRADE:             return ev_tradedBonus(ctx, eBonus);
 	default:
 		if (ctx.plotContext != NULL) return ctx.plotContext->hasBonus(eBonus, ctx.empireContext != NULL ? ctx.empireContext->teamId() : (int)NO_TEAM);
@@ -203,7 +195,7 @@ static bool ev_present(const CvCascadeEvalCtx& ctx, const CvCondition* a)
 	if (en_starts(t, "VICTORY_"))  return id >= 0 && GC.getGame().isVictoryValid((VictoryTypes)id);
 	if (en_starts(t, "GAMEOPTION_")) return id >= 0 && GC.getGame().isOption((GameOptionTypes)id);
 	if (en_starts(t, "BONUS_"))    return ev_hypothetical(ctx, EDGEB_BONUSES, id,
-		ev_bonusPresent(ctx, id, a->connection, a->vicinity));
+		ev_bonusPresent(ctx, id, a->connection));
 	// ⚖ THE MAP-CATEGORY GATE -- WHERE ON (or off) THE WORLD this may be built. It is a CITY-LOCAL plot check
 	// ([enabler.md] par.7.1: the one city-local project fact stays a live check at the gate), so it asks the CITY'S OWN
 	// plot, never the radius: a building is built IN the city, and a category is a property of the ground it
@@ -428,7 +420,7 @@ static bool ev_evalPresence(const CvCascadeEvalCtx& ctx, const CvCascadeEvalFlag
 	{
 		if (en_starts(t, "BONUS_") && (a->min < 0 || a->min <= 1) && a->max < 0)
 		{
-			if (a->connection != CASC_CONN_NONE) return ev_bonusPresent(ctx, a->id, a->connection, a->vicinity);
+			if (a->connection != CASC_CONN_NONE) return ev_bonusPresent(ctx, a->id, a->connection);
 			if (f.bonusFromPlot && ctx.plotContext != NULL) return ctx.plotContext->hasBonus(a->id, ctx.empireContext != NULL ? ctx.empireContext->teamId() : (int)NO_TEAM);
 			if (a->scope == CASC_SCOPE_PLOT) return ctx.plotContext != NULL && ctx.plotContext->hasBonus(a->id, ctx.empireContext != NULL ? ctx.empireContext->teamId() : (int)NO_TEAM);
 			// ⛔ AN UNQUALIFIED CITY-SCOPE BONUS ATOM IS **TRADED, ONLY** (owner): `{type, scope:"city", min:1}`

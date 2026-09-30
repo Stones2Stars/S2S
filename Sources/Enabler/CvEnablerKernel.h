@@ -293,7 +293,7 @@ public:
 	// dormant-trigger index intersected with the standing ACTIVE set -- both already maintained, nothing scanned.
 	static void dormedByBuilding(const CvCity* pCity, int eCandidate, std::vector<int>& kOut);
 	// Convenience: point ec.activeBuildings / ec.vicinityProvidedBonuses at the standing sets
-	// (feeds cascadeIsBuildingActive + ev_vicinityHas; no per-call set copies).
+	// (feeds cascadeIsBuildingActive + ev_cityLocalBonus; no per-call set copies).
 	static void wireOperatingBuildings(const CvCity* pCity, CvCascadeEvalCtx& ec);
 
 	/// <summary>The ONE placement gate: may this city HOLD this building right now? Refuses a building the city
@@ -314,7 +314,7 @@ public:
 	// ON SITE exactly as an improved radius tile is (owner; json §5a: a herd BUILDING and an improved herd TILE
 	// are the SAME act). Answering with the map half alone is the standing agent error this name exists to stop,
 	// and it fails SILENTLY -- the count simply comes out low.
-	// ⚑ The ctx-plane twin is the evaluator's ev_vicinityHas, which stays ctx-shaped because the eval ctx is
+	// ⚑ The ctx-plane twin is the evaluator's ev_cityLocalBonus, which stays ctx-shaped because the eval ctx is
 	// forbidden a game object. Two entry points because they reach different planes; neither may drop a half.
 	static bool cityHasBonusOnSite(const CvCity* pCity, int eBonus);
 };

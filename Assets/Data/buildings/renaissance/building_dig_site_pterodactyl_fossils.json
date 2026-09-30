@@ -28,7 +28,7 @@
     {
      "type": "BONUS_OIL",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     },
     {
      "type": "BONUS_FOSSIL_BEDS",

@@ -104,13 +104,6 @@ static CvCascConnection cp_parseConnection(const std::string& c)
 	return CASC_CONN_NONE;
 }
 
-static CvCascVicinity cp_parseVicinity(const std::string& v)
-{
-	if (v == "owned") return CASC_VIC_OWNED;   if (v == "worked") return CASC_VIC_WORKED;
-	if (v == "onSite") return CASC_VIC_ONSITE; if (v == "crossBorder") return CASC_VIC_CROSSBORDER;
-	return CASC_VIC_NONE;
-}
-
 static bool cp_isTypeRef(const std::string& n)
 {
 	return cp_starts(n, "TECH_") || cp_starts(n, "CIVIC_") || cp_starts(n, "TRAIT_") || cp_starts(n, "RELIGION_")
@@ -122,12 +115,11 @@ static bool cp_isTypeRef(const std::string& n)
 
 // ---- node builders (FK resolution via jsonResolveId -- unresolved ids land in the load-time diagnostics) --------
 
-static CvCondition* cp_presence(const std::string& type, CvCascScope scope, int min, int max,
-                                       CvCascConnection conn, CvCascVicinity vic)
+static CvCondition* cp_presence(const std::string& type, CvCascScope scope, int min, int max, CvCascConnection conn)
 {
 	CvCondition* c = new CvCondition();
 	c->kind = CASC_COND_PRESENCE; c->type = type; c->scope = scope; c->min = min; c->max = max;
-	c->connection = conn; c->vicinity = vic; c->id = jsonResolveId(type);
+	c->connection = conn; c->id = jsonResolveId(type);
 	return c;
 }
 static CvCondition* cp_predicate(CvCascPredKind k, const std::string& param, int min, int max)
@@ -175,16 +167,17 @@ static CvCondition* cp_parseObject(const picojson::object& o)
 		return g;
 	}
 
-	// 2) presence / count atom: {type, scope?, min?, max?, connection?, vicinity?}
+	// 2) presence / count atom: {type, scope?, min?, max?, connection?}
 	{
 		const picojson::value* ty = po_get(o, "type");
 		if (ty && ty->is<std::string>())
 		{
 			const std::string type = ty->get<std::string>();
+			FAssertMsg(!cp_starts(type, "BONUS_") || po_get(o, "vicinity") == NULL, CvString::format("%s authors `vicinity`: a resource is `connection:onSite` or `trade` (json §3.4)", type.c_str()).c_str());
 			const std::string sc = po_str(o, "scope");
 			CvCondition* pAtom = cp_presence(type, sc.empty() ? cp_impliedScope(type) : jsonParseScope(sc, CASC_SCOPE_EMPIRE),
 			                   po_int(o, "min", -1), po_int(o, "max", -1),
-			                   cp_parseConnection(po_str(o, "connection")), cp_parseVicinity(po_str(o, "vicinity")));
+			                   cp_parseConnection(po_str(o, "connection")));
 			// A bound is AUTHORED iff its key is present. ⛔ Never inferred from the value's sign: a PROPERTY_
 			// band bound is legitimately negative (CvCondition.h), so a sign test drops it and the clause
 			// collapses to always-true.
@@ -208,7 +201,7 @@ static CvCondition* cp_parseObject(const picojson::object& o)
 				{
 					if (!a[j].is<std::string>()) continue;
 					const std::string t = a[j].get<std::string>();
-					if (m == 0) g->anyOf.push_back(cp_presence(t, CASC_SCOPE_CITY, 1, -1, cp_parseConnection(po_str(o, "connection")), cp_parseVicinity(po_str(o, "vicinity"))));
+					if (m == 0) g->anyOf.push_back(cp_presence(t, CASC_SCOPE_CITY, 1, -1, cp_parseConnection(po_str(o, "connection"))));
 					else if (m == 1) g->anyOf.push_back(cp_predicate(CASC_PRED_HAS_TERRAIN, t, -1, -1));
 					else if (m == 2) g->anyOf.push_back(cp_predicate(CASC_PRED_HAS_FEATURE, t, -1, -1));
 					else g->anyOf.push_back(cp_predicate(CASC_PRED_HAS_IMPROVEMENT, t, -1, -1));
@@ -308,7 +301,7 @@ static CvCondition* cp_parseBareString(const std::string& s)
 	}
 	const CvCascPredKind k = cp_predKind(s);
 	if (k != CASC_PRED_UNKNOWN) return cp_predicate(k, "", -1, -1);
-	if (cp_isTypeRef(s)) return cp_presence(s, cp_impliedScope(s), 1, -1, CASC_CONN_NONE, CASC_VIC_NONE);
+	if (cp_isTypeRef(s)) return cp_presence(s, cp_impliedScope(s), 1, -1, CASC_CONN_NONE);
 	// an unrecognized IS_<SUFFIX> is a classification-TAG test against a unit target (json §8): IS_MILITARY ->
 	// the `military` tag. Store the full TAG_<SUFFIX> type name in `param`; eval resolves the id lazily (the TAG_*
 	// infotypes are minted AFTER condition parse, so it cannot FK-resolve here).

@@ -35,7 +35,7 @@
     {
      "type": "BONUS_CRAB",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ],
    "dormant": [

@@ -809,7 +809,6 @@ namespace
 		pClone->hasMin = pCondition->hasMin;
 		pClone->hasMax = pCondition->hasMax;
 		pClone->connection = pCondition->connection;
-		pClone->vicinity = pCondition->vicinity;
 		pClone->predKind = pCondition->predKind;
 		pClone->param = pCondition->param;
 		pClone->id = pCondition->id;

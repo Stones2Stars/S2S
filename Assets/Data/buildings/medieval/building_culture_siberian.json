@@ -23,7 +23,7 @@
     {
      "type": "BONUS_MAMMOTH",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

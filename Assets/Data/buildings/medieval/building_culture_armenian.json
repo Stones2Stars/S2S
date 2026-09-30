@@ -17,7 +17,7 @@
     {
      "type": "BONUS_GRAPES",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

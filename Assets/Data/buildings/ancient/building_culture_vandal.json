@@ -18,7 +18,7 @@
     {
      "type": "BONUS_TURQUOISE",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

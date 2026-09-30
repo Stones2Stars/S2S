@@ -25,7 +25,7 @@
     {
      "type": "BONUS_COFFEE",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

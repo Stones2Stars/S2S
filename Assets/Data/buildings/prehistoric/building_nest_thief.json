@@ -21,7 +21,7 @@
     {
      "type": "BONUS_POULTRY",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   },

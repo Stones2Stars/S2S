@@ -21,7 +21,7 @@
     {
      "type": "BONUS_JADE",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

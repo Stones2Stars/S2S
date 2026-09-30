@@ -34,7 +34,7 @@
     {
      "type": "BONUS_IRON_ORE",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ],
    "dormant": [

@@ -51,42 +51,31 @@ scope. **Forcing a redundant `{type, scope}` only invites authoring bugs.** *(Pl
 - **presence** = `min: 1` ("have ≥ 1"). Authoring presence this way keeps it future-proof if a resource later
   gains amounts.
 - **count thresholds** — `min: N` (≥ N) and/or `max: N` (≤ N), both inclusive. Exact-N = `min` and `max` together.
-- `connection` (resources only) ∈ `"trade"` | `"onSite"`. **The two are MUTUALLY EXCLUSIVE** — a gate wanting
-  either states TWO atoms under an `any`, never one combined selector. `vicinity` is a separate field, not a
-  `connection` value. What each means: [bonuses.md](../../../reference/bonuses.md).
-- **`vicinity`** — a separate field, carried with or without a `connection`: which tiles of
-  the city's workable radius count. A radius tile's
-  ownership is one of three — and the distinction is load-bearing: **owned** (the city's team), **neutral** (unowned,
-  `NO_TEAM`), or **foreign** (another team). The ownership selectors nest `owned ⊂ owned+neutral ⊂ owned+neutral+foreign`:
-  - **absent** = **owned + neutral** — the **DEFAULT**: the city's own tiles plus unclaimed land,
-    but NOT another team's. This mirrors the engine's vicinity (feature prereqs count neutral tiles too — `neutral`
-    flag, `CvHttpServer.cpp`; terrain/improvement/peak/hill are `owned`-only via the next selector).
-  - `"owned"` = **owned only** — strictly the city's own tiles (centre or owned radius tile; **no** connection or
-    improvement needed), excluding even neutral. A raw owned-presence.
-  - `"crossBorder"` = owned + neutral + **foreign** (any ownership) — the opt-in that ADDS foreign tiles, counting
-    beyond the city's borders. **No current use-case, kept for completeness.** Name avoids the
-    `all`/`any`/`noneOf` combinators (§3.4). A foreign tile's bonus is revealed per its OWN team, so it can read
-    differently per asking city — exactly why foreign is gated behind this explicit opt-in rather than the default.
-  - `"worked"` = a tile a citizen **works** this turn (implies owned).
-  - `"onSite"` = the resource is **actually available AT this city** — however it got there. Improving a resource
-    on a workable plot puts it here, and so does a building in the city that supplies it (a herd, a factory —
-    `provides.bonuses`, §5a): those are the SAME act as far as this list is concerned, and the list cares only
-    about what is there, never about provenance.
+- `connection` (resources only) ∈ `"onSite"` | `"trade"` — WHERE THE RESOURCE COMES FROM. **The two are MUTUALLY
+  EXCLUSIVE** — a gate wanting either states TWO atoms under an `any`, never one combined selector. More:
+  [bonuses.md](../../../reference/bonuses.md).
+  - `"onSite"` = **this city itself provides the resource to the network**: a tile it improves and serves, or an
+    active building in the city producing it (a herd, a factory — `provides.bonuses`, §5a). Those are the SAME act;
+    only what the city provides counts, never how.
+  - `"trade"` = the resource **reaches the city from the network** (its plot group).
+- **⛔ A RESOURCE ATOM HAS NO `vicinity`.** Vicinity is what surrounds the city — coast, terrain, features, peaks —
+  and is asked through the plot predicates (§3.5, `HAS_COAST`, the `TERRAIN_`/`FEATURE_` atoms over the city's
+  culture-grown radius). "A resource in vicinity" is an `onSite` question. The parser asserts on a `vicinity` key
+  on a `BONUS_` atom, and `CvCondition` carries no field for it.
+  ⚑ The ambiguity of "vicinity" is why `onSite` exists: a resource merely lying on an owned tile, unimproved, is
+  neither provided by the city nor on the network, and satisfies nothing.
     > **⛔ IT IS NAMED `onSite` BECAUSE "vicinity" AND "connected" BOTH MISLEAD.** The two sets are
-    > ORTHOGONAL: **onSite** = the resource is here; **`connection:"trade"`** = the plot group reaches it. A
+    > ORTHOGONAL: **onSite** = the city provides it; **`connection:"trade"`** = the plot group reaches it. A
     > resource can be either without the other — a mounted unit needs horses ON SITE, a swordsman only needs
     > iron wares in the NETWORK.
-    > ⚠ The retired spelling was `"connected"`, which took the trade side's word for a local question and is
-    > what made the two read as one thing. `owned` (raw presence, improved or not) stays its own tier and is
-    > strictly weaker than `onSite`.
     >
     > **⛔⛔ `onSite` IS AN ENABLER-SIDE CONCEPT ONLY. NO MODIFIER GATES ON IT — NOT ONE.** A DEPOSIT
     > conditioned on a resource asks whether the CITY HAS IT, which is the TRADED question and is spelled as the
     > bare `{type, scope:"city", min:1}` atom. `onSite` belongs to `requires` GATES and is *"almost purely a
     > concept that creating mounted units have to deal with, very little else"* — horses must be physically here;
     > the mine building is the other explicit case. Both are enabler-side.
-    > ⚠ **This has been stated repeatedly and re-derived wrongly anyway**, because the tier list above reads as a
-    > menu any atom may pick from. It is not: a modifier picks the bare atom, full stop. The measured cost of
+    > ⚠ **This has been stated repeatedly and re-derived wrongly anyway**, because `connection` reads as a menu any
+    > atom may pick from. It is not: a modifier picks the bare atom, full stop. The measured cost of
     > getting it wrong is silent and total — the curator mapped legacy `VicinityBonusYieldChanges` to
     > `vicinity:"onSite"` on the strength of its XML name (its engine read, `hasVicinityBonus`, actually means
     > *obtained* in vicinity, i.e. connected), and every one of those deposits then refused against a resource the
@@ -97,8 +86,8 @@ scope. **Forcing a redundant `{type, scope}` only invites authoring bugs.** *(Pl
     > atom that refused them.
 
   ```jsonc
-  { "type": "BONUS_SHRIMP",   "scope": "city", "connection": "vicinity", "vicinity": "owned" }      // raw presence on an owned tile
-  { "type": "BONUS_GOLD_ORE", "scope": "city", "connection": "vicinity", "vicinity": "onSite" }     // must be available here
+  { "type": "BONUS_MUREX",    "scope": "city", "connection": "onSite" }   // this city provides it (improved here, or produced here)
+  { "type": "BONUS_IRON_ORE", "scope": "city", "connection": "trade" }    // it reaches this city from the network
   ```
 
 - **`PROPERTY_*` band atom** `{type:PROPERTY_X, scope, min?, max?}` — its "count" is the city's property value;

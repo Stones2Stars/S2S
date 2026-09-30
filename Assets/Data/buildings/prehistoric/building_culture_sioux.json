@@ -29,7 +29,7 @@
     {
      "type": "BONUS_BISON",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

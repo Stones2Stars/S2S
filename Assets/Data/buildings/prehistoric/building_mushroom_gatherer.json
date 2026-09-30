@@ -16,7 +16,7 @@
     {
      "type": "BONUS_MUSHROOMS",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

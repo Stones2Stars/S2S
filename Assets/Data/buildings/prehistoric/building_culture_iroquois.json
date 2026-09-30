@@ -37,7 +37,7 @@
     {
      "type": "BONUS_PRIME_TIMBER",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

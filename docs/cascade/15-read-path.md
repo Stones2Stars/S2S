@@ -15,7 +15,7 @@ expected values out**: `(CityContext, EmpireContext, CvPlotGroup)` → the group
   city context. It also answers the city's **traded** bonuses (through the city's own plot-group-backed reads).
 - **EmpireContext** — the empire-scope state (civics/traits/policies/state religion).
 - **CvPlotGroup** — the trade-network object; the reserved explicit **traded**-bonus source (`connection:"trade"` vs
-  `"vicinity"`, [json.md §3.4](../specs/json.md)). Traded state is **NEVER mirrored into `CityContext`**. The
+  `"onSite"`, [json.md §3.4](../specs/json.md)). Traded state is **NEVER mirrored into `CityContext`**. The
   valuation seam fills it into the eval ctx (`CvCascadeEvalCtx::plotGroup`): a `connection:"trade"` atom reads the
   city's own plot-group-backed RELAY when a city is bound (`CityContext::tradedBonusCount` forwards to
   `CvCity::getNumBonuses` — the tech-gate/minted/corp layer over the group's count), and the passed group directly

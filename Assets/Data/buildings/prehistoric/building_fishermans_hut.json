@@ -46,32 +46,32 @@
       {
        "type": "BONUS_FISH",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_CRAB",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_LOBSTER",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_CLAM",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_SHRIMP",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_PEARLS",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       }
      ]
     }

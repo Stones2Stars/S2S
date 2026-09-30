@@ -39,7 +39,7 @@
     {
      "type": "BONUS_HORSE",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ],
    "dormant": [

@@ -107,8 +107,13 @@ event-driven — never a read-time scan, and never left on the old accessor as a
 supply is a union of two independently-owned halves, and storing either one twice is the duplication the model bans:
 
 - **MAP providers** (a bonus on a radius tile providing itself) are per-scope live state with no other home, so
-  `CityContext` holds them — tiered by the §3.4 ownership discriminator (`owned` / owned+neutral / `crossBorder` /
-  `worked`), since the `vicinity` band selects which tiles count — the plot-set axis, distinct from `connection`.
+  `CityContext` holds them: `onSite` (the tile the city improves and serves — what `connection:"onSite"` reads),
+  beside ownership tallies of every radius bonus (`all` / `owned` / `foreign` / `worked`).
+  ⚖ **The ownership tallies are KEPT and MAINTAINED, and NO RESOURCE GATE READS THEM.** A resource atom is
+  `onSite` or `trade` and has no vicinity axis ([json.md §3.4](../specs/json.md)), so `hasVicinityBonusAt` is asked
+  for `CASC_VIC_ONSITE` only. The tallies stay for possible later use; they are not dead state to delete.
+  ⛔ Never answer a resource gate from them: "the resource lies on an owned tile" is exactly the conflation
+  `onSite` was coined to end.
 - **ACTIVE BUILDING providers** (`provides.bonuses`) are the operate/provides **least fixpoint**, which only the
   enabler can resolve — an operate condition may consume a bonus another active building provides. They stay
   `OperatingBuildings::provided`, reached through `CvCascadeEvalCtx::vicinityProvidedBonuses`.

@@ -18,7 +18,7 @@
     {
      "type": "BONUS_SILVER_ORE",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

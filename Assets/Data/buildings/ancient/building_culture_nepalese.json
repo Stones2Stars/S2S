@@ -21,7 +21,7 @@
     {
      "type": "BONUS_HEMP",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

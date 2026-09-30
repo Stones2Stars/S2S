@@ -21,7 +21,7 @@
     {
      "type": "BONUS_KANGAROO",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

@@ -269,7 +269,7 @@ class PediaBonus:
 			H_MID += H_BOT_ROW + 16
 		# Buildings Enabled
 		#	⚠ The legacy page split this into "needs it nationwide" and "needs it locally". That distinction is
-		#	the `connection` / `vicinity` discriminator on the requires ATOM, which no edge family preserves
+		#	the `connection` discriminator on the requires ATOM, which no edge family preserves
 		#	([enabler.md] §2: RELATED and REQUIRED_BY are merged buckets), so the two are shown as one list.
 		#	A stated display change, not a silent one -- the composer still renders the exact clause in prose.
 		if aNeededByBuildings:
