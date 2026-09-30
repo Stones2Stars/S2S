@@ -29,7 +29,7 @@
     {
      "type": "BONUS_GEOTHERMAL_ENERGY",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ],
    "dormant": [

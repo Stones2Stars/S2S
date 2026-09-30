@@ -21,7 +21,7 @@
     {
      "type": "BONUS_SAPPHIRES",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

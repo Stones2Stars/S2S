@@ -17,7 +17,7 @@
     {
      "type": "BONUS_MARBLE",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

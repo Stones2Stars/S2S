@@ -33,7 +33,7 @@
     {
      "type": "BONUS_SUGAR",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ],
    "dormant": [

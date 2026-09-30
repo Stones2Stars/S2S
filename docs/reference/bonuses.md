@@ -29,8 +29,8 @@ answered a DIFFERENT number than the engine, because it carried none of the thre
 
 | value | means |
 |---|---|
-| **`trade`** | the NETWORK has it — the asking city's plot group holds it |
-| **`onSite`** | it originates from the city ITSELF |
+| **`trade`** | it reaches the city FROM the network — the asking city's plot group holds it |
+| **`onSite`** | the city ITSELF provides it to the network — a tile it improves and serves, or a building here producing it |
 
 **A gate wanting either states TWO ATOMS under an `any`**, deliberately. There is no combined selector.
 
@@ -38,9 +38,10 @@ answered a DIFFERENT number than the engine, because it carried none of the thre
 AWAY — the export leaves the plot group, but the ore is still in the ground — and it makes every network
 question silently satisfiable by a local resource, which is the conflation the split exists to end.
 
-⛔ **`vicinity` is NOT a connection value.** It is the PLOT-SET axis — WHICH plots count (`owned` / `worked` /
-`crossBorder`) — and naming it an origin is exactly what made the two read as interchangeable. Vicinity means
-plots in the city's control, and only that.
+⛔ **A resource has NO vicinity axis.** Vicinity is what surrounds the city — coast, terrain, features, peaks —
+asked through the plot predicates ([json.md §3.5](../specs/json.md)), never a field on a resource atom. "The
+resource is in vicinity" is an `onSite` question; a resource merely lying unimproved on an owned tile is neither
+provided by the city nor on the network, and satisfies neither.
 
 ⚖ **The worked pair:** a mounted unit needs horses **on site**; a swordsman needs iron in the **network**
 ([json.md §3.4](../specs/json.md)).

@@ -18,7 +18,7 @@
     {
      "type": "BONUS_FLAX",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

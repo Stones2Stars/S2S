@@ -18,7 +18,7 @@
     {
      "type": "BONUS_OBSIDIAN",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

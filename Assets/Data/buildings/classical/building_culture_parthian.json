@@ -17,7 +17,7 @@
     {
      "type": "BONUS_TIN_ORE",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

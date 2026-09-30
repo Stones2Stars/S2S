@@ -18,7 +18,7 @@
     {
      "type": "BONUS_WALRUS",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

@@ -38,7 +38,7 @@
     {
      "type": "BONUS_APPLE",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

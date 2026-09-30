@@ -17,7 +17,7 @@
     {
      "type": "BONUS_PAPYRUS",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

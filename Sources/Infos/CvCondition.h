@@ -40,14 +40,13 @@ enum CvCascScope
 	CASC_SCOPE_SPECIALIST, CASC_SCOPE_UNIT, CASC_SCOPE_SELF
 };
 
-// ⛔ WHERE A RESOURCE ORIGINATES (json §3.4 `connection`) -- the two values are MUTUALLY EXCLUSIVE (owner):
-// TRADE = the NETWORK has it, ONSITE = it comes from the city itself. A gate wanting either states two atoms
-// under an `any`, deliberately. They may never be combined into one selector: a gate satisfied by both keeps a
-// city operating on ore it has traded away, since the export leaves the plot group while the ore stays in the
-// ground. ⚠ Distinct from CvCascVicinity below, which is the PLOT-SET axis -- which plots count, never origin.
+// ⛔ WHERE A RESOURCE ORIGINATES (json §3.4 `connection`) -- the two values are MUTUALLY EXCLUSIVE:
+// ONSITE = this city itself provides it to the network (an improved tile it serves, or a building here producing
+// it); TRADE = it reaches the city from the network. A gate wanting either states two atoms under an `any`. A bonus
+// atom has no plot-set axis: vicinity describes the plot SUBSTRATE (coast, terrain, peaks), never a resource.
 enum CvCascConnection { CASC_CONN_NONE, CASC_CONN_TRADE, CASC_CONN_ONSITE };
 
-// Which radius tiles a vicinity bonus counts (json §3.4; NONE = the DEFAULT owned+neutral, NOT foreign).
+// The tiers a city's LOCAL bonus stores are keyed on (CityContext::hasVicinityBonusAt).
 enum CvCascVicinity { CASC_VIC_NONE, CASC_VIC_OWNED, CASC_VIC_WORKED, CASC_VIC_ONSITE, CASC_VIC_CROSSBORDER };
 
 // The canonical predicate vocabulary (json §3.5) -- bare + parameterized share the enum; param/min/max carry the
@@ -104,7 +103,7 @@ enum CvCascCondKind { CASC_COND_GROUP, CASC_COND_PRESENCE, CASC_COND_PREDICATE }
 
 //
 //	One node of the typed condition tree -- a tagged union (the C++03-faithful form). `kind` selects which fields are
-//	live: GROUP uses all/anyOf/noneOf/enabled/disabled; PRESENCE uses type/scope/min/max/connection/vicinity;
+//	live: GROUP uses all/anyOf/noneOf/enabled/disabled; PRESENCE uses type/scope/min/max/connection;
 //	PREDICATE uses predKind/param/min/max. `min`/`max` of -1 mean "unset" (StoneBase's nullable int).
 //
 class CvCondition
@@ -130,7 +129,6 @@ public:
 	bool hasMin;
 	bool hasMax;
 	CvCascConnection connection;
-	CvCascVicinity vicinity;
 
 	// --- PREDICATE (Predicate, json §3.5) ---
 	CvCascPredKind predKind;
@@ -142,7 +140,7 @@ public:
 
 	CvCondition()
 		: kind(CASC_COND_GROUP), enabled(NULL), disabled(NULL), scope(CASC_SCOPE_CITY), min(-1), max(-1), hasMin(false), hasMax(false),
-		  connection(CASC_CONN_NONE), vicinity(CASC_VIC_NONE), predKind(CASC_PRED_UNKNOWN), id(-1) {}
+		  connection(CASC_CONN_NONE), predKind(CASC_PRED_UNKNOWN), id(-1) {}
 	~CvCondition();
 
 private:

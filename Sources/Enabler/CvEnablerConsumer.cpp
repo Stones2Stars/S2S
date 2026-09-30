@@ -754,6 +754,26 @@ private:
 			}
 			break;
 		}
+		// ---- the same MAP half, arriving by MEMBERSHIP: a plot entered or left ONE city's work area ----
+		// The plot facts above reach only the cities already able to work the tile, so a tile JOINING a radius moves
+		// that city's vicinity bands with no plot fact at all -- culture growth in play, and every city's work area
+		// at the load end (CityContext folds these first; it registers before the enabler).
+		case SEVT_PLOT_WORKABLE_BY_ADDED:
+		case SEVT_PLOT_WORKABLE_BY_REMOVED:
+		{
+			const CvPlot* pPlot = (kEvent.iSrcLoc >= 0) ? GC.getMap().plotByIndex(kEvent.iSrcLoc) : NULL;
+			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iA);
+			if (pPlot == NULL || pCity == NULL) break;
+			const int aiBonuses[2] = { (int)pPlot->getBonusType(NO_TEAM), pPlot->getPlotContext().servedBonus() };
+			for (int iBonus = 0; iBonus < 2; ++iBonus)
+			{
+				if (aiBonuses[iBonus] < 0 || (iBonus == 1 && aiBonuses[1] == aiBonuses[0])) continue;
+				BuildingEnabler::onCityVicinityBonusChanged(*pCity, aiBonuses[iBonus]);
+				UnitEnabler::onCityVicinityBonusChanged(*pCity, aiBonuses[iBonus]);
+				EnablerKernel::onBonusAccessChangedActive(pCity, aiBonuses[iBonus]);
+			}
+			break;
+		}
 		// ---- CONQUEST: the city's whole HAVE basis is a different player's ----
 		// Every axis the gate reads moves at once (techs, civics, traits, the empire's counts and caps), and the
 		// tri-state is a bare fetch that nothing re-derives -- so a conquered city would otherwise serve the PREVIOUS

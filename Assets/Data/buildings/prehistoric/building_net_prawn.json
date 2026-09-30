@@ -37,12 +37,12 @@
       {
        "type": "BONUS_LOBSTER",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_SHRIMP",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       }
      ]
     }

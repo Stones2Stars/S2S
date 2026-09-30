@@ -28,7 +28,7 @@
     {
      "type": "BONUS_PEARLS",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     },
     {
      "type": "BONUS_MUREX",

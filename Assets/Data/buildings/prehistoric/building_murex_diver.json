@@ -30,7 +30,7 @@
     {
      "type": "BONUS_MUREX",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ],
    "dormant": [

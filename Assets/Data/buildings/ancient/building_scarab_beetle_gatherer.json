@@ -34,7 +34,7 @@
     {
      "type": "BONUS_INCENSE",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ],
    "dormant": [

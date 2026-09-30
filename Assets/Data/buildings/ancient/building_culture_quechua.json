@@ -21,7 +21,7 @@
     {
      "type": "BONUS_LLAMA",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

@@ -34,7 +34,7 @@
     {
      "type": "BONUS_SPICES",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ],
    "dormant": [

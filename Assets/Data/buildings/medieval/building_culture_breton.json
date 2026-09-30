@@ -18,7 +18,7 @@
     {
      "type": "BONUS_DONKEY",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

@@ -18,7 +18,7 @@
     {
      "type": "BONUS_DIAMOND",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

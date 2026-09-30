@@ -32,7 +32,7 @@
     {
      "type": "BONUS_PIG",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ],
    "dormant": [

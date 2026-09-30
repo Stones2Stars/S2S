@@ -407,10 +407,6 @@ namespace
 			break;
 		case CASC_CONN_NONE:
 		default:
-			if (condition.vicinity != CASC_VIC_NONE)
-			{
-				szText += L" in vicinity";
-			}
 			break;
 		}
 		return szText;

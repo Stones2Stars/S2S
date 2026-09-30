@@ -1100,7 +1100,7 @@ def requires_building(rec, store):
     # ⛔ A list WITHOUT a singular is untouched and stays a pure OR -- that idiom was always used correctly (the
     # pest buildings: grains OR cheese OR vegetables), and folding anything into it would change nothing.
     for singularTag, listTag, axis in (("VicinityBonus", "PrereqVicinityBonuses", {"connection": "onSite"}),
-                                       ("RawVicinityBonus", "PrereqRawVicinityBonuses", {"vicinity": "owned"})):
+                                       ("RawVicinityBonus", "PrereqRawVicinityBonuses", {"connection": "onSite"})):
         singular = _txt(rec, singularTag)
         lst = _typelist(rec, listTag)
         if singular and lst:
@@ -2077,7 +2077,7 @@ def _el_prune_operate(node, stats, keep_building_ids, moved):
     if isinstance(node, dict):
         if "type" in node and not any(k in node for k in ("all", "any", "noneOf", "dormant")):
             scope = node.get("scope")
-            if scope in ("plot", "city") or "connection" in node or "vicinity" in node:
+            if scope in ("plot", "city") or "connection" in node:
                 if moved is not None:
                     moved.append(node)
                 else:

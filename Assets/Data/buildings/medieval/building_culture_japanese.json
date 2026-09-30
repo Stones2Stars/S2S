@@ -38,7 +38,7 @@
     {
      "type": "BONUS_FISH",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

@@ -18,7 +18,7 @@
     {
      "type": "BONUS_WHALE",
      "scope": "city",
-     "vicinity": "owned"
+     "connection": "onSite"
     }
    ]
   }

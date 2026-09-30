@@ -36,12 +36,12 @@
       {
        "type": "BONUS_POULTRY",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       },
       {
        "type": "BONUS_LLAMA",
        "scope": "city",
-       "vicinity": "owned"
+       "connection": "onSite"
       }
      ]
     }
