@@ -201,6 +201,7 @@ public:
 	// requested depth (enabler.md §6) -- never a read of the whole tech database.
 	void AI_walkResearchFrontier(int iWalkDepth, std::set<int>& candidateTechs) const;
 	TechTypes AI_bestTech(int iMaxPathLength = 1, bool bIgnoreCost = false, bool bAsync = false, TechTypes eIgnoreTech = NO_TECH, AdvisorTypes eIgnoreAdvisor = NO_ADVISOR);
+	TechTypes AI_getBestResearchTarget() const { return m_eBestResearchTarget; }
 
 
 	bool AI_canTrainSettler();

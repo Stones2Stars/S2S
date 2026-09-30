@@ -4281,14 +4281,19 @@ TechTypes CvPlayerAI::AI_bestTech(int iMaxPathLength, bool bIgnoreCost, bool bAs
 	// If we had already decided to beeline previously, stick with it
 	if (m_eBestResearchTarget != NO_TECH && iMaxPathLength > 1)
 	{
-		if ((canEverResearch(m_eBestResearchTarget)))
+		if (canEverResearch(m_eBestResearchTarget))
 		{
 			techPath* path = findBestPath(m_eBestResearchTarget, iValue, bIgnoreCost, bAsync);
 
 			eFirstTech = findStartTech(path);
+			delete path;
 
-			return eFirstTech;
+			if (eFirstTech != NO_TECH)
+			{
+				return eFirstTech;
+			}
 		}
+		m_eBestResearchTarget = NO_TECH;
 	}
 
 

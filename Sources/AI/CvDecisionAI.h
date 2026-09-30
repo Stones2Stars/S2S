@@ -32,6 +32,7 @@ class CvPlayerAI;
 //   [DAI/flavors]      baseline dump: one line per flavour type + leader value
 //   [DAI/tech/cand]    per-candidate tech: a flavour's contribution to its value
 //   [DAI/tech/best]    final research pick (value, start tech)
+//   [DAI/tech/state]   the research state a player enters its turn with (spine DIAGNOSTIC)
 //   [DAI/civic/cand]   per-candidate civic: a flavour's contribution to its value
 //   [DAI/civic/best]   revolution decision + each changed civic option
 //   [DAI/strategy]     flavour-driven strategy flags set this turn (+ key flavours)
