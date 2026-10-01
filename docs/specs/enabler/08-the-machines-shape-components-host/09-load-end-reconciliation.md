@@ -31,7 +31,9 @@
   > that moves during the pushes is written to the group by the fixpoint itself, so the snapshot is also the
   > exact amount owed. ⚑ The failure is not local to the loop: it sits directly ahead of the
   > `GAME_LOAD_FINISHED` emit, so a load that spins or faults there never runs the load-end gate pass, and every
-  > tree member then reads LISTED — *"everything is buildable without its requirements"*.
+  > tree member then reads LISTED — *"everything is buildable without its requirements"*. That state announces
+  > itself as `[SPINE/GAME] gameLoadNeverFinished`
+  > ([the load reseed](../../../spine/05-the-load-reseed.md#5-the-load-reseed)).
 - **The DORMANCY VERDICT is the operating-building fixpoint** (§3.2,
   [the pollution guardrail](../../validation.md#the-pollution-guardrail--engine-computed-data-never-rides-in)) — applied through the engine's
   disabled-building flag, never a hand re-derivation from legacy prereq getters, plus the two runtime-state legs

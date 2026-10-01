@@ -576,6 +576,7 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_NAME_CHANGE:                      return "[SPINE/GAME] nameChange";
 	case SEVT_CITY_BUILDING_PROCESSED:          return "[SPINE/CITY] cityBuildingProcessed";
 	case SEVT_LOAD_PIPELINE:                    return "[SPINE/GAME] loadPipeline";
+	case SEVT_GAME_LOAD_NEVER_FINISHED:         return "[SPINE/GAME] gameLoadNeverFinished";
 	case SEVT_SAVELOAD_BLOCK:                   return "[SPINE/SAVELOAD] block";
 	case SEVT_SAVELOAD_CENSUS:                  return "[SPINE/SAVELOAD] census";
 	case SEVT_DEAL_VERIFY_CANCEL:               return "[SPINE/EMPIRE] dealVerifyCancel";
@@ -2150,12 +2151,14 @@ void emitPlayerInit(int iPlayer)
 // when a load actually STARTED: onFinalInitialized calls emitGameLoadFinished() for new game too, where it no-ops
 // (no matching STARTED). Result-producers (grants) will gate on these -- that is the grant engine's own job, later.
 static bool s_bGameLoadInProgress = false;
+static bool s_bGameLoadNeverFinishedReported = false;
 // DOMAIN-kind (so the grant engine will see the bracket) but tagged with the [SPINE] domain so the logging consumer
 // renders it through the registered prefix; iLevel 0 = a lifecycle signal that ALWAYS logs (STARTED fires before the
 // BUG log level is pushed).
 void emitGameLoadStarted()
 {
 	s_bGameLoadInProgress = true;
+	s_bGameLoadNeverFinishedReported = false;
 	CvSpineEvent kEvt(EVENTKIND_DOMAIN, SEVT_GAME_LOAD_STARTED);
 	kEvt.iDomainTag = SD_SPINE;
 	kEvt.iLevel = 0;
@@ -2176,3 +2179,14 @@ void emitGameLoadFinished()
 // reverse indices are not built until onFinalInitialized (buildFrontierIndices), so a mid-reseed ripple is invalid.
 // (Its ENABLER half stays load-active -- the reseed events BUILD the enabler domains, docs/spine.md §5 (the load reseed).)
 bool spineGameLoadInProgress() { return s_bGameLoadInProgress; }
+
+void emitGameLoadNeverFinished()
+{
+	if (!s_bGameLoadInProgress || s_bGameLoadNeverFinishedReported)
+	{
+		return;
+	}
+	s_bGameLoadNeverFinishedReported = true;
+	CvSpineEvent kEvent(EVENTKIND_DIAGNOSTIC, SD_SPINE, SEVT_GAME_LOAD_NEVER_FINISHED, 0);
+	eventSpine().emit(kEvent);
+}

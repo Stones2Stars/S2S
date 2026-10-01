@@ -794,6 +794,9 @@ enum SpineDomainEvent
 	// STATE these sit beside is the ACTIVATED / DORMANTED crossing above.
 	SEVT_CITY_BUILDING_PROCESSED    = 190,
 	SEVT_LOAD_PIPELINE              = 191,
+	/// <summary>A game turn ran while the load bracket was still open: GAME_LOAD_FINISHED never fired, so nothing
+	/// that waits for it has run -- the enabler's load-end gate pass among them.</summary>
+	SEVT_GAME_LOAD_NEVER_FINISHED   = 212,
 
 	// ===== SAVELOAD -- what the STREAM CONTAINED, never what set the state =====
 	// ⛔ NO CONSUMER MAY BUILD STATE FROM THIS. It is testimony ABOUT the read, sitting beside the DOMAIN facts
@@ -1108,6 +1111,9 @@ void emitPlayerInit(int iPlayer);
 // after it completes. Result-producers (grants) suppress between them; the cache-build consumer stays load-active.
 void emitGameLoadStarted();
 void emitGameLoadFinished();
+/// <summary>Reports, once per load, that play is continuing with the load bracket still open. A no-op when the
+/// bracket is closed, so the caller needs no test of its own.</summary>
+void emitGameLoadNeverFinished();
 
 // One traded item taking effect / ceasing between two empires (SEVT_EMPIRE_TRADE_ADDED / _REMOVED above).
 void emitEmpireTradeAdded(int iItem, int iData, int iFromPlayer, int iToPlayer, int iDeal);
