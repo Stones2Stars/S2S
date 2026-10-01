@@ -24,7 +24,7 @@ not yet ported (still authored in `Assets/XML`, referenced from JSON by id). Ver
 | `BONUSCLASS_` | a resource category (bonus class) | ✅ `bonusclasses/` |
 | `BUILD_` | a worker build action | ✅ `builds/` |
 | `BUILDING_` | a building (incl. `BUILDING_EFFECT_*` — the **property pseudo-buildings**: `BUILDING_` infotype, live in `buildings/`) | ✅ `buildings/` |
-| `C2C_ERA_` | an era | ✅ `eras/` |
+| `C2C_ERA_` | an era — ⛔ the brand is load-bearing, because the closed EXE knows the vanilla `ERA_*` names. (1) It reads the default start era BY NAME from `CivilizationIV.ini`, which is shared with vanilla BTS, whose value is `ERA_ANCIENT`; a branded name keeps that from resolving, and `ScreenResolution.py` rewrites any non-branded value to the prehistoric era — it tests the literal brand, so it moves with any rename. (2) It compares an era's type name as TEXT against `ERA_ANCIENT` / `ERA_CLASSICAL` to choose the city-wall style (`eu_an` on a match, `eu_med` otherwise — `Civ4BeyondSword.exe` `004cbbea`, `004cbde7`), so today every era draws `eu_med`. Any branded prefix preserves both; plain `ERA_` changes both | ✅ `eras/` |
 | `CIVIC_` | a civic | ✅ `civics/` |
 | `CIVICOPTION_` | a civic category / slot | ✅ `civicoptions/` |
 | `CIVILIZATION_` | a civilization | ✅ `civilizations/` |
