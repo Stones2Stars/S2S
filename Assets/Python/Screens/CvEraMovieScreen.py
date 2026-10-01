@@ -2,6 +2,8 @@
 ## Copyright Firaxis Games 2005
 from CvPythonExtensions import *
 
+INFO = CyInfo()
+
 class CvEraMovieScreen:
 
 	def interfaceScreen(self, iEra):
@@ -30,7 +32,7 @@ class CvEraMovieScreen:
 		screen.showScreen(PopupStates.POPUPSTATE_MINIMIZED, False)
 
 		# Header...
-		szHeader = localText.getText("TXT_KEY_ERA_SPLASH_SCREEN", (CyGlobalContext().getEraInfo(iEra).getTextKey(), ))
+		szHeader = localText.getText("TXT_KEY_ERA_SPLASH_SCREEN", (INFO.getTextKey("C2C_ERA_", iEra), ))
 		screen.setText("EraTitleHeader" + str(iEra), "", szHeader, 1<<2, self.X_SCREEN + self.W_SCREEN / 2, self.Y_TITLE, 0, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_GENERAL, -1, -1)
 
 		screen.setButtonGFC("EraExit" + str(iEra), localText.getText("TXT_KEY_MAIN_MENU_OK", ()), "", self.X_EXIT, self.Y_EXIT, self.W_EXIT, self.H_EXIT, WidgetTypes.WIDGET_CLOSE_SCREEN, -1, -1, ButtonStyles.BUTTON_STYLE_STANDARD)

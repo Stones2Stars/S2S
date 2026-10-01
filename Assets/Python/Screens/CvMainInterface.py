@@ -2332,11 +2332,11 @@ class CvMainInterface:
 				screen.show("Treasury")
 
 				iEra = CyPlayer.getCurrentEra()
-				BTN = INFO.getButton("ERA_", iEra)
+				BTN = INFO.getButton("C2C_ERA_", iEra)
 				if BTN:
 					screen.setText("EraIndicator0", "", "<img=%s>" % BTN, 1<<1, self.xMidL - 8, 0, 0, eFontGame, eWidGen, iEra, 0)
 				else:
-					szTxt = INFO.getDescription("ERA_", iEra)
+					szTxt = INFO.getDescription("C2C_ERA_", iEra)
 					screen.setText("EraIndicator0", "", "<font=3>%s" % szTxt[:3], 1<<1, self.xMidL - 14, 0, 0, eFontGame, eWidGen, iEra, 0)
 
 				if iCurrentResearch == -1:
