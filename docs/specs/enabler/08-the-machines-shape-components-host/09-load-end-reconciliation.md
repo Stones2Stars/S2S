@@ -25,6 +25,13 @@
   > the re-color, so the crossing is announced as a genuine `SEVT_PLOTGROUP_BONUS_ADDED` rather than seeded
   > ([the load reseed](../../../spine/05-the-load-reseed.md#5-the-load-reseed) bans a warm-up walk that leaves consumers
   > deaf; a real crossing emit is not one).
+  > ⛔ **THE RE-PUSH WALKS A SNAPSHOT OF EVERY CITY'S `providedCount`, TAKEN BEFORE THE FIRST PUSH — never the
+  > live map.** Each push is a live crossing, so it re-runs the operate fixpoint in the member cities and that
+  > fixpoint inserts into and erases from `providedCount`; iterating the live map walks a freed node. A supply
+  > that moves during the pushes is written to the group by the fixpoint itself, so the snapshot is also the
+  > exact amount owed. ⚑ The failure is not local to the loop: it sits directly ahead of the
+  > `GAME_LOAD_FINISHED` emit, so a load that spins or faults there never runs the load-end gate pass, and every
+  > tree member then reads LISTED — *"everything is buildable without its requirements"*.
 - **The DORMANCY VERDICT is the operating-building fixpoint** (§3.2,
   [the pollution guardrail](../../validation.md#the-pollution-guardrail--engine-computed-data-never-rides-in)) — applied through the engine's
   disabled-building flag, never a hand re-derivation from legacy prereq getters, plus the two runtime-state legs
