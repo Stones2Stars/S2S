@@ -145,6 +145,14 @@ consumes the in-read events to build the cascade. New game builds the same way: 
 events, with grants active because those are genuine acquisitions. Ledgered as
 [the load reseed](#5-the-load-reseed).
 
+⚑ **A BRACKET THAT NEVER CLOSES ANNOUNCES ITSELF — `[SPINE/GAME] gameLoadNeverFinished`.** `GAME_LOAD_FINISHED`
+is emitted at the end of `CvGame::onFinalInitialized`, which Python calls; anything that cuts that function short
+leaves the bracket open for the rest of the session, silently. Everything waiting on the close then never runs —
+the enabler's load-end gate pass first of all, so every build-tree member reads LISTED and the game offers
+buildings and units regardless of their requirements. `SEVT_GAME_LOAD_NEVER_FINISHED` (DIAGNOSTIC, level 0, once
+per load) fires from the top of `CvGame::doTurn`, the one point that can never legitimately run inside the
+bracket. ⇒ On a report of everything being buildable, grep `Cascade.log` for it before anything else.
+
 > **⛔ `spineGameLoadInProgress()` IS RESULT-PRODUCER SUPPRESSION, AND AGENTS KEEP MISCONSTRUING IT (repeatedly, across sessions).** It answers ONE question: *would acting on this fact HAND SOMETHING OUT for a
 > load, which is not an acquisition?* That is why the trigger/grant machinery consults it. ⛔ It is **NOT** a
 > licence for a LOAD-ACTIVE consumer to skip work the reseed exists to perform — reaching for it there asserts

@@ -6087,6 +6087,9 @@ void CvGame::doTurn()
 {
 	PROFILE_BEGIN("CvGame::doTurn()",DOTURN1);
 
+	// A turn can never legitimately run inside the load bracket, so this is where one left open is noticed.
+	emitGameLoadNeverFinished();
+
 	//	Turn-boundary accounting for the frame-driven span the doTurn tree does not cover:
 	//	turn.wall is the true wall-clock between consecutive turn boundaries (what a player's
 	//	stopwatch measures, minus their own think time on the human turn);
