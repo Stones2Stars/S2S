@@ -712,6 +712,12 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 		// supplied by its own world-unique building, so after the drain every city's traded store read <= 0 for it
 		// and the city screen's culture list -- which asks exactly that store -- was empty. A tile resource
 		// survived only because the re-color happens to re-fold THAT half.
+		// ⛔ SNAPSHOT EVERY CITY'S SUPPLY BEFORE PUSHING ANY OF IT. A push is a live crossing: it re-runs the operate
+		// fixpoint in the member cities, which inserts into and erases from `providedCount` -- so walking the live
+		// map while pushing walks a node the push just freed. A supply that moves DURING the pushes is written to
+		// the group by the fixpoint itself, so only what stood before the first push is owed here.
+		std::vector<CvCity*> supplyingCities;
+		std::vector< std::map<int, int> > suppliedCounts;
 		for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
 		{
 			CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
@@ -721,19 +727,25 @@ void CvGame::onFinalInitialized(const bool bNewGame)
 			}
 			foreach_(CvCity* pLoopCity, kPlayer.cities())
 			{
-				CvPlotGroup* pGroup = pLoopCity->plotGroup(pLoopCity->getOwner());
-				if (pGroup == NULL)
-				{
-					continue;
-				}
 				const OperatingBuildings& kOperating = EnablerKernel::operatingBuildings(pLoopCity);
-				for (std::map<int, int>::const_iterator it = kOperating.providedCount.begin();
-					it != kOperating.providedCount.end(); ++it)
+				if (!kOperating.providedCount.empty())
 				{
-					if (it->second > 0)
-					{
-						pGroup->changeNumBonuses((BonusTypes)it->first, it->second);
-					}
+					supplyingCities.push_back(pLoopCity);
+					suppliedCounts.push_back(kOperating.providedCount);
+				}
+			}
+		}
+		for (size_t iCity = 0; iCity < supplyingCities.size(); ++iCity)
+		{
+			CvCity* pSupplyingCity = supplyingCities[iCity];
+			const std::map<int, int>& kSupplied = suppliedCounts[iCity];
+			for (std::map<int, int>::const_iterator it = kSupplied.begin(); it != kSupplied.end(); ++it)
+			{
+				// re-fetched per push: an earlier push may have moved this city's group
+				CvPlotGroup* pGroup = pSupplyingCity->plotGroup(pSupplyingCity->getOwner());
+				if (pGroup != NULL && it->second > 0)
+				{
+					pGroup->changeNumBonuses((BonusTypes)it->first, it->second);
 				}
 			}
 		}
