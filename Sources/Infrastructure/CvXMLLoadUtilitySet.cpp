@@ -1362,8 +1362,10 @@ void CvXMLLoadUtility::SetGlobalActionInfo()
 		pActionInfo->setOriginalIndex(i);
 		pActionInfo->setSubType(ACTIONSUBTYPE_BUILDING);
 
-		// The building action entry keeps its slot in the action table; the mission/hotkey members it used to
-		// carry are gone from the JSON-fed info, so nothing is written back onto the building.
+		// The building action entry keeps its slot in the action table. The hotkey description is seeded like
+		// every other action-carrying type: it is the action tooltip's header.
+		CvBuildingInfo& building = GC.getBuildingInfo(static_cast<BuildingTypes>(i));
+		building.setHotKeyDescription(building.getTextKeyWide(), GC.getMissionInfo((MissionTypes)GetInfoClass("MISSION_CONSTRUCT")).getTextKeyWide(), L"");
 		iActionInfoIndex++;
 
 		GC.m_paActionInfo.push_back(pActionInfo);

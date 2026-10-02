@@ -513,7 +513,7 @@ class CvGameUtils:
 			elif iData1 > 8299 and iData1 < 8400:
 				iPlayer = iData1 - 8300
 				pUnit = GC.getPlayer(iPlayer).getUnit(iData2)
-				sText = CyGameTextMgr().getSpecificUnitHelp(pUnit, True, False)
+				sText = CyGameTextMgr().getSpecificUnitHelp(iPlayer, iData2, True, False)
 				if GAME.GetWorldBuilderMode():
 					sText += "\n" + CyTranslator().getText("TXT_WORD_UNIT", ()) + " ID: " + str(iData2)
 					sText += "\n" + CyTranslator().getText("TXT_KEY_WB_GROUP", ()) + " ID: " + str(pUnit.getRead()[UnitReadKind.UNIT_READ_GROUP_ID])

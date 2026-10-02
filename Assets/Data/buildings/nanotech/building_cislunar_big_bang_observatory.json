@@ -3,7 +3,11 @@
  "requires": {
   "build": {
    "all": [
-    "BUILDING_CISLUNAR_FACTORY",
+    {
+     "type": "BUILDING_CISLUNAR_FACTORY",
+     "scope": "empire",
+     "min": 1
+    },
     "BUILDING_CISLUNAR_SATELLITE_FACTORY",
     "BUILDING_CISLUNAR_TELESCOPE",
     "TECH_AMPLIFIED_WAVELENGTHS",

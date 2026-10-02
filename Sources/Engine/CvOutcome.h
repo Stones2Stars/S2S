@@ -28,7 +28,7 @@ public:
 	virtual ~CvOutcome();
 	int getYield(YieldTypes eYield, const CvUnit& kUnit) const;
 	int getCommerce(CommerceTypes eCommerce, const CvUnit& kUnit) const;
-	int getChance(const CvUnit& kUnit) const;
+	int getChance(const CvUnit& kUnit, int iDefeatedCaptureResistance = 0) const;
 	OutcomeTypes getType() const;
 	UnitTypes getUnitType() const;
 	bool getUnitToCity(const CvUnit& kUnit) const;

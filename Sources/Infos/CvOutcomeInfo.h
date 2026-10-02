@@ -65,6 +65,8 @@ public:
 	// ======================= 4. INTRINSIC -- bare typed reads (identity / FKs / the tier list) ===============
 	const CvWString& getMessageKey() const { return m_szMessageKey; }
 	bool isCapture() const             { return m_bCapture; }
+	///<summary>The chance is contested: the winner's capture probability adds to it, the loser's resistance subtracts.</summary>
+	bool isCaptureContest() const      { return m_bCaptureContest; }
 	TechTypes  getPrereqTech() const   { return m_ePrereqTech; }    // TECH_* FK
 	TechTypes  getObsoleteTech() const { return m_eObsoleteTech; }  // TECH_* FK
 	CivicTypes getPrereqCivic() const  { return m_ePrereqCivic; }   // CIVIC_* FK
@@ -82,6 +84,7 @@ private:
 	std::map<int, int> m_promotionOdds;
 	CvWString m_szMessageKey;
 	bool m_bCapture;
+	bool m_bCaptureContest;
 	TechTypes m_ePrereqTech;
 	TechTypes m_eObsoleteTech;
 	CivicTypes m_ePrereqCivic;

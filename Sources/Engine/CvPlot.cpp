@@ -40,6 +40,7 @@
 #include "Infrastructure/CvDLLPlotBuilderIFaceBase.h"
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
 #include "Repos/BuildsRepo.h"
+#include "Enabler/CvEnablerKernel.h"   // operatingBuildings -- what a city's buildings supply to its network
 #include "CvCascadeChannelRegistry.h"   // channelLookup / wellbeingTwin -- the group reads' channel identity
 #include "CvInfoKinds.h"                // the family + kind vocabulary the group reads walk
 #include "Conditions/CvConditionEval.h"  // CvCascadeEvalCtx + cascadeEvalCondition -- the ONE evaluator
@@ -223,6 +224,7 @@ CvPlot::CvPlot()
 	m_pFlagSymbol = NULL;
 	m_pFlagSymbolOffset = NULL;
 	m_pCenterUnit = NULL;
+	m_lastPresentedCenterUnit.reset();
 	m_bInhibitCenterUnitCalculation = false;
 	// Toffer - These doesn't recalculate, perhaps they should?
 	m_bImprovementUpgradable = false;
@@ -574,6 +576,7 @@ void CvPlot::hideGraphics(ECvPlotGraphics::type toHide /*= ECvPlotGraphics::ALL*
 	{
 		updateCenterUnit();
 		m_pCenterUnit = NULL;
+		m_lastPresentedCenterUnit.reset();
 		gDLL->getFlagEntityIFace()->destroy(m_pFlagSymbol);
 		gDLL->getFlagEntityIFace()->destroy(m_pFlagSymbolOffset);
 		m_pFlagSymbol = NULL;
@@ -8598,6 +8601,35 @@ void CvPlot::setPlotGroup(PlayerTypes ePlayer, CvPlotGroup* pNewValue, bool bRec
 			m_aiPlotGroup[ePlayer] = pNewValue->getID();
 		}
 
+		if (bRecalculateEffect && pCity != NULL && pCity->getOwner() == ePlayer)
+		{
+			//	What this city's buildings supply moves WITH the city: it is on the network because the city is.
+			//	A network's own fold carries tile resources only, so a rebuild or a move dropped every supplied
+			//	one, and a producer that then switched off subtracted it from a network that no longer held it.
+			//	⚠ Snapshotted first: a push re-runs the operate fixpoint, which edits the map being walked.
+			const std::map<int, int>& kSuppliedCounts = EnablerKernel::operatingBuildings(pCity).providedCount;
+			std::vector<int> suppliedBonuses;
+
+			for (std::map<int, int>::const_iterator itSupplied = kSuppliedCounts.begin(); itSupplied != kSuppliedCounts.end(); ++itSupplied)
+			{
+				if (itSupplied->second > 0)
+				{
+					suppliedBonuses.push_back(itSupplied->first);
+				}
+			}
+			for (size_t iSupplied = 0; iSupplied < suppliedBonuses.size(); ++iSupplied)
+			{
+				if (pOldPlotGroup != NULL)
+				{
+					pOldPlotGroup->changeNumBonuses((BonusTypes)suppliedBonuses[iSupplied], -1);
+				}
+				if (pNewValue != NULL)
+				{
+					pNewValue->changeNumBonuses((BonusTypes)suppliedBonuses[iSupplied], 1);
+				}
+			}
+		}
+
 		if (bRecalculateEffect)
 		{
 			// #430 NETWORK MEMBERSHIP (trigger #3): this city's OWN center plot moved to a different plot-group
@@ -10087,6 +10119,13 @@ void CvPlot::updateCenterUnit()
 		//	This makes the interim a safe state, and the correct value will be calculated once the
 		//	inhibitted section is exited
 		m_pCenterUnit = NULL;
+
+		//	A suspended recalculation hides nothing: the unit stays on screen, so the plot keeps the memory of
+		//	having presented it. A plot whose unit graphics are down has presented nothing.
+		if (!m_bInhibitCenterUnitCalculation)
+		{
+			m_lastPresentedCenterUnit.reset();
+		}
 		gfxTraceCenterUnit(getX(), getY(),
 			m_bInhibitCenterUnitCalculation ? GFX_GATE_INHIBITED : GFX_GATE_NOT_VISIBLE,
 			false, iOldCenterUnitId, -1);
@@ -10108,7 +10147,17 @@ void CvPlot::updateCenterUnit()
 			//	The plot is about to PRESENT this node — it draws exactly one unit, and this is now that unit.
 			//	reloadEntity guarantees the node exists and has been placed once; this states where it stands for
 			//	the presentation itself, which a node placed under a different centre unit never received.
-			newCenterUnit->placeForPresentation();
+			//	The same unit returning after a suspended recalculation never left the screen, and re-stating
+			//	its position makes the other figures of its formation run in.
+			if (!(newCenterUnit->getIDInfo() == m_lastPresentedCenterUnit))
+			{
+				newCenterUnit->placeForPresentation();
+			}
+			m_lastPresentedCenterUnit = newCenterUnit->getIDInfo();
+		}
+		else
+		{
+			m_lastPresentedCenterUnit.reset();
 		}
 		m_pCenterUnit = newCenterUnit;
 

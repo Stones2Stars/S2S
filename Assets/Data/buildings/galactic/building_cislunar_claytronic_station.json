@@ -9,7 +9,11 @@
  "requires": {
   "build": {
    "all": [
-    "BUILDING_CISLUNAR_NANOSATELLITE_CONSTELLATION",
+    {
+     "type": "BUILDING_CISLUNAR_NANOSATELLITE_CONSTELLATION",
+     "scope": "empire",
+     "min": 1
+    },
     "BUILDING_CISLUNAR_ONEILL_CYLINDER",
     "TECH_NANOMORPHIC_TROIDS",
     {

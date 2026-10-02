@@ -619,7 +619,7 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 		}
 		//--------------------------------
 		// Init non-saved data
-		setupGraphical();
+		ensureGraphicalPlacement();
 
 		//--------------------------------
 		// Init other game data
@@ -1764,12 +1764,6 @@ void CvUnit::NotifyEntity(MissionTypes eMission)
 		//	through: fortify and awaken both reach setActivityType, which notifies every unit in the group and
 		//	passes no plot, and nothing on that path ever calls reloadEntity
 		//	(docs/reference/unit-rendering/08-the-run-from-origin-reconciliation.md).
-		//	Selection is a presentation: the select notify reaches the engine a frame BEFORE the centre-unit pass
-		//	re-states the position, and not at all when the unit is already the centre unit.
-		if (eMission == MISSION_MULTI_SELECT)
-		{
-			placeForPresentation();
-		}
 		gDLL->getEntityIFace()->NotifyEntity(getUnitEntityPlaced(), eMission);
 		gfxTraceStatement(this, "notify", (int)eMission);
 	}
@@ -3262,7 +3256,7 @@ void CvUnit::updateCombat(CvUnit* pSelectedDefender, bool bSamePlot, bool bSteal
 					//pOutcomeList->execute(*pDefender, getOwner(), getUnitType());
 				}
 			}
-			list.execute(*pDefender, getOwner(), getUnitType());
+			list.execute(*pDefender, getOwner(), getUnitType(), captureResistanceTotal());
 
 			return;
 		}
@@ -3755,6 +3749,7 @@ void CvUnit::updateCombat(CvUnit* pSelectedDefender, bool bSamePlot, bool bSteal
 			}
 
 			CvEventReporter::getInstance().combatResult(this, pDefender);
+			const int iDefenderCaptureResistance = pDefender->captureResistanceTotal();
 			PlayerTypes eDefenderUnitPlayer = pDefender->getOwner();
 			UnitTypes eDefenderUnitType = pDefender->getUnitType();
 
@@ -3809,7 +3804,7 @@ void CvUnit::updateCombat(CvUnit* pSelectedDefender, bool bSamePlot, bool bSteal
 			}
 			//TB Combat Mods End
 
-			mergedList.execute(*this, eDefenderUnitPlayer, eDefenderUnitType);
+			mergedList.execute(*this, eDefenderUnitPlayer, eDefenderUnitType, iDefenderCaptureResistance);
 		}
 
 		if (bQuick && IsSelected() && !canMove())

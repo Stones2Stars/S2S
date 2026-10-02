@@ -9,6 +9,7 @@
 
 CvOutcomeInfo::CvOutcomeInfo()
 	: m_bCapture(false)
+	, m_bCaptureContest(false)
 	, m_ePrereqTech(NO_TECH)
 	, m_eObsoleteTech(NO_TECH)
 	, m_ePrereqCivic(NO_CIVIC)
@@ -52,6 +53,7 @@ void CvOutcomeInfo::mapFrom(const picojson::value& entity)
 	m_aeReplaceOutcomes.clear();
 	m_szMessageKey.clear();
 	m_bCapture = false;
+	m_bCaptureContest = false;
 	m_ePrereqTech = NO_TECH;
 	m_eObsoleteTech = NO_TECH;
 	m_ePrereqCivic = NO_CIVIC;
@@ -172,6 +174,12 @@ void CvOutcomeInfo::mapFrom(const picojson::value& entity)
 		m_bCapture = it->second.get<bool>();
 	}
 
+	it = kEntity.find("captureContest");
+	if (it != kEntity.end() && it->second.is<bool>())
+	{
+		m_bCaptureContest = it->second.get<bool>();
+	}
+
 	// odds -- PROMOTION_* id -> extra-chance percentage
 	if (const picojson::object* pkOdds = jsonChildObj(kEntity, "odds"))
 	{
@@ -229,6 +237,7 @@ void CvOutcomeInfo::getCheckSum(uint32_t& iSum) const
 		CheckSum(iSum, m_abPlacement[iPlacement]);
 	}
 	CheckSum(iSum, m_bCapture);
+	CheckSum(iSum, m_bCaptureContest);
 	CheckSumC(iSum, m_aeReplaceOutcomes);
 	CheckSum(iSum, m_ePrereqCivic);
 }

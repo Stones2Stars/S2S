@@ -1107,6 +1107,8 @@ protected:
 	CvFlagEntity* m_pFlagSymbol;
 	CvFlagEntity* m_pFlagSymbolOffset;
 	CvUnit* m_pCenterUnit;
+	///<summary>The unit this plot last presented as its centre unit; survives a suspended recalculation.</summary>
+	IDInfo m_lastPresentedCenterUnit;
 
 	CvPlotBuilder* m_pPlotBuilder; // builds bonuses and improvements
 

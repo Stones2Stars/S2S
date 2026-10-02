@@ -1,0 +1,15 @@
+{
+ "type": "OUTCOME_CAPTURE_MILITARY",
+ "identity": {
+  "description": "TXT_KEY_OUTCOME_CAPTURE_MILITARY",
+  "message": "TXT_KEY_MSG_MILITARY_CAPTIVE"
+ },
+ "territory": [
+  "friendly",
+  "neutral",
+  "hostile",
+  "barbarian"
+ ],
+ "capture": true,
+ "captureContest": true
+}

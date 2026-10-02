@@ -330,7 +330,7 @@ class CityDemolish:
 		print "ACEM - handleInput"
 		if iNotifyCode == NotifyCode.NOTIFY_CURSOR_MOVE_ON:
 			if szSplit[0] in ("List", "ListBtn"):
-				szText = CyGameTextMgr().getBuildingHelp(ID, True, self.CyCity, False, False, False)
+				szText = CyGameTextMgr().getBuildingHelp(ID, True, self.CyCity.getOwner(), self.CyCity.getID(), False, False, False)
 				self.updateTooltip(screen, szText, self.xListTooltip)
 		elif iNotifyCode == NotifyCode.NOTIFY_CLICKED:
 			if szSplit[0] == "Exit":

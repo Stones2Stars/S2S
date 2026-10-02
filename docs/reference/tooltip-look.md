@@ -3371,6 +3371,13 @@ the outcome list (`CvOutcomeMission::buildDisplayString` → per-outcome `NN%: <
 that authors no help prose therefore renders as a name followed directly by percentages, with nothing saying
 what the action IS -- which is a DATA gap in that mission, not a composer that forgot a heading.
 
+⚑ **The HEADER is the action's hotkey description, seeded per action-carrying type in
+`CvXMLLoadUtility::SetGlobalActionInfo`.** A type that loop does not seed renders a nameless tooltip; builds and
+buildings were each missed once.
+⚑ **A construct action shows the building's help whether or not the CITY could queue it.** A unit-placed
+building (`identity.notConstructible`) is hidden from the city's build list by design and never reads LISTED,
+so its help is asked without the city.
+
 ## `parseActionHelp`
 
 - %d1_Num [NUM1:Turn:Turns]  <!-- TXT_KEY_MISC_TURN_OR_TURNS -->

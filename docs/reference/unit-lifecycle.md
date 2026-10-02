@@ -55,6 +55,11 @@ through it.**
 - **Capture instead of combat.** `CvUnit::setXY` walks the plot it is entering and, for each enemy unit that
   cannot defend, takes it (`setCapturingPlayer` → `kill`) rather than fighting it. That is the whole of how a
   worker or a settler changes hands.
+  ⚖ **A unit that CAN defend is captured by a KILL OUTCOME — the same mechanism that subdues an animal.**
+  The captive is authored on the loser's species class (`UNITCOMBAT_SPECIES_HUMAN` →
+  `OUTCOME_CAPTURE_MILITARY`, `UNITCOMBAT_SPECIES_NEANDERTHAL` → `OUTCOME_CAPTURE_NEANDERTHAL`), and its
+  chance is the `captureContest` contest ([mission-outcome-system.md](mission-outcome-system.md)). ⛔ There is
+  no captive rule in Python and none hand-written in the DLL: a new kind of captive is a new authored outcome.
 - **Walking into an undefended city.** `CvCity::isDirectAttackable` lets a city be entered past its minimum
   defense floor exactly when `getNumDefenders(getOwner())` is zero, so an empty city is taken whatever its
   defenses have recovered to. That count is `PUF_canDefend`.

@@ -98,6 +98,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CISLUNAR_FACTORY",
   "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_FACTORY_PEDIA",
+  "help": "TXT_KEY_BUILDING_CISLUNAR_EARTH_SIDE_HELP",
   "worth": 6,
   "militaryWorth": 20,
   "advisor": "ADVISOR_GROWTH",

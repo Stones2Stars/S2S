@@ -208,6 +208,14 @@
 		<Russian>Вы захватили гражданские подразделения в количестве: %d1 (пленник-гражданский).</Russian>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_OUTCOME_CAPTURE_MILITARY</Tag>
+		<English>Capture Military Unit</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_OUTCOME_CAPTURE_NEANDERTHAL</Tag>
+		<English>Capture Neanderthal</English>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_MSG_MILITARY_CAPTIVE</Tag>
 		<English>You have captured a military unit (Captive - Military).</English>
 		<French>Vous avez capturé une unité militaire (Prisonnier de Guerre).</French>

@@ -87,6 +87,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CISLUNAR_ECONOMY",
   "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_ECONOMY_PEDIA",
+  "help": "TXT_KEY_BUILDING_CISLUNAR_EARTH_SIDE_HELP",
   "pediaCategory": "nationalWonder",
   "advisor": "ADVISOR_SCIENCE",
   "visibilityPriority": 1,

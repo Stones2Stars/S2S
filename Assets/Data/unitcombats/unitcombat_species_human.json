@@ -3,6 +3,19 @@
  "tags": [
   "human"
  ],
+ "outcomes": {
+  "kill": [
+   {
+    "requires": {
+     "outcome": "OUTCOME_CAPTURE_MILITARY"
+    },
+    "chance": 0,
+    "spawns": {
+     "unit": "UNIT_CAPTIVE_MILITARY"
+    }
+   }
+  ]
+ },
  "ui": {
   "art": {
    "icon": "Art/Interface/Buttons/units/sparth/categories/species_humans.dds"

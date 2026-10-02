@@ -47050,6 +47050,10 @@ TXT_KEY_BUILDING_CRIME_HACKING_PEDIA"</French>
 		<Russian>Орбитальные доки используются для строительства, технического обслуживания и ремонта космических кораблей, орбитальных самолетов, а также звездолетов.</Russian>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_BUILDING_CISLUNAR_EARTH_SIDE_HELP</Tag>
+		<English>[ICON_BULLET]Built on Earth. It supplies your stations in cislunar space, which need one anywhere in your empire.</English>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_BUILDING_CISLUNAR_FACTORY</Tag>
 		<English>Cislunar Factory</English>
 		<French>

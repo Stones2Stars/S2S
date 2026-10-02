@@ -2437,6 +2437,13 @@ void CvDLLWidgetData::parseActionHelp(CvWidgetDataStruct &widgetDataStruct, CvWS
 						szBuffer.append(NEWLINE);
 						GAMETEXT.setBuildingHelp(szBuffer, (BuildingTypes)GC.getActionInfo(widgetDataStruct.m_iData1).getMissionData(), true, pMissionCity);
 					}
+					//	A unit-placed building is hidden from the city's build list by design, so it never reads
+					//	LISTED. Its help is asked without the city: the city's gate reason describes the queue.
+					else if (GC.getBuildingInfo(eBuilding).isNotConstructible())
+					{
+						szBuffer.append(NEWLINE);
+						GAMETEXT.setBuildingHelp(szBuffer, eBuilding, true, NULL);
+					}
 					else if (!GC.getGame().isBuildingMaxedOut(eBuilding))
 					{
 						GAMETEXT.buildBuildingRequiresString(szBuffer, (BuildingTypes)GC.getActionInfo(widgetDataStruct.m_iData1).getMissionData(), false, false, pMissionCity);

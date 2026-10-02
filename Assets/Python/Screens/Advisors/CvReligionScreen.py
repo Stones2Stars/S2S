@@ -482,7 +482,7 @@ class CvReligionScreen:
 					bFirst = True
 					sHelp = ""
 					for iRel in lReligions:
-						szTempBuffer = CyGameTextMgr().getReligionHelpCity(iRel, cityX, False, False, False, True)
+						szTempBuffer = CyGameTextMgr().getReligionHelpCity(iRel, cityX.getOwner(), cityX.getID(), False, False, False, True)
 						if (szTempBuffer):
 							if (not bFirst):
 								sHelp += u", "
@@ -531,7 +531,7 @@ class CvReligionScreen:
 					bFirst = True
 					for iI in lReligions:
 						if iLinkReligion < 0:
-							szTempBuffer = CyGameTextMgr().getReligionHelpCity(iI, cityX, False, False, False, True)
+							szTempBuffer = CyGameTextMgr().getReligionHelpCity(iI, cityX.getOwner(), cityX.getID(), False, False, False, True)
 							if szTempBuffer:
 								if not bFirst:
 									szCityName += ", "
@@ -539,10 +539,10 @@ class CvReligionScreen:
 								bFirst = False
 
 						elif iI == iLinkReligion:
-							szTempBuffer = CyGameTextMgr().getReligionHelpCity(iLinkReligion, cityX, False, False, True, False)
-						else: szTempBuffer = CyGameTextMgr().getReligionHelpCity(iI, cityX, False, False, False, True)
+							szTempBuffer = CyGameTextMgr().getReligionHelpCity(iLinkReligion, cityX.getOwner(), cityX.getID(), False, False, True, False)
+						else: szTempBuffer = CyGameTextMgr().getReligionHelpCity(iI, cityX.getOwner(), cityX.getID(), False, False, False, True)
 
-				else: szCityName += CyGameTextMgr().getReligionHelpCity(iLinkReligion, cityX, False, False, True, False)
+				else: szCityName += CyGameTextMgr().getReligionHelpCity(iLinkReligion, cityX.getOwner(), cityX.getID(), False, False, True, False)
 
 
 				if bFirstColumn:
