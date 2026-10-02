@@ -1845,6 +1845,8 @@ public:
 	void setGGExperienceEarnedTowardsType();
 	UnitTypes getGGExperienceEarnedTowardsType() const;
 
+	///<summary>The era that bounds this unit's group rank: its owner's, or the players' average for an animal.</summary>
+	int groupRankEra() const;
 	int eraGroupMergeLimit() const;
 	int eraGroupSplitLimit() const;
 

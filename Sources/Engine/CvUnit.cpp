@@ -24114,14 +24114,24 @@ UnitTypes CvUnit::getGGExperienceEarnedTowardsType() const
 	return m_eGGExperienceEarnedTowardsType;
 }
 
+int CvUnit::groupRankEra() const
+{
+	//	The animal player never advances an era of its own, so its units are ranked against the players they meet.
+	if (GET_PLAYER(getOwner()).isAnimal())
+	{
+		return GC.getGame().getCurrentEra();
+	}
+	return GET_PLAYER(getOwner()).getCurrentEra();
+}
+
 int CvUnit::eraGroupMergeLimit() const
 {
-	return m_pUnitInfo->getBaseGroupRank() + GET_PLAYER(getOwner()).getCurrentEra() + 1;
+	return m_pUnitInfo->getBaseGroupRank() + groupRankEra() + 1;
 }
 
 int CvUnit::eraGroupSplitLimit() const
 {
-	return std::max(1, m_pUnitInfo->getBaseGroupRank() - GET_PLAYER(getOwner()).getCurrentEra() - 1);
+	return std::max(1, m_pUnitInfo->getBaseGroupRank() - groupRankEra() - 1);
 }
 
 DomainTypes CvUnit::getDomainCargo() const
