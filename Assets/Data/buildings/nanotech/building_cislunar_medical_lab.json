@@ -70,6 +70,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CISLUNAR_MEDICAL_LAB",
   "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_MEDICAL_LAB_PEDIA",
+  "help": "TXT_KEY_BUILDING_CISLUNAR_EARTH_SIDE_HELP",
   "worth": 6,
   "advisor": "ADVISOR_GROWTH",
   "visibilityPriority": 1,

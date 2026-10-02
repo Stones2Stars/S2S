@@ -84,6 +84,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CISLUNAR_DRYDOCK",
   "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_DRYDOCK_PEDIA",
+  "help": "TXT_KEY_BUILDING_CISLUNAR_EARTH_SIDE_HELP",
   "worth": 1,
   "militaryWorth": 2,
   "conquestProbability": 75,

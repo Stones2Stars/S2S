@@ -9,7 +9,11 @@
  "requires": {
   "build": {
    "all": [
-    "BUILDING_CISLUNAR_FACTORY",
+    {
+     "type": "BUILDING_CISLUNAR_FACTORY",
+     "scope": "empire",
+     "min": 1
+    },
     "BUILDING_CISLUNAR_MATERIALS_LAB",
     "BUILDING_CISLUNAR_AGRICULTURAL_LAB",
     "TECH_DYSTOPIA_PATHOGENS",

@@ -48,15 +48,23 @@ Keep the object form only when a special case forces it: a `connection`, a count
 scope. **Forcing a redundant `{type, scope}` only invites authoring bugs.** *(Plot-substrate
 `{type:"TERRAIN_…"/"FEATURE_…"/"IMPROVEMENT_…"}` and `{type:"MAPCATEGORY_…"}` stay object-form — they are plot predicates, §3.5.)*
 
+⛔ **A bare `BUILDING_X` prerequisite means "in THIS city", so X must be able to stand on the same tile.** A
+building gated to one `MAPCATEGORY_` that names, bare, a prerequisite gated to a category no terrain shares with
+it can never be built: the prerequisite cannot exist in that city. Such a dependency is an EMPIRE one —
+`{type: "BUILDING_X", scope: "empire", min: 1}`. *(The cislunar stations needing the Earth-built Cislunar Factory
+were the worked case.)* ⚑ A tile may carry SEVERAL categories, so the test is whether any terrain carries both,
+never whether the two category lists differ.
+
 - **presence** = `min: 1` ("have ≥ 1"). Authoring presence this way keeps it future-proof if a resource later
   gains amounts.
 - **count thresholds** — `min: N` (≥ N) and/or `max: N` (≤ N), both inclusive. Exact-N = `min` and `max` together.
 - `connection` (resources only) ∈ `"onSite"` | `"trade"` — WHERE THE RESOURCE COMES FROM. **The two are MUTUALLY
   EXCLUSIVE** — a gate wanting either states TWO atoms under an `any`, never one combined selector. More:
   [bonuses.md](../../../reference/bonuses.md).
-  - `"onSite"` = **this city itself provides the resource to the network**: a tile it improves and serves, or an
-    active building in the city producing it (a herd, a factory — `provides.bonuses`, §5a). Those are the SAME act;
-    only what the city provides counts, never how.
+  - `"onSite"` = **this city itself provides the resource to the network**: a tile it improves and serves, the
+    tile the city itself stands on (which serves its resource with no improvement), or an active building in the
+    city producing it (a herd, a factory — `provides.bonuses`, §5a). Those are the SAME act; only what the city
+    provides counts, never how.
   - `"trade"` = the resource **reaches the city from the network** (its plot group).
 - **⛔ A RESOURCE ATOM HAS NO `vicinity`.** Vicinity is what surrounds the city — coast, terrain, features, peaks —
   and is asked through the plot predicates (§3.5, `HAS_COAST`, the `TERRAIN_`/`FEATURE_` atoms over the city's

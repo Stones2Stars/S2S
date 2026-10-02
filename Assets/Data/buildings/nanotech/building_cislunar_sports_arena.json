@@ -104,6 +104,7 @@
  "identity": {
   "description": "TXT_KEY_BUILDING_CISLUNAR_SPORTS_ARENA",
   "civilopedia": "TXT_KEY_BUILDING_CISLUNAR_SPORTS_ARENA_PEDIA",
+  "help": "TXT_KEY_BUILDING_CISLUNAR_EARTH_SIDE_HELP",
   "worth": 12,
   "militaryWorth": 5,
   "advisor": "ADVISOR_ECONOMY",
