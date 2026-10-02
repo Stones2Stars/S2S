@@ -2792,6 +2792,12 @@ void CvPlayer::acquireCity(CvCity* pOldCity, bool bConquest, bool bTrade, bool b
 	}
 	emitCityOwnerAdded(pNewCity->getID(), (int)eNewOwner, GC.getMap().plotNum(pNewCity->getX(), pNewCity->getY()));
 
+		//	An empire whose first city arrives by acquisition has no capital to relocate from, so it is seated here.
+		if (getCapitalCity() == NULL && !isNPC())
+		{
+			findNewCapital();
+		}
+
 		// Don't bother with plot group calculations if they are immediately to be superseded by an auto raze
 		if (bUpdatePlotGroups)
 		{
