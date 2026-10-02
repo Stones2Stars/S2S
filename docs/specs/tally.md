@@ -89,7 +89,8 @@ load-time seed, no incremental maintenance, no rebuild, and no shadow**:
 > **The `allowed`-cap exception — lifetime-created, not currently-alive.** A world-unique *unit* cap counts
 > **lifetime-created** (a hero "born once, does its thing, then poofs" still consumes its world slot), so that
 > one case reads the engine's persisted created-count; everything else (buildings, all other scopes) reads the
-> live count. The tally owns the *job* without duplicating the *state*.
+> live count. The tally owns the *job* without duplicating the *state*. A unit cap also counts the units in
+> production, which the gate adds from the owner's queues ([enabler.md §4](enabler/04-the-allowed-cap.md)).
 
 ---
 

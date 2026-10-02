@@ -13,7 +13,7 @@ taking its domain's own shape:
 |---|---|
 | techs | world-unique founder techs |
 | buildings | world/team/empire self-caps + the per-city wonder-CATEGORY cap (§4) |
-| units | world lifetime-created; empire era-scaled national cap |
+| units | world lifetime-created; empire era-scaled national cap; both count units in production (§4) |
 | projects · civics · processes · builds | the plain per-scope cap |
 | promotions | none — and the gate is on demand, not a maintained flag (§7.1 carve-out) |
 

@@ -44,6 +44,8 @@ public:
 	// removal, the uc_reachable upgrade-tree dormancy) as the domain's gate verdict. LOAD gates once at
 	// GAME_LOAD_FINISHED (the par.7.1 "gate once after the stream ends" option). ====
 	static void gateCity(const CvCity& kCity);
+	///<summary>May an order for this unit already in the city's queue keep going: the unit gate, with that one order left out of its own cap.</summary>
+	static bool canContinueQueuedOrder(const CvCity& kCity, UnitTypes eUnit);
 	// EVERY city's full gate pass -- the load end, and a GAME OPTION flip (the entity gate's one axis; units are
 	// the domain that actually authors option gates today, so a flip genuinely moves trainability).
 	static void gateAllCities();

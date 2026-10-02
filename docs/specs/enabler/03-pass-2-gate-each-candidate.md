@@ -141,7 +141,7 @@ parity).** `canTrain` is the same generate-then-gate over unit inputs: frontier 
 `obsoletedBy.techs` (the target-side obsoleting tech, mirroring buildings; an obsolete unit leaves the buildable set
 but persists on the map, upgradeable) → exclude `identity.spawnOnly` (never-trainable; building/farm-improvement/
 vassalage-granted only) → the `allowed` instance cap (`world` = lifetime-created, `empire` = live count *era-scaled
-for a base of 5*; units have no `team` cap) → `requires.build` via the **same** condition evaluator. The two upgrade
+for a base of 5*, each plus the units in production — [§4](04-the-allowed-cap.md); units have no `team` cap) → `requires.build` via the **same** condition evaluator. The two upgrade
 relationships are **distinct gates, mirroring the engine** (`build`/`operate` share the conditional vocabulary):
 - **`UnitUpgrades` → `requires.build.dormant.all`** = the unit's *direct* upgrades **minus** any that are also
   superseders. The cascade recurses these engine-side: hide the unit only when

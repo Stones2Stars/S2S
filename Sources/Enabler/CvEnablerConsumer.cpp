@@ -415,6 +415,11 @@ private:
 				const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 				if (pCity != NULL) BuildingEnabler::onCityOrderChanged(*pCity, kEvent.iType);
 			}
+			else if (kEvent.iA == ORDER_TRAIN)
+			{
+				//	A unit in production counts toward its cap, so the queue moving re-checks that cap.
+				UnitEnabler::onUnitCountChanged((PlayerTypes)kEvent.iC, kEvent.iType);
+			}
 			break;
 		}
 		case SEVT_EMPIRE_TECH_ADDED:

@@ -172,7 +172,8 @@ count is below it. Absent ⇒ uncapped. Two shapes, told apart by the key:
 - **SpecialBuilding group cap** — each member authors `identity.specialBuildingType: SPECIALBUILDING_X`; the group
   entity holds the cap (`allowed:{empire:N}`). Member→group is authored, group→members derived.
 - **Units have no `team` cap** (units belong to players) — unit caps are `world`/`empire` only; for units `world`
-  reads the lifetime-created count and `empire` the live count (buildings keep all three scopes).
+  reads the lifetime-created count and `empire` the live count, each plus the units in production
+  ([enabler.md §4](../enabler/04-the-allowed-cap.md)); buildings keep all three scopes.
 
 The engine owns ignoring caps under the relevant game options, era-scaling, and per-entity exceptions — you just
 declare the number. Enforcement reads the [tally](../tally.md) count.

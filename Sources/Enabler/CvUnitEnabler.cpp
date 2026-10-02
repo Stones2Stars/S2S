@@ -215,10 +215,10 @@ void UnitEnabler::onPlayerCivicsChanged(PlayerTypes ePlayer, int iOldCivic, int 
 // every city; a mid-read evaluation would ensure the operating-buildings cache against half-read state).
 
 // Unit instance cap (StoneBase UnitEnabler.Capped).
-static bool ud_capped(const CvInfo* j, int eU, const CvPlayer& kPlayer, bool noNationalLimit)
+static bool ud_capped(const CvInfo* j, int eU, const CvPlayer& kPlayer, bool noNationalLimit, int iOrdersLeftOut)
 {
 	if (j == NULL) return false;
-	const int making = kPlayer.getUnitMaking((UnitTypes)eU);
+	const int making = kPlayer.getUnitMaking((UnitTypes)eU) - iOrdersLeftOut;
 	const int wcap = j->allowedCap(ALLOWEDCAP_WORLD);
 	if (wcap >= 0 && GC.getGame().getUnitCreatedCount((UnitTypes)eU) + making >= wcap) return true;
 	const int ecap = j->allowedCap(ALLOWEDCAP_EMPIRE);
@@ -241,6 +241,8 @@ struct UdGateCtx
 	CvCascadeEvalCtx* ec;
 	const CvCascadeEvalFlags* flags;
 	bool noNationalLimit;
+	///<summary>The unit whose queued order is asking to continue (-1 = none): its cap leaves that one order out.</summary>
+	int continuedUnit;
 	std::map<int, bool> availCache;   // u -> ud_isAvailable(u)
 	std::map<int, bool> reachCache;   // v -> ud_reachable(v)
 	std::set<int> inProgress;         // reachable() cycle guard (always fully unwound between roots)
@@ -252,7 +254,7 @@ static bool ud_isAvailable(int u, UdGateCtx& x)
 	const CvInfo* j = InfoRepo<CvUnitInfo>::get().get(u);
 	if (j != NULL && ((const CvUnitInfo*)j)->isSpawnOnly()) return false;
 	if (EnablerKernel::obsoletedByHeldTech(j, *x.team)) return false;
-	if (ud_capped(j, u, *x.player, x.noNationalLimit)) return false;
+	if (ud_capped(j, u, *x.player, x.noNationalLimit, (u == x.continuedUnit) ? 1 : 0)) return false;
 	if (j != NULL && !cascadeGateOk(j->getGate(), *x.ec, *x.flags)) return false;   // entity-level enabled/disabled
 	// through the ONE gate surface (docs/architecture/patterns.md §DRY (single implementation)): requiresMet sets buildingAtomsPresence -- gate
 	// atoms read the §7 presence has-list, never the operate-derived ACTIVE set (a direct evaluator call here
@@ -310,7 +312,7 @@ static unsigned char ud_gateReason(int u, UdGateCtx& x)
 		{
 			return (unsigned char)EnablerDomain::GATEREASON_REPLACED;
 		}
-		if (ud_capped(j, u, *x.player, x.noNationalLimit))
+		if (ud_capped(j, u, *x.player, x.noNationalLimit, (u == x.continuedUnit) ? 1 : 0))
 		{
 			return (unsigned char)EnablerDomain::GATEREASON_CAP_SELF;
 		}
@@ -364,6 +366,7 @@ static void ud_setupCtx(const CvCity& kCity, const CvPlayer& kPlayer, const CvTe
 	flags.strictStateReligionForBuild = true;
 	x.player = &kPlayer; x.team = &kTeam; x.ec = &ec; x.flags = &flags;
 	x.noNationalLimit = GC.getGame().isOption(GAMEOPTION_NO_NATIONAL_UNIT_LIMIT);
+	x.continuedUnit = -1;
 }
 
 static void ud_gateSet(const CvCity& kCity, const std::set<int>& ids)
@@ -455,6 +458,23 @@ void UnitEnabler::gateCity(const CvCity& kCity)
 		if (d.inTree(u)) d.setGateReason(u, ud_gateReason(u, x));
 }
 
+bool UnitEnabler::canContinueQueuedOrder(const CvCity& kCity, UnitTypes eUnit)
+{
+	const EnablerDomain& d = kCity.m_enabler.units;
+	if (!d.isSeeded() || !d.inTree((int)eUnit))
+	{
+		return false;
+	}
+	const CvPlayer& kPlayer = GET_PLAYER(kCity.getOwner());
+	std::set<int> waived;
+	CvCascadeEvalCtx ec;
+	CvCascadeEvalFlags flags;
+	UdGateCtx x;
+	ud_setupCtx(kCity, kPlayer, GET_TEAM(kPlayer.getTeam()), waived, ec, flags, x);
+	x.continuedUnit = (int)eUnit;
+	return ud_gateReason((int)eUnit, x) == (unsigned char)EnablerDomain::GATEREASON_NONE;
+}
+
 // The decomposition: each gate leg evaluated independently against the SAME per-city gate context the
 // real gate uses -- the endpoint's attribution surface (never a read path).
 void UnitEnabler::explain(const CvCity& kCity, int iUnit, Explain& out)
@@ -469,7 +489,7 @@ void UnitEnabler::explain(const CvCity& kCity, int iUnit, Explain& out)
 	if (j == NULL) return;
 	out.bSpawnOnly = ((const CvUnitInfo*)j)->isSpawnOnly();
 	out.bObsoleteTech = EnablerKernel::obsoletedByHeldTech(j, *x.team);
-	out.bCapped = ud_capped(j, iUnit, kPlayer, x.noNationalLimit);
+	out.bCapped = ud_capped(j, iUnit, kPlayer, x.noNationalLimit, 0);
 	out.bEntityGateFail = !cascadeGateOk(j->getGate(), ec, flags);
 	out.bRequiresFail = !EnablerKernel::requiresMet(j, ec);
 	const std::vector<int>& dorm = j->dormantTriggers();
