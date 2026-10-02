@@ -11,29 +11,20 @@
   `CvGame::onFinalInitialized`) — every in-play group change is incremental (`recalculatePlots`'s early-out,
   `CvPlot::updatePlotGroup`'s targeted join). Reading the load teardown as the ordinary shape invites
   "optimizing" a full rebuild that does not run during play.
-  > **⛔ THE RE-COLOR RE-FOLDS THE TILE HALF ONLY, SO THE BUILDING-SUPPLIED HALF MUST BE RE-PUSHED BEHIND IT.**
-  > `CvPlot::updatePlotGroupBonus` folds a plot's own extracted resource, a city's free bonuses and the capital's
-  > import/export — and nothing else. Every resource an ACTIVE BUILDING supplies through `provides.bonuses`
-  > (§5a) was pushed into the DESERIALIZED group as that building resolved its dormancy in-read, and the
-  > demolish-and-repaint throws it away: by re-color time the operating set has already CONVERGED, so
-  > re-confirming a dormant/active verdict is a no-op that crosses and announces nothing (§3.2) — the
-  > `GAME_LOAD_FINISHED` gate pass re-confirms `provided` and the supply is simply gone. The signature is a whole
-  > CLASS of resource going invisible, never a wrong number: a resource supplied only by an active building reads
-  > ≤ 0 in every member city's traded store, while tile-supplied resources beside it are unaffected.
-  > ⇒ **The fix is a load-end re-push through `CvPlotGroup::changeNumBonuses`** (the same live entry point
-  > `provides.bonuses` normally uses) — walking each city's converged `providedCount` into its NEW group, after
-  > the re-color, so the crossing is announced as a genuine `SEVT_PLOTGROUP_BONUS_ADDED` rather than seeded
-  > ([the load reseed](../../../spine/05-the-load-reseed.md#5-the-load-reseed) bans a warm-up walk that leaves consumers
-  > deaf; a real crossing emit is not one).
-  > ⛔ **THE RE-PUSH WALKS A SNAPSHOT OF EVERY CITY'S `providedCount`, TAKEN BEFORE THE FIRST PUSH — never the
-  > live map.** Each push is a live crossing, so it re-runs the operate fixpoint in the member cities and that
-  > fixpoint inserts into and erases from `providedCount`; iterating the live map walks a freed node. A supply
-  > that moves during the pushes is written to the group by the fixpoint itself, so the snapshot is also the
-  > exact amount owed. ⚑ The failure is not local to the loop: it sits directly ahead of the
-  > `GAME_LOAD_FINISHED` emit, so a load that spins or faults there never runs the load-end gate pass, and every
-  > tree member then reads LISTED — *"everything is buildable without its requirements"*. That state announces
-  > itself as `[SPINE/GAME] gameLoadNeverFinished`
-  > ([the load reseed](../../../spine/05-the-load-reseed.md#5-the-load-reseed)).
+  > **⛔ A CITY'S SUPPLIED RESOURCES MOVE WITH ITS OWN TILE — `CvPlot::setPlotGroup` IS THE ONE PLACE.**
+  > `CvPlot::updatePlotGroupBonus` folds a plot's extracted resource, a city's free bonuses and the capital's
+  > import/export. What an ACTIVE BUILDING supplies through `provides.bonuses` (§5a) is not in that fold: it
+  > sits on the network because the CITY does, so when the city's own tile joins, leaves or changes group,
+  > `setPlotGroup` subtracts the city's `providedCount` set from the group it left and adds it to the one it
+  > joined. That covers the load-end re-color and every in-play merge or split alike.
+  > ⚑ **The signature when this is missing is a producer's OWN output vanishing from trade while it stays on
+  > site.** The rebuilt group lacks the supplied inputs, so a producer that needs one switches off and its
+  > LOST crossing subtracts from a group that never held it (−1); when the input returns, the GAINED crossing
+  > only brings it back to 0. A producer with no traded input is untouched, which is why some survive.
+  > ⛔ **Do NOT put the supply back with a separate pass after the re-color.** It can only see the producers
+  > still running at that moment, and anything it adds is doubled by the move above.
+  > ⚠ The move walks a SNAPSHOT of `providedCount`: each push re-runs the operate fixpoint, which inserts into
+  > and erases from that map.
 - **The DORMANCY VERDICT is the operating-building fixpoint** (§3.2,
   [the pollution guardrail](../../validation.md#the-pollution-guardrail--engine-computed-data-never-rides-in)) — applied through the engine's
   disabled-building flag, never a hand re-derivation from legacy prereq getters, plus the two runtime-state legs

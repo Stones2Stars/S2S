@@ -40,6 +40,7 @@
 #include "Infrastructure/CvDLLPlotBuilderIFaceBase.h"
 #include "Infrastructure/CvDLLUtilityIFaceBase.h"
 #include "Repos/BuildsRepo.h"
+#include "Enabler/CvEnablerKernel.h"   // operatingBuildings -- what a city's buildings supply to its network
 #include "CvCascadeChannelRegistry.h"   // channelLookup / wellbeingTwin -- the group reads' channel identity
 #include "CvInfoKinds.h"                // the family + kind vocabulary the group reads walk
 #include "Conditions/CvConditionEval.h"  // CvCascadeEvalCtx + cascadeEvalCondition -- the ONE evaluator
@@ -8598,6 +8599,35 @@ void CvPlot::setPlotGroup(PlayerTypes ePlayer, CvPlotGroup* pNewValue, bool bRec
 		else
 		{
 			m_aiPlotGroup[ePlayer] = pNewValue->getID();
+		}
+
+		if (bRecalculateEffect && pCity != NULL && pCity->getOwner() == ePlayer)
+		{
+			//	What this city's buildings supply moves WITH the city: it is on the network because the city is.
+			//	A network's own fold carries tile resources only, so a rebuild or a move dropped every supplied
+			//	one, and a producer that then switched off subtracted it from a network that no longer held it.
+			//	⚠ Snapshotted first: a push re-runs the operate fixpoint, which edits the map being walked.
+			const std::map<int, int>& kSuppliedCounts = EnablerKernel::operatingBuildings(pCity).providedCount;
+			std::vector<int> suppliedBonuses;
+
+			for (std::map<int, int>::const_iterator itSupplied = kSuppliedCounts.begin(); itSupplied != kSuppliedCounts.end(); ++itSupplied)
+			{
+				if (itSupplied->second > 0)
+				{
+					suppliedBonuses.push_back(itSupplied->first);
+				}
+			}
+			for (size_t iSupplied = 0; iSupplied < suppliedBonuses.size(); ++iSupplied)
+			{
+				if (pOldPlotGroup != NULL)
+				{
+					pOldPlotGroup->changeNumBonuses((BonusTypes)suppliedBonuses[iSupplied], -1);
+				}
+				if (pNewValue != NULL)
+				{
+					pNewValue->changeNumBonuses((BonusTypes)suppliedBonuses[iSupplied], 1);
+				}
+			}
 		}
 
 		if (bRecalculateEffect)

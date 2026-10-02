@@ -82,9 +82,9 @@ namespace
 	}
 
 	// ⚖ THE SERVED-RESOURCE VERDICT -- which resource this tile makes available ON SITE, or -1.
-	// Two legs and both are necessary: the tile CARRIES a bonus, and the improvement standing on it TRADES that
-	// bonus. Either can move without the other, which is exactly why this is a verdict of its own rather than
-	// something a consumer could read off the bonus fact.
+	// Two legs and both are necessary: the tile CARRIES a bonus, and what stands on it SERVES that bonus -- an
+	// improvement that trades it, or a city. Either can move without the other, which is exactly why this is a
+	// verdict of its own rather than something a consumer could read off the bonus fact.
 	// ⚠ NO worked test and NO ownership test, deliberately. A fort cannot be worked by definition and a fort is
 	// precisely how a resource gets served (owner); and ownership is a per-ASKER question -- "is this tile MY
 	// owner's" has a different answer for each city that can work it, so no single per-plot verdict can hold it.
@@ -98,6 +98,12 @@ namespace
 		{
 			return -1;
 		}
+		//	A CITY serves the resource it stands on with no improvement at all -- the tile under the city is the
+		//	one tile that can never carry one, and the network side (CvPlot::isBonusExtracted) already counts it.
+		if (pPlot->isCity())
+		{
+			return iBonus;
+		}
 		const ImprovementTypes eImprovement = pPlot->getImprovementType();
 		if (eImprovement == NO_IMPROVEMENT)
 		{
@@ -108,7 +114,7 @@ namespace
 
 	// The axes the served-resource verdict reads -- stated once, beside the derivation, exactly as a bit row states
 	// its own ([contexts.md]: the dependency lives next to the derivation, never in a switch somewhere else).
-	const int PLOT_SERVED_BONUS_AXES = PLOTAXIS_BONUS | PLOTAXIS_IMPROVEMENT;
+	const int PLOT_SERVED_BONUS_AXES = PLOTAXIS_BONUS | PLOTAXIS_IMPROVEMENT | PLOTAXIS_CITY;
 
 	// ⚖ THE BONUS -> PLOTS INDEX: which plots carry each bonus, maintained off the plot's own bonus facts. A tech or
 	// force-reveal fact names a BONUS, never a plot, so this turns it into the plots whose reveal can move -- never a

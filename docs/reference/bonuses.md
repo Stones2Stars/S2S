@@ -167,9 +167,9 @@ CITY's team ([contexts](../cascade/13-context-maintained-events.md#maintained-ev
 
 Neither the counts nor plot-group MEMBERSHIP are trusted from a save; a load-end rebuild RE-COLORS membership
 from current state and re-folds the counts as a genuine crossing per plot, before the `GAME_LOAD_FINISHED` gate
-pass. ⚠ **That re-color re-folds the TILE half only** — every resource an ACTIVE BUILDING supplies must be
-re-pushed behind it separately, or a whole CLASS of resource goes invisible while tile-supplied ones beside it
-are unaffected. Full mechanism + the fix: [enabler.md §8](../specs/enabler.md) Load-end reconciliation.
+pass. ⚠ **That re-color folds the TILE half only** — what an ACTIVE BUILDING supplies moves with the city's
+own tile instead (`CvPlot::setPlotGroup`), on load and in play alike. Full mechanism:
+[enabler.md §8](../specs/enabler.md) Load-end reconciliation.
 
 ---
 
