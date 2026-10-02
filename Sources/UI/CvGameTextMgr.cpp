@@ -2921,6 +2921,13 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 		}
 	}
 	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
+
+	//	The building's own authored help closes the block, as a build's does in the action tooltip.
+	if (!CvWString(kInfo.getHelp()).empty())
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(kInfo.getHelp());
+	}
 }
 void CvGameTextMgr::setHeritageHelp(CvWStringBuffer &szBuffer, const HeritageTypes eType, CvCity* pCity, const bool bCivilopediaText, const bool bStrategyText, const bool bTechChooserText)
 {
