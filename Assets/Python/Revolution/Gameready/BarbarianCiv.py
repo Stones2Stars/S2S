@@ -241,7 +241,7 @@ class BarbarianCiv:
 
 		# Using following method to acquire city produces 'revolted and joined' replay messages
 		if CyCity.getOriginalOwner() == iPlayerBarb:
-			GC.getPlayer(iPlayer).getCity(CyCity.getID()).setOriginalOwner(iPlayer)
+			CyCity.setOriginalOwner(iPlayer)
 		CyPlot.setOwner(iPlayer)
 
 		# Note: city owner change (CyPlot.setOwner(iPlayer)) invalidate previous city pointer.
@@ -417,7 +417,7 @@ class BarbarianCiv:
 		iMobileVal = 0
 		iCultureBonusClass = GC.getInfoTypeForString("BONUSCLASS_CULTURE")
 		for iUnit in xrange(GC.getNumUnitInfos()):
-			if isLimitedUnit(iUnit): continue
+			if INFO.hasUnitInstanceCap(iUnit): continue
 
 			#	Prerequisites are the REQUIRES plane now. The mandatory clause is the right one to ask: a
 			#	mention read also reports what the unit is BARRED by, which would exclude it for the opposite

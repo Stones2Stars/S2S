@@ -2486,7 +2486,17 @@ bool CvCity::canContinueProduction(const OrderData& order) const
 	switch (order.eOrderType)
 	{
 	case ORDER_TRAIN:
-		return m_enabler.units.listedForContinue((int)order.getUnitType());
+	{
+		const UnitTypes eUnit = order.getUnitType();
+		if (m_enabler.units.listedForContinue((int)eUnit))
+		{
+			return true;
+		}
+		//	A unit in production counts toward its own cap, so an order refused on the cap is asked again
+		//	with itself left out.
+		return m_enabler.units.gateReason((int)eUnit) == (unsigned char)EnablerDomain::GATEREASON_CAP_SELF
+			&& UnitEnabler::canContinueQueuedOrder(*this, eUnit);
+	}
 	case ORDER_CONSTRUCT:
 		return isBuildingContinuable(order.getBuildingType());
 	case ORDER_CREATE:
@@ -12100,6 +12110,7 @@ bool CvCity::doCheckProduction()
 				foreach_(OrderData& order, m_orderQueue | filtered(bind(matchUnitOrder, _1, unitType)))
 				{
 					player.changeUnitMaking(order.getUnitType(), -1);
+					emitCityOrderRemoved(getID(), (int)getOwner(), (int)ORDER_TRAIN, (int)order.getUnitType());
 					order.setUnitType(eUpgradeUnit);
 					if (player.AI_unitValue(eUpgradeUnit, order.getUnitAIType(), area()) == 0)
 					{
@@ -12110,6 +12121,7 @@ bool CvCity::doCheckProduction()
 						player.AI_changeNumTrainAIUnits(order.getUnitAIType(), 1);
 					}
 					player.changeUnitMaking(order.getUnitType(), 1);
+					emitCityOrderAdded(getID(), (int)getOwner(), (int)ORDER_TRAIN, (int)order.getUnitType());
 				}
 			}
 		}

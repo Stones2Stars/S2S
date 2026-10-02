@@ -15,6 +15,7 @@
 #include "CvProcessEnabler.h"
 #include "CvBuildEnabler.h"
 #include "CvPromotionEnabler.h"
+#include "CvTechInfo.h"           // cascadeStartNode -- the TECH_GAME_START root redirect (the traits tech leg)
 #include "AI/CvPlayerAI.h"
 
 // ===================== [ENABLER] spine domain (logging.md: logging is a spine CONSUMER) =====================
@@ -415,6 +416,11 @@ private:
 				const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 				if (pCity != NULL) BuildingEnabler::onCityOrderChanged(*pCity, kEvent.iType);
 			}
+			else if (kEvent.iA == ORDER_TRAIN)
+			{
+				//	A unit in production counts toward its cap, so the queue moving re-checks that cap.
+				UnitEnabler::onUnitCountChanged((PlayerTypes)kEvent.iC, kEvent.iType);
+			}
 			break;
 		}
 		case SEVT_EMPIRE_TECH_ADDED:
@@ -469,6 +475,27 @@ private:
 				ProcessEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, bTechAcquired);
 				BuildEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, bTechAcquired);
 				PromotionEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, bTechAcquired);
+				//	The TRAITS domain's tech leg: a tech's `enables.traits` edge puts a rung in the tree, and the
+				//	root tech carries every rung that has no prerequisite.
+				{
+					const TeamTypes eTechTeam = GET_PLAYER((PlayerTypes)kEvent.iC).getTeam();
+					const CvInfo* pTechInfo = (kEvent.iType == GC.getInfoTypeForString("TECH_GAME_START", true))
+						? static_cast<const CvInfo*>(&cascadeStartNode())
+						: InfoRepo<CvTechInfo>::get().get(kEvent.iType);
+					for (int iTeamPlayer = 0; iTeamPlayer < MAX_PLAYERS; ++iTeamPlayer)
+					{
+						const CvPlayer& kTeamPlayer = GET_PLAYER((PlayerTypes)iTeamPlayer);
+						if (kTeamPlayer.getTeam() != eTechTeam)
+						{
+							continue;
+						}
+						if (!kTeamPlayer.m_enabler.techs.isSeeded() || kTeamPlayer.m_enabler.techs.isHeld(kEvent.iType) == bTechAcquired)
+						{
+							continue;
+						}
+						EnablerKernel::applyPlayerHave(kTeamPlayer, kTeamPlayer.m_enabler.traits, EDGEB_TRAITS, pTechInfo, bTechAcquired);
+					}
+				}
 				TechEnabler::onTechChanged(GET_PLAYER((PlayerTypes)kEvent.iC).getTeam(), (TechTypes)kEvent.iType, bTechAcquired);
 				// The OPERATE half. A tech moves two things this set depends on: an operate condition that reads a
 				// tech, and OBSOLESCENCE -- and a tech is the only thing that can obsolete (enabler.md §3.2), so

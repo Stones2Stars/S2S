@@ -3757,12 +3757,11 @@ void CvUnit::updateCombat(CvUnit* pSelectedDefender, bool bSamePlot, bool bSteal
 			//std::vector<UnitCombatTypes> aDefenderCombats;
 			CvOutcomeListMerged mergedList;
 			mergedList.addOutcomeList(pDefender->getUnitInfo().getKillOutcomeList());
-			for (std::map<UnitCombatTypes, UnitCombatKeyedInfo>::const_iterator it = m_unitCombatKeyedInfo.begin(), end = m_unitCombatKeyedInfo.end(); it != end; ++it)
+			for (std::map<UnitCombatTypes, UnitCombatKeyedInfo>::const_iterator it = pDefender->m_unitCombatKeyedInfo.begin(), end = pDefender->m_unitCombatKeyedInfo.end(); it != end; ++it)
 			{
 				if(it->second.m_bHasUnitCombat)
 				{
 					mergedList.addOutcomeList(GC.getUnitCombatInfo((UnitCombatTypes)it->first).getKillOutcomeList());
-					//aDefenderCombats.push_back((UnitCombatTypes)it->first);
 				}
 			}
 

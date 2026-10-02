@@ -147,14 +147,19 @@ not all land in the same machine:
 | `m_iNumUnitFullHeal` | discrete per-turn action (fully heals up to N damaged units) — [json.md §5](json.md) names a heal as a `repeatable` payload | **this machine** |
 | `m_paiHealUnitCombatTypeVolume` | **continuous heal-RATE contribution**, not a discrete event | **the MODIFIER heal channel** — alive-with-source ⇒ modifier, the `freeSpecialists` precedent |
 
-## ⚖ THE PALACE: two triggers, not one
+## ⚖ THE PALACE: three triggers, not one
 
-The capital building is placed by **two different events**, and covering only one leaves an empire with no capital:
+The capital building is placed by **three different events**, and covering fewer leaves an empire with no capital:
 
 | event | who places it |
 |---|---|
 | a city is FOUNDED and the empire has no palace | the settler's `grants.foundBuildings`, gated `{BUILDING_PALACE, empire, max:0}` |
 | a capital is CAPTURED and the capital relocates | **OWNER CHANGE must handle it** — not the founding gate |
+| a city is ACQUIRED by an empire that has no capital | the acquiring side of the same owner change: `CvPlayer::acquireCity` seats it through `findNewCapital` |
+
+⚠ **The third is the empire that never founded anything** — a civ that emerges from a barbarian city, or one
+handed its first city by trade or a flip. No settler ran and no capital was lost, so neither of the other two
+fires. An NPC owner is excluded: the Barbarians hold cities with no capital by design.
 
 **The gate is "the empire has NO PALACE", never a city count.** A `{CITY, empire, max:0}` proxy is wrong twice: it
 can never hold at founding (the grant applies after `initCity` has registered the new city, so the count is
