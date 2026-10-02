@@ -28,12 +28,7 @@
       }
      ]
     },
-    {
-     "any": [
-      "BUILDING_MAPINGUARI_COMPOUND",
-      "BUILDING_MAPINGUARI_CHANGING_OF_THE_GUARD_CEREMONY"
-     ]
-    }
+    "HERITAGE_FOLKLORE_ANTEATER"
    ],
    "dormant": {
     "all": [
