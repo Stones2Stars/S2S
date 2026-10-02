@@ -37,6 +37,13 @@ both preventable:
    walk and executing it (`Engine/CvSelectionGroup.cpp:3668`), and a reposition there lands the node on the
    destination before the walk plays — a teleport where the player should have seen a move.
 
+4. **A node SELECTED before its position was re-stated.** Selecting a unit sends
+   `NotifyEntity(MISSION_MULTI_SELECT)` (the selection group's `addUnit`), and that notification reaches the
+   engine BEFORE the centre-unit pass — measured 16–31 ms, one frame, ahead of the `setPosition` from item 3 —
+   and with no `setPosition` at all when the unit is already the centre unit, since the verdict does not change.
+   Whether the walk shows depends on a frame landing in that gap, which is why this shape is intermittent.
+   `CvUnit::NotifyEntity` therefore calls `placeForPresentation()` before a `MISSION_MULTI_SELECT`.
+
 ⛔ **THE SELECTED UNIT WAS THE HOLE, AND IT IS THE ONE TO KEEP IN MIND, BECAUSE THE PLAYER ONLY EVER OPERATES ON
 A SELECTED UNIT.** `reloadEntity` excludes a selected unit — correctly, because its node must never be destroyed
 and rebuilt underneath it ([AGENTS.md](../../../AGENTS.md)) — and that exclusion used to swallow the placement
@@ -62,6 +69,13 @@ as a question about what X's place in the stack is, never about X.
 Vanilla creates a node in the ctor and places it at birth `setXY`, so it has no un-presented-node window to get
 wrong ([§9](10-the-firaxis-reference-contract.md)). Every S2S run-in traces to a node introduced outside those two
 moments.
+
+⚑ **What the DLL said to a node is on the trace as `[GFX] say`** — one line per call that actually reached the
+EXE (`setup`, `setPosition`, `queueMove`, `executeMove`, `notify`, `siegeTower`, `enemyGlow`, `promotionGlow`,
+`promotionLayers`), carrying the unit, its plot,
+the call's own argument and whether the unit was selected, plus `presentRefusedMidMove` when
+`placeForPresentation` declined. Read a run-in off the `say` lines that precede it, beside the `centerUnit` and
+`move` lines for the same unit.
 
 Other engine behaviour measured on the `[GFX]` scene trace, which stands independently of the above:
 

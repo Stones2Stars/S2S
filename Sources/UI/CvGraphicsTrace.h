@@ -76,6 +76,15 @@ void gfxTraceMove(int iFromX, int iFromY, int iToX, int iToY, GfxMoveOutcome eOu
                   bool bGraphicsInitialized, bool bInViewport, bool bRealEntity,
                   bool bShow, bool bVisibleToWatchingHuman);
 
+///<summary>
+///	One statement the DLL made to the EXE about a unit's scene node, emitted only when the call was actually issued.
+///	The move line records what setXY chose; this records every other call the engine reconciles against where it
+///	believes the node stands (docs/reference/unit-rendering/08-the-run-from-origin-reconciliation.md).
+///</summary>
+///<param name="szVerb">A string LITERAL naming the call, or the reason a placement was refused.</param>
+///<param name="iData">The call's own argument: the mission type, the combat flag, or the target plot index.</param>
+void gfxTraceStatement(const CvUnit* pUnit, const char* szVerb, int iData);
+
 //	⛔ THE LEAF. getDefenderScore has exactly three early returns, and with pAttacker == NULL a score of 0 can come
 //	from NOWHERE ELSE (defenderValue cannot return 0 without an attacker). This says WHICH of the three fired and
 //	carries the values it decided on, so the cause stops being a matter of reasoning.
