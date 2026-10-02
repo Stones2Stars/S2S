@@ -192,6 +192,13 @@ Data read by a specific system, not the cascade. Use only when the entity needs 
   > is why an absolute rank would have contradicted the live cap rather than merely read oddly.
   > ⚑ **The ERA bounds `x`** — it decides how many merges are reachable — so the offer is per-ERA while the base
   > is per-UNIT. Two sources, one number; collapsing them into an absolute rank loses both.
+  > ⚖ **A SPAWNED GROUP OBEYS THE SAME CEILING, AND AN ANIMAL'S ERA IS THE PLAYERS'.** A `groupSpawn` roll is
+  > capped at `CvUnit::eraGroupMergeLimit` — the one implementation the merge gate uses — so a rolled row above
+  > the ceiling becomes the largest authored row under it (and its title), or the type's own base size when no
+  > row fits. The roll itself is drawn unchanged; only its result is capped.
+  > ⚑ The animal player never advances an era, so `CvUnit::groupRankEra` ranks an animal against
+  > `CvGame::getCurrentEra()` — the average era of the living NON-NPC players. ⛔ That average never counts an
+  > NPC player: the animal players sit at era 0 for the whole game and would drag it down for every caller.
   > ⚖ **WHY IT EXISTS: the merge GRIND, not the cost** — merging hundreds of units by hand in the late
   > game is the problem, and building at `base + x` is the shortcut past it. ⇒ **The cost is therefore the
   > EQUIVALENCE, not a free choice:** it must come out the same as building `3^x` units and merging them, or the

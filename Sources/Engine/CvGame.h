@@ -161,6 +161,7 @@ public:
 	bool canTrainNukes() const;
 
 	EraTypes getHighestEra() const;
+	///<summary>The average era of the living non-NPC players.</summary>
 	EraTypes getCurrentEra() const;
 
 	DllExport TeamTypes getActiveTeam() const;

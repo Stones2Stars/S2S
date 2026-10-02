@@ -3525,7 +3525,7 @@ EraTypes CvGame::getCurrentEra() const
 	int iEra = 0;
 	int iCount = 0;
 
-	for (int iI = 0; iI < MAX_PLAYERS; iI++)
+	for (int iI = 0; iI < MAX_PC_PLAYERS; iI++)
 	{
 		if (GET_PLAYER((PlayerTypes)iI).isAlive())
 		{
@@ -6769,9 +6769,37 @@ void CvGame::doSpawns(PlayerTypes ePlayer)
 								}
 							}
 							//generate result from list
-							const int iFinalIndex = aRandomList[getSorenRandNum(aRandomList.size(), "Spawn Group Random Roll")];
-							const UnitCombatTypes eGroupVolume = kGroupSpawn[iFinalIndex].eUnitCombat;
-							const CvWString szTitle = kGroupSpawn[iFinalIndex].m_szTitle;
+							int iFinalIndex = aRandomList[getSorenRandNum(aRandomList.size(), "Spawn Group Random Roll")];
+
+							//	A spawned group obeys the same era ceiling a merge does. The roll is drawn as before and
+							//	only its RESULT is capped, to the largest authored row the ceiling admits.
+							const int iGroupRankLimit = pUnit->eraGroupMergeLimit();
+
+							if (kGroupSpawn[iFinalIndex].eUnitCombat != NO_UNITCOMBAT
+							&& GC.getUnitCombatInfo(kGroupSpawn[iFinalIndex].eUnitCombat).getSizeMatters().groupBase > iGroupRankLimit)
+							{
+								int iBestIndex = -1;
+								int iBestGroupBase = -10;
+
+								for (int iIndex = 0; iIndex < (int)kGroupSpawn.size(); iIndex++)
+								{
+									if (kGroupSpawn[iIndex].eUnitCombat == NO_UNITCOMBAT)
+									{
+										continue;
+									}
+									const int iGroupBase = GC.getUnitCombatInfo(kGroupSpawn[iIndex].eUnitCombat).getSizeMatters().groupBase;
+
+									if (iGroupBase <= iGroupRankLimit && iGroupBase > iBestGroupBase)
+									{
+										iBestIndex = iIndex;
+										iBestGroupBase = iGroupBase;
+									}
+								}
+								iFinalIndex = iBestIndex;
+							}
+							//	No authored row under the ceiling leaves the unit at its own base size and name.
+							const UnitCombatTypes eGroupVolume = (iFinalIndex != -1) ? kGroupSpawn[iFinalIndex].eUnitCombat : NO_UNITCOMBAT;
+							const CvWString szTitle = (iFinalIndex != -1) ? kGroupSpawn[iFinalIndex].m_szTitle : CvWString();
 
 							//remove old group volume unitcombat
 							if (eGroupVolume != NO_UNITCOMBAT)
