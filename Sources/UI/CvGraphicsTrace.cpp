@@ -15,7 +15,8 @@ namespace
 		GFXEVT_DEFENDER_REFUSED,
 		GFXEVT_DEFENDER_SCAN,
 		GFXEVT_DEFENDER_REJECT,
-		GFXEVT_MOVE
+		GFXEVT_MOVE,
+		GFXEVT_STATEMENT
 	};
 
 	enum GfxFieldTag
@@ -51,7 +52,10 @@ namespace
 		GFXF_MOVE_OUTCOME,
 		GFXF_GRAPHICS_INIT,
 		GFXF_SHOW,
-		GFXF_WATCHED
+		GFXF_WATCHED,
+		GFXF_VERB,
+		GFXF_DATA,
+		GFXF_SELECTED
 	};
 
 	const char* gfx_domainPrefix(int iEventId)
@@ -64,6 +68,7 @@ namespace
 		case GFXEVT_DEFENDER_SCAN:    return "[GFX] defenderScan";
 		case GFXEVT_DEFENDER_REJECT:  return "[GFX] defenderReject";
 		case GFXEVT_MOVE:             return "[GFX] move";
+		case GFXEVT_STATEMENT:        return "[GFX] say";
 		default:                      return "[GFX] ?";
 		}
 	}
@@ -107,6 +112,9 @@ namespace
 		case GFXF_GRAPHICS_INIT:     *peType = SFT_INT; return "gfxInit";
 		case GFXF_SHOW:              *peType = SFT_INT; return "show";
 		case GFXF_WATCHED:           *peType = SFT_INT; return "watched";
+		case GFXF_VERB:              *peType = SFT_STR; return "verb";
+		case GFXF_DATA:              *peType = SFT_INT; return "data";
+		case GFXF_SELECTED:          *peType = SFT_INT; return "selected";
 		default:              *peType = SFT_INT;    return "?";
 		}
 	}
@@ -141,9 +149,8 @@ void gfxTraceCenterUnit(int iX, int iY, GfxCenterUnitGate eGate, bool bActiveVis
 {
 	gfx_ensureRegistered();
 
-	//	Level 3 -- the per-candidate tier (observability.md): updateCenterUnit runs per plot per membership change,
-	//	so it costs nothing until someone asks for it.
-	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRAPHICS, GFXEVT_CENTER_UNIT, 3)
+	//	updateCenterUnit runs per plot per membership change, so this is the domain's highest-volume line.
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRAPHICS, GFXEVT_CENTER_UNIT, 4)
 		.addI(GFXF_X, iX)
 		.addI(GFXF_Y, iY)
 		.addStr(GFXF_GATE, gfx_gateName(eGate))
@@ -161,12 +168,11 @@ void gfxTraceEntity(const CvUnit* pUnit, bool bReal, int iNumReal, int iNumDummy
 	}
 	gfx_ensureRegistered();
 
-	//	Level 2 -- per-decision: an entity attach is rarer than a centre-unit pass and it is the line the texture /
-	//	scene-memory question is actually read off, so it wants to be available a tier earlier.
+	//	An entity attach is the line the texture / scene-memory question is read off.
 	//	⚑ numReal is a NET count: reloadEntity destroys the old entity before creating the new one, so attaches far
 	//	outnumbering the net total is entity CHURN -- real scene nodes torn down and rebuilt, which is both a memory
 	//	question and why an in-flight animation would never finish.
-	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRAPHICS, GFXEVT_ENTITY, 2)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRAPHICS, GFXEVT_ENTITY, 4)
 		.addI(GFXF_OWNER, (int)pUnit->getOwner())
 		.addI(GFXF_UNIT_ID, pUnit->getID())
 		.addI(GFXF_UNIT_TYPE, (int)pUnit->getUnitType())
@@ -184,10 +190,10 @@ void gfxTraceDefenderScan(int iX, int iY, int iUnitsSeen, int iScoredPositive,
 {
 	gfx_ensureRegistered();
 
-	//	Level 2: the caller only reaches this where the scan already FAILED over a non-empty list, so it is rare by
+	//	The caller only reaches this where the scan already FAILED over a non-empty list, so it is rare by
 	//	construction. unitsSeen>0 with scoredPositive==0 is the whole finding -- the list is fine and the SCORER
 	//	rejected everything.
-	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRAPHICS, GFXEVT_DEFENDER_SCAN, 2)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRAPHICS, GFXEVT_DEFENDER_SCAN, 4)
 		.addI(GFXF_X, iX)
 		.addI(GFXF_Y, iY)
 		.addI(GFXF_UNITS_SEEN, iUnitsSeen)
@@ -204,9 +210,9 @@ void gfxTraceDefenderRefused(int iX, int iY, int iUnitId, bool bInViewport, bool
 {
 	gfx_ensureRegistered();
 
-	//	Level 2: this fires only where a defender was FOUND and then thrown away, so it is rare by construction and
+	//	This fires only where a defender was FOUND and then thrown away, so it is rare by construction and
 	//	is the line that turns "the plot presented nothing" into "this filter refused it".
-	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRAPHICS, GFXEVT_DEFENDER_REFUSED, 2)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRAPHICS, GFXEVT_DEFENDER_REFUSED, 4)
 		.addI(GFXF_X, iX)
 		.addI(GFXF_Y, iY)
 		.addI(GFXF_UNIT_ID, iUnitId)
@@ -226,9 +232,9 @@ void gfxTraceMove(int iFromX, int iFromY, int iToX, int iToY, GfxMoveOutcome eOu
 		(eOutcome == GFX_MOVE_TELEPORTED) ? "teleported" :
 		                                    "skipped";
 
-	//	Level 2 — one line per unit per plot change, which is move volume rather than frame volume. `skipped`
+	//	One line per unit per plot change, which is move volume rather than frame volume. `skipped`
 	//	is the whole question: the scene node was never told the unit left, so it keeps drawing where it was.
-	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRAPHICS, GFXEVT_MOVE, 2)
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRAPHICS, GFXEVT_MOVE, 4)
 		.addI(GFXF_FROM_X, iFromX)
 		.addI(GFXF_FROM_Y, iFromY)
 		.addI(GFXF_X, iToX)
@@ -239,6 +245,26 @@ void gfxTraceMove(int iFromX, int iFromY, int iToX, int iToY, GfxMoveOutcome eOu
 		.addI(GFXF_REAL, bRealEntity ? 1 : 0)
 		.addI(GFXF_SHOW, bShow ? 1 : 0)
 		.addI(GFXF_WATCHED, bVisibleToWatchingHuman ? 1 : 0));
+}
+
+void gfxTraceStatement(const CvUnit* pUnit, const char* szVerb, int iData)
+{
+	if (pUnit == NULL)
+	{
+		return;
+	}
+	gfx_ensureRegistered();
+
+	//	One line per call that actually reached the EXE.
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRAPHICS, GFXEVT_STATEMENT, 4)
+		.addI(GFXF_OWNER, (int)pUnit->getOwner())
+		.addI(GFXF_UNIT_ID, pUnit->getID())
+		.addI(GFXF_UNIT_TYPE, (int)pUnit->getUnitType())
+		.addStr(GFXF_VERB, szVerb)
+		.addI(GFXF_DATA, iData)
+		.addI(GFXF_X, pUnit->getX())
+		.addI(GFXF_Y, pUnit->getY())
+		.addI(GFXF_SELECTED, pUnit->IsSelected() ? 1 : 0));
 }
 
 void gfxTraceDefenderReject(int iX, int iY, int iUnitId, int iUnitType,
@@ -254,8 +280,8 @@ void gfxTraceDefenderReject(int iX, int iY, int iUnitId, int iUnitType,
 		bIsDead                    ? "isDead" :
 		                             "ownerMismatch";
 
-	//	Level 2: emitted only on the reject, so its volume IS the fault's volume.
-	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRAPHICS, GFXEVT_DEFENDER_REJECT, 2)
+	//	Emitted only on the reject, so its volume IS the fault's volume.
+	eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_GRAPHICS, GFXEVT_DEFENDER_REJECT, 4)
 		.addI(GFXF_X, iX)
 		.addI(GFXF_Y, iY)
 		.addI(GFXF_UNIT_ID, iUnitId)

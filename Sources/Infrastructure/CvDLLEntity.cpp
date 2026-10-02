@@ -5,6 +5,9 @@
 #include "CvDLLUtilityIFaceBase.h"
 #include "Defines/CvGlobals.h"
 #include "Engine/CvUnit.h"
+#include "Engine/CvMap.h"
+#include "Engine/CvPlot.h"
+#include "UI/CvGraphicsTrace.h"
 
 static int g_numEntitiesCreated = 0;
 static int g_numEntitiesDestroyed = 0;
@@ -98,6 +101,7 @@ void CvDLLEntity::QueueMove( const CvPlot * pkPlot )
 	if ( CvUnit::isRealEntity(getEntity()) )
 	{
 		gDLL->getEntityIFace()->QueueMove(getUnitEntity(), pkPlot );
+		gfxTraceStatement(static_cast<CvUnit*>(this), "queueMove", pkPlot != NULL ? GC.getMap().plotNum(pkPlot->getX(), pkPlot->getY()) : -1);
 	}
 }
 
@@ -106,6 +110,7 @@ void CvDLLEntity::ExecuteMove( float fTimeToExecute, bool bCombat )
 	if ( CvUnit::isRealEntity(getEntity()) && static_cast<CvUnit*>(this)->isInViewport() )
 	{
 		gDLL->getEntityIFace()->ExecuteMove(getUnitEntity(), fTimeToExecute, bCombat );
+		gfxTraceStatement(static_cast<CvUnit*>(this), "executeMove", bCombat ? 1 : 0);
 	}
 }
 
@@ -114,6 +119,7 @@ void CvDLLEntity::SetPosition( const CvPlot * pkPlot )
 	if ( CvUnit::isRealEntity(getEntity()) )
 	{
 		gDLL->getEntityIFace()->SetPosition(getUnitEntity(), pkPlot );
+		gfxTraceStatement(static_cast<CvUnit*>(this), "setPosition", pkPlot != NULL ? GC.getMap().plotNum(pkPlot->getX(), pkPlot->getY()) : -1);
 	}
 }
 
@@ -122,6 +128,7 @@ void CvDLLEntity::NotifyEntity( MissionTypes eMission )
 	if ( CvUnit::isRealEntity(getEntity()) )
 	{
 		gDLL->getEntityIFace()->NotifyEntity( getUnitEntity(), eMission );
+		gfxTraceStatement(static_cast<CvUnit*>(this), "notify", (int)eMission);
 	}
 }
 
@@ -130,6 +137,7 @@ void CvDLLEntity::SetSiegeTower(bool show)
 	if ( CvUnit::isRealEntity(getEntity()) )
 	{
 		gDLL->getEntityIFace()->SetSiegeTower( getUnitEntity(), show );
+		gfxTraceStatement(static_cast<CvUnit*>(this), "siegeTower", show ? 1 : 0);
 	}
 }
 

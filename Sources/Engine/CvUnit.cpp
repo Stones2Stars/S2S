@@ -446,6 +446,7 @@ void CvUnit::placeForPresentation()
 
 	if (pGroup != NULL && pGroup->isMidMove())
 	{
+		gfxTraceStatement(this, "presentRefusedMidMove", 0);
 		return;
 	}
 	SetPosition(plot());
@@ -1166,6 +1167,7 @@ void CvUnit::setupGraphical()
 	if (!isUsingDummyEntities())
 	{
 		CvDLLEntity::setup();
+		gfxTraceStatement(this, "setup", 0);
 	}
 
 	if (getGroup()->getActivityType() == ACTIVITY_INTERCEPT)
@@ -1762,7 +1764,14 @@ void CvUnit::NotifyEntity(MissionTypes eMission)
 		//	through: fortify and awaken both reach setActivityType, which notifies every unit in the group and
 		//	passes no plot, and nothing on that path ever calls reloadEntity
 		//	(docs/reference/unit-rendering/08-the-run-from-origin-reconciliation.md).
+		//	Selection is a presentation: the select notify reaches the engine a frame BEFORE the centre-unit pass
+		//	re-states the position, and not at all when the unit is already the centre unit.
+		if (eMission == MISSION_MULTI_SELECT)
+		{
+			placeForPresentation();
+		}
 		gDLL->getEntityIFace()->NotifyEntity(getUnitEntityPlaced(), eMission);
+		gfxTraceStatement(this, "notify", (int)eMission);
 	}
 }
 
@@ -14241,6 +14250,7 @@ void CvUnit::setXY(int iX, int iY, bool bGroup, bool bUpdate, bool bShow, bool b
 	if (pNewPlot && !isUsingDummyEntities() && isInViewport())
 	{
 		gDLL->getEntityIFace()->updateEnemyGlow(getUnitEntityPlaced());
+		gfxTraceStatement(this, "enemyGlow", 0);
 	}
 	/*GC.getGame().logOOSSpecial(5, getID(), iX, iY);*/
 }
@@ -15780,6 +15790,7 @@ void CvUnit::setPromotionReady(bool bNewValue)
 		if ( !isUsingDummyEntities() && isInViewport())
 		{
 			gDLL->getEntityIFace()->showPromotionGlow(getUnitEntityPlaced(), bNewValue);
+			gfxTraceStatement(this, "promotionGlow", bNewValue ? 1 : 0);
 		}
 
 		if (m_bPromotionReady)
@@ -17611,6 +17622,7 @@ void CvUnit::setHasUnitCombat(UnitCombatTypes eIndex, bool bNewValue, bool bByPr
 			if (!isUsingDummyEntities() && isInViewport())
 			{
 				gDLL->getEntityIFace()->updatePromotionLayers(getUnitEntityPlaced());
+				gfxTraceStatement(this, "promotionLayers", 0);
 			}
 		}
 	}
@@ -18188,6 +18200,7 @@ void CvUnit::setHasPromotion(PromotionTypes eIndex, bool bNewValue, bool bFree, 
 			if (!isUsingDummyEntities() && isInViewport())
 			{
 				gDLL->getEntityIFace()->updatePromotionLayers(getUnitEntityPlaced());
+				gfxTraceStatement(this, "promotionLayers", 0);
 			}
 		}
 	}
