@@ -21,7 +21,9 @@
    starts 0); `getDefenderScore` rejects dead/0-HP units and foreign units `isInvisible(activeTeam)` (3497-3593).
 4. On change: `newCenterUnit->reloadEntity(true)` then `placeForPresentation()` (10095-10099) — ⛔ the assignment
    IS the presentation, and a node is presented from where the engine believes it stands, so the position is
-   re-stated here even though the node was already placed ([§7b](08-the-run-from-origin-reconciliation.md)) —
+   re-stated here even though the node was already placed ([§7b](08-the-run-from-origin-reconciliation.md)),
+   except when the unit is the one this plot last presented (the verdict only looked changed because a
+   suspended recalculation had blanked it) —
    then assign, `updateMinimapColor`, `setFlagDirty(true)`,
    `setInfoBarDirty` (9993-10008). The displaced unit gets no call.
 5. `[GFX] centerUnit` is emitted on EVERY pass (10019-10023) — at its investigation tiers this line alone wrote

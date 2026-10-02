@@ -223,6 +223,7 @@ CvPlot::CvPlot()
 	m_pFlagSymbol = NULL;
 	m_pFlagSymbolOffset = NULL;
 	m_pCenterUnit = NULL;
+	m_lastPresentedCenterUnit.reset();
 	m_bInhibitCenterUnitCalculation = false;
 	// Toffer - These doesn't recalculate, perhaps they should?
 	m_bImprovementUpgradable = false;
@@ -574,6 +575,7 @@ void CvPlot::hideGraphics(ECvPlotGraphics::type toHide /*= ECvPlotGraphics::ALL*
 	{
 		updateCenterUnit();
 		m_pCenterUnit = NULL;
+		m_lastPresentedCenterUnit.reset();
 		gDLL->getFlagEntityIFace()->destroy(m_pFlagSymbol);
 		gDLL->getFlagEntityIFace()->destroy(m_pFlagSymbolOffset);
 		m_pFlagSymbol = NULL;
@@ -10087,6 +10089,13 @@ void CvPlot::updateCenterUnit()
 		//	This makes the interim a safe state, and the correct value will be calculated once the
 		//	inhibitted section is exited
 		m_pCenterUnit = NULL;
+
+		//	A suspended recalculation hides nothing: the unit stays on screen, so the plot keeps the memory of
+		//	having presented it. A plot whose unit graphics are down has presented nothing.
+		if (!m_bInhibitCenterUnitCalculation)
+		{
+			m_lastPresentedCenterUnit.reset();
+		}
 		gfxTraceCenterUnit(getX(), getY(),
 			m_bInhibitCenterUnitCalculation ? GFX_GATE_INHIBITED : GFX_GATE_NOT_VISIBLE,
 			false, iOldCenterUnitId, -1);
@@ -10108,7 +10117,17 @@ void CvPlot::updateCenterUnit()
 			//	The plot is about to PRESENT this node — it draws exactly one unit, and this is now that unit.
 			//	reloadEntity guarantees the node exists and has been placed once; this states where it stands for
 			//	the presentation itself, which a node placed under a different centre unit never received.
-			newCenterUnit->placeForPresentation();
+			//	The same unit returning after a suspended recalculation never left the screen, and re-stating
+			//	its position makes the other figures of its formation run in.
+			if (!(newCenterUnit->getIDInfo() == m_lastPresentedCenterUnit))
+			{
+				newCenterUnit->placeForPresentation();
+			}
+			m_lastPresentedCenterUnit = newCenterUnit->getIDInfo();
+		}
+		else
+		{
+			m_lastPresentedCenterUnit.reset();
 		}
 		m_pCenterUnit = newCenterUnit;
 

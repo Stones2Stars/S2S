@@ -293,7 +293,7 @@ bool CvOutcome::isKill() const
 	return m_bKill;
 }
 
-int CvOutcome::getChance(const CvUnit &kUnit) const
+int CvOutcome::getChance(const CvUnit &kUnit, int iDefeatedCaptureResistance) const
 {
 	PROFILE_EXTRA_FUNC();
 	int iChance = m_iChance->evaluate(kUnit.getGameObject());
@@ -317,6 +317,11 @@ int CvOutcome::getChance(const CvUnit &kUnit) const
 		{
 			iChance += itOdds->second;
 		}
+	}
+
+	if (kInfo.isCaptureContest())
+	{
+		iChance += kUnit.captureProbabilityTotal() - iDefeatedCaptureResistance;
 	}
 	return iChance > 0 ? iChance : 0;
 }
@@ -370,6 +375,12 @@ bool CvOutcome::isPossible(const CvUnit& kUnit) const
 		{
 			return false;
 		}
+	}
+
+	//	A contested capture is taken by a land unit that is not an animal.
+	if (kInfo.isCaptureContest() && (kUnit.isAnimal() || kUnit.getDomainType() != DOMAIN_LAND))
+	{
+		return false;
 	}
 
 	const TeamTypes eOwnerTeam = GET_PLAYER(kUnit.getOwner()).getTeam();

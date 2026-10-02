@@ -112,9 +112,12 @@ void insertReplaceOutcomesRecursive(std::set<OutcomeTypes>& aeReplacedOutcomes, 
 	}
 }
 
-bool CvOutcomeList::execute(CvUnit &kUnit, PlayerTypes eDefeatedUnitPlayer, UnitTypes eDefeatedUnitType) const
+bool CvOutcomeList::execute(CvUnit &kUnit, PlayerTypes eDefeatedUnitPlayer, UnitTypes eDefeatedUnitType, int iDefeatedCaptureResistance) const
 {
 	PROFILE_FUNC();
+
+	//	A contested capture takes a LAND unit; the loser is gone by now, so its type answers for it.
+	const bool bDefeatedIsLandUnit = eDefeatedUnitType != NO_UNIT && GC.getUnitInfo(eDefeatedUnitType).getDomain() == DOMAIN_LAND;
 
 	std::vector<std::pair<const CvOutcome*, int> > apOutcome;
 	std::set<OutcomeTypes> aeReplacedOutcomes;
@@ -122,9 +125,14 @@ bool CvOutcomeList::execute(CvUnit &kUnit, PlayerTypes eDefeatedUnitPlayer, Unit
 	for (int i=0; i<getNumOutcomes(); i++)
 	{
 		const CvOutcome* pOutcome = getOutcome(i);
+
+		if (!bDefeatedIsLandUnit && GC.getOutcomeInfo(pOutcome->getType()).isCaptureContest())
+		{
+			continue;
+		}
 		if (pOutcome->isPossible(kUnit))
 		{
-			const int iChance = pOutcome->getChance(kUnit);
+			const int iChance = pOutcome->getChance(kUnit, iDefeatedCaptureResistance);
 			iChanceSum += iChance;
 			apOutcome.push_back(std::make_pair(pOutcome, iChance));
 			insertReplaceOutcomesRecursive(aeReplacedOutcomes, pOutcome->getType());

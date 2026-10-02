@@ -6,6 +6,19 @@
  "tags": [
   "neanderthal"
  ],
+ "outcomes": {
+  "kill": [
+   {
+    "requires": {
+     "outcome": "OUTCOME_CAPTURE_NEANDERTHAL"
+    },
+    "chance": 0,
+    "spawns": {
+     "unit": "UNIT_CAPTIVE_NEANDERTHAL"
+    }
+   }
+  ]
+ },
  "hideAndSeek": {
   "detection": {
    "value": 500,

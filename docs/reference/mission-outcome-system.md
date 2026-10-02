@@ -68,6 +68,20 @@ Both `CvUnitInfo` **and** `CvUnitCombatInfo` expose both surfaces (runtime merge
   `getOutcomeMissionByMission` (unit info, then each combat-class) → `isPossible` → `execute` → `isKill()` ? `kill`.
   AI: `CvUnitAI::AI_outcomeMission` (15168) scores every action list over reachable city plots.
 
+### `captureContest` — a chance the LOSER resists
+
+An outcome's chance is otherwise computed from the VICTOR alone (the authored `chance`, `chancePerPop`, the
+promotion `odds`). An `OutcomeInfo` flagged `"captureContest": true` adds the victor's
+`captureProbabilityTotal()` and subtracts the defeated unit's `captureResistanceTotal()` — the two `capture`
+family magnitudes units, promotions, traits and civics author. The defeated unit is already gone when the list
+rolls, so `CvUnit::updateCombat` reads its resistance first and hands it to `CvOutcomeList::execute`.
+
+- **Who can take one:** a land unit that is not an animal (`CvOutcome::isPossible`), from a defeated LAND unit
+  type (`CvOutcomeList::execute`).
+- **`capture` and `captureContest` are separate words.** `capture` only bars a no-capture victor.
+  `OUTCOME_SUBDUE` is `capture` and NOT `captureContest`, so subdue odds do not read the capture magnitudes.
+- **A read with no defeated unit in hand** (`isPossible`, the AI valuation) sees resistance 0.
+
 ## Effect KINDS an outcome can produce (`CvOutcome::execute`, 991-1334)
 
 Promotion · spawn-unit (at plot, or `bUnitToCity`→nearest/coastal city; subdued animals auto-join a hunter group) ·

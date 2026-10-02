@@ -37,12 +37,23 @@ both preventable:
    walk and executing it (`Engine/CvSelectionGroup.cpp:3668`), and a reposition there lands the node on the
    destination before the walk plays — a teleport where the player should have seen a move.
 
-4. **A node SELECTED before its position was re-stated.** Selecting a unit sends
-   `NotifyEntity(MISSION_MULTI_SELECT)` (the selection group's `addUnit`), and that notification reaches the
-   engine BEFORE the centre-unit pass — measured 16–31 ms, one frame, ahead of the `setPosition` from item 3 —
-   and with no `setPosition` at all when the unit is already the centre unit, since the verdict does not change.
-   Whether the walk shows depends on a frame landing in that gap, which is why this shape is intermittent.
-   `CvUnit::NotifyEntity` therefore calls `placeForPresentation()` before a `MISSION_MULTI_SELECT`.
+   ⛔ **A SUSPENDED RECALCULATION IS NOT A PRESENTATION.** `groupMove`'s inhibit blanks `m_pCenterUnit` on the
+   start and destination plots, so when it lifts, the unit that was centre all along reads as `none → unit`.
+   Re-stating its position there is wrong: the node never left the screen, and on a MULTI-FIGURE unit the
+   engine snaps the lead figure and walks the others in — two of a three-figure fortified defender ran in on
+   every turn start and every move through its city. The plot therefore remembers the unit it last presented
+   (`CvPlot::m_lastPresentedCenterUnit`, cleared when the plot's unit graphics go down or no unit is presented)
+   and skips `placeForPresentation` when that same unit returns.
+   ⚑ **Single-figure units hide this class entirely** — a worker or a hunter has no follower to run in, so a
+   fix checked only against them is not checked.
+⛔ **`SetPosition` ON A NODE THAT IS ALREADY BUILT AND STANDING IS NOT FREE, AND IT IS NEVER ADDED TO THE
+SELECTION PATH.** Observed in play on multi-figure units, every time: the lead figure stays and the other
+figures run in from the map centre. A `placeForPresentation()` placed before `NotifyEntity(MISSION_MULTI_SELECT)`
+— to close the one-frame gap between the select notification and the centre-unit pass — turned that into a
+run-in on every selection of a fortified defender, and in the same sessions two-figure units began drawing far
+too tall, as if the art define's `fScale` had been dropped. ⚠ The engine-side mechanism is not measured; what
+is measured is that each added position call on a live node added a symptom. ⚑ A fix in this area is checked
+against a unit with SEVERAL figures — a single-figure unit has no follower to run in and hides the whole class.
 
 ⛔ **THE SELECTED UNIT WAS THE HOLE, AND IT IS THE ONE TO KEEP IN MIND, BECAUSE THE PLAYER ONLY EVER OPERATES ON
 A SELECTED UNIT.** `reloadEntity` excludes a selected unit — correctly, because its node must never be destroyed
