@@ -165,6 +165,9 @@ public:
 	// The unit's CUSTOM name only -- empty when it carries none, unlike getUnitName which falls back to the
 	// type's description. A scenario writes this one, because a fallback name is not authored data.
 	std::wstring getNameNoDesc() const;
+	/// <summary>The TXT key of the unique name this unit was given at birth; empty when it has none. A KEY,
+	/// never resolved text -- unlike getNameKey, which hands back the unit's current name.</summary>
+	std::string getUniqueNameKey() const;
 	// The UNIT twin. ⚠ A unit's position is part of the IDENTITY SET on the handle
 	// ([patterns.md] THE IDENTITY SET: owner, id, POSITION), but an EVENT PAYLOAD carries only (owner, id) --
 	// so a handler that was handed a payload has no handle to ask and needs this. Answers (-1, -1) for a unit

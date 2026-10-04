@@ -5,6 +5,7 @@
 
 #include "CvBonusInfo.h"
 #include "Engine/CvCity.h"
+#include "CvCityAI.h"
 #include "CvGameAI.h"
 #include "Defines/CvGlobals.h"
 #include "CvImprovementInfo.h"
@@ -91,7 +92,34 @@ namespace
 		// city/score, city/best
 		WAI_CITY_SCORE                    = 41, // [WAI/city/score]
 		WAI_CITY_BEST                     = 42, // [WAI/city/best]
+		// city/plot/skip: the unit cannot operate on this plot at all (a land worker and a water tile)
+		WAI_CITY_PLOT_SKIP_PLOTINVALID    = 43, // [WAI/city/plot/skip] reason=plotInvalid
+		// city/eval/nobuild: why the best-build search found nothing (one id per BestBuildOutcome)
+		WAI_CITY_NOBUILD_NOT_OWNED        = 44, // [WAI/city/eval/nobuild] reason=notOwned
+		WAI_CITY_NOBUILD_NO_TECH          = 45, // [WAI/city/eval/nobuild] reason=noTech
+		WAI_CITY_NOBUILD_CANNOT_BUILD     = 46, // [WAI/city/eval/nobuild] reason=cannotBuild
+		WAI_CITY_NOBUILD_KEEP_FEATURE     = 47, // [WAI/city/eval/nobuild] reason=keepFeature
+		WAI_CITY_NOBUILD_NO_GAIN          = 48, // [WAI/city/eval/nobuild] reason=noGain
+		WAI_CITY_NOBUILD_KEEP_CURRENT     = 49, // [WAI/city/eval/nobuild] reason=keepCurrent
+		WAI_CITY_NOBUILD_BUSY             = 50, // [WAI/city/eval/nobuild] reason=busy
+		// city/eval/fallback: the city's pick is outside this unit's repertoire; what the unit builds instead
+		WAI_CITY_EVAL_FALLBACK            = 51, // [WAI/city/eval/fallback]
 	};
+
+	// The reason line for a best-build search that found nothing.
+	int workerNoBuildEvent(BestBuildOutcome eOutcome)
+	{
+		switch (eOutcome)
+		{
+		case BEST_BUILD_NONE_NO_TECH:      return WAI_CITY_NOBUILD_NO_TECH;
+		case BEST_BUILD_NONE_CANNOT_BUILD: return WAI_CITY_NOBUILD_CANNOT_BUILD;
+		case BEST_BUILD_NONE_KEEP_FEATURE: return WAI_CITY_NOBUILD_KEEP_FEATURE;
+		case BEST_BUILD_NONE_NO_GAIN:      return WAI_CITY_NOBUILD_NO_GAIN;
+		case BEST_BUILD_NONE_KEEP_CURRENT: return WAI_CITY_NOBUILD_KEEP_CURRENT;
+		case BEST_BUILD_NONE_BUSY:         return WAI_CITY_NOBUILD_BUSY;
+		default:                           return WAI_CITY_NOBUILD_NOT_OWNED;
+		}
+	}
 
 	const char* workerLinePrefix(int iEventId)
 	{
@@ -140,6 +168,15 @@ namespace
 		case WAI_CITY_PLOT_SKIP_NOPATH:         return "[WAI/city/plot/skip] reason=noPath";
 		case WAI_CITY_SCORE:                    return "[WAI/city/score]";
 		case WAI_CITY_BEST:                     return "[WAI/city/best]";
+		case WAI_CITY_PLOT_SKIP_PLOTINVALID:    return "[WAI/city/plot/skip] reason=plotInvalid";
+		case WAI_CITY_NOBUILD_NOT_OWNED:        return "[WAI/city/eval/nobuild] reason=notOwned";
+		case WAI_CITY_NOBUILD_NO_TECH:          return "[WAI/city/eval/nobuild] reason=noTech";
+		case WAI_CITY_NOBUILD_CANNOT_BUILD:     return "[WAI/city/eval/nobuild] reason=cannotBuild";
+		case WAI_CITY_NOBUILD_KEEP_FEATURE:     return "[WAI/city/eval/nobuild] reason=keepFeature";
+		case WAI_CITY_NOBUILD_NO_GAIN:          return "[WAI/city/eval/nobuild] reason=noGain";
+		case WAI_CITY_NOBUILD_KEEP_CURRENT:     return "[WAI/city/eval/nobuild] reason=keepCurrent";
+		case WAI_CITY_NOBUILD_BUSY:             return "[WAI/city/eval/nobuild] reason=busy";
+		case WAI_CITY_EVAL_FALLBACK:            return "[WAI/city/eval/fallback]";
 		default:                                return NULL;
 		}
 	}
@@ -242,7 +279,9 @@ namespace
 		}
 	}
 
-	struct WorkerLogRegistrar { WorkerLogRegistrar() { spineRegisterDomain(SD_WORKER, &workerLinePrefix, "BuildEvaluation.log", &workerFieldInfo); } };
+	// Its OWN file: the legacy helper still writes BuildEvaluation.log through the EXE's logger, and two writers on
+	// one file means the one that opens second is dropped for the whole session.
+	struct WorkerLogRegistrar { WorkerLogRegistrar() { spineRegisterDomain(SD_WORKER, &workerLinePrefix, "WorkerAI.log", &workerFieldInfo); } };
 	WorkerLogRegistrar s_workerLogRegistrar; // static-init registration (g_domains is zero-init first; safe)
 } // namespace (WAI spine block)
 
@@ -585,7 +624,7 @@ bool CvWorkerAI::pushBuildMission(CvUnitAI* unit, CvPlot* pBestPlot, BuildTypes 
 	// Moves guard: BTS validates the first step at push time and rejects
 	// when no move is possible. Converts what would otherwise surface as a
 	// noisy pushFailed into a clean noMoves exit.
-	if (unit->getMoves() <= 0)
+	if (!unit->canMove())
 	{
 		if (gPlayerLogLevel >= 1)
 			logBuildEvaluation(1, "[%s/end] unit=%d result=noMoves at=(%d,%d) target=(%d,%d) mission=%s",
@@ -1441,7 +1480,12 @@ bool CvWorkerAI::improveCity(CvUnitAI* unit, CvCity* pCity)
 
 		// --- [WAI/city/plot/skip] outer filters mirror AI_bestCityBuild ---
 		if (pLoopPlot->getWorkingCity() != pCity) continue;
-		if (!unit->AI_plotValid(pLoopPlot))      continue;
+		if (!unit->AI_plotValid(pLoopPlot))
+		{
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_PLOT_SKIP_PLOTINVALID, 3)
+				.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY()));
+			continue;
+		}
 
 		if (bSafeAutomation)
 		{
@@ -1493,6 +1537,40 @@ bool CvWorkerAI::improveCity(CvUnitAI* unit, CvCity* pCity)
 			iValue = pCity->AI_getBestBuildValue(iI);
 			eBuild = pCity->AI_getBestBuild(iI);
 			bCanBuild = (eBuild != NO_BUILD) && unit->canBuild(pLoopPlot, eBuild);
+
+			const CvCityAI* pCityAI = static_cast<const CvCityAI*>(pCity);
+			if (eBuild == NO_BUILD)
+			{
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, workerNoBuildEvent(pCityAI->AI_getBestBuildOutcome(iI)), 2)
+					.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY()));
+			}
+			else if (!bCanBuild)
+			{
+				// The city's table is chosen with no unit in the question, so its pick can be a build this unit
+				// cannot perform. The unit then takes the best build it CAN do -- and none at all when that would
+				// be worth no more than what the plot already yields.
+				const BuildTypes eCityBuild = eBuild;
+				int iUnitValue = 0;
+				BestBuildOutcome eUnitOutcome = BEST_BUILD_FOUND;
+				const BuildTypes eUnitBuild = pCityAI->AI_bestBuildForUnit(pLoopPlot, unit, iUnitValue, eUnitOutcome);
+
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, WAI_CITY_EVAL_FALLBACK, 2)
+					.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY())
+					.addI(WAIF_chosen_build, (int)eCityBuild).addI(WAIF_actual_build, (int)eUnitBuild)
+					.addI(WAIF_value, iUnitValue));
+
+				if (eUnitBuild != NO_BUILD)
+				{
+					eBuild = eUnitBuild;
+					iValue = iUnitValue;
+					bCanBuild = true;
+				}
+				else
+				{
+					eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_WORKER, workerNoBuildEvent(eUnitOutcome), 2)
+						.addI(WAIF_x, pLoopPlot->getX()).addI(WAIF_y, pLoopPlot->getY()));
+				}
+			}
 
 			CityPlotEval eval;
 			eval.turnComputed = iGameTurn;

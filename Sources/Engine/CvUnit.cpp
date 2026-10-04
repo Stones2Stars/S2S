@@ -536,11 +536,13 @@ void CvUnit::init(int iID, UnitTypes eUnit, UnitAITypes eUnitAI, PlayerTypes eOw
 
 			for (int iI = 0; iI < iNumNames; iI++)
 			{
-				CvWString szName = gDLL->getText(m_pUnitInfo->getUniqueNames()[(iI + iOffset) % iNumNames].c_str());
+				const std::string& szUniqueNameKey = m_pUnitInfo->getUniqueNames()[(iI + iOffset) % iNumNames];
+				CvWString szName = gDLL->getText(szUniqueNameKey.c_str());
 
 				if (!GC.getGame().isGreatPersonBorn(szName))
 				{
 					setName(szName);
+					m_szUniqueNameKey = szUniqueNameKey;
 					GC.getGame().addGreatPersonBornName(szName);
 					break;
 				}
@@ -906,6 +908,7 @@ void CvUnit::reset(int iID, UnitTypes eUnit, PlayerTypes eOwner, bool bConstruct
 	}
 
 	m_szName.clear();
+	m_szUniqueNameKey.clear();
 	m_szScriptData = "";
 
 	m_aExtraAidChanges.clear();
@@ -1103,6 +1106,7 @@ CvUnit& CvUnit::operator=(const CvUnit& other)
 	m_transportUnit = other.m_transportUnit;
 
 	m_szName = other.m_szName;
+	m_szUniqueNameKey = other.m_szUniqueNameKey;
 	m_szScriptData = other.m_szScriptData;
 	m_aExtraAidChanges = other.m_aExtraAidChanges;
 
@@ -1306,7 +1310,7 @@ void CvUnit::convert(CvUnit* pUnit, const bool bKillOriginal)
 	const int iOurModifier = std::max(1, 100 + aiOurExperience[EXPERIENCE_LEVEL_MODIFIER]);
 	setExperience(std::max(0, pUnit->getExperience() * iOurModifier / iOldModifier));
 
-	setName(pUnit->getNameNoDesc());
+	copyNameFrom(*pUnit);
 
 	if (pUnit->isDescInName() && getBugOptionBOOL("MiscHover__UpdateUnitNameOnUpgrade", true, "BUG_UPDATE_UNIT_NAME_ON_UPGRADE"))
 	{
@@ -16291,6 +16295,19 @@ const CvWString& CvUnit::getNameNoDesc() const
 }
 
 
+const CvString& CvUnit::getUniqueNameKey() const
+{
+	return m_szUniqueNameKey;
+}
+
+
+void CvUnit::copyNameFrom(const CvUnit& kSource)
+{
+	setName(kSource.getNameNoDesc());
+	m_szUniqueNameKey = kSource.getUniqueNameKey();
+}
+
+
 void CvUnit::setName(CvWString szNewValue)
 {
 	gDLL->stripSpecialCharacters(szNewValue);
@@ -18465,6 +18482,7 @@ void CvUnit::read(FDataStreamBase* pStream)
 	}
 
 	WRAPPER_READ_STRING(wrapper, "CvUnit", m_szName);
+	WRAPPER_READ_STRING(wrapper, "CvUnit", m_szUniqueNameKey);
 	WRAPPER_READ_STRING(wrapper, "CvUnit", m_szScriptData);
 
 
@@ -19136,6 +19154,7 @@ void CvUnit::write(FDataStreamBase* pStream)
 	WRAPPER_WRITE_ARRAY(wrapper, "CvUnit", NUM_UNIT_STATUSES, m_aiStatusTurns);
 
 	WRAPPER_WRITE_STRING(wrapper, "CvUnit", m_szName);
+	WRAPPER_WRITE_STRING(wrapper, "CvUnit", m_szUniqueNameKey);
 	WRAPPER_WRITE_STRING(wrapper, "CvUnit", m_szScriptData);
 
 	//	Use condensed format now - only save non-default array elements
@@ -23841,7 +23860,7 @@ CvUnit* CvUnit::mergeUnits(CvUnit* pUnit1, CvUnit* pUnit2, CvUnit* pUnit3, CvSel
 	pkMergedUnit->m_eOriginalOwner = pUnit1->getOriginalOwner();
 	pkMergedUnit->setAutoPromoting(pUnit1->isAutoPromoting());
 	pkMergedUnit->testPromotionReady();
-	pkMergedUnit->setName(pUnit1->getNameNoDesc());
+	pkMergedUnit->copyNameFrom(*pUnit1);
 
 	pkMergedUnit->AI_setUnitAIType(pUnit1->AI_getUnitAIType());
 	if (pUnit2->AI_getUnitAIType() == pUnit3->AI_getUnitAIType() && pkMergedUnit->AI_getUnitAIType() != pUnit2->AI_getUnitAIType())
@@ -24052,7 +24071,7 @@ void CvUnit::doSplit()
 			unit->setGameTurnCreated(pUnit0->getGameTurnCreated());
 			unit->m_eOriginalOwner = pUnit0->getOriginalOwner();
 			unit->setAutoPromoting(pUnit0->isAutoPromoting());
-			unit->setName(pUnit0->getNameNoDesc());
+			unit->copyNameFrom(*pUnit0);
 			unit->joinGroup(pSplittingGroup);
 		}
 

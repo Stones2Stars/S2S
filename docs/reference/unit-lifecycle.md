@@ -24,6 +24,29 @@ that is what frees the object.
 `CvPlayer::initUnit` → `CvUnit::init`, which emits `SEVT_UNIT_CREATED`. A LOADED unit never runs `init`, so
 `CvUnit::read` emits the same fact from inside the save read (the reseed, [the load reseed](../spine/05-the-load-reseed.md#5-the-load-reseed)).
 
+### The unique name — drawn once, and the unit keeps the KEY
+
+A unit whose info authors `identity.uniqueNames` (the great-person types) draws one entry at birth, while
+fewer units of that type have been created than there are names. `init` takes one synchronized draw for an
+offset, walks the list from there, and takes the first name no great person in this game already carries.
+
+The unit stores **both halves**: the resolved text in `m_szName`, which is what it is called, and the TXT key
+it came from in `m_szUniqueNameKey`, which is who it is. Both are serialized, because the pick is a draw and
+cannot be re-derived.
+
+- **The key is identity, not the display name.** A rename (`setName`) leaves it alone.
+- **It rides with the name through every transformation.** Where a successor takes a predecessor's name
+  (`convert` for upgrade, gift, trade and assimilation; merge and split and their `CvMessageData` net
+  twins — the transformation set of [triggers.md](../specs/triggers.md)), it takes the key in the same call,
+  `CvUnit::copyNameFrom`. ⛔ A site that copies a name unit-to-unit with a bare `setName` drops the key.
+- **Python reads the key off the unit**: `CyUnit.getUniqueNameKey()`, empty when the unit was given none.
+  Portrait art and pedia text are keyed off it (`ART_DEF_<suffix>`, `TXT_KEY_<suffix>_PEDIA`).
+  ⛔ Never recover it by matching the unit's name text against the info's list: that breaks on a rename and
+  on a save loaded in another language.
+- ⚠ `CvUnit::getNameKey` is NOT this read. It returns the current name TEXT once one is set, and the info's
+  text key otherwise; it exists to be passed as a `getText` argument.
+- A unit born before the key was stored answers empty.
+
 ## The death sequence — one job per operation
 
 Five operations in `CvUnit`, each with exactly one job. **The names are load-bearing: only `die()` kills.**

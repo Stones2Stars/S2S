@@ -90,9 +90,13 @@ struct WorkerScoringWeights
 // Log taxonomy for improveCity (parallel to the above; [WAI/city/*] prefix):
 //
 //   [WAI/city/begin]    function entry; identifies the unit + city
-//   [WAI/city/plot/skip] plot rejected (notWorking / safeAutomation / noPath / dedup)
+//   [WAI/city/plot/skip] plot rejected (plotInvalid / safeAutomation / enemyUnit / noPath)
 //   [WAI/city/eval/hit] city plot evaluation read from cache
 //   [WAI/city/eval/new] city plot evaluation computed fresh
+//   [WAI/city/eval/nobuild] no build for this plot, with the reason (notOwned / noTech / cannotBuild /
+//                       keepFeature / noGain / keepCurrent / busy)
+//   [WAI/city/eval/fallback] the city's pick (chosen) is outside the unit's repertoire; what it builds
+//                       instead (actual, -1 when nothing it can build beats the plot as it stands)
 //   [WAI/city/score]    per-plot scoring after path-turn + dedup
 //   [WAI/city/best]     new best plot during outer iteration
 //   [WAI/city/mission]  final mission decision (MOVE_TO vs ROUTE_TO)
@@ -167,8 +171,8 @@ public:
 	{
 		int        turnComputed;
 		int        cityId;       // entry is a miss if plot's working city changed
-		BuildTypes bestBuild;    // copy of pCity->AI_getBestBuild(plotIdx) at compute time
-		int        baseValue;    // pCity->AI_getBestBuildValue(plotIdx) at compute time
+		BuildTypes bestBuild;    // the city's pick, or this unit type's own best build when it cannot do the pick
+		int        baseValue;    // the value that goes with bestBuild
 		bool       canBuild;     // unit->canBuild(plot, bestBuild) -- the per-unit filter
 	};
 

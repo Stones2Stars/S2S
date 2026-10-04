@@ -7,6 +7,7 @@
 #include "Defines/CvEnums.h"
 
 plotInfo::plotInfo() :
+	outcome(BEST_BUILD_NONE_NOT_OWNED),
 	index(0),
 	worked(false),
 	owned(false),

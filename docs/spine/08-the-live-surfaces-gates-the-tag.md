@@ -75,8 +75,13 @@ opportunistic disposition the contradicting-comment rule takes ([AGENTS.md](../.
 
 ### Domain / tag registry
 
-Each domain is a `[TAG]` prefix → log file → scope global → source: e.g. `[WAI]` → `BuildEvaluation.log` →
+Each domain is a `[TAG]` prefix → log file → scope global → source: e.g. `[WAI]` → `WorkerAI.log` →
 `gPlayerLogLevel` → `CvWorkerAI.cpp`; plus `[CIT]`/`[UNT]`/`[COM]`/`[WAR]`/`[CTB]`/`[ENG]`/`[PERF]`/`[XP]`/`[MOV]`.
+⛔ **A spine domain's file must not also be a legacy `gDLL->logMsg` sink's file.** `CvLogWriter` opens its
+file itself and caches a failed open for the session, and the EXE's logger holds the files it writes, so of
+two writers on one name the second to open is dropped — every line, with nothing reported. Which one loses
+depends on which wrote first, so the same pairing can lose the spine lines in one session and the legacy
+lines in the next.
 ⚠ **The count is deliberately not stated here** — it was, and it was wrong within a few domains of being written.
 `SpineDomainTag` in `Spine/CvEventSpine.h` is the register, and it cannot go stale. `[PERF/reqmodel]`
 passes when `mismatches=0`. `[INIT/*]` was renamed from `[GAME/*]` to avoid clashing with the `[STATE/game]` cascade

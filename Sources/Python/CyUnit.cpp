@@ -493,6 +493,12 @@ std::wstring CyUnit::getNameNoDesc() const
 	const CvUnit* pUnit = m_pUnit;
 	return pUnit ? std::wstring(pUnit->getNameNoDesc()) : std::wstring();
 }
+std::string CyUnit::getUniqueNameKey() const
+{
+	g_szLastCyRead = "CyUnit::getUniqueNameKey";
+	const CvUnit* pUnit = m_pUnit;
+	return pUnit ? std::string(pUnit->getUniqueNameKey()) : std::string();
+}
 python::list CyUnit::getPosition() const
 {
 	int values[2] = { -1, -1 };   // -1,-1 = no such unit, or the unit is OFF-MAP (a real state)
@@ -855,6 +861,7 @@ void CyUnit::pythonPublish()
 		.def("getBaseCombatStr", &CyUnit::getBaseCombatStr)
 		.def("getFlags", &CyUnit::getFlags)
 		.def("getNameNoDesc", &CyUnit::getNameNoDesc)
+		.def("getUniqueNameKey", &CyUnit::getUniqueNameKey)
 		.def("getPosition", &CyUnit::getPosition)
 		.def("getPromotions", &CyUnit::getPromotions)
 		.def("getMissionQueue", &CyUnit::getMissionQueue)
