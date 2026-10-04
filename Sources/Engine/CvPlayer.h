@@ -1246,7 +1246,6 @@ public:
 	void setVote(int iId, PlayerVoteTypes ePlayerVote);
 
 	int getUnitExtraCost(UnitTypes eUnit) const;
-	void setUnitExtraCost(UnitTypes eUnit, int iCost);
 
 	bool splitEmpire(int iAreaId);
 	bool canSplitEmpire() const;
@@ -1768,7 +1767,6 @@ protected:
 	UnitPromotionArray m_aFreeUnitPromotions;
 
 	std::vector< std::pair<int, PlayerVoteTypes> > m_aVote;
-	std::vector< std::pair<UnitTypes, int> > m_aUnitExtraCosts;
 
 	CvMessageQueue m_listGameMessages;
 	CvPopupQueue m_listPopups;

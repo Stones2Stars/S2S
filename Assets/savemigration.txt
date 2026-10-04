@@ -2381,3 +2381,17 @@ and changeExtraMoves are gone with it, and their processPromotion / processUnitC
 | ⚠ The TEAM counter (CvTeam::m_aiExtraMoves) is NOT cut and stays serialized: it carries the circumnavigation
 | award, which is a genuine event grant belonging to no held set.
 CvUnit::m_iExtraMoves                     (int)
+
+========================
+| A founding unit's extra build cost: the stored per-player (unit, cost) list is removed. The value is a pure
+| function of game speed, the start era's free population and the growth threshold, so it is derived data and
+| serializes nothing (save.md §5). It was computed at player init and on a handicap change and then read from
+| the save, so it stayed frozen at whatever era it was last computed in.
+| REPLACEMENT: CvPlayer::getUnitExtraCost answers CvPlayer::getNewCityProductionValue() on demand for a unit
+| holding the `found` skill, and 0 for every other unit. Nothing is stored and nothing refreshes it.
+| ⚠ The free-start-era BUILDING term is gone from that function with the define that scaled it
+| (NEW_CITY_BUILDING_VALUE_MODIFIER), so a founder no longer costs a share of the buildings a new city ships
+| with. Advanced-start city purchases are priced by the same function and drop with it.
+CvPlayer::numUnitCosts                    (uint)
+CvPlayer::eUnit                           (class enum, per element)
+CvPlayer::iCost                           (int, per element)
