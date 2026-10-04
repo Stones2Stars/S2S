@@ -620,7 +620,17 @@ void CvUnitInfo::mapFrom(const picojson::value& entity)
 		//	({"building": X, "enabled"?: <cond>}, json.md §5) on every unit that has one -- 5,758 entries --
 		//	so a string-only read leaves the list EMPTY and canConstruct refuses every building the unit
 		//	owns, with no button and nothing logged.
-		jsonReadIdList(*pGrants, "buildings", m_aiGrantedBuildings, "building");
+		//	⛔ NOT for a FOUNDER. Its `grants.buildings` is the FOUNDING payload -- one grammar, told apart by the
+		//	considered action that delivers it (json.md §5) -- and the trigger engine places it when the city is
+		//	founded. Read as a repertoire it offers the unit a construct mission for every founder building, in
+		//	any standing city: a settler raising a palace.
+		std::vector<std::string> aszAuthoredSkills;
+		jsonReadStrList(entityObj, "skills", aszAuthoredSkills);
+		const bool bFounder = std::find(aszAuthoredSkills.begin(), aszAuthoredSkills.end(), std::string("found")) != aszAuthoredSkills.end();
+		if (!bFounder)
+		{
+			jsonReadIdList(*pGrants, "buildings", m_aiGrantedBuildings, "building");
+		}
 		if (const picojson::object* pAction = jsonChildObj(*pGrants, "greatPersonAction"))
 		{
 			if (const picojson::object* pDiscover = jsonChildObj(*pAction, "discover"))

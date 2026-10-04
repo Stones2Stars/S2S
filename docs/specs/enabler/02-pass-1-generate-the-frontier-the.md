@@ -23,7 +23,7 @@ start node every player holds), derived by the curator (no prereq in legacy ⇒ 
 edge therefore fails **closed** (the entity is unreachable — loud in validation), never silently-available.
 The dead workarounds for this — whole-domain frontiers, hardcoded always-available whitelists — are tombstoned
 ([superseded-ideas #18](../../architecture/superseded-ideas.md)). *(The Palace's FIRST placement is not the
-enabler's doing: the settler's `grants.foundBuildings` places it at founding — the grants machine,
+enabler's doing: the settler's `grants.buildings` places it at founding — the grants machine,
 [json](../json.md) §5.)*
 
 **`TECH_GAME_START` is guaranteed into HAVE at load.** It is a newly-added concept — a tech that will **never be
