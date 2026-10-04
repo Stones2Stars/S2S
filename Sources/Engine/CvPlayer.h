@@ -1853,7 +1853,7 @@ public:
 	// re-assigns under game-start semantics (the barbarian carve-out, START_NO_POSITIVE), a runtime grant
 	// does not.
 	void setHasTraitInternal(TraitTypes eIndex, bool bNewValue);
-	bool canLearnTrait(TraitTypes eIndex, bool isSelectingNegative = false) const;
+	bool canLearnTrait(TraitTypes eIndex) const;
 	bool canUnlearnTrait(TraitTypes eTrait, bool bPositive) const;
 
 	int getLeaderHeadLevel() const;

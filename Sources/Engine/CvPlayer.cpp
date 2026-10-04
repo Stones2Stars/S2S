@@ -675,6 +675,7 @@ void CvPlayer::primeEnablerDomains() const
 	CivicEnabler::initDomain(*this);
 	// The TRAITS domain rides the generic kernel applier -- no per-info enabler class (docs/architecture/patterns.md §DRY (single implementation)).
 	m_enabler.traits.init(GC.getNumTraitInfos());
+	EnablerKernel::applyTraitSetExclusions(*this);
 	ProjectEnabler::initDomain(*this);
 	ProcessEnabler::initDomain(*this);
 	BuildEnabler::initDomain(*this);
@@ -25231,7 +25232,7 @@ void CvPlayer::setHasTrait(TraitTypes eIndex, bool bNewValue)
 //	rules WRONG: researching a level's tech does not advance a held trait.)
 //	⛔ The remaining legs are NOT availability and stay here: holding it already, the NPC bar, and the
 //	option-composed selectability verdict (CvTraitSelection -- a consuming-system calc, engine.md).
-bool CvPlayer::canLearnTrait(TraitTypes eIndex, bool isSelectingNegative) const
+bool CvPlayer::canLearnTrait(TraitTypes eIndex) const
 {
 	FASSERT_BOUNDS(NO_TRAIT, GC.getNumTraitInfos(), eIndex);
 
@@ -25243,7 +25244,8 @@ bool CvPlayer::canLearnTrait(TraitTypes eIndex, bool isSelectingNegative) const
 	{
 		return false;
 	}
-	return CvTraitSelection::isSelectable(GC.getTraitInfo(eIndex), isSelectingNegative);
+	// An in-play acquisition, never game start: the start-only rules do not apply to a level-up pick.
+	return CvTraitSelection::isSelectable(GC.getTraitInfo(eIndex), false);
 }
 
 //	Only the TOP OF THE HAS STACK may be unlearned (owner) -- and that is not a rank comparison, it is simply the

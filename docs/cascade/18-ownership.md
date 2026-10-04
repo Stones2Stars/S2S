@@ -32,6 +32,20 @@ authored shape.
 > (`traits/simple/` + `traits/complex/`); a consumer **loads the one active folder** by the live game option — this is
 > NOT an entity-level option gate and NOT a mid-game swap (any WorldBuilder mid-game trait swap is a post-migration
 > concern).
+> ⛔ **BOTH SETS ARE REGISTERED IN THE ONE ENGINE TRAIT ARRAY, SO EVERY CONSUMER SELECTS THE LIVE SET ITSELF —
+> AND ONLY THE COMPLEX REPO CAN SAY WHICH SET AN ID BELONGS TO.** Saves and the has-array index the whole union,
+> so `m_paTraitInfo` holds an object for every trait id, complex ones included. Asking the simple repo whether
+> it holds an id therefore answers yes for everything; an id is complex if and only if
+> `InfoRepo<CvComplexTraitTag>` holds it. `GC.getTraitInfo(id)` returns the record of the set that OWNS the id
+> and reads no game option.
+> - **The picker's consumer is the enabler's TRAITS domain.** `TECH_GAME_START` enables the base rungs of both
+>   sets, and every player holds it, so the domain statically excludes every id outside the live set
+>   (`EnablerKernel::applyTraitSetExclusions`, at domain prime and again on `SEVT_GAME_OPTION_ADDED / _REMOVED`).
+>   A `barbarianSelectionOnly` trait is excluded with them: it is assigned at start and is never a level-up pick.
+> - **A level-up pick is an in-play acquisition.** `CvPlayer::canLearnTrait` asks
+>   `CvTraitSelection::isSelectable` with the start flag off, for the positive and the negative pick alike.
+> - ⚑ **The signature when a consumer skips the selection:** traits of both sets, and the barbarian trait,
+>   offered in one game.
 > **A complex trait KEEPS ITS OWN `TRAIT_COMPLEX_` IDENTITY** ([naming.md](../specs/naming.md): `TRAIT_` is a simple trait,
 > `TRAIT_COMPLEX_` a complex one). ⛔ It is NEVER re-keyed onto the base trait's id: that re-key is what
 > manufactured the colliding-id problem — two genuinely different entities answering to one name — which then

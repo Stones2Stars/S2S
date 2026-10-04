@@ -407,6 +407,22 @@ unsigned char EnablerKernel::requiresGateReason(const CvInfo* j, const CvCascade
 	return (eBuildReason != (unsigned char)EnablerDomain::GATEREASON_NONE) ? eBuildReason : eOperateReason;
 }
 
+void EnablerKernel::applyTraitSetExclusions(const CvPlayer& kPlayer)
+{
+	EnablerDomain& d = kPlayer.m_enabler.traits;
+	if (!d.isSeeded())
+	{
+		return;
+	}
+	const bool bComplexGame = GC.getGame().isOption(GAMEOPTION_LEADER_COMPLEX_TRAITS);
+	for (int iTrait = 0; iTrait < GC.getNumTraitInfos(); ++iTrait)
+	{
+		const bool bComplexTrait = InfoRepo<CvComplexTraitTag>::get().get(iTrait) != NULL;
+		const bool bBarbarianOnly = GC.getTraitInfo((TraitTypes)iTrait).isBarbarianSelectionOnly();
+		d.setStaticExcluded(iTrait, bComplexTrait != bComplexGame || bBarbarianOnly);
+	}
+}
+
 // The system-placement gate (see the header for the role it plays and why it is not the availability read).
 bool EnablerKernel::everAvailable(EnEdgeBucket eBucket, int iId)
 {
