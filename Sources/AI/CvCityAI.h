@@ -57,6 +57,7 @@
 
 
 class CvArea;
+class CvUnitAI;
 class CvUnitSelectionCriteria;
 
 //	Koshling - add caching to yield calculations
@@ -628,6 +629,14 @@ public:
 	 */
 	BuildTypes AI_getBestBuild(int iIndex) const;
 
+	/// <summary>How the best-build search for a city plot ended; when the table holds no build, this is why.</summary>
+	BestBuildOutcome AI_getBestBuildOutcome(int iIndex) const;
+
+	/// <summary>The best build THIS unit can perform on a plot, by the same valuation that fills the city's
+	/// table. Asked when the table's pick is outside the unit's repertoire. It answers NO_BUILD, with the
+	/// reason, when nothing the unit can build is worth more than what the plot already yields.</summary>
+	BuildTypes AI_bestBuildForUnit(const CvPlot* pPlot, const CvUnitAI* pUnit, int& iValue, BestBuildOutcome& eOutcome) const;
+
 	/**
 	 * Counts the number of best builds in the area.
 	 * - Iterates over city plots in the area.
@@ -745,6 +754,7 @@ protected:
 	int m_aiBestBuildValue[NUM_CITY_PLOTS];
 
 	BuildTypes m_aeBestBuild[NUM_CITY_PLOTS];
+	BestBuildOutcome m_aeBestBuildOutcome[NUM_CITY_PLOTS];
 
 	bool* m_pbEmphasize;
 	bool* m_pbEmphasizeSpecialist;
@@ -821,7 +831,10 @@ protected:
 	 * - Considers yields, bonuses, and feature removal.
 	 * - Selects the improvement and build with the highest value.
 	 */
-	void AI_findBestImprovementForPlot(const CvPlot* pPlot, plotInfo* plotInfo, OutputRatios& ratios) const;
+	void AI_findBestImprovementForPlot(const CvPlot* pPlot, plotInfo* plotInfo, OutputRatios& ratios, const CvUnitAI* pUnit = NULL) const;
+
+	/// <summary>The weights the plot valuation runs on, from the city's realized yields.</summary>
+	OutputRatios AI_plotOutputRatios() const;
 
 	std::vector<int> AI_calculateOutputRatio(int food, int production, int commerce) const;
 

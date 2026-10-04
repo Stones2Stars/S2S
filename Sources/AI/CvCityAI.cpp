@@ -395,6 +395,7 @@ void CvCityAI::AI_reset()
 	for (int iI = 0; iI < NUM_CITY_PLOTS; iI++)
 	{
 		m_aeBestBuild[iI] = NO_BUILD;
+		m_aeBestBuildOutcome[iI] = BEST_BUILD_NONE_NOT_OWNED;
 	}
 
 	for (int iI = 0; iI < NUM_YIELD_TYPES; iI++)
@@ -8501,13 +8502,7 @@ void CvCityAI::AI_updateBestBuild()
 	}
 	m_bestBuildValuesStale = false;
 
-	// The city's REALIZED yields in ONE read; ÷100 at the reader (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
-	int aiRealizedYields[NUM_YIELD_TYPES];
-	getYields(aiRealizedYields);
-	OutputRatios ratios = OutputRatios(
-		aiRealizedYields[YIELD_FOOD] / 100,
-		aiRealizedYields[YIELD_PRODUCTION] / 100,
-		aiRealizedYields[YIELD_COMMERCE] / 100);
+	OutputRatios ratios = AI_plotOutputRatios();
 
 	// these are the current default weights to make AI actually care about food at their plots function is built in such a way
 	// that you can call it several times to adjust the ratio
@@ -8523,6 +8518,7 @@ void CvCityAI::AI_updateBestBuild()
 		if (NULL == loopedPlot || !(loopedPlot->getOwner() == getOwner()) || !(loopedPlot->getWorkingCity() == this)) {
 			m_aeBestBuild[iPlotCounter] = NO_BUILD;
 			m_aiBestBuildValue[iPlotCounter] = 0;
+			m_aeBestBuildOutcome[iPlotCounter] = BEST_BUILD_NONE_NOT_OWNED;
 			continue;
 		}
 
@@ -8533,6 +8529,7 @@ void CvCityAI::AI_updateBestBuild()
 
 		m_aeBestBuild[iPlotCounter] = optimalYieldList[iPlotCounter].newBuild;
 		m_aiBestBuildValue[iPlotCounter] = optimalYieldList[iPlotCounter].newValue;
+		m_aeBestBuildOutcome[iPlotCounter] = optimalYieldList[iPlotCounter].outcome;
 	}
 }
 
@@ -10796,13 +10793,18 @@ bool CvCityAI::AI_checkIrrigationSpread(const CvPlot* pPlot) const
 	return bEmphasizeIrrigation;
 }
 
-void CvCityAI::AI_findBestImprovementForPlot(const CvPlot* pPlot, plotInfo* plotInfo, OutputRatios& ratios) const
+void CvCityAI::AI_findBestImprovementForPlot(const CvPlot* pPlot, plotInfo* plotInfo, OutputRatios& ratios, const CvUnitAI* pUnit) const
 {
 	PROFILE_EXTRA_FUNC();
 	if (plotInfo == NULL) return;
 	if (pPlot == NULL) return;
-	if (pPlot->getOwner() != getOwner()) return;
+	if (pPlot->getOwner() != getOwner())
+	{
+		plotInfo->outcome = BEST_BUILD_NONE_NOT_OWNED;
+		return;
+	}
 
+	plotInfo->outcome = BEST_BUILD_NONE_NO_TECH;
 	plotInfo->newBuild = NO_BUILD;
 	plotInfo->currentImprovement = pPlot->getImprovementType();
 	plotInfo->newImprovement = NO_IMPROVEMENT;
@@ -10843,6 +10845,12 @@ void CvCityAI::AI_findBestImprovementForPlot(const CvPlot* pPlot, plotInfo* plot
 	// this entire section could be done smarter?
 	if (eForcedBuild != NO_BUILD)
 	{
+		if (pUnit != NULL && !pUnit->canBuild(pPlot, eForcedBuild))
+		{
+			plotInfo->outcome = BEST_BUILD_NONE_BUSY;
+			return;
+		}
+		plotInfo->outcome = BEST_BUILD_FOUND;
 		plotInfo->newBuild = eForcedBuild;
 		plotInfo->newValue = plotInfo->value;
 		return;
@@ -10874,7 +10882,13 @@ void CvCityAI::AI_findBestImprovementForPlot(const CvPlot* pPlot, plotInfo* plot
 		// check if improvement can be built by team
 		if (!pPlot->canBuildImprovement(ePotentialImprovement, getTeam())) continue;
 
-		BuildTypes eBestBuild = CvWorkerAI::getFastestBuildForImprovementType(player, ePotentialImprovement, pPlot);
+		if (plotInfo->outcome < BEST_BUILD_NONE_CANNOT_BUILD)
+		{
+			plotInfo->outcome = BEST_BUILD_NONE_CANNOT_BUILD;
+		}
+
+		// With a unit, only the builds THAT unit can perform count.
+		BuildTypes eBestBuild = CvWorkerAI::getFastestBuildForImprovementType(player, ePotentialImprovement, pPlot, pUnit);
 
 		// if we cannot build any of the valid builds for the improvement, skip to next improvement
 		if (eBestBuild == NO_BUILD) continue;
@@ -10903,7 +10917,14 @@ void CvCityAI::AI_findBestImprovementForPlot(const CvPlot* pPlot, plotInfo* plot
 			}
 		}
 
-		if (!bValid) continue;
+		if (!bValid)
+		{
+			if (plotInfo->outcome < BEST_BUILD_NONE_KEEP_FEATURE)
+			{
+				plotInfo->outcome = BEST_BUILD_NONE_KEEP_FEATURE;
+			}
+			continue;
+		}
 
 		for (int yieldCounter = 0; yieldCounter < NUM_YIELD_TYPES; yieldCounter++)
 		{
@@ -10916,7 +10937,14 @@ void CvCityAI::AI_findBestImprovementForPlot(const CvPlot* pPlot, plotInfo* plot
 		const int plotValue = std::max(0, CvValueService::CalculateCityPlotValue(ratios, plotInfo->newYields, plotHasBonus, plotHasBonus && potentialImprovementInfo.isImprovementBonusTrade(eNonObsoleteBonus)) - currentPlotValue);
 
 		// Skip zero-value candidates; they cannot improve the plot.
-		if (plotValue <= 0) continue;
+		if (plotValue <= 0)
+		{
+			if (plotInfo->outcome < BEST_BUILD_NONE_NO_GAIN)
+			{
+				plotInfo->outcome = BEST_BUILD_NONE_NO_GAIN;
+			}
+			continue;
+		}
 
 		const int timeScore = 10000 / (GC.getBuildInfo(eBestBuild).getTime() + 1);
 
@@ -10930,11 +10958,49 @@ void CvCityAI::AI_findBestImprovementForPlot(const CvPlot* pPlot, plotInfo* plot
 			bestTimeScore = timeScore;
 		}
 	}
+	if (plotInfo->newBuild != NO_BUILD)
+	{
+		plotInfo->outcome = BEST_BUILD_FOUND;
+	}
 	if (plotInfo->newImprovement == plotInfo->currentImprovement) {
+		if (plotInfo->newImprovement != NO_IMPROVEMENT)
+		{
+			plotInfo->outcome = BEST_BUILD_NONE_KEEP_CURRENT;
+		}
 		plotInfo->newValue = 0;
 		plotInfo->newBuild = NO_BUILD;
 		plotInfo->newImprovement = NO_IMPROVEMENT;
 	}
+}
+
+
+BuildTypes CvCityAI::AI_bestBuildForUnit(const CvPlot* pPlot, const CvUnitAI* pUnit, int& iValue, BestBuildOutcome& eOutcome) const
+{
+	plotInfo unitPlotInfo;
+	OutputRatios ratios = AI_plotOutputRatios();
+	AI_findBestImprovementForPlot(pPlot, &unitPlotInfo, ratios, pUnit);
+	iValue = unitPlotInfo.newValue;
+	eOutcome = unitPlotInfo.outcome;
+	return unitPlotInfo.newBuild;
+}
+
+
+BestBuildOutcome CvCityAI::AI_getBestBuildOutcome(int iIndex) const
+{
+	FASSERT_BOUNDS(0, NUM_CITY_PLOTS, iIndex);
+	return m_aeBestBuildOutcome[iIndex];
+}
+
+
+OutputRatios CvCityAI::AI_plotOutputRatios() const
+{
+	// The city's REALIZED yields in ONE read; ÷100 at the reader (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
+	int aiRealizedYields[NUM_YIELD_TYPES];
+	getYields(aiRealizedYields);
+	return OutputRatios(
+		aiRealizedYields[YIELD_FOOD] / 100,
+		aiRealizedYields[YIELD_PRODUCTION] / 100,
+		aiRealizedYields[YIELD_COMMERCE] / 100);
 }
 
 int CvCityAI::AI_getHappyFromHurry(HurryTypes eHurry) const

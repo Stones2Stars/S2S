@@ -452,9 +452,30 @@ not findings to re-discover.
   count-based dedup, which allows team builds. ⛔ Do NOT dedup via a per-plot
   single-claim scheme: one-unit-per-plot forces `iMaxWorkers=1` and breaks team builds,
   which is exactly why the dedup is the `AI_plotTargetMissionAIs` count.
-- **Observability:** `CvWorkerAI::improveBonus` emits `[WAI/*]`-tagged lines into
-  `BuildEvaluation.log`, gated by `gPlayerLogLevel` (1=headline, 2=per-plot, 3=per-candidate).
-  The class doc comment in `Sources/CvWorkerAI.h` is the authoritative tag reference.
+- **⛔ `CvUnit::getMoves()` IS MOVEMENT *SPENT*, NEVER MOVEMENT LEFT.** `movesLeft()` is
+  `maxMoves() - getMoves()`, `hasMoved()` is `getMoves() > 0`, and `finishMoves()` sets it to `maxMoves()`.
+  "Can this unit still act?" is **`canMove()`**. ⚠ The name reads as a remaining-moves count, so
+  `getMoves() <= 0` looks like an out-of-moves guard and is the opposite: it is true for a unit that has not
+  moved yet. ⚑ The signature in `BuildEvaluation.log` is a planner that picks a valid target and ends
+  `result=noMoves` on a fresh unit, several times at ONE timestamp as each planner in `AI_workerMove` is tried
+  in turn. `AUTOMATE_CITY` shows it worst, because that mode has only the city planner to fall back on.
+- **⛔ THE CITY'S BEST-BUILD TABLE IS CHOSEN WITH NO UNIT IN THE QUESTION, SO A WORKER FALLS BACK TO THE BEST
+  BUILD *IT* CAN DO.** `CvCityAI::AI_updateBestBuild` picks one build per plot from every improvement the team
+  has researched; a unit's `builds` repertoire is per unit-type ([json.md §8](docs/specs/json.md)), so the pick
+  is regularly one the worker on the spot cannot perform. `CvWorkerAI::improveCity` then asks
+  `CvCityAI::AI_bestBuildForUnit` — the SAME chooser (`AI_findBestImprovementForPlot`) with the unit as a
+  filter, never a second valuation. ⚑ It widens with the tech tree: the later the game, the more improvements
+  the table draws from and the more often the pick lands outside a given tier's repertoire.
+  ⛔ **The fallback never downgrades a plot.** The chooser scores a candidate as its GAIN over what the plot
+  yields now, so when the best build the unit can do is worth no more than the improvement already standing,
+  the answer is no build (`reason=noGain`) and the worker moves on.
+- **Observability:** the worker planners emit `[WAI/*]` lines through the spine domain `SD_WORKER` into
+  **`WorkerAI.log`**, readable while the game runs, gated by `gPlayerLogLevel` (1=headline, 2=per-plot,
+  3=per-candidate). ⚠ `BuildEvaluation.log` carries the legacy helper's copies of the older lines only; the
+  `[WAI/city/eval/nobuild]`, `[WAI/city/eval/fallback]` and `[WAI/city/plot/skip] reason=plotInvalid` lines
+  exist on the spine alone. ⛔ A spine domain must not share a file name with a legacy `gDLL->logMsg` sink:
+  the writer that opens the file second is dropped for the whole session, silently.
+  The class doc comment in `Sources/AI/CvWorkerAI.h` is the authoritative tag reference.
 
 ### AI valuation of ENABLEMENT
 
