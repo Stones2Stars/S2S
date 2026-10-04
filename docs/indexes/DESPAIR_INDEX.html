@@ -340,18 +340,16 @@
   getUnitExtraCost(eUnit)</code> (<code>CvPlayer.cpp:7002</code>), and the comment directly
   above says the quiet part out loud: <em>"The getUnitExtraCost() is where we get the cost for a
   settler unit (that's ALL this does). The cost scales to GROWTH factors rather than training
-  factors."</em> That extra cost is not unit data at all — for every <code>isFound()</code> unit
-  it is force-set to <code>getNewCityProductionValue()</code>: the production cost of the free
-  start-era buildings a new city ships with, plus the advanced-start city and per-population
-  costs, all scaled by game speed and era <em>growth</em> percent. It is the very same function
-  that prices an Advanced-Start city purchase. A settler costs what a city is worth, because
-  under the hood a settler <strong>is</strong> a city you have not placed yet.</p>
-  <p>The number lives in a per-player vector and is refreshed at exactly two moments — player
-  reset and a <strong>handicap change</strong> (<code>CvPlayer.cpp:1555</code>,
-  <code>CvGame.cpp:4731</code>) — so the growth-scaling it advertises is quietly frozen between
-  difficulty re-rates: it reads <code>getCurrentEra()</code>, but no era advance ever asks it to
-  look again. Whether that staleness is intended or merely never noticed is its own small
-  despair.</p>
+  factors."</em> That extra cost is not unit data at all — for every unit holding the
+  <code>found</code> skill it is <code>getNewCityProductionValue()</code>: the advanced-start
+  city and per-population costs, scaled by game speed and era <em>growth</em> percent. It is the
+  very same function that prices an Advanced-Start city purchase. A settler costs what a city is
+  worth, because under the hood a settler <strong>is</strong> a city you have not placed yet.</p>
+  <p>It used to be worse in two ways, both since removed. The price also charged a share of the
+  hammer cost of every building a new city ships with free, so an ancient-start settler cost
+  several times a prehistoric-start one. And the number lived in a saved per-player vector
+  refreshed only at player reset and on a handicap change, so the era scaling it advertised
+  stayed frozen at whatever era the game began in.</p>
   <p>Freshly topical: the data migration faithfully maps <code>iCost &rarr; cost.production</code>
   — perfectly honest about the field, perfectly wrong about the unit — and wrong for exactly the
   eight founders the settler-grants pass just spent a session wiring buildings onto. The one

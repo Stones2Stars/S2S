@@ -854,10 +854,8 @@ bool CvXMLLoadUtility::LoadPreMenuGlobals()
 	GC.registerMissions();
 	LoadGlobalClassInfo(GC.m_paMissionInfo, "CIV4MissionInfos", "Units", L"/Civ4MissionInfos/MissionInfos/MissionInfo", false);
 	LoadGlobalClassInfoJson(GC.m_paUnitInfo, "units");
-	// ALL trait types must be registered (simple-only, complex-only developing levels, and the shared ids) -- saves +
-	// isHasTrait index the whole union. Load the simple BASE first, then the complex set: dedup keeps simple for shared
-	// ids and ADDS the 239 complex-only types (SEAFARING2/3, ...). The runtime simple-vs-complex VALUE swap by
-	// GAMEOPTION_LEADER_COMPLEX_TRAITS is the separate deferred active-set step (modifier.md §4 / cascade-engine-430 §6).
+	// Both trait sets register in the one id space -- saves and the has-array index the whole union. The sets
+	// share no id; which one is LIVE is the consumer's question, never this array's.
 	LoadGlobalClassInfoJson(GC.m_paTraitInfo, "traits\\simple");
 	LoadGlobalClassInfoJson(GC.m_paTraitInfo, "traits\\complex");
 	LoadGlobalClassInfoJson(GC.m_paLeaderHeadInfo, "leaderheads");   // #430: JSON-fed (was CIV4LeaderHeadInfos.xml). Leaders ship TRAITLESS (owner ruling 2026-07-21; community re-adds post-merge). Post-load alpha re-sort below stays.

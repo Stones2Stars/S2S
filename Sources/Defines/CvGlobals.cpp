@@ -1283,18 +1283,12 @@ int cvInternalGlobals::getNumTraitInfos() const
 CvTraitInfo& cvInternalGlobals::getTraitInfo(TraitTypes eTraitNum) const
 {
 	FASSERT_BOUNDS(0, GC.getNumTraitInfos(), eTraitNum);
-	// The ACTIVE trait set is chosen PURELY by GAMEOPTION_LEADER_COMPLEX_TRAITS (the two sets share the engine id, so
-	// they live in separate repos -- cascade-engine-430.md §6 / modifier.md §4). complex/ is SELF-COMPLETE (a SUPERSET
-	// of simple/), so under the complex option EVERY id MUST resolve in the complex repo -- a miss is a CURATION defect
-	// (a trait absent from complex/), asserted LOUD and NEVER silently served from the simple set (owner ruling
-	// 2026-07-21: a simple trait must never reach a complex game). The FASSERT fires in dev; the self-complete data
-	// means it cannot fire on shipped content, and the Release fall-through is a crash-avoidance floor, not a fallback.
-	if (getGame().isOption(GAMEOPTION_LEADER_COMPLEX_TRAITS))
+	// The record of the set that OWNS the id. The complex repo is the discriminator: m_paTraitInfo registers every
+	// trait type, so only the complex repo can say an id is complex. Which set is LIVE is not asked here -- that
+	// is the consumer's question (CvTraitSelection, the enabler's trait domain).
+	if (InfoRepo<CvComplexTraitTag>::get().get(eTraitNum) != NULL)
 	{
-		const bool bHasComplex = InfoRepo<CvComplexTraitTag>::get().get(eTraitNum) != NULL;
-		FAssertMsg(bHasComplex, CvString::format("TRAIT %d absent from the self-complete complex set (curation gap)", (int)eTraitNum).c_str());
-		if (bHasComplex)
-			return *static_cast<CvComplexTraitInfo*>(InfoRepo<CvComplexTraitTag>::get().atPtr(eTraitNum, "CvComplexTraitTag"));
+		return *static_cast<CvComplexTraitInfo*>(InfoRepo<CvComplexTraitTag>::get().atPtr(eTraitNum, "CvComplexTraitTag"));
 	}
 	return *static_cast<CvSimpleTraitInfo*>(InfoRepo<CvTraitInfo>::get().atPtr(eTraitNum, "CvTraitInfo"));
 }

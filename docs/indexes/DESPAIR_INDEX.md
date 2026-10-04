@@ -376,17 +376,16 @@ has not founded yet**.
 (`CvPlayer.cpp:7002`), and the comment directly above says the quiet part out loud:
 *"The getUnitExtraCost() is where we get the cost for a settler unit (that's ALL this does). The
 cost scales to GROWTH factors rather than training factors."* That extra cost is not unit data at
-all — for every `isFound()` unit it is force-set to `getNewCityProductionValue()`: the production
-cost of the free start-era buildings a new city ships with, plus the advanced-start city and
-per-population costs, all scaled by game speed and era *growth* percent. It is the very same
-function that prices an Advanced-Start city purchase. A settler costs what a city is worth,
-because under the hood a settler **is** a city you have not placed yet.
+all — for every unit holding the `found` skill it is `getNewCityProductionValue()`: the
+advanced-start city and per-population costs, scaled by game speed and era *growth* percent. It
+is the very same function that prices an Advanced-Start city purchase. A settler costs what a
+city is worth, because under the hood a settler **is** a city you have not placed yet.
 
-The number lives in a per-player vector and is refreshed at exactly two moments — player reset
-and a **handicap change** (`CvPlayer.cpp:1555`, `CvGame.cpp:4731`) — so the growth-scaling it
-advertises is quietly frozen between difficulty re-rates: it reads `getCurrentEra()`, but no era
-advance ever asks it to look again. Whether that staleness is intended or merely never noticed is
-its own small despair.
+It used to be worse in two ways, both since removed. The price also charged a share of the
+hammer cost of every building a new city ships with free, so an ancient-start settler cost
+several times a prehistoric-start one. And the number lived in a saved per-player vector
+refreshed only at player reset and on a handicap change, so the era scaling it advertised stayed
+frozen at whatever era the game began in.
 
 Freshly topical: the data migration faithfully maps `iCost → cost.production` — perfectly honest
 about the field, perfectly wrong about the unit — and wrong for exactly the eight founders the

@@ -475,6 +475,11 @@ enum SpineDomainEvent
 	// iC = player. DOMAIN.
 	SEVT_EMPIRE_REBEL_ADDED          = 194,
 	SEVT_EMPIRE_REBEL_REMOVED        = 195,
+	// A per-PLAYER modder option was set / cleared (CvPlayer::setModderOption, both overloads) -- the player
+	// twin of SEVT_GAME_OPTION_*, which is game-scoped and names no owner. A slot replacement: REMOVED names the
+	// outgoing value, ADDED the incoming. iType = ModderOptionTypes, iA = the value's magnitude, iC = player. DOMAIN.
+	SEVT_EMPIRE_MODDER_OPTION_ADDED   = 213,
+	SEVT_EMPIRE_MODDER_OPTION_REMOVED = 214,
 	// A city's PROPERTY value crossed one of the band BOUNDARIES the authored `requires.operate` clauses declare
 	// -- the value ROSE across one (_ADDED) or FELL across one (_REMOVED). iType = the PROPERTY_, iC = owner,
 	// iSrcLoc = cityId. DOMAIN.
@@ -1006,6 +1011,8 @@ void emitEmpireAnarchyAdded(int iPlayer);
 void emitEmpireAnarchyRemoved(int iPlayer);
 void emitEmpireRebelAdded(int iPlayer);
 void emitEmpireRebelRemoved(int iPlayer);
+void emitEmpireModderOptionAdded(int iPlayer, int iOption, int iValue);
+void emitEmpireModderOptionRemoved(int iPlayer, int iOption, int iValue);
 // The era advanced: REMOVED(old era) then ADDED(new era).
 void emitEmpireEraAdded(int iPlayer, int iEra);
 void emitEmpireEraRemoved(int iPlayer, int iEra);

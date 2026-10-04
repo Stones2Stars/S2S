@@ -675,6 +675,7 @@ void CvPlayer::primeEnablerDomains() const
 	CivicEnabler::initDomain(*this);
 	// The TRAITS domain rides the generic kernel applier -- no per-info enabler class (docs/architecture/patterns.md §DRY (single implementation)).
 	m_enabler.traits.init(GC.getNumTraitInfos());
+	EnablerKernel::applyTraitSetExclusions(*this);
 	ProjectEnabler::initDomain(*this);
 	ProcessEnabler::initDomain(*this);
 	BuildEnabler::initDomain(*this);
@@ -1418,7 +1419,6 @@ void CvPlayer::reset(PlayerTypes eID, bool bConstructorCall)
 		m_aFreeUnitCombatPromotions.clear();
 		m_aFreeUnitPromotions.clear();
 		m_aVote.clear();
-		m_aUnitExtraCosts.clear();
 		m_triggersFired.clear();
 	}
 	for (int i = 0; i < NUM_MAPS; i++)
@@ -1531,14 +1531,6 @@ void CvPlayer::resetCivTypeEffects()
 			{
 				resetTriggerFired((EventTriggerTypes)iI);
 			}
-		}
-	}
-
-	for (int iI = 0; iI < GC.getNumUnitInfos(); ++iI)
-	{
-		if (GC.getUnitInfo((UnitTypes)iI).hasSkill(CLS_SKILL_FOUND))
-		{
-			setUnitExtraCost((UnitTypes)iI, getNewCityProductionValue());
 		}
 	}
 }
@@ -17232,25 +17224,6 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		}
 
 		{
-			m_aUnitExtraCosts.clear();
-			uint iSize;
-			iSize = 0;
-			WRAPPER_READ_DECORATED(wrapper, "CvPlayer", &iSize, "numUnitCosts");
-			for (uint i = 0; i < iSize; i++)
-			{
-				int iCost;
-				UnitTypes eUnit = NO_UNIT;
-				WRAPPER_READ_CLASS_ENUM_ALLOW_MISSING(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_UNITS, (int*)&eUnit);
-				WRAPPER_READ(wrapper, "CvPlayer", &iCost);
-
-				if (eUnit != NO_UNIT)
-				{
-					m_aUnitExtraCosts.push_back(std::make_pair(eUnit, iCost));
-				}
-			}
-		}
-
-		{
 			m_triggersFired.clear();
 			uint iSize;
 			iSize = 0;
@@ -18065,17 +18038,6 @@ void CvPlayer::write(FDataStreamBase* pStream)
 			{
 				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", (*it).first, "iId");
 				WRAPPER_WRITE_CLASS_ENUM_DECORATED(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_VOTES, (*it).second, "eVote");
-			}
-		}
-
-		{
-			uint iSize = m_aUnitExtraCosts.size();
-			WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", iSize, "numUnitCosts");
-			std::vector< std::pair<UnitTypes, int> >::iterator it;
-			for (it = m_aUnitExtraCosts.begin(); it != m_aUnitExtraCosts.end(); ++it)
-			{
-				WRAPPER_WRITE_CLASS_ENUM_DECORATED(wrapper, "CvPlayer", REMAPPED_CLASS_TYPE_UNITS, (*it).first, "eUnit");
-				WRAPPER_WRITE_DECORATED(wrapper, "CvPlayer", (*it).second, "iCost");
 			}
 		}
 
@@ -21535,41 +21497,7 @@ void CvPlayer::setVote(int iId, PlayerVoteTypes ePlayerVote)
 
 int CvPlayer::getUnitExtraCost(UnitTypes eUnit) const
 {
-	PROFILE_EXTRA_FUNC();
-	for (std::vector< std::pair<UnitTypes, int> >::const_iterator it = m_aUnitExtraCosts.begin(); it != m_aUnitExtraCosts.end(); ++it)
-	{
-		if ((*it).first == eUnit)
-		{
-			return ((*it).second);
-		}
-	}
-
-	return 0;
-}
-
-void CvPlayer::setUnitExtraCost(UnitTypes eUnit, int iCost)
-{
-	PROFILE_EXTRA_FUNC();
-	for (std::vector< std::pair<UnitTypes, int> >::iterator it = m_aUnitExtraCosts.begin(); it != m_aUnitExtraCosts.end(); ++it)
-	{
-		if ((*it).first == eUnit)
-		{
-			if (0 == iCost)
-			{
-				m_aUnitExtraCosts.erase(it);
-			}
-			else
-			{
-				(*it).second = iCost;
-			}
-			return;
-		}
-	}
-
-	if (0 != iCost)
-	{
-		m_aUnitExtraCosts.push_back(std::make_pair(eUnit, iCost));
-	}
+	return GC.getUnitInfo(eUnit).hasSkill(CLS_SKILL_FOUND) ? getNewCityProductionValue() : 0;
 }
 
 bool CvPlayer::hasShrine(ReligionTypes eReligion) const
@@ -22100,20 +22028,7 @@ int CvPlayer::getReligionPopulation(ReligionTypes eReligion) const
 int CvPlayer::getNewCityProductionValue() const
 {
 	PROFILE_EXTRA_FUNC();
-	int iValue = 0;
-
-	foreach_(const BuildingTypes eBuilding, BuildingsRepo::get().withFreeStartEra())
-	{
-		if (GC.getGame().getStartEra() >= GC.getBuildingInfo(eBuilding).getFreeStartEra())
-		{
-			iValue += 100 * getProductionNeeded(eBuilding) / std::max(1, 100 + getProductionModifier(eBuilding));
-		}
-	}
-
-	iValue *= 100 + GC.getDefineINT("NEW_CITY_BUILDING_VALUE_MODIFIER");
-	iValue /= 100;
-
-	iValue += GC.getDefineINT("ADVANCED_START_CITY_COST") * CvGameSpeedScale::speedPercent() / 100;
+	int iValue = GC.getDefineINT("ADVANCED_START_CITY_COST") * CvGameSpeedScale::speedPercent() / 100;
 
 	const int iPopulation = GC.getINITIAL_CITY_POPULATION() + GC.getEraInfo(GC.getGame().getStartEra()).getFreePopulation();
 	for (int i = 1; i <= iPopulation; ++i)
@@ -24575,13 +24490,27 @@ int CvPlayer::getModderOption(ModderOptionTypes eIndex) const
 void CvPlayer::setModderOption(ModderOptionTypes eIndex, int iNewValue)
 {
 	FASSERT_BOUNDS(0, NUM_MODDEROPTION_TYPES, eIndex);
+	const int iOldValue = m_aiModderOptions[eIndex];
+	if (iOldValue == iNewValue)
+	{
+		return;
+	}
+	// Written first, as CvGame::setOption does: the consumers re-read the live option rather than withdraw
+	// something the old value deposited.
 	m_aiModderOptions[eIndex] = iNewValue;
+	if (iOldValue != 0)
+	{
+		emitEmpireModderOptionRemoved((int)getID(), (int)eIndex, iOldValue);
+	}
+	if (iNewValue != 0)
+	{
+		emitEmpireModderOptionAdded((int)getID(), (int)eIndex, iNewValue);
+	}
 }
 
 void CvPlayer::setModderOption(ModderOptionTypes eIndex, bool bNewValue)
 {
-	FASSERT_BOUNDS(0, NUM_MODDEROPTION_TYPES, eIndex);
-	m_aiModderOptions[eIndex] = bNewValue;
+	setModderOption(eIndex, bNewValue ? 1 : 0);
 }
 
 int64_t CvPlayer::getCorporateMaintenance() const
@@ -25303,7 +25232,7 @@ void CvPlayer::setHasTrait(TraitTypes eIndex, bool bNewValue)
 //	rules WRONG: researching a level's tech does not advance a held trait.)
 //	⛔ The remaining legs are NOT availability and stay here: holding it already, the NPC bar, and the
 //	option-composed selectability verdict (CvTraitSelection -- a consuming-system calc, engine.md).
-bool CvPlayer::canLearnTrait(TraitTypes eIndex, bool isSelectingNegative) const
+bool CvPlayer::canLearnTrait(TraitTypes eIndex) const
 {
 	FASSERT_BOUNDS(NO_TRAIT, GC.getNumTraitInfos(), eIndex);
 
@@ -25315,7 +25244,8 @@ bool CvPlayer::canLearnTrait(TraitTypes eIndex, bool isSelectingNegative) const
 	{
 		return false;
 	}
-	return CvTraitSelection::isSelectable(GC.getTraitInfo(eIndex), isSelectingNegative);
+	// An in-play acquisition, never game start: the start-only rules do not apply to a level-up pick.
+	return CvTraitSelection::isSelectable(GC.getTraitInfo(eIndex), false);
 }
 
 //	Only the TOP OF THE HAS STACK may be unlearned (owner) -- and that is not a rank comparison, it is simply the

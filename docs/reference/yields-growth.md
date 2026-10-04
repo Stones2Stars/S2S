@@ -60,6 +60,18 @@
 - **Hammers/turn** = `max(1, extraYield + overflow(if flag) + foodSurplus(if FoodProduction) + (baseYieldRate +
   specialistYield)·baseYieldRateModifier/100)`. `isDisorder()` → 0. Process-mode converts to gold/science/culture
   as a live rate (no accrual); a NON-converting process is idle and banks overflow instead (§ The order queue).
+- **A FOUNDING unit is priced as a new city, not by its own data.** `UNIT_SETTLER` and most other founders
+  author no `cost.production`; `CvPlayer::getProductionNeeded(UnitTypes)` adds `getUnitExtraCost`, which for a
+  unit holding the `found` skill is `CvPlayer::getNewCityProductionValue()`:
+  `ADVANCED_START_CITY_COST × speedPercent/100` plus, for each point of the start era's city population,
+  `getGrowthThreshold(pop) × ADVANCED_START_POPULATION_COST/100`. The city then applies its own production
+  modifier for the unit. ⚑ The same function prices an advanced-start city purchase.
+  ⛔ **It is DERIVED and computed on demand — never stored.** The growth threshold reads the player's CURRENT
+  era, so a stored copy goes stale on every era advance; it was once computed at player init, saved, and read
+  back, which froze a founder's price at the era the game began in.
+  ⛔ **It does NOT scale with the buildings a new city ships with.** The free-start-era buildings a later-era
+  start hands every new city are not part of the price: charging a share of their hammer cost made a founder
+  several times dearer in an ancient-start game than in a prehistoric one, with nothing on screen saying why.
 - **Overflow cap** = `getYieldRate(PRODUCTION) × CityScreen__ProductionOverflowLimit` (default **2** — 2× base/turn);
   beyond cap → gold at `MAXED_{UNIT,BUILDING,PROJECT}_GOLD_PERCENT`. Feature production (chop hammers) banks
   alongside; both cleared each turn.

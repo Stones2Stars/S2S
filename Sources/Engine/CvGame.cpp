@@ -4880,32 +4880,9 @@ void CvGame::setHandicapType(HandicapTypes eHandicap)
 	emitGameHandicapAdded((int)eHandicap);
 
 		// ⛔ NEVER inside the load bracket: CvGame streams BEFORE the players, so at averageHandicaps time
-		// (CvGame::read) the player objects are still the PREVIOUS game's -- alive-flagged, state mid-teardown --
-		// and getNewCityProductionValue -> getProductionModifier dereferences freed arrays (the in-game-load
-		// ACCESS_VIOLATION at getProductionModifier+0x184). The fan is also REDUNDANT on a load: the per-player
-		// extra costs are SERIALIZED and each player recomputes its own at init. Play-time handicap moves
-		// (flexible difficulty) keep the recalc.
+		// (CvGame::read) the player objects are still the PREVIOUS game's -- alive-flagged, state mid-teardown.
 		if (eHandicap != NO_HANDICAP && !spineGameLoadInProgress())
 		{
-			for (int i = 0; i < GC.getNumUnitInfos(); i++)
-			{
-				if (GC.getUnitInfo((UnitTypes)i).hasSkill(CLS_SKILL_FOUND))
-				{
-					for (int j = 0; j < MAX_PLAYERS; j++)
-					{
-						// Skip empty/leaderless player slots: getNewCityProductionValue() ->
-						// getProductionModifier() -> hasTrait() asserts (getLeaderType() >= 0) for
-						// unused slots, and dead/never-used players have no city production to cost.
-						// On a mature-game load (averageHandicaps -> setHandicapType) the unguarded
-						// loop fired this assert hundreds of times, bloating Asserts.log to ~hundreds
-						// of MB and stalling the load on Assert builds.
-						if (GET_PLAYER((PlayerTypes)j).isAlive())
-						{
-							GET_PLAYER((PlayerTypes)j).setUnitExtraCost((UnitTypes)i, GET_PLAYER((PlayerTypes)j).getNewCityProductionValue());
-						}
-					}
-				}
-			}
 			for (int j = 0; j < MAX_PLAYERS; j++)
 			{
 				GET_PLAYER((PlayerTypes)j).setUnitUpkeepDirty();

@@ -111,6 +111,13 @@ for both big domains, and frontier iteration is a linear byte scan. The **only m
 3. **Caps / queue / built:** a count event re-checks `allowed` for that one type; queueing/completion is the
    targeted single-id erase. The leave-rules differ per domain: a **building** leaves the frontier when built; a
    **unit** stays trainable (it leaves only on a cap or supersession).
+   ⛔ **A building that leaves the CITY re-enters the frontier, and that is an ENTRY like any other, so it
+   gates.** Nothing gates a held building, so its gate reason and its queued overlay are whatever they were
+   when it was built — and a building completed from the queue is marked held BEFORE its order-removed fact
+   arrives, so that fact skips it and the queued bit is still set. `BuildingEnabler::onCityBuildingChanged`
+   therefore gates the building itself on its own flip. ⚑ The signature when this is missing: a building that
+   was BUILT in the city and then removed never returns to the construct list, while one that arrived by grant
+   does, and a reload fixes it.
 4. **Operate ripple:** operate-atoms referencing H drive the operating-building work-list fixpoint (§3.2).
 
 **⛔ ORDER-INDEPENDENCE is a HARD INVARIANT of the delta algorithm.** Events are facts, not causal steps

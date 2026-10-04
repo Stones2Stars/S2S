@@ -80,18 +80,15 @@ namespace
 		X(CvTraitInfo,           getNumTraitInfos,           EDGEB_TRAITS) \
 		X(CvSpecialistInfo,      getNumSpecialistInfos,      EDGEB_SPECIALISTS)
 
-	// A trait id lives in exactly ONE of the two trait repos, because the two sets are separated BY ID as well as
-	// by folder (modifier.md par.4: a complex trait keeps its own TRAIT_COMPLEX_ identity and is never re-keyed
-	// onto the base one). So there is no active-set choice to make here and NO game option to read -- asking both
-	// repos is total, and the order is arbitrary.
-	// The sets share NO id at all, so the single-pointer return can never be ambiguous: every simple trait is
-	// copied into complex/ under its OWN TRAIT_COMPLEX_ id, identical in content and distinct in identity.
+	// The record of the set that OWNS the id, with no game option to read. ⛔ The COMPLEX repo is asked first and
+	// the order is not arbitrary: the engine trait array registers every trait type, so it answers for a complex
+	// id too, with a duplicate nothing reads.
 	CvInfo* rp_traitInfoForId(int iId)
 	{
-		const CvInfo* pTraitInfo = InfoRepo<CvTraitInfo>::get().get(iId);
+		const CvInfo* pTraitInfo = InfoRepo<CvComplexTraitTag>::get().get(iId);
 		if (pTraitInfo == NULL)
 		{
-			pTraitInfo = InfoRepo<CvComplexTraitTag>::get().get(iId);
+			pTraitInfo = InfoRepo<CvTraitInfo>::get().get(iId);
 		}
 		return const_cast<CvInfo*>(pTraitInfo);
 	}

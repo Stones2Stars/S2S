@@ -518,9 +518,12 @@ private:
 				// ⛔ The direction is the EVENT ID, like every other case here -- the emit carries iA = 0 on BOTH
 				// ends (docs/spine.md §A FACT NAMES THE HAPPENING), so reading a payload flag makes every acquisition a removal.
 				const CvPlayer& kTraitOwner = GET_PLAYER((PlayerTypes)kEvent.iC);
-				EnablerKernel::applyPlayerHave(kTraitOwner, kTraitOwner.m_enabler.traits, EDGEB_TRAITS,
-					InfoRepo<CvTraitInfo>::get().get(kEvent.iType),
-					kEvent.iEventId == SEVT_EMPIRE_TRAIT_ADDED);
+				if (kEvent.iType >= 0 && kEvent.iType < GC.getNumTraitInfos())
+				{
+					EnablerKernel::applyPlayerHave(kTraitOwner, kTraitOwner.m_enabler.traits, EDGEB_TRAITS,
+						&GC.getTraitInfo((TraitTypes)kEvent.iType),
+						kEvent.iEventId == SEVT_EMPIRE_TRAIT_ADDED);
+				}
 			}
 			break;
 		case SEVT_CIVIC_ADOPTED:
@@ -854,6 +857,25 @@ private:
 			{
 				BuildingEnabler::gateAllCities();
 				UnitEnabler::gateAllCities();
+				// GAMEOPTION_LEADER_COMPLEX_TRAITS decides which trait set is live.
+				for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+				{
+					EnablerKernel::applyTraitSetExclusions(GET_PLAYER((PlayerTypes)iPlayer));
+				}
+			}
+			break;
+		// ---- a PLAYER option flipped: re-gate that player's building offer ----
+		// HIDE_REPLACED_BUILDINGS is the one player option a gate reads (the REPLACED reason), and it names no
+		// source to route from, so the player's cities re-gate whole. Every other player option marks nothing.
+		case SEVT_EMPIRE_MODDER_OPTION_ADDED:
+		case SEVT_EMPIRE_MODDER_OPTION_REMOVED:
+			if (kEvent.iType == MODDEROPTION_HIDE_REPLACED_BUILDINGS && !spineGameLoadInProgress()
+				&& kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+			{
+				foreach_(const CvCity* pCity, GET_PLAYER((PlayerTypes)kEvent.iC).cities())
+				{
+					BuildingEnabler::gateCity(*pCity);
+				}
 			}
 			break;
 		default: break;

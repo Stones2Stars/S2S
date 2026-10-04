@@ -154,6 +154,13 @@ public:
 	static void applyPlayerHave(const CvPlayer& kPlayer, EnablerDomain& d, EnEdgeBucket eBucket,
 		const CvInfo* jSource, bool bHas);
 
+	/// <summary>
+	/// Sets the player's TRAITS domain static exclusions: every trait outside the set the game runs on
+	/// (GAMEOPTION_LEADER_COMPLEX_TRAITS), and every barbarian-selection-only trait. The root tech enables the
+	/// base rungs of BOTH sets, so without this both are offered.
+	/// </summary>
+	static void applyTraitSetExclusions(const CvPlayer& kPlayer);
+
 	// requires gate: build ∧ operate, through the typed-condition evaluator (STRICT state religion for build).
 	// bVisible=true relaxes the GREYABLE clauses (connectable resource / unadopted civic) for the visible frontier (enabler.md §6).
 	static bool requiresMet(const CvInfo* j, const CvCascadeEvalCtx& ec, bool bVisible = false);

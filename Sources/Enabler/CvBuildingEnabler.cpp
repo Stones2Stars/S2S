@@ -295,15 +295,17 @@ static void bd_gate(const CvCity& kCity, const CvPlayer& kPlayer, const std::set
 		const std::vector<int>& dorm = j->dormantTriggers();
 		for (size_t i = 0; i < dorm.size(); ++i)
 			if (kCity.getCityContext().hasBuilding(dorm[i])) { bDormant = true; break; }   // the §7 has-list, through the context (contexts.md HAVE axis)
-		// the HIDE-REPLACED interface option (the legacy canConstruct replacement leg, post-flip): with the
-		// option on, a candidate whose dormancy successor is REACHABLE hides from the offer -- inTree is the
-		// two-mode read the legacy recursive canConstruct(replacement, bTestVisible=true) maps onto. Freshness:
-		// a source flipping the successor's membership re-gates this predecessor via the one-level REQUIRED_BY
-		// expansion in bd_touched; the option toggle itself re-gates every city (CvPlayer::setModderOption).
+		// the HIDE-REPLACED interface option (the legacy canConstruct(replacement, bTestVisible=true) leg): with
+		// the option on, a candidate whose dormancy successor is VISIBLE in the list hides from the offer.
+		// ⛔ Visible, never merely in the tree: a prerequisite building's enables edge puts the successor in the
+		// tree eras before its tech, and it would hide the predecessor while nothing replaces it.
+		// Freshness: a source moving the successor re-gates this predecessor via the one-level REQUIRED_BY
+		// expansion in bd_touched, and bd_settleReplaced orders the two within one pass; the option toggle
+		// re-gates the player's cities on SEVT_EMPIRE_MODDER_OPTION_ADDED / _REMOVED.
 		if (!bDormant && kPlayer.isModderOption(MODDEROPTION_HIDE_REPLACED_BUILDINGS))
 		{
 			for (size_t i = 0; i < dorm.size(); ++i)
-				if (d.inTree(dorm[i])) { bReplacedHidden = true; break; }
+				if (d.state(dorm[i]) != (unsigned char)EnablerDomain::STATE_HIDDEN) { bReplacedHidden = true; break; }
 		}
 	}
 	CvCascadeEvalCtx ec;
@@ -334,6 +336,31 @@ static void bd_gate(const CvCity& kCity, const CvPlayer& kPlayer, const std::set
 	d.setQueued(iB, kCity.getFirstBuildingOrder((BuildingTypes)iB) != -1);
 }
 
+// The hide-replaced leg reads the SUCCESSOR's verdict, so a predecessor gated ahead of its successor in the
+// same pass read a verdict that then moved. Re-gate the just-gated predecessors until none flips.
+// ponytail: capped at 8 rounds, far above any authored upgrade chain; a longer one settles on its next re-gate.
+static void bd_settleReplaced(const CvCity& kCity, const CvPlayer& kPlayer, const std::set<int>& waived, EnablerDomain& d, const std::vector<int>& gatedIds)
+{
+	if (!kPlayer.isModderOption(MODDEROPTION_HIDE_REPLACED_BUILDINGS)) return;
+	std::vector<int> predecessors;
+	for (size_t iGated = 0; iGated < gatedIds.size(); ++iGated)
+	{
+		const CvInfo* pInfo = InfoRepo<CvBuildingInfo>::get().get(gatedIds[iGated]);
+		if (pInfo != NULL && !pInfo->dormantTriggers().empty()) predecessors.push_back(gatedIds[iGated]);
+	}
+	bool bFlipped = !predecessors.empty();
+	for (int iRound = 0; bFlipped && iRound < 8; ++iRound)
+	{
+		bFlipped = false;
+		for (size_t iPredecessor = 0; iPredecessor < predecessors.size(); ++iPredecessor)
+		{
+			const unsigned char eBefore = d.state(predecessors[iPredecessor]);
+			bd_gate(kCity, kPlayer, waived, d, predecessors[iPredecessor]);
+			if (d.state(predecessors[iPredecessor]) != eBefore) bFlipped = true;
+		}
+	}
+}
+
 // Gate a SET of candidate ids in one city (the touched set of one event / a class list): the waived-prereq
 // set computes ONCE per call, non-members skip (a later entry event gates them then).
 static void bd_gateSet(const CvCity& kCity, const std::set<int>& ids)
@@ -343,8 +370,16 @@ static void bd_gateSet(const CvCity& kCity, const std::set<int>& ids)
 	const CvPlayer& kPlayer = GET_PLAYER(kCity.getOwner());
 	std::set<int> waived;
 	BuildingEnabler::augmentWaived(kPlayer, GET_TEAM(kPlayer.getTeam()), waived);
+	std::vector<int> gatedIds;
 	for (std::set<int>::const_iterator it = ids.begin(); it != ids.end(); ++it)
-		if (d.inTree(*it)) bd_gate(kCity, kPlayer, waived, d, *it);
+	{
+		if (d.inTree(*it))
+		{
+			bd_gate(kCity, kPlayer, waived, d, *it);
+			gatedIds.push_back(*it);
+		}
+	}
+	bd_settleReplaced(kCity, kPlayer, waived, d, gatedIds);
 }
 
 // The TOUCHED candidate set of one HAVE-event source (all read off the source's OWN info, O(delta)): its
@@ -432,8 +467,16 @@ void BuildingEnabler::gateCity(const CvCity& kCity)
 	const CvPlayer& kPlayer = GET_PLAYER(kCity.getOwner());
 	std::set<int> waived;
 	augmentWaived(kPlayer, GET_TEAM(kPlayer.getTeam()), waived);
+	std::vector<int> gatedIds;
 	for (int b = 0; b < GC.getNumBuildingInfos(); ++b)
-		if (d.inTree(b)) bd_gate(kCity, kPlayer, waived, d, b);
+	{
+		if (d.inTree(b))
+		{
+			bd_gate(kCity, kPlayer, waived, d, b);
+			gatedIds.push_back(b);
+		}
+	}
+	bd_settleReplaced(kCity, kPlayer, waived, d, gatedIds);
 }
 
 void BuildingEnabler::gateAllCities()
@@ -620,6 +663,9 @@ void BuildingEnabler::onCityBuildingChanged(const CvCity& kCity, int iBuilding, 
 		// gate-on-entry + the step-2 re-gates in THIS city (building prereq atoms reference iBuilding)
 		std::set<int> touched;
 		bd_touched(jb, touched);
+		// A building that LEFT the city re-enters the tree, and entry gates (par.7.1 step 1). Nothing gated it
+		// while it was held, so without this it returns carrying the queued bit of the order that built it.
+		touched.insert(iBuilding);
 		{
 			PerfAccumTimer timer(s_dBuildingChangedSelfGateMs);
 			bd_gateSet(kCity, touched);

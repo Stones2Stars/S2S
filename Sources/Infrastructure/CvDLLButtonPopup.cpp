@@ -2853,7 +2853,7 @@ bool CvDLLButtonPopup::launchChooseTraitPopupNegative(CvPopup* pPopup, CvPopupIn
 		const TraitTypes eTrait = ((TraitTypes)iTrait);
 		if (!GET_PLAYER(ePlayer).hasTrait(eTrait) && GC.getTraitInfo(eTrait).isNegativeTrait())
 		{
-			if (GET_PLAYER(ePlayer).canLearnTrait(eTrait, true))
+			if (GET_PLAYER(ePlayer).canLearnTrait(eTrait))
 			{
 				gDLL->getInterfaceIFace()->popupAddGenericButton(pPopup, kTrait.getDescription(), kTrait.getButton(), iTrait, WIDGET_HELP_TRAIT, iTrait);
 				bSelected = true;

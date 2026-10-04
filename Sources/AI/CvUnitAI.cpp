@@ -13370,17 +13370,67 @@ bool CvUnitAI::AI_heal(int iDamagePercent, int iMaxPath)
 		{
 			return true;
 		}
-		if (healRate(plot()) > 10)
+		// A wounded stack heals where it can, and otherwise retreats to a plot it can heal on. Sheltering under
+		// some healthy unit heals nothing and takes the stack out of play; a stack that brought a healer heals
+		// right here, because the healer is what makes this plot one it can heal on.
+		if (canHeal(plot()))
 		{
 			pGroup->pushMission(MISSION_HEAL);
 			return true;
 		}
-		if (AI_safety(iMaxPath))
+		if (AI_moveToHealPlot())
 		{
 			return true;
 		}
 	}
 	return false;
+}
+
+
+bool CvUnitAI::AI_moveToHealPlot()
+{
+	PROFILE_FUNC();
+
+	const CvPlot* pBestPlot = NULL;
+	int iBestDistance = MAX_INT;
+	int iBestPlotIndex = MAX_INT;
+	CvReachablePlotSet plotSet(getGroup(), 0, MAX_INT);
+
+	for (CvReachablePlotSet::const_iterator itr = plotSet.begin(); itr != plotSet.end(); ++itr)
+	{
+		const CvPlot* plotX = itr.plot();
+		const int iDistance = itr.stepDistance();
+		if (iDistance > iBestDistance)
+		{
+			continue;
+		}
+		// The set is hash-ordered by pointer, so an equal-distance tie is settled on the plot index: the
+		// choice must be the same on every machine.
+		const int iPlotIndex = GC.getMap().plotNum(plotX->getX(), plotX->getY());
+		if (iDistance == iBestDistance && iPlotIndex > iBestPlotIndex)
+		{
+			continue;
+		}
+		if (atPlot(plotX) || plotX->isVisibleEnemyUnit(this) || healTurns(plotX) == 0)
+		{
+			continue;
+		}
+		iBestDistance = iDistance;
+		iBestPlotIndex = iPlotIndex;
+		pBestPlot = plotX;
+	}
+
+	if (pBestPlot == NULL)
+	{
+		return false;
+	}
+	int iPathTurns = 0;
+	if (!generatePath(pBestPlot, 0, true, &iPathTurns))
+	{
+		return false;
+	}
+	AI_logAct("heal", "moveToHealPlot", pBestPlot);
+	return getGroup()->pushMissionInternal(MISSION_MOVE_TO, pBestPlot->getX(), pBestPlot->getY());
 }
 
 

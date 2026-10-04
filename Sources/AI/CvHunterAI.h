@@ -43,7 +43,8 @@ class CvUnitAI;
 // Log taxonomy (grep HunterAI.log); gated by gUnitLogLevel. Parallel to [WAI/*].
 //
 //   [HAI/begin]        routine entry: unit, AI type, automate type, with-commander
-//   [HAI/heal]         heal / safety branch taken
+//   [HAI/heal]         wounded branch taken: safety (real danger) / heal (can heal on this plot) /
+//                      seekHealPlot (cannot heal here, heading for the nearest plot where it can)
 //   [HAI/escort]       escort merge / hunter-escort contract advertise
 //   [HAI/target/skip]  candidate rejected + reason (claimed/filter/nopath/odds)
 //   [HAI/target/best]  new best target during the AI_huntRange sweep

@@ -1661,10 +1661,6 @@
 		<iDefineIntVal>6</iDefineIntVal>
 	</Define>
 	<Define>
-		<DefineName>NEW_CITY_BUILDING_VALUE_MODIFIER</DefineName>
-		<iDefineIntVal>-60</iDefineIntVal>
-	</Define>
-	<Define>
 		<DefineName>IGNORE_PLOT_GROUP_FOR_TRADE_ROUTES</DefineName>
 		<iDefineIntVal>0</iDefineIntVal>
 	</Define>

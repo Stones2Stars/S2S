@@ -77,7 +77,14 @@
 > **`grants` is ONLY genuine provisions handed out on the considered action.** A unit's MISSION_CONSTRUCT
 > repertoire — the buildings it can hand over by consuming itself — IS `grants.buildings` (the construct mission
 > reads exactly that surface; the founder's list and the hero's are one grammar, distinguished only by the
-> considered action that delivers them: founding vs the mission). What does NOT belong here (and where it lives
+> considered action that delivers them: founding vs the mission).
+> ⛔ **A UNIT HAS ONE CONSIDERED ACTION, SO A FOUNDER HAS NO CONSTRUCT REPERTOIRE.** A unit holding the `found`
+> skill delivers its `grants.buildings` by founding and by nothing else, so `CvUnitInfo::getGrantedBuildings()`
+> — the repertoire the construct mission, the auto-spread automation, the unit AI and the pedia all read — is
+> EMPTY for it; the trigger engine places the founder list from its own compiled plane. ⚑ Filling the
+> repertoire from a founder's list is silent and looks like a feature: the settler gains a construct mission
+> for every founder building in any standing city, a second palace included.
+> What does NOT belong here (and where it lives
 > instead): `greatPersonAction` / `goldenAge` → **`missions`** (§8 — the rest of
 > the mission-CONCEPT unification is a PERMANENT carve-out: missions/CvOutcome ground-up rework);
 > `builds` → the **`builds`** block (§8); promotion `unitCombats`/`removesUnitCombats` → **`skills`**; project

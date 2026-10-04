@@ -78,7 +78,7 @@ And, orthogonally:
 - **LEGACY-THAT-STOPPED** — a legacy behaviour whose apply is dead today (usually a stubbed poco getter). Needs a
   ruling: was the drop intended?
 - **NEW-DESIGN-NOT-YET-BUILT** — authored data for a mechanic that never had an apply. Not a regression.
-  `grants.foundBuildings` (settlers seeding buildings at settle time) is this: a **new mechanic coined for this
+  A founder's `grants.buildings` (settlers seeding buildings at settle time) is this: a **new mechanic coined for this
   rework**, not a port of the legacy `bNewCityFree`.
 
 ⚖ **Reuse the engine's own partition — do not re-derive one.** `CvPlayer::applyEvent` takes
@@ -153,7 +153,7 @@ The capital building is placed by **three different events**, and covering fewer
 
 | event | who places it |
 |---|---|
-| a city is FOUNDED and the empire has no palace | the settler's `grants.foundBuildings`, gated `{BUILDING_PALACE, empire, max:0}` |
+| a city is FOUNDED and the empire has no palace | the settler's `grants.buildings`, gated `{BUILDING_PALACE, empire, max:0}` |
 | a capital is CAPTURED and the capital relocates | **OWNER CHANGE must handle it** — not the founding gate |
 | a city is ACQUIRED by an empire that has no capital | the acquiring side of the same owner change: `CvPlayer::acquireCity` seats it through `findNewCapital` |
 
@@ -168,7 +168,7 @@ the case that matters — losing your capital while other cities stand should re
 its OWN absence is correct at both triggers and needs no off-by-one reasoning.
 
 ⛔ **The civ-grant palace was NOT redundant.** `BUILDING_PALACE` sat in ~48 civilizations' `grants.buildings` and
-was dropped as a duplicate of the settler's `foundBuildings`. It was not: `foundBuildings` covers FOUNDING, while
+was dropped as a duplicate of the settler's founder list. It was not: the founder list covers FOUNDING, while
 `CvPlayer::findNewCapital` / `setCapitalCity` place the **civilization building list** into the newly-chosen
 capital — that list was the only thing that moved a palace on RELOCATION. Dropping it removed the mechanism.
 

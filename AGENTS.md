@@ -781,6 +781,19 @@ with no worker at all can never build its first one.
   ranged strikes as the "yay we did something at least" clause. Standoff/maintenance
   actions are phase steps inside a plan with an abort rule, never turn-satisfying
   terminals in their own right.
+- **⛔ A WOUNDED UNIT'S DESTINATION IS JUDGED BY WHETHER IT CAN HEAL THERE — NEVER BY WHO IS STANDING THERE.**
+  Outside friendly territory a unit heals only with the heal-outside ability, Battlefield Medicine, or a healer
+  on or beside its tile (`CvUnit::healTurns` answers 0 otherwise), so for a hunter "can I heal on this plot" is
+  the whole question. `CvUnitAI::AI_moveToHealPlot` takes the nearest reachable plot where `healTurns` is
+  non-zero, with no random term; it is the last resort of the shared `CvUnitAI::AI_heal` as well as of the
+  hunter routines, so a wounded war stack with no healer retreats the same way, and a stack that brought a
+  healer heals in place because the healer makes its own plot a heal plot. ⛔ `AI_safety` is NOT a substitute: it scores a plot +100 per friendly
+  defender that has finished moving and re-rolls a bonus for every other plot on each re-plan, so one wounded
+  unit relocates every turn, the next ones follow it onto the same tile, and none of them ever heals because a
+  unit that moved does not recover. ⚑ The signature is several units logging
+  `[UNT/act] decision=safety reason=fleeToSafePlot` to the SAME target, turn after turn, while `HunterAI.log`
+  shows them in `[HAI/heal]` and never reaching a target. ⚠ `[HAI/heal] action=heal` does not mean a heal
+  mission was pushed: `AI_heal` also returns true when its own fallback moved the unit.
 
 ### Graphics / map generation
 
