@@ -36,7 +36,7 @@ namespace
 		HAI_END_AUTOHUNT,        // [HAI/end] phase=autoHunt result=skip
 		HAI_HEAL_SAFETY,         // [HAI/heal] action=safety
 		HAI_HEAL_HEAL,           // [HAI/heal] action=heal
-		HAI_HEAL_SAFETY3,        // [HAI/heal] action=safety3
+		HAI_HEAL_SEEK,           // [HAI/heal] action=seekHealPlot
 		HAI_ESCORT_MERGE,        // [HAI/escort] action=mergeEscort
 		HAI_ESCORT_ADVERTISE,    // [HAI/escort] action=advertiseEscort
 		HAI_SCRAP_REVERT_OWNED,  // [HAI/scrap] action=revertAI reason=owned (+owned)
@@ -63,7 +63,7 @@ namespace
 		case HAI_END_AUTOHUNT:    return "[HAI/end] phase=autoHunt result=skip";
 		case HAI_HEAL_SAFETY:     return "[HAI/heal] action=safety";
 		case HAI_HEAL_HEAL:       return "[HAI/heal] action=heal";
-		case HAI_HEAL_SAFETY3:    return "[HAI/heal] action=safety3";
+		case HAI_HEAL_SEEK:       return "[HAI/heal] action=seekHealPlot";
 		case HAI_ESCORT_MERGE:    return "[HAI/escort] action=mergeEscort";
 		case HAI_ESCORT_ADVERTISE:return "[HAI/escort] action=advertiseEscort";
 		case HAI_SCRAP_REVERT_OWNED:   return "[HAI/scrap] action=revertAI reason=owned";
@@ -252,24 +252,25 @@ bool CvHunterAI::hunterMove(CvUnitAI* unit, bool bWithCommander)
 			}
 		}
 
-		OutputDebugString("	...Try to heal\n");
-		if (unit->AI_heal())
+		// A hunter works outside friendly territory, where a unit heals only beside a healer -- so "can it heal
+		// HERE" decides the branch. Where it cannot, relocating for safety heals nothing and cancels the turn's
+		// recovery; the wounded unit goes to a plot it can heal on instead.
+		if (unit->healTurns(unit->plot()) > 0)
 		{
-			OutputDebugString(CvString::format("	...healing at (%d,%d)\n", unit->getX(), unit->getY()).c_str());
-			logHunterAI(2, "[HAI/heal] unit=%d action=heal", unit->getID());
-			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_HEAL_HEAL, 2).addI(HAIF_unit, unit->getID()));
-			return true;
-		}
-
-		if (unit->getGroup()->getWorstDamagePercent() > 25)
-		{
-			//	Look for somewhere safer
-			if (unit->AI_safety(3))
+			OutputDebugString("	...Try to heal\n");
+			if (unit->AI_heal())
 			{
-				logHunterAI(2, "[HAI/heal] unit=%d action=safety3", unit->getID());
-			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_HEAL_SAFETY3, 2).addI(HAIF_unit, unit->getID()));
+				OutputDebugString(CvString::format("	...healing at (%d,%d)\n", unit->getX(), unit->getY()).c_str());
+				logHunterAI(2, "[HAI/heal] unit=%d action=heal", unit->getID());
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_HEAL_HEAL, 2).addI(HAIF_unit, unit->getID()));
 				return true;
 			}
+		}
+		else if (unit->getGroup()->getWorstDamagePercent() > 25 && unit->AI_moveToHealPlot())
+		{
+			logHunterAI(2, "[HAI/heal] unit=%d action=seekHealPlot", unit->getID());
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_HEAL_SEEK, 2).addI(HAIF_unit, unit->getID()));
+			return true;
 		}
 	}
 
@@ -582,16 +583,19 @@ bool CvHunterAI::autoHuntMove(CvUnitAI* unit)
 			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_HEAL_SAFETY, 2).addI(HAIF_unit, unit->getID()));
 			return true;
 		}
-		if (unit->AI_heal())
+		if (unit->healTurns(unit->plot()) > 0)
 		{
-			logHunterAI(2, "[HAI/heal] unit=%d action=heal", unit->getID());
-			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_HEAL_HEAL, 2).addI(HAIF_unit, unit->getID()));
-			return true;
+			if (unit->AI_heal())
+			{
+				logHunterAI(2, "[HAI/heal] unit=%d action=heal", unit->getID());
+				eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_HEAL_HEAL, 2).addI(HAIF_unit, unit->getID()));
+				return true;
+			}
 		}
-		if (unit->getGroup()->getWorstDamagePercent() > 25 && unit->AI_safety(3))
+		else if (unit->getGroup()->getWorstDamagePercent() > 25 && unit->AI_moveToHealPlot())
 		{
-			logHunterAI(2, "[HAI/heal] unit=%d action=safety3", unit->getID());
-			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_HEAL_SAFETY3, 2).addI(HAIF_unit, unit->getID()));
+			logHunterAI(2, "[HAI/heal] unit=%d action=seekHealPlot", unit->getID());
+			eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_HUNTER, HAI_HEAL_SEEK, 2).addI(HAIF_unit, unit->getID()));
 			return true;
 		}
 	}

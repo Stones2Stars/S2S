@@ -1297,6 +1297,10 @@ protected:
      *   4. Returns true if a mission was pushed.
      */
 	bool AI_heal(int iDamagePercent = 0, int iMaxPath = MAX_INT);
+	/// <summary>Heads for the nearest reachable plot on which THIS unit can heal, for a unit that cannot heal
+	/// where it stands. The destination is judged by healing alone: friendly units standing there count for
+	/// nothing unless one of them is what makes healing possible.</summary>
+	bool AI_moveToHealPlot();
 
     /**
      * Handles post-attack actions for the unit.
