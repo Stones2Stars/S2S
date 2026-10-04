@@ -64,6 +64,17 @@ Grey vs hide is a **UI choice per clause**, not engine behaviour: author a resou
 > `reasonHides` returns true for ([http-endpoints.md](../http-endpoints.md)). The tooltip renderer shares this same
 > clause decomposition, one `all`-walk for both ([the DRY single-implementation law](../../architecture/patterns/03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)).
 
+> **⚖ THE HIDE-REPLACED OPTION HIDES A PREDECESSOR ONLY WHILE ITS SUCCESSOR IS *VISIBLE*.** With
+> `MODDEROPTION_HIDE_REPLACED_BUILDINGS` on, a candidate whose `requires.operate.dormant` successor is LISTED or
+> GREYED in the same city takes the reason `REPLACED` and hides. ⛔ The test is the successor's stored display
+> state, never its tree membership: pass 1 proposes a candidate from ANY enabling source (§1), so a prerequisite
+> building puts an industrial successor in the tree while its tech is eras away, and a membership test hides the
+> predecessor with nothing to replace it. ⚑ The signature: a building vanishes from the list the moment
+> something re-gates it (queueing it is enough) while the same building stays listed in a city nothing has
+> touched, and `/computed/enabler/verdict` reports `REPLACED` beside a successor that is `HIDDEN`.
+> ⚠ The predecessor's verdict reads the successor's, so one gate pass settles the pair in order
+> (`bd_settleReplaced`) rather than trusting id order.
+
 **The frontier is one shared choice set — UI *and* AI.** It is computed once per recompute; the UI greys from
 it, and the AI's production decision iterates **only this small frontier** instead of scoring the whole entity
 database. That consolidation — one recompute replacing dozens of scattered ad-hoc `canBuild` checks — is the

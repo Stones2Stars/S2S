@@ -177,6 +177,14 @@ wearing a confusingly similar name. Authored data honours that split — **no** 
 genuine synced state change; it simply marks nothing. That is "emit liberally, mark precisely" as a routing rule
 rather than a slogan. ⛔ Separating the two by grep needs a negative lookbehind — `MODDERGAMEOPTION_` contains
 `GAMEOPTION_`, so a naive scan conflates them.
+**`SEVT_EMPIRE_MODDER_OPTION_ADDED / _REMOVED`** is the PLAYER twin (`CvPlayer::setModderOption`, the one write
+path; the setter carries the flip guard). A `MODDEROPTION_` is a per-player setting changed from the BUG menu at
+any time, so the game-scoped fact above cannot carry it: that one names no owner. A value moving between two
+non-zero values announces REMOVED (old) then ADDED (new). ⚑ **One of them is a gate input:**
+`MODDEROPTION_HIDE_REPLACED_BUILDINGS` decides the `REPLACED` hide reason
+([enabler.md §6](../../specs/enabler/06-greying-the-build-list-tri-state.md)), so its flip re-gates that player's
+cities' building offer. Every other player option emits and marks nothing. ⚠ The save-carried values are read
+back without an emit, and need none: the load-end gate pass reads the option live.
 ⚑ Both option and difficulty route to **WHOLESALE** consumer work (the enabler re-gates every city; the modifier
 marks the affected player's packages whole) — the `SEVT_AREAS_RECALCULATED` shape, sanctioned for the same
 reason: the fact names no source to route from, so no finer derivation exists, and it is not the banned

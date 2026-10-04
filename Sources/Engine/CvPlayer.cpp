@@ -24489,13 +24489,27 @@ int CvPlayer::getModderOption(ModderOptionTypes eIndex) const
 void CvPlayer::setModderOption(ModderOptionTypes eIndex, int iNewValue)
 {
 	FASSERT_BOUNDS(0, NUM_MODDEROPTION_TYPES, eIndex);
+	const int iOldValue = m_aiModderOptions[eIndex];
+	if (iOldValue == iNewValue)
+	{
+		return;
+	}
+	// Written first, as CvGame::setOption does: the consumers re-read the live option rather than withdraw
+	// something the old value deposited.
 	m_aiModderOptions[eIndex] = iNewValue;
+	if (iOldValue != 0)
+	{
+		emitEmpireModderOptionRemoved((int)getID(), (int)eIndex, iOldValue);
+	}
+	if (iNewValue != 0)
+	{
+		emitEmpireModderOptionAdded((int)getID(), (int)eIndex, iNewValue);
+	}
 }
 
 void CvPlayer::setModderOption(ModderOptionTypes eIndex, bool bNewValue)
 {
-	FASSERT_BOUNDS(0, NUM_MODDEROPTION_TYPES, eIndex);
-	m_aiModderOptions[eIndex] = bNewValue;
+	setModderOption(eIndex, bNewValue ? 1 : 0);
 }
 
 int64_t CvPlayer::getCorporateMaintenance() const

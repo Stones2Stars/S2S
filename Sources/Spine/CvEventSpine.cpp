@@ -457,6 +457,8 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_EMPIRE_ANARCHY_REMOVED:           return "[SPINE/EMPIRE] empireAnarchyRemoved";
 	case SEVT_EMPIRE_REBEL_ADDED:               return "[SPINE/EMPIRE] empireRebelAdded";
 	case SEVT_EMPIRE_REBEL_REMOVED:             return "[SPINE/EMPIRE] empireRebelRemoved";
+	case SEVT_EMPIRE_MODDER_OPTION_ADDED:       return "[SPINE/EMPIRE] empireModderOptionAdded";
+	case SEVT_EMPIRE_MODDER_OPTION_REMOVED:     return "[SPINE/EMPIRE] empireModderOptionRemoved";
 	case SEVT_EMPIRE_ERA_ADDED:                 return "[SPINE/EMPIRE] empireEraAdded";
 	case SEVT_EMPIRE_ERA_REMOVED:               return "[SPINE/EMPIRE] empireEraRemoved";
 	case SEVT_EMPIRE_HANDICAP_ADDED:            return "[SPINE/EMPIRE] empireHandicapAdded";
@@ -1574,6 +1576,22 @@ void emitEmpireRebelRemoved(int iPlayer)
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_REBEL_REMOVED, -1, 0, 0, iPlayer, -1);
 	e.iDomainTag = SD_SPINE;
 	e.addI(SPF_OWNER, iPlayer);
+	eventSpine().emit(e);
+}
+
+void emitEmpireModderOptionAdded(int iPlayer, int iOption, int iValue)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_MODDER_OPTION_ADDED, iOption, iValue, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iPlayer).addI(SPF_OPTION, iOption).addI(SPF_VALUE, iValue);
+	eventSpine().emit(e);
+}
+
+void emitEmpireModderOptionRemoved(int iPlayer, int iOption, int iValue)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_MODDER_OPTION_REMOVED, iOption, iValue, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iPlayer).addI(SPF_OPTION, iOption).addI(SPF_VALUE, iValue);
 	eventSpine().emit(e);
 }
 

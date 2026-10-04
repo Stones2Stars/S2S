@@ -856,6 +856,20 @@ private:
 				UnitEnabler::gateAllCities();
 			}
 			break;
+		// ---- a PLAYER option flipped: re-gate that player's building offer ----
+		// HIDE_REPLACED_BUILDINGS is the one player option a gate reads (the REPLACED reason), and it names no
+		// source to route from, so the player's cities re-gate whole. Every other player option marks nothing.
+		case SEVT_EMPIRE_MODDER_OPTION_ADDED:
+		case SEVT_EMPIRE_MODDER_OPTION_REMOVED:
+			if (kEvent.iType == MODDEROPTION_HIDE_REPLACED_BUILDINGS && !spineGameLoadInProgress()
+				&& kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+			{
+				foreach_(const CvCity* pCity, GET_PLAYER((PlayerTypes)kEvent.iC).cities())
+				{
+					BuildingEnabler::gateCity(*pCity);
+				}
+			}
+			break;
 		default: break;
 		}
 	}
