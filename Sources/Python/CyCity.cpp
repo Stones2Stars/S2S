@@ -1540,6 +1540,13 @@ python::list CyCity::getUnitListGroups() const
 
 python::list CyCity::getBuildingListGroups() const
 {
+	// The list is a cache over the enabler's offer, and a re-gate does not invalidate it -- only a queue
+	// push/pop did, so the screen showed the offer as of the last order change. Rebuilt per read, as the unit
+	// tab's invalidateUnitList() does per draw.
+	if (m_pCity != NULL)
+	{
+		m_pCity->setBuildingListInvalid();
+	}
 	return cyc_listGroups(m_pCity, &CvCity::getBuildingListGroupNum, &CvCity::getBuildingListNumInGroup,
 	                      &CvCity::getBuildingListType);
 }
