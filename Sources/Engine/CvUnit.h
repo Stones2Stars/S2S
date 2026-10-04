@@ -1230,6 +1230,13 @@ public:
 	const wchar_t* getNameKey() const;
 	const CvWString& getNameNoDesc() const;
 	void setName(const CvWString szNewValue);
+	/// <summary>The TXT key of the unique name this unit was GIVEN AT BIRTH, drawn from its info's
+	/// `uniqueNames`; empty when it was given none. It is who the unit is rather than what it is currently
+	/// called, so a rename leaves it alone.</summary>
+	const CvString& getUniqueNameKey() const;
+	/// <summary>Takes another unit's name AND the unique-name key behind it. Every transformation that carries
+	/// a name to a successor (upgrade, gift, merge, split) uses this, so the two halves cannot be separated.</summary>
+	void copyNameFrom(const CvUnit& kSource);
 
 	// Script data needs to be a narrow string for pickling in Python
 	std::string getScriptData() const;
@@ -1633,6 +1640,7 @@ protected:
 	int* m_aiExtraDomainModifier;
 
 	CvWString m_szName;
+	CvString m_szUniqueNameKey;
 	CvString m_szScriptData;
 
 	mutable int	m_maxMoveCache;

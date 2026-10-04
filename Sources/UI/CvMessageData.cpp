@@ -1799,7 +1799,7 @@ void CvNetChooseMergeUnit::Execute()
 			pkMergedUnit->m_eOriginalOwner = pUnit1->getOriginalOwner();
 			pkMergedUnit->setAutoPromoting(pUnit1->isAutoPromoting());
 			pkMergedUnit->testPromotionReady();
-			pkMergedUnit->setName(pUnit1->getNameNoDesc());
+			pkMergedUnit->copyNameFrom(*pUnit1);
 
 			if (pUnit1->getLeaderUnitType() != NO_UNIT)
 			{
@@ -1938,7 +1938,7 @@ void CvNetConfirmSplitUnit::Execute()
 				loopUnit->setGameTurnCreated(pUnit0->getGameTurnCreated());
 				loopUnit->m_eOriginalOwner = pUnit0->getOriginalOwner();
 				loopUnit->setAutoPromoting(pUnit0->isAutoPromoting());
-				loopUnit->setName(pUnit0->getNameNoDesc());
+				loopUnit->copyNameFrom(*pUnit0);
 			}
 
 			if (pUnit0->getLeaderUnitType() != NO_UNIT)
