@@ -17,6 +17,7 @@ init()
 # enum vocabulary + name->id resolution. A game object's own data is asked OF THAT OBJECT --
 # GC.getPlayer(i).getCity(id).getYields(), never a flat class keyed by (owner, id).
 GC = CyGlobalContext()
+INFO = CyInfo()
 ENABLER = CyEnabler()
 ENUMS = CyEnums()
 
@@ -47,8 +48,10 @@ def onGreatPersonBorn(argsList):
 			return
 
 		pGreatPerson = GC.getPlayer(iUnitOwner).getUnit(iUnitID)
-		sUnitName = GC.getPlayer(iUnitOwner).getUnit(iUnitID).getNameNoDesc()
-		if sUnitName == "": return
+		# A unit given no unique name has no portrait or pedia entry to show.
+		sName = pGreatPerson.getUniqueNameKey()
+		if not sName: return
+		sGreat = sName[8:]
 
 		# Get screen resolution.
 		import ScreenResolution as SR
@@ -81,22 +84,12 @@ def onGreatPersonBorn(argsList):
 		W_TEXT_PANEL = 355
 		H_TEXT_PANEL = 250
 
-		iType = pGreatPerson.getRead()[UnitReadKind.UNIT_READ_TYPE]
-		Info = CyGlobalContext().getUnitInfo(iType)
-
-		for i in xrange(Info.getNumUnitNames()):
-			sName = Info.getUnitNames(i)
-			if CyTranslator().getText(sName, ()) == sUnitName:
-				sGreat = sName[8:]
-				break
-		else: return
-
 		sPortrait = ""
 		artDef = CyArtFileMgr().getInterfaceArtInfo("ART_DEF_" + sGreat)
 		if artDef:
 			sPortrait = artDef.getPath()
 		sBack = ""
-		sType = Info.getType()
+		sType = INFO.getType("UNIT_", pGreatPerson.getRead()[UnitReadKind.UNIT_READ_TYPE])
 		if sType in g_GreatPeople:
 			sIcon = g_GreatPeople[sType]
 			artDef = CyArtFileMgr().getInterfaceArtInfo(sIcon)
