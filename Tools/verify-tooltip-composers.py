@@ -21,13 +21,14 @@ VERDICTS
              is simply not the one doing the filling, so the work is at its target, not here.
              ⚠ Missing this distinction reads every delegating widget function as an EMPTY tooltip, which is the
              opposite of the truth and buries the genuinely blank ones under a hundred false ones.
-  HANDBUILT  writes text but never through the renderer -- the conversion candidates. This is the RATCHET.
+  HANDBUILT  writes its own text. An INVENTORY, never a defect count: a line that fits no block (research
+             spent against cost) is finished in this form, and a listing the engine builds itself (the combat
+             preview) lands here too. The question for a human is whether the composer RE-DERIVES something
+             the engine calculates -- this tool cannot see that.
   SILENT     fills nothing. Either a deliberate honest gap (the legacy read was cut and the composer awaits a
              rebuild) or a tooltip nobody has noticed is blank. Both want a human.
 
-The HANDBUILT + SILENT counts are a RATCHET and may only FALL. It is ADVISORY -- a permanently-red gate on a
-known in-progress conversion is one nobody can act on -- but a RISE means a composer was added off the shared
-renderer, which is the thing the spec bans.
+SILENT is the count to hunt. It is ADVISORY and never fails the run.
 
 ⛔ IT ANSWERS THE MECHANISM, NEVER THE LOOK. Whether a tooltip looks right is judged against the LOOK reference
 ([docs/reference/tooltip-look.md]), which is free text with icon placeholders and is where a tooltip is
@@ -140,7 +141,7 @@ def main():
     print("tooltip composers: %d" % total)
     print("  RENDERER  %4d  (consume rendered entry lines -- converted)" % len(verdicts["RENDERER"]))
     print("  DELEGATE  %4d  (hand the buffer to another composer -- not themselves the work)" % len(verdicts["DELEGATE"]))
-    print("  HANDBUILT %4d  (write text off the shared renderer -- the conversion candidates)" % len(verdicts["HANDBUILT"]))
+    print("  HANDBUILT %4d  (write their own text -- an inventory, not a defect count)" % len(verdicts["HANDBUILT"]))
     print("  SILENT    %4d  (fill nothing -- an honest gap, or a blank nobody noticed)" % len(verdicts["SILENT"]))
 
     if show_list:
@@ -152,9 +153,8 @@ def main():
         print("\nrun with --list for the per-composer verdicts")
 
     print(
-        "\nADVISORY. HANDBUILT + SILENT is a RATCHET and may only FALL: a rise means a composer was added off\n"
-        "the shared renderer, which is what [patterns.md] par. THE DIVISION OF LABOUR bans. It never fails the run --\n"
-        "a permanently-red gate on a known in-progress conversion is one nobody can act on."
+        "\nADVISORY. SILENT is the count to hunt. HANDBUILT is an inventory: what [patterns.md] par. THE DIVISION OF\n"
+        "LABOUR bans is a composer RE-DERIVING what the engine calculates, which this tool cannot see."
     )
     return 0
 

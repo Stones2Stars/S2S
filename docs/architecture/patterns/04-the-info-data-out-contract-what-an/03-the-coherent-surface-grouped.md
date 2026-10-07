@@ -158,6 +158,18 @@ group's natural index** — never N individual getters for a groupable set. This
      > ⚑ The test: `getText` around a MAGNITUDE is a hand-built sub-block and wrong; `getText` for a HEADING or
      > choosing which sources belong together is the block, and right.
      >
+     > **⚖ THE PART OF THE ENGINE THAT CALCULATES A THING BUILDS ITS DATABLOCK.** The big calculated listings —
+     > a buff breakdown, the combat listing — are built directly from the engine, by the code that owns the
+     > calculation: it hands over finished lines and the composer only lays them out and colours them
+     > (`CvCombatModel::computeCombatPreview` → `CombatPreview` is the exemplar). That is what makes the
+     > displayed listing the calculation itself rather than a second derivation of it
+     > ([the DRY single-implementation law](../03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)).
+     > ⛔ **NOT EVERYTHING FITS A BLOCK, AND A LINE THAT DOES NOT IS NOT A DEFECT.** A single line of live state
+     > — research spent against cost, a turns estimate — has no entry to render and no calculation to itemise;
+     > the composer writes it from the controller's value and that is its finished form. ⇒ The question on a
+     > composer that writes its own text is never *is it hand-built* but **does it re-derive something the
+     > engine calculates**: one that does is the defect, whatever it prints through.
+     >
      > **⛔ A BREAKDOWN ITEMISES WHAT THE OBJECT HAS, AND NOTHING ELSE.** It lists sources DELIVERING a
      > realized value — never a candidate that WOULD deliver one; the two read identically once rendered, so a
      > panel carrying both is unusable, not richer. ⚠ A separator does not rescue it, nor an option defaulting on.

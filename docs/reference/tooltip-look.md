@@ -86,7 +86,7 @@ so a single run showed some subset of its lines, never all of them at once. Read
 drew from, not as one screen.
 
 ⚑ The companion is `python Tools/verify-tooltip-composers.py`, which censuses the LIVE composers and says which
-still hand-build. That tool answers the MECHANISM; this file answers the LOOK. Neither alone says a tooltip is
+fill NOTHING. That tool answers the MECHANISM; this file answers the LOOK. Neither alone says a tooltip is
 finished.
 
 ---
