@@ -439,6 +439,18 @@ static void addModifierLine(std::vector<CombatPreviewLine>& lines, const char* s
 	lines.push_back(CombatPreviewLine(gDLL->getText(szTextKey, iValue), (float)iValue, eCategory));
 }
 
+///<summary>A combat strength as the text the preview hands over, with two decimals.</summary>
+static std::wstring combatStrengthText(int iStrength100)
+{
+	return CvWString::format(L"%d.%02d", iStrength100 / 100, iStrength100 % 100);
+}
+
+///<summary>A display-only preview figure (odds percent, expected hit points) as text with two decimals.</summary>
+static std::wstring combatDecimalText(float fValue)
+{
+	return CvWString::format(L"%.2f", fValue);
+}
+
 // Itemise the defender's effective-strength modifiers (the matchup breakdown) from
 // the CombatDetails the engine already filled while computing currCombatStr. Mirrors
 // the field/key mapping in CvUtil.combatDetailMessageBuilder so the tooltip and the
@@ -485,7 +497,9 @@ CombatPreview computeCombatPreview(const CvUnit* pAttacker, const CvUnit* pDefen
 
 	CombatPreview kP;
 	kP.bValid = false;
-	kP.iAttackerStrength = kP.iDefenderStrength = 0;
+	kP.bFirstStrikesFavourAttacker = true;
+	kP.bHasFirstStrikes = false;
+	kP.iAttackerFirstStrikeTotal = kP.iDefenderFirstStrikeTotal = 0;
 	kP.iNeededRoundsAttacker = kP.iNeededRoundsDefender = 0;
 	kP.iDamageToAttacker = kP.iDamageToDefender = 0;
 	kP.fAttackerKillOdds = kP.fPullOutOdds = kP.fRetreatOdds = kP.fDefenderKillOdds = 0.0f;
@@ -625,8 +639,8 @@ CombatPreview computeCombatPreview(const CvUnit* pAttacker, const CvUnit* pDefen
 	kP.iDefenderKillXP = iDefenderKillXP;
 
 	// --- strengths, rounds, first strikes and their measured win-swing ---
-	kP.iAttackerStrength = iAttackerStrength;
-	kP.iDefenderStrength = iDefenderStrength;
+	kP.szAttackerStrength = combatStrengthText(iAttackerStrength);
+	kP.szDefenderStrength = combatStrengthText(iDefenderStrength);
 	kP.iNeededRoundsAttacker = iNeededRoundsAttacker;
 	kP.iNeededRoundsDefender = iNeededRoundsDefender;
 	kP.iDamageToAttacker = iDamageToAttacker;
@@ -639,6 +653,24 @@ CombatPreview computeCombatPreview(const CvUnit* pAttacker, const CvUnit* pDefen
 
 	kP.iWinOddsWithFS = getCombatOddsImpl(pAttacker, pDefender, false);
 	kP.iWinOddsNoFS = getCombatOddsImpl(pAttacker, pDefender, true);
+
+	// --- the printed figures, finished ---
+	kP.szAttackerKillOdds = combatDecimalText(100.0f * kP.fAttackerKillOdds);
+	kP.szPullOutOdds = combatDecimalText(100.0f * kP.fPullOutOdds);
+	kP.szRetreatOdds = combatDecimalText(100.0f * kP.fRetreatOdds);
+	kP.szDefenderKillOdds = combatDecimalText(100.0f * kP.fDefenderKillOdds);
+	kP.szExpHPAttackerWin = combatDecimalText(kP.fExpHPAttackerWin);
+	kP.szExpHPAttackerPullOut = combatDecimalText(kP.fExpHPAttackerPullOut);
+	kP.szExpHPDefenderWin = combatDecimalText(kP.fExpHPDefenderWin);
+
+	kP.iAttackerFirstStrikeTotal = kP.iAttackerFirstStrikes + kP.iAttackerFirstStrikeChances;
+	kP.iDefenderFirstStrikeTotal = kP.iDefenderFirstStrikes + kP.iDefenderFirstStrikeChances;
+	kP.bHasFirstStrikes = kP.iAttackerFirstStrikeTotal != 0 || kP.iDefenderFirstStrikeTotal != 0;
+	const int iFirstStrikeSwing = kP.iWinOddsWithFS - kP.iWinOddsNoFS;   // out of 1000
+	const int iAbsFirstStrikeSwing = iFirstStrikeSwing < 0 ? -iFirstStrikeSwing : iFirstStrikeSwing;
+	kP.bFirstStrikesFavourAttacker = iFirstStrikeSwing >= 0;
+	kP.szFirstStrikeSwing = CvWString::format(L"%s%d.%d0",
+		kP.bFirstStrikesFavourAttacker ? L"+" : L"-", iAbsFirstStrikeSwing / 10, iAbsFirstStrikeSwing % 10);
 
 	// --- itemised strength-modifier breakdown (Shift-detail; empty otherwise) ---
 	if (bIncludeModifierBreakdown)

@@ -33,6 +33,8 @@
 #include "Infos/CvEspionageMissionInfo.h"  // the mission whose cost the espionage census decomposes
 #include "CvClassificationBlock.h"   // the §8/§9 block appendClassificationLines walks
 #include "UI/CvEntryText.h"           // entryDetailLine -- the ONE per-entry renderer
+#include "Python/CyTeam.h"            // the controller reads the tech hover prints
+#include "Python/CyPlayer.h"
 #include "Enabler/CvEnablerKernel.h"  // operatingBuildings -- the enabler's OWN active/obsolete verdict
 #include "Enabler/CvOperatingBuildings.h"
 #include "CvBonusInfo.h"
@@ -911,6 +913,17 @@ namespace {
 	}
 }
 
+///<summary>The first-strike row of a combat preview: both sides' totals and the swing they put on the win
+/// chance, coloured by which side it favours.</summary>
+static void appendCombatFirstStrikes(CvWStringBuffer& szString, const CombatPreview& kP)
+{
+	const char* szSwingColor = kP.bFirstStrikesFavourAttacker ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT";
+	CvWString szSwing;
+	szSwing.Format(SETCOLR L"%s%%" ENDCOLR, TEXT_COLOR(szSwingColor), kP.szFirstStrikeSwing.c_str());
+	szString.append(gDLL->getText("TXT_ACO_FIRST_STRIKE",
+		kP.iAttackerFirstStrikeTotal, kP.iDefenderFirstStrikeTotal, szSwing.GetCString()));
+}
+
 // Draws the at-a-glance combat-odds bar: a fixed 200px strip (1% = 2px) split into
 // green (attacker wins -- kills or reaches the combat limit), yellow (attacker
 // retreats) and red (attacker is defeated), proportional to the outcome odds in
@@ -1070,13 +1083,13 @@ bool CvGameTextMgr::setCombatPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, 
 					const bool bCanKill = (kP.iDefenderHitLimitHP == 0);
 
 					// --- Strengths (final, post-modifier) ---
-					szTempBuffer.Format(L"%.2f", pAttacker->currCombatStrFloat(NULL, NULL));
+					szTempBuffer = kP.szAttackerStrength.c_str();
 					if (pAttacker->isHurt())
 					{
 						szTempBuffer.append(L" ");
 						szTempBuffer.append(gDLL->getText("TXT_ACO_INJURED_HP", pAttacker->getHP(), pAttacker->getMaxHP()));
 					}
-					szTempBuffer2.Format(L"%.2f", pDefender->currCombatStrFloat(pPlot, pAttacker));
+					szTempBuffer2 = kP.szDefenderStrength.c_str();
 					if (pDefender->isHurt())
 					{
 						szTempBuffer2.append(L" ");
@@ -1094,12 +1107,12 @@ bool CvGameTextMgr::setCombatPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, 
 					if (bCanKill)
 					{
 						szString.append(gDLL->getText("TXT_ACO_VICTORY"));
-						szTempBuffer.Format(L": " SETCOLR L"%.2f%% %d" ENDCOLR,
-							TEXT_COLOR("COLOR_POSITIVE_TEXT"), 100.0f * kP.fAttackerKillOdds, kP.iVictoryXP);
+						szTempBuffer.Format(L": " SETCOLR L"%s%% %d" ENDCOLR,
+							TEXT_COLOR("COLOR_POSITIVE_TEXT"), kP.szAttackerKillOdds.c_str(), kP.iVictoryXP);
 						szString.append(szTempBuffer.GetCString());
 						szString.append(gDLL->getText("TXT_ACO_XP"));
-						szTempBuffer.Format(L"  (" SETCOLR L"%.1f" ENDCOLR,
-							TEXT_COLOR("COLOR_POSITIVE_TEXT"), kP.fExpHPAttackerWin);
+						szTempBuffer.Format(L"  (" SETCOLR L"%s" ENDCOLR,
+							TEXT_COLOR("COLOR_POSITIVE_TEXT"), kP.szExpHPAttackerWin.c_str());
 						szString.append(szTempBuffer.GetCString());
 						szString.append(gDLL->getText("TXT_ACO_HP"));
 						szString.append(L")");
@@ -1107,12 +1120,12 @@ bool CvGameTextMgr::setCombatPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, 
 					else
 					{
 						szString.append(gDLL->getText("TXT_ACO_WITHDRAW"));
-						szTempBuffer.Format(L": " SETCOLR L"%.2f%% %d" ENDCOLR,
-							TEXT_COLOR("COLOR_POSITIVE_TEXT"), 100.0f * kP.fPullOutOdds, kP.iVictoryXP);
+						szTempBuffer.Format(L": " SETCOLR L"%s%% %d" ENDCOLR,
+							TEXT_COLOR("COLOR_POSITIVE_TEXT"), kP.szPullOutOdds.c_str(), kP.iVictoryXP);
 						szString.append(szTempBuffer.GetCString());
 						szString.append(gDLL->getText("TXT_ACO_XP"));
-						szTempBuffer.Format(L"  (" SETCOLR L"%.1f" ENDCOLR,
-							TEXT_COLOR("COLOR_POSITIVE_TEXT"), kP.fExpHPAttackerPullOut);
+						szTempBuffer.Format(L"  (" SETCOLR L"%s" ENDCOLR,
+							TEXT_COLOR("COLOR_POSITIVE_TEXT"), kP.szExpHPAttackerPullOut.c_str());
 						szString.append(szTempBuffer.GetCString());
 						szString.append(gDLL->getText("TXT_ACO_HP"));
 						szTempBuffer.Format(L", " SETCOLR L"%d" ENDCOLR,
@@ -1127,8 +1140,8 @@ bool CvGameTextMgr::setCombatPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, 
 					{
 						szString.append(NEWLINE);
 						szString.append(gDLL->getText("TXT_ACO_RETREAT"));
-						szTempBuffer.Format(L": " SETCOLR L"%.2f%% %d" ENDCOLR,
-							TEXT_COLOR("COLOR_UNIT_TEXT"), 100.0f * kP.fRetreatOdds, kP.iRetreatXP);
+						szTempBuffer.Format(L": " SETCOLR L"%s%% %d" ENDCOLR,
+							TEXT_COLOR("COLOR_UNIT_TEXT"), kP.szRetreatOdds.c_str(), kP.iRetreatXP);
 						szString.append(szTempBuffer.GetCString());
 						szString.append(gDLL->getText("TXT_ACO_XP"));
 						szTempBuffer.Format(L"  (" SETCOLR L"%d" ENDCOLR,
@@ -1141,29 +1154,21 @@ bool CvGameTextMgr::setCombatPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, 
 					// --- Defeat ---
 					szString.append(NEWLINE);
 					szString.append(gDLL->getText("TXT_ACO_DEFEAT"));
-					szTempBuffer.Format(L": " SETCOLR L"%.2f%% %d" ENDCOLR,
-						TEXT_COLOR("COLOR_NEGATIVE_TEXT"), 100.0f * kP.fDefenderKillOdds, kP.iDefenderKillXP);
+					szTempBuffer.Format(L": " SETCOLR L"%s%% %d" ENDCOLR,
+						TEXT_COLOR("COLOR_NEGATIVE_TEXT"), kP.szDefenderKillOdds.c_str(), kP.iDefenderKillXP);
 					szString.append(szTempBuffer.GetCString());
 					szString.append(gDLL->getText("TXT_ACO_XP"));
-					szTempBuffer.Format(L"  (" SETCOLR L"%.1f" ENDCOLR,
-						TEXT_COLOR("COLOR_NEGATIVE_TEXT"), kP.fExpHPDefenderWin);
+					szTempBuffer.Format(L"  (" SETCOLR L"%s" ENDCOLR,
+						TEXT_COLOR("COLOR_NEGATIVE_TEXT"), kP.szExpHPDefenderWin.c_str());
 					szString.append(szTempBuffer.GetCString());
 					szString.append(gDLL->getText("TXT_ACO_HP"));
 					szString.append(L")");
 
 					// --- First strikes and their measured effect on the win chance ---
-					if (kP.iAttackerFirstStrikes || kP.iAttackerFirstStrikeChances
-						|| kP.iDefenderFirstStrikes || kP.iDefenderFirstStrikeChances)
+					if (kP.bHasFirstStrikes)
 					{
-						const int iSwing = kP.iWinOddsWithFS - kP.iWinOddsNoFS; // out of 1000
-						const char* szSwingColor = (iSwing >= 0) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT";
-						CvWString szSwing;
-						szSwing.Format(SETCOLR L"%+.1f%%" ENDCOLR, TEXT_COLOR(szSwingColor), iSwing / 10.0f);
 						szString.append(NEWLINE);
-						szString.append(gDLL->getText("TXT_ACO_FIRST_STRIKE",
-							kP.iAttackerFirstStrikes + kP.iAttackerFirstStrikeChances,
-							kP.iDefenderFirstStrikes + kP.iDefenderFirstStrikeChances,
-							szSwing.GetCString()));
+						appendCombatFirstStrikes(szString, kP);
 					}
 
 					// --- Needed rounds (detail, shown while holding Shift) ---
@@ -1267,38 +1272,30 @@ bool CvGameTextMgr::setMinimalCombatPlotHelp(CvWStringBuffer& szString, CvPlot* 
 		if (kP.iDefenderHitLimitHP == 0)
 		{
 			szString.append(gDLL->getText("TXT_ACO_VICTORY"));
-			szTmp.Format(L" " SETCOLR L"%.1f%%" ENDCOLR L"   ", TEXT_COLOR("COLOR_POSITIVE_TEXT"), 100.0f * kP.fAttackerKillOdds);
+			szTmp.Format(L" " SETCOLR L"%s%%" ENDCOLR L"   ", TEXT_COLOR("COLOR_POSITIVE_TEXT"), kP.szAttackerKillOdds.c_str());
 		}
 		else
 		{
 			szString.append(gDLL->getText("TXT_ACO_WITHDRAW"));
-			szTmp.Format(L" " SETCOLR L"%.1f%%" ENDCOLR L"   ", TEXT_COLOR("COLOR_POSITIVE_TEXT"), 100.0f * kP.fPullOutOdds);
+			szTmp.Format(L" " SETCOLR L"%s%%" ENDCOLR L"   ", TEXT_COLOR("COLOR_POSITIVE_TEXT"), kP.szPullOutOdds.c_str());
 		}
 		szString.append(szTmp.GetCString());
 
 		if (kP.fRetreatOdds > 0.0f)
 		{
 			szString.append(gDLL->getText("TXT_ACO_RETREAT"));
-			szTmp.Format(L" " SETCOLR L"%.1f%%" ENDCOLR L"   ", TEXT_COLOR("COLOR_UNIT_TEXT"), 100.0f * kP.fRetreatOdds);
+			szTmp.Format(L" " SETCOLR L"%s%%" ENDCOLR L"   ", TEXT_COLOR("COLOR_UNIT_TEXT"), kP.szRetreatOdds.c_str());
 			szString.append(szTmp.GetCString());
 		}
 
 		szString.append(gDLL->getText("TXT_ACO_DEFEAT"));
-		szTmp.Format(L" " SETCOLR L"%.1f%%" ENDCOLR, TEXT_COLOR("COLOR_NEGATIVE_TEXT"), 100.0f * kP.fDefenderKillOdds);
+		szTmp.Format(L" " SETCOLR L"%s%%" ENDCOLR, TEXT_COLOR("COLOR_NEGATIVE_TEXT"), kP.szDefenderKillOdds.c_str());
 		szString.append(szTmp.GetCString());
 
-		if (kP.iAttackerFirstStrikes || kP.iAttackerFirstStrikeChances
-			|| kP.iDefenderFirstStrikes || kP.iDefenderFirstStrikeChances)
+		if (kP.bHasFirstStrikes)
 		{
-			const int iSwing = kP.iWinOddsWithFS - kP.iWinOddsNoFS;
-			const char* szSwingColor = (iSwing >= 0) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT";
-			CvWString szSwing;
-			szSwing.Format(SETCOLR L"%+.1f%%" ENDCOLR, TEXT_COLOR(szSwingColor), iSwing / 10.0f);
 			szString.append(NEWLINE);
-			szString.append(gDLL->getText("TXT_ACO_FIRST_STRIKE",
-				kP.iAttackerFirstStrikes + kP.iAttackerFirstStrikeChances,
-				kP.iDefenderFirstStrikes + kP.iDefenderFirstStrikeChances,
-				szSwing.GetCString()));
+			appendCombatFirstStrikes(szString, kP);
 		}
 	}
 
@@ -1371,38 +1368,30 @@ bool CvGameTextMgr::setAssassinatePlotHelp(CvWStringBuffer& szString, CvPlot* pP
 		if (kP.iDefenderHitLimitHP == 0)
 		{
 			szString.append(gDLL->getText("TXT_ACO_VICTORY"));
-			szTmp.Format(L" " SETCOLR L"%.1f%%" ENDCOLR L"   ", TEXT_COLOR("COLOR_POSITIVE_TEXT"), 100.0f * kP.fAttackerKillOdds);
+			szTmp.Format(L" " SETCOLR L"%s%%" ENDCOLR L"   ", TEXT_COLOR("COLOR_POSITIVE_TEXT"), kP.szAttackerKillOdds.c_str());
 		}
 		else
 		{
 			szString.append(gDLL->getText("TXT_ACO_WITHDRAW"));
-			szTmp.Format(L" " SETCOLR L"%.1f%%" ENDCOLR L"   ", TEXT_COLOR("COLOR_POSITIVE_TEXT"), 100.0f * kP.fPullOutOdds);
+			szTmp.Format(L" " SETCOLR L"%s%%" ENDCOLR L"   ", TEXT_COLOR("COLOR_POSITIVE_TEXT"), kP.szPullOutOdds.c_str());
 		}
 		szString.append(szTmp.GetCString());
 
 		if (kP.fRetreatOdds > 0.0f)
 		{
 			szString.append(gDLL->getText("TXT_ACO_RETREAT"));
-			szTmp.Format(L" " SETCOLR L"%.1f%%" ENDCOLR L"   ", TEXT_COLOR("COLOR_UNIT_TEXT"), 100.0f * kP.fRetreatOdds);
+			szTmp.Format(L" " SETCOLR L"%s%%" ENDCOLR L"   ", TEXT_COLOR("COLOR_UNIT_TEXT"), kP.szRetreatOdds.c_str());
 			szString.append(szTmp.GetCString());
 		}
 
 		szString.append(gDLL->getText("TXT_ACO_DEFEAT"));
-		szTmp.Format(L" " SETCOLR L"%.1f%%" ENDCOLR, TEXT_COLOR("COLOR_NEGATIVE_TEXT"), 100.0f * kP.fDefenderKillOdds);
+		szTmp.Format(L" " SETCOLR L"%s%%" ENDCOLR, TEXT_COLOR("COLOR_NEGATIVE_TEXT"), kP.szDefenderKillOdds.c_str());
 		szString.append(szTmp.GetCString());
 
-		if (kP.iAttackerFirstStrikes || kP.iAttackerFirstStrikeChances
-			|| kP.iDefenderFirstStrikes || kP.iDefenderFirstStrikeChances)
+		if (kP.bHasFirstStrikes)
 		{
-			const int iSwing = kP.iWinOddsWithFS - kP.iWinOddsNoFS;
-			const char* szSwingColor = (iSwing >= 0) ? "COLOR_POSITIVE_TEXT" : "COLOR_NEGATIVE_TEXT";
-			CvWString szSwing;
-			szSwing.Format(SETCOLR L"%+.1f%%" ENDCOLR, TEXT_COLOR(szSwingColor), iSwing / 10.0f);
 			szString.append(NEWLINE);
-			szString.append(gDLL->getText("TXT_ACO_FIRST_STRIKE",
-				kP.iAttackerFirstStrikes + kP.iAttackerFirstStrikeChances,
-				kP.iDefenderFirstStrikes + kP.iDefenderFirstStrikeChances,
-				szSwing.GetCString()));
+			appendCombatFirstStrikes(szString, kP);
 		}
 	}
 
@@ -2683,9 +2672,39 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 	if (!bCivilopediaText)
 	{
 		szBuffer.append(kInfo.getDescription());
+		appendTechResearchProgress(szBuffer, eTech);
 	}
 	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
 }
+
+///<summary>The viewer's research on a tech they do not hold yet: beakers spent against the cost, and the
+/// turns left while they have a research rate. Every number is asked of the Cy controller.</summary>
+void CvGameTextMgr::appendTechResearchProgress(CvWStringBuffer& szBuffer, TechTypes eTech)
+{
+	const PlayerTypes eActivePlayer = GC.getGame().getActivePlayer();
+	if (eActivePlayer == NO_PLAYER)
+	{
+		return;
+	}
+	CvPlayer& kActivePlayer = GET_PLAYER(eActivePlayer);
+	CvTeam& kActiveTeam = GET_TEAM(kActivePlayer.getTeam());
+	if (kActiveTeam.isHasTech(eTech))
+	{
+		return;
+	}
+	const CyTeam kTeamRead(&kActiveTeam);
+	const CyPlayer kPlayerRead(&kActivePlayer);
+
+	szBuffer.append(NEWLINE);
+	szBuffer.append(gDLL->getText("TXT_KEY_TECHHELP_RESEARCH_PROGRESS",
+		kTeamRead.getResearchProgress(eTech), kTeamRead.getResearchCost(eTech)));
+	if (kPlayerRead.calculateResearchRate(eTech) > 0)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_TECHHELP_NUM_TURNS", kPlayerRead.getResearchTurnsLeft(eTech, true)));
+	}
+}
+
 void CvGameTextMgr::setBasicUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool bCivilopediaText)
 {
 	if ((int)eUnit < 0)
