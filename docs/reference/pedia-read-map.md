@@ -51,6 +51,12 @@ the same composer families already censused in [patterns.md](../architecture/pat
 **Two render modes of the SAME composers**: full-page body (`bCivilopediaText=True`, no player context) and
 hover tooltip (`False`, active-player context). The new surface must serve both from one source.
 
+⛔ **THE PEDIA SHOWS THE GAME YOU ARE IN.** It is reachable only from inside a game, so it lists an entity's
+data as that game's options leave it, exactly as a hover does: an entry a game option switches off is not
+listed, and the option is never printed as a condition. Both modes take that from the ONE filter
+(`entryHiddenByGameOptions`), which the rendered entry lines and `CyInfo::getConditionedEntries` both apply.
+⚠ A pedia that lets the reader CHOOSE the options to view under is a website function, not this screen.
+
 ## 3. Per-screen read inventory
 
 Call sites = every non-UI `get*/is/has/parse*` call in the file (includes `TRNSLTR.getText` localization
