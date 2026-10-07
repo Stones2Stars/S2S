@@ -228,11 +228,14 @@ group's natural index** — never N individual getters for a groupable set. This
      > ⚠ A run-on comma-separated line is NOT a block structure, however complete its content. ⛔ A SHOW
      > CONDITION is a design call, asked never inferred.
      >
-     > **⚖ THE DLL DOES NOT CONVERT FOR DISPLAY — THE CONSUMER CONVERTS ITSELF (let python convert
-     > themselves).** A composer doing `(float)value / 100 / denominator` to print `%.2f` is the DLL doing the
-     > presentation layer's arithmetic, in FLOAT, for a value the engine holds as an integer. ⚠ Not an OOS risk
-     > while display-only — exactly why it survives unnoticed — but it is the wrong side of the boundary: remove
-     > it as each composer moves, never copy it into a new one.
+     > **⚖ A COMPOSER DOES NOT CONVERT FOR DISPLAY — THE `Cy*` CONTROLLER DOES, AND IT IS THE ONLY PLACE THAT
+     > DOES.** Display conversion has one home
+     > ([the `Cy*` layer is the controller](../06-the-python-read-boundary-one.md#-the-python-read-boundary--one-complete-data-fetching-library)),
+     > and a composer is a VIEW exactly as Python is: it takes a finished value from the controller, or a
+     > finished line from the producer, and lays it out. A composer doing `(float)value / 100 / denominator` to
+     > print `%.2f` is a second copy of that conversion, in FLOAT, for a value the engine holds as an integer.
+     > ⚠ Not an OOS risk while display-only — exactly why it survives unnoticed — but every copy is a place the
+     > scale can be got wrong independently: remove it as each composer moves, never copy it into a new one.
 
   ```cpp
   // SECTIONS — whole typed objects
