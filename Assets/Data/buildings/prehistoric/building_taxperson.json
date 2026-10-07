@@ -32,7 +32,13 @@
  },
  "gold": {
   "city": {
-   "flat": 3
+   "flat": [
+    3,
+    {
+     "value": 0.1,
+     "per": "POPULATION"
+    }
+   ]
   }
  },
  "happiness": {

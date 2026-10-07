@@ -127,8 +127,6 @@ class Tracker:
 			self.terms[eYield] = GC.getPlayer(iPlayer).getCity(iCityID).getYieldTerms(eYield)
 
 	def term(self, eYield, iTerm):
-		# x100 amounts come back as whole game numbers here; percentSum / workedPlots are already whole
-		# ([DEC-fixedpoint-x100]: the reader divides at the point of use).
 		terms = self.terms.get(eYield)
 		if not terms or iTerm >= len(terms):
 			return 0
@@ -144,13 +142,13 @@ class Tracker:
 
 		# The worked-plot base, with its three segments -- a short plot yield cannot be attributed from the total
 		# alone (a dead improvement leg and a dead nature leg look identical in it).
-		iPlotBase = self.term(eYield, T_PLOT_BASE) / 100
+		iPlotBase = self.term(eYield, T_PLOT_BASE)
 		self.appendTable(screen, table, False,
 			TRNSLTR.getText(LABEL_KEYS[WORKED_TILES], (self.term(eYield, T_WORKED_PLOTS),)), eYield, iPlotBase)
 		for iTerm, szKey in ((T_PLOT_NATURE, "TXT_KEY_CONCEPT_NATURE"),
 		                     (T_PLOT_IMPROVEMENT, "TXT_KEY_CONCEPT_IMPROVEMENT"),
 		                     (T_PLOT_REST, "TXT_KEY_CONCEPT_OTHER")):
-			iValue = self.term(eYield, iTerm) / 100
+			iValue = self.term(eYield, iTerm)
 			if iValue:
 				self.appendTable(screen, table, False, u"    " + TRNSLTR.getText(szKey, ()), eYield, iValue)
 		iTotal = iPlotBase
@@ -168,7 +166,7 @@ class Tracker:
 		                     (T_UPPER_FLAT, "TXT_KEY_WB_BUILDINGS"),
 		                     (T_GOLDEN_AGE, "TXT_KEY_CONCEPT_GOLDEN_AGE"),
 		                     (T_CITY_FLAT, "TXT_KEY_WB_BUILDINGS")):
-			iValue = self.term(eYield, iTerm) / 100
+			iValue = self.term(eYield, iTerm)
 			if iValue:
 				iTotal += iValue
 				self.appendTable(screen, table, False, TRNSLTR.getText(szKey, ()), eYield, iValue)
@@ -184,7 +182,7 @@ class Tracker:
 		# â The TOTAL is the census's OWN rate, never this function's running sum. The combine is the
 		# authority; a total re-added here would be a second answer, and the two would drift the moment a term
 		# is added to the cascade and not to this loop.
-		self.appendTableTotal(screen, table, eYield, self.term(eYield, T_RATE) / 100)
+		self.appendTableTotal(screen, table, eYield, self.term(eYield, T_RATE))
 
 	def appendTable(self, screen, table, bTotal, heading, eYield, iValue, bFraction=False):
 		"""

@@ -109,8 +109,8 @@ struct CombatPreview
 {
 	bool bValid;                        // false if inputs are degenerate
 
-	int iAttackerStrength;              // currCombatStr, x100 (display divides)
-	int iDefenderStrength;
+	std::wstring szAttackerStrength;    // final post-modifier strength, ready to print
+	std::wstring szDefenderStrength;
 
 	int iNeededRoundsAttacker;          // hits attacker must land to win
 	int iNeededRoundsDefender;          // hits attacker can take before dying
@@ -140,6 +140,21 @@ struct CombatPreview
 	int iDefenderFirstStrikes, iDefenderFirstStrikeChances;
 	int iWinOddsWithFS;                 // attacker win prob out of 1000 (first strikes active)
 	int iWinOddsNoFS;                   // attacker win prob out of 1000 (first strikes suppressed)
+
+	// Every figure the tooltip prints, as finished text with two decimals. A composer places these and
+	// formats nothing; the numeric fields above serve the odds bar's widths and the show conditions.
+	std::wstring szAttackerKillOdds;    // percent, without the sign
+	std::wstring szPullOutOdds;
+	std::wstring szRetreatOdds;
+	std::wstring szDefenderKillOdds;
+	std::wstring szExpHPAttackerWin;
+	std::wstring szExpHPAttackerPullOut;
+	std::wstring szExpHPDefenderWin;
+	std::wstring szFirstStrikeSwing;    // signed percent the first strikes move the win chance by
+	bool bFirstStrikesFavourAttacker;   // the swing's direction, for the composer's colour
+	bool bHasFirstStrikes;              // either side brings a first strike or a chance of one
+	int iAttackerFirstStrikeTotal;      // strikes + chances
+	int iDefenderFirstStrikeTotal;
 
 	// Extension seam for combat-mod rules; empty in the vanilla engine.
 	std::vector<CombatPreviewLine> detailLines;

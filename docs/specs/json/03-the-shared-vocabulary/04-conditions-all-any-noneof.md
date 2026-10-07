@@ -90,8 +90,10 @@ never whether the two category lists differ.
     > city demonstrably held: London carried 96 resources in trade and 14 on site, so Cannery's apple, crab,
     > lemons and olives were each refused while the city was trading all four.
     > ⚑ The refusal is invisible in every total — a deposit that never applies leaves no trace — which is why this
-    > survives review and why the yield tooltip and `/computed/city/yield` now list the refused deposits WITH the
-    > atom that refused them.
+    > survives review and why `/computed/city/yield` lists the refused deposits WITH the atom that refused them.
+    > ⛔ The city's yield TOOLTIP does not: it is a breakdown of what the city gets, and a deposit that is not
+    > applying is not part of that
+    > ([a breakdown itemises what the object has](../../../architecture/patterns/04-the-info-data-out-contract-what-an/03-the-coherent-surface-grouped.md#the-coherent-surface--grouped-storage-parameterized-getters-clarity-and-predictability-is-king)).
 
   ```jsonc
   { "type": "BONUS_MUREX",    "scope": "city", "connection": "onSite" }   // this city provides it (improved here, or produced here)

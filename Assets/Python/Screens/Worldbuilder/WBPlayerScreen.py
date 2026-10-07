@@ -152,7 +152,7 @@ class WBPlayerScreen:
 				sColor = CyTranslator().getText("[COLOR_POSITIVE_TEXT]", ())
 				screen.setButtonGFC("CommerceFlexiblePlus" + str(i), "", "", iX, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1030, i, ButtonStyles.BUTTON_STYLE_CITY_PLUS)
 				screen.setButtonGFC("CommerceFlexibleMinus" + str(i), "", "", iX + 25, iY, 24, 24, WidgetTypes.WIDGET_PYTHON, 1031, i, ButtonStyles.BUTTON_STYLE_CITY_MINUS)
-			sText = sColor + u"<font=3>%c: %d%% %s</color></font>" %(TEXT.getSymbolChar("COMMERCE_", i), pPlayer.getCommercePercent(i), CyTranslator().getText("TXT_KEY_MISC_POS_GOLD_PER_TURN", (pPlayer.getCommerceRate(CommerceTypes(i)),)))
+			sText = sColor + u"<font=3>%c: %d%% %s</color></font>" %(TEXT.getSymbolChar("COMMERCE_", i), pPlayer.getCommercePercent(i), CyTranslator().getText("TXT_KEY_MISC_POS_GOLD_PER_TURN", (u"%+d" % pPlayer.getCommerceRate(CommerceTypes(i)),)))
 			screen.setText("AdjustCommerceFlexible" + INFO.getType("COMMERCE_", i), "Background", "<font=3>" + sText + "</font>", 1<<0, iX + 50, iY + 1, -0.1, FontTypes.TITLE_FONT, WidgetTypes.WIDGET_PYTHON, 7881, i)
 			iY += 30
 

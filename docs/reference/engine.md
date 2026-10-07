@@ -97,7 +97,7 @@ multiplayer."*** The test is whether the value can reach state every client must
   the AI runs on all clients, so a divergent score picks a different target on one of them.
 - **FINE** — anything that dies at the screen: symbol offsets, animation times, health-bar widths, map pixel
   dimensions, and the `*Float` combat-strength reads behind the odds display. ⚠ Display float is already ruled a
-  non-OOS ([patterns.md](../architecture/patterns.md) § the DLL does not convert for display) — that is a
+  non-OOS ([patterns.md](../architecture/patterns.md) § a composer does not convert for display) — that is a
   statement about *where the value ends*, never a licence to compute gameplay in float and print it.
 
 ⚑ **THE CONVERSION SHAPE, worked on `applyDistanceScoringFactor`** (an AI target-attractiveness decay that ran

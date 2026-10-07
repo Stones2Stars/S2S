@@ -20,6 +20,7 @@
 #include "Infos/CvEdges.h"           // the load-derived edge families (docs/cascade.md §1 (reverse lookups are populated once, at load))
 #include "Infos/CvModifiers.h"          // the compiled entry list the conditioned read walks
 #include "Infos/CvModEntry.h"
+#include "UI/CvEntryText.h"
 #include "Conditions/CvConditionQuery.h" // the ONE read over a condition tree (atoms + the negation probe)
 #include "Infos/CvRequires.h"            // the build/operate trees the requires-mention read walks
 #include "Infos/CvClassificationRegistry.h"   // the cold-path authored-key -> generated-id resolve
@@ -1579,7 +1580,7 @@ python::list CyInfo::getConditionedEntries(const std::string& szTypePrefix, int 
 	for (size_t iEntry = 0; iEntry < aEntries.size(); ++iEntry)
 	{
 		const CvModEntry* pEntry = aEntries[iEntry];
-		if (pEntry == NULL || (int)pEntry->family != iFamily)
+		if (pEntry == NULL || (int)pEntry->family != iFamily || entryHiddenByGameOptions(*pEntry))
 		{
 			continue;
 		}

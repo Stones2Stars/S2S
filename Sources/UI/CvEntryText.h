@@ -26,6 +26,10 @@ class CvCondition;
 // ONE compiled entry -> one localized detail line (see the grammar above).
 CvWString entryDetailLine(const CvModEntry& entry);
 
+///<summary>Do the game's options alone rule this entry out for the current game? Such an entry is not listed,
+/// and a game-option atom is never printed in a condition clause, because an option is fixed for the game.</summary>
+bool entryHiddenByGameOptions(const CvModEntry& entry);
+
 // Is this a PLAIN FLAT CHANNEL deposit -- a yield or commerce AMOUNT with nothing qualifying it: no condition,
 // no target, no member, no per-scaler, no unit/religion/rank qualifier, not AI-only?
 // ⚖ Those group onto ONE line ("+2<food> +1<hammer>") because that is what a player reads at a glance and what

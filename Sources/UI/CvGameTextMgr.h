@@ -92,6 +92,7 @@ public:
 	void parseLeaderHeadHelp(CvWStringBuffer &szBuffer, PlayerTypes eThisPlayer, PlayerTypes eOtherPlayer);
 	void parseGreatPeopleHelp(CvWStringBuffer &szBuffer, CvCity& city);
 	void parseGreatGeneralHelp(CvWStringBuffer &szBuffer, CvPlayer& kPlayer);
+	void appendTechResearchProgress(CvWStringBuffer& szBuffer, TechTypes eTech);
 	void setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool bCivilopediaText = false, bool bPlayerContext = false, bool bStrategyText = false, bool bTreeInfo = true, TechTypes eFromTech = NO_TECH);
 	void setBasicUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool bCivilopediaText = false);
 	void setBasicUnitHelpWithCity(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool bCivilopediaText = false, CvCity* pCity = NULL, bool bConscript = false, bool bTBUnitView1 = false, bool bTBUnitView2 = false, bool bTBUnitView3 = false);

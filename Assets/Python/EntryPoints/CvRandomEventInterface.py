@@ -2980,7 +2980,7 @@ def canTriggerImmigrantCity(argsList):
   if aWellbeing[WellbeingChannel.WELLBEING_HEALTH] - aWellbeing[WellbeingChannel.WELLBEING_UNHEALTH] < 1:
     return False
 
-  if GC.getPlayer(ePlayer).getCity(iCity).getCommerces()[CommerceTypes.COMMERCE_CULTURE] < 5500:
+  if GC.getPlayer(ePlayer).getCity(iCity).getCommerces()[CommerceTypes.COMMERCE_CULTURE] < 55:
     return False
 
   return True
@@ -2989,7 +2989,7 @@ def canTriggerImmigrantCity(argsList):
 
 def canTriggerControversialPhilosopherCity(argsList):
 	city = GC.getPlayer(argsList[1]).getCity(argsList[2])
-	return city and city.isCapital() and city.getCommerceRateTimes100(CommerceTypes.COMMERCE_RESEARCH) >= 3500
+	return city and city.isCapital() and city.getCommerces()[CommerceTypes.COMMERCE_RESEARCH] >= 35
 
 
 ####### Spy Discovered #######
@@ -3050,7 +3050,7 @@ def canTriggerDissidentPriestCity(argsList):
 
   if city.isGovernmentCenter():
     return False
-  if (city.getCommerceRateTimes100(CommerceTypes.COMMERCE_CULTURE) < 3000):
+  if (city.getCommerces()[CommerceTypes.COMMERCE_CULTURE] < 30):
     return False
   if (player.getStateReligion() != -1):
     return False

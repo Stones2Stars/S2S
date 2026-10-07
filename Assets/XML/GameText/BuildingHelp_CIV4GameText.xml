@@ -1501,18 +1501,6 @@
 		<English>[ICON_BULLET]Resources held: %d1 traded [ICON_BULLET] %d2 on site</English>
 	</TEXT>
 	<TEXT>
-		<Tag>TXT_KEY_YIELDHELP_NOTAPPLYING</Tag>
-		<English>[COLOR_WARNING_TEXT]Not applying (conditions unmet):[COLOR_REVERT]</English>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_YIELDHELP_REFUSED_FLAT</Tag>
-		<English>[ICON_BULLET]%s1: %s3 [COLOR_WARNING_TEXT]needs %s4[COLOR_REVERT]</English>
-	</TEXT>
-	<TEXT>
-		<Tag>TXT_KEY_YIELDHELP_REFUSED_PERCENT</Tag>
-		<English>[ICON_BULLET]%s1: +%d2% [COLOR_WARNING_TEXT]needs %s4[COLOR_REVERT]</English>
-	</TEXT>
-	<TEXT>
 		<Tag>TXT_KEY_COMMERCEHELP_SHARE</Tag>
 		<English>[COLOR_HIGHLIGHT_TEXT]Slider share: %d1% of %s2 = %s3[COLOR_REVERT]</English>
 	</TEXT>

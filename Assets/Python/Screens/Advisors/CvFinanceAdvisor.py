@@ -143,7 +143,6 @@ class CvFinanceAdvisor:
 				#  The city's own yield CENSUS answers the worked-plot total and the tile count together, so this
 				#  panel reads the SAME document the tooltip does instead of re-deriving it a plot at a time
 				#  ([CyCity.h]: a panel that recomputes its own breakdown is a second answer that drifts).
-				#  x100 like every amount; the reduce happens once, at the display below.
 				aTerms = CyCity.getYieldTerms(YieldTypes.YIELD_COMMERCE)
 				iYield0 += int(aTerms[CityYieldTerm.YIELD_TERM_PLOT_BASE])
 				iTiles += int(aTerms[CityYieldTerm.YIELD_TERM_WORKED_PLOTS])
@@ -172,7 +171,6 @@ class CvFinanceAdvisor:
 		y = 0
 		# Work plots
 		if iYield0:
-			iYield0 /= 100
 			szText = TRNSLTR.getText("TXT_KEY_CONCEPT_WORKED_TILES", (iTiles,))
 			screen.setLabelAt("", Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
 			screen.setLabelAt("", Pnl, uFont2 + str(iYield0), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
@@ -206,7 +204,6 @@ class CvFinanceAdvisor:
 
 		# specialists
 		if iYield4 > 0:
-			iYield4 /= 100
 			szText = TRNSLTR.getText("TXT_KEY_CONCEPT_SPECIALISTS", ())
 			screen.setLabelAt("", Pnl, uFont2 + szText, 1<<0, 8, y, 0, eGameFont, eWidGen, 1, 1)
 			screen.setLabelAt("", Pnl, uFont2 + str(iYield4), 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
@@ -327,7 +324,7 @@ class CvFinanceAdvisor:
 		uFontEdge, uFont4b, uFont4, uFont3b, uFont3, uFont2b, uFont2, uFont1b, uFont1 = self.aFontList
 		iconCommerceList = self.iconCommerceList
 		CyPlayer = self.CyPlayer
-		iIncome = GC.getPlayer(CyPlayer.getID()).getCommerces()[eComGold] / 100
+		iIncome = GC.getPlayer(CyPlayer.getID()).getCommerces()[eComGold]
 
 		# Treasury footer
 		szTxt = self.szTreasury
@@ -476,11 +473,11 @@ class CvFinanceAdvisor:
 				#  The process conversion is read as the ANSWER, from the same commerce census the split itself
 				#  produces, rather than re-derived here by multiplying a modifier by a production rate. A view
 				#  that recomputes a term is a second implementation of it, free to disagree with the number the
-				#  engine actually used. x100 like every amount; the reduce happens once, here at the display.
+				#  engine actually used.
 				fCityWealth = 0.0
 				if CyCity.isProductionProcess() and CyCity.getProductionProcess() == eWealth:
 					aCommerceTerms = CyCity.getCommerceTerms(eComGold)
-					fCityWealth = aCommerceTerms[CityCommerceTerm.COMMERCE_TERM_PROCESS_CONVERSION] / 100.0
+					fCityWealth = aCommerceTerms[CityCommerceTerm.COMMERCE_TERM_PROCESS_CONVERSION]
 					fWealth += fCityWealth
 					iWealthCount += 1
 

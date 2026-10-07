@@ -74,27 +74,29 @@
 	</TEXT>
 	<TEXT>
 		<Tag>INTERFACE_CITY_COMMERCE_RATE_FLOAT</Tag>
-		<English>%F1: %s2</English>
-		<French>%F1 : %s2</French>
-		<Italian>Livello culturale %F1 : %s2</Italian>
+		<English>%F1: %s2 (%s3/Turn)</English>
+		<French>%F1 : %s2 (%s3/tour)</French>
+		<German>%F1: %s2 (%s3/Runde)</German>
+		<Italian>%F1: %s2 %s3 a turno</Italian>
+		<Spanish>%F1: %s2 (%s3/turno)</Spanish>
 		<Russian>%F1: %s2 (%s3/ход)</Russian>
 		<!-- city screen UI on culture bar lower right -->
 	</TEXT>
 	<TEXT>
 		<Tag>INTERFACE_CITY_FOOD_GROW</Tag>
-		<English>%d1[ICON_FOOD] - %d2[ICON_EATENFOOD] = +%d3[ICON_FOOD]</English>
-		<Italian>[COLOR_HIGHLIGHT_TEXT]%d1[COLOR_REVERT] [ICON_FOOD] - [COLOR_HIGHLIGHT_TEXT]%d2[COLOR_REVERT] [ICON_EATENFOOD] = [COLOR_HIGHLIGHT_TEXT]+%d3[COLOR_REVERT] [ICON_FOOD]</Italian> <!-- city screen left of the food bar -->
+		<English>%s1[ICON_FOOD] - %s2[ICON_EATENFOOD] = +%s3[ICON_FOOD]</English>
+		<Italian>[COLOR_HIGHLIGHT_TEXT]%s1[COLOR_REVERT] [ICON_FOOD] - [COLOR_HIGHLIGHT_TEXT]%s2[COLOR_REVERT] [ICON_EATENFOOD] = [COLOR_HIGHLIGHT_TEXT]+%s3[COLOR_REVERT] [ICON_FOOD]</Italian> <!-- city screen left of the food bar -->
 	</TEXT>
 	<TEXT>
 		<Tag>INTERFACE_CITY_FOOD_SHRINK</Tag>
-		<English>%d1[ICON_FOOD] - %d2[ICON_EATENFOOD] = [COLOR_WARNING_TEXT]%d3[COLOR_REVERT][ICON_BAD_FOOD]</English>
-		<French>%d1[ICON_FOOD] - %d2[ICON_EATENFOOD] = [COLOR_WARNING_TEXT]%d3[COLOR_REVERT][ICON_BAD_FOOD]</French>
-		<Italian>[COLOR_HIGHLIGHT_TEXT]%d1[COLOR_REVERT] [ICON_FOOD] - [COLOR_HIGHLIGHT_TEXT]%d2[COLOR_REVERT] [ICON_EATENFOOD] = [COLOR_WARNING_TEXT]%d3[COLOR_REVERT] [ICON_BAD_FOOD]</Italian> <!-- city screen left of the food bar -->
+		<English>%s1[ICON_FOOD] - %s2[ICON_EATENFOOD] = [COLOR_WARNING_TEXT]%s3[COLOR_REVERT][ICON_BAD_FOOD]</English>
+		<French>%s1[ICON_FOOD] - %s2[ICON_EATENFOOD] = [COLOR_WARNING_TEXT]%s3[COLOR_REVERT][ICON_BAD_FOOD]</French>
+		<Italian>[COLOR_HIGHLIGHT_TEXT]%s1[COLOR_REVERT] [ICON_FOOD] - [COLOR_HIGHLIGHT_TEXT]%s2[COLOR_REVERT] [ICON_EATENFOOD] = [COLOR_WARNING_TEXT]%s3[COLOR_REVERT] [ICON_BAD_FOOD]</Italian> <!-- city screen left of the food bar -->
 	</TEXT>
 	<TEXT>
 		<Tag>INTERFACE_CITY_FOOD_STAGNATE</Tag>
-		<English>%d1[ICON_FOOD] = %d2[ICON_EATENFOOD]</English>
-		<Italian>[COLOR_HIGHLIGHT_TEXT]%d1[COLOR_REVERT] [ICON_FOOD] - [COLOR_HIGHLIGHT_TEXT]%d2[COLOR_REVERT] [ICON_EATENFOOD] = [COLOR_HIGHLIGHT_TEXT]0[COLOR_REVERT] [ICON_FOOD]</Italian> <!-- city screen left of the food bar -->
+		<English>%s1[ICON_FOOD] = %s2[ICON_EATENFOOD]</English>
+		<Italian>[COLOR_HIGHLIGHT_TEXT]%s1[COLOR_REVERT] [ICON_FOOD] - [COLOR_HIGHLIGHT_TEXT]%s2[COLOR_REVERT] [ICON_EATENFOOD] = [COLOR_HIGHLIGHT_TEXT]0[COLOR_REVERT] [ICON_FOOD]</Italian> <!-- city screen left of the food bar -->
 	</TEXT>
 	<TEXT>
 		<Tag>INTERFACE_CITY_GREATPEOPLE_RATE</Tag>
@@ -16317,20 +16319,20 @@
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_POS_GOLD_PER_TURN</Tag>
-		<English>[SPACE][COLOR_POSITIVE_TEXT](%D1_Change/Turn)[COLOR_REVERT]</English>
-		<French>[SPACE][COLOR_POSITIVE_TEXT](%D1_Change/tour)[COLOR_REVERT]</French>
-		<German>[SPACE][COLOR_POSITIVE_TEXT](%D1_Change/Runde)[COLOR_REVERT]</German>
-		<Italian>[SPACE][COLOR_POSITIVE_TEXT]%D1_Change a turno[COLOR_REVERT]</Italian>
-		<Spanish>[SPACE][COLOR_POSITIVE_TEXT](%D1_Change/turno)[COLOR_REVERT]</Spanish>
+		<English>[SPACE][COLOR_POSITIVE_TEXT](%s1_Change/Turn)[COLOR_REVERT]</English>
+		<French>[SPACE][COLOR_POSITIVE_TEXT](%s1_Change/tour)[COLOR_REVERT]</French>
+		<German>[SPACE][COLOR_POSITIVE_TEXT](%s1_Change/Runde)[COLOR_REVERT]</German>
+		<Italian>[SPACE][COLOR_POSITIVE_TEXT]%s1_Change a turno[COLOR_REVERT]</Italian>
+		<Spanish>[SPACE][COLOR_POSITIVE_TEXT](%s1_Change/turno)[COLOR_REVERT]</Spanish>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_POS_GOLD_PER_TURN_TD_WFL</Tag>
-		<English>[SPACE][COLOR_POSITIVE_TEXT](%D1/Turn %D2 TD/WFL)[COLOR_REVERT]</English>
-		<French>[SPACE][COLOR_POSITIVE_TEXT](%D1/tour %D2 Diff.Tech)[COLOR_REVERT]</French>
-		<German>[SPACE][COLOR_POSITIVE_TEXT](%D1/Runde %D2 TD/WFL)[COLOR_REVERT]</German>
-		<Italian>[SPACE][COLOR_POSITIVE_TEXT](%D1 a turno %D2 da diffusione tecnologica)[COLOR_REVERT]</Italian> <!-- main screen near reasearch pad in upper left -->
-		<Spanish>[SPACE][COLOR_POSITIVE_TEXT](%D1/turno %D2 TD/WFL)[COLOR_REVERT]</Spanish>
-		<Russian>[SPACE][COLOR_POSITIVE_TEXT](%D1/ход %D2 TD/WFL)[COLOR_REVERT]</Russian>
+		<English>[SPACE][COLOR_POSITIVE_TEXT](%s1/Turn %s2 TD/WFL)[COLOR_REVERT]</English>
+		<French>[SPACE][COLOR_POSITIVE_TEXT](%s1/tour %s2 Diff.Tech)[COLOR_REVERT]</French>
+		<German>[SPACE][COLOR_POSITIVE_TEXT](%s1/Runde %s2 TD/WFL)[COLOR_REVERT]</German>
+		<Italian>[SPACE][COLOR_POSITIVE_TEXT](%s1 a turno %s2 da diffusione tecnologica)[COLOR_REVERT]</Italian> <!-- main screen near reasearch pad in upper left -->
+		<Spanish>[SPACE][COLOR_POSITIVE_TEXT](%s1/turno %s2 TD/WFL)[COLOR_REVERT]</Spanish>
+		<Russian>[SPACE][COLOR_POSITIVE_TEXT](%s1/ход %s2 TD/WFL)[COLOR_REVERT]</Russian>
 	</TEXT>
 	<TEXT>
 		<Tag>TXT_KEY_MISC_POWER_RESTORED</Tag>

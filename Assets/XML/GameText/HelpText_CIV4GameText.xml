@@ -267,6 +267,10 @@
 		<Russian>[ICON_BULLET]%D1_Mod%% çàòðàòû íà îáñëóæèâàíèå îò ÷èñëà ãîðîäîâ</Russian>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_TECHHELP_RESEARCH_PROGRESS</Tag>
+		<English>[ICON_BULLET]Research: %d1_Spent/%d2_Cost[ICON_RESEARCH]</English>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_TECHHELP_NUM_TURNS</Tag>
 		<English>[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]%d1_Num Turns[COLOR_REVERT]</English>
 		<French>[ICON_BULLET][COLOR_HIGHLIGHT_TEXT]%d1_Num tours[COLOR_REVERT]</French>

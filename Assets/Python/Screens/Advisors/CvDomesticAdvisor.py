@@ -980,10 +980,9 @@ class CvDomesticAdvisor:
 		return CyCity.getCounts()[arg]
 
 	#	The worked-plot total for one yield. PLOT_BASE is that total -- the three PLOT_ segments beside it
-	#	decompose it rather than adding to it, so summing them would double-count. x100 like every amount, so
-	#	the column reduces here, at its display.
+	#	decompose it rather than adding to it, so summing them would double-count.
 	def calculatePlotYield(self, CyCity, szKey, arg):
-		return int(CyCity.getYieldTerms(arg)[CityYieldTerm.YIELD_TERM_PLOT_BASE]) / 100
+		return int(CyCity.getYieldTerms(arg)[CityYieldTerm.YIELD_TERM_PLOT_BASE])
 
 	def calculateBaseYieldRateRank(self, CyCity, szKey, arg):
 		return CyCity.getBaseYieldRateRanks()[arg]
