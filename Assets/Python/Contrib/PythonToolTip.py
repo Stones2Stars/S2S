@@ -85,18 +85,25 @@ def makeTooltip(screen, xPos, yPos, szTxt, uFont, listBox):
 	# Find longest text line in pixels
 	aList = szTxt.split('\n')
 	aWidthList = []
-	dxMax = xRes/3
 	dx = 0
 	for aLine in aList:
 		iWidth = CyIF.determineWidth(uFont + aLine)
 		aWidthList.append((iWidth, aLine))
 		if iWidth > dx:
 			dx = iWidth
-	if dx > dxMax:
-		dx = dxMax
-	elif not dx:
+	if not dx:
 		print "CvMainInterface: This will probably never happen, but hey it did."
 		dx = 1
+	else:
+		# A third of the screen unless the wrapped text would run tall; then widen in steps.
+		dxLongest = dx
+		for dxMax in (xRes/3, xRes/2, xRes*2/3):
+			dx = min(dxLongest, dxMax)
+			iLines = 0
+			for iWidth, aLine in aWidthList:
+				iLines += 1 + iWidth / dx
+			if iLines * 22 + 16 <= yRes*2/3:
+				break
 	iMaxX = dx - 24
 	# Wrap long lines
 	aList = []
@@ -180,6 +187,11 @@ def makeTooltip(screen, xPos, yPos, szTxt, uFont, listBox):
 		x = xPos - 32 - dx
 	else: # Left side of screen.
 		x = xPos + 24
+	# A widened tooltip can overrun either edge; keep it on screen.
+	if x + dx + 28 > xRes:
+		x = xRes - dx - 28
+	if x < 4:
+		x = 4
 	'''
 	if dy > yRes - 16:
 		pass # WIP may want to split tooltip into two separate lists.
