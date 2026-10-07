@@ -991,7 +991,7 @@ class CvDomesticAdvisor:
 		return CyCity.getYieldRateRanks()[arg]
 
 	def calculateCommerceRate(self, CyCity, szKey, arg):
-		return int(CyCity.getCommerces()[arg])
+		return CyCity.getCommerces()[arg]
 
 	def calculateCommerceRateRank(self, CyCity, szKey, arg):
 		return CyCity.getCommerceRateRanks()[arg]

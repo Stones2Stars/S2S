@@ -324,7 +324,7 @@ class CvFinanceAdvisor:
 		uFontEdge, uFont4b, uFont4, uFont3b, uFont3, uFont2b, uFont2, uFont1b, uFont1 = self.aFontList
 		iconCommerceList = self.iconCommerceList
 		CyPlayer = self.CyPlayer
-		iIncome = int(GC.getPlayer(CyPlayer.getID()).getCommerces()[eComGold])
+		iIncome = GC.getPlayer(CyPlayer.getID()).getCommerces()[eComGold]
 
 		# Treasury footer
 		szTxt = self.szTreasury
@@ -388,7 +388,7 @@ class CvFinanceAdvisor:
 					# Research is subject to modifiers.
 					iRate = CyPlayer.calculateResearchRate(CyPlayer.getCurrentResearch())
 				else:
-					iRate = int(CyPlayer.getCommerces()[iType])
+					iRate = CyPlayer.getCommerces()[iType]
 				szRate = uFont2b + str(iRate) + iconCommerceList[iType]
 				screen.setLabelAt(aName(), Pnl, szRate, 1<<1, x, y, 0, eGameFont, eWidGen, 1, 1)
 				y += Btnsize

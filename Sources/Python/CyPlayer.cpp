@@ -1297,14 +1297,14 @@ python::list CyPlayer::getYields() const
 {
 	int values[NUM_YIELD_TYPES] = { 0 };
 	m_pPlayer->getYields(values);
-	return cyToHumanFloatList(values);
+	return cyToHumanList(values);
 }
 
 python::list CyPlayer::getCommerces() const
 {
 	int values[NUM_COMMERCE_TYPES] = { 0 };
 	m_pPlayer->getCommerces(values);
-	return cyToHumanFloatList(values);
+	return cyToHumanList(values);
 }
 
 python::list CyPlayer::getWellbeing() const

@@ -45,6 +45,10 @@ public:
 
 	python::list getYields() const;
 	python::list getCommerces() const;
+	///<summary>The same two groups as display text with at most two decimals. A screen prints these;
+	/// getYields and getCommerces answer whole numbers for comparing and ranking.</summary>
+	python::list getYieldsText() const;
+	python::list getCommercesText() const;
 	python::list getWellbeing() const;
 	python::list getDefenseKinds() const;
 	python::list getMaintenanceKinds() const;

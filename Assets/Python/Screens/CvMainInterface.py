@@ -2282,13 +2282,13 @@ class CvMainInterface:
 						screen.setLabel("PercentText" + str(i), "", szTxt, 1<<0, 6, 53 + dY, 0, eFontGame, eWidGen, 0, 0)
 
 						if bCityScreen:
-							iCommerce = GC.getPlayer(InCity.iPlayer).getCity(InCity.iCityID).getCommerces()[j]
-							szTxt = "<font=1>%.2f<font=2>" % iCommerce + iconCommerceList[j]
+							szCommerce = GC.getPlayer(InCity.iPlayer).getCity(InCity.iCityID).getCommercesText()[j]
+							szTxt = "<font=1>" + szCommerce + "<font=2>" + iconCommerceList[j]
 
 							screen.setLabel("CityPercentText" + str(i), "", szTxt, 1<<1, 252, 53 + dY, 0, eFontGame, WidgetTypes.WIDGET_COMMERCE_MOD_HELP, j, -1)
 						else:
 							if j != CommerceTypes.COMMERCE_RESEARCH:
-								commerceRate = int(aEmpireCommerces[j])
+								commerceRate = aEmpireCommerces[j]
 
 							elif bTDDisplayOption:
 								commerceRate = getModifiedIntValue(iResearchRate, -iResearchMod)
@@ -2297,9 +2297,9 @@ class CvMainInterface:
 								commerceRate = iResearchRate
 
 							if bTDDisplayOption and j == CommerceTypes.COMMERCE_RESEARCH and iResearchMod > 0:
-								szTxt = TRNSLTR.getText("TXT_KEY_MISC_POS_GOLD_PER_TURN_TD_WFL", (commerceRate, techDiffusionHelp))
+								szTxt = TRNSLTR.getText("TXT_KEY_MISC_POS_GOLD_PER_TURN_TD_WFL", (u"%+d" % commerceRate, u"%+d" % techDiffusionHelp))
 							else:
-								szTxt = TRNSLTR.getText("TXT_KEY_MISC_POS_GOLD_PER_TURN", (commerceRate,))
+								szTxt = TRNSLTR.getText("TXT_KEY_MISC_POS_GOLD_PER_TURN", (u"%+d" % commerceRate,))
 							screen.setLabel("RateText" + str(i), "", uFont1b + szTxt, 1<<0, 108, 53 + dY, 0, eFontGame, eWidGen, 0, 0)
 						dY += 18
 				# Treasury and income info.
@@ -2959,19 +2959,15 @@ class CvMainInterface:
 			xR += w/2
 			aCulture = GC.getPlayer(iCityOwner).getCity(iCityID).getCultureReads()
 			iCultureTreshold = aCulture[CityCultureRead.CULTURE_READ_THRESHOLD]
-			aCommerces = GC.getPlayer(iCityOwner).getCity(iCityID).getCommerces()
-			iRate = aCommerces[CommerceTypes.COMMERCE_CULTURE]
-			if iRate == int(iRate):
-				szTxt = TRNSLTR.getText("INTERFACE_CITY_COMMERCE_RATE", (TRNSLTR.getText("[ICON_CULTURE]", ()), INFO.getTextKey("CULTURELEVEL_", aCulture[CityCultureRead.CULTURE_READ_LEVEL]), int(iRate)))
-			else:
-				szRate = u"+%.2f" % iRate
-				szTxt = TRNSLTR.getText("INTERFACE_CITY_COMMERCE_RATE_FLOAT", (TRNSLTR.getText("[ICON_CULTURE]", ()), INFO.getTextKey("CULTURELEVEL_", aCulture[CityCultureRead.CULTURE_READ_LEVEL]), szRate))
+			iRate = GC.getPlayer(iCityOwner).getCity(iCityID).getCommerces()[CommerceTypes.COMMERCE_CULTURE]
+			szRate = u"+" + GC.getPlayer(iCityOwner).getCity(iCityID).getCommercesText()[CommerceTypes.COMMERCE_CULTURE]
+			szTxt = TRNSLTR.getText("INTERFACE_CITY_COMMERCE_RATE_FLOAT", (TRNSLTR.getText("[ICON_CULTURE]", ()), INFO.getTextKey("CULTURELEVEL_", aCulture[CityCultureRead.CULTURE_READ_LEVEL]), szRate))
 
 			if iRate > 0 and iCultureTreshold > 0:
 				# Culture Turns
 				iCultureTimes100 = GC.getPlayer(iCityOwner).getCity(iCityID).getCultureForPlayer(iPlayer)
-				iCultureLeft = iCultureTreshold - iCultureTimes100 / 100.0
-				szTxt += " " + TRNSLTR.getText("INTERFACE_CITY_TURNS", (int((iCultureLeft + iRate - 0.01) / iRate),))
+				iCultureLeft = iCultureTreshold - iCultureTimes100 / 100
+				szTxt += " " + TRNSLTR.getText("INTERFACE_CITY_TURNS", (((iCultureLeft + iRate - 1) / iRate),))
 			screen.setText("CultureText", "", uFont2 + szTxt, 1<<2, xR, yBot - 1, 0, eFontGame, WidgetTypes.WIDGET_HELP_CULTURE, 0, 0)
 			# Great People Bar
 			iGreatPeopleProgress = GC.getPlayer(iCityOwner).getCity(iCityID).getGreatPeopleProgress()
@@ -4397,14 +4393,14 @@ class CvMainInterface:
 		screen.setHitTest("PopulationText", HitTestTypes.HITTEST_NOHIT)
 
 		aYields = GC.getPlayer(iCityOwner).getCity(iCityID).getYields()
-		iFoodYield = int(aYields[YieldTypes.YIELD_FOOD])
+		iFoodYield = aYields[YieldTypes.YIELD_FOOD]
 		iFoodEaten = aGrowth[CityGrowthRead.GROWTH_READ_FOOD_CONSUMPTION]
 		if iFoodYield == iFoodEaten or bFoodProduction or GC.getPlayer(iCityOwner).getCity(iCityID).isDisorder():
-			szTxt = TRNSLTR.getText("INTERFACE_CITY_FOOD_STAGNATE", (iFoodYield, iFoodYield))
+			szTxt = TRNSLTR.getText("INTERFACE_CITY_FOOD_STAGNATE", (str(iFoodYield), str(iFoodYield)))
 		elif iFoodYield > iFoodEaten:
-			szTxt = TRNSLTR.getText("INTERFACE_CITY_FOOD_GROW", (iFoodYield, iFoodEaten, iFoodYield - iFoodEaten))
+			szTxt = TRNSLTR.getText("INTERFACE_CITY_FOOD_GROW", (str(iFoodYield), str(iFoodEaten), str(iFoodYield - iFoodEaten)))
 		else:
-			szTxt = TRNSLTR.getText("INTERFACE_CITY_FOOD_SHRINK", (iFoodYield, iFoodEaten, iFoodYield - iFoodEaten))
+			szTxt = TRNSLTR.getText("INTERFACE_CITY_FOOD_SHRINK", (str(iFoodYield), str(iFoodEaten), str(iFoodYield - iFoodEaten)))
 
 		screen.setLabel("PopulationInputText", "", uFont2 + szTxt, 1<<1, xPopProgBar - 6, 70, 0, eFontGame, WidgetTypes.WIDGET_FOOD_MOD_HELP, -1, -1)
 

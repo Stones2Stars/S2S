@@ -1040,7 +1040,7 @@ python::list CyCity::getYields() const
 	PERF_SCOPE("CyCity::getYields", -1);
 	int values[NUM_YIELD_TYPES] = { 0 };
 	if (m_pCity) m_pCity->getYields(values);
-	return cyToHumanFloatList(values);
+	return cyToHumanList(values);
 }
 
 python::list CyCity::getCommerces() const
@@ -1048,7 +1048,21 @@ python::list CyCity::getCommerces() const
 	PERF_SCOPE("CyCity::getCommerces", -1);
 	int values[NUM_COMMERCE_TYPES] = { 0 };
 	if (m_pCity) m_pCity->getCommerces(values);
-	return cyToHumanFloatList(values);
+	return cyToHumanList(values);
+}
+
+python::list CyCity::getYieldsText() const
+{
+	int values[NUM_YIELD_TYPES] = { 0 };
+	if (m_pCity) m_pCity->getYields(values);
+	return cyToHumanTextList(values);
+}
+
+python::list CyCity::getCommercesText() const
+{
+	int values[NUM_COMMERCE_TYPES] = { 0 };
+	if (m_pCity) m_pCity->getCommerces(values);
+	return cyToHumanTextList(values);
 }
 
 python::list CyCity::getWellbeing() const
@@ -2109,6 +2123,8 @@ void CyCity::pythonPublish()
 
 		.def("getYields",           &CyCity::getYields)
 		.def("getCommerces",        &CyCity::getCommerces)
+		.def("getYieldsText",       &CyCity::getYieldsText)
+		.def("getCommercesText",    &CyCity::getCommercesText)
 		.def("getWellbeing",        &CyCity::getWellbeing)
 		.def("getDefenseKinds",     &CyCity::getDefenseKinds)
 		.def("getMaintenanceKinds", &CyCity::getMaintenanceKinds)

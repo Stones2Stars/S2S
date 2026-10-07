@@ -33,16 +33,31 @@ inline python::list cyToHumanList(const int (&values)[N])
 	return list;
 }
 
-///<summary>A group of AMOUNTS as the list Python indexes, each reduced from the engine's x100 form and
-/// keeping its two decimals. A caller passing one to the EXE's varargs getText must hand it an int, since
-/// an 8-byte float takes two argument slots there.</summary>
+///<summary>A group of AMOUNTS as display text, each reduced from the engine's x100 form with at most two
+/// decimals: "12", "12.5", "-0.75". The text twin of cyToHumanList, for a value a screen prints.</summary>
 template <int N>
-inline python::list cyToHumanFloatList(const int (&values)[N])
+inline python::list cyToHumanTextList(const int (&values)[N])
 {
 	python::list list = python::list();
 	for (int i = 0; i < N; ++i)
 	{
-		list.append(values[i] / 100.0);
+		const int iAbsValue = values[i] < 0 ? -values[i] : values[i];
+		const wchar_t* szSign = values[i] < 0 ? L"-" : L"";
+		const int iFraction = iAbsValue % 100;
+		wchar_t szText[32];
+		if (iFraction == 0)
+		{
+			swprintf(szText, L"%s%d", szSign, iAbsValue / 100);
+		}
+		else if (iFraction % 10 == 0)
+		{
+			swprintf(szText, L"%s%d.%d", szSign, iAbsValue / 100, iFraction / 10);
+		}
+		else
+		{
+			swprintf(szText, L"%s%d.%02d", szSign, iAbsValue / 100, iFraction);
+		}
+		list.append(std::wstring(szText));
 	}
 	return list;
 }
