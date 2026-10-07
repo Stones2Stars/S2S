@@ -2998,9 +2998,9 @@ class CvMainInterface:
 				iFirst = float(GC.getPlayer(iCityOwner).getCity(iCityID).getCultureForPlayer(iPlayer)) / float(100 * iCultureTreshold)
 				screen.setBarPercentage("CultureBar", InfoBarTypes.INFOBAR_STORED, iFirst)
 				if iFirst == 1:
-					screen.setBarPercentage("CultureBar", InfoBarTypes.INFOBAR_RATE, float(aCommerces[CommerceTypes.COMMERCE_CULTURE] / 100) / float(iCultureTreshold))
+					screen.setBarPercentage("CultureBar", InfoBarTypes.INFOBAR_RATE, float(iRate) / float(iCultureTreshold))
 				else:
-					screen.setBarPercentage("CultureBar", InfoBarTypes.INFOBAR_RATE, (float(aCommerces[CommerceTypes.COMMERCE_CULTURE] / 100) / float(iCultureTreshold)) / (1 - iFirst))
+					screen.setBarPercentage("CultureBar", InfoBarTypes.INFOBAR_RATE, (float(iRate) / float(iCultureTreshold)) / (1 - iFirst))
 			else:
 				screen.setBarPercentage("CultureBar", InfoBarTypes.INFOBAR_STORED, 100)
 			screen.show("CultureBar")
