@@ -906,14 +906,12 @@ class CvInfoScreen:
 				if iPop / 2 > iMedianPop:
 					iMedianPop = iPop / 2
 				# City Value, could expand this one...
-				#	ONE crossing for the whole yield group, indexed by the engine enum. The amounts are x100
-				#	native, so they reduce here where they are weighed against whole game counts.
 				aiYields = GC.getPlayer(i).getCity(iCityX).getYields()
 				iTotalCityValue = (
 					6 * iPop + GC.getPlayer(i).getCity(iCityX).getCultureForPlayer(i) / 30
-					+ 2 * aiYields[YieldTypes.YIELD_FOOD] / 100
-					+ 3 * aiYields[YieldTypes.YIELD_PRODUCTION] / 100
-					+ 3 * aiYields[YieldTypes.YIELD_COMMERCE] / 100
+					+ 2 * aiYields[YieldTypes.YIELD_FOOD]
+					+ 3 * aiYields[YieldTypes.YIELD_PRODUCTION]
+					+ 3 * aiYields[YieldTypes.YIELD_COMMERCE]
 				)
 				for iRankLoop in xrange(5):
 

@@ -628,7 +628,7 @@ def cityAdvise(iPlayer, iCityID):
 							popupInfo.addPopup(iPlayer)
 							g_iAdvisorNags += 1
 
-				if GC.getPlayer(iPlayer).getCity(iCityID).getCommerces()[CommerceTypes.COMMERCE_CULTURE] < 1000 and not aFlags[CityFlagKind.CITY_FLAG_OCCUPATION]:
+				if GC.getPlayer(iPlayer).getCity(iCityID).getCommerces()[CommerceTypes.COMMERCE_CULTURE] < 10 and not aFlags[CityFlagKind.CITY_FLAG_OCCUPATION]:
 
 					if (iTurn + 21) % 40 == iTurnFounded % 40:
 
@@ -663,7 +663,7 @@ def cityAdvise(iPlayer, iCityID):
 							popupInfo.addPopup(iPlayer)
 							g_iAdvisorNags += 1
 
-				if GC.getPlayer(iPlayer).getCity(iCityID).getCommerces()[CommerceTypes.COMMERCE_GOLD] > 1000:
+				if GC.getPlayer(iPlayer).getCity(iCityID).getCommerces()[CommerceTypes.COMMERCE_GOLD] > 10:
 
 					if (iTurn + 24) % 40 == iTurnFounded % 40:
 
@@ -698,7 +698,7 @@ def cityAdvise(iPlayer, iCityID):
 							popupInfo.addPopup(iPlayer)
 							g_iAdvisorNags += 1
 
-				if GC.getPlayer(iPlayer).getCity(iCityID).getCommerces()[CommerceTypes.COMMERCE_RESEARCH] > 1000:
+				if GC.getPlayer(iPlayer).getCity(iCityID).getCommerces()[CommerceTypes.COMMERCE_RESEARCH] > 10:
 
 					if (iTurn + 30) % 40 == iTurnFounded % 40:
 

@@ -77,6 +77,14 @@ protect a binding, and do not build a resolver to prove one safe first.
   consumer to know the engine's internal scale, then to disagree about it.
   ⚖ Because nothing downstream does deterministic math, an external getter may hand out a FLOAT rather than
   truncating: the two decimals survive the boundary instead of being thrown away at it.
+  ⛔ **A FLOAT IS RENDERED WITH TWO DECIMALS, NEVER MORE.** Two is the precision the model carries, so a third
+  digit shows arithmetic noise rather than data.
+  ⛔ **A float is safe for the MATH and not for the EXE's `getText`.** `CyTranslator().getText()` is the same
+  varargs call the C++ side guards ([AGENTS.md § Validation](../../../AGENTS.md#validation), varargs text widths):
+  a Python float is an 8-byte double, so it takes TWO argument slots, every later placeholder reads one slot
+  early, and a `%s` ends up walking an integer as a pointer. ⇒ **Only TEXT is ever sent to `getText`**: a number
+  is formatted first and passed against a `%s` placeholder, exactly as the C++ side pre-renders a 64-bit value.
+  A caller that does this cannot be broken by the width of what the controller returns.
 
 - **⛔ ENUM OPERATIONS ARE FIRST CLASS** — name→type resolution is supported, covering **resolution AND EXTENSION**:
   BUG resolves `WidgetTypes`/`InputTypes`/`InterfaceDirtyBits` by name from config strings *and* MINTS new

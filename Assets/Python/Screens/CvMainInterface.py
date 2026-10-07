@@ -2283,14 +2283,12 @@ class CvMainInterface:
 
 						if bCityScreen:
 							iCommerce = GC.getPlayer(InCity.iPlayer).getCity(InCity.iCityID).getCommerces()[j]
-							szTxt = "<font=1>%.2f<font=2>" %(iCommerce / 100.0) + iconCommerceList[j]
+							szTxt = "<font=1>%.2f<font=2>" % iCommerce + iconCommerceList[j]
 
 							screen.setLabel("CityPercentText" + str(i), "", szTxt, 1<<1, 252, 53 + dY, 0, eFontGame, WidgetTypes.WIDGET_COMMERCE_MOD_HELP, j, -1)
 						else:
 							if j != CommerceTypes.COMMERCE_RESEARCH:
-								# x100 native on the library; this line displays a whole rate, so it reduces here
-								# at the point of use -- never in the getter.
-								commerceRate = aEmpireCommerces[j] / 100
+								commerceRate = int(aEmpireCommerces[j])
 
 							elif bTDDisplayOption:
 								commerceRate = getModifiedIntValue(iResearchRate, -iResearchMod)
@@ -2963,17 +2961,17 @@ class CvMainInterface:
 			iCultureTreshold = aCulture[CityCultureRead.CULTURE_READ_THRESHOLD]
 			aCommerces = GC.getPlayer(iCityOwner).getCity(iCityID).getCommerces()
 			iRate = aCommerces[CommerceTypes.COMMERCE_CULTURE]
-			if not iRate % 100:
-				szTxt = TRNSLTR.getText("INTERFACE_CITY_COMMERCE_RATE", (TRNSLTR.getText("[ICON_CULTURE]", ()), INFO.getTextKey("CULTURELEVEL_", aCulture[CityCultureRead.CULTURE_READ_LEVEL]), iRate/100))
+			if iRate == int(iRate):
+				szTxt = TRNSLTR.getText("INTERFACE_CITY_COMMERCE_RATE", (TRNSLTR.getText("[ICON_CULTURE]", ()), INFO.getTextKey("CULTURELEVEL_", aCulture[CityCultureRead.CULTURE_READ_LEVEL]), int(iRate)))
 			else:
-				szRate = u"+%d.%02d" % (iRate/100, iRate%100)
+				szRate = u"+%.2f" % iRate
 				szTxt = TRNSLTR.getText("INTERFACE_CITY_COMMERCE_RATE_FLOAT", (TRNSLTR.getText("[ICON_CULTURE]", ()), INFO.getTextKey("CULTURELEVEL_", aCulture[CityCultureRead.CULTURE_READ_LEVEL]), szRate))
 
 			if iRate > 0 and iCultureTreshold > 0:
 				# Culture Turns
 				iCultureTimes100 = GC.getPlayer(iCityOwner).getCity(iCityID).getCultureForPlayer(iPlayer)
-				iCultureLeftTimes100 = 100 * iCultureTreshold - iCultureTimes100
-				szTxt += " " + TRNSLTR.getText("INTERFACE_CITY_TURNS", (((iCultureLeftTimes100 + iRate - 1) / iRate),))
+				iCultureLeft = iCultureTreshold - iCultureTimes100 / 100.0
+				szTxt += " " + TRNSLTR.getText("INTERFACE_CITY_TURNS", (int((iCultureLeft + iRate - 0.01) / iRate),))
 			screen.setText("CultureText", "", uFont2 + szTxt, 1<<2, xR, yBot - 1, 0, eFontGame, WidgetTypes.WIDGET_HELP_CULTURE, 0, 0)
 			# Great People Bar
 			iGreatPeopleProgress = GC.getPlayer(iCityOwner).getCity(iCityID).getGreatPeopleProgress()
@@ -4399,8 +4397,7 @@ class CvMainInterface:
 		screen.setHitTest("PopulationText", HitTestTypes.HITTEST_NOHIT)
 
 		aYields = GC.getPlayer(iCityOwner).getCity(iCityID).getYields()
-		# x100 native ([DEC-fixedpoint-x100]); it is compared against whole food counts, so it reduces here.
-		iFoodYield = aYields[YieldTypes.YIELD_FOOD] / 100
+		iFoodYield = int(aYields[YieldTypes.YIELD_FOOD])
 		iFoodEaten = aGrowth[CityGrowthRead.GROWTH_READ_FOOD_CONSUMPTION]
 		if iFoodYield == iFoodEaten or bFoodProduction or GC.getPlayer(iCityOwner).getCity(iCityID).isDisorder():
 			szTxt = TRNSLTR.getText("INTERFACE_CITY_FOOD_STAGNATE", (iFoodYield, iFoodYield))
@@ -5525,7 +5522,7 @@ class CvMainInterface:
 					elif TYPE == "PROCESS":
 						y = self.yBotBar + 12
 						eYieldProd = YieldTypes.YIELD_PRODUCTION
-						fProd = GC.getPlayer(iCityOwner).getCity(iCityID).getYields()[eYieldProd] / 100.0
+						fProd = GC.getPlayer(iCityOwner).getCity(iCityID).getYields()[eYieldProd]
 						szTxt = INFO.getDescription("PROCESS_", iType)
 						# The WHOLE conversion group in one crossing. Only the CITY scope answers it -- the
 						# conversion is the city's hammers-fold ([modifier.md] 2a, the EXTRA leg

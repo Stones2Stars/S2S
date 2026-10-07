@@ -369,7 +369,7 @@ class WBPlayerUnits:
 		for i in xrange(CommerceTypes.NUM_COMMERCE_TYPES):
 			iAmount = pCity.getCommerces()[i]
 			if iAmount <= 0: continue
-			sTemp = u"%d.%02d%c" %(pCity.getCommerces()[i] / 100, pCity.getCommerces()[i] % 100, TEXT.getSymbolChar("COMMERCE_", i))
+			sTemp = u"%.2f%c" %(iAmount, TEXT.getSymbolChar("COMMERCE_", i))
 			lTemp.append(sTemp)
 		if len(lTemp) > 0:
 			sText += "\n"

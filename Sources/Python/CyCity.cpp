@@ -1029,39 +1029,6 @@ bool CyCity::isEventOccured(int eEvent) const
 	return m_pCity->isEventOccured((EventTypes)eEvent);
 }
 
-namespace
-{
-	//	The whole group out, in one call. N is deduced from the array the group read filled, so a family that
-	//	grows a channel needs no edit here.
-	//	⚠ RAW relay -- for a group whose members are NOT ×100 amounts (counts, timers, percents, enum ids).
-	//	An AMOUNT group uses cyc_toHuman below.
-
-	//	⛔ THE READER BOUNDARY -- an AMOUNT converts HERE, once, and Python does no scale math.
-	//	The Cy layer is the CONTROLLER (patterns.md § the Cy* layer is the controller): thin means no LOGIC, and
-	//	representation is not logic -- turning the engine's internal ×100 fixed point into the external form is
-	//	precisely this layer's job, and the only place it should happen. Push it outward and every consumer has
-	//	to know the engine's internal scale, and they then disagree about it -- which is the state this replaces.
-	//	⛔ IT REDUCES TO AN INT, AND A FLOAT HERE IS A CRASH-CLASS BUG -- the reason is the EXE, not the model.
-	//	Python hands these straight to CyTranslator().getText(), which is the EXE's VARARGS text call: arguments
-	//	match a TXT_KEY's placeholders positionally BY 4-BYTE SLOT (the rule Tools/verify-gettext-widths.py
-	//	enforces on the C++ side). A Python float is an 8-byte double, so it eats TWO slots -- `%d1` renders the
-	//	double's HIGH half (5.0 -> 1075052544, "over a billion") and every later placeholder reads one slot early,
-	//	until a `%s` lands on an integer and the EXE walks it as a pointer.
-	//	⚑ So "nothing downstream does deterministic math, therefore a float is safe" is true of the MATH and false
-	//	of the ABI. Widening this to float requires first sweeping every getText call site that renders one of
-	//	these values -- it is not a property of the getter alone.
-	template <int N>
-	python::list cyc_toHuman(const int (&values)[N])
-	{
-		python::list list = python::list();
-		for (int i = 0; i < N; ++i)
-		{
-			list.append(values[i] / 100);
-		}
-		return list;
-	}
-}
-
 //	==== THE CITY READ SURFACE (CyCity.h) ====
 //	Every body is a BARE RELAY of a maintained group read: fill the caller-owned array off this city, hand it
 //	back as a list. Nothing gates, ensures or recomputes.
@@ -1073,7 +1040,7 @@ python::list CyCity::getYields() const
 	PERF_SCOPE("CyCity::getYields", -1);
 	int values[NUM_YIELD_TYPES] = { 0 };
 	if (m_pCity) m_pCity->getYields(values);
-	return cyToList(values);
+	return cyToHumanFloatList(values);
 }
 
 python::list CyCity::getCommerces() const
@@ -1081,14 +1048,14 @@ python::list CyCity::getCommerces() const
 	PERF_SCOPE("CyCity::getCommerces", -1);
 	int values[NUM_COMMERCE_TYPES] = { 0 };
 	if (m_pCity) m_pCity->getCommerces(values);
-	return cyToList(values);
+	return cyToHumanFloatList(values);
 }
 
 python::list CyCity::getWellbeing() const
 {
 	int values[NUM_WELLBEING_CHANNELS] = { 0 };
 	if (m_pCity) m_pCity->getWellbeing(values);
-	return cyc_toHuman(values);
+	return cyToHumanList(values);
 }
 
 python::list CyCity::getDefenseKinds() const
@@ -1173,7 +1140,7 @@ python::list CyCity::getRealizedWellbeing(int iExtraPopulation) const
 	PERF_SCOPE("CyCity::getRealizedWellbeing", -1);
 	int values[NUM_WELLBEING_CHANNELS] = { 0 };
 	if (m_pCity) m_pCity->realizedWellbeing(iExtraPopulation, values);
-	return cyc_toHuman(values);
+	return cyToHumanList(values);
 }
 
 int CyCity::getHealthRate(int iExtraPopulation) const
@@ -1207,18 +1174,18 @@ python::list CyCity::getYieldTerms(int iYield) const
 
 	InfoValuation::CityRateTerms t;
 	InfoValuation::cityReceiverRate(*m_pCity, iYield, &t);
-	terms.append((double)t.plotBase);
-	terms.append((double)t.plotNature);
-	terms.append((double)t.plotImprovement);
-	terms.append((double)t.plotRest);
-	terms.append((double)t.tradeYield);
-	terms.append((double)t.goldenAge);
-	terms.append((double)t.upperFlat);
-	terms.append((double)t.specialists);
-	terms.append((double)t.cityFlat);
+	terms.append((double)t.plotBase / 100);
+	terms.append((double)t.plotNature / 100);
+	terms.append((double)t.plotImprovement / 100);
+	terms.append((double)t.plotRest / 100);
+	terms.append((double)t.tradeYield / 100);
+	terms.append((double)t.goldenAge / 100);
+	terms.append((double)t.upperFlat / 100);
+	terms.append((double)t.specialists / 100);
+	terms.append((double)t.cityFlat / 100);
 	terms.append(t.percentSum);
 	terms.append(t.workedPlots);
-	terms.append((double)t.rate);
+	terms.append((double)t.rate / 100);
 	return terms;
 }
 
@@ -1230,13 +1197,13 @@ python::list CyCity::getCommerceTerms(int iCommerce) const
 
 	CvCommerceSplitTerms t;
 	m_pCity->getCommerceTerms((CommerceTypes)iCommerce, t);
-	terms.append((double)t.commerceYield);
+	terms.append((double)t.commerceYield / 100);
 	terms.append(t.sliderPercent);
-	terms.append((double)t.share);
+	terms.append((double)t.share / 100);
 	terms.append(t.percentSum);
-	terms.append((double)t.deposits);
-	terms.append((double)t.processConversion);
-	terms.append((double)t.rate);
+	terms.append((double)t.deposits / 100);
+	terms.append((double)t.processConversion / 100);
+	terms.append((double)t.rate / 100);
 	return terms;
 }
 

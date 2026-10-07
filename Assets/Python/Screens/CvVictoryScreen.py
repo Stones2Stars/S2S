@@ -1464,8 +1464,8 @@ class CvVictoryScreen:
 					if not iRate:
 						iTurns = -1
 					else:
-						iCultureLeftTimes100 = 100 * iThreshold - CyCity.getCultureForPlayer(iPlayer)
-						iTurns = int((iCultureLeftTimes100 + iRate - 1) / iRate)
+						iCultureLeft = iThreshold - CyCity.getCultureForPlayer(iPlayer) / 100
+						iTurns = int((iCultureLeft + iRate - 1) / iRate)
 					aList.append(((CyCity.getCultureForPlayer(iPlayer) / 100), CyCity, iTurns))
 
 				aList.sort()
