@@ -18,7 +18,7 @@
 #include "CvYieldInfo.h"
 #include "CvCommerceInfo.h"
 #include "Data/CvReadJson.h"        // rjInfoForTypeConst -- FK id -> the referenced info (name resolution; a READ)
-#include "Data/CvDepositRead.h"     // MMKernel::unitIsUnscaled -- the ONE "is this stored unscaled" test
+#include "Data/CvDepositRead.h"     // MMKernel::unitIsPercentSide
 #include "Defines/CvGlobals.h"
 
 namespace
@@ -221,19 +221,29 @@ namespace
 		return szName;
 	}
 
+	// Is this entry's `per` quantum of 100 folded into the magnitude, so "30 per 100 Population" reads
+	// "0.3 per Population"? Only where the fold is exact, and never on a percent, which carries no decimals.
+	bool etx_perNormalised(const CvModEntry& entry)
+	{
+		return entry.hasPer
+			&& entry.perEach == 100
+			&& entry.value % 100 == 0
+			&& !MMKernel::unitIsPercentSide(entry.unit);
+	}
+
+	// The entry's magnitude as rendered: absolute, with a normalised `per` quantum folded in.
+	int etx_absMagnitude(const CvModEntry& entry)
+	{
+		const int iAbsValue = (entry.value < 0) ? -entry.value : entry.value;
+		return etx_perNormalised(entry) ? iAbsValue / 100 : iAbsValue;
+	}
+
 	// The signed magnitude + unit marker ("+2", "-25%", "x1.5"). /100 happens here.
 	CvWString etx_signedMagnitude(const CvModEntry& entry)
 	{
-		const int iAbsValue = (entry.value < 0) ? -entry.value : entry.value;
+		const int iAbsValue = etx_absMagnitude(entry);
 		const wchar_t* szSign = (entry.value < 0) ? L"-" : L"+";
-		//	⛔ THE REDUCE IS PER UNIT, NEVER BLANKET ([fixed-point-and-scales] §4d). `mod_valueForUnit` scales
-		//	every unit EXCEPT the ones stored PLAIN -- the percent side (a percent carries no decimals) and a
-		//	COUNT of things (a headcount has none either) -- so reducing one here renders a +3% civic as
-		//	"+0.03%" and a free-specialist count of 1 as "+0.01". Flats and multipliers genuinely are x100.
-		//	⚑ The question a reader must ask is "is this stored unscaled", NOT "is this a percent": the second
-		//	answers NO for a count and reduces it anyway. One shared predicate, never a second copy
-		//	(docs/architecture/patterns.md §DRY (single implementation)).
-		const CvWString szNumber = MMKernel::unitIsUnscaled(entry.unit)
+		const CvWString szNumber = MMKernel::unitIsPercentSide(entry.unit)
 			? CvWString::format(L"%d", iAbsValue)
 			: etx_number100(iAbsValue);
 		switch (entry.unit)
@@ -263,7 +273,7 @@ namespace
 	CvWString etx_perPhrase(const CvModEntry& entry)
 	{
 		CvWString szPhrase = L"per ";
-		if (entry.perEach > 1)
+		if (entry.perEach > 1 && !etx_perNormalised(entry))
 		{
 			szPhrase += CvWString::format(L"%d ", entry.perEach);
 		}
@@ -560,8 +570,7 @@ CvWString entryDetailLine(const CvModEntry& entry)
 		{
 			iSymbol = gDLL->getSymbolID(bGood ? HEALTHY_CHAR : UNHEALTHY_CHAR);
 		}
-		const int iAbsValue100 = (entry.value < 0) ? -entry.value : entry.value;
-		szLine = CvWString(L"+") + etx_number100(iAbsValue100) + CvWString::format(L"%c", iSymbol);
+		szLine = CvWString(L"+") + etx_number100(etx_absMagnitude(entry)) + CvWString::format(L"%c", iSymbol);
 	}
 	else
 	{
