@@ -6028,40 +6028,6 @@ static CvWString gt_scaled100(int64_t iValue)
 	return szOut;
 }
 
-// One condition tree, spelled back as the ATOMS it asks about ("BONUS_DEER", "HAS_POWER"). This is what turns
-// "some food is missing" into "this building wants BONUS_DEER and this city has none" -- the refused half of the
-// §2a combine is otherwise invisible on every surface the player has (docs/spine.md §The reconstruction bar (Orwell)).
-static void gt_describeCondition(const CvCondition& kCondition, CvWString& szOut, int iDepth)
-{
-	if (iDepth > 3)
-	{
-		return;   // a deep tree renders its head, not its whole shape -- this is a tooltip, not a dump
-	}
-	if (!kCondition.type.empty())
-	{
-		if (!szOut.empty())
-		{
-			szOut += L", ";
-		}
-		szOut += CvWString(kCondition.type.c_str());
-	}
-	size_t iChild = 0;
-	for (iChild = 0; iChild < kCondition.all.size(); ++iChild)
-	{
-		if (kCondition.all[iChild] != NULL)
-		{
-			gt_describeCondition(*kCondition.all[iChild], szOut, iDepth + 1);
-		}
-	}
-	for (iChild = 0; iChild < kCondition.anyOf.size(); ++iChild)
-	{
-		if (kCondition.anyOf[iChild] != NULL)
-		{
-			gt_describeCondition(*kCondition.anyOf[iChild], szOut, iDepth + 1);
-		}
-	}
-}
-
 void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldTypes eYieldType)
 {
 	const int iChannel = CascadeChannelRegistry::channelLookup(
@@ -6152,48 +6118,6 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 		}
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_BONUSSTORES", iTradedHeld, iOnSiteHeld));
-	}
-
-	// ---- THE REFUSED HALF -- the deposits that COULD have applied and did not ----
-	// ⛔ This is the section the tooltip exists for. Every other line reports a number that IS there; a value that
-	// is wrong because a condition answered NO leaves no trace in any of them, so the shortfall is unattributable
-	// from the totals alone (AGENTS.md Conventions §Conduct (do not guess): at a gap the moves are VERIFY or ASK, and a bare total supports
-	// neither). Listing the source and the ATOM it wanted turns it into a question with an answer.
-	std::vector<InfoValuation::RefusedDeposit> kRefused;
-	InfoValuation::cityRefusedDeposits(city, iChannel, kRefused);
-	// ⛔ THE WALK RETURNS BOTH HALVES NOW -- applied AND refused -- so this section must FILTER, and an entry's
-	// condition may be NULL (an unconditioned deposit always applies and names no atom). Dereferencing it
-	// unconditionally crashed the game on hover: the list gained applied entries when the census learned to
-	// reconcile, and this reader was not updated with it.
-	bool bAnyRefused = false;
-	for (size_t iScan = 0; iScan < kRefused.size(); ++iScan)
-	{
-		if (!kRefused[iScan].bApplied) { bAnyRefused = true; break; }
-	}
-	if (bAnyRefused)
-	{
-		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_NOTAPPLYING"));
-		for (size_t iRefused = 0; iRefused < kRefused.size(); ++iRefused)
-		{
-			const InfoValuation::RefusedDeposit& kEntry = kRefused[iRefused];
-			if (kEntry.bApplied)
-			{
-				continue;
-			}
-			CvWString szCondition;
-			if (kEntry.pCondition != NULL)
-			{
-				gt_describeCondition(*kEntry.pCondition, szCondition, 0);
-			}
-			szBuffer.append(NEWLINE);
-			szBuffer.append(gDLL->getText(
-				kEntry.bPercentSide ? "TXT_KEY_YIELDHELP_REFUSED_PERCENT" : "TXT_KEY_YIELDHELP_REFUSED_FLAT",
-				kEntry.szSource,
-				kEntry.bPercentSide ? (int)kEntry.iValue : 0,
-				gt_scaled100(kEntry.iValue).GetCString(),
-				szCondition.GetCString()));
-		}
 	}
 }
 
