@@ -4839,7 +4839,7 @@ void CvGameTextMgr::appendEntryLinesFiltered(CvWStringBuffer& szBuffer, const Cv
 	for (std::vector<CvModEntry*>::const_iterator it = aEntries.begin(); it != aEntries.end(); ++it)
 	{
 		const CvModEntry* pEntry = *it;
-		if (pEntry == NULL || pEntry->family != eFamily)
+		if (pEntry == NULL || pEntry->family != eFamily || entryHiddenByGameOptions(*pEntry))
 		{
 			continue;
 		}

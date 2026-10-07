@@ -20,6 +20,7 @@
 #include "Data/CvReadJson.h"        // rjInfoForTypeConst -- FK id -> the referenced info (name resolution; a READ)
 #include "Data/CvDepositRead.h"     // MMKernel::unitIsPercentSide
 #include "Defines/CvGlobals.h"
+#include "AI/CvGameAI.h"            // the live game options a condition's GAMEOPTION_ atoms resolve against
 
 namespace
 {
@@ -382,8 +383,99 @@ namespace
 		return szText;
 	}
 
+	bool etx_isGameOptionAtom(const CvCondition& condition)
+	{
+		return condition.kind == CASC_COND_PRESENCE && condition.type.compare(0, 11, "GAMEOPTION_") == 0;
+	}
+
+	enum GameOptionVerdict
+	{
+		OPTION_VERDICT_FALSE,
+		OPTION_VERDICT_TRUE,
+		OPTION_VERDICT_UNDECIDED   // depends on something other than a game option
+	};
+
+	// What the game's options ALONE decide about a condition. A game option is fixed for the whole game, so a
+	// tooltip resolves it instead of printing it; every other atom stays undecided here and is rendered.
+	GameOptionVerdict etx_gameOptionVerdict(const CvCondition* condition)
+	{
+		if (condition == NULL)
+		{
+			return OPTION_VERDICT_TRUE;
+		}
+		if (condition->kind != CASC_COND_GROUP)
+		{
+			if (!etx_isGameOptionAtom(*condition) || condition->id < 0)
+			{
+				return OPTION_VERDICT_UNDECIDED;
+			}
+			const bool bWantsAbsent = condition->max == 0 && condition->min <= 0;
+			const bool bOptionOn = GC.getGame().isOption((GameOptionTypes)condition->id);
+			return (bOptionOn != bWantsAbsent) ? OPTION_VERDICT_TRUE : OPTION_VERDICT_FALSE;
+		}
+
+		bool bUndecided = false;
+		for (size_t iChild = 0; iChild < condition->all.size(); ++iChild)
+		{
+			const GameOptionVerdict eChild = etx_gameOptionVerdict(condition->all[iChild]);
+			if (eChild == OPTION_VERDICT_FALSE)
+			{
+				return OPTION_VERDICT_FALSE;
+			}
+			bUndecided = bUndecided || eChild == OPTION_VERDICT_UNDECIDED;
+		}
+		if (!condition->anyOf.empty())
+		{
+			bool bAnyHolds = false;
+			bool bAnyUndecided = false;
+			for (size_t iChild = 0; iChild < condition->anyOf.size(); ++iChild)
+			{
+				const GameOptionVerdict eChild = etx_gameOptionVerdict(condition->anyOf[iChild]);
+				bAnyHolds = bAnyHolds || eChild == OPTION_VERDICT_TRUE;
+				bAnyUndecided = bAnyUndecided || eChild == OPTION_VERDICT_UNDECIDED;
+			}
+			if (!bAnyHolds && !bAnyUndecided)
+			{
+				return OPTION_VERDICT_FALSE;
+			}
+			bUndecided = bUndecided || !bAnyHolds;
+		}
+		for (size_t iChild = 0; iChild < condition->noneOf.size(); ++iChild)
+		{
+			const GameOptionVerdict eChild = etx_gameOptionVerdict(condition->noneOf[iChild]);
+			if (eChild == OPTION_VERDICT_TRUE)
+			{
+				return OPTION_VERDICT_FALSE;
+			}
+			bUndecided = bUndecided || eChild == OPTION_VERDICT_UNDECIDED;
+		}
+		if (condition->enabled != NULL)
+		{
+			const GameOptionVerdict eEnabled = etx_gameOptionVerdict(condition->enabled);
+			if (eEnabled == OPTION_VERDICT_FALSE)
+			{
+				return OPTION_VERDICT_FALSE;
+			}
+			bUndecided = bUndecided || eEnabled == OPTION_VERDICT_UNDECIDED;
+		}
+		if (condition->disabled != NULL)
+		{
+			const GameOptionVerdict eDisabled = etx_gameOptionVerdict(condition->disabled);
+			if (eDisabled == OPTION_VERDICT_TRUE)
+			{
+				return OPTION_VERDICT_FALSE;
+			}
+			bUndecided = bUndecided || eDisabled == OPTION_VERDICT_UNDECIDED;
+		}
+		return bUndecided ? OPTION_VERDICT_UNDECIDED : OPTION_VERDICT_TRUE;
+	}
+
 	CvWString etx_presenceText(const CvCondition& condition)
 	{
+		if (etx_isGameOptionAtom(condition))
+		{
+			return CvWString();
+		}
 		const CvWString szName = etx_infoNameForType(condition.type, condition.id);
 		CvWString szText;
 		if (condition.max == 0 && condition.min <= 0)
@@ -434,11 +526,16 @@ namespace
 			CvWString szAny;
 			for (size_t iChild = 0; iChild < condition.anyOf.size(); ++iChild)
 			{
-				if (iChild > 0)
+				const CvWString szChild = entryConditionText(condition.anyOf[iChild]);
+				if (szChild.empty())
+				{
+					continue;
+				}
+				if (!szAny.empty())
 				{
 					szAny += L" or ";
 				}
-				szAny += entryConditionText(condition.anyOf[iChild]);
+				szAny += szChild;
 			}
 			const bool bMixed = !condition.all.empty() || !condition.noneOf.empty();
 			if (bMixed && condition.anyOf.size() > 1)
@@ -449,7 +546,11 @@ namespace
 		}
 		for (size_t iChild = 0; iChild < condition.noneOf.size(); ++iChild)
 		{
-			parts.push_back(CvWString(L"not ") + entryConditionText(condition.noneOf[iChild]));
+			const CvWString szChild = entryConditionText(condition.noneOf[iChild]);
+			if (!szChild.empty())
+			{
+				parts.push_back(CvWString(L"not ") + szChild);
+			}
 		}
 		if (condition.enabled != NULL)
 		{
@@ -457,7 +558,11 @@ namespace
 		}
 		if (condition.disabled != NULL)
 		{
-			parts.push_back(CvWString(L"not ") + entryConditionText(condition.disabled));
+			const CvWString szDisabled = entryConditionText(condition.disabled);
+			if (!szDisabled.empty())
+			{
+				parts.push_back(CvWString(L"not ") + szDisabled);
+			}
 		}
 		CvWString szText;
 		for (size_t iPart = 0; iPart < parts.size(); ++iPart)
@@ -516,6 +621,15 @@ CvWString entryConditionText(const CvCondition* condition)
 	default:
 		return etx_groupText(*condition);
 	}
+}
+
+bool entryHiddenByGameOptions(const CvModEntry& entry)
+{
+	if (entry.enabled != NULL && etx_gameOptionVerdict(entry.enabled) == OPTION_VERDICT_FALSE)
+	{
+		return true;
+	}
+	return entry.disabled != NULL && etx_gameOptionVerdict(entry.disabled) == OPTION_VERDICT_TRUE;
 }
 
 bool entryIsPlainFlatChannel(const CvModEntry& entry)
@@ -618,13 +732,15 @@ CvWString entryDetailLine(const CvModEntry& entry)
 			szLine += CvWString(L" -- ") + szRank;
 		}
 	}
-	if (entry.enabled != NULL)
+	const CvWString szEnabled = entryConditionText(entry.enabled);
+	if (!szEnabled.empty())
 	{
-		szLine += CvWString(L" -- while ") + entryConditionText(entry.enabled);
+		szLine += CvWString(L" -- while ") + szEnabled;
 	}
-	if (entry.disabled != NULL)
+	const CvWString szDisabled = entryConditionText(entry.disabled);
+	if (!szDisabled.empty())
 	{
-		szLine += CvWString(L" -- unless ") + entryConditionText(entry.disabled);
+		szLine += CvWString(L" -- unless ") + szDisabled;
 	}
 	if (entry.unitQual != NULL)
 	{
