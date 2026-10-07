@@ -166,7 +166,10 @@ group's natural index** — never N individual getters for a groupable set. This
      > ([the DRY single-implementation law](../03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)).
      > ⛔ **NOT EVERYTHING FITS A BLOCK, AND A LINE THAT DOES NOT IS NOT A DEFECT.** A single line of live state
      > — research spent against cost, a turns estimate — has no entry to render and no calculation to itemise;
-     > the composer writes it from the controller's value and that is its finished form. ⇒ The question on a
+     > the composer writes it from the controller's value and that is its finished form.
+     > ⛔ **A tooltip is built from widget blocks AS FAR AS THE DATA ALLOWS, AND DATA IS NEVER DROPPED BECAUSE
+     > IT HAS NO WIDGET.** A value the player needs is shown; "it would count as hand-built" is never a reason
+     > to leave it out. ⇒ The question on a
      > composer that writes its own text is never *is it hand-built* but **does it re-derive something the
      > engine calculates**: one that does is the defect, whatever it prints through.
      >
