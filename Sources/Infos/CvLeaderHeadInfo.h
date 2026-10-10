@@ -197,7 +197,13 @@ public:
 	const char* getLeaderHead() const;
 	const char* getButton() const;
 
+	virtual const CvEdges* getEdges() const { return &m_edges; }
+
+protected:
+	virtual CvEdges* mutEdges() { return &m_edges; }
+
 private:
+	CvEdges m_edges;
 	// Full redefinition of every mapped member to its load default (mapFrom idempotency, CvInfo.h).
 	void resetMapped();
 	// The archived non-zero engine default tables: the curator emits only XML-authored values, so

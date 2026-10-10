@@ -41,7 +41,13 @@ public:
 	int getProductionPerPopulation() const { return m_conversion.productionPerPopulation; }
 	bool causesAnger() const { return m_bCausesAnger; }   // causesAnger -- the population-rush anger flag
 
+	virtual const CvEdges* getEdges() const { return &m_edges; }
+
+protected:
+	virtual CvEdges* mutEdges() { return &m_edges; }
+
 private:
+	CvEdges m_edges;
 	// --- the bespoke §9 unit + the intrinsic members (materialized once at mapFrom) ---
 	Conversion m_conversion;
 	bool m_bCausesAnger;

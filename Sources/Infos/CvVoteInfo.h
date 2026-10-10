@@ -84,7 +84,13 @@ public:
 	VoteRole getRole() const { return m_eRole; }                       // role
 	int getTradeRoutes() const { return m_effect.tradeRoutes; }        // effect.tradeRoutes (lone numeric)
 
+	virtual const CvEdges* getEdges() const { return &m_edges; }
+
+protected:
+	virtual CvEdges* mutEdges() { return &m_edges; }
+
 private:
+	CvEdges m_edges;
 	// --- the bespoke §9 units (materialized once at mapFrom) ---
 	Effect m_effect;
 	int m_thresholds[NUM_VOTE_THRESHOLD_KINDS];

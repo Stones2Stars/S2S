@@ -143,6 +143,7 @@ public:
 	// GATE: what the entry's condition NAMES, which is how a CROSS-ENTITY question is asked -- a tech carries no
 	// movement family, so "which routes does this tech speed up" is the ROUTE's movement entry gated on the tech
 	// ([modifier.md] par.6). Pass -1 / NO_EDGEB to disable a filter; appendEntryLines is this with both off.
+	// MODFAM_NONE as the family takes every family, in compiled order.
 	// bSkipPlainFlats leaves out the entries the FLAT LINE below already gathered, so the two passes partition
 	// the family rather than both rendering the same deposit.
 	void appendEntryLinesFiltered(CvWStringBuffer& szBuffer, const CvInfo& info, ModifierFamily eFamily,
@@ -152,7 +153,9 @@ public:
 	// cannot live inside the per-family walk above.
 	void appendFlatChannelLine(CvWStringBuffer& szBuffer, const CvInfo& info,
 		const ModifierFamily* aeFamilies, int iFamilyCount) const;
-	void appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& info, const ModifierFamily* aeFamilies, int iFamilyCount) const;
+	// pRequiresCity gives each requires clause its own met / unmet colour; without one the clauses render plain.
+	void appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& info, const ModifierFamily* aeFamilies, int iFamilyCount,
+		bool bShowAllImproved = false, const CvCity* pRequiresCity = NULL) const;
 	// ONE `enables`-family EDGE list -> one "Unlocks: A, B, C" line. The info already CARRIES its edge lists (the
 	// readJson reverse pass lands them at load, docs/cascade.md §1 (reverse lookups are populated once, at load)), so this is a forward list read of the
 	// authored handful -- never the whole-database scan the backwards question would be.
@@ -161,6 +164,12 @@ public:
 	// rather than silently dropped.
 	void appendEdgeLines(CvWStringBuffer& szBuffer, const CvInfo& info,
 		EnEdgeFamily eFamily, const char* szHeadingKey) const;
+	///<summary>One target's name followed by its entries whose condition mentions the gate entity. Appends
+	/// nothing and answers false when the target holds no such entry.</summary>
+	bool appendGatedTargetLines(CvWStringBuffer& szBuffer, const CvInfo& target, EnEdgeBucket eGateBucket, int iGateId) const;
+	///<summary>What an entity changes on things that already exist: every other entity holding an entry whose
+	/// condition mentions it. The candidates are its load-built related lists; bShowAll lifts the resting cap.</summary>
+	void appendImprovesLines(CvWStringBuffer& szBuffer, const CvInfo& info, bool bShowAll) const;
 	// ONE source's contribution to a city-scope family (its heading + its own entry lines), and the WALK over
 	// every live source that feeds one: the city's operating buildings, the empire's adopted civics and held
 	// traits, and the city's culture level. This is the ATTRIBUTION half of a decomposition census -- a total

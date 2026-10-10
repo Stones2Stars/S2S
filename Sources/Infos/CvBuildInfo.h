@@ -64,6 +64,7 @@ public:
 
 	// ======================= 1. SECTIONS -- whole typed objects =======================
 	virtual const CvRequires* getRequires() const { return &m_requires; }
+	virtual const CvEdges* getEdges() const { return &m_edges; }
 	const CvBuildProduces& getProduces() const { return m_produces; }   // §9 produces (bespoke section)
 
 	// ======================= 2. CLASSIFICATION / MODIFIER GROUPS -- none (builds author neither) ============
@@ -105,10 +106,12 @@ public:
 
 protected:
 	virtual CvRequires* mutRequires() { return &m_requires; }
+	virtual CvEdges* mutEdges() { return &m_edges; }
 
 private:
 	// --- the composed section units ---
 	CvRequires m_requires;
+	CvEdges m_edges;
 	CvBuildProduces m_produces;   // the §9 produces section (typed at mapFrom)
 
 	// --- the materialized requires.build views ---

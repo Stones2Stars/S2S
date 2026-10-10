@@ -31165,6 +31165,18 @@ feindliche Einheit scrollen[COLOR_REVERT][\BOLD]Anzeige der Siegchance
 		<English> (+%d1 more, hold ALT for all)</English>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_EDGE_IMPROVES</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Improves:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EDGE_REQUIRES</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Requires:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_EDGE_REQUIRES_OPERATE</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Requires to operate:[COLOR_REVERT]</English>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_PLOTHELP_OWNER</Tag>
 		<English>[COLOR_HIGHLIGHT_TEXT]Owned by:[COLOR_REVERT] %s1</English>
 	</TEXT>

@@ -70,6 +70,15 @@ public:
 	// Membership without the allocation -- the common shape ("does this entity's requires name THIS corp?").
 	static bool namesId(const CvCondition* pRoot, EnEdgeBucket eBucket, int iId);
 
+	///<summary>Does the tree mention this entity in EITHER spelling: as a presence atom, or as the id of the
+	/// parameterized predicate its bucket has (a bonus is authored both as `BONUS_X` and as `{HAS_BONUS: BONUS_X}`).
+	/// The read for a consumer asking "is this entry gated on that thing" rather than about one axis.</summary>
+	static bool mentionsId(const CvCondition* pRoot, EnEdgeBucket eBucket, int iId);
+
+	///<summary>The parameterized predicate that names an entity of this bucket, or CASC_PRED_UNKNOWN where the
+	/// bucket is only ever authored as a presence atom.</summary>
+	static CvCascPredKind predicateForBucket(EnEdgeBucket eBucket);
+
 	// --- the PREDICATE axis: plot substrate + state questions, keyed by predicate kind ---
 
 	// Does the tree name this predicate anywhere? The bare form (HAS_RIVER, HAS_COAST, IS_CAPITAL, ...).
@@ -101,6 +110,10 @@ public:
 	// (TURN / POPULATION / ERA / ...), the plot substrate, and the PROPERTY_ bands, each of which has its own
 	// axis and its own event routing.
 	static EnEdgeBucket bucketForType(const std::string& szType);
+
+	///<summary>The INFOTYPE prefix of a bucket's entities, the same table read the other way. NULL for a bucket
+	/// no prefix routes to (the derived-only and the _AND / _OR / _WAIVED variant buckets).</summary>
+	static const char* typePrefixForBucket(EnEdgeBucket eBucket);
 
 private:
 	CvConditionQuery();   // a purely-organizational static-methods holder: never instantiated, holds no state

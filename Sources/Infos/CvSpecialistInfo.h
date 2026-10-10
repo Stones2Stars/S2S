@@ -31,6 +31,7 @@ public:
 
 	// ======================= 1. SECTIONS -- whole typed objects =======================
 	virtual const CvModifiers* getModifiers() const { return &m_modifiers; }
+	virtual const CvEdges* getEdges() const { return &m_edges; }
 
 	// ======================= 3. MODIFIER GROUPS -- point reads over the compiled sums ========================
 	// (Conditioned-list access + the expected* what-if valuations are the base CvInfo surface. The census
@@ -79,11 +80,13 @@ public:
 
 protected:
 	virtual CvModifiers* mutModifiers() { return &m_modifiers; }
+	virtual CvEdges* mutEdges() { return &m_edges; }
 
 private:
 	std::map<int, int> m_unitCombatExperience;   // keyed experience, materialized at mapFrom
 	// --- the composed section unit ---
 	CvModifiers m_modifiers;
+	CvEdges m_edges;
 
 	// --- the intrinsic identity members (materialized once at mapFrom) ---
 	int m_iGreatPeopleUnitType;
