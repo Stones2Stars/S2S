@@ -24,6 +24,7 @@ public:
 
 	// ======================= 1. SECTIONS -- whole typed objects =======================
 	virtual const CvGate* getGate() const { return &m_gate; }
+	virtual const CvEdges* getEdges() const { return &m_edges; }
 
 	// ======================= 4. INTRINSIC -- bare typed reads (the census identity set) =======================
 	bool isBuildUp() const { return m_bBuildUp; }      // buildUp.active (the dedicated build-up module, par.9)
@@ -53,10 +54,12 @@ public:
 
 protected:
 	virtual CvGate* mutGate() { return &m_gate; }
+	virtual CvEdges* mutEdges() { return &m_edges; }
 
 private:
 	// --- the composed section units ---
 	CvGate m_gate;                       // entity-level enabled/disabled (the game-option gates)
+	CvEdges m_edges;
 
 	// --- the intrinsic identity members (materialized once at mapFrom) ---
 	bool m_bBuildUp;                     // buildUp.active

@@ -54,8 +54,7 @@ namespace
 	// Every source KIND the general RELATED walk iterates: (repo tag, GC count getter, the EnEdgeBucket the kind
 	// lands under on a referenced info). Kinds with no EnEdgeBucket in the spec vocabulary (features / terrains /
 	// unitcombats / properties / the config kinds) cannot be landed as RELATED entries and are not walked as
-	// sources; they still RECEIVE nothing (they compose no CvEdges), so the receiver set is unchanged from the
-	// retired bespoke pass. Complex traits are walked beside the TRAIT_ row (same ids, same bucket, own repo).
+	// sources. Complex traits are walked beside the TRAIT_ row (same ids, same bucket, own repo).
 	// Cross-reference: RJ_REPO_TYPES (CvReadJson.cpp) is the reader's registration axis; this table is the
 	// reverse pass's kind->bucket axis -- a new bucket-carrying kind is added to both.
 	#define RP_RELATED_SOURCE_KINDS(X) \
@@ -1324,6 +1323,18 @@ namespace
 		#undef X
 		rp_sortUniqueKind<CvComplexTraitTag>(GC.getNumTraitInfos());
 		cascadeStartNode().sortUniqueEdges();
+		//	The receivers OUTSIDE the kind table. They are landed on like any other info, and this pass runs in
+		//	both load phases, so a receiver left out of the dedup carries every entry once per phase.
+		rp_sortUniqueKind<CvTerrainInfo>(GC.getNumTerrainInfos());
+		rp_sortUniqueKind<CvFeatureInfo>(GC.getNumFeatureInfos());
+		for (int iUnitCombat = 0; iUnitCombat < GC.getNumUnitCombatInfos(); ++iUnitCombat)
+		{
+			GC.getUnitCombatInfo((UnitCombatTypes)iUnitCombat).sortUniqueEdges();
+		}
+		for (int iLeader = 0; iLeader < GC.getNumLeaderHeadInfos(); ++iLeader)
+		{
+			GC.getLeaderHeadInfo((LeaderHeadTypes)iLeader).sortUniqueEdges();
+		}
 	}
 
 	// ==================== sub-pass (5): the unit-plane post-map derivation (json.md §9) ====================
@@ -1606,8 +1617,7 @@ void reversePassRun()
 	rp_reconstructTechForeignKeys();
 	rp_reconstructTechObsoletionViews();
 	// the own-output landing runs BEFORE the RELATED walk, so a landed entry's source-presence condition feeds
-	// the display inversion too (the improvement lands on the building's RELATED[improvements] -- the one
-	// direction that can carry it, since the plot-substrate infos compose no CvEdges)
+	// the display inversion too (the improvement lands on the building's RELATED[improvements])
 	rp_landOwnOutput();
 	rp_buildRelated();
 	rp_buildRequiredBy();

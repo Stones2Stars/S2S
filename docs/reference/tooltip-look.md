@@ -2752,6 +2752,51 @@ tile that carries one.
 - *Advances to the %s1_era Era  <!-- TXT_KEY_TECHHELP_ERA_ADVANCE -->
 - Sid's Tips:  <!-- TXT_KEY_SIDS_TIPS -->
 
+### The shared spine's list and requires blocks
+
+Issued by `appendEntityBlocks` for every entity, in this order: what it does (the family lines), what it leads
+to, what it improves, what it needs.
+
+- Unlocks:  <!-- TXT_KEY_EDGE_UNLOCKS; the same shape for Obsoletes / Obsoleted by / Replaces / Disables -->
+- <name>
+- <name>
+- (+%d1 more, hold ALT for all)  <!-- TXT_KEY_EDGE_MORE -->
+- Requires:  <!-- TXT_KEY_EDGE_REQUIRES -->
+- <one top-level clause of requires.build per line; an either/or group is ONE clause: "A or B">
+- Requires to operate:  <!-- TXT_KEY_EDGE_REQUIRES_OPERATE -->
+- <one top-level clause of requires.operate per line>
+
+A list is one name per line, never a comma run. The two requires headings stay separate because the timings
+mean different things ([enabler §3](../specs/enabler/03-pass-2-gate-each-candidate.md)). Given a city, each
+clause is coloured by its own verdict; on a pedia page the clauses render plain. A heading shows only when its
+tree renders at least one clause.
+
+### The IMPROVES block
+
+What an entity changes on things that already exist. It is issued by the shared entity spine
+(`appendEntityBlocks`), so every entity composer carries it: a tech, a civic, a resource, a religion, a
+corporation, a building. The effect is authored on the TARGET with this entity as its condition
+([the deliveryguy rule](../cascade/18-ownership.md#4-ownership--the-deliveryguy-rule)), so the entity holds no
+entry of its own and the block is a reverse read: its load-built related lists name the candidates, and only a
+candidate's entries whose condition mentions this entity are printed.
+
+- Improves:  <!-- TXT_KEY_EDGE_IMPROVES -->
+- <name of the target>: <its entries gated on this entity, comma-separated, from the entry renderer>
+- (+%d1 more, hold ALT for all)  <!-- TXT_KEY_EDGE_MORE -->
+
+**Position:** after the unlock / obsolete lines, before the requires block. **Sources:** every related bucket
+whose kind carries entries, in bucket order. **Shows:** only when at least one target has such an entry; six
+targets at rest, every target under ALT, and every target on a pedia page whose composer passes its pedia flag.
+
+**Line shape:** under this entity's own heading a line does not repeat it. Where an entry's `enabled` condition
+is nothing but a plain mention of the entity, the renderer leaves the `-- while <entity>` clause off
+(`+1 <hammer>`, never `+1 <hammer> -- while Chopping`). The clause stays whenever it carries more: a second
+condition, a count, an upper bound, or a connection requirement (`connected` / `on site`). `-- unless <entity>`
+always stays.
+
+⚠ A condition mentions an entity in two spellings, a presence atom and a parameterized predicate
+(`BONUS_X` and `{HAS_BONUS: BONUS_X}`); the block's filter is `CvConditionQuery::mentionsId`, which reads both.
+
 ## `setTerrainHelp`
 
 - <name of the thing>

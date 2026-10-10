@@ -15,16 +15,20 @@
 //	  <sign><magnitude><unit> <family/kind name>[ for <target>][, <scope phrase>][ per <per-scaler>]
 //	  [ -- top N by <metric>][ -- while <enabled>][ -- unless <disabled>]
 //	  [ -- units matching <unitQual>][ -- per city religion matching <religionQual>][ [AI only]]
+//	The `while` clause is left off when a page subject is named and the clause is only a plain mention of it.
 //	The magnitude is /100 at THIS out boundary (the reader rule, docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
 //
 
 #include "Defines/CvString.h"   // CvWString -- the rendered line type
+#include "Infos/CvEdges.h"      // EnEdgeBucket -- the page-subject axis
 
 class CvModEntry;
 class CvCondition;
 
-// ONE compiled entry -> one localized detail line (see the grammar above).
-CvWString entryDetailLine(const CvModEntry& entry);
+///<summary>One compiled entry as one localized detail line (the grammar above). A page SUBJECT may be named:
+/// when the entry's `enabled` condition is nothing but a plain mention of that subject, the "while" clause is
+/// left off, because under the subject's own heading it restates the heading.</summary>
+CvWString entryDetailLine(const CvModEntry& entry, EnEdgeBucket eSubjectBucket = NO_EDGEB, int iSubjectId = -1);
 
 ///<summary>Do the game's options alone rule this entry out for the current game? Such an entry is not listed,
 /// and a game-option atom is never printed in a condition clause, because an option is fixed for the game.</summary>

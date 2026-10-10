@@ -25,6 +25,7 @@
 #include "Infos/CvModifiers.h"        // entries() -- the compiled §3.9 deposits a composer renders
 #include "Infos/CvModEntry.h"         // targetFk + the entry conditions appendEntryLinesFiltered narrows on
 #include "Conditions/CvConditionQuery.h"  // namesId -- the ONE "what does this condition NAME" read
+#include "Data/CvReadJson.h"          // rjInfoForTypeConst -- the ONE read-only prefix -> info dispatch
 #include "Conditions/CvConditionEval.h"   // cascadeEvalCondition -- the ONE verdict, for the per-clause met/unmet
 #include "Infos/CvRequires.h"             // the build/operate trees the requires block renders
 #include "Infos/CvGrants.h"           // the considered-action payload the first-discoverer widgets render
@@ -2660,7 +2661,7 @@ void CvGameTextMgr::parseCivicInfo(CvWStringBuffer &szHelpText, CivicTypes eCivi
 			szHelpText.append(gDLL->getText("TXT_KEY_CIVICHELP_CITY_LIMIT", iCityLimit));
 		}
 	}
-	appendEntityBlocks(szHelpText, kCivic, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
+	appendEntityBlocks(szHelpText, kCivic, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]), bCivilopediaText);
 }
 void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool bCivilopediaText, bool bPlayerContext, bool bStrategyText, bool bTreeInfo, TechTypes eFromTech)
 {
@@ -2674,7 +2675,7 @@ void CvGameTextMgr::setTechHelp(CvWStringBuffer &szBuffer, TechTypes eTech, bool
 		szBuffer.append(kInfo.getDescription());
 		appendTechResearchProgress(szBuffer, eTech);
 	}
-	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
+	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]), bCivilopediaText);
 }
 
 ///<summary>The viewer's research on a tech they do not hold yet: beakers spent against the cost, and the
@@ -2929,17 +2930,12 @@ void CvGameTextMgr::setBuildingHelp(CvWStringBuffer &szBuffer, const BuildingTyp
 	//	that names no cause leaves them to guess, which is the one thing this surface exists to prevent.
 	if (pCity != NULL && !bCivilopediaText)
 	{
-		const unsigned char eReason = pCity->getBuildingGateReason(eBuilding);
-		appendGateReason(szBuffer, eReason);
-		// The reason names the KIND; WHICH atom is unmet is the requires tree's own per-clause render, so the
-		// two compose rather than the enabler duplicating the condition walk ([enabler.md] par.6).
-		if (EnablerDomain::isRequiresReason(eReason))
-		{
-			buildRequiresClauses(szBuffer, kInfo.requiresBuild(), pCity);
-			buildRequiresClauses(szBuffer, kInfo.requiresOperate(), pCity);
-		}
+		// The reason names the KIND; WHICH atom is unmet is the requires block's own per-clause colour below, so
+		// the two compose rather than the enabler duplicating the condition walk ([enabler.md] par.6).
+		appendGateReason(szBuffer, pCity->getBuildingGateReason(eBuilding));
 	}
-	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
+	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]), bCivilopediaText,
+		bCivilopediaText ? NULL : pCity);
 
 	//	The building's own authored help closes the block, as a build's does in the action tooltip.
 	if (!CvWString(kInfo.getHelp()).empty())
@@ -2959,7 +2955,7 @@ void CvGameTextMgr::setHeritageHelp(CvWStringBuffer &szBuffer, const HeritageTyp
 	{
 		szBuffer.append(kInfo.getDescription());
 	}
-	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
+	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]), bCivilopediaText);
 }
 // #195 Phase 2: render one terrain / feature / improvement "requires ... in city vicinity"
 // requirement straight from the unified prerequisite model, replacing four near-identical
@@ -3076,7 +3072,7 @@ void CvGameTextMgr::setProjectHelp(CvWStringBuffer &szBuffer, ProjectTypes eProj
 	{
 		szBuffer.append(kInfo.getDescription());
 	}
-	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
+	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]), bCivilopediaText);
 }
 void CvGameTextMgr::setProcessHelp(CvWStringBuffer &szBuffer, ProcessTypes eProcess)
 {
@@ -3842,7 +3838,7 @@ void CvGameTextMgr::setBonusTradeHelp(CvWStringBuffer &szBuffer, BonusTypes eBon
 	//	production across the curated set -- so it renders through the ONE per-entry renderer like every other
 	//	entity (docs/architecture/patterns.md §DRY (single implementation)), never a hand-assembled line.
 	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies,
-		sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
+		sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]), bCivilopediaText);
 }
 
 void CvGameTextMgr::setReligionHelp(CvWStringBuffer &szBuffer, ReligionTypes eReligion, bool bCivilopedia)
@@ -3856,7 +3852,7 @@ void CvGameTextMgr::setReligionHelp(CvWStringBuffer &szBuffer, ReligionTypes eRe
 	{
 		szBuffer.append(kInfo.getDescription());
 	}
-	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
+	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]), bCivilopedia);
 }
 void CvGameTextMgr::setReligionHelpCity(CvWStringBuffer &szBuffer, ReligionTypes eReligion, CvCity *pCity, bool bCityBar, bool bForceReligion, bool bForceState, bool bNoStateReligion)
 {
@@ -3887,7 +3883,7 @@ void CvGameTextMgr::setCorporationHelp(CvWStringBuffer &szBuffer, CorporationTyp
 	{
 		szBuffer.append(kInfo.getDescription());
 	}
-	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]));
+	appendEntityBlocks(szBuffer, kInfo, g_aeCityPlaneFamilies, sizeof(g_aeCityPlaneFamilies) / sizeof(g_aeCityPlaneFamilies[0]), bCivilopedia);
 }
 void CvGameTextMgr::setCorporationHelpCity(CvWStringBuffer &szBuffer, CorporationTypes eCorporation, CvCity *pCity, bool bCityBar, bool bForceCorporation)
 {
@@ -4190,21 +4186,13 @@ void CvGameTextMgr::buildYieldChangeString(CvWStringBuffer &szBuffer, TechTypes 
 	{
 		return;
 	}
-	const CvInfo& kImprovement = GC.getImprovementInfo((ImprovementTypes)iImprovement);
-	CvWStringBuffer szEntries;
-	appendEntryLinesFiltered(szEntries, kImprovement, MODFAM_FOOD,       -1, EDGEB_TECHS, (int)eTech);
-	appendEntryLinesFiltered(szEntries, kImprovement, MODFAM_PRODUCTION, -1, EDGEB_TECHS, (int)eTech);
-	appendEntryLinesFiltered(szEntries, kImprovement, MODFAM_COMMERCE,   -1, EDGEB_TECHS, (int)eTech);
-	if (szEntries.isEmpty())
+	CvWStringBuffer szLines;
+	if (!appendGatedTargetLines(szLines, GC.getImprovementInfo((ImprovementTypes)iImprovement), EDGEB_TECHS, (int)eTech))
 	{
 		return;
 	}
-	if (bList)
-	{
-		szBuffer.append(NEWLINE);
-	}
-	szBuffer.append(kImprovement.getDescription());
-	szBuffer.append(szEntries);
+	//	The shared lines open with a line break; a widget standing alone starts on its first line instead.
+	szBuffer.append(bList ? szLines.getCString() : szLines.getCString() + 1);
 }
 
 
@@ -4372,7 +4360,8 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 //	composer is this shape, so they cannot drift apart (docs/architecture/patterns.md §DRY (single implementation)); deciding that build and
 //	operate are separate lines is the composer's call (they mean different things -- merging them would
 //	misreport both), while rendering each tree is the condition renderer's.
-void CvGameTextMgr::appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& info, const ModifierFamily* aeFamilies, int iFamilyCount) const
+void CvGameTextMgr::appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& info, const ModifierFamily* aeFamilies, int iFamilyCount,
+	bool bShowAllImproved, const CvCity* pRequiresCity) const
 {
 	//	THE FLAT YIELDS ARE ONE LINE; THE CONDITIONALS COME SEPARATELY. A plain amount says everything it has to
 	//	say in a glyph and a number, so the whole set reads at a glance as "+2<food> +1<hammer> +3<commerce>" --
@@ -4403,18 +4392,27 @@ void CvGameTextMgr::appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& 
 	//	SUPERSET that cannot tell an unlocking tech from an obsoleting one ([CvEdges.h]), so it would state
 	//	relationships that are not true; REQUIRED_BY is the gate axis, and 4,381 buildings name a TECH atom, so a
 	//	tech would list thousands. Neither is a display axis, and capping them would not make them correct.
+	//	⚑ RELATED does serve as the CANDIDATE list below, where each candidate's own entries are the exact test.
+	appendImprovesLines(szBuffer, info, bShowAllImproved || gDLL->altKey());
 
-	const CvCondition* pRequiresBuild = info.requiresBuild();
-	if (pRequiresBuild != NULL)
+	//	WHAT IT NEEDS, one clause per line under its own heading. The two timings keep separate headings because
+	//	they mean different things: `build` is needed to construct, `operate` to construct AND to keep running
+	//	([enabler.md] par.3). A heading is issued only when its tree renders at least one clause.
+	CvWStringBuffer szBuildClauses;
+	buildRequiresClauses(szBuildClauses, info.requiresBuild(), pRequiresCity);
+	if (!szBuildClauses.isEmpty())
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(entryConditionText(pRequiresBuild));
+		szBuffer.append(gDLL->getText("TXT_KEY_EDGE_REQUIRES"));
+		szBuffer.append(szBuildClauses);
 	}
-	const CvCondition* pRequiresOperate = info.requiresOperate();
-	if (pRequiresOperate != NULL)
+	CvWStringBuffer szOperateClauses;
+	buildRequiresClauses(szOperateClauses, info.requiresOperate(), pRequiresCity);
+	if (!szOperateClauses.isEmpty())
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(entryConditionText(pRequiresOperate));
+		szBuffer.append(gDLL->getText("TXT_KEY_EDGE_REQUIRES_OPERATE"));
+		szBuffer.append(szOperateClauses);
 	}
 }
 
@@ -4582,21 +4580,122 @@ void CvGameTextMgr::appendEdgeLines(CvWStringBuffer& szBuffer, const CvInfo& inf
 	}
 
 	const size_t iCap = gDLL->altKey() ? aNames.size() : 12;
+	//	One name per line under the heading: a list is read by scanning down it, never across a comma run.
 	CvWString szList;
 	for (size_t iName = 0; iName < aNames.size() && iName < iCap; ++iName)
 	{
-		if (iName > 0)
-		{
-			szList += L", ";
-		}
+		szList += NEWLINE;
 		szList += aNames[iName];
 	}
 	if (aNames.size() > iCap)
 	{
+		szList += NEWLINE;
 		szList += gDLL->getText("TXT_KEY_EDGE_MORE", (int)(aNames.size() - iCap));
 	}
 	szBuffer.append(NEWLINE);
 	szBuffer.append(gDLL->getText(szHeadingKey, szList.GetCString()));
+}
+
+bool CvGameTextMgr::appendGatedTargetLines(CvWStringBuffer& szBuffer, const CvInfo& target,
+	EnEdgeBucket eGateBucket, int iGateId) const
+{
+	CvWStringBuffer szEntries;
+	appendEntryLinesFiltered(szEntries, target, MODFAM_NONE, -1, eGateBucket, iGateId);
+	if (szEntries.isEmpty())
+	{
+		return false;
+	}
+	//	ONE line per target: its name, then its entries. The filter hands the entries back one per line, so the
+	//	line breaks between them become the separators.
+	CvWString szEffects;
+	for (const wchar_t* pChar = szEntries.getCString(); *pChar != L'\0'; ++pChar)
+	{
+		if (*pChar != L'\n')
+		{
+			szEffects += *pChar;
+		}
+		else if (!szEffects.empty())
+		{
+			szEffects += L", ";
+		}
+	}
+	szBuffer.append(NEWLINE);
+	szBuffer.append(target.getDescription());
+	szBuffer.append(L": ");
+	szBuffer.append(szEffects);
+	return true;
+}
+
+//	⚑ The effect is authored on the TARGET with this entity as its condition (docs/cascade.md §4, the deliveryguy
+//	ownership rule), so the entity holds no entry of its own to render and this is a reverse read.
+//	⚠ EDGEF_RELATED is a merged candidate superset ([CvEdges.h]); the gate filter is the exact predicate over it.
+void CvGameTextMgr::appendImprovesLines(CvWStringBuffer& szBuffer, const CvInfo& info, bool bShowAll) const
+{
+	const char* szType = info.getType();
+	if (szType == NULL)
+	{
+		return;
+	}
+	const EnEdgeBucket eSelfBucket = CvConditionQuery::bucketForType(szType);
+	if (eSelfBucket == NO_EDGEB)
+	{
+		return;
+	}
+	const int iSelfId = GC.getInfoTypeForString(szType, true);
+	if (iSelfId < 0)
+	{
+		return;
+	}
+
+	const int iRestingTargetCap = 6;
+	int iTargetsShown = 0;
+	int iTargetsHidden = 0;
+
+	for (int iBucket = 0; iBucket < NUM_EDGEB; ++iBucket)
+	{
+		const EnEdgeBucket eBucket = (EnEdgeBucket)iBucket;
+		const char* szTargetPrefix = CvConditionQuery::typePrefixForBucket(eBucket);
+		const std::vector<int>* pCandidates = info.edge(EDGEF_RELATED, eBucket);
+		if (szTargetPrefix == NULL || pCandidates == NULL)
+		{
+			continue;
+		}
+		for (size_t iCandidate = 0; iCandidate < pCandidates->size(); ++iCandidate)
+		{
+			const CvInfo* pTarget = rjInfoForTypeConst(szTargetPrefix, (*pCandidates)[iCandidate]);
+			if (pTarget == NULL || pTarget == &info)
+			{
+				continue;
+			}
+			if (!bShowAll && iTargetsShown >= iRestingTargetCap)
+			{
+				//	Past the cap a target is only COUNTED, so the "+N more" is exact and names no target that has nothing.
+				CvWStringBuffer szUnshown;
+				if (appendGatedTargetLines(szUnshown, *pTarget, eSelfBucket, iSelfId))
+				{
+					++iTargetsHidden;
+				}
+				continue;
+			}
+			CvWStringBuffer szTarget;
+			if (!appendGatedTargetLines(szTarget, *pTarget, eSelfBucket, iSelfId))
+			{
+				continue;
+			}
+			if (iTargetsShown == 0)
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(gDLL->getText("TXT_KEY_EDGE_IMPROVES"));
+			}
+			szBuffer.append(szTarget);
+			++iTargetsShown;
+		}
+	}
+	if (iTargetsHidden > 0)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_EDGE_MORE", iTargetsHidden));
+	}
 }
 
 // What it COSTS, and what this city has already sunk into it.
@@ -4839,7 +4938,11 @@ void CvGameTextMgr::appendEntryLinesFiltered(CvWStringBuffer& szBuffer, const Cv
 	for (std::vector<CvModEntry*>::const_iterator it = aEntries.begin(); it != aEntries.end(); ++it)
 	{
 		const CvModEntry* pEntry = *it;
-		if (pEntry == NULL || pEntry->family != eFamily || entryHiddenByGameOptions(*pEntry))
+		if (pEntry == NULL || entryHiddenByGameOptions(*pEntry))
+		{
+			continue;
+		}
+		if (eFamily != MODFAM_NONE && pEntry->family != eFamily)
 		{
 			continue;
 		}
@@ -4855,13 +4958,15 @@ void CvGameTextMgr::appendEntryLinesFiltered(CvWStringBuffer& szBuffer, const Cv
 		// The gate axis asks what the entry's condition MENTIONS -- CvConditionQuery, never a walk of our own
 		// (docs/architecture/patterns.md §DRY (single implementation); the query surface exists precisely so each consumer does not grow one).
 		if (eGateBucket != NO_EDGEB
-		&& !CvConditionQuery::namesId(pEntry->enabled, eGateBucket, iGateId)
-		&& !CvConditionQuery::namesId(pEntry->disabled, eGateBucket, iGateId))
+		&& !CvConditionQuery::mentionsId(pEntry->enabled, eGateBucket, iGateId)
+		&& !CvConditionQuery::mentionsId(pEntry->disabled, eGateBucket, iGateId))
 		{
 			continue;
 		}
 		szBuffer.append(NEWLINE);
-		szBuffer.append(entryDetailLine(*pEntry));
+		//	The gate entity is the subject of the block these lines sit under, so the renderer may leave off a
+		//	"while" clause that only names it.
+		szBuffer.append(entryDetailLine(*pEntry, eGateBucket, iGateId));
 	}
 }
 

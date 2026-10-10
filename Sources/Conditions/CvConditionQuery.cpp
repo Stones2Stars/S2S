@@ -153,6 +153,24 @@ namespace
 		CvCascPredKind    m_ePredicate;
 		std::vector<int>* m_pIds;
 	};
+
+	class cq_PredicateIdFinder
+	{
+	public:
+		cq_PredicateIdFinder(CvCascPredKind ePredicate, int iId) : m_ePredicate(ePredicate), m_iId(iId), m_bFound(false) {}
+		void leaf(const CvCondition& condition)
+		{
+			if (condition.kind == CASC_COND_PREDICATE && condition.predKind == m_ePredicate && condition.id == m_iId)
+			{
+				m_bFound = true;
+			}
+		}
+		bool found() const { return m_bFound; }
+	private:
+		CvCascPredKind m_ePredicate;
+		int            m_iId;
+		bool           m_bFound;
+	};
 }
 
 
@@ -269,6 +287,54 @@ bool CvConditionQuery::namesId(const CvCondition* pRoot, EnEdgeBucket eBucket, i
 	cq_IdFinder finder(eBucket, iId);
 	cq_walk(pRoot, finder);
 	return finder.found();
+}
+
+
+CvCascPredKind CvConditionQuery::predicateForBucket(EnEdgeBucket eBucket)
+{
+	switch (eBucket)
+	{
+	case EDGEB_BONUSES:
+		return CASC_PRED_HAS_BONUS;
+	case EDGEB_RELIGIONS:
+		return CASC_PRED_HAS_RELIGION;
+	case EDGEB_CORPORATIONS:
+		return CASC_PRED_HAS_CORPORATION;
+	case EDGEB_IMPROVEMENTS:
+		return CASC_PRED_HAS_IMPROVEMENT;
+	default:
+		return CASC_PRED_UNKNOWN;
+	}
+}
+
+
+bool CvConditionQuery::mentionsId(const CvCondition* pRoot, EnEdgeBucket eBucket, int iId)
+{
+	if (namesId(pRoot, eBucket, iId))
+	{
+		return true;
+	}
+	const CvCascPredKind ePredicate = predicateForBucket(eBucket);
+	if (ePredicate == CASC_PRED_UNKNOWN || iId < 0)
+	{
+		return false;
+	}
+	cq_PredicateIdFinder finder(ePredicate, iId);
+	cq_walk(pRoot, finder);
+	return finder.found();
+}
+
+
+const char* CvConditionQuery::typePrefixForBucket(EnEdgeBucket eBucket)
+{
+	for (int iRow = 0; CQ_PREFIX_ROWS[iRow].szPrefix != 0; ++iRow)
+	{
+		if (CQ_PREFIX_ROWS[iRow].eBucket == eBucket)
+		{
+			return CQ_PREFIX_ROWS[iRow].szPrefix;
+		}
+	}
+	return NULL;
 }
 
 

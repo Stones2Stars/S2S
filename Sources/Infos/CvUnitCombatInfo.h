@@ -31,6 +31,7 @@ public:
 	virtual const CvClassificationBlock* getSkills() const { return &m_skills; }
 	virtual const CvClassificationBlock* getTags() const { return &m_tags; }
 	virtual const CvGate* getGate() const { return &m_gate; }
+	virtual const CvEdges* getEdges() const { return &m_edges; }
 	const CvHideAndSeekSection& getHideAndSeek() const { return m_hideAndSeek; }
 	const CvSizeMattersSection& getSizeMatters() const { return m_sizeMatters; }
 
@@ -140,6 +141,7 @@ protected:
 	virtual CvClassificationBlock* mutSkills() { return &m_skills; }
 	virtual CvClassificationBlock* mutTags() { return &m_tags; }
 	virtual CvGate* mutGate() { return &m_gate; }
+	virtual CvEdges* mutEdges() { return &m_edges; }
 
 private:
 	// --- the composed section units ---
@@ -147,6 +149,7 @@ private:
 	CvClassificationBlock m_skills;
 	CvClassificationBlock m_tags;
 	CvGate m_gate;
+	CvEdges m_edges;
 	CvHideAndSeekSection m_hideAndSeek;
 	CvSizeMattersSection m_sizeMatters;
 	CvOutcomesSection m_outcomes;

@@ -19,8 +19,7 @@
 //	      grants lists, provides, triggers) lands the referencing info on the referenced info's RELATED bucket.
 //	      Edge references land BOTH directions (the store-inversion means either side may carry the authored
 //	      edge; symmetry is what makes "author either side" true for display). A referenced info that composes
-//	      no CvEdges (the plot substrate, unitcombats, properties) silently lands nothing -- same receiver set
-//	      as the retired bespoke pass; a source KIND with no EnEdgeBucket cannot be landed and is skipped.
+//	      no CvEdges silently lands nothing; a source KIND with no EnEdgeBucket cannot be landed and is skipped.
 //	  (3) EDGEF_REQUIRED_BY -- the enabler's requires-reverse-index (enabler.md §7.1 step 2): every FK-resolved
 //	      atom/predicate in every dependent's requiresBuild/requiresOperate trees + its dormant triggers lands
 //	      the dependent under its kind bucket on the referenced HAVE-axis info.

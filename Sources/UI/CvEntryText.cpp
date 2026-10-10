@@ -15,6 +15,7 @@
 #include "CvInfoKinds.h"            // family key spell-back + the ruling-1 channel reverse lookups
 #include "CvInfo.h"                 // the JSON-info base (getTextKeyWide via CvInfoBase)
 #include "CvJsonConditionParse.h"   // cascadeSpellPredKind -- the predicate vocabulary's spell-back
+#include "Conditions/CvConditionQuery.h"   // bucketForType / predicateForBucket -- which entity a leaf names
 #include "CvYieldInfo.h"
 #include "CvCommerceInfo.h"
 #include "Data/CvReadJson.h"        // rjInfoForTypeConst -- FK id -> the referenced info (name resolution; a READ)
@@ -102,7 +103,8 @@ namespace
 		return etx_prettyToken(szType);
 	}
 
-	// The experienced-where phrase of a non-city scope (city is the default containing scope -- unrendered).
+	// The experienced-where phrase of a scope. City and unit are the default containing scope of the entity
+	// that carries the entry, so they are unrendered.
 	const wchar_t* etx_scopePhrase(CvCascScope eScope)
 	{
 		switch (eScope)
@@ -118,7 +120,7 @@ namespace
 		case CASC_SCOPE_ROUTE:       return L"on the route";
 		case CASC_SCOPE_BUILDING:    return L"on the building";
 		case CASC_SCOPE_SPECIALIST:  return L"per specialist";
-		case CASC_SCOPE_UNIT:        return L"for this unit";
+		case CASC_SCOPE_UNIT:        return L"";
 		case CASC_SCOPE_SELF:        return L"for itself";
 		default:                     return L"";
 		}
@@ -664,7 +666,41 @@ CvWString entryFlatSummary(const CvModEntry& entry)
 	return etx_signedMagnitude(entry) + etx_entryName(entry);
 }
 
-CvWString entryDetailLine(const CvModEntry& entry)
+//	Is this condition NOTHING BUT a plain mention of the subject? Anything it carries beyond that -- a second
+//	clause, a count, an upper bound, a connection requirement -- is information the line must keep, so it
+//	answers false. A group wrapping exactly one `all` child is seen through.
+static bool etx_isBareMentionOf(const CvCondition* pCondition, EnEdgeBucket eSubjectBucket, int iSubjectId)
+{
+	if (pCondition == NULL || eSubjectBucket == NO_EDGEB || iSubjectId < 0)
+	{
+		return false;
+	}
+	if (pCondition->kind == CASC_COND_PRESENCE)
+	{
+		return pCondition->id == iSubjectId
+			&& CvConditionQuery::bucketForType(pCondition->type) == eSubjectBucket
+			&& pCondition->min <= 1
+			&& !pCondition->hasMax
+			&& pCondition->connection == CASC_CONN_NONE;
+	}
+	if (pCondition->kind == CASC_COND_PREDICATE)
+	{
+		return pCondition->id == iSubjectId
+			&& pCondition->predKind != CASC_PRED_UNKNOWN
+			&& pCondition->predKind == CvConditionQuery::predicateForBucket(eSubjectBucket);
+	}
+	if (pCondition->all.size() != 1 || !pCondition->anyOf.empty() || !pCondition->noneOf.empty())
+	{
+		return false;
+	}
+	if (pCondition->enabled != NULL || pCondition->disabled != NULL)
+	{
+		return false;
+	}
+	return etx_isBareMentionOf(pCondition->all[0], eSubjectBucket, iSubjectId);
+}
+
+CvWString entryDetailLine(const CvModEntry& entry, EnEdgeBucket eSubjectBucket, int iSubjectId)
 {
 	CvWString szLine;
 
@@ -733,7 +769,7 @@ CvWString entryDetailLine(const CvModEntry& entry)
 		}
 	}
 	const CvWString szEnabled = entryConditionText(entry.enabled);
-	if (!szEnabled.empty())
+	if (!szEnabled.empty() && !etx_isBareMentionOf(entry.enabled, eSubjectBucket, iSubjectId))
 	{
 		szLine += CvWString(L" -- while ") + szEnabled;
 	}

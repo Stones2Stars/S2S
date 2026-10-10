@@ -252,18 +252,19 @@ class PediaBuilding:
 		# The requires tree, read PER CLAUSE so a needed entity is told apart from a barred one.
 		# ⛔ REQCLAUSE_NONE is never collected: a `noneOf` names what BLOCKS the building, and drawing it in a
 		# "Requires" panel tells the player to go and get the thing that refuses it.
-		# ⚠ The mandatory and one-of ids are concatenated rather than bracketed here -- this panel draws each
-		# kind as one flat run of buttons, so the {A || B} grouping PediaUnit now renders wants a layout change
-		# to go with it. The FORBIDDEN half is the correctness half and is fixed; the brackets are cosmetic.
+		# BUILDINGS and BONUSES are read per clause and drawn as the mandatory run then the one-of group in
+		# brackets, the shape PediaUnit draws. The other kinds are still one flat run of buttons.
+		def reqIdsIn(eBucket, eClause):
+			return list(INFO.getRequiresIdsInClause("BUILDING_", iTheBuilding, eBucket, eClause))
 		def reqIds(eBucket):
-			aIds = list(INFO.getRequiresIdsInClause("BUILDING_", iTheBuilding, eBucket, RequiresClause.REQCLAUSE_ALL))
-			aIds.extend(INFO.getRequiresIdsInClause("BUILDING_", iTheBuilding, eBucket, RequiresClause.REQCLAUSE_ANY))
-			return aIds
+			return reqIdsIn(eBucket, RequiresClause.REQCLAUSE_ALL) + reqIdsIn(eBucket, RequiresClause.REQCLAUSE_ANY)
 		aReqTechs = reqIds(EdgeBucket.EDGEB_TECHS)
 		aReqReligions = reqIds(EdgeBucket.EDGEB_RELIGIONS)
 		aReqCorps = reqIds(EdgeBucket.EDGEB_CORPORATIONS)
-		aReqBonuses = reqIds(EdgeBucket.EDGEB_BONUSES)
-		aReqBuildings = reqIds(EdgeBucket.EDGEB_BUILDINGS)
+		aReqBonusesAll = reqIdsIn(EdgeBucket.EDGEB_BONUSES, RequiresClause.REQCLAUSE_ALL)
+		aReqBonusesAny = reqIdsIn(EdgeBucket.EDGEB_BONUSES, RequiresClause.REQCLAUSE_ANY)
+		aReqBuildingsAll = reqIdsIn(EdgeBucket.EDGEB_BUILDINGS, RequiresClause.REQCLAUSE_ALL)
+		aReqBuildingsAny = reqIdsIn(EdgeBucket.EDGEB_BUILDINGS, RequiresClause.REQCLAUSE_ANY)
 		aReqCivics = reqIds(EdgeBucket.EDGEB_CIVICS)
 		aReqImprovements = reqIds(EdgeBucket.EDGEB_IMPROVEMENTS)
 		# Tech Req
@@ -290,28 +291,21 @@ class PediaBuilding:
 			screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("CORPORATION_", iType), enumGBS, eWidGen, 1, 1, False)
 		# Bonus Req
 		szChild = PF + "BONUS"
-		iType = -1
-		nOr = 0
-		for iCheck in aReqBonuses:
-			aList1.append(iCheck)
-			nOr += 1
-		if bPlus:
-			if iType != -1 or nOr:
+		if aReqBonusesAll or aReqBonusesAny:
+			if bPlus:
 				screen.attachLabel(panelName, "", szAnd)
-		elif iType != -1 or nOr:
-			bPlus = True
-		if iType > -1:
+			else:
+				bPlus = True
+		for iType in aReqBonusesAll:
 			screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("BONUS_", iType), enumGBS, eWidGen, 1, 1, False)
+		nOr = len(aReqBonusesAny)
 		if nOr > 1:
 			screen.attachLabel(panelName, "", szBracketL)
-		i = 0
-		if aList1:
-			for iType in aList1:
-				if i:
-					screen.attachLabel(panelName, "", szOr)
-				else: i = 1
-				screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("BONUS_", iType), enumGBS, eWidGen, 1, 1, False)
-			aList1 = []
+		for i in range(nOr):
+			iType = aReqBonusesAny[i]
+			if i != 0:
+				screen.attachLabel(panelName, "", szOr)
+			screen.attachImageButton(panelName, szChild + str(iType), INFO.getButton("BONUS_", iType), enumGBS, eWidGen, 1, 1, False)
 		if nOr > 1:
 			screen.attachLabel(panelName, "", szBracketR)
 		# Corporation Bonus Req
@@ -336,9 +330,11 @@ class PediaBuilding:
 		# Building Req
 		szChild = PF + "BUILDING"
 		szChild1 = szChild + "|Own"
-		# And building requirements
-		for j in aReqBuildings:
+		# The mandatory buildings, then the one-of group the bracketed draw below renders.
+		for j in aReqBuildingsAll:
 			aList1.append(j)
+		for j in aReqBuildingsAny:
+			aList2.append(j)
 
 
 		if aList1 or aList2 or aList3 or aList4 or aList5:
