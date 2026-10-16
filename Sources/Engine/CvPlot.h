@@ -309,6 +309,9 @@ public:
 
 	int defenseModifier(TeamTypes eDefender, bool bIgnoreBuilding, bool bHelp = false) const;
 	int movementCost(const CvUnit* pUnit, const CvPlot* pFromPlot) const;
+	///<summary>The moves this plot's terrain, feature, hills and peak cost a unit of ePlayer to enter, before a
+	/// river crossing and the unit's own discounts.</summary>
+	int getTerrainMovementCost(PlayerTypes ePlayer) const;
 	static void flushMovementCostCache();
 
 	//	Koshling - count of mountain leaders present per team maintained for efficiency of movement calculations
@@ -648,6 +651,14 @@ public:
 	int getUpgradeTimeLeft(ImprovementTypes eImprovement, PlayerTypes ePlayer) const;
 	void setImprovementUpgradeProgress(int iNewValue);
 	void changeImprovementUpgradeProgress(int iChange);
+	///<summary>The improvements eImprovement may upgrade into on this plot for eTeam right now: its main upgrade,
+	/// then its alternatives, each only if the plot can hold it.</summary>
+	void getValidImprovementUpgrades(ImprovementTypes eImprovement, TeamTypes eTeam, std::vector<ImprovementTypes>& upgrades) const;
+	///<summary>Does upgrade progress on eImprovement advance this turn: a fortified defender of eTeam on the plot
+	/// when the improvement requires one, otherwise a worked plot.</summary>
+	bool isImprovementUpgradeAdvancing(ImprovementTypes eImprovement, TeamTypes eTeam) const;
+	///<summary>Has upgrade progress reached eImprovement's upgrade time?</summary>
+	bool isImprovementUpgradeComplete(ImprovementTypes eImprovement) const;
 
 	// ⚖ WHICH CITIES MAY WORK THIS PLOT -- the membership the CITY defines and the plot holds. DERIVED (city
 	// positions × their radii), so it is never serialized and the reseed rebuilds it.
@@ -792,6 +803,15 @@ public:
 	/// <remarks>⛔ NOT interchangeable with getBonusType(NO_TEAM), which answers the RAW bonus. This one is the
 	/// observer-keyed read and fails CLOSED; that one is the omniscient read and fails OPEN.</remarks>
 	BonusTypes getBonusRevealedTo(PlayerTypes eObserver) const;
+	/// <summary>The owner this plot shows to an observing player, as last revealed to that player's team;
+	/// NO_PLAYER for NO_PLAYER.</summary>
+	PlayerTypes getOwnerRevealedTo(PlayerTypes eObserver) const;
+	/// <summary>The improvement this plot shows to an observing player, as last revealed to that player's team;
+	/// NO_IMPROVEMENT for NO_PLAYER.</summary>
+	ImprovementTypes getImprovementRevealedTo(PlayerTypes eObserver) const;
+	/// <summary>The route this plot shows to an observing player, as last revealed to that player's team;
+	/// NO_ROUTE for NO_PLAYER.</summary>
+	RouteTypes getRouteRevealedTo(PlayerTypes eObserver) const;
 	int calculateNatureYield(YieldTypes eIndex, bool bIgnoreFeature = false) const;
 	/// <summary>This plot's ground yield as an observing player sees it — the tile's bonus counted only once that
 	/// player has revealed it.</summary>

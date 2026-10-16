@@ -1789,23 +1789,7 @@ bool CvWorkerAI::improveCity(CvUnitAI* unit, CvCity* pCity)
 		}
 		else if (unit->plot()->getRouteType() == NO_ROUTE)
 		{
-			int iPlotMoveCost = GC.getTerrainInfo(unit->plot()->getTerrainType()).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100;
-			if (unit->plot()->getFeatureType() != NO_FEATURE)
-			{
-				iPlotMoveCost += GC.getFeatureInfo(unit->plot()->getFeatureType()).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100;
-			}
-			if (unit->plot()->isHills())
-			{
-				iPlotMoveCost += GC.getHILLS_EXTRA_MOVEMENT();
-			}
-			if (unit->plot()->isAsPeak())
-			{
-				if (!GET_TEAM(unit->getTeam()).isMoveFastPeaks())
-				{
-					iPlotMoveCost += GC.getPEAK_EXTRA_MOVEMENT();
-				}
-				iPlotMoveCost += 3;
-			}
+			const int iPlotMoveCost = unit->plot()->getTerrainMovementCost(unit->getOwner()) / 100;
 			if (iPlotMoveCost > 1)
 			{
 				eMission = MISSION_ROUTE_TO;

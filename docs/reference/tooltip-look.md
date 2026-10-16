@@ -2510,11 +2510,11 @@ a read-time walk of what each live source authored, never a stored per-source pl
 
 ## `setPlotHelp`
 
-⚑ **The working-city pair is DESIGN, not legacy** — the lines below it are the pre-rework record, and neither of
-these two appears in it. A tile inside a city's workable set names that city, and WHICH of the two it picks is the
-tile's live state: a citizen is on it, or the city could work it and does not. A tile no city can reach gets
-neither line, so open land stays short. The second is the one a player wants before improving a tile — it says an
-improvement there is waiting for a citizen rather than wasted.
+⚑ **The working-city pair is DESIGN, not legacy** — neither of these two appears in the pre-rework record. A tile
+inside a city's workable set names that city, and WHICH of the two it picks is the tile's live state: a citizen is
+on it, or the city could work it and does not. A tile no city can reach gets neither line, so open land stays
+short. The second is the one a player wants before improving a tile — it says an improvement there is waiting for
+a citizen rather than wasted.
 
 - Worked by %s1  <!-- TXT_KEY_PLOTHELP_WORKED_BY -->
 - In range of %s1 [ICON_BULLET] not currently worked  <!-- TXT_KEY_PLOTHELP_IN_RANGE_OF -->
@@ -2527,45 +2527,72 @@ tile that carries one.
 - %s1: %s2 (nature %s3 [ICON_BULLET] improvement %s4 [ICON_BULLET] route/other %s5)  <!-- TXT_KEY_PLOTHELP_YIELD -->
 - [ICON_BULLET] of which %s1 from a past event  <!-- TXT_KEY_PLOTHELP_YIELD_EVENT -->
 
-- <name of the thing>
-- Owner  <!-- TXT_KEY_MISC_OWNER -->
-- *  <!-- TXT_KEY_BULLET -->
-- Not in %s1_CivAdj city influence.  <!-- TXT_KEY_MISC_NO_CITY_INFLUENCE -->
-- %s1:  <!-- TXT_KEY_S1_COLON_SPACE -->
+⚑ **The layout, top to bottom.** The bonus, improvement, route and owner are the ones revealed to the observing
+player (`getBonusRevealedTo`, `getImprovementRevealedTo`, `getRouteRevealedTo`, `getOwnerRevealedTo`); techs,
+passability, movement, spotting and blockades are asked of that player's team; build progress shows only on a
+visible tile. Amounts print through `amountText`.
+
+1. **What the tile is, with its yields:** peak or hill, feature and terrain on one line (water in
+   `COLOR_WATER_TEXT`), then each non-zero yield total as magnitude and glyph (`yieldAmountSummary`). With ALT the
+   yields are the breakdown above instead, one line per yield.
+2. Defence bonus (`defenseModifier` for the revealed owner's team), fresh water, then impassable or the plot's
+   movement cost (`CvPlot::getTerrainMovementCost`), then the revealed route with its movement cost.
+3. The revealed resource: its glyph and name in `COLOR_HIGHLIGHT_TEXT`, the trade tech while the team lacks it,
+   and on the observer's own tile either the improvements that provide it, that the plot can hold and whose build
+   the player has unlocked (`getBuildUnlocked`), or else the tech a providing build waits on; or "Requires Route"
+   when it is improved but not connected. Its health and happiness entries follow through the entry renderer.
+4. The revealed improvement, "(Irrigated)" / "(Not Irrigated)" when it has an irrigation-conditioned yield (read
+   from the plot's `HAS_IRRIGATION` verdict, the one those yields are evaluated against), and its
+   upgrade status for the plot owner's team only, read from the engine's upgrade queries
+   ([yields-growth.md](yields-growth.md#improvements--plot-yields)): frozen, no upgrade available, or the turns
+   left and the valid targets, with what is missing when progress does not advance.
+5. The working-city pair, then the culture block (owner, "not in city influence", the culture rows, the cultural
+   owner).
+6. Spot values (`GAMEOPTION_COMBAT_HIDE_SEEK`), latitude/longitude (map centering + the
+   `MiscHover__LatLongCoords` BUG option), the landmark (`GAMEOPTION_MAP_PERSONALIZED`), builds in progress (the
+   `MiscHover__PartialBuilds` BUG option), blockade, plot properties, map categories.
+
+- Peak/  Hill/  <feature>/<terrain>, 3<food>, 2<hammer>  <!-- TXT_WORD_PEAK, TXT_WORD_HILL -->
 - Defense Bonus: %D1_Mod%%  <!-- TXT_KEY_PLOT_BONUS -->
 - Fresh Water  <!-- TXT_KEY_PLOT_FRESH_WATER -->
 - IMPASSABLE  <!-- TXT_KEY_PLOT_IMPASSABLE -->
 - Movement Cost: %d1<moves>  <!-- TXT_KEY_PLOT_MOVEMENT_COST -->
 - Route Movement: %s1(%s2)  <!-- TXT_KEY_PLOT_ROUTE_MOVEMENT_COST -->
+- <bonus glyph> <bonus name>  <!-- the resource line -->
 - , Research: %s1_Name  <!-- TXT_KEY_PLOT_RESEARCH -->
 - , Requires: %s1_Name  <!-- TXT_KEY_PLOT_REQUIRES -->
 - , or %s1_Name  <!-- TXT_KEY_PLOT_REQUIRES_OR -->
-- → `setListHelp`
-- (with %s1_ImpName)  <!-- TXT_KEY_BONUSHELP_WITH_IMPROVEMENT -->
-- Obsolete with %s2_TechName  <!-- TXT_KEY_BUILDINGHELP_OBSOLETE_WITH -->
 - , Requires Route  <!-- TXT_KEY_PLOT_REQUIRES_ROUTE -->
-- → `buildDisplayString`
 - (Irrigated)  <!-- TXT_KEY_PLOT_IRRIGATED -->
 - (Not Irrigated)  <!-- TXT_KEY_PLOT_NOT_IRRIGATED -->
 - Improvement upgrade frozen.Unfreeze by toggling city work here.  <!-- TXT_KEY_IMPROVEMENTHELP_UPGRADE_FROZEN -->
 - No upgrade available  <!-- TXT_KEY_IMPROVEMENTHELP_UPGRADE_BLOCKED -->
-- (Upgrade: %d1_Num [NUM1:Turn:Turns]  <!-- TXT_KEY_IMPROVEMENTHELP_UPGRADE_TURNS -->
+- (Upgrade: %d1_Num [NUM1:Turn:Turns] (<target>, <target>))  <!-- TXT_KEY_IMPROVEMENTHELP_UPGRADE_TURNS -->
 - (Need Garrison)  <!-- TXT_KEY_IMPROVEMENTHELP_UPGRADE_NEED_GARRISON -->
 - (Need Work)  <!-- TXT_KEY_IMPROVEMENTHELP_UPGRADE_NEED_WORK -->
-- %d1°%d2'  <!-- TXT_KEY_LATLONG -->
-- W  <!-- TXT_KEY_LATLONG_WEST -->
-- E  <!-- TXT_KEY_LATLONG_EAST -->
-- S  <!-- TXT_KEY_LATLONG_SOUTH -->
-- N  <!-- TXT_KEY_LATLONG_NORTH -->
-- %d1_Num [NUM1:Turn:Turns]  <!-- TXT_KEY_ACTION_NUM_TURNS -->
+- [ICON_BULLET]Not in %s1_CivAdj city influence.  <!-- TXT_KEY_BULLET, TXT_KEY_MISC_NO_CITY_INFLUENCE -->
+- Spot: 3<invisible>, 1<invisible>  <!-- TXT_KEY_S1_COLON_SPACE, TXT_WORD_SPOT -->
+- %d1°%d2' E, %d1°%d2' N  <!-- TXT_KEY_LATLONG, TXT_KEY_LATLONG_WEST/EAST/SOUTH/NORTH -->
+- <build>: %d1_Num [NUM1:Turn:Turns]  <!-- TXT_KEY_ACTION_NUM_TURNS -->
 - Trade Blocked by Enemy Ship  <!-- TXT_KEY_PLOT_BLOCKADED -->
-- (key not in current GameText)  <!-- TXT_KEY_PLOT_DAMAGE -->
+- → `buildDisplayString`
 - This is a %s1_MapCat.  <!-- TXT_KEY_MAP_CATEGORY_TERRAIN -->
+
+The pre-rework record also had these:
+
+- (with %s1_ImpName)  <!-- TXT_KEY_BONUSHELP_WITH_IMPROVEMENT -->
+- Obsolete with %s2_TechName  <!-- TXT_KEY_BUILDINGHELP_OBSOLETE_WITH -->
+- (key not in current GameText)  <!-- TXT_KEY_PLOT_DAMAGE -->
 
 ## `setPlotListHelp`
 
+⚑ **A stack stays one screen high.** A lone unit, and every unit when the caller asks for one line each (the
+off-screen indicator), renders through `setUnitHelp`. A stack renders the unit the plot draws through
+`setUnitHelp`, then one line per owner and unit type with the count, the average strength (current/full when
+damaged) and the owner when it is foreign and not hidden; five or more groups share one line.
+
 - → `setUnitHelp`
-- <name of the thing>
+- <unit name> (%d), 3.5/4<strength>, <owner>
 
 ## `setProcessHelp`
 

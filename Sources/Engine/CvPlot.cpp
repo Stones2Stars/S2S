@@ -998,23 +998,14 @@ void CvPlot::doImprovementUpgrade(const ImprovementTypes eType)
 	ImprovementTypes eUpgrade = NO_IMPROVEMENT;
 	int iHash = 512; // Super simple hash, but should be adequate for this purpose.
 	const ImprovementTypes eMainUpgrade = GC.getImprovementInfo(eType).getImprovementUpgrade();
+	std::vector<ImprovementTypes> validUpgrades;
+	getValidImprovementUpgrades(eType, eTeam, validUpgrades);
 
-	if (canHaveImprovement(eMainUpgrade, eTeam, false, true))
+	foreach_(const ImprovementTypes eValidUpgrade, validUpgrades)
 	{
+		eUpgrade = eValidUpgrade;
 		iHash *= -2;
-		iHash += eMainUpgrade;
-		eUpgrade = eMainUpgrade;
-	}
-	foreach_(const int iAltUpgrade, GC.getImprovementInfo(getImprovementType()).getAlternativeImprovementUpgradeTypes())
-	{
-		const ImprovementTypes eUpgradeX = (ImprovementTypes)iAltUpgrade;
-
-		if (canHaveImprovement(eUpgradeX, eTeam, false, true))
-		{
-			eUpgrade = eUpgradeX;
-			iHash *= -2;
-			iHash += eUpgradeX;
-		}
+		iHash += eValidUpgrade;
 	}
 	if (iHash == 512)
 	{
@@ -1025,20 +1016,13 @@ void CvPlot::doImprovementUpgrade(const ImprovementTypes eType)
 		}
 		return;
 	}
-	const int iTime = 100*GC.getGame().getImprovementUpgradeTime(eType);
-
 	// Advance upgrade progress if not already finished
-	if (
-		getImprovementUpgradeProgress() < iTime
-	// And not require fortified unit, or unit is fortified on improvement.
-	&& (
-			!GC.getImprovementInfo(eType).isUpgradeRequiresFortify()
-		||
-			algo::any_of(units(), CvUnit::fn::getFortifyTurns() > 0 && CvUnit::fn::getTeam() == eTeam && CvUnit::fn::canDefend())
-		)
-	) changeImprovementUpgradeProgress(GET_PLAYER(getOwner()).getImprovementUpgradeProgressRate(eType));
+	if (!isImprovementUpgradeComplete(eType) && isImprovementUpgradeAdvancing(eType, eTeam))
+	{
+		changeImprovementUpgradeProgress(GET_PLAYER(getOwner()).getImprovementUpgradeProgressRate(eType));
+	}
 
-	if (getImprovementUpgradeProgress() >= iTime)
+	if (isImprovementUpgradeComplete(eType))
 	{
 		setImprovementUpgradeCache(GET_TEAM(eTeam).getLastRoundOfValidImprovementCacheUpdate());
 
@@ -1072,27 +1056,13 @@ void CvPlot::doImprovementUpgrade(const ImprovementTypes eType)
 
 			int iBestValue = pCity->AI_getImprovementValue(this, eType, iFoodMultiplier, iProductionMultiplier, iCommerceMultiplier, iDesiredFoodChange);
 
-			if (canHaveImprovement(eMainUpgrade, eTeam, false, true))
+			foreach_(const ImprovementTypes eValidUpgrade, validUpgrades)
 			{
-				int iValue = pCity->AI_getImprovementValue(this, eMainUpgrade, iFoodMultiplier, iProductionMultiplier, iCommerceMultiplier, iDesiredFoodChange);
+				const int iValue = pCity->AI_getImprovementValue(this, eValidUpgrade, iFoodMultiplier, iProductionMultiplier, iCommerceMultiplier, iDesiredFoodChange);
 				if (iValue > iBestValue)
 				{
-					eBestUpgrade = eMainUpgrade;
+					eBestUpgrade = eValidUpgrade;
 					iBestValue = iValue;
-				}
-			}
-			foreach_(const int iAltUpgrade, GC.getImprovementInfo(getImprovementType()).getAlternativeImprovementUpgradeTypes())
-			{
-				const ImprovementTypes eUpgradeX = (ImprovementTypes)iAltUpgrade;
-
-				if (canHaveImprovement(eUpgradeX, eTeam, false, true))
-				{
-					int iValue = pCity->AI_getImprovementValue(this, eUpgradeX, iFoodMultiplier, iProductionMultiplier, iCommerceMultiplier, iDesiredFoodChange);
-					if (iValue > iBestValue)
-					{
-						eBestUpgrade = eUpgradeX;
-						iBestValue = iValue;
-					}
 				}
 			}
 			if (eBestUpgrade != NO_IMPROVEMENT)
@@ -4384,30 +4354,11 @@ int CvPlot::movementCost(const CvUnit* pUnit, const CvPlot* pFromPlot) const
 			}
 			else
 			{
-				iRegularCost = GC.getTerrainInfo(getTerrainType()).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100;
-
-				if (getFeatureType() != NO_FEATURE)
-				{
-					iRegularCost += GC.getFeatureInfo(getFeatureType()).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100;
-				}
-
-				if (isHills())
-				{
-					iRegularCost += GC.getHILLS_EXTRA_MOVEMENT();
-				}
+				iRegularCost = getTerrainMovementCost(pUnit->getOwner()) / 100;
 
 				if (bRiverCrossing)
 				{
 					iRegularCost += GC.getRIVER_EXTRA_MOVEMENT();
-				}
-
-				if (isAsPeak())
-				{
-					if (!GET_TEAM(pUnit->getTeam()).isMoveFastPeaks())
-					{
-						iRegularCost += GC.getPEAK_EXTRA_MOVEMENT();
-					}
-					iRegularCost += 3;
 				}
 			}
 
@@ -4454,6 +4405,31 @@ int CvPlot::movementCost(const CvUnit* pUnit, const CvPlot* pFromPlot) const
 	}
 
 	return iResult;
+}
+
+int CvPlot::getTerrainMovementCost(PlayerTypes ePlayer) const
+{
+	int iCost = GC.getTerrainInfo(getTerrainType()).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT);
+
+	if (getFeatureType() != NO_FEATURE)
+	{
+		iCost += GC.getFeatureInfo(getFeatureType()).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT);
+	}
+	//	The hills and peak extras are whole moves in the global defines, so they lift onto the plane of the
+	//	authored terrain and feature costs.
+	if (isHills())
+	{
+		iCost += 100 * GC.getHILLS_EXTRA_MOVEMENT();
+	}
+	if (isAsPeak())
+	{
+		if (!GET_TEAM(GET_PLAYER(ePlayer).getTeam()).isMoveFastPeaks())
+		{
+			iCost += 100 * GC.getPEAK_EXTRA_MOVEMENT();
+		}
+		iCost += 300;
+	}
+	return iCost;
 }
 
 int	CvPlot::getHasMountainLeader(TeamTypes eTeam) const
@@ -5850,6 +5826,41 @@ void CvPlot::setImprovementUpgradeProgress(int iNewValue)
 void CvPlot::changeImprovementUpgradeProgress(int iChange)
 {
 	setImprovementUpgradeProgress(m_iUpgradeProgress + iChange);
+}
+
+void CvPlot::getValidImprovementUpgrades(ImprovementTypes eImprovement, TeamTypes eTeam, std::vector<ImprovementTypes>& upgrades) const
+{
+	upgrades.clear();
+	const CvImprovementInfo& kImprovement = GC.getImprovementInfo(eImprovement);
+	const ImprovementTypes eMainUpgrade = kImprovement.getImprovementUpgrade();
+
+	if (canHaveImprovement(eMainUpgrade, eTeam, false, true))
+	{
+		upgrades.push_back(eMainUpgrade);
+	}
+	foreach_(const int iAlternativeUpgrade, kImprovement.getAlternativeImprovementUpgradeTypes())
+	{
+		const ImprovementTypes eAlternativeUpgrade = (ImprovementTypes)iAlternativeUpgrade;
+
+		if (canHaveImprovement(eAlternativeUpgrade, eTeam, false, true))
+		{
+			upgrades.push_back(eAlternativeUpgrade);
+		}
+	}
+}
+
+bool CvPlot::isImprovementUpgradeAdvancing(ImprovementTypes eImprovement, TeamTypes eTeam) const
+{
+	if (GC.getImprovementInfo(eImprovement).isUpgradeRequiresFortify())
+	{
+		return algo::any_of(units(), CvUnit::fn::getFortifyTurns() > 0 && CvUnit::fn::getTeam() == eTeam && CvUnit::fn::canDefend());
+	}
+	return isBeingWorked();
+}
+
+bool CvPlot::isImprovementUpgradeComplete(ImprovementTypes eImprovement) const
+{
+	return getImprovementUpgradeProgress() >= 100 * GC.getGame().getImprovementUpgradeTime(eImprovement);
 }
 
 
@@ -8049,6 +8060,33 @@ BonusTypes CvPlot::getBonusRevealedTo(PlayerTypes eObserver) const
 		return NO_BONUS;
 	}
 	return getBonusType(GET_PLAYER(eObserver).getTeam());
+}
+
+PlayerTypes CvPlot::getOwnerRevealedTo(PlayerTypes eObserver) const
+{
+	if (eObserver == NO_PLAYER)
+	{
+		return NO_PLAYER;
+	}
+	return getRevealedOwner(GET_PLAYER(eObserver).getTeam(), false);
+}
+
+ImprovementTypes CvPlot::getImprovementRevealedTo(PlayerTypes eObserver) const
+{
+	if (eObserver == NO_PLAYER)
+	{
+		return NO_IMPROVEMENT;
+	}
+	return getRevealedImprovementType(GET_PLAYER(eObserver).getTeam(), false);
+}
+
+RouteTypes CvPlot::getRouteRevealedTo(PlayerTypes eObserver) const
+{
+	if (eObserver == NO_PLAYER)
+	{
+		return NO_ROUTE;
+	}
+	return getRevealedRouteType(GET_PLAYER(eObserver).getTeam(), false);
 }
 
 

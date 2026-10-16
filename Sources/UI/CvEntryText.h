@@ -46,6 +46,13 @@ bool entryIsPlainFlatChannel(const CvModEntry& entry);
 // ("+2<food>") -- the same idiom the wellbeing pair already renders in.
 CvWString entryFlatSummary(const CvModEntry& entry);
 
+///<summary>The same compact rendering for a yield amount that is not an entry, such as a plot's total: magnitude
+/// then glyph ("3<food>").</summary>
+CvWString yieldAmountSummary(YieldTypes eYield, int64_t iAmount);
+
+///<summary>An amount as the entry lines print it: "2", "-0.5", "12.75".</summary>
+CvWString amountText(int64_t iAmount);
+
 // The minimal condition-to-text renderer (no other condition renderer exists in the tree -- census 2026-07):
 // a prebuilt CvCondition tree -> one phrase ("Coal connected", "IS_WATER and not HAS_HILLS", "3+ Grassland").
 // Shared by the detail line's enabled/disabled/qualifier clauses; future requires/gate renders reuse it.
