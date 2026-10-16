@@ -3481,13 +3481,13 @@ void CvGameTextMgr::setHappyHelp(CvWStringBuffer &szBuffer, CvCity& city)
 	if (iHappy > 0)
 	{
 		iSum += iHappy;
-		szBuffer.append(gDLL->getText("TXT_KEY_HAPPY_TEMP", iHappy));
+		szBuffer.append(gDLL->getText("TXT_KEY_HAPPY_FROM_EVENTS", iHappy));
 		szBuffer.append(NEWLINE);
 	}
 	if (city.getHappinessTimer() > 0)
 	{
 		iSum += GC.getTEMP_HAPPY();
-		szBuffer.append(gDLL->getText("TXT_KEY_HAPPY_TEMP", GC.getTEMP_HAPPY()));
+		szBuffer.append(gDLL->getText("TXT_KEY_HAPPY_TEMP", GC.getTEMP_HAPPY(), city.getHappinessTimer()));
 		szBuffer.append(NEWLINE);
 	}
 	if (iTotalHappy > iSum)

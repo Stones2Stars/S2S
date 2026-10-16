@@ -2426,6 +2426,7 @@ a read-time walk of what each live source authored, never a stored per-source pl
 - +%d1_Change<happy>: "In our Religion we trust!"  <!-- TXT_KEY_HAPPY_RELIGIOUS_FREEDOM -->
 - +%d1_Change<happy>: "We appreciate our entertainment!"  <!-- TXT_KEY_HAPPY_ENTERTAINMENT -->
 - +%d1_Change<happy>: "OH YEAH!"  <!-- TXT_KEY_HAPPY_YEAH -->
+- %D1_Change<happy>: Events  <!-- TXT_KEY_HAPPY_FROM_EVENTS -->
 - %D1_Change<happy>: "Past events went well!" (%d2 [NUM2:turn:turns])  <!-- TXT_KEY_HAPPY_TEMP -->
 - +%d1_Change<happy>: "We just enjoy life!"  <!-- TXT_KEY_HAPPY_HANDICAP -->
 - +%d1<happy> "We've a celebrity in our midst!"  <!-- TXT_KEY_HAPPY_CELEBRITY -->
