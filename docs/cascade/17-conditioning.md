@@ -23,8 +23,9 @@ deposit carries its **own** `enabled`/`disabled` (does *this effect* apply). Sam
 independent fields.
 
 **⛔ NOTHING IS RE-CHECKED ON A RECOMPUTE, BECAUSE THERE IS NO RECOMPUTE.** A conditioned deposit is applied
-`±value` by **the ATOM's own verdict crossing**, and a `per`-scaled one by `±value × Δcount` from **the COUNT's
-own fact** — the two routed planes of the maintained sum
+`±value` by **the ATOM's own verdict crossing**, and a `per`-scaled one by **the COUNT's own fact** — `±value ×
+Δcount` for a linear scaler, a re-book for one with `each` or `above`
+([a delta route is exact only for a linear scaler](05-three-planes.md)) — the two routed planes of the maintained sum
 (§ THE MAINTAINED SUM, above;
 [the maintained sum](05-three-planes.md#-the-maintained-sum--three-planes-one-slot-and-nothing-is-ever-recomputed)). That re-application *is* the dormancy
 model: a deposit whose `enabled` stops holding (or whose `disabled` starts) is withdrawn from the slot at that

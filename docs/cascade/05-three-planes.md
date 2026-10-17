@@ -22,14 +22,15 @@ at all is the tell that the cut is drawn in the right place).
 | plane | the deposit | the fact that moves it | the delta applied |
 |---|---|---|---|
 | **A — CONSTANT** | null-condition, unscaled | the SOURCE arriving or leaving | `±value` |
-| **B — SCALED** | `value × count(key)` — a `per` scaler, a `plots`-target, a keyed count | the source, **and the COUNT** | source: `±value × count` · **count: `±value × Δcount`** |
+| **B — SCALED** | `value × count(key)` — a `per` scaler, a `plots`-target, a keyed count | the source, **and the COUNT** | source: `±value × count` · **count: `±value × Δcount`** for a linear scaler, else the re-book (owed − booked, below) |
 | **C — CONDITIONED** | gated on a predicate | the source, **and the ATOM's verdict crossing** | `±value`, over the deposits that atom gates |
 
-⚑ **PLANE B IS WHAT THE DICTIONARIES BUY, AND IT IS WHY A COUNT FACT EXISTS AT ALL.** `Δ(v × c) = v × Δc`
-is EXACT — `v` is a compiled constant and `Δc` is what the fact carries — so a `ContextDict::add(id, ±1)` IS a
-yield delta of `Σ(deposits keyed on id) × ±1`. *"+1 food per river tile"* stops being a re-derivation and becomes
-one multiply the moment a river bit moves. **This is the reason a population-changed fact is emitted**:
-a `per: {POPULATION}` scaler is plane B, and the fact carries the delta that resolves it.
+⚑ **PLANE B IS WHAT THE DICTIONARIES BUY, AND IT IS WHY A COUNT FACT EXISTS AT ALL.** For a LINEAR scaler
+`Δ(v × c) = v × Δc` is EXACT — `v` is a compiled constant and `Δc` is what the fact carries — so a
+`ContextDict::add(id, ±1)` IS a yield delta of `Σ(deposits keyed on id) × ±1`. *"+1 food per river tile"* stops
+being a re-derivation and becomes one multiply the moment a river bit moves. A scaler with `each` > 1 or an
+`above` threshold is not linear, and its count RE-BOOKS instead (below). **This is the reason a
+population-changed fact is emitted**: a `per: {POPULATION}` scaler is plane B, and the fact is what moves it.
 
 ### ⛔ THE INVARIANT — the slot is correct at every instant, which is what makes plane C delta-able
 
@@ -50,7 +51,7 @@ buys. Four consequences:
   about, and nothing re-derives it ([self-heal is not a backstop](03-no-staleness-no-selfheal.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban)).
 - **ORDER-INDEPENDENCE SURVIVES, which is why LOAD is not a special case.** Source-then-count and
   count-then-source converge: the source applies `value × count_now` (0 if the count has not arrived yet), and
-  the count applies `value × Δcount` for every deposit whose source is already live. A count route therefore
+  the count applies `value × Δcount` (or re-books) for every deposit whose source is already live. A count route therefore
   tests the source's liveness at that owner — an O(1) `has()` — and applies for nobody else.
 - ⚠ **THE HAZARD IS DOUBLE APPLICATION, NOT DRIFT.** One fact drives exactly ONE route class. Where a happening
   moves both a source and a count they are two distinct FACTS
@@ -58,13 +59,22 @@ buys. Four consequences:
   applying both.
 
 - **⛔ THE SOURCE APPLY BOOKS EVERY ENTRY A RE-BOOK ROUTE CAN REACH — CONDITIONED *OR* `per`-SCALED.** The
-  count and threshold routes that RE-BOOK (owed − booked: the wonder-category, POPULATION, rate, improvement,
-  property and ERA-condition routes) move only a difference, so they are exact only if the source apply recorded
+  count and threshold routes that RE-BOOK (owed − booked: the wonder-category, POPULATION, rate, CITY count,
+  improvement, property and ERA-condition routes) move only a difference, so they are exact only if the source apply recorded
   what it deposited. Booking the CONDITIONED entries alone leaves a scaled, unconditioned deposit at booked = 0,
   and its first count move re-applies the whole `value × count`. ⚑ Measured: two per-national-wonder
-  free-specialist traits in a 37-wonder capital each landed twice, +74 phantom slots. ⚠ The DELTA routes
-  (`PER_SCALE_SUPPRESSED`: `per: ERA`, `CITY`, the religion counts) apply `value × Δcount` from their own index and
-  never read the book, so booking a scaled entry cannot disturb them.
+  free-specialist traits in a 37-wonder capital each landed twice, +74 phantom slots. ⚠ The DELTA route
+  (`PER_SCALE_SUPPRESSED`: `per: ERA`) applies `value × Δcount` from its own index and never reads the book, so
+  booking a scaled entry cannot disturb it.
+- **⛔ A DELTA ROUTE IS EXACT ONLY FOR A LINEAR SCALER — a count whose scaler has `each` > 1 or an `above`
+  threshold RE-BOOKS.** `Δ(value × max(0, count − above) / each)` is not `value × Δcount`: under the threshold
+  it is 0, and with `each` it moves in steps. So the `CITY` count, whose `above` carries the civic city limit
+  and the number-of-cities maintenance, re-books at the player and in each of its cities on
+  `SEVT_EMPIRE_CITY_COUNT_ADDED / _REMOVED` — the fact that fires after the city list changed, so the count it
+  reads is the new one. ⚑ Measured: as a delta route it moved Chiefdom's `-5 per CITY above CITY_LIMIT` on
+  every city, so an empire of 5 cities at a limit of 5 held 25 anger no source owed. ⚠ A `per: CITY` deposit can
+  be CITY-scoped while it counts the empire (the root tech's number-of-cities and colony maintenance), which is
+  why the route re-books in each of the player's cities as well as at the player.
 - **⛔ NO PLANE HAS AN EVALUATION MOMENT TO DEFER, WHICH IS WHY NONE OF THEM CARRIES A STALENESS FLAG.** There is
   nothing to be stale ABOUT: every operand is compiled or maintained, so a slot is either current or was never
   told — and "never told" is a MISSING EMIT that must stay visible, not a state to schedule work against.

@@ -1036,7 +1036,7 @@ namespace
 					// THE BOOK, on the empire plane -- for the same reason as the city and plot planes above. It is
 					// what the ERA route reads: an era atom is a THRESHOLD, not a presence crossing, so its deposits
 					// cannot be applied by a ±1 on a pinned verdict and are re-booked against the new era instead. A
-					// `per`-scaled entry is booked too: the POPULATION and rate count routes re-book it at this scope.
+					// `per`-scaled entry is booked too: the POPULATION, rate and CITY count routes re-book it at this scope.
 					if (pEntry->enabled != NULL || pEntry->disabled != NULL || pEntry->hasPer)
 					{
 						const CvCascadePackage<CvPlayer>::BookedDeposit kPrev =
@@ -1771,6 +1771,28 @@ namespace
 					bPercentSide, iValue, (int)kPlayer.getID(), -1, "gated");
 			}
 		}
+	}
+
+	/// <summary>Re-books every deposit a player-wide count token scales -- at the player, then in each of its
+	/// cities, since a city-scope deposit may count the empire -- and reports the route's tally.</summary>
+	void mc_rebookAtPlayerAndCities(const char* szToken, const CvPlayer& kPlayer)
+	{
+		const std::vector<DepositIndex::GatedDeposit>* pGated = DepositIndex::gatedByToken(szToken);
+		if (pGated == NULL)
+		{
+			return;
+		}
+		McGatedTally kTally;
+		mc_bookGatedEmpire(pGated, kPlayer, &kTally);
+		for (CvPlayer::city_iterator cityIterator = kPlayer.beginCities(); cityIterator != kPlayer.endCities(); ++cityIterator)
+		{
+			if (*cityIterator != NULL)
+			{
+				mc_bookGated(pGated, **cityIterator, &kTally);
+			}
+		}
+		CascadeChannelRegistry::reportAtomRoute(szToken, (int)pGated->size(), kTally.iFound, kTally.iNoSource,
+			kTally.iRefused, kTally.iApplied, (int)kPlayer.getID(), -1);
 	}
 
 	// Does this atom gate anything that lands on the PLOT plane at all? The plot pass is the expensive half (an
@@ -3057,23 +3079,9 @@ namespace
 				case COMMERCE_ESPIONAGE: szRateToken = "ESPIONAGE_RATE"; break;
 				default: break;
 				}
-				const std::vector<DepositIndex::GatedDeposit>* pRateGated =
-					(szRateToken != NULL) ? DepositIndex::gatedByToken(szRateToken) : NULL;
-				if (pPlayer != NULL && pRateGated != NULL)
+				if (szRateToken != NULL && pPlayer != NULL)
 				{
-					McGatedTally kRateTally;
-					mc_bookGatedEmpire(pRateGated, *pPlayer, &kRateTally);
-					for (CvPlayer::city_iterator cityIterator = pPlayer->beginCities();
-						cityIterator != pPlayer->endCities(); ++cityIterator)
-					{
-						if (*cityIterator != NULL)
-						{
-							mc_bookGated(pRateGated, **cityIterator, &kRateTally);
-						}
-					}
-					CascadeChannelRegistry::reportAtomRoute(szRateToken, (int)pRateGated->size(),
-						kRateTally.iFound, kRateTally.iNoSource, kRateTally.iRefused, kRateTally.iApplied,
-						(int)pPlayer->getID(), -1);
+					mc_rebookAtPlayerAndCities(szRateToken, *pPlayer);
 				}
 				break;
 			}
@@ -3097,9 +3105,10 @@ namespace
 			}
 			// ⚖ NOTHING FOR THE MODIFIER, AND THAT IS A DEDUPLICATION RATHER THAN A HOLE.
 			// CvPlayer::found emits SEVT_CITY_OWNER_ADDED *before* this fact ("OWNERSHIP first, then the founding"),
-			// and CvCity::readBody does the same on a load -- so the owner-source fold and the CITY-count delta both
-			// already ran there, on the ONE fact that covers founding, conquest and the reseed alike. Doing either
-			// again here would be the duplicate the spine bans ([event-spine.md]: one happening, one application).
+			// and CvCity::readBody does the same on a load -- so the owner-source fold already ran there, on the ONE
+			// fact that covers founding, conquest and the reseed alike, and the CITY count moved on its own
+			// SEVT_EMPIRE_CITY_COUNT fact. Doing either again here would be the duplicate the spine bans
+			// ([event-spine.md]: one happening, one application).
 			case SEVT_CITY_FOUNDED:
 				break;
 			// ---- ownership moves: the pair names ONE owner each, so each end is its own work ----
@@ -3120,19 +3129,23 @@ namespace
 				{
 					mc_foldOwnerSourcesIntoCity(*pPlayer, *pCity, szSource);
 				}
-				// Plane B: this empire's CITY count gained one.
-				mc_applyGated(DepositIndex::gatedByToken("CITY"), +1, MMKernel::PER_SCALE_SUPPRESSED,
-					pPlayer, NULL, NULL);
 				break;
 			}
+			// ⚖ NOTHING FOR THE MODIFIER: the city object is leaving this owner and its package goes with it, so
+			// there is no slot of this player's to withdraw from. The owner's CITY count moves on its own fact.
 			case SEVT_CITY_OWNER_REMOVED:
-			{
-				// Plane B only: this empire's CITY count lost one. The city object itself is leaving this owner, and
-				// its package goes with it -- there is no slot of this player's to withdraw from here.
-				mc_applyGated(DepositIndex::gatedByToken("CITY"), -1, MMKernel::PER_SCALE_SUPPRESSED,
-					pPlayer, NULL, NULL);
 				break;
-			}
+			// The player's CITY COUNT moved -- the `per: CITY` count route, a RE-BOOK because its scaler carries an
+			// `above` threshold ([docs/cascade/05-three-planes.md] a delta route is exact only for a linear scaler).
+			// ⚑ It rides the count fact, never the city-owner pair: the count fact fires after the city list
+			// changed, while the owner pair's removal half fires with the city still counted.
+			case SEVT_EMPIRE_CITY_COUNT_ADDED:
+			case SEVT_EMPIRE_CITY_COUNT_REMOVED:
+				if (pPlayer != NULL)
+				{
+					mc_rebookAtPlayerAndCities("CITY", *pPlayer);
+				}
+				break;
 			// ⚖ OWNERSHIP MOVES WHO SEES THE TILE'S BONUS, AND NOTHING ELSE HERE. CvPlot::setOwner CALLS
 			// updateWorkingCity ([contexts.md]: a city cannot work a plot it does not own, so the two facts cannot
 			// come apart), and every other modifier consequence of an ownership flip rides those facts: the
