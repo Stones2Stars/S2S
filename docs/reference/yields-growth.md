@@ -45,6 +45,12 @@
   fortify-upgrade) → feature growth/disappear → culture diffusion.
 - **Upgrade:** +`getImprovementUpgradeProgressRate` (base 100 + civic/trait/tech) each qualifying turn; threshold
   `100·getImprovementUpgradeTime` (XML time ×speed ×era). AI picks the best target **silently** (`AI_getImprovementValue`).
+- The upgrade rules are three `CvPlot` queries, read by both `doImprovementUpgrade` and the plot hover: the valid
+  targets (`getValidImprovementUpgrades`: the main upgrade, then the alternatives, each only if the plot can hold
+  it), whether progress advances this turn (`isImprovementUpgradeAdvancing`: a fortified defender of the owner's
+  team when the improvement requires one, otherwise a worked plot), and completion (`isImprovementUpgradeComplete`).
+  A complete upgrade that does not happen (a human declined the choice, or the same targets as last time) stays
+  **frozen** until the upgrade cache resets, e.g. by toggling the city's work on the plot.
 - **Yield** `calculateImprovementYieldChange` is a **7+-term additive stack:** XML base + river + irrigation (if
   available) + route + tech + civic + player (`getImprovementYieldChange` = trait + civic + building) + team +
   bonus-resource bonus. Floored (cannot drive total plot yield negative). `m_aiYield[eYield]` is the live cached

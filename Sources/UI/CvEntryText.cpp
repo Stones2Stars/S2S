@@ -25,22 +25,6 @@
 
 namespace
 {
-	// /100 at the out boundary: "2", "0.5", "12.75" -- integer math only (no float in the engine).
-	CvWString etx_number100(int iAbsValue100)
-	{
-		const int iWhole = iAbsValue100 / 100;
-		const int iFraction = iAbsValue100 % 100;
-		if (iFraction == 0)
-		{
-			return CvWString::format(L"%d", iWhole);
-		}
-		if (iFraction % 10 == 0)
-		{
-			return CvWString::format(L"%d.%d", iWhole, iFraction / 10);
-		}
-		return CvWString::format(L"%d.%02d", iWhole, iFraction);
-	}
-
 	// A vocabulary token ("POPULATION", "TARGET_NUM_CITIES") -> a readable word ("Population",
 	// "Target Num Cities"). Presentation-casing only -- the spelling stays the authored token's.
 	CvWString etx_prettyToken(const std::string& szToken)
@@ -248,7 +232,7 @@ namespace
 		const wchar_t* szSign = (entry.value < 0) ? L"-" : L"+";
 		const CvWString szNumber = MMKernel::unitIsPercentSide(entry.unit)
 			? CvWString::format(L"%d", iAbsValue)
-			: etx_number100(iAbsValue);
+			: amountText(iAbsValue);
 		switch (entry.unit)
 		{
 		case CASC_UNIT_PERCENT:
@@ -666,6 +650,51 @@ CvWString entryFlatSummary(const CvModEntry& entry)
 	return etx_signedMagnitude(entry) + etx_entryName(entry);
 }
 
+CvWString yieldAmountSummary(YieldTypes eYield, int64_t iAmount)
+{
+	const CvYieldInfo& kYield = GC.getYieldInfo(eYield);
+	return amountText(iAmount) + etx_channelLabel(kYield.getChar(), kYield, kYield.getType());
+}
+
+CvWString visionPlotsText(int iVisionAmount)
+{
+	return amountText(iVisionAmount / VISION_PLOT);
+}
+
+bool infoHasEntryConditionedOn(const CvInfo& info, CvCascPredKind ePredicate)
+{
+	const CvModifiers* pModifiers = info.getModifiers();
+	if (pModifiers == NULL)
+	{
+		return false;
+	}
+	foreach_(const CvModEntry* pEntry, pModifiers->entries())
+	{
+		if (pEntry != NULL && CvConditionQuery::hasPredicate(pEntry->enabled, ePredicate))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+CvWString amountText(int64_t iAmount)
+{
+	const int64_t iMagnitude = (iAmount < 0) ? -iAmount : iAmount;
+	const int64_t iWhole = iMagnitude / 100;
+	const int64_t iFraction = iMagnitude % 100;
+	const wchar_t* szSign = (iAmount < 0) ? L"-" : L"";
+	if (iFraction == 0)
+	{
+		return CvWString::format(L"%s%I64d", szSign, iWhole);
+	}
+	if (iFraction % 10 == 0)
+	{
+		return CvWString::format(L"%s%I64d.%I64d", szSign, iWhole, iFraction / 10);
+	}
+	return CvWString::format(L"%s%I64d.%02I64d", szSign, iWhole, iFraction);
+}
+
 //	Is this condition NOTHING BUT a plain mention of the subject? Anything it carries beyond that -- a second
 //	clause, a count, an upper bound, a connection requirement -- is information the line must keep, so it
 //	answers false. A group wrapping exactly one `all` child is seen through.
@@ -720,7 +749,7 @@ CvWString entryDetailLine(const CvModEntry& entry, EnEdgeBucket eSubjectBucket, 
 		{
 			iSymbol = gDLL->getSymbolID(bGood ? HEALTHY_CHAR : UNHEALTHY_CHAR);
 		}
-		szLine = CvWString(L"+") + etx_number100(etx_absMagnitude(entry)) + CvWString::format(L"%c", iSymbol);
+		szLine = CvWString(L"+") + amountText(etx_absMagnitude(entry)) + CvWString::format(L"%c", iSymbol);
 	}
 	else
 	{

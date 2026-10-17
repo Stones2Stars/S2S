@@ -74,6 +74,10 @@ No bespoke host↔cargo family is needed. The full unit-stat family vocabulary
 > ⚑ The distinction to hold: **the resolver reads the family and applies its own arithmetic** (min-override,
 > divisors, floor). What was wrong was parking the base value in `identity`, which carries no effects
 > ([json.md §7](../specs/json.md)) — a movement cost is plainly one.
+> The plot's own leg of that arithmetic (terrain + feature + hills + peak, before the river crossing and the unit's
+> discounts) is `CvPlot::getTerrainMovementCost`, read by the resolver, the worker AI and the plot hover alike.
+> Its terms are summed and reduced once, on the total
+> ([the plot leg rule](../specs/curators/fixed-point-and-scales/08-ter-the-combat-strength-cluster.md#4d--the-edge--where-a-scale-error-can-occur-at-all-and-therefore-what-an-audit-checks)).
 
 ### Specialist counts
 

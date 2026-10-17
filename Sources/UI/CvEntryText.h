@@ -21,9 +21,10 @@
 
 #include "Defines/CvString.h"   // CvWString -- the rendered line type
 #include "Infos/CvEdges.h"      // EnEdgeBucket -- the page-subject axis
+#include "Infos/CvCondition.h"  // CvCascPredKind -- the predicate infoHasEntryConditionedOn asks about
 
 class CvModEntry;
-class CvCondition;
+class CvInfo;
 
 ///<summary>One compiled entry as one localized detail line (the grammar above). A page SUBJECT may be named:
 /// when the entry's `enabled` condition is nothing but a plain mention of that subject, the "while" clause is
@@ -45,6 +46,21 @@ bool entryIsPlainFlatChannel(const CvModEntry& entry);
 // The COMPACT rendering of one of those: magnitude then glyph, no separating space and no trailing clause
 // ("+2<food>") -- the same idiom the wellbeing pair already renders in.
 CvWString entryFlatSummary(const CvModEntry& entry);
+
+///<summary>The same compact rendering for a yield amount that is not an entry, such as a plot's total: magnitude
+/// then glyph ("3<food>").</summary>
+CvWString yieldAmountSummary(YieldTypes eYield, int64_t iAmount);
+
+///<summary>An amount as the entry lines print it: "2", "-0.5", "12.75".</summary>
+CvWString amountText(int64_t iAmount);
+
+///<summary>A sight, detection or concealment amount in plots of open ground ([vision.md] §1a): "2",
+/// "1.25".</summary>
+CvWString visionPlotsText(int iVisionAmount);
+
+///<summary>Does the info carry an entry whose `enabled` condition tests ePredicate? For a composer that states the
+/// verdict of that predicate beside the entity, because one of its entries depends on it.</summary>
+bool infoHasEntryConditionedOn(const CvInfo& info, CvCascPredKind ePredicate);
 
 // The minimal condition-to-text renderer (no other condition renderer exists in the tree -- census 2026-07):
 // a prebuilt CvCondition tree -> one phrase ("Coal connected", "IS_WATER and not HAS_HILLS", "3+ Grassland").
