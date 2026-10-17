@@ -6,7 +6,6 @@
 #include "CapabilityContext.h"
 #include "Spine/CvEventSpine.h"
 #include "AI/CvPlayerAI.h"                    // GET_PLAYER
-#include "AI/CvTeamAI.h"                      // GET_TEAM -- the play-time fan over the team's members
 #include "Infos/CvClassificationBlock.h"
 #include "Infos/CvTechInfo.h"
 #include "Repos/InfoRepo.h"
@@ -109,39 +108,9 @@ void CapabilityContext::onSpineEvent(const CvSpineEvent& kEvent)
 		return;
 	}
 	const int iSign = (kEvent.iEventId == SEVT_EMPIRE_TECH_ADDED) ? +1 : -1;
-
-	// AT LOAD every member already emits per-self (CvPlayer::read walks its team's held techs), so the fact
-	// reaches each player once and the fold is a plain delta. AT PLAY setHasTech emits ONCE for the acquiring
-	// player, and tech is TEAM-held, so the delta FANS over that team's members. The guard is what keeps the fan
-	// from counting every member twice against the load build (contexts.md: the amenity fold's play-time fan).
-	if (spineGameLoadInProgress())
+	if (CapabilityContext* pCapabilities = capabilitiesFor(kEvent.iC))
 	{
-		if (CapabilityContext* pCaps = capabilitiesFor(kEvent.iC))
-		{
-			pCaps->foldTech(kEvent.iType, iSign);
-		}
-		return;
-	}
-
-	if (kEvent.iC < 0 || kEvent.iC >= MAX_PLAYERS)
-	{
-		return;
-	}
-	const TeamTypes eTeam = GET_PLAYER((PlayerTypes)kEvent.iC).getTeam();
-	if (eTeam == NO_TEAM)
-	{
-		return;
-	}
-	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
-	{
-		const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
-		if (kPlayer.isAlive() && kPlayer.getTeam() == eTeam)
-		{
-			if (CapabilityContext* pCaps = capabilitiesFor(iPlayer))
-			{
-				pCaps->foldTech(kEvent.iType, iSign);
-			}
-		}
+		pCapabilities->foldTech(kEvent.iType, iSign);
 	}
 }
 

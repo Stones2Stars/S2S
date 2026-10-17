@@ -113,6 +113,13 @@ AREA_SIZE + max-adjacent-water read), and **`SEVT_WORLD_UNIT_CREATED_COUNT_ADDED
 cumulative counter — distinct from `SEVT_EMPIRE_UNIT_COUNT_ADDED / _REMOVED`, the player's LIVE per-type tally, and
 from `SEVT_UNIT_CREATED`, the instance; all three fire at one birth and none duplicates another).
 
+⚖ **`SEVT_EMPIRE_TECH_ADDED / _REMOVED` NAMES ONE PLAYER, ALTHOUGH TECH IS TEAM-HELD.** Every emitter announces
+per player: `CvTeam::setHasTech` once for each alive member, in both directions; `CvPlayer::read` once for each
+player the save carries, per held tech of its team; and `CvPlayer::announceLifecycleStart` replays the team's held
+techs for a player created mid-game, for that player only. A repeat tech announces once per held count everywhere.
+⇒ **A consumer applies the fact to the player it names and never fans it over the team** — a fan counts the tech
+once per member. ⚠ A player that is not alive at a play-time `setHasTech` receives no fact for it.
+
 **`SEVT_PLOT_BONUS_REVEALED_ADDED / _REMOVED`** is the plot's per-TEAM reveal verdict, announced by `PlotContext` at
 the crossing and nowhere else — the served-resource shape, keyed by team because reveal belongs to whoever SEES the
 plot. ⛔ It is not a duplicate of `SEVT_PLOT_BONUS_*`: that says what the tile CARRIES, this says who can see it.
