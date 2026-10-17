@@ -21123,24 +21123,7 @@ bool CvUnitAI::AI_improveLocalPlot(int iRange, const CvCity* pIgnoreCity)
 		}
 		else if (plot()->getRouteType() == NO_ROUTE)
 		{
-			int iPlotMoveCost = GC.getTerrainInfo(plot()->getTerrainType()).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100;
-
-			if (plot()->getFeatureType() != NO_FEATURE)
-			{
-				iPlotMoveCost += GC.getFeatureInfo(plot()->getFeatureType()).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT) / 100;
-			}
-			if (plot()->isHills())
-			{
-				iPlotMoveCost += GC.getHILLS_EXTRA_MOVEMENT();
-			}
-			if (plot()->isAsPeak())
-			{
-				if (!GET_TEAM(getTeam()).isMoveFastPeaks())
-				{
-					iPlotMoveCost += GC.getPEAK_EXTRA_MOVEMENT();
-				}
-				iPlotMoveCost += 3;
-			}
+			const int iPlotMoveCost = plot()->getTerrainMovementCost(getOwner()) / 100;
 			if (iPlotMoveCost > 1)
 			{
 				eMission = MISSION_ROUTE_TO;

@@ -60,12 +60,17 @@ public:
 	DllExport void setMinimizePopupHelp(CvWString& szString, const CvPopupInfo & info);
 
 	void setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, bool bOneLine = false, bool bShort = false, bool bdarkColor = false);
+	///<summary>The plot's unit list -- what stands here. A lone unit, and every unit when bOneLine asks for one line
+	/// each (the off-screen indicator label), renders through the unit instance help. A stack shows the unit the plot
+	/// draws through it and the rest as one line per owner and unit type.</summary>
 	void setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bool bOneLine, bool bShort);
 	bool setCombatPlotHelp(CvWStringBuffer &szString, CvPlot* pPlot, bool bAssassinate = false);
 	bool setMinimalCombatPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool bAssassinate = false);
 	bool setAssassinatePlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, CvUnit* pAttacker, CvUnit* pDefender);
-	// bBreakdown = decompose each yield into its stored segments. OFF by default: the census is a diagnostic
-	// read, and putting it in every ordinary map hover buries the number a player actually came for.
+	///<summary>The plot hover: the tile as the active player sees it -- what it is and yields, its resource,
+	/// improvement and route, who works it, whose it is, and its build progress. bBreakdown also decomposes each
+	/// yield into its stored segments; it is off by default because that census is a diagnostic read, and in an
+	/// ordinary map hover it buries the number a player came for.</summary>
 	void setPlotHelp(CvWStringBuffer &szString, CvPlot* pPlot, bool bBreakdown = false);
 	// WHO holds a plot and who is taking it: the current owner, then every player's culture SHARE on it,
 	// strongest first, then the cultural owner when it differs from the holder. Cultural ownership is a CONTEST,

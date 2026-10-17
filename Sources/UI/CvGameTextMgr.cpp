@@ -124,8 +124,8 @@ int shortenID(int iId)
 static char* szErrorMsg;
 
 
-//	Structure to hold aggregate info about an instances of a unit type and owener
-//	on a stacked plot
+///<summary>One line of a stacked plot's unit list: the units of one owner and unit type, counted, with their
+/// strength summed for the average, and whether the line names the owner.</summary>
 class PlayerUnitInfo
 {
 public:
@@ -836,9 +836,6 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 }
 
 
-//	The PLOT's unit list -- what stands here. A lone unit, and every unit when the caller asks for one line each
-//	(the off-screen indicator label), is rendered by the INSTANCE composer above. A stack shows the unit the plot
-//	draws through that composer and the rest as one line per owner and unit type.
 void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bool bOneLine, bool bShort)
 {
 	if (pPlot == NULL)
