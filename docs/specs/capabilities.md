@@ -4,11 +4,11 @@ The catalogue of **empire/team-wide, grantor-provided abilities** — the **empi
 [skills](skills.md)**. This is the **glossary** (the namings); the **system** is the [json spec](json.md) §8.
 Sibling of skills.md.
 
-> **⚖ THE MECHANIC — a derived-on-query system, enabler-style; nothing is "granted".**
+> **⚖ THE MECHANIC — a source-derived union, enabler-style; nothing is "granted".**
 > Capabilities are not handed out per se — no grant event, no application moment, no stored team state. The system
-> behaves like the [enabler](enabler.md): the empire's ACTIVE capability set is **derived where consumed**, as the
-> union over the **currently live sources** — the same HAVE axis the enabler generates from (team techs + adopted
-> civics + active buildings). A source's `capabilities` block is pure data direction ("this source carries the key");
+> behaves like the [enabler](enabler.md): the empire's ACTIVE capability set is the union over the **currently
+> live sources** — the same HAVE axis the enabler generates from (team techs + adopted civics + active buildings) —
+> kept per player as a keyed count that the sources' own facts move (below). A source's `capabilities` block is pure data direction ("this source carries the key");
 > liveness does the rest — a capability is active iff SOME live source carries it, and it lapses the moment its last
 > source does (no lifetime bookkeeping exists or is needed). **In practice no capability is ever disabled today**:
 > every shipped grant is tech-side and techs are never lost — the lapse-with-source semantic is **headroom the model
@@ -38,7 +38,7 @@ trade-network recompute `updatePlotGroups` + `MarkBridgesDirty`, the improvement
 
 - **Team / empire scope** — applies to the whole civilization, not one unit (the section name carries the scope).
 - **Source-derived, never granted** — active iff some **live** HAVE source (tech / civic / building) carries the
-  key; derived on query, enabler-style. Monotonic only insofar as the source is (a tech is; a building isn't).
+  key, enabler-style. Monotonic only insofar as the source is (a tech is; a building isn't).
 - The empire analogue of a unit `skill` (a `skill` is the *unit* ability; a `capability` is the *empire* one).
 
 > **⚖ PARAMETERIZED abilities.** Two shapes, decided by the value's shape (json.md §2):
@@ -50,13 +50,14 @@ trade-network recompute `updatePlotGroups` + `MarkBridgesDirty`, the improvement
 >   hard-code gates, with 0 modularity"* — every key needs its own C++ gate + a hardcoded terrain→key table. Instead
 >   the grantor (tech) carries a bespoke **`canTradeOn`** block with REAL `TERRAIN_` references (FK-resolved by
 >   readJson), **which the trade-route system goes through**: the empire's tradable-terrain set is the
->   derived-on-query union over live sources' `canTradeOn.terrains` (same mechanic as capabilities), and the
+>   union over live sources' `canTradeOn.terrains` (same mechanic as capabilities), and the
 >   consumer (`CvPlot.cpp:5641` `CvTeam::isTerrainTrade`) asks generic set-membership — new tradable terrains are
 >   pure data, zero code. Live data: raft-building (lake-shore), sailing (coasts+lake), seafaring (seas),
->   navigation (oceans+trenches). **The COMMON (baseline) tradable terrains are homed on `TECH_GAME_START`'s
->   `canTradeOn` block** — the universal start node every civ holds (it already carries `setScienceRate:true` the
->   same way), so the from-game-start tradable set rides the SAME union mechanic, no engine special-case for
->   "always tradable". **`riverTrade` is semantically DISTINCT:** it defines whether a river can be used as a
+>   navigation (oceans+trenches). **A COMMON (baseline) tradable terrain is homed on `TECH_GAME_START`'s
+>   `canTradeOn` block** — the root tech every civilization grants (its `capabilities` block carries
+>   `canSetScienceRate`/`canSetEspionageRate` the same way), so the from-game-start tradable set rides the SAME
+>   union mechanic, no engine special-case for "always tradable". The shipped root authors no `canTradeOn`: no
+>   terrain is tradable from game start. **`riverTrade` is semantically DISTINCT:** it defines whether a river can be used as a
 >   "trade ROAD" (a connectivity conduit, like routes) — NOT whether you can trade on a river tile — so it is not
 >   terrain-list data; it **IS a capability** (a river-interaction ability like `bridgeBuilding`), outside
 >   `canTradeOn`, which stays purely "which plot types carry trade".
@@ -71,7 +72,7 @@ trade-network recompute `updatePlotGroups` + `MarkBridgesDirty`, the improvement
 > `openBorders`, `rightOfPassage` (the player-facing name, not limitedBorders), `embassy`, `bonuses`,
 > `freeTradeAgreement` *"and so on"* — plus the grounded legacy re-homes `gold`, `maps`,
 > `defensivePact`, `vassals`, `permanentAlliance`. The diplomacy/deal system (`CvPlayer::canTradeItem` + the
-> per-item gates) goes through it **generically** — no per-key hardcoded gate — via the same derived-on-query union
+> per-item gates) goes through it **generically** — no per-key hardcoded gate — via the same union
 > over live sources. Sibling of `canTradeOn` (above); the flat capability set keeps only the non-trading abilities.
 > Data consequence: the curator emits BOTH `canTrade.openBorders` AND `canTrade.rightOfPassage` from the single
 > legacy `isOpenBordersTrading` flag (legacy couples them in one `processTech` branch) — two keys so the coupling

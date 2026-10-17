@@ -117,9 +117,6 @@ public:
 	// disables collected into rem for the post-gather set-difference).
 	static void accumHave(const CvInfo* j, EnBucketSets& cand, EnBucketSets& rem);
 
-	// GENERATE (enabler.md §2). HAVE = team techs + adopted civics (+ the city's buildings if pCity != NULL).
-	static void generate(const CvPlayer& kPlayer, const CvCity* pCity, EnBucketSets& cand);
-
 	// Target-side obsoletedBy.techs: any held team tech obsoletes j.
 	static bool obsoletedByHeldTech(const CvInfo* j, const CvTeam& kTeam);
 	// ... by a held tech OTHER than eExclude (the tech-delta's obsolete-present ripple counterfactual).

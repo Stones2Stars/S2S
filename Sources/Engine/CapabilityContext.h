@@ -52,11 +52,6 @@ public:
 	// --- THE READ SURFACE -------------------------------------------------------------------------------------
 	// One dictionary per authored block; the id argument is the generated compile-time constant for its domain
 	// (CvClassificationIds.h), so every read is an O(1) map probe and no string survives load.
-	// ⚑ EACH READ ORs THE UNIVERSAL BASELINE. `TECH_GAME_START` is the synthetic root every civ holds and it
-	// lives OFF the InfoRepo -- it has no engine id and is not in `m_pabHasTech` (AGENTS.md; the enabler
-	// accumulates it separately for the same reason), so no tech fact can ever carry it and it cannot be a
-	// delta. It is universal and immutable, so it is read as a CONSTANT rather than stored: that is stateless,
-	// order-independent, and cannot drift out of step with the dictionary beside it.
 	bool hasCapability(int iCapabilityId) const;
 	bool hasCanTrade(int iCanTradeId) const;
 	bool hasCanWorkOn(int iCanWorkOnId) const;

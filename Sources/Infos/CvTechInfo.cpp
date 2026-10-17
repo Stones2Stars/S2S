@@ -250,23 +250,3 @@ void CvTechInfo::mapFrom(const picojson::value& entity)
 		}
 	}
 }
-
-// --- the synthetic TECH_GAME_START root (readjson.md §5.1) ---
-// No engine id -> lives OFF the InfoRepo as this owned singleton. Reset-recreate (never re-parse into a stale
-// object) keeps the write-once-at-load discipline across a re-map.
-static CvTechInfo* s_pStartNode = NULL;
-
-CvTechInfo& cascadeStartNode()
-{
-	if (s_pStartNode == NULL)
-	{
-		s_pStartNode = new CvTechInfo();
-	}
-	return *s_pStartNode;
-}
-
-void cascadeStartNodeReset()
-{
-	delete s_pStartNode;
-	s_pStartNode = NULL;
-}

@@ -530,3 +530,11 @@
     ⚖ **The same closed EXE is the root of the 32-bit ceiling, the frozen VC7.1/Python 2.4 toolchain
     ([engine.md](../reference/engine.md)) and this copying** — so the only thing that would genuinely dissolve
     it is not owning that constraint, which is a far larger question than an optimisation.
+
+43. **THE OFF-REGISTRY START NODE** (`cascadeStartNode()`, a `TECH_GAME_START` singleton beside the tech registry)
+    *(dead)* — built when the root had no engine id, so its data could not live in the InfoRepo. Once techs loaded
+    from JSON the category loader gave the root an id and a registry poco of its own, so the root existed twice:
+    every reader that special-cased it reached the singleton, every reader that did not reached the poco, and the
+    deposit index knew only the singleton. Replaced by the root being an ordinary tech record
+    ([engine.md](../reference/engine.md)). **Never give a tech, or any registered info, a second record off its
+    registry, and never route one type string to a different object than its id.**

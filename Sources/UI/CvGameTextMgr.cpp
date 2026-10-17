@@ -5433,7 +5433,7 @@ static CvWString gt_edgeEntityName(EnEdgeBucket eBucket, int iId)
 //	unlocks it) is the whole-database scan the enabler spec exists to delete.
 //
 //	⚖ THE DEFAULT IS THE OBVIOUS DATA; THE VERBOSE VERSION IS UNDER A HOTKEY (owner). Measured over the shipped
-//	data a tech's `enables` is a median of 8, but TECH_GAME_START -- the synthetic root every player holds --
+//	data a tech's `enables` is a median of 8, but TECH_GAME_START -- the root every civilization grants --
 //	carries 575, and the fattest buildings and bonuses carry ~230. So the resting tooltip shows the first handful
 //	and ALT shows the lot, which is the same key this branch already uses for the plot-yield breakdown -- one
 //	verbose modifier across the surface, never a second convention to learn. A page built once and never
@@ -5730,7 +5730,7 @@ void CvGameTextMgr::appendGrantLines(CvWStringBuffer& szBuffer, const CvInfo& in
 		{
 			continue;
 		}
-		// The synthetic TECH_GAME_START root is machinery, never player-facing content (every civilization
+		// The TECH_GAME_START root is machinery, never player-facing content (every civilization
 		// grants it, and its text keys are deliberately unauthored — it renders as a raw key). It is skipped,
 		// and the heading with it when the root was the bucket's only entry (the Dawn of Man civ blurb showed
 		// "Grants technologies: TXT_KEY_GAME_START" on every leader).

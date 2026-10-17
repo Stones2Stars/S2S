@@ -51,33 +51,25 @@ namespace
 	}
 }
 
-// --- the reads: the player's own delta store, OR the universal start-node baseline (see the header) ----------
+// --- the reads: the player's own delta store --------------------------------------------------------------
 bool CapabilityContext::hasCapability(int iCapabilityId) const
 {
-	return m_capabilities.has(iCapabilityId)
-		|| clsHasId(cascadeStartNode().getCapabilities(), iCapabilityId);
+	return m_capabilities.has(iCapabilityId);
 }
 
 bool CapabilityContext::hasCanTrade(int iCanTradeId) const
 {
-	return m_canTrade.has(iCanTradeId)
-		|| clsHasId(cascadeStartNode().getCanTrade(), iCanTradeId);
+	return m_canTrade.has(iCanTradeId);
 }
 
 bool CapabilityContext::hasCanWorkOn(int iCanWorkOnId) const
 {
-	return m_canWorkOn.has(iCanWorkOnId)
-		|| clsHasId(cascadeStartNode().getCanWorkOn(), iCanWorkOnId);
+	return m_canWorkOn.has(iCanWorkOnId);
 }
 
 bool CapabilityContext::canTradeOnTerrain(int iTerrain) const
 {
-	if (m_canTradeOn.has(iTerrain))
-	{
-		return true;
-	}
-	const std::set<int>& kBase = static_cast<const CvTechInfo&>(cascadeStartNode()).getCanTradeOnTerrains();
-	return kBase.find(iTerrain) != kBase.end();
+	return m_canTradeOn.has(iTerrain);
 }
 
 void CapabilityContext::clear()

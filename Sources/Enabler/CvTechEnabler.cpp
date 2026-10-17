@@ -13,37 +13,42 @@
 #include "Defines/CvGlobals.h"
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
-#include "Enabler/CvEnablerKernel.h"           // EnablerKernel::generate/requiresMet -- the GENERATE pass + the ONE gate evaluator
+#include "Enabler/CvEnablerKernel.h"           // EnablerKernel::standardGateReason -- the ONE gate evaluator
 #include "Conditions/CvConditionEval.h"    // CvCascadeEvalCtx -- the gate evaluation's context
-#include "CvTechInfo.h"                // cascadeStartNode -- the synthetic TECH_GAME_START root (off the InfoRepo)
+#include "CvTechInfo.h"                // the tech domain
 #include "CvReligionInfo.h"            // a religion's EDGEF_ENABLED_BY -- the techs that found it
 
-// The tech's cascade info: the synthetic TECH_GAME_START root lives OFF the InfoRepo (cascadeStartNode) --
-// but it IS a held engine tech (the guaranteed root, enabler.md par.2), so its edges apply through the same
-// delta path as every other held tech, exactly once.
-static const CvInfo* te_techInfo(int iTech)
+///<summary>
+/// Applies one tech's source-side tech edges (enables, and the obsoletes/replaces/disables removals) to the
+/// tech domain's refcounts with the given sign (enabler.md par.7.1 step 1). The load seed and the play-time event
+/// both use it.
+///</summary>
+static void te_applyDelta(EnablerDomain& techDomain, int iTech, int iDelta)
 {
-	const int iGameStart = GC.getInfoTypeForString("TECH_GAME_START", true);
-	if (iTech == iGameStart) return &cascadeStartNode();
-	return InfoRepo<CvTechInfo>::get().get(iTech);
-}
-
-// ONE tech's source-side tech edges into the domain refcounts (enabler.md par.7.1 step 1) -- the ONE delta
-// applier the load seed REPLAYS and the play-time event applies. Order-independent by the membership formula
-// (removal wins), so root-last / root-first / any event order converges to the same vector.
-static void te_applyDelta(EnablerDomain& d, int iTech, int iDelta)
-{
-	const CvInfo* j = te_techInfo(iTech);
-	if (j == NULL) return;
-	const std::vector<int>* p = j->edge(EDGEF_ENABLES, EDGEB_TECHS);
-	if (p != NULL)
-		for (size_t i = 0; i < p->size(); ++i) d.addEnable((*p)[i], iDelta);
-	static const EnEdgeFamily REMOVE_FAMILIES[] = { EDGEF_OBSOLETES, EDGEF_REPLACES, EDGEF_DISABLES, NUM_EDGEF };
-	for (int e = 0; REMOVE_FAMILIES[e] != NUM_EDGEF; ++e)
+	const CvInfo* pTechInfo = InfoRepo<CvTechInfo>::get().get(iTech);
+	if (pTechInfo == NULL)
 	{
-		p = j->edge(REMOVE_FAMILIES[e], EDGEB_TECHS);
-		if (p != NULL)
-			for (size_t i = 0; i < p->size(); ++i) d.addRemove((*p)[i], iDelta);
+		return;
+	}
+	const std::vector<int>* pEnabled = pTechInfo->edge(EDGEF_ENABLES, EDGEB_TECHS);
+	if (pEnabled != NULL)
+	{
+		for (size_t iEnabled = 0; iEnabled < pEnabled->size(); ++iEnabled)
+		{
+			techDomain.addEnable((*pEnabled)[iEnabled], iDelta);
+		}
+	}
+	static const EnEdgeFamily REMOVE_FAMILIES[] = { EDGEF_OBSOLETES, EDGEF_REPLACES, EDGEF_DISABLES, NUM_EDGEF };
+	for (int iFamily = 0; REMOVE_FAMILIES[iFamily] != NUM_EDGEF; ++iFamily)
+	{
+		const std::vector<int>* pRemoved = pTechInfo->edge(REMOVE_FAMILIES[iFamily], EDGEB_TECHS);
+		if (pRemoved != NULL)
+		{
+			for (size_t iRemoved = 0; iRemoved < pRemoved->size(); ++iRemoved)
+			{
+				techDomain.addRemove((*pRemoved)[iRemoved], iDelta);
+			}
+		}
 	}
 }
 
@@ -76,18 +81,18 @@ void TechEnabler::initDomain(const CvPlayer& kPlayer)
 // Either failing sets the domain's gate verdict: a tree member is GREYED (in the tree, unattainable now),
 // never removed. The Limited Religions bar (CvPlayer::isResearchBarredByReligionLimit) is the tech domain's own
 // extra clause; it hides, so it replaces any reason that only greys.
-static void te_gate(const CvPlayer& kPlayer, EnablerDomain& d, int iTech)
+static void te_gate(const CvPlayer& kPlayer, EnablerDomain& techDomain, int iTech)
 {
-	const CvInfo* j = te_techInfo(iTech);
-	CvCascadeEvalCtx ec;
-	kPlayer.getEmpireContext().fillEvalCtx(ec);   // player+team -- the contexts fill the eval state (contexts.md)
+	const CvInfo* pTechInfo = InfoRepo<CvTechInfo>::get().get(iTech);
+	CvCascadeEvalCtx evalCtx;
+	kPlayer.getEmpireContext().fillEvalCtx(evalCtx);   // player+team -- the contexts fill the eval state (contexts.md)
 	CvCascadeEvalFlags gateFlags;
-	unsigned char eReason = EnablerKernel::standardGateReason(j, iTech, kPlayer, ec, gateFlags, /*bUnit*/ false, EDGEB_TECHS);
+	unsigned char eReason = EnablerKernel::standardGateReason(pTechInfo, iTech, kPlayer, evalCtx, gateFlags, /*bUnit*/ false, EDGEB_TECHS);
 	if (!EnablerDomain::reasonHides(eReason) && kPlayer.isResearchBarredByReligionLimit((TechTypes)iTech))
 	{
 		eReason = EnablerDomain::GATEREASON_RELIGION_LIMIT;
 	}
-	d.setGateReason(iTech, eReason);
+	techDomain.setGateReason(iTech, eReason);
 }
 
 // The TOUCHED candidate set of one tech event H -- everything whose state or gate can change with H, all read
@@ -96,13 +101,19 @@ static void te_gate(const CvPlayer& kPlayer, EnablerDomain& d, int iTech)
 // gate references H).
 static void te_touched(int iTech, std::set<int>& touched)
 {
-	const CvInfo* j = te_techInfo(iTech);
-	if (j == NULL) return;
-	static const EnEdgeFamily FAMS[] = { EDGEF_ENABLES, EDGEF_OBSOLETES, EDGEF_REPLACES, EDGEF_DISABLES, EDGEF_REQUIRED_BY, NUM_EDGEF };
-	for (int f = 0; FAMS[f] != NUM_EDGEF; ++f)
+	const CvInfo* pTechInfo = InfoRepo<CvTechInfo>::get().get(iTech);
+	if (pTechInfo == NULL)
 	{
-		const std::vector<int>* p = j->edge(FAMS[f], EDGEB_TECHS);
-		if (p != NULL) touched.insert(p->begin(), p->end());
+		return;
+	}
+	static const EnEdgeFamily TOUCHING_FAMILIES[] = { EDGEF_ENABLES, EDGEF_OBSOLETES, EDGEF_REPLACES, EDGEF_DISABLES, EDGEF_REQUIRED_BY, NUM_EDGEF };
+	for (int iFamily = 0; TOUCHING_FAMILIES[iFamily] != NUM_EDGEF; ++iFamily)
+	{
+		const std::vector<int>* pTargets = pTechInfo->edge(TOUCHING_FAMILIES[iFamily], EDGEB_TECHS);
+		if (pTargets != NULL)
+		{
+			touched.insert(pTargets->begin(), pTargets->end());
+		}
 	}
 }
 
@@ -132,8 +143,8 @@ void TechEnabler::onTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas)
 	// count changed for EVERY team, so a capped eTech re-gates on ALL seeded players' domains, not just the
 	// acquiring team's (the founder techs vanish from every rival's researchable list the moment one team
 	// takes them).
-	const CvInfo* jT = te_techInfo((int)eTech);
-	if (jT != NULL && jT->getAllowed() != NULL && !jT->getAllowed()->isEmpty())
+	const CvInfo* pChangedTechInfo = InfoRepo<CvTechInfo>::get().get((int)eTech);
+	if (pChangedTechInfo != NULL && pChangedTechInfo->getAllowed() != NULL && !pChangedTechInfo->getAllowed()->isEmpty())
 	{
 		for (int iP = 0; iP < MAX_PLAYERS; iP++)
 		{

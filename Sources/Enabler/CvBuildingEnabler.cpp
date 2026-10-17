@@ -23,7 +23,7 @@
 #include "CvBuildingInfo.h"
 #include "CvCivicInfo.h"
 #include "Enabler/CvEnabler.h"            // EnablerDomain/CityEnabler -- the standardized per-city domain (CvCity::m_enabler)
-#include "CvTechInfo.h"           // cascadeStartNode -- the TECH_GAME_START root redirect (the tech HAVE axis)
+#include "CvTechInfo.h"           // the tech HAVE axis
 #include "CvReligionInfo.h"       // the religion HAVE axis repo
 #include "CvCorporationInfo.h"    // the corporation HAVE axis repo
 #include "CvBonusInfo.h"          // the bonus HAVE axis repo
@@ -68,14 +68,14 @@ void BuildingEnabler::augmentWaived(const CvPlayer& kPlayer, const CvTeam& kTeam
 // object-owned has-lists. Order-independence is the formula's (removal wins); idempotency is the emit surface's
 // (flip-guarded) plus the held-flag guards where an emit is documented broad (tech).
 
-// the source's cascade info per axis (the tech axis redirects the TECH_GAME_START root to cascadeStartNode)
+///<summary>
+/// The registry info of one HAVE source on the given axis.
+///</summary>
 static const CvInfo* bd_sourceInfo(int eAxis, int iId)
 {
 	switch (eAxis)
 	{
-	case BuildingEnabler::AX_TECH:
-		if (iId == GC.getInfoTypeForString("TECH_GAME_START", true)) return &cascadeStartNode();
-		return InfoRepo<CvTechInfo>::get().get(iId);
+	case BuildingEnabler::AX_TECH:     return InfoRepo<CvTechInfo>::get().get(iId);
 	case BuildingEnabler::AX_CIVIC:    return InfoRepo<CvCivicInfo>::get().get(iId);
 	case BuildingEnabler::AX_BUILDING: return InfoRepo<CvBuildingInfo>::get().get(iId);
 	case BuildingEnabler::AX_RELIGION: return InfoRepo<CvReligionInfo>::get().get(iId);

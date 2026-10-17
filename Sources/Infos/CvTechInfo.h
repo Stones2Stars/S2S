@@ -154,10 +154,4 @@ private:
 	std::set<TechTypes> m_leadsTo;                     // filled by the reverse pass (rp_deriveTechLeadsTo)
 };
 
-// The synthetic TECH_GAME_START root (no engine id -- lives OFF the InfoRepo; readjson.md §5.1): the universal
-// start node whose enables/capabilities seed every player's HAVE. Created on first use; cascadeStartNodeReset()
-// destroys it before a re-map (write-once discipline: a re-map gets a FRESH object, never re-parses into a stale one).
-CvTechInfo& cascadeStartNode();
-void cascadeStartNodeReset();
-
 #endif // CV_JSON_TECH_INFO_H

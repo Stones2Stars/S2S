@@ -15,7 +15,7 @@
 #include "CvProcessEnabler.h"
 #include "CvBuildEnabler.h"
 #include "CvPromotionEnabler.h"
-#include "CvTechInfo.h"           // cascadeStartNode -- the TECH_GAME_START root redirect (the traits tech leg)
+#include "CvTechInfo.h"           // the tech axis (the traits tech leg)
 #include "AI/CvPlayerAI.h"
 
 // ===================== [ENABLER] spine domain (logging.md: logging is a spine CONSUMER) =====================
@@ -479,9 +479,7 @@ private:
 				//	root tech carries every rung that has no prerequisite.
 				{
 					const TeamTypes eTechTeam = GET_PLAYER((PlayerTypes)kEvent.iC).getTeam();
-					const CvInfo* pTechInfo = (kEvent.iType == GC.getInfoTypeForString("TECH_GAME_START", true))
-						? static_cast<const CvInfo*>(&cascadeStartNode())
-						: InfoRepo<CvTechInfo>::get().get(kEvent.iType);
+					const CvInfo* pTechInfo = InfoRepo<CvTechInfo>::get().get(kEvent.iType);
 					for (int iTeamPlayer = 0; iTeamPlayer < MAX_PLAYERS; ++iTeamPlayer)
 					{
 						const CvPlayer& kTeamPlayer = GET_PLAYER((PlayerTypes)iTeamPlayer);

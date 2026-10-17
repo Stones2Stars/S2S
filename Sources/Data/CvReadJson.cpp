@@ -18,10 +18,10 @@
 #include "Defines/CvGlobals.h"         // GC.getInfoTypeForString -- the type registry (entity id resolution)
 #include "Spine/CvEventSpine.h"              // the #430 dispatch spine -- the [READJSON] census rides it as a CONSUMER
 #include "CvJsonParse.h"               // jsonClassifyKey / jsonUnresolvedIds -- shared vocabulary + FK diag
-#include "CvInfo.h"                // CvInfo (+ cascadeStartNode) -- the mapped info data + the TECH_GAME_START root
+#include "CvInfo.h"                // CvInfo -- the mapped info data
 #include "Data/CvDepositIndex.h"     // DepositIndex::pushInfo/clearCompiled -- the compiled deposit index (push-time interning)
 #include "CvClassificationRegistry.h"  // the §8/§9 generated classification categories -- minted + resolved post-map
-#include "CvTechInfo.h"            // CvTechInfo -- for the capabilities read-back survey (+ cascadeStartNode)
+#include "CvTechInfo.h"            // CvTechInfo -- for the capabilities read-back survey
 #include "CvImprovementInfo.h"     // complete type for the RJ_REPO_TYPES dispatch
 #include "CvBuildingInfo.h"        // complete type for the RJ_REPO_TYPES dispatch
 #include "CvUnitInfo.h"
@@ -316,7 +316,6 @@ static bool rj_isAliased(const std::string& t)
 //
 const CvInfo* rjInfoForTypeConst(const std::string& t, int iId)
 {
-	if (t == "TECH_GAME_START") return &cascadeStartNode();
 #define X(PFX, T) if (rj_starts(t, PFX)) return InfoRepo<T>::get().get(iId);
 	RJ_REPO_TYPES(X)
 #undef X
@@ -332,7 +331,6 @@ const CvInfo* rjInfoForTypeConst(const std::string& t, int iId)
 //
 int rjCountForType(const std::string& t)
 {
-	if (t == "TECH_GAME_START") return 1;
 #define X(PFX, T) if (rj_starts(t, PFX)) return InfoRepo<T>::get().size();
 	RJ_REPO_TYPES(X)
 #undef X
@@ -341,8 +339,6 @@ int rjCountForType(const std::string& t)
 
 CvInfo* rjInfoForType(const std::string& t, int iId)
 {
-	// the synthetic root's cascade data lives OFF the InfoRepo (cascadeStartNode) -- route it there, never the GC poco
-	if (t == "TECH_GAME_START") return &cascadeStartNode();
 #define X(PFX, T) if (rj_starts(t, PFX)) return InfoRepo<T>::get().editPtr(iId);
 	RJ_REPO_TYPES(X)
 #undef X
@@ -376,8 +372,6 @@ static void rj_clearAllRepos()
 	RJ_REPO_TYPES(X)
 #undef X
 	InfoRepo<CvComplexTraitTag>::get().clear();   // the complex trait set's own repo (off the RJ_REPO_TYPES dispatch)
-	cascadeStartNodeReset();                      // the synthetic TECH_GAME_START root lives off the InfoRepo --
-	                                              // reset-RECREATE (write-once discipline; a re-map gets a fresh node)
 }
 
 // ==================== THE RETAINED PARSE STORE (parse ONCE -- docs/architecture/patterns.md §The ONE reader) ====================
@@ -470,7 +464,7 @@ static bool rj_inCategory(const std::string& szRelDir, const std::string& szFold
 // The category ORDER-MANIFEST sort (`_order.json`, curator-derived -- Tools/Migration/curate_order.py): entities
 // sort by their legacy XML document position, so the registered engine ids reproduce the LEGACY id order and every
 // id-ordered UI surface keeps its familiar layout (the unit level-up promotion popup grouped each line's tiers
-// adjacently because the XML did). A type ABSENT from the manifest (the synthetic TECH_GAME_START, future
+// adjacently because the XML did). A type ABSENT from the manifest (the JSON-only TECH_GAME_START, future
 // additions, a category with no manifest) sorts AFTER every listed one, alphabetically -- the legacy
 // new-stuff-appends-last behaviour.
 struct JsonCategoryEntityOrder
@@ -558,7 +552,6 @@ void loadJson(JsonLoadPhase eLoadPhase)
 
 	// ===== PASS 1 -- REGISTER: resolve every store entity's engine id BEFORE any mapFrom (the registry must be
 	// COMPLETE first, else a FORWARD FK reference would drop). The parse already happened ONCE, at store build.
-	// TECH_GAME_START is the synthetic no-engine-id root (id -1, off the InfoRepo).
 	// COMPLEX traits (the `\complex\` folder) are keyed by the SAME ENGINE id as their type string. The simple and
 	// complex sets live in SEPARATE repos (CvTraitInfo vs CvComplexTraitTag), so they never collide even sharing an
 	// id. The active-set consumers (getTraitInfo / MMKernel::traitData) index the complex repo BY THE ENGINE id, so
@@ -571,7 +564,7 @@ void loadJson(JsonLoadPhase eLoadPhase)
 		rec.data = NULL;
 		if (rec.isOrderManifest || rec.type.empty()) continue;
 		++iEntities;
-		rec.typeId = (rec.type == "TECH_GAME_START") ? -1 : rj_registerId(rec.type);   // engine id (or -1 = DEFER to its load phase)
+		rec.typeId = rj_registerId(rec.type);   // engine id (or -1 = DEFER to its load phase)
 		if (rec.typeId >= 0) ++iResolved;
 		else { ++iUnresolved; if (iShownUnres < 16) { eventSpine().emit(CvSpineEvent(EVENTKIND_DIAGNOSTIC, SD_READJSON, RJE_UNRESOLVED, 1).addStr(RJF_TYPE, rec.type.c_str())); ++iShownUnres; } }
 	}
@@ -588,9 +581,7 @@ void loadJson(JsonLoadPhase eLoadPhase)
 		if (!rec.value.is<picojson::object>()) continue;
 		const picojson::object& o = rec.value.get<picojson::object>();
 		const bool bComplexTrait = rec.typeId >= 0 && rj_starts(rec.type, "TRAIT_") && rec.path.find("\\complex\\") != std::string::npos;
-		const bool bStartNode = (rec.type == "TECH_GAME_START");
-		CvInfo* data = bStartNode ? &cascadeStartNode()
-			: bComplexTrait ? InfoRepo<CvComplexTraitTag>::get().editPtr(rec.typeId)
+		CvInfo* data = bComplexTrait ? InfoRepo<CvComplexTraitTag>::get().editPtr(rec.typeId)
 			: rj_jsonEdit(rec.type, rec.typeId);
 		rec.data = data;
 		if (data != NULL)
@@ -602,10 +593,9 @@ void loadJson(JsonLoadPhase eLoadPhase)
 			// so the FULL virtual mapFrom re-runs -- mapFrom is IDEMPOTENT BY CONTRACT (CvInfo.h: sections clear via
 			// clearSections, subclass typed containers clear at their parse top), so every link (composed sections +
 			// typed FK members) resolves against the full id space, no mismatch, no double-accumulation. The OWNED
-			// objects -- the synthetic start node (cascadeStartNode) and the complex-trait set (CvComplexTraitTag),
-			// both matching an aliased type PREFIX (TECH_/TRAIT_) without being the aliased GC objects -- get their
-			// FIRST (and only) map here, on the same call.
-			const bool bAliased = !bStartNode && !bComplexTrait && rj_isAliased(rec.type);
+			// complex-trait set (CvComplexTraitTag), matching an aliased type PREFIX (TRAIT_) without being the
+			// aliased GC objects, gets its FIRST (and only) map here, on the same call.
+			const bool bAliased = !bComplexTrait && rj_isAliased(rec.type);
 			data->mapFrom(rec.value);
 			if (bAliased)
 			{

@@ -5922,8 +5922,8 @@ void CvTeam::read(FDataStreamBase* pStream)
 	WRAPPER_READ_CLASS_ARRAY_ALLOW_MISSING(wrapper, "CvTeam", REMAPPED_CLASS_TYPE_TECHS, GC.getNumTechInfos(), m_pabHasTech);
 	// TECH_GAME_START (the universal no-prereq root, [enabler.md] par.2) POSTDATES older saves -- upgrade the save
 	// ON READ: the team deserializes as if it had always held it. A RAW flag write on purpose: every consumer of the
-	// root derives from state at load (capabilities are derived-on-query, plot groups recalculate, the enabler seeds,
-	// and the reseed's per-held-tech emits announce it like any saved tech), while the full setHasTech side-effect
+	// root derives from state at load (plot groups recalculate, and the reseed's per-held-tech emits announce it
+	// like any saved tech to the enablers, the capability context and the cascade), while the full setHasTech side-effect
 	// chain (map loops, processTech, per-city sweeps) is unsafe mid-deserialization -- players are not set up yet.
 	// Unconditional across ALL teams (dead teams too -- a later revival must not resurrect a rootless team).
 	// New games never pass here; they receive the root through their civilization's free techs.

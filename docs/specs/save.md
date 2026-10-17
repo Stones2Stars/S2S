@@ -166,14 +166,14 @@ An apply-site audit alone misses non-obvious riders. Legacy changers carry them:
 > ⚑ **Why first-in-list is ALWAYS a legal substitute — it is structural, not luck.** Category id order
 > comes from the curator's `_order.json` manifest, which reproduces the legacy XML document order
 > ([engine.md § Info loading](../reference/engine.md)), so the FIRST civic in an option slot is that slot's BASE
-> civic — and the base civics are exactly what `TECH_GAME_START`'s `enables` unlocks, the synthetic root node
-> **every player always holds** ([enabler.md §2](enabler.md)). So the head of the list is available by
+> civic — and the base civics are exactly what `TECH_GAME_START`'s `enables` unlocks, the root tech
+> **every civilization grants** ([enabler.md §2](enabler.md)). So the head of the list is available by
 > construction, in every game, at every point. Do not "improve" this into a cleverer selection.
 >
 > Both layers already implement it: `CvPlayer::read` (~:18694) re-checks every slot after the allow-missing read
 > and replaces a `NO_CIVIC` **or wrong-category** civic with the civ's initial civic;
 > `cvInternalGlobals::checkInitialCivics` repairs that initial table in turn, taking the first civic in the
-> option **with no tech prereq** — which selects precisely the start-enabled civic described above. When you add
+> option that the root's `enables.civics` lists — precisely the start-enabled civic described above. When you add
 > a FALLBACK-class Type, copy that shape: repair at load, immediately after the read, in the same loop that
 > knows the slot's meaning.
 >
