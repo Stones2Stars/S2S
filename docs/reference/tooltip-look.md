@@ -2793,7 +2793,9 @@ to, what it improves, what it needs.
 - Requires to operate:  <!-- TXT_KEY_EDGE_REQUIRES_OPERATE -->
 - <one top-level clause of requires.operate per line>
 
-A list is one name per line, never a comma run. The two requires headings stay separate because the timings
+A list is one name per line, never a comma run. It shows twelve names at rest and every name under ALT, and
+every name on a page built once (a pedia page, the tech discovery popup) whose composer passes its pedia flag,
+since such a page cannot react to a held key. The two requires headings stay separate because the timings
 mean different things ([enabler §3](../specs/enabler/03-pass-2-gate-each-candidate.md)). Given a city, each
 clause is coloured by its own verdict; on a pedia page the clauses render plain. A heading shows only when its
 tree renders at least one clause.

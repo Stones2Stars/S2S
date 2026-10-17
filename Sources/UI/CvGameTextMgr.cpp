@@ -4734,8 +4734,9 @@ void CvGameTextMgr::setUnitCombatHelp(CvWStringBuffer& szBuffer, UnitCombatTypes
 //	operate are separate lines is the composer's call (they mean different things -- merging them would
 //	misreport both), while rendering each tree is the condition renderer's.
 void CvGameTextMgr::appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& info, const ModifierFamily* aeFamilies, int iFamilyCount,
-	bool bShowAllImproved, const CvCity* pRequiresCity) const
+	bool bShowAll, const CvCity* pRequiresCity) const
 {
+	const bool bShowAllLists = bShowAll || gDLL->altKey();
 	//	THE FLAT YIELDS ARE ONE LINE; THE CONDITIONALS COME SEPARATELY. A plain amount says everything it has to
 	//	say in a glyph and a number, so the whole set reads at a glance as "+2<food> +1<hammer> +3<commerce>" --
 	//	which is what legacy showed and what a player scans for. An entry that CARRIES something (a condition, a
@@ -4756,17 +4757,17 @@ void CvGameTextMgr::appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& 
 	//	⚑ Living on the SHARED spine rather than in each composer is the point: tech, building, unit, project,
 	//	improvement, feature, terrain, route, heritage and unit-combat all gain it from this one place, and a
 	//	newly-composed entity type gets it with no edit at all (docs/architecture/patterns.md §DRY (single implementation)).
-	appendEdgeLines(szBuffer, info, EDGEF_ENABLES,      "TXT_KEY_EDGE_UNLOCKS");
-	appendEdgeLines(szBuffer, info, EDGEF_OBSOLETES,    "TXT_KEY_EDGE_OBSOLETES");
-	appendEdgeLines(szBuffer, info, EDGEF_OBSOLETED_BY, "TXT_KEY_EDGE_OBSOLETED_BY");
-	appendEdgeLines(szBuffer, info, EDGEF_REPLACES,     "TXT_KEY_EDGE_REPLACES");
-	appendEdgeLines(szBuffer, info, EDGEF_DISABLES,     "TXT_KEY_EDGE_DISABLES");
+	appendEdgeLines(szBuffer, info, EDGEF_ENABLES,      "TXT_KEY_EDGE_UNLOCKS", bShowAllLists);
+	appendEdgeLines(szBuffer, info, EDGEF_OBSOLETES,    "TXT_KEY_EDGE_OBSOLETES", bShowAllLists);
+	appendEdgeLines(szBuffer, info, EDGEF_OBSOLETED_BY, "TXT_KEY_EDGE_OBSOLETED_BY", bShowAllLists);
+	appendEdgeLines(szBuffer, info, EDGEF_REPLACES,     "TXT_KEY_EDGE_REPLACES", bShowAllLists);
+	appendEdgeLines(szBuffer, info, EDGEF_DISABLES,     "TXT_KEY_EDGE_DISABLES", bShowAllLists);
 	//	⛔ EDGEF_RELATED and EDGEF_REQUIRED_BY are deliberately NOT rendered. RELATED is a merged candidate
 	//	SUPERSET that cannot tell an unlocking tech from an obsoleting one ([CvEdges.h]), so it would state
 	//	relationships that are not true; REQUIRED_BY is the gate axis, and 4,381 buildings name a TECH atom, so a
 	//	tech would list thousands. Neither is a display axis, and capping them would not make them correct.
 	//	⚑ RELATED does serve as the CANDIDATE list below, where each candidate's own entries are the exact test.
-	appendImprovesLines(szBuffer, info, bShowAllImproved || gDLL->altKey());
+	appendImprovesLines(szBuffer, info, bShowAllLists);
 
 	//	WHAT IT NEEDS, one clause per line under its own heading. The two timings keep separate headings because
 	//	they mean different things: `build` is needed to construct, `operate` to construct AND to keep running
@@ -4923,11 +4924,12 @@ static CvWString gt_edgeEntityName(EnEdgeBucket eBucket, int iId)
 //	data a tech's `enables` is a median of 8, but TECH_GAME_START -- the synthetic root every player holds --
 //	carries 575, and the fattest buildings and bonuses carry ~230. So the resting tooltip shows the first handful
 //	and ALT shows the lot, which is the same key this branch already uses for the plot-yield breakdown -- one
-//	verbose modifier across the surface, never a second convention to learn.
+//	verbose modifier across the surface, never a second convention to learn. A page built once and never
+//	re-rendered (the pedia, the tech discovery popup) cannot react to a held key, so its caller asks for the lot.
 //	⚠ The remainder is SHOWN, never swallowed: a silent truncation would misreport a capped list as complete, so
 //	the "+N more" is what keeps the bound honest and tells the player the hotkey is worth pressing.
 void CvGameTextMgr::appendEdgeLines(CvWStringBuffer& szBuffer, const CvInfo& info,
-	EnEdgeFamily eFamily, const char* szHeadingKey) const
+	EnEdgeFamily eFamily, const char* szHeadingKey, bool bShowAll) const
 {
 	std::vector<CvWString> aNames;
 	for (int iBucket = 0; iBucket < NUM_EDGEB; ++iBucket)
@@ -4952,7 +4954,7 @@ void CvGameTextMgr::appendEdgeLines(CvWStringBuffer& szBuffer, const CvInfo& inf
 		return;
 	}
 
-	const size_t iCap = gDLL->altKey() ? aNames.size() : 12;
+	const size_t iCap = bShowAll ? aNames.size() : 12;
 	//	One name per line under the heading: a list is read by scanning down it, never across a comma run.
 	CvWString szList;
 	for (size_t iName = 0; iName < aNames.size() && iName < iCap; ++iName)
