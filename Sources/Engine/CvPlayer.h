@@ -887,6 +887,10 @@ public:
 	void setParent(PlayerTypes eParent);
 
 	DllExport TeamTypes getTeam() const;
+	///<summary>Does this player's team hold eTech?</summary>
+	bool isHasTech(TechTypes eTech) const;
+	///<summary>Does this player's team have map centering, and with it the map coordinates?</summary>
+	bool isMapCentering() const;
 	void setTeam(TeamTypes eTeam);
 	void updateTeamType();
 

@@ -11226,6 +11226,16 @@ TeamTypes CvPlayer::getTeam() const
 	return m_eTeamType;
 }
 
+bool CvPlayer::isHasTech(TechTypes eTech) const
+{
+	return GET_TEAM(getTeam()).isHasTech(eTech);
+}
+
+bool CvPlayer::isMapCentering() const
+{
+	return GET_TEAM(getTeam()).isMapCentering();
+}
+
 void CvPlayer::updateTeamType()
 {
 	if(getID() == NO_PLAYER)

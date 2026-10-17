@@ -2529,21 +2529,24 @@ tile that carries one.
 
 ⚑ **The layout, top to bottom.** The bonus, improvement, route and owner are the ones revealed to the observing
 player (`getBonusRevealedTo`, `getImprovementRevealedTo`, `getRouteRevealedTo`, `getOwnerRevealedTo`); techs,
-passability, movement, spotting and blockades are asked of that player's team; build progress shows only on a
-visible tile. Amounts print through `amountText`.
+passability, movement, spotting and blockades are asked through the player-keyed reads (`CvPlot::…For`,
+`CvPlayer::isHasTech`), which take the team step themselves. What has no revealed form shows only while the
+observer sees the tile: the defence bonus, the irrigation verdict, the working-city pair, the culture contest
+(everything but the owner line), builds in progress and the plot properties. Amounts print through `amountText`,
+spot values in plots (`visionPlotsText`).
 
 1. **What the tile is, with its yields:** peak or hill, feature and terrain on one line (water in
    `COLOR_WATER_TEXT`), then each non-zero yield total as magnitude and glyph (`yieldAmountSummary`). With ALT the
    yields are the breakdown above instead, one line per yield.
-2. Defence bonus (`defenseModifier` for the revealed owner's team), fresh water, then impassable or the plot's
+2. Defence bonus (`defenseModifier` for the owner's team), fresh water, then impassable or the plot's
    movement cost (`CvPlot::getTerrainMovementCost`), then the revealed route with its movement cost.
 3. The revealed resource: its glyph and name in `COLOR_HIGHLIGHT_TEXT`, the trade tech while the team lacks it,
    and on the observer's own tile either the improvements that provide it, that the plot can hold and whose build
    the player has unlocked (`getBuildUnlocked`), or else the tech a providing build waits on; or "Requires Route"
    when it is improved but not connected. Its health and happiness entries follow through the entry renderer.
-4. The revealed improvement, "(Irrigated)" / "(Not Irrigated)" when it has an irrigation-conditioned yield (read
-   from the plot's `HAS_IRRIGATION` verdict, the one those yields are evaluated against), and its
-   upgrade status for the plot owner's team only, read from the engine's upgrade queries
+4. The revealed improvement, "(Irrigated)" / "(Not Irrigated)" when it has an irrigation-conditioned entry
+   (`infoHasEntryConditionedOn`; the verdict is the plot's `HAS_IRRIGATION`, the one those entries are evaluated
+   against), and its upgrade status on the observer's own tile, read from the engine's upgrade queries
    ([yields-growth.md](yields-growth.md#improvements--plot-yields)): frozen, no upgrade available, or the turns
    left and the valid targets, with what is missing when progress does not advance.
 5. The working-city pair, then the culture block (owner, "not in city influence", the culture rows, the cultural
@@ -2578,18 +2581,13 @@ visible tile. Amounts print through `amountText`.
 - → `buildDisplayString`
 - This is a %s1_MapCat.  <!-- TXT_KEY_MAP_CATEGORY_TERRAIN -->
 
-The pre-rework record also had these:
-
-- (with %s1_ImpName)  <!-- TXT_KEY_BONUSHELP_WITH_IMPROVEMENT -->
-- Obsolete with %s2_TechName  <!-- TXT_KEY_BUILDINGHELP_OBSOLETE_WITH -->
-- (key not in current GameText)  <!-- TXT_KEY_PLOT_DAMAGE -->
-
 ## `setPlotListHelp`
 
 ⚑ **A stack stays one screen high.** A lone unit, and every unit when the caller asks for one line each (the
 off-screen indicator), renders through `setUnitHelp`. A stack renders the unit the plot draws through
 `setUnitHelp`, then one line per owner and unit type with the count, the average strength (current/full when
-damaged) and the owner when it is foreign and not hidden; five or more groups share one line.
+damaged) and the owner when it is foreign and not hidden; one line per group when five or fewer, otherwise one
+shared line.
 
 - → `setUnitHelp`
 - <unit name> (%d), 3.5/4<strength>, <owner>

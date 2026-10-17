@@ -76,9 +76,8 @@ No bespoke host↔cargo family is needed. The full unit-stat family vocabulary
 > ([json.md §7](../specs/json.md)) — a movement cost is plainly one.
 > The plot's own leg of that arithmetic (terrain + feature + hills + peak, before the river crossing and the unit's
 > discounts) is `CvPlot::getTerrainMovementCost`, read by the resolver, the worker AI and the plot hover alike.
-> ⛔ The terms are summed first and reduced to whole moves ONCE, by the reader, at the end; reducing the terrain
-> and the feature separately before adding them drops their fractions and charges a unit an extra move on some
-> plots.
+> Its terms are summed and reduced once, on the total
+> ([the plot leg rule](../specs/curators/fixed-point-and-scales/08-ter-the-combat-strength-cluster.md#4d--the-edge--where-a-scale-error-can-occur-at-all-and-therefore-what-an-audit-checks)).
 
 ### Specialist counts
 

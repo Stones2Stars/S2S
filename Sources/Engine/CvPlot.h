@@ -310,7 +310,7 @@ public:
 	int defenseModifier(TeamTypes eDefender, bool bIgnoreBuilding, bool bHelp = false) const;
 	int movementCost(const CvUnit* pUnit, const CvPlot* pFromPlot) const;
 	///<summary>The moves this plot's terrain, feature, hills and peak cost a unit of ePlayer to enter, before a
-	/// river crossing and the unit's own discounts.</summary>
+	/// river crossing and the unit's own discounts. NO_PLAYER is charged the full peak cost.</summary>
 	int getTerrainMovementCost(PlayerTypes ePlayer) const;
 	static void flushMovementCostCache();
 
@@ -812,6 +812,21 @@ public:
 	/// <summary>The route this plot shows to an observing player, as last revealed to that player's team;
 	/// NO_ROUTE for NO_PLAYER.</summary>
 	RouteTypes getRouteRevealedTo(PlayerTypes eObserver) const;
+	/// <summary>Does an observing player see this plot right now (not debug); false for NO_PLAYER.</summary>
+	bool isVisibleFor(PlayerTypes eObserver) const;
+	/// <summary>Is this plot impassable to an observing player's team; false for NO_PLAYER.</summary>
+	bool isImpassableFor(PlayerTypes eObserver) const;
+	/// <summary>Does this plot connect its resource to an observing player's trade network; false for
+	/// NO_PLAYER.</summary>
+	bool isBonusNetworkFor(PlayerTypes eObserver) const;
+	/// <summary>Is this plot blockaded against an observing player's team; false for NO_PLAYER.</summary>
+	bool isBlockadedFor(PlayerTypes eObserver) const;
+	/// <summary>Has an observing player's team a spotter for eInvisible within sight of this plot; false for
+	/// NO_PLAYER.</summary>
+	bool isSpotterInSightFor(PlayerTypes eObserver, InvisibleTypes eInvisible) const;
+	/// <summary>The strongest detection an observing player's team holds on this plot against eInvisible; 0 for
+	/// NO_PLAYER.</summary>
+	int getSpotIntensityFor(PlayerTypes eObserver, InvisibleTypes eInvisible) const;
 	int calculateNatureYield(YieldTypes eIndex, bool bIgnoreFeature = false) const;
 	/// <summary>This plot's ground yield as an observing player sees it — the tile's bonus counted only once that
 	/// player has revealed it.</summary>

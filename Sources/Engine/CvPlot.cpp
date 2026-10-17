@@ -988,6 +988,10 @@ void CvPlot::doImprovementUpgrade(const ImprovementTypes eType)
 {
 	PROFILE_EXTRA_FUNC();
 	const TeamTypes eTeam = GET_PLAYER(getOwner()).getTeam();
+	//	The caller's gate (worked, or a fortify-type improvement) and isImprovementUpgradeAdvancing state one rule
+	//	twice; a non-fortify improvement only reaches here worked, where the query must agree.
+	FAssertMsg(GC.getImprovementInfo(eType).isUpgradeRequiresFortify() || isImprovementUpgradeAdvancing(eType, eTeam),
+		"doImprovementUpgrade reached on a plot isImprovementUpgradeAdvancing does not advance");
 
 	// Has the situation changed?
 	if (GET_TEAM(eTeam).getLastRoundOfValidImprovementCacheUpdate() == m_iCurrentRoundofUpgradeCache)
@@ -4415,15 +4419,15 @@ int CvPlot::getTerrainMovementCost(PlayerTypes ePlayer) const
 	{
 		iCost += GC.getFeatureInfo(getFeatureType()).getFlatMovement(MOVEMENT_MOVES, CASC_SCOPE_PLOT);
 	}
-	//	The hills and peak extras are whole moves in the global defines, so they lift onto the plane of the
-	//	authored terrain and feature costs.
+	//	The hills and peak extras come from the global defines, outside the cascade, so they enter at their own IN
+	//	boundary here.
 	if (isHills())
 	{
 		iCost += 100 * GC.getHILLS_EXTRA_MOVEMENT();
 	}
 	if (isAsPeak())
 	{
-		if (!GET_TEAM(GET_PLAYER(ePlayer).getTeam()).isMoveFastPeaks())
+		if (ePlayer == NO_PLAYER || !GET_TEAM(GET_PLAYER(ePlayer).getTeam()).isMoveFastPeaks())
 		{
 			iCost += 100 * GC.getPEAK_EXTRA_MOVEMENT();
 		}
@@ -8089,6 +8093,60 @@ RouteTypes CvPlot::getRouteRevealedTo(PlayerTypes eObserver) const
 	return getRevealedRouteType(GET_PLAYER(eObserver).getTeam(), false);
 }
 
+bool CvPlot::isVisibleFor(PlayerTypes eObserver) const
+{
+	if (eObserver == NO_PLAYER)
+	{
+		return false;
+	}
+	return isVisible(GET_PLAYER(eObserver).getTeam(), false);
+}
+
+bool CvPlot::isImpassableFor(PlayerTypes eObserver) const
+{
+	if (eObserver == NO_PLAYER)
+	{
+		return false;
+	}
+	return isImpassable(GET_PLAYER(eObserver).getTeam());
+}
+
+bool CvPlot::isBonusNetworkFor(PlayerTypes eObserver) const
+{
+	if (eObserver == NO_PLAYER)
+	{
+		return false;
+	}
+	return isBonusNetwork(GET_PLAYER(eObserver).getTeam());
+}
+
+bool CvPlot::isBlockadedFor(PlayerTypes eObserver) const
+{
+	if (eObserver == NO_PLAYER)
+	{
+		return false;
+	}
+	return getBlockadedCount(GET_PLAYER(eObserver).getTeam()) > 0;
+}
+
+bool CvPlot::isSpotterInSightFor(PlayerTypes eObserver, InvisibleTypes eInvisible) const
+{
+	if (eObserver == NO_PLAYER)
+	{
+		return false;
+	}
+	return isSpotterInSight(GET_PLAYER(eObserver).getTeam(), eInvisible);
+}
+
+int CvPlot::getSpotIntensityFor(PlayerTypes eObserver, InvisibleTypes eInvisible) const
+{
+	if (eObserver == NO_PLAYER)
+	{
+		return 0;
+	}
+	return getHighestPlotTeamVisibilityIntensity(eInvisible, GET_PLAYER(eObserver).getTeam());
+}
+
 
 int CvPlot::calculateNatureYield(YieldTypes eYield, bool bIgnoreFeature) const
 {
@@ -8112,7 +8170,7 @@ int CvPlot::calculateNatureYieldFor(PlayerTypes eObserver, YieldTypes eYield, bo
 
 void CvPlot::getObserverBonusYieldDelta(PlayerTypes eObserver, int (&aiDelta)[NUM_YIELD_TYPES]) const
 {
-	// What to ADD to this plot's STORED package so it reads as eObserverTeam sees the tile.
+	// What to ADD to this plot's STORED package so it reads as eObserver sees the tile.
 	// ⚖ The package books the bonus as the plot's OWNER sees it, raw on an unowned tile
 	// (docs/cascade/07-combine-arithmetic.md §48). That is ONE stored number, so it cannot also be every other
 	// team's answer -- and a DISPLAY answers for its viewer (docs/reference/tooltip-look.md § WHOSE VIEW). So the

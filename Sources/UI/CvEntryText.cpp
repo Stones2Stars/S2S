@@ -656,6 +656,28 @@ CvWString yieldAmountSummary(YieldTypes eYield, int64_t iAmount)
 	return amountText(iAmount) + etx_channelLabel(kYield.getChar(), kYield, kYield.getType());
 }
 
+CvWString visionPlotsText(int iVisionAmount)
+{
+	return amountText(iVisionAmount / VISION_PLOT);
+}
+
+bool infoHasEntryConditionedOn(const CvInfo& info, CvCascPredKind ePredicate)
+{
+	const CvModifiers* pModifiers = info.getModifiers();
+	if (pModifiers == NULL)
+	{
+		return false;
+	}
+	foreach_(const CvModEntry* pEntry, pModifiers->entries())
+	{
+		if (pEntry != NULL && CvConditionQuery::hasPredicate(pEntry->enabled, ePredicate))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 CvWString amountText(int64_t iAmount)
 {
 	const int64_t iMagnitude = (iAmount < 0) ? -iAmount : iAmount;

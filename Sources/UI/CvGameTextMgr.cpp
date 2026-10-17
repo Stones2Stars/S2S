@@ -916,7 +916,7 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 		}
 	}
 
-	const bool bOneLinePerGroup = groups.size() < 5;
+	const bool bOneLinePerGroup = groups.size() <= 5;
 	bool bFirstGroup = true;
 	for (std::map<int, PlayerUnitInfo>::const_iterator itGroup = groups.begin(); itGroup != groups.end(); ++itGroup)
 	{
@@ -1525,10 +1525,6 @@ void createTestFontString(CvWStringBuffer& szString)
 		szString.append(CvWString::format(L"%c%d", gDLL->getSymbolID(iI), gDLL->getSymbolID(iI)));
 }
 
-// Defined with the yield-help block below; both tooltips render the same ×100 fixed point and must render it
-// identically, so there is one formatter rather than two that could drift apart.
-static CvWString gt_scaled100(int64_t iValue);
-
 //	The per-player culture rows of a plot, strongest first -- so "who is winning this tile" is the first line
 //	read rather than something the player reconstructs from an unordered list.
 static bool gt_cultureRowGreater(const std::pair<int64_t, int>& kLeft, const std::pair<int64_t, int>& kRight)
@@ -1549,7 +1545,11 @@ static bool gt_cultureRowGreater(const std::pair<int64_t, int>& kLeft, const std
 //	presentation arithmetic in the DLL is the wrong side of the boundary ([patterns.md]).
 void CvGameTextMgr::appendPlotCultureLines(CvWStringBuffer& szString, const CvPlot* pPlot) const
 {
-	const PlayerTypes eRevealedOwner = pPlot->getOwnerRevealedTo(GC.getGame().getActivePlayer());
+	const PlayerTypes eObserver = GC.getGame().getActivePlayer();
+	const PlayerTypes eRevealedOwner = pPlot->getOwnerRevealedTo(eObserver);
+	//	The owner is the revealed one; the culture contest has no revealed form, so it shows only while the
+	//	observer sees the tile.
+	const bool bVisible = pPlot->isVisibleFor(eObserver);
 	if (eRevealedOwner != NO_PLAYER)
 	{
 		const CvPlayer& kOwner = GET_PLAYER(eRevealedOwner);
@@ -1559,12 +1559,16 @@ void CvGameTextMgr::appendPlotCultureLines(CvWStringBuffer& szString, const CvPl
 				kOwner.getPlayerTextColorR(), kOwner.getPlayerTextColorG(),
 				kOwner.getPlayerTextColorB(), kOwner.getPlayerTextColorA(),
 				kOwner.getCivilizationAdjective()).GetCString()));
-		if (!pPlot->isInCultureRangeOfCityByPlayer(eRevealedOwner))
+		if (bVisible && !pPlot->isInCultureRangeOfCityByPlayer(eRevealedOwner))
 		{
 			szString.append(NEWLINE);
 			szString.append(gDLL->getText("TXT_KEY_BULLET"));
 			szString.append(gDLL->getText("TXT_KEY_MISC_NO_CITY_INFLUENCE", kOwner.getCivilizationAdjective()));
 		}
+	}
+	if (!bVisible)
+	{
+		return;
 	}
 
 	std::vector<std::pair<int64_t, int> > aRows;   // (culture, playerId)
@@ -1611,10 +1615,11 @@ void CvGameTextMgr::appendPlotCultureLines(CvWStringBuffer& szString, const CvPl
 	}
 }
 
-///<summary>The upgrade status appended to an improvement's name: frozen, no upgrade available, or the turns left
-/// and the valid targets, with what is missing when progress does not advance.</summary>
-static CvWString gt_improvementUpgradeText(const CvPlot* pPlot, ImprovementTypes eImprovement, TeamTypes eTeam)
+///<summary>The upgrade status appended to an improvement's name on its owner's own tile: frozen, no upgrade
+/// available, or the turns left and the valid targets, with what is missing when progress does not advance.</summary>
+static CvWString gt_improvementUpgradeText(const CvPlot* pPlot, ImprovementTypes eImprovement)
 {
+	const TeamTypes eTeam = pPlot->getTeam();
 	if (pPlot->isImprovementUpgradeComplete(eImprovement))
 	{
 		return gDLL->getText("TXT_KEY_IMPROVEMENTHELP_UPGRADE_FROZEN");
@@ -1671,7 +1676,7 @@ static CvWString gt_bonusImprovementText(const CvPlot* pPlot, const CvBonusInfo&
 
 	foreach_(const ImprovementTypes eProvider, kBonus.getProvidedByImprovementTypes())
 	{
-		if (!pPlot->canHaveImprovement(eProvider, kPlayer.getTeam(), true))
+		if (!pPlot->canHaveImprovement(eProvider, pPlot->getTeam(), true))
 		{
 			continue;
 		}
@@ -1694,30 +1699,11 @@ static CvWString gt_bonusImprovementText(const CvPlot* pPlot, const CvBonusInfo&
 			szText.append(gDLL->getText(szText.empty() ? "TXT_KEY_PLOT_REQUIRES" : "TXT_KEY_PLOT_REQUIRES_OR", kProvider.getTextKeyWide()));
 		}
 	}
-	if (szText.empty() && eResearchTech != NO_TECH && !GET_TEAM(kPlayer.getTeam()).isHasTech(eResearchTech))
+	if (szText.empty() && eResearchTech != NO_TECH && !kPlayer.isHasTech(eResearchTech))
 	{
 		szText.append(gDLL->getText("TXT_KEY_PLOT_RESEARCH", GC.getTechInfo(eResearchTech).getTextKeyWide()));
 	}
 	return szText;
-}
-
-///<summary>Does the improvement have a yield that applies only on an irrigated plot?</summary>
-static bool gt_hasIrrigatedYield(const CvImprovementInfo& kImprovement)
-{
-	const CvModifiers* pModifiers = kImprovement.getModifiers();
-	if (pModifiers == NULL)
-	{
-		return false;
-	}
-	foreach_(const CvModEntry* pEntry, pModifiers->entries())
-	{
-		if (pEntry != NULL && infoFamilyYield(pEntry->family) >= 0
-		&& CvConditionQuery::hasPredicate(pEntry->enabled, CASC_PRED_HAS_IRRIGATION))
-		{
-			return true;
-		}
-	}
-	return false;
 }
 
 ///<summary>The plot's longitude and latitude as degrees and minutes with their hemisphere letters.</summary>
@@ -1739,12 +1725,13 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 	{
 		return;
 	}
-	// ⛔ THE TEXT MANAGER ANSWERS FOR ITS OBSERVER, ALWAYS -- it is display only, so the team whose screen this is
+	// ⛔ THE TEXT MANAGER ANSWERS FOR ITS OBSERVER, ALWAYS -- it is display only, so the player whose screen this is
 	// IS the question being asked (docs/reference/tooltip-look.md § WHOSE VIEW). The stored plot package holds one
-	// owner-side truth and cannot also be every other team's, so the viewer's view is composed here, at the read.
+	// owner-side truth and cannot also be every other player's, so the viewer's view is composed here, at the read.
 	const PlayerTypes eObserver = GC.getGame().getActivePlayer();
-	//	The observer's team, for the questions that are the team's own: techs, passability, blockades, spotting.
-	const TeamTypes eObserverTeam = GET_PLAYER(eObserver).getTeam();
+	//	What the plot holds right now is shown only while the observer sees it; a fogged tile shows what was
+	//	revealed, and the lines that have no revealed form are left off.
+	const bool bVisible = pPlot->isVisibleFor(eObserver);
 
 	// ---- WHAT THE TILE YIELDS, decomposed into the package's three stored segments ----
 	// ⛔ Read from the plot's OWN package, never recomputed here: this is the very number the city's Σ walks
@@ -1848,8 +1835,8 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 	szString.append(szYieldBreakdown);
 
 	const PlayerTypes eRevealedOwner = pPlot->getOwnerRevealedTo(eObserver);
-	const TeamTypes eRevealedOwnerTeam = (eRevealedOwner != NO_PLAYER) ? GET_PLAYER(eRevealedOwner).getTeam() : NO_TEAM;
-	const int iDefenseModifier = pPlot->defenseModifier(eRevealedOwnerTeam, true, true);
+	//	The defense reads the owner's territory and the city's defense damage as they are now.
+	const int iDefenseModifier = bVisible ? pPlot->defenseModifier(pPlot->getTeam(), true, true) : 0;
 	if (iDefenseModifier != 0)
 	{
 		szString.append(NEWLINE);
@@ -1860,7 +1847,7 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 		szString.append(NEWLINE);
 		szString.append(gDLL->getText("TXT_KEY_PLOT_FRESH_WATER"));
 	}
-	if (pPlot->isImpassable(eObserverTeam))
+	if (pPlot->isImpassableFor(eObserver))
 	{
 		szString.append(NEWLINE);
 		szString.append(gDLL->getText("TXT_KEY_PLOT_IMPASSABLE"));
@@ -1895,17 +1882,17 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 		szString.append(NEWLINE);
 		szString.append(CvWString::format(L"%c " SETCOLR L"%s" ENDCOLR, kBonus.getChar(), TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), kBonus.getDescription()));
 		const TechTypes eTradeTech = (TechTypes)kBonus.getTechCityTrade();
-		if (eTradeTech != NO_TECH && !GET_TEAM(eObserverTeam).isHasTech(eTradeTech))
+		if (eTradeTech != NO_TECH && eObserver != NO_PLAYER && !GET_PLAYER(eObserver).isHasTech(eTradeTech))
 		{
 			szString.append(gDLL->getText("TXT_KEY_PLOT_RESEARCH", GC.getTechInfo(eTradeTech).getTextKeyWide()));
 		}
-		if (eRevealedOwner == eObserver)
+		if (eObserver != NO_PLAYER && eRevealedOwner == eObserver)
 		{
 			if (eImprovement == NO_IMPROVEMENT || !kBonus.isProvidedByImprovementType(eImprovement))
 			{
 				szString.append(gt_bonusImprovementText(pPlot, kBonus, eObserver));
 			}
-			else if (!pPlot->isBonusNetwork(eObserverTeam))
+			else if (!pPlot->isBonusNetworkFor(eObserver))
 			{
 				szString.append(gDLL->getText("TXT_KEY_PLOT_REQUIRES_ROUTE"));
 			}
@@ -1920,13 +1907,13 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 		szString.append(NEWLINE);
 		szString.append(kImprovement.getDescription());
 		//	The same irrigation verdict the improvement's HAS_IRRIGATION yield entries are evaluated against.
-		if (gt_hasIrrigatedYield(kImprovement))
+		if (bVisible && infoHasEntryConditionedOn(kImprovement, CASC_PRED_HAS_IRRIGATION))
 		{
 			szString.append(gDLL->getText(pPlot->getPlotContext().hasIrrigation() ? "TXT_KEY_PLOT_IRRIGATED" : "TXT_KEY_PLOT_NOT_IRRIGATED"));
 		}
-		if (pPlot->isImprovementUpgradable() && pPlot->getTeam() == eObserverTeam)
+		if (pPlot->isImprovementUpgradable() && eObserver != NO_PLAYER && eRevealedOwner == eObserver)
 		{
-			szString.append(gt_improvementUpgradeText(pPlot, eImprovement, eObserverTeam));
+			szString.append(gt_improvementUpgradeText(pPlot, eImprovement));
 		}
 	}
 
@@ -1935,7 +1922,7 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 	// workable set, `isBeingWorked` whether a citizen is actually on it. A tile can have the first without the
 	// second, which is why the null check selects the line and the assignment check only picks which one.
 	const CvCity* pWorkingCity = pPlot->getWorkingCity();
-	if (pWorkingCity != NULL)
+	if (bVisible && pWorkingCity != NULL)
 	{
 		szString.append(NEWLINE);
 		szString.append(gDLL->getText(
@@ -1953,16 +1940,16 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 		{
 			const InvisibleTypes eInvisible = (InvisibleTypes)iInvisible;
 			const CvInvisibleInfo& kInvisible = GC.getInvisibleInfo(eInvisible);
-			if (!pPlot->isSpotterInSight(eObserverTeam, eInvisible)
+			if (!pPlot->isSpotterInSightFor(eObserver, eInvisible)
 			|| (kInvisible.isIntrinsic() && !GC.getGame().isOption(GAMEOPTION_COMBAT_SIZE_MATTERS)))
 			{
 				continue;
 			}
-			const int iSpotIntensity = pPlot->getHighestPlotTeamVisibilityIntensity(eInvisible, eObserverTeam);
+			const int iSpotIntensity = pPlot->getSpotIntensityFor(eObserver, eInvisible);
 			if (iSpotIntensity > 0 || kInvisible.isIntrinsic())
 			{
 				szSpot.append(szSpot.empty() ? gDLL->getText("TXT_KEY_S1_COLON_SPACE", gDLL->getText("TXT_WORD_SPOT").GetCString()) : CvWString(L", "));
-				szSpot.append(CvWString::format(L"%d%c", iSpotIntensity, kInvisible.getChar()));
+				szSpot.append(visionPlotsText(iSpotIntensity) + CvWString::format(L"%c", kInvisible.getChar()));
 			}
 		}
 		if (!szSpot.empty())
@@ -1972,7 +1959,7 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 		}
 	}
 
-	if (GET_TEAM(eObserverTeam).isMapCentering() && getBugOptionBOOL("MiscHover__LatLongCoords", true, "BUG_PLOT_HOVER_LAT_LONG"))
+	if (eObserver != NO_PLAYER && GET_PLAYER(eObserver).isMapCentering() && getBugOptionBOOL("MiscHover__LatLongCoords", true, "BUG_PLOT_HOVER_LAT_LONG"))
 	{
 		gt_appendLatLong(szString, pPlot);
 	}
@@ -1983,8 +1970,7 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 		szString.append(CvWString::format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_HIGHLIGHT_TEXT"), pPlot->getLandmarkMessage().GetCString()));
 	}
 
-	//	Build progress is live state, so it shows only on a tile the observer can see.
-	if (pPlot->isVisible(eObserverTeam, false) && getBugOptionBOOL("MiscHover__PartialBuilds", true, "BUG_PLOT_HOVER_PARTIAL_BUILDS"))
+	if (bVisible && getBugOptionBOOL("MiscHover__PartialBuilds", true, "BUG_PLOT_HOVER_PARTIAL_BUILDS"))
 	{
 		for (int iBuild = 0; iBuild < GC.getNumBuildInfos(); ++iBuild)
 		{
@@ -2004,13 +1990,16 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 		}
 	}
 
-	if (pPlot->getBlockadedCount(eObserverTeam) > 0)
+	if (pPlot->isBlockadedFor(eObserver))
 	{
 		szString.append(NEWLINE);
 		szString.append(CvWString::format(SETCOLR L"%s" ENDCOLR, TEXT_COLOR("COLOR_NEGATIVE_TEXT"), gDLL->getText("TXT_KEY_PLOT_BLOCKADED").GetCString()));
 	}
 
-	pPlot->getPropertiesConst()->buildDisplayString(szString);
+	if (bVisible)
+	{
+		pPlot->getPropertiesConst()->buildDisplayString(szString);
+	}
 
 	foreach_(const MapCategoryTypes eMapCategory, pPlot->getMapCategories())
 	{
@@ -6475,12 +6464,12 @@ void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, Com
 
 	szBuffer.append(NEWLINE);
 	szBuffer.append(gDLL->getText("TXT_KEY_COMMERCEHELP_SHARE",
-		kTerms.sliderPercent, gt_scaled100(kTerms.commerceYield).GetCString(),
-		gt_scaled100(kTerms.share).GetCString()));
+		kTerms.sliderPercent, amountText(kTerms.commerceYield).GetCString(),
+		amountText(kTerms.share).GetCString()));
 
 	// Shown even at zero: a zero that OUGHT to be non-zero is a finding, and a hidden line cannot be one.
 	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_COMMERCEHELP_DEPOSITS", gt_scaled100(kTerms.deposits).GetCString()));
+	szBuffer.append(gDLL->getText("TXT_KEY_COMMERCEHELP_DEPOSITS", amountText(kTerms.deposits).GetCString()));
 
 	szBuffer.append(NEWLINE);
 	szBuffer.append(gDLL->getText("TXT_KEY_COMMERCEHELP_PERCENT", kTerms.percentSum));
@@ -6489,28 +6478,11 @@ void CvGameTextMgr::setCommerceHelp(CvWStringBuffer &szBuffer, CvCity& city, Com
 	{
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_COMMERCEHELP_PROCESS",
-			gt_scaled100(kTerms.processConversion).GetCString()));
+			amountText(kTerms.processConversion).GetCString()));
 	}
 	szBuffer.append(SEPARATOR);
 	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_COMMERCEHELP_TOTAL", gt_scaled100(kTerms.rate).GetCString()));
-}
-
-// A ×100 fixed-point quantity, rendered whole.fraction (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model) -- the UI is a READ EDGE, so the
-// reduction happens here and the value travels scaled right up to it). Written out rather than truncated because
-// the whole point of this tooltip is to be reconcilable: a term shown as "3" when it is 3.47 does not add up on
-// screen, and a reader who cannot add the column up cannot trust any line in it.
-static CvWString gt_scaled100(int64_t iValue)
-{
-	CvWString szOut;
-	const int64_t iWhole = iValue / 100;
-	int64_t iFraction = iValue % 100;
-	if (iFraction < 0)
-	{
-		iFraction = -iFraction;
-	}
-	szOut.Format(L"%I64d.%02I64d", iWhole, iFraction);
-	return szOut;
+	szBuffer.append(gDLL->getText("TXT_KEY_COMMERCEHELP_TOTAL", amountText(kTerms.rate).GetCString()));
 }
 
 void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldTypes eYieldType)
@@ -6533,32 +6505,32 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 
 	szBuffer.append(NEWLINE);
 	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_PLOTS",
-		gt_scaled100(kTerms.plotBase).GetCString(), kTerms.workedPlots));
+		amountText(kTerms.plotBase).GetCString(), kTerms.workedPlots));
 	// the plot Σ's own three segments -- a short plot total says the plots are short and never WHICH leg is
 	szBuffer.append(NEWLINE);
 	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_PLOTSEGMENTS",
-		gt_scaled100(kTerms.plotNature).GetCString(),
-		gt_scaled100(kTerms.plotImprovement).GetCString(),
-		gt_scaled100(kTerms.plotRest).GetCString()));
+		amountText(kTerms.plotNature).GetCString(),
+		amountText(kTerms.plotImprovement).GetCString(),
+		amountText(kTerms.plotRest).GetCString()));
 
 	if (kTerms.tradeYield != 0)
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_TRADE", gt_scaled100(kTerms.tradeYield).GetCString()));
+		szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_TRADE", amountText(kTerms.tradeYield).GetCString()));
 	}
 	if (kTerms.goldenAge != 0)
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_GOLDENAGE", gt_scaled100(kTerms.goldenAge).GetCString()));
+		szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_GOLDENAGE", amountText(kTerms.goldenAge).GetCString()));
 	}
 	if (kTerms.upperFlat != 0)
 	{
 		szBuffer.append(NEWLINE);
-		szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_UPPERFLAT", gt_scaled100(kTerms.upperFlat).GetCString()));
+		szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_UPPERFLAT", amountText(kTerms.upperFlat).GetCString()));
 	}
 	// shown even at zero: a zero that OUGHT to be non-zero is a finding, and a hidden line cannot be one
 	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_SPECIALISTS", gt_scaled100(kTerms.specialists).GetCString()));
+	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_SPECIALISTS", amountText(kTerms.specialists).GetCString()));
 
 	// ---- the PERCENT stack, BY SCOPE ----
 	// ⚠ Split per scope deliberately: merging them into one "+131%" is exactly what hides which level a missing
@@ -6573,10 +6545,10 @@ void CvGameTextMgr::setYieldHelp(CvWStringBuffer &szBuffer, CvCity& city, YieldT
 
 	// ---- TIER 2: the city's own flats, added AFTER the stack ----
 	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_CITYFLAT", gt_scaled100(kTerms.cityFlat).GetCString()));
+	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_CITYFLAT", amountText(kTerms.cityFlat).GetCString()));
 
 	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_TOTAL", gt_scaled100(kTerms.rate).GetCString()));
+	szBuffer.append(gDLL->getText("TXT_KEY_YIELDHELP_TOTAL", amountText(kTerms.rate).GetCString()));
 
 	// ---- THE BONUS STORES, LIVE ----
 	// ⛔ Read HERE rather than trusted from a load-time census, and the distinction is the whole point: the
@@ -8031,7 +8003,7 @@ void CvGameTextMgr::setTradeRouteHelp(CvWStringBuffer &szBuffer, int iRoute, CvC
 
 	const int iBaseProfit = pCity->getBaseTradeProfit(pPartner);
 	szBuffer.append(NEWLINE);
-	szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_HELP_BASE", gt_scaled100(iBaseProfit).GetCString()));
+	szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_HELP_BASE", amountText(iBaseProfit).GetCString()));
 
 	const int iModifier = pCity->totalTradeModifier(pPartner);
 	if (iModifier != 100)
@@ -8040,7 +8012,7 @@ void CvGameTextMgr::setTradeRouteHelp(CvWStringBuffer &szBuffer, int iRoute, CvC
 	}
 
 	const int iProfit = pCity->calculateTradeProfit(pPartner);
-	szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_HELP_PROFIT", gt_scaled100(iProfit).GetCString()));
+	szBuffer.append(gDLL->getText("TXT_KEY_TRADE_ROUTE_HELP_PROFIT", amountText(iProfit).GetCString()));
 
 	//	What the route actually delivers, per channel. A channel with no trade share contributes nothing and is
 	//	simply absent rather than printed as a zero.
@@ -8050,7 +8022,7 @@ void CvGameTextMgr::setTradeRouteHelp(CvWStringBuffer &szBuffer, int iRoute, CvC
 		const int iTradeYield = pCity->calculateTradeYield((YieldTypes)iYield, iProfit);
 		if (iTradeYield != 0)
 		{
-			szYield.Format(L"%s %c", gt_scaled100(iTradeYield).GetCString(), GC.getYieldInfo((YieldTypes)iYield).getChar());
+			szYield.Format(L"%s %c", amountText(iTradeYield).GetCString(), GC.getYieldInfo((YieldTypes)iYield).getChar());
 			szBuffer.append(NEWLINE);
 			szBuffer.append(szYield);
 		}
