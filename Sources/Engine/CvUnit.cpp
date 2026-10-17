@@ -25344,6 +25344,28 @@ void CvUnit::changeExtraInsidiousness(int iChange)
 	m_iExtraInsidiousness += iChange;
 }
 
+///<summary>One property-source holder's share of CvUnit::getPropertySourceTotal: its constant sources of eProperty
+/// that deliver to eTarget, evaluated against pContext and added to *piTotal.</summary>
+static void addUnitPropertySources(const CvPropertyManipulators* pManipulators, PropertyTypes eProperty,
+	GameObjectTypes eTarget, const CvGameObject* pContext, int* piTotal)
+{
+	foreach_(const CvPropertySource* pSource, pManipulators->getSources())
+	{
+		if (pSource->getProperty() == eProperty && pSource->getObjectType() == eTarget
+		&& pSource->getType() == PROPERTYSOURCE_CONSTANT)
+		{
+			*piTotal += static_cast<const CvPropertySourceConstant*>(pSource)->getAmountPerTurn(pContext);
+		}
+	}
+}
+
+int CvUnit::getPropertySourceTotal(PropertyTypes eProperty, GameObjectTypes eTarget, const CvGameObject* pContext) const
+{
+	int iTotal = 0;
+	getGameObject()->foreachManipulator(bind(addUnitPropertySources, _1, eProperty, eTarget, pContext, &iTotal));
+	return iTotal;
+}
+
 int CvUnit::getInvestigationTotal() const
 {
 	int iTotal = m_pUnitInfo->getUnderworld(UNDERWORLD_INVESTIGATION, CASC_SCOPE_UNIT) / 100;

@@ -304,6 +304,9 @@ public:
 
 	CvGameObjectUnit* getGameObject() { return &m_GameObject; }
 	const CvGameObjectUnit* getGameObject() const { return &m_GameObject; }
+	///<summary>The per-turn amount of eProperty this unit's constant property sources (its type and held
+	/// promotions) deliver to objects of eTarget (a city or a plot), each evaluated against pContext.</summary>
+	int getPropertySourceTotal(PropertyTypes eProperty, GameObjectTypes eTarget, const CvGameObject* pContext) const;
 
 	CvUnit& operator=(const CvUnit& other);
 
@@ -744,6 +747,8 @@ public:
 	int sight(const CvPlot* pPlot = NULL) const;   // the unit's sight BUDGET (vision.md)
 	int concealment() const;                       // how well it HIDES (vision.md §4)
 	int detectionAgainst(int iMethodSkill) const;  // how well it sees THAT method (a SKILL id) -- registration only
+	///<summary>Every method this unit detects, as (method SKILL id, detection) rows summed over its held set.</summary>
+	const std::vector<std::pair<int, int> >& detectionRows() const { return m_resolvedValues.detectionRows(); }
 
 	int baseMoves() const;
 	int maxMoves() const;

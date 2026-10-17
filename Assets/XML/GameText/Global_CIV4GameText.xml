@@ -28095,6 +28095,38 @@ feindliche Einheit scrollen[COLOR_REVERT][\BOLD]Anzeige der Siegchance
 		<English>[COLOR_HIGHLIGHT_TEXT]Grants great people:[COLOR_REVERT]</English>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_UNITHELP_SKILLS</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Skills:[COLOR_REVERT] %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PROMOTIONHELP_REMOVES_SKILLS</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Removes skills:[COLOR_REVERT] %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PROMOTIONHELP_ADDS_COMBAT_CLASSES</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Adds combat classes:[COLOR_REVERT] %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PROMOTIONHELP_REMOVES_COMBAT_CLASSES</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Removes combat classes:[COLOR_REVERT] %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PROMOTIONHELP_CONTROL_POINTS_AMOUNT</Tag>
+		<English>%s1 control points</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_PROMOTIONHELP_COMMAND_RANGE_AMOUNT</Tag>
+		<English>%s1 command range</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNITHELP_COMBAT</Tag>
+		<English>[COLOR_HIGHLIGHT_TEXT]Combat:[COLOR_REVERT] %s1</English>
+	</TEXT>
+	<TEXT>
+		<Tag>TXT_KEY_UNITHELP_UPKEEP_AMOUNT</Tag>
+		<English>Upkeep: %s1[ICON_GOLD]</English>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_TRADE_ROUTE_MOD_BUILDING</Tag>
 		<English>%D2%%: for %s1_building</English>
 		<French>%D2%% : pour %s1_building</French>

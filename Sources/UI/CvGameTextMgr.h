@@ -153,6 +153,11 @@ public:
 	// the family rather than both rendering the same deposit.
 	void appendEntryLinesFiltered(CvWStringBuffer& szBuffer, const CvInfo& info, ModifierFamily eFamily,
 		int iTargetFk, EnEdgeBucket eGateBucket, int iGateId, bool bSkipPlainFlats = false) const;
+	///<summary>What an entity DOES over the given families: the plain flats on one line, then every other entry
+	/// on its own line. The first part of appendEntityBlocks, for a composer that adds its own lines between an
+	/// entity's effects and its edges and requires.</summary>
+	void appendEntityEffectLines(CvWStringBuffer& szBuffer, const CvInfo& info, const ModifierFamily* aeFamilies,
+		int iFamilyCount) const;
 	// The PLAIN FLAT channel amounts across the given families, on ONE line ("+2<food> +1<hammer>"). Spans
 	// families by design -- food, production and commerce are three families and one line -- which is why it
 	// cannot live inside the per-family walk above.
@@ -192,6 +197,12 @@ public:
 	// renderer rather than being hand-listed per composer (docs/architecture/patterns.md §DRY (single implementation)). A conditioned entry
 	// carries its condition, because rendering one unconditionally claims something the data does not say.
 	void appendGrantLines(CvWStringBuffer& szBuffer, const CvInfo& info) const;
+	///<summary>A unit's blocks after its name. Without a live unit, the TYPE's: the price, its own strength, moves
+	/// and sight on one stat line, its upkeep, its modifier lines, skills and hideAndSeek rows, the promotions it is
+	/// created with, and the edge and requires blocks. With pLiveUnit, that unit's: its upkeep, then the modifier
+	/// lines its type, held promotions and held combat classes author, each read off the unit, and its skills and
+	/// hideAndSeek rows -- the condition line above it already states strength, moves and sight.</summary>
+	void appendUnitBlocks(CvWStringBuffer& szBuffer, UnitTypes eUnit, const CvCity* pCity, const CvUnit* pLiveUnit) const;
 	// WHY the enabler refuses a candidate, in one line ([enabler.md] par.6). The gate STORED the reason, so this
 	// reads it rather than re-deriving it -- a second evaluation here could disagree with the verdict it claims
 	// to explain (docs/architecture/patterns.md §DRY (single implementation)). Without it a greyed row says only "unavailable", which leaves the

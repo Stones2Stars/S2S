@@ -16088,22 +16088,6 @@ int CvCity::getTotalBuildingSourcedProperty(PropertyTypes eProperty) const
 	return iValue;
 }
 
-void unitSources(const CvPropertyManipulators* pMani, PropertyTypes eProperty, const CvCity* pCity, int* iValue)
-{
-	PROFILE_EXTRA_FUNC();
-	foreach_(const CvPropertySource* pSource, pMani->getSources())
-	{
-		//	Sources that deliver to the city or the plot are both considered since the city plot diffuses
-		//	to the city for most properties anyway
-		if (pSource->getProperty() == eProperty &&
-			(pSource->getObjectType() == GAMEOBJECT_CITY || pSource->getObjectType() == GAMEOBJECT_PLOT) &&
-			pSource->getType() == PROPERTYSOURCE_CONSTANT)
-		{
-			*iValue += static_cast<const CvPropertySourceConstant*>(pSource)->getAmountPerTurn(pCity->getGameObject());
-		}
-	}
-}
-
 int CvCity::getTotalUnitSourcedProperty(PropertyTypes eProperty) const
 {
 	PROFILE_EXTRA_FUNC();
@@ -16115,9 +16099,12 @@ int CvCity::getTotalUnitSourcedProperty(PropertyTypes eProperty) const
 	}
 	int	iValue = 0;
 
+	//	Sources that deliver to the city or the plot are both counted, since the city plot diffuses to the city for
+	//	most properties anyway.
 	foreach_ (const CvUnit* unit, plot()->units())
 	{
-		unit->getGameObject()->foreachManipulator(bind(unitSources, _1, eProperty, this, &iValue));
+		iValue += unit->getPropertySourceTotal(eProperty, GAMEOBJECT_CITY, getGameObject());
+		iValue += unit->getPropertySourceTotal(eProperty, GAMEOBJECT_PLOT, getGameObject());
 	}
 	m_unitSourcedPropertyCache[(int)eProperty] = iValue;
 

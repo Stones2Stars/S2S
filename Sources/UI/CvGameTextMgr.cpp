@@ -110,7 +110,8 @@ namespace
 		MODFAM_BOMBARD, MODFAM_AIR, MODFAM_RANGE, MODFAM_CAPTURE,
 		MODFAM_MOVEMENT, MODFAM_DOMAIN_MOVES, MODFAM_VISION, MODFAM_HEAL, MODFAM_CARGO,
 		MODFAM_UPKEEP, MODFAM_COSTS, MODFAM_EXPERIENCE, MODFAM_WORK_RATE, MODFAM_PILLAGE,
-		MODFAM_HAPPINESS, MODFAM_HEALTH, MODFAM_UNDERWORLD, MODFAM_ODDS, MODFAM_SURVIVOR, MODFAM_PROPERTY
+		MODFAM_HAPPINESS, MODFAM_HEALTH, MODFAM_REVOLT_PROTECTION, MODFAM_UNDERWORLD, MODFAM_ODDS, MODFAM_SURVIVOR,
+		MODFAM_PROPERTY
 	};
 }
 
@@ -556,15 +557,26 @@ static void gt_appendSeparator(CvWStringBuffer& szString, bool& bFirstInBlock)
 }
 
 
-///<summary>The strength a unit fights with: an air unit's air strength, otherwise its ground strength, and 0 for
-/// a unit that cannot fight.</summary>
-static int gt_combatStrength(const CvUnit* pUnit)
+///<summary>The strength a unit fights with, now and at full health, with no plot or opponent in the question: an
+/// air unit's air strength, otherwise its ground strength. False for a unit that cannot fight. The unit line and the
+/// stack's group line both read it, so they cannot disagree about which strength a unit has.</summary>
+static bool gt_unitStrength(const CvUnit* pUnit, int& iCurrentOut, int& iFullOut)
 {
 	if (pUnit->getDomainType() == DOMAIN_AIR)
 	{
-		return pUnit->airBaseCombatStr();
+		iFullOut = pUnit->airMaxCombatStr(NULL);
+		iCurrentOut = pUnit->airCurrCombatStr(NULL);
 	}
-	return pUnit->canFight() ? pUnit->baseCombatStr() : 0;
+	else
+	{
+		if (!pUnit->canFight())
+		{
+			return false;
+		}
+		iFullOut = pUnit->maxCombatStr(NULL, NULL);
+		iCurrentOut = pUnit->currCombatStr(NULL, NULL);
+	}
+	return iFullOut > 0;
 }
 
 //	The UNIT INSTANCE's help -- this unit, right now: what the unit-name widget, the selected-unit hover and the
@@ -620,33 +632,15 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 	szString.append(NEWLINE);
 	bool bFirstCondition = true;
 
-	//	STRENGTH. An air unit fights with its own air strength -- a different number from the ground one -- so the
-	//	DOMAIN decides which is read, never a fallback between them.
-	//	⚑ The ÷100 on the air twin is the READER's (docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model): a reader divides at its point of use).
-	//	`baseCombatStrHuman` is the ground cluster's ONE named human read; the air side has no such twin, and
-	//	minting one would grow the per-channel getter surface this rebuild is deleting.
-	const bool bAir = (pUnit->getDomainType() == DOMAIN_AIR);
-	const int iStrength = bAir ? (pUnit->airBaseCombatStr() / 100) : pUnit->baseCombatStrHuman();
-	if (iStrength > 0 && (bAir || pUnit->canFight()))
+	//	STRENGTH, current over full when damaged -- the same reading and rendering as the stack's group line.
+	//	⚠ Mid-combat the CURRENT value is not answerable from here, so it says so rather than printing a stale
+	//	number that would read as authoritative.
+	int iCurrentStrength = 0;
+	int iFullStrength = 0;
+	if (gt_unitStrength(pUnit, iCurrentStrength, iFullStrength))
 	{
-		//	⚠ Mid-combat the CURRENT value is not answerable from here, so it says so rather than printing a
-		//	stale number that would read as authoritative.
 		gt_appendSeparator(szString, bFirstCondition);
-		if (pUnit->isInBattle())
-		{
-			szString.append(CvWString::format(L"?/%d%c", iStrength, gDLL->getSymbolID(STRENGTH_CHAR)));
-		}
-		else
-		{
-			szString.append(CvWString::format(L"%d%c", iStrength, gDLL->getSymbolID(STRENGTH_CHAR)));
-		}
-
-		//	Damage, only when there is some -- a unit at full health says so by omission.
-		const int iMaxHP = pUnit->getMaxHP();
-		if (iMaxHP > 0 && pUnit->getHP() < iMaxHP)
-		{
-			szString.append(CvWString::format(L" (%d/%d)", pUnit->getHP(), iMaxHP));
-		}
+		szString.append(unitStrengthText(iCurrentStrength, iFullStrength, pUnit->isInBattle()));
 	}
 
 	//	MOVES. The remaining/total split is only meaningful for a unit the player commands and only worth the
@@ -665,6 +659,15 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 		{
 			szString.append(CvWString::format(L"%d/%d%c", iCurrMoves, pUnit->baseMoves(), gDLL->getSymbolID(MOVES_CHAR)));
 		}
+	}
+
+	//	SIGHT -- the unit's own: base, combat classes and promotions. The elevation of the ground it stands on is
+	//	the plot's, not the unit's ([vision.md] §1), so it is left out.
+	const int iVision = pUnit->resolvedValue(URS_VISION);
+	if (iVision > 0)
+	{
+		gt_appendSeparator(szString, bFirstCondition);
+		szString.append(visionAmountText(iVision));
 	}
 
 	if (pUnit->airRange() > 0)
@@ -831,7 +834,7 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szString, const CvUnit* pUnit, 
 	//	for the short form today.
 	if (!bShort)
 	{
-		setUnitHelp(szString, pUnit->getUnitType(), true);
+		appendUnitBlocks(szString, pUnit->getUnitType(), NULL, pUnit);
 	}
 }
 
@@ -908,11 +911,12 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 		group.m_eUnitType = pUnit->getUnitType();
 		group.m_iCount++;
 		group.m_bShowOwner = eShownOwner != GC.getGame().getActivePlayer() && !pUnit->isAnimal() && !pUnit->isHiddenNationality();
-		const int iStrength = gt_combatStrength(pUnit);
-		if (iStrength > 0 && pUnit->getMaxHP() > 0)
+		int iCurrentStrength = 0;
+		int iFullStrength = 0;
+		if (gt_unitStrength(pUnit, iCurrentStrength, iFullStrength))
 		{
-			group.m_iTotalMaxStrength += iStrength;
-			group.m_iTotalStrength += iStrength * pUnit->getHP() / pUnit->getMaxHP();
+			group.m_iTotalMaxStrength += iFullStrength;
+			group.m_iTotalStrength += iCurrentStrength;
 		}
 	}
 
@@ -934,16 +938,9 @@ void CvGameTextMgr::setPlotListHelp(CvWStringBuffer &szString, CvPlot* pPlot, bo
 			GC.getUnitInfo(group.m_eUnitType).getDescription(), group.m_iCount));
 		if (group.m_iTotalMaxStrength > 0)
 		{
-			const int iAverageStrength = group.m_iTotalStrength / group.m_iCount;
-			const int iAverageMaxStrength = group.m_iTotalMaxStrength / group.m_iCount;
 			szString.append(L" ");
-			if (iAverageStrength < iAverageMaxStrength)
-			{
-				szString.append(amountText(iAverageStrength));
-				szString.append(L"/");
-			}
-			szString.append(amountText(iAverageMaxStrength));
-			szString.append(CvWString::format(L"%c", gDLL->getSymbolID(STRENGTH_CHAR)));
+			szString.append(unitStrengthText(group.m_iTotalStrength / group.m_iCount,
+				group.m_iTotalMaxStrength / group.m_iCount, false));
 		}
 		if (group.m_bShowOwner)
 		{
@@ -2977,6 +2974,57 @@ void CvGameTextMgr::parseFreeSpecialistHelp(CvWStringBuffer &szHelpString, const
 			GC.getSpecialistInfo((SpecialistTypes)iSpecialist).getDescription(), iTyped));
 	}
 }
+
+///<summary>Skill keys as one comma list of their names.</summary>
+static CvWString gt_skillNames(const std::set<std::string>& aszSkillKeys)
+{
+	CvWString szNames;
+	for (std::set<std::string>::const_iterator itSkill = aszSkillKeys.begin(); itSkill != aszSkillKeys.end(); ++itSkill)
+	{
+		if (!szNames.empty())
+		{
+			szNames += L", ";
+		}
+		szNames += entryClassificationName(*itSkill);
+	}
+	return szNames;
+}
+
+///<summary>An entity's skills block as its lines: the skills it grants, and the ones a promotion revokes
+/// ([skills.md] §4).</summary>
+static void gt_appendSkillLines(CvWStringBuffer& szBuffer, const CvClassificationBlock* pSkills)
+{
+	if (pSkills == NULL)
+	{
+		return;
+	}
+	if (!pSkills->all().empty())
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_UNITHELP_SKILLS", gt_skillNames(pSkills->all()).GetCString()));
+	}
+	if (!pSkills->allFalse().empty())
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_REMOVES_SKILLS", gt_skillNames(pSkills->allFalse()).GetCString()));
+	}
+}
+
+///<summary>Combat class ids as one comma list of their names.</summary>
+static CvWString gt_combatClassNames(const std::vector<int>& aiCombatClasses)
+{
+	CvWString szNames;
+	for (size_t iClass = 0; iClass < aiCombatClasses.size(); ++iClass)
+	{
+		if (!szNames.empty())
+		{
+			szNames += L", ";
+		}
+		szNames += GC.getUnitCombatInfo((UnitCombatTypes)aiCombatClasses[iClass]).getDescription();
+	}
+	return szNames;
+}
+
 //
 // Promotion Help
 //
@@ -2991,8 +3039,43 @@ void CvGameTextMgr::parsePromotionHelpInternal(CvWStringBuffer &szBuffer, Promot
 	{
 		return;
 	}
-	const CvInfo& kInfo = GC.getPromotionInfo(ePromotion);
-	appendEntityBlocks(szBuffer, kInfo, g_aeUnitPlaneFamilies, sizeof(g_aeUnitPlaneFamilies) / sizeof(g_aeUnitPlaneFamilies[0]));
+	//	What it does, then the skills and combat classes it grants or takes away, then the shared edges and
+	//	requires -- the order the unit hover lists the same things in.
+	const CvPromotionInfo& kPromotion = GC.getPromotionInfo(ePromotion);
+	appendEntityEffectLines(szBuffer, kPromotion, g_aeUnitPlaneFamilies, sizeof(g_aeUnitPlaneFamilies) / sizeof(g_aeUnitPlaneFamilies[0]));
+	if (kPromotion.getControlPoints() != 0)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_CONTROL_POINTS_AMOUNT",
+			CvWString::format(L"%+d", kPromotion.getControlPoints()).GetCString()));
+	}
+	if (kPromotion.getCommandRange() != 0)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_COMMAND_RANGE_AMOUNT",
+			CvWString::format(L"%+d", kPromotion.getCommandRange()).GetCString()));
+	}
+	gt_appendSkillLines(szBuffer, kPromotion.getSkills());
+	if (!kPromotion.providesUnitCombats().empty())
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_ADDS_COMBAT_CLASSES",
+			gt_combatClassNames(kPromotion.providesUnitCombats()).GetCString()));
+	}
+	if (!kPromotion.removesUnitCombats().empty())
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_PROMOTIONHELP_REMOVES_COMBAT_CLASSES",
+			gt_combatClassNames(kPromotion.removesUnitCombats()).GetCString()));
+	}
+	//	The authored help text: for a promotion whose effect the engine codes by its type, it is the only
+	//	description there is.
+	if (!CvWString(kPromotion.getHelp()).empty())
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(kPromotion.getHelp());
+	}
+	appendEntityBlocks(szBuffer, kPromotion, NULL, 0);
 }
 //	Function:			parseCivicInfo()
 //	Description:	Will parse the civic info help
@@ -3085,12 +3168,445 @@ void CvGameTextMgr::setBasicUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit,
 	{
 		return;
 	}
-	const CvInfo& kInfo = GC.getUnitInfo(eUnit);
 	if (!bCivilopediaText)
 	{
-		szBuffer.append(kInfo.getDescription());
+		szBuffer.append(GC.getUnitInfo(eUnit).getDescription());
 	}
-	appendEntityBlocks(szBuffer, kInfo, g_aeUnitPlaneFamilies, sizeof(g_aeUnitPlaneFamilies) / sizeof(g_aeUnitPlaneFamilies[0]));
+	appendUnitBlocks(szBuffer, eUnit, NULL, NULL);
+}
+
+///<summary>The CARRIERS of a unit's entries: its type, and for a live unit every held promotion and every held
+/// combat class -- the same held set, walked the same way, that the resolved plane folds over
+/// (CvUnitResolved.cpp).</summary>
+static void gt_unitCarriers(const CvUnitInfo& kType, const CvUnit* pLiveUnit, std::vector<const CvInfo*>& aCarriersOut)
+{
+	aCarriersOut.push_back(&kType);
+	if (pLiveUnit == NULL)
+	{
+		return;
+	}
+	const std::map<PromotionTypes, PromotionKeyedInfo>& kHeldPromotions = pLiveUnit->getPromotionKeyedInfo();
+	for (std::map<PromotionTypes, PromotionKeyedInfo>::const_iterator itPromotion = kHeldPromotions.begin();
+		itPromotion != kHeldPromotions.end(); ++itPromotion)
+	{
+		if (itPromotion->second.m_bHasPromotion)
+		{
+			aCarriersOut.push_back(&GC.getPromotionInfo(itPromotion->first));
+		}
+	}
+	const std::map<UnitCombatTypes, UnitCombatKeyedInfo>& kHeldCombats = pLiveUnit->getUnitCombatKeyedInfo();
+	for (std::map<UnitCombatTypes, UnitCombatKeyedInfo>::const_iterator itCombat = kHeldCombats.begin();
+		itCombat != kHeldCombats.end(); ++itCombat)
+	{
+		if (itCombat->second.m_bHasUnitCombat)
+		{
+			aCarriersOut.push_back(&GC.getUnitCombatInfo(itCombat->first));
+		}
+	}
+}
+
+///<summary>Do two entries deposit to the same address, so that their amounts add?</summary>
+static bool gt_sameEntryAddress(const CvModEntry& kLeft, const CvModEntry& kRight)
+{
+	return kLeft.family == kRight.family
+		&& kLeft.propertyFk == kRight.propertyFk
+		&& kLeft.scope == kRight.scope
+		&& kLeft.kind == kRight.kind
+		&& kLeft.memberSeg == kRight.memberSeg
+		&& kLeft.targetSeg == kRight.targetSeg
+		&& kLeft.targetFk == kRight.targetFk
+		&& kLeft.unit == kRight.unit
+		&& kLeft.aiOnly == kRight.aiOnly;
+}
+
+///<summary>One family's entries over the carriers, in authored order: each unconditioned address once, as an
+/// entry owned by aSummedOut, and each conditioned entry as authored. aLinesOut holds both, in the order they are
+/// listed. On the type hover the type is the only carrier, so an address carries its authored amount; on a live
+/// unit the caller replaces every amount with the engine's read, so the list only says WHICH lines to ask
+/// about.</summary>
+static void gt_collectUnitEntries(const std::vector<const CvInfo*>& aCarriers, ModifierFamily eFamily,
+	std::vector<CvModEntry*>& aSummedOut, std::vector<const CvModEntry*>& aLinesOut)
+{
+	for (size_t iCarrier = 0; iCarrier < aCarriers.size(); ++iCarrier)
+	{
+		const CvModifiers* pModifiers = aCarriers[iCarrier]->getModifiers();
+		if (pModifiers == NULL)
+		{
+			continue;
+		}
+		const std::vector<CvModEntry*>& aEntries = pModifiers->entries();
+		for (std::vector<CvModEntry*>::const_iterator itEntry = aEntries.begin(); itEntry != aEntries.end(); ++itEntry)
+		{
+			const CvModEntry* pEntry = *itEntry;
+			if (pEntry == NULL || pEntry->family != eFamily || entryHiddenByGameOptions(*pEntry))
+			{
+				continue;
+			}
+			if (pEntry->isConditioned())
+			{
+				aLinesOut.push_back(pEntry);
+				continue;
+			}
+			bool bAdded = false;
+			for (size_t iSummed = 0; iSummed < aSummedOut.size(); ++iSummed)
+			{
+				if (gt_sameEntryAddress(*aSummedOut[iSummed], *pEntry))
+				{
+					aSummedOut[iSummed]->value += pEntry->value;
+					bAdded = true;
+					break;
+				}
+			}
+			if (bAdded)
+			{
+				continue;
+			}
+			CvModEntry* pSummed = new CvModEntry();
+			pSummed->family = pEntry->family;
+			pSummed->propertyFk = pEntry->propertyFk;
+			pSummed->scope = pEntry->scope;
+			pSummed->kind = pEntry->kind;
+			pSummed->memberSeg = pEntry->memberSeg;
+			pSummed->targetSeg = pEntry->targetSeg;
+			pSummed->targetFk = pEntry->targetFk;
+			pSummed->nSeg = pEntry->nSeg;
+			for (int iSeg = 0; iSeg < CvModEntry::MOD_ENTRY_SEGS; ++iSeg)
+			{
+				pSummed->seg[iSeg] = pEntry->seg[iSeg];
+			}
+			pSummed->value = pEntry->value;
+			pSummed->unit = pEntry->unit;
+			pSummed->aiOnly = pEntry->aiOnly;
+			aSummedOut.push_back(pSummed);
+			aLinesOut.push_back(pSummed);
+		}
+	}
+}
+
+///<summary>The value a LIVE unit runs on at an address, read off the engine: the resolved plane's slot, or the
+/// unit getter the engine itself consults (which also adds the counters its promotions applied and a supporting
+/// leader's share). False where the engine has no such read; the live hover then leaves the line off rather than
+/// computing it ([tooltip-look.md] the unit hover: the text manager never emulates game logic).</summary>
+static bool gt_liveUnitValue(const CvUnit& kUnit, const CvModEntry& kSummed, int& iValueOut)
+{
+	if (kSummed.scope != CASC_SCOPE_UNIT || kSummed.aiOnly)
+	{
+		return false;
+	}
+	if (entryIsMembershipFlag(kSummed))
+	{
+		//	The engine asks the unit's TYPE whether it targets or defends against a class (CvUnit::isTargetOf).
+		iValueOut = (InfoValuation::keyedTarget(kUnit.getUnitInfo().getModifiers(), MODFAM_COMBAT, -1,
+			kSummed.targetSeg, kSummed.targetFk) != 0) ? 100 : 0;
+		return true;
+	}
+	if (kSummed.targetSeg < 0 && kSummed.targetFk < 0)
+	{
+		if (kSummed.family == MODFAM_UNDERWORLD && kSummed.kind == UNDERWORLD_INVESTIGATION)
+		{
+			iValueOut = kUnit.getInvestigationTotal() * 100;
+			return true;
+		}
+		if (kSummed.family == MODFAM_UNDERWORLD && kSummed.kind == UNDERWORLD_INSIDIOUSNESS)
+		{
+			iValueOut = kUnit.getInsidiousnessTotal() * 100;
+			return true;
+		}
+		if (kSummed.family == MODFAM_REVOLT_PROTECTION)
+		{
+			iValueOut = kUnit.revoltProtectionTotal();
+			return true;
+		}
+		const int iSlot = unitResolvedSlotFor(kSummed.family, kSummed.kind, kSummed.unit);
+		if (iSlot < 0)
+		{
+			return false;
+		}
+		iValueOut = kUnit.resolvedValue((UnitResolvedSlot)iSlot);
+		return true;
+	}
+	if (kSummed.targetSeg < 0 || kSummed.targetFk < 0)
+	{
+		return false;
+	}
+	static int iUnitCombatSeg = -1;
+	static int iTerrainSeg = -1;
+	static int iFeatureSeg = -1;
+	static int iDomainSeg = -1;
+	static int iVsUnitSeg = -1;
+	static int iFlankingSeg = -1;
+	const int iKey = kSummed.targetFk;
+	if (kSummed.family == MODFAM_HEAL && kSummed.targetSeg == modSegmentCached("unitCombat", iUnitCombatSeg))
+	{
+		if (kSummed.kind == HEAL_RATE)
+		{
+			iValueOut = kUnit.getHealUnitCombatTypeTotal((UnitCombatTypes)iKey) * 100;
+			return true;
+		}
+		if (kSummed.kind == HEAL_ADJACENT)
+		{
+			iValueOut = kUnit.getHealUnitCombatTypeAdjacentTotal((UnitCombatTypes)iKey) * 100;
+			return true;
+		}
+		return false;
+	}
+	if (kSummed.family == MODFAM_COMBAT)
+	{
+		if (kSummed.targetSeg == modSegmentCached("unitCombat", iUnitCombatSeg) && kSummed.kind == COMBAT_AMOUNT)
+		{
+			iValueOut = kUnit.unitCombatModifier((UnitCombatTypes)iKey);
+			return true;
+		}
+		if (kSummed.targetSeg == modSegmentCached("flanking", iFlankingSeg) && kSummed.kind == COMBAT_AMOUNT)
+		{
+			iValueOut = kUnit.flankingStrengthbyUnitCombatTotal((UnitCombatTypes)iKey);
+			return true;
+		}
+		if (kSummed.targetSeg == modSegmentCached("domain", iDomainSeg) && kSummed.kind == COMBAT_AMOUNT)
+		{
+			iValueOut = kUnit.domainModifier((DomainTypes)iKey);
+			return true;
+		}
+		const bool bAttack = (kSummed.kind == COMBAT_ATTACK);
+		if (!bAttack && kSummed.kind != COMBAT_DEFENSE)
+		{
+			return false;
+		}
+		if (kSummed.targetSeg == modSegmentCached("terrain", iTerrainSeg))
+		{
+			iValueOut = bAttack ? kUnit.terrainAttackModifier((TerrainTypes)iKey) : kUnit.terrainDefenseModifier((TerrainTypes)iKey);
+			return true;
+		}
+		if (kSummed.targetSeg == modSegmentCached("feature", iFeatureSeg))
+		{
+			iValueOut = bAttack ? kUnit.featureAttackModifier((FeatureTypes)iKey) : kUnit.featureDefenseModifier((FeatureTypes)iKey);
+			return true;
+		}
+		if (kSummed.targetSeg == modSegmentCached("vsUnit", iVsUnitSeg))
+		{
+			iValueOut = bAttack ? kUnit.unitAttackModifier((UnitTypes)iKey) : kUnit.unitDefenseModifier((UnitTypes)iKey);
+			return true;
+		}
+		return false;
+	}
+	return false;
+}
+
+//	⚑ ONE COMPOSITION FOR BOTH UNIT HOVERS, differing only in WHOSE values they read ([tooltip-look.md] the unit
+//	hover). The type hover reads the type's own entries; a live unit's lists what its type, held promotions and
+//	held combat classes author, reads each value off the unit, and leaves off what the engine has no read for. A
+//	unit type's own strength, moves and sight are
+//	its BASE values rather than bonuses, so the type hover states them unsigned on one stat line and a live unit
+//	on its condition line; the same keys on a promotion ARE bonuses, which is why the families are walked here
+//	rather than through appendEntityBlocks.
+void CvGameTextMgr::appendUnitBlocks(CvWStringBuffer& szBuffer, UnitTypes eUnit, const CvCity* pCity, const CvUnit* pLiveUnit) const
+{
+	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
+	const int iFamilyCount = sizeof(g_aeUnitPlaneFamilies) / sizeof(g_aeUnitPlaneFamilies[0]);
+	std::vector<const CvInfo*> aCarriers;
+	gt_unitCarriers(kUnit, pLiveUnit, aCarriers);
+
+	if (pLiveUnit == NULL)
+	{
+		//	The PRICE, directly under the name -- the same position a building states its own.
+		appendUnitProductionCost(szBuffer, eUnit, pCity);
+
+		static const ModifierFamily aeStatFamilies[] = { MODFAM_STRENGTH, MODFAM_MOVEMENT, MODFAM_VISION };
+		CvWString szStats;
+		const CvModifiers* pModifiers = kUnit.getModifiers();
+		for (int iStat = 0; pModifiers != NULL && iStat < (int)(sizeof(aeStatFamilies) / sizeof(aeStatFamilies[0])); ++iStat)
+		{
+			const std::vector<CvModEntry*>& aEntries = pModifiers->entries();
+			for (std::vector<CvModEntry*>::const_iterator itEntry = aEntries.begin(); itEntry != aEntries.end(); ++itEntry)
+			{
+				if (*itEntry == NULL || (*itEntry)->family != aeStatFamilies[iStat] || !entryIsUnitBaseStat(**itEntry))
+				{
+					continue;
+				}
+				if (!szStats.empty())
+				{
+					szStats += L", ";
+				}
+				szStats += entryUnitBaseStatText(**itEntry);
+			}
+		}
+		if (!szStats.empty())
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(szStats);
+		}
+	}
+
+	//	UPKEEP: what the type is charged, or what this unit costs its owner now. Another player's upkeep is not
+	//	the observer's to read ([tooltip-look.md] WHOSE VIEW).
+	CvWString szUpkeep;
+	if (pLiveUnit == NULL)
+	{
+		if (kUnit.getUpkeepCost() > 0)
+		{
+			szUpkeep = CvWString::format(L"%d", kUnit.getUpkeepCost());
+		}
+	}
+	else if (pLiveUnit->getOwner() == GC.getGame().getActivePlayer() && pLiveUnit->getUpkeep() > 0)
+	{
+		szUpkeep = upkeepAmountText(pLiveUnit->getUpkeep());
+	}
+	if (!szUpkeep.empty())
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(gDLL->getText("TXT_KEY_UNITHELP_UPKEEP_AMOUNT", szUpkeep.GetCString()));
+	}
+
+	for (int iFamily = 0; iFamily < iFamilyCount; ++iFamily)
+	{
+		std::vector<CvModEntry*> aSummed;
+		std::vector<const CvModEntry*> aLines;
+		gt_collectUnitEntries(aCarriers, g_aeUnitPlaneFamilies[iFamily], aSummed, aLines);
+		if (pLiveUnit != NULL)
+		{
+			//	Only what the engine reads off the unit is shown; an address it has no read for is left off.
+			for (size_t iSummed = 0; iSummed < aSummed.size(); ++iSummed)
+			{
+				int iLiveValue = 0;
+				aSummed[iSummed]->value = gt_liveUnitValue(*pLiveUnit, *aSummed[iSummed], iLiveValue) ? iLiveValue : 0;
+			}
+		}
+
+		//	The plain combat amounts read together on one line; a membership flag lists its targets under its
+		//	heading; everything else keeps its own line. The base stats are on the stat or condition line.
+		CvWString szCombat;
+		CvWStringBuffer szOwnLines;
+		std::vector<CvWString> aszMembershipHeadings;
+		std::vector<CvWString> aszMembershipNames;
+		for (size_t iLine = 0; iLine < aLines.size(); ++iLine)
+		{
+			const CvModEntry& kEntry = *aLines[iLine];
+			//	A conditioned entry is listed on the type; whether it holds for this unit now is the engine's
+			//	evaluation, not the hover's.
+			if (kEntry.value == 0 || entryIsUnitBaseStat(kEntry) || (pLiveUnit != NULL && kEntry.isConditioned()))
+			{
+				continue;
+			}
+			if (entryIsMembershipFlag(kEntry) && !kEntry.isConditioned())
+			{
+				const CvWString szHeading = entryMembershipHeading(kEntry);
+				size_t iHeading = 0;
+				while (iHeading < aszMembershipHeadings.size() && aszMembershipHeadings[iHeading] != szHeading)
+				{
+					++iHeading;
+				}
+				if (iHeading == aszMembershipHeadings.size())
+				{
+					aszMembershipHeadings.push_back(szHeading);
+					aszMembershipNames.push_back(entryMembershipTarget(kEntry));
+				}
+				else
+				{
+					aszMembershipNames[iHeading] += CvWString(L", ") + entryMembershipTarget(kEntry);
+				}
+				continue;
+			}
+			if (entryIsPlainCombatMember(kEntry))
+			{
+				if (!szCombat.empty())
+				{
+					szCombat += L", ";
+				}
+				szCombat += entryCombatSummary(kEntry);
+				continue;
+			}
+			szOwnLines.append(NEWLINE);
+			szOwnLines.append(entryDetailLine(kEntry));
+		}
+		if (!szCombat.empty())
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(gDLL->getText("TXT_KEY_UNITHELP_COMBAT", szCombat.GetCString()));
+		}
+		szBuffer.append(szOwnLines);
+		for (size_t iHeading = 0; iHeading < aszMembershipHeadings.size(); ++iHeading)
+		{
+			CvWString szMembership = aszMembershipHeadings[iHeading];
+			szMembership += L": ";
+			szMembership += aszMembershipNames[iHeading];
+			szBuffer.append(NEWLINE);
+			szBuffer.append(szMembership);
+		}
+		for (size_t iSummed = 0; iSummed < aSummed.size(); ++iSummed)
+		{
+			delete aSummed[iSummed];
+		}
+	}
+
+	if (pLiveUnit != NULL && pLiveUnit->plot() != NULL)
+	{
+		//	The unit's property effect as the engine totals it -- CvUnit::getPropertySourceTotal, the read the
+		//	city's own unit-sourced sum is made of -- evaluated against the city it stands in, else its plot.
+		const CvPlot* pPlot = pLiveUnit->plot();
+		const CvGameObject* pContext = (pPlot->getPlotCity() != NULL)
+			? static_cast<const CvGameObject*>(pPlot->getPlotCity()->getGameObject())
+			: static_cast<const CvGameObject*>(pPlot->getGameObject());
+		for (int iProperty = 0; iProperty < GC.getNumPropertyInfos(); ++iProperty)
+		{
+			const int iToCity = pLiveUnit->getPropertySourceTotal((PropertyTypes)iProperty, GAMEOBJECT_CITY, pContext);
+			const int iToPlot = pLiveUnit->getPropertySourceTotal((PropertyTypes)iProperty, GAMEOBJECT_PLOT, pContext);
+			if (iToCity != 0)
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(propertySourceLine((PropertyTypes)iProperty, iToCity, false));
+			}
+			if (iToPlot != 0)
+			{
+				szBuffer.append(NEWLINE);
+				szBuffer.append(propertySourceLine((PropertyTypes)iProperty, iToPlot, true));
+			}
+		}
+	}
+	else if (pLiveUnit == NULL)
+	{
+		//	The type's skills. A live unit's skills are composed by the engine skill by skill, with no single read
+		//	to show, so its hover leaves them to the type and the held promotions' own hovers. The skills a combat
+		//	class gives are listed on neither.
+		gt_appendSkillLines(szBuffer, kUnit.getSkills());
+	}
+
+	//	HIDE AND SEEK: the type's own block, or the unit's resolved one -- the fold over its held set.
+	std::vector<std::pair<int, int> > aDetectionRows;
+	int iConcealment = 0;
+	if (pLiveUnit == NULL)
+	{
+		iConcealment = kUnit.getHideAndSeek().concealment;
+		kUnit.getHideAndSeek().collectDetectionInto(aDetectionRows);
+	}
+	else
+	{
+		iConcealment = pLiveUnit->concealment();
+		aDetectionRows = pLiveUnit->detectionRows();
+	}
+	if (iConcealment != 0)
+	{
+		szBuffer.append(NEWLINE);
+		szBuffer.append(hideAndSeekConcealmentLine(iConcealment));
+	}
+	for (size_t iRow = 0; iRow < aDetectionRows.size(); ++iRow)
+	{
+		if (aDetectionRows[iRow].second != 0)
+		{
+			szBuffer.append(NEWLINE);
+			szBuffer.append(hideAndSeekDetectionLine(aDetectionRows[iRow].first, aDetectionRows[iRow].second));
+		}
+	}
+
+	if (pLiveUnit != NULL)
+	{
+		//	A built unit already holds its starting promotions (the icon row above), and what unlocks, replaces or
+		//	is required to build its type no longer applies to it.
+		return;
+	}
+	appendGrantLines(szBuffer, kUnit);
+
+	//	The edge and requires blocks of the shared spine; the families were walked above.
+	appendEntityBlocks(szBuffer, kUnit, NULL, 0);
 }
 //	The unit TYPE's help plus the legs only a CITY can answer — today the starting experience, which depends on the
 //	city's own free-XP sources and is halved for a draft.
@@ -3156,25 +3672,15 @@ void CvGameTextMgr::setUnitHelp(CvWStringBuffer &szBuffer, UnitTypes eUnit, bool
 	{
 		return;
 	}
-	const CvUnitInfo& kUnit = GC.getUnitInfo(eUnit);
-
-	//	The pedia page and the instance help both supply their own title, so the heading is the one thing the
-	//	caller gets to suppress.
+	//	The pedia page supplies its own title, so the heading is the one thing the caller gets to suppress.
 	if (!bCivilopediaText)
 	{
-		szBuffer.append(kUnit.getDescription());
+		szBuffer.append(GC.getUnitInfo(eUnit).getDescription());
 	}
 
-	//	The PRICE, directly under the name -- the same position a building states its own, so the two entity
-	//	tooltips read alike across the build list rather than one stating a cost and the other leaving it to be
-	//	guessed.
-	appendUnitProductionCost(szBuffer, eUnit, pCity);
-
-	//	⛔ THE SHARED UNIT-PLANE LIST, not a local copy. This composer used to carry its own duplicate of it beside
-	//	a hand-rolled repeat of the entity spine, and the duplicate had already DRIFTED: it silently dropped
-	//	MODFAM_ODDS and MODFAM_SURVIVOR, so those families rendered on the basic-unit help and nowhere else. One
-	//	list, one spine (docs/architecture/patterns.md §DRY (single implementation)) -- and the edge and requires blocks now come with it.
-	appendEntityBlocks(szBuffer, kUnit, g_aeUnitPlaneFamilies, sizeof(g_aeUnitPlaneFamilies) / sizeof(g_aeUnitPlaneFamilies[0]));
+	//	⛔ ONE unit-type block set for every unit-type hover (docs/architecture/patterns.md §DRY (single
+	//	implementation)): a second copy of the family list drifted once and silently dropped families.
+	appendUnitBlocks(szBuffer, eUnit, pCity, NULL);
 }
 
 // BUG - Building Actual Effects - start
@@ -4743,13 +5249,7 @@ void CvGameTextMgr::appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& 
 	//	target, a per-scaler) keeps its own line below, because the thing it carries is the half worth reading.
 	//	⚠ It spans FAMILIES, so it cannot live inside the per-family pass: food, production and commerce are
 	//	three families and one line.
-	appendFlatChannelLine(szBuffer, info, aeFamilies, iFamilyCount);
-
-	for (int iFamily = 0; iFamily < iFamilyCount; ++iFamily)
-	{
-		//	The plain flats are already on the line above; this pass is what is left.
-		appendEntryLinesFiltered(szBuffer, info, aeFamilies[iFamily], -1, NO_EDGEB, -1, true);
-	}
+	appendEntityEffectLines(szBuffer, info, aeFamilies, iFamilyCount);
 
 	//	WHAT IT LEADS TO. Reading order is what it DOES (the families above), then what it GIVES YOU (here), then
 	//	what it NEEDS (the requires block below) -- and "what does this unlock" is the first question anyone asks
@@ -4787,6 +5287,18 @@ void CvGameTextMgr::appendEntityBlocks(CvWStringBuffer& szBuffer, const CvInfo& 
 		szBuffer.append(NEWLINE);
 		szBuffer.append(gDLL->getText("TXT_KEY_EDGE_REQUIRES_OPERATE"));
 		szBuffer.append(szOperateClauses);
+	}
+}
+
+void CvGameTextMgr::appendEntityEffectLines(CvWStringBuffer& szBuffer, const CvInfo& info, const ModifierFamily* aeFamilies,
+	int iFamilyCount) const
+{
+	appendFlatChannelLine(szBuffer, info, aeFamilies, iFamilyCount);
+
+	for (int iFamily = 0; iFamily < iFamilyCount; ++iFamily)
+	{
+		//	The plain flats are already on the line above; this pass is what is left.
+		appendEntryLinesFiltered(szBuffer, info, aeFamilies[iFamily], -1, NO_EDGEB, -1, true);
 	}
 }
 
@@ -5309,6 +5821,10 @@ void CvGameTextMgr::appendEntryLinesFiltered(CvWStringBuffer& szBuffer, const Cv
 	{
 		return;
 	}
+	//	Unconditioned membership flags list one entity each, so the flags sharing a heading are gathered onto one
+	//	"Targets first in combat: A, B" line, in authored order, instead of a line per entity.
+	std::vector<CvWString> aszMembershipHeadings;
+	std::vector<CvWString> aszMembershipNames;
 	const std::vector<CvModEntry*>& aEntries = pModifiers->entries();
 	for (std::vector<CvModEntry*>::const_iterator it = aEntries.begin(); it != aEntries.end(); ++it)
 	{
@@ -5338,10 +5854,37 @@ void CvGameTextMgr::appendEntryLinesFiltered(CvWStringBuffer& szBuffer, const Cv
 		{
 			continue;
 		}
+		if (entryIsMembershipFlag(*pEntry) && !pEntry->isConditioned())
+		{
+			const CvWString szHeading = entryMembershipHeading(*pEntry);
+			size_t iHeading = 0;
+			while (iHeading < aszMembershipHeadings.size() && aszMembershipHeadings[iHeading] != szHeading)
+			{
+				++iHeading;
+			}
+			if (iHeading == aszMembershipHeadings.size())
+			{
+				aszMembershipHeadings.push_back(szHeading);
+				aszMembershipNames.push_back(entryMembershipTarget(*pEntry));
+			}
+			else
+			{
+				aszMembershipNames[iHeading] += CvWString(L", ") + entryMembershipTarget(*pEntry);
+			}
+			continue;
+		}
 		szBuffer.append(NEWLINE);
 		//	The gate entity is the subject of the block these lines sit under, so the renderer may leave off a
 		//	"while" clause that only names it.
 		szBuffer.append(entryDetailLine(*pEntry, eGateBucket, iGateId));
+	}
+	for (size_t iHeading = 0; iHeading < aszMembershipHeadings.size(); ++iHeading)
+	{
+		CvWString szLine = aszMembershipHeadings[iHeading];
+		szLine += L": ";
+		szLine += aszMembershipNames[iHeading];
+		szBuffer.append(NEWLINE);
+		szBuffer.append(szLine);
 	}
 }
 
