@@ -64,6 +64,12 @@ multiply.
 > ⛔ Do NOT "finish" this by carrying ×100 deeper into the resolver: that compounds the double-scaling instead
 > of resolving it. What has to be decided FIRST is which single denominator movement speaks in, and that is a
 > CURATOR question (does terrain author denominator units too?), never a consumer sweep.
+> ⛔ **THE PLOT LEG IS SUMMED ON THE ×100 PLANE AND REDUCED ONCE, ON THE SUM — NEVER PER TERM.** Terrain,
+> feature and the hills/peak extras (whole moves in GlobalDefines, lifted at their own IN boundary) add as ×100
+> values, and the reader takes the whole-moves cost down to the resolver's plane in a single `÷100` on the total:
+> `trunc(Σ xᵢ)`, never `Σ trunc(xᵢ)` ([§4c-bis](07-bis-100-everywhere-internally.md)). Every reader of the plot
+> leg — `CvPlot::movementCost` and the worker AI's road checks alike — reads the same sum, so a fractional term
+> moves every consumer identically or none.
 >
 > ⚖ **THAT IS THE PLOT-COST HALF. THE OTHER HALF — A UNIT'S OWN MOVE BUDGET — IS SETTLED: ×100 ON EVERY LEG,
 > REDUCED EXACTLY ONCE, WHERE THE BUDGET IS SPENT.** Two legs: the unit's whole allowance, resolved over its
