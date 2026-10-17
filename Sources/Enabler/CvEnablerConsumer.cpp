@@ -660,6 +660,11 @@ private:
 			{
 				BuildingEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, BuildingEnabler::GATE_DYNAMIC);
 				UnitEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, UnitEnabler::GATE_DYNAMIC);
+				// Rebel status is an exception leg of the Limited Religions research bar.
+				if (kEvent.iEventId == SEVT_EMPIRE_REBEL_ADDED || kEvent.iEventId == SEVT_EMPIRE_REBEL_REMOVED)
+				{
+					TechEnabler::onReligionLimitChanged((PlayerTypes)kEvent.iC);
+				}
 			}
 			break;
 		case SEVT_CITY_HOLY_CITY_ADDED:
@@ -675,6 +680,11 @@ private:
 			// The city-scope twins of the above: one city's designation moved, so only that city re-gates.
 			// Same load-bracket skip, same reason (gating against half-deserialized state; enabler.md §7.1).
 			if (spineGameLoadInProgress()) break;
+			// A holy city gained or lost also moves the owner's Limited Religions research bar.
+			if (kEvent.iEventId == SEVT_CITY_HOLY_CITY_ADDED || kEvent.iEventId == SEVT_CITY_HOLY_CITY_REMOVED)
+			{
+				TechEnabler::onReligionLimitChanged((PlayerTypes)kEvent.iC);
+			}
 			const CvCity* pCity = cityForEvent(kEvent.iC, kEvent.iSrcLoc);
 			if (pCity != NULL)
 			{
@@ -827,6 +837,22 @@ private:
 			}
 			break;
 		}
+		// ---- the player's CITY COUNT moved ----
+		// Two gates read it: the `CITY` count token of `requires` (the GATE_DYNAMIC residue, e.g. a Treasury's
+		// empire city minimum) and the one-city exception of the Limited Religions research bar. A holy city
+		// changing hands is the holy-city pair's, above.
+		case SEVT_EMPIRE_CITY_COUNT_ADDED:
+		case SEVT_EMPIRE_CITY_COUNT_REMOVED:
+			// Skipped inside the load bracket: the in-read half fires from CvPlayer::read, before the player's
+			// other slots have landed, and the load-end passes gate both classes against the final state.
+			if (spineGameLoadInProgress()) break;
+			if (kEvent.iC >= 0 && kEvent.iC < MAX_PLAYERS)
+			{
+				BuildingEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, BuildingEnabler::GATE_DYNAMIC);
+				UnitEnabler::onPlayerGateClass((PlayerTypes)kEvent.iC, UnitEnabler::GATE_DYNAMIC);
+				TechEnabler::onReligionLimitChanged((PlayerTypes)kEvent.iC);
+			}
+			break;
 		// ---- the founding census: what the city's seed fold + gate just built, readable off the domain itself ----
 		case SEVT_CITY_FOUNDED:
 		{
@@ -839,6 +865,9 @@ private:
 		case SEVT_GAME_LOAD_FINISHED:
 			BuildingEnabler::onLoadFinished();
 			UnitEnabler::onLoadFinished();
+			// The tech gate's in-read gating ran before the player's cities had loaded, so the Limited Religions
+			// bar is gated here, against the final state.
+			TechEnabler::onReligionLimitChangedForAll();
 			en_emitDomainCensus();
 			break;
 		// ---- a GAME OPTION flipped: re-gate EVERY city ----
@@ -862,8 +891,26 @@ private:
 				{
 					EnablerKernel::applyTraitSetExclusions(GET_PLAYER((PlayerTypes)iPlayer));
 				}
+				if (kEvent.iType == GAMEOPTION_RELIGION_LIMITED)
+				{
+					TechEnabler::onReligionLimitChangedForAll();
+				}
 			}
 			break;
+		// ---- a GLOBAL DEFINE flipped (a live option) ----
+		// LIMITED_RELIGIONS_EXCEPTIONS is a RevDCM live option the player can switch mid-game, and it is a leg of
+		// the Limited Religions research bar, so its flip re-gates every player's bar.
+		case SEVT_GAME_GLOBAL_DEFINE_ADDED:
+		{
+			// Inside the load bracket the load-end pass gates the bar against the define's final value.
+			if (spineGameLoadInProgress()) break;
+			const char* szDefine = spineGlobalDefineName(kEvent);
+			if (szDefine != NULL && strcmp(szDefine, "LIMITED_RELIGIONS_EXCEPTIONS") == 0)
+			{
+				TechEnabler::onReligionLimitChangedForAll();
+			}
+			break;
+		}
 		// ---- a PLAYER option flipped: re-gate that player's building offer ----
 		// HIDE_REPLACED_BUILDINGS is the one player option a gate reads (the REPLACED reason), and it names no
 		// source to route from, so the player's cities re-gate whole. Every other player option marks nothing.

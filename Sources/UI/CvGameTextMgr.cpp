@@ -5689,6 +5689,7 @@ void CvGameTextMgr::appendGateReason(CvWStringBuffer& szBuffer, unsigned char eR
 	case EnablerDomain::GATEREASON_CAP_SELF:     szKey = "TXT_KEY_GATEREASON_CAP_SELF"; break;
 	case EnablerDomain::GATEREASON_CAP_GROUP:    szKey = "TXT_KEY_GATEREASON_CAP_GROUP"; break;
 	case EnablerDomain::GATEREASON_CAP_CATEGORY: szKey = "TXT_KEY_GATEREASON_CAP_CATEGORY"; break;
+	case EnablerDomain::GATEREASON_RELIGION_LIMIT: szKey = "TXT_KEY_GATEREASON_RELIGION_LIMIT"; break;
 	default: return;   // GATEREASON_NONE -- it is offered, so there is nothing to explain
 	}
 	szBuffer.append(NEWLINE);

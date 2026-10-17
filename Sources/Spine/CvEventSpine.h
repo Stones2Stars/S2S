@@ -480,6 +480,11 @@ enum SpineDomainEvent
 	// outgoing value, ADDED the incoming. iType = ModderOptionTypes, iA = the value's magnitude, iC = player. DOMAIN.
 	SEVT_EMPIRE_MODDER_OPTION_ADDED   = 213,
 	SEVT_EMPIRE_MODDER_OPTION_REMOVED = 214,
+	/// <summary>The player's CITY LIST grew / shrank (CvPlayer::initCity / deleteCity, and the in-read half in
+	/// CvPlayer::read), announced after the list moved, so a consumer reading getNumCities sees the new count.
+	/// iA = HOW MANY, iC = player. DOMAIN.</summary>
+	SEVT_EMPIRE_CITY_COUNT_ADDED      = 215,
+	SEVT_EMPIRE_CITY_COUNT_REMOVED    = 216,
 	// A city's PROPERTY value crossed one of the band BOUNDARIES the authored `requires.operate` clauses declare
 	// -- the value ROSE across one (_ADDED) or FELL across one (_REMOVED). iType = the PROPERTY_, iC = owner,
 	// iSrcLoc = cityId. DOMAIN.
@@ -1036,6 +1041,10 @@ void emitEmpireBuildingCountAdded(int iPlayer, int iBuilding, int iCount);
 void emitEmpireBuildingCountRemoved(int iPlayer, int iBuilding, int iCount);
 void emitEmpireUnitCountAdded(int iPlayer, int iUnit, int iCount);
 void emitEmpireUnitCountRemoved(int iPlayer, int iUnit, int iCount);
+/// <summary>The player's city list grew. Call after the list changed. iCount = HOW MANY, unsigned.</summary>
+void emitEmpireCityCountAdded(int iPlayer, int iCount);
+/// <summary>The player's city list shrank. Call after the list changed. iCount = HOW MANY, unsigned.</summary>
+void emitEmpireCityCountRemoved(int iPlayer, int iCount);
 // ===== PLOT GROUP / AREA =====
 void emitPlotGroupBonusAdded(int iOwner, int iPlotGroupId, int iBonus, int iCount);
 void emitPlotGroupBonusRemoved(int iOwner, int iPlotGroupId, int iBonus, int iCount);
@@ -1087,6 +1096,10 @@ void emitGameHandicapRemoved(int iHandicap);
 // SYNCHRONOUS emit only and are never copied.
 void emitGameGlobalDefineAdded(const char* szName, int eKind, int iValue, float fValue, const char* szValue);
 void emitGameGlobalDefineRemoved(const char* szName, int eKind, int iValue, float fValue, const char* szValue);
+/// <summary>The define NAME a SEVT_GAME_GLOBAL_DEFINE_ADDED / _REMOVED fact carries, or NULL. A define has no id
+/// space, so its name is the key a machine consumer matches on; the pointer is the emit's borrowed string and is
+/// valid only inside the synchronous consumer call.</summary>
+const char* spineGlobalDefineName(const CvSpineEvent& kEvent);
 // ===== PROPERTY (any owner scope) =====
 // A game object's property value moved. Call AFTER the value is written, from the CvProperties mutation choke
 // points.

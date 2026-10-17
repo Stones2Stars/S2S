@@ -541,6 +541,14 @@ public:
 
 
 	bool canFoundReligion() const;
+	/// <summary>Limited Religions: this player owns a holy city and so may not found another religion. A
+	/// one-city or rebel player is exempt while LIMITED_RELIGIONS_EXCEPTIONS is on. False when the option is
+	/// off.</summary>
+	bool isReligionLimitReached() const;
+	/// <summary>Is eTech a religion-founding tech this player may not research because its religion limit is
+	/// reached? The one implementation of the Limited Religions research bar: canEverResearch and the tech
+	/// enabler's gate both ask it.</summary>
+	bool isResearchBarredByReligionLimit(TechTypes eTech) const;
 
 	int getNumNukeUnits() const;
 	void changeNumNukeUnits(int iChange);

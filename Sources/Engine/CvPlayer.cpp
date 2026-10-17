@@ -2298,6 +2298,8 @@ CvCity* CvPlayer::initCity(int iX, int iY, bool bBumpUnits, bool bUpdatePlotGrou
 	FAssertMsg(!GC.getMap().plot(iX, iY)->isCity(), "No city is expected at this plot when initializing new city");
 
 	pCity->init(pCity->getID(), getID(), iX, iY, bBumpUnits, false);
+	// The list grew; announced once the new city is initialized, so a consumer walking cities() sees a whole one.
+	emitEmpireCityCountAdded((int)getID(), 1);
 
 	if (bUpdatePlotGroups)
 	{
@@ -7718,18 +7720,9 @@ bool CvPlayer::canEverResearch(TechTypes eTech) const
 
 	// Limited religions must not allow a player to hoard religious techs to deny the religions from being founded anywhere.
 	// Religion techs are global and can thus only be invented once by one player in a game.
-	if (GC.getGame().isOption(GAMEOPTION_RELIGION_LIMITED) && !canFoundReligion())
+	if (isResearchBarredByReligionLimit(eTech))
 	{
-		// WHICH RELIGIONS DOES THIS TECH UNLOCK? -- the tech's own `enables` edge, not a sweep of every religion
-		// asking the reverse question. This runs per tech inside the AI's tech loops, so the sweep was paid
-		// religions x techs every time a research choice was scored.
-		std::set<int> unlockedReligions;
-		EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_RELIGIONS, unlockedReligions);
-
-		if (!unlockedReligions.empty())
-		{
-			return false;
-		}
+		return false;
 	}
 	return true;
 }
@@ -9309,18 +9302,33 @@ bool CvPlayer::canFoundReligion() const
 	{
 		return false;
 	}
+	return !isReligionLimitReached();
+}
 
-	if(GC.getGame().isOption(GAMEOPTION_RELIGION_LIMITED))
+bool CvPlayer::isReligionLimitReached() const
+{
+	if (!GC.getGame().isOption(GAMEOPTION_RELIGION_LIMITED))
 	{
-		if( ((getNumCities() > 1) && !(isRebel())) || !GC.isLIMITED_RELIGIONS_EXCEPTIONS() )
-		{
-			if(hasHolyCity())
-			{
-				return false;
-			}
-		}
+		return false;
 	}
-	return true;
+	if (GC.isLIMITED_RELIGIONS_EXCEPTIONS() && (getNumCities() <= 1 || isRebel()))
+	{
+		return false;
+	}
+	return hasHolyCity();
+}
+
+bool CvPlayer::isResearchBarredByReligionLimit(TechTypes eTech) const
+{
+	if (!isReligionLimitReached())
+	{
+		return false;
+	}
+	// WHICH RELIGIONS DOES THIS TECH UNLOCK? -- the tech's own `enables` edge, not a sweep of every religion
+	// asking the reverse question. This runs per tech inside the AI's tech loops.
+	std::set<int> unlockedReligions;
+	EnablerKernel::addEdge(EnablerKernel::infoFor(EDGEB_TECHS, (int)eTech), EDGEF_ENABLES, EDGEB_RELIGIONS, unlockedReligions);
+	return !unlockedReligions.empty();
 }
 
 
@@ -13304,6 +13312,7 @@ void CvPlayer::deleteCity(int iID)
 	// ⛔ Emitted BEFORE removeAt -- afterwards the id no longer resolves.
 	emitCityOwnerRemoved(iID, (int)getID());
 	m_cities[CURRENT_MAP]->removeAt(iID);
+	emitEmpireCityCountRemoved((int)getID(), 1);
 }
 
 
@@ -16876,6 +16885,11 @@ void CvPlayer::read(FDataStreamBase* pStream)
 			ReadStreamableFFreeListTrashArrayTwoPhase(*m_cities[i], pStream);
 			ReadStreamableFFreeListTrashArray(*m_units[i], pStream);
 			ReadStreamableFFreeListTrashArray(*m_selectionGroups[i], pStream);
+		}
+		// The city list lands wholesale, never through initCity, so its count fact's in-read half is here.
+		if (getNumCities() > 0)
+		{
+			emitEmpireCityCountAdded((int)getID(), getNumCities());
 		}
 		//Must be loaded AFTER units.
 		m_commanders.clear();

@@ -17,6 +17,9 @@ taking its domain's own shape:
 | projects · civics · processes · builds | the plain per-scope cap |
 | promotions | none — and the gate is on demand, not a maintained flag (§7.1 carve-out) |
 
+The tech domain carries one clause beyond the three: the Limited Religions research bar
+([what the enabler is not](05-what-the-enabler-is-not-tech-tree.md)).
+
 **Promotions are the exception to the over-offer:** they set no gate flag, but `requires` + the unit-state
 applicability leg (unitcombat QUALIFIED/DISQUALIFIED, game options, promotion-line prereq tech, and the runtime
 spy/pillage/commander/commodore/blend + intercept/evasion/XP caps) are enforced ON DEMAND at level-up, so the

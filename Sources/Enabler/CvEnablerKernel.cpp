@@ -642,25 +642,6 @@ bool EnablerKernel::queueExcludedArrivalOk(const CvCity* pCity, int iBuilding, b
 	return true;
 }
 
-// (The empire-capability query lives on the PLAYER, as its own keyed union -- Engine/CapabilityContext.h;
-// the kernel's former techs-only duplicate was folded into it 2026-07-02, capabilities.md.)
-
-// canFoundReligion -- a PLAYER-WIDE state predicate (CvPlayer::canFoundReligion): NOT a JSON frontier, reproduced from
-// game state so the enabler owns the gate (it is what enables/AI-reads the religion-founding action). >=1 city, not
-// NPC, not the first 3 turns; under RELIGION_LIMITED a holy-city owner cannot found another (minus the rebel /
-// LIMITED_RELIGIONS_EXCEPTIONS carve-out). Reads raw state only -- a faithful mirror of the engine predicate.
-bool EnablerKernel::canFoundReligion(const CvPlayer& kPlayer)
-{
-	if (kPlayer.getNumCities() < 1 || kPlayer.isNPC()
-	|| (GC.getGame().isGameStart() && GC.getGame().getElapsedGameTurns() < 3))
-		return false;
-	if (GC.getGame().isOption(GAMEOPTION_RELIGION_LIMITED))
-		if (((kPlayer.getNumCities() > 1) && !kPlayer.isRebel()) || !GC.isLIMITED_RELIGIONS_EXCEPTIONS())
-			if (kPlayer.hasHolyCity())
-				return false;
-	return true;
-}
-
 // ============================ the ONE per-building verdict ================================================
 namespace {
 

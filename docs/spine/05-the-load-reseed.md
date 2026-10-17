@@ -90,7 +90,7 @@ carry the bit and puts the fact before the `GAME_LOAD_FINISHED` fold that reads 
 disabled-power timer — a save can be taken mid-blackout — and the headquarters designation, tested off the
 loaded IDInfo via `CvGame::isHeadquartersByOwnerId`, the `isHolyCityByOwnerId` precedent, because `CvGame`'s
 array deserializes before the cities), `CvPlayer::read` (anarchy turns — a save can load mid-revolution — the
-golden-age twin), `CvPlot::read` (the plot's city, whose fact no other slot covers — no slot ever covers for
+golden-age twin — and the city count, since the city list lands wholesale and never through `initCity`), `CvPlot::read` (the plot's city, whose fact no other slot covers — no slot ever covers for
 another), `CvTeam::read` (the member count, landed through `changeNumMembers` after `m_eID` deserializes rather
 than beside the count, since the id the fact hangs on is only valid from there — and that is the team's WHOLE
 reseed, because `EmpireContext` forwards exactly three team facts and the other two, techs and projects, are

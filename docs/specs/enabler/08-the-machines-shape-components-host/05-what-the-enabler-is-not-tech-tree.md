@@ -65,9 +65,27 @@ It belongs to the picking logic, like everything else in this section — never 
 YET"* with *"it can never be offered"*, and a research QUEUE asks precisely that difference — a target is chosen
 now and researched later, so "not currently offerable" is not a refusal. ⛔ That is **not a gap in the tri-state
 to fill**: per the boundary above it is a picking concern, and `CvPlayer::canEverResearch` is its existing, single
-implementation, carrying the PERMANENT bars the enabler does not model as membership — the game-option bars
+implementation, carrying the bars the enabler does not model as membership — the game-option bars
 (`NO_FUTURE`, a tech's `PrereqGameOption`), the world-unique rule (*"religion techs are global and can only be
-invented once by one player in a game"*) and the limited-religion hoarding guard.
+invented once by one player in a game"*) and the Limited Religions research bar.
+⛔ **A bar that can hold NOW must also be on the tech GATE, or the offer and the research refusal disagree.** The
+frontier is what the research bar, the choose-tech popup and the AI iterate, whole
+([a consumer takes the frontier whole](../06-greying-the-build-list-tri-state.md)), so a tech the "ever" question
+refuses while the gate passes it is offered and then does nothing when picked. Two of these bars are therefore
+asked in both places through ONE implementation each: the world-unique rule is the tech's `allowed: {world: 1}`
+cap ([the allowed cap](../04-the-allowed-cap.md)), and the Limited Religions bar is
+`CvPlayer::isResearchBarredByReligionLimit` — a holy-city owner may not research a religion-founding tech, with
+the one-city / rebel exception while the `LIMITED_RELIGIONS_EXCEPTIONS` live option is on — which the tech gate
+stores as `GATEREASON_RELIGION_LIMIT` (it hides).
+⚠ That bar reads player state no tech event carries, so it re-gates on its own facts: a holy city gained or
+lost (`SEVT_CITY_HOLY_CITY_*`, which also carries a holy city changing hands), the city count
+(`SEVT_EMPIRE_CITY_COUNT_*` — never the city-owner pair, whose removal half fires while the city is still
+counted), rebel status, the exceptions define, the Limited Religions option, and the load end (the in-read tech
+gating runs before the player's cities have loaded). ⚖ It is the anti-hoarding rule only, the
+`isReligionLimitReached` half of `canFoundReligion`: the founding conditions (a city, not NPC, past the first
+three turns) stay on FOUNDING, where `CvTeam::setHasTech` asks them. An NPC is barred from these techs by the
+world-unique rule already, and the start window could not be re-gated in any case, since no fact marks the turn
+it closes.
 ⚠ **Do not re-derive it on the availability surface.** A second "ever" predicate reading only the membership
 planes silently drops those bars — it would call a religion tech already invented elsewhere a legitimate queue
 target ([the DRY single-implementation law](../../../architecture/patterns/03-dry-one-implementation-per.md#dry--one-implementation-per-calculation--evaluation-the-single-source-law)).
@@ -96,16 +114,18 @@ than split per domain, and it is where the option read lives for every entity-ga
 - **Evaluated against a bare ctx, deliberately.** Every authored entity gate in the tree is a `GAMEOPTION_` leaf,
   which reads the live options and consults no scope context — which is precisely what makes the verdict the same
   for every player and city, i.e. what "ever" means.
-- ⚑ **The verdict is STABLE for the game, and that is load-bearing: nothing the enabler gates rides a
-  BUG/live option.** A game option is fixed at setup, whereas a live option (`setDefineINT`) is changeable
-  mid-game, and its flip announces only as the string-keyed `SEVT_GAME_GLOBAL_DEFINE_ADDED / _REMOVED`
-  ([the named fact families](../../../spine/03-the-domain-emit-surface-every-fact/02-the-named-fact-families.md)),
-  which no enabler route consumes — so a maintained verdict gating on one would go permanently stale with nothing
-  to re-derive it ([self-heal is not a backstop](../../../cascade/03-no-staleness-no-selfheal.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban)). The last
-  enabler-facing live options went with the ranged-bombard removal
-  ([superseded-ideas #24](../../../architecture/superseded-ideas.md)), so the hazard is absent from this surface rather
-  than merely avoided. ⛔ Do not gate an enabler entity on a live option — authored data may not gate on one at all
-  ([python-read-map.md](../../../reference/python-read-map.md) ruling 3).
+- ⚑ **The verdict is STABLE for the game, and that is load-bearing: no entity gate rides a BUG/live option.**
+  A game option is fixed at setup, whereas a live option (`setDefineINT`) is changeable mid-game, and its flip
+  announces only as the string-keyed `SEVT_GAME_GLOBAL_DEFINE_ADDED / _REMOVED`
+  ([the named fact families](../../../spine/03-the-domain-emit-surface-every-fact/02-the-named-fact-families.md))
+  — so a maintained verdict gating on one goes permanently stale unless that fact re-gates it
+  ([self-heal is not a backstop](../../../cascade/03-no-staleness-no-selfheal.md#-a-self-heal-is-the-fossil-of-a-missing-emit--so-it-is-a-search-not-just-a-ban)).
+  ⛔ Authored data may not gate on a live option at all
+  ([python-read-map.md](../../../reference/python-read-map.md) ruling 3), so no entity gate can.
+  ⚖ An ENGINE clause of a gate may read one only where the define fact is routed to re-gate exactly what the
+  clause decides, matched by the define's name (`spineGlobalDefineName`). The one such clause is the Limited
+  Religions research bar's `LIMITED_RELIGIONS_EXCEPTIONS` leg (above), which `CvEnablerConsumer` re-gates on
+  that define's flip.
 
 > **⛔ A TRANSFORMATION ASKS `everAvailable` + THE TARGET'S `requires` — NEVER THE QUEUE-OFFER VERDICT.**
 > `STATE_LISTED` means *"offered in the production queue, in this city, right now"*. That is the right question
