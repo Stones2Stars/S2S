@@ -2532,7 +2532,9 @@ player (`getBonusRevealedTo`, `getImprovementRevealedTo`, `getRouteRevealedTo`, 
 passability, movement, spotting and blockades are asked through the player-keyed reads (`CvPlot::…For`,
 `CvPlayer::isHasTech`), which take the team step themselves. What has no revealed form shows only while the
 observer sees the tile: the defence bonus, the irrigation verdict, the working-city pair, the culture contest
-(everything but the owner line), builds in progress and the plot properties. Amounts print through `amountText`,
+(everything but the owner line), builds in progress and the plot properties. The yields of a fogged tile are its
+nature segment alone (terrain, feature, the revealed bonus); the improvement, route and event parts are what the
+tile holds now. Terrain and feature are not fogged: the map shows them live. Amounts print through `amountText`,
 spot values in plots (`visionPlotsText`).
 
 1. **What the tile is, with its yields:** peak or hill, feature and terrain on one line (water in

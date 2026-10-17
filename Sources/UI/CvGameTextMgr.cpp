@@ -1759,13 +1759,17 @@ void CvGameTextMgr::setPlotHelp(CvWStringBuffer& szString, CvPlot* pPlot, bool b
 		// A random event's grant is a PERSISTED store beside the cascade, never a deposit in it, so it appears
 		// in neither the substrate nor the improvement nor the rest -- it is summed by the reader
 		// ([three-planes.md] § WHY DELTA-DERIVING FAILED BEFORE, which is also what CvPlot::getYields does).
-		// ⚠ It has to be in the TOTAL here or the hover and the tile disagree about the same number, and it is
-		// stored in whole yields, so it lifts onto this ×100 plane.
-		const int64_t iEvent = (int64_t)pPlot->getEventYield((YieldTypes)iYield) * 100;
-		const int64_t iTotal = std::max<int64_t>(0, pPlot->getCascadePackage().readFlat(iChannel) + iObserverDelta + iEvent);
+		// ⚠ It has to be in the TOTAL here or the hover and the tile disagree about the same number.
+		// ⚖ ON A FOGGED TILE ONLY THE NATURE SEGMENT IS SHOWN. The improvement, route and event parts are what the
+		// tile holds now, and the observer has only seen its revealed improvement and route; nature is the terrain,
+		// the feature and the revealed bonus, which the map itself shows.
+		const int64_t iEvent = bVisible ? (int64_t)pPlot->getEventYield((YieldTypes)iYield) * 100 : 0;
 		const int64_t iNature = std::max<int64_t>(0, pPlot->getCascadePackage().readSubstrateFlat(iChannel) + iObserverDelta);
-		const int64_t iImprovement = pPlot->getCascadePackage().readImprovementFlat(iChannel);
-		const int64_t iRest = pPlot->getCascadePackage().readRestFlat(iChannel);
+		const int64_t iImprovement = bVisible ? pPlot->getCascadePackage().readImprovementFlat(iChannel) : 0;
+		const int64_t iRest = bVisible ? pPlot->getCascadePackage().readRestFlat(iChannel) : 0;
+		const int64_t iTotal = bVisible
+			? std::max<int64_t>(0, pPlot->getCascadePackage().readFlat(iChannel) + iObserverDelta + iEvent)
+			: iNature;
 		if (iTotal == 0 && iNature == 0 && iImprovement == 0 && iRest == 0 && iEvent == 0)
 		{
 			continue;   // a channel this tile has never carried says nothing worth a line
