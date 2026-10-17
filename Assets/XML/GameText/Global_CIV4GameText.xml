@@ -15011,6 +15011,16 @@
 		<Russian>%D1_Change[ICON_HEALTHY] îò Ñîáûòèé</Russian>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_HAPPY_FROM_EVENTS</Tag>
+		<English>%D1_Change[ICON_HAPPY]: Events</English>
+		<French>%D1_Change[ICON_HAPPY]: Evén.</French>
+		<German>%D1_Change[ICON_HAPPY]: Events</German>
+		<Italian>%D1_Change[ICON_HAPPY]: Eventi</Italian>
+		<Spanish>%D1_Change[ICON_HAPPY]: Eventos</Spanish>
+		<Polish>%D1_Change[ICON_HAPPY]: Wydarzenia</Polish>
+		<Russian>%D1_Change[ICON_HAPPY]: Ñîáûòèÿ</Russian>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_KEY_MISC_GOOD_HEALTH_FROM_HANDICAP</Tag>
 		<English>%D1_Change[ICON_HEALTHY] from Difficulty Level</English>
 		<French>%D1_Change[ICON_HEALTHY] (niveau de difficulté)</French>
