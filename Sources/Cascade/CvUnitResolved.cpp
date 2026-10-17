@@ -333,6 +333,29 @@ void UnitResolvedHideAndSeek::addMethodSkill(int iMethodSkillId, int iNet)
 	methodSkills.push_back(std::make_pair(iMethodSkillId, iNet));
 }
 
+int unitResolvedSlotFor(ModifierFamily eFamily, int iKind, CvCascUnit eUnit)
+{
+	for (int iSlot = 0; iSlot < NUM_UNIT_RESOLVED_SLOTS; ++iSlot)
+	{
+		const UnitSlotAddress& kAddress = g_aSlotAddress[iSlot];
+		ModifierFamily eSlotFamily = kAddress.family;
+		int iSlotKind = kAddress.kind;
+		if (kAddress.scalar >= 0)
+		{
+			// a straggler row is addressed by its InfoScalar, whose (family, kind) the vocabulary owns
+			infoScalarSlot((InfoScalar)kAddress.scalar, eSlotFamily, iSlotKind);
+		}
+		const CvCascUnit eSlotUnit = (kAddress.unit == UNIT_CANONICAL)
+			? infoKindUnit(eSlotFamily, iSlotKind, CASC_SCOPE_UNIT)
+			: kAddress.unit;
+		if (eSlotFamily == eFamily && iSlotKind == iKind && eSlotUnit == eUnit)
+		{
+			return iSlot;
+		}
+	}
+	return -1;
+}
+
 void UnitResolvedValues::gatherInto(const CvUnit& kUnit, int (&aiOut)[NUM_UNIT_RESOLVED_SLOTS])
 {
 	UnitResolvedHideAndSeek kUnusedBlock;

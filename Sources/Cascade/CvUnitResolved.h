@@ -186,6 +186,11 @@ enum UnitResolvedSlot
 	NUM_UNIT_RESOLVED_SLOTS
 };
 
+///<summary>The slot that resolves this unit-scope (family, kind, unit) address, or -1 when the plane has none.
+/// For a reader that holds an ENTRY and wants the unit's resolved value for its address -- the unit hover
+/// lists what the carriers author and reads each value off the unit.</summary>
+int unitResolvedSlotFor(ModifierFamily eFamily, int iKind, CvCascUnit eUnit);
+
 //	The resolved values + their dirty flag. A DATA MEMBER on CvUnit (the guardrail bars adding vtable BASES to
 //	EXE-bound classes, never members -- patterns.md). NEVER SERIALIZED: derived data is never trusted from a save
 //	(docs/specs/save.md §5 (derived data serializes NOTHING)), and the held set it gathers from is itself restored by the save read.
@@ -207,6 +212,8 @@ public:
 	// The `hideAndSeek` reads -- bare fetches, exactly like the slot read above.
 	int concealment() const { return m_hideAndSeek.concealment; }
 	int detectionAgainst(int iMethodSkillId) const { return m_hideAndSeek.detectionAgainst(iMethodSkillId); }
+	///<summary>Every detection row of the fold, as (method SKILL id, detection) pairs.</summary>
+	const std::vector<std::pair<int, int> >& detectionRows() const { return m_hideAndSeek.detection; }
 	bool holdsMethodSkill(int iMethodSkillId) const { return m_hideAndSeek.holdsMethodSkill(iMethodSkillId); }
 	bool noInvisibilityGranted() const { return m_hideAndSeek.noInvisibilityNet > 0; }
 

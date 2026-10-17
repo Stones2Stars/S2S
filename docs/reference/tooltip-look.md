@@ -880,6 +880,26 @@ finished.
 
 ## `parsePromotionHelpInternal`
 
+### Design — the promotion hover
+
+What the promotion does, then what it changes about the unit, then the shared tail — the order the unit hover
+lists the same things in:
+
+- the effect lines over the unit families → `appendEntityEffectLines`, through the entry renderer
+- %s1 control points  <!-- TXT_KEY_PROMOTIONHELP_CONTROL_POINTS_AMOUNT --> · %s1 command range  <!-- TXT_KEY_PROMOTIONHELP_COMMAND_RANGE_AMOUNT -->
+  — `identity.controlPoints` / `identity.commandRange`, signed
+- Skills: <skill>, …  <!-- TXT_KEY_UNITHELP_SKILLS --> · Removes skills: <skill>, …  <!-- TXT_KEY_PROMOTIONHELP_REMOVES_SKILLS -->
+  — the grant and revoke planes of its `skills` block ([skills.md](../specs/skills.md) §4)
+- Adds combat classes: <name of the thing>, …  <!-- TXT_KEY_PROMOTIONHELP_ADDS_COMBAT_CLASSES --> · Removes combat
+  classes: <name of the thing>, …  <!-- TXT_KEY_PROMOTIONHELP_REMOVES_COMBAT_CLASSES --> — `skills.unitCombats` /
+  `skills.removesUnitCombats`
+- the authored help text (`identity.help`) as written — for a promotion whose effect the engine codes by its type,
+  the only description of it
+- the edge and requires blocks of the shared spine → `appendEntityBlocks` with no families
+
+The `hideAndSeek` and `sizeMatters` blocks, and the `identity` eligibility (`unitCombats`, `notOnUnitCombats`,
+`notOnDomains`, `levelPrereq`, `minEra`, `stateReligionPrereq`), are not listed. The keys below are the legacy look.
+
 - *On the %s1_PromotionLine  <!-- TXT_KEY_PROMOTIONHELP_LINE -->
 - *Promotion Line Rank: %d1_PromotionLine  <!-- TXT_KEY_PROMOTIONHELP_LINE_PRIORITY -->
 - *Can Attack Multiple Times per Turn  <!-- TXT_KEY_PROMOTIONHELP_BLITZ -->
@@ -1658,6 +1678,55 @@ a read-time walk of what each live source authored, never a stored per-source pl
 - *This Unit will Stealth Defend  <!-- TXT_KEY_UNITHELP_STEALTH_DEFEND -->
 - *May only exist on a %s1_MapCat.  <!-- TXT_KEY_MAP_CATEGORY_PREREQUISITE -->
 - → `setUnitCombatHelp`
+
+### Design — the unit hover (`setUnitHelp` / `setBasicUnitHelp`, and under a live unit)
+
+⚖ **TWO RULES.** (1) A live unit's hover states THAT unit's values as the engine reads them, and nothing the
+hover would have to work out itself ([a composer never re-derives what the engine calculates](../architecture/patterns/04-the-info-data-out-contract-what-an/03-the-coherent-surface-grouped.md#the-coherent-surface--grouped-storage-parameterized-getters-clarity-and-predictability-is-king)).
+(2) An icon wherever the font has one for the quantity (strength, moves, gold, production, the property glyphs),
+words where it has none (vision, combat, heal, detection).
+
+One composition for both hovers (`appendUnitBlocks`), differing only in whose values it reads:
+
+- Cost: %d1<hammer> — → `appendUnitProductionCost`; type hover only
+- %d1<strength>, %d1<moves>, %d1 vision — the type's own BASE values, unsigned on one line; type hover only. Vision
+  is in plots, one plot of open ground is 100 authored ([vision.md §1a](../specs/vision.md)). The same keys on a
+  promotion are bonuses and keep their signed lines.
+- Upkeep: %s1<gold>  <!-- TXT_KEY_UNITHELP_UPKEEP_AMOUNT --> — the type's, or what the unit costs its owner now
+  (shown to its owner only)
+- Combat: +%d1% dynamic defense, +%d1% stealth, …  <!-- TXT_KEY_UNITHELP_COMBAT --> — the plain `combat.unit`
+  amounts on one line; the memberless one reads "strength"
+- the other modifier lines, through the entry renderer: keyed (+%d1% combat for <name of the thing>), conditioned,
+  property (-%d1<crime>, -%d1<crime>, on this plot)
+- Targets first in combat: <name of the thing>, … · Defends first against: <name of the thing>, … — the
+  `targets` / `unitTargets` / `defenders` flags, one line per heading
+- Skills: <skill>, <skill>, …  <!-- TXT_KEY_UNITHELP_SKILLS --> — the type's authored skills; type hover only
+- +%d1 concealment · +%d1 detection vs <hiding method> — the `hideAndSeek` block, in plots like vision
+- → `appendGrantLines` — the promotions the unit is created with; type hover only
+- the edge and requires blocks of the shared spine; type hover only
+
+⚖ **ONE STRENGTH READING AND ONE RENDERING FOR EVERY UNIT LINE.** The live unit's condition line and the
+stack's group line both read `gt_unitStrength` (air strength for an air unit, ground strength otherwise, current
+and full with no plot or opponent in the question) and render through `unitStrengthText`: 4<strength> at full
+health, 3.5/4<strength> when damaged (the group line averages the group), ?/4<strength> mid-combat. Damage shows
+as the reduced strength, not as a separate HP fraction.
+
+⚖ **Under a live unit** (the selected-unit and plot hovers) the condition line already states the unit's
+current strength, moves and vision (its own sight without the ground's elevation) and the icon row its held
+promotions, and what it took to build the type no longer applies — so no cost, stat line, starting promotions,
+edges or requires. The candidate lines are what the type, held promotions and held combat classes author, and
+each is shown only with the value the engine reads off the unit: a resolved slot (`unitResolvedSlotFor`), a unit
+getter (`unitCombatModifier`, `terrain`/`featureAttackModifier`, `domainModifier`, `unitAttackModifier`,
+`flankingStrengthbyUnitCombatTotal`, the per-class heal, `getInvestigationTotal` / `getInsidiousnessTotal`,
+`revoltProtectionTotal`), or for
+the `targets` / `defenders` flags the unit type, which is what the engine asks. An address the engine has no read
+for (the keyed movement and work rates), and a conditioned entry, is left off. A property is one total per target,
+-6<crime> to the city and -3<crime>, on this plot, read by `CvUnit::getPropertySourceTotal` — the read the city's
+unit-sourced sum (`CvCity::getTotalUnitSourcedProperty`) is made of — against the city the unit stands in, else its
+plot. Skills are left to
+the type hover and the held promotions' own hovers: the engine composes them skill by skill, with no single read.
+The skills a combat class gives are not listed on either.
+The hideAndSeek rows are the unit's resolved fold.
 
 ## `setBonusHelp`
 
@@ -2587,8 +2656,9 @@ spot values in plots (`visionPlotsText`).
 
 ⚑ **A stack stays one screen high.** A lone unit, and every unit when the caller asks for one line each (the
 off-screen indicator), renders through `setUnitHelp`. A stack renders the unit the plot draws through
-`setUnitHelp`, then one line per owner and unit type with the count, the average strength (current/full when
-damaged) and the owner when it is foreign and not hidden; one line per group when five or fewer, otherwise one
+`setUnitHelp`, then one line per owner and unit type with the count, the average strength (rendered like the unit
+line's, see the unit hover above) and the owner when it is foreign and not hidden; one line per group when five
+or fewer, otherwise one
 shared line.
 
 - → `setUnitHelp`

@@ -20,6 +20,8 @@
 #include "CvCommerceInfo.h"
 #include "Data/CvReadJson.h"        // rjInfoForTypeConst -- FK id -> the referenced info (name resolution; a READ)
 #include "Data/CvDepositRead.h"     // MMKernel::unitIsPercentSide
+#include "CvClassificationRegistry.h"   // keyOf -- a hiding method's skill key, for its name
+#include "CvPropertyInfo.h"             // getChar -- a property's font glyph
 #include "Defines/CvGlobals.h"
 #include "AI/CvGameAI.h"            // the live game options a condition's GAMEOPTION_ atoms resolve against
 
@@ -53,6 +55,33 @@ namespace
 			bWordStart = false;
 		}
 		return szPretty;
+	}
+
+	///<summary>An authored member path ("dynamicDefense", "counterDamage.chance") as lower-case words ("dynamic
+	/// defense", "counter damage chance"). Presentation-casing only, like etx_prettyToken; a run of capitals stays
+	/// one word.</summary>
+	CvWString etx_memberWords(const char* szMember)
+	{
+		CvWString szWords;
+		bool bPrevUpper = false;
+		for (const char* pChar = szMember; *pChar != '\0'; ++pChar)
+		{
+			const char cChar = *pChar;
+			if (cChar == '.')
+			{
+				szWords += L' ';
+				bPrevUpper = false;
+				continue;
+			}
+			const bool bUpper = (cChar >= 'A' && cChar <= 'Z');
+			if (bUpper && !bPrevUpper && !szWords.empty() && szWords[szWords.size() - 1] != L' ')
+			{
+				szWords += L' ';
+			}
+			szWords += bUpper ? (wchar_t)(cChar - 'A' + 'a') : (wchar_t)(unsigned char)cChar;
+			bPrevUpper = bUpper;
+		}
+		return szWords;
 	}
 
 	// The uncached localized name of an info base (see the file header). Empty/unreachable -> the fallback.
@@ -198,14 +227,25 @@ namespace
 			}
 			else
 			{
-				szName = CvWString(szFamilyFallback);   // the authored family key, verbatim
+				szName = etx_memberWords(szFamilyFallback.c_str());   // the authored family key, as words
 			}
 		}
-		if (entry.memberSeg >= 0)
+		// a member named like its own family (`heal.unit.….heal`) would read "heal heal", so it is not repeated
+		const char* szOwnFamilyKey = (entry.family == MODFAM_PROPERTY) ? NULL : infoFamilyKey(entry.family);
+		if (entry.memberSeg >= 0
+		&& (szOwnFamilyKey == NULL || strcmp(modSegmentSpell(entry.memberSeg), szOwnFamilyKey) != 0))
 		{
-			szName += CvWString(L" ") + CvWString(modSegmentSpell(entry.memberSeg));
+			szName += CvWString(L" ") + etx_memberWords(modSegmentSpell(entry.memberSeg));
 		}
 		return szName;
+	}
+
+	///<summary>The name of the entity an entry targets by key ("UNITCOMBAT_CRIMINAL" -> "Criminals").</summary>
+	CvWString etx_targetName(const CvModEntry& entry)
+	{
+		const char* szTypeSegment = etx_targetTypeSegment(entry);
+		const std::string szTargetType = (szTypeSegment != NULL) ? szTypeSegment : "";
+		return etx_infoNameForType(szTargetType, entry.targetFk);
 	}
 
 	// Is this entry's `per` quantum of 100 folded into the magnitude, so "30 per 100 Population" reads
@@ -218,10 +258,15 @@ namespace
 			&& !MMKernel::unitIsPercentSide(entry.unit);
 	}
 
-	// The entry's magnitude as rendered: absolute, with a normalised `per` quantum folded in.
+	// The entry's magnitude as rendered: absolute, with a normalised `per` quantum folded in. A vision amount
+	// reads in plots of open ground (vision.md §1a: VISION_PLOT to the plot), so "+100" sight is "+1".
 	int etx_absMagnitude(const CvModEntry& entry)
 	{
-		const int iAbsValue = (entry.value < 0) ? -entry.value : entry.value;
+		int iAbsValue = (entry.value < 0) ? -entry.value : entry.value;
+		if (entry.family == MODFAM_VISION && !MMKernel::unitIsPercentSide(entry.unit))
+		{
+			iAbsValue /= VISION_PLOT;
+		}
 		return etx_perNormalised(entry) ? iAbsValue / 100 : iAbsValue;
 	}
 
@@ -695,6 +740,137 @@ CvWString amountText(int64_t iAmount)
 	return CvWString::format(L"%s%I64d.%02I64d", szSign, iWhole, iFraction);
 }
 
+CvWString unitStrengthText(int iCurrentStrength, int iFullStrength, bool bCurrentUnknown)
+{
+	const CvWString szGlyph = CvWString::format(L"%c", gDLL->getSymbolID(STRENGTH_CHAR));
+	if (bCurrentUnknown)
+	{
+		return CvWString(L"?/") + amountText(iFullStrength) + szGlyph;
+	}
+	if (iCurrentStrength < iFullStrength)
+	{
+		return amountText(iCurrentStrength) + L"/" + amountText(iFullStrength) + szGlyph;
+	}
+	return amountText(iFullStrength) + szGlyph;
+}
+
+CvWString propertySourceLine(PropertyTypes eProperty, int iAmountPerTurn, bool bOnPlot)
+{
+	const CvPropertyInfo& kProperty = GC.getPropertyInfo(eProperty);
+	CvWString szLine = CvWString::format(L"%+d", iAmountPerTurn);
+	if (kProperty.getChar() > 0)
+	{
+		szLine += CvWString::format(L"%c", kProperty.getChar());
+	}
+	else
+	{
+		szLine += CvWString(L" ") + etx_infoBaseName(kProperty, kProperty.getType());
+	}
+	if (bOnPlot)
+	{
+		szLine += CvWString(L", ") + etx_scopePhrase(CASC_SCOPE_PLOT);
+	}
+	return szLine;
+}
+
+CvWString upkeepAmountText(int iUpkeep100)
+{
+	return amountText(iUpkeep100);
+}
+
+CvWString visionAmountText(int iSight)
+{
+	return visionPlotsText(iSight) + L" vision";
+}
+
+bool entryIsUnitBaseStat(const CvModEntry& entry)
+{
+	return (entry.family == MODFAM_STRENGTH || entry.family == MODFAM_MOVEMENT || entry.family == MODFAM_VISION)
+		&& entry.scope == CASC_SCOPE_UNIT
+		&& entry.unit == CASC_UNIT_FLAT
+		&& entry.kind == 0
+		&& !entry.isConditioned()
+		&& !entry.aiOnly
+		&& entry.targetFk < 0
+		&& entry.targetSeg < 0;
+}
+
+CvWString entryUnitBaseStatText(const CvModEntry& entry)
+{
+	if (entry.family == MODFAM_VISION)
+	{
+		return visionAmountText(entry.value);
+	}
+	if (entry.family == MODFAM_STRENGTH)
+	{
+		return unitStrengthText(entry.value, entry.value, false);
+	}
+	const CvWString szAmount = amountText((entry.value < 0) ? -etx_absMagnitude(entry) : etx_absMagnitude(entry));
+	const int iSymbol = gDLL->getSymbolID((entry.family == MODFAM_STRENGTH) ? STRENGTH_CHAR : MOVES_CHAR);
+	return szAmount + CvWString::format(L"%c", iSymbol);
+}
+
+bool entryIsMembershipFlag(const CvModEntry& entry)
+{
+	//	The shape CvModifiers::parseLeaf compiles a `{TYPE: true}` keyed-container flag into, and the same test
+	//	CvUnitInfo materializes its targeting sets from.
+	return entry.family == MODFAM_COMBAT
+		&& entry.scope == CASC_SCOPE_UNIT
+		&& entry.unit == CASC_UNIT_COUNT
+		&& entry.targetSeg >= 0
+		&& entry.targetFk >= 0;
+}
+
+CvWString entryMembershipHeading(const CvModEntry& entry)
+{
+	static int iTargetsSeg = -1;
+	static int iUnitTargetsSeg = -1;
+	static int iDefendersSeg = -1;
+	if (entry.targetSeg == modSegmentCached("targets", iTargetsSeg)
+	|| entry.targetSeg == modSegmentCached("unitTargets", iUnitTargetsSeg))
+	{
+		return L"Targets first in combat";
+	}
+	if (entry.targetSeg == modSegmentCached("defenders", iDefendersSeg))
+	{
+		return L"Defends first against";
+	}
+	return entryClassificationName(modSegmentSpell(entry.targetSeg));
+}
+
+CvWString entryMembershipTarget(const CvModEntry& entry)
+{
+	return etx_targetName(entry);
+}
+
+CvWString hideAndSeekConcealmentLine(int iConcealment)
+{
+	return CvWString((iConcealment < 0) ? L"" : L"+") + visionPlotsText(iConcealment) + L" concealment";
+}
+
+CvWString hideAndSeekDetectionLine(int iMethodSkill, int iDetection)
+{
+	return CvWString((iDetection < 0) ? L"" : L"+") + visionPlotsText(iDetection)
+		+ L" detection vs " + entryClassificationName(ClassificationRegistry::keyOf(CLSD_SKILL, iMethodSkill));
+}
+
+bool entryIsPlainCombatMember(const CvModEntry& entry)
+{
+	return entry.family == MODFAM_COMBAT
+		&& entry.scope == CASC_SCOPE_UNIT
+		&& !entry.isConditioned()
+		&& !entry.aiOnly
+		&& entry.targetFk < 0
+		&& entry.targetSeg < 0;
+}
+
+CvWString entryCombatSummary(const CvModEntry& entry)
+{
+	//	The memberless combat percent modifies the unit's whole strength (the slot table's URS_STRENGTH_PERCENT).
+	const CvWString szWhat = (entry.memberSeg >= 0) ? etx_memberWords(modSegmentSpell(entry.memberSeg)) : CvWString(L"strength");
+	return etx_signedMagnitude(entry) + L" " + szWhat;
+}
+
 //	Is this condition NOTHING BUT a plain mention of the subject? Anything it carries beyond that -- a second
 //	clause, a count, an upper bound, a connection requirement -- is information the line must keep, so it
 //	answers false. A group wrapping exactly one `all` child is seen through.
@@ -751,18 +927,47 @@ CvWString entryDetailLine(const CvModEntry& entry, EnEdgeBucket eSubjectBucket, 
 		}
 		szLine = CvWString(L"+") + amountText(etx_absMagnitude(entry)) + CvWString::format(L"%c", iSymbol);
 	}
+	else if (entryIsMembershipFlag(entry))
+	{
+		// a membership flag carries no magnitude: the container says what the listed entity is to the unit
+		szLine = entryMembershipHeading(entry) + L": " + etx_targetName(entry);
+	}
+	else if ((entry.family == MODFAM_STRENGTH || entry.family == MODFAM_MOVEMENT)
+	      && entry.scope == CASC_SCOPE_UNIT && entry.unit == CASC_UNIT_FLAT && entry.kind == 0)
+	{
+		// a unit's own strength and moves render as the stat glyphs, the way the unit bar shows them ("+3<strength>")
+		const int iSymbol = gDLL->getSymbolID((entry.family == MODFAM_STRENGTH) ? STRENGTH_CHAR : MOVES_CHAR);
+		szLine = etx_signedMagnitude(entry) + CvWString::format(L"%c", iSymbol);
+	}
+	else if (entry.family == MODFAM_PROPERTY && entry.propertyFk >= 0 && entry.unit == CASC_UNIT_FLAT
+	      && GC.getPropertyInfo((PropertyTypes)entry.propertyFk).getChar() > 0)
+	{
+		// a property with a font glyph renders as it, the way the city bar shows crime or disease ("-4<crime>");
+		// the glyph slot is 0 inside the load window, where the name stays (see etx_channelLabel)
+		szLine = etx_signedMagnitude(entry)
+			+ CvWString::format(L"%c", GC.getPropertyInfo((PropertyTypes)entry.propertyFk).getChar());
+	}
 	else
 	{
 		szLine = etx_signedMagnitude(entry) + L" " + etx_entryName(entry);
 	}
 
-	// the deposit's target: a named-entity key renders its resolved name; a plural object-target its token
+	// the deposit's target: a named-entity key renders its resolved name; a plural object-target its token.
+	// A family-scoped keyed container ([CvInfoKinds] INFO_FAMILY_TARGET_TOKENS) is part of what the entry means,
+	// so it is named before the target ("+100% combat flanking for Siege"); a plain container like `buildings`
+	// only says the key is a building, which the name already does.
 	bool bPluralTarget = false;
-	if (entry.targetFk >= 0)
+	if (entryIsMembershipFlag(entry))
 	{
-		const char* szTypeSegment = etx_targetTypeSegment(entry);
-		const std::string szTargetType = (szTypeSegment != NULL) ? szTypeSegment : "";
-		szLine += CvWString(L" for ") + etx_infoNameForType(szTargetType, entry.targetFk);
+		// the heading above already named the container and the target
+	}
+	else if (entry.targetFk >= 0)
+	{
+		if (entry.targetSeg >= 0 && infoIsFamilyTargetToken(entry.family, modSegmentSpell(entry.targetSeg)))
+		{
+			szLine += CvWString(L" ") + etx_memberWords(modSegmentSpell(entry.targetSeg));
+		}
+		szLine += CvWString(L" for ") + etx_targetName(entry);
 	}
 	else if (entry.targetSeg >= 0)
 	{

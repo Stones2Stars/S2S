@@ -17,6 +17,8 @@
 //	  [ -- units matching <unitQual>][ -- per city religion matching <religionQual>][ [AI only]]
 //	The `while` clause is left off when a page subject is named and the clause is only a plain mention of it.
 //	The magnitude is /100 at THIS out boundary (the reader rule, docs/specs/curators/fixed-point-and-scales.md §1 (the x100 fixed-point model)).
+//	A unit's own strength and moves, and a property that has a font glyph, render as their glyphs; a combat
+//	membership flag carries no magnitude: it reads "<container heading>: <target>".
 //
 
 #include "Defines/CvString.h"   // CvWString -- the rendered line type
@@ -61,6 +63,55 @@ CvWString visionPlotsText(int iVisionAmount);
 ///<summary>Does the info carry an entry whose `enabled` condition tests ePredicate? For a composer that states the
 /// verdict of that predicate beside the entity, because one of its entries depends on it.</summary>
 bool infoHasEntryConditionedOn(const CvInfo& info, CvCascPredKind ePredicate);
+
+///<summary>A unit's strength as the unit and stack lines show it, from the engine's current and full strength:
+/// "4<strength>" at full health, "3.5/4<strength>" when damaged, "?/4<strength>" when the current value cannot be
+/// answered (mid-combat). The one rendering both lines go through, so they read alike.</summary>
+CvWString unitStrengthText(int iCurrentStrength, int iFullStrength, bool bCurrentUnknown);
+
+///<summary>A per-turn property amount a unit delivers, as the entry lines show a property: "-6<crime>" to its city,
+/// "-3<crime>, on this plot" to its plot. The property's name stands in where its font glyph is not set.</summary>
+CvWString propertySourceLine(PropertyTypes eProperty, int iAmountPerTurn, bool bOnPlot);
+
+///<summary>A live unit's upkeep (CvUnit::getUpkeep) as the number a tooltip prints: "2", "2.5".</summary>
+CvWString upkeepAmountText(int iUpkeep100);
+
+///<summary>A sight amount, in the engine's vision scale, as plots of open ground: "2 vision", "1.25 vision".</summary>
+CvWString visionAmountText(int iSight);
+
+///<summary>Is this a unit's plain strength, moves or sight amount -- unconditioned, untargeted, memberless? On a
+/// unit TYPE that is its base value rather than a bonus; the same key on a promotion is a bonus. Only the
+/// composer knows which it is composing.</summary>
+bool entryIsUnitBaseStat(const CvModEntry& entry);
+
+///<summary>One of those as a unit type's base value, unsigned: "2<strength>", "1<moves>", "1 vision".</summary>
+CvWString entryUnitBaseStatText(const CvModEntry& entry);
+
+///<summary>Is this a combat MEMBERSHIP flag, a `combat.unit.<container>.{TYPE}: true` key such as the targets and
+/// defenders lists? It names an entity and carries no magnitude, so it never renders as "+1".</summary>
+bool entryIsMembershipFlag(const CvModEntry& entry);
+
+///<summary>What a membership flag's container means, as the heading its targets are listed under ("Targets first
+/// in combat", "Defends first against"). Several flags of one container can share one line.</summary>
+CvWString entryMembershipHeading(const CvModEntry& entry);
+
+///<summary>The name of the entity a membership flag lists ("Criminals").</summary>
+CvWString entryMembershipTarget(const CvModEntry& entry);
+
+///<summary>A hideAndSeek concealment as a line, in plots on the vision scale ("+3 concealment").</summary>
+CvWString hideAndSeekConcealmentLine(int iConcealment);
+
+///<summary>One hideAndSeek detection row -- a hiding method's SKILL id and the detection against it -- as a line,
+/// in plots on the vision scale ("+2 detection vs Disguised").</summary>
+CvWString hideAndSeekDetectionLine(int iMethodSkill, int iDetection);
+
+///<summary>Is this an unconditioned, untargeted `combat.unit` amount? Those read together on one "Combat:"
+/// line; a keyed or conditioned one keeps its own line.</summary>
+bool entryIsPlainCombatMember(const CvModEntry& entry);
+
+///<summary>One of those as an item of that line, without the family word: "+4% dynamic defense",
+/// "+10% strength" for the memberless amount.</summary>
+CvWString entryCombatSummary(const CvModEntry& entry);
 
 // The minimal condition-to-text renderer (no other condition renderer exists in the tree -- census 2026-07):
 // a prebuilt CvCondition tree -> one phrase ("Coal connected", "IS_WATER and not HAS_HILLS", "3+ Grassland").
