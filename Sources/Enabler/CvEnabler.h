@@ -61,6 +61,7 @@ public:
 		GATEREASON_CAP_SELF,      // its own `allowed` world/team/empire cap is consumed
 		GATEREASON_CAP_GROUP,     // the SpecialBuilding group cap is consumed by a sibling
 		GATEREASON_CAP_CATEGORY,  // this city's culture-level wonder-CATEGORY cap is full
+		GATEREASON_RELIGION_LIMIT, // Limited Religions: a holy-city owner may not research a religion-founding tech
 
 		// ==== the `requires` family -- one entry per ATOM KIND, CONTIGUOUS ====
 		// Contiguous so "is this a requires reason" is a range test (isRequiresReason) rather than a list every
@@ -113,6 +114,7 @@ public:
 		case GATEREASON_CAP_SELF:
 		case GATEREASON_CAP_GROUP:
 		case GATEREASON_CAP_CATEGORY:
+		case GATEREASON_RELIGION_LIMIT:
 		case GATEREASON_REQUIRES_TECH:
 		case GATEREASON_REQUIRES_PROMOTION:
 		case GATEREASON_REQUIRES_TERRAIN:
@@ -161,6 +163,7 @@ public:
 		case GATEREASON_CAP_SELF:              return "CAP_SELF";
 		case GATEREASON_CAP_GROUP:             return "CAP_GROUP";
 		case GATEREASON_CAP_CATEGORY:          return "CAP_CATEGORY";
+		case GATEREASON_RELIGION_LIMIT:        return "RELIGION_LIMIT";
 		case GATEREASON_REQUIRES:              return "REQUIRES";
 		case GATEREASON_REQUIRES_TECH:         return "REQUIRES_TECH";
 		case GATEREASON_REQUIRES_BUILDING:     return "REQUIRES_BUILDING";

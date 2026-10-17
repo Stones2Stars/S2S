@@ -16,6 +16,7 @@
 #include "Enabler/CvEnablerKernel.h"           // EnablerKernel::generate/requiresMet -- the GENERATE pass + the ONE gate evaluator
 #include "Conditions/CvConditionEval.h"    // CvCascadeEvalCtx -- the gate evaluation's context
 #include "CvTechInfo.h"                // cascadeStartNode -- the synthetic TECH_GAME_START root (off the InfoRepo)
+#include "CvReligionInfo.h"            // a religion's EDGEF_ENABLED_BY -- the techs that found it
 
 // The tech's cascade info: the synthetic TECH_GAME_START root lives OFF the InfoRepo (cascadeStartNode) --
 // but it IS a held engine tech (the guaranteed root, enabler.md par.2), so its edges apply through the same
@@ -73,14 +74,20 @@ void TechEnabler::initDomain(const CvPlayer& kPlayer)
 // all/any -- techs are monotonic, no operate) through the ONE evaluator, AND the `allowed` cap
 // (EnablerKernel::allowedOk's tech branch -- the engine-owned counts, e.g. the 29 world-unique founder techs).
 // Either failing sets the domain's gate verdict: a tree member is GREYED (in the tree, unattainable now),
-// never removed.
+// never removed. The Limited Religions bar (CvPlayer::isResearchBarredByReligionLimit) is the tech domain's own
+// extra clause; it hides, so it replaces any reason that only greys.
 static void te_gate(const CvPlayer& kPlayer, EnablerDomain& d, int iTech)
 {
 	const CvInfo* j = te_techInfo(iTech);
 	CvCascadeEvalCtx ec;
 	kPlayer.getEmpireContext().fillEvalCtx(ec);   // player+team -- the contexts fill the eval state (contexts.md)
 	CvCascadeEvalFlags gateFlags;
-	d.setGateReason(iTech, EnablerKernel::standardGateReason(j, iTech, kPlayer, ec, gateFlags, /*bUnit*/ false, EDGEB_TECHS));
+	unsigned char eReason = EnablerKernel::standardGateReason(j, iTech, kPlayer, ec, gateFlags, /*bUnit*/ false, EDGEB_TECHS);
+	if (!EnablerDomain::reasonHides(eReason) && kPlayer.isResearchBarredByReligionLimit((TechTypes)iTech))
+	{
+		eReason = EnablerDomain::GATEREASON_RELIGION_LIMIT;
+	}
+	d.setGateReason(iTech, eReason);
 }
 
 // The TOUCHED candidate set of one tech event H -- everything whose state or gate can change with H, all read
@@ -114,8 +121,10 @@ void TechEnabler::onTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas)
 		d.setHeld((int)eTech, bHas);
 		te_applyDelta(d, (int)eTech, bHas ? +1 : -1);
 		// gate-on-entry + the re-gates (par.7.1 step 2), over ONLY the touched candidates. During the load
-		// reseed this runs per event as it arrives (the pure per-event option of the par.7.1 order rule); the
-		// gate's atoms are team techs, final before any player reads, so every evaluation is stable.
+		// reseed this runs per event as it arrives: the `requires` atoms are team techs, final before any player
+		// reads. The Limited Religions clause reads the player's cities, which have not loaded yet, so for that
+		// clause the domain takes the other par.7.1 option -- it is gated once after the stream ends
+		// (onReligionLimitChangedForAll at SEVT_GAME_LOAD_FINISHED).
 		for (std::set<int>::const_iterator it = touched.begin(); it != touched.end(); ++it)
 			te_gate(kPlayer, d, *it);
 	}
@@ -133,5 +142,35 @@ void TechEnabler::onTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas)
 			if (!d.isSeeded()) continue;
 			te_gate(kPlayer, d, (int)eTech);
 		}
+	}
+}
+
+// The candidates of the Limited Religions bar are the religion-founding techs, read off each religion's own
+// EDGEF_ENABLED_BY (the techs whose `enables` names it) -- the reverse view the load pass built, never a sweep
+// of the tech registry.
+void TechEnabler::onReligionLimitChanged(PlayerTypes ePlayer)
+{
+	if (ePlayer < 0 || ePlayer >= MAX_PLAYERS) return;
+	const CvPlayer& kPlayer = GET_PLAYER(ePlayer);
+	EnablerDomain& techDomain = kPlayer.m_enabler.techs;
+	if (!techDomain.isSeeded()) return;
+	for (int iReligion = 0; iReligion < GC.getNumReligionInfos(); ++iReligion)
+	{
+		const CvInfo* pReligion = InfoRepo<CvReligionInfo>::get().get(iReligion);
+		if (pReligion == NULL) continue;
+		const std::vector<int>* pFoundingTechs = pReligion->edge(EDGEF_ENABLED_BY, EDGEB_TECHS);
+		if (pFoundingTechs == NULL) continue;
+		for (size_t iFounder = 0; iFounder < pFoundingTechs->size(); ++iFounder)
+		{
+			te_gate(kPlayer, techDomain, (*pFoundingTechs)[iFounder]);
+		}
+	}
+}
+
+void TechEnabler::onReligionLimitChangedForAll()
+{
+	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; ++iPlayer)
+	{
+		onReligionLimitChanged((PlayerTypes)iPlayer);
 	}
 }

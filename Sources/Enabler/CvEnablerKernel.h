@@ -246,9 +246,6 @@ public:
 		const CvCascadeEvalCtx& ec, const CvCascadeEvalFlags& gateFlags, bool bUnit,
 		EnEdgeBucket eBucket = NO_EDGEB);
 
-	// canFoundReligion -- a PLAYER-WIDE state predicate reproduced from game state (CvPlayer::canFoundReligion).
-	static bool canFoundReligion(const CvPlayer& kPlayer);
-
 	// The ONE requires-tree HAVE-atom scanner (recursing GROUP children + enabled/disabled): classifies PRESENCE
 	// atoms by type prefix/token and PREDICATEs by predKind into `d`. The two legs that differ between the three
 	// reverse-index builders are parameters: bTrackUnits collects UNIT_ presence atoms (the unit index's

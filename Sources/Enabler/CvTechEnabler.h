@@ -37,6 +37,15 @@ public:
 	// initialized player of eTeam. Idempotent per player (the held flag guards re-emits).
 	static void onTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas);
 
+	/// <summary>Re-gates ePlayer's religion-founding techs. The Limited Religions bar reads player state that no
+	/// tech event carries -- the holy cities held, the city count, rebel status -- so each of those facts routes
+	/// here.</summary>
+	static void onReligionLimitChanged(PlayerTypes ePlayer);
+
+	/// <summary>onReligionLimitChanged for every player: the load-end pass, and the game-wide facts (the
+	/// Limited Religions option, the exceptions define) that move every player's bar at once.</summary>
+	static void onReligionLimitChangedForAll();
+
 };
 
 #endif // CV_TECH_ENABLER_H

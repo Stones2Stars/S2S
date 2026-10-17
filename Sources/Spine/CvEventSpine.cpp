@@ -473,6 +473,8 @@ static const char* spineDomainPrefix(int iEventId)
 	case SEVT_EMPIRE_BUILDING_COUNT_REMOVED:    return "[SPINE/EMPIRE] empireBuildingCountRemoved";
 	case SEVT_EMPIRE_UNIT_COUNT_ADDED:          return "[SPINE/EMPIRE] empireUnitCountAdded";
 	case SEVT_EMPIRE_UNIT_COUNT_REMOVED:        return "[SPINE/EMPIRE] empireUnitCountRemoved";
+	case SEVT_EMPIRE_CITY_COUNT_ADDED:          return "[SPINE/EMPIRE] empireCityCountAdded";
+	case SEVT_EMPIRE_CITY_COUNT_REMOVED:        return "[SPINE/EMPIRE] empireCityCountRemoved";
 	case SEVT_CITY_BUILDING_ADDED:              return "[SPINE/CITY] cityBuildingAdded";
 	case SEVT_CITY_BUILDING_REMOVED:            return "[SPINE/CITY] cityBuildingRemoved";
 	case SEVT_CITY_BUILDING_ACTIVATED:          return "[SPINE/CITY] cityBuildingActivated";
@@ -1709,6 +1711,22 @@ void emitEmpireUnitCountRemoved(int iPlayer, int iUnit, int iCount)
 	eventSpine().emit(e);
 }
 
+void emitEmpireCityCountAdded(int iPlayer, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_CITY_COUNT_ADDED, -1, iCount, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iPlayer).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
+void emitEmpireCityCountRemoved(int iPlayer, int iCount)
+{
+	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_EMPIRE_CITY_COUNT_REMOVED, -1, iCount, 0, iPlayer, -1);
+	e.iDomainTag = SD_SPINE;
+	e.addI(SPF_OWNER, iPlayer).addI(SPF_COUNT, iCount);
+	eventSpine().emit(e);
+}
+
 void emitPlotGroupBonusAdded(int iOwner, int iPlotGroupId, int iBonus, int iCount)
 {
 	CvSpineEvent e(EVENTKIND_DOMAIN, SEVT_PLOTGROUP_BONUS_ADDED, iBonus, iCount, 0, iOwner, iPlotGroupId);
@@ -2002,6 +2020,22 @@ void emitGameGlobalDefineAdded(const char* szName, int eKind, int iValue, float 
 		e.addI(SPF_VALUE, iValue);
 	}
 	eventSpine().emit(e);
+}
+
+const char* spineGlobalDefineName(const CvSpineEvent& kEvent)
+{
+	if (kEvent.iEventId != SEVT_GAME_GLOBAL_DEFINE_ADDED && kEvent.iEventId != SEVT_GAME_GLOBAL_DEFINE_REMOVED)
+	{
+		return NULL;
+	}
+	for (int iField = 0; iField < kEvent.iFieldCount; ++iField)
+	{
+		if (kEvent.aFields[iField].eTag == SPF_DEFINE)
+		{
+			return kEvent.aFields[iField].v.s;
+		}
+	}
+	return NULL;
 }
 
 void emitGameGlobalDefineRemoved(const char* szName, int eKind, int iValue, float fValue, const char* szValue)

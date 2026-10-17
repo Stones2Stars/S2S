@@ -103,7 +103,11 @@ store that owns the verdict, and by nothing else. ⚠ Government centre and fres
 no pair of their own: nothing gates their delivery, so the refcount crossing IS their verdict and a bespoke
 fact for either would be one happening announced twice. POWER is the exception and keeps its own pair — it
 announces the GATED verdict (`isPowered`), which genuinely differs from the store crossing),
-**`SEVT_EMPIRE_ANARCHY_ADDED / _REMOVED`** (`CvPlayer::changeAnarchyTurns`), **`SEVT_TEAM_MEMBER_ADDED / _REMOVED`**
+**`SEVT_EMPIRE_ANARCHY_ADDED / _REMOVED`** (`CvPlayer::changeAnarchyTurns`), **`SEVT_EMPIRE_CITY_COUNT_ADDED /
+_REMOVED`** (`CvPlayer::initCity` once the new city is initialized, `CvPlayer::deleteCity` after the removal, and the
+in-read half in `CvPlayer::read` once the list has landed, carrying the whole count — the empire tally beside the
+per-city `SEVT_CITY_OWNER_*`, whose removal half fires while the city still resolves and is still counted),
+**`SEVT_TEAM_MEMBER_ADDED / _REMOVED`**
 and **`SEVT_AREA_TILE_ADDED / _REMOVED`** (the two bare counters `EmpireContext::teamMemberCount` / `CityContext`'s
 AREA_SIZE + max-adjacent-water read), and **`SEVT_WORLD_UNIT_CREATED_COUNT_ADDED`** (the world-instance cap's
 cumulative counter — distinct from `SEVT_EMPIRE_UNIT_COUNT_ADDED / _REMOVED`, the player's LIVE per-type tally, and
