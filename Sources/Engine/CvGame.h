@@ -53,6 +53,12 @@ public:
 
 	DllExport void initDiplomacy();
 	void initFreeState();
+	///<summary>
+	/// Whether a team starts with this tech: a tech of an era before the game's start era (for an NPC team only
+	/// the hominids'), or a free tech of the civilization of a team member whose lifecycle has started. The one
+	/// rule for a new game's teams and for a team created mid-game.
+	///</summary>
+	bool isStartingTech(TeamTypes eTeam, TechTypes eTech) const;
 	DllExport void initFreeUnits();
 
 	void assignStartingPlots(const bool bScenario = false, const bool bMapScript = false);

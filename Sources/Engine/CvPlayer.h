@@ -782,6 +782,17 @@ public:
 	// the team techs/projects this player starts under, PLAYER_INIT). First-time-only; the load path stays
 	// CvPlayer::read's own in-read emits.
 	void announceLifecycleStart();
+	///<summary>
+	/// Whether this player's lifecycle has started: its domains are primed (by announceLifecycleStart or the save
+	/// read) and it receives its team's per-player facts, alive or not. A reset clears it.
+	///</summary>
+	bool isLifecycleStarted() const { return m_enabler.techs.isSeeded(); }
+	///<summary>
+	/// Whether a team-held fact of eTeam (a tech, a project count) is announced to this player: it is on that team
+	/// and its lifecycle has started, alive or not
+	/// (docs/spine/03-the-domain-emit-surface-every-fact/02-the-named-fact-families.md).
+	///</summary>
+	bool receivesTeamFacts(TeamTypes eTeam) const { return getTeam() == eTeam && isLifecycleStarted(); }
 
 	// ---- THE AVAILABILITY READ SURFACE (player-held domains) -- the ENABLER's "can I, right now?" half of the
 	// GAME-OBJECT read role (patterns.md § THE TWO READ ROLES), one read pair per DOMAIN, the existing engine enum

@@ -493,9 +493,21 @@ void CvPlayer::initInGame(PlayerTypes eID, bool bSetAlive)
 	// civ got a player whose tech/civic/promotion frontiers were empty for the rest of the game. The held-tech
 	// replay inside is what delivers the facts that fired before this player existed. It runs AFTER the team
 	// join above (the replay reads the team's held techs/projects) and BEFORE initMore, whose trait/civic
-	// setters emit this player's first own facts. initMore announces first-thing itself, so the placement here
-	// covers only a slot initMore's status guard skips.
+	// setters emit this player's first own facts; initMore's own announce call then finds the player started.
 	announceLifecycleStart();
+
+	// A team created during play starts with what a new game's team starts with (CvGame::isStartingTech, which
+	// CvGame::initFreeState grants at game start).
+	if (bTeamInit && GC.getGame().isFinalInitialized())
+	{
+		for (int iTech = 0; iTech < GC.getNumTechInfos(); ++iTech)
+		{
+			if (GC.getGame().isStartingTech(getTeam(), (TechTypes)iTech))
+			{
+				GET_TEAM(getTeam()).setHasTech((TechTypes)iTech, true, NO_PLAYER, false, false);
+			}
+		}
+	}
 
 	if ((GC.getInitCore().getSlotStatus(getID()) == SS_TAKEN) || (GC.getInitCore().getSlotStatus(getID()) == SS_COMPUTER))
 	{
@@ -1835,13 +1847,13 @@ void CvPlayer::setupGraphical()
 // slot both pass because the owner's reset un-seeds the domains.
 void CvPlayer::announceLifecycleStart()
 {
-	if (m_enabler.techs.isSeeded())
+	if (isLifecycleStarted())
 	{
 		return;
 	}
-	// THE ENABLER'S PER-PLAYER LIFECYCLE START (enabler.md §7.1), ahead of the fact that begins this player's
-	// event stream: size each domain and apply its static exclusions. The appliers SKIP an un-init'd domain, so
-	// a player primed after its first HAVE-event would drop that event's edges permanently.
+	// THE ENABLER'S PER-PLAYER LIFECYCLE START, ahead of the fact that begins this player's event stream: size
+	// each domain and apply its static exclusions. The appliers SKIP an un-init'd domain, so a player primed
+	// after its first HAVE-event would drop that event's edges permanently.
 	primeEnablerDomains();
 	// The HANDICAP is CvInitCore state with no internal setter on this object; the modifier folds the
 	// handicap's families into this player's packages off this fact (event-spine.md: a genuine cascade input).
@@ -1882,9 +1894,10 @@ void CvPlayer::announceLifecycleStart()
 
 void CvPlayer::initFreeState()
 {
-	// The game-start provisions (civ civics/techs/buildings + era/handicap startingGold) are handed over by the
-	// GRANTS MACHINE off the lifecycle announce's PLAYER_INIT -- emit() dispatches synchronously, so the gold has
-	// landed by the time this returns. ⛔ The trigger belongs HERE, not in initFreeUnits: initFreeUnits
+	// The game-start STARTING GOLD (era + handicap startingGold) is handed over by the GRANTS MACHINE off the
+	// lifecycle announce's PLAYER_INIT -- emit() dispatches synchronously, so the gold has landed by the time this
+	// returns. The civilization's free techs come from CvGame::isStartingTech's grant, not from that trigger.
+	// ⛔ The trigger belongs HERE, not in initFreeUnits: initFreeUnits
 	// early-returns on a null starting plot (so a player could be skipped entirely) and ran AFTER the gold was
 	// already applied, while initFreeState is called for every alive player (CvGame::initFreeState) and has no
 	// early return.
@@ -11264,6 +11277,13 @@ void CvPlayer::setTeam(TeamTypes eTeam)
 	TeamTypes eOldTeam = getTeam();
 
 	FAssert(eOldTeam != NO_TEAM);
+	// The slot layout keeps NPC players on NPC teams and civ players on civ teams (docs/reference/engine.md
+	// § Player and team slots); a move across it is refused before any team counter moves.
+	if (isNPC() || eTeam >= MAX_PC_TEAMS)
+	{
+		FErrorMsg(CvString::format("CvPlayer::setTeam refused: player %d to team %d crosses the NPC boundary", (int)getID(), (int)eTeam).c_str());
+		return;
+	}
 
 	if (isAlive())
 	{
@@ -16539,7 +16559,7 @@ void CvPlayer::read(FDataStreamBase* pStream)
 		{
 			const CvTeam& kMyTeam = GET_TEAM(getTeam());
 			// Tech is TEAM-held and the EXE reads teams BEFORE players, so the team's techs are loaded now -- emit
-			// per-self for each held team tech (one emit per alive member player, realized from the player side).
+			// per-self for each held team tech, for every player the save carries.
 			// A REPEAT tech (the Future Tech class) announced once per COUNT INCREMENT at play, so the reseed
 			// matches: one emit per held count -- an emit-per-flag would fold a different state across a
 			// save/load round-trip than play built.

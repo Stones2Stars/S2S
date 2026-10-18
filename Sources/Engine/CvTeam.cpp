@@ -505,6 +505,12 @@ void CvTeam::addTeam(TeamTypes eTeam)
 {
 	PROFILE_EXTRA_FUNC();
 	FAssertMsg(eTeam != NO_TEAM && eTeam != getID() && eTeam < MAX_PC_TEAMS, CvString::format("eTeam = %d", (int)eTeam).c_str());
+	// A merge never crosses the civ/NPC slot boundary (docs/reference/engine.md § Player and team slots).
+	if (isNPC() || GET_TEAM(eTeam).isNPC())
+	{
+		FErrorMsg(CvString::format("CvTeam::addTeam refused: team %d with team %d crosses the NPC boundary", (int)getID(), (int)eTeam).c_str());
+		return;
+	}
 
 	CLLNode<TradeData>* pNode;
 
@@ -4190,13 +4196,13 @@ void CvTeam::changeProjectCount(ProjectTypes eIndex, int iChange)
 		processProjectChange(eIndex, iChange, iOldProjectCount);
 
 		// #430 event spine: announce the project count change (inside the iChange != 0 guard, after commit + apply).
-		// PER-MEMBER emits -- one per alive member player (the tech-emit precedent): a project is TEAM state consumed
+		// PER-MEMBER emits -- one per member player (the tech-emit precedent): a project is TEAM state consumed
 		// per player (the enabler applies to the emitting player's domain; the modifier mark scopes per player), so a
 		// single leader-only emit under-reaches teammates. Emitted HERE (the count choke point), NOT in
 		// processProjectChange, whose other caller re-applies effects and is not a genuine state change.
 		for (int iMemberIndex = 0; iMemberIndex < MAX_PLAYERS; iMemberIndex++)
 		{
-			if (GET_PLAYER((PlayerTypes)iMemberIndex).isAlive() && GET_PLAYER((PlayerTypes)iMemberIndex).getTeam() == getID())
+			if (GET_PLAYER((PlayerTypes)iMemberIndex).receivesTeamFacts(getID()))
 			{
 				if (iChange > 0)
 	{
@@ -4779,10 +4785,10 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 		}
 		processTech(eTech, iChange, bAnnounce);
 		// #430 event spine: broad tech-changed event on the repeat-tech (e.g. Future Tech) count change path.
-		// Fanned per alive member, exactly as the non-repeat commit below.
+		// Fanned per member, exactly as the non-repeat commit below.
 		for (int iMember = 0; iMember < MAX_PLAYERS; iMember++)
 		{
-			if (GET_PLAYER((PlayerTypes)iMember).isAliveAndTeam(getID()))
+			if (GET_PLAYER((PlayerTypes)iMember).receivesTeamFacts(getID()))
 			{
 				if (bNewValue)
 				{
@@ -4819,12 +4825,12 @@ void CvTeam::setHasTech(TechTypes eTech, bool bNewValue, PlayerTypes ePlayer, bo
 	m_pabHasTech[eTech] = bNewValue;
 	// #430 event spine: broad tech-changed event (any set, gain or loss) -- past the no-change guard, after commit.
 	// This is the ADDITIONAL broad emit; the SEVT_TECH_ACQUIRED first-discoverer emit below stays separate.
-	// Tech is TEAM-held, so the fact fans PER-SELF over every alive member (the reseed's own shape: one emit
-	// per member player) -- a single leader-attributed emit left every other teammate's consumers deaf to a
-	// play-time acquisition.
+	// Tech is TEAM-held, so the fact fans PER-SELF over the members (the reseed's own shape: one emit per member
+	// player) -- a single leader-attributed emit left every other teammate's consumers deaf to a play-time
+	// acquisition.
 	for (int iMember = 0; iMember < MAX_PLAYERS; iMember++)
 	{
-		if (GET_PLAYER((PlayerTypes)iMember).isAliveAndTeam(getID()))
+		if (GET_PLAYER((PlayerTypes)iMember).receivesTeamFacts(getID()))
 		{
 			if (bNewValue)
 			{
