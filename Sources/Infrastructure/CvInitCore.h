@@ -230,6 +230,10 @@ public:
 	DllExport void setLeader(PlayerTypes eID, LeaderHeadTypes eLeader);
 
 	DllExport TeamTypes getTeam(PlayerTypes eID) const;
+	///<summary>
+	/// Puts a slot on a team. An NPC slot always stays on its own team, and a civ slot's move to an NPC team is
+	/// refused (docs/reference/engine.md § Player and team slots).
+	///</summary>
 	DllExport void setTeam(PlayerTypes eID, TeamTypes eTeam);
 
 	DllExport HandicapTypes getHandicap(PlayerTypes eID) const;

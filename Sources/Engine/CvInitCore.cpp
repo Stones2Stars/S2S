@@ -1459,6 +1459,15 @@ TeamTypes CvInitCore::getTeam(PlayerTypes eID) const
 void CvInitCore::setTeam(PlayerTypes eID, TeamTypes eTeam)
 {
 	FASSERT_BOUNDS(0, MAX_PLAYERS, eID);
+	// The EXE renumbers teams over NPC slots too (docs/reference/engine.md § Player and team slots).
+	if (eID >= MAX_PC_PLAYERS)
+	{
+		eTeam = (TeamTypes)eID;
+	}
+	else if (eTeam >= MAX_PC_TEAMS)
+	{
+		return;
+	}
 	if (getTeam(eID) != eTeam)
 	{
 		m_aeTeam[eID] = eTeam;

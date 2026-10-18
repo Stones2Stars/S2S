@@ -1324,7 +1324,6 @@ void CvGame::initDiplomacy()
 void CvGame::initFreeState()
 {
 	PROFILE_EXTRA_FUNC();
-	const EraTypes iStartEra = getStartEra();
 
 	//	THE PLAYERS PRIME BEFORE THE FIRST TEAM TECH IS SET. The tech grants below fan SEVT_EMPIRE_TECH_ADDED
 	//	per member, and every player-domain applier DROPS a fact that lands on an un-seeded domain -- so with the
@@ -1341,32 +1340,34 @@ void CvGame::initFreeState()
 
 	for (int iI = 0; iI < GC.getNumTechInfos(); iI++)
 	{
-		const CvTechInfo& tech = GC.getTechInfo((TechTypes)iI);
-
 		for (int iJ = 0; iJ < MAX_TEAMS; iJ++)
 		{
-			if (GET_TEAM((TeamTypes)iJ).isAlive())
+			if (GET_TEAM((TeamTypes)iJ).isAlive() && isStartingTech((TeamTypes)iJ, (TechTypes)iI))
 			{
-				if (tech.getEra() < iStartEra && !tech.isDisable()
-				&& (!GET_TEAM((TeamTypes)iJ).isNPC() || GET_TEAM((TeamTypes)iJ).isHominid()))
-				{
-					GET_TEAM((TeamTypes)iJ).setHasTech((TechTypes)iI, true, NO_PLAYER, false, false);
-				}
-				else
-				{
-					for (int iK = 0; iK < MAX_PLAYERS; iK++)
-					{
-						if (GET_PLAYER((PlayerTypes)iK).isAliveAndTeam((TeamTypes)iJ)
-						&& GC.getCivilizationInfo(GET_PLAYER((PlayerTypes)iK).getCivilizationType()).isFreeTech((TechTypes)iI))
-						{
-							GET_TEAM((TeamTypes)iJ).setHasTech((TechTypes)iI, true, NO_PLAYER, false, false);
-							break;
-						}
-					}
-				}
+				GET_TEAM((TeamTypes)iJ).setHasTech((TechTypes)iI, true, NO_PLAYER, false, false);
 			}
 		}
 	}
+}
+
+bool CvGame::isStartingTech(TeamTypes eTeam, TechTypes eTech) const
+{
+	const CvTechInfo& kTech = GC.getTechInfo(eTech);
+	const CvTeam& kTeam = GET_TEAM(eTeam);
+	if (kTech.getEra() < getStartEra() && !kTech.isDisable() && (!kTeam.isNPC() || kTeam.isHominid()))
+	{
+		return true;
+	}
+	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
+	{
+		const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iPlayer);
+		if (kPlayer.receivesTeamFacts(eTeam) && kPlayer.getCivilizationType() != NO_CIVILIZATION
+		&& GC.getCivilizationInfo(kPlayer.getCivilizationType()).isFreeTech(eTech))
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 
@@ -8429,6 +8430,16 @@ void CvGame::read(FDataStreamBase* pStream)
 	for (int iTeam = 0; iTeam < MAX_TEAMS; iTeam++)
 	{
 		GET_TEAM((TeamTypes)iTeam).reset((TeamTypes)iTeam);
+	}
+	//	⛔ THE PLAYERS TOO, and for them the half-built state is a CRASH. reset(NO_HANDICAP) above uninits every
+	//	player, which frees its info-sized arrays and leaves m_bAlive as the game in memory before this load left
+	//	it. So until a player's own read, a slot alive in that game answers isAlive() with no arrays, and the
+	//	in-read facts of every player read before it walk all live players (CvGame::countReligionLevels for a
+	//	religion-count deposit condition) straight into a null m_paiHasReligionCount. Idempotent the same way:
+	//	CvPlayer::read opens with its own reset(), and an omitted slot ends not alive whatever this leaves.
+	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
+	{
+		GET_PLAYER((PlayerTypes)iPlayer).reset((PlayerTypes)iPlayer);
 	}
 
 	WRAPPER_READ_STRING(wrapper, "CvGame", m_gameId);	// flags for expansion

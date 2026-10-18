@@ -28,8 +28,8 @@ public:
 	static void initDomain(const CvPlayer& kPlayer);   // lifecycle sizing only -- the events build the content
 	// MUST run BEFORE TechEnabler::onTechChanged (the player tech domain's held flag is the broad-emit flip guard)
 	static void onTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas);
-	// SEVT_PROJECT_CHANGED: PER-MEMBER emits (one per alive team member, the tech-emit precedent) -- applies to
-	// ePlayer's domain ONLY, on the team count's 0-crossing (iDelta = the applied count delta).
+	// SEVT_EMPIRE_PROJECT_ADDED / _REMOVED: one emit per member that receives team facts (CvPlayer::receivesTeamFacts)
+	// -- applies to ePlayer's domain ONLY, on the team count's 0-crossing (iDelta = the applied count delta).
 	static void onProjectChanged(PlayerTypes ePlayer, ProjectTypes eProject, int iDelta);
 };
 

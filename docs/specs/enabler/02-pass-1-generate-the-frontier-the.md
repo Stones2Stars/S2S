@@ -27,8 +27,10 @@ enabler's doing: the settler's `grants.buildings` places it at founding — the 
 [json](../json.md) §5.)*
 
 **`TECH_GAME_START` is guaranteed into HAVE at load.** It is an ordinary tech record that is **never in the tech
-tree** (`identity.disable`) — so: **new games hold it through their civilization's free techs; a save made before
-the root existed does not** and gets it **added on save load if absent** (the `CvTeam::read` backfill that keeps
+tree** (`identity.disable`) — so: **every team holds it through its civilization's free techs**, granted by the
+one starting-tech rule (`CvGame::isStartingTech`) at game start (`CvGame::initFreeState`) and when a team is created
+during play (`CvPlayer::initInGame`); **a save made before the root existed does not** and gets it **added on save
+load if absent** (the `CvTeam::read` backfill that keeps
 an old save's generation rooted). Without it, generation on such a save produces an empty tree. **This backfill
 is the ONLY engine special case the root model needs** — everything else is pure data + the generic machine.
 (The engine also names the root in two places that are not the model: the load-time repair of a civilization's
