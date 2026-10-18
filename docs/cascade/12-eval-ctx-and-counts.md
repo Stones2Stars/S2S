@@ -65,7 +65,8 @@ vicinity bonuses it has, never WHICH. So a `plots`-target (or keyed) deposit's o
 gate is `has(id)` (count > 0).
 
 > **⚖ THAT PRODUCT IS A YIELD, AND THE DICTIONARY IS ONE OF ITS TWO OPERANDS.** `Δ(flat × count) = flat ×
-> Δcount` is exact — this is plane **B** of the maintained sum
+> Δcount` is exact for this linear product (a scaler with `each` or `above` re-books instead,
+> [05-three-planes.md](05-three-planes.md)) — this is plane **B** of the maintained sum
 > (§ THE MAINTAINED SUM, above), and it is why a count fact is emitted at
 > all: an `add(id, ±1)` IS a yield delta, never a re-derivation.
 > ⛔ **So a dictionary is not merely a gate store beside the value plane — it IS part of the value plane.** A
