@@ -63,8 +63,8 @@ derived state the object owns, and announces the fact.
 > wrapper picks its read overload from the destination, and a wider local asks the stream for a type code the
 > writer never wrote ([save.md](../specs/save.md)).
 
-Tech is team-held but emitted per-self from each member's `CvPlayer::read`, one emit per alive member; projects
-the same. Beside the DOMAIN facts the setters emit, the read may announce what the STREAM CONTAINED as
+Tech is team-held but emitted per-self from each player's `CvPlayer::read`, once per held count
+([the tech fact](03-the-domain-emit-surface-every-fact/02-the-named-fact-families.md)); projects the same. Beside the DOMAIN facts the setters emit, the read may announce what the STREAM CONTAINED as
 `SAVELOAD` lines — a log of loading, consumed by logging alone.
 
 **The load reseed, concretely:** `CvPlayer::read` per held tech / project / civic / trait / heritage + era /

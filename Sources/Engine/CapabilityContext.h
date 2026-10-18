@@ -22,15 +22,10 @@
 //	grantor still justifies (docs/cascade.md §EVERY DERIVED STORE IS ONE SHAPE (keyed accumulator)). A whole-union REFILL hides that: it recounts every time, so
 //	the multi-grantor case appears to work while nothing delta-maintains it. That is what this replaced.
 //
-//	⚖ THE TECH LEG HAS TWO TRIGGERS, because tech is TEAM-held while this store is PER-PLAYER:
-//	   - AT LOAD each member emits per-self (`CvPlayer::read` walks its team's held techs), so the fact already
-//	     reaches every player and the fold is a plain +1.
-//	   - AT PLAY `CvTeam::setHasTech` emits ONCE, naming the acquiring player, so the fold FANS over that team's
-//	     members. Unguarded, that fan would count every member twice against the load build -- so it is guarded to
-//	     the non-load path, exactly as the amenity fold guards its play-time civic fan (contexts.md).
-//	  ⚑ The withdrawal needs no new fact: `setHasTech` already announces BOTH directions past its no-change guard
-//	  (SEVT_EMPIRE_TECH_ADDED / _REMOVED), so the advanced-start refund -- the one live path that clears a tech --
-//	  withdraws exactly what it deposited.
+//	⚖ THE TECH LEG FOLDS INTO THE PLAYER THE FACT NAMES, WITH NO FAN OVER THE TEAM: the tech fact is already
+//	per player (docs/spine/03-the-domain-emit-surface-every-fact/02-the-named-fact-families.md).
+//	  ⚑ The withdrawal needs no new fact: `setHasTech` announces BOTH directions past its no-change guard
+//	  (SEVT_EMPIRE_TECH_ADDED / _REMOVED), so a cleared tech withdraws exactly what it deposited.
 //
 //	⛔ IT ONLY CONSUMES. Facts in, state out, nothing back.
 //
