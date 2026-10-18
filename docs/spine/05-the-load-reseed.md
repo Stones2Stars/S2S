@@ -86,6 +86,13 @@ carries the `IS_WORKED` verdict but only the city can attribute it, so the array
 the fact comes from — and the cities stream AFTER the map, which is exactly what makes the plot available to
 carry the bit and puts the fact before the `GAME_LOAD_FINISHED` fold that reads each plot's FINAL block.
 
+⛔ **Every team and every player is WHOLE before anything streams — `CvGame::read` resets both first.** The EXE
+reads the map before any team, and the players one after another, while the in-read facts of whatever is read
+first already reach the rest: a tech-gated deposit asks a team, a religion-count condition counts over every live
+player. Left to its own read, a team or player stands half-built until then — null info-sized arrays, and for a
+player the alive flag of the game that was in memory before the load. ⛔ The fix is never a guard at each reader:
+the object being whole is the invariant.
+
 **The reseed grew the matching in-read halves** wherever the setter cannot run on a load: `CvCity::read` (the
 disabled-power timer — a save can be taken mid-blackout — and the headquarters designation, tested off the
 loaded IDInfo via `CvGame::isHeadquartersByOwnerId`, the `isHolyCityByOwnerId` precedent, because `CvGame`'s

@@ -8431,6 +8431,16 @@ void CvGame::read(FDataStreamBase* pStream)
 	{
 		GET_TEAM((TeamTypes)iTeam).reset((TeamTypes)iTeam);
 	}
+	//	⛔ THE PLAYERS TOO, and for them the half-built state is a CRASH. reset(NO_HANDICAP) above uninits every
+	//	player, which frees its info-sized arrays and leaves m_bAlive as the game in memory before this load left
+	//	it. So until a player's own read, a slot alive in that game answers isAlive() with no arrays, and the
+	//	in-read facts of every player read before it walk all live players (CvGame::countReligionLevels for a
+	//	religion-count deposit condition) straight into a null m_paiHasReligionCount. Idempotent the same way:
+	//	CvPlayer::read opens with its own reset(), and an omitted slot ends not alive whatever this leaves.
+	for (int iPlayer = 0; iPlayer < MAX_PLAYERS; iPlayer++)
+	{
+		GET_PLAYER((PlayerTypes)iPlayer).reset((PlayerTypes)iPlayer);
+	}
 
 	WRAPPER_READ_STRING(wrapper, "CvGame", m_gameId);	// flags for expansion
 
