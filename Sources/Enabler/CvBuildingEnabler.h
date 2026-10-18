@@ -37,7 +37,7 @@ public:
 	// The HAVE-source axes feeding the buildings bucket (the store's enables.buildings inversion sources).
 	enum CityHaveAxis
 	{
-		AX_TECH = 0,       // team techs (incl. the TECH_GAME_START root via the cascadeStartNode redirect)
+		AX_TECH = 0,       // team techs (the TECH_GAME_START root among them)
 		AX_CIVIC = 1,      // the player's adopted civics
 		AX_BUILDING = 2,   // this city's present buildings (contributing only while NOT tech-obsolete)
 		AX_RELIGION = 3,   // this city's present religions

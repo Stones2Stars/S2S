@@ -17,7 +17,7 @@
 #include "CvBuildingInfo.h"
 #include "CvUnitInfo.h"
 #include "CvBuildInfo.h"
-#include "CvTechInfo.h"                // + cascadeStartNode -- the synthetic TECH_GAME_START root
+#include "CvTechInfo.h"
 #include "CvCivicInfo.h"
 #include "CvReligionInfo.h"
 #include "CvCorporationInfo.h"
@@ -534,12 +534,6 @@ namespace
 	// the dynamic plot axis with its own event routing), and PROPERTY_ bands (the property engine's axis).
 	CvInfo* rp_requiredByRefInfo(const std::string& szType, int iId)
 	{
-		// the synthetic root's cascade data lives OFF the InfoRepo (cascadeStartNode) -- route it there, never
-		// the GC poco (the split-brain the /state/info read exposed)
-		if (szType == "TECH_GAME_START")
-		{
-			return &cascadeStartNode();
-		}
 		if (!szType.compare(0, 5, "TECH_"))
 		{
 			return InfoRepo<CvTechInfo>::get().editPtr(iId);
@@ -1322,7 +1316,6 @@ namespace
 		RP_RELATED_SOURCE_KINDS(X)
 		#undef X
 		rp_sortUniqueKind<CvComplexTraitTag>(GC.getNumTraitInfos());
-		cascadeStartNode().sortUniqueEdges();
 		//	The receivers OUTSIDE the kind table. They are landed on like any other info, and this pass runs in
 		//	both load phases, so a receiver left out of the dedup carries every entry once per phase.
 		rp_sortUniqueKind<CvTerrainInfo>(GC.getNumTerrainInfos());
@@ -1342,7 +1335,7 @@ namespace
 	// The unit's era = its FIRST prereq TECH atom's era (the top-level requires.build AND list, in authored
 	// order). The atom's kind is classified by its RESOLVED id through the ONE type dispatch: the routed info
 	// is a tech iff it IS the tech repo's object at that id (repos are disjoint object sets, so pointer
-	// identity is exact; TECH_GAME_START resolves id -1 and never qualifies). NO_ERA when tech-free.
+	// identity is exact). NO_ERA when tech-free.
 	int rp_firstPrereqTechEra(const CvInfo* pUnitData)
 	{
 		const CvCondition* pBuild = pUnitData->requiresBuild();

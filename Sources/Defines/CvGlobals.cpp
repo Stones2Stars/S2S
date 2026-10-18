@@ -14,7 +14,7 @@
 #include "CvInfoUtil.h"
 #include "CvDiplomacyClasses.h"
 #include "CvUnitCombatInfo.h"
-#include "CvTechInfo.h"           // cascadeStartNode -- the synthetic TECH_GAME_START root every player holds
+#include "CvTechInfo.h"           // the TECH_GAME_START root every player holds (its start civics)
 #include "CvPlayerOptionInfo.h"
 #include "CvInfoWater.h"
 #include "Infrastructure/CvInitCore.h"
@@ -3553,6 +3553,13 @@ InvisibleTypes cvInternalGlobals::getUnitMethod(UnitTypes eUnit) const
 void cvInternalGlobals::checkInitialCivics()
 {
 	PROFILE_EXTRA_FUNC();
+	//	The substitute only has to be VALID ([save.md] par.7, the FALLBACK class), and the start-available civics
+	//	are exactly the ones the TECH_GAME_START root enables ([enabler.md] par.2). A civic carries NO tech in its
+	//	own `requires`: tech drives MEMBERSHIP through `enables`, never the gate, so the old "first civic with no
+	//	tech prereq" test has no forward reading and this asks the root instead.
+	const int iRootTech = getInfoTypeForString("TECH_GAME_START", true);
+	const std::vector<int>* pStartCivics = (iRootTech >= 0)
+		? getTechInfo((TechTypes)iRootTech).edge(EDGEF_ENABLES, EDGEB_CIVICS) : NULL;
 	for (int iCiv = getNumCivilizationInfos() - 1; iCiv > -1; iCiv--)
 	{
 		CvCivilizationInfo& civ = getCivilizationInfo(static_cast<CivilizationTypes>(iCiv));
@@ -3564,12 +3571,6 @@ void cvInternalGlobals::checkInitialCivics()
 
 			if (eCivic == NO_CIVIC || getCivicInfo(eCivic).getCivicOption() != iJ)
 			{
-				//	The substitute only has to be VALID ([save.md] par.7, the FALLBACK class), and the
-				//	start-available civics are exactly the ones the synthetic TECH_GAME_START root enables --
-				//	the node every player always holds ([enabler.md] par.2). A civic carries NO tech in its own
-				//	`requires`: tech drives MEMBERSHIP through `enables`, never the gate, so the old
-				//	"first civic with no tech prereq" test has no forward reading and this asks the root instead.
-				const std::vector<int>* pStartCivics = cascadeStartNode().edge(EDGEF_ENABLES, EDGEB_CIVICS);
 				bool bFound = false;
 				for (int iK = 0; pStartCivics != NULL && iK < getNumCivicInfos(); iK++)
 				{

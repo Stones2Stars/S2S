@@ -18,19 +18,21 @@ is unit succession — §3).
 **The tree is fully connected — `TECH_GAME_START` is the universal root.** Every entity enters CAN GET via an
 inbound `enables` edge; there is **no** implicit "no-edge ⇒ always available" engine rule. Entities available
 from the start of the game — the Palace's ongoing constructibility, the starter units (`UNIT_BRUTE`), the base
-promotions, `PROCESS_IDLE`, the base civics — are authored onto **`TECH_GAME_START`'s `enables`** (the synthetic
-start node every player holds), derived by the curator (no prereq in legacy ⇒ enabled from game start). A missing
+promotions, `PROCESS_IDLE`, the base civics — are authored onto **`TECH_GAME_START`'s `enables`** (the root
+tech every civilization grants), derived by the curator (no prereq in legacy ⇒ enabled from game start). A missing
 edge therefore fails **closed** (the entity is unreachable — loud in validation), never silently-available.
 The dead workarounds for this — whole-domain frontiers, hardcoded always-available whitelists — are tombstoned
 ([superseded-ideas #18](../../architecture/superseded-ideas.md)). *(The Palace's FIRST placement is not the
 enabler's doing: the settler's `grants.buildings` places it at founding — the grants machine,
 [json](../json.md) §5.)*
 
-**`TECH_GAME_START` is guaranteed into HAVE at load.** It is a newly-added concept — a tech that will **never be
-in the tech tree** — so: **new games hold it by default; an existing save does not** and gets it **added on save
-load if absent** (the backfill that keeps an old save's generation rooted). Without it, generation on a
-pre-concept save produces an empty tree. **This backfill is the ONLY engine special case the root model needs**
-— everything else is pure data + the generic machine.
+**`TECH_GAME_START` is guaranteed into HAVE at load.** It is an ordinary tech record that is **never in the tech
+tree** (`identity.disable`) — so: **new games hold it through their civilization's free techs; a save made before
+the root existed does not** and gets it **added on save load if absent** (the `CvTeam::read` backfill that keeps
+an old save's generation rooted). Without it, generation on such a save produces an empty tree. **This backfill
+is the ONLY engine special case the root model needs** — everything else is pure data + the generic machine.
+(The engine also names the root in two places that are not the model: the load-time repair of a civilization's
+initial civics, which asks the root's `enables.civics`, and the grants text, which hides the root.)
 
 > **`replaces` is the UNIT succession edge; building "replacement" is dormancy (engine-verified).**
 > A unit's superseders ARE genuine removal-on-succession (the legacy engine dropped the predecessor once a

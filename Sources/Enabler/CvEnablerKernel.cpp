@@ -9,7 +9,7 @@
 #include "Enabler/CvEnablerKernel.h"
 #include "Enabler/CvEnabler.h"            // EnablerDomain -- the standardized domain the applyEdges deltas write
 #include "CvInfo.h"
-#include "CvTechInfo.h"        // cascadeStartNode -- the synthetic TECH_GAME_START root
+#include "CvTechInfo.h"        // the tech edges
 #include "Repos/InfoRepo.h"
 #include "Tally/CvTally.h"
 #include "AI/CvPlayerAI.h"            // GET_PLAYER
@@ -89,43 +89,6 @@ void EnablerKernel::accumHave(const CvInfo* j, EnBucketSets& cand, EnBucketSets&
 		addEdge(j, EDGEF_OBSOLETES, b, rem[b]);
 		addEdge(j, EDGEF_REPLACES,  b, rem[b]);
 		addEdge(j, EDGEF_DISABLES,  b, rem[b]);
-	}
-}
-
-// GENERATE (enabler.md §2). HAVE = team techs + adopted civics (+ the city's buildings if pCity != NULL).
-void EnablerKernel::generate(const CvPlayer& kPlayer, const CvCity* pCity, EnBucketSets& cand)
-{
-	const CvTeam& kTeam = GET_TEAM(kPlayer.getTeam());
-	EnBucketSets rem;
-	// The synthetic TECH_GAME_START root: every civ grants it, so it is universally HELD -- seed its `enables` (the
-	// no-tech-prereq starting set: CAVE_DWELLING/NOMADISM/LANGUAGE, UNIT_BRUTE, …) into GENERATE for every player.
-	accumHave(&cascadeStartNode(), cand, rem);
-	for (int iT = 0; iT < GC.getNumTechInfos(); ++iT)
-		if (kTeam.isHasTech((TechTypes)iT)) accumHave(InfoRepo<CvTechInfo>::get().get(iT), cand, rem);
-	for (int iCO = 0; iCO < GC.getNumCivicOptionInfos(); ++iCO)
-	{
-		const CivicTypes eCivic = kPlayer.getCivics((CivicOptionTypes)iCO);
-		if (eCivic != NO_CIVIC) accumHave(InfoRepo<CvCivicInfo>::get().get((int)eCivic), cand, rem);
-	}
-	if (pCity != NULL)
-	{
-		const std::vector<BuildingTypes> aHas = pCity->getHasBuildings();
-		for (size_t i = 0; i < aHas.size(); ++i)
-		{
-			const CvInfo* jb = InfoRepo<CvBuildingInfo>::get().get((int)aHas[i]);
-			// #430 obsoletion FLIP (owner 2026-07-07): a now-present obsolete building no longer UNLOCKS -- its
-			// `enables` are SUPERSEDED (the same frontier outcome as the pre-flip world where legacy removed it),
-			// so it is skipped from GENERATE. This keeps the frontier input INVARIANT to the flip -- the enabler
-			// parity no longer leans on legacy obsoletion. (Its whenObsolete MODIFIER still delivers via the
-			// operating-buildings obsolete set; only its enabler/frontier contribution stops here.)
-			if (jb != NULL && obsoletedByHeldTech(jb, kTeam)) continue;
-			accumHave(jb, cand, rem);
-		}
-	}
-	for (int i = 0; i < NUM_EDGEB; ++i)
-	{
-		const std::set<int>& r = rem.a[i];
-		for (std::set<int>::const_iterator jt = r.begin(); jt != r.end(); ++jt) cand.a[i].erase(*jt);
 	}
 }
 

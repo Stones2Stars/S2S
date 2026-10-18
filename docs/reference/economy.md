@@ -12,8 +12,8 @@ supply + corporate maintenance.
 
 - **Treasury tax** (anti-hoarding): `(gold + 250·√gold) / (25 · gameSpeedPercent)`.
 - **City maintenance is ORDINARY CASCADE, end to end — no engine components left.** Distance, city count and
-  colonial separation are AUTHORED DEPOSITS on `TECH_GAME_START`'s `maintenance` block (the universal start node
-  every civ holds — the same baseline home `canTradeOn` uses, [capabilities.md](../specs/capabilities.md)):
+  colonial separation are AUTHORED DEPOSITS on `TECH_GAME_START`'s `maintenance` block (the root tech every
+  civilization grants, which also carries the from-start capabilities, [capabilities.md](../specs/capabilities.md)):
   distance scales `per: DISTANCE_TO_GOVERNMENT_CENTER`,
   city count `per: {CITY, empire, above: 1}`, colony rides `enabled: "!IS_HOME_AREA"` — the predicate
   [json.md §3.5](../specs/json.md) minted for exactly this.

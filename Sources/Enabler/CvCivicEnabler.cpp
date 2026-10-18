@@ -12,19 +12,13 @@
 #include "CvCivicInfo.h"
 #include "CvInfo.h"
 #include <set>
-#include "CvTechInfo.h"           // cascadeStartNode -- the TECH_GAME_START root redirect (carries the start civics)
+#include "CvTechInfo.h"           // the tech axis (carries the start civics)
 #include "Repos/InfoRepo.h"
 #include "AI/CvPlayerAI.h"        // GET_PLAYER
 #include "AI/CvTeamAI.h"          // GET_TEAM
 #include "Defines/CvGlobals.h"
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
-
-static const CvInfo* ce_techInfo(int iTech)
-{
-	if (iTech == GC.getInfoTypeForString("TECH_GAME_START", true)) return &cascadeStartNode();
-	return InfoRepo<CvTechInfo>::get().get(iTech);
-}
 
 // The lifecycle INIT: size + zero ONLY -- NO content. The content is built purely from the DOMAIN events (the
 // play-time tech emits AND the load reseed's in-read per-held-tech emits, one mechanism -- the load-RESEED).
@@ -70,9 +64,9 @@ static void ce_gateSet(const CvPlayer& kPlayer, EnablerDomain& d, const std::set
 void CivicEnabler::onTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas)
 {
 	if (eTeam == NO_TEAM || eTech == NO_TECH) return;
-	const CvInfo* jt = ce_techInfo((int)eTech);
+	const CvInfo* pTechInfo = InfoRepo<CvTechInfo>::get().get((int)eTech);
 	std::set<int> touched;
-	ce_touched(jt, touched);
+	ce_touched(pTechInfo, touched);
 	for (int iP = 0; iP < MAX_PLAYERS; iP++)
 	{
 		const CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iP);
@@ -81,7 +75,7 @@ void CivicEnabler::onTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas)
 		if (!kPlayer.m_enabler.techs.isSeeded() || kPlayer.m_enabler.techs.isHeld((int)eTech) == bHas) continue;
 		EnablerDomain& d = kPlayer.m_enabler.civics;
 		if (!d.isSeeded()) continue;   // pre-init window: the object's own read/init emits replay its facts
-		EnablerKernel::applyEdges(d, jt, EDGEB_CIVICS, bHas ? +1 : -1);
+		EnablerKernel::applyEdges(d, pTechInfo, EDGEB_CIVICS, bHas ? +1 : -1);
 		ce_gateSet(kPlayer, d, touched);   // gate-on-entry + the par.7.1 step-2 re-gates
 	}
 }

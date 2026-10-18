@@ -323,6 +323,12 @@ where it is. Read what the option is being ASKED, never match on the option name
   each line's tiers adjacently because the XML did). A type absent from the manifest (synthetic `TECH_GAME_START`,
   future additions, a manifest-less category) sorts AFTER every listed one, alphabetically — the legacy
   new-stuff-appends-last behaviour. Manifests are derived artifacts: regenerate + commit freely, never hand-edit.
+- **⛔ `TECH_GAME_START` IS AN ORDINARY TECH RECORD — one object, registered and mapped like every other tech,
+  never a second object beside the registry's ([superseded-ideas #43](../architecture/superseded-ideas.md)).** It is
+  never researchable (`identity.disable`, the tech domain's static exclusion), every civilization grants it, and
+  an old save that lacks it gets it from the `CvTeam::read` backfill
+  ([enabler.md §2](../specs/enabler/02-pass-1-generate-the-frontier-the.md)). The cascade, the enabler and the
+  capability context read it through the tech registry and its own tech fact, like any held tech.
 - **The per-category registration is TWO-PASS by requirement, never one.** Each JSON category loads by (1) registering
   **every** type→id (`setInfoTypeFromString`), then (2) running `mapFrom` on each entity. `mapFrom` resolves its FKs
   at parse time (`jsonResolveId` → `getInfoTypeForString(id, /*bHideAssert*/true)`), so a single register-then-map

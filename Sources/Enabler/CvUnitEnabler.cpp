@@ -16,7 +16,7 @@
 #include "CvInfo.h"
 #include "CvUnitInfo.h"           // spawnOnly / m_superseding -- the static exclusion + the replacedBy poco read
 #include "CvBuildingInfo.h"
-#include "CvTechInfo.h"           // cascadeStartNode -- the TECH_GAME_START root redirect (the tech HAVE axis)
+#include "CvTechInfo.h"           // the tech HAVE axis
 #include "CvCivicInfo.h"
 #include "CvReligionInfo.h"
 #include "CvBonusInfo.h"
@@ -29,15 +29,6 @@
 #include "Engine/CvPlayer.h"
 #include "Engine/CvTeam.h"
 #include <map>
-
-
-// the source's cascade info per axis (the tech axis redirects the TECH_GAME_START root to cascadeStartNode).
-// Units' HAVE axes per the store's enables.units inversion sources: techs, buildings, bonuses, religions, civics.
-static const CvInfo* ud_techInfo(int iTech)
-{
-	if (iTech == GC.getInfoTypeForString("TECH_GAME_START", true)) return &cascadeStartNode();
-	return InfoRepo<CvTechInfo>::get().get(iTech);
-}
 
 // forward decls -- the requires-gate helpers (the gate section below); the appliers call them post-apply
 static void ud_gateSet(const CvCity& kCity, const std::set<int>& ids);
@@ -61,8 +52,13 @@ void UnitEnabler::onCityCreated(const CvCity& kCity)
 		const CvUnitInfo* ju = (const CvUnitInfo*)InfoRepo<CvUnitInfo>::get().get(u);
 		if (ju != NULL && !ju->isOfferable()) d.setStaticExcluded(u, true);
 	}
-	for (int t = 0; t < GC.getNumTechInfos(); ++t)   // the root IS a held tech (the load backfill guarantees it)
-		if (kTeam.isHasTech((TechTypes)t)) EnablerKernel::applyEdges(d, ud_techInfo(t), EDGEB_UNITS, +1);
+	for (int iTech = 0; iTech < GC.getNumTechInfos(); ++iTech)   // the root IS a held tech (the load backfill guarantees it)
+	{
+		if (kTeam.isHasTech((TechTypes)iTech))
+		{
+			EnablerKernel::applyEdges(d, InfoRepo<CvTechInfo>::get().get(iTech), EDGEB_UNITS, +1);
+		}
+	}
 	for (int co = 0; co < GC.getNumCivicOptionInfos(); ++co)
 	{
 		const CivicTypes c = kPlayer.getCivics((CivicOptionTypes)co);
@@ -78,12 +74,15 @@ void UnitEnabler::onCityCreated(const CvCity& kCity)
 void UnitEnabler::onCityTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas)
 {
 	if (eTeam == NO_TEAM || eTech == NO_TECH) return;
-	const CvInfo* jt = ud_techInfo((int)eTech);
-	const std::vector<int>* obsB = jt ? jt->edge(EDGEF_OBSOLETES, EDGEB_BUILDINGS) : NULL;
+	const CvInfo* pTechInfo = InfoRepo<CvTechInfo>::get().get((int)eTech);
+	const std::vector<int>* pObsoletedBuildings = pTechInfo ? pTechInfo->edge(EDGEF_OBSOLETES, EDGEB_BUILDINGS) : NULL;
 	const CvTeam& kTeam = GET_TEAM(eTeam);
 	const bool bGate = !spineGameLoadInProgress();   // load gates once at GAME_LOAD_FINISHED
 	std::set<int> touched;
-	if (bGate) ud_touched(jt, touched);
+	if (bGate)
+	{
+		ud_touched(pTechInfo, touched);
+	}
 	for (int iP = 0; iP < MAX_PLAYERS; iP++)
 	{
 		CvPlayer& kPlayer = GET_PLAYER((PlayerTypes)iP);
@@ -94,12 +93,12 @@ void UnitEnabler::onCityTechChanged(TeamTypes eTeam, TechTypes eTech, bool bHas)
 		{
 			EnablerDomain& d = pCity->m_enabler.units;
 			if (!d.isSeeded()) continue;
-			EnablerKernel::applyEdges(d, jt, EDGEB_UNITS, iDelta);
+			EnablerKernel::applyEdges(d, pTechInfo, EDGEB_UNITS, iDelta);
 			// the obsolete-present ripple: a PRESENT building this tech obsoletes stops/resumes enabling its units
-			if (obsB != NULL)
-				for (size_t i = 0; i < obsB->size(); ++i)
+			if (pObsoletedBuildings != NULL)
+				for (size_t i = 0; i < pObsoletedBuildings->size(); ++i)
 				{
-					const int b = (*obsB)[i];
+					const int b = (*pObsoletedBuildings)[i];
 					if (!pCity->hasBuilding((BuildingTypes)b)) continue;
 					const CvInfo* jb = InfoRepo<CvBuildingInfo>::get().get(b);
 					if (!EnablerKernel::obsoletedByOtherHeldTech(jb, kTeam, eTech)) EnablerKernel::applyEdges(d, jb, EDGEB_UNITS, -iDelta);
