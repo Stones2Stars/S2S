@@ -77,6 +77,12 @@ bool CyBuildingInfo::isRelocatable(int iBuilding) const
 	return pBuilding ? pBuilding->isNoInstanceLimit() : false;
 }
 
+bool CyBuildingInfo::isEmpireLevel(int iBuilding) const
+{
+	const CvBuildingInfo* pBuilding = cyb_building(iBuilding);
+	return pBuilding ? pBuilding->isEmpireLevel() : false;
+}
+
 int CyBuildingInfo::getVoteSource(int iBuilding) const
 {
 	//	⚠ The INFO-side getter is still named for the legacy XML tag (`getDiploVoteType`); this read is named for
@@ -117,6 +123,7 @@ void CyBuildingInfo::pythonPublish()
 		.def("getWonderScope",              &CyBuildingInfo::getWonderScope)
 		.def("isLimitedWonder",             &CyBuildingInfo::isLimitedWonder)
 		.def("isRelocatable",               &CyBuildingInfo::isRelocatable)
+		.def("isEmpireLevel",               &CyBuildingInfo::isEmpireLevel)
 		.def("getVoteSource",               &CyBuildingInfo::getVoteSource)
 		.def("getGreatPeopleUnit",          &CyBuildingInfo::getGreatPeopleUnit)
 		.def("getCost",                     &CyBuildingInfo::getCost)

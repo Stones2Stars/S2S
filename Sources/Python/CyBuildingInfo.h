@@ -48,6 +48,10 @@ public:
 	//	itself stays; only its empire enforcement is waived, which is why this is its own fact.
 	bool isRelocatable(int iBuilding) const;
 
+	/// <summary>Is this an empire-level building -- one the EMPIRE holds once, never present in any city
+	/// (`identity.empireLevel`)?</summary>
+	bool isEmpireLevel(int iBuilding) const;
+
 	//	The VOTESOURCE_* diplomatic body this building CONVENES, NO_VOTESOURCE when it convenes none.
 	int getVoteSource(int iBuilding) const;
 

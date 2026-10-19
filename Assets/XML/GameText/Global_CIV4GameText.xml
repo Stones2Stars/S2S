@@ -372,6 +372,10 @@
 		<Russian>Панель Чудес</Russian>
 	</TEXT>
 	<TEXT>
+		<Tag>TXT_KEY_EMPIRE_BUILDINGS</Tag>
+		<English>Empire Buildings</English>
+	</TEXT>
+	<TEXT>
 		<Tag>TXT_ACO_ATTACKMODIFIERS</Tag>
 		<English>[NEWLINE][COLOR_POSITIVE_TEXT]Attack modifiers:[COLOR_REVERT]</English>
 		<French>[NEWLINE][COLOR_POSITIVE_TEXT]Modificateurs d'Attaque:[COLOR_REVERT]</French>

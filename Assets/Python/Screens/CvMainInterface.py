@@ -49,6 +49,10 @@ CITYTAB_ADMIN = 0
 CITYTAB_UNIT = 1
 CITYTAB_BUILDING = 2
 CITYTAB_WONDER = 3
+NUM_CITYTABS = 4
+# The built-building list's tabs: buildings, wonders, conceptual, and the empire's empire-level buildings.
+BLDGLIST_EMPIRE = 3
+NUM_BLDGLISTS = 4
 
 g_mainInterface = None
 
@@ -720,7 +724,7 @@ class CvMainInterface:
 			"Specials.dds>"
 		]
 		iPushed = self.iShowBuildings
-		for i in xrange(3):
+		for i in xrange(NUM_BLDGLISTS):
 			sz = str(i)
 			PNL = "BldgList|Bkgnd" + sz
 			TXT = "BldgList|Btn" + sz
@@ -731,7 +735,11 @@ class CvMainInterface:
 			else:
 				screen.setStyle(PNL, "GFC_Control_OutPanel_Style")
 				z = 1
-			screen.setText(TXT, "", szPre + aList[i], 1<<0, x+1, y+z, 0, eFontSmall, eWidGen, 0, 0)
+			if i == BLDGLIST_EMPIRE:
+				# The Wonders build-tab icon is 56px against the others' 32, and a text image cannot scale.
+				screen.setImageButton(TXT, "Art/Interface/screens/City/CityWonder.dds", x+1, y+z, 32, 32, eWidGen, 0, 0)
+			else:
+				screen.setText(TXT, "", szPre + aList[i], 1<<0, x+1, y+z, 0, eFontSmall, eWidGen, 0, 0)
 			x += dy + 2
 		# Demolish
 		x = a4thX - dy
@@ -1187,12 +1195,9 @@ class CvMainInterface:
 		screen.hide("TradeRouteListBackground")
 		screen.hide("CS|Maintenance0")
 		# Left side list tabs
-		screen.hide("BldgList|Bkgnd0")
-		screen.hide("BldgList|Bkgnd1")
-		screen.hide("BldgList|Bkgnd2")
-		screen.hide("BldgList|Btn0")
-		screen.hide("BldgList|Btn1")
-		screen.hide("BldgList|Btn2")
+		for iList in xrange(NUM_BLDGLISTS):
+			screen.hide("BldgList|Bkgnd%d" % iList)
+			screen.hide("BldgList|Btn%d" % iList)
 		screen.hide("BldgList|Demolish0")
 		# Right side list tabs
 		screen.hide("BonusList|Bkgnd0")
@@ -1492,10 +1497,8 @@ class CvMainInterface:
 				if self.cityOptions:
 					self.cityOptions.exit(screen, self)
 
-				screen.hide("CityTab0")
-				screen.hide("CityTab1")
-				screen.hide("CityTab2")
-				screen.hide("CityTab3")
+				for iTab in xrange(NUM_CITYTABS):
+					screen.hide("CityTab%d" % iTab)
 				# Completely rebuilt every time they are needed.
 				screen.deleteWidget("CT|UnitGrouping")
 				screen.deleteWidget("CT|UnitSorting")
@@ -1592,10 +1595,8 @@ class CvMainInterface:
 			screen.show("AdvBtn1")
 			if self.InCity:
 				screen.show("CityWorkQueue")
-				screen.show("CityTab0")
-				screen.show("CityTab1")
-				screen.show("CityTab2")
-				screen.show("CityTab3")
+				for iTab in xrange(NUM_CITYTABS):
+					screen.show("CityTab%d" % iTab)
 				screen.show("ProcessPanel")
 				screen.show("ScrollPanelBL")
 				screen.show("Conscript")
@@ -1692,10 +1693,8 @@ class CvMainInterface:
 			screen.hideList(0)
 			if self.InCity:
 				screen.hide("CityWorkQueue")
-				screen.hide("CityTab0")
-				screen.hide("CityTab1")
-				screen.hide("CityTab2")
-				screen.hide("CityTab3")
+				for iTab in xrange(NUM_CITYTABS):
+					screen.hide("CityTab%d" % iTab)
 				screen.hide("ProcessPanel")
 				screen.hide("ScrollPanelBL")
 			screen.hide("InterfaceLeftBackgroundWidget")
@@ -2525,12 +2524,9 @@ class CvMainInterface:
 				screen.hide("TradeRouteListBackground")
 				# Built Buildings
 				screen.hide("BldgList|Demolish0")
-				screen.hide("BldgList|Bkgnd0")
-				screen.hide("BldgList|Bkgnd1")
-				screen.hide("BldgList|Bkgnd2")
-				screen.hide("BldgList|Btn0")
-				screen.hide("BldgList|Btn1")
-				screen.hide("BldgList|Btn2")
+				for iList in xrange(NUM_BLDGLISTS):
+					screen.hide("BldgList|Bkgnd%d" % iList)
+					screen.hide("BldgList|Btn%d" % iList)
 				# Bonus list
 				screen.hide("BonusList|Bkgnd0")
 				screen.hide("BonusList|Bkgnd1")
@@ -2579,12 +2575,9 @@ class CvMainInterface:
 					screen.show("PopulationBar")
 					screen.show("ProductionBar")
 					# Left side list tabs
-					screen.show("BldgList|Bkgnd0")
-					screen.show("BldgList|Bkgnd1")
-					screen.show("BldgList|Bkgnd2")
-					screen.show("BldgList|Btn0")
-					screen.show("BldgList|Btn1")
-					screen.show("BldgList|Btn2")
+					for iList in xrange(NUM_BLDGLISTS):
+						screen.show("BldgList|Bkgnd%d" % iList)
+						screen.show("BldgList|Btn%d" % iList)
 					screen.show("BldgList|Demolish0")
 					# Right side list tabs
 					screen.show("BonusList|Bkgnd0")
@@ -3008,13 +3001,6 @@ class CvMainInterface:
 		w -= 16
 		wName = w - w / 3 - 24
 
-		aBuildingList = self.aSortedBuildingTuple[self.iShowBuildings]
-		# The CONCEPTUAL tab (the zero-cost, system-placed markers: civic markers, states, bands) lists only
-		# what is ACTIVE (owner): a dormant marker is machinery standing by, not a holding the player has --
-		# every rung of every band ladder is present in every city by construction, so listing them by
-		# presence would fill the tab with scenery. The verdict is the enabler's operating set, read off
-		# CITY_BUILDING_ACTIVE -- never re-derived here.
-		bActiveOnly = self.iShowBuildings == 2
 		ID = "WID|BUILDING|BldgList%d"
 		ROW_0 = "BldgListRow%d"
 		szDormantColor = "<color=140,140,140,255>"
@@ -3026,24 +3012,42 @@ class CvMainInterface:
 		CyCityHere = GC.getPlayer(iCityOwner).getCity(iCityID)
 		aActiveList = []
 		aDormantList = []
-		for szName, i in aBuildingList:
-			aBuilding = CyCityHere.getBuildingReads(i)
-			if not aBuilding[CityBuildingRead.CITY_BUILDING_HAS]:
-				continue
-			if aBuilding[CityBuildingRead.CITY_BUILDING_ACTIVE]:
-				aActiveList.append((szName, i, aBuilding))
-			elif not bActiveOnly:
-				aDormantList.append((szName, i, aBuilding))
+		if self.iShowBuildings == BLDGLIST_EMPIRE:
+			# An empire-level building is held by the EMPIRE and is never in a city, so the city's own reads can
+			# never list one: the empire's held list does, with no per-city figures to show.
+			CyPlayerHere = GC.getPlayer(iCityOwner)
+			for i in CyPlayerHere.getEmpireBuildings():
+				entry = (INFO.getDescription("BUILDING_", i), i, None, CyPlayerHere.isEmpireBuildingActive(i))
+				if entry[3]:
+					aActiveList.append(entry)
+				else:
+					aDormantList.append(entry)
+			aActiveList.sort()
+			aDormantList.sort()
+		else:
+			# The CONCEPTUAL tab (the zero-cost, system-placed markers: civic markers, states, bands) lists only
+			# what is ACTIVE (owner): a dormant marker is machinery standing by, not a holding the player has --
+			# every rung of every band ladder is present in every city by construction, so listing them by
+			# presence would fill the tab with scenery. The verdict is the enabler's operating set, read off
+			# CITY_BUILDING_ACTIVE -- never re-derived here.
+			bActiveOnly = self.iShowBuildings == 2
+			for szName, i in self.aSortedBuildingTuple[self.iShowBuildings]:
+				aBuilding = CyCityHere.getBuildingReads(i)
+				if not aBuilding[CityBuildingRead.CITY_BUILDING_HAS]:
+					continue
+				if aBuilding[CityBuildingRead.CITY_BUILDING_ACTIVE]:
+					aActiveList.append((szName, i, aBuilding, True))
+				elif not bActiveOnly:
+					aDormantList.append((szName, i, aBuilding, False))
 
 		iYieldFirst = int(CityBuildingRead.CITY_BUILDING_YIELD_FIRST)
 		iCommerceFirst = int(CityBuildingRead.CITY_BUILDING_COMMERCE_FIRST)
 		iRow = 0
 		y = -2
-		for szName, i, aBuilding in aActiveList + aDormantList:
-			bActive = aBuilding[CityBuildingRead.CITY_BUILDING_ACTIVE]
+		for szName, i, aBuilding, bActive in aActiveList + aDormantList:
 			szStat = ""
 
-			if bActive:
+			if bActive and aBuilding:
 				# What this ONE building contributes to THIS city -- one icon per non-zero channel, so the row
 				# says what the building is actually doing rather than only how it makes people feel.
 				for j in xrange(YieldTypes.NUM_YIELD_TYPES):
@@ -3423,7 +3427,7 @@ class CvMainInterface:
 			"CityWonder.dds"
 		]
 		x = self.xMidL
-		for i in xrange(4):
+		for i in xrange(NUM_CITYTABS):
 			ID = str(i)
 			Btn = "CityTab" + ID
 			Img = "CityTab|Img" + ID
@@ -3726,6 +3730,9 @@ class CvMainInterface:
 				if BUILDING.isLimitedWonder(iType):
 					break
 				i += 1
+				# One per empire, so it is offered with the wonders.
+				if BUILDING.isEmpireLevel(iType):
+					continue
 				BTN = INFO.getButton("BUILDING_", iType)
 				Img = PF % iType
 				if ENABLER.getBuildingAvailability(iCityOwner, iCityID, iType) != EnablerState.ENABLER_LISTED or iPlayer != iPlayerAct:
@@ -3772,9 +3779,13 @@ class CvMainInterface:
 						else:
 							aList3.append(iType)
 
+			# EMPIRE-LEVEL buildings, one per empire: their own band first. They carry no cap, so they sit among
+			# the ordinary buildings in the groups and are gathered from all of them.
+			aListEmpire = [iType for aGroup in GC.getPlayer(iCityOwner).getCity(iCityID).getBuildingListGroups() for iType in aGroup if BUILDING.isEmpireLevel(iType)]
+
 			# Wonders
 			iCount = 0
-			for aListX in [aList1, aList2, aList3]:
+			for aListX in [aListEmpire, aList1, aList2, aList3]:
 				if not aListX: continue
 				aList = []
 				for iType in aListX:
@@ -5594,7 +5605,7 @@ class CvMainInterface:
 					szTxt = CyGTM.getBuildingHelp(ID, True, self.InCity.iPlayer, self.InCity.iCityID, False, False, True)
 					self.updateTooltip(screen, szTxt)
 				else:
-					aList = [TRNSLTR.getText("TXT_KEY_WB_BUILDINGS", ()), TRNSLTR.getText("TXT_KEY_CONCEPT_WONDERS", ()), TRNSLTR.getText("TXT_KEY_CITY_SCREEN_CONCEPTUAL", ())]
+					aList = [TRNSLTR.getText("TXT_KEY_WB_BUILDINGS", ()), TRNSLTR.getText("TXT_KEY_CONCEPT_WONDERS", ()), TRNSLTR.getText("TXT_KEY_CITY_SCREEN_CONCEPTUAL", ()), TRNSLTR.getText("TXT_KEY_EMPIRE_BUILDINGS", ())]
 					self.updateTooltip(screen, aList[ID])
 
 			elif BASE == "BonusList":
