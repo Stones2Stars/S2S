@@ -6,6 +6,7 @@
 ## Copyright (c) 2008 The BUG Mod.
 
 from CvPythonExtensions import *
+import PythonToolTip
 
 # BUG Options
 import BugCore
@@ -137,7 +138,10 @@ class CvTechSplashScreen:
 #		screen.setHelpTextArea(self.W_HELP_AREA, FontTypes.SMALL_FONT, self.X_UNIT_PANE, self.Y_UNIT_PANE, self.Z_HELP_AREA, 1, CyArtFileMgr().getInterfaceArtInfo("POPUPS_BACKGROUND_TRANSPARENT").getPath(), True, True, 1<<0, 0 )
 #		screen.addDDSGFC( "TechSplashBackground", CyArtFileMgr().getInterfaceArtInfo("TEMP_BG").getPath(), 0, 0, self.W_SCREEN, self.H_SCREEN, WidgetTypes.WIDGET_GENERAL, -1, -1 )
 		screen.showWindowBackground( False )
-		screen.setDimensions(screen.centerX(0), screen.centerY(0), self.W_SCREEN, self.H_SCREEN)
+		iScreenX = screen.centerX(0)
+		iScreenY = screen.centerY(0)
+		screen.setDimensions(iScreenX, iScreenY, self.W_SCREEN, self.H_SCREEN)
+		PythonToolTip.setScreenOrigin(self, iScreenX, iScreenY)
 
 		# Create panels
 
